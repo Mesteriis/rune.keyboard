@@ -258,19 +258,18 @@ class ImeTestDriver {
         instrumentation.waitForIdleSync()
         device.pressBack()
         instrumentation.waitForIdleSync()
-        // API 26's bundled Google Latin IME can crash when it is selected briefly while an
-        // editor is already resumed. Move to Home first so the alternate -> Rune transition has
-        // no active input connection, then bring the QA editor back after Rune is selected.
+        // Detach the current input view without selecting the API 26 vendor IME: the settings
+        // listener has already rebuilt Rune's view, and returning from Home starts the next Rune
+        // input session against that updated view.
         device.pressHome()
         check(
             device.wait(
                 Until.gone(By.desc(targetContext.getString(R.string.key_delete))),
                 WAIT_MILLIS,
             ),
-        ) { "Rune IME did not detach before the restart" }
+        ) { "Rune IME did not detach before the next input session" }
         device.waitForIdle()
         instrumentation.waitForIdleSync()
-        restartRuneIme()
         resumeQa()
         focusField("qa_plain_text")
         eventually(WAIT_MILLIS) { (findKeyByText("1") != null) == enabled }
