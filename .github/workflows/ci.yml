@@ -129,13 +129,13 @@ jobs:
             ./gradlew assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest
             ./gradlew --stop
           script: |
-            ./gradlew installDebug
+            ./gradlew --no-daemon installDebug
             adb shell settings put secure show_ime_with_hard_keyboard 1
             for attempt in $(seq 1 15); do if adb shell ime enable io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService; then break; fi; if [ "$attempt" -eq 15 ]; then exit 1; fi; sleep 2; done
             adb shell ime set io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService
             adb shell am start -W -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
-            ./gradlew :app:connectedDebugAndroidTest
-            ./gradlew :runtime-llama:connectedDebugAndroidTest
+            ./gradlew --no-daemon :app:connectedDebugAndroidTest
+            ./gradlew --no-daemon :runtime-llama:connectedDebugAndroidTest
       - name: Upload instrumentation results
         if: always()
         uses: actions/upload-artifact@v4
