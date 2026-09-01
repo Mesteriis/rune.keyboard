@@ -294,7 +294,7 @@ class ImeTestDriver {
     }
 
     private fun awaitQaActivity() {
-        val selector = By.res(PACKAGE_NAME, "qa_plain_text")
+        val selector = By.res(PACKAGE_NAME, "qa_scroll")
         check(device.wait(Until.hasObject(selector), WAIT_MILLIS)) { "QA activity did not become visible" }
     }
 
