@@ -92,12 +92,14 @@ jobs:
             target: google_apis
             ram-size: 2048M
             disk-size: 6G
+            gpu-mode: swiftshader
             emulator-features: ''
           - api-level: '37.0'
             target: google_apis_ps16k
             ram-size: 4096M
             disk-size: 6G
-            emulator-features: ''
+            gpu-mode: software
+            emulator-features: -feature -Vulkan
     steps:
       - uses: actions/checkout@v4
         with:
@@ -126,7 +128,7 @@ jobs:
           ram-size: ${{ matrix.ram-size }}
           disk-size: ${{ matrix.disk-size }}
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader ${{ matrix.emulator-features }} -noaudio -no-boot-anim -no-snapshot-save
+          emulator-options: -no-window -gpu ${{ matrix.gpu-mode }} ${{ matrix.emulator-features }} -noaudio -no-boot-anim -no-snapshot-save
           pre-emulator-launch-script: |
             tools/ci/install-adb-wrapper
             ./gradlew assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest
