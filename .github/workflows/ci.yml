@@ -18,7 +18,9 @@ jobs:
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v4
       - name: Install pinned native toolchain
-        run: yes | sdkmanager "ndk;29.0.14206865" "cmake;3.31.6" >/dev/null
+        run: |
+          sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" "ndk;29.0.14206865" "cmake;3.31.6" >/dev/null
       - name: Run fresh JVM tests
         run: ./gradlew testDebugUnitTest --rerun-tasks
       - name: Upload unit-test results
@@ -43,7 +45,9 @@ jobs:
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v4
       - name: Install pinned native toolchain
-        run: yes | sdkmanager "ndk;29.0.14206865" "cmake;3.31.6" >/dev/null
+        run: |
+          sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" "ndk;29.0.14206865" "cmake;3.31.6" >/dev/null
       - name: Build, lint, and verify privacy
         run: ./gradlew lint assembleDebug assembleRelease assembleProfile privacyGateRelease privacyGateProfile imeIntelligenceBoundary forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate
       - name: Verify packaged native ABI boundary
@@ -94,7 +98,9 @@ jobs:
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v4
       - name: Install pinned native toolchain
-        run: yes | sdkmanager "ndk;29.0.14206865" "cmake;3.31.6" >/dev/null
+        run: |
+          sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" "ndk;29.0.14206865" "cmake;3.31.6" >/dev/null
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
