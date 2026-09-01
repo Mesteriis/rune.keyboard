@@ -90,8 +90,10 @@ jobs:
         include:
           - api-level: '26'
             ram-size: 2048M
+            disk-size: 6G
           - api-level: '37.0'
             ram-size: 4096M
+            disk-size: 6G
     steps:
       - uses: actions/checkout@v4
         with:
@@ -118,6 +120,7 @@ jobs:
           target: google_apis
           arch: x86_64
           ram-size: ${{ matrix.ram-size }}
+          disk-size: ${{ matrix.disk-size }}
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save
           script: |
