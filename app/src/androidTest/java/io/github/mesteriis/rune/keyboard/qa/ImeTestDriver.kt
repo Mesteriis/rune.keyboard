@@ -153,9 +153,13 @@ class ImeTestDriver {
     }
 
     fun awaitFieldText(idName: String, expected: String, timeoutMillis: Long = WAIT_MILLIS) {
-        eventually(timeoutMillis) { fieldText(idName) == expected }
-        check(fieldText(idName) == expected) {
-            "Field $idName expected <$expected>, actual <${fieldText(idName)}>"
+        var lastObserved = ""
+        eventually(timeoutMillis) {
+            lastObserved = fieldText(idName)
+            lastObserved == expected
+        }
+        check(lastObserved == expected) {
+            "Field $idName expected <$expected>, actual <$lastObserved>"
         }
     }
 
