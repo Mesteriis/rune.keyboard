@@ -85,7 +85,7 @@ jobs:
             ram-size: 4096M
             disk-size: 6G
             gpu-mode: swiftshader
-            emulator-features: -feature -Vulkan
+            emulator-features: -feature GLDirectMem -feature HasSharedSlotsHostMemoryAllocator -feature -Vulkan
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -112,7 +112,6 @@ jobs:
           pre-emulator-launch-script: |
             tools/ci/install-adb-wrapper
           script: |
-            if [ "${{ matrix.api-level }}" = "37.0" ]; then tools/ci/stabilize-api-37-emulator; fi
             ./gradlew --no-daemon installDebug
             mkdir -p app/build/ci-device
             adb logcat -v threadtime > app/build/ci-device/logcat.txt 2>&1 &
