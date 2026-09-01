@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<input-method xmlns:android="http://schemas.android.com/apk/res/android"
+    android:settingsActivity="io.github.mesteriis.rune.keyboard.settings.SetupActivity"
+    android:supportsSwitchingToNextInputMethod="true">
+
+  <subtype
+      android:imeSubtypeExtraValue="AsciiCapable"
+      android:isAsciiCapable="true"
+      android:label="@string/subtype_bilingual"
+      android:languageTag="en-US"
+      android:imeSubtypeMode="keyboard" />
+</input-method>

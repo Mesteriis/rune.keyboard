@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="rune_primary">#335CFF</color>
+  <color name="setup_background">#F4F6FA</color>
+  <color name="setup_surface">#FFFFFF</color>
+  <color name="setup_text_primary">#111827</color>
+  <color name="setup_text_secondary">#4B5563</color>
+  <color name="setup_border">#DCE2EC</color>
+  <color name="status_enabled">#167A45</color>
+  <color name="status_disabled">#9A3412</color>
+  <color name="keyboard_background">#D9DEE7</color>
+  <color name="key_background">#FFFFFF</color>
+  <color name="key_background_pressed">#C7D0DE</color>
+  <color name="key_action_background">#C9D3FF</color>
+  <color name="key_action_background_pressed">#AEBEFF</color>
+  <color name="key_space_background">#F8FAFC</color>
+  <color name="key_text">#101828</color>
+  <color name="key_text_accent">#1736B5</color>
+  <color name="icon_background">#070A24</color>
+</resources>

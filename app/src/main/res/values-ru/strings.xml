@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Клавиатура Rune</string>
+  <string name="ime_service_name">Клавиатура Rune</string>
+  <string name="subtype_bilingual">Английский / Русский</string>
+
+  <string name="setup_title">Клавиатура Rune</string>
+  <string name="setup_description">Быстрая приватная клавиатура для русского и английского. Выполните два системных шага, чтобы начать печатать.</string>
+  <string name="setup_status_label">Состояние клавиатуры</string>
+  <string name="setup_status_enabled">Включена</string>
+  <string name="setup_status_disabled">Не включена</string>
+  <string name="setup_enable_title">1. Включите Rune</string>
+  <string name="setup_enable_description">Android требует явно включать каждую стороннюю клавиатуру в системных настройках.</string>
+  <string name="setup_enable_button">Открыть настройки клавиатур</string>
+  <string name="setup_select_title">2. Выберите Rune</string>
+  <string name="setup_select_description">Выберите «Клавиатура Rune» в системном списке клавиатур.</string>
+  <string name="setup_select_button">Выбрать клавиатуру</string>
+  <string name="setup_privacy_title">Приватность по умолчанию</string>
+  <string name="setup_privacy_description">У Rune нет доступа в интернет, телеметрии, рекламы, истории ввода и доступа к буферу обмена.</string>
+  <string name="setup_mvp_note">MVP: ввод текста, русская и английская раскладки, цифры, символы, Shift/Caps Lock, безопасное удаление Unicode и действия редактора. Подсказки и свайп-ввод намеренно не входят в эту версию.</string>
+
+  <string name="key_shift">Shift</string>
+  <string name="key_shift_on">Shift включён</string>
+  <string name="key_caps_lock">Caps Lock</string>
+  <string name="key_delete">Удалить</string>
+  <string name="key_symbols">Символы</string>
+  <string name="key_letters">Буквы</string>
+  <string name="key_language">Сменить язык</string>
+  <string name="key_next_keyboard">Следующая клавиатура</string>
+  <string name="key_space">Пробел</string>
+  <string name="key_enter">Ввод</string>
+  <string name="key_go">Перейти</string>
+  <string name="key_search">Поиск</string>
+  <string name="key_send">Отправить</string>
+  <string name="key_next">Далее</string>
+  <string name="key_done">Готово</string>
+  <string name="key_previous">Назад</string>
+</resources>

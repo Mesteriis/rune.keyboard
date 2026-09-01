@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Rune Keyboard</string>
+  <string name="ime_service_name">Rune Keyboard</string>
+  <string name="subtype_bilingual">English / Russian</string>
+
+  <string name="setup_title">Rune Keyboard</string>
+  <string name="setup_description">A fast, private keyboard for English and Russian. Complete the two system steps below to start typing.</string>
+  <string name="setup_status_label">Keyboard status</string>
+  <string name="setup_status_enabled">Enabled</string>
+  <string name="setup_status_disabled">Not enabled</string>
+  <string name="setup_enable_title">1. Enable Rune</string>
+  <string name="setup_enable_description">Android requires you to explicitly enable every third-party keyboard in system settings.</string>
+  <string name="setup_enable_button">Open keyboard settings</string>
+  <string name="setup_select_title">2. Select Rune</string>
+  <string name="setup_select_description">Choose Rune Keyboard in the system keyboard picker.</string>
+  <string name="setup_select_button">Choose keyboard</string>
+  <string name="setup_privacy_title">Private by default</string>
+  <string name="setup_privacy_description">Rune has no internet permission, telemetry, ads, input history, or clipboard access.</string>
+  <string name="setup_mvp_note">MVP: typing, English/Russian layouts, numbers, symbols, shift/caps lock, Unicode-safe delete, and editor actions. Suggestions and swipe typing are intentionally out of scope.</string>
+
+  <string name="key_shift">Shift</string>
+  <string name="key_shift_on">Shift on</string>
+  <string name="key_caps_lock">Caps lock</string>
+  <string name="key_delete">Delete</string>
+  <string name="key_symbols">Symbols</string>
+  <string name="key_letters">Letters</string>
+  <string name="key_language">Switch language</string>
+  <string name="key_next_keyboard">Next keyboard</string>
+  <string name="key_space">Space</string>
+  <string name="key_enter">Enter</string>
+  <string name="key_go">Go</string>
+  <string name="key_search">Search</string>
+  <string name="key_send">Send</string>
+  <string name="key_next">Next</string>
+  <string name="key_done">Done</string>
+  <string name="key_previous">Previous</string>
+</resources>

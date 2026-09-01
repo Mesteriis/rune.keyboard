@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <item name="qa_plain_text" type="id" />
+  <item name="qa_raw_text" type="id" />
+  <item name="qa_seed_unicode" type="id" />
+  <item name="qa_multiline_text" type="id" />
+  <item name="qa_custom_action" type="id" />
+  <item name="qa_custom_status" type="id" />
+  <item name="qa_number" type="id" />
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Theme.RuneKeyboard.Setup" parent="android:style/Theme.Material.Light.NoActionBar">
+    <item name="android:fontFamily">sans</item>
+    <item name="android:windowActionModeOverlay">true</item>
+    <item name="android:windowBackground">@color/setup_background</item>
+    <item name="android:colorAccent">@color/rune_primary</item>
+    <item name="android:navigationBarColor">@color/setup_background</item>
+    <item name="android:statusBarColor">@color/setup_background</item>
+    <item name="android:windowLightNavigationBar">true</item>
+    <item name="android:windowLightStatusBar">true</item>
+  </style>
+
+  <style name="Theme.RuneKeyboard.Ime" parent="android:style/Theme.Material.Light.NoActionBar">
+    <item name="android:fontFamily">sans</item>
+    <item name="android:windowBackground">@color/keyboard_background</item>
+    <item name="android:navigationBarColor">@color/keyboard_background</item>
+    <item name="android:windowLightNavigationBar">true</item>
+  </style>
+</resources>
+

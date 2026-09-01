@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="qa_title" translatable="false">Rune IME debug acceptance</string>
+  <string name="qa_plain_hint" translatable="false">Plain text</string>
+  <string name="qa_raw_label" translatable="false">TYPE_NULL raw key events</string>
+  <string name="qa_raw_hint" translatable="false">Raw key event text</string>
+  <string name="qa_seed_unicode" translatable="false">Seed A + emoji</string>
+  <string name="qa_unicode_sample" translatable="false">A😀</string>
+  <string name="qa_multiline_label" translatable="false">Multiline with NO_ENTER_ACTION</string>
+  <string name="qa_multiline_hint" translatable="false">Multiline text</string>
+  <string name="qa_custom_label" translatable="false">Custom action with ID zero</string>
+  <string name="qa_custom_hint" translatable="false">Custom action text</string>
+  <string name="qa_custom_action" translatable="false">Apply</string>
+  <string name="qa_custom_waiting" translatable="false">Custom action not received</string>
+  <string name="qa_custom_received" translatable="false">Custom action received: %1$d</string>
+  <string name="qa_number_label" translatable="false">Signed decimal number</string>
+  <string name="qa_number_hint" translatable="false">Number</string>
+</resources>

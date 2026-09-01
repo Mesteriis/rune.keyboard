@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="setup_page_padding">24dp</dimen>
+  <dimen name="setup_section_spacing">20dp</dimen>
+  <dimen name="setup_card_padding">20dp</dimen>
+  <dimen name="keyboard_padding">4dp</dimen>
+  <dimen name="keyboard_key_gap">3dp</dimen>
+  <dimen name="keyboard_key_height">52dp</dimen>
+  <dimen name="keyboard_key_text_size">21sp</dimen>
+  <dimen name="keyboard_action_text_size">18sp</dimen>
+</resources>
+
