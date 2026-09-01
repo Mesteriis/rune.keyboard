@@ -65,10 +65,7 @@ class ImeTestDriver {
     }
 
     fun focusField(idName: String): UiObject2 {
-        val field = device.findObject(By.res(PACKAGE_NAME, idName)) ?: run {
-            resumeQa()
-            scrollToObject(idName)
-        }
+        val field = device.findObject(By.res(PACKAGE_NAME, idName)) ?: scrollToObject(idName)
         field.click()
         waitForKeyboard()
         // adjustResize may move a low editor outside the accessibility viewport once IME appears;
@@ -119,12 +116,13 @@ class ImeTestDriver {
     }
 
     private fun switchLanguageUntil(expectedKey: String) {
-        repeat(3) {
+        repeat(5) {
             if (findKeyByText(expectedKey) != null) return
             val space = keyByDescription(targetContext.getString(R.string.key_space))
             val bounds = space.visibleBounds
-            device.swipe(bounds.right - 8, bounds.centerY(), bounds.left + 8, bounds.centerY(), 12)
+            device.swipe(bounds.right - 8, bounds.centerY(), bounds.left + 8, bounds.centerY(), 24)
             device.waitForIdle()
+            eventually(INPUT_CONNECTION_SETTLE_MILLIS * 2) { findKeyByText(expectedKey) != null }
         }
         error("Expected layout key '$expectedKey' did not appear after a bounded language cycle")
     }
@@ -284,14 +282,7 @@ class ImeTestDriver {
         if (device.wait(Until.hasObject(selector), ACCESSIBILITY_SETTLE_MILLIS)) {
             return device.findObject(selector)
         }
-        if (scroll) {
-            if (device.findObject(By.res(PACKAGE_NAME, "qa_scroll")) == null) resumeQa()
-            @Suppress("DEPRECATION")
-            UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/qa_scroll")).apply {
-                setAsVerticalList()
-                scrollIntoView(UiSelector().resourceId("$PACKAGE_NAME:id/$idName"))
-            }
-        }
+        if (scroll) return scrollToObject(idName)
         check(device.wait(Until.hasObject(selector), WAIT_MILLIS)) { "QA object not found: $idName" }
         return device.findObject(selector)
     }
@@ -308,6 +299,7 @@ class ImeTestDriver {
     }
 
     private fun scrollToObject(idName: String): UiObject2 {
+        prepareQaForScroll()
         @Suppress("DEPRECATION")
         val scrollable = UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/qa_scroll")).apply {
             setAsVerticalList()
@@ -315,7 +307,21 @@ class ImeTestDriver {
             scrollIntoView(UiSelector().resourceId("$PACKAGE_NAME:id/$idName"))
         }
         check(scrollable.exists()) { "QA scroll container is unavailable" }
-        return requireObject(idName)
+        val selector = By.res(PACKAGE_NAME, idName)
+        check(device.wait(Until.hasObject(selector), WAIT_MILLIS)) { "QA object not found: $idName" }
+        return device.findObject(selector)
+    }
+
+    private fun prepareQaForScroll() {
+        val qaSelector = By.res(PACKAGE_NAME, "qa_scroll")
+        if (device.findObject(qaSelector) == null) resumeQa()
+        val keyboardSelector = By.desc(targetContext.getString(R.string.key_delete))
+        if (device.findObject(keyboardSelector) != null) {
+            device.pressBack()
+            device.wait(Until.gone(keyboardSelector), WAIT_MILLIS)
+        }
+        if (device.findObject(qaSelector) == null) resumeQa()
+        device.waitForIdle()
     }
 
     private fun waitForKeyboard() {
