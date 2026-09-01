@@ -198,7 +198,7 @@ class KeyboardLayoutProviderTest {
     }
 
     @Test
-    fun `the hide key replaces the language key and hosts the system switcher`() {
+    fun `bottom rows omit redundant keyboard chrome`() {
         val states = listOf(
             KeyboardState(KeyboardLanguage.ENGLISH),
             KeyboardState(KeyboardLanguage.ENGLISH).toggleSymbols(),
@@ -207,12 +207,9 @@ class KeyboardLayoutProviderTest {
 
         states.forEach { state ->
             val keys = provider.layoutFor(state, textEditor).rows.flatten()
-            val hideKey = keys.first { it.action == KeyboardAction.HideKeyboard }
 
-            assertEquals(
-                KeyboardAction.NextInputMethod,
-                hideKey.longPressAlternates.single().action,
-            )
+            assertTrue(keys.none { it.action == KeyboardAction.HideKeyboard })
+            assertTrue(keys.none { it.action == KeyboardAction.NextInputMethod })
             assertTrue(keys.none { it.action is KeyboardAction.SwitchLanguage })
         }
     }

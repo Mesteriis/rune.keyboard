@@ -49,6 +49,7 @@ android {
         }
         create("profile") {
             initWith(getByName("release"))
+            matchingFallbacks += listOf("release")
             applicationIdSuffix = ".profile"
             versionNameSuffix = "-profile"
             signingConfig = signingConfigs.getByName("debug")
@@ -73,6 +74,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":runtime-llama"))
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.androidx.test.runner)
@@ -89,14 +91,15 @@ abstract class PrivacyGateTask : DefaultTask() {
     @get:InputFile
     abstract val mergedManifest: RegularFileProperty
 
-    @get:InputDirectory
-    abstract val sourceDirectory: DirectoryProperty
+    @get:InputFiles
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    abstract val sourceDirectories: ConfigurableFileCollection
 
     @TaskAction
     fun verify() {
         val manifest = mergedManifest.get().asFile.readText()
-        val declared = PERMISSION_PATTERN.findAll(manifest).map { it.groupValues[1] }.toSet()
-        if (declared != setOf("android.permission.INTERNET")) {
+        val declared = PERMISSION_PATTERN.findAll(manifest).map { it.groupValues[1] }.toList()
+        if (declared != listOf("android.permission.INTERNET")) {
             throw GradleException(
                 "Rune must ship with exactly android.permission.INTERNET, but declares: $declared",
             )
@@ -108,7 +111,7 @@ abstract class PrivacyGateTask : DefaultTask() {
             throw GradleException("Rune must disable backup")
         }
 
-        val offenders = sourceDirectory.asFileTree
+        val offenders = sourceDirectories.asFileTree
             .matching { include("**/*.kt", "**/*.java") }
             .filter { file -> LOG_PATTERN.containsMatchIn(file.readText()) }
             .map { file -> file.path }
@@ -150,15 +153,15 @@ abstract class ImeIntelligenceBoundaryTask : DefaultTask() {
 }
 
 abstract class ForbiddenRuntimeDependencyTask : DefaultTask() {
-    @get:Classpath
-    abstract val runtimeClasspath: ConfigurableFileCollection
+    @get:Input
+    abstract val componentNames: ListProperty<String>
 
     @TaskAction
     fun verify() {
         val forbidden = Regex(
             """(?i)(okhttp|retrofit|ktor-client|volley|work-runtime|kotlinx-coroutines|firebase|analytics|appcenter|sentry)""",
         )
-        val offenders = runtimeClasspath.files.map(File::getName).filter(forbidden::containsMatchIn).sorted()
+        val offenders = componentNames.get().filter(forbidden::containsMatchIn).sorted()
         if (offenders.isNotEmpty()) {
             throw GradleException("Forbidden runtime dependencies: ${offenders.joinToString()}")
         }
@@ -174,7 +177,12 @@ val imeIntelligenceBoundary = tasks.register<ImeIntelligenceBoundaryTask>("imeIn
 val forbiddenRuntimeDependencies = tasks.register<ForbiddenRuntimeDependencyTask>("forbiddenRuntimeDependencies") {
     group = "verification"
     description = "Rejects HTTP clients, analytics SDKs, WorkManager, and coroutines."
-    runtimeClasspath.from(configurations.named("releaseRuntimeClasspath"))
+    val releaseRuntime = configurations.named("releaseRuntimeClasspath")
+    componentNames.set(providers.provider {
+        releaseRuntime.get().incoming.resolutionResult.allComponents
+            .map { it.id.displayName }
+            .sorted()
+    })
 }
 
 androidComponents {
@@ -194,9 +202,20 @@ fun com.android.build.api.variant.ApplicationAndroidComponentsExtension.register
             group = "verification"
             description = "Verifies Rune's exact permission set, privacy flags, and logging boundary."
             mergedManifest.set(variant.artifacts.get(SingleArtifact.MERGED_MANIFEST))
-            sourceDirectory.set(layout.projectDirectory.dir("src/main/java"))
+            sourceDirectories.from(
+                layout.projectDirectory.dir("src/main/java"),
+                layout.projectDirectory.dir("src/debug/java"),
+                layout.projectDirectory.dir("src/profile/java"),
+                layout.projectDirectory.dir("src/release/java"),
+                project(":runtime-llama").layout.projectDirectory.dir("src/main/java"),
+            )
         }
         tasks.named("check").configure {
-            dependsOn(gate, imeIntelligenceBoundary, forbiddenRuntimeDependencies)
+            dependsOn(
+                gate,
+                imeIntelligenceBoundary,
+                forbiddenRuntimeDependencies,
+                project(":runtime-llama").tasks.named("nativeSymbolGate"),
+            )
         }
 }

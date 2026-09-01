@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "RuneKeyboard"
 include(":app")
-
+include(":runtime-llama")

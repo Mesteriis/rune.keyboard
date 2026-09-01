@@ -11,6 +11,7 @@ data class GgufMetadata(val version: Int, val architecture: String, val fileType
 
 object GgufMetadataReader {
     private const val MAX_METADATA_ENTRIES = 100_000L
+    private const val MAX_ARRAY_ELEMENTS = 1_000_000L
     private const val MAX_STRING_BYTES = 16L * 1024 * 1024
 
     fun read(input: InputStream): GgufMetadata = try {
@@ -90,7 +91,7 @@ object GgufMetadataReader {
                 9 -> {
                     val elementType = u32().toInt()
                     val count = u64()
-                    if (count > MAX_METADATA_ENTRIES) invalid("GGUF array is too large")
+                    if (count > MAX_ARRAY_ELEMENTS) invalid("GGUF array is too large")
                     repeat(count.toInt()) { skipValue(elementType) }
                 }
                 10, 11, 12 -> bytes(8)

@@ -26,5 +26,9 @@ class OperationStateMapperTest {
             DeliveryJournal(JournalOperation.FAILED, failureCode = ModelFailureCode.HASH_MISMATCH),
         ) as ModelOperationState.Failed
         assertEquals("hash_mismatch", failed.failure.stableCode)
+        val deleteFailed = OperationStateMapper.map(
+            DeliveryJournal(JournalOperation.FAILED, failureCode = ModelFailureCode.DELETE_FAILED),
+        ) as ModelOperationState.Failed
+        assertEquals("delete_failed", deleteFailed.failure.stableCode)
     }
 }

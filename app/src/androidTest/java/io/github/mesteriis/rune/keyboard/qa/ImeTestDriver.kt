@@ -240,6 +240,10 @@ class ImeTestDriver {
             targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
                 .getBoolean(KEY_NUMBER_ROW, false) == enabled,
         ) { "Number-row setting was not persisted" }
+        // UiAutomator can observe SharedPreferences halfway through the settings click handler.
+        // Drain the app's main queue so that handler and the IME preference listener finish before
+        // API 26 restores the editor against the next input view.
+        instrumentation.waitForIdleSync()
         device.pressBack()
         shell("ime set $IME_COMPONENT")
         resumeQa()

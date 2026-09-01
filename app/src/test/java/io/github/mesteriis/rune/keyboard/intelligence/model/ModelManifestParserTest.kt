@@ -31,6 +31,7 @@ class ModelManifestParserTest {
         assertEquals("0.1.0", descriptor.version)
         assertEquals(420000000L, descriptor.sizeBytes)
         assertEquals(15, descriptor.fileType)
+        assertEquals(descriptor, ModelManifestParser.parse(ModelManifestParser.encode(descriptor)))
     }
 
     @Test

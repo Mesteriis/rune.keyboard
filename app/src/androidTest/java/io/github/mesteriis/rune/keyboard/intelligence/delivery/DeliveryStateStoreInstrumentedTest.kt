@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -52,5 +53,23 @@ class DeliveryStateStoreInstrumentedTest {
         workers.forEach(Thread::join)
 
         assertEquals(null, failure.get())
+    }
+
+    @Test
+    fun recoversCommittedBackupWhenBaseFileIsMissing() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        val root = File(context.cacheDir, "delivery-state-backup-${System.nanoTime()}")
+        val expected = DeliveryJournal(
+            operation = JournalOperation.SELF_TESTING,
+            activationPhase = ActivationPhase.ROLLBACK_COMMIT,
+            activationDirectory = "rune-text-0.1.0",
+        )
+        File(root, "delivery-state.json.bak").apply {
+            parentFile?.mkdirs()
+            writeText(DeliveryStateCodec.encode(expected))
+        }
+
+        assertEquals(expected, DeliveryStateStore(root).read())
+        assertTrue(File(root, "delivery-state.json").isFile)
     }
 }

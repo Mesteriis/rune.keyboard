@@ -9,6 +9,7 @@ import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import io.github.mesteriis.rune.keyboard.R
+import io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsActivity
 
 /**
  * Rune's configuration screen, built from plain framework views to keep the app dependency-free.
@@ -131,6 +132,12 @@ class SettingsActivity : ThemedActivity() {
         }
 
         addSection(R.string.settings_section_privacy)
+        addNavigationRow(
+            titleRes = R.string.settings_local_intelligence,
+            summary = getString(R.string.settings_local_intelligence_summary),
+        ) {
+            startActivity(Intent(this, ModelSettingsActivity::class.java))
+        }
         addInfoRow(
             title = getString(R.string.settings_section_privacy),
             summary = getString(R.string.settings_privacy_summary),

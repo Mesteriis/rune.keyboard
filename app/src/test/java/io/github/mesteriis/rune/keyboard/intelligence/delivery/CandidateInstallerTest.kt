@@ -25,6 +25,7 @@ class CandidateInstallerTest {
         val candidate = CandidateInstaller(root).install(ByteArrayInputStream(bytes), descriptor)
 
         assertTrue(File(root, "candidates/${candidate.directoryName}/${descriptor.fileName}").isFile)
+        assertTrue(File(root, "candidates/${candidate.directoryName}/${CandidateInstaller.MODEL_MANIFEST_NAME}").isFile)
         assertEquals("old-active", active.readText())
         assertFalse(File(root, ".installing").exists())
     }

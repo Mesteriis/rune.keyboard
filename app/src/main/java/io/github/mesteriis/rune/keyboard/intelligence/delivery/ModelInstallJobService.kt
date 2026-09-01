@@ -10,18 +10,26 @@ class ModelInstallJobService : JobService() {
         Thread(task, "rune-model-install").apply { priority = Thread.NORM_PRIORITY - 1 }
     }
     @Volatile private var running: Future<*>? = null
+    @Volatile private var coordinator: ModelInstallCoordinator? = null
     @Volatile private var stopped = false
 
     override fun onStartJob(params: JobParameters): Boolean {
         stopped = false
         running = executor.submit {
+            var needsReschedule = false
             try {
                 val store = DeliveryStateStore.forApplication(applicationContext)
                 ModelOperationGate(store.stateFile.parentFile!!).withLock {
-                    ModelInstallCoordinator(applicationContext).run()
+                    val current = ModelInstallCoordinator(applicationContext).also { coordinator = it }
+                    try {
+                        needsReschedule = current.run()
+                    } finally {
+                        current.close()
+                        coordinator = null
+                    }
                 }
             } finally {
-                if (!stopped) jobFinished(params, false)
+                if (!stopped) jobFinished(params, needsReschedule)
             }
         }
         return true
@@ -29,13 +37,15 @@ class ModelInstallJobService : JobService() {
 
     override fun onStopJob(params: JobParameters): Boolean {
         stopped = true
+        coordinator?.cancelCurrentOperation()
         running?.cancel(true)
-        // Reconciliation resumes when Model Settings opens or DownloadManager wakes the receiver.
+        // Journal/private files are reconciled explicitly when Model Settings opens again.
         return false
     }
 
     override fun onDestroy() {
         stopped = true
+        coordinator?.cancelCurrentOperation()
         running?.cancel(true)
         executor.shutdownNow()
         super.onDestroy()

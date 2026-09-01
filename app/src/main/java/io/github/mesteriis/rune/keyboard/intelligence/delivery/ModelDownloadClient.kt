@@ -42,6 +42,18 @@ class ModelDownloadClient(private val context: Context) {
         }
     }
 
+    fun progress(id: Long): DownloadProgress? {
+        manager.query(DownloadManager.Query().setFilterById(id)).use { cursor ->
+            if (!cursor.moveToFirst()) return null
+            return DownloadProgress(
+                bytesDownloaded = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
+                    .coerceAtLeast(0),
+                totalBytes = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
+                    .coerceAtLeast(0),
+            )
+        }
+    }
+
     fun findMatching(descriptor: ModelDescriptor): Long? = matchingIds(descriptor).maxOrNull()
 
     fun removeMatching(descriptor: ModelDescriptor) {
@@ -73,3 +85,5 @@ class ModelDownloadClient(private val context: Context) {
         ) { "External app-specific storage is unavailable" }
     }
 }
+
+data class DownloadProgress(val bytesDownloaded: Long, val totalBytes: Long)

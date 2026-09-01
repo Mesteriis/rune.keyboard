@@ -2,6 +2,7 @@ package io.github.mesteriis.rune.keyboard.intelligence.delivery
 
 import android.util.AtomicFile
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.RandomAccessFile
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.locks.ReentrantLock
@@ -17,9 +18,7 @@ class DeliveryStateStore(private val root: File) {
         check(root.mkdirs() || root.isDirectory) { "Cannot create model delivery state directory" }
     }
 
-    fun read(): DeliveryJournal = locked {
-        if (!stateFile.exists()) DeliveryJournal() else DeliveryStateCodec.decode(atomicFile.readFully().toString(Charsets.UTF_8))
-    }
+    fun read(): DeliveryJournal = locked(::readLocked)
 
     fun write(state: DeliveryJournal) = locked {
         val output = atomicFile.startWrite()
@@ -33,11 +32,7 @@ class DeliveryStateStore(private val root: File) {
     }
 
     fun update(transform: (DeliveryJournal) -> DeliveryJournal): DeliveryJournal = locked {
-        val current = if (stateFile.exists()) {
-            DeliveryStateCodec.decode(atomicFile.readFully().toString(Charsets.UTF_8))
-        } else {
-            DeliveryJournal()
-        }
+        val current = readLocked()
         transform(current).also { next ->
             val output = atomicFile.startWrite()
             try {
@@ -48,6 +43,12 @@ class DeliveryStateStore(private val root: File) {
                 throw error
             }
         }
+    }
+
+    private fun readLocked(): DeliveryJournal = try {
+        DeliveryStateCodec.decode(atomicFile.readFully().toString(Charsets.UTF_8))
+    } catch (_: FileNotFoundException) {
+        DeliveryJournal()
     }
 
     private fun <T> locked(block: () -> T): T = localLock.withLock {

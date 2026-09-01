@@ -6,6 +6,7 @@ Green Gradle build не подтверждает реальное поведен
 
 - immutable Rune Text 0.1 Q4_K_M asset совпадает с embedded byte size и SHA-256;
 - два чистых Linux-прогона recipe дают побайтно одинаковый artifact;
+- на Fold pinned llama.cpp CLI загружает этот digest, генерирует не более четырёх токенов для каждого синтетического RU/EN/ES prompt и проходит десять load/unload циклов без crash/OOM/thermal severe;
 - real download достигает private `VerifiedCandidate`, затем native self-test и атомарная активация дают `Ready`;
 - закрытие Activity, process kill и reboot в окнах download/verify/install/self-test корректно reconciled при следующем открытии Model Settings;
 - default download ждёт unmetered network; одноразовый mobile override заменяет только этот request, roaming остаётся запрещён;
@@ -31,7 +32,7 @@ adb shell am start -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
 - setup-экран показывает три состояния: не включена / включена, но не выбрана / активна, и обновляет статус сразу после закрытия системного picker (без ухода в фон);
 - системная шестерёнка в списке клавиатур открывает экран настроек Rune;
 - смена светлой/тёмной темы, поворот, screen off/on и пересоздание процесса не приводят к crash/ANR;
-- долгое нажатие клавиши скрытия (`▼`) переключает IME или открывает picker; короткий тап скрывает клавиатуру.
+- ни одна раскладка Rune не содержит отдельную клавишу скрытия; клавиатура скрывается системной кнопкой навигации.
 
 ## Ввод
 
@@ -90,4 +91,4 @@ adb shell am start -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
 - поворот и переключение IME при открытом popup не приводят к `WindowLeaked` или `BadTokenException`;
 - в airplane mode всё перечисленное работает без изменений.
 
-Обязательная CI-матрица: API 26 и API 37 (`google_apis/x86_64`). Полный `connectedDebugAndroidTest` идёт независимо от быстрого JVM job. Физическая Fold-приёмка и performance trace остаются отдельными gates и записываются в датированные отчёты.
+Обязательная CI-матрица: API 26 (`google_apis/x86_64`) и API 37 (`google_apis_ps16k/x86_64`). Полный `connectedDebugAndroidTest` идёт независимо от быстрого JVM job; API 37 дополнительно проверяет совместимость с 16 KiB page size. Физическая Fold-приёмка и performance trace остаются отдельными gates и записываются в датированные отчёты.

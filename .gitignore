@@ -3,6 +3,7 @@
 .idea/
 .serena/
 **/build/
+**/.cxx/
 local.properties
 keystore.properties
 *.iml

@@ -25,6 +25,31 @@ class GgufMetadataReaderTest {
         assertThrows(GgufValidationException::class.java) { GgufMetadataReader.read(ByteArrayInputStream(byteArrayOf(0x47, 0x47))) }
     }
 
+    @Test
+    fun acceptsLargeTokenizerMetadataArrays() {
+        val out = ByteArrayOutputStream()
+        out.write("GGUF".toByteArray())
+        out.write(leInt(3))
+        out.write(leLong(0))
+        out.write(leLong(3))
+        writeString(out, "tokenizer.ggml.token_type")
+        out.write(leInt(9))
+        out.write(leInt(0))
+        out.write(leLong(151_936))
+        out.write(ByteArray(151_936))
+        writeString(out, "general.architecture")
+        out.write(leInt(8))
+        writeString(out, "qwen3")
+        writeString(out, "general.file_type")
+        out.write(leInt(4))
+        out.write(leInt(15))
+
+        val metadata = GgufMetadataReader.read(ByteArrayInputStream(out.toByteArray()))
+
+        assertEquals("qwen3", metadata.architecture)
+        assertEquals(15, metadata.fileType)
+    }
+
     private fun gguf(architecture: String, fileType: Int): ByteArray {
         val out = ByteArrayOutputStream()
         out.write("GGUF".toByteArray())

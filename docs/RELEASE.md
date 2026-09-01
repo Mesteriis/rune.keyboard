@@ -33,7 +33,8 @@ which is what CI does.
 
 ```bash
 ./gradlew clean testDebugUnitTest lint assembleDebug assembleRelease assembleProfile \
-  privacyGateRelease privacyGateProfile
+  privacyGateRelease privacyGateProfile imeIntelligenceBoundary \
+  forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate
 ```
 
 With local signing configured, the signed artifact lands at
@@ -47,12 +48,22 @@ unsigned release output as `rune-release-unsigned.apk`, plus `lint-results` and
 
 1. `privacyGateRelease` passes — merged release/profile manifests contain exactly
    `android.permission.INTERNET`, cleartext and backup are disabled, and Rune-owned code does not log.
-2. The embedded model size/SHA match the immutable `model-rune-text-v0.1.0` asset and its
-   two-run reproducibility/Fold qualification evidence.
-3. Work through `docs/ACCEPTANCE.md` on a physical device, including model delivery/runtime, fold and settings.
-4. Install the release APK on a clean device and complete onboarding without ADB:
+2. Run `tools/verify-native-runtime.sh` against the exact APK being shipped; for a locally signed
+   release use `tools/verify-native-runtime.sh app/build/outputs/apk/release/app-release.apk`.
+   CI checks `app-release-unsigned.apk`. The gate confirms exactly `arm64-v8a + x86_64`,
+   `JNI_OnLoad`, allowed native dependencies, the packaged llama.cpp license, and no Rune JNI
+   logging/network symbols.
+3. The embedded model size/SHA match the immutable `model-rune-text-v0.1.0` asset and its
+   two-run reproducibility/Fold qualification evidence. The immutable release record also archives
+   `build-provenance.txt`, `gguf-metadata.json`, `QWEN3-BASE-APACHE-2.0.txt`,
+   `LLAMA-CPP-MIT.txt`, `THIRD_PARTY_NOTICES.md`, `python-sbom.txt` and `debian-sbom.txt`
+   from the qualified output.
+4. Work through `docs/ACCEPTANCE.md` on a physical device, including model delivery/runtime, fold and settings.
+5. GitHub Actions passes the complete API 26 `google_apis/x86_64` and API 37
+   `google_apis_ps16k/x86_64` instrumentation matrix.
+6. Install the release APK on a clean device and complete onboarding without ADB:
    open Rune → enable → select → the status card reads **Active**.
-5. Turn on airplane mode and type a message in all three languages.
+7. Turn on airplane mode and type a message in all three languages.
 
 ## Install
 

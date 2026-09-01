@@ -44,6 +44,39 @@ object ModelManifestParser {
         )
     }
 
+    fun encode(descriptor: ModelDescriptor): String = buildString {
+        append('{')
+        append("\"schemaVersion\":1,")
+        append("\"modelId\":\"").append(escaped(descriptor.id)).append("\",")
+        append("\"version\":\"").append(escaped(descriptor.version)).append("\",")
+        append("\"displayName\":\"").append(escaped(descriptor.displayName)).append("\",")
+        append("\"fileName\":\"").append(escaped(descriptor.fileName)).append("\",")
+        append("\"url\":\"").append(escaped(descriptor.downloadUrl)).append("\",")
+        append("\"sha256\":\"").append(escaped(descriptor.sha256)).append("\",")
+        append("\"sizeBytes\":").append(descriptor.sizeBytes).append(',')
+        append("\"runtimeApi\":").append(descriptor.runtimeApi).append(',')
+        append("\"minimumRuneVersionCode\":").append(descriptor.minimumRuneVersionCode).append(',')
+        append("\"ggufVersion\":").append(descriptor.ggufVersion).append(',')
+        append("\"architecture\":\"").append(escaped(descriptor.architecture)).append("\",")
+        append("\"fileType\":").append(descriptor.fileType)
+        append('}')
+    }.also(::parse)
+
+    private fun escaped(value: String): String = buildString {
+        value.forEach { char ->
+            when (char) {
+                '\\' -> append("\\\\")
+                '"' -> append("\\\"")
+                '\b' -> append("\\b")
+                '\u000c' -> append("\\f")
+                '\n' -> append("\\n")
+                '\r' -> append("\\r")
+                '\t' -> append("\\t")
+                else -> if (char < ' ') append("\\u%04x".format(char.code)) else append(char)
+            }
+        }
+    }
+
     private fun validateUrl(value: String, artifactName: String) {
         val uri = try { URI(value) } catch (_: Exception) { invalid("invalid url") }
         if (uri.scheme != "https" || uri.host != "github.com" || uri.port != -1 || uri.userInfo != null ||

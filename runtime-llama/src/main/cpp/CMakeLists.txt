@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.31.6)
+project(rune_llama LANGUAGES C CXX)
+
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+set(GGML_NATIVE OFF CACHE BOOL "" FORCE)
+set(GGML_OPENMP OFF CACHE BOOL "" FORCE)
+set(GGML_BACKEND_DL OFF CACHE BOOL "" FORCE)
+set(GGML_CPU_ALL_VARIANTS OFF CACHE BOOL "" FORCE)
+set(GGML_CPU_KLEIDIAI OFF CACHE BOOL "" FORCE)
+set(GGML_LLAMAFILE OFF CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_COMMON OFF CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_TOOLS OFF CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_SERVER OFF CACHE BOOL "" FORCE)
+
+add_subdirectory(llama.cpp EXCLUDE_FROM_ALL)
+
+add_library(rune_llama SHARED rune_llama_jni.cpp)
+target_compile_features(rune_llama PRIVATE cxx_std_17)
+target_compile_options(rune_llama PRIVATE -Wall -Wextra -Werror -fvisibility=hidden)
+target_link_libraries(rune_llama PRIVATE llama)

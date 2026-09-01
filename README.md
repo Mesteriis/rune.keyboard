@@ -5,7 +5,7 @@ Rune Keyboard — компактная приватная Android-клавиат
 ## Возможности 0.2
 
 - русская, английская и испанская раскладки (ЙЦУКЕН, QWERTY, QWERTY с `ñ`);
-- жесты пробела: свайп влево/вправо меняет язык циклично, удержание перемещает курсор, двойной тап ставить `. `;
+- жесты пробела: свайп влево/вправо меняет язык циклично, удержание перемещает курсор, двойной тап ставит `. `;
 - компактный индикатор языка на пробеле;
 - одноразовый Shift, Caps Lock по двойному нажатию, автокапитализация;
 - долгое нажатие с попапом альтернатив: `á é í ó ú ü`, `ё`, `ъ`, `« »`, `– —`, `¿ ¡`, валюты;
@@ -20,21 +20,31 @@ Rune Keyboard — компактная приватная Android-клавиат
 - необязательная локальная Rune Text 0.1: явное скачивание/импорт, проверка и локальный runtime self-test; модель пока не подключена к вводу;
 - ровно одно разрешение `android.permission.INTERNET`, используемое только для явно запущенного скачивания модели; без телеметрии, рекламы, истории ввода и доступа к clipboard.
 
-Скользящий ввод, подсказки, автокоррекция и словарь намеренно не входят в 0.1. Emoji-панель, one-handed и split-режимы, свайп по Backspace и голосовой ввод отложены до 0.1.1.
+Автокоррекция, автоматическая пунктуация, composing, inference из IME и общий `generate()` намеренно не входят в 0.2. Скользящий ввод, подсказки, словарь, Emoji-панель, one-handed и split-режимы, свайп по Backspace и голосовой ввод отложены на следующие версии.
 
 ## Требования
 
 - JDK 17;
 - Android SDK Platform 37 и Build Tools 36.0.0;
-- Android 8.0 (API 26) или новее.
+- Android NDK `29.0.14206865` и CMake `3.31.6`;
+- для установки: 64-разрядное устройство с Android 8.0 (API 26) или новее и ABI
+  `arm64-v8a` либо `x86_64`; 32-разрядные ABI не поддерживаются.
+
+После клонирования нужен pinned submodule runtime:
+
+```bash
+git submodule update --init --recursive
+```
 
 При настроенных стандартных `JAVA_HOME` и `ANDROID_HOME` полная проверка запускается так:
 
 ```bash
-./gradlew testDebugUnitTest lint assembleDebug assembleRelease privacyGateRelease
+./gradlew testDebugUnitTest lint assembleDebug assembleRelease assembleProfile \
+  privacyGateRelease privacyGateProfile imeIntelligenceBoundary \
+  forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate
 ```
 
-`privacyGateRelease` проверяет ровно одно разрешение `INTERNET`, отключённые cleartext/backup и отсутствие логирования. `imeIntelligenceBoundary` запрещает сети, доставке модели и native runtime попадать в `ime/**`.
+`privacyGateRelease` проверяет ровно одно разрешение `INTERNET`, отключённые cleartext/backup и отсутствие логирования. `imeIntelligenceBoundary` запрещает сети, доставке модели и native runtime попадать в `ime/**`; native gate проверяет ABI, зависимости и отсутствие JNI/log/network symbols.
 
 Подпись release-сборки описана в [docs/RELEASE.md](docs/RELEASE.md); без keystore release собирается неподписанным.
 
@@ -46,7 +56,7 @@ Rune Keyboard — компактная приватная Android-клавиат
 4. Вернитесь в приложение, нажмите «Выбрать клавиатуру» и выберите Rune.
 5. Выберите языки и проверьте ввод в тестовых полях на том же экране.
 
-Язык переключается свайпом по пробелу. Долгое нажатие клавиши `▼` открывает следующую клавиатуру или системный picker. `Ё` доступна долгим нажатием `Е`.
+Язык переключается свайпом по пробелу. Rune не дублирует системную кнопку скрытия клавиатуры. `Ё` доступна долгим нажатием `Е`.
 
 ## Иконка
 

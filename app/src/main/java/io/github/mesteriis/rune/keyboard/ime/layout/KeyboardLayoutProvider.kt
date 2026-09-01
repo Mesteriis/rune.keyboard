@@ -149,15 +149,13 @@ class KeyboardLayoutProvider {
             else -> ","
         }
         val modeKey = if (includeModeKey) symbolsKey() else lettersKey()
-        val hideKey = hideKey()
         val punctuationKey = symbolKey(punctuation, state.language, weight = PUNCTUATION_WEIGHT)
         val periodKey = symbolKey(".", state.language, weight = PUNCTUATION_WEIGHT)
         val enterKey = enterKey(editorContext)
         val spaceWeight = BOTTOM_ROW_WEIGHT -
-            (modeKey.weight + hideKey.weight + punctuationKey.weight + periodKey.weight + enterKey.weight)
+            (modeKey.weight + punctuationKey.weight + periodKey.weight + enterKey.weight)
         return listOf(
             modeKey,
-            hideKey,
             punctuationKey,
             spaceKey(state.language, spaceWeight),
             periodKey,
@@ -260,17 +258,6 @@ class KeyboardLayoutProvider {
         style = KeyStyle.ACTION,
     )
 
-    /** Also the home of the system input-method picker, which the language key used to carry. */
-    private fun hideKey(): KeySpec = KeySpec(
-        label = "▼",
-        action = KeyboardAction.HideKeyboard,
-        weight = HIDE_KEY_WEIGHT,
-        style = KeyStyle.ACTION,
-        longPressAlternates = listOf(
-            KeyAlternate(label = "⌨", action = KeyboardAction.NextInputMethod),
-        ),
-    )
-
     private fun spaceKey(language: KeyboardLanguage, weight: Float): KeySpec = KeySpec(
         label = language.compactLabel,
         action = KeyboardAction.Space,
@@ -324,7 +311,6 @@ class KeyboardLayoutProvider {
         const val BOTTOM_ROW_WEIGHT = 10f
         const val MODIFIER_WEIGHT = 1.5f
         const val MODE_KEY_WEIGHT = 1.3f
-        const val HIDE_KEY_WEIGHT = 1.1f
         const val PUNCTUATION_WEIGHT = 0.9f
         const val ENTER_KEY_WEIGHT = 1.25f
         const val WEIGHT_EPSILON = 0.01f
