@@ -87,7 +87,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        api-level: ['26', '37.0']
+        include:
+          - api-level: '26'
+            ram-size: 2048M
+          - api-level: '37.0'
+            ram-size: 4096M
     steps:
       - uses: actions/checkout@v4
         with:
@@ -113,6 +117,7 @@ jobs:
           api-level: ${{ matrix.api-level }}
           target: google_apis
           arch: x86_64
+          ram-size: ${{ matrix.ram-size }}
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save
           script: |
