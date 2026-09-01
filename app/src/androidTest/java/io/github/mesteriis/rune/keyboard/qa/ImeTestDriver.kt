@@ -320,12 +320,13 @@ class ImeTestDriver {
 
     private fun prepareQaForScroll() {
         val qaSelector = By.res(PACKAGE_NAME, "qa_scroll")
-        if (device.findObject(qaSelector) == null) resumeQa()
         val keyboardSelector = By.desc(targetContext.getString(R.string.key_delete))
         if (device.findObject(keyboardSelector) != null) {
             device.pressBack()
             device.wait(Until.gone(keyboardSelector), WAIT_MILLIS)
         }
+        // On API 26 accessibility may temporarily expose only the IME window. Hiding it first
+        // lets the already-resumed QA root reappear instead of waiting on a no-op Activity launch.
         if (device.findObject(qaSelector) == null) resumeQa()
         device.waitForIdle()
     }
