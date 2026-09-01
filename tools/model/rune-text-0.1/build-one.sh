@@ -60,3 +60,6 @@ EOF
 
 python -m pip freeze --all > /output/python-sbom.txt
 dpkg-query -W -f='${Package}\t${Version}\n' | sort > /output/debian-sbom.txt
+cp /source/LICENSE /output/QWEN3-BASE-APACHE-2.0.txt
+cp /work/llama.cpp/LICENSE /output/LLAMA-CPP-MIT.txt
+cp /recipe/THIRD_PARTY_NOTICES.md /output/THIRD_PARTY_NOTICES.md

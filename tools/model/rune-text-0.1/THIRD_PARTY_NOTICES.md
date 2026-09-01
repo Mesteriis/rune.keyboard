@@ -4,8 +4,8 @@
 
 - Source: `Qwen/Qwen3-0.6B-Base`
 - Revision: `da87bfb608c14b7cf20ba1ce41287e8de496c0cd`
-- License: Apache License 2.0. The authoritative `LICENSE` file from the pinned
-  source snapshot is retained with the release qualification evidence.
+- License: Apache License 2.0. The authoritative pinned source `LICENSE` is
+  emitted as `QWEN3-BASE-APACHE-2.0.txt` with every candidate build.
 
 ## llama.cpp
 
