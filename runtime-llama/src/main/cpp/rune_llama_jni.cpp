@@ -144,7 +144,7 @@ jlongArray native_load(JNIEnv * env, jobject, jlong handle, jstring path) {
     std::string local_path(raw_path);
     env->ReleaseStringUTFChars(path, raw_path);
     runtime->model.reset();
-    runtime->cancelled.store(false, std::memory_order_relaxed);
+    if (runtime->cancelled.load(std::memory_order_relaxed)) return result(env, ErrorCode::Cancelled);
     llama_model_params params = llama_model_default_params();
     params.n_gpu_layers = 0;
     params.progress_callback = continue_loading;
@@ -168,7 +168,7 @@ jlongArray native_self_test(JNIEnv * env, jobject, jlong handle) {
     Runtime * runtime = from_handle(handle);
     if (runtime == nullptr) return result(env, ErrorCode::InternalError);
     if (!runtime->model) return result(env, ErrorCode::NotLoaded);
-    runtime->cancelled.store(false, std::memory_order_relaxed);
+    if (runtime->cancelled.load(std::memory_order_relaxed)) return result(env, ErrorCode::Cancelled);
 
     llama_context_params params = llama_context_default_params();
     params.n_ctx = 256;
@@ -233,6 +233,10 @@ void native_cancel(JNIEnv *, jobject, jlong handle) {
     if (Runtime * runtime = from_handle(handle)) runtime->cancelled.store(true, std::memory_order_relaxed);
 }
 
+void native_reset_cancellation(JNIEnv *, jobject, jlong handle) {
+    if (Runtime * runtime = from_handle(handle)) runtime->cancelled.store(false, std::memory_order_relaxed);
+}
+
 void native_unload(JNIEnv *, jobject, jlong handle) {
     if (Runtime * runtime = from_handle(handle)) {
         runtime->cancelled.store(true, std::memory_order_relaxed);
@@ -245,6 +249,7 @@ JNINativeMethod methods[] = {
     {const_cast<char *>("nativeDestroy"), const_cast<char *>("(J)V"), reinterpret_cast<void *>(native_destroy)},
     {const_cast<char *>("nativeLoad"), const_cast<char *>("(JLjava/lang/String;)[J"), reinterpret_cast<void *>(native_load)},
     {const_cast<char *>("nativeSelfTest"), const_cast<char *>("(J)[J"), reinterpret_cast<void *>(native_self_test)},
+    {const_cast<char *>("nativeResetCancellation"), const_cast<char *>("(J)V"), reinterpret_cast<void *>(native_reset_cancellation)},
     {const_cast<char *>("nativeCancel"), const_cast<char *>("(J)V"), reinterpret_cast<void *>(native_cancel)},
     {const_cast<char *>("nativeUnload"), const_cast<char *>("(J)V"), reinterpret_cast<void *>(native_unload)},
 };
