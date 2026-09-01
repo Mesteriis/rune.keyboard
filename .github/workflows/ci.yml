@@ -113,6 +113,8 @@ jobs:
             | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: Stabilize preview emulator unlock
+        run: echo "$GITHUB_WORKSPACE/tools/ci" >> "$GITHUB_PATH"
       - name: Run Android boundary suite
         uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d
         with:
