@@ -113,8 +113,6 @@ jobs:
             | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Stabilize preview emulator unlock
-        run: echo "$GITHUB_WORKSPACE/tools/ci" >> "$GITHUB_PATH"
       - name: Run Android boundary suite
         uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d
         with:
@@ -126,12 +124,12 @@ jobs:
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save
           pre-emulator-launch-script: |
+            tools/ci/install-adb-wrapper
             ./gradlew assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest
             ./gradlew --stop
           script: |
             ./gradlew --no-daemon installDebug
             mkdir -p app/build/ci-device
-            adb logcat -c
             adb logcat -v threadtime > app/build/ci-device/logcat.txt 2>&1 &
             adb shell settings put secure show_ime_with_hard_keyboard 1
             for attempt in $(seq 1 15); do if adb shell ime enable io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService; then break; fi; if [ "$attempt" -eq 15 ]; then exit 1; fi; sleep 2; done
