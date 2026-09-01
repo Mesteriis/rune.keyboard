@@ -131,12 +131,18 @@ class ModelSettingsActivity : ThemedActivity() {
             view.canDownload && (current.active == null || current.updateAvailable) &&
             current.operation !is ModelOperationState.Failed
         ) View.VISIBLE else View.GONE
+        download.isEnabled = view.canDownload
         metered.visibility = if (current.operation is ModelOperationState.WaitingForUnmeteredNetwork) View.VISIBLE else View.GONE
+        metered.isEnabled = current.operation is ModelOperationState.WaitingForUnmeteredNetwork
         retry.visibility = if (current.operation is ModelOperationState.Failed) View.VISIBLE else View.GONE
+        retry.isEnabled = current.operation is ModelOperationState.Failed
         verify.visibility = if (current.candidate != null && !view.isBusy) View.VISIBLE else View.GONE
+        verify.isEnabled = current.candidate != null && !view.isBusy
         importModel.isEnabled = view.canImport
         export.visibility = if (view.canExport) View.VISIBLE else View.GONE
+        export.isEnabled = view.canExport
         delete.visibility = if (view.canDelete) View.VISIBLE else View.GONE
+        delete.isEnabled = view.canDelete
         if (view.isBusy) handler.postDelayed(refreshRunnable, REFRESH_INTERVAL_MS)
     }
 
