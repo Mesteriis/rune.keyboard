@@ -134,6 +134,7 @@ jobs:
             ./gradlew assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest
             ./gradlew --stop
           script: |
+            if [ "${{ matrix.api-level }}" = "37.0" ]; then tools/ci/stabilize-api-37-emulator; fi
             ./gradlew --no-daemon installDebug
             mkdir -p app/build/ci-device
             adb logcat -v threadtime > app/build/ci-device/logcat.txt 2>&1 &
