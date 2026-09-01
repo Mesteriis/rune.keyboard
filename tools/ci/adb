@@ -3,7 +3,7 @@
 set -u
 
 sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
-real_adb="$sdk_root/platform-tools/adb"
+real_adb="$sdk_root/platform-tools/adb-real"
 
 if [ ! -x "$real_adb" ]; then
     echo "Pinned adb binary is unavailable: $real_adb" >&2

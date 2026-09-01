@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -eu
+
+sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+platform_tools="$sdk_root/platform-tools"
+real_adb="$platform_tools/adb-real"
+wrapper_adb="$platform_tools/adb"
+
+if [ ! -x "$real_adb" ]; then
+    mv "$wrapper_adb" "$real_adb"
+fi
+cp "$GITHUB_WORKSPACE/tools/ci/adb" "$wrapper_adb"
+chmod +x "$wrapper_adb"
