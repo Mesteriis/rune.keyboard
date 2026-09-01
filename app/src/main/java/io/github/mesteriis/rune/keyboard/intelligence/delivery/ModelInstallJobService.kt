@@ -16,19 +16,20 @@ class ModelInstallJobService : JobService() {
     override fun onStartJob(params: JobParameters): Boolean {
         stopped = false
         running = executor.submit {
+            var needsReschedule = false
             try {
                 val store = DeliveryStateStore.forApplication(applicationContext)
                 ModelOperationGate(store.stateFile.parentFile!!).withLock {
                     val current = ModelInstallCoordinator(applicationContext).also { coordinator = it }
                     try {
-                        current.run()
+                        needsReschedule = current.run()
                     } finally {
                         current.close()
                         coordinator = null
                     }
                 }
             } finally {
-                if (!stopped) jobFinished(params, false)
+                if (!stopped) jobFinished(params, needsReschedule)
             }
         }
         return true

@@ -24,6 +24,10 @@ data class ModelSettingsViewState(
             val operation = snapshot.operation
             val isBusy = operation !is ModelOperationState.Idle &&
                 operation !is ModelOperationState.Failed
+            val deleteRecovery = (operation as? ModelOperationState.Failed)
+                ?.failure?.stableCode == "delete_failed"
+            val availableDirectory = "${snapshot.available.id}-${snapshot.available.version}"
+            val availableIsActive = snapshot.active?.directoryName == availableDirectory
             val status = when {
                 snapshot.active != null && operation is ModelOperationState.Failed -> ModelCardStatus.READY
                 snapshot.active != null && snapshot.updateAvailable -> ModelCardStatus.UPDATE_AVAILABLE
@@ -33,11 +37,11 @@ data class ModelSettingsViewState(
             }
             return ModelSettingsViewState(
                 status = status,
-                canDownload = !isBusy,
-                canImport = !isBusy,
-                canExport = snapshot.active != null && !isBusy,
+                canDownload = !isBusy && !deleteRecovery,
+                canImport = !isBusy && !deleteRecovery && !availableIsActive,
+                canExport = snapshot.active != null && !isBusy && !deleteRecovery,
                 canDelete = snapshot.active != null || snapshot.rollback != null ||
-                    snapshot.candidate != null || isBusy,
+                    snapshot.candidate != null || isBusy || deleteRecovery,
                 isBusy = isBusy,
                 failureCode = (operation as? ModelOperationState.Failed)?.failure?.stableCode,
             )

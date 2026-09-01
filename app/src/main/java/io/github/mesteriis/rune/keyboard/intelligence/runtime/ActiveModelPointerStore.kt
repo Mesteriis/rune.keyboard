@@ -2,7 +2,12 @@ package io.github.mesteriis.rune.keyboard.intelligence.runtime
 
 import android.util.AtomicFile
 import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
 import java.io.RandomAccessFile
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 
 object ActiveModelPointerCodec {
     private val json = Regex(
@@ -24,14 +29,34 @@ object ActiveModelPointerCodec {
 class AtomicModelPointerStore(private val root: File) : ModelPointerStore {
     private val pointerFile = File(root, "active-model.json")
     private val lockFile = File(root, "active-model.lock")
+    private val localLock = localLocks.computeIfAbsent(lockFile.canonicalPath) { ReentrantLock() }
     private val atomicFile get() = AtomicFile(pointerFile)
 
     override fun read(): ActiveModelPointer = locked {
-        if (!pointerFile.exists()) ActiveModelPointer(null, null)
-        else ActiveModelPointerCodec.decode(atomicFile.readFully().toString(Charsets.UTF_8))
+        try {
+            ActiveModelPointerCodec.decode(atomicFile.readFully().toString(Charsets.UTF_8))
+        } catch (_: FileNotFoundException) {
+            ActiveModelPointer(null, null)
+        }
     }
 
     override fun write(pointer: ActiveModelPointer) = locked {
+        writeLocked(pointer)
+    }
+
+    fun delete() = locked {
+        // Commit an empty pointer first. A process death during physical cleanup can then leave
+        // either an empty pointer or no pointer, never a reference to data deleted afterwards.
+        writeLocked(ActiveModelPointer(null, null))
+        atomicFile.delete()
+        val leftovers = listOf(pointerFile, File("${pointerFile.path}.new"), File("${pointerFile.path}.bak"))
+            .filter(File::exists)
+        if (leftovers.isNotEmpty()) {
+            throw IOException("cannot delete active model pointer")
+        }
+    }
+
+    private fun writeLocked(pointer: ActiveModelPointer) {
         val output = atomicFile.startWrite()
         try {
             output.write(ActiveModelPointerCodec.encode(pointer).toByteArray(Charsets.UTF_8))
@@ -42,10 +67,14 @@ class AtomicModelPointerStore(private val root: File) : ModelPointerStore {
         }
     }
 
-    private fun <T> locked(block: () -> T): T {
+    private fun <T> locked(block: () -> T): T = localLock.withLock {
         check(root.mkdirs() || root.isDirectory) { "cannot create model root" }
         RandomAccessFile(lockFile, "rw").use { file ->
             file.channel.lock().use { return block() }
         }
+    }
+
+    private companion object {
+        val localLocks = ConcurrentHashMap<String, ReentrantLock>()
     }
 }

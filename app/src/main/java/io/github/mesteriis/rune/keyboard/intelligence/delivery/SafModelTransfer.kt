@@ -15,6 +15,7 @@ class SafModelTransfer(
     private val store = DeliveryStateStore.forApplication(context)
     private val root = store.stateFile.parentFile!!
     private val resolver = context.contentResolver
+    private val activationDirectory = "${descriptor.id}-${descriptor.version}"
 
     fun import(uri: Uri): VerifiedCandidate {
         store.write(DeliveryJournal(operation = JournalOperation.IMPORTING))
@@ -23,7 +24,12 @@ class SafModelTransfer(
             val candidate = requireNotNull(resolver.openInputStream(uri)) { "Document provider returned no input" }
                 .use { input ->
                     CandidateInstaller(root).install(input, descriptor) {
-                        store.write(DeliveryJournal(operation = JournalOperation.INSTALLING))
+                        store.write(
+                            DeliveryJournal(
+                                operation = JournalOperation.INSTALLING,
+                                activationDirectory = activationDirectory,
+                            ),
+                        )
                     }
                 }
             store.write(DeliveryJournal())

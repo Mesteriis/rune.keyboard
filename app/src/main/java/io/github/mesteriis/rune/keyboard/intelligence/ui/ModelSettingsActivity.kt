@@ -134,10 +134,13 @@ class ModelSettingsActivity : ThemedActivity() {
         download.isEnabled = view.canDownload
         metered.visibility = if (current.operation is ModelOperationState.WaitingForUnmeteredNetwork) View.VISIBLE else View.GONE
         metered.isEnabled = current.operation is ModelOperationState.WaitingForUnmeteredNetwork
-        retry.visibility = if (current.operation is ModelOperationState.Failed) View.VISIBLE else View.GONE
-        retry.isEnabled = current.operation is ModelOperationState.Failed
-        verify.visibility = if (current.candidate != null && !view.isBusy) View.VISIBLE else View.GONE
-        verify.isEnabled = current.candidate != null && !view.isBusy
+        val deleteRecovery = view.failureCode == "delete_failed"
+        retry.visibility = if (
+            current.operation is ModelOperationState.Failed && !deleteRecovery
+        ) View.VISIBLE else View.GONE
+        retry.isEnabled = current.operation is ModelOperationState.Failed && !deleteRecovery
+        verify.visibility = if (current.candidate != null && view.canDownload) View.VISIBLE else View.GONE
+        verify.isEnabled = current.candidate != null && view.canDownload
         importModel.isEnabled = view.canImport
         export.visibility = if (view.canExport) View.VISIBLE else View.GONE
         export.isEnabled = view.canExport

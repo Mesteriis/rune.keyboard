@@ -48,6 +48,7 @@ object OperationStateMapper {
         ModelFailureCode.INSUFFICIENT_SPACE -> ModelFailure.InsufficientSpace
         ModelFailureCode.IMPORT_FAILED -> ModelFailure.ImportFailed
         ModelFailureCode.EXPORT_FAILED -> ModelFailure.ExportFailed
+        ModelFailureCode.DELETE_FAILED -> ModelFailure.Internal("delete_failed")
         ModelFailureCode.RUNTIME_LOAD_FAILED -> ModelFailure.Internal("runtime_load_failed")
         ModelFailureCode.RUNTIME_SELF_TEST_FAILED -> ModelFailure.Internal("runtime_self_test_failed")
         ModelFailureCode.RUNTIME_CANCELLED -> ModelFailure.Cancelled

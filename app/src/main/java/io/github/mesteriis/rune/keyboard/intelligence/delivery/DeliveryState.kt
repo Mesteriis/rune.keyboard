@@ -23,10 +23,19 @@ enum class ModelFailureCode {
     IO_ERROR,
     IMPORT_FAILED,
     EXPORT_FAILED,
+    DELETE_FAILED,
     RUNTIME_LOAD_FAILED,
     RUNTIME_SELF_TEST_FAILED,
     RUNTIME_CANCELLED,
     ROLLBACK_FAILED,
+}
+
+enum class ActivationPhase {
+    CANDIDATE_SELF_TEST,
+    POINTER_COMMIT,
+    ACTIVE_VALIDATION,
+    ROLLBACK_COMMIT,
+    CLEAR_POINTER_COMMIT,
 }
 
 data class DeliveryJournal(
@@ -34,7 +43,19 @@ data class DeliveryJournal(
     val downloadId: Long? = null,
     val allowMetered: Boolean = false,
     val failureCode: ModelFailureCode? = null,
+    val activationPhase: ActivationPhase? = null,
+    val activationDirectory: String? = null,
 )
+
+internal fun DeliveryJournal.needsActivationRetry(): Boolean =
+    operation == JournalOperation.SELF_TESTING &&
+        activationDirectory != null &&
+        activationPhase in setOf(
+            ActivationPhase.POINTER_COMMIT,
+            ActivationPhase.ACTIVE_VALIDATION,
+            ActivationPhase.ROLLBACK_COMMIT,
+            ActivationPhase.CLEAR_POINTER_COMMIT,
+        )
 
 enum class DownloadObservation { MISSING, PENDING, RUNNING, PAUSED, SUCCESSFUL, FAILED }
 

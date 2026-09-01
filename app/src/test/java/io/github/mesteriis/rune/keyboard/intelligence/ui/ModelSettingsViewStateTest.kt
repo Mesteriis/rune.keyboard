@@ -40,6 +40,29 @@ class ModelSettingsViewStateTest {
         assertEquals("hash_mismatch", view.failureCode)
     }
 
+    @Test
+    fun interruptedDeleteKeepsDeleteActionWithoutVisibleModelFiles() {
+        val view = ModelSettingsViewState.from(
+            snapshot(operation = ModelOperationState.Failed(ModelFailure.Internal("delete_failed"))),
+        )
+
+        assertEquals(ModelCardStatus.NOT_INSTALLED, view.status)
+        assertTrue(view.canDelete)
+        assertFalse(view.canDownload)
+        assertFalse(view.canImport)
+        assertFalse(view.canExport)
+    }
+
+    @Test
+    fun currentActiveVersionRejectsRedundantImport() {
+        val active = InstalledModel(descriptor, "${descriptor.id}-${descriptor.version}")
+
+        val view = ModelSettingsViewState.from(snapshot(active = active))
+
+        assertFalse(view.canImport)
+        assertTrue(view.canExport)
+    }
+
     private fun snapshot(
         active: InstalledModel? = null,
         candidate: VerifiedCandidate? = null,
