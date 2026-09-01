@@ -122,7 +122,7 @@ jobs:
           ram-size: ${{ matrix.ram-size }}
           disk-size: ${{ matrix.disk-size }}
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save
+          emulator-options: -no-window -gpu swiftshader -noaudio -no-boot-anim -no-snapshot-save
           pre-emulator-launch-script: |
             tools/ci/install-adb-wrapper
             ./gradlew assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest
