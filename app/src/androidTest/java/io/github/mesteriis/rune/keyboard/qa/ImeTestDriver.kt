@@ -65,10 +65,23 @@ class ImeTestDriver {
     }
 
     fun focusField(idName: String): UiObject2 {
-        // Accessibility can still expose editor nodes that are covered by the IME. Hide it before
-        // resolving the target so the click always lands in the editor, not on a keyboard key.
-        prepareQaForScroll()
-        val field = device.findObject(By.res(PACKAGE_NAME, idName)) ?: scrollToObject(idName)
+        val selector = By.res(PACKAGE_NAME, idName)
+        val visibleField = device.findObject(selector)
+        val keyboardTop = bottomMost(
+            device.findObjects(By.desc(targetContext.getString(R.string.key_delete))),
+        )?.visibleBounds?.top
+        val field = if (
+            visibleField == null ||
+            visibleField.visibleBounds.height() == 0 ||
+            keyboardTop != null && visibleField.visibleBounds.centerY() >= keyboardTop
+        ) {
+            // Accessibility can expose an editor node whose click point is covered by the IME.
+            // Hide the IME only for that case; lifecycle tests may return with it already restored.
+            prepareQaForScroll()
+            device.findObject(selector) ?: scrollToObject(idName)
+        } else {
+            visibleField
+        }
         field.click()
         waitForKeyboard()
         // adjustResize may move a low editor outside the accessibility viewport once IME appears;
