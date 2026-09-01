@@ -30,7 +30,7 @@ cmake -S /work/llama.cpp -B /work/llama.cpp/build \
   -DLLAMA_BUILD_TOOLS=ON \
   -DLLAMA_BUILD_TESTS=OFF \
   -DLLAMA_BUILD_EXAMPLES=OFF \
-  -DLLAMA_BUILD_SERVER=OFF
+  -DLLAMA_BUILD_SERVER=ON
 cmake --build /work/llama.cpp/build --target llama-quantize llama-cli --parallel 2
 
 python /work/llama.cpp/convert_hf_to_gguf.py \
