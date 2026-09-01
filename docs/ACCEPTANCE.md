@@ -6,6 +6,7 @@ Green Gradle build не подтверждает реальное поведен
 
 - immutable Rune Text 0.1 Q4_K_M asset совпадает с embedded byte size и SHA-256;
 - два чистых Linux-прогона recipe дают побайтно одинаковый artifact;
+- на Fold pinned llama.cpp CLI загружает этот digest, генерирует не более четырёх токенов для каждого синтетического RU/EN/ES prompt и проходит десять load/unload циклов без crash/OOM/thermal severe;
 - real download достигает private `VerifiedCandidate`, затем native self-test и атомарная активация дают `Ready`;
 - закрытие Activity, process kill и reboot в окнах download/verify/install/self-test корректно reconciled при следующем открытии Model Settings;
 - default download ждёт unmetered network; одноразовый mobile override заменяет только этот request, roaming остаётся запрещён;

@@ -98,8 +98,8 @@ abstract class PrivacyGateTask : DefaultTask() {
     @TaskAction
     fun verify() {
         val manifest = mergedManifest.get().asFile.readText()
-        val declared = PERMISSION_PATTERN.findAll(manifest).map { it.groupValues[1] }.toSet()
-        if (declared != setOf("android.permission.INTERNET")) {
+        val declared = PERMISSION_PATTERN.findAll(manifest).map { it.groupValues[1] }.toList()
+        if (declared != listOf("android.permission.INTERNET")) {
             throw GradleException(
                 "Rune must ship with exactly android.permission.INTERNET, but declares: $declared",
             )

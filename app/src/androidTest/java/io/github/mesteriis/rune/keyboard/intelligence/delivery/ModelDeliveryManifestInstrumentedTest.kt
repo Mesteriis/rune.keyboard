@@ -21,7 +21,7 @@ class ModelDeliveryManifestInstrumentedTest {
                 PackageManager.GET_RECEIVERS or PackageManager.GET_ACTIVITIES,
         )
 
-        assertEquals(setOf("android.permission.INTERNET"), info.requestedPermissions.orEmpty().toSet())
+        assertEquals(listOf("android.permission.INTERNET"), info.requestedPermissions.orEmpty().toList())
         val worker = info.services.orEmpty().single { it.name == ModelInstallJobService::class.java.name }
         val receiver = info.receivers.orEmpty().single { it.name == ModelDownloadReceiver::class.java.name }
         assertFalse(worker.exported)

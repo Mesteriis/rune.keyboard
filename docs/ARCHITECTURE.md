@@ -103,6 +103,8 @@ External app-specific каталог — только недоверенный s
 
 Pinned JNI runtime загружает candidate с отключённым logger, выполняет warm-up и не более четырёх greedy tokens при `n_ctx=256`/`n_batch=64`, проверяет непустой UTF-8 и не возвращает output. После успеха candidate атомарно становится versioned active, прежний active — единственным rollback. Opaque handle владеет model через RAII; глобальные model/context pointers отсутствуют. Отмена соединена с load-progress и decode-abort callbacks.
 
+Единый APK и `:runtime-llama` собираются только для `arm64-v8a` и `x86_64`; 32-разрядные ABI не поддерживаются.
+
 ## Производительность
 
 - IME остаётся в основном процессе; install/self-test выполняются worker service в `:model_worker`;

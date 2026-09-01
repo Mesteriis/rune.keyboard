@@ -44,10 +44,27 @@ fi
 apk=${1:-}
 if [[ -n "$apk" ]]; then
   [[ -f "$apk" ]] || { echo "APK does not exist: $apk" >&2; exit 1; }
-  abis=$(unzip -Z1 "$apk" | sed -n 's#^lib/\([^/]*\)/librune_llama.so$#\1#p' | sort -u)
+  apk_entries=$(unzip -Z1 "$apk")
+  abis=$(sed -n 's#^lib/\([^/]*\)/.*#\1#p' <<<"$apk_entries" | sort -u)
   [[ "$abis" == $'arm64-v8a\nx86_64' ]] || {
     echo "APK ABI set is not exactly arm64-v8a + x86_64:" >&2
     echo "$abis" >&2
+    exit 1
+  }
+  for abi in arm64-v8a x86_64; do
+    grep -Fxq "lib/$abi/librune_llama.so" <<<"$apk_entries" || {
+      echo "APK is missing librune_llama.so for $abi" >&2
+      exit 1
+    }
+  done
+  license_entry=assets/third_party_notices/llama.cpp-LICENSE.txt
+  grep -Fxq "$license_entry" <<<"$apk_entries" || {
+    echo "APK is missing the llama.cpp license notice" >&2
+    exit 1
+  }
+  cmp -s <(unzip -p "$apk" "$license_entry") \
+    "$repo_root/runtime-llama/src/main/cpp/llama.cpp/LICENSE" || {
+    echo "Packaged llama.cpp license does not match the pinned submodule" >&2
     exit 1
   }
 fi

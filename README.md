@@ -27,7 +27,8 @@ Rune Keyboard — компактная приватная Android-клавиат
 - JDK 17;
 - Android SDK Platform 37 и Build Tools 36.0.0;
 - Android NDK `29.0.14206865` и CMake `3.31.6`;
-- Android 8.0 (API 26) или новее.
+- для установки: 64-разрядное устройство с Android 8.0 (API 26) или новее и ABI
+  `arm64-v8a` либо `x86_64`; 32-разрядные ABI не поддерживаются.
 
 После клонирования нужен pinned submodule runtime:
 
