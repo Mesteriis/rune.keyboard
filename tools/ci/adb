@@ -1,0 +1,34 @@
+#!/bin/sh
+
+set -u
+
+sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+real_adb="$sdk_root/platform-tools/adb-real"
+
+if [ ! -x "$real_adb" ]; then
+    echo "Pinned adb binary is unavailable: $real_adb" >&2
+    exit 127
+fi
+
+# android-emulator-runner unlocks the device immediately after
+# sys.boot_completed becomes 1. On preview API images the input service can
+# still need a few seconds before accepting that one key event.
+if [ "${1:-}" = "-s" ] \
+    && [ "${3:-}" = "shell" ] \
+    && [ "${4:-}" = "input" ] \
+    && [ "${5:-}" = "keyevent" ] \
+    && [ "${6:-}" = "82" ]; then
+    attempt=1
+    while [ "$attempt" -le 15 ]; do
+        if "$real_adb" "$@"; then
+            exit 0
+        fi
+        if [ "$attempt" -lt 15 ]; then
+            sleep 2
+        fi
+        attempt=$((attempt + 1))
+    done
+    exit 1
+fi
+
+exec "$real_adb" "$@"

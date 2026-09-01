@@ -56,19 +56,29 @@ class ImeTestDriver {
 
     fun launchQa() {
         shell("am start -W -f 0x10008000 -n $QA_ACTIVITY")
-        requireObject("qa_plain_text")
+        awaitQaActivity()
     }
 
     private fun resumeQa() {
         shell("am start -W -n $QA_ACTIVITY")
-        requireObject("qa_plain_text")
+        awaitQaActivity()
     }
 
     fun focusField(idName: String): UiObject2 {
-        val field = device.findObject(By.res(PACKAGE_NAME, idName)) ?: run {
-            device.pressBack()
-            SystemClock.sleep(200)
-            scrollToObject(idName)
+        val selector = By.res(PACKAGE_NAME, idName)
+        val visibleField = device.findObject(selector)
+        val field = if (
+            visibleField == null ||
+            visibleField.visibleBounds.height() == 0 ||
+            !visibleField.isFocused
+        ) {
+            // Switching editors must happen with the IME hidden: accessibility may expose the
+            // target even when its click point is covered. Keep an already-focused editor and its
+            // restored IME intact for lifecycle tests.
+            prepareQaForScroll()
+            device.findObject(selector) ?: scrollToObject(idName)
+        } else {
+            visibleField
         }
         field.click()
         waitForKeyboard()
@@ -79,6 +89,8 @@ class ImeTestDriver {
 
     fun tapQaControl(idName: String) {
         requireObject(idName, scroll = true).click()
+        device.waitForIdle()
+        SystemClock.sleep(INPUT_CONNECTION_SETTLE_MILLIS)
         waitForKeyboard()
     }
 
@@ -118,12 +130,16 @@ class ImeTestDriver {
     }
 
     private fun switchLanguageUntil(expectedKey: String) {
-        repeat(3) {
+        repeat(5) {
             if (findKeyByText(expectedKey) != null) return
             val space = keyByDescription(targetContext.getString(R.string.key_space))
             val bounds = space.visibleBounds
-            device.swipe(bounds.right - 8, bounds.centerY(), bounds.left + 8, bounds.centerY(), 12)
+            // API 37 gesture navigation reserves the bottom strip for system task switching. The
+            // upper edge remains part of the space key and exercises Rune's gesture detector.
+            val swipeY = (bounds.top + 4).coerceAtMost(bounds.bottom - 1)
+            device.swipe(bounds.right - 8, swipeY, bounds.left + 8, swipeY, 24)
             device.waitForIdle()
+            eventually(INPUT_CONNECTION_SETTLE_MILLIS * 2) { findKeyByText(expectedKey) != null }
         }
         error("Expected layout key '$expectedKey' did not appear after a bounded language cycle")
     }
@@ -215,8 +231,17 @@ class ImeTestDriver {
             }
             row = device.findObject(By.text(label))
         }
-        checkNotNull(row) { "Number-row setting was not found" }.click()
+        clickClosestClickable(checkNotNull(row) { "Number-row setting was not found" })
+        eventually(WAIT_MILLIS) {
+            targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+                .getBoolean(KEY_NUMBER_ROW, false) == enabled
+        }
+        check(
+            targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+                .getBoolean(KEY_NUMBER_ROW, false) == enabled,
+        ) { "Number-row setting was not persisted" }
         device.pressBack()
+        shell("ime set $IME_COMPONENT")
         resumeQa()
         focusField("qa_plain_text")
         eventually(WAIT_MILLIS) { (findKeyByText("1") != null) == enabled }
@@ -271,18 +296,27 @@ class ImeTestDriver {
     private fun requireObject(idName: String, scroll: Boolean = false): UiObject2 {
         val selector = By.res(PACKAGE_NAME, idName)
         device.findObject(selector)?.let { return it }
-        if (scroll) {
-            @Suppress("DEPRECATION")
-            UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/qa_scroll")).apply {
-                setAsVerticalList()
-                scrollIntoView(UiSelector().resourceId("$PACKAGE_NAME:id/$idName"))
-            }
+        if (device.wait(Until.hasObject(selector), ACCESSIBILITY_SETTLE_MILLIS)) {
+            return device.findObject(selector)
         }
+        if (scroll) return scrollToObject(idName)
         check(device.wait(Until.hasObject(selector), WAIT_MILLIS)) { "QA object not found: $idName" }
         return device.findObject(selector)
     }
 
+    private fun awaitQaActivity() {
+        val selector = By.res(PACKAGE_NAME, "qa_scroll")
+        check(device.wait(Until.hasObject(selector), WAIT_MILLIS)) { "QA activity did not become visible" }
+    }
+
+    private fun clickClosestClickable(objectNode: UiObject2) {
+        var node: UiObject2? = objectNode
+        while (node != null && !node.isClickable) node = node.parent
+        checkNotNull(node) { "Settings row has no clickable ancestor" }.click()
+    }
+
     private fun scrollToObject(idName: String): UiObject2 {
+        prepareQaForScroll()
         @Suppress("DEPRECATION")
         val scrollable = UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/qa_scroll")).apply {
             setAsVerticalList()
@@ -290,7 +324,22 @@ class ImeTestDriver {
             scrollIntoView(UiSelector().resourceId("$PACKAGE_NAME:id/$idName"))
         }
         check(scrollable.exists()) { "QA scroll container is unavailable" }
-        return requireObject(idName)
+        val selector = By.res(PACKAGE_NAME, idName)
+        check(device.wait(Until.hasObject(selector), WAIT_MILLIS)) { "QA object not found: $idName" }
+        return device.findObject(selector)
+    }
+
+    private fun prepareQaForScroll() {
+        val qaSelector = By.res(PACKAGE_NAME, "qa_scroll")
+        val keyboardSelector = By.desc(targetContext.getString(R.string.key_delete))
+        if (device.findObject(keyboardSelector) != null) {
+            device.pressBack()
+            device.wait(Until.gone(keyboardSelector), WAIT_MILLIS)
+        }
+        // On API 26 accessibility may temporarily expose only the IME window. Hiding it first
+        // lets the already-resumed QA root reappear instead of waiting on a no-op Activity launch.
+        if (device.findObject(qaSelector) == null) resumeQa()
+        device.waitForIdle()
     }
 
     private fun waitForKeyboard() {
@@ -351,7 +400,10 @@ class ImeTestDriver {
         const val IME_COMPONENT = "$PACKAGE_NAME/.ime.RuneInputMethodService"
         const val QA_ACTIVITY = "$PACKAGE_NAME/.qa.ImeQaActivity"
         const val WAIT_MILLIS = 5_000L
+        const val ACCESSIBILITY_SETTLE_MILLIS = 1_000L
+        const val INPUT_CONNECTION_SETTLE_MILLIS = 250L
         const val PREFERENCES_NAME = "keyboard_preferences"
+        const val KEY_NUMBER_ROW = "number_row"
         const val KEY_PREVIEW = "key_preview"
     }
 }

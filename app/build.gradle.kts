@@ -20,8 +20,8 @@ android {
         applicationId = "io.github.mesteriis.rune.keyboard"
         minSdk = 26
         targetSdk = 37
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -82,8 +82,8 @@ dependencies {
 }
 
 /**
- * Fails the build if Rune ever gains a permission or starts logging.
- * Both are product invariants: the keyboard is fully offline and never logs editor text.
+ * Fails the build if Rune's single network permission or privacy boundaries drift.
+ * INTERNET is used only by explicit model downloads outside the IME package.
  */
 abstract class PrivacyGateTask : DefaultTask() {
     @get:InputFile
@@ -95,11 +95,17 @@ abstract class PrivacyGateTask : DefaultTask() {
     @TaskAction
     fun verify() {
         val manifest = mergedManifest.get().asFile.readText()
-        if (manifest.contains("<uses-permission")) {
-            val declared = PERMISSION_PATTERN.findAll(manifest).map { it.groupValues[1] }.toList()
+        val declared = PERMISSION_PATTERN.findAll(manifest).map { it.groupValues[1] }.toSet()
+        if (declared != setOf("android.permission.INTERNET")) {
             throw GradleException(
-                "Rune must ship without permissions, but the merged manifest declares: $declared",
+                "Rune must ship with exactly android.permission.INTERNET, but declares: $declared",
             )
+        }
+        if (!manifest.contains("android:usesCleartextTraffic=\"false\"")) {
+            throw GradleException("Rune must disable cleartext traffic")
+        }
+        if (!manifest.contains("android:allowBackup=\"false\"")) {
+            throw GradleException("Rune must disable backup")
         }
 
         val offenders = sourceDirectory.asFileTree
@@ -115,9 +121,60 @@ abstract class PrivacyGateTask : DefaultTask() {
     }
 
     private companion object {
-        val PERMISSION_PATTERN = Regex("""<uses-permission[^>]*android:name="([^"]+)"""")
+        val PERMISSION_PATTERN = Regex("""<uses-permission(?:-sdk-\d+)?[^>]*android:name="([^"]+)"""")
         val LOG_PATTERN = Regex("""android\.util\.Log|(^|[^\w.])Log\.[vdiwe]\(""", RegexOption.MULTILINE)
     }
+}
+
+abstract class ImeIntelligenceBoundaryTask : DefaultTask() {
+    @get:InputDirectory
+    abstract val imeSourceDirectory: DirectoryProperty
+
+    @TaskAction
+    fun verify() {
+        val forbidden = Regex(
+            """DownloadManager|java\.net\.|android\.net\.|\b(?:Socket|ServerSocket|URL)\s*\(|intelligence|runtime[-_.]llama""",
+        )
+        val offenders = imeSourceDirectory.asFileTree
+            .matching { include("**/*.kt", "**/*.java") }
+            .filter { forbidden.containsMatchIn(it.readText()) }
+            .map { it.path }
+            .sorted()
+        if (offenders.isNotEmpty()) {
+            throw GradleException(
+                "IME sources must not depend on model delivery, runtime, or network APIs:\n" +
+                    offenders.joinToString("\n"),
+            )
+        }
+    }
+}
+
+abstract class ForbiddenRuntimeDependencyTask : DefaultTask() {
+    @get:Classpath
+    abstract val runtimeClasspath: ConfigurableFileCollection
+
+    @TaskAction
+    fun verify() {
+        val forbidden = Regex(
+            """(?i)(okhttp|retrofit|ktor-client|volley|work-runtime|kotlinx-coroutines|firebase|analytics|appcenter|sentry)""",
+        )
+        val offenders = runtimeClasspath.files.map(File::getName).filter(forbidden::containsMatchIn).sorted()
+        if (offenders.isNotEmpty()) {
+            throw GradleException("Forbidden runtime dependencies: ${offenders.joinToString()}")
+        }
+    }
+}
+
+val imeIntelligenceBoundary = tasks.register<ImeIntelligenceBoundaryTask>("imeIntelligenceBoundary") {
+    group = "verification"
+    description = "Keeps model delivery, runtime, and network APIs out of ime/**."
+    imeSourceDirectory.set(layout.projectDirectory.dir("src/main/java/io/github/mesteriis/rune/keyboard/ime"))
+}
+
+val forbiddenRuntimeDependencies = tasks.register<ForbiddenRuntimeDependencyTask>("forbiddenRuntimeDependencies") {
+    group = "verification"
+    description = "Rejects HTTP clients, analytics SDKs, WorkManager, and coroutines."
+    runtimeClasspath.from(configurations.named("releaseRuntimeClasspath"))
 }
 
 androidComponents {
@@ -135,9 +192,11 @@ fun com.android.build.api.variant.ApplicationAndroidComponentsExtension.register
         val variantName = variant.name.replaceFirstChar(Char::uppercaseChar)
         val gate = tasks.register<PrivacyGateTask>("privacyGate$variantName") {
             group = "verification"
-            description = "Verifies that Rune declares no permissions and contains no logging."
+            description = "Verifies Rune's exact permission set, privacy flags, and logging boundary."
             mergedManifest.set(variant.artifacts.get(SingleArtifact.MERGED_MANIFEST))
             sourceDirectory.set(layout.projectDirectory.dir("src/main/java"))
         }
-        tasks.named("check").configure { dependsOn(gate) }
+        tasks.named("check").configure {
+            dependsOn(gate, imeIntelligenceBoundary, forbiddenRuntimeDependencies)
+        }
 }
