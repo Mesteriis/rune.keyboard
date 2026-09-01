@@ -1,0 +1,43 @@
+#!/bin/sh
+
+set -eu
+
+sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+adb="$sdk_root/platform-tools/adb"
+
+# Android 17 preview images can crash SurfaceFlinger's RegionSampling thread
+# when the ranchu mapper advertises read-color-buffer DMA. Restarting
+# SurfaceFlinger after disabling its optional luminance sampler avoids that
+# platform bug while leaving the Rune test surface unchanged.
+"$adb" root
+"$adb" wait-for-device
+"$adb" shell setprop debug.sf.luma_sampling 0
+
+actual_value=$("$adb" shell getprop debug.sf.luma_sampling | tr -d '\r')
+if [ "$actual_value" != "0" ]; then
+    echo "Unable to disable API 37 luminance sampling" >&2
+    exit 1
+fi
+
+"$adb" shell killall surfaceflinger >/dev/null 2>&1 || true
+"$adb" wait-for-device
+
+attempt=1
+while [ "$attempt" -le 60 ]; do
+    ready=true
+    for service_name in activity package input_method; do
+        service_status=$("$adb" shell service check "$service_name" 2>/dev/null || true)
+        case "$service_status" in
+            *found*) ;;
+            *) ready=false ;;
+        esac
+    done
+    if [ "$ready" = true ]; then
+        exit 0
+    fi
+    sleep 2
+    attempt=$((attempt + 1))
+done
+
+echo "API 37 framework services did not recover after SurfaceFlinger restart" >&2
+exit 1
