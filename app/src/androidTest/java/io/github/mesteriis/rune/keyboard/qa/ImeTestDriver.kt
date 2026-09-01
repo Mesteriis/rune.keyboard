@@ -56,18 +56,17 @@ class ImeTestDriver {
 
     fun launchQa() {
         shell("am start -W -f 0x10008000 -n $QA_ACTIVITY")
-        requireObject("qa_plain_text")
+        awaitQaActivity()
     }
 
     private fun resumeQa() {
         shell("am start -W -n $QA_ACTIVITY")
-        requireObject("qa_plain_text")
+        awaitQaActivity()
     }
 
     fun focusField(idName: String): UiObject2 {
         val field = device.findObject(By.res(PACKAGE_NAME, idName)) ?: run {
-            device.pressBack()
-            SystemClock.sleep(200)
+            resumeQa()
             scrollToObject(idName)
         }
         field.click()
@@ -215,7 +214,15 @@ class ImeTestDriver {
             }
             row = device.findObject(By.text(label))
         }
-        checkNotNull(row) { "Number-row setting was not found" }.click()
+        clickClosestClickable(checkNotNull(row) { "Number-row setting was not found" })
+        eventually(WAIT_MILLIS) {
+            targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+                .getBoolean(KEY_NUMBER_ROW, false) == enabled
+        }
+        check(
+            targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+                .getBoolean(KEY_NUMBER_ROW, false) == enabled,
+        ) { "Number-row setting was not persisted" }
         device.pressBack()
         resumeQa()
         focusField("qa_plain_text")
@@ -271,7 +278,11 @@ class ImeTestDriver {
     private fun requireObject(idName: String, scroll: Boolean = false): UiObject2 {
         val selector = By.res(PACKAGE_NAME, idName)
         device.findObject(selector)?.let { return it }
+        if (device.wait(Until.hasObject(selector), ACCESSIBILITY_SETTLE_MILLIS)) {
+            return device.findObject(selector)
+        }
         if (scroll) {
+            if (device.findObject(By.res(PACKAGE_NAME, "qa_scroll")) == null) resumeQa()
             @Suppress("DEPRECATION")
             UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/qa_scroll")).apply {
                 setAsVerticalList()
@@ -280,6 +291,17 @@ class ImeTestDriver {
         }
         check(device.wait(Until.hasObject(selector), WAIT_MILLIS)) { "QA object not found: $idName" }
         return device.findObject(selector)
+    }
+
+    private fun awaitQaActivity() {
+        val selector = By.res(PACKAGE_NAME, "qa_plain_text")
+        check(device.wait(Until.hasObject(selector), WAIT_MILLIS)) { "QA activity did not become visible" }
+    }
+
+    private fun clickClosestClickable(objectNode: UiObject2) {
+        var node: UiObject2? = objectNode
+        while (node != null && !node.isClickable) node = node.parent
+        checkNotNull(node) { "Settings row has no clickable ancestor" }.click()
     }
 
     private fun scrollToObject(idName: String): UiObject2 {
@@ -351,7 +373,9 @@ class ImeTestDriver {
         const val IME_COMPONENT = "$PACKAGE_NAME/.ime.RuneInputMethodService"
         const val QA_ACTIVITY = "$PACKAGE_NAME/.qa.ImeQaActivity"
         const val WAIT_MILLIS = 5_000L
+        const val ACCESSIBILITY_SETTLE_MILLIS = 1_000L
         const val PREFERENCES_NAME = "keyboard_preferences"
+        const val KEY_NUMBER_ROW = "number_row"
         const val KEY_PREVIEW = "key_preview"
     }
 }

@@ -76,12 +76,18 @@ jobs:
         include:
           - api-level: '26'
             target: google_apis
+            ram-size: 2048M
+            disk-size: 6G
             gpu-mode: swiftshader
             emulator-features: ''
+            emulator-properties: ''
           - api-level: '37.0'
             target: google_apis_ps16k
-            gpu-mode: software
+            ram-size: 4096M
+            disk-size: 6G
+            gpu-mode: swiftshader
             emulator-features: -feature -Vulkan
+            emulator-properties: -prop debug.sf.luma_sampling=0
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -101,8 +107,10 @@ jobs:
           api-level: ${{ matrix.api-level }}
           target: ${{ matrix.target }}
           arch: x86_64
+          ram-size: ${{ matrix.ram-size }}
+          disk-size: ${{ matrix.disk-size }}
           disable-animations: true
-          emulator-options: -no-window -gpu ${{ matrix.gpu-mode }} ${{ matrix.emulator-features }} -noaudio -no-boot-anim -no-snapshot-save
+          emulator-options: -no-window -gpu ${{ matrix.gpu-mode }} ${{ matrix.emulator-features }} ${{ matrix.emulator-properties }} -noaudio -no-boot-anim -no-snapshot-save
           script: |
             ./gradlew installDebug
             adb shell settings put secure show_ime_with_hard_keyboard 1
