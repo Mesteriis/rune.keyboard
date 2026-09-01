@@ -91,9 +91,11 @@ jobs:
           - api-level: '26'
             ram-size: 2048M
             disk-size: 6G
+            emulator-features: ''
           - api-level: '37.0'
             ram-size: 4096M
             disk-size: 6G
+            emulator-features: -feature -GLDMA -feature -GLDMA2
     steps:
       - uses: actions/checkout@v4
         with:
@@ -122,7 +124,7 @@ jobs:
           ram-size: ${{ matrix.ram-size }}
           disk-size: ${{ matrix.disk-size }}
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader -noaudio -no-boot-anim -no-snapshot-save
+          emulator-options: -no-window -gpu swiftshader ${{ matrix.emulator-features }} -noaudio -no-boot-anim -no-snapshot-save
           pre-emulator-launch-script: |
             tools/ci/install-adb-wrapper
             ./gradlew assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest
