@@ -26,8 +26,8 @@
   <string name="setup_try_number_hint">Число</string>
   <string name="setup_settings_button">Открыть настройки Rune</string>
   <string name="setup_privacy_title">Приватность по умолчанию</string>
-  <string name="setup_privacy_description">У Rune нет доступа в интернет, телеметрии, рекламы, истории ввода и доступа к буферу обмена.</string>
-  <string name="setup_mvp_note">Rune 0.1: ввод на русском, английском и испанском, жесты пробела, цифры и символы, Shift и Caps Lock, безопасное удаление Unicode и действия редактора. Свайп-ввод, подсказки и автокоррекция намеренно не входят в эту версию.</string>
+  <string name="setup_privacy_description">Сеть используется только после явного скачивания необязательной локальной модели. Введённый текст не отправляется. В Rune нет телеметрии, рекламы, истории ввода и доступа к буферу обмена.</string>
+  <string name="setup_mvp_note">Rune 0.2 добавляет доставку и самопроверку одной необязательной локальной модели. Модель не подключена к вводу. Свайп-ввод, подсказки, пунктуация и автокоррекция намеренно не входят в эту версию.</string>
 
   <string name="key_shift">Shift</string>
   <string name="key_shift_on">Shift включён</string>
@@ -70,7 +70,7 @@
   <string name="settings_theme">Тема</string>
   <string name="settings_haptic">Вибрация</string>
   <string name="settings_sound">Звук клавиш</string>
-  <string name="settings_privacy_summary">Нет доступа в интернет, аналитики, логирования ввода и доступа к буферу обмена. Настройки исключены из системного бэкапа.</string>
+  <string name="settings_privacy_summary">Сеть используется только для явно запущенного скачивания модели. Введённый текст не отправляется. Нет аналитики, логирования ввода и доступа к буферу обмена. Настройки исключены из системного бэкапа.</string>
   <string name="settings_version">Версия</string>
   <string name="settings_setup_guide">Инструкция по подключению</string>
   <string name="settings_languages_title">Языки</string>

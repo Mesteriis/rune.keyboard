@@ -2,7 +2,7 @@
 
 ## Цели
 
-Rune оптимизируется под низкую задержку, предсказуемый lifecycle и минимальную поверхность риска. Это один Android-модуль без сети, Compose, DI-контейнера, базы данных, фоновых задач и сторонних runtime-зависимостей.
+Rune оптимизируется под низкую задержку, предсказуемый lifecycle и минимальную поверхность риска. IME остаётся без сетевого и model-runtime кода. Отдельная подсистема локальной модели использует только системный `DownloadManager`, неперсистентный `JobScheduler` и приватный worker process; Compose, DI, WorkManager, coroutines, HTTP-клиентов, аналитики и базы данных нет.
 
 ## Поток ввода
 
@@ -47,6 +47,10 @@ Rune регистрирует один системный subtype на три я
 - `ime/feedback` — политика haptic/звука и её исполнитель;
 - `ime/editor` — единственная точка записи через `InputConnection`;
 - `settings` — снапшот настроек, их хранение и экраны onboarding/настроек.
+- `intelligence/model` — descriptor/snapshot/operation types и строгий manifest schema;
+- `intelligence/delivery` — DownloadManager adapter, AtomicFile journal, private candidate install и SAF transfer.
+
+Подсистема модели не зависит от `ime/**`, а статический gate запрещает обратную зависимость. В 0.2 runtime предоставляет только `load/selfTest/cancel/unload`; typing API и общий `generate()` отсутствуют.
 
 Платформенные `android.inputmethodservice.Keyboard` и `KeyboardView` не используются: они deprecated с API 29. View-подход выбран вместо Canvas, чтобы каждая клавиша сразу имела корректную focus/click/long-click семантику TalkBack без отдельного виртуального accessibility tree.
 
@@ -68,7 +72,9 @@ Session (только в памяти): активный редактор, яз�
 
 ## Приватность и безопасность
 
-- manifest не объявляет ни одного разрешения; `privacyGateRelease` падает, если разрешение или логирование появится;
+- manifest объявляет ровно `android.permission.INTERNET`; сеть используется только после явного скачивания модели через системный DownloadManager;
+- введённый текст не передаётся в delivery/runtime, не отправляется и не логируется;
+- `privacyGateRelease` проверяет точный permission set, отключённые backup/cleartext и отсутствие логирования;
 - service экспортирован только с signature permission `android.permission.BIND_INPUT_METHOD`;
 - backup и cleartext traffic отключены;
 - вибрация реализована через `View.performHapticFeedback`, поэтому Rune не просит `android.permission.VIBRATE`; интенсивности выражены платформенными haptic-константами, а не амплитудами;

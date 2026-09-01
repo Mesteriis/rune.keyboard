@@ -1,6 +1,6 @@
 # Release
 
-Rune 0.1 ships as a signed APK installed by hand — no store, no update channel, no ADB required
+Rune 0.2 ships as one signed APK installed by hand — no store and no ADB required
 on the target device.
 
 ## One-time: create a signing key
@@ -45,12 +45,14 @@ unsigned release output as `rune-release-unsigned.apk`, plus `lint-results` and
 
 ## Verify before shipping
 
-1. `privacyGateRelease` passes — it fails the build if the merged manifest declares any permission
-   or if any source file logs (`Log.*` / `android.util.Log`).
-2. Work through `docs/ACCEPTANCE.md` on a physical device, including the fold and settings sections.
-3. Install the release APK on a clean device and complete onboarding without ADB:
+1. `privacyGateRelease` passes — merged release/profile manifests contain exactly
+   `android.permission.INTERNET`, cleartext and backup are disabled, and Rune-owned code does not log.
+2. The embedded model size/SHA match the immutable `model-rune-text-v0.1.0` asset and its
+   two-run reproducibility/Fold qualification evidence.
+3. Work through `docs/ACCEPTANCE.md` on a physical device, including model delivery/runtime, fold and settings.
+4. Install the release APK on a clean device and complete onboarding without ADB:
    open Rune → enable → select → the status card reads **Active**.
-4. Turn on airplane mode and type a message in all three languages.
+5. Turn on airplane mode and type a message in all three languages.
 
 ## Install
 

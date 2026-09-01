@@ -26,8 +26,8 @@
   <string name="setup_try_number_hint">Number</string>
   <string name="setup_settings_button">Open Rune settings</string>
   <string name="setup_privacy_title">Private by default</string>
-  <string name="setup_privacy_description">Rune has no internet permission, telemetry, ads, input history, or clipboard access.</string>
-  <string name="setup_mvp_note">Rune 0.1: typing in English, Russian and Spanish, space bar gestures, numbers and symbols, shift and caps lock, Unicode-safe delete, and editor actions. Swipe typing, suggestions and autocorrect are intentionally out of scope.</string>
+  <string name="setup_privacy_description">Network access is used only after you explicitly download the optional local model. Typed text is never sent. Rune has no telemetry, ads, input history, or clipboard access.</string>
+  <string name="setup_mvp_note">Rune 0.2 adds delivery and a self-test for one optional local model. The model is not connected to typing. Swipe typing, suggestions, punctuation and autocorrect are intentionally out of scope.</string>
 
   <string name="key_shift">Shift</string>
   <string name="key_shift_on">Shift on</string>
@@ -70,7 +70,7 @@
   <string name="settings_theme">Theme</string>
   <string name="settings_haptic">Haptic feedback</string>
   <string name="settings_sound">Keypress sound</string>
-  <string name="settings_privacy_summary">No internet permission, no analytics, no input logging, no clipboard access. Settings are excluded from system backup.</string>
+  <string name="settings_privacy_summary">Network access is used only for an explicit model download. Typed text is never sent. No analytics, input logging, or clipboard access. Settings are excluded from system backup.</string>
   <string name="settings_version">Version</string>
   <string name="settings_setup_guide">Setup guide</string>
   <string name="settings_languages_title">Languages</string>

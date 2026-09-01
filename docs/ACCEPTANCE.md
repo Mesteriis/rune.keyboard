@@ -2,6 +2,20 @@
 
 Green Gradle build не подтверждает реальное поведение клавиатуры. Перед релизом пройти этот список на эмуляторе и хотя бы одном физическом устройстве.
 
+## Rune Intelligence Foundation 0.2
+
+- immutable Rune Text 0.1 Q4_K_M asset совпадает с embedded byte size и SHA-256;
+- два чистых Linux-прогона recipe дают побайтно одинаковый artifact;
+- real download достигает private `VerifiedCandidate`, затем native self-test и атомарная активация дают `Ready`;
+- закрытие Activity, process kill и reboot в окнах download/verify/install/self-test корректно reconciled при следующем открытии Model Settings;
+- default download ждёт unmetered network; одноразовый mobile override заменяет только этот request, roaming остаётся запрещён;
+- SAF import принимает только embedded digest; corrupt/short/oversized/incompatible GGUF не меняет active;
+- export завершается полностью или partial destination удаляется best-effort; delete удаляет active, rollback, candidates и pointer;
+- failed update сохраняет старый active; последующий load/self-test failure атомарно возвращает единственный rollback;
+- cancel during load/decode и десять load/self-test/unload циклов проходят без Rune crash/ANR/OOM/thermal severe;
+- Fold profile/release diagnostics фиксируют load/prompt/first-token/unload и RSS/PSS без prompt, output и model path;
+- airplane-mode typing RU/EN/ES не меняется, а `RuneInputMethodService` не вызывает delivery/runtime/network APIs.
+
 Release-сборка содержит собственные тестовые поля: шаг 4 «Попробуйте» на setup-экране (обычный текст, email, signed-decimal число). Debug-сборка дополнительно содержит изолированный QA-экран, отсутствующий в release APK:
 
 ```bash
