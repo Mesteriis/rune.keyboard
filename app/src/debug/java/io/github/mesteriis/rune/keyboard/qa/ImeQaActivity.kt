@@ -170,6 +170,9 @@ class ImeQaActivity : Activity() {
         this.hint = hint
         this.inputType = inputType
         this.imeOptions = imeOptions
+        // API 26 may keep a field focused while hiding the IME after a sibling Activity closes.
+        // Make a deliberate tap restore the keyboard even when focus itself does not change.
+        setOnClickListener { showKeyboard(this) }
         layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT,
