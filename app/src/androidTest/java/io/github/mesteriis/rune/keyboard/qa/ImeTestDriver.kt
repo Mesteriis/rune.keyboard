@@ -78,6 +78,8 @@ class ImeTestDriver {
 
     fun tapQaControl(idName: String) {
         requireObject(idName, scroll = true).click()
+        device.waitForIdle()
+        SystemClock.sleep(INPUT_CONNECTION_SETTLE_MILLIS)
         waitForKeyboard()
     }
 
@@ -224,6 +226,7 @@ class ImeTestDriver {
                 .getBoolean(KEY_NUMBER_ROW, false) == enabled,
         ) { "Number-row setting was not persisted" }
         device.pressBack()
+        shell("ime set $IME_COMPONENT")
         resumeQa()
         focusField("qa_plain_text")
         eventually(WAIT_MILLIS) { (findKeyByText("1") != null) == enabled }
@@ -374,6 +377,7 @@ class ImeTestDriver {
         const val QA_ACTIVITY = "$PACKAGE_NAME/.qa.ImeQaActivity"
         const val WAIT_MILLIS = 5_000L
         const val ACCESSIBILITY_SETTLE_MILLIS = 1_000L
+        const val INPUT_CONNECTION_SETTLE_MILLIS = 250L
         const val PREFERENCES_NAME = "keyboard_preferences"
         const val KEY_NUMBER_ROW = "number_row"
         const val KEY_PREVIEW = "key_preview"
