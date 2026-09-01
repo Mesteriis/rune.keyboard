@@ -85,7 +85,7 @@ Session (только в памяти): активный редактор, яз�
 
 ### Осознанное расширение инварианта чтения текста
 
-До Rune 0.1 клавиатура читала из редактора только `getCursorCapsMode` и числовые границы selection. Правило двойного пробела (SPACE-002) и атомарное удаление logical character требуют минимального surrounding-text контекста. Rune разрешает два строго ограниченных вида эфемерного чтения:
+До введения правила двойного пробела и Unicode-safe Backspace клавиатура читала из редактора только `getCursorCapsMode` и числовые границы selection. Правило двойного пробела (SPACE-002) и атомарное удаление logical character требуют минимального surrounding-text контекста. Rune разрешает два строго ограниченных вида эфемерного чтения:
 
 - `getTextBeforeCursor(2, 0)` — только в момент второго тапа по пробелу и при последующем Backspace-откате, только в plain-text полях;
 - `getTextBeforeCursor(64, 0)` — только непосредственно во время Backspace в non-sensitive поле. Android ICU и ограниченный compatibility scan находят предыдущий grapheme cluster, после чего удаление передаётся редактору числом code points;
@@ -95,7 +95,7 @@ Session (только в памяти): активный редактор, яз�
 
 Compatibility scan покрывает ZWJ, emoji modifiers, regional-indicator flags, keycaps, variation selectors и combining marks в пределах тех же 64 UTF-16 units. Патологический cluster длиннее границы чтения остаётся документированным ограничением: Rune не расширяет наблюдаемое окно и использует безопасный fallback редактора. Rune-owned composing state отсутствует, поэтому Fold-gate проверяет committed text, cursor/selection, язык, слой и Shift/Caps без phantom composition.
 
-Direct Boot в 0.1 выключен: его нельзя честно включить без device-protected preferences и отдельной lockscreen-проверки после перезагрузки.
+Direct Boot в 0.2 выключен: его нельзя честно включить без device-protected preferences и отдельной lockscreen-проверки после перезагрузки.
 
 ## Доставка, self-test и активация
 
