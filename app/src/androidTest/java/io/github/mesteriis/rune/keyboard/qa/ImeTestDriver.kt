@@ -48,6 +48,10 @@ class ImeTestDriver {
     fun tearDown() {
         device.pressHome()
         restorePreferences()
+        // restorePreferences() runs on the instrumentation thread. Its commit makes the values
+        // visible immediately, but the IME listener is dispatched on the app's main thread.
+        // Drain that queue so the next test cannot inherit a stale keyboard layout.
+        instrumentation.waitForIdleSync()
         if (previousIme.isNotBlank() && previousIme != "null") shell("ime set $previousIme")
         if (!runeWasEnabled) shell("ime disable $IME_COMPONENT")
         val hardKeyboardSetting = previousHardKeyboardSetting.takeUnless { it.isBlank() || it == "null" } ?: "0"
