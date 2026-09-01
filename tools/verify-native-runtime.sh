@@ -20,8 +20,8 @@ while IFS= read -r line; do native_libraries+=("$line"); done < <(
 }
 
 for library in "${native_libraries[@]}"; do
-  needed=$($readelf_bin -d "$library" | sed -n 's/.*Shared library: \[\(.*\)\]/\1/p' | sort)
-  expected=$'libc.so\nlibc++_shared.so\nlibdl.so\nlibm.so'
+  needed=$($readelf_bin -d "$library" | sed -n 's/.*Shared library: \[\(.*\)\]/\1/p' | LC_ALL=C sort)
+  expected=$(printf '%s\n' libc.so libc++_shared.so libdl.so libm.so | LC_ALL=C sort)
   [[ "$needed" == "$expected" ]] || {
     echo "Unexpected DT_NEEDED for $library:" >&2
     echo "$needed" >&2
