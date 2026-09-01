@@ -30,6 +30,7 @@ jobs:
             --local-dir "$RUNNER_TEMP/rune-source" \
             --quiet
           cd "$RUNNER_TEMP/rune-source"
+          sha256sum model.safetensors
           sha256sum --check "$GITHUB_WORKSPACE/tools/model/rune-text-0.1/source.sha256"
       - name: Build in a clean pinned container
         run: |
