@@ -52,7 +52,11 @@ class ImeTestDriver {
         // visible immediately, but the IME listener is dispatched on the app's main thread.
         // Drain that queue so the next test cannot inherit a stale keyboard layout.
         instrumentation.waitForIdleSync()
-        if (previousIme.isNotBlank() && previousIme != "null") shell("ime set $previousIme")
+        if (previousIme == IME_COMPONENT) {
+            restartRuneIme()
+        } else if (previousIme.isNotBlank() && previousIme != "null") {
+            shell("ime set $previousIme")
+        }
         if (!runeWasEnabled) shell("ime disable $IME_COMPONENT")
         val hardKeyboardSetting = previousHardKeyboardSetting.takeUnless { it.isBlank() || it == "null" } ?: "0"
         shell("settings put secure show_ime_with_hard_keyboard $hardKeyboardSetting")
@@ -249,7 +253,8 @@ class ImeTestDriver {
         // API 26 restores the editor against the next input view.
         instrumentation.waitForIdleSync()
         device.pressBack()
-        shell("ime set $IME_COMPONENT")
+        instrumentation.waitForIdleSync()
+        restartRuneIme()
         resumeQa()
         focusField("qa_plain_text")
         eventually(WAIT_MILLIS) { (findKeyByText("1") != null) == enabled }
@@ -350,6 +355,34 @@ class ImeTestDriver {
         device.waitForIdle()
     }
 
+    private fun restartRuneIme() {
+        val fallback = sequenceOf(previousIme)
+            .plus(previousEnabledImes.split(':'))
+            .map { it.substringBefore(';').trim() }
+            .firstOrNull { candidate ->
+                candidate.isNotEmpty() &&
+                    candidate != "null" &&
+                    candidate != IME_COMPONENT &&
+                    candidate.matches(IME_COMPONENT_PATTERN)
+        }
+        checkNotNull(fallback) { "A second enabled IME is required to restart Rune deterministically" }
+        selectImeAndDrain(fallback)
+        selectImeAndDrain(IME_COMPONENT)
+    }
+
+    private fun selectImeAndDrain(component: String) {
+        shell("ime set $component")
+        eventually(WAIT_MILLIS) {
+            shell("settings get secure default_input_method") == component
+        }
+        check(shell("settings get secure default_input_method") == component) {
+            "Input method did not switch to $component"
+        }
+        // The shell setting is synchronous, while service unbind/bind callbacks are dispatched on
+        // the app main thread. Drain them before selecting the next IME.
+        instrumentation.waitForIdleSync()
+    }
+
     private fun waitForKeyboard() {
         check(device.wait(Until.hasObject(By.desc(targetContext.getString(R.string.key_delete))), WAIT_MILLIS)) {
             "Rune IME window did not become visible"
@@ -413,6 +446,7 @@ class ImeTestDriver {
         const val PREFERENCES_NAME = "keyboard_preferences"
         const val KEY_NUMBER_ROW = "number_row"
         const val KEY_PREVIEW = "key_preview"
+        private val IME_COMPONENT_PATTERN = Regex("[A-Za-z0-9._]+/[A-Za-z0-9._]+")
     }
 }
 
