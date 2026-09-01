@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.intelligence.delivery
 
 import java.io.InputStream
+import java.io.InterruptedIOException
 import java.io.OutputStream
 import java.security.MessageDigest
 
@@ -15,6 +16,9 @@ object VerifiedStreamCopier {
         val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
         var copied = 0L
         while (copied < expectedSize) {
+            if (Thread.currentThread().isInterrupted) {
+                throw InterruptedIOException("model copy was cancelled")
+            }
             val allowed = minOf(buffer.size.toLong(), expectedSize - copied).toInt()
             val count = input.read(buffer, 0, allowed)
             if (count < 0) throw StreamSizeException("stream ended at $copied of $expectedSize bytes")
@@ -22,6 +26,9 @@ object VerifiedStreamCopier {
             output.write(buffer, 0, count)
             digest.update(buffer, 0, count)
             copied += count
+        }
+        if (Thread.currentThread().isInterrupted) {
+            throw InterruptedIOException("model copy was cancelled")
         }
         if (input.read() != -1) throw StreamSizeException("stream exceeds $expectedSize bytes")
         return VerifiedCopyResult(copied, digest.digest().joinToString("") { "%02x".format(it) })

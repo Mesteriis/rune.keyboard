@@ -23,6 +23,7 @@ class ModelInstallCoordinator(
             store.write(DeliveryJournal())
             return
         }
+        if (journal.operation == JournalOperation.IDLE) return
         val id = journal.downloadId ?: downloads.findMatching(descriptor)?.also { recoveredId ->
             store.write(journal.copy(downloadId = recoveredId))
         } ?: run {

@@ -1,10 +1,32 @@
 package io.github.mesteriis.rune.keyboard.intelligence.model
 
 import io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryJournal
+import io.github.mesteriis.rune.keyboard.intelligence.delivery.DownloadObservation
 import io.github.mesteriis.rune.keyboard.intelligence.delivery.JournalOperation
 import io.github.mesteriis.rune.keyboard.intelligence.delivery.ModelFailureCode
 
 object OperationStateMapper {
+    fun map(journal: DeliveryJournal, download: DownloadObservation?): ModelOperationState {
+        if (
+            journal.downloadId != null &&
+            journal.operation in setOf(
+                JournalOperation.QUEUED,
+                JournalOperation.WAITING_UNMETERED,
+                JournalOperation.DOWNLOADING,
+            )
+        ) {
+            when (download) {
+                DownloadObservation.PENDING -> return ModelOperationState.Queued
+                DownloadObservation.RUNNING -> return ModelOperationState.Downloading(0, 0)
+                DownloadObservation.PAUSED -> return ModelOperationState.WaitingForUnmeteredNetwork
+                DownloadObservation.FAILED, DownloadObservation.MISSING ->
+                    return ModelOperationState.Failed(ModelFailure.DownloadFailed)
+                DownloadObservation.SUCCESSFUL, null -> Unit
+            }
+        }
+        return map(journal)
+    }
+
     fun map(journal: DeliveryJournal): ModelOperationState = when (journal.operation) {
         JournalOperation.IDLE -> ModelOperationState.Idle
         JournalOperation.QUEUED -> ModelOperationState.Queued

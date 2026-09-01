@@ -10,24 +10,32 @@ class ModelInstallJobService : JobService() {
         Thread(task, "rune-model-install").apply { priority = Thread.NORM_PRIORITY - 1 }
     }
     @Volatile private var running: Future<*>? = null
+    @Volatile private var stopped = false
 
     override fun onStartJob(params: JobParameters): Boolean {
+        stopped = false
         running = executor.submit {
             try {
-                ModelInstallCoordinator(applicationContext).run()
+                val store = DeliveryStateStore.forApplication(applicationContext)
+                ModelOperationGate(store.stateFile.parentFile!!).withLock {
+                    ModelInstallCoordinator(applicationContext).run()
+                }
             } finally {
-                jobFinished(params, false)
+                if (!stopped) jobFinished(params, false)
             }
         }
         return true
     }
 
     override fun onStopJob(params: JobParameters): Boolean {
+        stopped = true
         running?.cancel(true)
-        return true
+        // Reconciliation resumes when Model Settings opens or DownloadManager wakes the receiver.
+        return false
     }
 
     override fun onDestroy() {
+        stopped = true
         running?.cancel(true)
         executor.shutdownNow()
         super.onDestroy()
