@@ -23,6 +23,10 @@ enum class ModelFailureCode {
     IO_ERROR,
     IMPORT_FAILED,
     EXPORT_FAILED,
+    RUNTIME_LOAD_FAILED,
+    RUNTIME_SELF_TEST_FAILED,
+    RUNTIME_CANCELLED,
+    ROLLBACK_FAILED,
 }
 
 data class DeliveryJournal(

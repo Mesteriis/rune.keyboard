@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.intelligence.delivery
 
 import io.github.mesteriis.rune.keyboard.intelligence.model.ModelDescriptor
+import io.github.mesteriis.rune.keyboard.intelligence.model.ModelManifestParser
 import io.github.mesteriis.rune.keyboard.intelligence.model.VerifiedCandidate
 import java.io.File
 import java.io.FileInputStream
@@ -43,6 +44,10 @@ class CandidateInstaller(private val root: File) {
                 throw CandidateInstallException(ModelFailureCode.HASH_MISMATCH, "model digest does not match descriptor")
             }
             FileInputStream(stagedModel).use(GgufMetadataReader::read)
+            FileOutputStream(File(staging, MODEL_MANIFEST_NAME)).use { output ->
+                output.write(ModelManifestParser.encode(descriptor).toByteArray(Charsets.UTF_8))
+                output.fd.sync()
+            }
             beforePublish()
             if (!candidates.mkdirs() && !candidates.isDirectory) {
                 throw CandidateInstallException(ModelFailureCode.IO_ERROR, "cannot create candidate directory")
@@ -72,5 +77,9 @@ class CandidateInstaller(private val root: File) {
         if (!staging.exists()) return
         check(staging.parentFile == root) { "refusing to remove an unscoped path" }
         staging.deleteRecursively()
+    }
+
+    companion object {
+        const val MODEL_MANIFEST_NAME = "model-manifest.json"
     }
 }

@@ -8,21 +8,27 @@ import java.io.File
 class ModelInstallCoordinator(
     context: Context,
     private val descriptor: ModelDescriptor = EmbeddedModelDescriptor.load(context),
-) {
+) : AutoCloseable {
     private val appContext = context.applicationContext
     private val store = DeliveryStateStore.forApplication(appContext)
     private val root: File = store.stateFile.parentFile!!
     private val downloads = ModelDownloadClient(appContext)
     private val space = ModelStorageSpace(ModelDownloadClient.externalStaging(appContext), root)
+    private val activation = io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinator(
+        appContext,
+        descriptor,
+    )
 
     fun run() {
         val journal = store.read()
         val candidate = File(root, "candidates/${descriptor.id}-${descriptor.version}/${descriptor.fileName}")
-        if (candidate.isFile) {
+        if (candidate.isFile && journal.operation != JournalOperation.FAILED) {
             journal.downloadId?.let(downloads::remove)
-            store.write(DeliveryJournal())
+            activation.activateCandidate()
             return
         }
+        if (candidate.isFile) return
+        if (journal.operation == JournalOperation.IDLE) return
         val id = journal.downloadId ?: downloads.findMatching(descriptor)?.also { recoveredId ->
             store.write(journal.copy(downloadId = recoveredId))
         } ?: run {
@@ -52,7 +58,7 @@ class ModelInstallCoordinator(
                 }
             }
             downloads.remove(id)
-            store.write(DeliveryJournal())
+            activation.activateCandidate()
         } catch (error: CandidateInstallException) {
             fail(journal, error.failureCode)
         } catch (_: Exception) {
@@ -62,5 +68,13 @@ class ModelInstallCoordinator(
 
     private fun fail(journal: DeliveryJournal, code: ModelFailureCode) {
         store.write(journal.copy(operation = JournalOperation.FAILED, failureCode = code))
+    }
+
+    fun cancelCurrentOperation() {
+        activation.cancelCurrentOperation()
+    }
+
+    override fun close() {
+        activation.close()
     }
 }

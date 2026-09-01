@@ -49,6 +49,8 @@ Rune регистрирует один системный subtype на три я
 - `settings` — снапшот настроек, их хранение и экраны onboarding/настроек.
 - `intelligence/model` — descriptor/snapshot/operation types и строгий manifest schema;
 - `intelligence/delivery` — DownloadManager adapter, AtomicFile journal, private candidate install и SAF transfer.
+- `intelligence/runtime` — self-test orchestration, атомарный active pointer и единственный rollback slot;
+- `:runtime-llama` — pinned llama.cpp, opaque JNI handle и CPU-only `load/selfTest/cancel/unload`.
 
 Подсистема модели не зависит от `ime/**`, а статический gate запрещает обратную зависимость. В 0.2 runtime предоставляет только `load/selfTest/cancel/unload`; typing API и общий `generate()` отсутствуют.
 
@@ -95,9 +97,15 @@ Compatibility scan покрывает ZWJ, emoji modifiers, regional-indicator f
 
 Direct Boot в 0.1 выключен: его нельзя честно включить без device-protected preferences и отдельной lockscreen-проверки после перезагрузки.
 
+## Доставка, self-test и активация
+
+External app-specific каталог — только недоверенный staging системного `DownloadManager`. Worker в процессе `:model_worker` открывает результат через `openDownloadedFile()`, одним ограниченным проходом копирует его в private `.installing`, считает SHA-256, делает `fsync` и только затем проверяет GGUF v3, `qwen3` и `file_type=15`. Кандидат публикуется атомарным rename в `noBackupFilesDir`; старый active при этом не скрывается.
+
+Pinned JNI runtime загружает candidate с отключённым logger, выполняет warm-up и не более четырёх greedy tokens при `n_ctx=256`/`n_batch=64`, проверяет непустой UTF-8 и не возвращает output. После успеха candidate атомарно становится versioned active, прежний active — единственным rollback. Opaque handle владеет model через RAII; глобальные model/context pointers отсутствуют. Отмена соединена с load-progress и decode-abort callbacks.
+
 ## Производительность
 
-- один процесс и один модуль;
+- IME остаётся в основном процессе; install/self-test выполняются worker service в `:model_worker`;
 - нет runtime-зависимостей кроме Kotlin stdlib, встроенной AGP;
 - нет I/O на пути нажатия клавиши;
 - один основной `InputConnection` вызов на действие (двойной пробел — один batch edit);

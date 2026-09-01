@@ -18,4 +18,8 @@ object ModelDeliveryJobScheduler {
         )
         return result == JobScheduler.RESULT_SUCCESS
     }
+
+    fun cancel(context: Context) {
+        context.getSystemService(JobScheduler::class.java).cancel(JOB_ID)
+    }
 }

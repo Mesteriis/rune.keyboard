@@ -35,6 +35,11 @@
         android:exported="false"
         android:label="@string/settings_languages_title" />
 
+    <activity
+        android:name=".intelligence.ui.ModelSettingsActivity"
+        android:exported="false"
+        android:label="@string/model_settings_title" />
+
     <service
         android:name=".ime.RuneInputMethodService"
         android:exported="true"

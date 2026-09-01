@@ -7,6 +7,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test
 import org.junit.runner.RunWith
+import io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsActivity
 
 @RunWith(AndroidJUnit4::class)
 class ModelDeliveryManifestInstrumentedTest {
@@ -16,7 +17,8 @@ class ModelDeliveryManifestInstrumentedTest {
         @Suppress("DEPRECATION")
         val info = context.packageManager.getPackageInfo(
             context.packageName,
-            PackageManager.GET_PERMISSIONS or PackageManager.GET_SERVICES or PackageManager.GET_RECEIVERS,
+            PackageManager.GET_PERMISSIONS or PackageManager.GET_SERVICES or
+                PackageManager.GET_RECEIVERS or PackageManager.GET_ACTIVITIES,
         )
 
         assertEquals(setOf("android.permission.INTERNET"), info.requestedPermissions.orEmpty().toSet())
@@ -25,5 +27,7 @@ class ModelDeliveryManifestInstrumentedTest {
         assertFalse(worker.exported)
         assertEquals("android.permission.BIND_JOB_SERVICE", worker.permission)
         assertFalse(receiver.exported)
+        val modelSettings = info.activities.orEmpty().single { it.name == ModelSettingsActivity::class.java.name }
+        assertFalse(modelSettings.exported)
     }
 }

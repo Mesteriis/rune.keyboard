@@ -26,15 +26,24 @@ Rune Keyboard — компактная приватная Android-клавиат
 
 - JDK 17;
 - Android SDK Platform 37 и Build Tools 36.0.0;
+- Android NDK `29.0.14206865` и CMake `3.31.6`;
 - Android 8.0 (API 26) или новее.
+
+После клонирования нужен pinned submodule runtime:
+
+```bash
+git submodule update --init --recursive
+```
 
 При настроенных стандартных `JAVA_HOME` и `ANDROID_HOME` полная проверка запускается так:
 
 ```bash
-./gradlew testDebugUnitTest lint assembleDebug assembleRelease privacyGateRelease
+./gradlew testDebugUnitTest lint assembleDebug assembleRelease assembleProfile \
+  privacyGateRelease privacyGateProfile imeIntelligenceBoundary \
+  forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate
 ```
 
-`privacyGateRelease` проверяет ровно одно разрешение `INTERNET`, отключённые cleartext/backup и отсутствие логирования. `imeIntelligenceBoundary` запрещает сети, доставке модели и native runtime попадать в `ime/**`.
+`privacyGateRelease` проверяет ровно одно разрешение `INTERNET`, отключённые cleartext/backup и отсутствие логирования. `imeIntelligenceBoundary` запрещает сети, доставке модели и native runtime попадать в `ime/**`; native gate проверяет ABI, зависимости и отсутствие JNI/log/network symbols.
 
 Подпись release-сборки описана в [docs/RELEASE.md](docs/RELEASE.md); без keystore release собирается неподписанным.
 

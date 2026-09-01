@@ -10,21 +10,30 @@ class ModelInstallJobService : JobService() {
         Thread(task, "rune-model-install").apply { priority = Thread.NORM_PRIORITY - 1 }
     }
     @Volatile private var running: Future<*>? = null
+    @Volatile private var coordinator: ModelInstallCoordinator? = null
+    @Volatile private var stopped = false
 
     override fun onStartJob(params: JobParameters): Boolean {
+        stopped = false
         running = executor.submit {
+            val current = ModelInstallCoordinator(applicationContext).also { coordinator = it }
             try {
-                ModelInstallCoordinator(applicationContext).run()
+                current.run()
             } finally {
-                jobFinished(params, false)
+                current.close()
+                coordinator = null
+                if (!stopped) jobFinished(params, false)
             }
         }
         return true
     }
 
     override fun onStopJob(params: JobParameters): Boolean {
+        stopped = true
+        coordinator?.cancelCurrentOperation()
         running?.cancel(true)
-        return true
+        // Journal/private files are reconciled explicitly when Model Settings opens again.
+        return false
     }
 
     override fun onDestroy() {

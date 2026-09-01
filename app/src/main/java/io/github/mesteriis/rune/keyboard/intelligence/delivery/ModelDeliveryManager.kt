@@ -17,12 +17,15 @@ class ModelDeliveryManager(
     )
 
     fun enqueueDownload(allowMetered: Boolean = false): Long {
-        space.requireCapacity(descriptor)
-        store.write(DeliveryJournal(JournalOperation.QUEUED, downloadId = null, allowMetered = allowMetered))
         return try {
+            space.requireCapacity(descriptor)
+            store.write(DeliveryJournal(JournalOperation.QUEUED, downloadId = null, allowMetered = allowMetered))
             downloads.enqueue(descriptor, allowMetered).also { id ->
                 store.write(DeliveryJournal(JournalOperation.QUEUED, id, allowMetered))
             }
+        } catch (error: CandidateInstallException) {
+            store.write(DeliveryJournal(JournalOperation.FAILED, failureCode = error.failureCode))
+            throw error
         } catch (error: Exception) {
             store.write(DeliveryJournal(JournalOperation.FAILED, failureCode = ModelFailureCode.DOWNLOAD_FAILED))
             throw error
@@ -39,7 +42,21 @@ class ModelDeliveryManager(
         ModelDeliveryJobScheduler.schedule(context)
     }
 
+    fun retry(): Long? {
+        val candidate = File(
+            store.stateFile.parentFile,
+            "candidates/${descriptor.id}-${descriptor.version}/${descriptor.fileName}",
+        )
+        if (candidate.isFile) {
+            store.write(DeliveryJournal())
+            ModelDeliveryJobScheduler.schedule(context)
+            return null
+        }
+        return enqueueDownload()
+    }
+
     fun cancel() {
+        ModelDeliveryJobScheduler.cancel(context)
         val current = store.read()
         current.downloadId?.let(downloads::remove) ?: downloads.removeMatching(descriptor)
         store.write(DeliveryJournal())
@@ -52,7 +69,7 @@ class ModelDeliveryManager(
     fun deleteAllModels() {
         cancel()
         val root = store.stateFile.parentFile!!
-        listOf("active", "rollback", "candidates", ".installing").forEach { name ->
+        listOf("versions", "candidates", ".installing").forEach { name ->
             val target = File(root, name)
             check(target.parentFile == root) { "refusing to remove an unscoped path" }
             target.deleteRecursively()

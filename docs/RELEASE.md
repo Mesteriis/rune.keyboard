@@ -33,7 +33,8 @@ which is what CI does.
 
 ```bash
 ./gradlew clean testDebugUnitTest lint assembleDebug assembleRelease assembleProfile \
-  privacyGateRelease privacyGateProfile
+  privacyGateRelease privacyGateProfile imeIntelligenceBoundary \
+  forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate
 ```
 
 With local signing configured, the signed artifact lands at
@@ -47,12 +48,14 @@ unsigned release output as `rune-release-unsigned.apk`, plus `lint-results` and
 
 1. `privacyGateRelease` passes — merged release/profile manifests contain exactly
    `android.permission.INTERNET`, cleartext and backup are disabled, and Rune-owned code does not log.
-2. The embedded model size/SHA match the immutable `model-rune-text-v0.1.0` asset and its
+2. `tools/verify-native-runtime.sh app/build/outputs/apk/release/app-release-unsigned.apk`
+   confirms exactly `arm64-v8a + x86_64`, `JNI_OnLoad`, the allowed native dependencies and no Rune JNI logging/network symbols.
+3. The embedded model size/SHA match the immutable `model-rune-text-v0.1.0` asset and its
    two-run reproducibility/Fold qualification evidence.
-3. Work through `docs/ACCEPTANCE.md` on a physical device, including model delivery/runtime, fold and settings.
-4. Install the release APK on a clean device and complete onboarding without ADB:
+4. Work through `docs/ACCEPTANCE.md` on a physical device, including model delivery/runtime, fold and settings.
+5. Install the release APK on a clean device and complete onboarding without ADB:
    open Rune → enable → select → the status card reads **Active**.
-5. Turn on airplane mode and type a message in all three languages.
+6. Turn on airplane mode and type a message in all three languages.
 
 ## Install
 
