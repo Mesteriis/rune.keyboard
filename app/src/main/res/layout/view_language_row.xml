@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="56dp"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/settings_row_padding"
+    android:paddingEnd="@dimen/settings_row_padding">
+
+  <CheckBox
+      android:id="@+id/language_enabled"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:minWidth="48dp"
+      android:minHeight="48dp" />
+
+  <TextView
+      android:id="@+id/language_name"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_weight="1"
+      android:textColor="@color/setup_text_primary"
+      android:textSize="17sp" />
+
+  <Button
+      android:id="@+id/language_move_up"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:minWidth="48dp"
+      android:minHeight="48dp"
+      android:text="@string/settings_language_move_up" />
+
+  <Button
+      android:id="@+id/language_move_down"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="4dp"
+      android:minWidth="48dp"
+      android:minHeight="48dp"
+      android:text="@string/settings_language_move_down" />
+</LinearLayout>

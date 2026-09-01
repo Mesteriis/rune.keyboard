@@ -17,4 +17,6 @@
   <color name="key_text">#F8FAFC</color>
   <color name="key_text_accent">#DCE4FF</color>
   <color name="icon_background">#335CFF</color>
+  <color name="key_popup_background">#1F2A3C</color>
+  <color name="key_popup_border">#475569</color>
 </resources>

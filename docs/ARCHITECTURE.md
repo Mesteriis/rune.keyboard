@@ -10,7 +10,9 @@ Rune оптимизируется под низкую задержку, пред
 Android editor / EditorInfo
           │
           ▼
-RuneInputMethodService ── lifecycle, InputConnection, system feedback
+RuneInputMethodService ── lifecycle, InputConnection, settings snapshot, feedback
+          │
+          ├──── SpaceGestureDetector ── touches → tap / double tap / swipe / cursor
           │
           ▼
 KeyboardReducer ───────── (state, action, editor context) → state + command
@@ -18,44 +20,77 @@ KeyboardReducer ───────── (state, action, editor context) → 
           ├──────────────► EditorCommandExecutor → InputConnection
           │
           ▼
-KeyboardLayoutProvider ── immutable KeySpec rows
+KeyboardLayoutProvider ── immutable KeySpec rows (+ LayoutOptions)
           │
           ▼
-RuneKeyboardView ──────── accessible View keys and touch/repeat handling
+RuneKeyboardView ──────── accessible View keys, popups, touch/repeat handling
 ```
 
-`RuneInputMethodService` остаётся оркестратором Android lifecycle. Переходы Shift/language/symbols и mapping Enter вынесены в синхронный reducer и покрываются обычными JVM-тестами. Рендер не пересобирается на каждом обычном символе: только при изменении состояния или контекста редактора.
+`RuneInputMethodService` остаётся оркестратором Android lifecycle. Переходы Shift/language/symbols, mapping Enter, арбитраж жестов пробела, правило двойного пробела и политика ускорения Backspace вынесены в чистый Kotlin и покрываются обычными JVM-тестами. Рендер не пересобирается на каждом обычном символе: только при изменении состояния или контекста редактора.
 
-Rune регистрирует один двуязычный системный subtype. Переключение EN/RU происходит внутри reducer и сохраняется как несекретная preference, поэтому обе раскладки доступны сразу после включения IME и не зависят от отдельно активированных Android-subtype.
+Rune регистрирует один системный subtype на три языка. Переключение EN/RU/ES происходит внутри reducer по пользовательскому порядку из настроек, поэтому все раскладки доступны сразу после включения IME и не зависят от отдельно активированных Android-subtype.
+
+## Жесты
+
+Жесты живут только на управляющих клавишах. Пробел — отдельный `SpaceKeyView`, буквенные клавиши (`KeyboardKeyView`) физически не содержат жестового кода, поэтому glide typing невозможен не по настройке, а по устройству кода.
+
+`SpaceGestureDetector` — одна state machine (`Idle`, `TapCandidate`, `Pressed`, `DoubleTapCandidate`, `LanguageSwipe`, `CursorMode`, `Cancelled`), которая арбитрирует тап, двойной тап, горизонтальный свайп смены языка и удержание для перемещения курсора. Она не читает время и не планирует таймеры: события и таймауты приходят снаружи, поэтому весь жестовый контракт тестируется на JVM.
+
+Курсор двигается DPAD-событиями: редактор сам шагает по grapheme-кластерам, работает в `TYPE_NULL`-полях, и Rune при этом не читает текст.
 
 ## Границы пакетов
 
-- `ime/model` — типизированные действия, состояние, контекст редактора, reducer и команды;
-- `ime/layout` — EN/RU/symbol/numeric спецификации клавиш;
-- `ime/ui` — доступные View-клавиши, long press и Backspace repeat;
+- `ime/model` — типизированные действия, состояние, контекст редактора, session policy, reducer и команды;
+- `ime/gesture` — чистые правила жестов и расписание повтора Backspace;
+- `ime/layout` — EN/RU/ES, две страницы символов, numeric/phone спецификации клавиш и таблицы long-press;
+- `ime/ui` — доступные View-клавиши, popup preview и alternates, геометрия попапов;
+- `ime/feedback` — политика haptic/звука и её исполнитель;
 - `ime/editor` — единственная точка записи через `InputConnection`;
-- `settings` — launcher-экран для системного enable/select flow.
+- `settings` — снапшот настроек, их хранение и экраны onboarding/настроек.
 
 Платформенные `android.inputmethodservice.Keyboard` и `KeyboardView` не используются: они deprecated с API 29. View-подход выбран вместо Canvas, чтобы каждая клавиша сразу имела корректную focus/click/long-click семантику TalkBack без отдельного виртуального accessibility tree.
 
+## Настройки и session state
+
+Persistent (`SharedPreferences`, файл `keyboard_preferences`): включённые языки и их порядок, стартовый язык, высота по профилям экрана, отступы, цифровой ряд, тема, haptic, звук, preview, двойной пробел. Читаются кодеком `SettingsCodec` в immutable снапшот `KeyboardSettings`; любое некорректное значение честно падает в default, поэтому испорченный файл настроек не мешает клавиатуре запуститься.
+
+Session (только в памяти): активный редактор, язык, Shift, слой, состояние жеста.
+
+Снапшот читается один раз на старте сессии и обновляется через `OnSharedPreferenceChangeListener`, поэтому на пути нажатия клавиши нет I/O. Изменения, влияющие на внешний вид, пересоздают input view; остальные просто подменяют снапшот.
+
+Профили размеров выбираются по `smallestScreenWidthDp` (граница 600dp совпадает с ресурсным квалификатором `sw600dp`), отдельно для внешнего и внутреннего экрана Fold и для каждой ориентации. Вендорные Fold API не используются.
+
+Тема переопределяется через `createConfigurationContext` с форсированным `uiMode`: палитра живёт в квалификаторах `values`/`values-night`, и только конфигурационный контекст переразрешает её корректно.
+
+## Fold и сессия редактора
+
+Складывание и раскладывание — обычная смена конфигурации: фреймворк пересоздаёт input view и повторно вызывает `onStartInput(restarting = true)` для того же редактора. `KeyboardSessionPolicy` в этом случае сохраняет предыдущее состояние, поэтому Shift, Caps Lock, слой и язык не теряются. Единственная точка сброса — `onStartInput(restarting = false)`; `onFinishInput` состояние не сбрасывает, потому что некоторые прошивки перемешивают его с restarting-стартом во время fold-перехода.
+
 ## Приватность и безопасность
 
-- manifest не объявляет разрешения пользователя и не содержит `INTERNET`;
+- manifest не объявляет ни одного разрешения; `privacyGateRelease` падает, если разрешение или логирование появится;
 - service экспортирован только с signature permission `android.permission.BIND_INPUT_METHOD`;
 - backup и cleartext traffic отключены;
-- используются только числовые границы selection из `EditorInfo`/`onUpdateSelection` и вычисленный
-  из них факт наличия выделения; содержимое selection и surrounding text не читается и не логируется;
-- Backspace опирается на этот факт и `deleteSurroundingTextInCodePoints`, не извлекая текст редактора;
-- выбранный язык хранится как единственная несекретная preference; история ввода не сохраняется;
+- вибрация реализована через `View.performHapticFeedback`, поэтому Rune не просит `android.permission.VIBRATE`; интенсивности выражены платформенными haptic-константами, а не амплитудами;
+- `EditorContext.inputPolicy` (`NORMAL`/`SENSITIVE`) — единая точка, которую обязаны спрашивать компоненты, работающие с текстом. `SENSITIVE` включается для password-полей и `IME_FLAG_NO_PERSONALIZED_LEARNING`; он, в частности, выключает popup preview. Значение `INCOGNITO` появится вместе с первой обучающейся подсистемой — пустую заглушку заранее не вводим;
 - история, composing buffer, clipboard, аналитика и crash SDK отсутствуют.
 
-Direct Boot в MVP выключен: его нельзя честно включить без device-protected preferences и отдельной lockscreen-проверки после перезагрузки.
+### Осознанное расширение инварианта чтения текста
+
+До Rune 0.1 клавиатура читала из редактора только `getCursorCapsMode` и числовые границы selection. Правило двойного пробела (SPACE-002) требует знать символ перед курсором, иначе оно ломается после любого перемещения курсора или правки из приложения. Поэтому Rune делает ограниченное чтение `getTextBeforeCursor(2, 0)`:
+
+- только в момент второго тапа по пробелу и при последующем Backspace-откате;
+- только в plain-text полях: `EditorMode.TEXT`, не password, не `TYPE_NULL`;
+- прочитанное не сохраняется, не логируется и не сравнивается ни с чем, кроме правил в `DoubleSpacePeriod`.
+
+Direct Boot в 0.1 выключен: его нельзя честно включить без device-protected preferences и отдельной lockscreen-проверки после перезагрузки.
 
 ## Производительность
 
 - один процесс и один модуль;
 - нет runtime-зависимостей кроме Kotlin stdlib, встроенной AGP;
 - нет I/O на пути нажатия клавиши;
-- один основной `InputConnection` вызов на действие;
-- повтор удаления отменяется на `UP`, `CANCEL`, уходе пальца и detach View;
+- один основной `InputConnection` вызов на действие (двойной пробел — один batch edit);
+- popup-окна создаются один раз и переиспользуются, на `ACTION_DOWN` ничего не инфлейтится;
+- повтор удаления отменяется на `UP`, `CANCEL`, уходе пальца и detach View; жестовое состояние возвращается в `Idle` через общий `cancelActiveTouches`;
 - R8 и resource shrinking включены для release.

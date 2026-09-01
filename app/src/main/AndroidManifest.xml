@@ -14,13 +14,24 @@
 
     <activity
         android:name=".settings.SetupActivity"
-        android:exported="true">
+        android:exported="true"
+        android:windowSoftInputMode="stateHidden|adjustResize">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <activity
+        android:name=".settings.SettingsActivity"
+        android:exported="true"
+        android:label="@string/settings_title" />
+
+    <activity
+        android:name=".settings.LanguageSettingsActivity"
+        android:exported="false"
+        android:label="@string/settings_languages_title" />
 
     <service
         android:name=".ime.RuneInputMethodService"

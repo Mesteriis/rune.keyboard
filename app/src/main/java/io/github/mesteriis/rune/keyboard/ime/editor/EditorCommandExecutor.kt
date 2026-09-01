@@ -46,7 +46,73 @@ object EditorCommandExecutor {
                 insertNewline(inputConnection)
             },
         )
-        EditorCommand.SwitchToNextInputMethod -> EditorExecutionResult(handled = false)
+        EditorCommand.ConvertPrecedingSpaceToPeriod -> textMutationResult(
+            convertPrecedingSpaceToPeriod(inputConnection),
+        )
+        EditorCommand.RevertDoubleSpacePeriod -> textMutationResult(
+            revertDoubleSpacePeriod(
+                inputConnection = inputConnection,
+                hasSelection = hasSelection,
+                requiresRawKeyEvents = requiresRawKeyEvents,
+            ),
+        )
+        is EditorCommand.MoveCursor -> {
+            val plan = cursorKeyPlan(command.steps)
+            var allSent = true
+            repeat(plan.presses) {
+                allSent = sendKey(inputConnection, plan.keyCode) && allSent
+            }
+            EditorExecutionResult(handled = allSent, clearsSelection = true)
+        }
+        EditorCommand.SwitchToNextInputMethod,
+        EditorCommand.HideKeyboard,
+        -> EditorExecutionResult(handled = false)
+    }
+
+    internal data class CursorKeyPlan(val keyCode: Int, val presses: Int)
+
+    /**
+     * Cursor mode moves through the editor's own arrow-key handling: it steps by grapheme
+     * cluster, works in TYPE_NULL editors, and needs no text or selection reads.
+     */
+    internal fun cursorKeyPlan(steps: Int): CursorKeyPlan = CursorKeyPlan(
+        keyCode = if (steps < 0) KeyEvent.KEYCODE_DPAD_LEFT else KeyEvent.KEYCODE_DPAD_RIGHT,
+        presses = if (steps < 0) -steps else steps,
+    )
+
+    private fun convertPrecedingSpaceToPeriod(inputConnection: InputConnection): Boolean {
+        val before = inputConnection.getTextBeforeCursor(2, 0)
+        if (!DoubleSpacePeriod.canConvert(before)) {
+            return inputConnection.commitText(" ", 1)
+        }
+        inputConnection.beginBatchEdit()
+        return try {
+            inputConnection.deleteSurroundingText(1, 0) &&
+                inputConnection.commitText(". ", 1)
+        } finally {
+            inputConnection.endBatchEdit()
+        }
+    }
+
+    private fun revertDoubleSpacePeriod(
+        inputConnection: InputConnection,
+        hasSelection: Boolean,
+        requiresRawKeyEvents: Boolean,
+    ): Boolean {
+        if (hasSelection || requiresRawKeyEvents) {
+            return deletePreviousCodePoint(inputConnection, hasSelection, requiresRawKeyEvents)
+        }
+        val before = inputConnection.getTextBeforeCursor(2, 0)
+        if (!DoubleSpacePeriod.canRevert(before)) {
+            return deletePreviousCodePoint(inputConnection, hasSelection = false, requiresRawKeyEvents = false)
+        }
+        inputConnection.beginBatchEdit()
+        return try {
+            inputConnection.deleteSurroundingText(2, 0) &&
+                inputConnection.commitText(" ", 1)
+        } finally {
+            inputConnection.endBatchEdit()
+        }
     }
 
     private fun deletePreviousCodePoint(

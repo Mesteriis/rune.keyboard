@@ -1,24 +1,23 @@
 package io.github.mesteriis.rune.keyboard.settings
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.ComponentName
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.view.WindowInsets
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.ScrollView
 import android.widget.TextView
 import io.github.mesteriis.rune.keyboard.R
 
-class SetupActivity : Activity() {
+class SetupActivity : ThemedActivity() {
     private val inputMethodManager: InputMethodManager by lazy {
         getSystemService(InputMethodManager::class.java)
     }
 
     private lateinit var statusView: TextView
+    private var appliedTheme = ThemePreference.SYSTEM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,13 +30,30 @@ class SetupActivity : Activity() {
         findViewById<Button>(R.id.select_keyboard_button).setOnClickListener {
             inputMethodManager.showInputMethodPicker()
         }
+        findViewById<Button>(R.id.languages_button).setOnClickListener {
+            startActivity(Intent(this, LanguageSettingsActivity::class.java))
+        }
+        findViewById<Button>(R.id.open_settings_button).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
 
-        applySystemBarInsets(findViewById(R.id.setup_scroll))
+        applySystemBarInsets(findViewById<View>(R.id.setup_scroll))
+        appliedTheme = themePreference()
     }
 
     override fun onResume() {
         super.onResume()
+        if (themePreference() != appliedTheme) {
+            recreate()
+            return
+        }
         updateKeyboardStatus()
+    }
+
+    /** The keyboard picker is a system dialog that never pauses this activity. */
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) updateKeyboardStatus()
     }
 
     private fun openInputMethodSettings() {
@@ -49,37 +65,44 @@ class SetupActivity : Activity() {
     }
 
     private fun updateKeyboardStatus() {
-        val isEnabled = inputMethodManager.enabledInputMethodList.any { inputMethod ->
-            inputMethod.packageName == packageName
-        }
+        val status = resolveStatus()
         statusView.setText(
-            if (isEnabled) R.string.setup_status_enabled else R.string.setup_status_disabled,
+            when (status) {
+                SetupStatus.ACTIVE -> R.string.setup_status_active
+                SetupStatus.ENABLED -> R.string.setup_status_enabled
+                SetupStatus.DISABLED -> R.string.setup_status_disabled
+            },
         )
         statusView.setTextColor(
-            getColor(if (isEnabled) R.color.status_enabled else R.color.status_disabled),
+            getColor(
+                when (status) {
+                    SetupStatus.ACTIVE -> R.color.status_enabled
+                    SetupStatus.ENABLED -> R.color.rune_primary
+                    SetupStatus.DISABLED -> R.color.status_disabled
+                },
+            ),
         )
     }
 
-    @Suppress("DEPRECATION")
-    private fun applySystemBarInsets(scrollView: ScrollView) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
-
-        window.setDecorFitsSystemWindows(false)
-        val initialLeft = scrollView.paddingLeft
-        val initialTop = scrollView.paddingTop
-        val initialRight = scrollView.paddingRight
-        val initialBottom = scrollView.paddingBottom
-        scrollView.setOnApplyWindowInsetsListener { view, windowInsets ->
-            val safeInsets = windowInsets.getInsets(
-                WindowInsets.Type.systemBars() or WindowInsets.Type.displayCutout(),
-            )
-            view.setPadding(
-                initialLeft + safeInsets.left,
-                initialTop + safeInsets.top,
-                initialRight + safeInsets.right,
-                initialBottom + safeInsets.bottom,
-            )
-            windowInsets
+    private fun resolveStatus(): SetupStatus {
+        val isEnabled = inputMethodManager.enabledInputMethodList.any { inputMethod ->
+            inputMethod.packageName == packageName
         }
+        if (!isEnabled) return SetupStatus.DISABLED
+        return if (isDefaultInputMethod()) SetupStatus.ACTIVE else SetupStatus.ENABLED
+    }
+
+    private fun isDefaultInputMethod(): Boolean {
+        val current = Settings.Secure.getString(
+            contentResolver,
+            Settings.Secure.DEFAULT_INPUT_METHOD,
+        ) ?: return false
+        return ComponentName.unflattenFromString(current)?.packageName == packageName
+    }
+
+    private enum class SetupStatus {
+        DISABLED,
+        ENABLED,
+        ACTIVE,
     }
 }

@@ -9,12 +9,22 @@ enum class KeyStyle {
     SPACER,
 }
 
+/** One cell of the long-press popup. The first entry is pre-selected when the popup opens. */
+data class KeyAlternate(
+    val label: String,
+    val action: KeyboardAction,
+) {
+    init {
+        require(label.isNotEmpty()) { "Alternate label must not be empty" }
+    }
+}
+
 data class KeySpec(
     val label: String,
     val action: KeyboardAction?,
     val weight: Float = 1f,
     val style: KeyStyle = KeyStyle.CHARACTER,
-    val longPressAction: KeyboardAction? = null,
+    val longPressAlternates: List<KeyAlternate> = emptyList(),
     val accessibilityLabel: String? = null,
 ) {
     init {
@@ -36,5 +46,12 @@ data class KeyboardLayout(val rows: List<List<KeySpec>>) {
     init {
         require(rows.isNotEmpty()) { "Keyboard must contain rows" }
         require(rows.none { it.isEmpty() }) { "Keyboard rows must not be empty" }
+    }
+}
+
+/** Presentation options that never participate in a state transition. */
+data class LayoutOptions(val showNumberRow: Boolean = false) {
+    companion object {
+        val DEFAULT = LayoutOptions()
     }
 }

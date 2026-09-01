@@ -12,6 +12,16 @@ enum class EditorMode {
     DATE_TIME,
 }
 
+/**
+ * Runtime input policy every text-touching component must consult.
+ * SENSITIVE forbids anything beyond plain committing: no preview popups, no text reads,
+ * no learning. An INCOGNITO value joins this enum once learning subsystems exist.
+ */
+enum class InputPolicy {
+    NORMAL,
+    SENSITIVE,
+}
+
 data class EditorContext(
     val inputType: Int,
     val imeOptions: Int,
@@ -20,11 +30,23 @@ data class EditorContext(
     val allowsSignedNumber: Boolean,
     val allowsDecimalNumber: Boolean,
     val requiresRawKeyEvents: Boolean,
+    val isMultiLine: Boolean = false,
+    val noPersonalizedLearning: Boolean = false,
     val customActionId: Int? = null,
     val customActionLabel: String? = null,
 ) {
+    val inputPolicy: InputPolicy
+        get() = if (isPassword || noPersonalizedLearning) InputPolicy.SENSITIVE else InputPolicy.NORMAL
+
     val supportsAutomaticCapitalization: Boolean
         get() = mode == EditorMode.TEXT && !isPassword
+
+    /**
+     * Double space converts to ". " only where a sentence separator makes sense and where the
+     * bounded two-character guard read is acceptable: plain text, never passwords, never TYPE_NULL.
+     */
+    val supportsDoubleSpacePeriod: Boolean
+        get() = mode == EditorMode.TEXT && !isPassword && !requiresRawKeyEvents
 
     companion object {
         fun from(editorInfo: EditorInfo): EditorContext = from(
@@ -61,6 +83,10 @@ data class EditorContext(
                 allowsSignedNumber = inputType and InputType.TYPE_NUMBER_FLAG_SIGNED != 0,
                 allowsDecimalNumber = inputType and InputType.TYPE_NUMBER_FLAG_DECIMAL != 0,
                 requiresRawKeyEvents = inputType == InputType.TYPE_NULL,
+                isMultiLine = inputClass == InputType.TYPE_CLASS_TEXT &&
+                    inputType and InputType.TYPE_TEXT_FLAG_MULTI_LINE != 0,
+                noPersonalizedLearning = imeOptions and
+                    EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING != 0,
             )
         }
 

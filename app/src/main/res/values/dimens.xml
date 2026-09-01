@@ -3,10 +3,19 @@
   <dimen name="setup_page_padding">24dp</dimen>
   <dimen name="setup_section_spacing">20dp</dimen>
   <dimen name="setup_card_padding">20dp</dimen>
+  <dimen name="settings_row_padding">16dp</dimen>
   <dimen name="keyboard_padding">4dp</dimen>
+  <dimen name="keyboard_key_gap_tight">2dp</dimen>
   <dimen name="keyboard_key_gap">3dp</dimen>
+  <dimen name="keyboard_key_gap_wide">5dp</dimen>
   <dimen name="keyboard_key_height">52dp</dimen>
   <dimen name="keyboard_key_text_size">21sp</dimen>
   <dimen name="keyboard_action_text_size">18sp</dimen>
+  <dimen name="keyboard_preview_width">48dp</dimen>
+  <dimen name="keyboard_preview_height">58dp</dimen>
+  <dimen name="keyboard_preview_text_size">30sp</dimen>
+  <dimen name="keyboard_popup_cell_width">44dp</dimen>
+  <dimen name="keyboard_popup_row_height">52dp</dimen>
+  <dimen name="keyboard_popup_text_size">22sp</dimen>
+  <dimen name="keyboard_popup_vertical_gap">4dp</dimen>
 </resources>
-
