@@ -123,6 +123,9 @@ jobs:
           disk-size: ${{ matrix.disk-size }}
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save
+          pre-emulator-launch-script: |
+            ./gradlew assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest
+            ./gradlew --stop
           script: |
             ./gradlew installDebug
             adb shell settings put secure show_ime_with_hard_keyboard 1
