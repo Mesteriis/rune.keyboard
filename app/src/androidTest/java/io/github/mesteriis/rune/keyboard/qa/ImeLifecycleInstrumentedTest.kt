@@ -21,9 +21,10 @@ class ImeLifecycleInstrumentedTest : ImeTestBase() {
     @Test
     fun backspaceRepeatStopsWhenImeViewDetaches() {
         driver.tapQaControl("qa_seed_canary")
-        driver.touchDown(driver.deleteKey())
+        val touch = driver.touchDown(driver.deleteKey())
         SystemClock.sleep(700)
         driver.shell("am start -W -n ${ImeTestDriver.PACKAGE_NAME}/.settings.SettingsActivity")
+        driver.cancelTouch(touch)
         SystemClock.sleep(900)
         driver.device.pressBack()
         driver.focusField("qa_plain_text")
@@ -35,8 +36,9 @@ class ImeLifecycleInstrumentedTest : ImeTestBase() {
     @Test
     fun focusLossCancelsAnArmedCharacterGesture() {
         driver.tapQaControl("qa_seed_cursor")
-        driver.touchDown(driver.characterKey("a", "A"))
+        val touch = driver.touchDown(driver.characterKey("a", "A"))
         driver.shell("am start -W -n ${ImeTestDriver.PACKAGE_NAME}/.settings.SettingsActivity")
+        driver.cancelTouch(touch)
         driver.device.pressBack()
         driver.focusField("qa_plain_text")
         driver.awaitFieldText("qa_plain_text", "leftright")
