@@ -76,8 +76,12 @@ jobs:
         include:
           - api-level: '26'
             target: google_apis
+            gpu-mode: swiftshader
+            emulator-features: ''
           - api-level: '37.0'
             target: google_apis_ps16k
+            gpu-mode: software
+            emulator-features: -feature -Vulkan
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -98,7 +102,7 @@ jobs:
           target: ${{ matrix.target }}
           arch: x86_64
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save
+          emulator-options: -no-window -gpu ${{ matrix.gpu-mode }} ${{ matrix.emulator-features }} -noaudio -no-boot-anim -no-snapshot-save
           script: |
             ./gradlew installDebug
             adb shell settings put secure show_ime_with_hard_keyboard 1
