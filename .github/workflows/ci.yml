@@ -80,14 +80,12 @@ jobs:
             disk-size: 6G
             gpu-mode: swiftshader
             emulator-features: ''
-            emulator-properties: ''
           - api-level: '37.0'
             target: google_apis_ps16k
             ram-size: 4096M
             disk-size: 6G
             gpu-mode: swiftshader
             emulator-features: -feature -Vulkan
-            emulator-properties: -prop debug.sf.luma_sampling=0
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -110,11 +108,11 @@ jobs:
           ram-size: ${{ matrix.ram-size }}
           disk-size: ${{ matrix.disk-size }}
           disable-animations: true
-          emulator-options: -no-window -gpu ${{ matrix.gpu-mode }} ${{ matrix.emulator-features }} ${{ matrix.emulator-properties }} -noaudio -no-boot-anim -no-snapshot-save
+          emulator-options: -no-window -gpu ${{ matrix.gpu-mode }} ${{ matrix.emulator-features }} -noaudio -no-boot-anim -no-snapshot-save
           script: |
             ./gradlew installDebug
             adb shell settings put secure show_ime_with_hard_keyboard 1
-            adb shell ime enable io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService
+            for attempt in $(seq 1 15); do if adb shell ime enable io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService; then break; fi; if [ "$attempt" -eq 15 ]; then exit 1; fi; sleep 2; done
             adb shell ime set io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService
             adb shell am start -W -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
             ./gradlew connectedDebugAndroidTest
