@@ -10,6 +10,27 @@ if [ ! -x "$real_adb" ]; then
     exit 127
 fi
 
+# The API 37 preview image currently crashes SurfaceFlinger when SystemUI
+# registers its luma-sampling listener against gfxstream's
+# ReadColorBufferDMA capability. Disable SystemUI as soon as PackageManager is
+# available in that one headless matrix job; app, IME, and runtime
+# instrumentation do not depend on status/navigation chrome.
+if [ "${1:-}" = "-s" ] \
+    && [ "${3:-}" = "shell" ] \
+    && [ "${4:-}" = "getprop" ] \
+    && [ "${5:-}" = "sys.boot_completed" ]; then
+    marker="${RUNNER_TEMP:-/tmp}/rune-api37-systemui-disabled"
+    if [ ! -e "$marker" ]; then
+        api_level=$("$real_adb" -s "${2:-}" shell getprop ro.build.version.sdk 2>/dev/null || true)
+        if [ "$api_level" = "37" ]; then
+            if "$real_adb" -s "${2:-}" shell pm disable-user --user 0 com.android.systemui \
+                >/dev/null 2>&1; then
+                : > "$marker"
+            fi
+        fi
+    fi
+fi
+
 # android-emulator-runner unlocks the device immediately after
 # sys.boot_completed becomes 1. On preview API images the input service can
 # still need a few seconds before accepting that one key event.
