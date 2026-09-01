@@ -2,8 +2,10 @@ package io.github.mesteriis.rune.keyboard.intelligence.delivery
 
 import android.content.Context
 import android.net.Uri
+import android.util.AtomicFile
 import io.github.mesteriis.rune.keyboard.intelligence.model.ModelDescriptor
 import java.io.File
+import java.io.IOException
 
 class ModelDeliveryManager(
     private val context: Context,
@@ -15,13 +17,20 @@ class ModelDeliveryManager(
         ModelDownloadClient.externalStaging(context),
         store.stateFile.parentFile!!,
     )
+    private val root = store.stateFile.parentFile!!
+    private val operationGate = ModelOperationGate(root)
 
-    fun enqueueDownload(allowMetered: Boolean = false): Long {
+    fun enqueueDownload(allowMetered: Boolean = false): Long = operationGate.withLock {
+        enqueueDownloadLocked(allowMetered)
+    }
+
+    private fun enqueueDownloadLocked(allowMetered: Boolean): Long {
+        store.write(DeliveryJournal(JournalOperation.QUEUED, downloadId = null, allowMetered = allowMetered))
         return try {
             space.requireCapacity(descriptor)
-            store.write(DeliveryJournal(JournalOperation.QUEUED, downloadId = null, allowMetered = allowMetered))
             downloads.enqueue(descriptor, allowMetered).also { id ->
                 store.write(DeliveryJournal(JournalOperation.QUEUED, id, allowMetered))
+                ModelDeliveryJobScheduler.schedule(context)
             }
         } catch (error: CandidateInstallException) {
             store.write(DeliveryJournal(JournalOperation.FAILED, failureCode = error.failureCode))
@@ -32,48 +41,67 @@ class ModelDeliveryManager(
         }
     }
 
-    fun downloadOverMeteredNetwork(): Long {
-        val action = DeliveryReconciler.requestMeteredOverride(store.read())
+    fun downloadOverMeteredNetwork(): Long = operationGate.withLock {
+        val journal = store.read()
+        val id = requireNotNull(journal.downloadId) { "downloadId is missing" }
+        require(downloads.query(id) == DownloadObservation.PAUSED) { "download is not paused" }
+        val action = DeliveryReconciler.requestMeteredOverride(
+            journal.copy(operation = JournalOperation.WAITING_UNMETERED),
+        )
         downloads.remove(action.removeDownloadId)
-        return enqueueDownload(allowMetered = action.requeueAllowedOverMetered)
+        enqueueDownloadLocked(allowMetered = action.requeueAllowedOverMetered)
     }
 
     fun reconcileOnSettingsOpen() {
         ModelDeliveryJobScheduler.schedule(context)
     }
 
-    fun retry(): Long? {
+    fun retry(): Long? = operationGate.withLock {
         val candidate = File(
-            store.stateFile.parentFile,
+            root,
             "candidates/${descriptor.id}-${descriptor.version}/${descriptor.fileName}",
         )
         if (candidate.isFile) {
             store.write(DeliveryJournal())
             ModelDeliveryJobScheduler.schedule(context)
-            return null
+            return@withLock null
         }
-        return enqueueDownload()
+        enqueueDownloadLocked(allowMetered = false)
     }
 
     fun cancel() {
         ModelDeliveryJobScheduler.cancel(context)
+        operationGate.withLock(::cancelLocked)
+    }
+
+    private fun cancelLocked() {
         val current = store.read()
         current.downloadId?.let(downloads::remove) ?: downloads.removeMatching(descriptor)
         store.write(DeliveryJournal())
     }
 
-    fun importDocument(uri: Uri) = SafModelTransfer(context, descriptor).import(uri)
+    fun importDocument(uri: Uri) = operationGate.withLock {
+        SafModelTransfer(context, descriptor).import(uri)
+    }
 
-    fun exportActive(activeModel: File, uri: Uri) = SafModelTransfer(context, descriptor).export(activeModel, uri)
+    fun exportActive(activeModel: File, uri: Uri) = operationGate.withLock {
+        SafModelTransfer(context, descriptor).export(activeModel, uri)
+    }
 
     fun deleteAllModels() {
-        cancel()
-        val root = store.stateFile.parentFile!!
-        listOf("versions", "candidates", ".installing").forEach { name ->
-            val target = File(root, name)
-            check(target.parentFile == root) { "refusing to remove an unscoped path" }
-            target.deleteRecursively()
+        ModelDeliveryJobScheduler.cancel(context)
+        operationGate.withLock {
+            val current = store.read()
+            current.downloadId?.let(downloads::remove) ?: downloads.removeMatching(descriptor)
+            listOf("versions", "candidates", ".installing").forEach { name ->
+                val target = File(root, name)
+                check(target.parentFile == root) { "refusing to remove an unscoped path" }
+                if (target.exists() && !target.deleteRecursively()) {
+                    throw IOException("cannot delete model directory")
+                }
+            }
+            AtomicFile(File(root, "active-model.json")).delete()
+            store.write(DeliveryJournal())
         }
-        File(root, "active-model.json").delete()
     }
 }

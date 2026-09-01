@@ -1,10 +1,10 @@
 package io.github.mesteriis.rune.keyboard.intelligence.model
 
 import android.content.Context
+import io.github.mesteriis.rune.keyboard.intelligence.delivery.CandidateInstaller
 import io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryStateStore
 import io.github.mesteriis.rune.keyboard.intelligence.delivery.EmbeddedModelDescriptor
 import io.github.mesteriis.rune.keyboard.intelligence.delivery.ModelDownloadClient
-import io.github.mesteriis.rune.keyboard.intelligence.delivery.CandidateInstaller
 import io.github.mesteriis.rune.keyboard.intelligence.runtime.AtomicModelPointerStore
 import java.io.File
 
@@ -24,7 +24,8 @@ class ModelSnapshotReader(
         val active = pointer.activeDirectory?.let { directory -> installed(directory) }
         val rollback = pointer.rollbackDirectory?.let { directory -> installed(directory) }
         val journal = store.read()
-        val mappedOperation = OperationStateMapper.map(journal)
+        val download = journal.downloadId?.let(downloads::query)
+        val mappedOperation = OperationStateMapper.map(journal, download)
         val operation = if (mappedOperation is ModelOperationState.Downloading && journal.downloadId != null) {
             downloads.progress(journal.downloadId)?.let {
                 ModelOperationState.Downloading(it.bytesDownloaded, it.totalBytes)

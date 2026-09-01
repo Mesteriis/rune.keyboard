@@ -16,12 +16,18 @@ class ModelInstallJobService : JobService() {
     override fun onStartJob(params: JobParameters): Boolean {
         stopped = false
         running = executor.submit {
-            val current = ModelInstallCoordinator(applicationContext).also { coordinator = it }
             try {
-                current.run()
+                val store = DeliveryStateStore.forApplication(applicationContext)
+                ModelOperationGate(store.stateFile.parentFile!!).withLock {
+                    val current = ModelInstallCoordinator(applicationContext).also { coordinator = it }
+                    try {
+                        current.run()
+                    } finally {
+                        current.close()
+                        coordinator = null
+                    }
+                }
             } finally {
-                current.close()
-                coordinator = null
                 if (!stopped) jobFinished(params, false)
             }
         }
@@ -37,6 +43,8 @@ class ModelInstallJobService : JobService() {
     }
 
     override fun onDestroy() {
+        stopped = true
+        coordinator?.cancelCurrentOperation()
         running?.cancel(true)
         executor.shutdownNow()
         super.onDestroy()

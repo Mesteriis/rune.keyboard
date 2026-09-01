@@ -26,6 +26,7 @@ class ModelDeliveryManifestInstrumentedTest {
         val receiver = info.receivers.orEmpty().single { it.name == ModelDownloadReceiver::class.java.name }
         assertFalse(worker.exported)
         assertEquals("android.permission.BIND_JOB_SERVICE", worker.permission)
+        assertEquals("${context.packageName}:model_worker", worker.processName)
         assertFalse(receiver.exported)
         val modelSettings = info.activities.orEmpty().single { it.name == ModelSettingsActivity::class.java.name }
         assertFalse(modelSettings.exported)

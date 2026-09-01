@@ -3,10 +3,14 @@ package io.github.mesteriis.rune.keyboard.intelligence.delivery
 import android.util.AtomicFile
 import java.io.File
 import java.io.RandomAccessFile
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 
 class DeliveryStateStore(private val root: File) {
     val stateFile = File(root, "delivery-state.json")
     private val lockFile = File(root, "delivery-state.lock")
+    private val localLock = localLocks.computeIfAbsent(lockFile.canonicalPath) { ReentrantLock() }
     private val atomicFile get() = AtomicFile(stateFile)
 
     init {
@@ -46,13 +50,15 @@ class DeliveryStateStore(private val root: File) {
         }
     }
 
-    private fun <T> locked(block: () -> T): T {
+    private fun <T> locked(block: () -> T): T = localLock.withLock {
         RandomAccessFile(lockFile, "rw").use { randomAccess ->
             randomAccess.channel.lock().use { return block() }
         }
     }
 
     companion object {
+        private val localLocks = ConcurrentHashMap<String, ReentrantLock>()
+
         fun forApplication(context: android.content.Context): DeliveryStateStore =
             DeliveryStateStore(File(context.noBackupFilesDir, "model-delivery"))
     }
