@@ -89,10 +89,12 @@ jobs:
       matrix:
         include:
           - api-level: '26'
+            target: google_apis
             ram-size: 2048M
             disk-size: 6G
             emulator-features: ''
           - api-level: '37.0'
+            target: google_apis_ps16k
             ram-size: 4096M
             disk-size: 6G
             emulator-features: ''
@@ -119,7 +121,7 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d
         with:
           api-level: ${{ matrix.api-level }}
-          target: google_apis
+          target: ${{ matrix.target }}
           arch: x86_64
           ram-size: ${{ matrix.ram-size }}
           disk-size: ${{ matrix.disk-size }}
