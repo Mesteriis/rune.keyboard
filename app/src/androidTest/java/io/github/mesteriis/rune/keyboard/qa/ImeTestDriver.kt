@@ -65,6 +65,9 @@ class ImeTestDriver {
     }
 
     fun focusField(idName: String): UiObject2 {
+        // Accessibility can still expose editor nodes that are covered by the IME. Hide it before
+        // resolving the target so the click always lands in the editor, not on a keyboard key.
+        prepareQaForScroll()
         val field = device.findObject(By.res(PACKAGE_NAME, idName)) ?: scrollToObject(idName)
         field.click()
         waitForKeyboard()
@@ -120,7 +123,10 @@ class ImeTestDriver {
             if (findKeyByText(expectedKey) != null) return
             val space = keyByDescription(targetContext.getString(R.string.key_space))
             val bounds = space.visibleBounds
-            device.swipe(bounds.right - 8, bounds.centerY(), bounds.left + 8, bounds.centerY(), 24)
+            // API 37 gesture navigation reserves the bottom strip for system task switching. The
+            // upper edge remains part of the space key and exercises Rune's gesture detector.
+            val swipeY = (bounds.top + 4).coerceAtMost(bounds.bottom - 1)
+            device.swipe(bounds.right - 8, swipeY, bounds.left + 8, swipeY, 24)
             device.waitForIdle()
             eventually(INPUT_CONNECTION_SETTLE_MILLIS * 2) { findKeyByText(expectedKey) != null }
         }
