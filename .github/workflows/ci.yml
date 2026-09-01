@@ -134,7 +134,7 @@ jobs:
             for attempt in $(seq 1 15); do if adb shell ime enable io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService; then break; fi; if [ "$attempt" -eq 15 ]; then exit 1; fi; sleep 2; done
             adb shell ime set io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService
             adb shell am start -W -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
-            ./gradlew connectedDebugAndroidTest
+            ./gradlew :app:connectedDebugAndroidTest
             ./gradlew :runtime-llama:connectedDebugAndroidTest
       - name: Upload instrumentation results
         if: always()
