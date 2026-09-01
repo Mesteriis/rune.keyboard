@@ -28,14 +28,14 @@ for library in "${native_libraries[@]}"; do
     exit 1
   }
   symbols=$($readelf_bin -Ws "$library")
-  rg -q 'JNI_OnLoad' <<<"$symbols" || { echo "JNI_OnLoad is missing from $library" >&2; exit 1; }
-  if rg -q 'Java_|__android_log|curl_|\b(socket|connect|sendto|recvfrom)@' <<<"$symbols"; then
+  grep -Eq 'JNI_OnLoad' <<<"$symbols" || { echo "JNI_OnLoad is missing from $library" >&2; exit 1; }
+  if grep -Eq 'Java_|__android_log|curl_|[[:space:]](socket|connect|sendto|recvfrom)(@[^[:space:]]*)?$' <<<"$symbols"; then
     echo "Forbidden JNI/log/network symbol in $library" >&2
     exit 1
   fi
 done
 
-if rg -n 'android/log\.h|__android_log|\b(printf|fprintf)\s*\(|std::(cout|cerr)' \
+if grep -En 'android/log\.h|__android_log|(^|[^[:alnum:]_])(printf|fprintf)[[:space:]]*\(|std::(cout|cerr)' \
   "$repo_root/runtime-llama/src/main/cpp/rune_llama_jni.cpp"; then
   echo "Rune-owned JNI must not log to Android, stdout, or stderr" >&2
   exit 1
