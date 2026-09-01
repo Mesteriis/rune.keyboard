@@ -43,7 +43,7 @@ class ImeLifecycleInstrumentedTest : ImeTestBase() {
     }
 
     @Test
-    fun settingsChangeRecreatesTheActiveImeView() {
+    fun settingsChangeAppliesToTheNextImeView() {
         driver.tapQaControl("qa_seed_cursor")
         driver.setNumberRowThroughSettings(enabled = true)
         driver.assertKeyVisible("1")
