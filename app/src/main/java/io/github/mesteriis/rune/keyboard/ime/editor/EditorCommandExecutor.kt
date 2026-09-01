@@ -12,24 +12,37 @@ internal data class EditorExecutionResult(
 )
 
 object EditorCommandExecutor {
+    /** Kept for reducer-adjacent JVM tests and raw-editor callers. */
     internal fun execute(
         command: EditorCommand,
         inputConnection: InputConnection,
         hasSelection: Boolean,
         requiresRawKeyEvents: Boolean,
+    ): EditorExecutionResult = execute(
+        command = command,
+        inputConnection = inputConnection,
+        hasSelection = hasSelection,
+        deleteMode = if (requiresRawKeyEvents) DeleteMode.RAW_KEY_EVENT else DeleteMode.CODE_POINT,
+    )
+
+    internal fun execute(
+        command: EditorCommand,
+        inputConnection: InputConnection,
+        hasSelection: Boolean,
+        deleteMode: DeleteMode,
     ): EditorExecutionResult = when (command) {
         is EditorCommand.CommitText -> textMutationResult(
-            if (requiresRawKeyEvents) {
+            if (deleteMode == DeleteMode.RAW_KEY_EVENT) {
                 sendTextAsKeyEvents(inputConnection, command.value)
             } else {
                 inputConnection.commitText(command.value, 1)
             },
         )
         EditorCommand.DeletePreviousCodePoint -> textMutationResult(
-            deletePreviousCodePoint(
+            deletePrevious(
                 inputConnection = inputConnection,
                 hasSelection = hasSelection,
-                requiresRawKeyEvents = requiresRawKeyEvents,
+                deleteMode = deleteMode,
             ),
         )
         is EditorCommand.PerformEditorAction -> {
@@ -40,7 +53,7 @@ object EditorCommandExecutor {
             }
         }
         EditorCommand.InsertNewline -> textMutationResult(
-            if (requiresRawKeyEvents) {
+            if (deleteMode == DeleteMode.RAW_KEY_EVENT) {
                 sendKey(inputConnection, KeyEvent.KEYCODE_ENTER)
             } else {
                 insertNewline(inputConnection)
@@ -53,7 +66,7 @@ object EditorCommandExecutor {
             revertDoubleSpacePeriod(
                 inputConnection = inputConnection,
                 hasSelection = hasSelection,
-                requiresRawKeyEvents = requiresRawKeyEvents,
+                deleteMode = deleteMode,
             ),
         )
         is EditorCommand.MoveCursor -> {
@@ -97,14 +110,14 @@ object EditorCommandExecutor {
     private fun revertDoubleSpacePeriod(
         inputConnection: InputConnection,
         hasSelection: Boolean,
-        requiresRawKeyEvents: Boolean,
+        deleteMode: DeleteMode,
     ): Boolean {
-        if (hasSelection || requiresRawKeyEvents) {
-            return deletePreviousCodePoint(inputConnection, hasSelection, requiresRawKeyEvents)
+        if (hasSelection || deleteMode == DeleteMode.RAW_KEY_EVENT) {
+            return deletePrevious(inputConnection, hasSelection, deleteMode)
         }
         val before = inputConnection.getTextBeforeCursor(2, 0)
         if (!DoubleSpacePeriod.canRevert(before)) {
-            return deletePreviousCodePoint(inputConnection, hasSelection = false, requiresRawKeyEvents = false)
+            return deletePrevious(inputConnection, hasSelection = false, deleteMode = deleteMode)
         }
         inputConnection.beginBatchEdit()
         return try {
@@ -115,14 +128,19 @@ object EditorCommandExecutor {
         }
     }
 
-    private fun deletePreviousCodePoint(
+    private fun deletePrevious(
         inputConnection: InputConnection,
         hasSelection: Boolean,
-        requiresRawKeyEvents: Boolean,
+        deleteMode: DeleteMode,
     ): Boolean {
-        if (requiresRawKeyEvents) return sendKey(inputConnection, KeyEvent.KEYCODE_DEL)
+        if (deleteMode == DeleteMode.RAW_KEY_EVENT) return sendKey(inputConnection, KeyEvent.KEYCODE_DEL)
         if (hasSelection) return inputConnection.commitText("", 1)
-        return inputConnection.deleteSurroundingTextInCodePoints(1, 0) ||
+        val deleted = when (deleteMode) {
+            DeleteMode.GRAPHEME_AWARE -> GraphemeDeletion.deletePrevious(inputConnection)
+            DeleteMode.CODE_POINT -> inputConnection.deleteSurroundingTextInCodePoints(1, 0)
+            DeleteMode.RAW_KEY_EVENT -> false
+        }
+        return deleted ||
             sendKey(inputConnection, KeyEvent.KEYCODE_DEL)
     }
 

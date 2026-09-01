@@ -1,18 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="qa_title" translatable="false">Rune IME debug acceptance</string>
+  <string name="qa_plain_label" translatable="false">Plain text</string>
   <string name="qa_plain_hint" translatable="false">Plain text</string>
   <string name="qa_raw_label" translatable="false">TYPE_NULL raw key events</string>
   <string name="qa_raw_hint" translatable="false">Raw key event text</string>
-  <string name="qa_seed_unicode" translatable="false">Seed A + emoji</string>
-  <string name="qa_unicode_sample" translatable="false">A😀</string>
+  <string name="qa_seed_selection" translatable="false">Seed selection</string>
+  <string name="qa_seed_cursor" translatable="false">Seed middle cursor</string>
+  <string name="qa_seed_start" translatable="false">Seed start cursor</string>
+  <string name="qa_seed_unicode" translatable="false">Seed Cyrillic + surrogate emoji</string>
+  <string name="qa_unicode_sample" translatable="false">Привет😀</string>
+  <string name="qa_seed_graphemes" translatable="false">Seed grapheme corpus</string>
+  <string name="qa_grapheme_sample" translatable="false">xе́1️⃣🇺🇦👍🏽🧑🏽‍💻👩‍❤️‍💋‍👨👨‍👩‍👧‍👦</string>
+  <string name="qa_seed_canary" translatable="false">Seed privacy canary</string>
+  <string name="qa_canary" translatable="false">RUNE_QA_CANARY_7429</string>
   <string name="qa_multiline_label" translatable="false">Multiline with NO_ENTER_ACTION</string>
   <string name="qa_multiline_hint" translatable="false">Multiline text</string>
-  <string name="qa_custom_label" translatable="false">Custom action with ID zero</string>
-  <string name="qa_custom_hint" translatable="false">Custom action text</string>
-  <string name="qa_custom_action" translatable="false">Apply</string>
-  <string name="qa_custom_waiting" translatable="false">Custom action not received</string>
-  <string name="qa_custom_received" translatable="false">Custom action received: %1$d</string>
+  <string name="qa_email_label" translatable="false">Email</string>
+  <string name="qa_email_hint" translatable="false">qa@example.invalid</string>
+  <string name="qa_url_label" translatable="false">URL</string>
+  <string name="qa_url_hint" translatable="false">https://example.invalid</string>
+  <string name="qa_phone_label" translatable="false">Phone</string>
+  <string name="qa_phone_hint" translatable="false">Phone</string>
   <string name="qa_number_label" translatable="false">Signed decimal number</string>
   <string name="qa_number_hint" translatable="false">Number</string>
+  <string name="qa_password_label" translatable="false">Password</string>
+  <string name="qa_password_hint" translatable="false">Synthetic password only</string>
+  <string name="qa_actions_label" translatable="false">Editor actions</string>
+  <string name="qa_send_hint" translatable="false">SEND</string>
+  <string name="qa_search_hint" translatable="false">SEARCH</string>
+  <string name="qa_go_hint" translatable="false">GO</string>
+  <string name="qa_next_hint" translatable="false">NEXT</string>
+  <string name="qa_done_hint" translatable="false">DONE</string>
+  <string name="qa_custom_hint" translatable="false">CUSTOM 0</string>
+  <string name="qa_custom_action" translatable="false">Apply</string>
+  <string name="qa_action_waiting" translatable="false">No action received</string>
+  <string name="qa_action_received" translatable="false">Action received: %1$d</string>
 </resources>

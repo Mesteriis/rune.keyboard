@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <item name="qa_scroll" type="id" />
   <item name="qa_plain_text" type="id" />
   <item name="qa_raw_text" type="id" />
+  <item name="qa_seed_selection" type="id" />
+  <item name="qa_seed_cursor" type="id" />
+  <item name="qa_seed_start" type="id" />
   <item name="qa_seed_unicode" type="id" />
+  <item name="qa_seed_graphemes" type="id" />
+  <item name="qa_seed_canary" type="id" />
   <item name="qa_multiline_text" type="id" />
-  <item name="qa_custom_action" type="id" />
-  <item name="qa_custom_status" type="id" />
+  <item name="qa_email" type="id" />
+  <item name="qa_url" type="id" />
+  <item name="qa_phone" type="id" />
   <item name="qa_number" type="id" />
+  <item name="qa_password" type="id" />
+  <item name="qa_action_send" type="id" />
+  <item name="qa_action_search" type="id" />
+  <item name="qa_action_go" type="id" />
+  <item name="qa_action_next" type="id" />
+  <item name="qa_action_done" type="id" />
+  <item name="qa_custom_action" type="id" />
+  <item name="qa_action_status" type="id" />
 </resources>

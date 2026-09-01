@@ -6,18 +6,108 @@ on:
   pull_request:
 
 jobs:
-  build:
+  unit-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
-
       - uses: gradle/actions/setup-gradle@v4
+      - name: Run fresh JVM tests
+        run: ./gradlew testDebugUnitTest --rerun-tasks
+      - name: Upload unit-test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-results
+          if-no-files-found: error
+          path: |
+            app/build/test-results/testDebugUnitTest/**
+            app/build/reports/tests/testDebugUnitTest/**
 
-      # No keystore in CI, so assembleRelease produces an unsigned APK on purpose.
-      - name: Build and verify
-        run: ./gradlew testDebugUnitTest lint assembleDebug assembleRelease privacyGateRelease
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build, lint, and verify privacy
+        run: ./gradlew lint assembleDebug assembleRelease assembleProfile privacyGateRelease privacyGateProfile
+      - name: Stage installable artifacts
+        run: |
+          mkdir -p app/build/ci-artifacts
+          cp app/build/outputs/apk/debug/app-debug.apk app/build/ci-artifacts/rune-debug.apk
+          cp app/build/outputs/apk/release/app-release-unsigned.apk app/build/ci-artifacts/rune-release-unsigned.apk
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: rune-debug.apk
+          if-no-files-found: error
+          path: app/build/ci-artifacts/rune-debug.apk
+      - name: Upload unsigned release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: rune-release-unsigned.apk
+          if-no-files-found: error
+          path: app/build/ci-artifacts/rune-release-unsigned.apk
+      - name: Upload lint results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-results
+          if-no-files-found: error
+          path: |
+            app/build/reports/lint-results*.html
+            app/build/reports/lint-results*.xml
+            app/build/reports/lint-results*.sarif
+
+  emulator-smoke:
+    name: emulator-smoke-api-${{ matrix.api-level }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        api-level: ['26', '37.0']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Run Android boundary suite
+        uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: google_apis
+          arch: x86_64
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save
+          script: |
+            ./gradlew installDebug
+            adb shell settings put secure show_ime_with_hard_keyboard 1
+            adb shell ime enable io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService
+            adb shell ime set io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService
+            adb shell am start -W -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
+            ./gradlew connectedDebugAndroidTest
+      - name: Upload instrumentation results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: instrumentation-results-api-${{ matrix.api-level }}
+          if-no-files-found: warn
+          path: |
+            app/build/outputs/androidTest-results/connected/debug/**
+            app/build/reports/androidTests/connected/debug/**

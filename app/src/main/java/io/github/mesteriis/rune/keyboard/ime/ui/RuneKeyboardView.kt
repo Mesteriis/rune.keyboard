@@ -10,6 +10,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.widget.LinearLayout
 import io.github.mesteriis.rune.keyboard.R
+import io.github.mesteriis.rune.keyboard.ime.RuneTrace
 import io.github.mesteriis.rune.keyboard.ime.layout.KeySpec
 import io.github.mesteriis.rune.keyboard.ime.layout.KeyStyle
 import io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayout
@@ -77,10 +78,12 @@ internal class RuneKeyboardView(
     }
 
     private fun applyRender(layout: KeyboardLayout, state: KeyboardState) {
-        // Key views are about to be discarded; a popup anchored to one of them must go first.
-        popupController?.dismissAll()
-        removeAllViews()
-        layout.rows.forEach { rowSpecs -> addView(createRow(rowSpecs, state)) }
+        RuneTrace.section("Rune#rebuildKeys") {
+            // Key views are about to be discarded; a popup anchored to one of them must go first.
+            popupController?.dismissAll()
+            removeAllViews()
+            layout.rows.forEach { rowSpecs -> addView(createRow(rowSpecs, state)) }
+        }
     }
 
     fun cancelActiveTouches() {
@@ -121,8 +124,13 @@ internal class RuneKeyboardView(
     }
 
     override fun onDetachedFromWindow() {
-        popupController?.dismissAll()
+        cancelActiveTouches()
         super.onDetachedFromWindow()
+    }
+
+    override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
+        super.onWindowFocusChanged(hasWindowFocus)
+        if (!hasWindowFocus) cancelActiveTouches()
     }
 
     private fun controller(): KeyPopupController =

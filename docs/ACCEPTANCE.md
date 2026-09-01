@@ -8,7 +8,7 @@ Release-сборка содержит собственные тестовые п
 adb shell am start -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
 ```
 
-На нём доступны обычное, `TYPE_NULL`, multiline с `NO_ENTER_ACTION`, custom-action с ID `0` и signed-decimal поля, а также локальная Unicode-заготовка `A😀` для проверки Backspace без clipboard.
+На нём доступны plain, multiline, email, URL, phone, signed-decimal numeric, password, `TYPE_NULL`, `SEND/SEARCH/GO/NEXT/DONE`, custom-action с ID `0`, selection/cursor presets и локальные Cyrillic/surrogate/ZWJ заготовки без clipboard. Activity работает в `:qa_editor`, чтобы IME и редактор были разделены Binder-границей.
 
 ## Установка и lifecycle
 
@@ -31,7 +31,7 @@ adb shell am start -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
 - symbols, number, signed/decimal number, phone, date/time, email и URL;
 - Space, punctuation, короткий и удерживаемый Backspace;
 - удержание Backspace ускоряется в две ступени и мгновенно останавливается при отпускании;
-- удаление emoji/символа вне BMP не оставляет половину surrogate pair;
+- в обычных полях Backspace атомарно удаляет surrogate emoji, family/kiss/profession ZWJ, skin tone, flag, keycap и combining-mark clusters; в sensitive-полях намеренно остаётся code-point fallback без чтения текста;
 - Enter проверен для multiline, DONE, GO, NEXT, PREVIOUS, SEARCH и SEND; в multiline-поле с `IME_ACTION_DONE` Enter даёт перенос строки, а метка клавиши — `↵`;
 - выделенный текст заменяется обычным вводом и полностью удаляется Backspace;
 - password-поле не включает автокапитализацию, не показывает preview и нигде не появляется в логах;
@@ -76,4 +76,4 @@ adb shell am start -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
 - поворот и переключение IME при открытом popup не приводят к `WindowLeaked` или `BadTokenException`;
 - в airplane mode всё перечисленное работает без изменений.
 
-Рекомендуемая матрица: API 26, 30, 34, 37; обязательный ближайший smoke — доступный ARM64 AVD API 36. Физическая приёмка остаётся отдельным gate.
+Обязательная CI-матрица: API 26 и API 37 (`google_apis/x86_64`). Полный `connectedDebugAndroidTest` идёт независимо от быстрого JVM job. Физическая Fold-приёмка и performance trace остаются отдельными gates и записываются в датированные отчёты.

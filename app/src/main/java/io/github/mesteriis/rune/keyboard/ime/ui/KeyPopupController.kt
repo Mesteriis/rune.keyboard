@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.PopupWindow
 import android.widget.TextView
 import io.github.mesteriis.rune.keyboard.R
+import io.github.mesteriis.rune.keyboard.ime.RuneTrace
 import io.github.mesteriis.rune.keyboard.ime.layout.KeyAlternate
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
 
@@ -46,22 +47,24 @@ internal class KeyPopupController(private val anchorRoot: View) {
         get() = alternatesOwner != null
 
     fun showPreview(key: View, label: String) {
-        if (!anchorRoot.isAttachedToWindow || isShowingAlternates) return
-        val popup = previewPopup ?: createPreviewPopup().also { previewPopup = it }
-        previewLabel?.text = label
-        val bounds = keyBounds(key) ?: return
-        val placement = PopupGeometry.previewPlacement(
-            keyLeft = bounds.left,
-            keyTop = bounds.top,
-            keyWidth = bounds.width,
-            previewWidth = previewWidth,
-            previewHeight = previewHeight,
-            verticalGap = verticalGap,
-            containerLeft = bounds.containerLeft,
-            containerRight = bounds.containerRight,
-        )
-        show(popup, placement)
-        previewOwner = key
+        RuneTrace.section("Rune#showPreview") {
+            if (!anchorRoot.isAttachedToWindow || isShowingAlternates) return@section
+            val popup = previewPopup ?: createPreviewPopup().also { previewPopup = it }
+            previewLabel?.text = label
+            val bounds = keyBounds(key) ?: return@section
+            val placement = PopupGeometry.previewPlacement(
+                keyLeft = bounds.left,
+                keyTop = bounds.top,
+                keyWidth = bounds.width,
+                previewWidth = previewWidth,
+                previewHeight = previewHeight,
+                verticalGap = verticalGap,
+                containerLeft = bounds.containerLeft,
+                containerRight = bounds.containerRight,
+            )
+            show(popup, placement)
+            previewOwner = key
+        }
     }
 
     fun dismissPreview(key: View) {
@@ -163,21 +166,23 @@ internal class KeyPopupController(private val anchorRoot: View) {
     }
 
     private fun createPreviewPopup(): PopupWindow {
-        val label = TextView(context).apply {
-            gravity = Gravity.CENTER
-            includeFontPadding = false
-            maxLines = 1
-            setTextSize(
-                TypedValue.COMPLEX_UNIT_PX,
-                context.resources.getDimension(R.dimen.keyboard_preview_text_size),
-            )
-            typeface = Typeface.DEFAULT
-            setTextColor(context.getColor(R.color.key_text))
-            background = context.getDrawable(R.drawable.key_preview_background)
-            importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        return RuneTrace.section("Rune#createPreview") {
+            val label = TextView(context).apply {
+                gravity = Gravity.CENTER
+                includeFontPadding = false
+                maxLines = 1
+                setTextSize(
+                    TypedValue.COMPLEX_UNIT_PX,
+                    context.resources.getDimension(R.dimen.keyboard_preview_text_size),
+                )
+                typeface = Typeface.DEFAULT
+                setTextColor(context.getColor(R.color.key_text))
+                background = context.getDrawable(R.drawable.key_preview_background)
+                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+            }
+            previewLabel = label
+            newPopup(label)
         }
-        previewLabel = label
-        return newPopup(label)
     }
 
     private fun createAlternatesPopup(): PopupWindow {

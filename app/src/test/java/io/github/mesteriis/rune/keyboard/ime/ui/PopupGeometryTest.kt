@@ -55,7 +55,7 @@ class PopupGeometryTest {
     }
 
     @Test
-    fun `a popup with no room above overlaps the key instead of being clipped`() {
+    fun `a popup with no room above clamps to the IME top edge`() {
         val placement = PopupGeometry.previewPlacement(
             keyLeft = 100,
             keyTop = 20,
@@ -67,7 +67,7 @@ class PopupGeometryTest {
             containerRight = 1000,
         )
 
-        assertEquals(20, placement.y)
+        assertEquals(0, placement.y)
     }
 
     @Test

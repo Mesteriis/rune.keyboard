@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutor
+import io.github.mesteriis.rune.keyboard.ime.editor.DeleteMode
 import io.github.mesteriis.rune.keyboard.ime.feedback.CommandOutcome
 import io.github.mesteriis.rune.keyboard.ime.feedback.FeedbackController
 import io.github.mesteriis.rune.keyboard.ime.feedback.FeedbackPolicy
@@ -79,11 +80,13 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     override fun onCreateInputView(): View {
-        val themedContext = ThemeOverride.themedContext(this, settings.theme)
-        return RuneKeyboardView(themedContext, buildMetrics(themedContext)).also { view ->
-            keyboardView = view
-            view.setOnActionListener(::handleAction)
-            renderKeyboard()
+        return RuneTrace.section("Rune#createInputView") {
+            val themedContext = ThemeOverride.themedContext(this, settings.theme)
+            RuneKeyboardView(themedContext, buildMetrics(themedContext)).also { view ->
+                keyboardView = view
+                view.setOnActionListener(::handleAction)
+                renderKeyboard()
+            }
         }
     }
 
@@ -151,32 +154,34 @@ class RuneInputMethodService : InputMethodService() {
     override fun onEvaluateFullscreenMode(): Boolean = false
 
     private fun handleAction(action: KeyboardAction) {
-        val previousState = state
-        val transition = KeyboardReducer.reduce(
-            state = state,
-            action = action,
-            editorContext = editorContext,
-            nowMillis = SystemClock.uptimeMillis(),
-        )
-        state = transition.state
-        if (action is KeyboardAction.SwitchLanguage) {
-            if (state.language != previousState.language) {
-                selectedLanguage = state.language
-                keyboardPreferences.writeLanguage(selectedLanguage)
-                keyboardView?.showLanguagePreview(state.language.displayLabel)
+        RuneTrace.section("Rune#touchUpDispatch") {
+            val previousState = state
+            val transition = KeyboardReducer.reduce(
+                state = state,
+                action = action,
+                editorContext = editorContext,
+                nowMillis = SystemClock.uptimeMillis(),
+            )
+            state = transition.state
+            if (action is KeyboardAction.SwitchLanguage) {
+                if (state.language != previousState.language) {
+                    selectedLanguage = state.language
+                    keyboardPreferences.writeLanguage(selectedLanguage)
+                    keyboardView?.showLanguagePreview(state.language.displayLabel)
+                }
+                state = withAutomaticCapitalization(state)
+            } else if (action == KeyboardAction.ToggleSymbols && state.layer == KeyboardLayer.LETTERS) {
+                state = withAutomaticCapitalization(state)
             }
-            state = withAutomaticCapitalization(state)
-        } else if (action == KeyboardAction.ToggleSymbols && state.layer == KeyboardLayer.LETTERS) {
-            state = withAutomaticCapitalization(state)
-        }
 
-        val outcome = transition.command?.let(::executeCommand) ?: CommandOutcome.NO_COMMAND
-        val stateChanged = state != previousState
-        provideFeedback(action, stateChanged, outcome)
-        if (stateChanged) renderKeyboard()
+            val outcome = transition.command?.let(::executeCommand) ?: CommandOutcome.NO_COMMAND
+            val stateChanged = state != previousState
+            provideFeedback(action, stateChanged, outcome)
+            if (stateChanged) renderKeyboard()
 
-        if (mutatesText(transition.command)) {
-            keyboardView?.post(::refreshAutomaticCapitalization)
+            if (mutatesText(transition.command)) {
+                keyboardView?.post(::refreshAutomaticCapitalization)
+            }
         }
     }
 
@@ -193,12 +198,20 @@ class RuneInputMethodService : InputMethodService() {
             else -> Unit
         }
         val connection = currentInputConnection ?: return CommandOutcome.DROPPED
-        val result = EditorCommandExecutor.execute(
-            command = command,
-            inputConnection = connection,
-            hasSelection = hasSelection,
-            requiresRawKeyEvents = editorContext.requiresRawKeyEvents,
-        )
+        val result = RuneTrace.section("Rune#editorCommand") {
+            EditorCommandExecutor.execute(
+                command = command,
+                inputConnection = connection,
+                hasSelection = hasSelection,
+                deleteMode = when {
+                    editorContext.requiresRawKeyEvents -> DeleteMode.RAW_KEY_EVENT
+                    editorContext.inputPolicy == io.github.mesteriis.rune.keyboard.ime.model.InputPolicy.SENSITIVE -> {
+                        DeleteMode.CODE_POINT
+                    }
+                    else -> DeleteMode.GRAPHEME_AWARE
+                },
+            )
+        }
         if (result.clearsSelection) {
             hasSelection = false
         }
@@ -216,26 +229,30 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     private fun onSettingsChanged() {
-        val previous = settings
-        settings = keyboardPreferences.readSettings()
-        state = state
-            .withEnabledLanguages(settings.enabledLanguages)
-            .copy(doubleSpacePeriodEnabled = settings.doubleSpacePeriod)
-        if (state.language != selectedLanguage) {
-            selectedLanguage = state.language
-            keyboardPreferences.writeLanguage(selectedLanguage)
-        }
-        if (settings.affectsKeyboardView(previous)) {
-            recreateInputView()
-        } else {
-            renderKeyboard()
+        RuneTrace.section("Rune#applySettings") {
+            val previous = settings
+            settings = keyboardPreferences.readSettings()
+            state = state
+                .withEnabledLanguages(settings.enabledLanguages)
+                .copy(doubleSpacePeriodEnabled = settings.doubleSpacePeriod)
+            if (state.language != selectedLanguage) {
+                selectedLanguage = state.language
+                keyboardPreferences.writeLanguage(selectedLanguage)
+            }
+            if (settings.affectsKeyboardView(previous)) {
+                recreateInputView()
+            } else {
+                renderKeyboard()
+            }
         }
     }
 
     private fun recreateInputView() {
         if (keyboardView == null) return
-        keyboardView?.cancelActiveTouches()
-        setInputView(onCreateInputView())
+        RuneTrace.section("Rune#recreateInputView") {
+            keyboardView?.cancelActiveTouches()
+            setInputView(onCreateInputView())
+        }
     }
 
     private fun refreshAutomaticCapitalization() {
@@ -261,14 +278,14 @@ class RuneInputMethodService : InputMethodService() {
             previewEnabled = settings.keyPreview,
             inputPolicy = editorContext.inputPolicy,
         )
-        view.render(
+        val layout = RuneTrace.section("Rune#layoutFor") {
             layoutProvider.layoutFor(
                 state = state,
                 editorContext = editorContext,
                 options = LayoutOptions(showNumberRow = settings.numberRow),
-            ),
-            state,
-        )
+            )
+        }
+        view.render(layout, state)
     }
 
     private fun buildMetrics(themedContext: android.content.Context): KeyboardViewMetrics {

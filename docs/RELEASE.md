@@ -32,10 +32,16 @@ which is what CI does.
 ## Build
 
 ```bash
-./gradlew clean testDebugUnitTest lint assembleDebug assembleRelease privacyGateRelease
+./gradlew clean testDebugUnitTest lint assembleDebug assembleRelease assembleProfile \
+  privacyGateRelease privacyGateProfile
 ```
 
-The signed artifact lands at `app/build/outputs/apk/release/app-release.apk`.
+With local signing configured, the signed artifact lands at
+`app/build/outputs/apk/release/app-release.apk`. Without `keystore.properties`, Gradle and CI
+produce `app/build/outputs/apk/release/app-release-unsigned.apk`; this is a build artifact, not an
+installable release. CI also publishes the installable debug build as `rune-debug.apk` and the
+unsigned release output as `rune-release-unsigned.apk`, plus `lint-results` and
+`unit-test-results`.
 
 ## Verify before shipping
 
@@ -54,3 +60,6 @@ adb install -r app/build/outputs/apk/release/app-release.apk
 
 For a device without ADB, transfer the APK and install it from the file manager; Android will ask
 to allow installs from that source.
+
+For RC testing, install `rune-debug.apk` from CI or a locally signed release. Do not try to install
+`rune-release-unsigned.apk`.

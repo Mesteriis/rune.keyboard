@@ -98,11 +98,11 @@ internal object PopupGeometry {
     }
 
     /**
-     * Popups draw above the key. When there is no room left in the window (top key row) the popup
-     * overlaps the key instead of being clipped away.
+     * Popups draw above the key. When the ideal position crosses the IME window's top edge, clamp
+     * to that edge; placing the preview back on the key makes an equal-sized preview invisible.
      */
     private fun placeAbove(keyTop: Int, popupHeight: Int, verticalGap: Int): Int {
         val above = keyTop - popupHeight - verticalGap
-        return if (above < 0) keyTop else above
+        return above.coerceAtLeast(0)
     }
 }

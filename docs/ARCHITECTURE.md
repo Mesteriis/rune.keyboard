@@ -26,7 +26,7 @@ KeyboardLayoutProvider ── immutable KeySpec rows (+ LayoutOptions)
 RuneKeyboardView ──────── accessible View keys, popups, touch/repeat handling
 ```
 
-`RuneInputMethodService` остаётся оркестратором Android lifecycle. Переходы Shift/language/symbols, mapping Enter, арбитраж жестов пробела, правило двойного пробела и политика ускорения Backspace вынесены в чистый Kotlin и покрываются обычными JVM-тестами. Рендер не пересобирается на каждом обычном символе: только при изменении состояния или контекста редактора.
+`RuneInputMethodService` остаётся оркестратором Android lifecycle. Переходы Shift/language/symbols, mapping Enter, арбитраж жестов пробела, правило двойного пробела и политика ускорения Backspace вынесены в чистый Kotlin и покрываются обычными JVM-тестами. Android-boundary сценарии проходят через debug-only `ImeQaActivity` в отдельном процессе `:qa_editor`, поэтому instrumentation проверяет настоящий Binder `InputConnection`, а не повторяет reducer-тесты. Рендер не пересобирается на каждом обычном символе: только при изменении состояния или контекста редактора.
 
 Rune регистрирует один системный subtype на три языка. Переключение EN/RU/ES происходит внутри reducer по пользовательскому порядку из настроек, поэтому все раскладки доступны сразу после включения IME и не зависят от отдельно активированных Android-subtype.
 
@@ -77,11 +77,15 @@ Session (только в памяти): активный редактор, яз�
 
 ### Осознанное расширение инварианта чтения текста
 
-До Rune 0.1 клавиатура читала из редактора только `getCursorCapsMode` и числовые границы selection. Правило двойного пробела (SPACE-002) требует знать символ перед курсором, иначе оно ломается после любого перемещения курсора или правки из приложения. Поэтому Rune делает ограниченное чтение `getTextBeforeCursor(2, 0)`:
+До Rune 0.1 клавиатура читала из редактора только `getCursorCapsMode` и числовые границы selection. Правило двойного пробела (SPACE-002) и атомарное удаление logical character требуют минимального surrounding-text контекста. Rune разрешает два строго ограниченных вида эфемерного чтения:
 
-- только в момент второго тапа по пробелу и при последующем Backspace-откате;
-- только в plain-text полях: `EditorMode.TEXT`, не password, не `TYPE_NULL`;
-- прочитанное не сохраняется, не логируется и не сравнивается ни с чем, кроме правил в `DoubleSpacePeriod`.
+- `getTextBeforeCursor(2, 0)` — только в момент второго тапа по пробелу и при последующем Backspace-откате, только в plain-text полях;
+- `getTextBeforeCursor(64, 0)` — только непосредственно во время Backspace в non-sensitive поле. Android ICU и ограниченный compatibility scan находят предыдущий grapheme cluster, после чего удаление передаётся редактору числом code points;
+- selection удаляется целиком через `commitText("", 1)` без чтения выделенного или surrounding text;
+- password и `IME_FLAG_NO_PERSONALIZED_LEARNING` никогда не читаются: там Backspace удаляет один code point; `TYPE_NULL` получает `KEYCODE_DEL`;
+- прочитанное существует только в стеке одной команды, не сохраняется, не логируется, не попадает в trace и не передаётся другим компонентам.
+
+Compatibility scan покрывает ZWJ, emoji modifiers, regional-indicator flags, keycaps, variation selectors и combining marks в пределах тех же 64 UTF-16 units. Патологический cluster длиннее границы чтения остаётся документированным ограничением: Rune не расширяет наблюдаемое окно и использует безопасный fallback редактора. Rune-owned composing state отсутствует, поэтому Fold-gate проверяет committed text, cursor/selection, язык, слой и Shift/Caps без phantom composition.
 
 Direct Boot в 0.1 выключен: его нельзя честно включить без device-protected preferences и отдельной lockscreen-проверки после перезагрузки.
 
@@ -94,3 +98,5 @@ Direct Boot в 0.1 выключен: его нельзя честно включ
 - popup-окна создаются один раз и переиспользуются, на `ACTION_DOWN` ничего не инфлейтится;
 - повтор удаления отменяется на `UP`, `CANCEL`, уходе пальца и detach View; жестовое состояние возвращается в `Idle` через общий `cancelActiveTouches`;
 - R8 и resource shrinking включены для release.
+
+Build type `profile` повторяет release minification/shrinking, подписывается debug-ключом, имеет отдельный application ID suffix, остаётся `debuggable=false` и разрешает shell profiling через `<profileable>`. Perfetto-секции имеют только константные content-free имена `Rune#…`; текст редактора в них не попадает. Аллокации снимаются отдельно на debuggable debug build.

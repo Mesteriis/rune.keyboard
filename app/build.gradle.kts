@@ -22,6 +22,7 @@ android {
         targetSdk = 37
         versionCode = 1
         versionName = "0.1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
@@ -46,6 +47,13 @@ android {
                 "proguard-rules.pro",
             )
         }
+        create("profile") {
+            initWith(getByName("release"))
+            applicationIdSuffix = ".profile"
+            versionNameSuffix = "-profile"
+            signingConfig = signingConfigs.getByName("debug")
+            isDebuggable = false
+        }
     }
 
     compileOptions {
@@ -66,11 +74,16 @@ android {
 
 dependencies {
     testImplementation(libs.junit4)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.uiautomator)
 }
 
 /**
  * Fails the build if Rune ever gains a permission or starts logging.
- * Both are product invariants: the keyboard is fully offline and never observes typed text.
+ * Both are product invariants: the keyboard is fully offline and never logs editor text.
  */
 abstract class PrivacyGateTask : DefaultTask() {
     @get:InputFile
@@ -109,6 +122,16 @@ abstract class PrivacyGateTask : DefaultTask() {
 
 androidComponents {
     onVariants(selector().withBuildType("release")) { variant ->
+        registerPrivacyGate(variant)
+    }
+    onVariants(selector().withBuildType("profile")) { variant ->
+        registerPrivacyGate(variant)
+    }
+}
+
+fun com.android.build.api.variant.ApplicationAndroidComponentsExtension.registerPrivacyGate(
+    variant: com.android.build.api.variant.ApplicationVariant,
+) {
         val variantName = variant.name.replaceFirstChar(Char::uppercaseChar)
         val gate = tasks.register<PrivacyGateTask>("privacyGate$variantName") {
             group = "verification"
@@ -117,5 +140,4 @@ androidComponents {
             sourceDirectory.set(layout.projectDirectory.dir("src/main/java"))
         }
         tasks.named("check").configure { dependsOn(gate) }
-    }
 }
