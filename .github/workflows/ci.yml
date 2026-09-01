@@ -95,7 +95,7 @@ jobs:
           - api-level: '37.0'
             ram-size: 4096M
             disk-size: 6G
-            emulator-features: -feature -GLDirectMem
+            emulator-features: -feature -GLDirectMem -feature -HasSharedSlotsHostMemoryAllocator
     steps:
       - uses: actions/checkout@v4
         with:
