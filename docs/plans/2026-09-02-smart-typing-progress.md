@@ -12,6 +12,41 @@ Baseline: b5400cbadadd29e8ee915a0fb33fb11ec5bebc79. Binding requirements: `2026-
 
 ## Execution
 
+### Resumed full implementation
+
+The user explicitly resumed the full objective after PR1 and authorized changing
+the model when needed, with on-device latency, memory and battery constraints.
+The earlier stop applies to qualifying Rune Text 0.1, not to abandoning the
+remaining product implementation. Historical PR1 evidence remains immutable.
+
+Ruling: build the independent PR4 composing/privacy foundation first, then
+candidate strip/Undo, deterministic lexicons and mechanical punctuation while
+qualifying a resource-bounded model path. Preserve all quality/privacy gates;
+do not treat switching models as permission to weaken them. Model execution
+must be demand-driven, cancellable, and absent in sensitive/ineligible sessions.
+
+Current slice: `feature/smart-typing-03-pr04-foundation`, based on PR1
+`f06d815e07f6457a03e6c978a64250349995bc3d`. PR4 implementation is complete with
+local JVM/build gates and API36 Binder evidence; API26/37 and physical Fold
+remain unqualified. PR2/3/5/6/7/8/9/10 remain required. No push, remote PR or
+publication is authorized by this resume.
+
+### PR4 local evidence
+
+- Separate typing controller, leading-boundary composition, bounded RAM-only context,
+  ownership invalidation and explicit cursor-mode-start are integrated through the existing executor.
+- NPL/password/raw paths prohibit composing; NPL Caps/double-space read bug fixed.
+- Independent review caught a legacy double-space callback clearing Undo. A known numeric +1 acknowledgement bridge preserves it until PR5 migration; fix re-reviewed and Binder-tested.
+- Fresh JVM: 272/272 PASS (266 app + 6 runtime), no failures/errors/skips. Required post-commit rerun still executed after the closing commit.
+- Full prescribed lint/build/privacy/dependency/native command PASS, including Android test APK assembly.
+- API36: full 43-test app run PASS; extra stationary Space hold regression PASS separately, 44 unique tests. This does not close API26/37 or Fold.
+- Same-session rewrite fixture now mutates Editable and asserts no new InputConnection; earlier failed setText-based fixture is not treated as product root-cause proof.
+- Official API26 ARM64 and API37 16KiB ARM64 images are downloading for later local checks. No physical device connected at initial inventory; no wireless ADB used.
+- Acceptance: `docs/acceptance/2026-09-02-smart-typing-0.3-pr04.md`.
+- Ruling: API36 is diagnostic evidence only; retain separate API26/API37/remote CI/Fold/energy status and app version 0.2.0.
+
+### Historical PR1 result
+
 - PR 1 implementation and full evaluation complete: suitability **FAIL**. This ledger and the dated acceptance/evidence files are included in the closing evidence commit; the required post-commit JVM result is reported with its exact SHA in the task's final response.
 - Ordered sequence stops before model-dependent PR 2 runtime API/tokenizer patch. PR 3 service, PR 4 composing, PR 5 strip/Undo, PR 6 lexicons, PR 7 model ranker, PR 8 mechanical punctuation, PR 9 contextual punctuation and PR 10 release hardening are not implemented. Independent deterministic work is not claimed complete by this evaluation slice.
 - Local branch `feature/smart-typing-03-pr01`; no push or remote PR creation authorized.

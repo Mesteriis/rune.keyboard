@@ -8,6 +8,32 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class KeyboardReducerTest {
+    @Test
+    fun `sensitive session cannot consume stale double space undo`() {
+        val context = EditorContext.from(
+            InputType.TYPE_CLASS_TEXT,
+            EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING,
+        )
+        val state = KeyboardState(KeyboardLanguage.ENGLISH, pendingDoubleSpaceUndo = true)
+
+        val transition = KeyboardReducer.reduce(state, KeyboardAction.Delete, context, 0)
+
+        assertEquals(EditorCommand.DeletePreviousCodePoint, transition.command)
+        assertFalse(transition.state.pendingDoubleSpaceUndo)
+    }
+
+    @Test
+    fun `no personalized learning double tap stays a plain space`() {
+        val context = EditorContext.from(
+            InputType.TYPE_CLASS_TEXT,
+            EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING,
+        )
+        val transition = reduceDoubleSpace(KeyboardState(KeyboardLanguage.ENGLISH), context)
+
+        assertEquals(EditorCommand.CommitText(" "), transition.command)
+        assertFalse(transition.state.pendingDoubleSpaceUndo)
+    }
+
     private val textEditor = EditorContext.from(
         inputType = InputType.TYPE_CLASS_TEXT,
         imeOptions = EditorInfo.IME_ACTION_NONE,

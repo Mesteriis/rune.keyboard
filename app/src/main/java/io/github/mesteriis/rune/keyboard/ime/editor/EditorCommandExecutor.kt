@@ -5,6 +5,7 @@ import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.inputmethod.InputConnection
 import io.github.mesteriis.rune.keyboard.ime.model.EditorCommand
+import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
 
 internal data class EditorExecutionResult(
     val handled: Boolean,
@@ -18,11 +19,13 @@ object EditorCommandExecutor {
         inputConnection: InputConnection,
         hasSelection: Boolean,
         requiresRawKeyEvents: Boolean,
+        inputPolicy: InputPolicy = InputPolicy.NORMAL,
     ): EditorExecutionResult = execute(
         command = command,
         inputConnection = inputConnection,
         hasSelection = hasSelection,
         deleteMode = if (requiresRawKeyEvents) DeleteMode.RAW_KEY_EVENT else DeleteMode.CODE_POINT,
+        inputPolicy = inputPolicy,
     )
 
     internal fun execute(
@@ -30,7 +33,16 @@ object EditorCommandExecutor {
         inputConnection: InputConnection,
         hasSelection: Boolean,
         deleteMode: DeleteMode,
+        inputPolicy: InputPolicy = InputPolicy.NORMAL,
     ): EditorExecutionResult = when (command) {
+        is EditorCommand.SetComposingText -> textMutationResult(
+            inputPolicy == InputPolicy.NORMAL && deleteMode != DeleteMode.RAW_KEY_EVENT &&
+                inputConnection.setComposingText(command.value, 1),
+        )
+        EditorCommand.FinishComposingText -> EditorExecutionResult(
+            handled = inputPolicy == InputPolicy.NORMAL && deleteMode != DeleteMode.RAW_KEY_EVENT &&
+                inputConnection.finishComposingText(),
+        )
         is EditorCommand.CommitText -> textMutationResult(
             if (deleteMode == DeleteMode.RAW_KEY_EVENT) {
                 sendTextAsKeyEvents(inputConnection, command.value)
@@ -42,7 +54,9 @@ object EditorCommandExecutor {
             deletePrevious(
                 inputConnection = inputConnection,
                 hasSelection = hasSelection,
-                deleteMode = deleteMode,
+                deleteMode = if (inputPolicy == InputPolicy.SENSITIVE && deleteMode != DeleteMode.RAW_KEY_EVENT) {
+                    DeleteMode.CODE_POINT
+                } else deleteMode,
             ),
         )
         is EditorCommand.PerformEditorAction -> {
@@ -60,10 +74,14 @@ object EditorCommandExecutor {
             },
         )
         EditorCommand.ConvertPrecedingSpaceToPeriod -> textMutationResult(
-            convertPrecedingSpaceToPeriod(inputConnection),
+            if (inputPolicy == InputPolicy.SENSITIVE) inputConnection.commitText(" ", 1)
+            else convertPrecedingSpaceToPeriod(inputConnection),
         )
         EditorCommand.RevertDoubleSpacePeriod -> textMutationResult(
-            revertDoubleSpacePeriod(
+            if (inputPolicy == InputPolicy.SENSITIVE) deletePrevious(
+                inputConnection, hasSelection,
+                if (deleteMode == DeleteMode.RAW_KEY_EVENT) deleteMode else DeleteMode.CODE_POINT,
+            ) else revertDoubleSpacePeriod(
                 inputConnection = inputConnection,
                 hasSelection = hasSelection,
                 deleteMode = deleteMode,

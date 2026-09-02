@@ -17,6 +17,8 @@ RuneInputMethodService ── lifecycle, InputConnection, settings snapshot, fee
           ▼
 KeyboardReducer ───────── (state, action, editor context) → state + command
           │
+          ├──────────────► TypingSessionController → composing / RAM context
+          │                                      │
           ├──────────────► EditorCommandExecutor → InputConnection
           │
           ▼
@@ -46,6 +48,7 @@ Rune регистрирует один системный subtype на три я
 - `ime/ui` — доступные View-клавиши, popup preview и alternates, геометрия попапов;
 - `ime/feedback` — политика haptic/звука и её исполнитель;
 - `ime/editor` — единственная точка записи через `InputConnection`;
+- `smarttyping/session` — отдельный владелец composing, session/revision и ограниченного контекста; не хранит визуальное состояние;
 - `settings` — снапшот настроек, их хранение и экраны onboarding/настроек.
 - `intelligence/model` — descriptor/snapshot/operation types и строгий manifest schema;
 - `intelligence/delivery` — DownloadManager adapter, AtomicFile journal, private candidate install и SAF transfer.
@@ -60,7 +63,7 @@ Rune регистрирует один системный subtype на три я
 
 Persistent (`SharedPreferences`, файл `keyboard_preferences`): включённые языки и их порядок, стартовый язык, высота по профилям экрана, отступы, цифровой ряд, тема, haptic, звук, preview, двойной пробел. Читаются кодеком `SettingsCodec` в immutable снапшот `KeyboardSettings`; любое некорректное значение честно падает в default, поэтому испорченный файл настроек не мешает клавиатуре запуститься.
 
-Session (только в памяти): активный редактор, язык, Shift, слой, состояние жеста.
+Session (только в памяти): активный редактор, язык, Shift, слой, состояние жеста; отдельно — composing word с leading boundary и текст, введённый через Rune в текущей сессии. Контекст ограничен 2048 UTF-16 units и 1024 code points с обрезкой по ICU grapheme boundaries. Он не заполняется из чтений редактора.
 
 Снапшот читается один раз на старте сессии и обновляется через `OnSharedPreferenceChangeListener`, поэтому на пути нажатия клавиши нет I/O. Изменения, влияющие на внешний вид, пересоздают input view; остальные просто подменяют снапшот.
 
@@ -72,6 +75,10 @@ Session (только в памяти): активный редактор, яз�
 
 Складывание и раскладывание — обычная смена конфигурации: фреймворк пересоздаёт input view и повторно вызывает `onStartInput(restarting = true)` для того же редактора. `KeyboardSessionPolicy` в этом случае сохраняет предыдущее состояние, поэтому Shift, Caps Lock, слой и язык не теряются. Единственная точка сброса — `onStartInput(restarting = false)`; `onFinishInput` состояние не сбрасывает, потому что некоторые прошивки перемешивают его с restarting-стартом во время fold-перехода.
 
+Визуальное состояние и typing-сессия имеют разные lifecycle. При завершении input/view Rune завершает принадлежащий ей span и уничтожает контекст. Restart начинает новую typing-сессию; предыдущий буфер не отправляется повторно. Буквы обновляют текущий composing span. Пробел завершает слово и создаёт видимую pending boundary, которую следующая буква расширяет до `" <word>"`. Enter, язык, слой и начало cursor mode завершают composition. После операции с неизвестной позицией курсора composing ждёт selection callback; plain ввод остаётся доступным.
+
+Подтверждения ожидаемых selection/span имеют ограниченную числовую очередь. Внешняя selection очищает контекст; потерянный или отвергнутый composing span отключает Smart Typing до следующей editor session. Rune не читает текст для проверки ownership и не восстанавливает потерянный буфер. Редакторы, молча отбрасывающие span без callback, остаются явной границей совместимости.
+
 ## Приватность и безопасность
 
 - manifest объявляет ровно `android.permission.INTERNET`; сеть используется только после явного скачивания модели через системный DownloadManager;
@@ -81,7 +88,8 @@ Session (только в памяти): активный редактор, яз�
 - backup и cleartext traffic отключены;
 - вибрация реализована через `View.performHapticFeedback`, поэтому Rune не просит `android.permission.VIBRATE`; интенсивности выражены платформенными haptic-константами, а не амплитудами;
 - `EditorContext.inputPolicy` (`NORMAL`/`SENSITIVE`) — единая точка, которую обязаны спрашивать компоненты, работающие с текстом. `SENSITIVE` включается для password-полей и `IME_FLAG_NO_PERSONALIZED_LEARNING`; он, в частности, выключает popup preview. Значение `INCOGNITO` появится вместе с первой обучающейся подсистемой — пустую заглушку заранее не вводим;
-- история, composing buffer, clipboard, аналитика и crash SDK отсутствуют.
+- история ввода на диске, clipboard, аналитика и crash SDK отсутствуют; composing и текущий Rune-owned контекст существуют только в RAM;
+- sensitive/raw редакторы не создают composing/context; automatic Caps и double-space также требуют `InputPolicy.NORMAL`.
 
 ### Осознанное расширение инварианта чтения текста
 
@@ -93,7 +101,7 @@ Session (только в памяти): активный редактор, яз�
 - password и `IME_FLAG_NO_PERSONALIZED_LEARNING` никогда не читаются: там Backspace удаляет один code point; `TYPE_NULL` получает `KEYCODE_DEL`;
 - прочитанное существует только в стеке одной команды, не сохраняется, не логируется, не попадает в trace и не передаётся другим компонентам.
 
-Compatibility scan покрывает ZWJ, emoji modifiers, regional-indicator flags, keycaps, variation selectors и combining marks в пределах тех же 64 UTF-16 units. Патологический cluster длиннее границы чтения остаётся документированным ограничением: Rune не расширяет наблюдаемое окно и использует безопасный fallback редактора. Rune-owned composing state отсутствует, поэтому Fold-gate проверяет committed text, cursor/selection, язык, слой и Shift/Caps без phantom composition.
+Compatibility scan покрывает ZWJ, emoji modifiers, regional-indicator flags, keycaps, variation selectors и combining marks в пределах тех же 64 UTF-16 units. Патологический cluster длиннее границы чтения остаётся документированным ограничением: Rune не расширяет наблюдаемое окно и использует безопасный fallback редактора. Внутри Rune-owned composition Backspace удаляет последний grapheme из собственного буфера без чтения редактора. Fold-gate должен дополнительно проверять сохранность отображённого текста без повторного применения старой composition.
 
 Direct Boot в 0.2 выключен: его нельзя честно включить без device-protected preferences и отдельной lockscreen-проверки после перезагрузки.
 
@@ -110,7 +118,7 @@ Pinned JNI runtime загружает candidate с отключённым logger
 - IME остаётся в основном процессе; install/self-test выполняются worker service в `:model_worker`;
 - нет runtime-зависимостей кроме Kotlin stdlib, встроенной AGP;
 - нет I/O на пути нажатия клавиши;
-- один основной `InputConnection` вызов на действие (двойной пробел — один batch edit);
+- обновление слова — один `setComposingText`; граница слова и удаление последнего composing grapheme дополнительно завершают span (двойной пробел — один batch edit);
 - popup-окна создаются один раз и переиспользуются, на `ACTION_DOWN` ничего не инфлейтится;
 - повтор удаления отменяется на `UP`, `CANCEL`, уходе пальца и detach View; жестовое состояние возвращается в `Idle` через общий `cancelActiveTouches`;
 - R8 и resource shrinking включены для release.

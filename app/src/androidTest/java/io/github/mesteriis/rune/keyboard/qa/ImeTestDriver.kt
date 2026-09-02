@@ -67,6 +67,14 @@ class ImeTestDriver {
         awaitQaActivity()
     }
 
+    fun launchComposingQa(mode: String = "accept") {
+        require(mode in setOf("accept", "reject", "drop", "private"))
+        shell("am start -W -f 0x10008000 -n $QA_ACTIVITY --es qa_composing_fixture $mode")
+        awaitQaActivity()
+        waitForKeyboard()
+        switchToEnglish()
+    }
+
     private fun resumeQa() {
         shell("am start -W -n $QA_ACTIVITY")
         awaitQaActivity()

@@ -9,6 +9,24 @@ import org.junit.Test
 
 class EditorContextTest {
     @Test
+    fun `no personalized learning forbids capitalization and double space reads`() {
+        val context = EditorContext.from(
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES,
+            EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING,
+        )
+
+        assertFalse(context.supportsAutomaticCapitalization)
+        assertFalse(context.supportsDoubleSpacePeriod)
+    }
+
+    @Test
+    fun `raw editors never request capitalization context`() {
+        val context = EditorContext.from(InputType.TYPE_NULL, EditorInfo.IME_ACTION_NONE)
+
+        assertFalse(context.supportsAutomaticCapitalization)
+    }
+
+    @Test
     fun `email variation selects email mode`() {
         val context = EditorContext.from(
             inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,

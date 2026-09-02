@@ -279,6 +279,7 @@ internal class RuneKeyboardView(
             KeyboardAction.NextInputMethod -> context.getString(R.string.key_next_keyboard)
             is KeyboardAction.SwitchLanguage -> context.getString(R.string.key_language)
             KeyboardAction.DoubleSpaceTap,
+            KeyboardAction.CursorModeStarted,
             is KeyboardAction.MoveCursor,
             null,
             -> null

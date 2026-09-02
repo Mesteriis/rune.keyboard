@@ -25,6 +25,18 @@ class ImeQaActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        intent.getStringExtra("qa_composing_fixture")?.let { mode ->
+            val fixture = ComposingQaFixture(this, mode)
+            val scrollView = ScrollView(this).apply {
+                id = R.id.qa_scroll
+                addView(fixture.content)
+            }
+            setContentView(scrollView)
+            applySystemBarInsets(scrollView)
+            fixture.editor.requestFocus()
+            fixture.editor.post { showKeyboard(fixture.editor) }
+            return
+        }
         val content = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             val padding = dp(24)

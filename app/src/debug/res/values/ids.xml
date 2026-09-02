@@ -22,4 +22,11 @@
   <item name="qa_action_done" type="id" />
   <item name="qa_custom_action" type="id" />
   <item name="qa_action_status" type="id" />
+  <item name="qa_composing_text" type="id" />
+  <item name="qa_composing_stats" type="id" />
+  <item name="qa_composing_rewrite" type="id" />
+  <item name="qa_composing_cursor" type="id" />
+  <item name="qa_composing_select" type="id" />
+  <item name="qa_composing_drop" type="id" />
+  <item name="qa_composing_restart" type="id" />
 </resources>

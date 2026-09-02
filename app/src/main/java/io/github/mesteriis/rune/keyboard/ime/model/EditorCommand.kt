@@ -2,6 +2,10 @@ package io.github.mesteriis.rune.keyboard.ime.model
 
 sealed interface EditorCommand {
     data class CommitText(val value: String) : EditorCommand
+    data class SetComposingText(val value: String) : EditorCommand {
+        override fun toString(): String = "SetComposingText(redacted)"
+    }
+    data object FinishComposingText : EditorCommand
     data object DeletePreviousCodePoint : EditorCommand
     data class PerformEditorAction(val actionId: Int) : EditorCommand
     data object InsertNewline : EditorCommand

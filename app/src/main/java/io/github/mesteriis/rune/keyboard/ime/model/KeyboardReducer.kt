@@ -31,14 +31,14 @@ object KeyboardReducer {
                 command = EditorCommand.CommitText(" "),
             )
             KeyboardAction.DoubleSpaceTap -> reduceDoubleSpaceTap(base, editorContext)
-            KeyboardAction.Delete -> if (base.pendingDoubleSpaceUndo) {
+            KeyboardAction.Delete -> if (base.pendingDoubleSpaceUndo && editorContext.supportsDoubleSpacePeriod) {
                 KeyboardTransition(
                     state = base.clearDoubleSpaceUndo(),
                     command = EditorCommand.RevertDoubleSpacePeriod,
                 )
             } else {
                 KeyboardTransition(
-                    state = base,
+                    state = base.clearDoubleSpaceUndo(),
                     command = EditorCommand.DeletePreviousCodePoint,
                 )
             }
@@ -47,6 +47,7 @@ object KeyboardReducer {
                 command = resolveEnterCommand(editorContext),
             )
             KeyboardAction.Shift -> KeyboardTransition(base.onShiftPressed(nowMillis))
+            KeyboardAction.CursorModeStarted -> KeyboardTransition(base)
             KeyboardAction.ToggleSymbols -> KeyboardTransition(base.toggleSymbols())
             KeyboardAction.ToggleSymbolsPage -> KeyboardTransition(base.toggleSymbolsPage())
             is KeyboardAction.SwitchLanguage -> KeyboardTransition(base.switchLanguage(action.direction))

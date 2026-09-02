@@ -36,4 +36,10 @@
   <string name="qa_custom_action" translatable="false">Apply</string>
   <string name="qa_action_waiting" translatable="false">No action received</string>
   <string name="qa_action_received" translatable="false">Action received: %1$d</string>
+  <string name="qa_composing_hint" translatable="false">Composing Binder fixture</string>
+  <string name="qa_composing_rewrite" translatable="false">Rewrite</string>
+  <string name="qa_composing_cursor" translatable="false">Cursor 0</string>
+  <string name="qa_composing_select" translatable="false">Select all</string>
+  <string name="qa_composing_drop" translatable="false">Drop span</string>
+  <string name="qa_composing_restart" translatable="false">Restart input</string>
 </resources>

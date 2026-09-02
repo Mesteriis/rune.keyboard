@@ -34,6 +34,9 @@ import io.github.mesteriis.rune.keyboard.settings.KeyboardViewMetrics
 import io.github.mesteriis.rune.keyboard.settings.SettingsCodec
 import io.github.mesteriis.rune.keyboard.settings.SizeBucket
 import io.github.mesteriis.rune.keyboard.settings.ThemeOverride
+import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingEdit
+import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionController
+import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingTextResult
 
 class RuneInputMethodService : InputMethodService() {
     private val layoutProvider = KeyboardLayoutProvider()
@@ -45,6 +48,7 @@ class RuneInputMethodService : InputMethodService() {
     private var state = KeyboardState.initial(KeyboardLanguage.ENGLISH, automaticCapitalization = false)
     private var selectedLanguage = KeyboardLanguage.ENGLISH
     private var hasSelection = false
+    private val typingSession = TypingSessionController()
 
     // Held in a field on purpose: SharedPreferences keeps registered listeners weakly.
     private val preferencesListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
@@ -74,6 +78,7 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     override fun onDestroy() {
+        typingSession.endSession()
         keyboardPreferences.unregisterListener(preferencesListener)
         keyboardView = null
         super.onDestroy()
@@ -98,6 +103,8 @@ class RuneInputMethodService : InputMethodService() {
         hasSelection = editorInfo.initialSelStart >= 0 &&
             editorInfo.initialSelEnd >= 0 &&
             editorInfo.initialSelStart != editorInfo.initialSelEnd
+        // Restart preserves displayed editor text and visual state, never an old composing buffer.
+        typingSession.startSession(editorContext, editorInfo.initialSelStart, editorInfo.initialSelEnd)
         state = KeyboardSessionPolicy.onStartInput(
             previous = state,
             restarting = restarting,
@@ -131,11 +138,17 @@ class RuneInputMethodService : InputMethodService() {
             candidatesEnd,
         )
         hasSelection = newSelStart >= 0 && newSelEnd >= 0 && newSelStart != newSelEnd
+        if (typingSession.updateSelection(
+                newSelStart, newSelEnd, candidatesStart, candidatesEnd, ::executeTypingEdit,
+            )
+        ) state = state.clearDoubleSpaceUndo()
         refreshAutomaticCapitalization()
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
         keyboardView?.cancelActiveTouches()
+        typingSession.invalidate(::executeTypingEdit)
+        if (finishingInput) typingSession.endSession()
         super.onFinishInputView(finishingInput)
     }
 
@@ -147,6 +160,8 @@ class RuneInputMethodService : InputMethodService() {
      */
     override fun onFinishInput() {
         keyboardView?.cancelActiveTouches()
+        typingSession.finishComposition(::executeTypingEdit)
+        typingSession.endSession()
         hasSelection = false
         super.onFinishInput()
     }
@@ -156,6 +171,11 @@ class RuneInputMethodService : InputMethodService() {
     private fun handleAction(action: KeyboardAction) {
         RuneTrace.section("Rune#touchUpDispatch") {
             val previousState = state
+            if (action is KeyboardAction.MoveCursor || action == KeyboardAction.Enter) {
+                typingSession.awaitEditorSelection(::executeTypingEdit)
+            } else if (invalidatesTyping(action)) {
+                typingSession.invalidate(::executeTypingEdit)
+            }
             val transition = KeyboardReducer.reduce(
                 state = state,
                 action = action,
@@ -174,7 +194,7 @@ class RuneInputMethodService : InputMethodService() {
                 state = withAutomaticCapitalization(state)
             }
 
-            val outcome = transition.command?.let(::executeCommand) ?: CommandOutcome.NO_COMMAND
+            val outcome = transition.command?.let(::executeTypingOrEditorCommand) ?: CommandOutcome.NO_COMMAND
             val stateChanged = state != previousState
             provideFeedback(action, stateChanged, outcome)
             if (stateChanged) renderKeyboard()
@@ -183,6 +203,51 @@ class RuneInputMethodService : InputMethodService() {
                 keyboardView?.post(::refreshAutomaticCapitalization)
             }
         }
+    }
+
+    private fun invalidatesTyping(action: KeyboardAction): Boolean = when (action) {
+        KeyboardAction.Enter,
+        KeyboardAction.ToggleSymbols,
+        KeyboardAction.ToggleSymbolsPage,
+        KeyboardAction.CursorModeStarted,
+        KeyboardAction.HideKeyboard,
+        KeyboardAction.NextInputMethod,
+        is KeyboardAction.SwitchLanguage,
+        is KeyboardAction.MoveCursor,
+        -> true
+        else -> false
+    }
+
+    private fun executeTypingOrEditorCommand(command: EditorCommand): CommandOutcome {
+        val result = when (command) {
+            is EditorCommand.CommitText -> typingSession.typeText(command.value, ::executeTypingEdit)
+            EditorCommand.DeletePreviousCodePoint -> typingSession.deletePrevious(::executeTypingEdit)
+            EditorCommand.ConvertPrecedingSpaceToPeriod -> typingSession.legacyDoubleSpace(::executeTypingEdit) {
+                executeCommand(command) == CommandOutcome.DELIVERED
+            }
+            EditorCommand.RevertDoubleSpacePeriod,
+            -> {
+                // PR5 moves this existing gesture/Undo into the typing-owned transaction.
+                typingSession.awaitEditorSelection(::executeTypingEdit)
+                TypingTextResult.BYPASS
+            }
+            else -> TypingTextResult.BYPASS
+        }
+        return when (result) {
+            TypingTextResult.HANDLED -> CommandOutcome.DELIVERED
+            TypingTextResult.REJECTED -> CommandOutcome.DROPPED
+            TypingTextResult.BYPASS -> executeCommand(command)
+        }
+    }
+
+    private fun executeTypingEdit(edit: TypingEdit): Boolean = RuneTrace.section("Rune#composeUpdate") {
+        executeCommand(
+            when (edit) {
+                is TypingEdit.SetComposingText -> EditorCommand.SetComposingText(edit.value)
+                is TypingEdit.CommitText -> EditorCommand.CommitText(edit.value)
+                TypingEdit.FinishComposingText -> EditorCommand.FinishComposingText
+            },
+        ) == CommandOutcome.DELIVERED
     }
 
     private fun executeCommand(command: EditorCommand): CommandOutcome {
@@ -203,6 +268,7 @@ class RuneInputMethodService : InputMethodService() {
                 command = command,
                 inputConnection = connection,
                 hasSelection = hasSelection,
+                inputPolicy = editorContext.inputPolicy,
                 deleteMode = when {
                     editorContext.requiresRawKeyEvents -> DeleteMode.RAW_KEY_EVENT
                     editorContext.inputPolicy == io.github.mesteriis.rune.keyboard.ime.model.InputPolicy.SENSITIVE -> {
@@ -220,6 +286,7 @@ class RuneInputMethodService : InputMethodService() {
 
     private fun mutatesText(command: EditorCommand?): Boolean = when (command) {
         is EditorCommand.CommitText,
+        is EditorCommand.SetComposingText,
         EditorCommand.DeletePreviousCodePoint,
         EditorCommand.InsertNewline,
         EditorCommand.ConvertPrecedingSpaceToPeriod,
@@ -236,6 +303,7 @@ class RuneInputMethodService : InputMethodService() {
                 .withEnabledLanguages(settings.enabledLanguages)
                 .copy(doubleSpacePeriodEnabled = settings.doubleSpacePeriod)
             if (state.language != selectedLanguage) {
+                typingSession.invalidate(::executeTypingEdit)
                 selectedLanguage = state.language
                 keyboardPreferences.writeLanguage(selectedLanguage)
             }
@@ -265,8 +333,9 @@ class RuneInputMethodService : InputMethodService() {
 
     private fun withAutomaticCapitalization(candidate: KeyboardState): KeyboardState {
         if (!editorContext.supportsAutomaticCapitalization || candidate.layer != KeyboardLayer.LETTERS) {
-            return candidate
+            return candidate.withAutomaticCapitalization(false)
         }
+        if (!typingSession.state.composing?.typedWord.isNullOrEmpty()) return candidate
         val connection = currentInputConnection ?: return candidate
         val shouldCapitalize = connection.getCursorCapsMode(editorContext.inputType) != 0
         return candidate.withAutomaticCapitalization(shouldCapitalize)
@@ -326,7 +395,7 @@ class RuneInputMethodService : InputMethodService() {
         outcome: CommandOutcome,
     ) {
         // Cursor mode emits a step per movement; the space key gives one buzz when it engages.
-        if (action is KeyboardAction.MoveCursor) return
+        if (action is KeyboardAction.MoveCursor || action == KeyboardAction.CursorModeStarted) return
         val view = keyboardView ?: return
         if (!FeedbackPolicy.shouldProvide(stateChanged, outcome)) return
         feedbackController.provide(
