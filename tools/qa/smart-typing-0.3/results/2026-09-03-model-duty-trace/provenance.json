@@ -1,0 +1,31 @@
+{
+  "baseline": "6fb5880efa7815189cfb559675eaecc5775d2b57",
+  "rawJunitSha256": {
+    "first-execution.xml": "dc5293e388c200c0ef335ce183a0ca383c84f7a4aa99d0a0693d815facb09922",
+    "final-execution.xml": "916e7c00ecf9b651a2faec56451090898ea85060059d52c338ab76c19f0e9362"
+  },
+  "xmlNormalization": "Only hostname replaced with redacted; archived XML drives report regeneration.",
+  "sources": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/inference/LatestScoringWorker.kt": "83440c4456bd42b713052c9600e9ba0ed03e07c1e3ad4baf3af9df27f89fc2c2",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ModelDutyOwner.kt": "b92721f04018d2e16c6d526dd2ab2f9e145a7406c93bbe664d29bd7274415f70",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ModelDutyScheduler.kt": "81df2a382427e651ea55154745430b498aa45ac222c790a3345c2b6c96ff49d2",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ProcessModelDuty.kt": "48f3a93b0a76a490052e77f4cfa2511463b65bec549ee289ebb23e6becda4bcd",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ModelDutyTraceTest.kt": "9de46f387734279adebe85a781f1636b5d52dc8a88cd99747b1c7374c52b30ee",
+    ".github/workflows/ci.yml": "27758a6b281dfbe009b4f37e7eba2882d9d1b9124a5fa8952ff63e0180c3aa20",
+    "tools/qa/smart-typing-0.3/duty-traces/PROTOCOL.md": "bc9f9925b28e538261cb5f360e4d3767d1dc9cc904e8cb2cdc39bac4da20de24",
+    "tools/qa/smart-typing-0.3/duty-traces/report.py": "f29c206d933b8223a48d3b879eb4b393116beed86222efc4e65208a949b7a5a9",
+    "tools/qa/smart-typing-0.3/duty-traces/test_report.py": "359e8cfcc784de5483d49d45e36a10e34983b2a349414adc3457ede0abd792bd"
+  },
+  "jvm": {
+    "tests": 564,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "reportTests": 7,
+  "gates": {
+    "tasks": 238,
+    "executed": 27,
+    "upToDate": 211
+  }
+}

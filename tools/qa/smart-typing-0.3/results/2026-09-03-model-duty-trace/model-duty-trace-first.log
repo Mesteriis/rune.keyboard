@@ -1,0 +1,53 @@
+Calculating task graph as no cached configuration is available for tasks: :app:testDebugUnitTest --tests *ModelDutyTraceTest
+> Task :app:preBuild UP-TO-DATE
+> Task :runtime-llama:preBuild UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :runtime-llama:preDebugBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:mapDebugSourceSetPaths
+> Task :runtime-llama:processDebugNavigationResources
+> Task :app:extractDeepLinksDebug
+> Task :app:javaPreCompileDebugUnitTest
+> Task :runtime-llama:generateDebugResources
+> Task :app:generateDebugResources
+> Task :app:javaPreCompileDebug
+> Task :app:processDebugNavigationResources
+> Task :runtime-llama:javaPreCompileDebug
+> Task :runtime-llama:extractDeepLinksDebug
+> Task :runtime-llama:writeDebugAarMetadata
+> Task :runtime-llama:mapDebugSourceSetPaths
+> Task :app:checkDebugAarMetadata
+> Task :app:compileDebugNavigationResources
+> Task :runtime-llama:packageDebugResources
+> Task :runtime-llama:compileDebugLibraryResources
+> Task :runtime-llama:processDebugManifest
+> Task :runtime-llama:parseDebugLocalResources
+> Task :app:processDebugMainManifest
+> Task :runtime-llama:generateDebugRFile
+> Task :app:processDebugManifest
+> Task :app:processDebugManifestForPackage
+> Task :app:mergeDebugResources
+> Task :app:packageDebugResources
+> Task :app:parseDebugLocalResources
+> Task :app:generateDebugRFile
+> Task :app:compileDebugAidl
+> Task :app:processDebugResources
+> Task :runtime-llama:compileDebugKotlin
+> Task :runtime-llama:compileDebugJavaWithJavac NO-SOURCE
+> Task :runtime-llama:processDebugJavaRes
+> Task :runtime-llama:bundleLibRuntimeToJarDebug
+> Task :runtime-llama:bundleLibCompileToJarDebug
+> Task :app:compileDebugKotlin
+> Task :app:processDebugJavaRes
+> Task :app:compileDebugJavaWithJavac
+> Task :app:bundleDebugClassesToCompileJar
+> Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:compileDebugUnitTestKotlin
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:processDebugUnitTestJavaRes
+> Task :app:testDebugUnitTest
+
+BUILD SUCCESSFUL in 10s
+41 actionable tasks: 41 executed
+Configuration cache entry stored.

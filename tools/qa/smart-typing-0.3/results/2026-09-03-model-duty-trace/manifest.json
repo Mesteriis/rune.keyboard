@@ -1,0 +1,12 @@
+{
+  "REPORT.md": "57aeda8f161ea4096bd874953a5ac5b592398c7a83fdb6d27ebaf0425f0ea407",
+  "final-execution.xml": "3f9e11505f0dde5b5be5ed73bf01dfc7da1489c64c504356a198305d7513bc23",
+  "first-execution.xml": "52c1065b022d595e008cd9b3fb100ba61715d7dbaed5fe11c479957101f19f4f",
+  "model-duty-trace-first.log": "d7e8bc4c5cb1c2d4f824ca3d88ee3d914e9eaa9bbba58188b217e291c5605da3",
+  "model-duty-trace-gates.log": "696199672cc444d5aa09bcd698124531c958668a05af60ca1b28ce818d2068a5",
+  "model-duty-trace-jvm-final.log": "7d5764ad218494dcccc6711f2e50dbee212bf57f65bdbbc3425f9c5b4a872dfe",
+  "model-duty-trace-report-red.log": "44f54f71347aea281e812db929925aabeddfb2fdbbe02d5eac526d6eb776d262",
+  "model-duty-trace-report-tests.log": "e586fc0f3bb2a05f4c80f07d1b4c6171e830592f6c7aaf70d4af3b0aa3ebd072",
+  "provenance.json": "c5fc87a90fd4ab8bd95bdc9cf282f08aa809ad305fe356196def896a6f1b73d7",
+  "results.json": "49f3612084592b2256066691c143b50fca37b82230d11b65abda812cb66b47ee"
+}

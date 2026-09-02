@@ -23,6 +23,10 @@ jobs:
           yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" "ndk;29.0.14206865" "cmake;3.31.6" >/dev/null
       - name: Run fresh JVM tests
         run: ./gradlew testDebugUnitTest --rerun-tasks
+      - name: Synthetic CPU duty trace contracts and report
+        run: |
+          python3 -m unittest discover -s tools/qa/smart-typing-0.3/duty-traces -p test_report.py
+          python3 tools/qa/smart-typing-0.3/duty-traces/report.py --xml app/build/test-results/testDebugUnitTest/TEST-io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest.xml --output-dir build/model-duty-trace-ci
       - name: Verify offline lexicon source and benchmark contracts
         run: |
           python3 tools/lexicon/smart-typing-0.3/pipeline.py --build-dir build/lexicon-regression test
@@ -58,6 +62,7 @@ jobs:
           path: |
             app/build/test-results/testDebugUnitTest/**
             app/build/reports/tests/testDebugUnitTest/**
+            build/model-duty-trace-ci/**
 
   build:
     runs-on: ubuntu-latest

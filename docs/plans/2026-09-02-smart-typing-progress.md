@@ -30,8 +30,9 @@ commit `b4d76cdbd53780ed83f77ef5e15f3e3022fbe4dc`. PR2/3 runtime and private
 inference foundations, PR4 composing and PR5 strip/owned-boundary Undo are
 integrated. IME model inference and automatic spelling replacement remain off.
 PR6 has scoped live-suggestion evidence on API26/37 and Fold. PR7 duty and
-bound-worker CPU control has JVM/API26/API37 functional evidence; its trace
-experiment remains unrun. Remaining PR7 ranking and AutoReplace, PR9 contextual,
+bound-worker CPU control has JVM/API26/API37 functional evidence. Nine
+virtual-clock worker traces pass; real CPU/device trace qualification remains
+unrun. Remaining PR7 ranking and AutoReplace, PR9 contextual,
 and full autocorrection Undo plus final device/performance matrices are required.
 PR8 mechanical punctuation and schema3 persistence have local integration
 evidence, while settings consumers/UI have scoped API26/API37 integration
@@ -214,6 +215,9 @@ evidence. No push, remote PR or publication is authorized.
 - Bounded client committed `b4d76cdbd53780ed83f77ef5e15f3e3022fbe4dc`; mandatory fresh post-commit JVM530/530 PASS, zero failures/errors/skips,46 executed (`model-demand-client-jvm-postcommit.log`). Previous goal turn is progress through committed production lifecycle behavior and actual API26/API37 tests. Current duty author is live, with controlled-clock actual-worker tests progressing in ignored overlay; not treated as a stopped task or restarted.
 
 - Duty proposal integrated; fresh parent tests found and fixed two defects. Lint rejected fixed-rate catch-up scheduling; changed to fixed delay without suppression. Both Android matrices initially failed the two same-Service rebind recovery cases (40/42 PASS each). The earlier `onUnbind=false` decision was incorrect for a retained Service/Binder: production now returns true and rearms through actual `onRebind`; debug latches acknowledge lifecycle completion. No pressure/debt assertion was relaxed. Final root JVM555/555 PASS, full prescribed gates plus test APK PASS267/45, final complete API26 42/42 PASS17.446s and API37 42/42 PASS17.850s. Evidence, initial failures, source/APK identities and dated acceptance archived under `2026-09-02-model-duty`. The saved independent review covers the initial proposal, not the parent corrections. Trace experiment/energy remain UNRUN, physical USB Fold absent; no consumer or release qualification. This goal turn made concrete progress through production corrections and fresh integration evidence.
+
+- Duty implementation committed `6fb5880efa7815189cfb559675eaecc5775d2b57`; mandatory fresh post-commit JVM555/555 PASS, zero failures/errors/skips,46 tasks executed. Working tree clean at that checkpoint.
+- 2026-09-03: added nine virtual-clock traces of the actual worker, RU/EN/ES ×2/4/8. Each exercises11 submissions with6 engine admissions,4 denials including1 expiry,3 cancelled operations,2 OK replies,1 failed load and1 replaced pending. First warm result fits a simulated1000ms boundary in5/9 configurations. Initial NO_MODEL fixture was corrected to LOAD_FAILED with first XML retained; no profile/input/timing change. Report negative tests exposed and fixed XML empty-element truthiness and incorrect capped-refill debt arithmetic. Final JVM564/564 PASS, Python7/7 PASS, full gates238/27 PASS. CI now extracts and archives the simulation report without a model. Numeric report/source identities and first/final XML are under `2026-09-03-model-duty-trace`; actual device trace/energy, model consumers and quality remain open. This turn is concrete test/CI progress, not physical qualification.
 
 ### Historical PR1 result
 

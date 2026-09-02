@@ -1,0 +1,13 @@
+..F....
+======================================================================
+FAIL: test_hidden_test_failure (test_report.ReportTest.test_hidden_test_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/qa/smart-typing-0.3/duty-traces/test_report.py", line 34, in test_hidden_test_failure
+    with self.assertRaises(ValueError): read_results(ET.tostring(root))
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.004s
+
+FAILED (failures=1)
