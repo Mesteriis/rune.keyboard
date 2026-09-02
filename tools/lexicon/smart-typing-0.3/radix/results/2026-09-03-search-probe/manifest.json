@@ -1,0 +1,13 @@
+{
+  "CandidateExport.kt.gz": "154bffe146e06d175e03c15400211555b22324931a153f67a1fb04dddd14d195",
+  "ProbeRadixIdentities.kt.gz": "d8c851124f5fa10417020a390ac5515ce563602912a78625c936d68a03c3b5dc",
+  "ProbeRadixTopSeven.kt.gz": "e09a8d888ccdc8886f18067c71f3b2eb5a756e139887721539ae87c5fa491713",
+  "calibration-actual.tsv.gz": "59f4aebe3ba342fb515b7c2abf397a7cc2ec88429631746d7a7c89e06b5c01b3",
+  "calibration-candidates.jsonl.gz": "e795dbffcb1ec4c50c518b9f600d4d51f621f90a978ecd5599eb5726326cd45a",
+  "calibration-inputs.tsv.gz": "9db54bbab2ef8b58e5009ba6c0ec46f1a94aceb95c2d296e765f020732aa4068",
+  "calibration-provenance.json.gz": "5eaac6fcd145789c22a87425c1ac0f3eda5313bc785e6d291cb134c5245b76a2",
+  "calibration-summary.json.gz": "8e5317df0517b98d95ea61cafa942ff18bc4203ba3c1e0c930dde93201bfffc0",
+  "oracle-actual.tsv.gz": "422e2591c9b29271272a2982ba2705ad641b84701917000515ecdb04bd57cffd",
+  "oracle-inputs.tsv.gz": "5c9822d3d27f423c4ed90f4286e14c738ad6021443b97885dec9e3083403d91a",
+  "oracle-report.json.gz": "fc62ff5d14a236887af413e44a14d02cbb2b5d5ef5b30411c64cf69956631ef8"
+}

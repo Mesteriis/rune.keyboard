@@ -41,6 +41,15 @@ PR8 mechanical punctuation and schema3 persistence have local integration
 evidence, while settings consumers/UI have scoped API26/API37 integration
 evidence. No push, remote PR or publication is authorized.
 
+### Exact candidate-width feasibility — 2026-09-03
+
+- Baseline `ab8029b729c1cc12d15c2b487b401ca0b08c19ca`. The user requires at most7 alternatives; always requesting7 was an implementation choice. Compared predeclared exact widths2/4/8 including original, with unchanged8192/64 caps, protection, ranking and corpus.
+- Complete-correct calibration counts for width4: EN475/RU583/ES537, versus184/366/314 for width8. Width2 gives852/791/802 but lower overall candidate recall. This is retrieval feasibility, not precision or an AutoReplace gate. No model, threshold fit or holdout ran.
+- Each width passes the773-request full-neighborhood oracle with zero violations; completions683/393/238 for widths2/4/8. Width8 records match prior production bytes. Explicit width/experiment metadata prevents silently truncating an exhausted wider result. Every exhausted request retains its veto.
+- Actual radix search prototype passes its oracle but loses24 previously complete calibration rows and gains22; it does not solve EN and is not adopted. Original packed reader remains in product.
+- Exporter/comparison/converter Python tests9/9/4 PASS; prescribed product gates PASS. Next: explicit production width contract and boundary/cancellation coverage, then calibrated ranking and device cost comparison. All quality/device/model/release gates remain open.
+- Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-candidate-widths.md`.
+
 ### Lossless radix format preparation — 2026-09-03
 
 - Baseline `bff8110a54c05984a34f8aac4b963e5b3c8e4d02`. Diagnostic calibration grouping found EN state exhaustion concentrated at lengths 7–12. Static source analysis found 130818/558058/509338 collapsible nonterminal one-child nodes in EN/RU/ES respectively.

@@ -48,6 +48,18 @@ def excluded_controls(inputs):
     return excluded
 
 
+def requested_width(receipt, maximum):
+    assert type(maximum) is int and maximum in (1, 3, 7)
+    experiment = receipt.get("experiment")
+    if experiment is None:
+        assert maximum == 7
+    else:
+        assert experiment["name"] == "exact-candidate-budget"
+        assert experiment["maximumAlternatives"] == maximum and experiment["totalCandidates"] == maximum + 1
+        assert experiment["stateCap"] == 8192 and experiment["verificationCap"] == 64
+    return maximum
+
+
 def run(args):
     archive = module("preserved_archive", PACKAGE / "archive.py")
     export = module("current_export", EXPORT)
@@ -63,6 +75,7 @@ def run(args):
     assert len(selected) == 773 and len(excluded) == 2
     home = Path(args.compiled_export).resolve(strict=True)
     receipt = json.loads((home / "provenance.json").read_text())
+    maximum = requested_width(receipt, getattr(args, "maximum_alternatives", 7))
     def verify_sources():
         assert all(export.sha(ROOT / path) == digest for path, digest in receipt["sources"].items())
         assert export.sha(home / "generator.jar") == receipt["binary"]
@@ -98,6 +111,7 @@ def run(args):
         expected = oracle[r["id"]]
         allowed = {expected_signature(c) for c in expected["all_candidates"] if c["admitted"]}
         signatures = list(map(signature, result["alternatives"]))
+        assert len(signatures) <= maximum
         assert all(c in allowed for c in signatures), r["id"]
         assert all(c["repetitionBonus"] == c["repeatedCharacterEdits"] * 0.25 for c in result["alternatives"])
         if expected["completion"] != 0:
@@ -105,7 +119,7 @@ def run(args):
             assert result["protectedReason"] == (reasons[expected["protected"]] if expected["protected"] >= 0 else None)
             counts["policy"] += 1
         elif result["completion"] == "COMPLETE":
-            assert signatures == [expected_signature(c) for c in expected["best"]], r["id"]
+            assert signatures == [expected_signature(c) for c in expected["best"][:maximum]], r["id"]
             assert not result["prohibitsAutoReplace"]
             counts["complete"] += 1
         else:
@@ -116,7 +130,8 @@ def run(args):
     export.write_json(output / "report.json", {"freshExecution": True, "requests": len(actual), "excludedControls": excluded,
         "counts": counts, "violations": 0, "compiledReceipt": export.sha(home / "provenance.json"),
         "archiveSha256": archive.ARCHIVE_SHA, "actualSha256": export.sha(output / "actual.tsv"),
-        "scriptSha256": export.sha(Path(__file__)), "noModelOrHoldout": True})
+        "scriptSha256": export.sha(Path(__file__)), "noModelOrHoldout": True,
+        "maximumAlternatives": maximum, "experiment": receipt.get("experiment")})
     print(f'Fresh full-oracle comparison PASS: {len(actual)} requests, {counts}; 2 controls separately covered in JVM.')
 
 
@@ -124,4 +139,5 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("compiled-export", "output", "index-dir", "rank-dir", "java", "gradle-cache"):
         parser.add_argument("--" + name, required=True)
+    parser.add_argument("--maximum-alternatives", type=int, choices=(1, 3, 7), default=7)
     run(parser.parse_args())

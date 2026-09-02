@@ -2,7 +2,8 @@ import base64
 import copy
 import unittest
 
-from export_calibration import parse_output, summarize
+from pathlib import Path
+from export_calibration import REPO, parse_output, selected_sources, summarize
 
 
 def enc(s):
@@ -15,6 +16,16 @@ CANDIDATE = f"C\t0\t1\t{enc('hello')}\t{enc('hello')}\t{enc('hello')}\ten\tfalse
 
 
 class ExportContractTest(unittest.TestCase):
+    def test_experimental_sources_require_explicit_identity_and_known_scoped_paths(self):
+        source = REPO / "app/source.kt"
+        overlay = REPO / "build/experiment/source.kt"
+        self.assertEqual([source], selected_sources([source], None, None))
+        self.assertEqual([overlay], selected_sources([source], {source: overlay}, {"name": "experiment"}))
+        for replacements, identity in (({source: overlay}, None), ({overlay: source}, {}),
+                                        ({source: Path('/outside/source.kt')}, {})):
+            with self.assertRaises(ValueError):
+                selected_sources([source], replacements, identity)
+
     def test_real_candidate_features_and_original_survive_protocol(self):
         output = parse_output(RECORD + CANDIDATE, [ROW])
         self.assertEqual(output[0]["original"], "helo")

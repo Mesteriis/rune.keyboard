@@ -60,3 +60,37 @@ and partial-expansion rules. Before production adoption, compare calibration
 coverage, CPU, mapping/validation cost and APK/RAM on the same controls, then
 integrate strict load/manifest validation. No results for those checks are
 claimed by the converter alone.
+
+## Search probe outcome
+
+`probe.py` now builds a host-only RDX1 reader and a generated adaptation of the
+pinned production selector. It verifies the source/harness SHA before changing
+the edge traversal, retains the original exact-membership reader and ranks, and
+uses the same full-corpus input protocol. Full paths use a fixed1MiB extra scratch
+array, cleared after each request. This is not a production memory design.
+Every scalar inside each compressed edge still runs through the unrestricted
+recurrence, with cancellation checkpoints and inherited bounds. Certificate
+checks remain outside the entire child-list expansion.
+
+The probe passed the773-request oracle but regressed24 complete calibration rows
+and gained22; EN complete-correct retrieval fell184→175. It is **not adopted**.
+No Android performance or model/holdout qualification followed this failed
+feasibility check. Source, generated overlays and evidence are preserved in
+`results/2026-09-03-search-probe/`. The next product direction is the explicit
+candidate-width evaluation in `../top-seven/`, not integrating this prototype.
+
+Reproduce against the pinned selector/harness versions checked by the script:
+
+```sh
+python3 tools/lexicon/smart-typing-0.3/radix/probe.py \
+  --output build/smart-typing-0.3/radix-probe-fresh \
+  --index-dir build/smart-typing-0.3/lexicon-index-prototype/assets \
+  --rank-dir build/smart-typing-0.3/packed-lexicon-reader-prototype/rank-assets \
+  --radix-dir build/smart-typing-0.3/radix-derivation-fresh \
+  --java java --gradle-cache "$HOME/.gradle/caches/modules-2/files-2.1"
+```
+
+Use the emitted `assets/` directory as `--rank-dir` and the probe output root as
+`--compiled-export` for the existing full-width oracle verifier. The generated
+identity class pins and checks all radix asset hashes on load. Original scalar
+trie/rank hashes and every compiled source are also recorded and checked.

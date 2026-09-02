@@ -115,7 +115,18 @@ def summarize(rows, results):
     return report
 
 
-def run(args):
+def selected_sources(production_sources, source_overrides, experiment):
+    source_overrides = source_overrides or {}
+    require(set(source_overrides) <= set(production_sources), "UNKNOWN_SOURCE_OVERRIDE")
+    require(not source_overrides or experiment is not None, "EXPERIMENT_IDENTITY_REQUIRED")
+    sources = [source_overrides.get(p, p) for p in production_sources]
+    require(all(p.resolve().is_relative_to(REPO) for p in sources), "SOURCE_SCOPE")
+    return sources
+
+
+def run(args, source_overrides=None, experiment=None):
+    """CLI always uses production sources; controlled host experiments may provide hashed overlays."""
+    exporter_sha = sha(Path(__file__))
     manifest = json.loads((CORPUS / "manifest.json").read_text())
     for name, digest in manifest["files"].items():
         require(sha(CORPUS / name) == digest, "CORPUS_DIGEST")
@@ -131,7 +142,9 @@ def run(args):
     index, rank = Path(args.index_dir).resolve(strict=True), Path(args.rank_dir).resolve(strict=True)
     assets = [index / f"{lang}{suffix}" for lang in ("en", "ru", "es") for suffix in (".trie", ".trie.lengths")]
     assets += [rank / f"{lang}.ranks" for lang in ("en", "ru", "es")]
-    sources = [REPO / (PRODUCTION + p) for p in SOURCES] + [HERE / "CandidateExport.kt"]
+    production_sources = [REPO / (PRODUCTION + p) for p in SOURCES] + [HERE / "CandidateExport.kt"]
+    source_overrides = source_overrides or {}
+    sources = selected_sources(production_sources, source_overrides, experiment)
     source_hashes = {str(p.relative_to(REPO)): sha(p) for p in sources}
     tools = json.loads((LEXICON / "weighted-qualification/manifests/reproduction-toolchain.json").read_text())
     jars = []
@@ -161,17 +174,23 @@ def run(args):
         subprocess.run(command, stdout=data, stderr=log, timeout=600, check=True)
     results = parse_output((output / "actual.tsv").read_text(encoding="ascii"), rows)
     require(source_hashes == {str(p.relative_to(REPO)): sha(p) for p in sources}
-            and asset_hashes == {p.name: sha(p) for p in assets}, "EXECUTION_INPUT_DRIFT")
+            and asset_hashes == {p.name: sha(p) for p in assets}
+            and exporter_sha == sha(Path(__file__)), "EXECUTION_INPUT_DRIFT")
     with (output / "candidates.jsonl").open("x", encoding="utf-8") as stream:
         for result in results:
             stream.write(json.dumps(result, ensure_ascii=False, sort_keys=True, allow_nan=False) + "\n")
-    write_json(output / "summary.json", summarize(rows, results))
+    summary = summarize(rows, results)
+    if experiment is not None:
+        summary["experiment"] = experiment
+    write_json(output / "summary.json", summary)
     write_json(output / "provenance.json", {"sources": source_hashes, "assets": asset_hashes,
         "corpusManifest": sha(CORPUS / "manifest.json"), "calibrationRows": evaluator.digest(rows),
-        "exporter": sha(Path(__file__)), "toolchainManifest": sha(LEXICON / "weighted-qualification/manifests/reproduction-toolchain.json"),
+        "exporter": exporter_sha, "toolchainManifest": sha(LEXICON / "weighted-qualification/manifests/reproduction-toolchain.json"),
         "binary": sha(binary), "inputs": sha(inputs), "actual": sha(output / "actual.tsv"),
         "candidates": sha(output / "candidates.jsonl"), "summary": sha(output / "summary.json"),
-        "hostTimingIsNotDeviceMeasurement": True, "freshExecution": True})
+        "hostTimingIsNotDeviceMeasurement": True, "freshExecution": True,
+        "experiment": experiment, "sourceOverrides": {str(p.relative_to(REPO)): str(v.relative_to(REPO))
+            for p, v in source_overrides.items()}})
     print("Calibration candidate export complete; no model, holdout or AutoReplace qualification.")
 
 

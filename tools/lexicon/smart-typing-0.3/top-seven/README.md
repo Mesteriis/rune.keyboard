@@ -132,3 +132,37 @@ is separately covered by the existing APK asset test. Emulator timings do not
 qualify physical Fold battery or final latency budgets.
 
 No AutoReplace, model quality or release gate is enabled by an exact set certificate.
+
+## Candidate-width calibration experiments
+
+The product currently requests seven alternatives. The user contract allows up
+to seven, so this is a configurable design choice to evaluate before ranking
+calibration. `candidate_budget.py` creates explicit host-only source overlays
+for exact top1/top3/top7 alternatives (total set widths2/4/8 including original).
+It does not change product source files, search/verification limits, protected
+tokens, original preservation, comparator or language fallback policy.
+The width is selected before the request; a budget-exhausted request is never
+reinterpreted as a successful smaller request.
+
+```sh
+python3 tools/lexicon/smart-typing-0.3/top-seven/candidate_budget.py \
+  --candidates 4 --output build/smart-typing-0.3/candidate-budget-four-fresh \
+  --index-dir build/smart-typing-0.3/lexicon-index-prototype/assets \
+  --rank-dir build/smart-typing-0.3/packed-lexicon-reader-prototype/rank-assets \
+  --java java --gradle-cache "$HOME/.gradle/caches/modules-2/files-2.1"
+python3 tools/lexicon/smart-typing-0.3/top-seven/qualify_current.py \
+  --maximum-alternatives 3 \
+  --compiled-export build/smart-typing-0.3/candidate-budget-four-fresh/export \
+  --output build/smart-typing-0.3/candidate-budget-four-oracle-fresh \
+  --index-dir build/smart-typing-0.3/lexicon-index-prototype/assets \
+  --rank-dir build/smart-typing-0.3/packed-lexicon-reader-prototype/rank-assets \
+  --java java --gradle-cache "$HOME/.gradle/caches/modules-2/files-2.1"
+```
+
+Use fresh directories and corresponding explicit widths for the2/8 controls.
+The oracle is always the preserved full-neighborhood oracle; the declared
+requested prefix is compared exactly. Verifier metadata must match the request,
+and every incomplete request must retain its veto. Width8 is also compared
+byte-for-byte with the production calibration export as a transformation control.
+Evidence and limitations: `results/2026-09-03-candidate-widths/` and
+`docs/acceptance/2026-09-03-smart-typing-0.3-candidate-widths.md`.

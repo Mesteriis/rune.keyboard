@@ -1,0 +1,182 @@
+{
+  "modelOrHoldoutExecuted": false,
+  "productionIntegrated": false,
+  "qualityGatePassed": false,
+  "width8ByteIdenticalToProductionBaseline": true,
+  "widths": {
+    "2": {
+      "languages": {
+        "en": {
+          "candidateRecall": 0.855,
+          "candidateRecallCount": 855,
+          "completeRecalledTypos": 852,
+          "completionCounts": {
+            "COMPLETE": 996,
+            "PROTECTED": 260,
+            "STATES_EXHAUSTED": 5,
+            "VALID_WORD": 735,
+            "VERIFIED_EXHAUSTED": 4
+          },
+          "retrievalAllowsAutoReplace": 993,
+          "rows": 2000,
+          "typoRows": 1000,
+          "uniqueInputs": 1500
+        },
+        "es": {
+          "candidateRecall": 0.813,
+          "candidateRecallCount": 813,
+          "completeRecalledTypos": 802,
+          "completionCounts": {
+            "COMPLETE": 955,
+            "PROTECTED": 260,
+            "STATES_EXHAUSTED": 5,
+            "VALID_WORD": 764,
+            "VERIFIED_EXHAUSTED": 16
+          },
+          "retrievalAllowsAutoReplace": 955,
+          "rows": 2000,
+          "typoRows": 1000,
+          "uniqueInputs": 1499
+        },
+        "ru": {
+          "candidateRecall": 0.798,
+          "candidateRecallCount": 798,
+          "completeRecalledTypos": 791,
+          "completionCounts": {
+            "COMPLETE": 968,
+            "PROTECTED": 260,
+            "STATES_EXHAUSTED": 6,
+            "VALID_WORD": 752,
+            "VERIFIED_EXHAUSTED": 14
+          },
+          "retrievalAllowsAutoReplace": 968,
+          "rows": 2000,
+          "typoRows": 1000,
+          "uniqueInputs": 1500
+        }
+      },
+      "maximumAlternatives": 1,
+      "oracle": {
+        "complete": 683,
+        "incomplete": 53,
+        "policy": 37
+      }
+    },
+    "4": {
+      "languages": {
+        "en": {
+          "candidateRecall": 0.952,
+          "candidateRecallCount": 952,
+          "completeRecalledTypos": 475,
+          "completionCounts": {
+            "COMPLETE": 517,
+            "PROTECTED": 260,
+            "STATES_EXHAUSTED": 463,
+            "VALID_WORD": 735,
+            "VERIFIED_EXHAUSTED": 25
+          },
+          "retrievalAllowsAutoReplace": 514,
+          "rows": 2000,
+          "typoRows": 1000,
+          "uniqueInputs": 1500
+        },
+        "es": {
+          "candidateRecall": 0.925,
+          "candidateRecallCount": 925,
+          "completeRecalledTypos": 537,
+          "completionCounts": {
+            "COMPLETE": 568,
+            "PROTECTED": 260,
+            "STATES_EXHAUSTED": 355,
+            "VALID_WORD": 764,
+            "VERIFIED_EXHAUSTED": 53
+          },
+          "retrievalAllowsAutoReplace": 568,
+          "rows": 2000,
+          "typoRows": 1000,
+          "uniqueInputs": 1499
+        },
+        "ru": {
+          "candidateRecall": 0.925,
+          "candidateRecallCount": 925,
+          "completeRecalledTypos": 583,
+          "completionCounts": {
+            "COMPLETE": 629,
+            "PROTECTED": 260,
+            "STATES_EXHAUSTED": 318,
+            "VALID_WORD": 752,
+            "VERIFIED_EXHAUSTED": 41
+          },
+          "retrievalAllowsAutoReplace": 629,
+          "rows": 2000,
+          "typoRows": 1000,
+          "uniqueInputs": 1500
+        }
+      },
+      "maximumAlternatives": 3,
+      "oracle": {
+        "complete": 393,
+        "incomplete": 343,
+        "policy": 37
+      }
+    },
+    "8": {
+      "languages": {
+        "en": {
+          "candidateRecall": 0.972,
+          "candidateRecallCount": 972,
+          "completeRecalledTypos": 184,
+          "completionCounts": {
+            "COMPLETE": 206,
+            "PROTECTED": 260,
+            "STATES_EXHAUSTED": 744,
+            "VALID_WORD": 735,
+            "VERIFIED_EXHAUSTED": 55
+          },
+          "retrievalAllowsAutoReplace": 203,
+          "rows": 2000,
+          "typoRows": 1000,
+          "uniqueInputs": 1500
+        },
+        "es": {
+          "candidateRecall": 0.947,
+          "candidateRecallCount": 947,
+          "completeRecalledTypos": 314,
+          "completionCounts": {
+            "COMPLETE": 322,
+            "PROTECTED": 260,
+            "STATES_EXHAUSTED": 570,
+            "VALID_WORD": 764,
+            "VERIFIED_EXHAUSTED": 84
+          },
+          "retrievalAllowsAutoReplace": 322,
+          "rows": 2000,
+          "typoRows": 1000,
+          "uniqueInputs": 1499
+        },
+        "ru": {
+          "candidateRecall": 0.962,
+          "candidateRecallCount": 962,
+          "completeRecalledTypos": 366,
+          "completionCounts": {
+            "COMPLETE": 377,
+            "PROTECTED": 260,
+            "STATES_EXHAUSTED": 550,
+            "VALID_WORD": 752,
+            "VERIFIED_EXHAUSTED": 61
+          },
+          "retrievalAllowsAutoReplace": 377,
+          "rows": 2000,
+          "typoRows": 1000,
+          "uniqueInputs": 1500
+        }
+      },
+      "maximumAlternatives": 7,
+      "oracle": {
+        "complete": 238,
+        "incomplete": 498,
+        "policy": 37
+      }
+    }
+  }
+}
