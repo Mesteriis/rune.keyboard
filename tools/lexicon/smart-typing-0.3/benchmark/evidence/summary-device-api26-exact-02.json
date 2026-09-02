@@ -1,0 +1,1476 @@
+{
+  "validation": "PASS",
+  "api26_ready": true,
+  "processes": 9,
+  "measured_exact_comparisons": 12465,
+  "manifest_sha256": "88da5e175e0ea5f2c10e9ebf05b7a60c0a909cd8f43d03924c484aa82f953cd6",
+  "dex_sha256": "89449fc9e5f4bdb5decde1741a7e5d17528ad2277cad11195a829c10329ef11b",
+  "bootstrap": {
+    "samples": 2000,
+    "seed": 30902026,
+    "paired": true,
+    "stratification": "category x stratum within reported cohort/label"
+  },
+  "groups": [
+    {
+      "language": "en",
+      "pool": "development",
+      "queries": 240,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 57542,
+          "wall_ns_p95_ci95": [
+            56042,
+            58917
+          ],
+          "cpu_ns_p95": 58000,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 8875,
+          "wall_ns_p95_ci95": [
+            8208,
+            9375
+          ],
+          "cpu_ns_p95": 9291,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 61250,
+          "wall_ns_p95_ci95": [
+            57125,
+            71083
+          ],
+          "cpu_ns_p95": 61625,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          46959,
+          50250
+        ],
+        "delete-trie": [
+          48292,
+          62083
+        ],
+        "delete-front": [
+          -500,
+          13083
+        ]
+      }
+    },
+    {
+      "language": "en",
+      "pool": "control_present",
+      "queries": 18,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 52500,
+          "wall_ns_p95_ci95": [
+            52500,
+            52500
+          ],
+          "cpu_ns_p95": 52916,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 13917,
+          "wall_ns_p95_ci95": [
+            13917,
+            13917
+          ],
+          "cpu_ns_p95": 14334,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 122375,
+          "wall_ns_p95_ci95": [
+            122375,
+            122375
+          ],
+          "cpu_ns_p95": 97583,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          38583,
+          38583
+        ],
+        "delete-trie": [
+          108458,
+          108458
+        ],
+        "delete-front": [
+          69875,
+          69875
+        ]
+      }
+    },
+    {
+      "language": "en",
+      "pool": "control_absent",
+      "queries": 18,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 52834,
+          "wall_ns_p95_ci95": [
+            52834,
+            52834
+          ],
+          "cpu_ns_p95": 53250,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 15333,
+          "wall_ns_p95_ci95": [
+            15333,
+            15333
+          ],
+          "cpu_ns_p95": 15791,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 60708,
+          "wall_ns_p95_ci95": [
+            60708,
+            60708
+          ],
+          "cpu_ns_p95": 61042,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          37501,
+          37501
+        ],
+        "delete-trie": [
+          45375,
+          45375
+        ],
+        "delete-front": [
+          7874,
+          7874
+        ]
+      }
+    },
+    {
+      "language": "en",
+      "pool": "control_empty",
+      "queries": 1,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 37542,
+          "wall_ns_p95_ci95": [
+            37542,
+            37542
+          ],
+          "cpu_ns_p95": 37875,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 2083,
+          "wall_ns_p95_ci95": [
+            2083,
+            2083
+          ],
+          "cpu_ns_p95": 2500,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 40291,
+          "wall_ns_p95_ci95": [
+            40291,
+            40291
+          ],
+          "cpu_ns_p95": 40625,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          35459,
+          35459
+        ],
+        "delete-trie": [
+          38208,
+          38208
+        ],
+        "delete-front": [
+          2749,
+          2749
+        ]
+      }
+    },
+    {
+      "language": "en",
+      "pool": "development_absent",
+      "queries": 240,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 57542,
+          "wall_ns_p95_ci95": [
+            56042,
+            58917
+          ],
+          "cpu_ns_p95": 58000,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 8875,
+          "wall_ns_p95_ci95": [
+            8208,
+            9375
+          ],
+          "cpu_ns_p95": 9291,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 61250,
+          "wall_ns_p95_ci95": [
+            57125,
+            71083
+          ],
+          "cpu_ns_p95": 61625,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          46959,
+          50250
+        ],
+        "delete-trie": [
+          48292,
+          62083
+        ],
+        "delete-front": [
+          -500,
+          13083
+        ]
+      }
+    },
+    {
+      "language": "en",
+      "pool": "development_present",
+      "queries": 0,
+      "status": "EMPTY_PREDECLARED_LABEL_POOL"
+    },
+    {
+      "language": "es",
+      "pool": "development",
+      "queries": 240,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 73459,
+          "wall_ns_p95_ci95": [
+            69208,
+            77792
+          ],
+          "cpu_ns_p95": 73833,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 10583,
+          "wall_ns_p95_ci95": [
+            9792,
+            11250
+          ],
+          "cpu_ns_p95": 11000,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 68083,
+          "wall_ns_p95_ci95": [
+            65708,
+            70375
+          ],
+          "cpu_ns_p95": 68458,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          58541,
+          67291
+        ],
+        "delete-trie": [
+          54999,
+          59874
+        ],
+        "delete-front": [
+          -10209,
+          -1000
+        ]
+      }
+    },
+    {
+      "language": "es",
+      "pool": "control_present",
+      "queries": 18,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 64334,
+          "wall_ns_p95_ci95": [
+            64334,
+            64334
+          ],
+          "cpu_ns_p95": 64750,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 12792,
+          "wall_ns_p95_ci95": [
+            12792,
+            12792
+          ],
+          "cpu_ns_p95": 13167,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 62500,
+          "wall_ns_p95_ci95": [
+            62500,
+            62500
+          ],
+          "cpu_ns_p95": 62833,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          51542,
+          51542
+        ],
+        "delete-trie": [
+          49708,
+          49708
+        ],
+        "delete-front": [
+          -1834,
+          -1834
+        ]
+      }
+    },
+    {
+      "language": "es",
+      "pool": "control_absent",
+      "queries": 18,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 76083,
+          "wall_ns_p95_ci95": [
+            76083,
+            76083
+          ],
+          "cpu_ns_p95": 76500,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 8000,
+          "wall_ns_p95_ci95": [
+            8000,
+            8000
+          ],
+          "cpu_ns_p95": 8417,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 66417,
+          "wall_ns_p95_ci95": [
+            66417,
+            66417
+          ],
+          "cpu_ns_p95": 66791,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          68083,
+          68083
+        ],
+        "delete-trie": [
+          58417,
+          58417
+        ],
+        "delete-front": [
+          -9666,
+          -9666
+        ]
+      }
+    },
+    {
+      "language": "es",
+      "pool": "control_empty",
+      "queries": 1,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 51625,
+          "wall_ns_p95_ci95": [
+            51625,
+            51625
+          ],
+          "cpu_ns_p95": 52042,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 1500,
+          "wall_ns_p95_ci95": [
+            1500,
+            1500
+          ],
+          "cpu_ns_p95": 1917,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 46083,
+          "wall_ns_p95_ci95": [
+            46083,
+            46083
+          ],
+          "cpu_ns_p95": 46459,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          50125,
+          50125
+        ],
+        "delete-trie": [
+          44583,
+          44583
+        ],
+        "delete-front": [
+          -5542,
+          -5542
+        ]
+      }
+    },
+    {
+      "language": "es",
+      "pool": "development_absent",
+      "queries": 240,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 73459,
+          "wall_ns_p95_ci95": [
+            69208,
+            77792
+          ],
+          "cpu_ns_p95": 73833,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 10583,
+          "wall_ns_p95_ci95": [
+            9792,
+            11250
+          ],
+          "cpu_ns_p95": 11000,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 68083,
+          "wall_ns_p95_ci95": [
+            65708,
+            70375
+          ],
+          "cpu_ns_p95": 68458,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          58541,
+          67291
+        ],
+        "delete-trie": [
+          54999,
+          59874
+        ],
+        "delete-front": [
+          -10209,
+          -1000
+        ]
+      }
+    },
+    {
+      "language": "es",
+      "pool": "development_present",
+      "queries": 0,
+      "status": "EMPTY_PREDECLARED_LABEL_POOL"
+    },
+    {
+      "language": "ru",
+      "pool": "development",
+      "queries": 240,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 85625,
+          "wall_ns_p95_ci95": [
+            81792,
+            96125
+          ],
+          "cpu_ns_p95": 86250,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 13125,
+          "wall_ns_p95_ci95": [
+            12500,
+            14833
+          ],
+          "cpu_ns_p95": 13625,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 75916,
+          "wall_ns_p95_ci95": [
+            74292,
+            78583
+          ],
+          "cpu_ns_p95": 76583,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          68792,
+          83333
+        ],
+        "delete-trie": [
+          60417,
+          65708
+        ],
+        "delete-front": [
+          -20625,
+          -5459
+        ]
+      }
+    },
+    {
+      "language": "ru",
+      "pool": "control_present",
+      "queries": 18,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 77167,
+          "wall_ns_p95_ci95": [
+            77167,
+            77167
+          ],
+          "cpu_ns_p95": 77584,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 14750,
+          "wall_ns_p95_ci95": [
+            14750,
+            14750
+          ],
+          "cpu_ns_p95": 15167,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 74208,
+          "wall_ns_p95_ci95": [
+            74208,
+            74208
+          ],
+          "cpu_ns_p95": 74583,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          62417,
+          62417
+        ],
+        "delete-trie": [
+          59458,
+          59458
+        ],
+        "delete-front": [
+          -2959,
+          -2959
+        ]
+      }
+    },
+    {
+      "language": "ru",
+      "pool": "control_absent",
+      "queries": 18,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 109709,
+          "wall_ns_p95_ci95": [
+            109709,
+            109709
+          ],
+          "cpu_ns_p95": 110208,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 13917,
+          "wall_ns_p95_ci95": [
+            13917,
+            13917
+          ],
+          "cpu_ns_p95": 14292,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 75250,
+          "wall_ns_p95_ci95": [
+            75250,
+            75250
+          ],
+          "cpu_ns_p95": 75625,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          95792,
+          95792
+        ],
+        "delete-trie": [
+          61333,
+          61333
+        ],
+        "delete-front": [
+          -34459,
+          -34459
+        ]
+      }
+    },
+    {
+      "language": "ru",
+      "pool": "control_empty",
+      "queries": 1,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 56250,
+          "wall_ns_p95_ci95": [
+            56250,
+            56250
+          ],
+          "cpu_ns_p95": 56625,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 2333,
+          "wall_ns_p95_ci95": [
+            2333,
+            2333
+          ],
+          "cpu_ns_p95": 2708,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 55459,
+          "wall_ns_p95_ci95": [
+            55459,
+            55459
+          ],
+          "cpu_ns_p95": 55875,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          53917,
+          53917
+        ],
+        "delete-trie": [
+          53126,
+          53126
+        ],
+        "delete-front": [
+          -791,
+          -791
+        ]
+      }
+    },
+    {
+      "language": "ru",
+      "pool": "development_absent",
+      "queries": 240,
+      "formats": {
+        "front": {
+          "wall_ns_p95": 85625,
+          "wall_ns_p95_ci95": [
+            81792,
+            96125
+          ],
+          "cpu_ns_p95": 86250,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "trie": {
+          "wall_ns_p95": 13125,
+          "wall_ns_p95_ci95": [
+            12500,
+            14833
+          ],
+          "cpu_ns_p95": 13625,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        },
+        "delete": {
+          "wall_ns_p95": 75916,
+          "wall_ns_p95_ci95": [
+            74292,
+            78583
+          ],
+          "cpu_ns_p95": 76583,
+          "allocated_bytes_p95": null,
+          "gc_count_p95": 0
+        }
+      },
+      "paired_p95_difference_ns_ci95": {
+        "front-trie": [
+          68792,
+          83333
+        ],
+        "delete-trie": [
+          60417,
+          65708
+        ],
+        "delete-front": [
+          -20625,
+          -5459
+        ]
+      }
+    },
+    {
+      "language": "ru",
+      "pool": "development_present",
+      "queries": 0,
+      "status": "EMPTY_PREDECLARED_LABEL_POOL"
+    }
+  ],
+  "process_observations": [
+    {
+      "language": "en",
+      "format": "front",
+      "api": 26,
+      "open_ns": 2102084,
+      "cold_first_ns": 1867541,
+      "memory": [
+        [
+          "MEM",
+          "0",
+          "287472",
+          "5242880",
+          "1445728",
+          "14372864",
+          "6991872",
+          "71008256",
+          "71008256"
+        ],
+        [
+          "MEM",
+          "1",
+          "1647344",
+          "5242880",
+          "1657248",
+          "16117760",
+          "7581696",
+          "77684736",
+          "81805312"
+        ],
+        [
+          "MEM",
+          "2",
+          "1684208",
+          "5242880",
+          "1657696",
+          "16331776",
+          "7659520",
+          "77684736",
+          "81805312"
+        ],
+        [
+          "MEM",
+          "3",
+          "1756896",
+          "5242880",
+          "1658464",
+          "16703488",
+          "7761920",
+          "77684736",
+          "81805312"
+        ],
+        [
+          "MEM",
+          "4",
+          "775928",
+          "2049784",
+          "1776832",
+          "17435648",
+          "8032256",
+          "79863808",
+          "83394560"
+        ],
+        [
+          "MEM",
+          "5",
+          "1212512",
+          "2175072",
+          "1411648",
+          "17882112",
+          "8474624",
+          "80039936",
+          "83394560"
+        ]
+      ]
+    },
+    {
+      "language": "en",
+      "format": "trie",
+      "api": 26,
+      "open_ns": 381750,
+      "cold_first_ns": 1000209,
+      "memory": [
+        [
+          "MEM",
+          "0",
+          "287472",
+          "5242880",
+          "1445728",
+          "14374912",
+          "6991872",
+          "71372800",
+          "71372800"
+        ],
+        [
+          "MEM",
+          "1",
+          "1647344",
+          "5242880",
+          "1657248",
+          "19549184",
+          "10981376",
+          "78024704",
+          "82145280"
+        ],
+        [
+          "MEM",
+          "2",
+          "1684208",
+          "5242880",
+          "1657696",
+          "16366592",
+          "7659520",
+          "78024704",
+          "82145280"
+        ],
+        [
+          "MEM",
+          "3",
+          "1740512",
+          "5242880",
+          "1658208",
+          "18272256",
+          "7745536",
+          "80523264",
+          "82145280"
+        ],
+        [
+          "MEM",
+          "4",
+          "3038944",
+          "5242880",
+          "1657568",
+          "22130688",
+          "9060352",
+          "84291584",
+          "84672512"
+        ],
+        [
+          "MEM",
+          "5",
+          "1081224",
+          "2076552",
+          "1411128",
+          "21484544",
+          "8331264",
+          "83820544",
+          "87306240"
+        ]
+      ]
+    },
+    {
+      "language": "en",
+      "format": "delete",
+      "api": 26,
+      "open_ns": 1672500,
+      "cold_first_ns": 1155792,
+      "memory": [
+        [
+          "MEM",
+          "0",
+          "287472",
+          "5242880",
+          "1445728",
+          "14290944",
+          "6987776",
+          "71024640",
+          "71024640"
+        ],
+        [
+          "MEM",
+          "1",
+          "1647344",
+          "5242880",
+          "1657248",
+          "18109440",
+          "9646080",
+          "77848576",
+          "81977344"
+        ],
+        [
+          "MEM",
+          "2",
+          "1684208",
+          "5242880",
+          "1657696",
+          "16246784",
+          "7647232",
+          "77848576",
+          "81977344"
+        ],
+        [
+          "MEM",
+          "3",
+          "1756896",
+          "5242880",
+          "1658464",
+          "16619520",
+          "7749632",
+          "77918208",
+          "81977344"
+        ],
+        [
+          "MEM",
+          "4",
+          "661312",
+          "2017088",
+          "1776704",
+          "17219584",
+          "7925760",
+          "79839232",
+          "83456000"
+        ],
+        [
+          "MEM",
+          "5",
+          "639176",
+          "2060488",
+          "1411512",
+          "17178624",
+          "7884800",
+          "79523840",
+          "83456000"
+        ]
+      ]
+    },
+    {
+      "language": "es",
+      "format": "front",
+      "api": 26,
+      "open_ns": 3371000,
+      "cold_first_ns": 796583,
+      "memory": [
+        [
+          "MEM",
+          "0",
+          "287472",
+          "5242880",
+          "1445728",
+          "14294016",
+          "6987776",
+          "71380992",
+          "71380992"
+        ],
+        [
+          "MEM",
+          "1",
+          "1647344",
+          "5242880",
+          "1657216",
+          "18882560",
+          "10379264",
+          "78127104",
+          "82255872"
+        ],
+        [
+          "MEM",
+          "2",
+          "1684208",
+          "5242880",
+          "1657760",
+          "16416768",
+          "7663616",
+          "78127104",
+          "82255872"
+        ],
+        [
+          "MEM",
+          "3",
+          "1773280",
+          "5242880",
+          "1658528",
+          "16990208",
+          "7770112",
+          "78196736",
+          "82255872"
+        ],
+        [
+          "MEM",
+          "4",
+          "1943784",
+          "2103528",
+          "1776896",
+          "21106688",
+          "9216000",
+          "84013056",
+          "86462464"
+        ],
+        [
+          "MEM",
+          "5",
+          "431384",
+          "1983768",
+          "1411584",
+          "21626880",
+          "9732096",
+          "82247680",
+          "86462464"
+        ]
+      ]
+    },
+    {
+      "language": "es",
+      "format": "trie",
+      "api": 26,
+      "open_ns": 302958,
+      "cold_first_ns": 798583,
+      "memory": [
+        [
+          "MEM",
+          "0",
+          "287472",
+          "5242880",
+          "1445728",
+          "14316544",
+          "6983680",
+          "71487488",
+          "71487488"
+        ],
+        [
+          "MEM",
+          "1",
+          "1647344",
+          "5242880",
+          "1657216",
+          "18497536",
+          "9973760",
+          "78196736",
+          "82325504"
+        ],
+        [
+          "MEM",
+          "2",
+          "1684208",
+          "5242880",
+          "1657696",
+          "16321536",
+          "7655424",
+          "78196736",
+          "82325504"
+        ],
+        [
+          "MEM",
+          "3",
+          "1740512",
+          "5242880",
+          "1658208",
+          "18333696",
+          "7737344",
+          "80584704",
+          "82325504"
+        ],
+        [
+          "MEM",
+          "4",
+          "3120864",
+          "5242880",
+          "1657568",
+          "35670016",
+          "9129984",
+          "98045952",
+          "98426880"
+        ],
+        [
+          "MEM",
+          "5",
+          "1397784",
+          "2049048",
+          "1411128",
+          "35261440",
+          "8642560",
+          "98394112",
+          "101478400"
+        ]
+      ]
+    },
+    {
+      "language": "es",
+      "format": "delete",
+      "api": 26,
+      "open_ns": 3172458,
+      "cold_first_ns": 822542,
+      "memory": [
+        [
+          "MEM",
+          "0",
+          "287472",
+          "5242880",
+          "1445728",
+          "14404608",
+          "6983680",
+          "71348224",
+          "71348224"
+        ],
+        [
+          "MEM",
+          "1",
+          "1647344",
+          "5242880",
+          "1657216",
+          "16905216",
+          "8282112",
+          "78098432",
+          "82227200"
+        ],
+        [
+          "MEM",
+          "2",
+          "1684208",
+          "5242880",
+          "1657760",
+          "16532480",
+          "7651328",
+          "78098432",
+          "82227200"
+        ],
+        [
+          "MEM",
+          "3",
+          "1756896",
+          "5242880",
+          "1658528",
+          "17031168",
+          "7753728",
+          "78102528",
+          "82227200"
+        ],
+        [
+          "MEM",
+          "4",
+          "1911168",
+          "2103680",
+          "1776768",
+          "21185536",
+          "9162752",
+          "83881984",
+          "86376448"
+        ],
+        [
+          "MEM",
+          "5",
+          "955120",
+          "2065136",
+          "1411704",
+          "20222976",
+          "8196096",
+          "82751488",
+          "86376448"
+        ]
+      ]
+    },
+    {
+      "language": "ru",
+      "format": "front",
+      "api": 26,
+      "open_ns": 3805625,
+      "cold_first_ns": 862167,
+      "memory": [
+        [
+          "MEM",
+          "0",
+          "287472",
+          "5242880",
+          "1445728",
+          "14337024",
+          "6983680",
+          "71012352",
+          "71012352"
+        ],
+        [
+          "MEM",
+          "1",
+          "1663728",
+          "5242880",
+          "1657248",
+          "16069632",
+          "7589888",
+          "77373440",
+          "81502208"
+        ],
+        [
+          "MEM",
+          "2",
+          "1700592",
+          "5242880",
+          "1657760",
+          "16590848",
+          "7671808",
+          "77373440",
+          "81502208"
+        ],
+        [
+          "MEM",
+          "3",
+          "1789664",
+          "5242880",
+          "1658528",
+          "17236992",
+          "7782400",
+          "79159296",
+          "81502208"
+        ],
+        [
+          "MEM",
+          "4",
+          "1342176",
+          "2173664",
+          "1777024",
+          "26018816",
+          "8577024",
+          "88190976",
+          "90972160"
+        ],
+        [
+          "MEM",
+          "5",
+          "1671120",
+          "2011088",
+          "1411960",
+          "26371072",
+          "8929280",
+          "88494080",
+          "90972160"
+        ]
+      ]
+    },
+    {
+      "language": "ru",
+      "format": "trie",
+      "api": 26,
+      "open_ns": 324208,
+      "cold_first_ns": 1072583,
+      "memory": [
+        [
+          "MEM",
+          "0",
+          "287472",
+          "5242880",
+          "1445728",
+          "14198784",
+          "6983680",
+          "70856704",
+          "70856704"
+        ],
+        [
+          "MEM",
+          "1",
+          "1663728",
+          "5242880",
+          "1657056",
+          "19629056",
+          "11259904",
+          "77541376",
+          "81649664"
+        ],
+        [
+          "MEM",
+          "2",
+          "1700592",
+          "5242880",
+          "1657504",
+          "16128000",
+          "7675904",
+          "77541376",
+          "81649664"
+        ],
+        [
+          "MEM",
+          "3",
+          "1756896",
+          "5242880",
+          "1658016",
+          "19871744",
+          "7766016",
+          "79683584",
+          "81649664"
+        ],
+        [
+          "MEM",
+          "4",
+          "3530464",
+          "5242880",
+          "1657376",
+          "48217088",
+          "9560064",
+          "110428160",
+          "110428160"
+        ],
+        [
+          "MEM",
+          "5",
+          "459032",
+          "2011416",
+          "1411160",
+          "48287744",
+          "9543680",
+          "109092864",
+          "112861184"
+        ]
+      ]
+    },
+    {
+      "language": "ru",
+      "format": "delete",
+      "api": 26,
+      "open_ns": 3716083,
+      "cold_first_ns": 1579750,
+      "memory": [
+        [
+          "MEM",
+          "0",
+          "287472",
+          "5242880",
+          "1445728",
+          "14270464",
+          "6938624",
+          "71245824",
+          "71245824"
+        ],
+        [
+          "MEM",
+          "1",
+          "1663728",
+          "5242880",
+          "1657248",
+          "16447488",
+          "7917568",
+          "77950976",
+          "82079744"
+        ],
+        [
+          "MEM",
+          "2",
+          "1700592",
+          "5242880",
+          "1657760",
+          "16640000",
+          "7675904",
+          "77950976",
+          "82079744"
+        ],
+        [
+          "MEM",
+          "3",
+          "1789664",
+          "5242880",
+          "1658528",
+          "17280000",
+          "7790592",
+          "79695872",
+          "82079744"
+        ],
+        [
+          "MEM",
+          "4",
+          "555864",
+          "1780568",
+          "1776896",
+          "25234432",
+          "7806976",
+          "87793664",
+          "90935296"
+        ],
+        [
+          "MEM",
+          "5",
+          "1588880",
+          "2059920",
+          "1411384",
+          "26285056",
+          "8839168",
+          "88674304",
+          "90935296"
+        ]
+      ]
+    }
+  ]
+}

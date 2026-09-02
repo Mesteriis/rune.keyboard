@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "encoding": "UTF-8 TSV, LF, no header quoting",
+  "languages": ["en", "es", "ru"],
+  "formats": ["front", "trie", "delete"],
+  "time_unit": "nanoseconds",
+  "memory_unit": "bytes",
+  "optional_unavailable": -1,
+  "full": {
+    "META": ["record", "api", "language", "format", "profile", "mode", "measured_repeats=3", "warmup_passes=1", "timeout_seconds"],
+    "profiles": ["development", "smoke"],
+    "modes": ["full", "cold"],
+    "ROW": ["record", "language", "format", "profile", "phase", "id", "repeat", "search_ns", "topn_ns", "cpu_ns", "allocated_bytes", "gc_count", "states", "verified", "rows", "reason", "expected", "returned", "top7_equal", "prohibits_autoreplace"],
+    "phases": ["cold_first", "warmup", "reference", "bounded"],
+    "reasons": ["NONE", "STATES", "VERIFIED"],
+    "boolean_values": ["true", "false"],
+    "MEM": ["record", "stage", "heap_used", "heap_committed", "native_allocated", "pss", "private_dirty", "rss", "peak_rss"],
+    "caps": {"states": 8192, "verified": 64},
+    "rows_full_per_process": "1 + query_count * (1 + 3 + 3)",
+    "rows_cold_per_process": 1,
+    "full_processes": 9,
+    "cold_processes": 27,
+    "android_allocation_status": "UNSUPPORTED_ENTIRELY"
+  },
+  "exact": {
+    "META": ["record", "api", "language", "format", "query_count=277", "warmup_passes=1", "measured_passes=5", "timeout_seconds"],
+    "ROW": ["record", "phase", "numeric_id", "repeat", "cohort", "label", "wall_ns", "cpu_ns", "allocated_bytes", "gc_count", "passed=1"],
+    "MEM": ["record", "stage", "heap_used", "heap_committed", "native_allocated", "pss", "private_dirty", "rss", "peak_rss"],
+    "phases": {"3": "first_query", "4": "warmup", "5": "measured"},
+    "labels": {"0": "absent", "1": "present", "2": "empty"},
+    "cohorts": {"0": "development", "1": "present_control", "2": "absent_control", "3": "empty_control"},
+    "memory_stages": [0, 1, 2, 3, 4, 5],
+    "rows_per_process": 1663,
+    "processes": 9,
+    "measured_comparisons": 12465,
+    "current_android_allocation_status": "UNAVAILABLE"
+  },
+  "completeness": "Every expected row and process required exactly once; raw failures never enter winner statistics",
+  "implementation": "records.py plus unchanged source/exact/aggregate.py",
+  "details": "PROTOCOL.md"
+}

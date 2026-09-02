@@ -1,0 +1,2143 @@
+{
+  "schema": 1,
+  "decision": "PACKED_TRIE",
+  "reason": "All completed top-N p95 paired 95% intervals favor trie against both alternatives in all three languages; separate exact development lookup intervals also favor trie.",
+  "size_tie_break_invoked": false,
+  "scope": "API26 synthetic predeclared development data; unit unrestricted DL and historic static adjacency ranking, not future weighted generator. Index format choice, not production integration qualification.",
+  "authoritative": {
+    "full": "summary-device-api26-development-quiet.json",
+    "cold": "summary-device-api26-cold.json",
+    "exact": "summary-device-api26-exact-02.json",
+    "apk": "apk-assets.json"
+  },
+  "excluded": {
+    "first_full": "diagnostic only: host Gradle overlapped; no ranking conclusions",
+    "original_android_allocation": "unsupported in all full/cold/first exact records, including positive deltas",
+    "fixed_exact_allocation": "unavailable (-1 in records, null in summaries)",
+    "natural_typing_holdout": "not accessed",
+    "energy_battery": "not measured",
+    "cold_os_page_cache": "unknown/preflight-warmed; fresh process is not cold storage"
+  },
+  "historical_dex_sha256": {
+    "full": "6d17867fb4abca637872e500e0d4c32cb36b29231d8368cd683baa745db6c418",
+    "exact_02": "89449fc9e5f4bdb5decde1741a7e5d17528ad2277cad11195a829c10329ef11b"
+  },
+  "source_summaries_sha256": {
+    "apk-assets.json": "0d973f4439cd631f5f408dbdd4cf065ff4017279f8a67c4df1025b36e8986ae2",
+    "summary-device-api26-exact-02.json": "47e6cf2610b12df49cbc2de7a6843df68f0f897e7d2eb197d8c1997874e78976",
+    "summary-device-api26-development-quiet.json": "263ccc03fad0cbd3c88516ebb5cf4817668e89194727bb8d99f29ffc2f463e84",
+    "summary-device-api26-cold.json": "88229c679945c62112f62b04e1b4d9b8bdd0886c4d0f694fa42f6d9399d46d8e",
+    "summary-device-api26-development-diagnostic.json": "53d185bb6cf6161e5f28248d817bc7652d41748efd063af465c77592929b992f"
+  },
+  "languages": [
+    {
+      "language": "en",
+      "queries": 240,
+      "full_complete_p95_ms": {
+        "front": 131.762584,
+        "trie": 4.018125,
+        "delete": 23.591459
+      },
+      "full_complete_p95_ci95_ms": {
+        "front": [
+          129.44125,
+          133.914667
+        ],
+        "trie": [
+          3.835375,
+          4.511542
+        ],
+        "delete": [
+          20.259667,
+          25.250792
+        ]
+      },
+      "paired_full_delta_ms_ci95": {
+        "front minus trie": [
+          125.27270899999999,
+          129.46283400000002
+        ],
+        "delete minus trie": [
+          16.341251,
+          21.314834
+        ],
+        "delete minus front": [
+          -111.49908300000001,
+          -105.35533399999998
+        ]
+      },
+      "bounded_completion": {
+        "delete": {
+          "complete": 80,
+          "total": 240,
+          "reasons": {
+            "VERIFIED": 122,
+            "NONE": 80,
+            "STATES": 38
+          }
+        },
+        "front": {
+          "complete": 61,
+          "total": 240,
+          "reasons": {
+            "STATES": 166,
+            "NONE": 61,
+            "VERIFIED": 13
+          }
+        },
+        "trie": {
+          "complete": 61,
+          "total": 240,
+          "reasons": {
+            "STATES": 166,
+            "NONE": 61,
+            "VERIFIED": 13
+          }
+        }
+      },
+      "exact_development": {
+        "p95_ns": {
+          "front": 57542,
+          "trie": 8875,
+          "delete": 61250
+        },
+        "paired_p95_delta_ns_ci95": {
+          "front-trie": [
+            46959,
+            50250
+          ],
+          "delete-trie": [
+            48292,
+            62083
+          ],
+          "delete-front": [
+            -500,
+            13083
+          ]
+        }
+      },
+      "actual_apk_index_contribution_bytes": {
+        "front": 1118751,
+        "trie": 4903219,
+        "delete": 31193180
+      },
+      "cold_observations": [
+        {
+          "format": "delete",
+          "fresh_processes": 3,
+          "passed": 3,
+          "three_process_preset_complete": true,
+          "index_open_ms": {
+            "p50": 1.39675,
+            "p95": 1.4325,
+            "p99": 1.4325,
+            "max": 1.4325
+          },
+          "frequency_load_ms": {
+            "p50": 53.491708,
+            "p95": 55.26475,
+            "p99": 55.26475,
+            "max": 55.26475
+          },
+          "first_query_ms": {
+            "p50": 25.840084,
+            "p95": 30.91875,
+            "p99": 30.91875,
+            "max": 30.91875
+          },
+          "memory_bytes": {
+            "boot": {
+              "heap_used": {
+                "p50": 287472,
+                "p95": 287472,
+                "p99": 287472,
+                "max": 287472
+              },
+              "heap_committed": {
+                "p50": 5242880,
+                "p95": 5242880,
+                "p99": 5242880,
+                "max": 5242880
+              },
+              "native_allocated": {
+                "p50": 1445280,
+                "p95": 1445280,
+                "p99": 1445280,
+                "max": 1445280
+              },
+              "pss": {
+                "p50": 14277632,
+                "p95": 14300160,
+                "p99": 14300160,
+                "max": 14300160
+              },
+              "private_dirty": {
+                "p50": 6983680,
+                "p95": 6983680,
+                "p99": 6983680,
+                "max": 6983680
+              },
+              "rss": {
+                "p50": 71065600,
+                "p95": 71065600,
+                "p99": 71065600,
+                "max": 71065600
+              },
+              "peak_rss": {
+                "p50": 71065600,
+                "p95": 71065600,
+                "p99": 71065600,
+                "max": 71065600
+              }
+            },
+            "frequency_loaded": {
+              "heap_used": {
+                "p50": 12168672,
+                "p95": 12332680,
+                "p99": 12332680,
+                "max": 12332680
+              },
+              "heap_committed": {
+                "p50": 12679592,
+                "p95": 12885640,
+                "p99": 12885640,
+                "max": 12885640
+              },
+              "native_allocated": {
+                "p50": 1781152,
+                "p95": 1781408,
+                "p99": 1781408,
+                "max": 1781408
+              },
+              "pss": {
+                "p50": 27483136,
+                "p95": 28924928,
+                "p99": 28924928,
+                "max": 28924928
+              },
+              "private_dirty": {
+                "p50": 19177472,
+                "p95": 20443136,
+                "p99": 20443136,
+                "max": 20443136
+              },
+              "rss": {
+                "p50": 89018368,
+                "p95": 91172864,
+                "p99": 91172864,
+                "max": 91172864
+              },
+              "peak_rss": {
+                "p50": 89018368,
+                "p95": 91172864,
+                "p99": 91172864,
+                "max": 91172864
+              }
+            },
+            "index_opened": {
+              "heap_used": {
+                "p50": 11278760,
+                "p95": 12385928,
+                "p99": 12385928,
+                "max": 12385928
+              },
+              "heap_committed": {
+                "p50": 12679592,
+                "p95": 12885640,
+                "p99": 12885640,
+                "max": 12885640
+              },
+              "native_allocated": {
+                "p50": 1783168,
+                "p95": 1783264,
+                "p99": 1783264,
+                "max": 1783264
+              },
+              "pss": {
+                "p50": 26682368,
+                "p95": 27680768,
+                "p99": 27680768,
+                "max": 27680768
+              },
+              "private_dirty": {
+                "p50": 18104320,
+                "p95": 19214336,
+                "p99": 19214336,
+                "max": 19214336
+              },
+              "rss": {
+                "p50": 87814144,
+                "p95": 89022464,
+                "p99": 89022464,
+                "max": 89022464
+              },
+              "peak_rss": {
+                "p50": 89436160,
+                "p95": 91172864,
+                "p99": 91172864,
+                "max": 91172864
+              }
+            },
+            "first_query": {
+              "heap_used": {
+                "p50": 10595040,
+                "p95": 11485792,
+                "p99": 11485792,
+                "max": 11485792
+              },
+              "heap_committed": {
+                "p50": 12589736,
+                "p95": 13589216,
+                "p99": 13589216,
+                "max": 13589216
+              },
+              "native_allocated": {
+                "p50": 1784352,
+                "p95": 1784640,
+                "p99": 1784640,
+                "max": 1784640
+              },
+              "pss": {
+                "p50": 29443072,
+                "p95": 31233024,
+                "p99": 31233024,
+                "max": 31233024
+              },
+              "private_dirty": {
+                "p50": 18616320,
+                "p95": 20226048,
+                "p99": 20226048,
+                "max": 20226048
+              },
+              "rss": {
+                "p50": 91512832,
+                "p95": 92180480,
+                "p99": 92180480,
+                "max": 92180480
+              },
+              "peak_rss": {
+                "p50": 96862208,
+                "p95": 97554432,
+                "p99": 97554432,
+                "max": 97554432
+              }
+            }
+          },
+          "scope": "Three fresh processes at most; OS caches unknown and preflight-warmed. Quantiles describe these observations, not reliable cold p95 population estimates."
+        },
+        {
+          "format": "front",
+          "fresh_processes": 3,
+          "passed": 3,
+          "three_process_preset_complete": true,
+          "index_open_ms": {
+            "p50": 1.590459,
+            "p95": 1.6155,
+            "p99": 1.6155,
+            "max": 1.6155
+          },
+          "frequency_load_ms": {
+            "p50": 52.64425,
+            "p95": 61.342625,
+            "p99": 61.342625,
+            "max": 61.342625
+          },
+          "first_query_ms": {
+            "p50": 116.397625,
+            "p95": 118.493875,
+            "p99": 118.493875,
+            "max": 118.493875
+          },
+          "memory_bytes": {
+            "boot": {
+              "heap_used": {
+                "p50": 287472,
+                "p95": 287472,
+                "p99": 287472,
+                "max": 287472
+              },
+              "heap_committed": {
+                "p50": 5242880,
+                "p95": 5242880,
+                "p99": 5242880,
+                "max": 5242880
+              },
+              "native_allocated": {
+                "p50": 1445280,
+                "p95": 1445280,
+                "p99": 1445280,
+                "max": 1445280
+              },
+              "pss": {
+                "p50": 14366720,
+                "p95": 14449664,
+                "p99": 14449664,
+                "max": 14449664
+              },
+              "private_dirty": {
+                "p50": 6983680,
+                "p95": 6987776,
+                "p99": 6987776,
+                "max": 6987776
+              },
+              "rss": {
+                "p50": 71372800,
+                "p95": 71405568,
+                "p99": 71405568,
+                "max": 71405568
+              },
+              "peak_rss": {
+                "p50": 71372800,
+                "p95": 71405568,
+                "p99": 71405568,
+                "max": 71405568
+              }
+            },
+            "frequency_loaded": {
+              "heap_used": {
+                "p50": 11394368,
+                "p95": 12051024,
+                "p99": 12051024,
+                "max": 12051024
+              },
+              "heap_committed": {
+                "p50": 12620368,
+                "p95": 13909856,
+                "p99": 13909856,
+                "max": 13909856
+              },
+              "native_allocated": {
+                "p50": 1781280,
+                "p95": 1781280,
+                "p99": 1781280,
+                "max": 1781280
+              },
+              "pss": {
+                "p50": 27348992,
+                "p95": 29307904,
+                "p99": 29307904,
+                "max": 29307904
+              },
+              "private_dirty": {
+                "p50": 18886656,
+                "p95": 20893696,
+                "p99": 20893696,
+                "max": 20893696
+              },
+              "rss": {
+                "p50": 88268800,
+                "p95": 89157632,
+                "p99": 89157632,
+                "max": 89157632
+              },
+              "peak_rss": {
+                "p50": 89157632,
+                "p95": 90681344,
+                "p99": 90681344,
+                "max": 90681344
+              }
+            },
+            "index_opened": {
+              "heap_used": {
+                "p50": 11447616,
+                "p95": 12104272,
+                "p99": 12104272,
+                "max": 12104272
+              },
+              "heap_committed": {
+                "p50": 12620368,
+                "p95": 13909856,
+                "p99": 13909856,
+                "max": 13909856
+              },
+              "native_allocated": {
+                "p50": 1783616,
+                "p95": 1783808,
+                "p99": 1783808,
+                "max": 1783808
+              },
+              "pss": {
+                "p50": 27025408,
+                "p95": 27544576,
+                "p99": 27544576,
+                "max": 27544576
+              },
+              "private_dirty": {
+                "p50": 18268160,
+                "p95": 18923520,
+                "p99": 18923520,
+                "max": 18923520
+              },
+              "rss": {
+                "p50": 88276992,
+                "p95": 89165824,
+                "p99": 89165824,
+                "max": 89165824
+              },
+              "peak_rss": {
+                "p50": 89579520,
+                "p95": 90681344,
+                "p99": 90681344,
+                "max": 90681344
+              }
+            },
+            "first_query": {
+              "heap_used": {
+                "p50": 6722736,
+                "p95": 7266208,
+                "p99": 7266208,
+                "max": 7266208
+              },
+              "heap_committed": {
+                "p50": 12993712,
+                "p95": 13471648,
+                "p99": 13471648,
+                "max": 13471648
+              },
+              "native_allocated": {
+                "p50": 1784800,
+                "p95": 1785024,
+                "p99": 1785024,
+                "max": 1785024
+              },
+              "pss": {
+                "p50": 32572416,
+                "p95": 32790528,
+                "p99": 32790528,
+                "max": 32790528
+              },
+              "private_dirty": {
+                "p50": 22683648,
+                "p95": 22769664,
+                "p99": 22769664,
+                "max": 22769664
+              },
+              "rss": {
+                "p50": 86614016,
+                "p95": 86974464,
+                "p99": 86974464,
+                "max": 86974464
+              },
+              "peak_rss": {
+                "p50": 96575488,
+                "p95": 96591872,
+                "p99": 96591872,
+                "max": 96591872
+              }
+            }
+          },
+          "scope": "Three fresh processes at most; OS caches unknown and preflight-warmed. Quantiles describe these observations, not reliable cold p95 population estimates."
+        },
+        {
+          "format": "trie",
+          "fresh_processes": 3,
+          "passed": 3,
+          "three_process_preset_complete": true,
+          "index_open_ms": {
+            "p50": 0.29825,
+            "p95": 0.390459,
+            "p99": 0.390459,
+            "max": 0.390459
+          },
+          "frequency_load_ms": {
+            "p50": 49.818084,
+            "p95": 53.476208,
+            "p99": 53.476208,
+            "max": 53.476208
+          },
+          "first_query_ms": {
+            "p50": 11.218625,
+            "p95": 11.527542,
+            "p99": 11.527542,
+            "max": 11.527542
+          },
+          "memory_bytes": {
+            "boot": {
+              "heap_used": {
+                "p50": 287472,
+                "p95": 287472,
+                "p99": 287472,
+                "max": 287472
+              },
+              "heap_committed": {
+                "p50": 5242880,
+                "p95": 5242880,
+                "p99": 5242880,
+                "max": 5242880
+              },
+              "native_allocated": {
+                "p50": 1445280,
+                "p95": 1445280,
+                "p99": 1445280,
+                "max": 1445280
+              },
+              "pss": {
+                "p50": 14320640,
+                "p95": 14411776,
+                "p99": 14411776,
+                "max": 14411776
+              },
+              "private_dirty": {
+                "p50": 6987776,
+                "p95": 6991872,
+                "p99": 6991872,
+                "max": 6991872
+              },
+              "rss": {
+                "p50": 71176192,
+                "p95": 71184384,
+                "p99": 71184384,
+                "max": 71184384
+              },
+              "peak_rss": {
+                "p50": 71176192,
+                "p95": 71184384,
+                "p99": 71184384,
+                "max": 71184384
+              }
+            },
+            "frequency_loaded": {
+              "heap_used": {
+                "p50": 6240072,
+                "p95": 11533504,
+                "p99": 11533504,
+                "max": 11533504
+              },
+              "heap_committed": {
+                "p50": 12447374,
+                "p95": 12987584,
+                "p99": 12987584,
+                "max": 12987584
+              },
+              "native_allocated": {
+                "p50": 1781280,
+                "p95": 1781280,
+                "p99": 1781280,
+                "max": 1781280
+              },
+              "pss": {
+                "p50": 29035520,
+                "p95": 29224960,
+                "p99": 29224960,
+                "max": 29224960
+              },
+              "private_dirty": {
+                "p50": 20496384,
+                "p95": 20783104,
+                "p99": 20783104,
+                "max": 20783104
+              },
+              "rss": {
+                "p50": 82837504,
+                "p95": 88031232,
+                "p99": 88031232,
+                "max": 88031232
+              },
+              "peak_rss": {
+                "p50": 90923008,
+                "p95": 91459584,
+                "p99": 91459584,
+                "max": 91459584
+              }
+            },
+            "index_opened": {
+              "heap_used": {
+                "p50": 6276936,
+                "p95": 11586752,
+                "p99": 11586752,
+                "max": 11586752
+              },
+              "heap_committed": {
+                "p50": 12447374,
+                "p95": 12987584,
+                "p99": 12987584,
+                "max": 12987584
+              },
+              "native_allocated": {
+                "p50": 1783392,
+                "p95": 1783520,
+                "p99": 1783520,
+                "max": 1783520
+              },
+              "pss": {
+                "p50": 21749760,
+                "p95": 26996736,
+                "p99": 26996736,
+                "max": 26996736
+              },
+              "private_dirty": {
+                "p50": 13045760,
+                "p95": 18419712,
+                "p99": 18419712,
+                "max": 18419712
+              },
+              "rss": {
+                "p50": 82837504,
+                "p95": 88031232,
+                "p99": 88031232,
+                "max": 88031232
+              },
+              "peak_rss": {
+                "p50": 90923008,
+                "p95": 91459584,
+                "p99": 91459584,
+                "max": 91459584
+              }
+            },
+            "first_query": {
+              "heap_used": {
+                "p50": 8216536,
+                "p95": 8578888,
+                "p99": 8578888,
+                "max": 8578888
+              },
+              "heap_committed": {
+                "p50": 12060254,
+                "p95": 12447374,
+                "p99": 12447374,
+                "max": 12447374
+              },
+              "native_allocated": {
+                "p50": 1784576,
+                "p95": 1784672,
+                "p99": 1784672,
+                "max": 1784672
+              },
+              "pss": {
+                "p50": 29023232,
+                "p95": 36021248,
+                "p99": 36021248,
+                "max": 36021248
+              },
+              "private_dirty": {
+                "p50": 15388672,
+                "p95": 22482944,
+                "p99": 22482944,
+                "max": 22482944
+              },
+              "rss": {
+                "p50": 91295744,
+                "p95": 91586560,
+                "p99": 91586560,
+                "max": 91586560
+              },
+              "peak_rss": {
+                "p50": 92524544,
+                "p95": 98508800,
+                "p99": 98508800,
+                "max": 98508800
+              }
+            }
+          },
+          "scope": "Three fresh processes at most; OS caches unknown and preflight-warmed. Quantiles describe these observations, not reliable cold p95 population estimates."
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "queries": 240,
+      "full_complete_p95_ms": {
+        "front": 173.228125,
+        "trie": 5.092875,
+        "delete": 230.839792
+      },
+      "full_complete_p95_ci95_ms": {
+        "front": [
+          166.141708,
+          181.491751
+        ],
+        "trie": [
+          4.4635,
+          5.981
+        ],
+        "delete": [
+          199.280042,
+          240.422958
+        ]
+      },
+      "paired_full_delta_ms_ci95": {
+        "front minus trie": [
+          160.6265,
+          176.218042
+        ],
+        "delete minus trie": [
+          194.881,
+          235.419542
+        ],
+        "delete minus front": [
+          28.660042000000004,
+          69.768834
+        ]
+      },
+      "bounded_completion": {
+        "delete": {
+          "complete": 25,
+          "total": 240,
+          "reasons": {
+            "NONE": 25,
+            "VERIFIED": 122,
+            "STATES": 93
+          }
+        },
+        "front": {
+          "complete": 66,
+          "total": 240,
+          "reasons": {
+            "NONE": 66,
+            "STATES": 160,
+            "VERIFIED": 14
+          }
+        },
+        "trie": {
+          "complete": 66,
+          "total": 240,
+          "reasons": {
+            "NONE": 66,
+            "STATES": 160,
+            "VERIFIED": 14
+          }
+        }
+      },
+      "exact_development": {
+        "p95_ns": {
+          "front": 73459,
+          "trie": 10583,
+          "delete": 68083
+        },
+        "paired_p95_delta_ns_ci95": {
+          "front-trie": [
+            58541,
+            67291
+          ],
+          "delete-trie": [
+            54999,
+            59874
+          ],
+          "delete-front": [
+            -10209,
+            -1000
+          ]
+        }
+      },
+      "actual_apk_index_contribution_bytes": {
+        "front": 7342963,
+        "trie": 22517911,
+        "delete": 175923714
+      },
+      "cold_observations": [
+        {
+          "format": "delete",
+          "fresh_processes": 3,
+          "passed": 3,
+          "three_process_preset_complete": true,
+          "index_open_ms": {
+            "p50": 2.584625,
+            "p95": 3.443,
+            "p99": 3.443,
+            "max": 3.443
+          },
+          "frequency_load_ms": {
+            "p50": 51.948042,
+            "p95": 54.198875,
+            "p99": 54.198875,
+            "max": 54.198875
+          },
+          "first_query_ms": {
+            "p50": 6.189166,
+            "p95": 7.203292,
+            "p99": 7.203292,
+            "max": 7.203292
+          },
+          "memory_bytes": {
+            "boot": {
+              "heap_used": {
+                "p50": 287472,
+                "p95": 287472,
+                "p99": 287472,
+                "max": 287472
+              },
+              "heap_committed": {
+                "p50": 5242880,
+                "p95": 5242880,
+                "p99": 5242880,
+                "max": 5242880
+              },
+              "native_allocated": {
+                "p50": 1445280,
+                "p95": 1445280,
+                "p99": 1445280,
+                "max": 1445280
+              },
+              "pss": {
+                "p50": 14260224,
+                "p95": 14285824,
+                "p99": 14285824,
+                "max": 14285824
+              },
+              "private_dirty": {
+                "p50": 6987776,
+                "p95": 6991872,
+                "p99": 6991872,
+                "max": 6991872
+              },
+              "rss": {
+                "p50": 70979584,
+                "p95": 71221248,
+                "p99": 71221248,
+                "max": 71221248
+              },
+              "peak_rss": {
+                "p50": 70979584,
+                "p95": 71221248,
+                "p99": 71221248,
+                "max": 71221248
+              }
+            },
+            "frequency_loaded": {
+              "heap_used": {
+                "p50": 12464216,
+                "p95": 12925752,
+                "p99": 12925752,
+                "max": 12925752
+              },
+              "heap_committed": {
+                "p50": 12925752,
+                "p95": 13356712,
+                "p99": 13356712,
+                "max": 13356712
+              },
+              "native_allocated": {
+                "p50": 1781184,
+                "p95": 1781504,
+                "p99": 1781504,
+                "max": 1781504
+              },
+              "pss": {
+                "p50": 27630592,
+                "p95": 29774848,
+                "p99": 29774848,
+                "max": 29774848
+              },
+              "private_dirty": {
+                "p50": 19320832,
+                "p95": 21307392,
+                "p99": 21307392,
+                "max": 21307392
+              },
+              "rss": {
+                "p50": 88985600,
+                "p95": 92172288,
+                "p99": 92172288,
+                "max": 92172288
+              },
+              "peak_rss": {
+                "p50": 89341952,
+                "p95": 92172288,
+                "p99": 92172288,
+                "max": 92172288
+              }
+            },
+            "index_opened": {
+              "heap_used": {
+                "p50": 11988648,
+                "p95": 12517464,
+                "p99": 12517464,
+                "max": 12517464
+              },
+              "heap_committed": {
+                "p50": 12705880,
+                "p95": 13356712,
+                "p99": 13356712,
+                "max": 13356712
+              },
+              "native_allocated": {
+                "p50": 1783488,
+                "p95": 1783936,
+                "p99": 1783936,
+                "max": 1783936
+              },
+              "pss": {
+                "p50": 27581440,
+                "p95": 27976704,
+                "p99": 27976704,
+                "max": 27976704
+              },
+              "private_dirty": {
+                "p50": 18825216,
+                "p95": 19357696,
+                "p99": 19357696,
+                "max": 19357696
+              },
+              "rss": {
+                "p50": 88555520,
+                "p95": 88993792,
+                "p99": 88993792,
+                "max": 88993792
+              },
+              "peak_rss": {
+                "p50": 89407488,
+                "p95": 92614656,
+                "p99": 92614656,
+                "max": 92614656
+              }
+            },
+            "first_query": {
+              "heap_used": {
+                "p50": 6640928,
+                "p95": 12422824,
+                "p99": 12422824,
+                "max": 12422824
+              },
+              "heap_committed": {
+                "p50": 12372542,
+                "p95": 13356712,
+                "p99": 13356712,
+                "max": 13356712
+              },
+              "native_allocated": {
+                "p50": 1784128,
+                "p95": 1784576,
+                "p99": 1784576,
+                "max": 1784576
+              },
+              "pss": {
+                "p50": 33833984,
+                "p95": 35331072,
+                "p99": 35331072,
+                "max": 35331072
+              },
+              "private_dirty": {
+                "p50": 20926464,
+                "p95": 22577152,
+                "p99": 22577152,
+                "max": 22577152
+              },
+              "rss": {
+                "p50": 88969216,
+                "p95": 94822400,
+                "p99": 94822400,
+                "max": 94822400
+              },
+              "peak_rss": {
+                "p50": 97607680,
+                "p95": 97853440,
+                "p99": 97853440,
+                "max": 97853440
+              }
+            }
+          },
+          "scope": "Three fresh processes at most; OS caches unknown and preflight-warmed. Quantiles describe these observations, not reliable cold p95 population estimates."
+        },
+        {
+          "format": "front",
+          "fresh_processes": 3,
+          "passed": 3,
+          "three_process_preset_complete": true,
+          "index_open_ms": {
+            "p50": 2.656042,
+            "p95": 6.577833,
+            "p99": 6.577833,
+            "max": 6.577833
+          },
+          "frequency_load_ms": {
+            "p50": 51.403208,
+            "p95": 53.176125,
+            "p99": 53.176125,
+            "max": 53.176125
+          },
+          "first_query_ms": {
+            "p50": 24.840916,
+            "p95": 24.858667,
+            "p99": 24.858667,
+            "max": 24.858667
+          },
+          "memory_bytes": {
+            "boot": {
+              "heap_used": {
+                "p50": 287472,
+                "p95": 287472,
+                "p99": 287472,
+                "max": 287472
+              },
+              "heap_committed": {
+                "p50": 5242880,
+                "p95": 5242880,
+                "p99": 5242880,
+                "max": 5242880
+              },
+              "native_allocated": {
+                "p50": 1445280,
+                "p95": 1445280,
+                "p99": 1445280,
+                "max": 1445280
+              },
+              "pss": {
+                "p50": 14356480,
+                "p95": 14370816,
+                "p99": 14370816,
+                "max": 14370816
+              },
+              "private_dirty": {
+                "p50": 6983680,
+                "p95": 6987776,
+                "p99": 6987776,
+                "max": 6987776
+              },
+              "rss": {
+                "p50": 71315456,
+                "p95": 71389184,
+                "p99": 71389184,
+                "max": 71389184
+              },
+              "peak_rss": {
+                "p50": 71315456,
+                "p95": 71389184,
+                "p99": 71389184,
+                "max": 71389184
+              }
+            },
+            "frequency_loaded": {
+              "heap_used": {
+                "p50": 12450912,
+                "p95": 12495288,
+                "p99": 12495288,
+                "max": 12495288
+              },
+              "heap_committed": {
+                "p50": 12848344,
+                "p95": 12987488,
+                "p99": 12987488,
+                "max": 12987488
+              },
+              "native_allocated": {
+                "p50": 1781184,
+                "p95": 1781312,
+                "p99": 1781312,
+                "max": 1781312
+              },
+              "pss": {
+                "p50": 27809792,
+                "p95": 27834368,
+                "p99": 27834368,
+                "max": 27834368
+              },
+              "private_dirty": {
+                "p50": 19308544,
+                "p95": 19431424,
+                "p99": 19431424,
+                "max": 19431424
+              },
+              "rss": {
+                "p50": 89387008,
+                "p95": 90693632,
+                "p99": 90693632,
+                "max": 90693632
+              },
+              "peak_rss": {
+                "p50": 89387008,
+                "p95": 90693632,
+                "p99": 90693632,
+                "max": 90693632
+              }
+            },
+            "index_opened": {
+              "heap_used": {
+                "p50": 12053720,
+                "p95": 12520544,
+                "p99": 12520544,
+                "max": 12520544
+              },
+              "heap_committed": {
+                "p50": 12848344,
+                "p95": 12987488,
+                "p99": 12987488,
+                "max": 12987488
+              },
+              "native_allocated": {
+                "p50": 1783808,
+                "p95": 1784000,
+                "p99": 1784000,
+                "max": 1784000
+              },
+              "pss": {
+                "p50": 27649024,
+                "p95": 28154880,
+                "p99": 28154880,
+                "max": 28154880
+              },
+              "private_dirty": {
+                "p50": 18886656,
+                "p95": 19353600,
+                "p99": 19353600,
+                "max": 19353600
+              },
+              "rss": {
+                "p50": 88875008,
+                "p95": 89395200,
+                "p99": 89395200,
+                "max": 89395200
+              },
+              "peak_rss": {
+                "p50": 89808896,
+                "p95": 91652096,
+                "p99": 91652096,
+                "max": 91652096
+              }
+            },
+            "first_query": {
+              "heap_used": {
+                "p50": 12555896,
+                "p95": 12881672,
+                "p99": 12881672,
+                "max": 12881672
+              },
+              "heap_committed": {
+                "p50": 13995712,
+                "p95": 14024456,
+                "p99": 14024456,
+                "max": 14024456
+              },
+              "native_allocated": {
+                "p50": 1784832,
+                "p95": 1785024,
+                "p99": 1785024,
+                "max": 1785024
+              },
+              "pss": {
+                "p50": 37613568,
+                "p95": 37984256,
+                "p99": 37984256,
+                "max": 37984256
+              },
+              "private_dirty": {
+                "p50": 22683648,
+                "p95": 23015424,
+                "p99": 23015424,
+                "max": 23015424
+              },
+              "rss": {
+                "p50": 97226752,
+                "p95": 97533952,
+                "p99": 97533952,
+                "max": 97533952
+              },
+              "peak_rss": {
+                "p50": 100569088,
+                "p95": 101187584,
+                "p99": 101187584,
+                "max": 101187584
+              }
+            }
+          },
+          "scope": "Three fresh processes at most; OS caches unknown and preflight-warmed. Quantiles describe these observations, not reliable cold p95 population estimates."
+        },
+        {
+          "format": "trie",
+          "fresh_processes": 3,
+          "passed": 3,
+          "three_process_preset_complete": true,
+          "index_open_ms": {
+            "p50": 0.308541,
+            "p95": 0.414084,
+            "p99": 0.414084,
+            "max": 0.414084
+          },
+          "frequency_load_ms": {
+            "p50": 56.864166,
+            "p95": 61.50075,
+            "p99": 61.50075,
+            "max": 61.50075
+          },
+          "first_query_ms": {
+            "p50": 4.846292,
+            "p95": 4.868125,
+            "p99": 4.868125,
+            "max": 4.868125
+          },
+          "memory_bytes": {
+            "boot": {
+              "heap_used": {
+                "p50": 287472,
+                "p95": 287472,
+                "p99": 287472,
+                "max": 287472
+              },
+              "heap_committed": {
+                "p50": 5242880,
+                "p95": 5242880,
+                "p99": 5242880,
+                "max": 5242880
+              },
+              "native_allocated": {
+                "p50": 1445280,
+                "p95": 1445280,
+                "p99": 1445280,
+                "max": 1445280
+              },
+              "pss": {
+                "p50": 14265344,
+                "p95": 14402560,
+                "p99": 14402560,
+                "max": 14402560
+              },
+              "private_dirty": {
+                "p50": 6987776,
+                "p95": 6987776,
+                "p99": 6987776,
+                "max": 6987776
+              },
+              "rss": {
+                "p50": 71049216,
+                "p95": 71069696,
+                "p99": 71069696,
+                "max": 71069696
+              },
+              "peak_rss": {
+                "p50": 71049216,
+                "p95": 71069696,
+                "p99": 71069696,
+                "max": 71069696
+              }
+            },
+            "frequency_loaded": {
+              "heap_used": {
+                "p50": 12387000,
+                "p95": 12542784,
+                "p99": 12542784,
+                "max": 12542784
+              },
+              "heap_committed": {
+                "p50": 12743352,
+                "p95": 14006288,
+                "p99": 14006288,
+                "max": 14006288
+              },
+              "native_allocated": {
+                "p50": 1781312,
+                "p95": 1781440,
+                "p99": 1781440,
+                "max": 1781440
+              },
+              "pss": {
+                "p50": 27615232,
+                "p95": 29448192,
+                "p99": 29448192,
+                "max": 29448192
+              },
+              "private_dirty": {
+                "p50": 19243008,
+                "p95": 20873216,
+                "p99": 20873216,
+                "max": 20873216
+              },
+              "rss": {
+                "p50": 89239552,
+                "p95": 91561984,
+                "p99": 91561984,
+                "max": 91561984
+              },
+              "peak_rss": {
+                "p50": 89239552,
+                "p95": 91561984,
+                "p99": 91561984,
+                "max": 91561984
+              }
+            },
+            "index_opened": {
+              "heap_used": {
+                "p50": 10377232,
+                "p95": 12440248,
+                "p99": 12440248,
+                "max": 12440248
+              },
+              "heap_committed": {
+                "p50": 12743352,
+                "p95": 14006288,
+                "p99": 14006288,
+                "max": 14006288
+              },
+              "native_allocated": {
+                "p50": 1783552,
+                "p95": 1783552,
+                "p99": 1783552,
+                "max": 1783552
+              },
+              "pss": {
+                "p50": 27810816,
+                "p95": 30076928,
+                "p99": 30076928,
+                "max": 30076928
+              },
+              "private_dirty": {
+                "p50": 19279872,
+                "p95": 21331968,
+                "p99": 21331968,
+                "max": 21331968
+              },
+              "rss": {
+                "p50": 87060480,
+                "p95": 89239552,
+                "p99": 89239552,
+                "max": 89239552
+              },
+              "peak_rss": {
+                "p50": 89239552,
+                "p95": 91688960,
+                "p99": 91688960,
+                "max": 91688960
+              }
+            },
+            "first_query": {
+              "heap_used": {
+                "p50": 10680336,
+                "p95": 12776120,
+                "p99": 12776120,
+                "max": 12776120
+              },
+              "heap_committed": {
+                "p50": 12776120,
+                "p95": 14006288,
+                "p99": 14006288,
+                "max": 14006288
+              },
+              "native_allocated": {
+                "p50": 1784448,
+                "p95": 1784448,
+                "p99": 1784448,
+                "max": 1784448
+              },
+              "pss": {
+                "p50": 38453248,
+                "p95": 39070720,
+                "p99": 39070720,
+                "max": 39070720
+              },
+              "private_dirty": {
+                "p50": 19406848,
+                "p95": 19996672,
+                "p99": 19996672,
+                "max": 19996672
+              },
+              "rss": {
+                "p50": 98762752,
+                "p95": 102813696,
+                "p99": 102813696,
+                "max": 102813696
+              },
+              "peak_rss": {
+                "p50": 101732352,
+                "p95": 102813696,
+                "p99": 102813696,
+                "max": 102813696
+              }
+            }
+          },
+          "scope": "Three fresh processes at most; OS caches unknown and preflight-warmed. Quantiles describe these observations, not reliable cold p95 population estimates."
+        }
+      ]
+    },
+    {
+      "language": "ru",
+      "queries": 240,
+      "full_complete_p95_ms": {
+        "front": 288.389833,
+        "trie": 8.120625,
+        "delete": 393.686417
+      },
+      "full_complete_p95_ci95_ms": {
+        "front": [
+          277.866542,
+          299.210958
+        ],
+        "trie": [
+          7.530959,
+          8.704375
+        ],
+        "delete": [
+          322.228959,
+          422.614
+        ]
+      },
+      "paired_full_delta_ms_ci95": {
+        "front minus trie": [
+          269.821958,
+          291.151291
+        ],
+        "delete minus trie": [
+          314.148375,
+          414.569416
+        ],
+        "delete minus front": [
+          34.93879199999998,
+          132.68937600000004
+        ]
+      },
+      "bounded_completion": {
+        "delete": {
+          "complete": 13,
+          "total": 240,
+          "reasons": {
+            "VERIFIED": 101,
+            "NONE": 13,
+            "STATES": 126
+          }
+        },
+        "front": {
+          "complete": 18,
+          "total": 240,
+          "reasons": {
+            "STATES": 205,
+            "NONE": 18,
+            "VERIFIED": 17
+          }
+        },
+        "trie": {
+          "complete": 18,
+          "total": 240,
+          "reasons": {
+            "STATES": 205,
+            "NONE": 18,
+            "VERIFIED": 17
+          }
+        }
+      },
+      "exact_development": {
+        "p95_ns": {
+          "front": 85625,
+          "trie": 13125,
+          "delete": 75916
+        },
+        "paired_p95_delta_ns_ci95": {
+          "front-trie": [
+            68792,
+            83333
+          ],
+          "delete-trie": [
+            60417,
+            65708
+          ],
+          "delete-front": [
+            -20625,
+            -5459
+          ]
+        }
+      },
+      "actual_apk_index_contribution_bytes": {
+        "front": 17153177,
+        "trie": 40605879,
+        "delete": 380837612
+      },
+      "cold_observations": [
+        {
+          "format": "delete",
+          "fresh_processes": 3,
+          "passed": 3,
+          "three_process_preset_complete": true,
+          "index_open_ms": {
+            "p50": 2.830042,
+            "p95": 3.1285,
+            "p99": 3.1285,
+            "max": 3.1285
+          },
+          "frequency_load_ms": {
+            "p50": 59.534875,
+            "p95": 72.159167,
+            "p99": 72.159167,
+            "max": 72.159167
+          },
+          "first_query_ms": {
+            "p50": 144.897042,
+            "p95": 166.222875,
+            "p99": 166.222875,
+            "max": 166.222875
+          },
+          "memory_bytes": {
+            "boot": {
+              "heap_used": {
+                "p50": 287472,
+                "p95": 287472,
+                "p99": 287472,
+                "max": 287472
+              },
+              "heap_committed": {
+                "p50": 5242880,
+                "p95": 5242880,
+                "p99": 5242880,
+                "max": 5242880
+              },
+              "native_allocated": {
+                "p50": 1445280,
+                "p95": 1445280,
+                "p99": 1445280,
+                "max": 1445280
+              },
+              "pss": {
+                "p50": 14341120,
+                "p95": 14347264,
+                "p99": 14347264,
+                "max": 14347264
+              },
+              "private_dirty": {
+                "p50": 6983680,
+                "p95": 6987776,
+                "p99": 6987776,
+                "max": 6987776
+              },
+              "rss": {
+                "p50": 71221248,
+                "p95": 71430144,
+                "p99": 71430144,
+                "max": 71430144
+              },
+              "peak_rss": {
+                "p50": 71221248,
+                "p95": 71430144,
+                "p99": 71430144,
+                "max": 71430144
+              }
+            },
+            "frequency_loaded": {
+              "heap_used": {
+                "p50": 8230024,
+                "p95": 8478120,
+                "p99": 8478120,
+                "max": 8478120
+              },
+              "heap_committed": {
+                "p50": 12753384,
+                "p95": 14732712,
+                "p99": 14732712,
+                "max": 14732712
+              },
+              "native_allocated": {
+                "p50": 1781280,
+                "p95": 1781856,
+                "p99": 1781856,
+                "max": 1781856
+              },
+              "pss": {
+                "p50": 30417920,
+                "p95": 31257600,
+                "p99": 31257600,
+                "max": 31257600
+              },
+              "private_dirty": {
+                "p50": 21905408,
+                "p95": 22769664,
+                "p99": 22769664,
+                "max": 22769664
+              },
+              "rss": {
+                "p50": 85237760,
+                "p95": 86282240,
+                "p99": 86282240,
+                "max": 86282240
+              },
+              "peak_rss": {
+                "p50": 92807168,
+                "p95": 93036544,
+                "p99": 93036544,
+                "max": 93036544
+              }
+            },
+            "index_opened": {
+              "heap_used": {
+                "p50": 8299656,
+                "p95": 8531368,
+                "p99": 8531368,
+                "max": 8531368
+              },
+              "heap_committed": {
+                "p50": 12927880,
+                "p95": 14732712,
+                "p99": 14732712,
+                "max": 14732712
+              },
+              "native_allocated": {
+                "p50": 1783616,
+                "p95": 1783648,
+                "p99": 1783648,
+                "max": 1783648
+              },
+              "pss": {
+                "p50": 24089600,
+                "p95": 24250368,
+                "p99": 24250368,
+                "max": 24250368
+              },
+              "private_dirty": {
+                "p50": 15122432,
+                "p95": 15290368,
+                "p99": 15290368,
+                "max": 15290368
+              },
+              "rss": {
+                "p50": 85241856,
+                "p95": 86085632,
+                "p99": 86085632,
+                "max": 86085632
+              },
+              "peak_rss": {
+                "p50": 92807168,
+                "p95": 93036544,
+                "p99": 93036544,
+                "max": 93036544
+              }
+            },
+            "first_query": {
+              "heap_used": {
+                "p50": 14825816,
+                "p95": 16857336,
+                "p99": 16857336,
+                "max": 16857336
+              },
+              "heap_committed": {
+                "p50": 19310936,
+                "p95": 19343608,
+                "p99": 19343608,
+                "max": 19343608
+              },
+              "native_allocated": {
+                "p50": 1785344,
+                "p95": 1785440,
+                "p99": 1785440,
+                "max": 1785440
+              },
+              "pss": {
+                "p50": 44758016,
+                "p95": 46914560,
+                "p99": 46914560,
+                "max": 46914560
+              },
+              "private_dirty": {
+                "p50": 21725184,
+                "p95": 23871488,
+                "p99": 23871488,
+                "max": 23871488
+              },
+              "rss": {
+                "p50": 107552768,
+                "p95": 109637632,
+                "p99": 109637632,
+                "max": 109637632
+              },
+              "peak_rss": {
+                "p50": 115625984,
+                "p95": 118931456,
+                "p99": 118931456,
+                "max": 118931456
+              }
+            }
+          },
+          "scope": "Three fresh processes at most; OS caches unknown and preflight-warmed. Quantiles describe these observations, not reliable cold p95 population estimates."
+        },
+        {
+          "format": "front",
+          "fresh_processes": 3,
+          "passed": 3,
+          "three_process_preset_complete": true,
+          "index_open_ms": {
+            "p50": 3.050292,
+            "p95": 3.238,
+            "p99": 3.238,
+            "max": 3.238
+          },
+          "frequency_load_ms": {
+            "p50": 63.541625,
+            "p95": 66.28425,
+            "p99": 66.28425,
+            "max": 66.28425
+          },
+          "first_query_ms": {
+            "p50": 318.1595,
+            "p95": 356.557291,
+            "p99": 356.557291,
+            "max": 356.557291
+          },
+          "memory_bytes": {
+            "boot": {
+              "heap_used": {
+                "p50": 287472,
+                "p95": 287472,
+                "p99": 287472,
+                "max": 287472
+              },
+              "heap_committed": {
+                "p50": 5242880,
+                "p95": 5242880,
+                "p99": 5242880,
+                "max": 5242880
+              },
+              "native_allocated": {
+                "p50": 1445280,
+                "p95": 1445280,
+                "p99": 1445280,
+                "max": 1445280
+              },
+              "pss": {
+                "p50": 14304256,
+                "p95": 14374912,
+                "p99": 14374912,
+                "max": 14374912
+              },
+              "private_dirty": {
+                "p50": 6983680,
+                "p95": 6983680,
+                "p99": 6983680,
+                "max": 6983680
+              },
+              "rss": {
+                "p50": 71036928,
+                "p95": 71299072,
+                "p99": 71299072,
+                "max": 71299072
+              },
+              "peak_rss": {
+                "p50": 71036928,
+                "p95": 71299072,
+                "p99": 71299072,
+                "max": 71299072
+              }
+            },
+            "frequency_loaded": {
+              "heap_used": {
+                "p50": 8659208,
+                "p95": 10326240,
+                "p99": 10326240,
+                "max": 10326240
+              },
+              "heap_committed": {
+                "p50": 14888648,
+                "p95": 14913800,
+                "p99": 14913800,
+                "max": 14913800
+              },
+              "native_allocated": {
+                "p50": 1781280,
+                "p95": 1781408,
+                "p99": 1781408,
+                "max": 1781408
+              },
+              "pss": {
+                "p50": 31344640,
+                "p95": 32211968,
+                "p99": 32211968,
+                "max": 32211968
+              },
+              "private_dirty": {
+                "p50": 22880256,
+                "p95": 23814144,
+                "p99": 23814144,
+                "max": 23814144
+              },
+              "rss": {
+                "p50": 85471232,
+                "p95": 86589440,
+                "p99": 86589440,
+                "max": 86589440
+              },
+              "peak_rss": {
+                "p50": 92672000,
+                "p95": 93839360,
+                "p99": 93839360,
+                "max": 93839360
+              }
+            },
+            "index_opened": {
+              "heap_used": {
+                "p50": 8728840,
+                "p95": 10379488,
+                "p99": 10379488,
+                "max": 10379488
+              },
+              "heap_committed": {
+                "p50": 14888648,
+                "p95": 14913800,
+                "p99": 14913800,
+                "max": 14913800
+              },
+              "native_allocated": {
+                "p50": 1780832,
+                "p95": 1780896,
+                "p99": 1780896,
+                "max": 1780896
+              },
+              "pss": {
+                "p50": 24415232,
+                "p95": 26184704,
+                "p99": 26184704,
+                "max": 26184704
+              },
+              "private_dirty": {
+                "p50": 15486976,
+                "p95": 17215488,
+                "p99": 17215488,
+                "max": 17215488
+              },
+              "rss": {
+                "p50": 86458368,
+                "p95": 87105536,
+                "p99": 87105536,
+                "max": 87105536
+              },
+              "peak_rss": {
+                "p50": 92672000,
+                "p95": 93839360,
+                "p99": 93839360,
+                "max": 93839360
+              }
+            },
+            "first_query": {
+              "heap_used": {
+                "p50": 12459496,
+                "p95": 14375832,
+                "p99": 14375832,
+                "max": 14375832
+              },
+              "heap_committed": {
+                "p50": 14781336,
+                "p95": 15551976,
+                "p99": 15551976,
+                "max": 15551976
+              },
+              "native_allocated": {
+                "p50": 1785760,
+                "p95": 1786208,
+                "p99": 1786208,
+                "max": 1786208
+              },
+              "pss": {
+                "p50": 43138048,
+                "p95": 45161472,
+                "p99": 45161472,
+                "max": 45161472
+              },
+              "private_dirty": {
+                "p50": 19599360,
+                "p95": 21549056,
+                "p99": 21549056,
+                "max": 21549056
+              },
+              "rss": {
+                "p50": 105955328,
+                "p95": 107741184,
+                "p99": 107741184,
+                "max": 107741184
+              },
+              "peak_rss": {
+                "p50": 110833664,
+                "p95": 112300032,
+                "p99": 112300032,
+                "max": 112300032
+              }
+            }
+          },
+          "scope": "Three fresh processes at most; OS caches unknown and preflight-warmed. Quantiles describe these observations, not reliable cold p95 population estimates."
+        },
+        {
+          "format": "trie",
+          "fresh_processes": 3,
+          "passed": 3,
+          "three_process_preset_complete": true,
+          "index_open_ms": {
+            "p50": 0.25375,
+            "p95": 0.277709,
+            "p99": 0.277709,
+            "max": 0.277709
+          },
+          "frequency_load_ms": {
+            "p50": 57.882875,
+            "p95": 62.554792,
+            "p99": 62.554792,
+            "max": 62.554792
+          },
+          "first_query_ms": {
+            "p50": 29.915584,
+            "p95": 42.89925,
+            "p99": 42.89925,
+            "max": 42.89925
+          },
+          "memory_bytes": {
+            "boot": {
+              "heap_used": {
+                "p50": 287472,
+                "p95": 287472,
+                "p99": 287472,
+                "max": 287472
+              },
+              "heap_committed": {
+                "p50": 5242880,
+                "p95": 5242880,
+                "p99": 5242880,
+                "max": 5242880
+              },
+              "native_allocated": {
+                "p50": 1445280,
+                "p95": 1445280,
+                "p99": 1445280,
+                "max": 1445280
+              },
+              "pss": {
+                "p50": 14319616,
+                "p95": 14334976,
+                "p99": 14334976,
+                "max": 14334976
+              },
+              "private_dirty": {
+                "p50": 6983680,
+                "p95": 6983680,
+                "p99": 6983680,
+                "max": 6983680
+              },
+              "rss": {
+                "p50": 71065600,
+                "p95": 71245824,
+                "p99": 71245824,
+                "max": 71245824
+              },
+              "peak_rss": {
+                "p50": 71065600,
+                "p95": 71245824,
+                "p99": 71245824,
+                "max": 71245824
+              }
+            },
+            "frequency_loaded": {
+              "heap_used": {
+                "p50": 8504648,
+                "p95": 13241640,
+                "p99": 13241640,
+                "max": 13241640
+              },
+              "heap_committed": {
+                "p50": 14382064,
+                "p95": 14759240,
+                "p99": 14759240,
+                "max": 14759240
+              },
+              "native_allocated": {
+                "p50": 1781280,
+                "p95": 1781280,
+                "p99": 1781280,
+                "max": 1781280
+              },
+              "pss": {
+                "p50": 31398912,
+                "p95": 31582208,
+                "p99": 31582208,
+                "max": 31582208
+              },
+              "private_dirty": {
+                "p50": 23048192,
+                "p95": 23121920,
+                "p99": 23121920,
+                "max": 23121920
+              },
+              "rss": {
+                "p50": 85078016,
+                "p95": 90095616,
+                "p99": 90095616,
+                "max": 90095616
+              },
+              "peak_rss": {
+                "p50": 93167616,
+                "p95": 93294592,
+                "p99": 93294592,
+                "max": 93294592
+              }
+            },
+            "index_opened": {
+              "heap_used": {
+                "p50": 8541512,
+                "p95": 13278504,
+                "p99": 13278504,
+                "max": 13278504
+              },
+              "heap_committed": {
+                "p50": 14382064,
+                "p95": 14759240,
+                "p99": 14759240,
+                "max": 14759240
+              },
+              "native_allocated": {
+                "p50": 1783392,
+                "p95": 1783520,
+                "p99": 1783520,
+                "max": 1783520
+              },
+              "pss": {
+                "p50": 23825408,
+                "p95": 28765184,
+                "p99": 28765184,
+                "max": 28765184
+              },
+              "private_dirty": {
+                "p50": 15310848,
+                "p95": 20127744,
+                "p99": 20127744,
+                "max": 20127744
+              },
+              "rss": {
+                "p50": 85078016,
+                "p95": 90423296,
+                "p99": 90423296,
+                "max": 90423296
+              },
+              "peak_rss": {
+                "p50": 93167616,
+                "p95": 93294592,
+                "p99": 93294592,
+                "max": 93294592
+              }
+            },
+            "first_query": {
+              "heap_used": {
+                "p50": 8802096,
+                "p95": 14385368,
+                "p99": 14385368,
+                "max": 14385368
+              },
+              "heap_committed": {
+                "p50": 14385368,
+                "p95": 15023048,
+                "p99": 15023048,
+                "max": 15023048
+              },
+              "native_allocated": {
+                "p50": 1785440,
+                "p95": 1785440,
+                "p99": 1785440,
+                "max": 1785440
+              },
+              "pss": {
+                "p50": 60875776,
+                "p95": 66384896,
+                "p99": 66384896,
+                "max": 66384896
+              },
+              "private_dirty": {
+                "p50": 15921152,
+                "p95": 21524480,
+                "p99": 21524480,
+                "max": 21524480
+              },
+              "rss": {
+                "p50": 123682816,
+                "p95": 129056768,
+                "p99": 129056768,
+                "max": 129056768
+              },
+              "peak_rss": {
+                "p50": 134361088,
+                "p95": 134774784,
+                "p99": 134774784,
+                "max": 134774784
+              }
+            }
+          },
+          "scope": "Three fresh processes at most; OS caches unknown and preflight-warmed. Quantiles describe these observations, not reliable cold p95 population estimates."
+        }
+      ]
+    }
+  ]
+}

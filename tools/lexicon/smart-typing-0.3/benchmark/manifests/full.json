@@ -1,0 +1,5532 @@
+{
+  "status": "FROZEN_BEFORE_DEVICE_RUN",
+  "query_plan": "development720; original eligible smoke26; no performance-based sampling",
+  "source_reader_sha256": "e1f3dd4396f59a0bcf1f4cb6ec0639fdaa6e0d6f80430afee5c22ed736e856e3",
+  "assets": [
+    {
+      "path": "assets/en.delete",
+      "sha256": "4573ab6cf1a59f15e393ecb1d4b651cbe19cec1cd737c3f2d60702d6beb64360",
+      "bytes": 30598744,
+      "source": "lexicon-index-prototype/assets/en.delete"
+    },
+    {
+      "path": "assets/en.front",
+      "sha256": "f06bb1d8e9021c6752705ddb94f9750429ff943bd0615e348a3d4a17bf500d92",
+      "bytes": 594184,
+      "source": "lexicon-index-prototype/assets/en.front"
+    },
+    {
+      "path": "assets/en.trie",
+      "sha256": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc",
+      "bytes": 4358176,
+      "source": "lexicon-index-prototype/assets/en.trie"
+    },
+    {
+      "path": "assets/es.delete",
+      "sha256": "5774f58e0d986a48c3d40a71c667f410c8f690240150489f7dacea2f41909f31",
+      "bytes": 172775080,
+      "source": "lexicon-index-prototype/assets/es.delete"
+    },
+    {
+      "path": "assets/es.front",
+      "sha256": "ff4ff52b4d95b7c74ac376f64adc7e0fe0d01e83ce58bfafc383e00f87b4ad32",
+      "bytes": 3148382,
+      "source": "lexicon-index-prototype/assets/es.front"
+    },
+    {
+      "path": "assets/es.trie",
+      "sha256": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681",
+      "bytes": 20015680,
+      "source": "lexicon-index-prototype/assets/es.trie"
+    },
+    {
+      "path": "assets/ru.delete",
+      "sha256": "beb4c0f14511b503adff736f2e514f1b283c0b4c52eaa02216968ae38831baed",
+      "bytes": 372073072,
+      "source": "lexicon-index-prototype/assets/ru.delete"
+    },
+    {
+      "path": "assets/ru.front",
+      "sha256": "29b8abb008123b6900183e083c32a750c986eb5f5509a8f12b8a7400976f4241",
+      "bytes": 8764290,
+      "source": "lexicon-index-prototype/assets/ru.front"
+    },
+    {
+      "path": "assets/ru.trie",
+      "sha256": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b",
+      "bytes": 36093872,
+      "source": "lexicon-index-prototype/assets/ru.trie"
+    },
+    {
+      "path": "assets/en.front.lengths",
+      "sha256": "4aa2b09a27ba99b77806c5546a35f441ab8a4b93300eaf32b1184e2dd6687ed5",
+      "bytes": 524304,
+      "source": "lexicon-index-prototype/assets/en.front.lengths"
+    },
+    {
+      "path": "assets/en.trie.lengths",
+      "sha256": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4",
+      "bytes": 544786,
+      "source": "lexicon-index-prototype/assets/en.trie.lengths"
+    },
+    {
+      "path": "assets/es.front.lengths",
+      "sha256": "96e99c53a1405084ac675284e3ca2871076410d3f1cdc1fb2dbd616c4c9d8f88",
+      "bytes": 4194320,
+      "source": "lexicon-index-prototype/assets/es.front.lengths"
+    },
+    {
+      "path": "assets/es.trie.lengths",
+      "sha256": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78",
+      "bytes": 2501974,
+      "source": "lexicon-index-prototype/assets/es.trie.lengths"
+    },
+    {
+      "path": "assets/ru.front.lengths",
+      "sha256": "cde4103f2688b6a7e299ebb567d30c1239ba4c82cb165d31ce7fff5b0536fc54",
+      "bytes": 8388624,
+      "source": "lexicon-index-prototype/assets/ru.front.lengths"
+    },
+    {
+      "path": "assets/ru.trie.lengths",
+      "sha256": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c",
+      "bytes": 4511748,
+      "source": "lexicon-index-prototype/assets/ru.trie.lengths"
+    },
+    {
+      "path": "notices/ES-LICENSE.md",
+      "sha256": "2b70fd5cb8d3b34cc6ae322c969557a2270b99017594addb2531ef5ffd9e1b17",
+      "bytes": 991,
+      "source": "lexicon-prototype/notices/ES-LICENSE.md"
+    },
+    {
+      "path": "notices/Hunspell-COPYING.txt",
+      "sha256": "640d90f6ee401241ff62834d0d1b33f83049e99b8bfdfa04ed1b0a1635dde3e7",
+      "bytes": 18093,
+      "source": "lexicon-prototype/notices/Hunspell-COPYING.txt"
+    },
+    {
+      "path": "notices/Hunspell-COPYING.LESSER.txt",
+      "sha256": "7c6699c75f87b52bdc542db26d6b1b92892577cda46e20eceb79e2790a1c291b",
+      "bytes": 26531,
+      "source": "lexicon-prototype/notices/Hunspell-COPYING.LESSER.txt"
+    },
+    {
+      "path": "notices/ES-MPL-1.1.txt",
+      "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f",
+      "bytes": 25755,
+      "source": "lexicon-prototype/notices/ES-MPL-1.1.txt"
+    },
+    {
+      "path": "notices/Hunspell-license.hunspell.txt",
+      "sha256": "3f7ddd07c296edbfe0a47c7bcc82038ad347a2c4f672345b24f95c624db68513",
+      "bytes": 1973,
+      "source": "lexicon-prototype/notices/Hunspell-license.hunspell.txt"
+    },
+    {
+      "path": "notices/RU-Lebedev.txt",
+      "sha256": "262af2f6ad70a61e5ee1332ff44fa8ee50edca819cf33207d8ad6ba6a0c9be52",
+      "bytes": 1886,
+      "source": "lexicon-prototype/notices/RU-Lebedev.txt"
+    },
+    {
+      "path": "notices/FrequencyWords-README.md",
+      "sha256": "a92fcc50e27f7b2d5860ec1c1ce794dc4c892d945bfa4c8c3136cdfd213ee710",
+      "bytes": 913,
+      "source": "lexicon-prototype/notices/FrequencyWords-README.md"
+    },
+    {
+      "path": "notices/Hunspell-license.myspell.txt",
+      "sha256": "dcda061adeed22b26f276c01ec374f930789ae0d684e5aa8f8be309dd680ff20",
+      "bytes": 2912,
+      "source": "lexicon-prototype/notices/Hunspell-license.myspell.txt"
+    },
+    {
+      "path": "notices/Hunspell-COPYING.MPL.txt",
+      "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f",
+      "bytes": 25755,
+      "source": "lexicon-prototype/notices/Hunspell-COPYING.MPL.txt"
+    },
+    {
+      "path": "notices/ES-README.txt",
+      "sha256": "0b5c39a863ecb61f5c5631ec1cd977667ef9bda6da6f90e80e9fc0edcbfadd97",
+      "bytes": 2615,
+      "source": "lexicon-prototype/notices/ES-README.txt"
+    },
+    {
+      "path": "notices/Hunspell-AUTHORS.txt",
+      "sha256": "a0f915313286a6e359ffb3e6586adb445849a79f2e9f0380fae14365fc064519",
+      "bytes": 759,
+      "source": "lexicon-prototype/notices/Hunspell-AUTHORS.txt"
+    },
+    {
+      "path": "notices/CC-BY-SA-4.0.txt",
+      "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5",
+      "bytes": 20138,
+      "source": "lexicon-prototype/notices/CC-BY-SA-4.0.txt"
+    },
+    {
+      "path": "notices/FrequencyWords-code-MIT.txt",
+      "sha256": "e08d916cc953f85f7dfa0df530f6d7931f14ce804d053602662d8649b5fac829",
+      "bytes": 1068,
+      "source": "lexicon-prototype/notices/FrequencyWords-code-MIT.txt"
+    },
+    {
+      "path": "notices/SCOWL-Copyright.txt",
+      "sha256": "283326a422e29c510e2ba6805518c418ce3c35ed1fadc3eec83d2da4f6c5a055",
+      "bytes": 11758,
+      "source": "lexicon-prototype/notices/SCOWL-Copyright.txt"
+    },
+    {
+      "path": "notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+      "sha256": "7882067541d4e0ae1382abaac451bf78e0163af0bc77a3e4eb4f09bf6bf0b956",
+      "bytes": 5116,
+      "source": "lexicon-prototype/THIRD_PARTY_NOTICES.md"
+    },
+    {
+      "path": "notices/source-lock.json",
+      "sha256": "28750e183ef99ea33da58b20036e2f0dcb3f7e1f76e8528c21074ac7d6615b70",
+      "bytes": 6412,
+      "source": "lexicon-prototype/source-lock.json"
+    },
+    {
+      "path": "notices/output-manifest.json",
+      "sha256": "ec26c80edd28f2b42008a844c8b0ce83c11759386ccc9de591cb038a7a4f3c48",
+      "bytes": 10313,
+      "source": "lexicon-prototype/output-manifest.json"
+    },
+    {
+      "path": "frequency/en.tsv",
+      "sha256": "2534369e870173a436634cf4065e05e2463053ea3bce747f4ea23ae1119c8f51",
+      "bytes": 1312125,
+      "source": "lexicon-prototype/outputs/frequency/en.tsv"
+    },
+    {
+      "path": "queries/en.development.tsv",
+      "sha256": "738f283b05429ff8424553733dd403055870d5d29627fb394804e26b86da2040",
+      "bytes": 46199,
+      "source": "frozen prior oracle + predeclared query order"
+    },
+    {
+      "path": "queries/en.smoke.tsv",
+      "sha256": "5a184655dc1f37dcf8b3bfe3b99ea3d93ba4b6a879323dda243ac07fe13c83f8",
+      "bytes": 791,
+      "source": "frozen prior oracle + predeclared query order"
+    },
+    {
+      "path": "frequency/es.tsv",
+      "sha256": "c845ccf663b3b291197988f380b034cdd35f2e3c732684ae8ef02171ecf9a7e7",
+      "bytes": 1384810,
+      "source": "lexicon-prototype/outputs/frequency/es.tsv"
+    },
+    {
+      "path": "queries/es.development.tsv",
+      "sha256": "d5425f8c48f9dc6a4c908c1d82e9726fa0b61094d300c3234b88af79c4c787bb",
+      "bytes": 65897,
+      "source": "frozen prior oracle + predeclared query order"
+    },
+    {
+      "path": "queries/es.smoke.tsv",
+      "sha256": "f48d0d2c7ac470117716817ab99cc2a6906b74b38b15c9d8b1ed8b9d74e99db2",
+      "bytes": 6099,
+      "source": "frozen prior oracle + predeclared query order"
+    },
+    {
+      "path": "frequency/ru.tsv",
+      "sha256": "53f49acb173ebb131ed15ecc31acfc7bda778bd1a25fdaa8b7d3ab833e9cb97f",
+      "bytes": 2074403,
+      "source": "lexicon-prototype/outputs/frequency/ru.tsv"
+    },
+    {
+      "path": "queries/ru.development.tsv",
+      "sha256": "bfbe2e7f79b902c3d9442061c332c932d8758f2b24611058c6ea0c60abf475bf",
+      "bytes": 128547,
+      "source": "frozen prior oracle + predeclared query order"
+    },
+    {
+      "path": "queries/ru.smoke.tsv",
+      "sha256": "fead1447db97438a9d7fea3c82d999bbf013a5923686ed108d23d867d03c6a73",
+      "bytes": 5956,
+      "source": "frozen prior oracle + predeclared query order"
+    }
+  ],
+  "queries": [
+    {
+      "language": "en",
+      "profile": "development",
+      "count": 240,
+      "path": "queries/en.development.tsv",
+      "sha256": "738f283b05429ff8424553733dd403055870d5d29627fb394804e26b86da2040",
+      "queries": [
+        {
+          "id": "en-d-001",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 17
+        },
+        {
+          "id": "en-d-002",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 3,
+          "expected_candidates": 11
+        },
+        {
+          "id": "en-d-003",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 12
+        },
+        {
+          "id": "en-d-004",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 33
+        },
+        {
+          "id": "en-d-005",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 7
+        },
+        {
+          "id": "en-d-006",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 99
+        },
+        {
+          "id": "en-d-007",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 41
+        },
+        {
+          "id": "en-d-008",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 121
+        },
+        {
+          "id": "en-d-009",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 120
+        },
+        {
+          "id": "en-d-010",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 13
+        },
+        {
+          "id": "en-d-011",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 3,
+          "expected_candidates": 36
+        },
+        {
+          "id": "en-d-012",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 35
+        },
+        {
+          "id": "en-d-013",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 14
+        },
+        {
+          "id": "en-d-014",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 43
+        },
+        {
+          "id": "en-d-015",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-016",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 3,
+          "expected_candidates": 8
+        },
+        {
+          "id": "en-d-017",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 17
+        },
+        {
+          "id": "en-d-018",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 4
+        },
+        {
+          "id": "en-d-019",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 4,
+          "expected_candidates": 5
+        },
+        {
+          "id": "en-d-020",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 2,
+          "expected_candidates": 41
+        },
+        {
+          "id": "en-d-021",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 81
+        },
+        {
+          "id": "en-d-022",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-023",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-024",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 39
+        },
+        {
+          "id": "en-d-025",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 91
+        },
+        {
+          "id": "en-d-026",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 27
+        },
+        {
+          "id": "en-d-027",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-028",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 10
+        },
+        {
+          "id": "en-d-029",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-030",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 5,
+          "expected_candidates": 26
+        },
+        {
+          "id": "en-d-031",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 12
+        },
+        {
+          "id": "en-d-032",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-033",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-034",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 7,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-035",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-036",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 5
+        },
+        {
+          "id": "en-d-037",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-038",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 4
+        },
+        {
+          "id": "en-d-039",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 4,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-040",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-041",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 10
+        },
+        {
+          "id": "en-d-042",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 10
+        },
+        {
+          "id": "en-d-043",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 9
+        },
+        {
+          "id": "en-d-044",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 7
+        },
+        {
+          "id": "en-d-045",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 19
+        },
+        {
+          "id": "en-d-046",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-047",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 11
+        },
+        {
+          "id": "en-d-048",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-049",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 41
+        },
+        {
+          "id": "en-d-050",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 17
+        },
+        {
+          "id": "en-d-051",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 7
+        },
+        {
+          "id": "en-d-052",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-053",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 22
+        },
+        {
+          "id": "en-d-054",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 7
+        },
+        {
+          "id": "en-d-055",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 6
+        },
+        {
+          "id": "en-d-056",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-057",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 12
+        },
+        {
+          "id": "en-d-058",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 46
+        },
+        {
+          "id": "en-d-059",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-060",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 74
+        },
+        {
+          "id": "en-d-061",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-062",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-063",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 3,
+          "expected_candidates": 11
+        },
+        {
+          "id": "en-d-064",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 9
+        },
+        {
+          "id": "en-d-065",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-066",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-067",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-068",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 17
+        },
+        {
+          "id": "en-d-069",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-070",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 7,
+          "expected_candidates": 7
+        },
+        {
+          "id": "en-d-071",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 19
+        },
+        {
+          "id": "en-d-072",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-073",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 7,
+          "expected_candidates": 7
+        },
+        {
+          "id": "en-d-074",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-075",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 50
+        },
+        {
+          "id": "en-d-076",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 4
+        },
+        {
+          "id": "en-d-077",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-078",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 7,
+          "expected_candidates": 18
+        },
+        {
+          "id": "en-d-079",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 4
+        },
+        {
+          "id": "en-d-080",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 5,
+          "expected_candidates": 28
+        },
+        {
+          "id": "en-d-081",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 9
+        },
+        {
+          "id": "en-d-082",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 10,
+          "expected_candidates": 4
+        },
+        {
+          "id": "en-d-083",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 6
+        },
+        {
+          "id": "en-d-084",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 20
+        },
+        {
+          "id": "en-d-085",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 67
+        },
+        {
+          "id": "en-d-086",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-087",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 25
+        },
+        {
+          "id": "en-d-088",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 23
+        },
+        {
+          "id": "en-d-089",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 196
+        },
+        {
+          "id": "en-d-090",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-091",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 8
+        },
+        {
+          "id": "en-d-092",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 3,
+          "expected_candidates": 4
+        },
+        {
+          "id": "en-d-093",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-094",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-095",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-096",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 9
+        },
+        {
+          "id": "en-d-097",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 35
+        },
+        {
+          "id": "en-d-098",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 62
+        },
+        {
+          "id": "en-d-099",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-100",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-101",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 5
+        },
+        {
+          "id": "en-d-102",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-103",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-104",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-105",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 12
+        },
+        {
+          "id": "en-d-106",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 5
+        },
+        {
+          "id": "en-d-107",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 26
+        },
+        {
+          "id": "en-d-108",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-109",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-110",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-111",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-112",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-113",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-114",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 7
+        },
+        {
+          "id": "en-d-115",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-116",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-117",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-118",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 5
+        },
+        {
+          "id": "en-d-119",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-120",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-121",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 3,
+          "expected_candidates": 12
+        },
+        {
+          "id": "en-d-122",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 15
+        },
+        {
+          "id": "en-d-123",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 26
+        },
+        {
+          "id": "en-d-124",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 34
+        },
+        {
+          "id": "en-d-125",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-126",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 17
+        },
+        {
+          "id": "en-d-127",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 8
+        },
+        {
+          "id": "en-d-128",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 9
+        },
+        {
+          "id": "en-d-129",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 15
+        },
+        {
+          "id": "en-d-130",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 3,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-131",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 7
+        },
+        {
+          "id": "en-d-132",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 11
+        },
+        {
+          "id": "en-d-133",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 11,
+          "expected_candidates": 4
+        },
+        {
+          "id": "en-d-134",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 4
+        },
+        {
+          "id": "en-d-135",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 4,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-136",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 8
+        },
+        {
+          "id": "en-d-137",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 35
+        },
+        {
+          "id": "en-d-138",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 63
+        },
+        {
+          "id": "en-d-139",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-140",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 12,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-141",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-142",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 13
+        },
+        {
+          "id": "en-d-143",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 37
+        },
+        {
+          "id": "en-d-144",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-145",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 4
+        },
+        {
+          "id": "en-d-146",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 26
+        },
+        {
+          "id": "en-d-147",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 12,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-148",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 5
+        },
+        {
+          "id": "en-d-149",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-150",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-151",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-152",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 14,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-153",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-154",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-155",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 6
+        },
+        {
+          "id": "en-d-156",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 4
+        },
+        {
+          "id": "en-d-157",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 5
+        },
+        {
+          "id": "en-d-158",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 6
+        },
+        {
+          "id": "en-d-159",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 15,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-160",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 7,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-161",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 31
+        },
+        {
+          "id": "en-d-162",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-163",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 6
+        },
+        {
+          "id": "en-d-164",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 64
+        },
+        {
+          "id": "en-d-165",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 37
+        },
+        {
+          "id": "en-d-166",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 12,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-167",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 3,
+          "expected_candidates": 10
+        },
+        {
+          "id": "en-d-168",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 11
+        },
+        {
+          "id": "en-d-169",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 22
+        },
+        {
+          "id": "en-d-170",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-171",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-172",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 4
+        },
+        {
+          "id": "en-d-173",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-174",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 5
+        },
+        {
+          "id": "en-d-175",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-176",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-177",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 180
+        },
+        {
+          "id": "en-d-178",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 5
+        },
+        {
+          "id": "en-d-179",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-180",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-181",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 30
+        },
+        {
+          "id": "en-d-182",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 16
+        },
+        {
+          "id": "en-d-183",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-184",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-185",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 5
+        },
+        {
+          "id": "en-d-186",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-187",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 91
+        },
+        {
+          "id": "en-d-188",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-189",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-190",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 9
+        },
+        {
+          "id": "en-d-191",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-192",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-193",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-194",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-195",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-196",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-197",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-198",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 18
+        },
+        {
+          "id": "en-d-199",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 14,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-200",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-201",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 7
+        },
+        {
+          "id": "en-d-202",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-203",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 20
+        },
+        {
+          "id": "en-d-204",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 28
+        },
+        {
+          "id": "en-d-205",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 29
+        },
+        {
+          "id": "en-d-206",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 71
+        },
+        {
+          "id": "en-d-207",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 31
+        },
+        {
+          "id": "en-d-208",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-209",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 17
+        },
+        {
+          "id": "en-d-210",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 4
+        },
+        {
+          "id": "en-d-211",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 57
+        },
+        {
+          "id": "en-d-212",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 232
+        },
+        {
+          "id": "en-d-213",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-214",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 37
+        },
+        {
+          "id": "en-d-215",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-216",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 42
+        },
+        {
+          "id": "en-d-217",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-218",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-219",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-220",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-221",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 85
+        },
+        {
+          "id": "en-d-222",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 77
+        },
+        {
+          "id": "en-d-223",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-224",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 13,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-225",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 106
+        },
+        {
+          "id": "en-d-226",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 26
+        },
+        {
+          "id": "en-d-227",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 22
+        },
+        {
+          "id": "en-d-228",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 5,
+          "expected_candidates": 47
+        },
+        {
+          "id": "en-d-229",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-230",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-231",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-232",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 12
+        },
+        {
+          "id": "en-d-233",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 1
+        },
+        {
+          "id": "en-d-234",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-235",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "en-d-236",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 21
+        },
+        {
+          "id": "en-d-237",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 7,
+          "expected_candidates": 13
+        },
+        {
+          "id": "en-d-238",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-239",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-d-240",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 1
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "profile": "smoke",
+      "count": 6,
+      "path": "queries/en.smoke.tsv",
+      "sha256": "5a184655dc1f37dcf8b3bfe3b99ea3d93ba4b6a879323dda243ac07fe13c83f8",
+      "queries": [
+        {
+          "id": "en-s-001",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 8,
+          "expected_candidates": 7
+        },
+        {
+          "id": "en-s-002",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 7,
+          "expected_candidates": 26
+        },
+        {
+          "id": "en-s-003",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 10,
+          "expected_candidates": 2
+        },
+        {
+          "id": "en-s-004",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 4,
+          "expected_candidates": 16
+        },
+        {
+          "id": "en-s-005",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 4,
+          "expected_candidates": 6
+        },
+        {
+          "id": "en-s-006",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 4,
+          "expected_candidates": 2
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "profile": "development",
+      "count": 240,
+      "path": "queries/es.development.tsv",
+      "sha256": "d5425f8c48f9dc6a4c908c1d82e9726fa0b61094d300c3234b88af79c4c787bb",
+      "queries": [
+        {
+          "id": "es-d-001",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 2,
+          "expected_candidates": 18
+        },
+        {
+          "id": "es-d-002",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-003",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 2,
+          "expected_candidates": 25
+        },
+        {
+          "id": "es-d-004",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 61
+        },
+        {
+          "id": "es-d-005",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-006",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 7
+        },
+        {
+          "id": "es-d-007",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 106
+        },
+        {
+          "id": "es-d-008",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 16
+        },
+        {
+          "id": "es-d-009",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 195
+        },
+        {
+          "id": "es-d-010",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 18
+        },
+        {
+          "id": "es-d-011",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 287
+        },
+        {
+          "id": "es-d-012",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 28
+        },
+        {
+          "id": "es-d-013",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 10,
+          "expected_candidates": 4
+        },
+        {
+          "id": "es-d-014",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 7
+        },
+        {
+          "id": "es-d-015",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 20
+        },
+        {
+          "id": "es-d-016",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 24
+        },
+        {
+          "id": "es-d-017",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 4,
+          "expected_candidates": 8
+        },
+        {
+          "id": "es-d-018",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-019",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 224
+        },
+        {
+          "id": "es-d-020",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 30
+        },
+        {
+          "id": "es-d-021",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 97
+        },
+        {
+          "id": "es-d-022",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 3,
+          "expected_candidates": 7
+        },
+        {
+          "id": "es-d-023",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 21
+        },
+        {
+          "id": "es-d-024",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 4,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-025",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 25
+        },
+        {
+          "id": "es-d-026",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-027",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 39
+        },
+        {
+          "id": "es-d-028",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 61
+        },
+        {
+          "id": "es-d-029",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 12
+        },
+        {
+          "id": "es-d-030",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 8
+        },
+        {
+          "id": "es-d-031",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-032",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 13
+        },
+        {
+          "id": "es-d-033",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 16
+        },
+        {
+          "id": "es-d-034",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 8
+        },
+        {
+          "id": "es-d-035",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 22
+        },
+        {
+          "id": "es-d-036",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 8
+        },
+        {
+          "id": "es-d-037",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 19
+        },
+        {
+          "id": "es-d-038",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 7,
+          "expected_candidates": 8
+        },
+        {
+          "id": "es-d-039",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 19
+        },
+        {
+          "id": "es-d-040",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 17
+        },
+        {
+          "id": "es-d-041",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 44
+        },
+        {
+          "id": "es-d-042",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 54
+        },
+        {
+          "id": "es-d-043",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 104
+        },
+        {
+          "id": "es-d-044",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 36
+        },
+        {
+          "id": "es-d-045",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 66
+        },
+        {
+          "id": "es-d-046",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-047",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 13
+        },
+        {
+          "id": "es-d-048",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 49
+        },
+        {
+          "id": "es-d-049",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 22
+        },
+        {
+          "id": "es-d-050",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 15
+        },
+        {
+          "id": "es-d-051",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 22
+        },
+        {
+          "id": "es-d-052",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 22
+        },
+        {
+          "id": "es-d-053",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 56
+        },
+        {
+          "id": "es-d-054",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 2,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-d-055",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 9
+        },
+        {
+          "id": "es-d-056",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 11
+        },
+        {
+          "id": "es-d-057",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 13,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-058",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 36
+        },
+        {
+          "id": "es-d-059",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 18
+        },
+        {
+          "id": "es-d-060",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 188
+        },
+        {
+          "id": "es-d-061",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 11
+        },
+        {
+          "id": "es-d-062",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-d-063",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 41
+        },
+        {
+          "id": "es-d-064",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 18
+        },
+        {
+          "id": "es-d-065",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 13,
+          "expected_candidates": 9
+        },
+        {
+          "id": "es-d-066",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-067",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 17
+        },
+        {
+          "id": "es-d-068",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 5,
+          "expected_candidates": 141
+        },
+        {
+          "id": "es-d-069",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 8
+        },
+        {
+          "id": "es-d-070",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 14,
+          "expected_candidates": 22
+        },
+        {
+          "id": "es-d-071",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 4
+        },
+        {
+          "id": "es-d-072",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 25
+        },
+        {
+          "id": "es-d-073",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 26
+        },
+        {
+          "id": "es-d-074",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 9
+        },
+        {
+          "id": "es-d-075",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 15,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-076",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 24
+        },
+        {
+          "id": "es-d-077",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-078",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 4
+        },
+        {
+          "id": "es-d-079",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 10
+        },
+        {
+          "id": "es-d-080",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 7
+        },
+        {
+          "id": "es-d-081",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 14
+        },
+        {
+          "id": "es-d-082",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 27
+        },
+        {
+          "id": "es-d-083",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 4
+        },
+        {
+          "id": "es-d-084",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-085",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 29
+        },
+        {
+          "id": "es-d-086",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-087",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 4
+        },
+        {
+          "id": "es-d-088",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 16
+        },
+        {
+          "id": "es-d-089",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-090",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-091",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 132
+        },
+        {
+          "id": "es-d-092",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-093",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 11,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-094",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 10,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-095",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 13,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-096",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 13
+        },
+        {
+          "id": "es-d-097",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-d-098",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 37
+        },
+        {
+          "id": "es-d-099",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 27
+        },
+        {
+          "id": "es-d-100",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 27
+        },
+        {
+          "id": "es-d-101",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 13
+        },
+        {
+          "id": "es-d-102",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-103",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 212
+        },
+        {
+          "id": "es-d-104",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 13
+        },
+        {
+          "id": "es-d-105",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 4
+        },
+        {
+          "id": "es-d-106",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-107",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 4
+        },
+        {
+          "id": "es-d-108",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 15
+        },
+        {
+          "id": "es-d-109",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 18
+        },
+        {
+          "id": "es-d-110",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 9
+        },
+        {
+          "id": "es-d-111",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 27
+        },
+        {
+          "id": "es-d-112",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-113",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 9
+        },
+        {
+          "id": "es-d-114",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 14,
+          "expected_candidates": 9
+        },
+        {
+          "id": "es-d-115",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-116",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 20
+        },
+        {
+          "id": "es-d-117",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 16,
+          "expected_candidates": 9
+        },
+        {
+          "id": "es-d-118",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 9
+        },
+        {
+          "id": "es-d-119",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 4,
+          "expected_candidates": 4
+        },
+        {
+          "id": "es-d-120",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-121",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 161
+        },
+        {
+          "id": "es-d-122",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 20
+        },
+        {
+          "id": "es-d-123",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 83
+        },
+        {
+          "id": "es-d-124",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 11,
+          "expected_candidates": 14
+        },
+        {
+          "id": "es-d-125",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 93
+        },
+        {
+          "id": "es-d-126",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 12,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-127",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 56
+        },
+        {
+          "id": "es-d-128",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-129",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 12
+        },
+        {
+          "id": "es-d-130",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 8
+        },
+        {
+          "id": "es-d-131",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-132",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 17
+        },
+        {
+          "id": "es-d-133",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-134",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 18
+        },
+        {
+          "id": "es-d-135",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-d-136",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 86
+        },
+        {
+          "id": "es-d-137",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-138",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-d-139",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-140",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 38
+        },
+        {
+          "id": "es-d-141",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 4
+        },
+        {
+          "id": "es-d-142",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 13
+        },
+        {
+          "id": "es-d-143",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 20
+        },
+        {
+          "id": "es-d-144",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-145",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-146",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 8
+        },
+        {
+          "id": "es-d-147",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 41
+        },
+        {
+          "id": "es-d-148",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-d-149",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 15,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-150",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-d-151",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 7
+        },
+        {
+          "id": "es-d-152",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 15,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-153",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 9
+        },
+        {
+          "id": "es-d-154",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 33
+        },
+        {
+          "id": "es-d-155",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 10
+        },
+        {
+          "id": "es-d-156",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-157",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-158",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 15,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-159",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 25
+        },
+        {
+          "id": "es-d-160",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 19,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-161",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 11
+        },
+        {
+          "id": "es-d-162",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 19
+        },
+        {
+          "id": "es-d-163",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-164",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 10
+        },
+        {
+          "id": "es-d-165",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 49
+        },
+        {
+          "id": "es-d-166",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 8
+        },
+        {
+          "id": "es-d-167",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-168",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 12
+        },
+        {
+          "id": "es-d-169",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 43
+        },
+        {
+          "id": "es-d-170",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 8
+        },
+        {
+          "id": "es-d-171",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 10,
+          "expected_candidates": 14
+        },
+        {
+          "id": "es-d-172",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-173",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 11
+        },
+        {
+          "id": "es-d-174",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 43
+        },
+        {
+          "id": "es-d-175",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-176",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 4,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-177",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-d-178",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 26
+        },
+        {
+          "id": "es-d-179",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 13,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-180",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-181",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 74
+        },
+        {
+          "id": "es-d-182",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-183",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 25
+        },
+        {
+          "id": "es-d-184",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-185",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 14,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-186",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-d-187",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 17
+        },
+        {
+          "id": "es-d-188",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 9
+        },
+        {
+          "id": "es-d-189",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-d-190",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 11
+        },
+        {
+          "id": "es-d-191",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 19
+        },
+        {
+          "id": "es-d-192",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 27
+        },
+        {
+          "id": "es-d-193",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-194",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 7
+        },
+        {
+          "id": "es-d-195",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 4
+        },
+        {
+          "id": "es-d-196",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 13
+        },
+        {
+          "id": "es-d-197",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-198",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 13
+        },
+        {
+          "id": "es-d-199",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-200",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-d-201",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 11
+        },
+        {
+          "id": "es-d-202",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-203",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-d-204",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 10,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-d-205",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-206",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 4
+        },
+        {
+          "id": "es-d-207",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-208",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-209",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 19
+        },
+        {
+          "id": "es-d-210",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 55
+        },
+        {
+          "id": "es-d-211",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 11,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-212",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 22
+        },
+        {
+          "id": "es-d-213",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-214",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-215",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 8
+        },
+        {
+          "id": "es-d-216",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-217",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-218",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 17
+        },
+        {
+          "id": "es-d-219",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 26
+        },
+        {
+          "id": "es-d-220",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-221",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-222",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 46
+        },
+        {
+          "id": "es-d-223",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 33
+        },
+        {
+          "id": "es-d-224",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 14
+        },
+        {
+          "id": "es-d-225",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 39
+        },
+        {
+          "id": "es-d-226",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 18
+        },
+        {
+          "id": "es-d-227",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "es-d-228",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 7,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-229",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 14
+        },
+        {
+          "id": "es-d-230",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-231",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 10
+        },
+        {
+          "id": "es-d-232",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 14,
+          "expected_candidates": 4
+        },
+        {
+          "id": "es-d-233",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 10
+        },
+        {
+          "id": "es-d-234",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-235",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-d-236",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-237",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-238",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 2
+        },
+        {
+          "id": "es-d-239",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 1
+        },
+        {
+          "id": "es-d-240",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 5,
+          "expected_candidates": 44
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "profile": "smoke",
+      "count": 10,
+      "path": "queries/es.smoke.tsv",
+      "sha256": "f48d0d2c7ac470117716817ab99cc2a6906b74b38b15c9d8b1ed8b9d74e99db2",
+      "queries": [
+        {
+          "id": "es-s-001",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 9,
+          "expected_candidates": 65
+        },
+        {
+          "id": "es-s-002",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 8,
+          "expected_candidates": 148
+        },
+        {
+          "id": "es-s-003",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 14,
+          "expected_candidates": 27
+        },
+        {
+          "id": "es-s-004",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 13,
+          "expected_candidates": 5
+        },
+        {
+          "id": "es-s-005",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 7,
+          "expected_candidates": 175
+        },
+        {
+          "id": "es-s-006",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 6,
+          "expected_candidates": 130
+        },
+        {
+          "id": "es-s-007",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 13,
+          "expected_candidates": 11
+        },
+        {
+          "id": "es-s-008",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 4,
+          "expected_candidates": 21
+        },
+        {
+          "id": "es-s-009",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 4,
+          "expected_candidates": 6
+        },
+        {
+          "id": "es-s-010",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 4,
+          "expected_candidates": 11
+        }
+      ]
+    },
+    {
+      "language": "ru",
+      "profile": "development",
+      "count": 240,
+      "path": "queries/ru.development.tsv",
+      "sha256": "bfbe2e7f79b902c3d9442061c332c932d8758f2b24611058c6ea0c60abf475bf",
+      "queries": [
+        {
+          "id": "ru-d-001",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 128
+        },
+        {
+          "id": "ru-d-002",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 48
+        },
+        {
+          "id": "ru-d-003",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 11
+        },
+        {
+          "id": "ru-d-004",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 25
+        },
+        {
+          "id": "ru-d-005",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 2,
+          "expected_candidates": 29
+        },
+        {
+          "id": "ru-d-006",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 18
+        },
+        {
+          "id": "ru-d-007",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 83
+        },
+        {
+          "id": "ru-d-008",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-009",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 81
+        },
+        {
+          "id": "ru-d-010",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 108
+        },
+        {
+          "id": "ru-d-011",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 201
+        },
+        {
+          "id": "ru-d-012",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 39
+        },
+        {
+          "id": "ru-d-013",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 68
+        },
+        {
+          "id": "ru-d-014",
+          "category": "deletion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 42
+        },
+        {
+          "id": "ru-d-015",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 58
+        },
+        {
+          "id": "ru-d-016",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 26
+        },
+        {
+          "id": "ru-d-017",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 142
+        },
+        {
+          "id": "ru-d-018",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 12,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-019",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 37
+        },
+        {
+          "id": "ru-d-020",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 148
+        },
+        {
+          "id": "ru-d-021",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 295
+        },
+        {
+          "id": "ru-d-022",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 32
+        },
+        {
+          "id": "ru-d-023",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-024",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 86
+        },
+        {
+          "id": "ru-d-025",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 92
+        },
+        {
+          "id": "ru-d-026",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 263
+        },
+        {
+          "id": "ru-d-027",
+          "category": "deletion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 118
+        },
+        {
+          "id": "ru-d-028",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-029",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 14,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-030",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 9
+        },
+        {
+          "id": "ru-d-031",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 32
+        },
+        {
+          "id": "ru-d-032",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 35
+        },
+        {
+          "id": "ru-d-033",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 25
+        },
+        {
+          "id": "ru-d-034",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 7,
+          "expected_candidates": 26
+        },
+        {
+          "id": "ru-d-035",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 31
+        },
+        {
+          "id": "ru-d-036",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 21
+        },
+        {
+          "id": "ru-d-037",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 36
+        },
+        {
+          "id": "ru-d-038",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 17
+        },
+        {
+          "id": "ru-d-039",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 6
+        },
+        {
+          "id": "ru-d-040",
+          "category": "deletion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-041",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 103
+        },
+        {
+          "id": "ru-d-042",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-043",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 99
+        },
+        {
+          "id": "ru-d-044",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 59
+        },
+        {
+          "id": "ru-d-045",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-046",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 27
+        },
+        {
+          "id": "ru-d-047",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 12,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-048",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 31
+        },
+        {
+          "id": "ru-d-049",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 65
+        },
+        {
+          "id": "ru-d-050",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 63
+        },
+        {
+          "id": "ru-d-051",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 31
+        },
+        {
+          "id": "ru-d-052",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 3
+        },
+        {
+          "id": "ru-d-053",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 170
+        },
+        {
+          "id": "ru-d-054",
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-055",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 4,
+          "expected_candidates": 12
+        },
+        {
+          "id": "ru-d-056",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 28
+        },
+        {
+          "id": "ru-d-057",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 9
+        },
+        {
+          "id": "ru-d-058",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 16
+        },
+        {
+          "id": "ru-d-059",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 3
+        },
+        {
+          "id": "ru-d-060",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 15
+        },
+        {
+          "id": "ru-d-061",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-062",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 6
+        },
+        {
+          "id": "ru-d-063",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 18
+        },
+        {
+          "id": "ru-d-064",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 77
+        },
+        {
+          "id": "ru-d-065",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 45
+        },
+        {
+          "id": "ru-d-066",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-067",
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 10
+        },
+        {
+          "id": "ru-d-068",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-069",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-070",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-071",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-072",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-073",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 20
+        },
+        {
+          "id": "ru-d-074",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 9
+        },
+        {
+          "id": "ru-d-075",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-076",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 18,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-077",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 7,
+          "expected_candidates": 48
+        },
+        {
+          "id": "ru-d-078",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 13
+        },
+        {
+          "id": "ru-d-079",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 29
+        },
+        {
+          "id": "ru-d-080",
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-081",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 2,
+          "expected_candidates": 37
+        },
+        {
+          "id": "ru-d-082",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-083",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 4,
+          "expected_candidates": 12
+        },
+        {
+          "id": "ru-d-084",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 6
+        },
+        {
+          "id": "ru-d-085",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 11,
+          "expected_candidates": 2
+        },
+        {
+          "id": "ru-d-086",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 17
+        },
+        {
+          "id": "ru-d-087",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 64
+        },
+        {
+          "id": "ru-d-088",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 19
+        },
+        {
+          "id": "ru-d-089",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 10,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-090",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 16
+        },
+        {
+          "id": "ru-d-091",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-092",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 24
+        },
+        {
+          "id": "ru-d-093",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 24
+        },
+        {
+          "id": "ru-d-094",
+          "category": "transposition",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 11
+        },
+        {
+          "id": "ru-d-095",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 4,
+          "expected_candidates": 3
+        },
+        {
+          "id": "ru-d-096",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 14
+        },
+        {
+          "id": "ru-d-097",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 12,
+          "expected_candidates": 3
+        },
+        {
+          "id": "ru-d-098",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 20
+        },
+        {
+          "id": "ru-d-099",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 4
+        },
+        {
+          "id": "ru-d-100",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 85
+        },
+        {
+          "id": "ru-d-101",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-102",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 12
+        },
+        {
+          "id": "ru-d-103",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 14
+        },
+        {
+          "id": "ru-d-104",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 60
+        },
+        {
+          "id": "ru-d-105",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 46
+        },
+        {
+          "id": "ru-d-106",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-107",
+          "category": "transposition",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 119
+        },
+        {
+          "id": "ru-d-108",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 7,
+          "expected_candidates": 45
+        },
+        {
+          "id": "ru-d-109",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 22
+        },
+        {
+          "id": "ru-d-110",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-111",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-112",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 3
+        },
+        {
+          "id": "ru-d-113",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 4
+        },
+        {
+          "id": "ru-d-114",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-115",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 2
+        },
+        {
+          "id": "ru-d-116",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 19,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-117",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 18
+        },
+        {
+          "id": "ru-d-118",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 6
+        },
+        {
+          "id": "ru-d-119",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 14,
+          "expected_candidates": 3
+        },
+        {
+          "id": "ru-d-120",
+          "category": "transposition",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 3
+        },
+        {
+          "id": "ru-d-121",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 3,
+          "expected_candidates": 11
+        },
+        {
+          "id": "ru-d-122",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 26
+        },
+        {
+          "id": "ru-d-123",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 35
+        },
+        {
+          "id": "ru-d-124",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 12
+        },
+        {
+          "id": "ru-d-125",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 13
+        },
+        {
+          "id": "ru-d-126",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 4
+        },
+        {
+          "id": "ru-d-127",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 10,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-128",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 77
+        },
+        {
+          "id": "ru-d-129",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 3,
+          "expected_candidates": 20
+        },
+        {
+          "id": "ru-d-130",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 36
+        },
+        {
+          "id": "ru-d-131",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 6
+        },
+        {
+          "id": "ru-d-132",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 88
+        },
+        {
+          "id": "ru-d-133",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 2
+        },
+        {
+          "id": "ru-d-134",
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 152
+        },
+        {
+          "id": "ru-d-135",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 20
+        },
+        {
+          "id": "ru-d-136",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 16
+        },
+        {
+          "id": "ru-d-137",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 13,
+          "expected_candidates": 9
+        },
+        {
+          "id": "ru-d-138",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 6
+        },
+        {
+          "id": "ru-d-139",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 15,
+          "expected_candidates": 3
+        },
+        {
+          "id": "ru-d-140",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 13,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-141",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-142",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 10
+        },
+        {
+          "id": "ru-d-143",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 10
+        },
+        {
+          "id": "ru-d-144",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-145",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 66
+        },
+        {
+          "id": "ru-d-146",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 12,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-147",
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 13
+        },
+        {
+          "id": "ru-d-148",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 6
+        },
+        {
+          "id": "ru-d-149",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 15,
+          "expected_candidates": 4
+        },
+        {
+          "id": "ru-d-150",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-151",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-152",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 9
+        },
+        {
+          "id": "ru-d-153",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-154",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 10
+        },
+        {
+          "id": "ru-d-155",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 4
+        },
+        {
+          "id": "ru-d-156",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 10
+        },
+        {
+          "id": "ru-d-157",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 16,
+          "expected_candidates": 2
+        },
+        {
+          "id": "ru-d-158",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 9
+        },
+        {
+          "id": "ru-d-159",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 15,
+          "expected_candidates": 2
+        },
+        {
+          "id": "ru-d-160",
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 6
+        },
+        {
+          "id": "ru-d-161",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 64
+        },
+        {
+          "id": "ru-d-162",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-163",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 10,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-164",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 49
+        },
+        {
+          "id": "ru-d-165",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 30
+        },
+        {
+          "id": "ru-d-166",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 12
+        },
+        {
+          "id": "ru-d-167",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 3
+        },
+        {
+          "id": "ru-d-168",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 11,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-169",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-170",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 7,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-171",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 16
+        },
+        {
+          "id": "ru-d-172",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 35
+        },
+        {
+          "id": "ru-d-173",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 9,
+          "expected_candidates": 40
+        },
+        {
+          "id": "ru-d-174",
+          "category": "insertion",
+          "stratum": "frequent-1-5000",
+          "codepoints": 11,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-175",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 12,
+          "expected_candidates": 2
+        },
+        {
+          "id": "ru-d-176",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-177",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-178",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 11,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-179",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 14,
+          "expected_candidates": 3
+        },
+        {
+          "id": "ru-d-180",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 11
+        },
+        {
+          "id": "ru-d-181",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 12
+        },
+        {
+          "id": "ru-d-182",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-183",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 35
+        },
+        {
+          "id": "ru-d-184",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 15,
+          "expected_candidates": 4
+        },
+        {
+          "id": "ru-d-185",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-186",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 15
+        },
+        {
+          "id": "ru-d-187",
+          "category": "insertion",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-188",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-189",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-190",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 20
+        },
+        {
+          "id": "ru-d-191",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 16,
+          "expected_candidates": 4
+        },
+        {
+          "id": "ru-d-192",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 15,
+          "expected_candidates": 6
+        },
+        {
+          "id": "ru-d-193",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 14,
+          "expected_candidates": 4
+        },
+        {
+          "id": "ru-d-194",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 15,
+          "expected_candidates": 6
+        },
+        {
+          "id": "ru-d-195",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 16,
+          "expected_candidates": 4
+        },
+        {
+          "id": "ru-d-196",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 12
+        },
+        {
+          "id": "ru-d-197",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 6,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-198",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 16,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-199",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-200",
+          "category": "insertion",
+          "stratum": "wordforms-unranked",
+          "codepoints": 16,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-201",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 12,
+          "expected_candidates": 4
+        },
+        {
+          "id": "ru-d-202",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 23
+        },
+        {
+          "id": "ru-d-203",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 23
+        },
+        {
+          "id": "ru-d-204",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 16
+        },
+        {
+          "id": "ru-d-205",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-206",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 44
+        },
+        {
+          "id": "ru-d-207",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 78
+        },
+        {
+          "id": "ru-d-208",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-209",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 2
+        },
+        {
+          "id": "ru-d-210",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 29
+        },
+        {
+          "id": "ru-d-211",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 6,
+          "expected_candidates": 49
+        },
+        {
+          "id": "ru-d-212",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 10,
+          "expected_candidates": 3
+        },
+        {
+          "id": "ru-d-213",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 8,
+          "expected_candidates": 7
+        },
+        {
+          "id": "ru-d-214",
+          "category": "two-edits",
+          "stratum": "frequent-1-5000",
+          "codepoints": 5,
+          "expected_candidates": 10
+        },
+        {
+          "id": "ru-d-215",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 47
+        },
+        {
+          "id": "ru-d-216",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-217",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-218",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 7,
+          "expected_candidates": 26
+        },
+        {
+          "id": "ru-d-219",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 27
+        },
+        {
+          "id": "ru-d-220",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 28
+        },
+        {
+          "id": "ru-d-221",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 51
+        },
+        {
+          "id": "ru-d-222",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-223",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 9,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-224",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 131
+        },
+        {
+          "id": "ru-d-225",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 6,
+          "expected_candidates": 19
+        },
+        {
+          "id": "ru-d-226",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 5,
+          "expected_candidates": 89
+        },
+        {
+          "id": "ru-d-227",
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000",
+          "codepoints": 8,
+          "expected_candidates": 17
+        },
+        {
+          "id": "ru-d-228",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-229",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-230",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-231",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-232",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-233",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 9
+        },
+        {
+          "id": "ru-d-234",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-d-235",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 11,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-236",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 10,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-237",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 13,
+          "expected_candidates": 2
+        },
+        {
+          "id": "ru-d-238",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 8,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-d-239",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 9,
+          "expected_candidates": 1
+        },
+        {
+          "id": "ru-d-240",
+          "category": "two-edits",
+          "stratum": "wordforms-unranked",
+          "codepoints": 12,
+          "expected_candidates": 5
+        }
+      ]
+    },
+    {
+      "language": "ru",
+      "profile": "smoke",
+      "count": 10,
+      "path": "queries/ru.smoke.tsv",
+      "sha256": "fead1447db97438a9d7fea3c82d999bbf013a5923686ed108d23d867d03c6a73",
+      "queries": [
+        {
+          "id": "ru-s-001",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 9,
+          "expected_candidates": 16
+        },
+        {
+          "id": "ru-s-002",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 8,
+          "expected_candidates": 13
+        },
+        {
+          "id": "ru-s-003",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 13,
+          "expected_candidates": 10
+        },
+        {
+          "id": "ru-s-004",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 12,
+          "expected_candidates": 6
+        },
+        {
+          "id": "ru-s-005",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 7,
+          "expected_candidates": 113
+        },
+        {
+          "id": "ru-s-006",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 6,
+          "expected_candidates": 97
+        },
+        {
+          "id": "ru-s-007",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 12,
+          "expected_candidates": 8
+        },
+        {
+          "id": "ru-s-008",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 3,
+          "expected_candidates": 22
+        },
+        {
+          "id": "ru-s-009",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 3,
+          "expected_candidates": 5
+        },
+        {
+          "id": "ru-s-010",
+          "category": "smoke",
+          "stratum": "smoke",
+          "codepoints": 4,
+          "expected_candidates": 11
+        }
+      ]
+    }
+  ],
+  "ranking": "same original + up to7; unit unrestricted DL, static adjacency, unchanged frequency map, lexical order; not weighted DL"
+}

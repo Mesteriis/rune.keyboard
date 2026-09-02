@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "jdk_major": 17,
+  "kotlin": "2.2.10",
+  "jvm_target": "1.8",
+  "min_api": 26,
+  "android_platform": "android-37.0",
+  "build_tools": "36.0.0",
+  "compiler_heap": "768m",
+  "compiler_active_processors": 2,
+  "jars": [
+    {
+      "group": "org.jetbrains.kotlin",
+      "artifact": "kotlin-compiler-embeddable",
+      "version": "2.2.10",
+      "sha256": "79628fd5d64b4692a62f98962baab00e9076a37e2cffd6ace33cd0b7be7d1cdf",
+      "bytes": 56259401
+    },
+    {
+      "group": "org.jetbrains.kotlin",
+      "artifact": "kotlin-stdlib",
+      "version": "2.2.10",
+      "sha256": "9c67cc79efd6b9215b49d2a4308f5f3433537376c7c88e89bdd6729bd096e61a",
+      "bytes": 1750374
+    },
+    {
+      "group": "org.jetbrains.kotlin",
+      "artifact": "kotlin-script-runtime",
+      "version": "2.2.10",
+      "sha256": "c304a67dba6a61dde560e6310920bed746307c3854f6675c29ac29114731b6b0",
+      "bytes": 44759
+    },
+    {
+      "group": "org.jetbrains.kotlin",
+      "artifact": "kotlin-daemon-embeddable",
+      "version": "2.2.10",
+      "sha256": "b31573d418961fa080760fedcfc90d68ad67a85eafa245c73fe3d551476777ba",
+      "bytes": 345724
+    },
+    {
+      "group": "org.jetbrains.kotlinx",
+      "artifact": "kotlinx-coroutines-core-jvm",
+      "version": "1.9.0",
+      "sha256": "ad89c2892235e670f222d819cb3d81188143cb19a05b59df9889ae4269f5c70a",
+      "bytes": 1463587
+    },
+    {
+      "group": "org.jetbrains",
+      "artifact": "annotations",
+      "version": "23.0.0",
+      "sha256": "7b0f19724082cbfcbc66e5abea2b9bc92cf08a1ea11e191933ed43801eb3cd05",
+      "bytes": 29371
+    }
+  ],
+  "android_jar_sha256": "bf1b4387cc7ca94fc6ef684f040d9d16fbf16248e181819f020736ea2053f177",
+  "d8_jar_sha256": "4097ff9c46c185c6e7214da7fe9b1befb5adeea5cc9ca349270e0249904f9240",
+  "note": "Jar and packaging tool hashes fingerprint the cached toolchain at promotion. Historical compilation/packaging commands used the stated versions; the historical APK report did not snapshot executable hashes. Other host binaries must be reported distinctly. No paths or identities. A rebuilt DEX is always hashed and never reassigned a historical identity.",
+  "packaging_tool_reference": {
+    "aapt2": {
+      "sha256": "a8844d4089b442b034aed8953deee1893253053c900e03141ae7173e3edd8157"
+    },
+    "zipalign": {
+      "sha256": "0427144f4a3fd242c5a159e7088637082539ae556bc1d2bbc2032bb775d47cea"
+    }
+  }
+}

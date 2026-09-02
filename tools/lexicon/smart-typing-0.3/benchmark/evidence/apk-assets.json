@@ -1,0 +1,1672 @@
+{
+  "status": "ACTUAL_AAPT2_APK_MEASURED",
+  "policy": "front/trie/delete/lengths ZIP_STORED, shared frequency/notices normal aapt2 compression; zipalign4; same manifest; unsigned asset-only fixture",
+  "scope": "not application release APK; no installation or app asset activation claim",
+  "artifacts": [
+    {
+      "language": "en",
+      "format": "base",
+      "apk": "packaging/en.base.apk",
+      "apk_bytes": 575371,
+      "index_raw_bytes": 0,
+      "entries": [
+        {
+          "path": "AndroidManifest.xml",
+          "uncompressed_bytes": 1188,
+          "compressed_bytes": 470,
+          "compression": 8
+        },
+        {
+          "path": "resources.arsc",
+          "uncompressed_bytes": 40,
+          "compressed_bytes": 40,
+          "compression": 0
+        },
+        {
+          "path": "assets/frequency/en.tsv",
+          "uncompressed_bytes": 1312125,
+          "compressed_bytes": 514886,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/CC-BY-SA-4.0.txt",
+          "uncompressed_bytes": 20138,
+          "compressed_bytes": 6185,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-LICENSE.md",
+          "uncompressed_bytes": 991,
+          "compressed_bytes": 409,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-MPL-1.1.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-README.txt",
+          "uncompressed_bytes": 2615,
+          "compressed_bytes": 1145,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-README.md",
+          "uncompressed_bytes": 913,
+          "compressed_bytes": 540,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-code-MIT.txt",
+          "uncompressed_bytes": 1068,
+          "compressed_bytes": 627,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-AUTHORS.txt",
+          "uncompressed_bytes": 759,
+          "compressed_bytes": 467,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.LESSER.txt",
+          "uncompressed_bytes": 26531,
+          "compressed_bytes": 9339,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.MPL.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.txt",
+          "uncompressed_bytes": 18093,
+          "compressed_bytes": 6806,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.hunspell.txt",
+          "uncompressed_bytes": 1973,
+          "compressed_bytes": 971,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.myspell.txt",
+          "uncompressed_bytes": 2912,
+          "compressed_bytes": 1458,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/RU-Lebedev.txt",
+          "uncompressed_bytes": 1886,
+          "compressed_bytes": 940,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/SCOWL-Copyright.txt",
+          "uncompressed_bytes": 11758,
+          "compressed_bytes": 4496,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+          "uncompressed_bytes": 5116,
+          "compressed_bytes": 2333,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/output-manifest.json",
+          "uncompressed_bytes": 10313,
+          "compressed_bytes": 3393,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/source-lock.json",
+          "uncompressed_bytes": 6412,
+          "compressed_bytes": 1435,
+          "compression": 8
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "format": "front",
+      "apk": "packaging/en.front.apk",
+      "apk_bytes": 1694122,
+      "index_raw_bytes": 1118488,
+      "entries": [
+        {
+          "path": "AndroidManifest.xml",
+          "uncompressed_bytes": 1188,
+          "compressed_bytes": 470,
+          "compression": 8
+        },
+        {
+          "path": "resources.arsc",
+          "uncompressed_bytes": 40,
+          "compressed_bytes": 40,
+          "compression": 0
+        },
+        {
+          "path": "assets/frequency/en.tsv",
+          "uncompressed_bytes": 1312125,
+          "compressed_bytes": 514886,
+          "compression": 8
+        },
+        {
+          "path": "assets/lexicon/en.front",
+          "uncompressed_bytes": 594184,
+          "compressed_bytes": 594184,
+          "compression": 0
+        },
+        {
+          "path": "assets/lexicon/en.front.lengths",
+          "uncompressed_bytes": 524304,
+          "compressed_bytes": 524304,
+          "compression": 0
+        },
+        {
+          "path": "assets/notices/CC-BY-SA-4.0.txt",
+          "uncompressed_bytes": 20138,
+          "compressed_bytes": 6185,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-LICENSE.md",
+          "uncompressed_bytes": 991,
+          "compressed_bytes": 409,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-MPL-1.1.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-README.txt",
+          "uncompressed_bytes": 2615,
+          "compressed_bytes": 1145,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-README.md",
+          "uncompressed_bytes": 913,
+          "compressed_bytes": 540,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-code-MIT.txt",
+          "uncompressed_bytes": 1068,
+          "compressed_bytes": 627,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-AUTHORS.txt",
+          "uncompressed_bytes": 759,
+          "compressed_bytes": 467,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.LESSER.txt",
+          "uncompressed_bytes": 26531,
+          "compressed_bytes": 9339,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.MPL.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.txt",
+          "uncompressed_bytes": 18093,
+          "compressed_bytes": 6806,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.hunspell.txt",
+          "uncompressed_bytes": 1973,
+          "compressed_bytes": 971,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.myspell.txt",
+          "uncompressed_bytes": 2912,
+          "compressed_bytes": 1458,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/RU-Lebedev.txt",
+          "uncompressed_bytes": 1886,
+          "compressed_bytes": 940,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/SCOWL-Copyright.txt",
+          "uncompressed_bytes": 11758,
+          "compressed_bytes": 4496,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+          "uncompressed_bytes": 5116,
+          "compressed_bytes": 2333,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/output-manifest.json",
+          "uncompressed_bytes": 10313,
+          "compressed_bytes": 3393,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/source-lock.json",
+          "uncompressed_bytes": 6412,
+          "compressed_bytes": 1435,
+          "compression": 8
+        }
+      ],
+      "apk_index_contribution_bytes": 1118751
+    },
+    {
+      "language": "en",
+      "format": "trie",
+      "apk": "packaging/en.trie.apk",
+      "apk_bytes": 5478590,
+      "index_raw_bytes": 4902962,
+      "entries": [
+        {
+          "path": "AndroidManifest.xml",
+          "uncompressed_bytes": 1188,
+          "compressed_bytes": 470,
+          "compression": 8
+        },
+        {
+          "path": "resources.arsc",
+          "uncompressed_bytes": 40,
+          "compressed_bytes": 40,
+          "compression": 0
+        },
+        {
+          "path": "assets/frequency/en.tsv",
+          "uncompressed_bytes": 1312125,
+          "compressed_bytes": 514886,
+          "compression": 8
+        },
+        {
+          "path": "assets/lexicon/en.trie",
+          "uncompressed_bytes": 4358176,
+          "compressed_bytes": 4358176,
+          "compression": 0
+        },
+        {
+          "path": "assets/lexicon/en.trie.lengths",
+          "uncompressed_bytes": 544786,
+          "compressed_bytes": 544786,
+          "compression": 0
+        },
+        {
+          "path": "assets/notices/CC-BY-SA-4.0.txt",
+          "uncompressed_bytes": 20138,
+          "compressed_bytes": 6185,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-LICENSE.md",
+          "uncompressed_bytes": 991,
+          "compressed_bytes": 409,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-MPL-1.1.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-README.txt",
+          "uncompressed_bytes": 2615,
+          "compressed_bytes": 1145,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-README.md",
+          "uncompressed_bytes": 913,
+          "compressed_bytes": 540,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-code-MIT.txt",
+          "uncompressed_bytes": 1068,
+          "compressed_bytes": 627,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-AUTHORS.txt",
+          "uncompressed_bytes": 759,
+          "compressed_bytes": 467,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.LESSER.txt",
+          "uncompressed_bytes": 26531,
+          "compressed_bytes": 9339,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.MPL.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.txt",
+          "uncompressed_bytes": 18093,
+          "compressed_bytes": 6806,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.hunspell.txt",
+          "uncompressed_bytes": 1973,
+          "compressed_bytes": 971,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.myspell.txt",
+          "uncompressed_bytes": 2912,
+          "compressed_bytes": 1458,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/RU-Lebedev.txt",
+          "uncompressed_bytes": 1886,
+          "compressed_bytes": 940,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/SCOWL-Copyright.txt",
+          "uncompressed_bytes": 11758,
+          "compressed_bytes": 4496,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+          "uncompressed_bytes": 5116,
+          "compressed_bytes": 2333,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/output-manifest.json",
+          "uncompressed_bytes": 10313,
+          "compressed_bytes": 3393,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/source-lock.json",
+          "uncompressed_bytes": 6412,
+          "compressed_bytes": 1435,
+          "compression": 8
+        }
+      ],
+      "apk_index_contribution_bytes": 4903219
+    },
+    {
+      "language": "en",
+      "format": "delete",
+      "apk": "packaging/en.delete.apk",
+      "apk_bytes": 31768551,
+      "index_raw_bytes": 31192928,
+      "entries": [
+        {
+          "path": "AndroidManifest.xml",
+          "uncompressed_bytes": 1188,
+          "compressed_bytes": 470,
+          "compression": 8
+        },
+        {
+          "path": "resources.arsc",
+          "uncompressed_bytes": 40,
+          "compressed_bytes": 40,
+          "compression": 0
+        },
+        {
+          "path": "assets/frequency/en.tsv",
+          "uncompressed_bytes": 1312125,
+          "compressed_bytes": 514886,
+          "compression": 8
+        },
+        {
+          "path": "assets/lexicon/en.delete",
+          "uncompressed_bytes": 30598744,
+          "compressed_bytes": 30598744,
+          "compression": 0
+        },
+        {
+          "path": "assets/lexicon/en.front",
+          "uncompressed_bytes": 594184,
+          "compressed_bytes": 594184,
+          "compression": 0
+        },
+        {
+          "path": "assets/notices/CC-BY-SA-4.0.txt",
+          "uncompressed_bytes": 20138,
+          "compressed_bytes": 6185,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-LICENSE.md",
+          "uncompressed_bytes": 991,
+          "compressed_bytes": 409,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-MPL-1.1.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-README.txt",
+          "uncompressed_bytes": 2615,
+          "compressed_bytes": 1145,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-README.md",
+          "uncompressed_bytes": 913,
+          "compressed_bytes": 540,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-code-MIT.txt",
+          "uncompressed_bytes": 1068,
+          "compressed_bytes": 627,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-AUTHORS.txt",
+          "uncompressed_bytes": 759,
+          "compressed_bytes": 467,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.LESSER.txt",
+          "uncompressed_bytes": 26531,
+          "compressed_bytes": 9339,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.MPL.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.txt",
+          "uncompressed_bytes": 18093,
+          "compressed_bytes": 6806,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.hunspell.txt",
+          "uncompressed_bytes": 1973,
+          "compressed_bytes": 971,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.myspell.txt",
+          "uncompressed_bytes": 2912,
+          "compressed_bytes": 1458,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/RU-Lebedev.txt",
+          "uncompressed_bytes": 1886,
+          "compressed_bytes": 940,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/SCOWL-Copyright.txt",
+          "uncompressed_bytes": 11758,
+          "compressed_bytes": 4496,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+          "uncompressed_bytes": 5116,
+          "compressed_bytes": 2333,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/output-manifest.json",
+          "uncompressed_bytes": 10313,
+          "compressed_bytes": 3393,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/source-lock.json",
+          "uncompressed_bytes": 6412,
+          "compressed_bytes": 1435,
+          "compression": 8
+        }
+      ],
+      "apk_index_contribution_bytes": 31193180
+    },
+    {
+      "language": "es",
+      "format": "base",
+      "apk": "packaging/es.base.apk",
+      "apk_bytes": 572943,
+      "index_raw_bytes": 0,
+      "entries": [
+        {
+          "path": "AndroidManifest.xml",
+          "uncompressed_bytes": 1188,
+          "compressed_bytes": 470,
+          "compression": 8
+        },
+        {
+          "path": "resources.arsc",
+          "uncompressed_bytes": 40,
+          "compressed_bytes": 40,
+          "compression": 0
+        },
+        {
+          "path": "assets/frequency/es.tsv",
+          "uncompressed_bytes": 1384810,
+          "compressed_bytes": 512458,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/CC-BY-SA-4.0.txt",
+          "uncompressed_bytes": 20138,
+          "compressed_bytes": 6185,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-LICENSE.md",
+          "uncompressed_bytes": 991,
+          "compressed_bytes": 409,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-MPL-1.1.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-README.txt",
+          "uncompressed_bytes": 2615,
+          "compressed_bytes": 1145,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-README.md",
+          "uncompressed_bytes": 913,
+          "compressed_bytes": 540,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-code-MIT.txt",
+          "uncompressed_bytes": 1068,
+          "compressed_bytes": 627,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-AUTHORS.txt",
+          "uncompressed_bytes": 759,
+          "compressed_bytes": 467,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.LESSER.txt",
+          "uncompressed_bytes": 26531,
+          "compressed_bytes": 9339,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.MPL.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.txt",
+          "uncompressed_bytes": 18093,
+          "compressed_bytes": 6806,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.hunspell.txt",
+          "uncompressed_bytes": 1973,
+          "compressed_bytes": 971,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.myspell.txt",
+          "uncompressed_bytes": 2912,
+          "compressed_bytes": 1458,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/RU-Lebedev.txt",
+          "uncompressed_bytes": 1886,
+          "compressed_bytes": 940,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/SCOWL-Copyright.txt",
+          "uncompressed_bytes": 11758,
+          "compressed_bytes": 4496,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+          "uncompressed_bytes": 5116,
+          "compressed_bytes": 2333,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/output-manifest.json",
+          "uncompressed_bytes": 10313,
+          "compressed_bytes": 3393,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/source-lock.json",
+          "uncompressed_bytes": 6412,
+          "compressed_bytes": 1435,
+          "compression": 8
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "format": "front",
+      "apk": "packaging/es.front.apk",
+      "apk_bytes": 7915906,
+      "index_raw_bytes": 7342702,
+      "entries": [
+        {
+          "path": "AndroidManifest.xml",
+          "uncompressed_bytes": 1188,
+          "compressed_bytes": 470,
+          "compression": 8
+        },
+        {
+          "path": "resources.arsc",
+          "uncompressed_bytes": 40,
+          "compressed_bytes": 40,
+          "compression": 0
+        },
+        {
+          "path": "assets/frequency/es.tsv",
+          "uncompressed_bytes": 1384810,
+          "compressed_bytes": 512458,
+          "compression": 8
+        },
+        {
+          "path": "assets/lexicon/es.front",
+          "uncompressed_bytes": 3148382,
+          "compressed_bytes": 3148382,
+          "compression": 0
+        },
+        {
+          "path": "assets/lexicon/es.front.lengths",
+          "uncompressed_bytes": 4194320,
+          "compressed_bytes": 4194320,
+          "compression": 0
+        },
+        {
+          "path": "assets/notices/CC-BY-SA-4.0.txt",
+          "uncompressed_bytes": 20138,
+          "compressed_bytes": 6185,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-LICENSE.md",
+          "uncompressed_bytes": 991,
+          "compressed_bytes": 409,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-MPL-1.1.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-README.txt",
+          "uncompressed_bytes": 2615,
+          "compressed_bytes": 1145,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-README.md",
+          "uncompressed_bytes": 913,
+          "compressed_bytes": 540,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-code-MIT.txt",
+          "uncompressed_bytes": 1068,
+          "compressed_bytes": 627,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-AUTHORS.txt",
+          "uncompressed_bytes": 759,
+          "compressed_bytes": 467,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.LESSER.txt",
+          "uncompressed_bytes": 26531,
+          "compressed_bytes": 9339,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.MPL.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.txt",
+          "uncompressed_bytes": 18093,
+          "compressed_bytes": 6806,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.hunspell.txt",
+          "uncompressed_bytes": 1973,
+          "compressed_bytes": 971,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.myspell.txt",
+          "uncompressed_bytes": 2912,
+          "compressed_bytes": 1458,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/RU-Lebedev.txt",
+          "uncompressed_bytes": 1886,
+          "compressed_bytes": 940,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/SCOWL-Copyright.txt",
+          "uncompressed_bytes": 11758,
+          "compressed_bytes": 4496,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+          "uncompressed_bytes": 5116,
+          "compressed_bytes": 2333,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/output-manifest.json",
+          "uncompressed_bytes": 10313,
+          "compressed_bytes": 3393,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/source-lock.json",
+          "uncompressed_bytes": 6412,
+          "compressed_bytes": 1435,
+          "compression": 8
+        }
+      ],
+      "apk_index_contribution_bytes": 7342963
+    },
+    {
+      "language": "es",
+      "format": "trie",
+      "apk": "packaging/es.trie.apk",
+      "apk_bytes": 23090854,
+      "index_raw_bytes": 22517654,
+      "entries": [
+        {
+          "path": "AndroidManifest.xml",
+          "uncompressed_bytes": 1188,
+          "compressed_bytes": 470,
+          "compression": 8
+        },
+        {
+          "path": "resources.arsc",
+          "uncompressed_bytes": 40,
+          "compressed_bytes": 40,
+          "compression": 0
+        },
+        {
+          "path": "assets/frequency/es.tsv",
+          "uncompressed_bytes": 1384810,
+          "compressed_bytes": 512458,
+          "compression": 8
+        },
+        {
+          "path": "assets/lexicon/es.trie",
+          "uncompressed_bytes": 20015680,
+          "compressed_bytes": 20015680,
+          "compression": 0
+        },
+        {
+          "path": "assets/lexicon/es.trie.lengths",
+          "uncompressed_bytes": 2501974,
+          "compressed_bytes": 2501974,
+          "compression": 0
+        },
+        {
+          "path": "assets/notices/CC-BY-SA-4.0.txt",
+          "uncompressed_bytes": 20138,
+          "compressed_bytes": 6185,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-LICENSE.md",
+          "uncompressed_bytes": 991,
+          "compressed_bytes": 409,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-MPL-1.1.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-README.txt",
+          "uncompressed_bytes": 2615,
+          "compressed_bytes": 1145,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-README.md",
+          "uncompressed_bytes": 913,
+          "compressed_bytes": 540,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-code-MIT.txt",
+          "uncompressed_bytes": 1068,
+          "compressed_bytes": 627,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-AUTHORS.txt",
+          "uncompressed_bytes": 759,
+          "compressed_bytes": 467,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.LESSER.txt",
+          "uncompressed_bytes": 26531,
+          "compressed_bytes": 9339,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.MPL.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.txt",
+          "uncompressed_bytes": 18093,
+          "compressed_bytes": 6806,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.hunspell.txt",
+          "uncompressed_bytes": 1973,
+          "compressed_bytes": 971,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.myspell.txt",
+          "uncompressed_bytes": 2912,
+          "compressed_bytes": 1458,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/RU-Lebedev.txt",
+          "uncompressed_bytes": 1886,
+          "compressed_bytes": 940,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/SCOWL-Copyright.txt",
+          "uncompressed_bytes": 11758,
+          "compressed_bytes": 4496,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+          "uncompressed_bytes": 5116,
+          "compressed_bytes": 2333,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/output-manifest.json",
+          "uncompressed_bytes": 10313,
+          "compressed_bytes": 3393,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/source-lock.json",
+          "uncompressed_bytes": 6412,
+          "compressed_bytes": 1435,
+          "compression": 8
+        }
+      ],
+      "apk_index_contribution_bytes": 22517911
+    },
+    {
+      "language": "es",
+      "format": "delete",
+      "apk": "packaging/es.delete.apk",
+      "apk_bytes": 176496657,
+      "index_raw_bytes": 175923462,
+      "entries": [
+        {
+          "path": "AndroidManifest.xml",
+          "uncompressed_bytes": 1188,
+          "compressed_bytes": 470,
+          "compression": 8
+        },
+        {
+          "path": "resources.arsc",
+          "uncompressed_bytes": 40,
+          "compressed_bytes": 40,
+          "compression": 0
+        },
+        {
+          "path": "assets/frequency/es.tsv",
+          "uncompressed_bytes": 1384810,
+          "compressed_bytes": 512458,
+          "compression": 8
+        },
+        {
+          "path": "assets/lexicon/es.delete",
+          "uncompressed_bytes": 172775080,
+          "compressed_bytes": 172775080,
+          "compression": 0
+        },
+        {
+          "path": "assets/lexicon/es.front",
+          "uncompressed_bytes": 3148382,
+          "compressed_bytes": 3148382,
+          "compression": 0
+        },
+        {
+          "path": "assets/notices/CC-BY-SA-4.0.txt",
+          "uncompressed_bytes": 20138,
+          "compressed_bytes": 6185,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-LICENSE.md",
+          "uncompressed_bytes": 991,
+          "compressed_bytes": 409,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-MPL-1.1.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-README.txt",
+          "uncompressed_bytes": 2615,
+          "compressed_bytes": 1145,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-README.md",
+          "uncompressed_bytes": 913,
+          "compressed_bytes": 540,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-code-MIT.txt",
+          "uncompressed_bytes": 1068,
+          "compressed_bytes": 627,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-AUTHORS.txt",
+          "uncompressed_bytes": 759,
+          "compressed_bytes": 467,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.LESSER.txt",
+          "uncompressed_bytes": 26531,
+          "compressed_bytes": 9339,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.MPL.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.txt",
+          "uncompressed_bytes": 18093,
+          "compressed_bytes": 6806,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.hunspell.txt",
+          "uncompressed_bytes": 1973,
+          "compressed_bytes": 971,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.myspell.txt",
+          "uncompressed_bytes": 2912,
+          "compressed_bytes": 1458,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/RU-Lebedev.txt",
+          "uncompressed_bytes": 1886,
+          "compressed_bytes": 940,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/SCOWL-Copyright.txt",
+          "uncompressed_bytes": 11758,
+          "compressed_bytes": 4496,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+          "uncompressed_bytes": 5116,
+          "compressed_bytes": 2333,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/output-manifest.json",
+          "uncompressed_bytes": 10313,
+          "compressed_bytes": 3393,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/source-lock.json",
+          "uncompressed_bytes": 6412,
+          "compressed_bytes": 1435,
+          "compression": 8
+        }
+      ],
+      "apk_index_contribution_bytes": 175923714
+    },
+    {
+      "language": "ru",
+      "format": "base",
+      "apk": "packaging/ru.base.apk",
+      "apk_bytes": 617365,
+      "index_raw_bytes": 0,
+      "entries": [
+        {
+          "path": "AndroidManifest.xml",
+          "uncompressed_bytes": 1188,
+          "compressed_bytes": 470,
+          "compression": 8
+        },
+        {
+          "path": "resources.arsc",
+          "uncompressed_bytes": 40,
+          "compressed_bytes": 40,
+          "compression": 0
+        },
+        {
+          "path": "assets/frequency/ru.tsv",
+          "uncompressed_bytes": 2074403,
+          "compressed_bytes": 556880,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/CC-BY-SA-4.0.txt",
+          "uncompressed_bytes": 20138,
+          "compressed_bytes": 6185,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-LICENSE.md",
+          "uncompressed_bytes": 991,
+          "compressed_bytes": 409,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-MPL-1.1.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-README.txt",
+          "uncompressed_bytes": 2615,
+          "compressed_bytes": 1145,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-README.md",
+          "uncompressed_bytes": 913,
+          "compressed_bytes": 540,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-code-MIT.txt",
+          "uncompressed_bytes": 1068,
+          "compressed_bytes": 627,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-AUTHORS.txt",
+          "uncompressed_bytes": 759,
+          "compressed_bytes": 467,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.LESSER.txt",
+          "uncompressed_bytes": 26531,
+          "compressed_bytes": 9339,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.MPL.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.txt",
+          "uncompressed_bytes": 18093,
+          "compressed_bytes": 6806,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.hunspell.txt",
+          "uncompressed_bytes": 1973,
+          "compressed_bytes": 971,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.myspell.txt",
+          "uncompressed_bytes": 2912,
+          "compressed_bytes": 1458,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/RU-Lebedev.txt",
+          "uncompressed_bytes": 1886,
+          "compressed_bytes": 940,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/SCOWL-Copyright.txt",
+          "uncompressed_bytes": 11758,
+          "compressed_bytes": 4496,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+          "uncompressed_bytes": 5116,
+          "compressed_bytes": 2333,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/output-manifest.json",
+          "uncompressed_bytes": 10313,
+          "compressed_bytes": 3393,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/source-lock.json",
+          "uncompressed_bytes": 6412,
+          "compressed_bytes": 1435,
+          "compression": 8
+        }
+      ]
+    },
+    {
+      "language": "ru",
+      "format": "front",
+      "apk": "packaging/ru.front.apk",
+      "apk_bytes": 17770542,
+      "index_raw_bytes": 17152914,
+      "entries": [
+        {
+          "path": "AndroidManifest.xml",
+          "uncompressed_bytes": 1188,
+          "compressed_bytes": 470,
+          "compression": 8
+        },
+        {
+          "path": "resources.arsc",
+          "uncompressed_bytes": 40,
+          "compressed_bytes": 40,
+          "compression": 0
+        },
+        {
+          "path": "assets/frequency/ru.tsv",
+          "uncompressed_bytes": 2074403,
+          "compressed_bytes": 556880,
+          "compression": 8
+        },
+        {
+          "path": "assets/lexicon/ru.front",
+          "uncompressed_bytes": 8764290,
+          "compressed_bytes": 8764290,
+          "compression": 0
+        },
+        {
+          "path": "assets/lexicon/ru.front.lengths",
+          "uncompressed_bytes": 8388624,
+          "compressed_bytes": 8388624,
+          "compression": 0
+        },
+        {
+          "path": "assets/notices/CC-BY-SA-4.0.txt",
+          "uncompressed_bytes": 20138,
+          "compressed_bytes": 6185,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-LICENSE.md",
+          "uncompressed_bytes": 991,
+          "compressed_bytes": 409,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-MPL-1.1.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-README.txt",
+          "uncompressed_bytes": 2615,
+          "compressed_bytes": 1145,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-README.md",
+          "uncompressed_bytes": 913,
+          "compressed_bytes": 540,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-code-MIT.txt",
+          "uncompressed_bytes": 1068,
+          "compressed_bytes": 627,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-AUTHORS.txt",
+          "uncompressed_bytes": 759,
+          "compressed_bytes": 467,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.LESSER.txt",
+          "uncompressed_bytes": 26531,
+          "compressed_bytes": 9339,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.MPL.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.txt",
+          "uncompressed_bytes": 18093,
+          "compressed_bytes": 6806,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.hunspell.txt",
+          "uncompressed_bytes": 1973,
+          "compressed_bytes": 971,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.myspell.txt",
+          "uncompressed_bytes": 2912,
+          "compressed_bytes": 1458,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/RU-Lebedev.txt",
+          "uncompressed_bytes": 1886,
+          "compressed_bytes": 940,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/SCOWL-Copyright.txt",
+          "uncompressed_bytes": 11758,
+          "compressed_bytes": 4496,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+          "uncompressed_bytes": 5116,
+          "compressed_bytes": 2333,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/output-manifest.json",
+          "uncompressed_bytes": 10313,
+          "compressed_bytes": 3393,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/source-lock.json",
+          "uncompressed_bytes": 6412,
+          "compressed_bytes": 1435,
+          "compression": 8
+        }
+      ],
+      "apk_index_contribution_bytes": 17153177
+    },
+    {
+      "language": "ru",
+      "format": "trie",
+      "apk": "packaging/ru.trie.apk",
+      "apk_bytes": 41223244,
+      "index_raw_bytes": 40605620,
+      "entries": [
+        {
+          "path": "AndroidManifest.xml",
+          "uncompressed_bytes": 1188,
+          "compressed_bytes": 470,
+          "compression": 8
+        },
+        {
+          "path": "resources.arsc",
+          "uncompressed_bytes": 40,
+          "compressed_bytes": 40,
+          "compression": 0
+        },
+        {
+          "path": "assets/frequency/ru.tsv",
+          "uncompressed_bytes": 2074403,
+          "compressed_bytes": 556880,
+          "compression": 8
+        },
+        {
+          "path": "assets/lexicon/ru.trie",
+          "uncompressed_bytes": 36093872,
+          "compressed_bytes": 36093872,
+          "compression": 0
+        },
+        {
+          "path": "assets/lexicon/ru.trie.lengths",
+          "uncompressed_bytes": 4511748,
+          "compressed_bytes": 4511748,
+          "compression": 0
+        },
+        {
+          "path": "assets/notices/CC-BY-SA-4.0.txt",
+          "uncompressed_bytes": 20138,
+          "compressed_bytes": 6185,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-LICENSE.md",
+          "uncompressed_bytes": 991,
+          "compressed_bytes": 409,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-MPL-1.1.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-README.txt",
+          "uncompressed_bytes": 2615,
+          "compressed_bytes": 1145,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-README.md",
+          "uncompressed_bytes": 913,
+          "compressed_bytes": 540,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-code-MIT.txt",
+          "uncompressed_bytes": 1068,
+          "compressed_bytes": 627,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-AUTHORS.txt",
+          "uncompressed_bytes": 759,
+          "compressed_bytes": 467,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.LESSER.txt",
+          "uncompressed_bytes": 26531,
+          "compressed_bytes": 9339,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.MPL.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.txt",
+          "uncompressed_bytes": 18093,
+          "compressed_bytes": 6806,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.hunspell.txt",
+          "uncompressed_bytes": 1973,
+          "compressed_bytes": 971,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.myspell.txt",
+          "uncompressed_bytes": 2912,
+          "compressed_bytes": 1458,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/RU-Lebedev.txt",
+          "uncompressed_bytes": 1886,
+          "compressed_bytes": 940,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/SCOWL-Copyright.txt",
+          "uncompressed_bytes": 11758,
+          "compressed_bytes": 4496,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+          "uncompressed_bytes": 5116,
+          "compressed_bytes": 2333,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/output-manifest.json",
+          "uncompressed_bytes": 10313,
+          "compressed_bytes": 3393,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/source-lock.json",
+          "uncompressed_bytes": 6412,
+          "compressed_bytes": 1435,
+          "compression": 8
+        }
+      ],
+      "apk_index_contribution_bytes": 40605879
+    },
+    {
+      "language": "ru",
+      "format": "delete",
+      "apk": "packaging/ru.delete.apk",
+      "apk_bytes": 381454977,
+      "index_raw_bytes": 380837362,
+      "entries": [
+        {
+          "path": "AndroidManifest.xml",
+          "uncompressed_bytes": 1188,
+          "compressed_bytes": 470,
+          "compression": 8
+        },
+        {
+          "path": "resources.arsc",
+          "uncompressed_bytes": 40,
+          "compressed_bytes": 40,
+          "compression": 0
+        },
+        {
+          "path": "assets/frequency/ru.tsv",
+          "uncompressed_bytes": 2074403,
+          "compressed_bytes": 556880,
+          "compression": 8
+        },
+        {
+          "path": "assets/lexicon/ru.delete",
+          "uncompressed_bytes": 372073072,
+          "compressed_bytes": 372073072,
+          "compression": 0
+        },
+        {
+          "path": "assets/lexicon/ru.front",
+          "uncompressed_bytes": 8764290,
+          "compressed_bytes": 8764290,
+          "compression": 0
+        },
+        {
+          "path": "assets/notices/CC-BY-SA-4.0.txt",
+          "uncompressed_bytes": 20138,
+          "compressed_bytes": 6185,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-LICENSE.md",
+          "uncompressed_bytes": 991,
+          "compressed_bytes": 409,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-MPL-1.1.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/ES-README.txt",
+          "uncompressed_bytes": 2615,
+          "compressed_bytes": 1145,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-README.md",
+          "uncompressed_bytes": 913,
+          "compressed_bytes": 540,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/FrequencyWords-code-MIT.txt",
+          "uncompressed_bytes": 1068,
+          "compressed_bytes": 627,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-AUTHORS.txt",
+          "uncompressed_bytes": 759,
+          "compressed_bytes": 467,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.LESSER.txt",
+          "uncompressed_bytes": 26531,
+          "compressed_bytes": 9339,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.MPL.txt",
+          "uncompressed_bytes": 25755,
+          "compressed_bytes": 8280,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-COPYING.txt",
+          "uncompressed_bytes": 18093,
+          "compressed_bytes": 6806,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.hunspell.txt",
+          "uncompressed_bytes": 1973,
+          "compressed_bytes": 971,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/Hunspell-license.myspell.txt",
+          "uncompressed_bytes": 2912,
+          "compressed_bytes": 1458,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/RU-Lebedev.txt",
+          "uncompressed_bytes": 1886,
+          "compressed_bytes": 940,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/SCOWL-Copyright.txt",
+          "uncompressed_bytes": 11758,
+          "compressed_bytes": 4496,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+          "uncompressed_bytes": 5116,
+          "compressed_bytes": 2333,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/output-manifest.json",
+          "uncompressed_bytes": 10313,
+          "compressed_bytes": 3393,
+          "compression": 8
+        },
+        {
+          "path": "assets/notices/source-lock.json",
+          "uncompressed_bytes": 6412,
+          "compressed_bytes": 1435,
+          "compression": 8
+        }
+      ],
+      "apk_index_contribution_bytes": 380837612
+    }
+  ]
+}

@@ -1,0 +1,1436 @@
+{
+  "status": "NO_FORMAT_SELECTED",
+  "preflight_and_exact_dex_verified": true,
+  "fixture_manifest_sha256": "39c5b0836e67678d1711f33936ab08cd0c970e679e861b31185411dc3ac8d534",
+  "bootstrap": {
+    "replicates": 2000,
+    "seed": 30902026,
+    "unit": "query/source-word cluster; median of3 measured repeats; paired resampling inside category x frequency-stratum cells; p95 nearest rank"
+  },
+  "comparisons": [
+    {
+      "api": 26,
+      "language": "en",
+      "profile": "development",
+      "ready": true,
+      "formats": {
+        "front": {
+          "status": "PASS",
+          "completed_queries": 240,
+          "completed_measured_runs": 720,
+          "full_reference_topn_ms": {
+            "p50": 110.144125,
+            "p95": 134.393,
+            "p99": 140.740458,
+            "max": 142.678709
+          },
+          "reference_allocated_bytes": {
+            "p50": 55427072,
+            "p95": 66879488,
+            "p99": 70254592,
+            "max": 70877184
+          },
+          "reference_cpu_ms": {
+            "p50": 107.456753,
+            "p95": 133.690331,
+            "p99": 159.972584,
+            "max": 260.358082
+          },
+          "reference_gc_count": {
+            "p50": 6,
+            "p95": 8,
+            "p99": 8,
+            "max": 9
+          },
+          "p95_bootstrap_95ci_ms": [
+            130.470291,
+            136.081333
+          ]
+        },
+        "trie": {
+          "status": "PASS",
+          "completed_queries": 240,
+          "completed_measured_runs": 720,
+          "full_reference_topn_ms": {
+            "p50": 2.621459,
+            "p95": 4.288792,
+            "p99": 6.62725,
+            "max": 8.274916
+          },
+          "reference_allocated_bytes": {
+            "p50": 2211840,
+            "p95": 3194880,
+            "p99": 5718016,
+            "max": 7208960
+          },
+          "reference_cpu_ms": {
+            "p50": 2.509375,
+            "p95": 3.928669,
+            "p99": 6.192749,
+            "max": 8.473543
+          },
+          "reference_gc_count": {
+            "p50": 0,
+            "p95": 1,
+            "p99": 1,
+            "max": 1
+          },
+          "p95_bootstrap_95ci_ms": [
+            3.927625,
+            4.791959
+          ]
+        },
+        "delete": {
+          "status": "PASS",
+          "completed_queries": 240,
+          "completed_measured_runs": 720,
+          "full_reference_topn_ms": {
+            "p50": 11.488084,
+            "p95": 22.913083,
+            "p99": 29.232667,
+            "max": 30.885375
+          },
+          "reference_allocated_bytes": {
+            "p50": 5603328,
+            "p95": 10911744,
+            "p99": 13287424,
+            "max": 13762560
+          },
+          "reference_cpu_ms": {
+            "p50": 11.055459,
+            "p95": 22.692042,
+            "p99": 28.303084,
+            "max": 30.508041
+          },
+          "reference_gc_count": {
+            "p50": 1,
+            "p95": 1,
+            "p99": 2,
+            "max": 2
+          },
+          "p95_bootstrap_95ci_ms": [
+            20.979208,
+            26.317292
+          ]
+        }
+      },
+      "paired_p95_delta_ms": {
+        "front minus trie": [
+          126.12687499999998,
+          131.96741600000001
+        ],
+        "delete minus trie": [
+          16.757832999999998,
+          22.203374999999998
+        ],
+        "delete minus front": [
+          -114.145667,
+          -105.878167
+        ]
+      },
+      "interpretation": "Completed reference comparison; capped feasibility reported separately. Synthetic development profile, not natural typing or energy evidence."
+    },
+    {
+      "api": 26,
+      "language": "es",
+      "profile": "development",
+      "ready": true,
+      "formats": {
+        "front": {
+          "status": "PASS",
+          "completed_queries": 240,
+          "completed_measured_runs": 720,
+          "full_reference_topn_ms": {
+            "p50": 132.62725,
+            "p95": 173.785208,
+            "p99": 201.320917,
+            "max": 248.11725
+          },
+          "reference_allocated_bytes": {
+            "p50": 64897024,
+            "p95": 85934080,
+            "p99": 92667904,
+            "max": 102662144
+          },
+          "reference_cpu_ms": {
+            "p50": 129.93583,
+            "p95": 202.810664,
+            "p99": 402.492457,
+            "max": 852.76308
+          },
+          "reference_gc_count": {
+            "p50": 7,
+            "p95": 10,
+            "p99": 11,
+            "max": 12
+          },
+          "p95_bootstrap_95ci_ms": [
+            170.043667,
+            181.790208
+          ]
+        },
+        "trie": {
+          "status": "PASS",
+          "completed_queries": 240,
+          "completed_measured_runs": 720,
+          "full_reference_topn_ms": {
+            "p50": 3.043,
+            "p95": 5.076167,
+            "p99": 8.11,
+            "max": 10.422791
+          },
+          "reference_allocated_bytes": {
+            "p50": 2441216,
+            "p95": 4096000,
+            "p99": 7077888,
+            "max": 8470528
+          },
+          "reference_cpu_ms": {
+            "p50": 2.903167,
+            "p95": 5.276209,
+            "p99": 8.406168,
+            "max": 76.809417
+          },
+          "reference_gc_count": {
+            "p50": 0,
+            "p95": 1,
+            "p99": 1,
+            "max": 1
+          },
+          "p95_bootstrap_95ci_ms": [
+            4.694125,
+            5.767209
+          ]
+        },
+        "delete": {
+          "status": "PASS",
+          "completed_queries": 240,
+          "completed_measured_runs": 720,
+          "full_reference_topn_ms": {
+            "p50": 72.415167,
+            "p95": 233.84875,
+            "p99": 306.58925,
+            "max": 399.224083
+          },
+          "reference_allocated_bytes": {
+            "p50": 32473088,
+            "p95": 101351448,
+            "p99": 115818512,
+            "max": 134070632
+          },
+          "reference_cpu_ms": {
+            "p50": 72.726956,
+            "p95": 235.158748,
+            "p99": 327.223704,
+            "max": 504.408665
+          },
+          "reference_gc_count": {
+            "p50": 3,
+            "p95": 10,
+            "p99": 12,
+            "max": 13
+          },
+          "p95_bootstrap_95ci_ms": [
+            214.748833,
+            242.246834
+          ]
+        }
+      },
+      "paired_p95_delta_ms": {
+        "front minus trie": [
+          165.011334,
+          176.886583
+        ],
+        "delete minus trie": [
+          209.651501,
+          237.282792
+        ],
+        "delete minus front": [
+          39.17316599999998,
+          70.522042
+        ]
+      },
+      "interpretation": "Completed reference comparison; capped feasibility reported separately. Synthetic development profile, not natural typing or energy evidence."
+    },
+    {
+      "api": 26,
+      "language": "ru",
+      "profile": "development",
+      "ready": true,
+      "formats": {
+        "front": {
+          "status": "PASS",
+          "completed_queries": 240,
+          "completed_measured_runs": 720,
+          "full_reference_topn_ms": {
+            "p50": 216.51275,
+            "p95": 285.47375,
+            "p99": 302.070042,
+            "max": 306.241667
+          },
+          "reference_allocated_bytes": {
+            "p50": 113049600,
+            "p95": 148504576,
+            "p99": 157368320,
+            "max": 160055296
+          },
+          "reference_cpu_ms": {
+            "p50": 213.301459,
+            "p95": 283.231628,
+            "p99": 298.127286,
+            "max": 689.693621
+          },
+          "reference_gc_count": {
+            "p50": 12,
+            "p95": 16,
+            "p99": 17,
+            "max": 18
+          },
+          "p95_bootstrap_95ci_ms": [
+            270.963792,
+            295.2455
+          ]
+        },
+        "trie": {
+          "status": "PASS",
+          "completed_queries": 240,
+          "completed_measured_runs": 720,
+          "full_reference_topn_ms": {
+            "p50": 5.106791,
+            "p95": 7.582875,
+            "p99": 9.464875,
+            "max": 11.586292
+          },
+          "reference_allocated_bytes": {
+            "p50": 4849664,
+            "p95": 7766016,
+            "p99": 8880128,
+            "max": 10436608
+          },
+          "reference_cpu_ms": {
+            "p50": 4.785791,
+            "p95": 7.516417,
+            "p99": 8.975084,
+            "max": 15.350374
+          },
+          "reference_gc_count": {
+            "p50": 0,
+            "p95": 1,
+            "p99": 1,
+            "max": 1
+          },
+          "p95_bootstrap_95ci_ms": [
+            7.273,
+            8.558084
+          ]
+        },
+        "delete": {
+          "status": "PASS",
+          "completed_queries": 240,
+          "completed_measured_runs": 720,
+          "full_reference_topn_ms": {
+            "p50": 101.015541,
+            "p95": 396.334083,
+            "p99": 506.237583,
+            "max": 615.882667
+          },
+          "reference_allocated_bytes": {
+            "p50": 47155168,
+            "p95": 183877632,
+            "p99": 249233408,
+            "max": 290310736
+          },
+          "reference_cpu_ms": {
+            "p50": 99.183251,
+            "p95": 396.137709,
+            "p99": 514.647544,
+            "max": 659.239202
+          },
+          "reference_gc_count": {
+            "p50": 5,
+            "p95": 17,
+            "p99": 21,
+            "max": 25
+          },
+          "p95_bootstrap_95ci_ms": [
+            322.736958,
+            422.218667
+          ]
+        }
+      },
+      "paired_p95_delta_ms": {
+        "front minus trie": [
+          263.552459,
+          287.681416
+        ],
+        "delete minus trie": [
+          315.154083,
+          414.80733399999997
+        ],
+        "delete minus front": [
+          43.32175000000001,
+          142.78754200000003
+        ]
+      },
+      "interpretation": "Completed reference comparison; capped feasibility reported separately. Synthetic development profile, not natural typing or energy evidence."
+    }
+  ],
+  "processes": [
+    {
+      "api": 26,
+      "language": "en",
+      "profile": "development",
+      "mode": "full",
+      "format": "delete",
+      "file": "en.delete.development.full.0.tsv",
+      "pass": true,
+      "loads_ns": {
+        "frequency": 57200000,
+        "index": 2151458
+      },
+      "memory_bytes": [
+        {
+          "stage": "boot",
+          "heap_used": "287472",
+          "heap_committed": "5242880",
+          "native_allocated": "1445280",
+          "pss": "14401536",
+          "private_dirty": "6987776",
+          "rss": "71331840",
+          "peak_rss": "71331840"
+        },
+        {
+          "stage": "fixtures_loaded",
+          "heap_used": "2236160",
+          "heap_committed": "5242880",
+          "native_allocated": "1661056",
+          "pss": "16750592",
+          "private_dirty": "8261632",
+          "rss": "78032896",
+          "peak_rss": "83525632"
+        },
+        {
+          "stage": "frequency_loaded",
+          "heap_used": "12425312",
+          "heap_committed": "12425312",
+          "native_allocated": "1781280",
+          "pss": "29315072",
+          "private_dirty": "20758528",
+          "rss": "91496448",
+          "peak_rss": "91496448"
+        },
+        {
+          "stage": "index_opened",
+          "heap_used": "5931032",
+          "heap_committed": "11755567",
+          "native_allocated": "1783520",
+          "pss": "27035648",
+          "private_dirty": "18309120",
+          "rss": "82722816",
+          "peak_rss": "91811840"
+        },
+        {
+          "stage": "first_query",
+          "heap_used": "6367064",
+          "heap_committed": "12621656",
+          "native_allocated": "1784288",
+          "pss": "31258624",
+          "private_dirty": "20185088",
+          "rss": "87724032",
+          "peak_rss": "94490624"
+        },
+        {
+          "stage": "warmup_complete",
+          "heap_used": "6905304",
+          "heap_committed": "13159896",
+          "native_allocated": "1675216",
+          "pss": "63441920",
+          "private_dirty": "23527424",
+          "rss": "117018624",
+          "peak_rss": "129970176"
+        },
+        {
+          "stage": "measure_complete",
+          "heap_used": "8963384",
+          "heap_committed": "13841720",
+          "native_allocated": "1268560",
+          "pss": "56083456",
+          "private_dirty": "16162816",
+          "rss": "119525376",
+          "peak_rss": "131002368"
+        },
+        {
+          "stage": "post_gc_requested",
+          "heap_used": "5157288",
+          "heap_committed": "10208078",
+          "native_allocated": "1272496",
+          "pss": "52196352",
+          "private_dirty": "12275712",
+          "rss": "115658752",
+          "peak_rss": "131002368"
+        }
+      ],
+      "cold_first_topn_ns": [
+        28296000
+      ],
+      "bounded_unique": 240,
+      "bounded_complete": 80,
+      "bounded_reasons": {
+        "VERIFIED": 122,
+        "NONE": 80,
+        "STATES": 38
+      },
+      "bounded_all_latencies_ms_diagnostic_only": {
+        "p50": 3.892375,
+        "p95": 15.354917,
+        "p99": 16.597584,
+        "max": 18.400541
+      },
+      "bounded_completed_latencies_ms_not_paired_for_ranking": {
+        "p50": 7.646125,
+        "p95": 14.473917,
+        "p99": 16.0025,
+        "max": 18.400541
+      }
+    },
+    {
+      "api": 26,
+      "language": "en",
+      "profile": "development",
+      "mode": "full",
+      "format": "front",
+      "file": "en.front.development.full.0.tsv",
+      "pass": true,
+      "loads_ns": {
+        "frequency": 58927459,
+        "index": 1819167
+      },
+      "memory_bytes": [
+        {
+          "stage": "boot",
+          "heap_used": "287472",
+          "heap_committed": "5242880",
+          "native_allocated": "1445280",
+          "pss": "14196736",
+          "private_dirty": "6979584",
+          "rss": "71196672",
+          "peak_rss": "71196672"
+        },
+        {
+          "stage": "fixtures_loaded",
+          "heap_used": "2236160",
+          "heap_committed": "5242880",
+          "native_allocated": "1661440",
+          "pss": "16856064",
+          "private_dirty": "8544256",
+          "rss": "78024704",
+          "peak_rss": "83578880"
+        },
+        {
+          "stage": "frequency_loaded",
+          "heap_used": "11572896",
+          "heap_committed": "11767104",
+          "native_allocated": "1781120",
+          "pss": "26767360",
+          "private_dirty": "18411520",
+          "rss": "88592384",
+          "peak_rss": "88592384"
+        },
+        {
+          "stage": "index_opened",
+          "heap_used": "11626144",
+          "heap_committed": "11767104",
+          "native_allocated": "1783552",
+          "pss": "26966016",
+          "private_dirty": "18452480",
+          "rss": "88596480",
+          "peak_rss": "89010176"
+        },
+        {
+          "stage": "first_query",
+          "heap_used": "5657824",
+          "heap_committed": "11241919",
+          "native_allocated": "1785088",
+          "pss": "31291392",
+          "private_dirty": "21553152",
+          "rss": "85708800",
+          "peak_rss": "96432128"
+        },
+        {
+          "stage": "warmup_complete",
+          "heap_used": "13219240",
+          "heap_committed": "13985192",
+          "native_allocated": "1592240",
+          "pss": "30388224",
+          "private_dirty": "20447232",
+          "rss": "93835264",
+          "peak_rss": "103944192"
+        },
+        {
+          "stage": "measure_complete",
+          "heap_used": "6239944",
+          "heap_committed": "12406159",
+          "native_allocated": "1271920",
+          "pss": "32174080",
+          "private_dirty": "22233088",
+          "rss": "86396928",
+          "peak_rss": "109580288"
+        },
+        {
+          "stage": "post_gc_requested",
+          "heap_used": "5140464",
+          "heap_committed": "10174430",
+          "native_allocated": "1275664",
+          "pss": "22192128",
+          "private_dirty": "12251136",
+          "rss": "85348352",
+          "peak_rss": "109580288"
+        }
+      ],
+      "cold_first_topn_ns": [
+        129804084
+      ],
+      "bounded_unique": 240,
+      "bounded_complete": 61,
+      "bounded_reasons": {
+        "STATES": 166,
+        "NONE": 61,
+        "VERIFIED": 13
+      },
+      "bounded_all_latencies_ms_diagnostic_only": {
+        "p50": 95.398417,
+        "p95": 103.434917,
+        "p99": 135.265167,
+        "max": 179.231041
+      },
+      "bounded_completed_latencies_ms_not_paired_for_ranking": {
+        "p50": 87.899917,
+        "p95": 99.802959,
+        "p99": 131.418333,
+        "max": 135.265167
+      }
+    },
+    {
+      "api": 26,
+      "language": "en",
+      "profile": "development",
+      "mode": "full",
+      "format": "trie",
+      "file": "en.trie.development.full.0.tsv",
+      "pass": true,
+      "loads_ns": {
+        "frequency": 53666209,
+        "index": 709709
+      },
+      "memory_bytes": [
+        {
+          "stage": "boot",
+          "heap_used": "287472",
+          "heap_committed": "5242880",
+          "native_allocated": "1445280",
+          "pss": "14404608",
+          "private_dirty": "6979584",
+          "rss": "71299072",
+          "peak_rss": "71299072"
+        },
+        {
+          "stage": "fixtures_loaded",
+          "heap_used": "2236160",
+          "heap_committed": "5242880",
+          "native_allocated": "1661184",
+          "pss": "16748544",
+          "private_dirty": "8249344",
+          "rss": "77807616",
+          "peak_rss": "83365888"
+        },
+        {
+          "stage": "frequency_loaded",
+          "heap_used": "11291208",
+          "heap_committed": "12696136",
+          "native_allocated": "1781312",
+          "pss": "26648576",
+          "private_dirty": "18116608",
+          "rss": "88006656",
+          "peak_rss": "88825856"
+        },
+        {
+          "stage": "index_opened",
+          "heap_used": "11328072",
+          "heap_committed": "12696136",
+          "native_allocated": "1783360",
+          "pss": "26839040",
+          "private_dirty": "18153472",
+          "rss": "88006656",
+          "peak_rss": "88825856"
+        },
+        {
+          "stage": "first_query",
+          "heap_used": "6181776",
+          "heap_committed": "12257054",
+          "native_allocated": "1784576",
+          "pss": "36127744",
+          "private_dirty": "22474752",
+          "rss": "89362432",
+          "peak_rss": "98529280"
+        },
+        {
+          "stage": "warmup_complete",
+          "heap_used": "5660152",
+          "heap_committed": "11279342",
+          "native_allocated": "1731072",
+          "pss": "38312960",
+          "private_dirty": "24514560",
+          "rss": "89636864",
+          "peak_rss": "109481984"
+        },
+        {
+          "stage": "measure_complete",
+          "heap_used": "13420352",
+          "heap_committed": "15644480",
+          "native_allocated": "1315384",
+          "pss": "34438144",
+          "private_dirty": "20639744",
+          "rss": "97333248",
+          "peak_rss": "109481984"
+        },
+        {
+          "stage": "post_gc_requested",
+          "heap_used": "5140472",
+          "heap_committed": "10174447",
+          "native_allocated": "1315416",
+          "pss": "26094592",
+          "private_dirty": "12296192",
+          "rss": "89034752",
+          "peak_rss": "109481984"
+        }
+      ],
+      "cold_first_topn_ns": [
+        19874291
+      ],
+      "bounded_unique": 240,
+      "bounded_complete": 61,
+      "bounded_reasons": {
+        "STATES": 166,
+        "NONE": 61,
+        "VERIFIED": 13
+      },
+      "bounded_all_latencies_ms_diagnostic_only": {
+        "p50": 2.148417,
+        "p95": 3.081167,
+        "p99": 3.455375,
+        "max": 4.683583
+      },
+      "bounded_completed_latencies_ms_not_paired_for_ranking": {
+        "p50": 1.550791,
+        "p95": 2.731833,
+        "p99": 3.087584,
+        "max": 3.093583
+      }
+    },
+    {
+      "api": 26,
+      "language": "es",
+      "profile": "development",
+      "mode": "full",
+      "format": "delete",
+      "file": "es.delete.development.full.0.tsv",
+      "pass": true,
+      "loads_ns": {
+        "frequency": 227783542,
+        "index": 3438625
+      },
+      "memory_bytes": [
+        {
+          "stage": "boot",
+          "heap_used": "287472",
+          "heap_committed": "5242880",
+          "native_allocated": "1445280",
+          "pss": "14266368",
+          "private_dirty": "6991872",
+          "rss": "70754304",
+          "peak_rss": "70754304"
+        },
+        {
+          "stage": "fixtures_loaded",
+          "heap_used": "2498304",
+          "heap_committed": "5242880",
+          "native_allocated": "1663840",
+          "pss": "16925696",
+          "private_dirty": "8548352",
+          "rss": "78323712",
+          "peak_rss": "83353600"
+        },
+        {
+          "stage": "frequency_loaded",
+          "heap_used": "12243096",
+          "heap_committed": "12664984",
+          "native_allocated": "1781568",
+          "pss": "27538432",
+          "private_dirty": "19103744",
+          "rss": "88731648",
+          "peak_rss": "88731648"
+        },
+        {
+          "stage": "index_opened",
+          "heap_used": "12296344",
+          "heap_committed": "12664984",
+          "native_allocated": "1783488",
+          "pss": "27859968",
+          "private_dirty": "19144704",
+          "rss": "88735744",
+          "peak_rss": "89149440"
+        },
+        {
+          "stage": "first_query",
+          "heap_used": "5598232",
+          "heap_committed": "11196463",
+          "native_allocated": "1784192",
+          "pss": "35592192",
+          "private_dirty": "22482944",
+          "rss": "88195072",
+          "peak_rss": "100081664"
+        },
+        {
+          "stage": "warmup_complete",
+          "heap_used": "15586200",
+          "heap_committed": "19743640",
+          "native_allocated": "1590392",
+          "pss": "190433280",
+          "private_dirty": "22585344",
+          "rss": "253014016",
+          "peak_rss": "263434240"
+        },
+        {
+          "stage": "measure_complete",
+          "heap_used": "7876344",
+          "heap_committed": "14130936",
+          "native_allocated": "1273496",
+          "pss": "192243712",
+          "private_dirty": "24395776",
+          "rss": "245592064",
+          "peak_rss": "267456512"
+        },
+        {
+          "stage": "post_gc_requested",
+          "heap_used": "5434104",
+          "heap_committed": "10761710",
+          "native_allocated": "1277432",
+          "pss": "180414464",
+          "private_dirty": "12566528",
+          "rss": "243204096",
+          "peak_rss": "267456512"
+        }
+      ],
+      "cold_first_topn_ns": [
+        12232250
+      ],
+      "bounded_unique": 240,
+      "bounded_complete": 25,
+      "bounded_reasons": {
+        "NONE": 25,
+        "VERIFIED": 122,
+        "STATES": 93
+      },
+      "bounded_all_latencies_ms_diagnostic_only": {
+        "p50": 9.531459,
+        "p95": 20.648875,
+        "p99": 36.20075,
+        "max": 106.751208
+      },
+      "bounded_completed_latencies_ms_not_paired_for_ranking": {
+        "p50": 0.270959,
+        "p95": 11.833792,
+        "p99": 106.751208,
+        "max": 106.751208
+      }
+    },
+    {
+      "api": 26,
+      "language": "es",
+      "profile": "development",
+      "mode": "full",
+      "format": "front",
+      "file": "es.front.development.full.0.tsv",
+      "pass": true,
+      "loads_ns": {
+        "frequency": 53998541,
+        "index": 3565792
+      },
+      "memory_bytes": [
+        {
+          "stage": "boot",
+          "heap_used": "287472",
+          "heap_committed": "5242880",
+          "native_allocated": "1445280",
+          "pss": "14142464",
+          "private_dirty": "6987776",
+          "rss": "71081984",
+          "peak_rss": "71081984"
+        },
+        {
+          "stage": "fixtures_loaded",
+          "heap_used": "2498304",
+          "heap_committed": "5242880",
+          "native_allocated": "1661216",
+          "pss": "16964608",
+          "private_dirty": "8736768",
+          "rss": "78036992",
+          "peak_rss": "83529728"
+        },
+        {
+          "stage": "frequency_loaded",
+          "heap_used": "12284288",
+          "heap_committed": "12370687",
+          "native_allocated": "1781184",
+          "pss": "27478016",
+          "private_dirty": "19202048",
+          "rss": "91131904",
+          "peak_rss": "91131904"
+        },
+        {
+          "stage": "index_opened",
+          "heap_used": "5434424",
+          "heap_committed": "10827888",
+          "native_allocated": "1783872",
+          "pss": "24796160",
+          "private_dirty": "16183296",
+          "rss": "82214912",
+          "peak_rss": "91365376"
+        },
+        {
+          "stage": "first_query",
+          "heap_used": "7970008",
+          "heap_committed": "13782232",
+          "native_allocated": "1784960",
+          "pss": "32619520",
+          "private_dirty": "18063360",
+          "rss": "92823552",
+          "peak_rss": "97796096"
+        },
+        {
+          "stage": "warmup_complete",
+          "heap_used": "9486552",
+          "heap_committed": "14069976",
+          "native_allocated": "1593200",
+          "pss": "31398912",
+          "private_dirty": "16687104",
+          "rss": "94498816",
+          "peak_rss": "108642304"
+        },
+        {
+          "stage": "measure_complete",
+          "heap_used": "10338472",
+          "heap_committed": "14069928",
+          "native_allocated": "1275304",
+          "pss": "32222208",
+          "private_dirty": "17498112",
+          "rss": "95608832",
+          "peak_rss": "113364992"
+        },
+        {
+          "stage": "post_gc_requested",
+          "heap_used": "5417280",
+          "heap_committed": "10728062",
+          "native_allocated": "1279240",
+          "pss": "27253760",
+          "private_dirty": "12529664",
+          "rss": "90677248",
+          "peak_rss": "113364992"
+        }
+      ],
+      "cold_first_topn_ns": [
+        25546125
+      ],
+      "bounded_unique": 240,
+      "bounded_complete": 66,
+      "bounded_reasons": {
+        "NONE": 66,
+        "STATES": 160,
+        "VERIFIED": 14
+      },
+      "bounded_all_latencies_ms_diagnostic_only": {
+        "p50": 113.025667,
+        "p95": 161.535584,
+        "p99": 312.259959,
+        "max": 592.33125
+      },
+      "bounded_completed_latencies_ms_not_paired_for_ranking": {
+        "p50": 99.033833,
+        "p95": 134.965958,
+        "p99": 490.695917,
+        "max": 576.145959
+      }
+    },
+    {
+      "api": 26,
+      "language": "es",
+      "profile": "development",
+      "mode": "full",
+      "format": "trie",
+      "file": "es.trie.development.full.0.tsv",
+      "pass": true,
+      "loads_ns": {
+        "frequency": 52025083,
+        "index": 534333
+      },
+      "memory_bytes": [
+        {
+          "stage": "boot",
+          "heap_used": "287472",
+          "heap_committed": "5242880",
+          "native_allocated": "1445280",
+          "pss": "14359552",
+          "private_dirty": "6983680",
+          "rss": "71049216",
+          "peak_rss": "71049216"
+        },
+        {
+          "stage": "fixtures_loaded",
+          "heap_used": "2498304",
+          "heap_committed": "5242880",
+          "native_allocated": "1661216",
+          "pss": "17735680",
+          "private_dirty": "9265152",
+          "rss": "77934592",
+          "peak_rss": "83492864"
+        },
+        {
+          "stage": "frequency_loaded",
+          "heap_used": "12292728",
+          "heap_committed": "12632696",
+          "native_allocated": "1781312",
+          "pss": "27652096",
+          "private_dirty": "19148800",
+          "rss": "88969216",
+          "peak_rss": "88969216"
+        },
+        {
+          "stage": "index_opened",
+          "heap_used": "12345976",
+          "heap_committed": "12632696",
+          "native_allocated": "1783360",
+          "pss": "27851776",
+          "private_dirty": "19185664",
+          "rss": "88969216",
+          "peak_rss": "88969216"
+        },
+        {
+          "stage": "first_query",
+          "heap_used": "12681848",
+          "heap_committed": "12681848",
+          "native_allocated": "1784320",
+          "pss": "39204864",
+          "private_dirty": "20078592",
+          "rss": "102842368",
+          "peak_rss": "102842368"
+        },
+        {
+          "stage": "warmup_complete",
+          "heap_used": "11453544",
+          "heap_committed": "16708712",
+          "native_allocated": "1700992",
+          "pss": "50006016",
+          "private_dirty": "18657280",
+          "rss": "112828416",
+          "peak_rss": "124899328"
+        },
+        {
+          "stage": "measure_complete",
+          "heap_used": "11486352",
+          "heap_committed": "15611024",
+          "native_allocated": "1315048",
+          "pss": "50026496",
+          "private_dirty": "18665472",
+          "rss": "112701440",
+          "peak_rss": "126910464"
+        },
+        {
+          "stage": "post_gc_requested",
+          "heap_used": "5433672",
+          "heap_committed": "10760846",
+          "native_allocated": "1315912",
+          "pss": "43911168",
+          "private_dirty": "12550144",
+          "rss": "106758144",
+          "peak_rss": "126910464"
+        }
+      ],
+      "cold_first_topn_ns": [
+        8547416
+      ],
+      "bounded_unique": 240,
+      "bounded_complete": 66,
+      "bounded_reasons": {
+        "NONE": 66,
+        "STATES": 160,
+        "VERIFIED": 14
+      },
+      "bounded_all_latencies_ms_diagnostic_only": {
+        "p50": 2.476208,
+        "p95": 3.65275,
+        "p99": 4.320958,
+        "max": 33.848167
+      },
+      "bounded_completed_latencies_ms_not_paired_for_ranking": {
+        "p50": 1.826042,
+        "p95": 3.109166,
+        "p99": 4.402125,
+        "max": 5.96425
+      }
+    },
+    {
+      "api": 26,
+      "language": "ru",
+      "profile": "development",
+      "mode": "full",
+      "format": "delete",
+      "file": "ru.delete.development.full.0.tsv",
+      "pass": true,
+      "loads_ns": {
+        "frequency": 88223709,
+        "index": 6546125
+      },
+      "memory_bytes": [
+        {
+          "stage": "boot",
+          "heap_used": "287472",
+          "heap_committed": "5242880",
+          "native_allocated": "1445280",
+          "pss": "14313472",
+          "private_dirty": "6991872",
+          "rss": "71204864",
+          "peak_rss": "71204864"
+        },
+        {
+          "stage": "fixtures_loaded",
+          "heap_used": "2694912",
+          "heap_committed": "5242880",
+          "native_allocated": "1661184",
+          "pss": "17558528",
+          "private_dirty": "9187328",
+          "rss": "78528512",
+          "peak_rss": "84021248"
+        },
+        {
+          "stage": "frequency_loaded",
+          "heap_used": "12466128",
+          "heap_committed": "12724176",
+          "native_allocated": "1778208",
+          "pss": "27765760",
+          "private_dirty": "19353600",
+          "rss": "89346048",
+          "peak_rss": "89346048"
+        },
+        {
+          "stage": "index_opened",
+          "heap_used": "12519376",
+          "heap_committed": "12724176",
+          "native_allocated": "1780256",
+          "pss": "28264448",
+          "private_dirty": "19390464",
+          "rss": "89354240",
+          "peak_rss": "89767936"
+        },
+        {
+          "stage": "first_query",
+          "heap_used": "8754344",
+          "heap_committed": "15008936",
+          "native_allocated": "1787040",
+          "pss": "49882112",
+          "private_dirty": "26894336",
+          "rss": "101814272",
+          "peak_rss": "113680384"
+        },
+        {
+          "stage": "warmup_complete",
+          "heap_used": "8021520",
+          "heap_committed": "14292496",
+          "native_allocated": "1593808",
+          "pss": "330673152",
+          "private_dirty": "24485888",
+          "rss": "384241664",
+          "peak_rss": "408051712"
+        },
+        {
+          "stage": "measure_complete",
+          "heap_used": "9572384",
+          "heap_committed": "15843360",
+          "native_allocated": "1272856",
+          "pss": "322952192",
+          "private_dirty": "16764928",
+          "rss": "386203648",
+          "peak_rss": "418574336"
+        },
+        {
+          "stage": "post_gc_requested",
+          "heap_used": "5855832",
+          "heap_committed": "11605166",
+          "native_allocated": "1276600",
+          "pss": "319192064",
+          "private_dirty": "13004800",
+          "rss": "382443520",
+          "peak_rss": "418574336"
+        }
+      ],
+      "cold_first_topn_ns": [
+        268439083
+      ],
+      "bounded_unique": 240,
+      "bounded_complete": 13,
+      "bounded_reasons": {
+        "VERIFIED": 101,
+        "NONE": 13,
+        "STATES": 126
+      },
+      "bounded_all_latencies_ms_diagnostic_only": {
+        "p50": 16.331875,
+        "p95": 21.654125,
+        "p99": 24.330708,
+        "max": 45.329708
+      },
+      "bounded_completed_latencies_ms_not_paired_for_ranking": {
+        "p50": 0.336958,
+        "p95": 15.64,
+        "p99": 15.887375,
+        "max": 15.887375
+      }
+    },
+    {
+      "api": 26,
+      "language": "ru",
+      "profile": "development",
+      "mode": "full",
+      "format": "front",
+      "file": "ru.front.development.full.0.tsv",
+      "pass": true,
+      "loads_ns": {
+        "frequency": 60180917,
+        "index": 3941833
+      },
+      "memory_bytes": [
+        {
+          "stage": "boot",
+          "heap_used": "287472",
+          "heap_committed": "5242880",
+          "native_allocated": "1445280",
+          "pss": "14238720",
+          "private_dirty": "6983680",
+          "rss": "70975488",
+          "peak_rss": "70975488"
+        },
+        {
+          "stage": "fixtures_loaded",
+          "heap_used": "2694912",
+          "heap_committed": "5242880",
+          "native_allocated": "1661184",
+          "pss": "17597440",
+          "private_dirty": "9281536",
+          "rss": "78221312",
+          "peak_rss": "83714048"
+        },
+        {
+          "stage": "frequency_loaded",
+          "heap_used": "8211872",
+          "heap_committed": "14466464",
+          "native_allocated": "1781280",
+          "pss": "31401984",
+          "private_dirty": "23023616",
+          "rss": "84848640",
+          "peak_rss": "93327360"
+        },
+        {
+          "stage": "index_opened",
+          "heap_used": "8265120",
+          "heap_committed": "14466464",
+          "native_allocated": "1780704",
+          "pss": "23897088",
+          "private_dirty": "15036416",
+          "rss": "84852736",
+          "peak_rss": "93327360"
+        },
+        {
+          "stage": "first_query",
+          "heap_used": "7325208",
+          "heap_committed": "13563416",
+          "native_allocated": "1786016",
+          "pss": "46644224",
+          "private_dirty": "23375872",
+          "rss": "100757504",
+          "peak_rss": "110911488"
+        },
+        {
+          "stage": "warmup_complete",
+          "heap_used": "10046880",
+          "heap_committed": "16121248",
+          "native_allocated": "1593648",
+          "pss": "40568832",
+          "private_dirty": "17227776",
+          "rss": "103305216",
+          "peak_rss": "124694528"
+        },
+        {
+          "stage": "measure_complete",
+          "heap_used": "11539976",
+          "heap_committed": "15582728",
+          "native_allocated": "1273056",
+          "pss": "42035200",
+          "private_dirty": "18722816",
+          "rss": "105111552",
+          "peak_rss": "124694528"
+        },
+        {
+          "stage": "post_gc_requested",
+          "heap_used": "5855392",
+          "heap_committed": "11604288",
+          "native_allocated": "1276800",
+          "pss": "36280320",
+          "private_dirty": "12967936",
+          "rss": "99438592",
+          "peak_rss": "124694528"
+        }
+      ],
+      "cold_first_topn_ns": [
+        481284626
+      ],
+      "bounded_unique": 240,
+      "bounded_complete": 18,
+      "bounded_reasons": {
+        "STATES": 205,
+        "NONE": 18,
+        "VERIFIED": 17
+      },
+      "bounded_all_latencies_ms_diagnostic_only": {
+        "p50": 144.335542,
+        "p95": 160.797709,
+        "p99": 187.63575,
+        "max": 331.180958
+      },
+      "bounded_completed_latencies_ms_not_paired_for_ranking": {
+        "p50": 35.032959,
+        "p95": 166.068416,
+        "p99": 174.850167,
+        "max": 174.850167
+      }
+    },
+    {
+      "api": 26,
+      "language": "ru",
+      "profile": "development",
+      "mode": "full",
+      "format": "trie",
+      "file": "ru.trie.development.full.0.tsv",
+      "pass": true,
+      "loads_ns": {
+        "frequency": 78091833,
+        "index": 824250
+      },
+      "memory_bytes": [
+        {
+          "stage": "boot",
+          "heap_used": "287472",
+          "heap_committed": "5242880",
+          "native_allocated": "1445280",
+          "pss": "14258176",
+          "private_dirty": "6983680",
+          "rss": "70934528",
+          "peak_rss": "70934528"
+        },
+        {
+          "stage": "fixtures_loaded",
+          "heap_used": "2694912",
+          "heap_committed": "5242880",
+          "native_allocated": "1661184",
+          "pss": "17205248",
+          "private_dirty": "8876032",
+          "rss": "78012416",
+          "peak_rss": "83570688"
+        },
+        {
+          "stage": "frequency_loaded",
+          "heap_used": "8230024",
+          "heap_committed": "10127630",
+          "native_allocated": "1781280",
+          "pss": "23470080",
+          "private_dirty": "15081472",
+          "rss": "84537344",
+          "peak_rss": "86290432"
+        },
+        {
+          "stage": "index_opened",
+          "heap_used": "8283272",
+          "heap_committed": "10127630",
+          "native_allocated": "1780256",
+          "pss": "23663616",
+          "private_dirty": "15118336",
+          "rss": "84537344",
+          "peak_rss": "86290432"
+        },
+        {
+          "stage": "first_query",
+          "heap_used": "7021936",
+          "heap_committed": "13260144",
+          "native_allocated": "1785280",
+          "pss": "65168384",
+          "private_dirty": "20627456",
+          "rss": "120999936",
+          "peak_rss": "127729664"
+        },
+        {
+          "stage": "warmup_complete",
+          "heap_used": "6504816",
+          "heap_committed": "12759408",
+          "native_allocated": "1676336",
+          "pss": "74641408",
+          "private_dirty": "25276416",
+          "rss": "125698048",
+          "peak_rss": "144482304"
+        },
+        {
+          "stage": "measure_complete",
+          "heap_used": "9076544",
+          "heap_committed": "15314752",
+          "native_allocated": "1313376",
+          "pss": "77594624",
+          "private_dirty": "28229632",
+          "rss": "128323584",
+          "peak_rss": "145981440"
+        },
+        {
+          "stage": "post_gc_requested",
+          "heap_used": "5855400",
+          "heap_committed": "11604302",
+          "native_allocated": "1315776",
+          "pss": "62341120",
+          "private_dirty": "12976128",
+          "rss": "125075456",
+          "peak_rss": "145981440"
+        }
+      ],
+      "cold_first_topn_ns": [
+        186462708
+      ],
+      "bounded_unique": 240,
+      "bounded_complete": 18,
+      "bounded_reasons": {
+        "STATES": 205,
+        "NONE": 18,
+        "VERIFIED": 17
+      },
+      "bounded_all_latencies_ms_diagnostic_only": {
+        "p50": 3.201041,
+        "p95": 4.246625,
+        "p99": 4.899833,
+        "max": 8.227542
+      },
+      "bounded_completed_latencies_ms_not_paired_for_ranking": {
+        "p50": 0.493084,
+        "p95": 3.415958,
+        "p99": 3.752958,
+        "max": 3.752958
+      }
+    }
+  ],
+  "api26_full_three_language_comparison_ready": true,
+  "cold_summaries": [],
+  "apk_measurement": "apk-assets.json; actual aapt2 + zipalign fixtures with common storage policy"
+}

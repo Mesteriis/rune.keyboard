@@ -1,0 +1,6946 @@
+{
+  "version": 1,
+  "status": "FROZEN_BEFORE_MEASUREMENT",
+  "base_manifest_sha256": "39c5b0836e67678d1711f33936ab08cd0c970e679e861b31185411dc3ac8d534",
+  "reader_sha256": "e1f3dd4396f59a0bcf1f4cb6ec0639fdaa6e0d6f80430afee5c22ed736e856e3",
+  "source_manifest_sha256": "ec26c80edd28f2b42008a844c8b0ce83c11759386ccc9de591cb038a7a4f3c48",
+  "warmup_passes": 1,
+  "measured_passes": 5,
+  "seed": 30902026,
+  "bootstrap_samples": 2000,
+  "base_assets": [
+    {
+      "path": "assets/en.delete",
+      "sha256": "4573ab6cf1a59f15e393ecb1d4b651cbe19cec1cd737c3f2d60702d6beb64360",
+      "bytes": 30598744,
+      "source": "lexicon-index-prototype/assets/en.delete"
+    },
+    {
+      "path": "assets/en.front",
+      "sha256": "f06bb1d8e9021c6752705ddb94f9750429ff943bd0615e348a3d4a17bf500d92",
+      "bytes": 594184,
+      "source": "lexicon-index-prototype/assets/en.front"
+    },
+    {
+      "path": "assets/en.trie",
+      "sha256": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc",
+      "bytes": 4358176,
+      "source": "lexicon-index-prototype/assets/en.trie"
+    },
+    {
+      "path": "assets/es.delete",
+      "sha256": "5774f58e0d986a48c3d40a71c667f410c8f690240150489f7dacea2f41909f31",
+      "bytes": 172775080,
+      "source": "lexicon-index-prototype/assets/es.delete"
+    },
+    {
+      "path": "assets/es.front",
+      "sha256": "ff4ff52b4d95b7c74ac376f64adc7e0fe0d01e83ce58bfafc383e00f87b4ad32",
+      "bytes": 3148382,
+      "source": "lexicon-index-prototype/assets/es.front"
+    },
+    {
+      "path": "assets/es.trie",
+      "sha256": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681",
+      "bytes": 20015680,
+      "source": "lexicon-index-prototype/assets/es.trie"
+    },
+    {
+      "path": "assets/ru.delete",
+      "sha256": "beb4c0f14511b503adff736f2e514f1b283c0b4c52eaa02216968ae38831baed",
+      "bytes": 372073072,
+      "source": "lexicon-index-prototype/assets/ru.delete"
+    },
+    {
+      "path": "assets/ru.front",
+      "sha256": "29b8abb008123b6900183e083c32a750c986eb5f5509a8f12b8a7400976f4241",
+      "bytes": 8764290,
+      "source": "lexicon-index-prototype/assets/ru.front"
+    },
+    {
+      "path": "assets/ru.trie",
+      "sha256": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b",
+      "bytes": 36093872,
+      "source": "lexicon-index-prototype/assets/ru.trie"
+    },
+    {
+      "path": "assets/en.front.lengths",
+      "sha256": "4aa2b09a27ba99b77806c5546a35f441ab8a4b93300eaf32b1184e2dd6687ed5",
+      "bytes": 524304,
+      "source": "lexicon-index-prototype/assets/en.front.lengths"
+    },
+    {
+      "path": "assets/en.trie.lengths",
+      "sha256": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4",
+      "bytes": 544786,
+      "source": "lexicon-index-prototype/assets/en.trie.lengths"
+    },
+    {
+      "path": "assets/es.front.lengths",
+      "sha256": "96e99c53a1405084ac675284e3ca2871076410d3f1cdc1fb2dbd616c4c9d8f88",
+      "bytes": 4194320,
+      "source": "lexicon-index-prototype/assets/es.front.lengths"
+    },
+    {
+      "path": "assets/es.trie.lengths",
+      "sha256": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78",
+      "bytes": 2501974,
+      "source": "lexicon-index-prototype/assets/es.trie.lengths"
+    },
+    {
+      "path": "assets/ru.front.lengths",
+      "sha256": "cde4103f2688b6a7e299ebb567d30c1239ba4c82cb165d31ce7fff5b0536fc54",
+      "bytes": 8388624,
+      "source": "lexicon-index-prototype/assets/ru.front.lengths"
+    },
+    {
+      "path": "assets/ru.trie.lengths",
+      "sha256": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c",
+      "bytes": 4511748,
+      "source": "lexicon-index-prototype/assets/ru.trie.lengths"
+    },
+    {
+      "path": "notices/ES-LICENSE.md",
+      "sha256": "2b70fd5cb8d3b34cc6ae322c969557a2270b99017594addb2531ef5ffd9e1b17",
+      "bytes": 991,
+      "source": "lexicon-prototype/notices/ES-LICENSE.md"
+    },
+    {
+      "path": "notices/Hunspell-COPYING.txt",
+      "sha256": "640d90f6ee401241ff62834d0d1b33f83049e99b8bfdfa04ed1b0a1635dde3e7",
+      "bytes": 18093,
+      "source": "lexicon-prototype/notices/Hunspell-COPYING.txt"
+    },
+    {
+      "path": "notices/Hunspell-COPYING.LESSER.txt",
+      "sha256": "7c6699c75f87b52bdc542db26d6b1b92892577cda46e20eceb79e2790a1c291b",
+      "bytes": 26531,
+      "source": "lexicon-prototype/notices/Hunspell-COPYING.LESSER.txt"
+    },
+    {
+      "path": "notices/ES-MPL-1.1.txt",
+      "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f",
+      "bytes": 25755,
+      "source": "lexicon-prototype/notices/ES-MPL-1.1.txt"
+    },
+    {
+      "path": "notices/Hunspell-license.hunspell.txt",
+      "sha256": "3f7ddd07c296edbfe0a47c7bcc82038ad347a2c4f672345b24f95c624db68513",
+      "bytes": 1973,
+      "source": "lexicon-prototype/notices/Hunspell-license.hunspell.txt"
+    },
+    {
+      "path": "notices/RU-Lebedev.txt",
+      "sha256": "262af2f6ad70a61e5ee1332ff44fa8ee50edca819cf33207d8ad6ba6a0c9be52",
+      "bytes": 1886,
+      "source": "lexicon-prototype/notices/RU-Lebedev.txt"
+    },
+    {
+      "path": "notices/FrequencyWords-README.md",
+      "sha256": "a92fcc50e27f7b2d5860ec1c1ce794dc4c892d945bfa4c8c3136cdfd213ee710",
+      "bytes": 913,
+      "source": "lexicon-prototype/notices/FrequencyWords-README.md"
+    },
+    {
+      "path": "notices/Hunspell-license.myspell.txt",
+      "sha256": "dcda061adeed22b26f276c01ec374f930789ae0d684e5aa8f8be309dd680ff20",
+      "bytes": 2912,
+      "source": "lexicon-prototype/notices/Hunspell-license.myspell.txt"
+    },
+    {
+      "path": "notices/Hunspell-COPYING.MPL.txt",
+      "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f",
+      "bytes": 25755,
+      "source": "lexicon-prototype/notices/Hunspell-COPYING.MPL.txt"
+    },
+    {
+      "path": "notices/ES-README.txt",
+      "sha256": "0b5c39a863ecb61f5c5631ec1cd977667ef9bda6da6f90e80e9fc0edcbfadd97",
+      "bytes": 2615,
+      "source": "lexicon-prototype/notices/ES-README.txt"
+    },
+    {
+      "path": "notices/Hunspell-AUTHORS.txt",
+      "sha256": "a0f915313286a6e359ffb3e6586adb445849a79f2e9f0380fae14365fc064519",
+      "bytes": 759,
+      "source": "lexicon-prototype/notices/Hunspell-AUTHORS.txt"
+    },
+    {
+      "path": "notices/CC-BY-SA-4.0.txt",
+      "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5",
+      "bytes": 20138,
+      "source": "lexicon-prototype/notices/CC-BY-SA-4.0.txt"
+    },
+    {
+      "path": "notices/FrequencyWords-code-MIT.txt",
+      "sha256": "e08d916cc953f85f7dfa0df530f6d7931f14ce804d053602662d8649b5fac829",
+      "bytes": 1068,
+      "source": "lexicon-prototype/notices/FrequencyWords-code-MIT.txt"
+    },
+    {
+      "path": "notices/SCOWL-Copyright.txt",
+      "sha256": "283326a422e29c510e2ba6805518c418ce3c35ed1fadc3eec83d2da4f6c5a055",
+      "bytes": 11758,
+      "source": "lexicon-prototype/notices/SCOWL-Copyright.txt"
+    },
+    {
+      "path": "notices/UPSTREAM-PROTOTYPE-NOTICES.md",
+      "sha256": "7882067541d4e0ae1382abaac451bf78e0163af0bc77a3e4eb4f09bf6bf0b956",
+      "bytes": 5116,
+      "source": "lexicon-prototype/THIRD_PARTY_NOTICES.md"
+    },
+    {
+      "path": "notices/source-lock.json",
+      "sha256": "28750e183ef99ea33da58b20036e2f0dcb3f7e1f76e8528c21074ac7d6615b70",
+      "bytes": 6412,
+      "source": "lexicon-prototype/source-lock.json"
+    },
+    {
+      "path": "notices/output-manifest.json",
+      "sha256": "ec26c80edd28f2b42008a844c8b0ce83c11759386ccc9de591cb038a7a4f3c48",
+      "bytes": 10313,
+      "source": "lexicon-prototype/output-manifest.json"
+    },
+    {
+      "path": "frequency/en.tsv",
+      "sha256": "2534369e870173a436634cf4065e05e2463053ea3bce747f4ea23ae1119c8f51",
+      "bytes": 1312125,
+      "source": "lexicon-prototype/outputs/frequency/en.tsv"
+    },
+    {
+      "path": "queries/en.development.tsv",
+      "sha256": "738f283b05429ff8424553733dd403055870d5d29627fb394804e26b86da2040",
+      "bytes": 46199,
+      "source": "frozen prior oracle + predeclared query order"
+    },
+    {
+      "path": "queries/en.smoke.tsv",
+      "sha256": "5a184655dc1f37dcf8b3bfe3b99ea3d93ba4b6a879323dda243ac07fe13c83f8",
+      "bytes": 791,
+      "source": "frozen prior oracle + predeclared query order"
+    },
+    {
+      "path": "frequency/es.tsv",
+      "sha256": "c845ccf663b3b291197988f380b034cdd35f2e3c732684ae8ef02171ecf9a7e7",
+      "bytes": 1384810,
+      "source": "lexicon-prototype/outputs/frequency/es.tsv"
+    },
+    {
+      "path": "queries/es.development.tsv",
+      "sha256": "d5425f8c48f9dc6a4c908c1d82e9726fa0b61094d300c3234b88af79c4c787bb",
+      "bytes": 65897,
+      "source": "frozen prior oracle + predeclared query order"
+    },
+    {
+      "path": "queries/es.smoke.tsv",
+      "sha256": "f48d0d2c7ac470117716817ab99cc2a6906b74b38b15c9d8b1ed8b9d74e99db2",
+      "bytes": 6099,
+      "source": "frozen prior oracle + predeclared query order"
+    },
+    {
+      "path": "frequency/ru.tsv",
+      "sha256": "53f49acb173ebb131ed15ecc31acfc7bda778bd1a25fdaa8b7d3ab833e9cb97f",
+      "bytes": 2074403,
+      "source": "lexicon-prototype/outputs/frequency/ru.tsv"
+    },
+    {
+      "path": "queries/ru.development.tsv",
+      "sha256": "bfbe2e7f79b902c3d9442061c332c932d8758f2b24611058c6ea0c60abf475bf",
+      "bytes": 128547,
+      "source": "frozen prior oracle + predeclared query order"
+    },
+    {
+      "path": "queries/ru.smoke.tsv",
+      "sha256": "fead1447db97438a9d7fea3c82d999bbf013a5923686ed108d23d867d03c6a73",
+      "bytes": 5956,
+      "source": "frozen prior oracle + predeclared query order"
+    }
+  ],
+  "groups": [
+    {
+      "language": "en",
+      "count": 277,
+      "development": 240,
+      "controls": 37,
+      "sha256": "c6f9d2b1ca959c33dff74c1714e3e21efabf474300d2585990c5667e96af8498",
+      "old_queries_sha256": "738f283b05429ff8424553733dd403055870d5d29627fb394804e26b86da2040",
+      "words_sha256": "67f5299ebd264abb62518b01dae9ea36837d39dfcfe76d731983841bc9794d26",
+      "inputs_sha256": "ecd07052d199ff0cbcdf985203a94d23c46c2983f648c742dbad30cd97094875",
+      "queries": [
+        {
+          "id": 0,
+          "original_id": "en-d-001",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1,
+          "original_id": "en-d-002",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2,
+          "original_id": "en-d-003",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 3,
+          "original_id": "en-d-004",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 4,
+          "original_id": "en-d-005",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 5,
+          "original_id": "en-d-006",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 6,
+          "original_id": "en-d-007",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 7,
+          "original_id": "en-d-008",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 8,
+          "original_id": "en-d-009",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 9,
+          "original_id": "en-d-010",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 10,
+          "original_id": "en-d-011",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 11,
+          "original_id": "en-d-012",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 12,
+          "original_id": "en-d-013",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 13,
+          "original_id": "en-d-014",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 14,
+          "original_id": "en-d-015",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 15,
+          "original_id": "en-d-016",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 16,
+          "original_id": "en-d-017",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 17,
+          "original_id": "en-d-018",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 18,
+          "original_id": "en-d-019",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 19,
+          "original_id": "en-d-020",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 20,
+          "original_id": "en-d-021",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 21,
+          "original_id": "en-d-022",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 22,
+          "original_id": "en-d-023",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 23,
+          "original_id": "en-d-024",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 24,
+          "original_id": "en-d-025",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 25,
+          "original_id": "en-d-026",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 26,
+          "original_id": "en-d-027",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 27,
+          "original_id": "en-d-028",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 28,
+          "original_id": "en-d-029",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 29,
+          "original_id": "en-d-030",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 30,
+          "original_id": "en-d-031",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 31,
+          "original_id": "en-d-032",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 32,
+          "original_id": "en-d-033",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 33,
+          "original_id": "en-d-034",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 34,
+          "original_id": "en-d-035",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 35,
+          "original_id": "en-d-036",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 36,
+          "original_id": "en-d-037",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 37,
+          "original_id": "en-d-038",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 38,
+          "original_id": "en-d-039",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 39,
+          "original_id": "en-d-040",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 40,
+          "original_id": "en-d-041",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 41,
+          "original_id": "en-d-042",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 42,
+          "original_id": "en-d-043",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 43,
+          "original_id": "en-d-044",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 44,
+          "original_id": "en-d-045",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 45,
+          "original_id": "en-d-046",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 46,
+          "original_id": "en-d-047",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 47,
+          "original_id": "en-d-048",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 48,
+          "original_id": "en-d-049",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 49,
+          "original_id": "en-d-050",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 50,
+          "original_id": "en-d-051",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 51,
+          "original_id": "en-d-052",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 52,
+          "original_id": "en-d-053",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 53,
+          "original_id": "en-d-054",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 54,
+          "original_id": "en-d-055",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 55,
+          "original_id": "en-d-056",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 56,
+          "original_id": "en-d-057",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 57,
+          "original_id": "en-d-058",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 58,
+          "original_id": "en-d-059",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 59,
+          "original_id": "en-d-060",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 60,
+          "original_id": "en-d-061",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 61,
+          "original_id": "en-d-062",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 62,
+          "original_id": "en-d-063",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 63,
+          "original_id": "en-d-064",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 64,
+          "original_id": "en-d-065",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 65,
+          "original_id": "en-d-066",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 66,
+          "original_id": "en-d-067",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 67,
+          "original_id": "en-d-068",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 68,
+          "original_id": "en-d-069",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 69,
+          "original_id": "en-d-070",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 70,
+          "original_id": "en-d-071",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 71,
+          "original_id": "en-d-072",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 72,
+          "original_id": "en-d-073",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 73,
+          "original_id": "en-d-074",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 74,
+          "original_id": "en-d-075",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 75,
+          "original_id": "en-d-076",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 76,
+          "original_id": "en-d-077",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 77,
+          "original_id": "en-d-078",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 78,
+          "original_id": "en-d-079",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 79,
+          "original_id": "en-d-080",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 80,
+          "original_id": "en-d-081",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 81,
+          "original_id": "en-d-082",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 82,
+          "original_id": "en-d-083",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 83,
+          "original_id": "en-d-084",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 84,
+          "original_id": "en-d-085",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 85,
+          "original_id": "en-d-086",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 86,
+          "original_id": "en-d-087",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 87,
+          "original_id": "en-d-088",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 88,
+          "original_id": "en-d-089",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 89,
+          "original_id": "en-d-090",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 90,
+          "original_id": "en-d-091",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 91,
+          "original_id": "en-d-092",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 92,
+          "original_id": "en-d-093",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 93,
+          "original_id": "en-d-094",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 94,
+          "original_id": "en-d-095",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 95,
+          "original_id": "en-d-096",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 96,
+          "original_id": "en-d-097",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 97,
+          "original_id": "en-d-098",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 98,
+          "original_id": "en-d-099",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 99,
+          "original_id": "en-d-100",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 100,
+          "original_id": "en-d-101",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 101,
+          "original_id": "en-d-102",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 102,
+          "original_id": "en-d-103",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 103,
+          "original_id": "en-d-104",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 104,
+          "original_id": "en-d-105",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 105,
+          "original_id": "en-d-106",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 106,
+          "original_id": "en-d-107",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 107,
+          "original_id": "en-d-108",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 108,
+          "original_id": "en-d-109",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 109,
+          "original_id": "en-d-110",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 110,
+          "original_id": "en-d-111",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 111,
+          "original_id": "en-d-112",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 112,
+          "original_id": "en-d-113",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 113,
+          "original_id": "en-d-114",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 114,
+          "original_id": "en-d-115",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 115,
+          "original_id": "en-d-116",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 116,
+          "original_id": "en-d-117",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 117,
+          "original_id": "en-d-118",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 118,
+          "original_id": "en-d-119",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 119,
+          "original_id": "en-d-120",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 120,
+          "original_id": "en-d-121",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 121,
+          "original_id": "en-d-122",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 122,
+          "original_id": "en-d-123",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 123,
+          "original_id": "en-d-124",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 124,
+          "original_id": "en-d-125",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 125,
+          "original_id": "en-d-126",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 126,
+          "original_id": "en-d-127",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 127,
+          "original_id": "en-d-128",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 128,
+          "original_id": "en-d-129",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 129,
+          "original_id": "en-d-130",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 130,
+          "original_id": "en-d-131",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 131,
+          "original_id": "en-d-132",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 132,
+          "original_id": "en-d-133",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 133,
+          "original_id": "en-d-134",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 134,
+          "original_id": "en-d-135",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 135,
+          "original_id": "en-d-136",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 136,
+          "original_id": "en-d-137",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 137,
+          "original_id": "en-d-138",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 138,
+          "original_id": "en-d-139",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 139,
+          "original_id": "en-d-140",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 140,
+          "original_id": "en-d-141",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 141,
+          "original_id": "en-d-142",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 142,
+          "original_id": "en-d-143",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 143,
+          "original_id": "en-d-144",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 144,
+          "original_id": "en-d-145",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 145,
+          "original_id": "en-d-146",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 146,
+          "original_id": "en-d-147",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 147,
+          "original_id": "en-d-148",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 148,
+          "original_id": "en-d-149",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 149,
+          "original_id": "en-d-150",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 150,
+          "original_id": "en-d-151",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 151,
+          "original_id": "en-d-152",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 152,
+          "original_id": "en-d-153",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 153,
+          "original_id": "en-d-154",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 154,
+          "original_id": "en-d-155",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 155,
+          "original_id": "en-d-156",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 156,
+          "original_id": "en-d-157",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 157,
+          "original_id": "en-d-158",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 158,
+          "original_id": "en-d-159",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 159,
+          "original_id": "en-d-160",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 160,
+          "original_id": "en-d-161",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 161,
+          "original_id": "en-d-162",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 162,
+          "original_id": "en-d-163",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 163,
+          "original_id": "en-d-164",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 164,
+          "original_id": "en-d-165",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 165,
+          "original_id": "en-d-166",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 166,
+          "original_id": "en-d-167",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 167,
+          "original_id": "en-d-168",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 168,
+          "original_id": "en-d-169",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 169,
+          "original_id": "en-d-170",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 170,
+          "original_id": "en-d-171",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 171,
+          "original_id": "en-d-172",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 172,
+          "original_id": "en-d-173",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 173,
+          "original_id": "en-d-174",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 174,
+          "original_id": "en-d-175",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 175,
+          "original_id": "en-d-176",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 176,
+          "original_id": "en-d-177",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 177,
+          "original_id": "en-d-178",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 178,
+          "original_id": "en-d-179",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 179,
+          "original_id": "en-d-180",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 180,
+          "original_id": "en-d-181",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 181,
+          "original_id": "en-d-182",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 182,
+          "original_id": "en-d-183",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 183,
+          "original_id": "en-d-184",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 184,
+          "original_id": "en-d-185",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 185,
+          "original_id": "en-d-186",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 186,
+          "original_id": "en-d-187",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 187,
+          "original_id": "en-d-188",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 188,
+          "original_id": "en-d-189",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 189,
+          "original_id": "en-d-190",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 190,
+          "original_id": "en-d-191",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 191,
+          "original_id": "en-d-192",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 192,
+          "original_id": "en-d-193",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 193,
+          "original_id": "en-d-194",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 194,
+          "original_id": "en-d-195",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 195,
+          "original_id": "en-d-196",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 196,
+          "original_id": "en-d-197",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 197,
+          "original_id": "en-d-198",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 198,
+          "original_id": "en-d-199",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 199,
+          "original_id": "en-d-200",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 200,
+          "original_id": "en-d-201",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 201,
+          "original_id": "en-d-202",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 202,
+          "original_id": "en-d-203",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 203,
+          "original_id": "en-d-204",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 204,
+          "original_id": "en-d-205",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 205,
+          "original_id": "en-d-206",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 206,
+          "original_id": "en-d-207",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 207,
+          "original_id": "en-d-208",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 208,
+          "original_id": "en-d-209",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 209,
+          "original_id": "en-d-210",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 210,
+          "original_id": "en-d-211",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 211,
+          "original_id": "en-d-212",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 212,
+          "original_id": "en-d-213",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 213,
+          "original_id": "en-d-214",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 214,
+          "original_id": "en-d-215",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 215,
+          "original_id": "en-d-216",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 216,
+          "original_id": "en-d-217",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 217,
+          "original_id": "en-d-218",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 218,
+          "original_id": "en-d-219",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 219,
+          "original_id": "en-d-220",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 220,
+          "original_id": "en-d-221",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 221,
+          "original_id": "en-d-222",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 222,
+          "original_id": "en-d-223",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 223,
+          "original_id": "en-d-224",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 224,
+          "original_id": "en-d-225",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 225,
+          "original_id": "en-d-226",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 226,
+          "original_id": "en-d-227",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 227,
+          "original_id": "en-d-228",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 228,
+          "original_id": "en-d-229",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 229,
+          "original_id": "en-d-230",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 230,
+          "original_id": "en-d-231",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 231,
+          "original_id": "en-d-232",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 232,
+          "original_id": "en-d-233",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 233,
+          "original_id": "en-d-234",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 234,
+          "original_id": "en-d-235",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 235,
+          "original_id": "en-d-236",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 236,
+          "original_id": "en-d-237",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 237,
+          "original_id": "en-d-238",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 238,
+          "original_id": "en-d-239",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 239,
+          "original_id": "en-d-240",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 240,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 241,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 242,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 243,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 244,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 245,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 246,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 247,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 248,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 249,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 250,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 251,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 252,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 253,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 254,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 255,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 256,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 257,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 258,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 259,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 260,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 261,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 262,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 263,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 264,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 265,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 266,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 267,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 268,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 269,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 270,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 271,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 272,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 273,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 274,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 275,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 276,
+          "original_id": "",
+          "cohort": 3,
+          "label": 2,
+          "category": "empty",
+          "stratum": "empty"
+        }
+      ]
+    },
+    {
+      "language": "es",
+      "count": 277,
+      "development": 240,
+      "controls": 37,
+      "sha256": "d380124502043fe17535aa016cb30b381453e46ae8ae6e33b72e4d766ed62bd9",
+      "old_queries_sha256": "d5425f8c48f9dc6a4c908c1d82e9726fa0b61094d300c3234b88af79c4c787bb",
+      "words_sha256": "0a304ca9c3269498f82e573b44c9b80f4135e6e596ed947205cfa26b6f4530dd",
+      "inputs_sha256": "f364dba1f5a87e7eef9afa6e6c7e2f0c12674493e1f24a8efd2b1c61bbf00a95",
+      "queries": [
+        {
+          "id": 1000,
+          "original_id": "es-d-001",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1001,
+          "original_id": "es-d-002",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1002,
+          "original_id": "es-d-003",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1003,
+          "original_id": "es-d-004",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1004,
+          "original_id": "es-d-005",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1005,
+          "original_id": "es-d-006",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1006,
+          "original_id": "es-d-007",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1007,
+          "original_id": "es-d-008",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1008,
+          "original_id": "es-d-009",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1009,
+          "original_id": "es-d-010",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1010,
+          "original_id": "es-d-011",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1011,
+          "original_id": "es-d-012",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1012,
+          "original_id": "es-d-013",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1013,
+          "original_id": "es-d-014",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1014,
+          "original_id": "es-d-015",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1015,
+          "original_id": "es-d-016",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1016,
+          "original_id": "es-d-017",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1017,
+          "original_id": "es-d-018",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1018,
+          "original_id": "es-d-019",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1019,
+          "original_id": "es-d-020",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1020,
+          "original_id": "es-d-021",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1021,
+          "original_id": "es-d-022",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1022,
+          "original_id": "es-d-023",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1023,
+          "original_id": "es-d-024",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1024,
+          "original_id": "es-d-025",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1025,
+          "original_id": "es-d-026",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1026,
+          "original_id": "es-d-027",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1027,
+          "original_id": "es-d-028",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1028,
+          "original_id": "es-d-029",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1029,
+          "original_id": "es-d-030",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1030,
+          "original_id": "es-d-031",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1031,
+          "original_id": "es-d-032",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1032,
+          "original_id": "es-d-033",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1033,
+          "original_id": "es-d-034",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1034,
+          "original_id": "es-d-035",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1035,
+          "original_id": "es-d-036",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1036,
+          "original_id": "es-d-037",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1037,
+          "original_id": "es-d-038",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1038,
+          "original_id": "es-d-039",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1039,
+          "original_id": "es-d-040",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1040,
+          "original_id": "es-d-041",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1041,
+          "original_id": "es-d-042",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1042,
+          "original_id": "es-d-043",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1043,
+          "original_id": "es-d-044",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1044,
+          "original_id": "es-d-045",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1045,
+          "original_id": "es-d-046",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1046,
+          "original_id": "es-d-047",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1047,
+          "original_id": "es-d-048",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1048,
+          "original_id": "es-d-049",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1049,
+          "original_id": "es-d-050",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1050,
+          "original_id": "es-d-051",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1051,
+          "original_id": "es-d-052",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1052,
+          "original_id": "es-d-053",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1053,
+          "original_id": "es-d-054",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1054,
+          "original_id": "es-d-055",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1055,
+          "original_id": "es-d-056",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1056,
+          "original_id": "es-d-057",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1057,
+          "original_id": "es-d-058",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1058,
+          "original_id": "es-d-059",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1059,
+          "original_id": "es-d-060",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1060,
+          "original_id": "es-d-061",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1061,
+          "original_id": "es-d-062",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1062,
+          "original_id": "es-d-063",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1063,
+          "original_id": "es-d-064",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1064,
+          "original_id": "es-d-065",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1065,
+          "original_id": "es-d-066",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1066,
+          "original_id": "es-d-067",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1067,
+          "original_id": "es-d-068",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1068,
+          "original_id": "es-d-069",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1069,
+          "original_id": "es-d-070",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1070,
+          "original_id": "es-d-071",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1071,
+          "original_id": "es-d-072",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1072,
+          "original_id": "es-d-073",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1073,
+          "original_id": "es-d-074",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1074,
+          "original_id": "es-d-075",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1075,
+          "original_id": "es-d-076",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1076,
+          "original_id": "es-d-077",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1077,
+          "original_id": "es-d-078",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1078,
+          "original_id": "es-d-079",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1079,
+          "original_id": "es-d-080",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1080,
+          "original_id": "es-d-081",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1081,
+          "original_id": "es-d-082",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1082,
+          "original_id": "es-d-083",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1083,
+          "original_id": "es-d-084",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1084,
+          "original_id": "es-d-085",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1085,
+          "original_id": "es-d-086",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1086,
+          "original_id": "es-d-087",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1087,
+          "original_id": "es-d-088",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1088,
+          "original_id": "es-d-089",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1089,
+          "original_id": "es-d-090",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1090,
+          "original_id": "es-d-091",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1091,
+          "original_id": "es-d-092",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1092,
+          "original_id": "es-d-093",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1093,
+          "original_id": "es-d-094",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1094,
+          "original_id": "es-d-095",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1095,
+          "original_id": "es-d-096",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1096,
+          "original_id": "es-d-097",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1097,
+          "original_id": "es-d-098",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1098,
+          "original_id": "es-d-099",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1099,
+          "original_id": "es-d-100",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1100,
+          "original_id": "es-d-101",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1101,
+          "original_id": "es-d-102",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1102,
+          "original_id": "es-d-103",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1103,
+          "original_id": "es-d-104",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1104,
+          "original_id": "es-d-105",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1105,
+          "original_id": "es-d-106",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1106,
+          "original_id": "es-d-107",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1107,
+          "original_id": "es-d-108",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1108,
+          "original_id": "es-d-109",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1109,
+          "original_id": "es-d-110",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1110,
+          "original_id": "es-d-111",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1111,
+          "original_id": "es-d-112",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1112,
+          "original_id": "es-d-113",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1113,
+          "original_id": "es-d-114",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1114,
+          "original_id": "es-d-115",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1115,
+          "original_id": "es-d-116",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1116,
+          "original_id": "es-d-117",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1117,
+          "original_id": "es-d-118",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1118,
+          "original_id": "es-d-119",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1119,
+          "original_id": "es-d-120",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1120,
+          "original_id": "es-d-121",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1121,
+          "original_id": "es-d-122",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1122,
+          "original_id": "es-d-123",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1123,
+          "original_id": "es-d-124",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1124,
+          "original_id": "es-d-125",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1125,
+          "original_id": "es-d-126",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1126,
+          "original_id": "es-d-127",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1127,
+          "original_id": "es-d-128",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1128,
+          "original_id": "es-d-129",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1129,
+          "original_id": "es-d-130",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1130,
+          "original_id": "es-d-131",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1131,
+          "original_id": "es-d-132",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1132,
+          "original_id": "es-d-133",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1133,
+          "original_id": "es-d-134",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1134,
+          "original_id": "es-d-135",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1135,
+          "original_id": "es-d-136",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1136,
+          "original_id": "es-d-137",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1137,
+          "original_id": "es-d-138",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1138,
+          "original_id": "es-d-139",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1139,
+          "original_id": "es-d-140",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1140,
+          "original_id": "es-d-141",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1141,
+          "original_id": "es-d-142",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1142,
+          "original_id": "es-d-143",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1143,
+          "original_id": "es-d-144",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1144,
+          "original_id": "es-d-145",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1145,
+          "original_id": "es-d-146",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1146,
+          "original_id": "es-d-147",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1147,
+          "original_id": "es-d-148",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1148,
+          "original_id": "es-d-149",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1149,
+          "original_id": "es-d-150",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1150,
+          "original_id": "es-d-151",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1151,
+          "original_id": "es-d-152",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1152,
+          "original_id": "es-d-153",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1153,
+          "original_id": "es-d-154",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1154,
+          "original_id": "es-d-155",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1155,
+          "original_id": "es-d-156",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1156,
+          "original_id": "es-d-157",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1157,
+          "original_id": "es-d-158",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1158,
+          "original_id": "es-d-159",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1159,
+          "original_id": "es-d-160",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1160,
+          "original_id": "es-d-161",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1161,
+          "original_id": "es-d-162",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1162,
+          "original_id": "es-d-163",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1163,
+          "original_id": "es-d-164",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1164,
+          "original_id": "es-d-165",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1165,
+          "original_id": "es-d-166",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1166,
+          "original_id": "es-d-167",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1167,
+          "original_id": "es-d-168",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1168,
+          "original_id": "es-d-169",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1169,
+          "original_id": "es-d-170",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1170,
+          "original_id": "es-d-171",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1171,
+          "original_id": "es-d-172",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1172,
+          "original_id": "es-d-173",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1173,
+          "original_id": "es-d-174",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1174,
+          "original_id": "es-d-175",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1175,
+          "original_id": "es-d-176",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1176,
+          "original_id": "es-d-177",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1177,
+          "original_id": "es-d-178",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1178,
+          "original_id": "es-d-179",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1179,
+          "original_id": "es-d-180",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1180,
+          "original_id": "es-d-181",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1181,
+          "original_id": "es-d-182",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1182,
+          "original_id": "es-d-183",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1183,
+          "original_id": "es-d-184",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1184,
+          "original_id": "es-d-185",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1185,
+          "original_id": "es-d-186",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1186,
+          "original_id": "es-d-187",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1187,
+          "original_id": "es-d-188",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1188,
+          "original_id": "es-d-189",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1189,
+          "original_id": "es-d-190",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1190,
+          "original_id": "es-d-191",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1191,
+          "original_id": "es-d-192",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1192,
+          "original_id": "es-d-193",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1193,
+          "original_id": "es-d-194",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1194,
+          "original_id": "es-d-195",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1195,
+          "original_id": "es-d-196",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1196,
+          "original_id": "es-d-197",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1197,
+          "original_id": "es-d-198",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1198,
+          "original_id": "es-d-199",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1199,
+          "original_id": "es-d-200",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1200,
+          "original_id": "es-d-201",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1201,
+          "original_id": "es-d-202",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1202,
+          "original_id": "es-d-203",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1203,
+          "original_id": "es-d-204",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1204,
+          "original_id": "es-d-205",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1205,
+          "original_id": "es-d-206",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1206,
+          "original_id": "es-d-207",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1207,
+          "original_id": "es-d-208",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1208,
+          "original_id": "es-d-209",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1209,
+          "original_id": "es-d-210",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1210,
+          "original_id": "es-d-211",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1211,
+          "original_id": "es-d-212",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1212,
+          "original_id": "es-d-213",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1213,
+          "original_id": "es-d-214",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1214,
+          "original_id": "es-d-215",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1215,
+          "original_id": "es-d-216",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1216,
+          "original_id": "es-d-217",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1217,
+          "original_id": "es-d-218",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1218,
+          "original_id": "es-d-219",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1219,
+          "original_id": "es-d-220",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1220,
+          "original_id": "es-d-221",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1221,
+          "original_id": "es-d-222",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1222,
+          "original_id": "es-d-223",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1223,
+          "original_id": "es-d-224",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1224,
+          "original_id": "es-d-225",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1225,
+          "original_id": "es-d-226",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1226,
+          "original_id": "es-d-227",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1227,
+          "original_id": "es-d-228",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1228,
+          "original_id": "es-d-229",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1229,
+          "original_id": "es-d-230",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1230,
+          "original_id": "es-d-231",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1231,
+          "original_id": "es-d-232",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1232,
+          "original_id": "es-d-233",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1233,
+          "original_id": "es-d-234",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1234,
+          "original_id": "es-d-235",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1235,
+          "original_id": "es-d-236",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1236,
+          "original_id": "es-d-237",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1237,
+          "original_id": "es-d-238",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1238,
+          "original_id": "es-d-239",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1239,
+          "original_id": "es-d-240",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1240,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1241,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1242,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1243,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1244,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1245,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1246,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1247,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1248,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1249,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1250,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1251,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1252,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1253,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1254,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1255,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1256,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1257,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1258,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1259,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1260,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1261,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1262,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1263,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1264,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1265,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1266,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1267,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1268,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1269,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1270,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1271,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1272,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1273,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 1274,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 1275,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 1276,
+          "original_id": "",
+          "cohort": 3,
+          "label": 2,
+          "category": "empty",
+          "stratum": "empty"
+        }
+      ]
+    },
+    {
+      "language": "ru",
+      "count": 277,
+      "development": 240,
+      "controls": 37,
+      "sha256": "5b830a33c475ef675c786dc3fa4a922b992d24ccc82bea3b3fc70c3d46260f79",
+      "old_queries_sha256": "bfbe2e7f79b902c3d9442061c332c932d8758f2b24611058c6ea0c60abf475bf",
+      "words_sha256": "b54c01203aad985845c7b79116e57b818fde5e647f66f735bddb0b3239249401",
+      "inputs_sha256": "72feb5c2f05796a63fd1684bba7e50e4f307e75124b307a3f0914ce9bfa3f9ee",
+      "queries": [
+        {
+          "id": 2000,
+          "original_id": "ru-d-001",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2001,
+          "original_id": "ru-d-002",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2002,
+          "original_id": "ru-d-003",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2003,
+          "original_id": "ru-d-004",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2004,
+          "original_id": "ru-d-005",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2005,
+          "original_id": "ru-d-006",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2006,
+          "original_id": "ru-d-007",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2007,
+          "original_id": "ru-d-008",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2008,
+          "original_id": "ru-d-009",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2009,
+          "original_id": "ru-d-010",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2010,
+          "original_id": "ru-d-011",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2011,
+          "original_id": "ru-d-012",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2012,
+          "original_id": "ru-d-013",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2013,
+          "original_id": "ru-d-014",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2014,
+          "original_id": "ru-d-015",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2015,
+          "original_id": "ru-d-016",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2016,
+          "original_id": "ru-d-017",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2017,
+          "original_id": "ru-d-018",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2018,
+          "original_id": "ru-d-019",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2019,
+          "original_id": "ru-d-020",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2020,
+          "original_id": "ru-d-021",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2021,
+          "original_id": "ru-d-022",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2022,
+          "original_id": "ru-d-023",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2023,
+          "original_id": "ru-d-024",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2024,
+          "original_id": "ru-d-025",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2025,
+          "original_id": "ru-d-026",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2026,
+          "original_id": "ru-d-027",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2027,
+          "original_id": "ru-d-028",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2028,
+          "original_id": "ru-d-029",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2029,
+          "original_id": "ru-d-030",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2030,
+          "original_id": "ru-d-031",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2031,
+          "original_id": "ru-d-032",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2032,
+          "original_id": "ru-d-033",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2033,
+          "original_id": "ru-d-034",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2034,
+          "original_id": "ru-d-035",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2035,
+          "original_id": "ru-d-036",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2036,
+          "original_id": "ru-d-037",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2037,
+          "original_id": "ru-d-038",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2038,
+          "original_id": "ru-d-039",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2039,
+          "original_id": "ru-d-040",
+          "cohort": 0,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2040,
+          "original_id": "ru-d-041",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2041,
+          "original_id": "ru-d-042",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2042,
+          "original_id": "ru-d-043",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2043,
+          "original_id": "ru-d-044",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2044,
+          "original_id": "ru-d-045",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2045,
+          "original_id": "ru-d-046",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2046,
+          "original_id": "ru-d-047",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2047,
+          "original_id": "ru-d-048",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2048,
+          "original_id": "ru-d-049",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2049,
+          "original_id": "ru-d-050",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2050,
+          "original_id": "ru-d-051",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2051,
+          "original_id": "ru-d-052",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2052,
+          "original_id": "ru-d-053",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2053,
+          "original_id": "ru-d-054",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2054,
+          "original_id": "ru-d-055",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2055,
+          "original_id": "ru-d-056",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2056,
+          "original_id": "ru-d-057",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2057,
+          "original_id": "ru-d-058",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2058,
+          "original_id": "ru-d-059",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2059,
+          "original_id": "ru-d-060",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2060,
+          "original_id": "ru-d-061",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2061,
+          "original_id": "ru-d-062",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2062,
+          "original_id": "ru-d-063",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2063,
+          "original_id": "ru-d-064",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2064,
+          "original_id": "ru-d-065",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2065,
+          "original_id": "ru-d-066",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2066,
+          "original_id": "ru-d-067",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2067,
+          "original_id": "ru-d-068",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2068,
+          "original_id": "ru-d-069",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2069,
+          "original_id": "ru-d-070",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2070,
+          "original_id": "ru-d-071",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2071,
+          "original_id": "ru-d-072",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2072,
+          "original_id": "ru-d-073",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2073,
+          "original_id": "ru-d-074",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2074,
+          "original_id": "ru-d-075",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2075,
+          "original_id": "ru-d-076",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2076,
+          "original_id": "ru-d-077",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2077,
+          "original_id": "ru-d-078",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2078,
+          "original_id": "ru-d-079",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2079,
+          "original_id": "ru-d-080",
+          "cohort": 0,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2080,
+          "original_id": "ru-d-081",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2081,
+          "original_id": "ru-d-082",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2082,
+          "original_id": "ru-d-083",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2083,
+          "original_id": "ru-d-084",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2084,
+          "original_id": "ru-d-085",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2085,
+          "original_id": "ru-d-086",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2086,
+          "original_id": "ru-d-087",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2087,
+          "original_id": "ru-d-088",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2088,
+          "original_id": "ru-d-089",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2089,
+          "original_id": "ru-d-090",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2090,
+          "original_id": "ru-d-091",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2091,
+          "original_id": "ru-d-092",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2092,
+          "original_id": "ru-d-093",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2093,
+          "original_id": "ru-d-094",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2094,
+          "original_id": "ru-d-095",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2095,
+          "original_id": "ru-d-096",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2096,
+          "original_id": "ru-d-097",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2097,
+          "original_id": "ru-d-098",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2098,
+          "original_id": "ru-d-099",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2099,
+          "original_id": "ru-d-100",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2100,
+          "original_id": "ru-d-101",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2101,
+          "original_id": "ru-d-102",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2102,
+          "original_id": "ru-d-103",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2103,
+          "original_id": "ru-d-104",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2104,
+          "original_id": "ru-d-105",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2105,
+          "original_id": "ru-d-106",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2106,
+          "original_id": "ru-d-107",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2107,
+          "original_id": "ru-d-108",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2108,
+          "original_id": "ru-d-109",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2109,
+          "original_id": "ru-d-110",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2110,
+          "original_id": "ru-d-111",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2111,
+          "original_id": "ru-d-112",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2112,
+          "original_id": "ru-d-113",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2113,
+          "original_id": "ru-d-114",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2114,
+          "original_id": "ru-d-115",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2115,
+          "original_id": "ru-d-116",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2116,
+          "original_id": "ru-d-117",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2117,
+          "original_id": "ru-d-118",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2118,
+          "original_id": "ru-d-119",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2119,
+          "original_id": "ru-d-120",
+          "cohort": 0,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2120,
+          "original_id": "ru-d-121",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2121,
+          "original_id": "ru-d-122",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2122,
+          "original_id": "ru-d-123",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2123,
+          "original_id": "ru-d-124",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2124,
+          "original_id": "ru-d-125",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2125,
+          "original_id": "ru-d-126",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2126,
+          "original_id": "ru-d-127",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2127,
+          "original_id": "ru-d-128",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2128,
+          "original_id": "ru-d-129",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2129,
+          "original_id": "ru-d-130",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2130,
+          "original_id": "ru-d-131",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2131,
+          "original_id": "ru-d-132",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2132,
+          "original_id": "ru-d-133",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2133,
+          "original_id": "ru-d-134",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2134,
+          "original_id": "ru-d-135",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2135,
+          "original_id": "ru-d-136",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2136,
+          "original_id": "ru-d-137",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2137,
+          "original_id": "ru-d-138",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2138,
+          "original_id": "ru-d-139",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2139,
+          "original_id": "ru-d-140",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2140,
+          "original_id": "ru-d-141",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2141,
+          "original_id": "ru-d-142",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2142,
+          "original_id": "ru-d-143",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2143,
+          "original_id": "ru-d-144",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2144,
+          "original_id": "ru-d-145",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2145,
+          "original_id": "ru-d-146",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2146,
+          "original_id": "ru-d-147",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2147,
+          "original_id": "ru-d-148",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2148,
+          "original_id": "ru-d-149",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2149,
+          "original_id": "ru-d-150",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2150,
+          "original_id": "ru-d-151",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2151,
+          "original_id": "ru-d-152",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2152,
+          "original_id": "ru-d-153",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2153,
+          "original_id": "ru-d-154",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2154,
+          "original_id": "ru-d-155",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2155,
+          "original_id": "ru-d-156",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2156,
+          "original_id": "ru-d-157",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2157,
+          "original_id": "ru-d-158",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2158,
+          "original_id": "ru-d-159",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2159,
+          "original_id": "ru-d-160",
+          "cohort": 0,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2160,
+          "original_id": "ru-d-161",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2161,
+          "original_id": "ru-d-162",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2162,
+          "original_id": "ru-d-163",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2163,
+          "original_id": "ru-d-164",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2164,
+          "original_id": "ru-d-165",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2165,
+          "original_id": "ru-d-166",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2166,
+          "original_id": "ru-d-167",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2167,
+          "original_id": "ru-d-168",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2168,
+          "original_id": "ru-d-169",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2169,
+          "original_id": "ru-d-170",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2170,
+          "original_id": "ru-d-171",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2171,
+          "original_id": "ru-d-172",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2172,
+          "original_id": "ru-d-173",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2173,
+          "original_id": "ru-d-174",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2174,
+          "original_id": "ru-d-175",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2175,
+          "original_id": "ru-d-176",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2176,
+          "original_id": "ru-d-177",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2177,
+          "original_id": "ru-d-178",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2178,
+          "original_id": "ru-d-179",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2179,
+          "original_id": "ru-d-180",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2180,
+          "original_id": "ru-d-181",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2181,
+          "original_id": "ru-d-182",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2182,
+          "original_id": "ru-d-183",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2183,
+          "original_id": "ru-d-184",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2184,
+          "original_id": "ru-d-185",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2185,
+          "original_id": "ru-d-186",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2186,
+          "original_id": "ru-d-187",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2187,
+          "original_id": "ru-d-188",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2188,
+          "original_id": "ru-d-189",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2189,
+          "original_id": "ru-d-190",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2190,
+          "original_id": "ru-d-191",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2191,
+          "original_id": "ru-d-192",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2192,
+          "original_id": "ru-d-193",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2193,
+          "original_id": "ru-d-194",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2194,
+          "original_id": "ru-d-195",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2195,
+          "original_id": "ru-d-196",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2196,
+          "original_id": "ru-d-197",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2197,
+          "original_id": "ru-d-198",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2198,
+          "original_id": "ru-d-199",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2199,
+          "original_id": "ru-d-200",
+          "cohort": 0,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2200,
+          "original_id": "ru-d-201",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2201,
+          "original_id": "ru-d-202",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2202,
+          "original_id": "ru-d-203",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2203,
+          "original_id": "ru-d-204",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2204,
+          "original_id": "ru-d-205",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2205,
+          "original_id": "ru-d-206",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2206,
+          "original_id": "ru-d-207",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2207,
+          "original_id": "ru-d-208",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2208,
+          "original_id": "ru-d-209",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2209,
+          "original_id": "ru-d-210",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2210,
+          "original_id": "ru-d-211",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2211,
+          "original_id": "ru-d-212",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2212,
+          "original_id": "ru-d-213",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2213,
+          "original_id": "ru-d-214",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2214,
+          "original_id": "ru-d-215",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2215,
+          "original_id": "ru-d-216",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2216,
+          "original_id": "ru-d-217",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2217,
+          "original_id": "ru-d-218",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2218,
+          "original_id": "ru-d-219",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2219,
+          "original_id": "ru-d-220",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2220,
+          "original_id": "ru-d-221",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2221,
+          "original_id": "ru-d-222",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2222,
+          "original_id": "ru-d-223",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2223,
+          "original_id": "ru-d-224",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2224,
+          "original_id": "ru-d-225",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2225,
+          "original_id": "ru-d-226",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2226,
+          "original_id": "ru-d-227",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2227,
+          "original_id": "ru-d-228",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2228,
+          "original_id": "ru-d-229",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2229,
+          "original_id": "ru-d-230",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2230,
+          "original_id": "ru-d-231",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2231,
+          "original_id": "ru-d-232",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2232,
+          "original_id": "ru-d-233",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2233,
+          "original_id": "ru-d-234",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2234,
+          "original_id": "ru-d-235",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2235,
+          "original_id": "ru-d-236",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2236,
+          "original_id": "ru-d-237",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2237,
+          "original_id": "ru-d-238",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2238,
+          "original_id": "ru-d-239",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2239,
+          "original_id": "ru-d-240",
+          "cohort": 0,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2240,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2241,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2242,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2243,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2244,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2245,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2246,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2247,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2248,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2249,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2250,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2251,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2252,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2253,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2254,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2255,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2256,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2257,
+          "original_id": "",
+          "cohort": 1,
+          "label": 1,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2258,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2259,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2260,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "adjacent-substitution",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2261,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2262,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2263,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "deletion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2264,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2265,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2266,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "insertion",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2267,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2268,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2269,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "repeated-character",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2270,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2271,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2272,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "transposition",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2273,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequency-5001-50000"
+        },
+        {
+          "id": 2274,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "frequent-1-5000"
+        },
+        {
+          "id": 2275,
+          "original_id": "",
+          "cohort": 2,
+          "label": 0,
+          "category": "two-edits",
+          "stratum": "wordforms-unranked"
+        },
+        {
+          "id": 2276,
+          "original_id": "",
+          "cohort": 3,
+          "label": 2,
+          "category": "empty",
+          "stratum": "empty"
+        }
+      ]
+    }
+  ],
+  "control_policy": "First source_word in each original category/stratum cell; 18 present, 18 source[:31]+U+10FFFF independently absent, one empty, per language. Controls reported separately; no holdout."
+}

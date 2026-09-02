@@ -1,0 +1,133 @@
+{
+  "seed": "rune-pr6-development-v1",
+  "split_rule": "SHA256(seed NUL language NUL canonical source word)[0] modulo 10: 0..6 development; 7..9 reserved and not used. Each source word used once; no external eval/holdout files read.",
+  "query_order": "category then fixed stratum quota, ascending source hash",
+  "qualification": "broader stratified synthetic development benchmark; not a natural user workload distribution",
+  "languages": [
+    {
+      "language": "en",
+      "queries": 240,
+      "unique_source_words": 240,
+      "input_sha256": "67f5299ebd264abb62518b01dae9ea36837d39dfcfe76d731983841bc9794d26",
+      "fixture_sha256": "ecd07052d199ff0cbcdf985203a94d23c46c2983f648c742dbad30cd97094875",
+      "categories": {
+        "deletion": 40,
+        "adjacent-substitution": 40,
+        "transposition": 40,
+        "repeated-character": 40,
+        "insertion": 40,
+        "two-edits": 40
+      },
+      "strata": {
+        "frequent-1-5000": 84,
+        "frequency-5001-50000": 78,
+        "wordforms-unranked": 78
+      },
+      "codepoint_lengths": {
+        "2": 1,
+        "3": 8,
+        "4": 14,
+        "5": 37,
+        "6": 44,
+        "7": 27,
+        "8": 29,
+        "9": 26,
+        "10": 23,
+        "11": 19,
+        "12": 7,
+        "13": 2,
+        "14": 2,
+        "15": 1
+      },
+      "excluded_during_generation": {
+        "valid-generated-token": 37,
+        "edit-category-or-radius": 3
+      }
+    },
+    {
+      "language": "es",
+      "queries": 240,
+      "unique_source_words": 240,
+      "input_sha256": "0a304ca9c3269498f82e573b44c9b80f4135e6e596ed947205cfa26b6f4530dd",
+      "fixture_sha256": "f364dba1f5a87e7eef9afa6e6c7e2f0c12674493e1f24a8efd2b1c61bbf00a95",
+      "categories": {
+        "deletion": 40,
+        "adjacent-substitution": 40,
+        "transposition": 40,
+        "repeated-character": 40,
+        "insertion": 40,
+        "two-edits": 40
+      },
+      "strata": {
+        "frequent-1-5000": 84,
+        "frequency-5001-50000": 78,
+        "wordforms-unranked": 78
+      },
+      "codepoint_lengths": {
+        "2": 3,
+        "3": 1,
+        "4": 16,
+        "5": 21,
+        "6": 26,
+        "7": 23,
+        "8": 36,
+        "9": 32,
+        "10": 30,
+        "11": 20,
+        "12": 12,
+        "13": 10,
+        "14": 4,
+        "15": 4,
+        "16": 1,
+        "19": 1
+      },
+      "excluded_during_generation": {
+        "valid-generated-token": 23,
+        "edit-category-or-radius": 1
+      }
+    },
+    {
+      "language": "ru",
+      "queries": 240,
+      "unique_source_words": 240,
+      "input_sha256": "b54c01203aad985845c7b79116e57b818fde5e647f66f735bddb0b3239249401",
+      "fixture_sha256": "72feb5c2f05796a63fd1684bba7e50e4f307e75124b307a3f0914ce9bfa3f9ee",
+      "categories": {
+        "deletion": 40,
+        "adjacent-substitution": 40,
+        "transposition": 40,
+        "repeated-character": 40,
+        "insertion": 40,
+        "two-edits": 40
+      },
+      "strata": {
+        "frequent-1-5000": 84,
+        "frequency-5001-50000": 78,
+        "wordforms-unranked": 78
+      },
+      "codepoint_lengths": {
+        "2": 2,
+        "3": 2,
+        "4": 9,
+        "5": 21,
+        "6": 43,
+        "7": 21,
+        "8": 29,
+        "9": 30,
+        "10": 18,
+        "11": 21,
+        "12": 17,
+        "13": 10,
+        "14": 4,
+        "15": 6,
+        "16": 5,
+        "18": 1,
+        "19": 1
+      },
+      "excluded_during_generation": {
+        "valid-generated-token": 8,
+        "edit-category-or-radius": 2
+      }
+    }
+  ]
+}
