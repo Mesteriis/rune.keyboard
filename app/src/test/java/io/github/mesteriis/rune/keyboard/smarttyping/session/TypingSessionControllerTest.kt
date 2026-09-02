@@ -15,6 +15,61 @@ class TypingSessionControllerTest {
     private val execute: (TypingEdit) -> Boolean = { edits.add(it); true }
 
     @Test
+    fun `original candidate selection is scoped to current session and revision without editor writes`() {
+        start()
+        controller.typeText("ab", execute)
+        val originalId = checkNotNull(controller.originalCandidateId)
+        val count = edits.size
+        assertTrue(controller.selectOriginal(originalId))
+        assertTrue(controller.state.originalSelected)
+        assertEquals(count, edits.size)
+        assertFalse(controller.selectOriginal(originalId))
+        assertTrue(originalId != controller.originalCandidateId)
+        val currentId = checkNotNull(controller.originalCandidateId)
+        start()
+        assertFalse(controller.selectOriginal(currentId))
+        assertNull(controller.originalCandidateId)
+    }
+
+    @Test
+    fun `selecting original protects the same word until its next boundary`() {
+        start()
+        controller.typeText("ab", execute)
+        assertTrue(controller.selectOriginal(checkNotNull(controller.originalCandidateId)))
+        controller.typeText("c", execute)
+        assertTrue(controller.state.originalSelected)
+        controller.typeText(" ", execute)
+        assertFalse(controller.state.originalSelected)
+        assertNull(controller.originalCandidateId)
+        controller.typeText("d", execute)
+        assertFalse(controller.state.originalSelected)
+        assertTrue(controller.originalCandidateId != null)
+    }
+
+    @Test
+    fun `deleting the entire selected original does not protect a later word`() {
+        start()
+        controller.typeText("a", execute)
+        controller.selectOriginal(checkNotNull(controller.originalCandidateId))
+        controller.deletePrevious(execute)
+        assertFalse(controller.state.originalSelected)
+        assertNull(controller.originalCandidateId)
+        controller.typeText("b", execute)
+        assertFalse(controller.state.originalSelected)
+    }
+
+    @Test
+    fun `editor invalidation rejects a pending original tap`() {
+        start()
+        controller.typeText("ab", execute)
+        val id = checkNotNull(controller.originalCandidateId)
+        selection(2, 2, -1, -1)
+        assertFalse(controller.selectOriginal(id))
+        assertNull(controller.originalCandidateId)
+        assertFalse(controller.state.originalSelected)
+    }
+
+    @Test
     fun `first letter composes and following letters replace only that span`() {
         start()
         assertEquals(TypingTextResult.HANDLED, controller.typeText("п", execute))

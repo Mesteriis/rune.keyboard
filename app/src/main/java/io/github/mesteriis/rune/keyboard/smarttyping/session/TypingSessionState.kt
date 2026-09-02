@@ -8,6 +8,7 @@ data class TypingSessionState(
     val contextText: String = "",
     val enabled: Boolean = false,
     val lastAutoEdit: UndoableTextEdit? = null,
+    val originalSelected: Boolean = false,
 ) {
     override fun toString(): String =
         "TypingSessionState(sessionId=$sessionId, revision=$revision, enabled=$enabled)"

@@ -49,10 +49,15 @@ publication is authorized by this resume.
 
 - First commit migrates double-space and Undo from KeyboardState into the typing owner. Only Rune-owned pending boundary/context may be transformed; unowned/unsupported text gets plain Space. The executor's legacy surrounding-text conversion/revert path is removed.
 - Ruling: preserve the existing double-space gesture's priority, but remove its ability to edit unowned editor text. This matches the 0.3 ownership/privacy contract; no additional editor reads are introduced.
-- Candidate-strip implementation is prepared separately under ignored build artifacts, with fixed cells/keysContainer and identity tests. Apply after the migration commit, then connect a real current-word Original consumer. Prototype code alone is not an implemented feature.
+- Candidate strip is integrated after the migration commit: permanent three cells and keys container, current-word Original consumer, session/revision IDs and explicit Original choice without editor writes. Corrections/punctuation remain later consumers.
 - PR2 tokenizer patch prototype passed host stage cancellation, 632 exact original/new token-sequence comparisons, and independent review. It remains unapplied to production until the native runtime slice.
 - Undo migration verification: fresh JVM 281/281 (275 app + 6 runtime), no failures/errors/skips; full required gates PASS (292 tasks, 51 executed); all 13 composing Binder scenarios PASS on API36 in 119.440 s, including the ineligible double-space fallback and zero surrounding reads for conversion/Undo. Independent review approved with no P1/P2; stale privacy comment corrected.
 - This migration is committed separately before strip integration. Autocorrection and mechanical-punctuation consumers are later slices; no placeholder edit subclasses or Undo stack are introduced.
+- Migration commit: `e22fdbd4fed9687baa00ee99996ff1e3194f584b`; fresh post-commit JVM 281/281 PASS.
+- Strip verification: fresh JVM 292/292 (286 app + 6 runtime); full prescribed gates PASS. API36 full suite initially 56/57 PASS in 492.582 s, with one unattached accessibility fixture failure. The fixture now attaches through ActivityScenario, preserving every assertion; all 10 component tests PASS in 6.881 s. Together 57 unique scenarios passed, including Original tap and sensitive editor transition through Binder. Independent integration and scoped fixture reviews approved.
+- Ruling: retain the failed initial log and distinguish combined unique-test coverage from a fresh complete rerun. API36 remains diagnostic and does not close API26/API37/Fold.
+- Official API37 ARM64 16 KiB image installed and a dedicated AVD created; API26 download continues. New local device evidence will be recorded separately.
+- Acceptance checkpoint: `docs/acceptance/2026-09-02-smart-typing-0.3-pr05.md`. Full-word autocorrection Undo still needs its later consumer and end-to-end test; only current owned-boundary Undo is qualified here.
 
 ### Historical PR1 result
 

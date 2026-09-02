@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="candidate_strip_height">48dp</dimen>
+  <dimen name="candidate_text_size">18sp</dimen>
+  <dimen name="candidate_horizontal_padding">8dp</dimen>
+  <string name="candidate_original">Original: %1$s</string>
+  <string name="candidate_correction">Correction: %1$s</string>
+  <string name="candidate_punctuation">Punctuation: %1$s</string>
+  <string name="candidate_keep_original">Keep original word</string>
+  <string name="candidate_apply_correction">Apply correction</string>
+  <string name="candidate_apply_punctuation">Apply punctuation</string>
+</resources>

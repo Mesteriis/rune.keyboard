@@ -37,6 +37,8 @@ import io.github.mesteriis.rune.keyboard.settings.ThemeOverride
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingEdit
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionController
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingTextResult
+import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
+import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
 
 class RuneInputMethodService : InputMethodService() {
     private val layoutProvider = KeyboardLayoutProvider()
@@ -79,6 +81,7 @@ class RuneInputMethodService : InputMethodService() {
 
     override fun onDestroy() {
         typingSession.endSession()
+        keyboardView?.updateCandidates(SmartTypingViewState.HIDDEN)
         keyboardPreferences.unregisterListener(preferencesListener)
         keyboardView = null
         super.onDestroy()
@@ -90,6 +93,7 @@ class RuneInputMethodService : InputMethodService() {
             RuneKeyboardView(themedContext, buildMetrics(themedContext)).also { view ->
                 keyboardView = view
                 view.setOnActionListener(::handleAction)
+                view.setOnCandidateSelectedListener(::handleCandidateSelection)
                 renderKeyboard()
             }
         }
@@ -112,6 +116,7 @@ class RuneInputMethodService : InputMethodService() {
             lastUsedLanguage = selectedLanguage,
         )
         selectedLanguage = state.language
+        renderCandidates()
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
@@ -141,6 +146,7 @@ class RuneInputMethodService : InputMethodService() {
         typingSession.updateSelection(
             newSelStart, newSelEnd, candidatesStart, candidatesEnd, ::executeTypingEdit,
         )
+        renderCandidates()
         refreshAutomaticCapitalization()
     }
 
@@ -148,6 +154,7 @@ class RuneInputMethodService : InputMethodService() {
         keyboardView?.cancelActiveTouches()
         typingSession.invalidate(::executeTypingEdit)
         if (finishingInput) typingSession.endSession()
+        renderCandidates()
         super.onFinishInputView(finishingInput)
     }
 
@@ -161,6 +168,7 @@ class RuneInputMethodService : InputMethodService() {
         keyboardView?.cancelActiveTouches()
         typingSession.finishComposition(::executeTypingEdit)
         typingSession.endSession()
+        renderCandidates()
         hasSelection = false
         super.onFinishInput()
     }
@@ -196,7 +204,7 @@ class RuneInputMethodService : InputMethodService() {
             val outcome = transition.command?.let(::executeTypingOrEditorCommand) ?: CommandOutcome.NO_COMMAND
             val stateChanged = state != previousState
             provideFeedback(action, stateChanged, outcome)
-            if (stateChanged) renderKeyboard()
+            if (stateChanged) renderKeyboard() else renderCandidates()
 
             if (mutatesText(transition.command)) {
                 keyboardView?.post(::refreshAutomaticCapitalization)
@@ -351,6 +359,29 @@ class RuneInputMethodService : InputMethodService() {
             )
         }
         view.render(layout, state)
+        renderCandidates()
+    }
+
+    private fun handleCandidateSelection(id: String) {
+        if (typingSession.selectOriginal(id)) renderCandidates()
+    }
+
+    private fun renderCandidates() {
+        val view = keyboardView ?: return
+        val typing = typingSession.state
+        val candidateId = typingSession.originalCandidateId
+        val word = typing.composing?.typedWord.orEmpty()
+        val candidateState = when {
+            !editorContext.supportsSmartTyping || !typing.enabled || state.layer != KeyboardLayer.LETTERS ->
+                SmartTypingViewState.HIDDEN
+            candidateId == null || word.isEmpty() -> SmartTypingViewState.EMPTY
+            else -> SmartTypingViewState(
+                enabled = true,
+                candidates = listOf(CandidateUiItem.Original(candidateId, word)),
+                selectedCandidateId = candidateId,
+            )
+        }
+        view.updateCandidates(candidateState)
     }
 
     private fun buildMetrics(themedContext: android.content.Context): KeyboardViewMetrics {

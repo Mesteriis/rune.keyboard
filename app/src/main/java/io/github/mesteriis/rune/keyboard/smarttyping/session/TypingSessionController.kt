@@ -26,6 +26,19 @@ class TypingSessionController internal constructor(
     private var awaitingEditorSelection = false
     private var plainWordUntilBoundary = false
 
+    val originalCandidateId: String?
+        get() = if (state.enabled && !awaitingEditorSelection &&
+            !state.composing?.typedWord.isNullOrEmpty()
+        ) "original:${state.sessionId}:${state.revision}" else null
+
+    /** A stale strip tap cannot select a different word or resurrect an earlier session. */
+    fun selectOriginal(candidateId: String): Boolean {
+        if (candidateId != originalCandidateId) return false
+        discardUndo()
+        state = state.copy(originalSelected = true, revision = state.revision + 1)
+        return true
+    }
+
     fun startSession(editor: EditorContext, selectionStart: Int, selectionEnd: Int) {
         endSession()
         val enabled = editor.supportsSmartTyping &&
@@ -83,7 +96,10 @@ class TypingSessionController internal constructor(
                 val caret = composingStart + edit.original.length
                 val expected = EditorSelection(caret, caret, composingStart, caret)
                 return applyEdit(TypingEdit.SetComposingText(edit.original), expected, execute) {
-                    state = state.copy(composing = edit.restoreComposition)
+                    state = state.copy(
+                        composing = edit.restoreComposition,
+                        originalSelected = edit.restoreComposition.typedWord.isNotEmpty(),
+                    )
                     context?.restore(edit.contextBefore)
                     publish()
                 }
@@ -108,7 +124,10 @@ class TypingSessionController internal constructor(
         }
         val result = applyEdit(TypingEdit.SetComposingText(shortened), expected, execute) {
             context?.removeLastGrapheme()
-            state = state.copy(composing = next ?: ComposingSegment())
+            state = state.copy(
+                composing = next ?: ComposingSegment(),
+                originalSelected = state.originalSelected && !next?.typedWord.isNullOrEmpty(),
+            )
             publish()
         }
         if (result != TypingTextResult.HANDLED || next != null) return result
@@ -119,7 +138,7 @@ class TypingSessionController internal constructor(
     fun finishComposition(execute: (TypingEdit) -> Boolean): Boolean {
         discardUndo()
         plainWordUntilBoundary = false
-        state = state.copy(revision = state.revision + 1)
+        state = state.copy(revision = state.revision + 1, originalSelected = false)
         if (state.composing == null) return true
         val expected = EditorSelection(selectionStart, selectionEnd, -1, -1)
         return applyEdit(TypingEdit.FinishComposingText, expected, execute) {
@@ -215,7 +234,10 @@ class TypingSessionController internal constructor(
         lastAcknowledgedSelection = null
         awaitingEditorSelection = false
         plainWordUntilBoundary = false
-        state = state.copy(composing = null, lastAutoEdit = null, revision = state.revision + 1)
+        state = state.copy(
+            composing = null, lastAutoEdit = null, originalSelected = false,
+            revision = state.revision + 1,
+        )
         composingStart = -1
         selectionStart = newStart
         selectionEnd = newEnd
@@ -327,6 +349,7 @@ class TypingSessionController internal constructor(
         state = state.copy(
             composing = null,
             lastAutoEdit = null,
+            originalSelected = false,
             contextText = "",
             enabled = false,
             revision = state.revision + 1,

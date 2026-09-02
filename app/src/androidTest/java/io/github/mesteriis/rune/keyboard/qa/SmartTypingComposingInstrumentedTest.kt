@@ -15,6 +15,39 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class SmartTypingComposingInstrumentedTest : ImeTestBase() {
     @Test
+    fun currentOriginalStripTapDoesNotWriteEditorAndUpdatesWithTheWord() {
+        driver.launchComposingQa()
+        type("a", "b")
+        val resources = InstrumentationRegistry.getInstrumentation().targetContext
+        val before = stats()
+        val original = checkNotNull(driver.device.findObject(By.desc(resources.getString(R.string.candidate_original, "ab"))))
+        assertTrue(original.isSelected)
+        original.click()
+        driver.device.waitForIdle()
+        driver.awaitFieldText(FIELD, "ab")
+        assertEquals(before.getValue("compose"), stats().getValue("compose"))
+        assertEquals(before.getValue("commit"), stats().getValue("commit"))
+        type("c")
+        driver.awaitFieldText(FIELD, "abc")
+        assertTrue(driver.device.hasObject(By.desc(resources.getString(R.string.candidate_original, "abc"))))
+    }
+
+    @Test
+    fun changingToSensitiveEditorRemovesThePreviousOriginalFromTheStrip() {
+        driver.launchComposingQa()
+        type("a", "b")
+        val resources = InstrumentationRegistry.getInstrumentation().targetContext
+        val description = resources.getString(R.string.candidate_original, "ab")
+        assertTrue(driver.device.hasObject(By.desc(description)))
+        driver.launchComposingQa("private")
+        assertTrue(!driver.device.hasObject(By.desc(description)))
+        type("c")
+        driver.awaitFieldText(FIELD, "c")
+        assertEquals(0, stats().getValue("compose"))
+        assertTrue(!driver.device.hasObject(By.desc(resources.getString(R.string.candidate_original, "c"))))
+    }
+
+    @Test
     fun wordAndLeadingBoundaryComposeAndDeleteWithoutReplayingCommittedText() {
         driver.launchComposingQa()
         type("a", "b")
