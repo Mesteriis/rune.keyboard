@@ -1,0 +1,70 @@
+{
+  "version": 2,
+  "seedSha256": "0f39af8db3d4a9800904a782a8b3b1dab4868b8d8af3d8f986d36e92c73711bd",
+  "nearbyWordsSha256": "a9ab0f0f6d5d54ca803d2bc2b7ed849c995560a0ea9a2aa3a7ff8e673ad89b16",
+  "generatorSha256": "6f91c360b071885fe776a3277971b2c2543ead20b197c0d70cf4c1406a615767",
+  "files": {
+    "spelling-ru.jsonl": "a0e44bcd7a5df74c07caa2c181c8354746082737cbd728266d1afd6b10250b69",
+    "spelling-en.jsonl": "7808484045e5f9e082e2f68d7b8c2fc7e74b5e7875d041236f6efa6d2ce7929c",
+    "spelling-es.jsonl": "15d8262790b80846fa9758861f12adb863e79db64dc601b64ffb996a508d249f",
+    "punctuation-ru.jsonl": "ba355adb7f8553f8976891e448ccb16030ba350916b020595b2c9808e3bc4fdf",
+    "punctuation-en.jsonl": "6fbcf0bab9cdd607d3dd9899fdc3186bee936e2565330c2dc14f4776ca77de7c",
+    "punctuation-es.jsonl": "cf0e61edc0658ad757448507f0bca45409b4806542301de79fc4e62243b03dd7",
+    "protected-tokens.jsonl": "5a17511f29c7f7c6b763f7d8b48c12819a38357d95654595016406f873e39d84"
+  },
+  "summary": {
+    "samples": 13200,
+    "counts": {
+      "en/calibration/negative": 1000,
+      "en/calibration/punctuation": 200,
+      "en/calibration/typo": 1000,
+      "en/holdout/negative": 1000,
+      "en/holdout/punctuation": 200,
+      "en/holdout/typo": 1000,
+      "es/calibration/negative": 1000,
+      "es/calibration/punctuation": 200,
+      "es/calibration/typo": 1000,
+      "es/holdout/negative": 1000,
+      "es/holdout/punctuation": 200,
+      "es/holdout/typo": 1000,
+      "ru/calibration/negative": 1000,
+      "ru/calibration/punctuation": 200,
+      "ru/calibration/typo": 1000,
+      "ru/holdout/negative": 1000,
+      "ru/holdout/punctuation": 200,
+      "ru/holdout/typo": 1000
+    },
+    "families": {
+      "calibration": 1216,
+      "holdout": 1215
+    },
+    "templates": {
+      "calibration": 195,
+      "holdout": 186
+    }
+  },
+  "source": "authored-rune-2026-09-02",
+  "collisionFilters": {
+    "ru": {
+      "sha256": "6095f507cc167488ec66ada5a85ac50433503a08ad24a07c6eabdf54352c4e7f",
+      "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/content/2018/ru/ru_50k.txt",
+      "license": "CC-BY-SA-4.0",
+      "purpose": "veto known surface-form collisions; absence is not proof of typo"
+    },
+    "en": {
+      "sha256": "5351ff405b1126ef555791dd4d9798a48e3e9a501a9fc481a9da957752cfb458",
+      "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/content/2018/en/en_50k.txt",
+      "license": "CC-BY-SA-4.0",
+      "purpose": "veto known surface-form collisions; absence is not proof of typo"
+    },
+    "es": {
+      "sha256": "dcff3ad4316192f4dc4ff7d26e637c6ff314ef1ca0f3f720c5649018a71056c0",
+      "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/content/2018/es/es_50k.txt",
+      "license": "CC-BY-SA-4.0",
+      "purpose": "veto known surface-form collisions; absence is not proof of typo"
+    }
+  },
+  "independentSamples": false,
+  "correctPanel": "700 correct rows per language/split are 100 lexical contexts with seven prepared-candidate perturbations each; 300 additional rows are protected token probes.",
+  "splitPolicy": "Authored word families, templates and protected tokens assigned before scoring; spelling word families and punctuation subject families do not cross splits."
+}

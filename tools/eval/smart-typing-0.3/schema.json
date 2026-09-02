@@ -1,0 +1,283 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Rune Smart Typing prepared-candidate fixture",
+  "type": "object",
+  "required": [
+    "corpusVersion",
+    "id",
+    "language",
+    "split",
+    "task",
+    "cohort",
+    "family",
+    "template",
+    "source",
+    "prefix",
+    "candidates",
+    "expectedCandidate",
+    "category",
+    "noAuto",
+    "ambiguous",
+    "position"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "language": {
+      "enum": [
+        "ru",
+        "en",
+        "es"
+      ]
+    },
+    "split": {
+      "enum": [
+        "calibration",
+        "holdout"
+      ]
+    },
+    "task": {
+      "enum": [
+        "spelling",
+        "punctuation"
+      ]
+    },
+    "cohort": {
+      "enum": [
+        "typo",
+        "correct",
+        "protected",
+        "punctuation"
+      ]
+    },
+    "family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "template": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "const": "authored-rune-2026-09-02"
+    },
+    "prefix": {
+      "type": "string"
+    },
+    "typed": {
+      "type": "string",
+      "minLength": 1
+    },
+    "currentWord": {
+      "type": "string",
+      "minLength": 1
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "expectedCandidate": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 7
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "noAuto": {
+      "type": "boolean"
+    },
+    "ambiguous": {
+      "type": "boolean"
+    },
+    "position": {
+      "enum": [
+        "initial",
+        "middle",
+        "end",
+        "boundary"
+      ]
+    },
+    "wordLength": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "boundaries": {
+      "const": [
+        " ",
+        ", ",
+        ": ",
+        ". "
+      ]
+    },
+    "expectedBoundary": {
+      "enum": [
+        " ",
+        ", ",
+        ": ",
+        ". "
+      ]
+    },
+    "panel": {
+      "const": "candidate_set_sensitivity"
+    },
+    "orthographicPolicy": {
+      "const": "preserve_ambiguous_diacritic_or_yo_e"
+    },
+    "curatedAcceptance": {
+      "type": "boolean"
+    },
+    "corpusVersion": {
+      "const": 2
+    },
+    "expectedSpelling": {
+      "type": "string",
+      "minLength": 1
+    },
+    "orthographicAlternative": {
+      "type": "string",
+      "minLength": 1
+    },
+    "orthographicKind": {
+      "enum": [
+        "en_optional_accent",
+        "es_ambiguous_accent",
+        "ru_yo_e"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "task": {
+            "const": "spelling"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "typed",
+          "wordLength"
+        ],
+        "properties": {
+          "cohort": {
+            "enum": [
+              "typo",
+              "correct",
+              "protected"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "task": {
+            "const": "punctuation"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "currentWord",
+          "boundaries",
+          "expectedBoundary"
+        ],
+        "properties": {
+          "cohort": {
+            "const": "punctuation"
+          },
+          "noAuto": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cohort": {
+            "const": "protected"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "noAuto": {
+            "const": true
+          },
+          "expectedCandidate": {
+            "const": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cohort": {
+            "const": "correct"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "expectedCandidate": {
+            "const": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cohort": {
+            "const": "typo"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "expectedSpelling"
+        ]
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "orthographicPolicy"
+        ]
+      },
+      "then": {
+        "required": [
+          "orthographicAlternative",
+          "orthographicKind"
+        ],
+        "properties": {
+          "cohort": {
+            "const": "protected"
+          },
+          "noAuto": {
+            "const": true
+          },
+          "expectedCandidate": {
+            "const": 0
+          }
+        }
+      }
+    }
+  ],
+  "$comment": "evaluate.py validate additionally checks original-at-zero, expected index in bounds, exact punctuation concatenation/case, split family/template leakage, duplicate model observations, and cohort counts. The schema is documentation; Python runtime has no jsonschema dependency."
+}
