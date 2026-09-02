@@ -23,6 +23,8 @@ jobs:
           yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" "ndk;29.0.14206865" "cmake;3.31.6" >/dev/null
       - name: Run fresh JVM tests
         run: ./gradlew testDebugUnitTest --rerun-tasks
+      - name: Verify offline lexicon source contracts
+        run: python3 tools/lexicon/smart-typing-0.3/pipeline.py --build-dir build/lexicon-regression test
       - name: Verify offline scoring harness without a model
         run: |
           python3 tools/eval/smart-typing-0.3/evaluate.py validate

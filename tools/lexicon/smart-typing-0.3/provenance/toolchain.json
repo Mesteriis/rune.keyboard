@@ -1,0 +1,135 @@
+{
+  "system": "Darwin",
+  "architecture": "arm64",
+  "python": "3.11.14",
+  "unicode": "14.0.0",
+  "tools": {
+    "find": {
+      "executable": "gfind",
+      "sha256": "8d4477f16ab8c982c74469af20afc5a5cd92d0377b2768587da943a9b10a0e24",
+      "version": "find (GNU findutils) 4.10.0"
+    },
+    "grep": {
+      "executable": "ggrep",
+      "sha256": "3dce5f930773490cb3a8d40b449d8541344cf3976514d584b3531160b6cedd55",
+      "version": "ggrep (GNU grep) 3.12"
+    },
+    "c++": {
+      "executable": "c++",
+      "sha256": "179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818",
+      "version": "Apple clang version 21.0.0 (clang-2100.1.1.101)"
+    },
+    "make": {
+      "executable": "make",
+      "sha256": "179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818",
+      "version": "GNU Make 3.81"
+    },
+    "perl": {
+      "executable": "perl",
+      "sha256": "abda2bfd23a6c9a8e57adf2291f0aea4abd8faf440558ee49fe4ced55e8d9ad0",
+      "version": "This is perl 5, version 34, subversion 1 (v5.34.1) built for darwin-thread-multi-2level"
+    },
+    "spell_oracle": {
+      "sha256": "ecb21d12067241342ee33564aae864233fc824f88fafddb9c50dab19f48b7ad8"
+    },
+    "unmunch": {
+      "sha256": "6c52112474de6d99e29b75cefe0b10463955f7ad3baa3076f394f49dd859f82e"
+    },
+    "bash": {
+      "executable": "bash",
+      "sha256": "94d661f8e2d6922f16d5eeb918359750f70d5e9a99fd179d438eeb27bb6ca045"
+    },
+    "sh": {
+      "executable": "sh",
+      "sha256": "ad5c194b05f83bc5e793c1cd67b148a4b680467b5a5730ab1a31fe4e6460ee9f"
+    },
+    "tar": {
+      "executable": "bsdtar",
+      "sha256": "9ab7f0793033dc9dc4809d83d695118801bd687cbacda59a0cbbf151ba25dc2b"
+    },
+    "unzip": {
+      "executable": "unzip",
+      "sha256": "a07e8b49ac7c1f1fffd8b45544dc69a9cd71a7015f63e6e139c582cff2a56f33"
+    },
+    "gzip": {
+      "executable": "gzip",
+      "sha256": "c78f313867a6978148f989c8e758fb7a9ba7ff324f0b359b2053f5172f970be5"
+    },
+    "sort": {
+      "executable": "sort",
+      "sha256": "e595f29543691f7355d16035f71992512c6a23804f9447b73e6d484b7887d731"
+    },
+    "uniq": {
+      "executable": "uniq",
+      "sha256": "58e3343527649dbc68c6914a440921327da60faa07e6d17e3792e037a5f1544d"
+    },
+    "comm": {
+      "executable": "comm",
+      "sha256": "402ca57723d9224b17c745c1e48d86d3fafa0bd06142e398204fa6492c7a151d"
+    },
+    "tr": {
+      "executable": "tr",
+      "sha256": "1ddc659c4c983056863cad854384c35d78d004dd2c53cc63ea3b3b380e76233a"
+    },
+    "sed": {
+      "executable": "sed",
+      "sha256": "abd2eb945442a8ab1d210e58edb153f34870ee6d7c359f0f6d8385b1f7fc50fc"
+    },
+    "awk": {
+      "executable": "awk",
+      "sha256": "3693175058d0be720f941a8e9c645756f7d38848f3457abd938d8e27ba35f8ab"
+    },
+    "cut": {
+      "executable": "cut",
+      "sha256": "970267eca05deee66db7796118901c452004a816b81a12b3e8dfe69f4a80661d"
+    },
+    "cat": {
+      "executable": "cat",
+      "sha256": "9e4bb13f36ffcc1ff2152738e185637f5b7c97977044bb88a3708cbba2c351ec"
+    }
+  },
+  "scowl_work": "work/scowl-reproduce",
+  "commands": [
+    [
+      "c++",
+      "-std=c++17",
+      "-O2",
+      "-DHUNSPELL_STATIC",
+      "-I<ROOT>/sources/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b/src/hunspell",
+      "<ROOT>/scripts/spell_oracle.cxx",
+      "<ROOT>/sources/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b/src/hunspell/affentry.cxx",
+      "<ROOT>/sources/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b/src/hunspell/affixmgr.cxx",
+      "<ROOT>/sources/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b/src/hunspell/csutil.cxx",
+      "<ROOT>/sources/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b/src/hunspell/filemgr.cxx",
+      "<ROOT>/sources/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b/src/hunspell/hashmgr.cxx",
+      "<ROOT>/sources/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b/src/hunspell/hunspell.cxx",
+      "<ROOT>/sources/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b/src/hunspell/hunspelltrace.cxx",
+      "<ROOT>/sources/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b/src/hunspell/hunzip.cxx",
+      "<ROOT>/sources/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b/src/hunspell/phonet.cxx",
+      "<ROOT>/sources/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b/src/hunspell/replist.cxx",
+      "<ROOT>/sources/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b/src/hunspell/suggestmgr.cxx",
+      "-o",
+      "<ROOT>/bin/spell_oracle"
+    ],
+    [
+      "c++",
+      "-std=c++17",
+      "-O2",
+      "<ROOT>/sources/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b/src/tools/unmunch.cxx",
+      "-o",
+      "<ROOT>/bin/unmunch"
+    ],
+    [
+      "make",
+      "-j1"
+    ],
+    [
+      "perl",
+      "mk-list",
+      "--accents",
+      "keep",
+      "en_US",
+      "60"
+    ]
+  ]
+}
