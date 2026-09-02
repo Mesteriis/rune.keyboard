@@ -34,7 +34,7 @@ class EditorActionInstrumentedTest : ImeTestBase() {
         driver.tapKey("a", "A")
         driver.tapEnter(R.string.key_enter)
         driver.tapKey("b", "B")
-        driver.awaitFieldText("qa_multiline_text", "a\nb")
+        driver.revealFieldAndAwaitText("qa_multiline_text", "a\nb")
     }
 
     private data class ActionCase(val field: String, val keyDescription: Int, val actionId: Int)

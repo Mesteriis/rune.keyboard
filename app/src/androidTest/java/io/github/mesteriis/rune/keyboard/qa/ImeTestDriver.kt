@@ -170,6 +170,14 @@ class ImeTestDriver {
         }
     }
 
+    fun revealFieldAndAwaitText(idName: String, expected: String) {
+        // Lower editors can remain focused but accessibility-invisible behind the API 37 IME.
+        // This explicit post-action assertion may hide the IME; passive lifecycle assertions must
+        // continue to use awaitFieldText so they cannot add a focus-loss cancellation.
+        scrollToObject(idName)
+        awaitFieldText(idName, expected)
+    }
+
     fun awaitStatus(expected: String) {
         if (device.findObject(By.res(PACKAGE_NAME, "qa_action_status")) == null) {
             device.pressBack()
