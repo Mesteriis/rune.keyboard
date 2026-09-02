@@ -75,11 +75,11 @@ class ImeTestDriver {
     fun focusField(idName: String): UiObject2 {
         val selector = By.res(PACKAGE_NAME, idName)
         val visibleField = device.findObject(selector)
-        val field = if (
+        val needsFocus =
             visibleField == null ||
             visibleField.visibleBounds.height() == 0 ||
             !visibleField.isFocused
-        ) {
+        val field = if (needsFocus) {
             // Switching editors must happen with the IME hidden: accessibility may expose the
             // target even when its click point is covered. Keep an already-focused editor and its
             // restored IME intact for lifecycle tests.
@@ -90,6 +90,7 @@ class ImeTestDriver {
         }
         field.click()
         waitForKeyboard()
+        device.waitForIdle()
         // adjustResize may move a low editor outside the accessibility viewport once IME appears;
         // callers only need the focus transition, so keep the node captured before that resize.
         return field
@@ -100,6 +101,9 @@ class ImeTestDriver {
         device.waitForIdle()
         SystemClock.sleep(INPUT_CONNECTION_SETTLE_MILLIS)
         waitForKeyboard()
+        // The QA editor runs in a separate process. Drain Rune's main thread after its Binder
+        // selection/update callbacks before dispatching the next keyboard action.
+        instrumentation.waitForIdleSync()
     }
 
     fun fieldText(idName: String): String = requireObject(idName, scroll = true).text.orEmpty()
@@ -153,13 +157,16 @@ class ImeTestDriver {
     }
 
     fun awaitFieldText(idName: String, expected: String, timeoutMillis: Long = WAIT_MILLIS) {
-        var lastObserved = ""
+        val selector = By.res(PACKAGE_NAME, idName)
+        var lastObserved: String? = null
         eventually(timeoutMillis) {
-            lastObserved = fieldText(idName)
-            lastObserved == expected
+            device.findObject(selector)?.text?.let { observed ->
+                lastObserved = observed
+                observed == expected
+            } ?: false
         }
         check(lastObserved == expected) {
-            "Field $idName expected <$expected>, actual <$lastObserved>"
+            "Field $idName expected <$expected>, actual <${lastObserved ?: "unavailable"}>"
         }
     }
 
@@ -362,11 +369,16 @@ class ImeTestDriver {
         val keyboardSelector = By.desc(targetContext.getString(R.string.key_delete))
         if (device.findObject(keyboardSelector) != null) {
             device.pressBack()
-            device.wait(Until.gone(keyboardSelector), WAIT_MILLIS)
+            check(device.wait(Until.gone(keyboardSelector), WAIT_MILLIS)) {
+                "Rune IME did not hide before scrolling the QA activity"
+            }
         }
         // On API 26 accessibility may temporarily expose only the IME window. Hiding it first
-        // lets the already-resumed QA root reappear instead of waiting on a no-op Activity launch.
-        if (device.findObject(qaSelector) == null) resumeQa()
+        // lets the already-resumed QA root reappear. Do not relaunch from a setup/assertion helper:
+        // that could conceal a crashed editor or add another focus-loss cancellation.
+        check(device.wait(Until.hasObject(qaSelector), WAIT_MILLIS)) {
+            "QA activity did not reappear after hiding Rune IME"
+        }
         device.waitForIdle()
     }
 

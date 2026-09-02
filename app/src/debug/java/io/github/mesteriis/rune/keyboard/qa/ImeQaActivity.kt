@@ -198,6 +198,16 @@ class ImeQaActivity : Activity() {
         editor.setText(text)
         editor.setSelection(selectionStart, selectionEnd)
         editor.requestFocus()
+        // TextView coalesces selection notifications on API 26 after replacing all text. Send the
+        // public editor-to-IME update explicitly so the test still exercises Rune's live
+        // onUpdateSelection path instead of hiding it behind restartInput/EditorInfo.
+        getSystemService(InputMethodManager::class.java).updateSelection(
+            editor,
+            selectionStart,
+            selectionEnd,
+            -1,
+            -1,
+        )
         showKeyboard(editor)
     }
 

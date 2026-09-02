@@ -40,7 +40,7 @@ class ImeLifecycleInstrumentedTest : ImeTestBase() {
         driver.shell("am start -W -n ${ImeTestDriver.PACKAGE_NAME}/.settings.SettingsActivity")
         driver.cancelTouch(touch)
         driver.device.pressBack()
-        driver.focusField("qa_plain_text")
+        SystemClock.sleep(900)
         driver.awaitFieldText("qa_plain_text", "leftright")
     }
 
