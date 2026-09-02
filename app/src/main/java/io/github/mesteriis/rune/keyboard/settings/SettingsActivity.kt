@@ -59,7 +59,32 @@ class SettingsActivity : ThemedActivity() {
             startActivity(Intent(this, LanguageSettingsActivity::class.java))
         }
 
-        addSection(R.string.settings_section_typing)
+        addSection(R.string.settings_section_smart_typing)
+        addChoiceRow(
+            titleRes = R.string.settings_autocorrection,
+            values = AutocorrectionMode.entries,
+            labels = AutocorrectionMode.entries.map { getString(autocorrectionLabel(it)) },
+            selected = settings.autocorrectionMode,
+            summary = autocorrectionSummary(),
+        ) { preferences.writeAutocorrectionMode(it) }
+        addToggleRow(
+            titleRes = R.string.settings_mechanical_punctuation,
+            summaryRes = R.string.settings_mechanical_punctuation_summary,
+            checked = settings.mechanicalPunctuation,
+        ) { preferences.writeMechanicalPunctuation(it) }
+        addChoiceRow(
+            titleRes = R.string.settings_contextual_punctuation,
+            values = ContextualPunctuationMode.entries,
+            labels = ContextualPunctuationMode.entries.map { getString(contextualLabel(it)) },
+            selected = settings.contextualPunctuationMode,
+            summary = if (settings.contextualPunctuationMode == ContextualPunctuationMode.SUGGESTIONS)
+                getString(R.string.settings_contextual_unavailable) else null,
+        ) { preferences.writeContextualPunctuationMode(it) }
+        addToggleRow(
+            titleRes = R.string.settings_candidate_strip,
+            summaryRes = R.string.settings_candidate_strip_summary,
+            checked = settings.candidateStrip,
+        ) { preferences.writeCandidateStrip(it) }
         addToggleRow(
             titleRes = R.string.settings_double_space,
             summaryRes = R.string.settings_double_space_summary,
@@ -67,6 +92,7 @@ class SettingsActivity : ThemedActivity() {
         ) { enabled ->
             preferences.writeDoubleSpacePeriod(enabled)
         }
+        addSection(R.string.settings_section_typing)
         addToggleRow(
             titleRes = R.string.settings_key_preview,
             summaryRes = R.string.settings_key_preview_summary,
@@ -193,10 +219,11 @@ class SettingsActivity : ThemedActivity() {
         values: List<T>,
         labels: List<String>,
         selected: T,
+        summary: String? = null,
         onSelected: (T) -> Unit,
     ) {
         val selectedIndex = values.indexOf(selected).coerceAtLeast(0)
-        val row = newRow(getString(titleRes), labels[selectedIndex])
+        val row = newRow(getString(titleRes), listOfNotNull(labels[selectedIndex], summary).joinToString("\n"))
         row.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle(titleRes)
@@ -251,6 +278,27 @@ class SettingsActivity : ThemedActivity() {
     private fun versionName(): String = runCatching {
         packageManager.getPackageInfo(packageName, 0).versionName
     }.getOrNull().orEmpty()
+
+    private fun autocorrectionLabel(mode: AutocorrectionMode): Int = when (mode) {
+        AutocorrectionMode.OFF -> R.string.smart_typing_off
+        AutocorrectionMode.SUGGESTIONS -> R.string.smart_typing_suggestions
+        AutocorrectionMode.HIGH_CONFIDENCE -> R.string.smart_typing_high_confidence
+    }
+
+    private fun contextualLabel(mode: ContextualPunctuationMode): Int = when (mode) {
+        ContextualPunctuationMode.OFF -> R.string.smart_typing_off
+        ContextualPunctuationMode.SUGGESTIONS -> R.string.smart_typing_suggestions
+    }
+
+    private fun autocorrectionSummary(): String {
+        val summary = getString(when (settings.autocorrectionMode) {
+            AutocorrectionMode.OFF -> R.string.settings_autocorrection_off_summary
+            AutocorrectionMode.SUGGESTIONS -> R.string.settings_autocorrection_suggestions_summary
+            AutocorrectionMode.HIGH_CONFIDENCE -> R.string.settings_autocorrection_high_confidence_summary
+        })
+        return if (settings.candidateStrip) summary
+        else summary + "\n" + getString(R.string.settings_suggestions_hidden)
+    }
 
     private fun heightLabel(preset: HeightPreset): Int = when (preset) {
         HeightPreset.COMPACT -> R.string.height_compact

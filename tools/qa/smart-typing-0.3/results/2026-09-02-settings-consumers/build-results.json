@@ -1,0 +1,24 @@
+{
+  "settings-consumer-gates.log": {
+    "sha256": "70453cab508e11ac2d576aeddb5ce347e28372cb5174f5318e46d621d7846210",
+    "terminalLines": [
+      "> Task :app:lintDebug",
+      "> Task :app:lint",
+      "",
+      "BUILD SUCCESSFUL in 30s",
+      "277 actionable tasks: 277 executed",
+      "Configuration cache entry stored."
+    ]
+  },
+  "settings-consumer-final-gates.log": {
+    "sha256": "9c0e31929a11c20bc96e99338f1634cc6cee1014f239ff1b35bc0c817339eccd",
+    "terminalLines": [
+      "> Task :app:lintDebug",
+      "> Task :app:lint",
+      "",
+      "BUILD SUCCESSFUL in 6s",
+      "267 actionable tasks: 21 executed, 246 up-to-date",
+      "Configuration cache entry reused."
+    ]
+  }
+}

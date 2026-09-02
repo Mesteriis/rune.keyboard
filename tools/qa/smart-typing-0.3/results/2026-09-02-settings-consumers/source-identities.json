@@ -1,0 +1,22 @@
+{
+  "baseline": "e4a43059143c79773424a96ff57ad0e8770fb141",
+  "proposalSha256": "d44b26ab070e0ed9122aa77403805d95d70be219b0e1d11bd292896cdd483de8",
+  "sources": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt": "983e79b9c0f02702516b230dc53cefab0770bc7401820e5772fa814c82a5fb25",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/KeyboardInstanceAssertions.kt": "246d6104013cb607888d587b6aa69cb605397f7709e85780c9b25c62f8f8a9db",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveCandidatesInstrumentedTest.kt": "701911f41c0bafdba2bca74367e2103197db410402964d1a876037229636ff88",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/MechanicalPunctuationInstrumentedTest.kt": "dd6fcf44be7539865e3bc221927ac060bd1f769dd086b68032a5c8acfd9da45b",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingSettingsInstrumentedTest.kt": "557c82f121568e6fd4b049b5d8a1964f05c870b8836abc62ac138935b9373680",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt": "782ff684c60661e0938609606a4d3ed092d28f26334b1a831a0e2d1823ede9c7",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SettingsActivity.kt": "013073e15c01d39f0d3bf27fe22c89570786bcd4e33a0fa1ddae8d9308a2a55f",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt": "65f8b8f65cb25d6b38bf60fdea0e2342179406c37f78a82724cad20172c2b990",
+    "app/src/main/res/values/strings.xml": "cf271667748744063df608e9d566c42dcd32416f4313d67c7310c01ae7d4bb57",
+    "app/src/main/res/values-ru/strings.xml": "6f245096980c8b4599aaca3869a982b2b8172e2876a330bfe91d683f13fd5b06",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinatorTest.kt": "5f9704ec830b560768995f66bcabc72998ab5d3ceb22fbbd5c039b3394085bd0"
+  },
+  "builtApks": {
+    "app/build/outputs/apk/debug/app-debug.apk": "dcec70981236c383396a2772f1c518d123c30f88343eb01fcea4e148c3425e5b",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "594cdb5695dadb75b7bcf162f44b8d691251144116d89bdb67ea68bd74276f88"
+  },
+  "testFixSha256": "ac20e2ee5b88ceebee87db464404d83eed4c72e262c06e218377792cf1a163f4"
+}

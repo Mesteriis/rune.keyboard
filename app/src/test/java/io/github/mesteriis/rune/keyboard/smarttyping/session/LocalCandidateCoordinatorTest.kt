@@ -5,6 +5,11 @@ import android.view.inputmethod.EditorInfo
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLayer
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
+import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
+import io.github.mesteriis.rune.keyboard.ime.model.EditorMode
+import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
+import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateLexicon
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateSearchControl
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateVisitor
@@ -298,6 +303,127 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
+    @Test fun `all six mode and strip combinations admit only the current manual consumer`() {
+        for (mode in AutocorrectionMode.entries) for (strip in listOf(false, true)) Harness().use { h ->
+            h.configure(mode, strip)
+            h.type("helo")
+            val work = mode != AutocorrectionMode.OFF && strip
+            if (work) h.deliver()
+            assertEquals(if (work) 1 else 0, h.routeRequests)
+            assertEquals(if (work) 2 else 0, h.lexicon.exactCalls.get())
+            assertEquals(if (work) 1 else 0, h.published)
+            assertEquals(listOf(TypingEdit.SetComposingText("helo")), h.commands)
+            assertEquals(strip, h.coordinator.viewState.enabled)
+            assertEquals(if (!strip) emptyList() else if (work) listOf("helo", "help", "hello") else listOf("helo"), h.labels())
+            val view = h.coordinator.viewState
+            assertTrue(view.selectedCandidateId == null || view.candidates.any { it.id == view.selectedCandidateId })
+            assertNull(h.controller.state.lastAutoEdit)
+        }
+    }
+
+    @Test fun `disable policy cancels blocked search preserves composition and rejects stale correction`() {
+        for (disableMode in listOf(true, false)) Harness().use { h ->
+            h.type("helo"); h.deliver()
+            val stale = h.coordinator.viewState.candidates[1].id
+            val hold = Hold(); h.lexicon.hold = hold
+            h.type("s"); hold.entered.awaitChecked()
+            val before = h.controller.state
+            h.commands.clear()
+            h.configure(if (disableMode) AutocorrectionMode.OFF else AutocorrectionMode.SUGGESTIONS, disableMode)
+            hold.stopped.awaitChecked(); hold.release.countDown()
+            h.drain()
+            assertEquals(1, h.published)
+            assertEquals(before, h.controller.state)
+            assertEquals(TypingTextResult.REJECTED, h.coordinator.selectCandidate(stale, h.execute))
+            assertTrue(h.commands.isEmpty())
+            assertEquals(if (disableMode) listOf("helos") else emptyList(), h.labels())
+        }
+    }
+
+    @Test fun `queued reply checks disabled mode and strip even without caller invalidation`() {
+        for (modeOff in listOf(true, false)) Harness().use { h ->
+            h.type("helo"); h.awaitQueued()
+            h.owner = h.owner.copy(autocorrectionMode = if (modeOff) AutocorrectionMode.OFF else AutocorrectionMode.SUGGESTIONS,
+                candidateStripEnabled = modeOff)
+            h.drain()
+            assertEquals(0, h.published)
+            assertEquals(if (modeOff) listOf("helo") else emptyList(), h.labels())
+        }
+    }
+
+    @Test fun `enable and Ready and rendering wait for the next accepted composing edit`() {
+        for (modeOff in listOf(true, false)) Harness(ready = false).use { h ->
+            h.configure(if (modeOff) AutocorrectionMode.OFF else AutocorrectionMode.SUGGESTIONS, modeOff)
+            h.type("helo")
+            h.configure(AutocorrectionMode.HIGH_CONFIDENCE, true)
+            h.ready = true
+            repeat(5) { h.coordinator.viewState }
+            assertEquals(0, h.routeRequests); assertEquals(0, h.lexicon.exactCalls.get())
+            h.type("s"); h.deliver()
+            assertEquals(1, h.routeRequests); assertEquals(2, h.lexicon.exactCalls.get())
+            assertEquals(listOf("helos", "hellos"), h.labels())
+        }
+    }
+
+    @Test fun `OFF Original after manual correction keeps the currently displayed composing word`() {
+        Harness().use { h ->
+            h.type("helo"); h.deliver()
+            val correction = h.coordinator.viewState.candidates.single { it.text == "hello" }.id
+            assertEquals(TypingTextResult.HANDLED, h.coordinator.selectCandidate(correction, h.execute))
+            h.commands.clear()
+            h.configure(AutocorrectionMode.OFF, true)
+            assertEquals(listOf("hello"), h.labels())
+            assertEquals(h.coordinator.viewState.candidates.single().id, h.coordinator.viewState.selectedCandidateId)
+            assertEquals(TypingTextResult.REJECTED, h.coordinator.selectCandidate(correction, h.execute))
+            assertEquals(TypingTextResult.HANDLED,
+                h.coordinator.selectCandidate(h.coordinator.viewState.candidates.single().id, h.execute))
+            assertEquals("hello", h.controller.state.contextText)
+            assertTrue(h.commands.isEmpty()); assertEquals(1, h.routeRequests)
+        }
+    }
+
+    @Test fun `unfiltered controller allowlist cannot bypass current spelling or strip policy`() {
+        for (modeOff in listOf(true, false)) Harness().use { h ->
+            h.type("helo"); h.deliver()
+            val correction = h.coordinator.viewState.candidates[1].id
+            h.owner = h.owner.copy(autocorrectionMode = if (modeOff) AutocorrectionMode.OFF else AutocorrectionMode.SUGGESTIONS,
+                candidateStripEnabled = modeOff)
+            h.commands.clear()
+            assertEquals(TypingTextResult.REJECTED, h.coordinator.selectCandidate(correction, h.execute))
+            assertTrue(h.commands.isEmpty())
+            assertEquals("helo", h.controller.state.contextText)
+        }
+    }
+
+    @Test fun `spelling settings preserve mechanical transaction and its immediate raw Undo`() {
+        for (mode in AutocorrectionMode.entries) for (strip in listOf(false, true)) Harness(ready = false).use { h ->
+            h.type("hello"); h.type(" "); h.type(",")
+            h.coordinator.edit { h.controller.typeText("world",
+                MechanicalPunctuationPolicy(InputPolicy.NORMAL, EditorMode.TEXT, false, true, false),
+                KeyboardState(KeyboardLanguage.ENGLISH), execute = h.execute) }
+            assertEquals("hello, world", h.controller.state.contextText)
+            val undo = h.controller.state.lastAutoEdit
+            assertNotNull(undo)
+            h.commands.clear(); h.configure(mode, strip)
+            assertEquals(undo, h.controller.state.lastAutoEdit); assertTrue(h.commands.isEmpty())
+            h.coordinator.edit { h.controller.deletePrevious(h.execute) }
+            assertEquals("hello ,world", h.controller.state.contextText)
+            assertEquals(listOf(TypingEdit.SetComposingText(" ,world")), h.commands)
+        }
+    }
+
+    @Test fun `base ownership guard wins across every mode and strip combination`() {
+        for (mode in AutocorrectionMode.entries) for (strip in listOf(false, true)) {
+            for (change in listOf<(CandidateOwnerState) -> CandidateOwnerState>(
+                { it.copy(editorAllowsSmartTyping = false) }, { it.copy(inputViewActive = false) },
+                { it.copy(hasSelection = true) }, { it.copy(layer = KeyboardLayer.SYMBOLS) })) Harness().use { h ->
+                h.configure(mode, strip); h.owner = change(h.owner); h.type("helo")
+                assertEquals(0, h.routeRequests); assertEquals(0, h.lexicon.exactCalls.get())
+                assertFalse(h.coordinator.viewState.enabled)
+            }
+        }
+    }
+
     private class Harness(ready: Boolean = true) : AutoCloseable {
         val controller = TypingSessionController(jvmGraphemes)
         val lexicon = FixtureLexicon()
@@ -317,6 +443,10 @@ class LocalCandidateCoordinatorTest {
             { owner }, { published++ })
 
         init { controller.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, 0), 0, 0) }
+        fun configure(mode: AutocorrectionMode, strip: Boolean) {
+            val next = owner.copy(autocorrectionMode = mode, candidateStripEnabled = strip)
+            if (next != owner) { owner = next; coordinator.invalidate() }
+        }
         fun type(value: String) = coordinator.edit { controller.typeText(value, execute) }
         fun labels() = coordinator.viewState.candidates.map { it.text }
         fun awaitQueued() = eventually { queue.isNotEmpty() }

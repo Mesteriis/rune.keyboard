@@ -17,8 +17,8 @@ import androidx.test.uiautomator.UiSelector
 import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.settings.SettingsCodec
-import io.github.mesteriis.rune.keyboard.settings.KeyboardSettings
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
+import io.github.mesteriis.rune.keyboard.settings.ContextualPunctuationMode
 import java.io.File
 import java.io.FileOutputStream
 import org.junit.rules.TestWatcher
@@ -67,21 +67,76 @@ class ImeTestDriver {
     }
 
     /** Deterministic temporary QA settings; tearDown restores the full pre-test raw map. */
-    fun configureMechanicalPunctuation(mechanical: Boolean, doubleSpace: Boolean) {
+    fun configureMechanicalPunctuation(mechanical: Boolean, doubleSpace: Boolean) =
+        configureSmartTyping(AutocorrectionMode.OFF, true, mechanical, doubleSpace)
+
+    fun configureSmartTyping(
+        autocorrection: AutocorrectionMode,
+        strip: Boolean,
+        mechanical: Boolean = true,
+        doubleSpace: Boolean = true,
+        contextual: ContextualPunctuationMode = ContextualPunctuationMode.SUGGESTIONS,
+    ) {
         val preferences = targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
         synchronized(preferences) {
-            val defaults = KeyboardSettings.DEFAULT
             // A schema-3 marker requires all five Smart Typing keys, not a partial test map.
             check(preferences.edit()
                 .putInt(SettingsCodec.KEY_SCHEMA_VERSION, SettingsCodec.SCHEMA_VERSION)
-                .putString(SettingsCodec.KEY_AUTOCORRECTION_MODE, AutocorrectionMode.OFF.name)
+                .putString(SettingsCodec.KEY_AUTOCORRECTION_MODE, autocorrection.name)
                 .putBoolean(SettingsCodec.KEY_MECHANICAL_PUNCTUATION, mechanical)
-                .putString(SettingsCodec.KEY_CONTEXTUAL_PUNCTUATION_MODE, defaults.contextualPunctuationMode.name)
-                .putBoolean(SettingsCodec.KEY_CANDIDATE_STRIP, defaults.candidateStrip)
+                .putString(SettingsCodec.KEY_CONTEXTUAL_PUNCTUATION_MODE, contextual.name)
+                .putBoolean(SettingsCodec.KEY_CANDIDATE_STRIP, strip)
                 .putBoolean(SettingsCodec.KEY_DOUBLE_SPACE_PERIOD, doubleSpace)
                 .commit()) { "QA settings write failed" }
         }
         instrumentation.waitForIdleSync()
+    }
+
+    /** Shared live fixture: explicit settings, then bounded edits while dictionary handles load. */
+    fun prepareLiveCorrection(): UiObject2 {
+        configureSmartTyping(AutocorrectionMode.SUGGESTIONS, true, mechanical = false, doubleSpace = false)
+        launchComposingQa()
+        tapKey("a"); tapKeyByDescription(targetContext.getString(R.string.key_space))
+        for (key in listOf("h", "e", "l", "l", "l")) tapKey(key)
+        val deadline = SystemClock.uptimeMillis() + 120_000L
+        do {
+            tapKey("o"); awaitFieldText("qa_composing_text", "a helllo")
+            val correction = device.wait(Until.findObject(By.desc(
+                targetContext.getString(R.string.candidate_correction, "hello"))), INPUT_CONNECTION_SETTLE_MILLIS)
+            if (correction != null) return correction
+            tapDelete(); awaitFieldText("qa_composing_text", "a helll")
+        } while (SystemClock.uptimeMillis() < deadline)
+        throw AssertionError("Fixed public spelling candidate unavailable after bounded loading/edits")
+    }
+
+    fun launchSettings() {
+        shell("am start -W -n $PACKAGE_NAME/.settings.SettingsActivity")
+        check(device.wait(Until.hasObject(By.res(PACKAGE_NAME, "settings_scroll")), WAIT_MILLIS)) {
+            "Settings screen unavailable"
+        }
+    }
+
+    fun settingsRow(titleRes: Int): UiObject2 {
+        val label = targetContext.getString(titleRes)
+        var title = device.findObject(By.text(label))
+        if (title == null) {
+            @Suppress("DEPRECATION")
+            UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/settings_scroll")).apply {
+                setAsVerticalList(); scrollIntoView(UiSelector().text(label))
+            }
+            title = device.findObject(By.text(label))
+        }
+        var row: UiObject2? = checkNotNull(title) { "Settings row unavailable" }
+        while (row != null && !row.isClickable) row = row.parent
+        return checkNotNull(row) { "Settings control unavailable" }
+    }
+
+    fun chooseSetting(titleRes: Int, choiceRes: Int) {
+        settingsRow(titleRes).click()
+        checkNotNull(device.wait(Until.findObject(By.text(targetContext.getString(choiceRes))), WAIT_MILLIS)) {
+            "Settings option unavailable"
+        }.click()
+        instrumentation.waitForIdleSync(); device.waitForIdle()
     }
 
     fun launchQa() {

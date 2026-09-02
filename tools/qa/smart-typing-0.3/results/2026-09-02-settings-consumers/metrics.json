@@ -1,0 +1,38 @@
+{
+  "scope": "Settings UI/policy, real IME touches and public Binder editor; no model/latency/energy qualification",
+  "api26": {
+    "initial": {
+      "tests": 12,
+      "failures": 1,
+      "seconds": 166.162
+    },
+    "correctedTargeted": {
+      "tests": 1,
+      "failures": 0,
+      "seconds": 11.98
+    },
+    "coverage": "All 12 methods have a pass; unchanged 11 from initial run and corrected 1 from targeted rerun. No full final 12-method rerun."
+  },
+  "api37": {
+    "final": {
+      "tests": 12,
+      "failures": 0,
+      "seconds": 182.88
+    }
+  },
+  "jvmPreCommit": {
+    "tests": 525,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "finalBuildGates": {
+    "status": "PASS",
+    "tasks": 267,
+    "executed": 21,
+    "upToDate": 246
+  },
+  "physicalFold": "BLOCKED - no USB device",
+  "remoteCI": "UNRUN",
+  "version": "0.2.0"
+}

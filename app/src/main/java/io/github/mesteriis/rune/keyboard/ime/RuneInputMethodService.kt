@@ -358,6 +358,9 @@ class RuneInputMethodService : InputMethodService() {
                 typingSession.discardUndo()
                 candidates.invalidate()
             }
+            if (settings.autocorrectionMode != previous.autocorrectionMode ||
+                settings.candidateStrip != previous.candidateStrip
+            ) candidates.invalidate()
             if (settings.enabledLanguages != previous.enabledLanguages) candidates.invalidate()
             if (state.language != selectedLanguage) {
                 candidates.invalidate()
@@ -428,6 +431,8 @@ class RuneInputMethodService : InputMethodService() {
         layer = state.layer,
         language = state.language,
         hasSelection = hasSelection,
+        autocorrectionMode = settings.autocorrectionMode,
+        candidateStripEnabled = settings.candidateStrip,
     )
 
     private fun renderCandidates() {

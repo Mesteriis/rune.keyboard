@@ -51,6 +51,21 @@
 
   <string name="settings_title">Rune settings</string>
   <string name="settings_section_languages">Languages</string>
+  <string name="settings_section_smart_typing">Smart Typing</string>
+  <string name="settings_autocorrection">Autocorrection</string>
+  <string name="smart_typing_off">Off</string>
+  <string name="smart_typing_suggestions">Suggestions</string>
+  <string name="smart_typing_high_confidence">High confidence</string>
+  <string name="settings_autocorrection_off_summary">Spelling corrections are off. Mechanical punctuation is controlled separately.</string>
+  <string name="settings_autocorrection_suggestions_summary">Dictionary suggestions only. Tap a suggestion to replace the word.</string>
+  <string name="settings_autocorrection_high_confidence_summary">Dictionary suggestions only. Automatic replacement is not available in this version.</string>
+  <string name="settings_suggestions_hidden">Suggestions are hidden while the candidate strip is off.</string>
+  <string name="settings_mechanical_punctuation">Mechanical punctuation</string>
+  <string name="settings_mechanical_punctuation_summary">Adjust punctuation spacing and sentence capitalization in text typed with Rune.</string>
+  <string name="settings_contextual_punctuation">Contextual punctuation</string>
+  <string name="settings_contextual_unavailable">Unavailable in this version. The choice is saved. Installing a model does not enable this feature yet.</string>
+  <string name="settings_candidate_strip">Candidate strip</string>
+  <string name="settings_candidate_strip_summary">Show the original word and available suggestions. Hiding this strip does not disable mechanical punctuation.</string>
   <string name="settings_section_typing">Typing</string>
   <string name="settings_section_layout">Layout</string>
   <string name="settings_section_appearance">Appearance</string>

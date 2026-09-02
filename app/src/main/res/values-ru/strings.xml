@@ -51,6 +51,21 @@
 
   <string name="settings_title">Настройки Rune</string>
   <string name="settings_section_languages">Языки</string>
+  <string name="settings_section_smart_typing">Умный ввод</string>
+  <string name="settings_autocorrection">Автокоррекция</string>
+  <string name="smart_typing_off">Выключено</string>
+  <string name="smart_typing_suggestions">Подсказки</string>
+  <string name="smart_typing_high_confidence">Высокая уверенность</string>
+  <string name="settings_autocorrection_off_summary">Исправления слов выключены. Механическая пунктуация настраивается отдельно.</string>
+  <string name="settings_autocorrection_suggestions_summary">Словарные подсказки. Нажмите на подсказку, чтобы заменить слово.</string>
+  <string name="settings_autocorrection_high_confidence_summary">Доступны только словарные подсказки. Автоматическая замена в этой версии недоступна.</string>
+  <string name="settings_suggestions_hidden">Подсказки скрыты, пока строка подсказок выключена.</string>
+  <string name="settings_mechanical_punctuation">Механическая пунктуация</string>
+  <string name="settings_mechanical_punctuation_summary">Корректирует пробелы у знаков пунктуации и заглавную букву предложения в тексте, набранном Rune.</string>
+  <string name="settings_contextual_punctuation">Контекстная пунктуация</string>
+  <string name="settings_contextual_unavailable">Недоступно в этой версии. Выбор сохранён. Установка модели пока не включает эту функцию.</string>
+  <string name="settings_candidate_strip">Строка подсказок</string>
+  <string name="settings_candidate_strip_summary">Показывает исходное слово и доступные подсказки. Скрытие строки не выключает механическую пунктуацию.</string>
   <string name="settings_section_typing">Ввод</string>
   <string name="settings_section_layout">Раскладка</string>
   <string name="settings_section_appearance">Оформление</string>

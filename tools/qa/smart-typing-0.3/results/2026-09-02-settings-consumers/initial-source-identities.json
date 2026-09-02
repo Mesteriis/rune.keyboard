@@ -1,0 +1,54 @@
+{
+  "baseline": "e4a43059143c79773424a96ff57ad0e8770fb141",
+  "proposalSha256": "d44b26ab070e0ed9122aa77403805d95d70be219b0e1d11bd292896cdd483de8",
+  "sources": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt": {
+      "before": "cefea961741c08e8a95238f2465cd2185d62665e0b394e05f5ab710d3825cdbb",
+      "after": "983e79b9c0f02702516b230dc53cefab0770bc7401820e5772fa814c82a5fb25"
+    },
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/KeyboardInstanceAssertions.kt": {
+      "before": null,
+      "after": "246d6104013cb607888d587b6aa69cb605397f7709e85780c9b25c62f8f8a9db"
+    },
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveCandidatesInstrumentedTest.kt": {
+      "before": "c55a9b767dcbf627283be5926bd257eecae481932c3d50611b723f2e73cebf26",
+      "after": "701911f41c0bafdba2bca74367e2103197db410402964d1a876037229636ff88"
+    },
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/MechanicalPunctuationInstrumentedTest.kt": {
+      "before": "696a57e6cbf50f1d3232695a8690cfaaad5189a83d736da82c8b62aa9ffa60e8",
+      "after": "dd6fcf44be7539865e3bc221927ac060bd1f769dd086b68032a5c8acfd9da45b"
+    },
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingSettingsInstrumentedTest.kt": {
+      "before": null,
+      "after": "f2e26feb772766c3d45380811f49e517be2a5d3c7f3f01da6dc19917bbad50ee"
+    },
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt": {
+      "before": "d05901f37c5a128255ac1914f6f7f430c368a65f847feab46cd8a4a75bcb3fd5",
+      "after": "782ff684c60661e0938609606a4d3ed092d28f26334b1a831a0e2d1823ede9c7"
+    },
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SettingsActivity.kt": {
+      "before": "98d57354d631d7217d8ce5225cfd46e92756c952c8f98665f4ce6c93d7850fd1",
+      "after": "013073e15c01d39f0d3bf27fe22c89570786bcd4e33a0fa1ddae8d9308a2a55f"
+    },
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt": {
+      "before": "5b814fb9c961885cbf70618067db0a5f65f5cf6e4318f98d21cd8b4331173346",
+      "after": "65f8b8f65cb25d6b38bf60fdea0e2342179406c37f78a82724cad20172c2b990"
+    },
+    "app/src/main/res/values/strings.xml": {
+      "before": "707b02d49551e4016fee5b2139fb7b44fb8887adbf6fadef0bcdbcfaea072fb2",
+      "after": "cf271667748744063df608e9d566c42dcd32416f4313d67c7310c01ae7d4bb57"
+    },
+    "app/src/main/res/values-ru/strings.xml": {
+      "before": "62c92a42bb525a41c273145ff17f08cde25b74b7de1683223d9facd51fb8e9ea",
+      "after": "6f245096980c8b4599aaca3869a982b2b8172e2876a330bfe91d683f13fd5b06"
+    },
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinatorTest.kt": {
+      "before": "64390623e78a98750a05bb2bd9c8581d3bd33db3fa508aff1a3e8fbf7907ad55",
+      "after": "5f9704ec830b560768995f66bcabc72998ab5d3ceb22fbbd5c039b3394085bd0"
+    }
+  },
+  "builtApks": {
+    "app/build/outputs/apk/debug/app-debug.apk": "dcec70981236c383396a2772f1c518d123c30f88343eb01fcea4e148c3425e5b",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "405cf0c049e7fa73fc6f876d303fd426e983e49bd687fd5dc33ec73ee0e7bc1e"
+  }
+}

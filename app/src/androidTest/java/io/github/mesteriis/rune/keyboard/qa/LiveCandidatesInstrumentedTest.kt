@@ -54,27 +54,7 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
         noReadback()
     }
 
-    private fun prepareCorrection(): UiObject2 {
-        driver.launchComposingQa()
-        driver.tapKey("a")
-        space()
-        for (key in listOf("h", "e", "l", "l", "l")) driver.tapKey(key)
-        // Loading never submits by itself. These bounded explicit edits keep the same EN/ES
-        // route eligible while its maps load, then request a fresh result for the fixed word.
-        val deadline = SystemClock.uptimeMillis() + LOAD_TEST_TIMEOUT_MILLIS
-        do {
-            driver.tapKey("o")
-            driver.awaitFieldText(FIELD, "a helllo")
-            val correction = driver.device.wait(
-                Until.findObject(By.desc(description(R.string.candidate_correction, "hello"))),
-                ImeTestDriver.INPUT_CONNECTION_SETTLE_MILLIS,
-            )
-            if (correction != null) return correction
-            driver.tapDelete()
-            driver.awaitFieldText(FIELD, "a helll")
-        } while (SystemClock.uptimeMillis() < deadline)
-        throw AssertionError("Fixed public spelling candidate unavailable after bounded loading/edits")
-    }
+    private fun prepareCorrection(): UiObject2 = driver.prepareLiveCorrection()
 
     private fun noReadback() {
         for (key in listOf("before", "after", "selected", "extracted", "surrounding", "snapshot")) {
@@ -108,7 +88,5 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
 
     private companion object {
         const val FIELD = "qa_composing_text"
-        // Mirrors the existing packaged-load contract's test-only deadline, not a product timeout.
-        const val LOAD_TEST_TIMEOUT_MILLIS = 120_000L
     }
 }

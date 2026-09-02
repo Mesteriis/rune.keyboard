@@ -25,13 +25,16 @@ qualifying a resource-bounded model path. Preserve all quality/privacy gates;
 do not treat switching models as permission to weaken them. Model execution
 must be demand-driven, cancellable, and absent in sensitive/ineligible sessions.
 
-Current slice: `feature/smart-typing-03-pr06-lexicons`, following packaged-reader
-checkpoint `c45f43ae6f84ac27d84e68eb8c10fea40a385dbe`. PR2/3 runtime and private
+Current slice: `feature/smart-typing-03-pr06-lexicons`, following settings-render
+checkpoint `e4a43059143c79773424a96ff57ad0e8770fb141`. PR2/3 runtime and private
 inference foundations, PR4 composing and PR5 strip/owned-boundary Undo are
 integrated; IME model inference and automatic spelling replacement remain off.
-PR6 now has scoped live-suggestion evidence on API26/37 and Fold, while useful
-retrieval/quality, PR7/8/9/10, full autocorrection Undo and final device/performance
-matrices remain required. No push, remote PR or publication is authorized.
+PR6 has scoped live-suggestion evidence on API26/37 and Fold. PR8 mechanical
+punctuation and schema3 persistence have local integration evidence, while
+settings consumers/UI have scoped API26/API37 integration evidence.
+Retrieval/quality, PR7/9, full autocorrection Undo and final device/performance
+matrices remain required. No push, remote PR or publication
+is authorized.
 
 ### PR4 local evidence
 
@@ -188,6 +191,17 @@ matrices remain required. No push, remote PR or publication is authorized.
 - Settings consumer design exposed a remaining key-rebuild defect: nonvisual settings used `renderKeyboard`, which defers replacement during an active key touch. Ruling: fix the actual service dispatch before broader settings consumers; preserve view recreation for visual fields and key rendering for language-list changes, using strip-only rendering otherwise. The earlier mechanical toggle test did not assert identity; avoiding recreation was insufficient evidence. Cost: changed nonvisual dispatch requires an actual held-key regression.
 - Independently reviewed settings-render correction (`696ac86b08315bb1efb03112ee54e16db7703dee010af9e8ba3422e055a84e4a`, review `4c632a7577086e6857962f14c59b71f5047191fe8e7942fbcbe363d6cdeac6c9`). Parent tests-only old-service control on API37 failed after UP with changed key index0 (1 failure,12.887 s). Fixed complete mechanical class PASS API26 3/3,34.884 s and API37 3/3,39.874 s. Full gates plus test APK PASS267/46. Evidence preserved under `tools/qa/smart-typing-0.3/results/2026-09-02-settings-render/`. API27/28 and remote CI unrun; Fold blocked because USB device remains absent.
 - Broader settings consumer/UI design independently approved (`settings-consumer-design/DESIGN-REVIEW.md`). Reuse the corrected renderer branch. A strip visibility change must additionally prove held-key geometry safety; if deferring height, keep only latest visibility, clear items immediately and drain/reset on UP/CANCEL/lifecycle. No implementation or availability claim follows from design approval.
+
+- Settings-render slice committed `e4a43059143c79773424a96ff57ad0e8770fb141`; mandatory fresh post-commit JVM517/517 PASS, zero failures/errors/skips,46 executed (`settings-render-jvm-postcommit.log`). Previous goal turn made concrete progress through this production fix, its executed old-source negative control and API26/API37 tests; it was not a no-progress wait.
+- One ignored exact weighted-top-seven prototype completed its source/control review. Eight finite control groups PASS (3209 independent distance pairs,8218 prefix cuts,94 full-policy cases). Core algorithm had no material review finding. P2 in standalone comparison was fixed before qualification: reference/fixture/baseline provenance must validate before execution/consumption, with exactly775 ordered IDs/results. Sixteen analyzer-only tests PASS; their positive synthetic records are not a generator execution. Scoped fix review `3ec907a8df0cd41e575edc16ecdc2686551caf6531e25b5a98fecbe896c80318` approved the correction, retaining old snapshot/failure rationale.
+- Parent executed the sole unchanged775-request prototype run and corrected analyzer, both exit0:775 contracts, zero violations. Development retrieval certificates226/716 (EN63/239,RU77/240,ES86/237), compared with72/716;154 gains and zero complete-result losses. States exhaustion460 and verification exhaustion30 retain the AutoReplace veto. The55 controls remain separate. Raw numeric output SHA `19ef0e029d6cbd914fab8a09f6b8a029259c8ef22a74108df308d33287e92993`. Independent final evidence review `af098ef2c42b71995656ec9a832e44565819a053c95f8477af2e05e528f9159e` approved all775 contracts through separate numeric reconciliation; no production replacement, holdout, latency or energy qualification follows from this run. No second strategy or repeated775 run is authorized through this prototype result. Source-word recall improves overall563→616/716, but includes106 gains/53 losses and an ES regression209→206;181 requests retain fewer oracle top-seven identities. Primitive scratch capacity292,020 bytes is not measured RSS. These tradeoffs remain open before production adoption.
+
+- Settings consumer/UI slice independently reviewed; fix round1 corrected only the new double-space Undo expectation to one pending space. Final proposal SHA `d44b26ab070e0ed9122aa77403805d95d70be219b0e1d11bd292896cdd483de8`, scoped review `420ea65d2e769b87312fd214b7b6c505c9b5f36883cb4faad5d30a41a659c879`. Parent verified eleven before/after identities and integrated the patch. Fresh root JVM525/525 PASS, zero failures/errors/skips; full prescribed gates plus test APK PASS277/277 executed (`settings-consumer-gates.log`). API26/API37 runtime checks remain in progress.
+- Following the user's new phone-connected message, fresh USB/ADB checks still found no physical Android device: one emulator only, no matching Samsung/Android/Fold USB node. No phone installation was attempted. Asked the user to check direct data-capable cable/port and USB-debugging confirmation; independent implementation continues.
+
+- Initial settings API26 matrix:12 run,11 PASS/1 FAIL,166.162 s (`settings-consumer-api26.log`). New private-transition test queried empty Editable through accessibility, which returned the configured hint. Existing debug fixture already exposes actual numeric editor length; investigate and fix the assertion without accepting hint text as empty globally. All three held-key visibility sequences passed. Earlier intermediate commentary incorrectly called all six new tests passed before reading the final failure; corrected immediately from terminal evidence.
+
+- Settings fix round2 independently reviewed (`ac20e2ee5b88ceebee87db464404d83eed4c72e262c06e218377792cf1a163f4`, review `be3b66a24d4ad38c3f504339459a61c01ac24edb6b373a1c1a636fecaafd6c6a`): use existing actual numeric Editable length rather than accessibility hint text. Final gates PASS267/21. Full API37 matrix12/12 PASS182.880 s; corrected API26 targeted1/1 PASS11.980 s, with unchanged11 initial passes retained. No full final API26 rerun. Scoped evidence and acceptance committed with the settings consumer slice; Fold/quality/model integration remain open.
 
 ### Historical PR1 result
 

@@ -10,6 +10,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexicons
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateReply
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorker
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
+import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
+import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import java.util.concurrent.Executor
 
 /** Only non-text live eligibility. The service derives editorAllowsSmartTyping from EditorContext. */
@@ -19,9 +21,18 @@ data class CandidateOwnerState(
     val layer: KeyboardLayer,
     val language: KeyboardLanguage,
     val hasSelection: Boolean,
+    val autocorrectionMode: AutocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE,
+    val candidateStripEnabled: Boolean = true,
 ) {
-    val eligible: Boolean
+    val baseEligible: Boolean
         get() = editorAllowsSmartTyping && inputViewActive && layer == KeyboardLayer.LETTERS && !hasSelection
+    val spellingEnabled: Boolean
+        get() = autocorrectionMode != AutocorrectionMode.OFF
+    val showsCandidates: Boolean
+        get() = baseEligible && candidateStripEnabled
+    /** Manual strip selection is the only implemented spelling consumer. */
+    val canRequestSpelling: Boolean
+        get() = showsCandidates && spellingEnabled
 }
 
 /** Main owner only; readiness never calls back, renders never submit, and no request survives a boundary. */
@@ -83,13 +94,20 @@ class LocalCandidateCoordinator internal constructor(
     /** A tap must retain its current allowlist until the controller resolves the ID. */
     fun selectCandidate(id: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
         checkOwner()
-        if (closed || ownerState?.invoke()?.eligible != true || !controller.ownsCandidateComposition) {
+        val owner = ownerState?.invoke()
+        if (closed || owner?.showsCandidates != true || !controller.ownsCandidateComposition) {
             invalidate()
             return TypingTextResult.REJECTED
         }
-        if (controller.candidateViewState.candidates.none { it.id == id }) return TypingTextResult.REJECTED
+        val item = viewState.candidates.firstOrNull { it.id == id } ?: return TypingTextResult.REJECTED
+        if (item is CandidateUiItem.Correction && !owner.spellingEnabled) return TypingTextResult.REJECTED
         cancelCandidates(clearAllowlist = false)
         invalidateLoads()
+        // Under OFF, Original can acknowledge only the current spelling, never restore a prior
+        // manual correction if a caller changed policy without clearing its old metadata.
+        if (!owner.spellingEnabled) {
+            return if (controller.selectOriginal(id)) TypingTextResult.HANDLED else TypingTextResult.REJECTED
+        }
         return controller.selectCandidate(id, execute)
     }
 
@@ -97,8 +115,13 @@ class LocalCandidateCoordinator internal constructor(
     val viewState: SmartTypingViewState
         get() {
             checkOwner()
-            return if (closed || ownerState?.invoke()?.eligible != true) SmartTypingViewState.HIDDEN
-            else controller.candidateViewState
+            val owner = ownerState?.invoke()
+            if (closed || owner?.showsCandidates != true) return SmartTypingViewState.HIDDEN
+            val view = controller.candidateViewState
+            if (owner.spellingEnabled || !view.enabled) return view
+            val originalId = controller.originalCandidateId ?: return SmartTypingViewState.EMPTY
+            val original = CandidateUiItem.Original(originalId, controller.state.composing!!.typedWord)
+            return SmartTypingViewState(true, listOf(original), original.id)
         }
 
     override fun close() {
@@ -115,7 +138,7 @@ class LocalCandidateCoordinator internal constructor(
 
     private fun requestCurrentWord() {
         val owner = ownerState?.invoke() ?: return
-        if (!owner.eligible || !controller.canRequestCandidates) {
+        if (!owner.canRequestSpelling || !controller.canRequestCandidates) {
             invalidateLoads()
             return
         }
@@ -141,7 +164,7 @@ class LocalCandidateCoordinator internal constructor(
         val owner = ownerState?.invoke()
         val typing = controller.state
         val original = typing.composing?.typedWord
-        if (owner?.eligible != true || owner.language != current.language ||
+        if (owner?.canRequestSpelling != true || owner.language != current.language ||
             typing.sessionId != current.sessionId || typing.revision != current.revision ||
             !controller.canRequestCandidates || original == null || reply.generation.original != original ||
             !routeReady(LanguageRouter.route(original, owner.language))) {

@@ -1,0 +1,23 @@
+# Smart Typing 0.3 — settings consumers, 2026-09-02
+
+Baseline: `e4a43059143c79773424a96ff57ad0e8770fb141`. Settings schema 3 was already persisted; this slice connects its spelling/strip preferences to the existing manual candidate consumer and exposes the independent controls in the existing settings screen.
+
+`OFF` cancels spelling demand and shows only the current Original if the strip is visible. A hidden strip makes no dictionary request because explicit selection is the only implemented spelling consumer. `SUGGESTIONS` and `HIGH_CONFIDENCE` currently offer manual dictionary alternatives. Saved high-confidence/contextual preferences are retained, while both English and Russian UI state their unavailable effective capability. Mechanical punctuation and double-space remain independent. No model binding or automatic spelling replacement is introduced.
+
+The service invalidates candidates, request epochs and loading demand on mode/visibility changes, preserving composition and mechanical Undo. Reply delivery and selection recheck policy and current IDs. Enabling a preference, route readiness, rendering or reopening Settings does not resubmit the current word; a later explicit composing edit is required. The preceding nonvisual renderer fix is reused, preserving keyboard/key instances and active touches.
+
+Independent review found an incorrect new double-space Undo expectation and it was corrected to the existing single-pending-space contract before integration. Final proposal SHA-256: `d44b26ab070e0ed9122aa77403805d95d70be219b0e1d11bd292896cdd483de8`; scoped review: `420ea65d2e769b87312fd214b7b6c505c9b5f36883cb4faad5d30a41a659c879`. Parent verified all eleven before/after source identities. Author's coordinator red control failed 5 of 26 tests before policy wiring; final focused 26/26 passed.
+
+Root fresh JVM: **525/525 PASS**, zero failures/errors/skips. Initial full lint/debug/release/profile/privacy/dependency/native gates plus Android test assembly: **PASS**,277 tasks/277 executed (`settings-consumer-gates.log`). These checks do not establish runtime behavior.
+
+Initial API26 matrix: **12 run,11 passed,1 failed**,166.162 s. The new private-transition test used accessibility text to assert an empty Editable; accessibility returned its configured hint. The debug fixture already exposes actual numeric editor length. A one-assertion correction uses that existing length, preserving the exact subsequent character, composing, old-candidate and all six readback checks. No hint-to-empty normalization, fixture change or production change is made. The initial failure log is retained; its actual length was not captured and is not retrospectively claimed as zero.
+
+The test correction was independently approved (patch `ac20e2ee5b88ceebee87db464404d83eed4c72e262c06e218377792cf1a163f4`, review `be3b66a24d4ad38c3f504339459a61c01ac24edb6b373a1c1a636fecaafd6c6a`). Final prescribed gates plus test APK: **PASS**,267 tasks/21 executed,246 up-to-date (`settings-consumer-final-gates.log`).
+
+Runtime after that test correction: **API37 full matrix 12/12 PASS**,182.880 s; **API26 corrected targeted test 1/1 PASS**,11.980 s. Together with the unchanged eleven initial API26 passes, every affected method has an API26 pass. A full final twelve-method API26 rerun was not performed; only the corrected assertion changed. The successful targeted run independently confirms actual empty Editable length, exact next input and the existing privacy counters.
+
+Evidence is in `tools/qa/smart-typing-0.3/results/2026-09-02-settings-consumers/`. Tests operate the actual controls and IME through the public Binder fixture, including held Correction cancellation, strip on/off/repeated toggles during key DOWN, UP/CANCEL, privacy transitions and independent mechanical/double-space Undo. Failure screenshots and hierarchy capture are disabled; no device identifiers or user text are collected. Functional test durations are not latency measurements.
+
+Physical Fold: **BLOCKED**. After the user's phone-connected message, a fresh check still found only the emulator in ADB and no matching Samsung/Android/Fold USB node. No phone installation occurred. API27/28, remote CI and this slice's physical performance/energy checks are unrun. Prepared-model quality remains FAIL; full end-to-end quality and release gates remain open. Version stays 0.2.0; no push or publication.
+
+Diff review: staged whitespace check reports one extra final blank line in the test-only `KeyboardInstanceAssertions.kt`; retained as a cosmetic minor to preserve the reviewed/tested source identities. No functional or validation assertion is affected.

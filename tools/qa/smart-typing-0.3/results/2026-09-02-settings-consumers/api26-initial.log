@@ -1,0 +1,197 @@
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest:
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=spellingAndStripChangesPreserveMechanicalUndoAndIndependentDoubleSpace
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=spellingAndStripChangesPreserveMechanicalUndoAndIndependentDoubleSpace
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=stripToggleCancelAndPrivateTransitionCannotResurrectOldCandidateContent
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+Error in stripToggleCancelAndPrivateTransitionCannotResurrectOldCandidateContent(io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest):
+java.lang.IllegalStateException: Field qa_composing_text expected <>, actual <Composing Binder fixture>
+	at io.github.mesteriis.rune.keyboard.qa.ImeTestDriver.awaitFieldText(ImeTestDriver.kt:253)
+	at io.github.mesteriis.rune.keyboard.qa.ImeTestDriver.awaitFieldText$default(ImeTestDriver.kt:244)
+	at io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest.stripToggleCancelAndPrivateTransitionCannotResurrectOldCandidateContent(SmartTypingSettingsInstrumentedTest.kt:135)
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=stripToggleCancelAndPrivateTransitionCannotResurrectOldCandidateContent
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Field qa_composing_text expected <>, actual <Composing Binder fixture>
+	at io.github.mesteriis.rune.keyboard.qa.ImeTestDriver.awaitFieldText(ImeTestDriver.kt:253)
+	at io.github.mesteriis.rune.keyboard.qa.ImeTestDriver.awaitFieldText$default(ImeTestDriver.kt:244)
+	at io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest.stripToggleCancelAndPrivateTransitionCannotResurrectOldCandidateContent(SmartTypingSettingsInstrumentedTest.kt:135)
+
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=controlsPersistIndependentlyAndExplainUnavailableCapabilities
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=controlsPersistIndependentlyAndExplainUnavailableCapabilities
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=disablingSpellingCancelsHeldCorrectionWithoutEditorMutation
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=disablingSpellingCancelsHeldCorrectionWithoutEditorMutation
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=liveOffDropsCorrectionsAndEnableWaitsForExplicitEdit
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=liveOffDropsCorrectionsAndEnableWaitsForExplicitEdit
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=stripBothDirectionsAndRepeatedTogglesPreserveHeldKeyAndSingleRelease
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=stripBothDirectionsAndRepeatedTogglesPreserveHeldKeyAndSingleRelease
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest:
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=boundaryKeepsTypedOriginalAndDropsPreviousSuggestions
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=boundaryKeepsTypedOriginalAndDropsPreviousSuggestions
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=correctionAndOriginalTapsReplaceOnlyOwnedWordWithNoReadback
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=correctionAndOriginalTapsReplaceOnlyOwnedWordWithNoReadback
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=sensitiveEditorTransitionClearsLoadedSuggestionsAndPreservesPlainTyping
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=sensitiveEditorTransitionClearsLoadedSuggestionsAndPreservesPlainTyping
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest:
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=pairOfDotsWaitsForWhitespaceAndNewWordThenUndoesCapsTogether
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=pairOfDotsWaitsForWhitespaceAndNewWordThenUndoesCapsTogether
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=commaPopupPunctuationCapsAndImmediateUndoNeverReplayOldWord
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=commaPopupPunctuationCapsAndImmediateUndoNeverReplayOldWord
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 166.162
+There was 1 failure:
+1) stripToggleCancelAndPrivateTransitionCannotResurrectOldCandidateContent(io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest)
+java.lang.IllegalStateException: Field qa_composing_text expected <>, actual <Composing Binder fixture>
+	at io.github.mesteriis.rune.keyboard.qa.ImeTestDriver.awaitFieldText(ImeTestDriver.kt:253)
+	at io.github.mesteriis.rune.keyboard.qa.ImeTestDriver.awaitFieldText$default(ImeTestDriver.kt:244)
+	at io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest.stripToggleCancelAndPrivateTransitionCannotResurrectOldCandidateContent(SmartTypingSettingsInstrumentedTest.kt:135)
+
+FAILURES!!!
+Tests run: 12,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
