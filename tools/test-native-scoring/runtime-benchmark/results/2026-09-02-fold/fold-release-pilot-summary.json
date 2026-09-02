@@ -1,0 +1,926 @@
+{
+  "schema": 1,
+  "profile": 0,
+  "sdk": 36,
+  "build": 1,
+  "matched_release": 1,
+  "measured_requests": 27,
+  "warmup_requests": 9,
+  "measured_cells": [
+    {
+      "config": 0,
+      "language": 0,
+      "candidates": 2,
+      "request_count": 3,
+      "scored_candidates": 6,
+      "scored_tokens": 6,
+      "metrics": {
+        "wall_ns": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 124797968,
+          "p95": 125449219,
+          "max": 125449219
+        },
+        "process_cpu_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 405,
+          "p95": 409,
+          "max": 409
+        },
+        "native_duration_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 121,
+          "p95": 122,
+          "max": 122
+        },
+        "pss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 459334656,
+          "p95": 466505728,
+          "max": 466505728
+        },
+        "rss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 535900160,
+          "p95": 542707712,
+          "max": 542707712
+        },
+        "native_heap_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 46650224,
+          "p95": 46660816,
+          "max": 46660816
+        },
+        "java_heap_used_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 3161216,
+          "p95": 12014368,
+          "max": 12014368
+        }
+      }
+    },
+    {
+      "config": 1,
+      "language": 0,
+      "candidates": 4,
+      "request_count": 3,
+      "scored_candidates": 12,
+      "scored_tokens": 12,
+      "metrics": {
+        "wall_ns": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 239112656,
+          "p95": 263953125,
+          "max": 263953125
+        },
+        "process_cpu_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 791,
+          "p95": 908,
+          "max": 908
+        },
+        "native_duration_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 235,
+          "p95": 258,
+          "max": 258
+        },
+        "pss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 459351040,
+          "p95": 466534400,
+          "max": 466534400
+        },
+        "rss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 536154112,
+          "p95": 542699520,
+          "max": 542699520
+        },
+        "native_heap_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 46655248,
+          "p95": 46665840,
+          "max": 46665840
+        },
+        "java_heap_used_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 3214672,
+          "p95": 12067824,
+          "max": 12067824
+        }
+      }
+    },
+    {
+      "config": 2,
+      "language": 0,
+      "candidates": 8,
+      "request_count": 3,
+      "scored_candidates": 24,
+      "scored_tokens": 30,
+      "metrics": {
+        "wall_ns": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 512926406,
+          "p95": 663198386,
+          "max": 663198386
+        },
+        "process_cpu_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 1769,
+          "p95": 2299,
+          "max": 2299
+        },
+        "native_duration_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 509,
+          "p95": 658,
+          "max": 658
+        },
+        "pss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 458044416,
+          "p95": 465231872,
+          "max": 465231872
+        },
+        "rss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 534859776,
+          "p95": 541458432,
+          "max": 541458432
+        },
+        "native_heap_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 46662000,
+          "p95": 46672528,
+          "max": 46672528
+        },
+        "java_heap_used_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 3301024,
+          "p95": 12154176,
+          "max": 12154176
+        }
+      }
+    },
+    {
+      "config": 3,
+      "language": 1,
+      "candidates": 2,
+      "request_count": 3,
+      "scored_candidates": 6,
+      "scored_tokens": 15,
+      "metrics": {
+        "wall_ns": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 286168750,
+          "p95": 360873021,
+          "max": 360873021
+        },
+        "process_cpu_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 978,
+          "p95": 1257,
+          "max": 1257
+        },
+        "native_duration_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 282,
+          "p95": 356,
+          "max": 356
+        },
+        "pss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 458023936,
+          "p95": 463450112,
+          "max": 463450112
+        },
+        "rss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 534589440,
+          "p95": 539664384,
+          "max": 539664384
+        },
+        "native_heap_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 46666064,
+          "p95": 46676688,
+          "max": 46676688
+        },
+        "java_heap_used_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 3354416,
+          "p95": 12207568,
+          "max": 12207568
+        }
+      }
+    },
+    {
+      "config": 4,
+      "language": 1,
+      "candidates": 4,
+      "request_count": 3,
+      "scored_candidates": 12,
+      "scored_tokens": 27,
+      "metrics": {
+        "wall_ns": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 514639791,
+          "p95": 682151666,
+          "max": 682151666
+        },
+        "process_cpu_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 1819,
+          "p95": 2389,
+          "max": 2389
+        },
+        "native_duration_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 511,
+          "p95": 678,
+          "max": 678
+        },
+        "pss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 463425536,
+          "p95": 463625216,
+          "max": 463625216
+        },
+        "rss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 539811840,
+          "p95": 539934720,
+          "max": 539934720
+        },
+        "native_heap_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 46681712,
+          "p95": 46709424,
+          "max": 46709424
+        },
+        "java_heap_used_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 12301984,
+          "p95": 12643184,
+          "max": 12643184
+        }
+      }
+    },
+    {
+      "config": 5,
+      "language": 1,
+      "candidates": 8,
+      "request_count": 3,
+      "scored_candidates": 24,
+      "scored_tokens": 51,
+      "metrics": {
+        "wall_ns": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 993262656,
+          "p95": 1565290780,
+          "max": 1565290780
+        },
+        "process_cpu_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 3500,
+          "p95": 5703,
+          "max": 5703
+        },
+        "native_duration_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 989,
+          "p95": 1560,
+          "max": 1560
+        },
+        "pss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 463498240,
+          "p95": 463514624,
+          "max": 463514624
+        },
+        "rss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 539803648,
+          "p95": 540004352,
+          "max": 540004352
+        },
+        "native_heap_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 46688464,
+          "p95": 46720624,
+          "max": 46720624
+        },
+        "java_heap_used_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 12355568,
+          "p95": 12696768,
+          "max": 12696768
+        }
+      }
+    },
+    {
+      "config": 6,
+      "language": 2,
+      "candidates": 2,
+      "request_count": 3,
+      "scored_candidates": 6,
+      "scored_tokens": 9,
+      "metrics": {
+        "wall_ns": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 179232812,
+          "p95": 270193750,
+          "max": 270193750
+        },
+        "process_cpu_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 593,
+          "p95": 938,
+          "max": 938
+        },
+        "native_duration_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 175,
+          "p95": 265,
+          "max": 265
+        },
+        "pss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 459101184,
+          "p95": 464620544,
+          "max": 464620544
+        },
+        "rss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 535969792,
+          "p95": 541069312,
+          "max": 541069312
+        },
+        "native_heap_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 46681936,
+          "p95": 46692624,
+          "max": 46692624
+        },
+        "java_heap_used_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 3555808,
+          "p95": 12408960,
+          "max": 12408960
+        }
+      }
+    },
+    {
+      "config": 7,
+      "language": 2,
+      "candidates": 4,
+      "request_count": 3,
+      "scored_candidates": 12,
+      "scored_tokens": 21,
+      "metrics": {
+        "wall_ns": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 362731406,
+          "p95": 568115156,
+          "max": 568115156
+        },
+        "process_cpu_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 1239,
+          "p95": 1988,
+          "max": 1988
+        },
+        "native_duration_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 359,
+          "p95": 563,
+          "max": 563
+        },
+        "pss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 459138048,
+          "p95": 464796672,
+          "max": 464796672
+        },
+        "rss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 535937024,
+          "p95": 541163520,
+          "max": 541163520
+        },
+        "native_heap_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 46686960,
+          "p95": 46697648,
+          "max": 46697648
+        },
+        "java_heap_used_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 3642032,
+          "p95": 12495184,
+          "max": 12495184
+        }
+      }
+    },
+    {
+      "config": 8,
+      "language": 2,
+      "candidates": 8,
+      "request_count": 3,
+      "scored_candidates": 24,
+      "scored_tokens": 42,
+      "metrics": {
+        "wall_ns": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 717950521,
+          "p95": 720536927,
+          "max": 720536927
+        },
+        "process_cpu_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 2518,
+          "p95": 2530,
+          "max": 2530
+        },
+        "native_duration_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 714,
+          "p95": 716,
+          "max": 716
+        },
+        "pss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 459310080,
+          "p95": 464776192,
+          "max": 464776192
+        },
+        "rss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 535965696,
+          "p95": 541114368,
+          "max": 541114368
+        },
+        "native_heap_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 46646064,
+          "p95": 46704400,
+          "max": 46704400
+        },
+        "java_heap_used_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 3107824,
+          "p95": 12548768,
+          "max": 12548768
+        }
+      }
+    }
+  ],
+  "lifecycle": [
+    {
+      "operation": 0,
+      "metrics": {
+        "wall_ns": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 3213855,
+          "p95": 3213855,
+          "max": 3213855
+        },
+        "process_cpu_ms": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 4,
+          "p95": 4,
+          "max": 4
+        },
+        "native_duration_ms": {
+          "count": 1,
+          "available_count": 0,
+          "missing_count": 1,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "pss_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 19597312,
+          "p95": 19597312,
+          "max": 19597312
+        },
+        "rss_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 94597120,
+          "p95": 94597120,
+          "max": 94597120
+        },
+        "native_heap_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 7201600,
+          "p95": 7201600,
+          "max": 7201600
+        },
+        "java_heap_used_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 11213248,
+          "p95": 11213248,
+          "max": 11213248
+        }
+      }
+    },
+    {
+      "operation": 1,
+      "metrics": {
+        "wall_ns": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 380441666,
+          "p95": 380441666,
+          "max": 380441666
+        },
+        "process_cpu_ms": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 375,
+          "p95": 375,
+          "max": 375
+        },
+        "native_duration_ms": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 379,
+          "p95": 379,
+          "max": 379
+        },
+        "pss_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 459164672,
+          "p95": 459164672,
+          "max": 459164672
+        },
+        "rss_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 534163456,
+          "p95": 534163456,
+          "max": 534163456
+        },
+        "native_heap_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 46604688,
+          "p95": 46604688,
+          "max": 46604688
+        },
+        "java_heap_used_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 11299456,
+          "p95": 11299456,
+          "max": 11299456
+        }
+      }
+    },
+    {
+      "operation": 2,
+      "metrics": {
+        "wall_ns": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 96946666,
+          "p95": 96946666,
+          "max": 96946666
+        },
+        "process_cpu_ms": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 93,
+          "p95": 93,
+          "max": 93
+        },
+        "native_duration_ms": {
+          "count": 1,
+          "available_count": 0,
+          "missing_count": 1,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "pss_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 57951232,
+          "p95": 57951232,
+          "max": 57951232
+        },
+        "rss_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 134660096,
+          "p95": 134660096,
+          "max": 134660096
+        },
+        "native_heap_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 9596992,
+          "p95": 9596992,
+          "max": 9596992
+        },
+        "java_heap_used_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 3983200,
+          "p95": 3983200,
+          "max": 3983200
+        }
+      }
+    },
+    {
+      "operation": 3,
+      "metrics": {
+        "wall_ns": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 194062,
+          "p95": 194062,
+          "max": 194062
+        },
+        "process_cpu_ms": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 0,
+          "p95": 0,
+          "max": 0
+        },
+        "native_duration_ms": {
+          "count": 1,
+          "available_count": 0,
+          "missing_count": 1,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "pss_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 57886720,
+          "p95": 57886720,
+          "max": 57886720
+        },
+        "rss_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 134660096,
+          "p95": 134660096,
+          "max": 134660096
+        },
+        "native_heap_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 9591872,
+          "p95": 9591872,
+          "max": 9591872
+        },
+        "java_heap_used_bytes": {
+          "count": 1,
+          "available_count": 1,
+          "missing_count": 0,
+          "p50": 4069264,
+          "p95": 4069264,
+          "max": 4069264
+        }
+      }
+    }
+  ],
+  "cancellation": {
+    "attempts": 3,
+    "cancelled": 3,
+    "completion_races": 0,
+    "completed_before_signal": 0,
+    "signal_to_end_ns": {
+      "count": 3,
+      "available_count": 3,
+      "missing_count": 0,
+      "p50": 10772031,
+      "p95": 13103230,
+      "max": 13103230
+    },
+    "metrics": {
+      "wall_ns": {
+        "count": 3,
+        "available_count": 3,
+        "missing_count": 0,
+        "p50": 21187968,
+        "p95": 23477969,
+        "max": 23477969
+      },
+      "process_cpu_ms": {
+        "count": 3,
+        "available_count": 3,
+        "missing_count": 0,
+        "p50": 21,
+        "p95": 22,
+        "max": 22
+      },
+      "native_duration_ms": {
+        "count": 3,
+        "available_count": 0,
+        "missing_count": 3,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "pss_bytes": {
+        "count": 3,
+        "available_count": 3,
+        "missing_count": 0,
+        "p50": 455513088,
+        "p95": 455554048,
+        "max": 455554048
+      },
+      "rss_bytes": {
+        "count": 3,
+        "available_count": 3,
+        "missing_count": 0,
+        "p50": 532246528,
+        "p95": 532267008,
+        "max": 532267008
+      },
+      "native_heap_bytes": {
+        "count": 3,
+        "available_count": 3,
+        "missing_count": 0,
+        "p50": 46700512,
+        "p95": 46707264,
+        "max": 46707264
+      },
+      "java_heap_used_bytes": {
+        "count": 3,
+        "available_count": 3,
+        "missing_count": 0,
+        "p50": 3781968,
+        "p95": 3876512,
+        "max": 3876512
+      }
+    }
+  },
+  "recovery_requests": 1,
+  "total_wall_ns": 19440202753,
+  "total_process_cpu_ms": 61893
+}

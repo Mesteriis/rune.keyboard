@@ -2,7 +2,13 @@ plugins {
     id("com.android.library")
 }
 
+val runtimeTestBuildType = providers.gradleProperty("runeRuntimeTestBuildType").orElse("debug").get()
+require(runtimeTestBuildType in setOf("debug", "release")) {
+    "runeRuntimeTestBuildType must be debug or release"
+}
+
 android {
+    testBuildType = runtimeTestBuildType
     namespace = "io.github.mesteriis.rune.runtime.llama"
     compileSdk = 37
     ndkVersion = "29.0.14206865"
@@ -11,7 +17,9 @@ android {
         minSdk = 26
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["notAnnotation"] =
-            "io.github.mesteriis.rune.runtime.llama.VerifiedModelOnly"
+            "io.github.mesteriis.rune.runtime.llama.VerifiedModelOnly," +
+                "io.github.mesteriis.rune.runtime.llama.RuntimeBenchmarkOnly"
+        manifestPlaceholders["runeRuntimeBenchmarkBuildType"] = runtimeTestBuildType
         ndk {
             abiFilters += setOf("arm64-v8a", "x86_64")
         }

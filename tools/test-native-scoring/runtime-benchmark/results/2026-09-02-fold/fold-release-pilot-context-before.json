@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "observed_unix_seconds": 1788356765,
+  "ac_powered": 0,
+  "usb_powered": 1,
+  "wireless_powered": 0,
+  "battery_status": 2,
+  "battery_percent": 85,
+  "battery_millivolts": 4307,
+  "battery_temperature_tenths_c": 360,
+  "thermal_status": 1
+}

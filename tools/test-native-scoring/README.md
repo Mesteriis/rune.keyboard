@@ -160,7 +160,7 @@ Explicit ordinary no-model runtime tests:
 
 ```sh
 adb shell am instrument -w -r \
-  -e notAnnotation io.github.mesteriis.rune.runtime.llama.VerifiedModelOnly \
+  -e notAnnotation io.github.mesteriis.rune.runtime.llama.VerifiedModelOnly,io.github.mesteriis.rune.runtime.llama.RuntimeBenchmarkOnly \
   io.github.mesteriis.rune.runtime.llama.test/androidx.test.runner.AndroidJUnitRunner
 ```
 
@@ -202,3 +202,7 @@ Exact inside-tokenizer cancellation belongs to the host qualification harness;
 the Android test cannot certify that stage without intrusive hooks. Device
 ranking quality, keyboard UX, production latency, battery and thermal behavior
 remain separate gates.
+
+## Optional physical public-runtime benchmark
+
+The separate [runtime benchmark](runtime-benchmark/README.md) adds explicit `pilot` and `full` profiles. Ordinary instrumentation excludes `RuntimeBenchmarkOnly` as well as `VerifiedModelOnly`; the existing qualification annotation still selects exactly one test. Release measurements require an explicitly selected release Android test variant and verified native-entry equality with the app release APK. Debug qualification remains correctness evidence.

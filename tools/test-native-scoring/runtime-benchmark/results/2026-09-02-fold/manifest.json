@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-09-02",
+  "device_model": "SM-F966B",
+  "api": 36,
+  "transport": "USB",
+  "model_bytes": 396704416,
+  "model_sha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+  "base_commit": "5cbf609afb9213d6e74df842483c8c7a5e775c5b",
+  "benchmark_proposal_sha256": "34ffbd2be776ff1c44ecd0a1685daeee66485694a1e8af283809a9120adf22e9",
+  "upstream_llama_sha": "36b10154383b60eb15baac2c7a40d2a5f784faa7",
+  "files": {
+    "fold-release-native-proof.json": "f5f4d5ec2d8ec9a154d562f5ac3d03c38f59a15f2b2212bfba8e5729342045ef",
+    "fold-release-pilot.csv": "dd5a4bfa3d0ccec59f6a0a0684416205ad0ac51329c51f4ed2f4755d70cc3f33",
+    "fold-release-pilot-summary.json": "b5ba7472dcf90df43dfcac6bc20e7389ca69af3c568636f5b2c5bd064b7d63c5",
+    "fold-release-pilot-context-before.json": "305e58935aa1bcf8033614d7fc1397eb83dc7ae5bf5a45587455a9d33d4d694a",
+    "fold-release-pilot-context-after.json": "76f7b896ef09f977bc17afd032700fe359773e712adf98833e36a923da781822",
+    "fold-release-full.csv": "2ea423638ed84a9f1ba486b320c4794a2370e7c791583098835ff3e33a37517a",
+    "fold-release-full-summary.json": "7bca5e02c5767b3bd66e2753a26ed213cbc50b6a70cb08847edc0b5fdb0c8daf",
+    "fold-release-full-context-before.json": "e386ef849c2c4b2a5f4ff933008a0e1bd883f3d9677131c7e25cfe2d57d41887",
+    "fold-release-full-context-after.json": "439cb56f489ef286399528618f64c9d625e594649c770a5c041645436d96a988"
+  },
+  "source_sha256": {
+    "runtime-llama/src/androidTest/java/io/github/mesteriis/rune/runtime/llama/LlamaRuntimeBenchmarkInstrumentedTest.kt": "9b6c85546e3bf262bd28ebec6b8de6bd510ead7e7d9f613b8ce5487177b6088d",
+    "runtime-llama/src/androidTest/java/io/github/mesteriis/rune/runtime/llama/RuntimeBenchmarkOnly.kt": "e650d7268b21e87697c0b454616dad0a6ab28c68ebc4e3b8d6c4e012fd6f6b3b",
+    "runtime-llama/src/androidTest/java/io/github/mesteriis/rune/runtime/llama/RuntimeBenchmarkWorkload.kt": "bb2895a435862d34c1c34961ea20d82cccb23349953adcce61b3f185e6c4ae04"
+  }
+}
