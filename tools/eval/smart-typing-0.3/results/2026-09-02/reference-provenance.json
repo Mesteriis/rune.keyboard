@@ -1,0 +1,61 @@
+{
+  "baselineCommit": "b5400cbadadd29e8ee915a0fb33fb11ec5bebc79",
+  "nativeCommit": "a2110629989fd66c335072c677c8235b6b235d15",
+  "upstreamCommit": "36b10154383b60eb15baac2c7a40d2a5f784faa7",
+  "upstreamPatch": null,
+  "nativeSourceSha256": {
+    "CMakeLists.txt": "8e6b9ebc07f09c5c92aa0eb96ab1d0c5fdbf3a064a4f20b7f49e32e8d6b08f25",
+    "scoring.h": "8ef76fa2854a79fdf099b1c9d4f74735567f8b7cd9ebbf9965a275ae427c1180",
+    "scoring.cpp": "237c18fb8c2e841189d91b4ae10bb6a65c9c901150e99d2985e378d12c5f6213",
+    "score_main.cpp": "047fa457134d7051fa31ca9ccfd94eaf1cd3a3f575a724a9f48b97101de3eec1",
+    "scoring_math_test.cpp": "bc12b43d65d59c91e47693d5a55fd65750b73297d6092697063147135da40557",
+    "scoring_model_test.cpp": "02d3350cecb1b9f4f17b0a748878ef9778d72e81aa79c9882478cf5af27cc161"
+  },
+  "runnerSha256": "f28ddb5658561bc41b1fd84188c0ed11c77d5f5ec8f415b411824c72b69c9cc4",
+  "host": {
+    "os": "macOS",
+    "architecture": "arm64",
+    "compiler": "Apple clang 21.0.0 (clang-2100.1.1.101)",
+    "cmake": "4.4.2",
+    "python": "3.11.14"
+  },
+  "reference": {
+    "n_ctx": 256,
+    "n_batch": 64,
+    "n_ubatch": 1,
+    "threads": 4,
+    "gpuLayers": 0,
+    "flashAttention": false,
+    "eos": false,
+    "sharedPrefixKvCopy": false
+  },
+  "model": {
+    "size": 396704416,
+    "sha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "metadata": {
+      "general.architecture": "qwen3",
+      "general.file_type": 15,
+      "general.name": "Source",
+      "general.quantization_version": 2,
+      "gguf.version": 3,
+      "metadata_count": 28,
+      "tensor_count": 310
+    },
+    "actionsArtifactId": 9800688354
+  },
+  "numericalOracle": {
+    "candidateComparisons": 15,
+    "maximumAbsoluteSumDelta": 0,
+    "crossBatch": true,
+    "allMaskedFirstBatch": true,
+    "tokenLimitAcceptance": true,
+    "exact256TokenScalarComparison": false
+  },
+  "tokenizerInternalCancellation": "not implemented in PR1",
+  "deviceQualification": "not measured",
+  "corpusCommit": "d59d14fa3e608b675bb1c34e8ba13d8a0f5e4979",
+  "corpusVersion": 2,
+  "corpusSha256": "2b3874adabbb60370360087f208d6e9cf2ef308e4955af57114ef2a687c7fd96",
+  "evaluatorSha256": "ca9a03240b899b7c525e3ac99ed6bd6a01d8bd6738a4bca19628762ee219373b",
+  "generatorSha256": "6f91c360b071885fe776a3277971b2c2543ead20b197c0d70cf4c1406a615767"
+}

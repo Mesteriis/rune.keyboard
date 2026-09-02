@@ -1,0 +1,16 @@
+oracle_candidate=0 scored_tokens=1 sum_delta=0
+oracle_candidate=1 scored_tokens=1 sum_delta=0
+oracle_candidate=2 scored_tokens=1 sum_delta=0
+oracle_candidate=0 scored_tokens=2 sum_delta=0
+oracle_candidate=1 scored_tokens=3 sum_delta=0
+oracle_candidate=2 scored_tokens=2 sum_delta=0
+oracle_candidate=0 scored_tokens=1 sum_delta=0
+oracle_candidate=1 scored_tokens=2 sum_delta=0
+oracle_candidate=2 scored_tokens=1 sum_delta=0
+oracle_candidate=0 scored_tokens=2 sum_delta=0
+oracle_candidate=1 scored_tokens=3 sum_delta=0
+oracle_candidate=0 scored_tokens=2 sum_delta=0
+oracle_candidate=1 scored_tokens=2 sum_delta=0
+oracle_candidate=0 scored_tokens=2 sum_delta=0
+oracle_candidate=1 scored_tokens=2 sum_delta=0
+model scoring oracle passed; maximum_sum_delta=0

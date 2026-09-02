@@ -1,0 +1,48 @@
+{
+  "date": "2026-09-02",
+  "commits": [
+    "33c12e12e7c57b336e31b48091d62da7aa858763 ci: validate offline scoring harness without model downloads",
+    "d59d14fa3e608b675bb1c34e8ba13d8a0f5e4979 test(model): freeze multilingual suitability corpus and evaluator",
+    "a2110629989fd66c335072c677c8235b6b235d15 test(model): add bounded native candidate scoring reference"
+  ],
+  "postCommitJvm": {
+    "runs": 3,
+    "command": "./gradlew testDebugUnitTest --rerun-tasks",
+    "result": "PASS",
+    "lastXmlTotals": {
+      "tests": 222,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "python": {
+    "tests": 24,
+    "result": "PASS"
+  },
+  "nativeUnit": {
+    "tests": 1,
+    "result": "PASS"
+  },
+  "nativeSdkToolchain": {
+    "cmake": "3.31.6",
+    "build": "PASS",
+    "ctest": "1/1 PASS",
+    "host": "macOS arm64",
+    "linuxCi": "not run"
+  },
+  "integration": {
+    "result": "PASS",
+    "command": "./gradlew lint assembleDebug assembleRelease assembleProfile privacyGateRelease privacyGateProfile imeIntelligenceBoundary forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate"
+  },
+  "baselineCi": {
+    "run": 33579534128,
+    "revision": "b5400cbadadd29e8ee915a0fb33fb11ec5bebc79",
+    "api26": "PASS",
+    "api37": "PASS"
+  },
+  "newFeatureApi26": "BLOCKED",
+  "newFeatureApi37": "BLOCKED",
+  "physicalFold": "BLOCKED",
+  "immutableModelPublication": "BLOCKED"
+}

@@ -1,0 +1,18 @@
+{
+  "date": "2026-09-02",
+  "files": {
+    "scores.jsonl": "83c0d412804701d105bd14c73c894a7cb1ddf6eab6f5b930511d5bed464a2c02",
+    "calibration.json": "bb6241ece4644bd512d670862f8917267001b17a9f19fd8e9a9b03a2c89bd65d",
+    "suitability.json": "dd9c8e8cb833b27e4d32491b56727be82cfebbf443e1180b1d7051e79688340a",
+    "suitability.md": "28c53455283dc2c85dd00d34e19f9cc27d9b5db0f783a4ec8bca4336f981d481",
+    "reference-provenance.json": "ea1c100215d86444d327f93fd55703dff0a2f4a484491481c39f932fad6c9b13",
+    "verification.json": "bee4098ad540b73040c9d62b0e8e35bd29f4a17bd9ffabad101751f8e60cc08a",
+    "native-oracle.txt": "99d535525c599ab52724e4460fc8b72e7cd33fb8a659b1ab4b7594164c1a2ad5",
+    "native-smoke.json": "4190bfa3e3df23003463843f07e71af05b53db1c84844b0852c1d725f6f12789",
+    "quality-review.md": "5dd0337e97cc9c64f4fd044c7c818834e0217d19f0109ea112cd22f53f4c41bc"
+  },
+  "modelIncluded": false,
+  "cacheResponseCount": 13200,
+  "result": "FAIL",
+  "reason": "No language reaches 300 AutoReplace; RU and ES also fail 99% precision."
+}

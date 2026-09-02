@@ -1,0 +1,65 @@
+{
+  "elapsedSeconds": 1.7282202089991188,
+  "responses": [
+    {
+      "durationMillis": 61,
+      "id": "smoke-en",
+      "scores": [
+        {
+          "id": 0,
+          "scoredTokenCount": 1,
+          "sumLogProbability": -15.737372516404383
+        },
+        {
+          "id": 1,
+          "scoredTokenCount": 1,
+          "sumLogProbability": -10.261209605942957
+        }
+      ]
+    },
+    {
+      "durationMillis": 112,
+      "id": "smoke-ru",
+      "scores": [
+        {
+          "id": 0,
+          "scoredTokenCount": 3,
+          "sumLogProbability": -16.448437910821525
+        },
+        {
+          "id": 1,
+          "scoredTokenCount": 2,
+          "sumLogProbability": -7.423440297922826
+        }
+      ]
+    },
+    {
+      "durationMillis": 68,
+      "id": "smoke-es",
+      "scores": [
+        {
+          "id": 0,
+          "scoredTokenCount": 2,
+          "sumLogProbability": -12.387823267137952
+        },
+        {
+          "id": 1,
+          "scoredTokenCount": 1,
+          "sumLogProbability": -1.850765578829942
+        }
+      ]
+    },
+    {
+      "error": "INVALID_REQUEST",
+      "id": "empty"
+    },
+    {
+      "error": "TOO_MANY_CANDIDATES",
+      "id": "too-many"
+    },
+    {
+      "error": "CONTEXT_TOO_LONG",
+      "id": "too-long"
+    }
+  ]
+}
