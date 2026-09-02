@@ -137,6 +137,10 @@ publication is authorized by this resume.
 
 - Reader integration fresh JVM PASS 374/374, zero failures/errors/skips; full prescribed gates PASS 238 tasks / 48 executed. Root benchmark prepare/cached-index validation/portable Kotlin+D8 compile PASS from promoted paths, without repeating device measurements. Small rank-builder/benchmark contracts added to ordinary CI; remote execution unrun. Checkpoint acceptance recorded in `docs/acceptance/2026-09-02-smart-typing-0.3-pr06-index-reader.md`. Actual asset packaging, weighted development qualification and latest-candidate worker are active separate tasks.
 
+- Reader/format checkpoint committed locally as `773fb15c531859ced3ec7843c946c4b0a3a67c97`; required post-commit fresh JVM PASS 374/374, zero failures/errors/skips, 46 tasks executed (`pr06-packed-reader-jvm-postcommit-773fb15.log`). Independent integration review approved the acceptance report and small CI commands. Tree was clean before local-worker promotion.
+- Local candidate worker independently approved and promoted (proposal `a1bc7446b737b8f4210b0209f05e230e598eb97ea06f6487d9c67852cf888078`). It uses one serial thread, one replacing pending slot, direct cancellation, a payload-free coalesced owner action and completion/delivery freshness guards. Actual JVM reachability tests include positive controls; this is not ART secure-erasure evidence. Integrated fresh JVM PASS 391/391, zero failures/errors/skips. Live composing integration/index loading remain separate.
+- Read-only backup of the currently installed Fold Rune APK completed (one APK) for possible reversible QA updates. User Rune/data were not changed. Separate runtime qualification GGUF remains in the dedicated test package for ongoing device work.
+
 ### Historical PR1 result
 
 - PR 1 implementation and full evaluation complete: suitability **FAIL**. This ledger and the dated acceptance/evidence files are included in the closing evidence commit; the required post-commit JVM result is reported with its exact SHA in the task's final response.
