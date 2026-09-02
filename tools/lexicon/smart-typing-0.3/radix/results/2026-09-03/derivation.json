@@ -1,0 +1,43 @@
+{
+  "format": "RDX1/v1, little-endian, 20-byte records, strict UTF-8 labels",
+  "inputManifestSha256": "7ce207ab7d05b8800a1d8921f6e55fe81f429f8158bf8ebcebf581cbee7255f0",
+  "languages": {
+    "en": {
+      "bytes": 3103867,
+      "canonicalWordsSha256": "67f5299ebd264abb62518b01dae9ea36837d39dfcfe76d731983841bc9794d26",
+      "frequencyRanksUnchanged": true,
+      "labelBytes": 272503,
+      "nodes": 141567,
+      "originalBytes": 4902962,
+      "originalNodes": 272385,
+      "sha256": "40c55b90faedc1613433b8bb73749a2279e1bd5ebe0bcadc7b53e43d9fe10502",
+      "words": 121255
+    },
+    "es": {
+      "bytes": 16148361,
+      "canonicalWordsSha256": "0a304ca9c3269498f82e573b44c9b80f4135e6e596ed947205cfa26b6f4530dd",
+      "frequencyRanksUnchanged": true,
+      "labelBytes": 1315517,
+      "nodes": 741641,
+      "originalBytes": 22517654,
+      "originalNodes": 1250979,
+      "sha256": "7faa4b20639f137394430893a25efb7b4fc25bdb0cdd04018f64d64dd271e736",
+      "words": 668267
+    },
+    "ru": {
+      "bytes": 38467914,
+      "canonicalWordsSha256": "b54c01203aad985845c7b79116e57b818fde5e647f66f735bddb0b3239249401",
+      "frequencyRanksUnchanged": true,
+      "labelBytes": 4511730,
+      "nodes": 1697808,
+      "originalBytes": 40605620,
+      "originalNodes": 2255866,
+      "sha256": "f8b9b2990b856e3acb802bbe176d14818c0af14dc4b284cb70d2d369d8a4eb8b",
+      "words": 1436553
+    }
+  },
+  "productionIntegrated": false,
+  "pythonVersion": "3.11.14",
+  "queryOrHoldoutExecuted": false,
+  "sourceSha256": "5bef11b0b7665002d45bcdb12fb008ccb5d95536689e6bdb3379e0f635a238fe"
+}

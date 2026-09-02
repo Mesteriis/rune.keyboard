@@ -1,0 +1,14 @@
+{
+  "en": {
+    "byteIdentical": true,
+    "sha256": "40c55b90faedc1613433b8bb73749a2279e1bd5ebe0bcadc7b53e43d9fe10502"
+  },
+  "es": {
+    "byteIdentical": true,
+    "sha256": "7faa4b20639f137394430893a25efb7b4fc25bdb0cdd04018f64d64dd271e736"
+  },
+  "ru": {
+    "byteIdentical": true,
+    "sha256": "f8b9b2990b856e3acb802bbe176d14818c0af14dc4b284cb70d2d369d8a4eb8b"
+  }
+}

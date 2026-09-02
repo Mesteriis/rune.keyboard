@@ -41,6 +41,13 @@ PR8 mechanical punctuation and schema3 persistence have local integration
 evidence, while settings consumers/UI have scoped API26/API37 integration
 evidence. No push, remote PR or publication is authorized.
 
+### Lossless radix format preparation — 2026-09-03
+
+- Baseline `bff8110a54c05984a34f8aac4b963e5b3c8e4d02`. Diagnostic calibration grouping found EN state exhaustion concentrated at lengths 7–12. Static source analysis found 130818/558058/509338 collapsible nonterminal one-child nodes in EN/RU/ES respectively.
+- Added an offline RDX1 converter and independent compressed-edge validator. All 2226075 original terminals retain their ordinal and exact canonical-word stream digest. Frequency assets and production code are unchanged; no corpus labels or holdout feed conversion.
+- Two full derivations produced byte-identical files. Combined trie/length bytes change EN4902962→3103867, ES22517654→16148361, RU40605620→38467914. Four parser/structure/Unicode/determinism tests PASS. Reports and artifact hashes: `tools/lexicon/smart-typing-0.3/radix/results/2026-09-03/`.
+- Experimental format only: no bounded search, candidate-quality, Android, CPU or energy result is claimed. Next work is a radix reader and exact selector with shared8192/64 budgets, full oracle/calibration comparison, then measured Android qualification before adoption. Production remains on the previously qualified reader and prefix-reuse implementation.
+
 ### Prefix DP reuse — 2026-09-03
 
 - Baseline `3459033462f90eb6fb4048e9e96f92bbcf501a52`. Removed a measured subtree-rank experiment: exact and slightly better retrieval, but 7.6 MB extra metadata with no observed API26 CPU benefit. Patch and evidence preserved, not adopted.
