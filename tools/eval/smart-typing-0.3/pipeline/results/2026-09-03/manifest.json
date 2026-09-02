@@ -1,0 +1,13 @@
+{
+  "README.md": "320ebf0d5c860fb471c7f3da81a01e42e5b93d40209ad1f6bdb9d2ca83399d89",
+  "actual.tsv.gz": "af47cc95bf7563f5302820218649222cec0700478f13f26721f16731af66ef9f",
+  "candidates.jsonl.gz": "213562d46b64cccb9c6385a529bdf18a63be79de04c79aa4adb99faeb41b4c6e",
+  "compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "gates.log": "a32c4c9aba1b86e472a97de3ec9d464aaa1432a6600c881abecedb6891013a79",
+  "inputs.tsv.gz": "9db54bbab2ef8b58e5009ba6c0ec46f1a94aceb95c2d296e765f020732aa4068",
+  "parser-tests.log": "698d16d7b93c4bd9707d3cfacda6fb1e0fea99ed0cda6e69bedc42772940540a",
+  "provenance.json": "e4a55433cffff1b74d0c89c5df27c460df6849ca76acb9185840bba281fd0dab",
+  "run.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "summary.json": "0ec5b616f760d5ab26b8d3f67285e4240201e58832028e33993e3e2716bf719c",
+  "verification.log": "7a63fd68495ea95c4d294f61f9c9246609ed5343d91bf01f66f38cb45f4c72ee"
+}

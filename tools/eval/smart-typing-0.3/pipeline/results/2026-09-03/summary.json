@@ -1,0 +1,56 @@
+{
+  "autoReplaceEnabled": false,
+  "holdoutExecuted": false,
+  "languages": {
+    "en": {
+      "candidateRecall": 0.894,
+      "candidateRecallCount": 894,
+      "completeRecalledTypos": 22,
+      "completionCounts": {
+        "COMPLETE": 44,
+        "PROTECTED": 260,
+        "STATES_EXHAUSTED": 935,
+        "VALID_WORD": 735,
+        "VERIFIED_EXHAUSTED": 26
+      },
+      "retrievalAllowsAutoReplace": 41,
+      "rows": 2000,
+      "typoRows": 1000,
+      "uniqueInputs": 1500
+    },
+    "es": {
+      "candidateRecall": 0.824,
+      "candidateRecallCount": 824,
+      "completeRecalledTypos": 90,
+      "completionCounts": {
+        "COMPLETE": 98,
+        "PROTECTED": 260,
+        "STATES_EXHAUSTED": 762,
+        "VALID_WORD": 764,
+        "VERIFIED_EXHAUSTED": 116
+      },
+      "retrievalAllowsAutoReplace": 98,
+      "rows": 2000,
+      "typoRows": 1000,
+      "uniqueInputs": 1499
+    },
+    "ru": {
+      "candidateRecall": 0.666,
+      "candidateRecallCount": 666,
+      "completeRecalledTypos": 126,
+      "completionCounts": {
+        "COMPLETE": 137,
+        "PROTECTED": 260,
+        "STATES_EXHAUSTED": 791,
+        "VALID_WORD": 752,
+        "VERIFIED_EXHAUSTED": 60
+      },
+      "retrievalAllowsAutoReplace": 137,
+      "rows": 2000,
+      "typoRows": 1000,
+      "uniqueInputs": 1500
+    }
+  },
+  "productionQualified": false,
+  "split": "calibration"
+}

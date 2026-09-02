@@ -41,6 +41,16 @@ PR8 mechanical punctuation and schema3 persistence have local integration
 evidence, while settings consumers/UI have scoped API26/API37 integration
 evidence. No push, remote PR or publication is authorized.
 
+### Production calibration retrieval baseline — 2026-09-03
+
+- Android model consumer committed as `5ff78a8`; mandatory fresh post-commit JVM rerun PASS 586/586. Source tree was clean before this tooling slice.
+- New host-only export compiles the actual current Kotlin generator/packed reader and validates the frozen assets. Only numeric ID, language and typed token reach generation; prepared expected words/labels/context do not. All 6,000 public calibration spelling rows exported, original retained, no holdout or model run.
+- Candidate recall: EN894/1000, RU666/1000, ES824/1000. Correct candidate present with complete retrieval: EN22, RU126, ES90. All rows with alternatives and no retrieval veto: EN41, RU137, ES98. Search exhaustion dominates; even perfect ranking cannot undo this calibration coverage ceiling without improving retrieval or violating its veto.
+- Ruling: improve exact candidate retrieval within the unchanged 8192-state/64-verification limits before selecting full-pipeline confidence thresholds. Earlier top-seven prototype remains unadopted; incomplete cases must retain their veto and successful certificates must match the full offline oracle. No model switch or relaxed precision threshold addresses this measured prerequisite.
+- Corpus row weighting is preserved, with 1500/1500/1499 unique EN/RU/ES tokens explicitly reported. Prepared candidate-set repeats are not independent typing observations. This is a calibration feasibility report, not a final quality/holdout result.
+- Eight parser regressions PASS; archived source/decompressed hashes, every label-free input, original preservation and exact report regeneration PASS. Full prescribed local gates PASS238/25. Tooling is outside the APK.
+- Evidence: `tools/eval/smart-typing-0.3/pipeline/results/2026-09-03/`; reproduction instructions in its parent pipeline README. Physical ADB inventory at this checkpoint contains only API26/API37 emulators; no Fold measurement inferred.
+
 ### Android model consumer integration — 2026-09-03
 
 - Baseline `f65c079cf7df488366a58e60b42406c5761dbad9`; its mandatory post-commit JVM rerun passed 574/574.
