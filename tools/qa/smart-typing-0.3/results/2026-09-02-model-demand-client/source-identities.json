@@ -1,0 +1,17 @@
+{
+  "baseline": "cb0f3d7a10b7d30fe553ac3ad823ab53fb4fa950",
+  "proposalSha256": "b477e8f1ddb076141abc2ad989aa35a88f965f8392104eb53785a652496cd0d1",
+  "sources": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelDemandClientInstrumentedTest.kt": "6b2e478541e9e49b8994d373d73e6f8a4182920f7cc0ddcfd32b54c7e892c269",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/BoundModelScoringClient.kt": "1613000d96a69d14ea86f5dc738fd1f8acbcce001a1c4fc639db745f082687e7",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/LatestReplyGuard.kt": "0d752f77fe6f6d550e673d993359684dc0d4c13cca84526d8c1b17c75c52f7f4",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelDemand.kt": "6ffd35a90e9e364f9471c5c2a6b017a1251b8136b6d23bb7da2ab6c29ab0a7e5",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelScoringClient.kt": "5d5718d428ab0243de9277dd1bbfb74a3ba1f9b1c5f26c1cc07820300a297128",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/intelligence/client/LatestReplyGuardTest.kt": "314444e944ff00b2ac3ae6cb2a40b4036833d48e637f62a0ff4ab72ed7f6ef5c",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelDemandTest.kt": "45ff360d34ca6d0d4271ff36886c49aa9cafb9878463df699c4075c1469aec9e"
+  },
+  "builtApks": {
+    "app/build/outputs/apk/debug/app-debug.apk": "a0aa1a5532806c0fe34ee192ae7fcab91aac42e9fb4b7a62d9fe533098c6bfc6",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "9e0be1fb923c9221e36ba6469d3f30a20edd6af044793431b7e8012d4f37d381"
+  }
+}

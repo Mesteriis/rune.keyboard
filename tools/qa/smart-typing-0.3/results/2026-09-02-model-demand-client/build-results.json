@@ -1,0 +1,17 @@
+{
+  "sha256": "834d4fa0287cd459516e9b91e18656b15f1e511c9258d4ee1e8a05c52be37418",
+  "terminalLines": [
+    "> Task :app:lintDebug",
+    "> Task :app:lint",
+    "",
+    "BUILD SUCCESSFUL in 38s",
+    "277 actionable tasks: 53 executed, 224 up-to-date",
+    "Configuration cache entry reused."
+  ],
+  "jvm": {
+    "tests": 530,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}

@@ -113,13 +113,27 @@ Resolver не выполняет AtomicFile recovery, не создаёт storag
 delivery; mutable activation остаётся у install worker.
 
 Client принимает только актуальный session/revision/request/candidate набор и
-текущую revision composition. После смерти Binder он становится unavailable;
-одновременно не более одной отложенной попытки rebind допускается только пока session eligible. Старый
-payload не воспроизводится. Завершение/смена session снимает retry и binding.
-В текущем срезе IME ещё не создаёт client: это инфраструктура для последующего
-model-assisted ranking, не включение модели при обычном вводе.
-Ограничение общего числа повторов, demand-only binding и process-CPU budget
-ещё должны быть реализованы и измерены до включения модельного потребителя.
+текущую revision composition. Каждый callback дополнительно привязан к generation
+подключения. Повторный attach той же session/demand ничего не отменяет и не
+переподключает; OFF/ON и временный null detach сохраняют request watermark
+последней положительной session. Разные реальные сессии получают разные IDs.
+
+После смерти Binder transport становится unavailable. В одной непрерывной demand
+эпохе разрешены initial bind и максимум две попытки rebind через 1 и 2 секунды;
+успешное подключение, revision и повторный attach не пополняют число попыток.
+Существует не более одного retry timer; старые timers/connections не изменяют
+новую generation. Старый payload не воспроизводится. Завершение/смена session
+снимает retry и binding. Close окончателен и идемпотентен. Availability callback
+сообщает только переходы транспортного состояния, а не готовность/загрузку модели.
+
+Чистый `ModelDemand` объединяет cached readiness, активность/видимость допустимой
+NORMAL text session и наличие включённого реализованного модельного потребителя.
+Без READY или такого потребителя спрос отсутствует. Словарные подсказки,
+видимость полоски, механика и double-space сами по себе не являются модельным
+спросом; spelling/contextual потребители независимы. В текущем срезе IME ещё
+не создаёт client: readiness monitor, consumer scheduling, process-CPU budget и
+model-assisted ranking остаются последующей интеграцией. Конечное число bind
+попыток не доказывает ограничение inference CPU или экономию батареи.
 
 `imeIntelligenceBoundary` проверяет также client, IPC, storage и inference с
 транзитивными зависимостями. Отрицательные fixtures подтверждают обнаружение

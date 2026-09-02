@@ -1,0 +1,26 @@
+{
+  "api26": {
+    "tests": 22,
+    "failures": 0,
+    "seconds": 17.089
+  },
+  "api37": {
+    "tests": 22,
+    "failures": 0,
+    "seconds": 17.423
+  },
+  "fullGates": {
+    "status": "PASS",
+    "tasks": 277,
+    "executed": 53
+  },
+  "jvmPreCommit": {
+    "tests": 530,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "fold": "BLOCKED - latest USB check absent; no new probe",
+  "remoteCI": "UNRUN",
+  "batteryQualification": "UNRUN; bounded binding only"
+}

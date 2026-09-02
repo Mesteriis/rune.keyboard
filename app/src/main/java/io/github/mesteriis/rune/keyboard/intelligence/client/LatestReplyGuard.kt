@@ -2,16 +2,25 @@ package io.github.mesteriis.rune.keyboard.intelligence.client
 
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringToken
 
-/** PR7 supplies its current composition revision; this guard never retains editor payload. */
+/** Main-owner numeric guard. Session identities belong to the owner; no editor payload is retained. */
 class LatestReplyGuard {
     private var session: Long? = null
     private var eligible = false
     private var latest: ScoringToken? = null
+    private var requestSession: Long? = null
     private var lastRequest = 0L
-    fun attach(sessionId: Long?, effectiveAvailability: Boolean) {
+
+    /** Returns whether normalized attachment changed; an identical attach preserves active work. */
+    fun attach(sessionId: Long?, effectiveAvailability: Boolean): Boolean {
         require(sessionId == null || sessionId > 0)
-        session = sessionId; eligible = effectiveAvailability && sessionId != null
-        latest = null; lastRequest = 0
+        val nextEligible = effectiveAvailability && sessionId != null
+        if (session == sessionId && eligible == nextEligible) return false
+        session = sessionId; eligible = nextEligible; latest = null
+        // A temporary null detach or demand toggle must not reset this session's watermark.
+        if (sessionId != null && requestSession != sessionId) {
+            requestSession = sessionId; lastRequest = 0
+        }
+        return true
     }
     fun begin(token: ScoringToken): Boolean {
         if (!eligible || session != token.sessionId || token.requestId <= lastRequest) return false

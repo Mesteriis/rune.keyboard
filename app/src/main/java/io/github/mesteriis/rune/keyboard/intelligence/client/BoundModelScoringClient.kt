@@ -16,7 +16,13 @@ import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringInput
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringToken
 
 /** Main-thread lifecycle, only oneway IPC; IME/controller integration belongs to PR7. */
-class BoundModelScoringClient(context: Context, private val listener: ModelScoringListener) : ModelScoringClient {
+class BoundModelScoringClient internal constructor(
+    context: Context,
+    private val listener: ModelScoringListener,
+    private val retryScheduler: ModelRetryScheduler,
+) : ModelScoringClient {
+    constructor(context: Context, listener: ModelScoringListener) : this(context, listener, HandlerRetryScheduler())
+
     private val context = context.applicationContext
     private val main = Handler(Looper.getMainLooper())
     private val guard = LatestReplyGuard()
@@ -25,70 +31,122 @@ class BoundModelScoringClient(context: Context, private val listener: ModelScori
     private var latest: ScoringToken? = null
     private var generation = 0L
     private var retry: Runnable? = null
-    override val available get() = endpoint != null && guard.shouldBind()
-    private val callback = object : IModelScoringCallback.Stub() {
-        override fun onResult(reply: ScoreReplyParcel?) {
-            val result = reply?.value ?: return
-            main.post {
-                if (guard.accepts(result.token, listener.currentCompositionRevision())) {
-                    guard.invalidate(); latest = null; listener.onReply(result)
-                }
-            }
-        }
-    }
+    private var attempts = 0
+    private var closed = false
+    private var publishedAvailable = false
+    override val available get() = !closed && endpoint != null && guard.shouldBind()
+
     override fun attachSession(sessionId: Long?, effectiveAvailability: Boolean) {
-        onMain(); cancel(); generation++; stopBinding()
-        guard.attach(sessionId, effectiveAvailability)
-        if (guard.shouldBind()) bind()
+        onMain()
+        if (closed || !guard.attach(sessionId, effectiveAvailability)) return
+        cancel(); generation++
+        val attachment = generation
+        stopBinding()
+        attempts = 0
+        publishAvailability()
+        if (generation == attachment && !closed && guard.shouldBind()) bind()
     }
     override fun score(input: ScoringInput) {
         onMain()
         val service = endpoint ?: return
-        if (!guard.begin(input.token)) return
+        val admittedConnection = connection ?: return
+        if (closed || !guard.begin(input.token)) return
         latest?.let { try { service.cancel(it.sessionId, it.requestId) } catch (_: RemoteException) { } }
         latest = input.token
-        try { service.score(ScoreRequestParcel(input), callback) }
+        try { service.score(ScoreRequestParcel(input), callback(generation, admittedConnection)) }
         catch (_: RemoteException) { lost() }
     }
     override fun cancel() {
         onMain(); guard.invalidate()
-        latest?.let { try { endpoint?.cancel(it.sessionId, it.requestId) } catch (_: RemoteException) { } }
-        latest = null
+        val previous = latest; latest = null
+        previous?.let { try { endpoint?.cancel(it.sessionId, it.requestId) } catch (_: RemoteException) { } }
     }
-    override fun close() { attachSession(null, false) }
+    override fun close() {
+        onMain()
+        if (closed) return
+        closed = true
+        cancel(); guard.attach(null, false); generation++
+        stopBinding(); publishAvailability()
+    }
+    private fun callback(admittedGeneration: Long, admittedConnection: ServiceConnection) =
+        object : IModelScoringCallback.Stub() {
+            override fun onResult(reply: ScoreReplyParcel?) {
+                val result = reply?.value ?: return
+                main.post {
+                    if (generation != admittedGeneration || connection !== admittedConnection || !available) return@post
+                    if (guard.accepts(result.token, listener.currentCompositionRevision())) {
+                        guard.invalidate(); latest = null; listener.onReply(result)
+                    }
+                }
+            }
+        }
     private fun bind() {
-        if (!guard.shouldBind() || connection != null) return
+        if (closed || !guard.shouldBind() || connection != null || attempts >= MAX_ATTEMPTS) return
+        attempts++
         val admittedGeneration = generation
         val candidate = object : ServiceConnection {
-            override fun onServiceConnected(name: ComponentName, binder: IBinder) {
-                if (generation != admittedGeneration || connection !== this || !guard.shouldBind()) return
-                endpoint = IModelScoringService.Stub.asInterface(binder)
-                listener.onAvailabilityChanged(true)
+            private fun current(): Boolean {
+                onMain()
+                return generation == admittedGeneration && connection === this && !closed && guard.shouldBind()
             }
-            override fun onServiceDisconnected(name: ComponentName) { if (connection === this) lost() }
-            override fun onBindingDied(name: ComponentName) { if (connection === this) lost() }
-            override fun onNullBinding(name: ComponentName) { if (connection === this) lost() }
+            override fun onServiceConnected(name: ComponentName, binder: IBinder) {
+                if (!current() || endpoint != null) return
+                if (!binder.isBinderAlive) { lost(); return }
+                endpoint = IModelScoringService.Stub.asInterface(binder)
+                if (endpoint == null) lost() else publishAvailability()
+            }
+            override fun onServiceDisconnected(name: ComponentName) { if (current()) lost() }
+            override fun onBindingDied(name: ComponentName) { if (current()) lost() }
+            override fun onNullBinding(name: ComponentName) { if (current()) lost() }
         }
         connection = candidate
         val intent = Intent().setComponent(ComponentName(context.packageName,
             "io.github.mesteriis.rune.keyboard.intelligence.inference.ModelInferenceService"))
         val bound = try { context.bindService(intent, candidate, Context.BIND_AUTO_CREATE) }
         catch (_: SecurityException) { false }
-        if (!bound) lost() // Preserve candidate until stopBinding unbinds this attempt.
+        // Preserve even a failed attempt until stopBinding releases its registration.
+        if (!bound && generation == admittedGeneration && connection === candidate) lost()
     }
     private fun lost() {
         onMain(); guard.invalidate(); latest = null; generation++; stopBinding()
-        if (guard.shouldBind()) {
+        if (!closed && guard.shouldBind() && attempts < MAX_ATTEMPTS) {
             val admittedGeneration = generation
-            val task = Runnable { retry = null; if (generation == admittedGeneration && guard.shouldBind()) bind() }
-            retry = task; main.postDelayed(task, 1000)
+            val task = object : Runnable {
+                override fun run() {
+                    onMain()
+                    if (retry !== this || generation != admittedGeneration || closed || !guard.shouldBind()) return
+                    retry = null
+                    bind()
+                }
+            }
+            retry = task
+            retryScheduler.postDelayed(task, attempts * 1000L)
         }
+        publishAvailability()
     }
     private fun stopBinding() {
-        retry?.let(main::removeCallbacks); retry = null
+        retry?.let(retryScheduler::remove); retry = null
         val previous = connection; connection = null; endpoint = null
         if (previous != null) context.unbindService(previous)
-        listener.onAvailabilityChanged(false)
+    }
+    private fun publishAvailability() {
+        val current = available
+        if (current == publishedAvailable) return
+        publishedAvailable = current
+        listener.onAvailabilityChanged(current)
     }
     private fun onMain() { check(Looper.myLooper() == Looper.getMainLooper()) }
+
+    private companion object { const val MAX_ATTEMPTS = 3 }
+}
+
+/** Only retry time is injectable; result callbacks always use the real main Handler. */
+internal interface ModelRetryScheduler {
+    fun postDelayed(task: Runnable, delayMillis: Long)
+    fun remove(task: Runnable)
+}
+private class HandlerRetryScheduler : ModelRetryScheduler {
+    private val main = Handler(Looper.getMainLooper())
+    override fun postDelayed(task: Runnable, delayMillis: Long) { main.postDelayed(task, delayMillis) }
+    override fun remove(task: Runnable) { main.removeCallbacks(task) }
 }
