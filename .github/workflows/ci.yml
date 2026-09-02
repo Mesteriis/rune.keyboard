@@ -23,6 +23,15 @@ jobs:
           yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" "ndk;29.0.14206865" "cmake;3.31.6" >/dev/null
       - name: Run fresh JVM tests
         run: ./gradlew testDebugUnitTest --rerun-tasks
+      - name: Verify offline scoring harness without a model
+        run: |
+          python3 tools/eval/smart-typing-0.3/evaluate.py validate
+          python3 -m unittest discover -s tools/eval/smart-typing-0.3 -p 'test_*.py' -v
+          sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          cmake_bin="$sdk_root/cmake/3.31.6/bin/cmake"
+          "$cmake_bin" -S tools/eval/smart-typing-0.3 -B build/scoring-eval-ci -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM="$sdk_root/cmake/3.31.6/bin/ninja"
+          "$cmake_bin" --build build/scoring-eval-ci --target rune-score scoring-math-test -j 2
+          "$sdk_root/cmake/3.31.6/bin/ctest" --test-dir build/scoring-eval-ci --output-on-failure
       - name: Upload unit-test results
         if: always()
         uses: actions/upload-artifact@v4
