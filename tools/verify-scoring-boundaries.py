@@ -63,8 +63,8 @@ def inspect(sources):
                 if area == 'intelligence.inference' and not (package.startswith((BASE+'intelligence.inference', BASE+'intelligence.ipc', BASE+'intelligence.storage', RUNTIME.rstrip('.'))) or package == BASE+'intelligence.model' and name in PURE_MODEL): errors.append(f'{area}: {p}: dependency outside service adapter boundary')
                 if area == 'intelligence.inference' and package == BASE+'intelligence.model' and name not in PURE_MODEL: errors.append(f'{area}: {p}: non-pure model dependency')
                 if 'RandomAccessFile' in text and name != 'ModelOperationGate.kt': errors.append(f'{area}: {p}: arbitrary file writes')
-            if area == 'ime' and package.startswith(BASE+'intelligence.') and not (package == BASE+'intelligence.client' and name == 'ModelScoringClient.kt' or package == BASE+'intelligence.ipc' and name == 'ScoringContract.kt'):
-                errors.append(f'{area}: {p}: only ModelScoringClient/Listener and scoring value contracts allowed')
+            if area == 'ime' and package.startswith(BASE+'intelligence.') and not (package == BASE+'intelligence.client' and name in ('ModelScoringClient.kt', 'ModelDemand.kt') or package == BASE+'intelligence.ipc' and name == 'ScoringContract.kt'):
+                errors.append(f'{area}: {p}: only ModelScoringClient/Listener, pure demand and scoring value contracts allowed')
     return sorted(set(errors))
 
 def collect(root):
@@ -87,6 +87,8 @@ def self_test():
         {'Client.kt':source('intelligence.client','class Client { val x = Class.forName("hidden") }')},
     ]
     tests += [
+        {'Controller.kt':source('ime','import '+BASE+'intelligence.client.ModelDemand\nclass Controller'),
+         'ModelDemand.kt':source('intelligence.client','import java.io.File\nclass ModelDemand')},
         {'Service.kt':source('intelligence.inference','import '+RUNTIME+'Adapter\nclass Service'), 'Adapter.kt':'package '+RUNTIME.rstrip('.')+'\nclass Adapter'},
         {'Store.kt':source('intelligence.storage','import '+BASE+'helper.Helper\nclass Store'), 'Helper.kt':source('helper','import '+BASE+'intelligence.delivery.Manager\nclass Helper'), 'Manager.kt':source('intelligence.delivery','class Manager')},
     ]
@@ -96,7 +98,10 @@ def self_test():
     assert not inspect(positive)
     adapter={'ActiveModelScoringEngine.kt':source('intelligence.inference','import '+RUNTIME+'Adapter\nclass ActiveModelScoringEngine'), 'Adapter.kt':'package '+RUNTIME.rstrip('.')+'\nclass Adapter'}
     assert not inspect(adapter)
-    print(f'boundary fixtures PASS: {len(tests)} negative, 2 positive')
+    demand={'Controller.kt':source('ime','import '+BASE+'intelligence.client.ModelDemand\nclass Controller'),
+            'ModelDemand.kt':source('intelligence.client','class ModelDemand')}
+    assert not inspect(demand)
+    print(f'boundary fixtures PASS: {len(tests)} negative, 3 positive')
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--root',type=Path);parser.add_argument('--self-test',action='store_true');args=parser.parse_args()

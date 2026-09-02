@@ -156,8 +156,8 @@ NORMAL text session и наличие включённого реализова�
 Без READY или такого потребителя спрос отсутствует. Словарные подсказки,
 видимость полоски, механика и double-space сами по себе не являются модельным
 спросом; spelling/contextual потребители независимы. В текущем срезе IME ещё
-не создаёт client: readiness monitor, consumer scheduling и
-model-assisted ranking остаются последующей интеграцией. Конечное число bind
+не создаёт client: readiness monitor, Android pause scheduler и
+подключение model-assisted ranking остаются последующей интеграцией. Конечное число bind
 попыток не доказывает ограничение inference CPU или экономию батареи.
 
 `imeIntelligenceBoundary` проверяет также client, IPC, storage и inference с
@@ -208,6 +208,29 @@ Shift подавляет автоматическую капитализацию
 открывает `? ! : ;` без смены слоя и потери typing context.
 
 ## Полоса кандидатов
+
+Typing-контроллер сохраняет Original и до семи полных `GeneratedCandidate`,
+включая deterministic features, а показывает только Original и два варианта.
+Позиция на полоске не является identity: correction ID содержит исходный
+индекс кандидата и не меняет смысл при перестановке. Невидимый ID не допускается
+к выбору, даже если этот вариант остаётся в полном наборе.
+
+Опциональный `ModelCandidateCoordinator` подключён к выходу local coordinator.
+Он использует cached eligibility/Ready, ждёт паузу 400 ms после принятого
+словарного результата и отправляет полный набор только через `ModelScoringClient`.
+Таймер хранит числовую identity и policy, а не текст. Snapshot собирается в момент
+отправки из Rune-owned context; prefix исключает текущее typedWord, но включает
+его leading boundary. Ввод/tap отменяет запрос, lifecycle/settings/privacy
+дополнительно снимают binding. Reconnect/Ready/render не воспроизводят старый
+payload. 400 ms — development debounce, не измеренный performance budget.
+
+Числовой ответ принимается только для точного token, исходного candidate set,
+текущей composition и неизменной owner policy. Нормализация — sum/tokenCount;
+при равенстве сохраняется исходный порядок, Original имеет первый ID.
+Результат меняет только порядок и выделение подсказок, никогда editor text.
+Это ещё не калиброванный combined ranker или AutoReplace. Production IME пока
+не передаёт model coordinator: Android-фабрика и read-only Ready bridge остаются
+следующим срезом; текущая клавиатура продолжает словарный путь.
 
 `RuneKeyboardView` содержит постоянные `CandidateStripView` и контейнер клавиш.
 Обновление кандидатов меняет только три постоянные ячейки полосы, сохраняя

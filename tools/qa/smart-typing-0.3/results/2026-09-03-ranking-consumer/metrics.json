@@ -1,0 +1,30 @@
+{
+  "jvm": {
+    "tests": 574,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "gates": {
+    "tasks": 267,
+    "executed": 46,
+    "upToDate": 221
+  },
+  "api26": {
+    "tests": 28,
+    "failures": 0,
+    "seconds": 199.18
+  },
+  "api37Initial": {
+    "tests": 28,
+    "failures": 1,
+    "seconds": 231.908
+  },
+  "api37Retry": {
+    "tests": 1,
+    "failures": 0,
+    "seconds": 16.591
+  },
+  "realModel": "UNRUN",
+  "modelConsumerInIme": "NOT_CONNECTED"
+}

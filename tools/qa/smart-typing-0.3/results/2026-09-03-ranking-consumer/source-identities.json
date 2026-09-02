@@ -1,0 +1,15 @@
+{
+  "baseline": "99c0c06fc3eda0c918b6aad7ca9585b371209ff8",
+  "sources": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelCandidateCoordinator.kt": "9a373632aea0ab4f66339263fcc3a387ddf7bfb98cce75cd4eb9c4dd35ee0621",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt": "4d58751ac272dc08293d75d54c6fc560fa300913390c9b81f12d2499878154aa",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "67a28cfe1899b2ca4e0c62072be76291081aadc297292f9ce4e2fed2e00beca6",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingCandidateSelectionTest.kt": "a48e6020166ac10eed0c0802173b0c33e47a0c140d5c63ff69f3d49c41d82421",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinatorTest.kt": "f78110334f665effba21e2b5bb0aa1a042250281c45058204873cd1045222255",
+    "tools/verify-scoring-boundaries.py": "8d0cd9f906ff498c8a0178ad4d46c2cdfd0a3d851eaf59ef56d4d664c82b11ee"
+  },
+  "builtApks": {
+    "app/build/outputs/apk/debug/app-debug.apk": "e77f2c4163d53f1b910a95229eac65b1fe6106609319ac0fd93516a51adf163b",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "6a9ccc6e3dcf2a757c9da2990bbe5507720a3ac81542fda1e11ed9008a50892e"
+  }
+}

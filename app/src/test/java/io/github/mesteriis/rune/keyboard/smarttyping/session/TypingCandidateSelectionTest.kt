@@ -1,6 +1,11 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.session
 
 import android.text.InputType
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringInput
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringToken
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringCode
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.NumericScore
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
@@ -473,6 +478,90 @@ class TypingCandidateSelectionTest {
         edits.clear()
         return refs
     }
+
+    @Test fun `model snapshot includes full candidate set and only owned prefix`() {
+        start("I")
+        controller.typeText(" ", execute); controller.typeText("helo", execute)
+        publish("hello", "help", "held", "hero", "halo", "hell", "helm")
+        val before = controller.state
+        val snapshot = controller.beginModelRanking(1)!!
+        assertEquals("I ", snapshot.prefix)
+        assertEquals(listOf("helo", "hello", "help", "held", "hero", "halo", "hell", "helm"), snapshot.continuations)
+        assertEquals((0..7).toList(), snapshot.token.candidateIds)
+        assertEquals(listOf("helo", "hello", "help"), labels())
+        assertEquals(before, controller.state)
+        assertNull(controller.beginModelRanking(1))
+    }
+
+    @Test fun `model ordering keeps original and stable identities without editing`() {
+        start("helo"); publish("hello", "help", "held", "hero", "halo", "hell", "helm")
+        val before = controller.state
+        val original = controller.originalCandidateId
+        val hello = correction()
+        val help = controller.candidateViewState.candidates[2].id
+        val input = controller.beginModelRanking(1)!!
+        edits.clear()
+        assertTrue(controller.acceptModelRanking(modelReply(input, 7)))
+        assertEquals(listOf("helo", "helm", "hello"), labels())
+        assertEquals(before, controller.state)
+        assertEquals(original, controller.originalCandidateId)
+        assertEquals(hello, controller.candidateViewState.candidates[2].id)
+        assertTrue(edits.isEmpty())
+        assertFalse(controller.acceptModelRanking(modelReply(input, 1)))
+        assertNull(controller.beginModelRanking(2))
+        assertEquals(TypingTextResult.REJECTED, controller.selectCandidate(help, execute))
+        assertEquals(TypingTextResult.HANDLED, controller.selectCandidate(hello, execute))
+        assertEquals("hello", controller.state.composing!!.typedWord)
+    }
+
+    @Test fun `model uses average log probability and original wins exact ties`() {
+        start("helo"); publish("hello", "help")
+        var input = controller.beginModelRanking(1)!!
+        assertTrue(controller.acceptModelRanking(ScoringReply(input.token, ScoringCode.OK, 0,
+            listOf(NumericScore(0, -4.0, 1), NumericScore(1, -2.0, 1), NumericScore(2, -3.0, 3)))))
+        assertEquals(listOf("helo", "help", "hello"), labels())
+        assertEquals(controller.candidateViewState.candidates[1].id, controller.candidateViewState.selectedCandidateId)
+        start("helo"); publish("hello", "help"); input = controller.beginModelRanking(2)!!
+        assertTrue(controller.acceptModelRanking(ScoringReply(input.token, ScoringCode.OK, 0,
+            input.token.candidateIds.map { NumericScore(it, -1.0, 1) })))
+        assertEquals(controller.originalCandidateId, controller.candidateViewState.selectedCandidateId)
+        assertFalse(controller.state.originalSelected) // only an explicit Original tap sets the veto
+    }
+
+    @Test fun `ranking rejects every changed token identity and then accepts current reply once`() {
+        start("helo"); publish("hello", "help")
+        val input = controller.beginModelRanking(1)!!
+        val t = input.token
+        for (wrong in listOf(ScoringToken(t.sessionId + 1, t.revision, t.requestId, t.candidateIds),
+            ScoringToken(t.sessionId, t.revision + 1, t.requestId, t.candidateIds),
+            ScoringToken(t.sessionId, t.revision, t.requestId + 1, t.candidateIds),
+            ScoringToken(t.sessionId, t.revision, t.requestId, listOf(0, 2, 1)))) {
+            assertFalse(controller.acceptModelRanking(ScoringReply(wrong, ScoringCode.OK, 0,
+                wrong.candidateIds.map { NumericScore(it, -1.0, 1) })))
+        }
+        assertTrue(controller.acceptModelRanking(modelReply(input, 2)))
+        assertFalse(controller.acceptModelRanking(modelReply(input, 1)))
+    }
+
+    @Test fun `ranking cancellation text edits original taps and errors preserve deterministic fallback`() {
+        for (action in 0..4) {
+            start("helo"); publish("hello", "help")
+            val input = controller.beginModelRanking((action + 1).toLong())!!
+            when (action) {
+                0 -> controller.cancelModelRanking()
+                1 -> controller.typeText("s", execute)
+                2 -> controller.selectOriginal(controller.originalCandidateId!!)
+                3 -> controller.endSession()
+                else -> assertFalse(controller.acceptModelRanking(ScoringReply(input.token, ScoringCode.UNAVAILABLE, 0, emptyList())))
+            }
+            val before = controller.candidateViewState.candidates
+            assertFalse(controller.acceptModelRanking(modelReply(input, 2)))
+            assertEquals(before, controller.candidateViewState.candidates)
+        }
+    }
+
+    private fun modelReply(input: ScoringInput, winner: Int) = ScoringReply(input.token, ScoringCode.OK, 0,
+        input.token.candidateIds.map { NumericScore(it, if (it == winner) -1.0 else -10.0, 1) })
 
     private fun start(word: String) {
         controller.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, 0), 0, 0)

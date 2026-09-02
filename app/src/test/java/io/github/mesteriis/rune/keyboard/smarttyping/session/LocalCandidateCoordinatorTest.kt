@@ -2,6 +2,12 @@ package io.github.mesteriis.rune.keyboard.smarttyping.session
 
 import android.text.InputType
 import android.view.inputmethod.EditorInfo
+import io.github.mesteriis.rune.keyboard.intelligence.client.ModelScoringClient
+import io.github.mesteriis.rune.keyboard.intelligence.client.ModelScoringListener
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringInput
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringCode
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.NumericScore
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLayer
@@ -424,7 +430,108 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
-    private class Harness(ready: Boolean = true) : AutoCloseable {
+    @Test fun `local generation renders before model pause then numeric reply reorders without editor work`() {
+        Harness(withModel = true).use { h ->
+            h.type("helo"); h.deliver()
+            assertEquals(listOf("helo", "help", "hello"), h.labels())
+            assertTrue(h.model.requests.isEmpty())
+            assertEquals(400L, h.pause.delay)
+            h.pause.fire()
+            val request = h.model.requests.single()
+            assertEquals(listOf("helo", "help", "hello"), request.continuations)
+            h.commands.clear()
+            h.model.reply(request, 2)
+            assertEquals(listOf("helo", "hello", "help"), h.labels())
+            assertTrue(h.commands.isEmpty())
+            assertEquals(2, h.published)
+            h.model.reply(request, 1)
+            assertEquals(2, h.published)
+            repeat(3) { h.coordinator.viewState }
+            assertEquals(1, h.model.requests.size)
+        }
+    }
+
+    @Test fun `typing retires pause and stale model callbacks cannot cross word boundary`() {
+        Harness(withModel = true).use { h ->
+            h.type("helo"); h.deliver()
+            val retired = h.pause.task!!
+            h.type("s"); retired.run()
+            assertTrue(h.model.requests.isEmpty())
+            h.deliver(); h.pause.fire()
+            val input = h.model.requests.single()
+            h.type(" ")
+            val view = h.labels(); val count = h.published
+            h.model.reply(input, 1)
+            assertEquals(view, h.labels()); assertEquals(count, h.published)
+            assertEquals("helos ", h.controller.state.contextText)
+            assertNull(h.pause.task)
+        }
+    }
+
+    @Test fun `model readiness connection and render never replay old composition`() {
+        Harness(withModel = true).use { h ->
+            h.modelReady = false
+            h.type("helo"); h.deliver()
+            assertNull(h.pause.task); assertTrue(h.model.attachments.none { it.second })
+            h.modelReady = true; h.model.listener.onAvailabilityChanged(true)
+            assertNull(h.pause.task); assertTrue(h.model.requests.isEmpty())
+            h.type("s"); h.deliver(); h.model.available = false; h.pause.fire()
+            assertTrue(h.model.requests.isEmpty())
+            h.model.available = true; h.model.listener.onAvailabilityChanged(true)
+            assertTrue(h.model.requests.isEmpty())
+        }
+    }
+
+    @Test fun `original tap policy change and language change reject pending model results`() {
+        for (mode in 0..3) Harness(withModel = true).use { h ->
+            h.type("helo"); h.deliver(); h.pause.fire()
+            val input = h.model.requests.single()
+            when (mode) {
+                0 -> h.coordinator.selectCandidate(h.coordinator.viewState.candidates[0].id, h.execute)
+                1 -> h.configure(AutocorrectionMode.OFF, true)
+                2 -> h.owner = h.owner.copy(language = KeyboardLanguage.RUSSIAN)
+                else -> h.owner = h.owner.copy(editorAllowsSmartTyping = false)
+            }
+            val before = h.labels(); val count = h.published
+            h.model.reply(input, 2)
+            assertEquals(before, h.labels()); assertEquals(count, h.published)
+        }
+    }
+
+    @Test fun `valid word has no model demand and close retires delayed work`() {
+        Harness(withModel = true).use { valid ->
+            valid.type("hello"); valid.deliver()
+            assertTrue(valid.model.attachments.none { it.second })
+        }
+        val h = Harness(withModel = true)
+        h.type("helo"); h.deliver()
+        val retired = checkNotNull(h.pause.task)
+        h.close(); retired.run()
+        assertTrue(h.model.closed); assertTrue(h.model.requests.isEmpty())
+    }
+
+    private class Pause : ModelPauseScheduler {
+        var task: Runnable? = null
+        var delay = 0L
+        override fun postDelayed(task: Runnable, millis: Long) { check(this.task == null); this.task = task; delay = millis }
+        override fun remove(task: Runnable) { if (this.task === task) this.task = null }
+        fun fire() { val next = task; task = null; next?.run() }
+    }
+    private class FakeModel : ModelScoringClient {
+        lateinit var listener: ModelScoringListener
+        val requests = mutableListOf<ScoringInput>()
+        val attachments = mutableListOf<Pair<Long?, Boolean>>()
+        var closed = false
+        override var available = true
+        override fun attachSession(sessionId: Long?, effectiveAvailability: Boolean) { attachments += sessionId to effectiveAvailability }
+        override fun score(input: ScoringInput) { requests += input }
+        override fun cancel() = Unit
+        override fun close() { closed = true }
+        fun reply(input: ScoringInput, winner: Int) = listener.onReply(ScoringReply(input.token, ScoringCode.OK, 0,
+            input.token.candidateIds.map { NumericScore(it, if (it == winner) -1.0 else -10.0, 1) }))
+    }
+
+    private class Harness(ready: Boolean = true, withModel: Boolean = false) : AutoCloseable {
         val controller = TypingSessionController(jvmGraphemes)
         val lexicon = FixtureLexicon()
         var ready = ready
@@ -434,13 +541,18 @@ class LocalCandidateCoordinatorTest {
         var published = 0
         var lastRoute: LanguageRoute? = null
         var owner = CandidateOwnerState(true, true, KeyboardLayer.LETTERS, KeyboardLanguage.ENGLISH, false)
+        var modelReady = true
+        val model = FakeModel()
+        val pause = Pause()
+        private val ranking = if (withModel) ModelCandidateCoordinator(controller,
+            { model.listener = it; model }, pause, { owner }, { modelReady }, { published++ }) else null
         val commands = mutableListOf<TypingEdit>()
         val execute: (TypingEdit) -> Boolean = { commands.add(it); true }
         private val queue = ConcurrentLinkedQueue<Runnable>()
         val coordinator = LocalCandidateCoordinator(controller, lexicon,
             { routeRequests++; lastRoute = it; this.ready }, { this.ready },
             { invalidatedLoads++ }, { closedLoads++ }, Executor { queue.add(it) },
-            { owner }, { published++ })
+            { owner }, { published++ }, ranking)
 
         init { controller.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, 0), 0, 0) }
         fun configure(mode: AutocorrectionMode, strip: Boolean) {

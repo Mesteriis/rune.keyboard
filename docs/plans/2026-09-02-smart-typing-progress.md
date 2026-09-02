@@ -32,7 +32,9 @@ integrated. IME model inference and automatic spelling replacement remain off.
 PR6 has scoped live-suggestion evidence on API26/37 and Fold. PR7 duty and
 bound-worker CPU control has JVM/API26/API37 functional evidence. Nine
 virtual-clock worker traces pass; real CPU/device trace qualification remains
-unrun. Remaining PR7 ranking and AutoReplace, PR9 contextual,
+unrun. PR7 optional suggestion consumer now retains/ranks the full candidate set
+with fake-client integration coverage; production Ready/factory wiring, calibrated
+combined ranking and AutoReplace remain open, along with PR9 contextual,
 and full autocorrection Undo plus final device/performance matrices are required.
 PR8 mechanical punctuation and schema3 persistence have local integration
 evidence, while settings consumers/UI have scoped API26/API37 integration
@@ -218,6 +220,9 @@ evidence. No push, remote PR or publication is authorized.
 
 - Duty implementation committed `6fb5880efa7815189cfb559675eaecc5775d2b57`; mandatory fresh post-commit JVM555/555 PASS, zero failures/errors/skips,46 tasks executed. Working tree clean at that checkpoint.
 - 2026-09-03: added nine virtual-clock traces of the actual worker, RU/EN/ES ×2/4/8. Each exercises11 submissions with6 engine admissions,4 denials including1 expiry,3 cancelled operations,2 OK replies,1 failed load and1 replaced pending. First warm result fits a simulated1000ms boundary in5/9 configurations. Initial NO_MODEL fixture was corrected to LOAD_FAILED with first XML retained; no profile/input/timing change. Report negative tests exposed and fixed XML empty-element truthiness and incorrect capped-refill debt arithmetic. Final JVM564/564 PASS, Python7/7 PASS, full gates238/27 PASS. CI now extracts and archives the simulation report without a model. Numeric report/source identities and first/final XML are under `2026-09-03-model-duty-trace`; actual device trace/energy, model consumers and quality remain open. This turn is concrete test/CI progress, not physical qualification.
+
+- Virtual trace slice committed `99c0c06fc3eda0c918b6aad7ca9585b371209ff8`; required post-commit JVM564/564 PASS, zero failures/errors/skips,46 executed. Working tree clean at checkpoint.
+- 2026-09-03: optional model suggestion consumer integrated into local coordinator. Full7 alternatives/features retained, Original+2 projected, stable source-index IDs, owner-only prefix and exact token/selection guards. Numeric average scoring reorders suggestions without editor changes. Development400ms pause, immediate action cancellation and no Ready/render/reconnect replay. Production IME does not instantiate the consumer yet; neutral Ready/Android factory remain required. Fresh JVM574/574 PASS; full gates+test APK267/46 PASS. API26 candidate/composing/view regression28/28 PASS199.180s. API37 initial27PASS/1 setupFAIL231.908s (QA activity not visible), unchanged targeted boundary retry1/1 PASS16.591s; no clean full final API37 run claimed. Both logs/source/APK identities retained under `2026-09-03-ranking-consumer`. Boundary gate exact pure-demand allowance adds filesystem-negative fixture:11 negative/3 positive PASS. No quality/real-model/energy or independent-review claim. This goal turn is implementation and executed integration progress.
 
 ### Historical PR1 result
 

@@ -46,6 +46,7 @@ class LocalCandidateCoordinator internal constructor(
     private val ownerDispatcher: Executor,
     ownerState: () -> CandidateOwnerState,
     onCandidatesChanged: () -> Unit,
+    private val modelRanking: ModelCandidateCoordinator? = null,
 ) : AutoCloseable {
     constructor(
         controller: TypingSessionController,
@@ -53,8 +54,9 @@ class LocalCandidateCoordinator internal constructor(
         ownerDispatcher: Executor,
         ownerState: () -> CandidateOwnerState,
         onCandidatesChanged: () -> Unit,
+        modelRanking: ModelCandidateCoordinator? = null,
     ) : this(controller, lexicons.lexicon, lexicons::request, lexicons::isReady,
-        lexicons::invalidate, lexicons::close, ownerDispatcher, ownerState, onCandidatesChanged)
+        lexicons::invalidate, lexicons::close, ownerDispatcher, ownerState, onCandidatesChanged, modelRanking)
 
     private val ownerThread = Thread.currentThread()
     private var ownerState: (() -> CandidateOwnerState)? = ownerState
@@ -88,6 +90,7 @@ class LocalCandidateCoordinator internal constructor(
         checkOwner()
         if (closed) return
         cancelCandidates(clearAllowlist = true)
+        modelRanking?.invalidate()
         invalidateLoads()
     }
 
@@ -132,6 +135,7 @@ class LocalCandidateCoordinator internal constructor(
         worker?.close()
         worker = null
         closeLoads()
+        modelRanking?.close()
         ownerState = null
         onCandidatesChanged = null
     }
@@ -172,10 +176,14 @@ class LocalCandidateCoordinator internal constructor(
             return
         }
         pending = null
-        if (controller.acceptCandidates(reply)) onCandidatesChanged?.invoke()
+        if (controller.acceptCandidates(reply)) {
+            onCandidatesChanged?.invoke()
+            modelRanking?.candidatesChanged()
+        }
     }
 
     private fun cancelCandidates(clearAllowlist: Boolean) {
+        modelRanking?.cancel()
         epoch++
         pending = null
         worker?.cancel()
