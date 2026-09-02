@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "source_base_commit": "c45f43ae6f84ac27d84e68eb8c10fea40a385dbe",
+  "source_status": "uncommitted reviewed integration at collection",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1439,
+      "sha256": "2f20338c0609ba5fdab1667dae7832fe35bfb37770b4a045e8479c0aa08b129f"
+    },
+    {
+      "path": "metrics.json",
+      "bytes": 1389,
+      "sha256": "0ba25c63ccca1bdf15e0d0b13844aa209cd8e88d8e7d7b7dc7c6145132ba7b89"
+    },
+    {
+      "path": "pr06-live-candidates-api26.log",
+      "bytes": 2432,
+      "sha256": "31c62002fe3ac5f3d857be002dacf67adb4a9641adced34f9246e88718a0ac7f"
+    },
+    {
+      "path": "pr06-live-candidates-api37.log",
+      "bytes": 2433,
+      "sha256": "0e3dac423d0627133541bf78ce3325c442359b97f5700c93e028d1604f6c17fb"
+    },
+    {
+      "path": "pr06-live-candidates-fold.log",
+      "bytes": 2433,
+      "sha256": "913fcfedbae379263d41b40054ebfab457aa783bbd7a71629b79a720c9223c2b"
+    },
+    {
+      "path": "pr06-live-candidates-gates.log",
+      "bytes": 17660,
+      "sha256": "c7cb09148e0b357ad5c4a519cd72b36fb5697044bf94d854d0c1435d9521de74"
+    },
+    {
+      "path": "pr06-live-candidates-jvm-integrated.log",
+      "bytes": 2434,
+      "sha256": "2dab9dd469b9c5d588cc7016dcbc720e9dfa35883762d664dd4b03e931908b80"
+    },
+    {
+      "path": "pr06-live-candidates-physical-gates.log",
+      "bytes": 18043,
+      "sha256": "19988fe8f027dc677546446c737437ee5bbc492f56aadce84c34129e30a723e3"
+    },
+    {
+      "path": "pr06-live-original-api26.log",
+      "bytes": 909,
+      "sha256": "a5030e98bfeea65d06480d6ab3236a96e9818fa8b27409165ef861ccda983c57"
+    },
+    {
+      "path": "pr06-live-original-api37.log",
+      "bytes": 910,
+      "sha256": "7e68aa418db68afb7ad3fcddcab6ce1cc06669cd086e9a995b9e8fee28cc3474"
+    }
+  ],
+  "sources": [
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt",
+      "sha256": "a9ce41c92237d9127f16723bc064c3af261bb9c7e5bcd3b21df641f8258f0a25"
+    },
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt",
+      "sha256": "fb3e59688f6628c7605317cd2e2207e07028ee2aa99dc465ab53810c8418b312"
+    },
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt",
+      "sha256": "5b814fb9c961885cbf70618067db0a5f65f5cf6e4318f98d21cd8b4331173346"
+    },
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LazyPackedLexicons.kt",
+      "sha256": "569fa9b35fadb52077befa4d704d3f4ddcd1b5e848ddee7cc5551238d14bd55c"
+    },
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/AndroidLazyPackedLexicons.kt",
+      "sha256": "ef3f6f97a169ce644a9735c670cc072582a62ae4e4e6b4a99e0eddd0a8eb7409"
+    },
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt",
+      "sha256": "e252953f764ce410e2d0c029c0aa2af49498eb30e9d70283240eb5aeb367d48f"
+    },
+    {
+      "path": "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveCandidatesInstrumentedTest.kt",
+      "sha256": "c55a9b767dcbf627283be5926bd257eecae481932c3d50611b723f2e73cebf26"
+    },
+    {
+      "path": "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingComposingInstrumentedTest.kt",
+      "sha256": "3b1953a259be4c6d3c1b3311e68820314e82c5f8ed91075548255d41341af2ea"
+    },
+    {
+      "path": "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt",
+      "sha256": "00b863a99dd79d9e3c6f567eaeb1a50b1350a8616f873ae236efe540e2d0c532"
+    }
+  ]
+}

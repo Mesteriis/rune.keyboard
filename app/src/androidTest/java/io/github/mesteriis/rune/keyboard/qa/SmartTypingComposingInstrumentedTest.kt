@@ -24,10 +24,10 @@ class SmartTypingComposingInstrumentedTest : ImeTestBase() {
         val resources = InstrumentationRegistry.getInstrumentation().targetContext
         val original = awaitOriginal("ab")
         val before = stats()
-        assertTrue(original.isSelected)
         original.click()
         driver.device.waitForIdle()
         driver.awaitFieldText(FIELD, "ab")
+        assertTrue(awaitOriginal("ab").isSelected)
         assertEquals(before.getValue("compose"), stats().getValue("compose"))
         assertEquals(before.getValue("commit"), stats().getValue("commit"))
         type("c")

@@ -2,6 +2,18 @@ package io.github.mesteriis.rune.keyboard.smarttyping.session
 
 import io.github.mesteriis.rune.keyboard.ime.editor.DoubleSpacePeriod
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.ProtectedTokenPolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.ProtectedTokenReason
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.TokenUnicode
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateCompletion
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGenerator
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateSearchControl
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateReply
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateRequest
+import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
+import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
 import java.util.ArrayDeque
 
 /**
@@ -25,19 +37,151 @@ class TypingSessionController internal constructor(
     private var lastAcknowledgedSelection: EditorSelection? = null
     private var awaitingEditorSelection = false
     private var plainWordUntilBoundary = false
+    private var editorEditDepth = 0
+    private var candidateEpoch = 0L
+    private var lastCandidateRequestId = -1L
+    private var pendingCandidate: CandidateStamp? = null
+    private var candidateSelection: CandidateSelection? = null
+
+    /** Owner must additionally check the active view, editor policy, layer, language and readiness. */
+    val ownsCandidateComposition: Boolean
+        get() {
+            val composing = state.composing ?: return false
+            return state.enabled && !awaitingEditorSelection && editorEditDepth == 0 &&
+                composing.typedWord.isNotEmpty() && composingStart >= 0 &&
+                selectionStart == selectionEnd &&
+                selectionStart.toLong() == composingStart.toLong() + composing.text.length &&
+                context?.text?.endsWith(composing.text) == true
+        }
+
+    val canRequestCandidates: Boolean
+        get() = ownsCandidateComposition && !state.originalSelected &&
+            candidateSelection?.manual != true &&
+            !ProtectedTokenPolicy.isProtected(state.composing!!.typedWord)
+
+    /** Only the numeric stamp is retained. Caller admits this request after live service checks. */
+    fun beginCandidateRequest(requestId: Long, activeLanguage: KeyboardLanguage): LocalCandidateRequest? {
+        if (!canRequestCandidates || requestId < 0 || requestId <= lastCandidateRequestId) return null
+        clearCandidates()
+        lastCandidateRequestId = requestId
+        pendingCandidate = CandidateStamp(state.sessionId, state.revision, requestId)
+        return LocalCandidateRequest(state.sessionId, state.revision, requestId,
+            state.composing!!.typedWord, activeLanguage, eligible = true)
+    }
+
+    /** Service rechecks its policy/language/lifetime first; this owner checks the exact live word. */
+    fun acceptCandidates(reply: LocalCandidateReply): Boolean {
+        val stamp = pendingCandidate ?: return false
+        if (stamp != CandidateStamp(reply.sessionId, reply.revision, reply.requestId)) return false
+        pendingCandidate = null
+        val generation = reply.generation
+        if (state.sessionId != stamp.sessionId || state.revision != stamp.revision ||
+            !canRequestCandidates || generation.original != state.composing?.typedWord ||
+            generation.completion == CandidateCompletion.CANCELLED ||
+            generation.alternatives.size > CandidateGenerator.MAX_ALTERNATIVES ||
+            generation.inspectedStates !in 0..CandidateSearchControl.MAX_STATES ||
+            generation.verifiedTerminals !in 0..CandidateSearchControl.MAX_VERIFIED
+        ) return false
+
+        val suggests = generation.completion == CandidateCompletion.COMPLETE ||
+            generation.completion == CandidateCompletion.STATES_EXHAUSTED ||
+            generation.completion == CandidateCompletion.VERIFIED_EXHAUSTED
+        if ((!suggests || generation.isValidWord || generation.protectedReason != null) &&
+            generation.alternatives.isNotEmpty()) return false
+        val original = generation.original!!
+        val originalCase = CasePattern.analyze(original)
+        val seen = hashSetOf(TokenUnicode.folded(original))
+        for (candidate in generation.alternatives) {
+            val reason = ProtectedTokenPolicy.reason(candidate.text)
+            // Eligible one-letter uppercase input can expand to a multi-letter uppercase display.
+            // Source admission stays protected; only its preserved ALL_CAPS output is allowed.
+            if ((reason != null && !(reason == ProtectedTokenReason.ALL_CAPS && originalCase == CasePattern.UPPER)) ||
+                !seen.add(TokenUnicode.folded(candidate.text))) return false
+        }
+        val alternatives = generation.alternatives.take(SmartTypingViewState.MAX_VISIBLE_CANDIDATES - 1)
+            .map { it.text }
+        candidateSelection = CandidateSelection(original, alternatives, stamp.requestId,
+            generation.completion, selectedIndex = if (alternatives.isEmpty()) -1 else 0)
+        return true
+    }
+
+    /** No editor mutation or veto reset. Service calls this when its own policy/route invalidates. */
+    fun clearCandidates() {
+        candidateEpoch++
+        pendingCandidate = null
+        candidateSelection = null
+    }
+
+    /** Diagnostic completion only: this controller never authorizes automatic replacement. */
+    val candidateCompletion: CandidateCompletion?
+        get() = candidateSelection?.completion
+
+    /** Pure projection. Service applies its additional HIDDEN policy before displaying it. */
+    val candidateViewState: SmartTypingViewState
+        get() {
+            if (!state.enabled) return SmartTypingViewState.HIDDEN
+            val originalId = originalCandidateId ?: return SmartTypingViewState.EMPTY
+            val selection = candidateSelection
+            val items = buildList {
+                add(CandidateUiItem.Original(originalId, selection?.original ?: state.composing!!.typedWord))
+                selection?.alternatives?.forEachIndexed { index, word ->
+                    add(CandidateUiItem.Correction(correctionId(selection.requestId, index), word))
+                }
+            }
+            val selectedId = if (selection != null && selection.selectedIndex >= 0 &&
+                (!state.originalSelected || selection.manual)) {
+                correctionId(selection.requestId, selection.selectedIndex)
+            } else originalId
+            return SmartTypingViewState(true, items, selectedId)
+        }
 
     val originalCandidateId: String?
-        get() = if (state.enabled && !awaitingEditorSelection &&
-            !state.composing?.typedWord.isNullOrEmpty()
-        ) "original:${state.sessionId}:${state.revision}" else null
+        get() = if (ownsCandidateComposition)
+            "original:${state.sessionId}:${state.revision}:$candidateEpoch" else null
 
     /** A stale strip tap cannot select a different word or resurrect an earlier session. */
     fun selectOriginal(candidateId: String): Boolean {
         if (candidateId != originalCandidateId) return false
+        val selection = candidateSelection
+        // The old no-editor API cannot restore a manually replaced word. Use selectCandidate.
+        if (selection != null && selection.original != state.composing?.typedWord) return false
         discardUndo()
+        clearCandidates()
         state = state.copy(originalSelected = true, revision = state.revision + 1)
+        candidateSelection = selection?.copy(selectedIndex = -1, manual = true)
         return true
     }
+
+    /** Explicit user choice only. Unknown/stale IDs are REJECTED and must never fall back/replay. */
+    fun selectCandidate(candidateId: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
+        if (!ownsCandidateComposition) return TypingTextResult.REJECTED
+        val selection = candidateSelection
+        val index = if (candidateId == originalCandidateId) -1 else {
+            selection?.alternatives?.indices?.firstOrNull {
+                candidateId == correctionId(selection.requestId, it)
+            } ?: return TypingTextResult.REJECTED
+        }
+        if (index == -1 && (selection == null || selection.original == state.composing!!.typedWord)) {
+            return if (selectOriginal(candidateId)) TypingTextResult.HANDLED else TypingTextResult.REJECTED
+        }
+        if (selection == null) return TypingTextResult.REJECTED
+        val previous = state.composing!!
+        val word = if (index == -1) selection.original else selection.alternatives[index]
+        val next = previous.copy(typedWord = word)
+        val caret = composingStart.toLong() + next.text.length
+        if (caret > Int.MAX_VALUE || next.text.length > MAX_COMPOSING_UTF16) return TypingTextResult.REJECTED
+        discardUndo()
+        val expected = EditorSelection(caret.toInt(), caret.toInt(), composingStart, caret.toInt())
+        return applyEdit(TypingEdit.SetComposingText(next.text), expected, execute) {
+            check(context?.replaceSuffix(previous.text, next.text) == true) { "Candidate context mismatch" }
+            state = state.copy(composing = next, originalSelected = state.originalSelected || index == -1)
+            candidateSelection = selection.copy(selectedIndex = index, manual = true)
+            publish()
+        }
+    }
+
+    private fun correctionId(requestId: Long, index: Int): String =
+        "correction:${state.sessionId}:${state.revision}:$requestId:$index"
 
     fun startSession(editor: EditorContext, selectionStart: Int, selectionEnd: Int) {
         endSession()
@@ -85,6 +229,7 @@ class TypingSessionController internal constructor(
     }
 
     fun deletePrevious(execute: (TypingEdit) -> Boolean): TypingTextResult {
+        clearCandidates()
         if (!state.enabled || awaitingEditorSelection) return TypingTextResult.BYPASS
         state.lastAutoEdit?.let { edit ->
             discardUndo()
@@ -136,6 +281,7 @@ class TypingSessionController internal constructor(
 
     /** Finishes only Rune's owned span; invalidates revisions even when already idle. */
     fun finishComposition(execute: (TypingEdit) -> Boolean): Boolean {
+        clearCandidates()
         discardUndo()
         plainWordUntilBoundary = false
         state = state.copy(revision = state.revision + 1, originalSelected = false)
@@ -228,6 +374,7 @@ class TypingSessionController internal constructor(
             (expectedEditorSelection?.composingStart ?: -1) >= 0
         val stillOwnsSpan = state.composing != null && candidatesStart == composingStart &&
             candidatesEnd == composingStart + state.composing!!.text.length
+        clearCandidates()
         context?.clear()
         expectedSelections.clear()
         expectedEditorSelection = null
@@ -254,6 +401,7 @@ class TypingSessionController internal constructor(
     }
 
     fun endSession() {
+        clearCandidates()
         context?.clear()
         context = null
         expectedSelections.clear()
@@ -307,15 +455,20 @@ class TypingSessionController internal constructor(
     ): TypingTextResult {
         val session = state.sessionId
         val revision = state.revision + 1
+        clearCandidates()
+        val expectedCandidateEpoch = candidateEpoch
         state = state.copy(revision = revision)
         remember(expected)
-        val handled = execute()
+        editorEditDepth++
+        val handled = try { execute() } finally { editorEditDepth-- }
         if (state.sessionId != session || state.revision != revision) {
             // A reentrant external/lifecycle callback already invalidated this operation.
             // Abort a multi-command action even if this individual editor call succeeded.
             return TypingTextResult.REJECTED
         }
-        if (!handled) {
+        if (!handled || candidateEpoch != expectedCandidateEpoch) {
+            // Owner policy may invalidate candidates reentrantly without changing the editor
+            // session. Freeze an ambiguously applied span; never publish its old allowlist.
             disableSession()
             rejected()
             return TypingTextResult.REJECTED
@@ -338,6 +491,7 @@ class TypingSessionController internal constructor(
     }
 
     private fun disableSession() {
+        clearCandidates()
         context?.clear()
         context = null
         expectedSelections.clear()
@@ -357,6 +511,19 @@ class TypingSessionController internal constructor(
     }
 
     private data class EditorSelection(val start: Int, val end: Int, val composingStart: Int, val composingEnd: Int)
+
+    private data class CandidateStamp(val sessionId: Long, val revision: Long, val requestId: Long)
+
+    private data class CandidateSelection(
+        val original: String,
+        val alternatives: List<String>,
+        val requestId: Long,
+        val completion: CandidateCompletion,
+        val selectedIndex: Int,
+        val manual: Boolean = false,
+    ) {
+        override fun toString(): String = "CandidateSelection(redacted)"
+    }
 
     private companion object {
         const val MAX_COMPOSING_UTF16 = 256

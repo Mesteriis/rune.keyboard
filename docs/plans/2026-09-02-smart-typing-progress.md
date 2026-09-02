@@ -25,12 +25,13 @@ qualifying a resource-bounded model path. Preserve all quality/privacy gates;
 do not treat switching models as permission to weaken them. Model execution
 must be demand-driven, cancellable, and absent in sensitive/ineligible sessions.
 
-Current slice: `feature/smart-typing-03-pr03-private-inference`, based on PR2
-commit `585f380691baabb7bec25ae5bd25067880d54158`. PR4 and the PR5
-strip/owned-boundary Undo foundation have local JVM/build gates and API36 Binder
-evidence. API26/37 and physical Fold are recorded separately; PR2/3/6/7/8/9/10
-and full-word autocorrection Undo remain required. No push, remote PR or
-publication is authorized by this resume.
+Current slice: `feature/smart-typing-03-pr06-lexicons`, following packaged-reader
+checkpoint `c45f43ae6f84ac27d84e68eb8c10fea40a385dbe`. PR2/3 runtime and private
+inference foundations, PR4 composing and PR5 strip/owned-boundary Undo are
+integrated; IME model inference and automatic spelling replacement remain off.
+PR6 now has scoped live-suggestion evidence on API26/37 and Fold, while useful
+retrieval/quality, PR7/8/9/10, full autocorrection Undo and final device/performance
+matrices remain required. No push, remote PR or publication is authorized.
 
 ### PR4 local evidence
 
@@ -150,6 +151,20 @@ publication is authorized by this resume.
 - Independently reviewed adapter fix uses an owned duplicated raw descriptor and a whole-file channel. Exact range checks, read-only maps and full hashes remain unchanged. The Android regression checks a positive-offset region, all five rejected ranges, descriptor closure on success/failure and map readability after closure. No extraction or mutable fallback.
 - Fixed full prescribed gates PASS (298 tasks / 48 executed). Fixed Fold and API37 packaged contract each PASS (one test). Final API26 packaged contract also PASS (one test, same final APK pair); these are packaged-reader functional checks, not full IME/lifecycle/energy acceptance. The Fold app was updated with `install -r`, preserving data; its previous APK backup remains available.
 - Weighted development qualification independently approved: 775/775 contracts, but only 72/716 retrieval requests complete; 602 state and 42 verification exhaustions keep their veto. This is development correctness/feasibility evidence, not a quality holdout pass. Separate exact weighted top-seven design must preserve the earlier proof-before-adoption ruling and original caps.
+
+### PR6 live candidate foundation
+
+- Packaged assets and the whole-FD Android compatibility fix committed as `c45f43ae6f84ac27d84e68eb8c10fea40a385dbe`; required fresh post-commit JVM PASS 391/391, zero failures/errors/skips, 46 tasks executed (`pr06-packaging-jvm-postcommit-c45f43a.log`). The tree was clean before consumer-foundation integration.
+- Independently reviewed controller candidate selection and callback-free lazy loader applied (proposals `321b0162b1a00461798fddf925aa83d27e29ab916b7f283a96ad040170e80ba1` and `01b26847868d0ec42f160274831a7e8486a21184394e0ae4b0a5563e1b5dac0d`). Controller P2 fixed: valid case-preserved uppercase output from an eligible one-letter original must not be rejected by the source-only ALL_CAPS policy; other protection guards remain. One serial enum-only loader publishes validated immutable readers, never queues a token or resubmits on readiness.
+- Integrated fresh JVM PASS 435/435, zero failures/errors/skips. This adds 30 controller and 14 loader cases. Actual service/coordinator consumer is under separate independent review; no device execution of that consumer is claimed yet.
+
+### PR6 live IME integration evidence
+
+- Service/coordinator proposal `f64631b40e81b36992c9794801888783355cca7102a39f92dc389041c10a32d6` independently approved and applied. It submits only after accepted composing edits, polls callback-free readiness, cancels old work at owner/lifecycle boundaries and renders only through the permanent strip. Model inference and AutoReplace are not enabled.
+- Fresh integrated JVM PASS 453/453, zero failures/errors/skips. Full prescribed gates initially PASS (298 tasks / 53 executed); final test-only physical-capture opt-out also built with the full command PASS (298 / 21 executed). `-e runeFailureArtifacts false` prevents screenshot/XML capture without skipping assertions or teardown.
+- Actual Binder LiveCandidates scenarios PASS: API26 3/3 in 50.620 s, API37 3/3 in 54.061 s, physical USB Fold API36 3/3 in 31.838 s. They verify correction/Original tap transactions, plain boundary behavior and sensitive-field cleanup with no editor readback. Existing Original regression additionally PASS on API26 (7.447 s) and API37 (11.255 s). These are scoped functional checks, not the complete release/device/performance matrix.
+- Fold was temporarily absent before its first UI attempt; no wake/install/test occurred during that failed connection check. The user reconnected it, USB readiness was confirmed, current app/test APKs installed with -r and the three UI tests passed. Data were not cleared; no failure screenshots/XML were captured.
+- Weighted qualification package independently approved and promoted (proposal `c990deb304196462d0794318c39ce0915d7ef84572d5d3046830395254fa2811`). Root historical verification PASS (41 archived texts / 775 requests / FRESH_EXECUTION 0), root documented contract invocation PASS 19/19. An initial generic unittest invocation omitted its required RUNE_QUAL_TEST_DIR and ran zero tests; that failed setup log is retained, then the documented invocation passed. No new production retrieval or holdout run is inferred.
 
 ### Historical PR1 result
 

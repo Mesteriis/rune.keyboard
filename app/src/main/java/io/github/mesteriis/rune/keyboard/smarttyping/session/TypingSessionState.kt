@@ -1,6 +1,6 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.session
 
-/** No model/request/candidate state exists until a consumer is implemented. */
+/** Composing snapshot; bounded candidate ownership lives in TypingSessionController. No model state. */
 data class TypingSessionState(
     val sessionId: Long = 0,
     val revision: Long = 0,

@@ -4,6 +4,8 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.text.InputType
 import android.view.View
@@ -35,10 +37,13 @@ import io.github.mesteriis.rune.keyboard.settings.SettingsCodec
 import io.github.mesteriis.rune.keyboard.settings.SizeBucket
 import io.github.mesteriis.rune.keyboard.settings.ThemeOverride
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingEdit
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.AndroidLazyPackedLexicons
+import io.github.mesteriis.rune.keyboard.smarttyping.session.CandidateOwnerState
+import io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinator
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionController
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingTextResult
-import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
+import java.util.concurrent.Executor
 
 class RuneInputMethodService : InputMethodService() {
     private val layoutProvider = KeyboardLayoutProvider()
@@ -51,6 +56,8 @@ class RuneInputMethodService : InputMethodService() {
     private var selectedLanguage = KeyboardLanguage.ENGLISH
     private var hasSelection = false
     private val typingSession = TypingSessionController()
+    private lateinit var candidates: LocalCandidateCoordinator
+    private var inputViewActive = false
 
     // Held in a field on purpose: SharedPreferences keeps registered listeners weakly.
     private val preferencesListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
@@ -76,10 +83,20 @@ class RuneInputMethodService : InputMethodService() {
             enabledLanguages = settings.enabledLanguages,
             doubleSpacePeriodEnabled = settings.doubleSpacePeriod,
         )
+        val mainHandler = Handler(Looper.getMainLooper())
+        candidates = LocalCandidateCoordinator(
+            typingSession,
+            AndroidLazyPackedLexicons.create(applicationContext.assets),
+            Executor { action -> check(mainHandler.post(action)) { "Candidate owner dispatcher stopped" } },
+            ::candidateOwnerState,
+            ::renderCandidates,
+        )
         keyboardPreferences.registerListener(preferencesListener)
     }
 
     override fun onDestroy() {
+        inputViewActive = false
+        candidates.close()
         typingSession.endSession()
         keyboardView?.updateCandidates(SmartTypingViewState.HIDDEN)
         keyboardPreferences.unregisterListener(preferencesListener)
@@ -101,6 +118,8 @@ class RuneInputMethodService : InputMethodService() {
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         keyboardView?.cancelActiveTouches()
+        inputViewActive = false
+        candidates.invalidate()
         super.onStartInput(attribute, restarting)
         val editorInfo = attribute ?: EditorInfo()
         editorContext = EditorContext.from(editorInfo)
@@ -122,6 +141,9 @@ class RuneInputMethodService : InputMethodService() {
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
         if (info != null) editorContext = EditorContext.from(info)
+        inputViewActive = true
+        candidates.invalidate()
+        if (!editorContext.supportsSmartTyping) typingSession.endSession()
         state = withAutomaticCapitalization(state)
         renderKeyboard()
     }
@@ -143,15 +165,18 @@ class RuneInputMethodService : InputMethodService() {
             candidatesEnd,
         )
         hasSelection = newSelStart >= 0 && newSelEnd >= 0 && newSelStart != newSelEnd
-        typingSession.updateSelection(
+        val externalChange = typingSession.updateSelection(
             newSelStart, newSelEnd, candidatesStart, candidatesEnd, ::executeTypingEdit,
         )
+        if (externalChange) candidates.invalidate()
         renderCandidates()
         refreshAutomaticCapitalization()
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
         keyboardView?.cancelActiveTouches()
+        inputViewActive = false
+        candidates.invalidate()
         typingSession.invalidate(::executeTypingEdit)
         if (finishingInput) typingSession.endSession()
         renderCandidates()
@@ -166,6 +191,8 @@ class RuneInputMethodService : InputMethodService() {
      */
     override fun onFinishInput() {
         keyboardView?.cancelActiveTouches()
+        inputViewActive = false
+        candidates.invalidate()
         typingSession.finishComposition(::executeTypingEdit)
         typingSession.endSession()
         renderCandidates()
@@ -175,9 +202,15 @@ class RuneInputMethodService : InputMethodService() {
 
     override fun onEvaluateFullscreenMode(): Boolean = false
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        candidates.invalidate()
+        super.onConfigurationChanged(newConfig)
+    }
+
     private fun handleAction(action: KeyboardAction) {
         RuneTrace.section("Rune#touchUpDispatch") {
             val previousState = state
+            if (invalidatesTyping(action)) candidates.invalidate()
             if (action is KeyboardAction.MoveCursor || action == KeyboardAction.Enter) {
                 typingSession.awaitEditorSelection(::executeTypingEdit)
             } else if (invalidatesTyping(action)) {
@@ -226,18 +259,23 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     private fun executeTypingOrEditorCommand(command: EditorCommand): CommandOutcome {
-        val result = when (command) {
-            is EditorCommand.CommitText -> typingSession.typeText(command.value, ::executeTypingEdit)
-            EditorCommand.DeletePreviousCodePoint -> typingSession.deletePrevious(::executeTypingEdit)
-            EditorCommand.ConvertPrecedingSpaceToPeriod -> {
-                val boundary = typingSession.doubleSpace(::executeTypingEdit)
-                if (boundary == TypingTextResult.BYPASS) {
-                    // A pending span must be finished before an ordinary second space is inserted.
-                    typingSession.typeText(" ", ::executeTypingEdit)
-                } else boundary
+        val result = if (command is EditorCommand.CommitText || command == EditorCommand.DeletePreviousCodePoint ||
+            command == EditorCommand.ConvertPrecedingSpaceToPeriod) {
+            candidates.edit {
+                when (command) {
+                    is EditorCommand.CommitText -> typingSession.typeText(command.value, ::executeTypingEdit)
+                    EditorCommand.DeletePreviousCodePoint -> typingSession.deletePrevious(::executeTypingEdit)
+                    EditorCommand.ConvertPrecedingSpaceToPeriod -> {
+                        val boundary = typingSession.doubleSpace(::executeTypingEdit)
+                        if (boundary == TypingTextResult.BYPASS) {
+                            // Finish the pending span before inserting an ordinary second space.
+                            typingSession.typeText(" ", ::executeTypingEdit)
+                        } else boundary
+                    }
+                    else -> TypingTextResult.BYPASS
+                }
             }
-            else -> TypingTextResult.BYPASS
-        }
+        } else TypingTextResult.BYPASS
         return when (result) {
             TypingTextResult.HANDLED -> CommandOutcome.DELIVERED
             TypingTextResult.REJECTED -> CommandOutcome.DROPPED
@@ -306,7 +344,9 @@ class RuneInputMethodService : InputMethodService() {
             state = state
                 .withEnabledLanguages(settings.enabledLanguages)
                 .copy(doubleSpacePeriodEnabled = settings.doubleSpacePeriod)
+            if (settings.enabledLanguages != previous.enabledLanguages) candidates.invalidate()
             if (state.language != selectedLanguage) {
+                candidates.invalidate()
                 typingSession.invalidate(::executeTypingEdit)
                 selectedLanguage = state.language
                 keyboardPreferences.writeLanguage(selectedLanguage)
@@ -363,25 +403,21 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     private fun handleCandidateSelection(id: String) {
-        if (typingSession.selectOriginal(id)) renderCandidates()
+        candidates.selectCandidate(id, ::executeTypingEdit)
+        renderCandidates()
     }
+
+    private fun candidateOwnerState() = CandidateOwnerState(
+        editorAllowsSmartTyping = editorContext.supportsSmartTyping,
+        inputViewActive = inputViewActive,
+        layer = state.layer,
+        language = state.language,
+        hasSelection = hasSelection,
+    )
 
     private fun renderCandidates() {
         val view = keyboardView ?: return
-        val typing = typingSession.state
-        val candidateId = typingSession.originalCandidateId
-        val word = typing.composing?.typedWord.orEmpty()
-        val candidateState = when {
-            !editorContext.supportsSmartTyping || !typing.enabled || state.layer != KeyboardLayer.LETTERS ->
-                SmartTypingViewState.HIDDEN
-            candidateId == null || word.isEmpty() -> SmartTypingViewState.EMPTY
-            else -> SmartTypingViewState(
-                enabled = true,
-                candidates = listOf(CandidateUiItem.Original(candidateId, word)),
-                selectedCandidateId = candidateId,
-            )
-        }
-        view.updateCandidates(candidateState)
+        view.updateCandidates(candidates.viewState)
     }
 
     private fun buildMetrics(themedContext: android.content.Context): KeyboardViewMetrics {

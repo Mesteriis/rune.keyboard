@@ -518,6 +518,8 @@ class ImeTestDriver {
 
 class ImeFailureArtifacts(private val driver: ImeTestDriver) : TestWatcher() {
     override fun failed(error: Throwable?, description: Description) {
+        // Physical-device runs can suppress captures without skipping assertions or teardown.
+        if (InstrumentationRegistry.getArguments().getString("runeFailureArtifacts") == "false") return
         val root = InstrumentationRegistry.getInstrumentation().targetContext
             .getExternalFilesDir("instrumentation-failures") ?: return
         val safeName = description.methodName.replace(Regex("[^A-Za-z0-9_.-]"), "_")

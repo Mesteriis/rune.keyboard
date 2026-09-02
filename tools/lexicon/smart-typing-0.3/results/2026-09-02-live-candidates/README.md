@@ -1,0 +1,7 @@
+# Live suggestions evidence — 2026-09-02
+
+Pre-commit integrated source based on c45f43a. Logs preserve the fresh JVM/build and narrow Binder outcomes summarized in metrics.json. Full gate task totals distinguish executed and up-to-date work. The source manifest identifies the integrated source bytes and saved log bytes; it does not attest per-device installed APK identity. Functional test durations are not latency or energy measurements.
+
+API26/API37 live scenarios use a fixed public example, not user text or holdout data. The initial physical attempt was BLOCKED before wake/install because no USB device was available; no test began or screenshot/hierarchy was captured. Following user reconnection and USB-ready confirmation, both install-r operations succeeded and the three live scenarios passed on Fold in 31.838 s. The new live APK is now installed. The run used `runeFailureArtifacts=false` and captured no screenshots/hierarchy; it does not qualify cover/inner transitions or the full Fold lifecycle matrix. The prior packaged-reader Fold checkpoint is separate and is not copied here.
+
+The test-only failure artifact opt-out requires the exact string argument `-e runeFailureArtifacts false`; assertions and teardown remain active. Fresh post-commit JVM, broad IME/Fold lifecycle, weighted quality, useful completion and energy remain independent gates. IME model inference and automatic spelling replacement remain off.

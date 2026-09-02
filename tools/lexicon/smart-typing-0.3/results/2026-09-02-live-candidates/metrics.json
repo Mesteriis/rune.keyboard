@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "source_base_commit": "c45f43ae6f84ac27d84e68eb8c10fea40a385dbe",
+  "scope": "Pre-commit integrated functional evidence; not release, latency, quality, energy or device readback proof.",
+  "jvm": {
+    "app": 434,
+    "runtime_llama": 19,
+    "tests": 453,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "tasks": 46,
+    "executed": 46
+  },
+  "gates_initial": {
+    "tasks": 298,
+    "executed": 53,
+    "up_to_date": 245
+  },
+  "gates_final_test_only_capture_optout": {
+    "tasks": 298,
+    "executed": 21,
+    "up_to_date": 277
+  },
+  "api26_live": {
+    "status": "PASS",
+    "tests": 3,
+    "seconds": 50.62
+  },
+  "api26_original": {
+    "status": "PASS",
+    "tests": 1,
+    "seconds": 7.447
+  },
+  "api37_live": {
+    "status": "PASS",
+    "tests": 3,
+    "seconds": 54.061
+  },
+  "api37_original": {
+    "status": "PASS",
+    "tests": 1,
+    "seconds": 11.255
+  },
+  "physical_initial_attempt": {
+    "status": "BLOCKED",
+    "reason": "USB device absent before wake/install",
+    "new_live_apk_installed": false,
+    "test_started": false
+  },
+  "physical_live": {
+    "status": "PASS",
+    "tests": 3,
+    "seconds": 31.838,
+    "install_replace_successes": 2,
+    "failure_artifacts_argument": "false",
+    "new_live_apk_installed": true,
+    "scope": "Three live Binder scenarios only; not cover/inner/configuration matrix or performance."
+  }
+}
