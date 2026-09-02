@@ -286,6 +286,13 @@ class ImeTestDriver {
         device.waitForIdle()
         instrumentation.waitForIdleSync()
         resumeQa()
+        // Resuming the same focused EditText is not guaranteed to start a new input session on
+        // API 26, so the framework can reuse the detached view. Focus a second text editor first:
+        // this makes the "next IME view" precondition explicit and keeps the assertion on a
+        // normal InputConnection path rather than relying on an Activity/Home timing race.
+        focusField("qa_email")
+        eventually(WAIT_MILLIS) { (findKeyByText("1") != null) == enabled }
+        check((findKeyByText("1") != null) == enabled) { "Next IME view did not apply number-row setting" }
         focusField("qa_plain_text")
         eventually(WAIT_MILLIS) { (findKeyByText("1") != null) == enabled }
         check((findKeyByText("1") != null) == enabled) { "Active IME did not apply number-row setting" }
