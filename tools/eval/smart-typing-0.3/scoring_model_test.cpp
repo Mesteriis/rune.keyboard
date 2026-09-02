@@ -113,9 +113,7 @@ int main(int argc, char ** argv) {
         }
         require(within_tolerance);
         const auto identical = scorer.score({"Same", {{0, " word"}, {1, " word"}}});
-        require(identical.error == rune::scoring::Error::None);
-        require(identical.scores.size() == 2 && identical.scores[0].scored_token_count == 0);
-        require(identical.scores[0].sum_log_probability == identical.scores[1].sum_log_probability);
+        require(identical.error == rune::scoring::Error::ScoringFailed && identical.scores.empty());
         cancelled = true;
         require(scorer.score(requests[0]).error == rune::scoring::Error::Cancelled);
         cancelled = false;

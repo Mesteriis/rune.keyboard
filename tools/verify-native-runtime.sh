@@ -27,6 +27,8 @@ for library in "${native_libraries[@]}"; do
     echo "$needed" >&2
     exit 1
   }
+  exports=$($readelf_bin --dyn-syms --wide "$library" | awk '($5 == "GLOBAL" || $5 == "WEAK") && $6 == "DEFAULT" && $7 != "UND" {print $8}' | LC_ALL=C sort -u)
+  [[ "$exports" == "JNI_OnLoad" ]] || { echo "Unexpected runtime dynamic export" >&2; exit 1; }
   symbols=$($readelf_bin -Ws "$library")
   grep -Eq 'JNI_OnLoad' <<<"$symbols" || { echo "JNI_OnLoad is missing from $library" >&2; exit 1; }
   if grep -Eq 'Java_|__android_log|curl_|[[:space:]](socket|connect|sendto|recvfrom)(@[^[:space:]]*)?$' <<<"$symbols"; then
@@ -40,6 +42,27 @@ if grep -En 'android/log\.h|__android_log|(^|[^[:alnum:]_])(printf|fprintf)[[:sp
   echo "Rune-owned JNI must not log to Android, stdout, or stderr" >&2
   exit 1
 fi
+
+# Exact registration/signature allowlist: no public generate or text-returning entry.
+python3 - "$repo_root" <<'PYCODE'
+import pathlib
+import re
+import sys
+root = pathlib.Path(sys.argv[1])
+expected = {
+    "nativeCreate": "()J", "nativeDestroy": "(J)V",
+    "nativeLoad": "(JLjava/lang/String;)[J", "nativeSelfTest": "(J)[J",
+    "nativeResetCancellation": "(J)V", "nativeCancel": "(J)V", "nativeUnload": "(J)V",
+    "nativeScoreCandidates": "(J[B[I[[B)[J",
+}
+source = (root / "runtime-llama/src/main/cpp/rune_llama_jni.cpp").read_text()
+entries = re.findall(r'const_cast<char \*>\("(native\w+)"\), const_cast<char \*>\("([^"\n]+)"\)', source)
+kotlin = (root / "runtime-llama/src/main/java/io/github/mesteriis/rune/runtime/llama/LlamaLocalModelRuntime.kt").read_text()
+externals = re.findall(r'\bexternal fun (\w+)', kotlin)
+private_externals = re.findall(r'private external fun (\w+)', kotlin)
+if len(entries) != len(expected) or dict(entries) != expected or sorted(externals) != sorted(expected) or sorted(private_externals) != sorted(expected):
+    raise SystemExit("Unexpected runtime native method contract")
+PYCODE
 
 apk=${1:-}
 if [[ -n "$apk" ]]; then

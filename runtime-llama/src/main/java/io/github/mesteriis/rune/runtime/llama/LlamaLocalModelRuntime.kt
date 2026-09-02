@@ -16,10 +16,10 @@ class LlamaLocalModelRuntime : LocalModelRuntime {
         destroyNative = ::nativeDestroy,
     )
 
-    override fun load(modelFile: File): ModelLoadResult {
+    override fun load(modelFile: File, isCancelled: () -> Boolean): ModelLoadResult {
         if (!modelFile.isFile) return ModelLoadResult.Failure(RuntimeErrorCode.MODEL_NOT_FOUND)
         val values = when (
-            val call = lifecycle.beginOperation { handle -> nativeLoad(handle, modelFile.absolutePath) }
+            val call = lifecycle.beginOperation(isCancelled) { handle -> nativeLoad(handle, modelFile.absolutePath) }
         ) {
             is NativeCallResult.Completed -> call.value
             NativeCallResult.Cancelled -> return ModelLoadResult.Failure(RuntimeErrorCode.CANCELLED)
@@ -54,6 +54,26 @@ class LlamaLocalModelRuntime : LocalModelRuntime {
         }
     }
 
+    override fun scoreCandidates(
+        request: CandidateScoringRequest,
+        isCancelled: () -> Boolean,
+    ): CandidateScoringResult {
+        val encoded = when (val result = CandidateScoringWire.encode(request)) {
+            is EncodedCandidateScoringRequest.Success -> result
+            is EncodedCandidateScoringRequest.Failure -> return CandidateScoringResult.Failure(result.error)
+        }
+        val values = when (val call = lifecycle.beginOperation(isCancelled) { handle ->
+            nativeScoreCandidates(handle, encoded.prefix, encoded.ids, encoded.continuations)
+        }) {
+            is NativeCallResult.Completed -> call.value
+            NativeCallResult.Cancelled -> return CandidateScoringResult.Failure(RuntimeErrorCode.CANCELLED)
+            NativeCallResult.Failed,
+            NativeCallResult.Unavailable,
+            -> return CandidateScoringResult.Failure(RuntimeErrorCode.INTERNAL_ERROR)
+        }
+        return CandidateScoringWire.decode(values, encoded.ids)
+    }
+
     override fun cancelCurrentOperation() {
         lifecycle.cancel()
     }
@@ -73,6 +93,12 @@ class LlamaLocalModelRuntime : LocalModelRuntime {
     private external fun nativeDestroy(handle: Long)
     private external fun nativeLoad(handle: Long, modelPath: String): LongArray
     private external fun nativeSelfTest(handle: Long): LongArray
+    private external fun nativeScoreCandidates(
+        handle: Long,
+        prefix: ByteArray,
+        ids: IntArray,
+        continuations: Array<ByteArray>,
+    ): LongArray
     private external fun nativeResetCancellation(handle: Long)
     private external fun nativeCancel(handle: Long)
     private external fun nativeUnload(handle: Long)

@@ -15,6 +15,10 @@ enum class RuntimeErrorCode(val stableCode: Int) {
     CANCELLED(9),
     INTERNAL_ERROR(10),
     NATIVE_LIBRARY_UNAVAILABLE(11),
+    INVALID_REQUEST(12),
+    CONTEXT_TOO_LONG(13),
+    TOO_MANY_CANDIDATES(14),
+    SCORING_FAILED(15),
 }
 
 sealed interface ModelLoadResult {
@@ -31,8 +35,23 @@ sealed interface ModelSelfTestResult {
 }
 
 interface LocalModelRuntime : AutoCloseable {
-    fun load(modelFile: File): ModelLoadResult
+    fun load(modelFile: File): ModelLoadResult = load(modelFile, isCancelled = { false })
+
+    /** Uses the same cancellation admission contract as [scoreCandidates]. */
+    fun load(modelFile: File, isCancelled: () -> Boolean): ModelLoadResult
     fun selfTest(): ModelSelfTestResult
+    fun scoreCandidates(request: CandidateScoringRequest): CandidateScoringResult =
+        scoreCandidates(request, isCancelled = { false })
+
+    /**
+     * Checks request cancellation at native admission after resetting the native flag.
+     * [isCancelled] must be a fast, non-blocking read of request-owned cancellation state.
+     * Set that state before calling [cancelCurrentOperation] to also stop admitted work.
+     */
+    fun scoreCandidates(
+        request: CandidateScoringRequest,
+        isCancelled: () -> Boolean,
+    ): CandidateScoringResult
     fun cancelCurrentOperation()
     fun unload()
     override fun close() = unload()

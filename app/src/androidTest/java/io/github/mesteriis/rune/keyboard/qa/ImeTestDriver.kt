@@ -213,6 +213,25 @@ class ImeTestDriver {
         inject(handle.downTime, SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, handle.x, handle.y)
     }
 
+    /** Reads the target once, then returns the real interval between the two injected releases. */
+    fun doubleTap(key: UiObject2): Long {
+        // UiObject2.visibleBounds refreshes its node after waiting for accessibility idle.
+        // Resolve it before the gesture; no UI-tree queries may separate the four events.
+        val bounds = key.visibleBounds
+        check(!bounds.isEmpty) { "Double-tap target has no visible bounds" }
+        val x = bounds.exactCenterX()
+        val y = bounds.exactCenterY()
+        val firstDownTime = SystemClock.uptimeMillis()
+        inject(firstDownTime, firstDownTime, MotionEvent.ACTION_DOWN, x, y)
+        val firstUpTime = SystemClock.uptimeMillis()
+        inject(firstDownTime, firstUpTime, MotionEvent.ACTION_UP, x, y)
+        val secondDownTime = SystemClock.uptimeMillis()
+        inject(secondDownTime, secondDownTime, MotionEvent.ACTION_DOWN, x, y)
+        val secondUpTime = SystemClock.uptimeMillis()
+        inject(secondDownTime, secondUpTime, MotionEvent.ACTION_UP, x, y)
+        return secondUpTime - firstUpTime
+    }
+
     fun deleteKey(): UiObject2 = keyByDescription(targetContext.getString(R.string.key_delete))
 
     fun characterKey(vararg labels: String): UiObject2 =

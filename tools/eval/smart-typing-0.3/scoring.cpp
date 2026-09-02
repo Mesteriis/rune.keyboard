@@ -74,6 +74,12 @@ Error validate_request(const Request & request) noexcept {
 
 namespace {
 bool abort_decode(void * data) { return static_cast<std::atomic_bool *>(data)->load(std::memory_order_relaxed); }
+#if defined(RUNE_TOKENIZER_ABORT)
+struct TokenizeCancellation { std::atomic_bool & cancelled; };
+bool abort_tokenize(llama_tokenize_stage, void * data) noexcept {
+    return static_cast<TokenizeCancellation *>(data)->cancelled.load(std::memory_order_relaxed);
+}
+#endif
 struct Batch {
     llama_batch value = llama_batch_init(64, 0, 1);
     ~Batch() { llama_batch_free(value); }
@@ -108,11 +114,31 @@ Scorer::Scorer(llama_model * model, std::atomic_bool & cancelled)
 
 std::vector<llama_token> Scorer::tokenize(const std::string & text, size_t limit, bool bos) {
     if (cancelled_) throw Error::Cancelled;
-    // PR1 uses upstream tokenizer. PR2 adds *internal* cancellation checkpoints;
-    // do not misrepresent this bounded before/after cancellation as that gate.
     std::vector<llama_token> tokens(limit + 1);
+#if defined(RUNE_TOKENIZER_ABORT)
+    // The additive API checks BPE/QWEN2/gpt2 metadata and whitespace policy.
+    // The adapter and callback userdata are local to this tokenization call.
+    TokenizeCancellation cancellation{cancelled_};
+    int32_t count = 0;
+    const auto status = llama_tokenize_with_abort(vocab_, text.data(), static_cast<int32_t>(text.size()),
+        tokens.data(), static_cast<int32_t>(tokens.size()), false, false,
+        abort_tokenize, &cancellation, &count);
+    switch (status) {
+    case LLAMA_TOKENIZE_OK: break;
+    case LLAMA_TOKENIZE_CANCELLED: throw Error::Cancelled;
+    case LLAMA_TOKENIZE_INVALID_UTF8: throw Error::InvalidUtf8;
+    case LLAMA_TOKENIZE_BUFFER_TOO_SMALL:
+    case LLAMA_TOKENIZE_OVERFLOW: throw Error::ContextTooLong;
+    case LLAMA_TOKENIZE_INVALID_ARGUMENT: throw Error::InvalidRequest;
+    case LLAMA_TOKENIZE_UNSUPPORTED:
+    case LLAMA_TOKENIZE_FAILED: throw Error::TokenizeFailed;
+    default: throw Error::TokenizeFailed;
+    }
+#else
+    // The evaluator can still build against the pristine pinned upstream API.
     const auto count = llama_tokenize(vocab_, text.data(), static_cast<int32_t>(text.size()),
         tokens.data(), static_cast<int32_t>(tokens.size()), false, false);
+#endif
     if (cancelled_) throw Error::Cancelled;
     if (count < 0 || static_cast<size_t>(count) > limit) throw Error::ContextTooLong;
     tokens.resize(static_cast<size_t>(count));
@@ -147,6 +173,11 @@ Result Scorer::score(const Request & request) {
             common = i;
         }
         if (common == 0) return {Error::InsufficientContext, {}};
+        // Equal token sequences, one candidate, or one sequence ending at the
+        // LCP cannot form a complete comparable set. Never rank a zero span.
+        if (std::any_of(alternatives.begin(), alternatives.end(), [common](const auto & tokens) {
+            return tokens.size() <= common;
+        })) return {Error::ScoringFailed, {}};
         const auto vocabulary_size = static_cast<size_t>(llama_vocab_n_tokens(vocab_));
         Batch batch;
         if (!batch.value.token || !batch.value.pos || !batch.value.n_seq_id ||

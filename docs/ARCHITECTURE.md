@@ -55,7 +55,24 @@ Rune регистрирует один системный subtype на три я
 - `intelligence/runtime` — self-test orchestration, атомарный active pointer и единственный rollback slot;
 - `:runtime-llama` — pinned llama.cpp, opaque JNI handle и CPU-only `load/selfTest/cancel/unload`.
 
-Подсистема модели не зависит от `ime/**`, а статический gate запрещает обратную зависимость. В 0.2 runtime предоставляет только `load/selfTest/cancel/unload`; typing API и общий `generate()` отсутствуют.
+Подсистема модели не зависит от `ime/**`, а статический gate запрещает обратную зависимость. Runtime предоставляет `load/selfTest/cancel/unload` и bounded `scoreCandidates`; IME ещё не вызывает модель. Общего `generate()` нет.
+
+Scoring получает 1–8 продолжений с уникальными числовыми IDs. Kotlin и JNI
+независимо проверяют строгий UTF-8 и byte limits; tokenizer дополнительно
+проверяет 192/64 standalone tokens и 256 tokens полной строки с допустимым BOS.
+Оценка строится по полной строке `prefix + continuation`, общему token prefix
+и divergent span. Последовательный teacher forcing очищает KV между вариантами;
+возвращаются только IDs, суммы log probability, counts, timing и stable error.
+Нулевой divergent span отклоняет весь набор. EOS не добавляется.
+
+CMake архивирует чистый pinned llama.cpp в build directory и применяет туда
+проверенный patch; gitlink не меняется. Новый совместимый tokenizer API имеет
+callback/user-data на вызов и проверяет отмену внутри Unicode preparation,
+QWEN2 pre-split и BPE loops. Runtime отклоняет неподдерживаемые tokenizer types.
+Отдельный request cancellation predicate проверяется после сброса native flag
+при допуске load/score на worker: отмена до постановки в очередь не теряется.
+После допуска `cancelCurrentOperation` непосредственно выставляет atomic flag.
+Периодического polling для этой гарантии нет.
 
 Платформенные `android.inputmethodservice.Keyboard` и `KeyboardView` не используются: они deprecated с API 29. View-подход выбран вместо Canvas, чтобы каждая клавиша сразу имела корректную focus/click/long-click семантику TalkBack без отдельного виртуального accessibility tree.
 

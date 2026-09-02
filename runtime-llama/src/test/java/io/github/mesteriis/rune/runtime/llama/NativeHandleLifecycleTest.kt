@@ -124,6 +124,131 @@ class NativeHandleLifecycleTest {
     }
 
     @Test
+    fun requestCancelledBeforeAdmissionCannotBeResetIntoNativeWork() {
+        val requestCancelled = AtomicBoolean(false)
+        val nativeCancelled = AtomicBoolean(false)
+        val nativeCalls = AtomicInteger()
+        val resets = AtomicInteger()
+        val lifecycle = lifecycle(
+            resetCancellation = { resets.incrementAndGet(); nativeCancelled.set(false) },
+            cancel = { nativeCancelled.set(true) },
+        )
+        try {
+            // Simulate the service's earlier check followed by Binder cancellation
+            // before the operation has entered the runtime's admission queue.
+            assertFalse(requestCancelled.get())
+            requestCancelled.set(true)
+            lifecycle.cancel()
+
+            val result = lifecycle.beginOperation(requestCancelled::get) { nativeCalls.incrementAndGet() }
+
+            assertSame(NativeCallResult.Cancelled, result)
+            assertEquals(1, resets.get())
+            assertEquals(0, nativeCalls.get())
+            assertEquals(NativeCallResult.Completed(false), lifecycle.beginOperation({ false }) { nativeCancelled.get() })
+            assertEquals(2, resets.get())
+        } finally {
+            lifecycle.close()
+        }
+    }
+
+    @Test
+    fun requestCancelledDuringNativeResetIsCheckedAfterResetBeforeNativeWork() {
+        val resetEntered = CountDownLatch(1)
+        val releaseReset = CountDownLatch(1)
+        val requestTokenSet = CountDownLatch(1)
+        val requestCancelled = AtomicBoolean(false)
+        val nativeCancelled = AtomicBoolean(false)
+        val nativeCalls = AtomicInteger()
+        val resets = AtomicInteger()
+        val outcome = AtomicReference<NativeCallResult<Int>>()
+        val lifecycle = lifecycle(
+            resetCancellation = {
+                if (resets.incrementAndGet() == 1) {
+                    resetEntered.countDown()
+                    check(releaseReset.await(5, TimeUnit.SECONDS))
+                }
+                nativeCancelled.set(false)
+            },
+            cancel = { nativeCancelled.set(true) },
+        )
+        val caller = Thread {
+            outcome.set(lifecycle.beginOperation(requestCancelled::get) { nativeCalls.incrementAndGet() })
+        }
+        val canceller = Thread {
+            requestCancelled.set(true)
+            requestTokenSet.countDown()
+            lifecycle.cancel()
+        }
+        try {
+            caller.start()
+            assertTrue(resetEntered.await(5, TimeUnit.SECONDS))
+            canceller.start()
+            assertTrue(requestTokenSet.await(5, TimeUnit.SECONDS))
+            releaseReset.countDown()
+            caller.join(5_000)
+            canceller.join(5_000)
+
+            assertFalse(caller.isAlive)
+            assertFalse(canceller.isAlive)
+            assertSame(NativeCallResult.Cancelled, outcome.get())
+            assertEquals(0, nativeCalls.get())
+            assertTrue(nativeCancelled.get())
+            assertEquals(NativeCallResult.Completed(false), lifecycle.beginOperation({ false }) { nativeCancelled.get() })
+            assertEquals(2, resets.get())
+        } finally {
+            releaseReset.countDown()
+            caller.join(5_000)
+            canceller.join(5_000)
+            lifecycle.close()
+        }
+    }
+
+    @Test
+    fun cancellationAfterRequestAdmissionReachesNativeWithoutWaitingForWork() {
+        val workEntered = CountDownLatch(1)
+        val releaseWork = CountDownLatch(1)
+        val cancelReturned = CountDownLatch(1)
+        val requestCancelled = AtomicBoolean(false)
+        val nativeCancelled = AtomicBoolean(false)
+        val outcome = AtomicReference<NativeCallResult<Boolean>>()
+        val lifecycle = lifecycle(
+            resetCancellation = { nativeCancelled.set(false) },
+            cancel = { nativeCancelled.set(true) },
+        )
+        val caller = Thread {
+            outcome.set(lifecycle.beginOperation(requestCancelled::get) {
+                workEntered.countDown()
+                check(releaseWork.await(5, TimeUnit.SECONDS))
+                nativeCancelled.get()
+            })
+        }
+        val canceller = Thread {
+            requestCancelled.set(true)
+            lifecycle.cancel()
+            cancelReturned.countDown()
+        }
+        try {
+            caller.start()
+            assertTrue(workEntered.await(5, TimeUnit.SECONDS))
+            canceller.start()
+            assertTrue(cancelReturned.await(5, TimeUnit.SECONDS))
+            assertTrue(nativeCancelled.get())
+            releaseWork.countDown()
+            caller.join(5_000)
+
+            assertFalse(caller.isAlive)
+            assertEquals(NativeCallResult.Completed(true), outcome.get())
+            assertEquals(NativeCallResult.Completed(false), lifecycle.beginOperation({ false }) { nativeCancelled.get() })
+        } finally {
+            releaseWork.countDown()
+            caller.join(5_000)
+            canceller.join(5_000)
+            lifecycle.close()
+        }
+    }
+
+    @Test
     fun cancelBetweenLoadAndSelfTestRemainsStickyUntilNextLoad() {
         val resets = AtomicInteger()
         val selfTests = AtomicInteger()

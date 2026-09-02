@@ -25,10 +25,11 @@ qualifying a resource-bounded model path. Preserve all quality/privacy gates;
 do not treat switching models as permission to weaken them. Model execution
 must be demand-driven, cancellable, and absent in sensitive/ineligible sessions.
 
-Current slice: `feature/smart-typing-03-pr05-strip-undo`, based on PR4
-`ffe8e3932449da9a7d2c2a8cf6f5554535c3e511`. PR4 implementation is complete with
-local JVM/build gates and API36 Binder evidence; API26/37 and physical Fold
-remain unqualified. PR2/3/5/6/7/8/9/10 remain required. No push, remote PR or
+Current slice: `feature/smart-typing-03-pr02-native-scoring`, based on the PR5
+strip commit `1e100db8e9dce81d3b0c5acc8a636298c8ebef41`. PR4 and the PR5
+strip/owned-boundary Undo foundation have local JVM/build gates and API36 Binder
+evidence. API26/37 and physical Fold are recorded separately; PR2/3/6/7/8/9/10
+and full-word autocorrection Undo remain required. No push, remote PR or
 publication is authorized by this resume.
 
 ### PR4 local evidence
@@ -50,7 +51,7 @@ publication is authorized by this resume.
 - First commit migrates double-space and Undo from KeyboardState into the typing owner. Only Rune-owned pending boundary/context may be transformed; unowned/unsupported text gets plain Space. The executor's legacy surrounding-text conversion/revert path is removed.
 - Ruling: preserve the existing double-space gesture's priority, but remove its ability to edit unowned editor text. This matches the 0.3 ownership/privacy contract; no additional editor reads are introduced.
 - Candidate strip is integrated after the migration commit: permanent three cells and keys container, current-word Original consumer, session/revision IDs and explicit Original choice without editor writes. Corrections/punctuation remain later consumers.
-- PR2 tokenizer patch prototype passed host stage cancellation, 632 exact original/new token-sequence comparisons, and independent review. It remains unapplied to production until the native runtime slice.
+- PR2 tokenizer patch prototype passed host stage cancellation, 632 exact original/new token-sequence comparisons, and independent review. At this PR5 checkpoint it remained unapplied; PR2 below integrates it.
 - Undo migration verification: fresh JVM 281/281 (275 app + 6 runtime), no failures/errors/skips; full required gates PASS (292 tasks, 51 executed); all 13 composing Binder scenarios PASS on API36 in 119.440 s, including the ineligible double-space fallback and zero surrounding reads for conversion/Undo. Independent review approved with no P1/P2; stale privacy comment corrected.
 - This migration is committed separately before strip integration. Autocorrection and mechanical-punctuation consumers are later slices; no placeholder edit subclasses or Undo stack are introduced.
 - Migration commit: `e22fdbd4fed9687baa00ee99996ff1e3194f584b`; fresh post-commit JVM 281/281 PASS.
@@ -58,6 +59,24 @@ publication is authorized by this resume.
 - Ruling: retain the failed initial log and distinguish combined unique-test coverage from a fresh complete rerun. API36 remains diagnostic and does not close API26/API37/Fold.
 - Official API37 ARM64 16 KiB image installed and a dedicated AVD created; API26 download continues. New local device evidence will be recorded separately.
 - Acceptance checkpoint: `docs/acceptance/2026-09-02-smart-typing-0.3-pr05.md`. Full-word autocorrection Undo still needs its later consumer and end-to-end test; only current owned-boundary Undo is qualified here.
+- Strip commit: `1e100db8e9dce81d3b0c5acc8a636298c8ebef41`; mandatory post-commit fresh JVM rerun PASS, 292/292, zero failures/errors/skips (44 tasks executed). Working tree was clean before starting PR2.
+
+### PR2 integration in progress
+
+- The independently reviewed bounded scoring API/JNI proposal is applied. It shares the evaluator C++ core; serial teacher forcing/KV clearing, strict byte-array UTF-8, LCP divergent scoring and whole-set zero-span refusal are preserved. Four error codes append to the existing stable values.
+- CMake prepares a private archive copy of the clean pinned source and applies tokenizer patch SHA `0a043ce8a57b8534ef2f409443d2dd6ecf00042bd9c2b661b31d94618eb4dc95`. Upstream gitlink remains `36b10154383b60eb15baac2c7a40d2a5f784faa7`.
+- Host prototype checks (15 JVM contracts, one deterministic core harness, NDK syntax and copied-source preparation) passed before integration. Android linking, real-model numerical tests, ordinary-CI synthetic tokenizer cancellation and JNI instrumentation are still being qualified.
+- Ruling: qualify reusable scoring infrastructure under the resumed user instruction without changing the frozen PR1 failed model-quality result or enabling model ranking in the IME. The caller must still enforce stale request/session guards; no hard cancellation deadline or battery claim follows from host tests.
+
+- Integrated fresh JVM run: 305/305 PASS (286 app + 19 runtime), zero failures/errors/skips. Required full build/lint/privacy/dependency/native gates PASS; final instrumentation-only additions also compile and lint successfully.
+- Promoted host harness: ordinary synthetic 4/4 PASS; exact-model 7/7 PASS, including 15 scalar comparisons with zero sum delta and 632 complete legacy/patched token sequences. ZIP extraction regressions 4/4 PASS; the actual nested GGUF passed exact size/digest extraction.
+- Runtime cancellation admission now accepts a per-request predicate checked after native cancellation reset under the same admission monitor. Independent review and a reset-order mutant regression establish the pre-admission race fix; callers set their request token before runtime.cancel().
+- API26 final app run 57/57 PASS (390.754 s), ordinary runtime 6/6 PASS (0.162 s), exact-model runtime 1/1 PASS (54.806 s). The last figure includes hashing, loads and nine successful requests/27 candidates; it is not a keyboard latency measurement. Both pre-cancelled admissions and the concurrent cancellation returned CANCELLED; a subsequent request succeeded.
+- Preserve earlier fixture failures: API26 double-tap now resolves the key bounds once and asserts a real <=400 ms injected interval; API37 Original accessibility lookup waits for observed editor text and then the exact node. Assertions and product timeouts were not weakened. Both fixture fixes independently reviewed. Final API37 app run 57/57 PASS (476.425 s); ordinary runtime 6/6 PASS (0.126 s); exact-model runtime 1/1 PASS (36.626 s), nine requests/27 candidates, two pre-cancelled admissions and one concurrent CANCELLED, followed by success.
+- Ruling: a mathematically proven exact top-seven stop is permitted by the original-plus-seven contract; full distance-neighborhood enumeration is not required. Any index using that stop must match the full offline oracle's ranked seven with unchanged state/verification limits. This is a feasibility experiment, not a chosen production index or quality pass.
+
+- Final full prescribed gates PASS after all PR2 test additions (292 tasks, 19 executed); `git diff --check` PASS. Local API26/API37 results cover this slice, not unimplemented PR3/6/7/8/9/10 or the final release matrix. Remote CI and physical Fold remain unrun.
+- Acceptance: `docs/acceptance/2026-09-02-smart-typing-0.3-pr02.md`.
 
 ### Historical PR1 result
 

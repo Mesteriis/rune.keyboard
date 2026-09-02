@@ -1,0 +1,2 @@
+# A unified diff requires a single-space prefix on blank context lines.
+tokenizer-abort.patch whitespace=-blank-at-eol

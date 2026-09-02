@@ -1,0 +1,50 @@
+name: qualify-exact-model-scoring
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  exact-model-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install pinned CMake
+        run: |
+          sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" "cmake;3.31.6" >/dev/null
+      - name: Fetch the fixed qualification artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p build/exact-model-input
+          gh api repos/Mesteriis/rune.keyboard/actions/artifacts/9800688354/zip > build/exact-model-input/artifact.zip
+          python3 tools/test-native-scoring/extract_model.py build/exact-model-input/artifact.zip build/exact-model-input/model.gguf
+      - name: Verify exact digest, scalar scores and tokenizer contracts
+        run: |
+          sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          cmake_bin="$sdk_root/cmake/3.31.6/bin/cmake"
+          "$cmake_bin" -S tools/test-native-scoring -B build/native-scoring-exact -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM="$sdk_root/cmake/3.31.6/bin/ninja" \
+            -DRUNE_SCORING_MODEL="$GITHUB_WORKSPACE/build/exact-model-input/model.gguf"
+          "$cmake_bin" --build build/native-scoring-exact --parallel 2
+          "$sdk_root/cmake/3.31.6/bin/ctest" --test-dir build/native-scoring-exact --output-on-failure -V
+      - name: Upload content-free contract evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: exact-model-scoring-contracts
+          if-no-files-found: warn
+          path: |
+            build/native-scoring-exact/Testing/Temporary/LastTest.log
+            build/native-scoring-exact/rune-llama-provenance.json

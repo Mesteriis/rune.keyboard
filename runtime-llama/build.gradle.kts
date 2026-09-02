@@ -10,6 +10,8 @@ android {
     defaultConfig {
         minSdk = 26
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments["notAnnotation"] =
+            "io.github.mesteriis.rune.runtime.llama.VerifiedModelOnly"
         ndk {
             abiFilters += setOf("arm64-v8a", "x86_64")
         }

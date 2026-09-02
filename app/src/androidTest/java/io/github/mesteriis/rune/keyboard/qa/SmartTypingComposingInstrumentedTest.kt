@@ -5,6 +5,8 @@ import android.view.ViewConfiguration
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiObject2
+import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -18,9 +20,10 @@ class SmartTypingComposingInstrumentedTest : ImeTestBase() {
     fun currentOriginalStripTapDoesNotWriteEditorAndUpdatesWithTheWord() {
         driver.launchComposingQa()
         type("a", "b")
+        driver.awaitFieldText(FIELD, "ab")
         val resources = InstrumentationRegistry.getInstrumentation().targetContext
+        val original = awaitOriginal("ab")
         val before = stats()
-        val original = checkNotNull(driver.device.findObject(By.desc(resources.getString(R.string.candidate_original, "ab"))))
         assertTrue(original.isSelected)
         original.click()
         driver.device.waitForIdle()
@@ -36,9 +39,10 @@ class SmartTypingComposingInstrumentedTest : ImeTestBase() {
     fun changingToSensitiveEditorRemovesThePreviousOriginalFromTheStrip() {
         driver.launchComposingQa()
         type("a", "b")
+        driver.awaitFieldText(FIELD, "ab")
         val resources = InstrumentationRegistry.getInstrumentation().targetContext
         val description = resources.getString(R.string.candidate_original, "ab")
-        assertTrue(driver.device.hasObject(By.desc(description)))
+        awaitOriginal("ab")
         driver.launchComposingQa("private")
         assertTrue(!driver.device.hasObject(By.desc(description)))
         type("c")
@@ -246,13 +250,21 @@ class SmartTypingComposingInstrumentedTest : ImeTestBase() {
     private fun doubleTapSpace() {
         val description = InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.key_space)
         val key = checkNotNull(driver.device.findObject(By.desc(description)))
-        // Dispatch two physical taps without UiAutomator's idle wait between them: the product
-        // gesture detector must see both releases within its double-tap window.
-        repeat(2) {
-            val touch = driver.touchDown(key)
-            driver.releaseTouch(touch)
-        }
+        val releaseIntervalMillis = driver.doubleTap(key)
+        assertTrue(
+            "Double-space gesture injection stalled: release interval ${releaseIntervalMillis}ms " +
+                "exceeds ${DOUBLE_SPACE_TAP_WINDOW_MILLIS}ms",
+            releaseIntervalMillis in 0..DOUBLE_SPACE_TAP_WINDOW_MILLIS,
+        )
         driver.device.waitForIdle()
+    }
+
+    private fun awaitOriginal(word: String): UiObject2 {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val description = context.getString(R.string.candidate_original, word)
+        return checkNotNull(driver.device.wait(Until.findObject(By.desc(description)), 5_000)) {
+            "Original candidate did not appear after acknowledged typing"
+        }
     }
 
     private fun type(vararg keys: String) = keys.forEach { driver.tapKey(it) }
@@ -283,5 +295,7 @@ class SmartTypingComposingInstrumentedTest : ImeTestBase() {
 
     private companion object {
         const val FIELD = "qa_composing_text"
+        // Matches the production SpaceKeyView gesture window; never widen it for slow test hosts.
+        const val DOUBLE_SPACE_TAP_WINDOW_MILLIS = 400L
     }
 }

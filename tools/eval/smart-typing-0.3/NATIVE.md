@@ -63,3 +63,18 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+## Runtime integration contract
+
+The runtime compiles this same `scoring.cpp` with `RUNE_TOKENIZER_ABORT=1` against
+a clean-pin archive copy plus the reviewed additive tokenizer patch. The evaluator
+can still compile the default branch against the pristine submodule; the flag is
+private to the runtime target. No second scoring implementation is maintained.
+
+A zero divergent-token span rejects the entire candidate set as `SCORING_FAILED`
+(including one candidate, identical full token sequences, or one sequence ending
+at the LCP). `INSUFFICIENT_CONTEXT` also maps to `SCORING_FAILED` in the runtime.
+No partial scores or ranking are returned. This changes the evaluator's previous
+zero-score behavior and requires rerunning its contract/model regression suite in
+a separate output tree before PR2 integration; existing quality results are not
+requalified by the infrastructure change.

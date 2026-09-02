@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "llama.h"
+#include "candidate_score_wire.h"
 
 namespace {
 
@@ -26,6 +27,11 @@ enum class ErrorCode : int64_t {
     InvalidUtf8 = 8,
     Cancelled = 9,
     InternalError = 10,
+    NativeLibraryUnavailable = 11,
+    InvalidRequest = 12,
+    ContextTooLong = 13,
+    TooManyCandidates = 14,
+    ScoringFailed = 15,
 };
 
 struct ModelDeleter {
@@ -119,6 +125,72 @@ jlongArray result(JNIEnv * env, ErrorCode code, int64_t first = 0, int64_t secon
     return array;
 }
 
+// JNI references never outlive one call, including C++ exception paths.
+struct UtfChars {
+    JNIEnv * env;
+    jstring value;
+    const char * chars;
+    ~UtfChars() { if (chars) env->ReleaseStringUTFChars(value, chars); }
+};
+struct LocalRef {
+    JNIEnv * env;
+    jobject value;
+    ~LocalRef() { if (value) env->DeleteLocalRef(value); }
+};
+
+// Catch handlers must not allocate a C++ vector while reporting allocation failure.
+jlongArray scoring_failure(JNIEnv * env, int64_t error) noexcept {
+    if (env->ExceptionCheck()) return nullptr;
+    const jlong values[] = {1, error, 0, 0};
+    auto array = env->NewLongArray(4);
+    if (array) env->SetLongArrayRegion(array, 0, 4, values);
+    return array;
+}
+
+jlongArray scoring_result(JNIEnv * env, const std::vector<int64_t> & wire) {
+    if (env->ExceptionCheck()) return nullptr;
+    if (wire.size() > 28) return nullptr;
+    jlong values[28];
+    std::copy(wire.begin(), wire.end(), values);
+    auto array = env->NewLongArray(static_cast<jsize>(wire.size()));
+    if (array) env->SetLongArrayRegion(array, 0, static_cast<jsize>(wire.size()), values);
+    return array;
+}
+
+std::string bounded_bytes(JNIEnv * env, jbyteArray array, jsize limit) {
+    if (!array) throw rune::scoring::Error::InvalidRequest;
+    const auto size = env->GetArrayLength(array);
+    if (env->ExceptionCheck()) throw rune::scoring::Error::ScoringFailed;
+    if (size > limit) throw rune::scoring::Error::ContextTooLong;
+    std::string text(static_cast<size_t>(size), '\0');
+    if (size) env->GetByteArrayRegion(array, 0, size, reinterpret_cast<jbyte *>(text.data()));
+    if (env->ExceptionCheck()) throw rune::scoring::Error::ScoringFailed;
+    return text;
+}
+
+rune::scoring::Request scoring_request(JNIEnv * env, jbyteArray prefix, jintArray ids,
+                                     jobjectArray continuations) {
+    if (!ids || !continuations) throw rune::scoring::Error::InvalidRequest;
+    const auto count = env->GetArrayLength(ids);
+    if (env->ExceptionCheck()) throw rune::scoring::Error::ScoringFailed;
+    if (count > 8) throw rune::scoring::Error::TooManyCandidates;
+    if (count < 1 || env->GetArrayLength(continuations) != count) throw rune::scoring::Error::InvalidRequest;
+    if (env->ExceptionCheck()) throw rune::scoring::Error::ScoringFailed;
+    jint identifiers[8];
+    env->GetIntArrayRegion(ids, 0, count, identifiers);
+    if (env->ExceptionCheck()) throw rune::scoring::Error::ScoringFailed;
+    rune::scoring::Request request{bounded_bytes(env, prefix, 4096), {}};
+    request.candidates.reserve(static_cast<size_t>(count));
+    for (jsize i = 0; i < count; ++i) {
+        LocalRef item{env, env->GetObjectArrayElement(continuations, i)};
+        if (env->ExceptionCheck()) throw rune::scoring::Error::ScoringFailed;
+        request.candidates.push_back({identifiers[i], bounded_bytes(env, static_cast<jbyteArray>(item.value), 512)});
+    }
+    const auto error = rune::scoring::validate_request(request);
+    if (error != rune::scoring::Error::None) throw error;
+    return request;
+}
+
 Runtime * from_handle(jlong handle) {
     return reinterpret_cast<Runtime *>(static_cast<intptr_t>(handle));
 }
@@ -132,17 +204,16 @@ jlong native_create(JNIEnv *, jobject) {
     }
 }
 
-void native_destroy(JNIEnv *, jobject, jlong handle) {
+void native_destroy(JNIEnv *, jobject, jlong handle) try {
     delete from_handle(handle);
-}
+} catch (...) {  }
 
-jlongArray native_load(JNIEnv * env, jobject, jlong handle, jstring path) {
+jlongArray native_load(JNIEnv * env, jobject, jlong handle, jstring path) try {
     Runtime * runtime = from_handle(handle);
     if (runtime == nullptr || path == nullptr) return result(env, ErrorCode::InternalError);
-    const char * raw_path = env->GetStringUTFChars(path, nullptr);
-    if (raw_path == nullptr) return result(env, ErrorCode::InternalError);
-    std::string local_path(raw_path);
-    env->ReleaseStringUTFChars(path, raw_path);
+    UtfChars raw_path{env, path, env->GetStringUTFChars(path, nullptr)};
+    if (!raw_path.chars) return nullptr;
+    std::string local_path(raw_path.chars);
     runtime->model.reset();
     if (runtime->cancelled.load(std::memory_order_relaxed)) return result(env, ErrorCode::Cancelled);
     llama_model_params params = llama_model_default_params();
@@ -162,9 +233,9 @@ jlongArray native_load(JNIEnv * env, jobject, jlong handle, jstring path) {
     }
     if (!runtime->model) return result(env, ErrorCode::ModelLoadFailed);
     return result(env, ErrorCode::Ok, milliseconds_since(start));
-}
+} catch (...) { return result(env, ErrorCode::InternalError); }
 
-jlongArray native_self_test(JNIEnv * env, jobject, jlong handle) {
+jlongArray native_self_test(JNIEnv * env, jobject, jlong handle) try {
     Runtime * runtime = from_handle(handle);
     if (runtime == nullptr) return result(env, ErrorCode::InternalError);
     if (!runtime->model) return result(env, ErrorCode::NotLoaded);
@@ -227,27 +298,50 @@ jlongArray native_self_test(JNIEnv * env, jobject, jlong handle) {
     if (output.empty()) return result(env, ErrorCode::EmptyOutput);
     if (!valid_utf8(output)) return result(env, ErrorCode::InvalidUtf8);
     return result(env, ErrorCode::Ok, prompt_millis, first_token_millis);
+} catch (...) { return result(env, ErrorCode::InternalError); }
+
+// Admission and model lifetime stay owned by NativeHandleLifecycle's serial
+// executor. Cancellation runs directly on its monitor and never waits on score.
+jlongArray native_score_candidates(JNIEnv * env, jobject, jlong handle, jbyteArray prefix,
+                                   jintArray ids, jobjectArray continuations) try {
+    Runtime * runtime = from_handle(handle);
+    if (!runtime) return scoring_result(env, rune::scoring::failure_wire(10));
+    auto request = scoring_request(env, prefix, ids, continuations);
+    if (runtime->cancelled.load(std::memory_order_relaxed))
+        return scoring_result(env, rune::scoring::failure_wire(9));
+    if (!runtime->model) return scoring_result(env, rune::scoring::failure_wire(3));
+    const auto start = std::chrono::steady_clock::now();
+    rune::scoring::Scorer scorer(runtime->model.get(), runtime->cancelled);
+    const auto score = scorer.score(request);
+    if (runtime->cancelled.load(std::memory_order_relaxed))
+        return scoring_result(env, rune::scoring::failure_wire(9, milliseconds_since(start)));
+    return scoring_result(env, rune::scoring::score_wire(score, request, milliseconds_since(start)));
+} catch (rune::scoring::Error error) {
+    return scoring_failure(env, rune::scoring::runtime_error(error));
+} catch (...) {
+    return scoring_failure(env, 15);
 }
 
-void native_cancel(JNIEnv *, jobject, jlong handle) {
+void native_cancel(JNIEnv *, jobject, jlong handle) try {
     if (Runtime * runtime = from_handle(handle)) runtime->cancelled.store(true, std::memory_order_relaxed);
-}
+} catch (...) {  }
 
-void native_reset_cancellation(JNIEnv *, jobject, jlong handle) {
+void native_reset_cancellation(JNIEnv *, jobject, jlong handle) try {
     if (Runtime * runtime = from_handle(handle)) runtime->cancelled.store(false, std::memory_order_relaxed);
-}
+} catch (...) {  }
 
-void native_unload(JNIEnv *, jobject, jlong handle) {
+void native_unload(JNIEnv *, jobject, jlong handle) try {
     if (Runtime * runtime = from_handle(handle)) {
         runtime->cancelled.store(true, std::memory_order_relaxed);
         runtime->model.reset();
     }
-}
+} catch (...) {  }
 
 JNINativeMethod methods[] = {
     {const_cast<char *>("nativeCreate"), const_cast<char *>("()J"), reinterpret_cast<void *>(native_create)},
     {const_cast<char *>("nativeDestroy"), const_cast<char *>("(J)V"), reinterpret_cast<void *>(native_destroy)},
     {const_cast<char *>("nativeLoad"), const_cast<char *>("(JLjava/lang/String;)[J"), reinterpret_cast<void *>(native_load)},
+    {const_cast<char *>("nativeScoreCandidates"), const_cast<char *>("(J[B[I[[B)[J"), reinterpret_cast<void *>(native_score_candidates)},
     {const_cast<char *>("nativeSelfTest"), const_cast<char *>("(J)[J"), reinterpret_cast<void *>(native_self_test)},
     {const_cast<char *>("nativeResetCancellation"), const_cast<char *>("(J)V"), reinterpret_cast<void *>(native_reset_cancellation)},
     {const_cast<char *>("nativeCancel"), const_cast<char *>("(J)V"), reinterpret_cast<void *>(native_cancel)},
@@ -256,11 +350,12 @@ JNINativeMethod methods[] = {
 
 }  // namespace
 
-JNIEXPORT jint JNI_OnLoad(JavaVM * vm, void *) {
+JNIEXPORT jint JNI_OnLoad(JavaVM * vm, void *) try {
     JNIEnv * env = nullptr;
     if (vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6) != JNI_OK) return JNI_ERR;
     jclass runtime_class = env->FindClass("io/github/mesteriis/rune/runtime/llama/LlamaLocalModelRuntime");
     if (runtime_class == nullptr) return JNI_ERR;
+    LocalRef runtime_ref{env, runtime_class};
     if (env->RegisterNatives(runtime_class, methods, sizeof(methods) / sizeof(methods[0])) != JNI_OK) return JNI_ERR;
     return JNI_VERSION_1_6;
-}
+} catch (...) { return JNI_ERR; }
