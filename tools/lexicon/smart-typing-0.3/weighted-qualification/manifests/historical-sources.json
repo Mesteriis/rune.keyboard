@@ -1,0 +1,16 @@
+{
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt": "be25c97f4f9ab356adcace269f91e9ef80171d1eadf1cd5e16dd5b07c4b65381",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt": "8f06699d2a658c7c5f6d9dc2473f8e51afd284816cdd1717254412b7bf2e460c",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "602eda9c06e101b4b2f7746c867cdb71e4dc2f40de67bf2cf1f489bfd90f764f",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt": "665069523dc464e8351291aa4c50a24a912e201ed25af6babbbe7d6f09ce5782",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt": "d0dae2e1d58eb44894cbdface3f4a91f8f5c1022400ec68f9e7e219cc14adc3c",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa",
+  "build/smart-typing-0.3/weighted-candidate-qualification/src/QualificationMain.kt": "96321ab58ec8c4f1d0b7f1faa3e4066e28afb22f0062ac42642784c38ea363d6"
+}

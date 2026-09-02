@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "archive_sha256": "dfbd2f1dfdaf84155ab29c12efbaa1d54b81861944063c57842e1825eef87d82",
+  "encoded_sha256": "6323330a5ecef18f89194c01645019d2fe73685670909e75f13343a2dea320f4",
+  "uncompressed_bytes": 17228152,
+  "text_artifacts": 41,
+  "omitted_binaries": [
+    {
+      "path": "bin/qualification.jar",
+      "bytes": 114263,
+      "sha256": "08aabaf3202cd245b14952b69a365c6c52db82a72f927488b780b3ef3978bec5"
+    },
+    {
+      "path": "bin/unit_oracle",
+      "bytes": 44680,
+      "sha256": "e56a5507e10ab0eb6dd76ca8e18237f479f2015b8e205c28ec724d6e9d6a92f2"
+    }
+  ],
+  "original_manifest_sha256": "45c2c6c91e69ccb78c042318d481c04b1a16589f0d41ae3f06057fc325648170"
+}

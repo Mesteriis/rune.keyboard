@@ -1,0 +1,11 @@
+# Data provenance and redistribution boundaries
+
+The fixed development inputs, source word references, oracle neighborhoods and weighted expected records are derived data from the existing pinned lexicon source pipeline. Packaging them as test evidence does not replace any upstream license with the application's code license. The exact source lock and frozen output manifest are retained in `manifests/`; all 14 original notice/license files are copied unchanged in `notices/` and checked against the frozen output manifest.
+
+- Russian wordforms: the separate permissive Alexander I. Lebedev component; retain `RU-Lebedev.txt` and its full conditions/attribution. The finite source transformation and provenance are in the parent `tools/lexicon/smart-typing-0.3` pipeline.
+- Spanish wordforms: the selected separate MPL 1.1 option, with `ES-LICENSE.md`, `ES-README.txt` and `ES-MPL-1.1.txt`. Evidence is derived from the already documented finite transformed wordforms, not a new vocabulary reduction or relicensing.
+- English wordforms: SCOWL's complete multi-source terms in `SCOWL-Copyright.txt`, including constituent notices. This is not described as a uniform MIT dictionary.
+- Frequency ranks and derived frequency fields: Hermit Dave/FrequencyWords/OpenSubtitles provenance under CC-BY-SA 4.0 content terms; preserve `FrequencyWords-README.md` and `CC-BY-SA-4.0.txt`. The separate FrequencyWords code MIT notice does not replace content licensing. Original frequency source data and transformation remain separate from orthographic assets; this qualification's rank-bearing expected records retain the applicable frequency-data provenance.
+- Hunspell notices remain host-tool provenance only. No Hunspell executable/library, model, APK or generated lexicon binary is redistributed by this package. The optional C++ full-list distance oracle is the separately authored qualification source, not the Hunspell runtime.
+
+The immutable historical report describes its original paths and evidence boundaries. Active portable commands use only this package, a matching repository source checkout and explicitly selected pinned source/index/rank caches. No source archive download, source expansion, private user text, personalized learning, quality holdout or calibration data is part of this promotion.

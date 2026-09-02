@@ -165,6 +165,7 @@ matrices remain required. No push, remote PR or publication is authorized.
 - Actual Binder LiveCandidates scenarios PASS: API26 3/3 in 50.620 s, API37 3/3 in 54.061 s, physical USB Fold API36 3/3 in 31.838 s. They verify correction/Original tap transactions, plain boundary behavior and sensitive-field cleanup with no editor readback. Existing Original regression additionally PASS on API26 (7.447 s) and API37 (11.255 s). These are scoped functional checks, not the complete release/device/performance matrix.
 - Fold was temporarily absent before its first UI attempt; no wake/install/test occurred during that failed connection check. The user reconnected it, USB readiness was confirmed, current app/test APKs installed with -r and the three UI tests passed. Data were not cleared; no failure screenshots/XML were captured.
 - Weighted qualification package independently approved and promoted (proposal `c990deb304196462d0794318c39ce0915d7ef84572d5d3046830395254fa2811`). Root historical verification PASS (41 archived texts / 775 requests / FRESH_EXECUTION 0), root documented contract invocation PASS 19/19. An initial generic unittest invocation omitted its required RUNE_QUAL_TEST_DIR and ran zero tests; that failed setup log is retained, then the documented invocation passed. No new production retrieval or holdout run is inferred.
+- Live candidate integration committed as `e135305`; mandatory fresh post-commit JVM PASS 453/453, zero failures/errors/skips, 46 tasks executed (`pr06-live-candidates-jvm-postcommit-e135305.log`).
 
 ### Historical PR1 result
 

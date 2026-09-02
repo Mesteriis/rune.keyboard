@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "historical_manifest_sha256": "45c2c6c91e69ccb78c042318d481c04b1a16589f0d41ae3f06057fc325648170",
+  "historical_text_count": 41,
+  "binary_identities_preserved_not_distributed": [
+    "bin/qualification.jar",
+    "bin/unit_oracle"
+  ],
+  "unchanged_active_sources": [
+    "reference.py",
+    "QualificationMain.kt",
+    "unit_oracle.cpp"
+  ],
+  "adapted_sources": {
+    "analyze.py": "Build path is a function parameter; analyzer body AST preserved after BASE rename.",
+    "derive_oracle.py": "Explicit build/source/manifest/C++ inputs; archived missing scans reused unless explicitly rescan; weighted expected construction AST preserved."
+  },
+  "new_interfaces": [
+    "qualify.py",
+    "archive.py",
+    "test_contracts.py"
+  ],
+  "no_new_production_retrieval": true
+}
