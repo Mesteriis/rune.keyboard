@@ -1,0 +1,30 @@
+{
+  "scope": "Actual Binder mechanical punctuation and held-key identity; no model or performance measurement",
+  "oldServiceControl": {
+    "api": 37,
+    "tests": 1,
+    "failures": 1,
+    "seconds": 12.887,
+    "failure": "Key instance changed at index 0 after ACTION_UP"
+  },
+  "final": {
+    "api26": {
+      "tests": 3,
+      "failures": 0,
+      "seconds": 34.884
+    },
+    "api37": {
+      "tests": 3,
+      "failures": 0,
+      "seconds": 39.874
+    }
+  },
+  "buildGates": {
+    "status": "PASS",
+    "tasks": 267,
+    "executed": 46
+  },
+  "physicalFold": "BLOCKED - no USB device",
+  "remoteCI": "UNRUN",
+  "api27api28": "UNRUN"
+}

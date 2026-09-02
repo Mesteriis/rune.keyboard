@@ -1,0 +1,44 @@
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest:
+INSTRUMENTATION_STATUS: test=cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Key instance changed at index 0
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest.assertSameKeys(MechanicalPunctuationInstrumentedTest.kt:125)
+	at io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest.cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo(MechanicalPunctuationInstrumentedTest.kt:74)
+
+INSTRUMENTATION_STATUS: stream=
+Error in cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo(io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest):
+java.lang.AssertionError: Key instance changed at index 0
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest.assertSameKeys(MechanicalPunctuationInstrumentedTest.kt:125)
+	at io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest.cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo(MechanicalPunctuationInstrumentedTest.kt:74)
+
+INSTRUMENTATION_STATUS: test=cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 12.887
+There was 1 failure:
+1) cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo(io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest)
+java.lang.AssertionError: Key instance changed at index 0
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest.assertSameKeys(MechanicalPunctuationInstrumentedTest.kt:125)
+	at io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest.cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo(MechanicalPunctuationInstrumentedTest.kt:74)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

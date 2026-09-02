@@ -367,8 +367,11 @@ class RuneInputMethodService : InputMethodService() {
             }
             if (settings.affectsKeyboardView(previous)) {
                 recreateInputView()
-            } else {
+            } else if (settings.enabledLanguages != previous.enabledLanguages) {
                 renderKeyboard()
+            } else {
+                // Nonvisual settings update the cached action policy, not existing key views.
+                renderCandidates()
             }
         }
     }

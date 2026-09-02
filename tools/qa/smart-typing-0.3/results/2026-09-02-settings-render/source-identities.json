@@ -1,0 +1,12 @@
+{
+  "baseline": "83837fd3e4a6b6fc8da5d5bc5eeae63b09de1ab7",
+  "oldServiceSha256": "85f830eca2e3b9ece9f969250277a1dce6bbeaad3bead4c40aae5be8eaf738d4",
+  "sources": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt": "d05901f37c5a128255ac1914f6f7f430c368a65f847feab46cd8a4a75bcb3fd5",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/MechanicalPunctuationInstrumentedTest.kt": "696a57e6cbf50f1d3232695a8690cfaaad5189a83d736da82c8b62aa9ffa60e8"
+  },
+  "builtApks": {
+    "app/build/outputs/apk/debug/app-debug.apk": "ae418f38d9b6f206b5e18cfe2504ea063cde350af0cbdd8f7fc5ba1406b32b1d",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "24dec453e9657c804b37a140bde2787512968ca9bbdb338d89bdc1089118dd00"
+  }
+}

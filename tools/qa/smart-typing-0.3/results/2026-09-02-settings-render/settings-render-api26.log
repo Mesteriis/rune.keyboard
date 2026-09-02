@@ -1,0 +1,51 @@
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest:
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=pairOfDotsWaitsForWhitespaceAndNewWordThenUndoesCapsTogether
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=pairOfDotsWaitsForWhitespaceAndNewWordThenUndoesCapsTogether
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=commaPopupPunctuationCapsAndImmediateUndoNeverReplayOldWord
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=commaPopupPunctuationCapsAndImmediateUndoNeverReplayOldWord
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 34.884
+
+OK (3 tests)
+
+
+INSTRUMENTATION_CODE: -1
