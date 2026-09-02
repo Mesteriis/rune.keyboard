@@ -1,5 +1,6 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.session
 
+import io.github.mesteriis.rune.keyboard.ime.editor.DoubleSpacePeriod
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
 import java.util.ArrayDeque
 
@@ -40,6 +41,7 @@ class TypingSessionController internal constructor(
     }
 
     fun typeText(text: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
+        if (text.isNotEmpty()) discardUndo()
         if (!state.enabled || awaitingEditorSelection || text.isEmpty()) return TypingTextResult.BYPASS
         if (text == " ") {
             if (!finishComposition(execute)) return TypingTextResult.REJECTED
@@ -71,6 +73,22 @@ class TypingSessionController internal constructor(
 
     fun deletePrevious(execute: (TypingEdit) -> Boolean): TypingTextResult {
         if (!state.enabled || awaitingEditorSelection) return TypingTextResult.BYPASS
+        state.lastAutoEdit?.let { edit ->
+            discardUndo()
+            if (edit.sessionId == state.sessionId && edit.revision == state.revision &&
+                state.composing?.text == edit.applied && composingStart >= 0 &&
+                selectionStart == selectionEnd &&
+                selectionStart.toLong() == composingStart.toLong() + edit.applied.length
+            ) {
+                val caret = composingStart + edit.original.length
+                val expected = EditorSelection(caret, caret, composingStart, caret)
+                return applyEdit(TypingEdit.SetComposingText(edit.original), expected, execute) {
+                    state = state.copy(composing = edit.restoreComposition)
+                    context?.restore(edit.contextBefore)
+                    publish()
+                }
+            }
+        }
         val previous = state.composing ?: run {
             awaitEditorSelection(execute)
             return TypingTextResult.BYPASS
@@ -99,6 +117,7 @@ class TypingSessionController internal constructor(
 
     /** Finishes only Rune's owned span; invalidates revisions even when already idle. */
     fun finishComposition(execute: (TypingEdit) -> Boolean): Boolean {
+        discardUndo()
         plainWordUntilBoundary = false
         state = state.copy(revision = state.revision + 1)
         if (state.composing == null) return true
@@ -126,28 +145,41 @@ class TypingSessionController internal constructor(
         return finished
     }
 
-    /**
-     * Temporary bridge to the existing double-space command. At a known collapsed caret both
-     * its period conversion and guarded space fallback advance by exactly one UTF-16 unit.
-     * Text context is discarded; the existing service continues to own the undo operation.
-     */
-    fun legacyDoubleSpace(
-        executeTypingEdit: (TypingEdit) -> Boolean,
-        executeBoundary: () -> Boolean,
-    ): TypingTextResult {
-        if (!state.enabled) return TypingTextResult.BYPASS
-        if (awaitingEditorSelection || selectionStart < 0 || selectionStart != selectionEnd ||
-            selectionStart == Int.MAX_VALUE
-        ) {
-            return if (awaitEditorSelection(executeTypingEdit)) {
-                TypingTextResult.BYPASS
-            } else {
-                TypingTextResult.REJECTED
-            }
-        }
-        if (!invalidate(executeTypingEdit)) return TypingTextResult.REJECTED
+    /** Converts only the pending space and preceding suffix accepted from Rune commands. */
+    fun doubleSpace(executeTypingEdit: (TypingEdit) -> Boolean): TypingTextResult {
+        discardUndo()
+        val previous = state.composing
+        val before = context?.text ?: return TypingTextResult.BYPASS
+        if (!state.enabled || awaitingEditorSelection || previous?.leadingBoundary != " " ||
+            previous.typedWord.isNotEmpty() || composingStart < 0 ||
+            selectionStart != selectionEnd || selectionStart == Int.MAX_VALUE ||
+            selectionStart.toLong() != composingStart.toLong() + previous.text.length ||
+            !DoubleSpacePeriod.canConvert(before)
+        ) return TypingTextResult.BYPASS
+
+        val next = ComposingSegment(leadingBoundary = ". ")
         val caret = selectionStart + 1
-        return acknowledgeEdit(EditorSelection(caret, caret, -1, -1), executeBoundary)
+        val expected = EditorSelection(caret, caret, composingStart, caret)
+        return applyEdit(TypingEdit.SetComposingText(next.text), expected, executeTypingEdit) {
+            check(context?.replaceSuffix(previous.text, next.text) == true)
+            state = state.copy(
+                composing = next,
+                lastAutoEdit = UndoableTextEdit(
+                    original = previous.text,
+                    applied = next.text,
+                    sessionId = state.sessionId,
+                    revision = state.revision,
+                    restoreComposition = previous,
+                    contextBefore = before,
+                ),
+            )
+            publish()
+        }
+    }
+
+    /** Settings and non-text boundaries can close Undo without making an editor call. */
+    fun discardUndo() {
+        if (state.lastAutoEdit != null) state = state.copy(lastAutoEdit = null)
     }
 
     /** Returns true when the callback cannot be attributed to a recent Rune edit. */
@@ -183,7 +215,7 @@ class TypingSessionController internal constructor(
         lastAcknowledgedSelection = null
         awaitingEditorSelection = false
         plainWordUntilBoundary = false
-        state = state.copy(composing = null, revision = state.revision + 1)
+        state = state.copy(composing = null, lastAutoEdit = null, revision = state.revision + 1)
         composingStart = -1
         selectionStart = newStart
         selectionEnd = newEnd
@@ -294,6 +326,7 @@ class TypingSessionController internal constructor(
         composingStart = -1
         state = state.copy(
             composing = null,
+            lastAutoEdit = null,
             contextText = "",
             enabled = false,
             revision = state.revision + 1,

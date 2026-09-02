@@ -138,10 +138,9 @@ class RuneInputMethodService : InputMethodService() {
             candidatesEnd,
         )
         hasSelection = newSelStart >= 0 && newSelEnd >= 0 && newSelStart != newSelEnd
-        if (typingSession.updateSelection(
-                newSelStart, newSelEnd, candidatesStart, candidatesEnd, ::executeTypingEdit,
-            )
-        ) state = state.clearDoubleSpaceUndo()
+        typingSession.updateSelection(
+            newSelStart, newSelEnd, candidatesStart, candidatesEnd, ::executeTypingEdit,
+        )
         refreshAutomaticCapitalization()
     }
 
@@ -222,14 +221,12 @@ class RuneInputMethodService : InputMethodService() {
         val result = when (command) {
             is EditorCommand.CommitText -> typingSession.typeText(command.value, ::executeTypingEdit)
             EditorCommand.DeletePreviousCodePoint -> typingSession.deletePrevious(::executeTypingEdit)
-            EditorCommand.ConvertPrecedingSpaceToPeriod -> typingSession.legacyDoubleSpace(::executeTypingEdit) {
-                executeCommand(command) == CommandOutcome.DELIVERED
-            }
-            EditorCommand.RevertDoubleSpacePeriod,
-            -> {
-                // PR5 moves this existing gesture/Undo into the typing-owned transaction.
-                typingSession.awaitEditorSelection(::executeTypingEdit)
-                TypingTextResult.BYPASS
+            EditorCommand.ConvertPrecedingSpaceToPeriod -> {
+                val boundary = typingSession.doubleSpace(::executeTypingEdit)
+                if (boundary == TypingTextResult.BYPASS) {
+                    // A pending span must be finished before an ordinary second space is inserted.
+                    typingSession.typeText(" ", ::executeTypingEdit)
+                } else boundary
             }
             else -> TypingTextResult.BYPASS
         }
@@ -290,7 +287,6 @@ class RuneInputMethodService : InputMethodService() {
         EditorCommand.DeletePreviousCodePoint,
         EditorCommand.InsertNewline,
         EditorCommand.ConvertPrecedingSpaceToPeriod,
-        EditorCommand.RevertDoubleSpacePeriod,
         -> true
         else -> false
     }

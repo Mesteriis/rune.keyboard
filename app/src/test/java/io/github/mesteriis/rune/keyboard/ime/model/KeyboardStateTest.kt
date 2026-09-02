@@ -181,13 +181,6 @@ class KeyboardStateTest {
     }
 
     @Test
-    fun `clearing an unset double space undo keeps the same instance`() {
-        val state = KeyboardState(KeyboardLanguage.ENGLISH)
-
-        assertSame(state, state.clearDoubleSpaceUndo())
-    }
-
-    @Test
     fun `an empty language list is rejected`() {
         assertThrows(IllegalArgumentException::class.java) {
             KeyboardState(language = KeyboardLanguage.ENGLISH, enabledLanguages = emptyList())

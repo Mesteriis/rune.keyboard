@@ -69,11 +69,45 @@ class SessionTextContextTest {
     }
 
     @Test
+    fun `suffix replacement rejects mismatches without mutating owned context`() {
+        val context = SessionTextContext(jvmGraphemes).apply { append("word ") }
+        assertFalse(context.replaceSuffix(". ", " "))
+        assertFalse(context.replaceSuffix("", "replacement"))
+        assertEquals("word ", context.text)
+        assertTrue(context.replaceSuffix(" ", ". "))
+        assertEquals("word. ", context.text)
+    }
+
+    @Test
+    fun `suffix replacement and snapshot restoration retain bounds and whole graphemes`() {
+        val context = SessionTextContext(jvmGraphemes, maxUtf16 = 6, maxCodePoints = 5)
+        context.append("e\u0301ab ")
+        val original = context.text
+        assertTrue(context.replaceSuffix(" ", ". "))
+        assertEquals("ab. ", context.text)
+        context.restore(original)
+        assertEquals("e\u0301ab ", context.text)
+        context.restore("x".repeat(20))
+        assertEquals("xxxxx", context.text)
+    }
+
+    @Test
     fun `diagnostic representations contain no typed content`() {
         val context = SessionTextContext(jvmGraphemes).apply { append("private phrase") }
         assertFalse(context.toString().contains("private phrase"))
         assertFalse(ComposingSegment(typedWord = "private phrase").toString().contains("private phrase"))
         assertTrue(TypingSessionState(contextText = "private phrase").toString().contains("sessionId"))
         assertFalse(TypingSessionState(contextText = "private phrase").toString().contains("private phrase"))
+        val undo = UndoableTextEdit(
+            original = "private original",
+            applied = "private replacement",
+            sessionId = 1,
+            revision = 2,
+            restoreComposition = ComposingSegment(typedWord = "private original"),
+            contextBefore = "private context",
+        )
+        assertTrue(undo.toString().contains("sessionId=1"))
+        assertFalse(undo.toString().contains("private"))
+        assertFalse(TypingSessionState(lastAutoEdit = undo).toString().contains("private"))
     }
 }

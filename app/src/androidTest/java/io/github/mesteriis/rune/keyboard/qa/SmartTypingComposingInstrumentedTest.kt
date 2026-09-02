@@ -169,20 +169,23 @@ class SmartTypingComposingInstrumentedTest : ImeTestBase() {
     fun doubleSpaceUndoSurvivesBinderSelectionAcknowledgement() {
         driver.launchComposingQa()
         type("a")
-        val description = InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.key_space)
-        val key = checkNotNull(driver.device.findObject(By.desc(description)))
-        // Dispatch two physical taps without UiAutomator's idle wait between them: the product
-        // gesture detector must see both releases within its double-tap window.
-        repeat(2) {
-            val touch = driver.touchDown(key)
-            driver.releaseTouch(touch)
-        }
-        driver.device.waitForIdle()
+        doubleTapSpace()
         driver.awaitFieldText(FIELD, "a. ")
         driver.tapDelete()
         driver.awaitFieldText(FIELD, "a ")
         type("b")
         driver.awaitFieldText(FIELD, "a b")
+        assertEquals(0, stats().getValue("before"))
+    }
+
+    @Test
+    fun doubleSpaceWithoutOwnedWordKeepsBothSpacesAndDoesNotReadEditor() {
+        driver.launchComposingQa()
+        doubleTapSpace()
+        driver.awaitFieldText(FIELD, "  ")
+        type("a")
+        driver.awaitFieldText(FIELD, "  a")
+        assertEquals(0, stats().getValue("before"))
     }
 
     @Test
@@ -205,6 +208,18 @@ class SmartTypingComposingInstrumentedTest : ImeTestBase() {
         ).forEach { counter ->
             assertEquals("Sensitive editor unexpectedly called $counter", 0, observed.getValue(counter))
         }
+    }
+
+    private fun doubleTapSpace() {
+        val description = InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.key_space)
+        val key = checkNotNull(driver.device.findObject(By.desc(description)))
+        // Dispatch two physical taps without UiAutomator's idle wait between them: the product
+        // gesture detector must see both releases within its double-tap window.
+        repeat(2) {
+            val touch = driver.touchDown(key)
+            driver.releaseTouch(touch)
+        }
+        driver.device.waitForIdle()
     }
 
     private fun type(vararg keys: String) = keys.forEach { driver.tapKey(it) }

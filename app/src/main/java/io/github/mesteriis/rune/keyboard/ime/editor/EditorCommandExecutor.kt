@@ -74,18 +74,8 @@ object EditorCommandExecutor {
             },
         )
         EditorCommand.ConvertPrecedingSpaceToPeriod -> textMutationResult(
-            if (inputPolicy == InputPolicy.SENSITIVE) inputConnection.commitText(" ", 1)
-            else convertPrecedingSpaceToPeriod(inputConnection),
-        )
-        EditorCommand.RevertDoubleSpacePeriod -> textMutationResult(
-            if (inputPolicy == InputPolicy.SENSITIVE) deletePrevious(
-                inputConnection, hasSelection,
-                if (deleteMode == DeleteMode.RAW_KEY_EVENT) deleteMode else DeleteMode.CODE_POINT,
-            ) else revertDoubleSpacePeriod(
-                inputConnection = inputConnection,
-                hasSelection = hasSelection,
-                deleteMode = deleteMode,
-            ),
+            if (deleteMode == DeleteMode.RAW_KEY_EVENT) sendTextAsKeyEvents(inputConnection, " ")
+            else inputConnection.commitText(" ", 1),
         )
         is EditorCommand.MoveCursor -> {
             val plan = cursorKeyPlan(command.steps)
@@ -110,41 +100,6 @@ object EditorCommandExecutor {
         keyCode = if (steps < 0) KeyEvent.KEYCODE_DPAD_LEFT else KeyEvent.KEYCODE_DPAD_RIGHT,
         presses = if (steps < 0) -steps else steps,
     )
-
-    private fun convertPrecedingSpaceToPeriod(inputConnection: InputConnection): Boolean {
-        val before = inputConnection.getTextBeforeCursor(2, 0)
-        if (!DoubleSpacePeriod.canConvert(before)) {
-            return inputConnection.commitText(" ", 1)
-        }
-        inputConnection.beginBatchEdit()
-        return try {
-            inputConnection.deleteSurroundingText(1, 0) &&
-                inputConnection.commitText(". ", 1)
-        } finally {
-            inputConnection.endBatchEdit()
-        }
-    }
-
-    private fun revertDoubleSpacePeriod(
-        inputConnection: InputConnection,
-        hasSelection: Boolean,
-        deleteMode: DeleteMode,
-    ): Boolean {
-        if (hasSelection || deleteMode == DeleteMode.RAW_KEY_EVENT) {
-            return deletePrevious(inputConnection, hasSelection, deleteMode)
-        }
-        val before = inputConnection.getTextBeforeCursor(2, 0)
-        if (!DoubleSpacePeriod.canRevert(before)) {
-            return deletePrevious(inputConnection, hasSelection = false, deleteMode = deleteMode)
-        }
-        inputConnection.beginBatchEdit()
-        return try {
-            inputConnection.deleteSurroundingText(2, 0) &&
-                inputConnection.commitText(" ", 1)
-        } finally {
-            inputConnection.endBatchEdit()
-        }
-    }
 
     private fun deletePrevious(
         inputConnection: InputConnection,

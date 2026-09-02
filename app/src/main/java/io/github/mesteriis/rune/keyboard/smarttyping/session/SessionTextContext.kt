@@ -56,6 +56,20 @@ internal class SessionTextContext(
         text = text.substring(0, graphemes.boundaries(text).dropLast(1).last())
     }
 
+    /** Replaces only a verified Rune suffix and applies the same grapheme-safe retention limits. */
+    fun replaceSuffix(expected: String, replacement: String): Boolean {
+        if (expected.isEmpty() || !text.endsWith(expected)) return false
+        text = text.dropLast(expected.length)
+        append(replacement)
+        return true
+    }
+
+    /** Restores a bounded snapshot captured before an automatic edit could evict its prefix. */
+    fun restore(snapshot: String) {
+        clear()
+        append(snapshot)
+    }
+
     fun clear() {
         text = ""
     }

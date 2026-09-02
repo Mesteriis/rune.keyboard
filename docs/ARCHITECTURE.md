@@ -28,7 +28,7 @@ KeyboardLayoutProvider ── immutable KeySpec rows (+ LayoutOptions)
 RuneKeyboardView ──────── accessible View keys, popups, touch/repeat handling
 ```
 
-`RuneInputMethodService` остаётся оркестратором Android lifecycle. Переходы Shift/language/symbols, mapping Enter, арбитраж жестов пробела, правило двойного пробела и политика ускорения Backspace вынесены в чистый Kotlin и покрываются обычными JVM-тестами. Android-boundary сценарии проходят через debug-only `ImeQaActivity` в отдельном процессе `:qa_editor`, поэтому instrumentation проверяет настоящий Binder `InputConnection`, а не повторяет reducer-тесты. Рендер не пересобирается на каждом обычном символе: только при изменении состояния или контекста редактора.
+`RuneInputMethodService` остаётся оркестратором Android lifecycle. Переходы Shift/language/symbols, mapping Enter, арбитраж жестов пробела, typing-owned правило двойного пробела и политика ускорения Backspace вынесены в чистый Kotlin и покрываются обычными JVM-тестами. Android-boundary сценарии проходят через debug-only `ImeQaActivity` в отдельном процессе `:qa_editor`, поэтому instrumentation проверяет настоящий Binder `InputConnection`, а не повторяет reducer-тесты. Рендер не пересобирается на каждом обычном символе: только при изменении состояния или контекста редактора.
 
 Rune регистрирует один системный subtype на три языка. Переключение EN/RU/ES происходит внутри reducer по пользовательскому порядку из настроек, поэтому все раскладки доступны сразу после включения IME и не зависят от отдельно активированных Android-subtype.
 
@@ -77,7 +77,7 @@ Session (только в памяти): активный редактор, яз�
 
 Визуальное состояние и typing-сессия имеют разные lifecycle. При завершении input/view Rune завершает принадлежащий ей span и уничтожает контекст. Restart начинает новую typing-сессию; предыдущий буфер не отправляется повторно. Буквы обновляют текущий composing span. Пробел завершает слово и создаёт видимую pending boundary, которую следующая буква расширяет до `" <word>"`. Enter, язык, слой и начало cursor mode завершают composition. После операции с неизвестной позицией курсора composing ждёт selection callback; plain ввод остаётся доступным.
 
-Подтверждения ожидаемых selection/span имеют ограниченную числовую очередь. Внешняя selection очищает контекст; потерянный или отвергнутый composing span отключает Smart Typing до следующей editor session. Rune не читает текст для проверки ownership и не восстанавливает потерянный буфер. Редакторы, молча отбрасывающие span без callback, остаются явной границей совместимости.
+Подтверждения ожидаемых selection/span имеют ограниченную числовую очередь. Внешняя selection очищает контекст; потерянный или отвергнутый composing span отключает Smart Typing до следующей editor session. Rune не читает текст для проверки ownership и не восстанавливает потерянный буфер. Одна typing-owned Undo-транзакция хранит предыдущий собственный suffix; первый Backspace восстанавливает его как composition, следующее текстовое действие закрывает транзакцию. В KeyboardState отдельного double-space Undo нет. Редакторы, молча отбрасывающие span без callback, остаются явной границей совместимости.
 
 ## Приватность и безопасность
 
@@ -93,9 +93,9 @@ Session (только в памяти): активный редактор, яз�
 
 ### Осознанное расширение инварианта чтения текста
 
-До введения правила двойного пробела и Unicode-safe Backspace клавиатура читала из редактора только `getCursorCapsMode` и числовые границы selection. Правило двойного пробела (SPACE-002) и атомарное удаление logical character требуют минимального surrounding-text контекста. Rune разрешает два строго ограниченных вида эфемерного чтения:
+До введения правила двойного пробела и Unicode-safe Backspace клавиатура читала из редактора только `getCursorCapsMode` и числовые границы selection. Правило двойного пробела (SPACE-002) и атомарное удаление logical character требуют минимального surrounding-text контекста. Rune разрешает ограниченное эфемерное чтение для удаления вне собственной composition:
 
-- `getTextBeforeCursor(2, 0)` — только в момент второго тапа по пробелу и при последующем Backspace-откате, только в plain-text полях;
+- double-space и его Undo используют собственный pending span и Rune-owned RAM-контекст, без чтений редактора;
 - `getTextBeforeCursor(64, 0)` — только непосредственно во время Backspace в non-sensitive поле. Android ICU и ограниченный compatibility scan находят предыдущий grapheme cluster, после чего удаление передаётся редактору числом code points;
 - selection удаляется целиком через `commitText("", 1)` без чтения выделенного или surrounding text;
 - password и `IME_FLAG_NO_PERSONALIZED_LEARNING` никогда не читаются: там Backspace удаляет один code point; `TYPE_NULL` получает `KEYCODE_DEL`;
@@ -118,7 +118,7 @@ Pinned JNI runtime загружает candidate с отключённым logger
 - IME остаётся в основном процессе; install/self-test выполняются worker service в `:model_worker`;
 - нет runtime-зависимостей кроме Kotlin stdlib, встроенной AGP;
 - нет I/O на пути нажатия клавиши;
-- обновление слова — один `setComposingText`; граница слова и удаление последнего composing grapheme дополнительно завершают span (двойной пробел — один batch edit);
+- обновление слова — один `setComposingText`; граница слова и удаление последнего composing grapheme дополнительно завершают span (двойной пробел и его Undo — замена собственного span);
 - popup-окна создаются один раз и переиспользуются, на `ACTION_DOWN` ничего не инфлейтится;
 - повтор удаления отменяется на `UP`, `CANCEL`, уходе пальца и detach View; жестовое состояние возвращается в `Idle` через общий `cancelActiveTouches`;
 - R8 и resource shrinking включены для release.

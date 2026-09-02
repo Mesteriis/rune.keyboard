@@ -39,7 +39,6 @@ data class KeyboardState(
     val layer: KeyboardLayer = KeyboardLayer.LETTERS,
     val shiftMode: ShiftMode = ShiftMode.OFF,
     val doubleSpacePeriodEnabled: Boolean = true,
-    val pendingDoubleSpaceUndo: Boolean = false,
     private val lastShiftTapAtMillis: Long? = null,
 ) {
     init {
@@ -130,9 +129,6 @@ data class KeyboardState(
             layer = if (coercedLanguage == language) layer else KeyboardLayer.LETTERS,
         )
     }
-
-    fun clearDoubleSpaceUndo(): KeyboardState =
-        if (pendingDoubleSpaceUndo) copy(pendingDoubleSpaceUndo = false) else this
 
     companion object {
         const val DOUBLE_TAP_WINDOW_MILLIS = 400L

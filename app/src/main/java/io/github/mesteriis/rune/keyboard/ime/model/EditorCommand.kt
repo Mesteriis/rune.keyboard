@@ -19,13 +19,11 @@ sealed interface EditorCommand {
     }
 
     /**
-     * Replaces the space committed by the first of two quick space taps with ". ".
-     * Falls back to committing a plain space when the surrounding text is not eligible.
+     * Requests typing-owned double-space handling. The executor's fallback commits a plain space;
+     * only the typing controller may transform its own suffix or retain an Undo transaction.
      */
     data object ConvertPrecedingSpaceToPeriod : EditorCommand
 
-    /** Undoes [ConvertPrecedingSpaceToPeriod], restoring the plain space. */
-    data object RevertDoubleSpacePeriod : EditorCommand
 }
 
 data class KeyboardTransition(

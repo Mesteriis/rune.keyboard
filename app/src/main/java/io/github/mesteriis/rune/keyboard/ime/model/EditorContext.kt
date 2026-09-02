@@ -45,8 +45,8 @@ data class EditorContext(
         get() = mode == EditorMode.TEXT && inputPolicy == InputPolicy.NORMAL && !requiresRawKeyEvents
 
     /**
-     * Double space converts to ". " only where a sentence separator makes sense and where the
-     * bounded two-character guard read is acceptable: NORMAL plain text, never sensitive/raw input.
+     * Double space may transform a Rune-owned suffix only in NORMAL plain text, never
+     * sensitive/raw input. The typing controller additionally verifies ownership without reads.
      */
     val supportsDoubleSpacePeriod: Boolean
         get() = supportsSmartTyping

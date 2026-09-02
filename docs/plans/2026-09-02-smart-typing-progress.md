@@ -25,8 +25,8 @@ qualifying a resource-bounded model path. Preserve all quality/privacy gates;
 do not treat switching models as permission to weaken them. Model execution
 must be demand-driven, cancellable, and absent in sensitive/ineligible sessions.
 
-Current slice: `feature/smart-typing-03-pr04-foundation`, based on PR1
-`f06d815e07f6457a03e6c978a64250349995bc3d`. PR4 implementation is complete with
+Current slice: `feature/smart-typing-03-pr05-strip-undo`, based on PR4
+`ffe8e3932449da9a7d2c2a8cf6f5554535c3e511`. PR4 implementation is complete with
 local JVM/build gates and API36 Binder evidence; API26/37 and physical Fold
 remain unqualified. PR2/3/5/6/7/8/9/10 remain required. No push, remote PR or
 publication is authorized by this resume.
@@ -37,13 +37,22 @@ publication is authorized by this resume.
   ownership invalidation and explicit cursor-mode-start are integrated through the existing executor.
 - NPL/password/raw paths prohibit composing; NPL Caps/double-space read bug fixed.
 - Independent review caught a legacy double-space callback clearing Undo. A known numeric +1 acknowledgement bridge preserves it until PR5 migration; fix re-reviewed and Binder-tested.
-- Fresh JVM: 272/272 PASS (266 app + 6 runtime), no failures/errors/skips. Required post-commit rerun still executed after the closing commit.
+- Fresh JVM: 272/272 PASS (266 app + 6 runtime), no failures/errors/skips. Required post-commit rerun after `ffe8e3932449da9a7d2c2a8cf6f5554535c3e511` also PASS (44 tasks executed).
 - Full prescribed lint/build/privacy/dependency/native command PASS, including Android test APK assembly.
 - API36: full 43-test app run PASS; extra stationary Space hold regression PASS separately, 44 unique tests. This does not close API26/37 or Fold.
 - Same-session rewrite fixture now mutates Editable and asserts no new InputConnection; earlier failed setText-based fixture is not treated as product root-cause proof.
 - Official API26 ARM64 and API37 16KiB ARM64 images are downloading for later local checks. No physical device connected at initial inventory; no wireless ADB used.
 - Acceptance: `docs/acceptance/2026-09-02-smart-typing-0.3-pr04.md`.
 - Ruling: API36 is diagnostic evidence only; retain separate API26/API37/remote CI/Fold/energy status and app version 0.2.0.
+
+### PR5 in progress
+
+- First commit migrates double-space and Undo from KeyboardState into the typing owner. Only Rune-owned pending boundary/context may be transformed; unowned/unsupported text gets plain Space. The executor's legacy surrounding-text conversion/revert path is removed.
+- Ruling: preserve the existing double-space gesture's priority, but remove its ability to edit unowned editor text. This matches the 0.3 ownership/privacy contract; no additional editor reads are introduced.
+- Candidate-strip implementation is prepared separately under ignored build artifacts, with fixed cells/keysContainer and identity tests. Apply after the migration commit, then connect a real current-word Original consumer. Prototype code alone is not an implemented feature.
+- PR2 tokenizer patch prototype passed host stage cancellation, 632 exact original/new token-sequence comparisons, and independent review. It remains unapplied to production until the native runtime slice.
+- Undo migration verification: fresh JVM 281/281 (275 app + 6 runtime), no failures/errors/skips; full required gates PASS (292 tasks, 51 executed); all 13 composing Binder scenarios PASS on API36 in 119.440 s, including the ineligible double-space fallback and zero surrounding reads for conversion/Undo. Independent review approved with no P1/P2; stale privacy comment corrected.
+- This migration is committed separately before strip integration. Autocorrection and mechanical-punctuation consumers are later slices; no placeholder edit subclasses or Undo stack are introduced.
 
 ### Historical PR1 result
 

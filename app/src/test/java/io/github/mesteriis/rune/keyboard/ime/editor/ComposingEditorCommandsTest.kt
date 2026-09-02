@@ -48,10 +48,9 @@ class ComposingEditorCommandsTest {
         assertFalse(execute(EditorCommand.SetComposingText("text"), editor, InputPolicy.SENSITIVE).handled)
         assertFalse(execute(EditorCommand.FinishComposingText, editor, InputPolicy.SENSITIVE).handled)
         execute(EditorCommand.ConvertPrecedingSpaceToPeriod, editor, InputPolicy.SENSITIVE)
-        execute(EditorCommand.RevertDoubleSpacePeriod, editor, InputPolicy.SENSITIVE)
         execute(EditorCommand.DeletePreviousCodePoint, editor, InputPolicy.SENSITIVE)
 
-        assertEquals(listOf("commitText", "deleteSurroundingTextInCodePoints", "deleteSurroundingTextInCodePoints"), editor.calls)
+        assertEquals(listOf("commitText", "deleteSurroundingTextInCodePoints"), editor.calls)
         assertEquals(listOf(" "), editor.payloads)
     }
 

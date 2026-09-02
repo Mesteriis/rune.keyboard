@@ -64,107 +64,19 @@ class EditorCommandExecutorTest {
     }
 
     @Test
-    fun `double space replaces the preceding space with a period`() {
-        val connection = RecordingInputConnection(
-            commitTextResult = true,
-            textBeforeCursor = "d ",
-            deleteSurroundingTextResult = true,
-        )
-
+    fun `double space fallback cannot transform unowned editor text or read it`() {
+        val connection = RecordingInputConnection(commitTextResult = true, textBeforeCursor = "d ")
         val result = EditorCommandExecutor.execute(
             command = EditorCommand.ConvertPrecedingSpaceToPeriod,
             inputConnection = connection.proxy,
             hasSelection = false,
             requiresRawKeyEvents = false,
         )
-
         assertTrue(result.handled)
-        assertEquals(listOf(1 to 0), connection.deletedSurroundingText)
-        assertEquals(listOf(". "), connection.committedText)
-        assertEquals(1, connection.batchEdits)
-    }
-
-    @Test
-    fun `double space degrades to a plain space when the text is not eligible`() {
-        val connection = RecordingInputConnection(commitTextResult = true, textBeforeCursor = " b")
-
-        EditorCommandExecutor.execute(
-            command = EditorCommand.ConvertPrecedingSpaceToPeriod,
-            inputConnection = connection.proxy,
-            hasSelection = false,
-            requiresRawKeyEvents = false,
-        )
-
         assertEquals(listOf(" "), connection.committedText)
         assertTrue(connection.deletedSurroundingText.isEmpty())
-    }
-
-    @Test
-    fun `double space degrades to a plain space when the text is unavailable`() {
-        val connection = RecordingInputConnection(commitTextResult = true, textBeforeCursor = null)
-
-        EditorCommandExecutor.execute(
-            command = EditorCommand.ConvertPrecedingSpaceToPeriod,
-            inputConnection = connection.proxy,
-            hasSelection = false,
-            requiresRawKeyEvents = false,
-        )
-
-        assertEquals(listOf(" "), connection.committedText)
-    }
-
-    @Test
-    fun `revert restores the plain space`() {
-        val connection = RecordingInputConnection(
-            commitTextResult = true,
-            textBeforeCursor = ". ",
-            deleteSurroundingTextResult = true,
-        )
-
-        EditorCommandExecutor.execute(
-            command = EditorCommand.RevertDoubleSpacePeriod,
-            inputConnection = connection.proxy,
-            hasSelection = false,
-            requiresRawKeyEvents = false,
-        )
-
-        assertEquals(listOf(2 to 0), connection.deletedSurroundingText)
-        assertEquals(listOf(" "), connection.committedText)
-        assertEquals(1, connection.batchEdits)
-    }
-
-    @Test
-    fun `revert falls back to a normal delete when the text moved on`() {
-        val connection = RecordingInputConnection(
-            textBeforeCursor = "ab",
-            deleteSurroundingTextInCodePointsResult = true,
-        )
-
-        EditorCommandExecutor.execute(
-            command = EditorCommand.RevertDoubleSpacePeriod,
-            inputConnection = connection.proxy,
-            hasSelection = false,
-            requiresRawKeyEvents = false,
-        )
-
-        assertEquals(listOf(1 to 0), connection.deletedCodePoints)
-        assertTrue(connection.committedText.isEmpty())
-    }
-
-    @Test
-    fun `revert with a selection deletes the selection`() {
-        val connection = RecordingInputConnection(commitTextResult = true, textBeforeCursor = ". ")
-
-        val result = EditorCommandExecutor.execute(
-            command = EditorCommand.RevertDoubleSpacePeriod,
-            inputConnection = connection.proxy,
-            hasSelection = true,
-            requiresRawKeyEvents = false,
-        )
-
-        assertTrue(result.clearsSelection)
-        assertEquals(listOf(""), connection.committedText)
-        assertTrue(connection.deletedSurroundingText.isEmpty())
+        assertEquals(0, connection.batchEdits)
+        assertEquals(0, connection.textReads)
     }
 
     @Test
@@ -189,6 +101,8 @@ class EditorCommandExecutorTest {
         val editorActions = mutableListOf<Int>()
         val deletedSurroundingText = mutableListOf<Pair<Int, Int>>()
         val deletedCodePoints = mutableListOf<Pair<Int, Int>>()
+        var textReads = 0
+            private set
         var batchEdits = 0
             private set
 
@@ -208,7 +122,7 @@ class EditorCommandExecutorTest {
                     editorActions += args?.get(0) as Int
                     performEditorActionResult
                 }
-                "getTextBeforeCursor" -> textBeforeCursor
+                "getTextBeforeCursor" -> { textReads++; textBeforeCursor }
                 "deleteSurroundingText" -> {
                     deletedSurroundingText += (args?.get(0) as Int) to (args[1] as Int)
                     deleteSurroundingTextResult

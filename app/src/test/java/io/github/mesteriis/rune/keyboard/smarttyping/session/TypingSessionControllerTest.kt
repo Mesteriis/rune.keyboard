@@ -400,105 +400,321 @@ class TypingSessionControllerTest {
     }
 
     @Test
-    fun `legacy double space acknowledges known delta and next word starts at updated caret`() {
-        start()
-        controller.typeText("word", execute)
-        controller.typeText(" ", execute)
-        var boundaryCalls = 0
-        val result = controller.legacyDoubleSpace(execute) {
-            boundaryCalls++
-            true
-        }
-        assertEquals(TypingTextResult.HANDLED, result)
-        assertEquals(1, boundaryCalls)
-        assertEquals(TypingEdit.FinishComposingText, edits.last())
-        assertFalse(selection(6, 6, -1, -1))
-        assertEquals("", controller.state.contextText)
-        assertNull(controller.state.composing)
-        controller.typeText("x", execute)
-        assertFalse(selection(7, 7, 6, 7))
-        assertEquals("x", controller.state.contextText)
+    fun `double space replaces only owned pending boundary and records one transaction`() {
+        pendingSpace("word")
+        val beforeRevision = controller.state.revision
+
+        assertEquals(TypingTextResult.HANDLED, controller.doubleSpace(execute))
+
+        assertEquals(listOf(TypingEdit.SetComposingText(". ")), edits)
+        assertEquals(ComposingSegment(". "), controller.state.composing)
+        assertEquals("word. ", controller.state.contextText)
+        val undo = controller.state.lastAutoEdit!!
+        assertEquals(" ", undo.original)
+        assertEquals(". ", undo.applied)
+        assertEquals(ComposingSegment(" "), undo.restoreComposition)
+        assertEquals(controller.state.sessionId, undo.sessionId)
+        assertEquals(controller.state.revision, undo.revision)
+        assertTrue(undo.revision > beforeRevision)
     }
 
     @Test
-    fun `legacy double space handles synchronous callback and delayed following typing`() {
-        start(10)
+    fun `first backspace restores original boundary and second backspace deletes it`() {
+        pendingSpace("word")
+        controller.doubleSpace(execute)
+        edits.clear()
+
+        assertEquals(TypingTextResult.HANDLED, controller.deletePrevious(execute))
+        assertEquals(listOf(TypingEdit.SetComposingText(" ")), edits)
+        assertEquals("word ", controller.state.contextText)
+        assertEquals(ComposingSegment(" "), controller.state.composing)
+        assertNull(controller.state.lastAutoEdit)
+        assertFalse(selection(5, 5, 4, 5))
+
+        edits.clear()
+        assertEquals(TypingTextResult.HANDLED, controller.deletePrevious(execute))
+        assertEquals(listOf(TypingEdit.SetComposingText(""), TypingEdit.FinishComposingText), edits)
+        assertEquals("word", controller.state.contextText)
+    }
+
+    @Test
+    fun `next word retains the converted boundary and closes undo`() {
+        pendingSpace("a")
+        controller.doubleSpace(execute)
+        controller.typeText("b", execute)
+        assertEquals(TypingEdit.SetComposingText(". b"), edits.last())
+        assertEquals("a. b", controller.state.contextText)
+        assertNull(controller.state.lastAutoEdit)
+        assertFalse(selection(4, 4, 1, 4))
+        controller.deletePrevious(execute)
+        assertEquals("a. ", controller.state.contextText)
+        assertEquals(ComposingSegment(". "), controller.state.composing)
+    }
+
+    @Test
+    fun `double space preserves existing preceding character rules using owned context`() {
+        for (prefix in listOf("a", "я", "5", ":", ";", "e\u0301", "😀", "👩🏽‍💻", "🇷🇺")) {
+            pendingSpace(prefix)
+            assertEquals(prefix, TypingTextResult.HANDLED, controller.doubleSpace(execute))
+            assertEquals(prefix + ". ", controller.state.contextText)
+            controller.deletePrevious(execute)
+            assertEquals(prefix + " ", controller.state.contextText)
+        }
+        for (prefix in listOf("", " ", "\n", "\t", ".", ",", "!", "?")) {
+            pendingSpace(prefix)
+            assertEquals(prefix, TypingTextResult.BYPASS, controller.doubleSpace(execute))
+            assertTrue(edits.isEmpty())
+            assertNull(controller.state.lastAutoEdit)
+            assertEquals(prefix + " ", controller.state.contextText)
+        }
+    }
+
+    @Test
+    fun `double space bypasses disabled unknown and noncollapsed initial selections without writes`() {
+        for ((start, end) in listOf(-1 to -1, 4 to 7, 0 to 0)) {
+            start(start, end)
+            edits.clear()
+            assertEquals(TypingTextResult.BYPASS, controller.doubleSpace(execute))
+            assertTrue(edits.isEmpty())
+            assertNull(controller.state.lastAutoEdit)
+        }
+        controller.startSession(
+            EditorContext.from(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD, 0),
+            0, 0,
+        )
+        assertEquals(TypingTextResult.BYPASS, controller.doubleSpace(execute))
+        assertTrue(edits.isEmpty())
+        assertEquals("", controller.state.contextText)
+    }
+
+    @Test
+    fun `double space bypasses finished or uncertain ownership without editor reads or writes`() {
+        pendingSpace("word")
+        controller.finishComposition(execute)
+        edits.clear()
+        assertEquals(TypingTextResult.BYPASS, controller.doubleSpace(execute))
+        assertTrue(edits.isEmpty())
+
+        controller.awaitEditorSelection(execute)
+        edits.clear()
+        assertEquals(TypingTextResult.BYPASS, controller.doubleSpace(execute))
+        assertTrue(edits.isEmpty())
+        assertNull(controller.state.lastAutoEdit)
+    }
+
+    @Test
+    fun `double space bypasses when only editor could know preceding character`() {
+        start(50)
+        controller.typeText(" ", execute)
+        edits.clear()
+        assertEquals(TypingTextResult.BYPASS, controller.doubleSpace(execute))
+        assertTrue(edits.isEmpty())
+        assertEquals(" ", controller.state.contextText)
+    }
+
+    @Test
+    fun `double space bypass followed by plain space preserves both visible spaces`() {
+        for (prefix in listOf("", ".", ",", "!", "?")) {
+            pendingSpace(prefix)
+            assertEquals(TypingTextResult.BYPASS, controller.doubleSpace(execute))
+            assertEquals(TypingTextResult.HANDLED, controller.typeText(" ", execute))
+            assertEquals(listOf(TypingEdit.FinishComposingText, TypingEdit.SetComposingText(" ")), edits)
+            assertEquals(prefix + "  ", controller.state.contextText)
+            assertEquals(ComposingSegment(" "), controller.state.composing)
+            assertNull(controller.state.lastAutoEdit)
+        }
+    }
+
+    @Test
+    fun `double space bypasses caret overflow`() {
+        start(Int.MAX_VALUE - 2)
         controller.typeText("a", execute)
         controller.typeText(" ", execute)
-        assertEquals(TypingTextResult.HANDLED, controller.legacyDoubleSpace(execute) {
-            assertFalse(selection(13, 13, -1, -1))
+        edits.clear()
+        assertEquals(TypingTextResult.BYPASS, controller.doubleSpace(execute))
+        assertTrue(edits.isEmpty())
+        assertEquals("a ", controller.state.contextText)
+    }
+
+    @Test
+    fun `double space and undo accept synchronous callbacks and delayed following typing`() {
+        pendingSpace("a", 10)
+        assertEquals(TypingTextResult.HANDLED, controller.doubleSpace {
+            edits.add(it)
+            assertFalse(selection(13, 13, 11, 13))
+            true
+        })
+        assertEquals(TypingTextResult.HANDLED, controller.deletePrevious {
+            edits.add(it)
+            assertFalse(selection(12, 12, 11, 12))
             true
         })
         controller.typeText("b", execute)
         controller.typeText("c", execute)
-        assertFalse(selection(15, 15, 13, 15))
-        assertEquals("bc", controller.state.composing?.text)
+        assertFalse(selection(14, 14, 11, 14))
+        assertEquals("a bc", controller.state.contextText)
     }
 
     @Test
-    fun `legacy double space bypasses uncertain selection without invoking boundary`() {
-        start(4, 7)
-        var boundaryCalls = 0
-        assertEquals(TypingTextResult.BYPASS, controller.legacyDoubleSpace(execute) {
-            boundaryCalls++
-            true
-        })
-        assertEquals(0, boundaryCalls)
-        assertEquals(TypingTextResult.BYPASS, controller.typeText("a", execute))
+    fun `delayed own callbacks preserve undo until its latest span is acknowledged`() {
+        pendingSpace("word")
+        controller.doubleSpace(execute)
+        assertFalse(selection(4, 4, 0, 4))
+        assertFalse(selection(5, 5, 4, 5))
+        assertFalse(selection(6, 6, 4, 6))
+        assertFalse(selection(6, 6, 4, 6))
+        assertTrue(controller.state.lastAutoEdit != null)
+        assertEquals(TypingTextResult.HANDLED, controller.deletePrevious(execute))
+        assertEquals("word ", controller.state.contextText)
+    }
+
+    @Test
+    fun `acknowledged older span cannot revive stale undo after external replacement`() {
+        pendingSpace("word")
+        controller.doubleSpace(execute)
+        assertFalse(selection(6, 6, 4, 6))
+        edits.clear()
+        assertTrue(selection(5, 5, 4, 5))
+        assertNull(controller.state.lastAutoEdit)
+        assertFalse(controller.state.enabled)
+        assertEquals(TypingTextResult.BYPASS, controller.deletePrevious(execute))
+        assertTrue(edits.isEmpty())
+    }
+
+    @Test
+    fun `cursor move clears undo and never restores suffix at new caret`() {
+        pendingSpace("word")
+        controller.doubleSpace(execute)
+        assertTrue(selection(0, 0, 4, 6))
+        assertNull(controller.state.lastAutoEdit)
+        edits.clear()
+        assertEquals(TypingTextResult.BYPASS, controller.deletePrevious(execute))
+        assertTrue(edits.isEmpty())
         assertEquals("", controller.state.contextText)
-        assertTrue(selection(5, 5, -1, -1))
-        assertEquals(TypingTextResult.HANDLED, controller.typeText("b", execute))
-        assertFalse(selection(6, 6, 5, 6))
     }
 
     @Test
-    fun `legacy double space aborts if session changes while finishing word`() {
-        start()
-        controller.typeText("a", execute)
-        var boundaryCalls = 0
-        val result = controller.legacyDoubleSpace(
-            executeTypingEdit = {
-                controller.endSession()
-                true
-            },
-            executeBoundary = {
-                boundaryCalls++
-                true
-            },
+    fun `every other text action closes the immediate undo slot`() {
+        for (text in listOf("b", " ", "!", "😀", "\n")) {
+            pendingSpace("word")
+            controller.doubleSpace(execute)
+            controller.typeText(text, execute)
+            assertNull(controller.state.lastAutoEdit)
+        }
+        pendingSpace("word")
+        controller.doubleSpace(execute)
+        edits.clear()
+        assertEquals(TypingTextResult.BYPASS, controller.doubleSpace(execute))
+        assertNull(controller.state.lastAutoEdit)
+        assertTrue(edits.isEmpty())
+    }
+
+    @Test
+    fun `finish invalidate settings discard and session lifecycle close undo`() {
+        val boundaries: List<() -> Unit> = listOf(
+            { controller.finishComposition(execute) },
+            { controller.invalidate(execute) },
+            { controller.discardUndo() },
+            { controller.endSession() },
+            { start(20) },
         )
-        assertEquals(TypingTextResult.REJECTED, result)
-        assertEquals(0, boundaryCalls)
-        assertFalse(controller.state.enabled)
+        for (boundary in boundaries) {
+            pendingSpace("word")
+            controller.doubleSpace(execute)
+            boundary()
+            assertNull(controller.state.lastAutoEdit)
+        }
     }
 
     @Test
-    fun `legacy double space cannot acknowledge into a session created during boundary execution`() {
-        start()
-        controller.typeText("a", execute)
-        val result = controller.legacyDoubleSpace(execute) {
-            start(20)
-            true
-        }
-        assertEquals(TypingTextResult.REJECTED, result)
-        controller.typeText("b", execute)
-        assertFalse(selection(21, 21, 20, 21))
-        assertEquals("b", controller.state.contextText)
+    fun `a later automatic edit replaces the undo slot without retaining history`() {
+        pendingSpace("first")
+        controller.doubleSpace(execute)
+        val first = controller.state.lastAutoEdit!!
+        controller.typeText("second", execute)
+        controller.typeText(" ", execute)
+        controller.doubleSpace(execute)
+        assertTrue(controller.state.lastAutoEdit!!.revision > first.revision)
+        controller.deletePrevious(execute)
+        assertEquals("first. second ", controller.state.contextText)
+        assertNull(controller.state.lastAutoEdit)
     }
 
     @Test
-    fun `legacy double space rejection disables stale caret tracking without replay`() {
-        start()
-        controller.typeText("a", execute)
-        var boundaryCalls = 0
-        val result = controller.legacyDoubleSpace(execute) {
-            boundaryCalls++
-            false
+    fun `rejected conversion or undo clears transaction and never replays text`() {
+        for (undo in listOf(false, true)) {
+            pendingSpace("word")
+            if (undo) controller.doubleSpace(execute)
+            edits.clear()
+            val rejecting: (TypingEdit) -> Boolean = { edits.add(it); false }
+            val result = if (undo) controller.deletePrevious(rejecting) else controller.doubleSpace(rejecting)
+            assertEquals(TypingTextResult.REJECTED, result)
+            assertEquals(listOf(TypingEdit.SetComposingText(if (undo) " " else ". "),
+                TypingEdit.FinishComposingText), edits)
+            assertNull(controller.state.lastAutoEdit)
+            assertFalse(controller.state.enabled)
+            assertEquals("", controller.state.contextText)
+            assertEquals(TypingTextResult.BYPASS, controller.deletePrevious(execute))
+            assertEquals(2, edits.size)
         }
-        assertEquals(TypingTextResult.REJECTED, result)
-        assertEquals(1, boundaryCalls)
-        assertFalse(controller.state.enabled)
-        assertEquals(TypingTextResult.BYPASS, controller.typeText("b", execute))
-        assertEquals("", controller.state.contextText)
+    }
+
+    @Test
+    fun `session switch during conversion or undo cannot publish into new session`() {
+        for (undo in listOf(false, true)) {
+            pendingSpace("word")
+            if (undo) controller.doubleSpace(execute)
+            val switching: (TypingEdit) -> Boolean = {
+                start(20)
+                true
+            }
+            val result = if (undo) controller.deletePrevious(switching) else controller.doubleSpace(switching)
+            assertEquals(TypingTextResult.REJECTED, result)
+            assertNull(controller.state.lastAutoEdit)
+            assertEquals("", controller.state.contextText)
+            controller.typeText("b", execute)
+            assertFalse(selection(21, 21, 20, 21))
+            assertEquals("b", controller.state.contextText)
+        }
+    }
+
+    @Test
+    fun `external callback during conversion or undo cannot resurrect old context`() {
+        for (undo in listOf(false, true)) {
+            pendingSpace("word")
+            if (undo) controller.doubleSpace(execute)
+            val replacing: (TypingEdit) -> Boolean = {
+                assertTrue(selection(30, 30, 29, 30))
+                true
+            }
+            val result = if (undo) controller.deletePrevious(replacing) else controller.doubleSpace(replacing)
+            assertEquals(TypingTextResult.REJECTED, result)
+            assertNull(controller.state.lastAutoEdit)
+            assertFalse(controller.state.enabled)
+            assertEquals("", controller.state.contextText)
+        }
+    }
+
+    @Test
+    fun `undo restores bounded context prefix evicted by conversion without breaking Unicode`() {
+        for (prefix in listOf("x".repeat(1_023), "😀".repeat(1_022) + "a")) {
+            pendingSpace(prefix)
+            val original = controller.state.contextText
+            assertEquals(1_024, original.codePointCount(0, original.length))
+            controller.doubleSpace(execute)
+            assertTrue(controller.state.contextText.length <= 2_048)
+            assertEquals(1_024, controller.state.contextText.codePointCount(0, controller.state.contextText.length))
+            controller.deletePrevious(execute)
+            assertEquals(original, controller.state.contextText)
+            assertEquals(ComposingSegment(" "), controller.state.composing)
+        }
+    }
+
+    private fun pendingSpace(prefix: String, initialCaret: Int = 0) {
+        start(initialCaret)
+        controller.typeText(prefix, execute)
+        controller.typeText(" ", execute)
+        edits.clear()
     }
 
     private fun start(start: Int = 0, end: Int = start) {
