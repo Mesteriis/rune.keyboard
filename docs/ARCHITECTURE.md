@@ -223,6 +223,27 @@ Shift подавляет автоматическую капитализацию
 
 ## Полоса кандидатов
 
+`CandidateGenerator` выполняет общие protection, normalization и routed exact
+membership проверки, затем использует точный глобальный top-seven selection для
+packed словарей. `CandidateLexicon.scan` остаётся полным перечислением для
+общих readers; отдельный `selectTop` требует сертификат семи вариантов в полном
+порядке или исчерпания всей допустимой области поиска. Оба пути используют один
+бюджет 8192 состояний и 64 проверенных terminals, включая exact lookup и оба языка.
+Порядок определяется weighted distance, prior, частотой и Unicode scalar identity;
+case/display дедупликация предшествует квоте fallback. Положительный результат
+сертифицирует набор предложений, а не confidence или право на AutoReplace.
+
+`PackedTopSeven` хранит глобальные heap/arena и unrestricted prefix DP в фиксированных
+массивах на candidate worker. Он восстанавливает только уже прочитанные prefix
+records, проверяет отмену между строками DP и очищает scratch в finally.
+Незавершённое расширение списка children не может выдать сертификат. Исчерпание
+лимита оставляет только проверенные partial suggestions с veto автоматической
+замены. Lazy bridge публикует immutable mappings; сам поиск не загружает файлы и
+не сохраняет запросы. Дополнительные примитивные массивы занимают 282524 байта
+на используемый engine, помимо существующих generator/reader arrays; это размер
+ёмкости массивов, не измеренный RSS. Подробный proof и воспроизводимые controls:
+`tools/lexicon/smart-typing-0.3/top-seven/README.md`.
+
 Typing-контроллер сохраняет Original и до семи полных `GeneratedCandidate`,
 включая deterministic features, а показывает только Original и два варианта.
 Позиция на полоске не является identity: correction ID содержит исходный

@@ -1,0 +1,23 @@
+{
+  "actualSha256": "f739fde5b88f292d3281e017567dc5d21c9e0b5060aa045aca173ae3d248b735",
+  "archiveSha256": "dfbd2f1dfdaf84155ab29c12efbaa1d54b81861944063c57842e1825eef87d82",
+  "compiledReceipt": "a66dcf81941fa9781f7521919d36595e38643ed0b0bc10b29a7b0ad855e7118d",
+  "counts": {
+    "complete": 238,
+    "incomplete": 498,
+    "policy": 37
+  },
+  "excludedControlIds": [
+    771,
+    774
+  ],
+  "exclusionReasons": [
+    "explicit cancellation",
+    "unpaired surrogate incompatible with strict UTF-8 harness"
+  ],
+  "freshExecution": true,
+  "noModelOrHoldout": true,
+  "requests": 773,
+  "scriptSha256": "0faac255b316d33911908f1d9c26dc9ebb0e59a79f65a13662fba9949c61f3c8",
+  "violations": 0
+}

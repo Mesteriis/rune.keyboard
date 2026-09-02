@@ -1,0 +1,40 @@
+{
+  "en": {
+    "recallGains": 82,
+    "recallLosses": 4,
+    "recallLossIds": [
+      "en-calibration-typo-03-3-1",
+      "en-calibration-typo-09-3-6",
+      "en-calibration-typo-11-2-3",
+      "en-calibration-typo-13-0-2"
+    ],
+    "oldCompletePreserved": 44,
+    "newComplete": 162
+  },
+  "ru": {
+    "recallGains": 301,
+    "recallLosses": 5,
+    "recallLossIds": [
+      "ru-calibration-typo-00-0-0",
+      "ru-calibration-typo-10-0-1",
+      "ru-calibration-typo-13-2-4",
+      "ru-calibration-typo-16-2-4",
+      "ru-calibration-typo-17-2-1"
+    ],
+    "oldCompletePreserved": 137,
+    "newComplete": 240
+  },
+  "es": {
+    "recallGains": 128,
+    "recallLosses": 5,
+    "recallLossIds": [
+      "es-calibration-typo-00-0-1",
+      "es-calibration-typo-05-1-6",
+      "es-calibration-typo-06-4-1",
+      "es-calibration-typo-06-4-4",
+      "es-calibration-typo-11-2-1"
+    ],
+    "oldCompletePreserved": 98,
+    "newComplete": 224
+  }
+}

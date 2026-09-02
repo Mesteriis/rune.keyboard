@@ -41,6 +41,17 @@ PR8 mechanical punctuation and schema3 persistence have local integration
 evidence, while settings consumers/UI have scoped API26/API37 integration
 evidence. No push, remote PR or publication is authorized.
 
+### Exact top-seven production integration — 2026-09-03
+
+- Baseline `991d7c56aa503fec023ce6b434ddd9737940d0ed`; its required post-commit JVM run passed 586/586.
+- Packed selection now uses a global covering frontier and a separate exact top-seven certificate after shared preflight/membership. Exhaustive scan stays unchanged. Both routes share 8192 states/64 verifications, with strict dedup-before-quota and the incomplete-search veto. Temporary arrays and mapping references clear on all exits; no new editor reads, models or index sidecars.
+- Independent 3209 graph pairs/8218 prefix cuts, 94 full-policy cases, expanded finite oracle comparisons and every cancellation checkpoint PASS. New current-source full-neighborhood comparison773/773 PASS (238 complete/498 incomplete/37 policy); explicit cancellation and unpaired-surrogate controls remain separately tested in JVM. Initial exclusion-reason metadata corrected; raw results unchanged.
+- Calibration recall EN894→972, RU666→962, ES824→947 /1000 typos. Complete recalled typos EN22→184, RU126→366, ES90→314. All279 old complete searches preserve exact alternatives;626 new complete. Fourteen individual recall losses remain incomplete/vetoed and are listed. No holdout/model/AutoReplace quality claim.
+- Final JVM593/593 PASS, full gates267/42 PASS, four tooling tests PASS. API26 30/30 PASS213.899s; API37 30/30 PASS238.677s. Android installed inputs differ from final sources only by two archived comment clarifications; final source compilation/JVM and calibration/oracle identity are verified separately.
+- On fixed60 development requests (300 observations/strategy/API), CPU p95 rises6.191→14.566ms on API26 and7.855→39.394ms on API37. Complete coverage18→38/60. Additional fixed primitive scratch282524bytes; not measured RSS. This is a coverage improvement with higher compute cost, not an energy pass.
+- Next: reduce equal-cost unresolved-region work while preserving the proof and caps (candidate approach: separately validated/licensed subtree frequency lower bound), then finish calibration, automatic replacement/Undo, contextual punctuation and physical qualification. EN coverage still insufficient on calibration; model swapping alone does not repair it.
+- Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-top-seven.md`; proof/tooling/evidence: `tools/lexicon/smart-typing-0.3/top-seven/`.
+
 ### Production calibration retrieval baseline — 2026-09-03
 
 - Android model consumer committed as `5ff78a8`; mandatory fresh post-commit JVM rerun PASS 586/586. Source tree was clean before this tooling slice.

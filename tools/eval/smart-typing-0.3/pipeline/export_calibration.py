@@ -22,7 +22,8 @@ SOURCES = ["ime/model/KeyboardState.kt"] + [f"smarttyping/correction/{s}.kt" for
     "TokenUnicode", "ProtectedTokenPolicy", "CasePattern", "KeyboardDistance", "WeightedDamerauLevenshtein"
 )] + [f"smarttyping/lexicon/{s}.kt" for s in (
     "LanguageRouter", "CandidateLexicon", "CandidateGenerator", "PackedCandidateLexicon",
-    "PackedLexiconData", "PackedLexiconManifest", "FrozenPackedLexicons"
+    "PackedLexiconData", "PackedLexiconManifest", "FrozenPackedLexicons",
+    "TopCandidateSelection", "PackedTopSeven", "PrefixDistance"
 )]
 COMPLETIONS = {"COMPLETE", "PROTECTED", "VALID_WORD", "STATES_EXHAUSTED", "VERIFIED_EXHAUSTED",
                "CANCELLED", "UNAVAILABLE", "READER_FAILURE"}

@@ -2,11 +2,12 @@ package io.github.mesteriis.rune.keyboard.smarttyping.lexicon
 
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.TokenUnicode
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 
 /** Static diagnostic, without query text or a query-bearing exception cause. */
 class PackedReaderException internal constructor() : Exception("PACKED_READER_FAILURE")
 
-/** Worker-confined scratch over immutable validated handles; no ranking or local top-N. */
+/** Worker-confined scratch over immutable handles; exhaustive scan and separately certified global top-N. */
 class PackedCandidateLexicon(handles: Collection<PackedLexiconData>) : CandidateLexicon {
     private val indices = arrayOfNulls<PackedLexiconData>(KeyboardLanguage.entries.size)
     private val query = IntArray(32)
@@ -16,6 +17,12 @@ class PackedCandidateLexicon(handles: Collection<PackedLexiconData>) : Candidate
     private val distance = IntArray(34 * 34)
     private val next = IntArray(33)
     private val lower = IntArray(33)
+    private val topSeven by lazy(LazyThreadSafetyMode.NONE) { PackedTopSeven(::handle) }
+
+    internal fun handle(language: KeyboardLanguage): PackedLexiconData? = indices[language.ordinal]
+
+    override fun selectTop(key: String, route: LanguageRoute, pattern: CasePattern,
+        control: CandidateSearchControl): TopCandidateSelection = topSeven.select(key, route, pattern, control)
 
     init {
         require(handles.size <= indices.size) { "PACKED_HANDLE_COUNT" }

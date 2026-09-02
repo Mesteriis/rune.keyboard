@@ -86,7 +86,7 @@ class PackedCandidateLexiconTest {
     }
 
     @Test fun `actual generator retains partial suggestions when the shared verification budget ends`() {
-        val words = (0..2).flatMap { position -> ('b'..'z').map { "aaaaa".replaceRange(position, position + 1, it.toString()) } }
+        val words = (0..3).flatMap { position -> "bcdefghijklmnoprtuvxy".map { "aaaaa".replaceRange(position, position + 1, it.toString()) } }
         val reader = PackedCandidateLexicon(listOf(PackedFixture.build(words).ready(), PackedFixture.build(listOf("zzzzzzzzzz"), es).ready()))
         val result = CandidateGenerator(reader).generate("aaaaa", en)
         assertEquals(CandidateCompletion.VERIFIED_EXHAUSTED, result.completion)

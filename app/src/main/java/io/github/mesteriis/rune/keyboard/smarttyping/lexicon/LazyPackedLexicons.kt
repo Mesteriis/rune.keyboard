@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.lexicon
 
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 import java.util.concurrent.ThreadFactory
 
 internal fun interface PackedLanguageSource {
@@ -140,14 +141,21 @@ class LazyPackedLexicons internal constructor(
         var active = false
     }
 
-    /** No lookup, loading, ranking, accounting, query retention or replacement callback here. */
+    /** Worker-only scratch delegates selection over published immutable handles; never loads assets. */
     private class ReadyBridge(private val state: State) : CandidateLexicon {
+        private val topSeven by lazy(LazyThreadSafetyMode.NONE) {
+            PackedTopSeven { language -> state.snapshot.reader(language)?.handle(language) }
+        }
+
         override fun exact(language: KeyboardLanguage, key: String, control: CandidateSearchControl): ExactMembership =
             state.snapshot.reader(language)?.exact(language, key, control) ?: ExactMembership.UNAVAILABLE
 
         override fun scan(language: KeyboardLanguage, key: String, unitRadius: Int,
             control: CandidateSearchControl, visitor: CandidateVisitor): LexiconScanStatus =
             state.snapshot.reader(language)?.scan(language, key, unitRadius, control, visitor) ?: LexiconScanStatus.UNAVAILABLE
+
+        override fun selectTop(key: String, route: LanguageRoute, pattern: CasePattern,
+            control: CandidateSearchControl): TopCandidateSelection = topSeven.select(key, route, pattern, control)
     }
 
     private class Work(val language: KeyboardLanguage, val generation: Long, val source: PackedLanguageSource)

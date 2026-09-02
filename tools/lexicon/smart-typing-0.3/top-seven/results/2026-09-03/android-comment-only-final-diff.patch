@@ -1,0 +1,11 @@
+--- a/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt
++++ b/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt
+@@ -58 +58,2 @@
+- * All verified neighbors are evaluated before display-case/dedup/quota/top-N selection. INITIAL
++ * Packed selection requires an exact global top-seven certificate; generic readers exhaust the
++ * neighborhood before display-case/dedup/quota/top-N selection. INITIAL
+--- a/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt
++++ b/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt
+@@ -10 +10 @@
+-/** Worker-confined scratch over immutable validated handles; no ranking or local top-N. */
++/** Worker-confined scratch over immutable handles; exhaustive scan and separately certified global top-N. */

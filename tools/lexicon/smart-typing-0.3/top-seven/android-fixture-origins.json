@@ -1,0 +1,10 @@
+{
+  "selection": "first 20 queries per EN/RU/ES development source, unchanged order",
+  "fixture": "app/src/androidTest/assets/top-seven/requests.tsv",
+  "sha256": "364369c7b716e617536725ff1f6622f722addaeca592962dfc1743c931c11e7c",
+  "sources": {
+    "tools/lexicon/smart-typing-0.3/benchmark/fixtures/development/en.queries.txt": "c6cdb793cdd7b87cb67478c843bc67b91beeefeeeffaa40358d576ab56ce82f5",
+    "tools/lexicon/smart-typing-0.3/benchmark/fixtures/development/ru.queries.txt": "3f7073145ef6e8160eeda229f94bd3a3451dcc8bae800af84059b7bedc12cdcf",
+    "tools/lexicon/smart-typing-0.3/benchmark/fixtures/development/es.queries.txt": "11448784899bffe21baf6dc1ec23a959cc2787f7d91f54eb5578fec072832470"
+  }
+}

@@ -1,0 +1,1639 @@
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.smarttyping.lexicon.TopSevenInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.smarttyping.lexicon.TopSevenInstrumentedTest:
+INSTRUMENTATION_STATUS: test=packedTopSevenAndExhaustiveComparison
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=0 strategy=0 round=0 wall_ns=6656000 cpu_ns=6544459 states=8192 verified=17 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=0 strategy=1 round=0 wall_ns=32244250 cpu_ns=30321543 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=1 strategy=1 round=0 wall_ns=3555208 cpu_ns=3210917 states=1438 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=1 strategy=0 round=0 wall_ns=1784208 cpu_ns=1709624 states=2144 verified=14 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=2 strategy=0 round=0 wall_ns=6443083 cpu_ns=6187334 states=8192 verified=10 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=2 strategy=1 round=0 wall_ns=29586126 cpu_ns=29222082 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=3 strategy=1 round=0 wall_ns=21782750 cpu_ns=21051333 states=6441 verified=57 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=3 strategy=0 round=0 wall_ns=6764125 cpu_ns=6533166 states=8192 verified=33 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=4 strategy=0 round=0 wall_ns=6018417 cpu_ns=5941125 states=8192 verified=7 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=4 strategy=1 round=0 wall_ns=29540459 cpu_ns=28981500 states=8192 verified=7 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=5 strategy=1 round=0 wall_ns=6951542 cpu_ns=6796960 states=2139 verified=59 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=5 strategy=0 round=0 wall_ns=6963875 cpu_ns=6746292 states=8192 verified=49 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=6 strategy=0 round=0 wall_ns=6945208 cpu_ns=6734792 states=8192 verified=37 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=6 strategy=1 round=0 wall_ns=19723959 cpu_ns=17889917 states=5398 verified=16 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=7 strategy=1 round=0 wall_ns=23683167 cpu_ns=23251209 states=5678 verified=45 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=7 strategy=0 round=0 wall_ns=5532292 cpu_ns=5336917 states=4050 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=8 strategy=0 round=0 wall_ns=3187125 cpu_ns=3107417 states=1838 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=8 strategy=1 round=0 wall_ns=6321541 cpu_ns=6200251 states=1503 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=9 strategy=1 round=0 wall_ns=15008625 cpu_ns=14737539 states=4662 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=9 strategy=0 round=0 wall_ns=6977750 cpu_ns=6432666 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=10 strategy=0 round=0 wall_ns=2959417 cpu_ns=2892084 states=3038 verified=57 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=10 strategy=1 round=0 wall_ns=4035167 cpu_ns=3872916 states=1917 verified=42 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=11 strategy=1 round=0 wall_ns=33086375 cpu_ns=31618629 states=8192 verified=49 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=11 strategy=0 round=0 wall_ns=7188292 cpu_ns=6862083 states=8192 verified=34 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=12 strategy=0 round=0 wall_ns=2748208 cpu_ns=2608834 states=3316 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=12 strategy=1 round=0 wall_ns=4614959 cpu_ns=4532500 states=1986 verified=15 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=13 strategy=1 round=0 wall_ns=10192125 cpu_ns=9949915 states=2999 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=13 strategy=0 round=0 wall_ns=7557875 cpu_ns=7092792 states=8192 verified=42 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=14 strategy=0 round=0 wall_ns=6063125 cpu_ns=5885458 states=8192 verified=0 completion=3 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=14 strategy=1 round=0 wall_ns=34791750 cpu_ns=34038290 states=8192 verified=1 completion=3 alternatives=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=15 strategy=1 round=0 wall_ns=4702208 cpu_ns=3109790 states=1324 verified=9 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=15 strategy=0 round=0 wall_ns=1903208 cpu_ns=1477125 states=2138 verified=16 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=16 strategy=0 round=0 wall_ns=6726291 cpu_ns=6287916 states=8192 verified=15 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=16 strategy=1 round=0 wall_ns=28865292 cpu_ns=28077751 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=17 strategy=1 round=0 wall_ns=30617916 cpu_ns=30119083 states=8192 verified=2 completion=3 alternatives=2
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=17 strategy=0 round=0 wall_ns=6513084 cpu_ns=6188500 states=8192 verified=1 completion=3 alternatives=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=18 strategy=0 round=0 wall_ns=3881708 cpu_ns=3102083 states=3409 verified=5 completion=0 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=18 strategy=1 round=0 wall_ns=8265917 cpu_ns=7544376 states=3409 verified=5 completion=0 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=19 strategy=1 round=0 wall_ns=2667167 cpu_ns=2575709 states=1121 verified=50 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=19 strategy=0 round=0 wall_ns=1781500 cpu_ns=1783500 states=1668 verified=52 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=20 strategy=0 round=0 wall_ns=6675000 cpu_ns=6536917 states=8192 verified=12 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=20 strategy=1 round=0 wall_ns=13862583 cpu_ns=13207208 states=2619 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=21 strategy=1 round=0 wall_ns=40010500 cpu_ns=39012917 states=5806 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=21 strategy=0 round=0 wall_ns=9223291 cpu_ns=9038792 states=8192 verified=44 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=22 strategy=0 round=0 wall_ns=3161458 cpu_ns=2773957 states=1937 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=22 strategy=1 round=0 wall_ns=5621834 cpu_ns=5090125 states=1928 verified=10 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=23 strategy=1 round=0 wall_ns=6743500 cpu_ns=6257001 states=1455 verified=24 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=23 strategy=0 round=0 wall_ns=1672708 cpu_ns=1675875 states=1462 verified=25 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=24 strategy=0 round=0 wall_ns=1394042 cpu_ns=1254375 states=1273 verified=29 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=24 strategy=1 round=0 wall_ns=2558000 cpu_ns=2457875 states=1273 verified=29 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=25 strategy=1 round=0 wall_ns=29448833 cpu_ns=27179918 states=6796 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=25 strategy=0 round=0 wall_ns=7151458 cpu_ns=6764708 states=8192 verified=18 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=26 strategy=0 round=0 wall_ns=7340459 cpu_ns=6886334 states=8192 verified=22 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=26 strategy=1 round=0 wall_ns=21185625 cpu_ns=20341957 states=4889 verified=39 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=27 strategy=1 round=0 wall_ns=5007375 cpu_ns=4747624 states=1508 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=27 strategy=0 round=0 wall_ns=1592416 cpu_ns=1262708 states=1508 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=28 strategy=0 round=0 wall_ns=4219209 cpu_ns=4084625 states=2798 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=28 strategy=1 round=0 wall_ns=18674000 cpu_ns=18130958 states=4469 verified=63 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=29 strategy=1 round=0 wall_ns=31147875 cpu_ns=30311042 states=7060 verified=55 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=29 strategy=0 round=0 wall_ns=7569417 cpu_ns=7367166 states=6682 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=30 strategy=0 round=0 wall_ns=7836042 cpu_ns=7606916 states=7644 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=30 strategy=1 round=0 wall_ns=10117792 cpu_ns=9490500 states=2206 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=31 strategy=1 round=0 wall_ns=32792126 cpu_ns=31722207 states=6727 verified=12 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=31 strategy=0 round=0 wall_ns=7629583 cpu_ns=7286751 states=8192 verified=27 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=32 strategy=0 round=0 wall_ns=8068958 cpu_ns=7845209 states=8192 verified=47 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=32 strategy=1 round=0 wall_ns=25217417 cpu_ns=22772835 states=5006 verified=47 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=33 strategy=1 round=0 wall_ns=12954708 cpu_ns=12224875 states=3501 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=33 strategy=0 round=0 wall_ns=7628792 cpu_ns=7263833 states=8192 verified=41 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=34 strategy=0 round=0 wall_ns=6932541 cpu_ns=6511667 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=34 strategy=1 round=0 wall_ns=40529750 cpu_ns=39243832 states=8192 verified=26 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=35 strategy=1 round=0 wall_ns=33381083 cpu_ns=32461373 states=8192 verified=25 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=35 strategy=0 round=0 wall_ns=7361333 cpu_ns=6903958 states=8192 verified=26 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=36 strategy=0 round=0 wall_ns=6478042 cpu_ns=6284333 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=36 strategy=1 round=0 wall_ns=10349292 cpu_ns=9740458 states=2213 verified=48 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=37 strategy=1 round=0 wall_ns=45738042 cpu_ns=44133833 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=37 strategy=0 round=0 wall_ns=6774209 cpu_ns=6557416 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=38 strategy=0 round=0 wall_ns=6484250 cpu_ns=6353166 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=38 strategy=1 round=0 wall_ns=44459792 cpu_ns=43698876 states=8192 verified=29 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=39 strategy=1 round=0 wall_ns=9823459 cpu_ns=8453460 states=1873 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=39 strategy=0 round=0 wall_ns=5551167 cpu_ns=5276500 states=4858 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=40 strategy=0 round=0 wall_ns=2248583 cpu_ns=2006458 states=1943 verified=60 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=40 strategy=1 round=0 wall_ns=2195708 cpu_ns=2106791 states=1119 verified=42 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=41 strategy=1 round=0 wall_ns=7635458 cpu_ns=7100500 states=3007 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=41 strategy=0 round=0 wall_ns=2341000 cpu_ns=2342417 states=3014 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=42 strategy=0 round=0 wall_ns=2353500 cpu_ns=2303083 states=2621 verified=56 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=42 strategy=1 round=0 wall_ns=2879875 cpu_ns=2547874 states=1399 verified=41 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=43 strategy=1 round=0 wall_ns=17872625 cpu_ns=17563125 states=4904 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=43 strategy=0 round=0 wall_ns=7941875 cpu_ns=7811333 states=8192 verified=50 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=44 strategy=0 round=0 wall_ns=1890291 cpu_ns=1893875 states=2455 verified=10 completion=0 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=44 strategy=1 round=0 wall_ns=5711542 cpu_ns=5492792 states=2455 verified=10 completion=0 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=45 strategy=1 round=0 wall_ns=62750 cpu_ns=15417 states=28 verified=0 completion=2 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=45 strategy=0 round=0 wall_ns=66625 cpu_ns=68042 states=28 verified=0 completion=2 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=46 strategy=0 round=0 wall_ns=3998125 cpu_ns=3905625 states=2906 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=46 strategy=1 round=0 wall_ns=8124917 cpu_ns=7919293 states=2202 verified=27 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=47 strategy=1 round=0 wall_ns=36742542 cpu_ns=35934917 states=8192 verified=16 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=47 strategy=0 round=0 wall_ns=8023500 cpu_ns=7369666 states=8192 verified=16 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=48 strategy=0 round=0 wall_ns=6267500 cpu_ns=6190000 states=5158 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=48 strategy=1 round=0 wall_ns=6669417 cpu_ns=6258499 states=1680 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=49 strategy=1 round=0 wall_ns=4288917 cpu_ns=4132833 states=1514 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=49 strategy=0 round=0 wall_ns=1475000 cpu_ns=1476500 states=1514 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=50 strategy=0 round=0 wall_ns=3829083 cpu_ns=3631249 states=2296 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=50 strategy=1 round=0 wall_ns=7471917 cpu_ns=7346417 states=1892 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=51 strategy=1 round=0 wall_ns=2012625 cpu_ns=1802207 states=740 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=51 strategy=0 round=0 wall_ns=2895041 cpu_ns=2818042 states=3145 verified=33 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=52 strategy=0 round=0 wall_ns=6370083 cpu_ns=6068043 states=8192 verified=4 completion=3 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=52 strategy=1 round=0 wall_ns=40644083 cpu_ns=38469665 states=8192 verified=4 completion=3 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=53 strategy=1 round=0 wall_ns=4452375 cpu_ns=4207918 states=1667 verified=10 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=53 strategy=0 round=0 wall_ns=2725208 cpu_ns=2270334 states=2924 verified=17 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=54 strategy=0 round=0 wall_ns=6870917 cpu_ns=6639125 states=8192 verified=20 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=54 strategy=1 round=0 wall_ns=31626833 cpu_ns=30752126 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=55 strategy=1 round=0 wall_ns=31223083 cpu_ns=30359249 states=6979 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=55 strategy=0 round=0 wall_ns=7764167 cpu_ns=7244999 states=8192 verified=23 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=56 strategy=0 round=0 wall_ns=2157042 cpu_ns=2044208 states=2318 verified=12 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=56 strategy=1 round=0 wall_ns=8058583 cpu_ns=5468667 states=1277 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=57 strategy=1 round=0 wall_ns=72431042 cpu_ns=56682250 states=8192 verified=3 completion=3 alternatives=3
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=57 strategy=0 round=0 wall_ns=6836625 cpu_ns=6414166 states=8192 verified=6 completion=3 alternatives=6
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=58 strategy=0 round=0 wall_ns=3532458 cpu_ns=2952541 states=970 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=58 strategy=1 round=0 wall_ns=8998375 cpu_ns=8561625 states=2200 verified=48 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=59 strategy=1 round=0 wall_ns=21294000 cpu_ns=20296082 states=5151 verified=15 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=59 strategy=0 round=0 wall_ns=7275250 cpu_ns=6532752 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=0 strategy=1 round=1 wall_ns=33408167 cpu_ns=30904541 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=0 strategy=0 round=1 wall_ns=7170958 cpu_ns=6789501 states=8192 verified=17 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=1 strategy=0 round=1 wall_ns=2287125 cpu_ns=1861083 states=2144 verified=14 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=1 strategy=1 round=1 wall_ns=3286083 cpu_ns=3124334 states=1438 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=2 strategy=1 round=1 wall_ns=30049583 cpu_ns=29537250 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=2 strategy=0 round=1 wall_ns=6209458 cpu_ns=6128541 states=8192 verified=10 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=3 strategy=0 round=1 wall_ns=8622083 cpu_ns=7953957 states=8192 verified=33 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=3 strategy=1 round=1 wall_ns=106750958 cpu_ns=76181498 states=6441 verified=57 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=4 strategy=1 round=1 wall_ns=93578583 cpu_ns=65799083 states=8192 verified=7 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=4 strategy=0 round=1 wall_ns=14221541 cpu_ns=13788041 states=8192 verified=7 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=5 strategy=0 round=1 wall_ns=12641083 cpu_ns=12219249 states=8192 verified=49 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=5 strategy=1 round=1 wall_ns=8362791 cpu_ns=8173582 states=2139 verified=59 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=6 strategy=1 round=1 wall_ns=22144083 cpu_ns=20128083 states=5398 verified=16 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=6 strategy=0 round=1 wall_ns=6824167 cpu_ns=6666584 states=8192 verified=37 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=7 strategy=0 round=1 wall_ns=5294291 cpu_ns=5087416 states=4050 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=7 strategy=1 round=1 wall_ns=26237625 cpu_ns=25227749 states=5678 verified=45 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=8 strategy=1 round=1 wall_ns=6402666 cpu_ns=6104793 states=1503 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=8 strategy=0 round=1 wall_ns=3558667 cpu_ns=3030707 states=1838 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=9 strategy=0 round=1 wall_ns=8171791 cpu_ns=7989541 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=9 strategy=1 round=1 wall_ns=14744000 cpu_ns=14424459 states=4662 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=10 strategy=1 round=1 wall_ns=4101917 cpu_ns=4000582 states=1917 verified=42 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=10 strategy=0 round=1 wall_ns=2883250 cpu_ns=2758001 states=3038 verified=57 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=11 strategy=0 round=1 wall_ns=6923167 cpu_ns=6725958 states=8192 verified=34 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=11 strategy=1 round=1 wall_ns=31567416 cpu_ns=31085375 states=8192 verified=49 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=12 strategy=1 round=1 wall_ns=5252000 cpu_ns=4861958 states=1986 verified=15 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=12 strategy=0 round=1 wall_ns=3610542 cpu_ns=2946583 states=3316 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=13 strategy=0 round=1 wall_ns=6554583 cpu_ns=6335666 states=8192 verified=42 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=13 strategy=1 round=1 wall_ns=9393791 cpu_ns=9181875 states=2999 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=14 strategy=1 round=1 wall_ns=37819834 cpu_ns=36042212 states=8192 verified=1 completion=3 alternatives=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=14 strategy=0 round=1 wall_ns=6312833 cpu_ns=6130958 states=8192 verified=0 completion=3 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=15 strategy=0 round=1 wall_ns=1744375 cpu_ns=1746916 states=2138 verified=16 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=15 strategy=1 round=1 wall_ns=2777708 cpu_ns=2700541 states=1324 verified=9 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=16 strategy=1 round=1 wall_ns=28761125 cpu_ns=28232416 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=16 strategy=0 round=1 wall_ns=6358792 cpu_ns=6247832 states=8192 verified=15 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=17 strategy=0 round=1 wall_ns=5990250 cpu_ns=5824084 states=8192 verified=1 completion=3 alternatives=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=17 strategy=1 round=1 wall_ns=31383709 cpu_ns=30186874 states=8192 verified=2 completion=3 alternatives=2
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=18 strategy=1 round=1 wall_ns=7473083 cpu_ns=7204500 states=3409 verified=5 completion=0 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=18 strategy=0 round=1 wall_ns=2265584 cpu_ns=2184208 states=3409 verified=5 completion=0 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=19 strategy=0 round=1 wall_ns=1691542 cpu_ns=1693084 states=1668 verified=52 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=19 strategy=1 round=1 wall_ns=2820167 cpu_ns=2718334 states=1121 verified=50 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=20 strategy=1 round=1 wall_ns=12462166 cpu_ns=11907958 states=2619 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=20 strategy=0 round=1 wall_ns=6676042 cpu_ns=6373543 states=8192 verified=12 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=21 strategy=0 round=1 wall_ns=8563542 cpu_ns=8393334 states=8192 verified=44 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=21 strategy=1 round=1 wall_ns=32023083 cpu_ns=31415709 states=5806 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=22 strategy=1 round=1 wall_ns=4863709 cpu_ns=4815750 states=1928 verified=10 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=22 strategy=0 round=1 wall_ns=1788250 cpu_ns=1728167 states=1937 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=23 strategy=0 round=1 wall_ns=1506917 cpu_ns=1509250 states=1462 verified=25 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=23 strategy=1 round=1 wall_ns=4054958 cpu_ns=3803457 states=1455 verified=24 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=24 strategy=1 round=1 wall_ns=2362875 cpu_ns=2364583 states=1273 verified=29 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=24 strategy=0 round=1 wall_ns=1285417 cpu_ns=1203958 states=1273 verified=29 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=25 strategy=0 round=1 wall_ns=6694625 cpu_ns=6550375 states=8192 verified=18 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=25 strategy=1 round=1 wall_ns=28030292 cpu_ns=26188125 states=6796 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=26 strategy=1 round=1 wall_ns=20661167 cpu_ns=20222000 states=4889 verified=39 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=26 strategy=0 round=1 wall_ns=6746000 cpu_ns=6482333 states=8192 verified=22 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=27 strategy=0 round=1 wall_ns=1546875 cpu_ns=1388375 states=1508 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=27 strategy=1 round=1 wall_ns=4414084 cpu_ns=4062083 states=1508 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=28 strategy=1 round=1 wall_ns=18516125 cpu_ns=18036666 states=4469 verified=63 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=28 strategy=0 round=1 wall_ns=4284291 cpu_ns=4132042 states=2798 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=29 strategy=0 round=1 wall_ns=7546417 cpu_ns=7272166 states=6682 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=29 strategy=1 round=1 wall_ns=30637000 cpu_ns=29981334 states=7060 verified=55 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=30 strategy=1 round=1 wall_ns=9707708 cpu_ns=9229126 states=2206 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=30 strategy=0 round=1 wall_ns=7522583 cpu_ns=7232583 states=7644 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=31 strategy=0 round=1 wall_ns=7392417 cpu_ns=7265375 states=8192 verified=27 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=31 strategy=1 round=1 wall_ns=32216042 cpu_ns=31628707 states=6727 verified=12 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=32 strategy=1 round=1 wall_ns=24053083 cpu_ns=22333499 states=5006 verified=47 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=32 strategy=0 round=1 wall_ns=7828042 cpu_ns=7467917 states=8192 verified=47 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=33 strategy=0 round=1 wall_ns=7047833 cpu_ns=6820374 states=8192 verified=41 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=33 strategy=1 round=1 wall_ns=12972542 cpu_ns=12443541 states=3501 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=34 strategy=1 round=1 wall_ns=40872542 cpu_ns=39683753 states=8192 verified=26 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=34 strategy=0 round=1 wall_ns=7060500 cpu_ns=6789000 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=35 strategy=0 round=1 wall_ns=7474291 cpu_ns=7052166 states=8192 verified=26 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=35 strategy=1 round=1 wall_ns=35967500 cpu_ns=34843794 states=8192 verified=25 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=36 strategy=1 round=1 wall_ns=10603250 cpu_ns=9766251 states=2213 verified=48 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=36 strategy=0 round=1 wall_ns=6815375 cpu_ns=6433332 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=37 strategy=0 round=1 wall_ns=9236917 cpu_ns=8295207 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=37 strategy=1 round=1 wall_ns=53763334 cpu_ns=52750790 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=38 strategy=1 round=1 wall_ns=49238667 cpu_ns=46894540 states=8192 verified=29 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=38 strategy=0 round=1 wall_ns=6649708 cpu_ns=6544083 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=39 strategy=0 round=1 wall_ns=5417833 cpu_ns=5276166 states=4858 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=39 strategy=1 round=1 wall_ns=7703833 cpu_ns=7482791 states=1873 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=40 strategy=1 round=1 wall_ns=2335875 cpu_ns=2289542 states=1119 verified=42 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=40 strategy=0 round=1 wall_ns=1870666 cpu_ns=1874334 states=1943 verified=60 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=41 strategy=0 round=1 wall_ns=2228167 cpu_ns=2098832 states=3014 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=41 strategy=1 round=1 wall_ns=6731083 cpu_ns=6189334 states=3007 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=42 strategy=1 round=1 wall_ns=2831542 cpu_ns=2247208 states=1399 verified=41 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=42 strategy=0 round=1 wall_ns=2974041 cpu_ns=2604666 states=2621 verified=56 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=43 strategy=0 round=1 wall_ns=8239417 cpu_ns=7940875 states=8192 verified=50 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=43 strategy=1 round=1 wall_ns=19204292 cpu_ns=18481709 states=4904 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=44 strategy=1 round=1 wall_ns=6415333 cpu_ns=5940167 states=2455 verified=10 completion=0 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=44 strategy=0 round=1 wall_ns=2659875 cpu_ns=2302291 states=2455 verified=10 completion=0 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=45 strategy=0 round=1 wall_ns=77375 cpu_ns=79000 states=28 verified=0 completion=2 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=45 strategy=1 round=1 wall_ns=68542 cpu_ns=0 states=28 verified=0 completion=2 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=46 strategy=1 round=1 wall_ns=9143333 cpu_ns=8321831 states=2202 verified=27 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=46 strategy=0 round=1 wall_ns=4906625 cpu_ns=4321750 states=2906 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=47 strategy=0 round=1 wall_ns=7592083 cpu_ns=7193668 states=8192 verified=16 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=47 strategy=1 round=1 wall_ns=37021584 cpu_ns=35991960 states=8192 verified=16 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=48 strategy=1 round=1 wall_ns=7574542 cpu_ns=6964208 states=1680 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=48 strategy=0 round=1 wall_ns=6728166 cpu_ns=6254000 states=5158 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=49 strategy=0 round=1 wall_ns=1334375 cpu_ns=1267959 states=1514 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=49 strategy=1 round=1 wall_ns=4687291 cpu_ns=4319375 states=1514 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=50 strategy=1 round=1 wall_ns=7284083 cpu_ns=7182582 states=1892 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=50 strategy=0 round=1 wall_ns=3439750 cpu_ns=3360875 states=2296 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=51 strategy=0 round=1 wall_ns=3394500 cpu_ns=2972709 states=3145 verified=33 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=51 strategy=1 round=1 wall_ns=2477709 cpu_ns=2251917 states=740 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=52 strategy=1 round=1 wall_ns=41913417 cpu_ns=38772960 states=8192 verified=4 completion=3 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=52 strategy=0 round=1 wall_ns=6929584 cpu_ns=6357417 states=8192 verified=4 completion=3 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=53 strategy=0 round=1 wall_ns=2318000 cpu_ns=2151458 states=2924 verified=17 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=53 strategy=1 round=1 wall_ns=4826667 cpu_ns=4340749 states=1667 verified=10 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=54 strategy=1 round=1 wall_ns=32323292 cpu_ns=31153251 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=54 strategy=0 round=1 wall_ns=7958250 cpu_ns=7217210 states=8192 verified=20 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=55 strategy=0 round=1 wall_ns=7523958 cpu_ns=7168126 states=8192 verified=23 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=55 strategy=1 round=1 wall_ns=31922459 cpu_ns=31110001 states=6979 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=56 strategy=1 round=1 wall_ns=3766625 cpu_ns=3208334 states=1277 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=56 strategy=0 round=1 wall_ns=2504833 cpu_ns=2109875 states=2318 verified=12 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=57 strategy=0 round=1 wall_ns=7091708 cpu_ns=6664876 states=8192 verified=6 completion=3 alternatives=6
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=57 strategy=1 round=1 wall_ns=37388208 cpu_ns=36768290 states=8192 verified=3 completion=3 alternatives=3
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=58 strategy=1 round=1 wall_ns=8352459 cpu_ns=8065501 states=2200 verified=48 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=58 strategy=0 round=1 wall_ns=3042834 cpu_ns=2769332 states=970 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=59 strategy=0 round=1 wall_ns=7541583 cpu_ns=6854335 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=59 strategy=1 round=1 wall_ns=21935875 cpu_ns=20244543 states=5151 verified=15 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=0 strategy=0 round=2 wall_ns=6508666 cpu_ns=6303209 states=8192 verified=17 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=0 strategy=1 round=2 wall_ns=30851500 cpu_ns=30217376 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=1 strategy=1 round=2 wall_ns=3276750 cpu_ns=3103041 states=1438 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=1 strategy=0 round=2 wall_ns=1759834 cpu_ns=1599208 states=2144 verified=14 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=2 strategy=0 round=2 wall_ns=6864666 cpu_ns=6477334 states=8192 verified=10 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=2 strategy=1 round=2 wall_ns=29906458 cpu_ns=29317958 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=3 strategy=1 round=2 wall_ns=22286166 cpu_ns=21157625 states=6441 verified=57 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=3 strategy=0 round=2 wall_ns=7179375 cpu_ns=6706333 states=8192 verified=33 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=4 strategy=0 round=2 wall_ns=7068125 cpu_ns=6462414 states=8192 verified=7 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=4 strategy=1 round=2 wall_ns=30846667 cpu_ns=29651207 states=8192 verified=7 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=5 strategy=1 round=2 wall_ns=7496708 cpu_ns=6915042 states=2139 verified=59 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=5 strategy=0 round=2 wall_ns=7292167 cpu_ns=6787707 states=8192 verified=49 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=6 strategy=0 round=2 wall_ns=6999500 cpu_ns=6794000 states=8192 verified=37 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=6 strategy=1 round=2 wall_ns=20033917 cpu_ns=18231457 states=5398 verified=16 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=7 strategy=1 round=2 wall_ns=25045208 cpu_ns=24501041 states=5678 verified=45 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=7 strategy=0 round=2 wall_ns=5391458 cpu_ns=5030042 states=4050 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=8 strategy=0 round=2 wall_ns=3466416 cpu_ns=3069001 states=1838 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=8 strategy=1 round=2 wall_ns=8756417 cpu_ns=8374084 states=1503 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=9 strategy=1 round=2 wall_ns=18603042 cpu_ns=18130250 states=4662 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=9 strategy=0 round=2 wall_ns=6044917 cpu_ns=5963916 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=10 strategy=0 round=2 wall_ns=2746833 cpu_ns=2750792 states=3038 verified=57 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=10 strategy=1 round=2 wall_ns=4422208 cpu_ns=4265584 states=1917 verified=42 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=11 strategy=1 round=2 wall_ns=32012083 cpu_ns=31294709 states=8192 verified=49 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=11 strategy=0 round=2 wall_ns=7941750 cpu_ns=7333333 states=8192 verified=34 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=12 strategy=0 round=2 wall_ns=2841500 cpu_ns=2568833 states=3316 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=12 strategy=1 round=2 wall_ns=4682042 cpu_ns=4537917 states=1986 verified=15 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=13 strategy=1 round=2 wall_ns=9872208 cpu_ns=9493917 states=2999 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=13 strategy=0 round=2 wall_ns=7245708 cpu_ns=6778333 states=8192 verified=42 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=14 strategy=0 round=2 wall_ns=6209917 cpu_ns=5851000 states=8192 verified=0 completion=3 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=14 strategy=1 round=2 wall_ns=36294417 cpu_ns=34364539 states=8192 verified=1 completion=3 alternatives=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=15 strategy=1 round=2 wall_ns=3042209 cpu_ns=2795750 states=1324 verified=9 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=15 strategy=0 round=2 wall_ns=1667959 cpu_ns=1598501 states=2138 verified=16 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=16 strategy=0 round=2 wall_ns=6311916 cpu_ns=6207000 states=8192 verified=15 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=16 strategy=1 round=2 wall_ns=29037833 cpu_ns=28251956 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=17 strategy=1 round=2 wall_ns=31231708 cpu_ns=30081583 states=8192 verified=2 completion=3 alternatives=2
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=17 strategy=0 round=2 wall_ns=6626834 cpu_ns=6171959 states=8192 verified=1 completion=3 alternatives=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=18 strategy=0 round=2 wall_ns=2327125 cpu_ns=2331667 states=3409 verified=5 completion=0 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=18 strategy=1 round=2 wall_ns=7064750 cpu_ns=7007417 states=3409 verified=5 completion=0 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=19 strategy=1 round=2 wall_ns=2400291 cpu_ns=2404334 states=1121 verified=50 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=19 strategy=0 round=2 wall_ns=1877083 cpu_ns=1800210 states=1668 verified=52 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=20 strategy=0 round=2 wall_ns=6424917 cpu_ns=6287167 states=8192 verified=12 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=20 strategy=1 round=2 wall_ns=12867584 cpu_ns=12546001 states=2619 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=21 strategy=1 round=2 wall_ns=33852000 cpu_ns=33137334 states=5806 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=21 strategy=0 round=2 wall_ns=9517792 cpu_ns=8899209 states=8192 verified=44 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=22 strategy=0 round=2 wall_ns=1606958 cpu_ns=1610584 states=1937 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=22 strategy=1 round=2 wall_ns=5858834 cpu_ns=5005915 states=1928 verified=10 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=23 strategy=1 round=2 wall_ns=4197708 cpu_ns=3845707 states=1455 verified=24 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=23 strategy=0 round=2 wall_ns=1526458 cpu_ns=1511876 states=1462 verified=25 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=24 strategy=0 round=2 wall_ns=1343500 cpu_ns=1338292 states=1273 verified=29 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=24 strategy=1 round=2 wall_ns=2524833 cpu_ns=2452499 states=1273 verified=29 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=25 strategy=1 round=2 wall_ns=29118000 cpu_ns=27226252 states=6796 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=25 strategy=0 round=2 wall_ns=6889042 cpu_ns=6693791 states=8192 verified=18 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=26 strategy=0 round=2 wall_ns=8363750 cpu_ns=7976876 states=8192 verified=22 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=26 strategy=1 round=2 wall_ns=20548167 cpu_ns=20142583 states=4889 verified=39 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=27 strategy=1 round=2 wall_ns=4353167 cpu_ns=4262624 states=1508 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=27 strategy=0 round=2 wall_ns=1182666 cpu_ns=1184750 states=1508 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=28 strategy=0 round=2 wall_ns=4820667 cpu_ns=4545585 states=2798 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=28 strategy=1 round=2 wall_ns=21628625 cpu_ns=19430999 states=4469 verified=63 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=29 strategy=1 round=2 wall_ns=31475750 cpu_ns=30778625 states=7060 verified=55 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=29 strategy=0 round=2 wall_ns=7707375 cpu_ns=7394208 states=6682 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=30 strategy=0 round=2 wall_ns=7777916 cpu_ns=7516250 states=7644 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=30 strategy=1 round=2 wall_ns=9611917 cpu_ns=9441751 states=2206 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=31 strategy=1 round=2 wall_ns=32040167 cpu_ns=31260790 states=6727 verified=12 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=31 strategy=0 round=2 wall_ns=8167125 cpu_ns=7414833 states=8192 verified=27 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=32 strategy=0 round=2 wall_ns=8724417 cpu_ns=8298957 states=8192 verified=47 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=32 strategy=1 round=2 wall_ns=24459042 cpu_ns=22370499 states=5006 verified=47 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=33 strategy=1 round=2 wall_ns=12693125 cpu_ns=12216959 states=3501 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=33 strategy=0 round=2 wall_ns=7746375 cpu_ns=7219833 states=8192 verified=41 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=34 strategy=0 round=2 wall_ns=6154583 cpu_ns=6007166 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=34 strategy=1 round=2 wall_ns=40617917 cpu_ns=39676957 states=8192 verified=26 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=35 strategy=1 round=2 wall_ns=32953875 cpu_ns=32082748 states=8192 verified=25 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=35 strategy=0 round=2 wall_ns=6879375 cpu_ns=6749083 states=8192 verified=26 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=36 strategy=0 round=2 wall_ns=6504292 cpu_ns=6320708 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=36 strategy=1 round=2 wall_ns=9548667 cpu_ns=9421333 states=2213 verified=48 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=37 strategy=1 round=2 wall_ns=44875750 cpu_ns=43686877 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=37 strategy=0 round=2 wall_ns=6923542 cpu_ns=6657417 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=38 strategy=0 round=2 wall_ns=7085667 cpu_ns=6690251 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=38 strategy=1 round=2 wall_ns=45632458 cpu_ns=43592170 states=8192 verified=29 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=39 strategy=1 round=2 wall_ns=8698250 cpu_ns=8306332 states=1873 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=39 strategy=0 round=2 wall_ns=6299917 cpu_ns=5678708 states=4858 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=40 strategy=0 round=2 wall_ns=2067250 cpu_ns=2070583 states=1943 verified=60 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=40 strategy=1 round=2 wall_ns=2235334 cpu_ns=2098083 states=1119 verified=42 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=41 strategy=1 round=2 wall_ns=6905542 cpu_ns=6627958 states=3007 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=41 strategy=0 round=2 wall_ns=3108708 cpu_ns=2509249 states=3014 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=42 strategy=0 round=2 wall_ns=2204458 cpu_ns=1802499 states=2621 verified=56 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=42 strategy=1 round=2 wall_ns=2051834 cpu_ns=2053125 states=1399 verified=41 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=43 strategy=1 round=2 wall_ns=18427667 cpu_ns=17830042 states=4904 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=43 strategy=0 round=2 wall_ns=8292750 cpu_ns=7855374 states=8192 verified=50 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=44 strategy=0 round=2 wall_ns=1814042 cpu_ns=1717124 states=2455 verified=10 completion=0 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=44 strategy=1 round=2 wall_ns=6164125 cpu_ns=5958210 states=2455 verified=10 completion=0 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=45 strategy=1 round=2 wall_ns=179667 cpu_ns=182708 states=28 verified=0 completion=2 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=45 strategy=0 round=2 wall_ns=60208 cpu_ns=61333 states=28 verified=0 completion=2 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=46 strategy=0 round=2 wall_ns=3900834 cpu_ns=3726458 states=2906 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=46 strategy=1 round=2 wall_ns=8004959 cpu_ns=7753166 states=2202 verified=27 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=47 strategy=1 round=2 wall_ns=37383750 cpu_ns=36330583 states=8192 verified=16 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=47 strategy=0 round=2 wall_ns=6961250 cpu_ns=6834374 states=8192 verified=16 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=48 strategy=0 round=2 wall_ns=6383208 cpu_ns=6250125 states=5158 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=48 strategy=1 round=2 wall_ns=6456375 cpu_ns=6234708 states=1680 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=49 strategy=1 round=2 wall_ns=4135750 cpu_ns=4030374 states=1514 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=49 strategy=0 round=2 wall_ns=1300666 cpu_ns=1208292 states=1514 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=50 strategy=0 round=2 wall_ns=3892125 cpu_ns=3462542 states=2296 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=50 strategy=1 round=2 wall_ns=7203625 cpu_ns=6967791 states=1892 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=51 strategy=1 round=2 wall_ns=2396750 cpu_ns=1953082 states=740 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=51 strategy=0 round=2 wall_ns=2851792 cpu_ns=2697624 states=3145 verified=33 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=52 strategy=0 round=2 wall_ns=6525916 cpu_ns=6316374 states=8192 verified=4 completion=3 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=52 strategy=1 round=2 wall_ns=40707417 cpu_ns=38439460 states=8192 verified=4 completion=3 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=53 strategy=1 round=2 wall_ns=4143417 cpu_ns=3946042 states=1667 verified=10 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=53 strategy=0 round=2 wall_ns=2127750 cpu_ns=2041916 states=2924 verified=17 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=54 strategy=0 round=2 wall_ns=6998833 cpu_ns=6683666 states=8192 verified=20 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=54 strategy=1 round=2 wall_ns=30751792 cpu_ns=29906875 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=55 strategy=1 round=2 wall_ns=31156625 cpu_ns=30681877 states=6979 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=55 strategy=0 round=2 wall_ns=7166791 cpu_ns=6870209 states=8192 verified=23 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=56 strategy=0 round=2 wall_ns=1884125 cpu_ns=1887209 states=2318 verified=12 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=56 strategy=1 round=2 wall_ns=2739167 cpu_ns=2731875 states=1277 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=57 strategy=1 round=2 wall_ns=38854333 cpu_ns=37987541 states=8192 verified=3 completion=3 alternatives=3
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=57 strategy=0 round=2 wall_ns=9559583 cpu_ns=8681374 states=8192 verified=6 completion=3 alternatives=6
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=58 strategy=0 round=2 wall_ns=3432792 cpu_ns=3189791 states=970 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=58 strategy=1 round=2 wall_ns=12559000 cpu_ns=12050876 states=2200 verified=48 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=59 strategy=1 round=2 wall_ns=23229875 cpu_ns=21023751 states=5151 verified=15 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=59 strategy=0 round=2 wall_ns=7155583 cpu_ns=6868291 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=0 strategy=1 round=3 wall_ns=34083500 cpu_ns=32838665 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=0 strategy=0 round=3 wall_ns=7159333 cpu_ns=6841251 states=8192 verified=17 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=1 strategy=0 round=3 wall_ns=2221250 cpu_ns=1928542 states=2144 verified=14 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=1 strategy=1 round=3 wall_ns=3368083 cpu_ns=3125165 states=1438 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=2 strategy=1 round=3 wall_ns=31275250 cpu_ns=30259373 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=2 strategy=0 round=3 wall_ns=6912458 cpu_ns=6467373 states=8192 verified=10 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=3 strategy=0 round=3 wall_ns=7248459 cpu_ns=6579542 states=8192 verified=33 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=3 strategy=1 round=3 wall_ns=21903791 cpu_ns=21263000 states=6441 verified=57 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=4 strategy=1 round=3 wall_ns=32118959 cpu_ns=31083461 states=8192 verified=7 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=4 strategy=0 round=3 wall_ns=6878250 cpu_ns=6151458 states=8192 verified=7 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=5 strategy=0 round=3 wall_ns=7765667 cpu_ns=7109417 states=8192 verified=49 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=5 strategy=1 round=3 wall_ns=7634583 cpu_ns=7136292 states=2139 verified=59 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=6 strategy=1 round=3 wall_ns=20811916 cpu_ns=18640375 states=5398 verified=16 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=6 strategy=0 round=3 wall_ns=7502750 cpu_ns=7061000 states=8192 verified=37 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=7 strategy=0 round=3 wall_ns=5078917 cpu_ns=5002542 states=4050 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=7 strategy=1 round=3 wall_ns=25119333 cpu_ns=23697208 states=5678 verified=45 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=8 strategy=1 round=3 wall_ns=6241167 cpu_ns=6090541 states=1503 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=8 strategy=0 round=3 wall_ns=2885333 cpu_ns=2735874 states=1838 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=9 strategy=0 round=3 wall_ns=6550584 cpu_ns=6046124 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=9 strategy=1 round=3 wall_ns=15571667 cpu_ns=14878960 states=4662 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=10 strategy=1 round=3 wall_ns=4987000 cpu_ns=4425291 states=1917 verified=42 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=10 strategy=0 round=3 wall_ns=3393375 cpu_ns=3019957 states=3038 verified=57 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=11 strategy=0 round=3 wall_ns=8221542 cpu_ns=7437417 states=8192 verified=34 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=11 strategy=1 round=3 wall_ns=32311709 cpu_ns=31318459 states=8192 verified=49 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=12 strategy=1 round=3 wall_ns=4799250 cpu_ns=4640917 states=1986 verified=15 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=12 strategy=0 round=3 wall_ns=3021208 cpu_ns=2558126 states=3316 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=13 strategy=0 round=3 wall_ns=7417959 cpu_ns=6876706 states=8192 verified=42 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=13 strategy=1 round=3 wall_ns=10025125 cpu_ns=9485542 states=2999 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=14 strategy=1 round=3 wall_ns=36941208 cpu_ns=34686626 states=8192 verified=1 completion=3 alternatives=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=14 strategy=0 round=3 wall_ns=6661583 cpu_ns=6098582 states=8192 verified=0 completion=3 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=15 strategy=0 round=3 wall_ns=1935291 cpu_ns=1657584 states=2138 verified=16 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=15 strategy=1 round=3 wall_ns=3468584 cpu_ns=3246500 states=1324 verified=9 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=16 strategy=1 round=3 wall_ns=28484459 cpu_ns=27970250 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=16 strategy=0 round=3 wall_ns=6700250 cpu_ns=6346333 states=8192 verified=15 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=17 strategy=0 round=3 wall_ns=5998917 cpu_ns=5841918 states=8192 verified=1 completion=3 alternatives=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=17 strategy=1 round=3 wall_ns=30407833 cpu_ns=29827377 states=8192 verified=2 completion=3 alternatives=2
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=18 strategy=1 round=3 wall_ns=7890750 cpu_ns=7568917 states=3409 verified=5 completion=0 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=18 strategy=0 round=3 wall_ns=2119959 cpu_ns=2121625 states=3409 verified=5 completion=0 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=19 strategy=0 round=3 wall_ns=1647084 cpu_ns=1649167 states=1668 verified=52 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=19 strategy=1 round=3 wall_ns=2922667 cpu_ns=2612958 states=1121 verified=50 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=20 strategy=1 round=3 wall_ns=12849083 cpu_ns=12329583 states=2619 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=20 strategy=0 round=3 wall_ns=7045167 cpu_ns=6570875 states=8192 verified=12 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=21 strategy=0 round=3 wall_ns=8741541 cpu_ns=8555333 states=8192 verified=44 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=21 strategy=1 round=3 wall_ns=32588875 cpu_ns=31705582 states=5806 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=22 strategy=1 round=3 wall_ns=4957666 cpu_ns=4883583 states=1928 verified=10 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=22 strategy=0 round=3 wall_ns=1681333 cpu_ns=1598333 states=1937 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=23 strategy=0 round=3 wall_ns=1561583 cpu_ns=1563458 states=1462 verified=25 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=23 strategy=1 round=3 wall_ns=4001583 cpu_ns=3918668 states=1455 verified=24 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=24 strategy=1 round=3 wall_ns=4357708 cpu_ns=2670000 states=1273 verified=29 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=24 strategy=0 round=3 wall_ns=1091208 cpu_ns=977124 states=1273 verified=29 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=25 strategy=0 round=3 wall_ns=6635792 cpu_ns=6362291 states=8192 verified=18 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=25 strategy=1 round=3 wall_ns=27014125 cpu_ns=26435459 states=6796 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=26 strategy=1 round=3 wall_ns=22642833 cpu_ns=22003042 states=4889 verified=39 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=26 strategy=0 round=3 wall_ns=7046542 cpu_ns=6683460 states=8192 verified=22 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=27 strategy=0 round=3 wall_ns=1372125 cpu_ns=1376292 states=1508 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=27 strategy=1 round=3 wall_ns=4068542 cpu_ns=3923584 states=1508 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=28 strategy=1 round=3 wall_ns=18218416 cpu_ns=17911625 states=4469 verified=63 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=28 strategy=0 round=3 wall_ns=5311416 cpu_ns=4763249 states=2798 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=29 strategy=0 round=3 wall_ns=7935625 cpu_ns=7415624 states=6682 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=29 strategy=1 round=3 wall_ns=31952708 cpu_ns=30450499 states=7060 verified=55 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=30 strategy=1 round=3 wall_ns=9813375 cpu_ns=9294707 states=2206 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=30 strategy=0 round=3 wall_ns=7902375 cpu_ns=7493375 states=7644 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=31 strategy=0 round=3 wall_ns=8007333 cpu_ns=7553959 states=8192 verified=27 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=31 strategy=1 round=3 wall_ns=32799667 cpu_ns=31858792 states=6727 verified=12 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=32 strategy=1 round=3 wall_ns=25239292 cpu_ns=22668251 states=5006 verified=47 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=32 strategy=0 round=3 wall_ns=8522791 cpu_ns=8106043 states=8192 verified=47 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=33 strategy=0 round=3 wall_ns=6975959 cpu_ns=6678958 states=8192 verified=41 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=33 strategy=1 round=3 wall_ns=12309584 cpu_ns=11976169 states=3501 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=34 strategy=1 round=3 wall_ns=39914542 cpu_ns=39085376 states=8192 verified=26 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=34 strategy=0 round=3 wall_ns=6219417 cpu_ns=6044291 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=35 strategy=0 round=3 wall_ns=6820500 cpu_ns=6654666 states=8192 verified=26 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=35 strategy=1 round=3 wall_ns=32027458 cpu_ns=31463208 states=8192 verified=25 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=36 strategy=1 round=3 wall_ns=10124250 cpu_ns=9599458 states=2213 verified=48 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=36 strategy=0 round=3 wall_ns=6282167 cpu_ns=6152626 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=37 strategy=0 round=3 wall_ns=7840375 cpu_ns=7027083 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=37 strategy=1 round=3 wall_ns=45065959 cpu_ns=43778333 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=38 strategy=1 round=3 wall_ns=46572375 cpu_ns=43616038 states=8192 verified=29 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=38 strategy=0 round=3 wall_ns=6631708 cpu_ns=6405500 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=39 strategy=0 round=3 wall_ns=5980833 cpu_ns=5534999 states=4858 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=39 strategy=1 round=3 wall_ns=9052583 cpu_ns=8302292 states=1873 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=40 strategy=1 round=3 wall_ns=2018792 cpu_ns=1969125 states=1119 verified=42 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=40 strategy=0 round=3 wall_ns=1852291 cpu_ns=1854208 states=1943 verified=60 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=41 strategy=0 round=3 wall_ns=2331000 cpu_ns=2237082 states=3014 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=41 strategy=1 round=3 wall_ns=6763458 cpu_ns=6579332 states=3007 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=42 strategy=1 round=3 wall_ns=2287250 cpu_ns=2291541 states=1399 verified=41 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=42 strategy=0 round=3 wall_ns=2411125 cpu_ns=2303583 states=2621 verified=56 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=43 strategy=0 round=3 wall_ns=7963250 cpu_ns=7746708 states=8192 verified=50 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=43 strategy=1 round=3 wall_ns=18257500 cpu_ns=17734416 states=4904 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=44 strategy=1 round=3 wall_ns=5730208 cpu_ns=5443499 states=2455 verified=10 completion=0 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=44 strategy=0 round=3 wall_ns=1796583 cpu_ns=1790625 states=2455 verified=10 completion=0 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=45 strategy=0 round=3 wall_ns=54583 cpu_ns=55958 states=28 verified=0 completion=2 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=45 strategy=1 round=3 wall_ns=44917 cpu_ns=45875 states=28 verified=0 completion=2 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=46 strategy=1 round=3 wall_ns=8146292 cpu_ns=7963333 states=2202 verified=27 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=46 strategy=0 round=3 wall_ns=4092750 cpu_ns=3872251 states=2906 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=47 strategy=0 round=3 wall_ns=7291083 cpu_ns=6869625 states=8192 verified=16 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=47 strategy=1 round=3 wall_ns=36455709 cpu_ns=35833335 states=8192 verified=16 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=48 strategy=1 round=3 wall_ns=6483834 cpu_ns=6302125 states=1680 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=48 strategy=0 round=3 wall_ns=6310125 cpu_ns=5766125 states=5158 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=49 strategy=0 round=3 wall_ns=1430333 cpu_ns=1354584 states=1514 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=49 strategy=1 round=3 wall_ns=3981458 cpu_ns=3868709 states=1514 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=50 strategy=1 round=3 wall_ns=7848208 cpu_ns=7111166 states=1892 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=50 strategy=0 round=3 wall_ns=3856125 cpu_ns=3610875 states=2296 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=51 strategy=0 round=3 wall_ns=2806166 cpu_ns=2444585 states=3145 verified=33 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=51 strategy=1 round=3 wall_ns=2094125 cpu_ns=1855543 states=740 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=52 strategy=1 round=3 wall_ns=38532167 cpu_ns=37800832 states=8192 verified=4 completion=3 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=52 strategy=0 round=3 wall_ns=6318041 cpu_ns=6143583 states=8192 verified=4 completion=3 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=53 strategy=0 round=3 wall_ns=2469583 cpu_ns=2299374 states=2924 verified=17 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=53 strategy=1 round=3 wall_ns=3988083 cpu_ns=3833168 states=1667 verified=10 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=54 strategy=1 round=3 wall_ns=31116334 cpu_ns=30226498 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=54 strategy=0 round=3 wall_ns=7029792 cpu_ns=6802166 states=8192 verified=20 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=55 strategy=0 round=3 wall_ns=7456250 cpu_ns=7238041 states=8192 verified=23 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=55 strategy=1 round=3 wall_ns=33269625 cpu_ns=32446789 states=6979 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=56 strategy=1 round=3 wall_ns=3064333 cpu_ns=2915125 states=1277 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=56 strategy=0 round=3 wall_ns=1725542 cpu_ns=1714084 states=2318 verified=12 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=57 strategy=0 round=3 wall_ns=6501000 cpu_ns=6348626 states=8192 verified=6 completion=3 alternatives=6
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=57 strategy=1 round=3 wall_ns=38054625 cpu_ns=37399623 states=8192 verified=3 completion=3 alternatives=3
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=58 strategy=1 round=3 wall_ns=8135500 cpu_ns=8006084 states=2200 verified=48 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=58 strategy=0 round=3 wall_ns=2875042 cpu_ns=2760417 states=970 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=59 strategy=0 round=3 wall_ns=8448208 cpu_ns=6649875 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=59 strategy=1 round=3 wall_ns=20300959 cpu_ns=19903209 states=5151 verified=15 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=0 strategy=0 round=4 wall_ns=6539333 cpu_ns=6361083 states=8192 verified=17 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=0 strategy=1 round=4 wall_ns=32177333 cpu_ns=31028333 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=1 strategy=1 round=4 wall_ns=3781041 cpu_ns=3432959 states=1438 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=1 strategy=0 round=4 wall_ns=1521542 cpu_ns=1519501 states=2144 verified=14 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=2 strategy=0 round=4 wall_ns=6621583 cpu_ns=6393085 states=8192 verified=10 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=2 strategy=1 round=4 wall_ns=30671000 cpu_ns=29914793 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=3 strategy=1 round=4 wall_ns=21798667 cpu_ns=21475457 states=6441 verified=57 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=3 strategy=0 round=4 wall_ns=6387958 cpu_ns=6266750 states=8192 verified=33 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=4 strategy=0 round=4 wall_ns=6164834 cpu_ns=6041084 states=8192 verified=7 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=4 strategy=1 round=4 wall_ns=31608417 cpu_ns=29575794 states=8192 verified=7 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=5 strategy=1 round=4 wall_ns=7027750 cpu_ns=6740085 states=2139 verified=59 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=5 strategy=0 round=4 wall_ns=6698583 cpu_ns=6483624 states=8192 verified=49 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=6 strategy=0 round=4 wall_ns=6679500 cpu_ns=6578542 states=8192 verified=37 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=6 strategy=1 round=4 wall_ns=17813583 cpu_ns=17518542 states=5398 verified=16 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=7 strategy=1 round=4 wall_ns=24093375 cpu_ns=23713126 states=5678 verified=45 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=7 strategy=0 round=4 wall_ns=5044667 cpu_ns=4908417 states=4050 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=8 strategy=0 round=4 wall_ns=3561209 cpu_ns=3279792 states=1838 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=8 strategy=1 round=4 wall_ns=6161792 cpu_ns=5905626 states=1503 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=9 strategy=1 round=4 wall_ns=15253583 cpu_ns=14867583 states=4662 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=9 strategy=0 round=4 wall_ns=6170250 cpu_ns=6040583 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=10 strategy=0 round=4 wall_ns=2683209 cpu_ns=2627791 states=3038 verified=57 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=10 strategy=1 round=4 wall_ns=4032958 cpu_ns=3954541 states=1917 verified=42 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=11 strategy=1 round=4 wall_ns=31969708 cpu_ns=31238252 states=8192 verified=49 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=11 strategy=0 round=4 wall_ns=7518084 cpu_ns=7081168 states=8192 verified=34 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=12 strategy=0 round=4 wall_ns=2583584 cpu_ns=2496459 states=3316 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=12 strategy=1 round=4 wall_ns=4393667 cpu_ns=4314583 states=1986 verified=15 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=13 strategy=1 round=4 wall_ns=11548625 cpu_ns=9988871 states=2999 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=13 strategy=0 round=4 wall_ns=6459791 cpu_ns=6198500 states=8192 verified=42 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=14 strategy=0 round=4 wall_ns=6292875 cpu_ns=5899960 states=8192 verified=0 completion=3 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=14 strategy=1 round=4 wall_ns=34788000 cpu_ns=34110416 states=8192 verified=1 completion=3 alternatives=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=15 strategy=1 round=4 wall_ns=2818667 cpu_ns=2823125 states=1324 verified=9 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=15 strategy=0 round=4 wall_ns=1605583 cpu_ns=1490791 states=2138 verified=16 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=16 strategy=0 round=4 wall_ns=6563500 cpu_ns=6256333 states=8192 verified=15 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=16 strategy=1 round=4 wall_ns=28818750 cpu_ns=28242002 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=17 strategy=1 round=4 wall_ns=30277875 cpu_ns=29736957 states=8192 verified=2 completion=3 alternatives=2
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=17 strategy=0 round=4 wall_ns=5935000 cpu_ns=5722167 states=8192 verified=1 completion=3 alternatives=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=18 strategy=0 round=4 wall_ns=2330750 cpu_ns=2334458 states=3409 verified=5 completion=0 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=18 strategy=1 round=4 wall_ns=7055625 cpu_ns=6914625 states=3409 verified=5 completion=0 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=19 strategy=1 round=4 wall_ns=2450209 cpu_ns=2407708 states=1121 verified=50 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=19 strategy=0 round=4 wall_ns=2194750 cpu_ns=1789376 states=1668 verified=52 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=20 strategy=0 round=4 wall_ns=6399000 cpu_ns=6238127 states=8192 verified=12 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=20 strategy=1 round=4 wall_ns=12320083 cpu_ns=12109583 states=2619 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=21 strategy=1 round=4 wall_ns=33341500 cpu_ns=31364747 states=5806 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=21 strategy=0 round=4 wall_ns=8620959 cpu_ns=8446459 states=8192 verified=44 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=22 strategy=0 round=4 wall_ns=1672833 cpu_ns=1590250 states=1937 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=22 strategy=1 round=4 wall_ns=5003042 cpu_ns=4766793 states=1928 verified=10 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=23 strategy=1 round=4 wall_ns=4698167 cpu_ns=4085708 states=1455 verified=24 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=23 strategy=0 round=4 wall_ns=1683209 cpu_ns=1451083 states=1462 verified=25 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=24 strategy=0 round=4 wall_ns=1218208 cpu_ns=1222583 states=1273 verified=29 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=24 strategy=1 round=4 wall_ns=2453042 cpu_ns=2203376 states=1273 verified=29 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=25 strategy=1 round=4 wall_ns=27386584 cpu_ns=26506041 states=6796 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=25 strategy=0 round=4 wall_ns=6792000 cpu_ns=6621833 states=8192 verified=18 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=26 strategy=0 round=4 wall_ns=6729333 cpu_ns=6579499 states=8192 verified=22 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=26 strategy=1 round=4 wall_ns=20991709 cpu_ns=20410001 states=4889 verified=39 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=27 strategy=1 round=4 wall_ns=4278875 cpu_ns=4076209 states=1508 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=27 strategy=0 round=4 wall_ns=1300208 cpu_ns=1277083 states=1508 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=28 strategy=0 round=4 wall_ns=3999041 cpu_ns=3925375 states=2798 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=28 strategy=1 round=4 wall_ns=18133542 cpu_ns=17650374 states=4469 verified=63 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=29 strategy=1 round=4 wall_ns=30602459 cpu_ns=30060168 states=7060 verified=55 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=29 strategy=0 round=4 wall_ns=7596667 cpu_ns=7344875 states=6682 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=30 strategy=0 round=4 wall_ns=7174917 cpu_ns=6976666 states=7644 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=30 strategy=1 round=4 wall_ns=9184792 cpu_ns=9053499 states=2206 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=31 strategy=1 round=4 wall_ns=35027292 cpu_ns=32263419 states=6727 verified=12 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=31 strategy=0 round=4 wall_ns=7377291 cpu_ns=7112458 states=8192 verified=27 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=32 strategy=0 round=4 wall_ns=7594500 cpu_ns=7520167 states=8192 verified=47 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=32 strategy=1 round=4 wall_ns=22551875 cpu_ns=22116875 states=5006 verified=47 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=33 strategy=1 round=4 wall_ns=12083791 cpu_ns=11806333 states=3501 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=33 strategy=0 round=4 wall_ns=7073000 cpu_ns=6854083 states=8192 verified=41 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=34 strategy=0 round=4 wall_ns=6059125 cpu_ns=5981501 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=34 strategy=1 round=4 wall_ns=40169625 cpu_ns=39393543 states=8192 verified=26 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=35 strategy=1 round=4 wall_ns=32393625 cpu_ns=31807498 states=8192 verified=25 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=35 strategy=0 round=4 wall_ns=7278292 cpu_ns=6914792 states=8192 verified=26 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=36 strategy=0 round=4 wall_ns=7364584 cpu_ns=6676458 states=8192 verified=13 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=36 strategy=1 round=4 wall_ns=9851750 cpu_ns=9699749 states=2213 verified=48 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=37 strategy=1 round=4 wall_ns=46637959 cpu_ns=44043709 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=37 strategy=0 round=4 wall_ns=7178208 cpu_ns=6760791 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=38 strategy=0 round=4 wall_ns=6401250 cpu_ns=6098500 states=8192 verified=5 completion=3 alternatives=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=38 strategy=1 round=4 wall_ns=44472250 cpu_ns=43475873 states=8192 verified=29 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=39 strategy=1 round=4 wall_ns=8111417 cpu_ns=7647666 states=1873 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=39 strategy=0 round=4 wall_ns=5841459 cpu_ns=5460209 states=4858 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=40 strategy=0 round=4 wall_ns=2019166 cpu_ns=1941625 states=1943 verified=60 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=40 strategy=1 round=4 wall_ns=1992583 cpu_ns=1995875 states=1119 verified=42 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=41 strategy=1 round=4 wall_ns=6589750 cpu_ns=6459751 states=3007 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=41 strategy=0 round=4 wall_ns=2762625 cpu_ns=2332751 states=3014 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=42 strategy=0 round=4 wall_ns=2143708 cpu_ns=1977583 states=2621 verified=56 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=42 strategy=1 round=4 wall_ns=2163875 cpu_ns=2166333 states=1399 verified=41 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=43 strategy=1 round=4 wall_ns=18761375 cpu_ns=18129876 states=4904 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=43 strategy=0 round=4 wall_ns=7789208 cpu_ns=7655540 states=8192 verified=50 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=44 strategy=0 round=4 wall_ns=1949208 cpu_ns=1820501 states=2455 verified=10 completion=0 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=44 strategy=1 round=4 wall_ns=5668625 cpu_ns=5413001 states=2455 verified=10 completion=0 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=45 strategy=1 round=4 wall_ns=67000 cpu_ns=68709 states=28 verified=0 completion=2 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=45 strategy=0 round=4 wall_ns=53625 cpu_ns=0 states=28 verified=0 completion=2 alternatives=0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=46 strategy=0 round=4 wall_ns=4415625 cpu_ns=3785708 states=2906 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=46 strategy=1 round=4 wall_ns=7942875 cpu_ns=7772209 states=2202 verified=27 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=47 strategy=1 round=4 wall_ns=36647875 cpu_ns=35892876 states=8192 verified=16 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=47 strategy=0 round=4 wall_ns=6939375 cpu_ns=6732709 states=8192 verified=16 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=48 strategy=0 round=4 wall_ns=5852167 cpu_ns=5557627 states=5158 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=48 strategy=1 round=4 wall_ns=6597625 cpu_ns=6376209 states=1680 verified=21 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=49 strategy=1 round=4 wall_ns=4355417 cpu_ns=4245167 states=1514 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=49 strategy=0 round=4 wall_ns=2048375 cpu_ns=1648750 states=1514 verified=18 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=50 strategy=0 round=4 wall_ns=3498167 cpu_ns=3289958 states=2296 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=50 strategy=1 round=4 wall_ns=8046333 cpu_ns=7687708 states=1892 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=51 strategy=1 round=4 wall_ns=2742708 cpu_ns=2232376 states=740 verified=11 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=51 strategy=0 round=4 wall_ns=3401792 cpu_ns=2965833 states=3145 verified=33 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=52 strategy=0 round=4 wall_ns=7623167 cpu_ns=7068958 states=8192 verified=4 completion=3 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=52 strategy=1 round=4 wall_ns=39332375 cpu_ns=37950125 states=8192 verified=4 completion=3 alternatives=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=53 strategy=1 round=4 wall_ns=4717458 cpu_ns=4383667 states=1667 verified=10 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=53 strategy=0 round=4 wall_ns=3147000 cpu_ns=2850083 states=2924 verified=17 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=54 strategy=0 round=4 wall_ns=7819625 cpu_ns=6822835 states=8192 verified=20 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=54 strategy=1 round=4 wall_ns=32037209 cpu_ns=30715333 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=55 strategy=1 round=4 wall_ns=31585750 cpu_ns=30779667 states=6979 verified=13 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=55 strategy=0 round=4 wall_ns=7750084 cpu_ns=7226834 states=8192 verified=23 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=56 strategy=0 round=4 wall_ns=2523667 cpu_ns=2113375 states=2318 verified=12 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=56 strategy=1 round=4 wall_ns=3064250 cpu_ns=2879416 states=1277 verified=8 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=57 strategy=1 round=4 wall_ns=39006000 cpu_ns=37766833 states=8192 verified=3 completion=3 alternatives=3
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=57 strategy=0 round=4 wall_ns=7670875 cpu_ns=6323583 states=8192 verified=6 completion=3 alternatives=6
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=58 strategy=0 round=4 wall_ns=2655167 cpu_ns=2555958 states=970 verified=64 completion=4 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=58 strategy=1 round=4 wall_ns=8650250 cpu_ns=8363124 states=2200 verified=48 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=59 strategy=1 round=4 wall_ns=20780250 cpu_ns=20069957 states=5151 verified=15 completion=0 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: top_seven_measurement=v1 id=59 strategy=0 round=4 wall_ns=7022500 cpu_ns=6789500 states=8192 verified=14 completion=3 alternatives=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.smarttyping.lexicon.TopSevenInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=packedTopSevenAndExhaustiveComparison
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconAssetsInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconAssetsInstrumentedTest:
+INSTRUMENTATION_STATUS: test=packagedMappingsNoticesAndExactReferencesAreAvailableOffMainThread
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: packed_reader_contract=v1 language=0 open_ns=109833 load_ns=528514375 cpu_ns=497414334 mapped_bytes=5388002 words=121255 nodes=272385 references=8 java_before=2335792 java_after=3023920 pss_kib_before=116459 pss_kib_after=44390
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: packed_reader_contract=v1 language=1 open_ns=158417 load_ns=3089565835 cpu_ns=2898174448 mapped_bytes=25190742 words=668267 nodes=1250979 references=8 java_before=3023920 java_after=2499632 pss_kib_before=44390 pss_kib_after=69206
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: packed_reader_contract=v1 language=2 open_ns=293833 load_ns=7426592254 cpu_ns=6984501217 mapped_bytes=46351852 words=1436553 nodes=2255866 references=8 java_before=2532400 java_after=3220528 pss_kib_before=68358 pss_kib_after=109014
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconAssetsInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=packagedMappingsNoticesAndExactReferencesAreAvailableOffMainThread
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest:
+INSTRUMENTATION_STATUS: test=boundaryKeepsTypedOriginalAndDropsPreviousSuggestions
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=boundaryKeepsTypedOriginalAndDropsPreviousSuggestions
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=correctionAndOriginalTapsReplaceOnlyOwnedWordWithNoReadback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=correctionAndOriginalTapsReplaceOnlyOwnedWordWithNoReadback
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sensitiveEditorTransitionClearsLoadedSuggestionsAndPreservesPlainTyping
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=sensitiveEditorTransitionClearsLoadedSuggestionsAndPreservesPlainTyping
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest:
+INSTRUMENTATION_STATUS: test=droppedSpanWithExplicitCallbackContinuesAsPlainText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=droppedSpanWithExplicitCallbackContinuesAsPlainText
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=rejectedSpanWithExplicitCallbackContinuesAsPlainText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=rejectedSpanWithExplicitCallbackContinuesAsPlainText
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=changingToSensitiveEditorRemovesThePreviousOriginalFromTheStrip
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=changingToSensitiveEditorRemovesThePreviousOriginalFromTheStrip
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=noPersonalizedLearningNeverReadsEditorTextOrSetsComposition
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=noPersonalizedLearningNeverReadsEditorTextOrSetsComposition
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=droppedOwnedSpanWithCallbackDisablesCompositionForTheSession
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=droppedOwnedSpanWithCallbackDisablesCompositionForTheSession
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cursorMovementAndSelectionFinishTheOldSpan
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cursorMovementAndSelectionFinishTheOldSpan
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=restartInputDoesNotReplaceOrDuplicateThePriorComposition
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=restartInputDoesNotReplaceOrDuplicateThePriorComposition
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=languageSwitchPreservesTextAndFinishesComposition
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=languageSwitchPreservesTextAndFinishesComposition
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=doubleSpaceWithoutOwnedWordKeepsBothSpacesAndDoesNotReadEditor
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=doubleSpaceWithoutOwnedWordKeepsBothSpacesAndDoesNotReadEditor
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=editorRewriteInvalidatesOwnedTextWithoutReplay
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=editorRewriteInvalidatesOwnedTextWithoutReplay
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=currentOriginalStripTapDoesNotWriteEditorAndUpdatesWithTheWord
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=currentOriginalStripTapDoesNotWriteEditorAndUpdatesWithTheWord
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=inputViewDetachDoesNotReplayThePriorComposition
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=inputViewDetachDoesNotReplayThePriorComposition
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=stationarySpaceHoldFinishesCompositionBeforeAnyCursorStep
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=stationarySpaceHoldFinishesCompositionBeforeAnyCursorStep
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=doubleSpaceUndoSurvivesBinderSelectionAcknowledgement
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=doubleSpaceUndoSurvivesBinderSelectionAcknowledgement
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=wordAndLeadingBoundaryComposeAndDeleteWithoutReplayingCommittedText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=wordAndLeadingBoundaryComposeAndDeleteWithoutReplayingCommittedText
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest:
+INSTRUMENTATION_STATUS: test=candidateUpdatesKeepKeysShiftLanguageAndContainerIdentity
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=candidateUpdatesKeepKeysShiftLanguageAndContainerIdentity
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=updateDuringHeldKeyDoesNotCancelTouchOrFlushPendingRender
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=updateDuringHeldKeyDoesNotCancelTouchOrFlushPendingRender
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=candidateRefreshBetweenDownAndUpDoesNotSelectReplacementCell
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=candidateRefreshBetweenDownAndUpDoesNotSelectReplacementCell
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancellationStillReachesNestedLetterAndSpaceKeys
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancellationStillReachesNestedLetterAndSpaceKeys
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=originalAndCorrectionExposeSelectedStateLabelledActionAndIdCallbacks
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=originalAndCorrectionExposeSelectedStateLabelledActionAndIdCallbacks
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=candidateUpOutsideWithoutMoveDoesNotSelect
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=candidateUpOutsideWithoutMoveDoesNotSelect
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=secondaryPointerIsIgnoredAndCannotTakeOverReleasedOwner
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=secondaryPointerIsIgnoredAndCannotTakeOverReleasedOwner
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=candidateUpdateKeepsAttachedAlternatePopupSelectionAlive
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=candidateUpdateKeepsAttachedAlternatePopupSelectionAlive
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=29
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sameIdWithChangedTextOrTypeCancelsPendingCandidateTap
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=29
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=sameIdWithChangedTextOrTypeCancelsPendingCandidateTap
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=30
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=missingOwnerPointerCancelsCandidateTap
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest
+INSTRUMENTATION_STATUS: current=30
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=missingOwnerPointerCancelsCandidateTap
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 238.677
+
+OK (30 tests)
+
+
+INSTRUMENTATION_CODE: -1

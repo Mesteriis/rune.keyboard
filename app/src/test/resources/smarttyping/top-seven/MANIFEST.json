@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "requests": 94,
+  "bound_pairs": 3209,
+  "source": "two finite edit-graph alphabets plus predeclared Unicode/route/case controls",
+  "files": {
+    "expected.tsv": "cfb5d1888d48bb6d83557e6c285b80cd002ddebad81b0daaedb238beb37cc107",
+    "bounds.tsv": "952a102cb0d89e81ea197326c933002de1da59843d309f325b08b1e2ec8c5ea6",
+    "requests.tsv": "eb11eb7cc41ed246b9f745429914ffdc65ae5ce492fbc3acf3668efad5a7592c",
+    "dictionaries.tsv": "e57243cb9b89a5a60bb33413d5b6357457ed8f439f98075e84353b241c63af00"
+  }
+}

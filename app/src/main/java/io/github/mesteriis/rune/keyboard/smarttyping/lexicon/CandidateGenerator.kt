@@ -55,7 +55,8 @@ data class CandidateGeneration(
 
 /**
  * Worker-confined suggestion foundation, with no editor, model, logging or persistence dependency.
- * All verified neighbors are evaluated before display-case/dedup/quota/top-N selection. INITIAL
+ * Packed selection requires an exact global top-seven certificate; generic readers exhaust the
+ * neighborhood before display-case/dedup/quota/top-N selection. INITIAL
  * edit cost, descending route prior, frequency rank, Unicode scalar lexical order, then language
  * ordinal and original terminal identity define a deterministic proposal comparator, NOT a
  * calibrated CandidateRanker. The last tie resolves equal-ranked display expansion collisions.
@@ -108,6 +109,13 @@ class CandidateGenerator(private val lexicon: CandidateLexicon) {
             }
             val length = key.codePointCount(0, key.length)
             val radius = if (length < 5) 1 else 2
+            val top = lexicon.selectTop(key, route, pattern, control)
+            if (top != null) {
+                if (!control.cancellationCheckpoint()) return result(CandidateCompletion.CANCELLED)
+                check(control.stop == null || control.stop == top.completion) { "TOP_SELECTION_STOP" }
+                check(top.alternatives.size <= control.verifiedTerminals) { "TOP_SELECTION_VERIFICATION" }
+                return result(top.completion, top.alternatives)
+            }
             var completion = CandidateCompletion.COMPLETE
             for (language in languages) {
                 val fallback = language != primary
@@ -188,7 +196,7 @@ class CandidateGenerator(private val lexicon: CandidateLexicon) {
     companion object {
         const val MAX_ALTERNATIVES = 7
 
-        private val COMPARATOR = Comparator<GeneratedCandidate> { left, right ->
+        internal val COMPARATOR = Comparator<GeneratedCandidate> { left, right ->
             var order = left.editFeatures.editCost.compareTo(right.editFeatures.editCost)
             if (order == 0) order = right.languagePrior.compareTo(left.languagePrior)
             if (order == 0) order = left.frequencyRank.compareTo(right.frequencyRank)

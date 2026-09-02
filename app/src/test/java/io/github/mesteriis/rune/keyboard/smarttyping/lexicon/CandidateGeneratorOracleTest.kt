@@ -34,19 +34,21 @@ class CandidateGeneratorOracleTest {
                 }
                 for (reverse in listOf(false, true)) {
                     val ordered = dictionaries.mapValues { (_, entries) -> if (reverse) entries.reversed() else entries }
-                    val result = CandidateGenerator(ScriptedLexicon(ordered)).generate(input, active)
                     val expected = fullOracle(input, active, dictionaries, unit, weighted, 1)
-                    assertEquals(CandidateCompletion.COMPLETE, result.completion)
-                    assertFalse(result.prohibitsAutoReplace) // Retrieval veto only, never permission.
-                    assertEquals(input, result.original)
-                    assertEquals(expected, result.alternatives.map(::signature))
-                    assertTrue(result.alternatives.size <= 7)
-                    assertTrue(result.alternatives.count { it.isFallback } <= 2)
-                    comparisons++
+                    for (reader in listOf(ScriptedLexicon(ordered), packed(ordered))) {
+                        val result = CandidateGenerator(reader).generate(input, active)
+                        assertEquals(CandidateCompletion.COMPLETE, result.completion)
+                        assertFalse(result.prohibitsAutoReplace) // Retrieval veto only, never permission.
+                        assertEquals(input, result.original)
+                        assertEquals(expected, result.alternatives.map(::signature))
+                        assertTrue(result.alternatives.size <= 7)
+                        assertTrue(result.alternatives.count { it.isFallback } <= 2)
+                        comparisons++
+                    }
                 }
             }
         }
-        assertEquals(234, comparisons)
+        assertEquals(468, comparisons)
     }
 
     @Test
@@ -73,12 +75,22 @@ class CandidateGeneratorOracleTest {
         val unit = shortestEdits(query, "asd", 8, weighted = false)
         val weighted = shortestEdits(query, "asd", 10, weighted = true)
         for (active in listOf(en, es)) {
-            val result = CandidateGenerator(ScriptedLexicon(dictionaries)).generate(query, active)
-            assertEquals(CandidateCompletion.COMPLETE, result.completion)
-            assertEquals(fullOracle(query, active, dictionaries, unit, weighted, 2), result.alternatives.map(::signature))
-            assertFalse(result.alternatives.any { it.text == "sssss" })
+            for (reader in listOf(ScriptedLexicon(dictionaries), packed(dictionaries))) {
+                val result = CandidateGenerator(reader).generate(query, active)
+                assertEquals(CandidateCompletion.COMPLETE, result.completion)
+                assertEquals(fullOracle(query, active, dictionaries, unit, weighted, 2), result.alternatives.map(::signature))
+                assertFalse(result.alternatives.any { it.text == "sssss" })
+            }
         }
     }
+
+    private fun packed(dictionaries: Map<KeyboardLanguage, List<Entry>>): CandidateLexicon =
+        PackedCandidateLexicon(dictionaries.map { (language, entries) ->
+            val fixture = PackedFixture.build(entries.map { it.word }, language)
+            val ranks = entries.associate { it.word to it.rank }
+            fixture.words.forEachIndexed { i, word -> fixture.put(fixture.ranks, 20 + 4 * i, ranks.getValue(word)) }
+            fixture.ready()
+        })
 
     private data class Signature(
         val text: String,

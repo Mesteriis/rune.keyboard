@@ -1,0 +1,19 @@
+{
+  "app/src/androidTest/assets/top-seven/requests.tsv": "364369c7b716e617536725ff1f6622f722addaeca592962dfc1743c931c11e7c",
+  "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopSevenInstrumentedTest.kt": "cfd08baeb9365d2b067703b768e7aaa1b646bef45ca32f8d80457a69b095801e",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "047916bb0e8223de47c7da05a08d29b5ea3ab599ac5a3a6050b1222ae29206c0",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt": "f328ebfd17d0fc0abcde09849a161f92f0edc724eacb7f6794f3d8e60d2d672a",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LazyPackedLexicons.kt": "77a4905dcdce63f6ebd66b203150b0ea5b20f92cb3473c0e5e57e9f113611802",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt": "2940f8da1d41ec78e15c0ffa44f7e8849d8cc8998755fddfcd9242f16b96c147",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt": "004e967f35f50d96ff7c62e0bc53667153695b4ca8e69ad9df6c93876bb812f8",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt": "d07a19f399c90db2fefeb38cf39997f73802f125df7c5c3ff8f5ff153882110d",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt": "6c3cd9b74ed62fa6b06f1a659e094c8cda396412586c7a982ff00884df3f6ef2",
+  "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGeneratorOracleTest.kt": "50e853b3e334ba2c6ec236dcb31e4c19ba9d6ed0988893584978b39f518a5cf6",
+  "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexiconTest.kt": "e681b71e3c1fefe1e4b51f380768878a1c42334e85bdd8c8491c94c3bcfe0914",
+  "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSevenTest.kt": "ad1b02487784fd629caea9dc544ef2e416a6a1c4bf69b42f197006828a961bc0",
+  "app/src/test/resources/smarttyping/top-seven/MANIFEST.json": "e3f6abe98e3212679678a1788decad4d1f71437a6d0291d86f76175382d091ce",
+  "app/src/test/resources/smarttyping/top-seven/bounds.tsv": "952a102cb0d89e81ea197326c933002de1da59843d309f325b08b1e2ec8c5ea6",
+  "app/src/test/resources/smarttyping/top-seven/dictionaries.tsv": "e57243cb9b89a5a60bb33413d5b6357457ed8f439f98075e84353b241c63af00",
+  "app/src/test/resources/smarttyping/top-seven/expected.tsv": "cfb5d1888d48bb6d83557e6c285b80cd002ddebad81b0daaedb238beb37cc107",
+  "app/src/test/resources/smarttyping/top-seven/requests.tsv": "eb11eb7cc41ed246b9f745429914ffdc65ae5ce492fbc3acf3668efad5a7592c"
+}

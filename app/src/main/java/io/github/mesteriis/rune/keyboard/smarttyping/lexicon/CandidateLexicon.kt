@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.lexicon
 
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 
 /**
  * Synchronous, read-only contract for a validated index. Implementations must not retain query,
@@ -27,6 +28,15 @@ interface CandidateLexicon {
         control: CandidateSearchControl,
         visitor: CandidateVisitor,
     ): LexiconScanStatus
+
+    /**
+     * Optional exact global top-seven selection after shared membership/protection checks.
+     * Null selects the exhaustive scan path. COMPLETE requires a full-comparator certificate,
+     * including display-case dedup BEFORE fallback quota. The SAME control charges all routes;
+     * budget exhaustion retains its veto. Never reinterpret scan COMPLETE as a top-N result.
+     */
+    fun selectTop(key: String, route: LanguageRoute, pattern: CasePattern,
+        control: CandidateSearchControl): TopCandidateSelection? = null
 }
 
 enum class ExactMembership { PRESENT, ABSENT, UNAVAILABLE }
