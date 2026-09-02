@@ -18,6 +18,56 @@ class PackedTopSevenTest {
         return f.ready()
     }
 
+    @Test fun `cached prefixes preserve full recurrence across branches languages and queries`() {
+        val cached = PrefixDistance()
+        val fresh = PrefixDistance()
+        val paths = listOf("", "abca", "abc", "abcb", "abcb", "acba", "baac", "a", "",
+            "ёаб", "ёба", "éab", "éba", "😀aba", "😀aab", "a".repeat(32), "a".repeat(31) + "b")
+        for (query in listOf("abca", "ёаб", "éba", "😀aab", "a".repeat(32))) {
+            cached.begin(query)
+            for (lang in listOf(en, es, KeyboardLanguage.RUSSIAN, en)) for (target in paths) {
+                val cps = target.codePoints().toArray()
+                assertTrue(cached.restorePath(cps, cps.size, lang, control()))
+                fresh.begin(query)
+                for (cp in cps) assertTrue(fresh.append(cp, lang, control()))
+                assertEquals(fresh.terminalUnit, cached.terminalUnit)
+                assertEquals(fresh.terminalWeighted, cached.terminalWeighted)
+                assertEquals(fresh.unitMinimum, cached.unitMinimum)
+                assertEquals(fresh.weightedMinimum, cached.weightedMinimum)
+                // Exercise sibling restoration after a cached parent, as used by the search.
+                if (cps.size < 32) {
+                    val last = IntArray(32)
+                    cached.saveLast(last)
+                    for (cp in intArrayOf('a'.code, 'b'.code, 'a'.code)) {
+                        cached.restoreParent(cps.size, last)
+                        assertTrue(cached.append(cp, lang, control()))
+                        fresh.begin(query)
+                        for (parent in cps) assertTrue(fresh.append(parent, lang, control()))
+                        assertTrue(fresh.append(cp, lang, control()))
+                        assertEquals(fresh.terminalUnit, cached.terminalUnit)
+                        assertEquals(fresh.terminalWeighted, cached.terminalWeighted)
+                    }
+                }
+            }
+        }
+        cached.clear(); fresh.clear()
+        assertTrue(cached.isClear()); assertTrue(fresh.isClear())
+    }
+
+    @Test fun `common prefix work is reused and adjacency language changes invalidate it`() {
+        val dp = PrefixDistance()
+        dp.begin("abcdefgh")
+        assertTrue(dp.restorePath("abcdefgh".codePoints().toArray(), 8, en, control()))
+        assertEquals(16L, dp.rows)
+        assertTrue(dp.restorePath("abcdefgi".codePoints().toArray(), 8, en, control()))
+        assertEquals(18L, dp.rows)
+        assertTrue(dp.restorePath("abcdefgi".codePoints().toArray(), 8, en, control()))
+        assertEquals(18L, dp.rows)
+        assertTrue(dp.restorePath("abcdefgi".codePoints().toArray(), 8, es, control()))
+        assertEquals(34L, dp.rows)
+        dp.clear(); assertTrue(dp.isClear())
+    }
+
     @Test fun `all prefix cuts are bounded by independent edit graph distances`() {
         val dp = PrefixDistance()
         var pairs = 0; var cuts = 0

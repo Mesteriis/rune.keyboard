@@ -54,8 +54,36 @@ The caps remain 8192 states shared with exact lookup and 64 verifications shared
 between languages. Fixed search arrays reserve 272,508 primitive bytes; two
 terminal verification engines add 10,016 bytes. The existing generator and
 readers retain their own previous arrays. This is approximately 283 KB additional
-primitive scratch per actively used selection engine, allocated lazily; it is
+primitive scratch per actively used selection engine in the initial integration;
+prefix reuse adds 4,352 bytes, for a current total of 286,876 bytes. It is allocated lazily and is
 not a measured RSS/allocation figure. No per-state objects or new index sidecars.
+
+## Reusing prefix recurrence rows
+
+The frontier order, bounds, state/verifications counters and result certificates
+are unchanged. `PrefixDistance` retains the last scalar path and a 33-by-32 table
+of last-occurrence histories for that path. Moving to a new region retains only
+its common scalar prefix with the previous path, and only for the same adjacency
+language and query. The suffix is recomputed using the original unrestricted
+recurrence. At language changes the reusable depth is zero. At query changes
+`begin` resets both matrices, path and histories. Cancellation/finally clears
+them with the other typing scratch; no cache survives a selection.
+
+Rows through the common prefix depend only on that prefix, query and language;
+their recurrence values and histories are therefore identical to replay from
+root. A new row overwrites all columns it can subsequently reference. Its
+transposition references use only strictly earlier occurrence rows and earlier
+query columns. Deeper discarded rows cannot contribute to a new recurrence.
+Sibling expansion restores the already saved parent history and overwrites its
+child row. This preserves full unrestricted history, including repeated symbols
+and transpositions crossing the common-prefix boundary; it is not a banded or
+optimal-string-alignment approximation.
+
+Regression controls compare branch/language/query/sibling reuse against full
+replay, retain independent graph/oracle coverage, and cancel at every observed
+checkpoint. The public 6000-row calibration export must remain byte-identical
+to the previous generator output. This optimization changes CPU work, not
+candidate coverage or confidence policy.
 
 ## Evidence and reproduction
 

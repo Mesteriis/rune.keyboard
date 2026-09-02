@@ -41,6 +41,15 @@ PR8 mechanical punctuation and schema3 persistence have local integration
 evidence, while settings consumers/UI have scoped API26/API37 integration
 evidence. No push, remote PR or publication is authorized.
 
+### Prefix DP reuse — 2026-09-03
+
+- Baseline `3459033462f90eb6fb4048e9e96f92bbcf501a52`. Removed a measured subtree-rank experiment: exact and slightly better retrieval, but 7.6 MB extra metadata with no observed API26 CPU benefit. Patch and evidence preserved, not adopted.
+- Reuse recurrence rows only for the same query/language/common scalar prefix; retain full unrestricted last-occurrence history and clear on completion/cancellation. Added fixed scratch4352 bytes; assets, frontier ordering and caps unchanged.
+- All6000 calibration raw/candidate records byte-identical; full oracle773 PASS with238 complete/498 incomplete/37 policy. JVM596/596 PASS and all prescribed product gates PASS. Python6/6 PASS.
+- Sequential baseline/current Android runs: API26 and API37 each2/2 reader/search tests PASS in both variants, all600 numeric records per run and identical work counters. Top-seven total CPU reduced5.5%/16.9%; p95 CPU14.401→13.321 ms /39.205→31.586 ms. API26 median slightly increased. These are emulator measurements, not physical battery qualification.
+- Current USB inventory has only the two emulators; Fold unavailable. EN retrieval coverage, calibrated automatic replacement/Undo, contextual punctuation, validation load CPU and final model/device/energy/release gates remain open.
+- Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-prefix-reuse.md`; evidence: `tools/lexicon/smart-typing-0.3/top-seven/results/2026-09-03-prefix-reuse/`.
+
 ### Duty fixture retirement synchronization — 2026-09-03
 
 - Exact top-seven integration committed as `17d539c0b1f938d31a92d389689411b0b1a14691`. Its mandatory fresh JVM rerun reported593 tests/1 failure in `ModelDutyWorkerTest.deniedRequestsNeverEnterEngineOrExtendExistingIdleUnload`; the initial failure is preserved.

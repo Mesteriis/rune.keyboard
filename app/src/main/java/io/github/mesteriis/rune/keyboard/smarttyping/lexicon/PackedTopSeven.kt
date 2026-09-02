@@ -98,10 +98,7 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
                 val parentDepth = depth[region]
                 var ancestor = region
                 while (depth[ancestor] > 0) { path[depth[ancestor] - 1] = codepoint[ancestor]; ancestor = parent[ancestor] }
-                prefix.resetPath()
-                for (i in 0 until parentDepth) {
-                    if (!prefix.append(path[i], lang, control)) return stopped()
-                }
+                if (!prefix.restorePath(path, parentDepth, lang, control)) return stopped()
                 prefix.saveLast(restore)
                 var node = child[region]
                 // This popped region remains logically active until its ENTIRE child list is expanded.

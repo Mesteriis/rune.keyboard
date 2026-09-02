@@ -1,0 +1,193 @@
+diff --git a/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt b/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt
+index db05bd1..8786284 100644
+--- a/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt
++++ b/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt
+@@ -19,0 +20,4 @@ class PackedLexiconData private constructor(
++    // Public dictionary metadata, computed once during the existing off-main validation walk.
++    // 65535 means no ranked terminal; larger finite ranks are conservatively rounded down.
++    private val minimumRanks = CharArray(nodeCount)
++    internal fun minimumRank(node: Int): Int = minimumRanks[node].code.let { if (it == 65535) Int.MAX_VALUE else it }
+@@ -120,0 +125 @@ class PackedLexiconData private constructor(
++        val minimumRank = IntArray(33) { Int.MAX_VALUE }
+@@ -132,0 +138,2 @@ class PackedLexiconData private constructor(
++                val rank = minimumRank[depth]
++                minimumRanks[nodes[depth]] = (if (rank == Int.MAX_VALUE) 65535 else minOf(rank, 65534)).toChar()
+@@ -135,0 +143 @@ class PackedLexiconData private constructor(
++                    minimumRank[depth - 1] = minOf(minimumRank[depth - 1], rank)
+@@ -152,0 +161 @@ class PackedLexiconData private constructor(
++            minimumRank[depth] = rank(terminal)
+diff --git a/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt b/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt
+index 4db549d..1071a41 100644
+--- a/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt
++++ b/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt
+@@ -18,0 +19 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
++    private val rankLower = IntArray(CAPACITY)
+@@ -64 +65,2 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
+-                val root = allocate(-1, 0, 0, lang.ordinal, indices[lang.ordinal]!!.child(0), 0, 0)
++                val index = indices[lang.ordinal]!!
++                val root = allocate(-1, 0, 0, lang.ordinal, index.child(0), 0, 0, index.minimumRank(0))
+@@ -70 +72 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
+-                        weightedLower[frontier[0]], prior(frontier[0], primary)))) {
++                        weightedLower[frontier[0]], prior(frontier[0], primary), rankLower[frontier[0]]))) {
+@@ -124 +126 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
+-                            val slot = allocate(region, cp, parentDepth + 1, lang.ordinal, descendants, u, w)
++                            val slot = allocate(region, cp, parentDepth + 1, lang.ordinal, descendants, u, w, index.minimumRank(node))
+@@ -157 +159 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
+-    private fun allocate(p: Int, cp: Int, d: Int, lang: Int, children: Int, u: Int, w: Int): Int {
++    private fun allocate(p: Int, cp: Int, d: Int, lang: Int, children: Int, u: Int, w: Int, rank: Int): Int {
+@@ -161,0 +164 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
++        rankLower[id] = rank
+@@ -167,0 +171 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
++        if (rankLower[a] != rankLower[b]) return rankLower[a] < rankLower[b]
+@@ -206 +210 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
+-        unitLower.fill(0); weightedLower.fill(0); frontier.fill(0); path.fill(0); restore.fill(0)
++        unitLower.fill(0); weightedLower.fill(0); rankLower.fill(0); frontier.fill(0); path.fill(0); restore.fill(0)
+@@ -211 +215 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
+-    fun isClear(): Boolean = listOf(parent, codepoint, depth, language, child, unitLower, weightedLower,
++    fun isClear(): Boolean = listOf(parent, codepoint, depth, language, child, unitLower, weightedLower, rankLower,
+@@ -219,3 +223,4 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
+-        // Frequency and lexical bounds are deliberately bottom: equal cost/prior cannot certify.
+-        internal fun precedesBound(candidate: GeneratedCandidate, weighted: Int, prior: Int): Boolean =
+-            quarters(candidate) < weighted || (quarters(candidate) == weighted && candidate.languagePrior > prior)
++        // Strict frequency separation is safe after equal cost/prior; lexical ties never certify.
++        internal fun precedesBound(candidate: GeneratedCandidate, weighted: Int, prior: Int, rank: Int = 1): Boolean =
++            quarters(candidate) < weighted || (quarters(candidate) == weighted &&
++                (candidate.languagePrior > prior || (candidate.languagePrior == prior && candidate.frequencyRank < rank)))
+diff --git a/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexiconTest.kt b/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexiconTest.kt
+index 7fe335a..220fe05 100644
+--- a/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexiconTest.kt
++++ b/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexiconTest.kt
+@@ -90 +90,4 @@ class PackedCandidateLexiconTest {
+-        val reader = PackedCandidateLexicon(listOf(PackedFixture.build(words).ready(), PackedFixture.build(listOf("zzzzzzzzzz"), es).ready()))
++        val fixture = PackedFixture.build(words)
++        // Equal cost AND rank prevent a valid early certificate from bypassing this cap fixture.
++        fixture.words.indices.forEach { fixture.put(fixture.ranks, 20 + 4 * it, 1) }
++        val reader = PackedCandidateLexicon(listOf(fixture.ready(), PackedFixture.build(listOf("zzzzzzzzzz"), es).ready()))
+diff --git a/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconFixture.kt b/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconFixture.kt
+index 710ffe7..d258b1c 100644
+--- a/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconFixture.kt
++++ b/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconFixture.kt
+@@ -17,0 +18 @@ internal class PackedFixture(
++        maximumFrequencyRank: Int = 50_000,
+@@ -23 +24 @@ internal class PackedFixture(
+-            listOf(PackedAsset("lexicon/notices/license.txt", 1, "0".repeat(64))), normalization)
++            listOf(PackedAsset("lexicon/notices/license.txt", 1, "0".repeat(64))), normalization, maximumFrequencyRank)
+diff --git a/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconValidationTest.kt b/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconValidationTest.kt
+index b3d74eb..00402dc 100644
+--- a/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconValidationTest.kt
++++ b/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconValidationTest.kt
+@@ -11,0 +12,25 @@ class PackedLexiconValidationTest {
++    @Test fun `frequency lower bounds include own terminal descendants and unranked branches`() {
++        val ranks = mapOf("a" to 30, "aa" to 40, "ab" to 2, "abc" to 50_000,
++            "b" to Int.MAX_VALUE, "ba" to Int.MAX_VALUE, "é" to 65_535, "ё" to 65_534,
++            "😀" to 90_000, "😀a" to Int.MAX_VALUE)
++        val fixture = PackedFixture.build(ranks.keys.toList())
++        fixture.words.forEachIndexed { i, word -> fixture.put(fixture.ranks, 20 + 4 * i, ranks.getValue(word)) }
++        val loaded = fixture.load(fixture.trusted(maximumFrequencyRank = 100_000)) as PackedLexiconLoad.Ready
++        val data = loaded.lexicon
++        var count = 0
++        fun visit(node: Int, prefix: String) {
++            val expected = ranks.filterKeys { it.startsWith(prefix) }.values.min()
++            val bound = data.minimumRank(node)
++            assertEquals(if (expected == Int.MAX_VALUE) expected else minOf(expected, 65_534), bound)
++            assertTrue(bound <= expected)
++            count++
++            var child = data.child(node)
++            while (child != 0) {
++                visit(child, prefix + String(Character.toChars(data.label(child))))
++                child = data.sibling(child)
++            }
++        }
++        visit(0, "")
++        assertEquals(data.nodeCount, count)
++    }
++
+diff --git a/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSevenTest.kt b/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSevenTest.kt
+index e9ae6bb..c36f6a6 100644
+--- a/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSevenTest.kt
++++ b/app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSevenTest.kt
+@@ -121 +121 @@ class PackedTopSevenTest {
+-    @Test fun `strict cost prior bound cannot certify equality regardless of frequency`() {
++    @Test fun `certificate uses strict lexicographic cost prior and frequency separation`() {
+@@ -127,0 +128,18 @@ class PackedTopSevenTest {
++        assertTrue(PackedTopSeven.precedesBound(candidate, quarters, candidate.languagePrior, candidate.frequencyRank + 1))
++        assertFalse(PackedTopSeven.precedesBound(candidate, quarters, candidate.languagePrior, candidate.frequencyRank))
++        assertFalse(PackedTopSeven.precedesBound(candidate, quarters - 1, candidate.languagePrior, Int.MAX_VALUE))
++        assertFalse(PackedTopSeven.precedesBound(candidate, quarters, candidate.languagePrior + 1, Int.MAX_VALUE))
++        val unranked = candidate.copy(frequencyRank = Int.MAX_VALUE)
++        assertFalse(PackedTopSeven.precedesBound(unranked, quarters, candidate.languagePrior, Int.MAX_VALUE))
++    }
++
++    @Test fun `frequency certificate completes seven ranked alternatives before dense unranked neighborhood`() {
++        val words = (0..3).flatMap { pos -> "bcdefghijklmnoprtuvxy".map { "aaaaa".replaceRange(pos, pos + 1, it.toString()) } }
++        val expected = words.take(7)
++        val ranks = words.associateWith { word -> expected.indexOf(word).let { if (it < 0) Int.MAX_VALUE else it + 1 } }
++        val handles = listOf(handle(ranks, en), handle(mapOf("zzzzzzzz" to Int.MAX_VALUE), es))
++        val result = CandidateGenerator(PackedCandidateLexicon(handles)).generate("aaaaa", en)
++        assertEquals(CandidateCompletion.COMPLETE, result.completion)
++        assertEquals(expected, result.alternatives.map { it.terminalKey })
++        assertTrue(result.verifiedTerminals < 64)
++        assertFalse(result.prohibitsAutoReplace)
+diff --git a/docs/ARCHITECTURE.md b/docs/ARCHITECTURE.md
+index 4cad35b..ca528a8 100644
+--- a/docs/ARCHITECTURE.md
++++ b/docs/ARCHITECTURE.md
+@@ -242 +242 @@ records, проверяет отмену между строками DP и оч
+-не сохраняет запросы. Дополнительные примитивные массивы занимают 282524 байта
++не сохраняет запросы. Дополнительные примитивные массивы занимают 315300 байт
+@@ -244 +244,6 @@ records, проверяет отмену между строками DP и оч
+-ёмкости массивов, не измеренный RSS. Подробный proof и воспроизводимые controls:
++ёмкости массивов, не измеренный RSS. Существующий off-main обход валидации
++вычисляет минимальный frequency rank для каждой ветви. При равных edit-cost и
++prior строгая разница частот позволяет раньше подтвердить кандидата; равенство
++частот не даёт сертификата. Immutable metadata добавляет два байта на узел
++(7558460 байт для трёх языков); отдельные лицензированные assets не меняются.
++Подробный proof и воспроизводимые controls:
+diff --git a/tools/lexicon/smart-typing-0.3/top-seven/README.md b/tools/lexicon/smart-typing-0.3/top-seven/README.md
+index 06d9d3e..fde08fc 100644
+--- a/tools/lexicon/smart-typing-0.3/top-seven/README.md
++++ b/tools/lexicon/smart-typing-0.3/top-seven/README.md
+@@ -41,3 +41,4 @@ The pending heap contains verified exact comparator keys. Its minimum may stream
+-only when strictly before every unresolved lower bound. Frequency/lexical bounds
+-remain conservative bottom values, so equality in weighted cost and prior never
+-certifies. A streamed display is marked seen even when skipped by the fallback
++only when strictly before every unresolved lower bound. After equal weighted
++cost and prior, a strictly smaller frequency rank can certify. Equal frequency
++still cannot certify because the lexical bound remains bottom. A streamed display
++is marked seen even when skipped by the fallback
+@@ -54 +55 @@ The caps remain 8192 states shared with exact lookup and 64 verifications shared
+-between languages. Fixed search arrays reserve 272,508 primitive bytes; two
++between languages. Fixed search arrays reserve 305,284 primitive bytes; two
+@@ -57,2 +58,30 @@ readers retain their own previous arrays. This is approximately 283 KB additiona
+-primitive scratch per actively used selection engine, allocated lazily; it is
+-not a measured RSS/allocation figure. No per-state objects or new index sidecars.
++primitive scratch in the initial integration, now 315,300 bytes per actively used
++selection engine, allocated lazily; these are not measured RSS/allocation figures.
++No per-state objects or new index sidecars.
++
++## Frequency lower bound
++
++`PackedLexiconData` derives the minimum terminal rank for each subtree during
++its existing off-main, depth-bounded postorder validation. The stack starts with
++the node's own terminal rank (unknown for nonterminals); completed child minima
++propagate to the parent. The published immutable handle retains only two bytes
++per node. Values 1..65534 are lower bounds, 65535 represents `Int.MAX_VALUE`
++(no ranked terminal). Larger finite ranks round down to 65534, never up; the
++current pinned ranks <=50000 are represented exactly. Structural and rank
++validation and canonical-word hashing still precede publication. Failed or
++cancelled validation cannot publish partially derived bounds.
++
++Every terminal reachable from a frontier region has rank at least its stored
++minimum. Including an already visited own terminal or a policy-ineligible
++descendant only weakens the bound. The comparator's lower bound is therefore
++`(W, -prior, minimumRank, LEX_BOTTOM, ...)`. Streaming uses strict lexicographic
++separation, with no new pruning of unverified terminals or provisional quota
++selection. The complete child-list expansion rule and both shared caps are
++unchanged. Rank metadata contains only public dictionary information and follows
++the same immutable handle lifecycle; no typing payload or new persistence.
++
++The separate CC-BY-SA frequency assets and APK bytes are unchanged. Derived
++arrays cost 544770 bytes EN, 2501958 ES and 4511732 RU (7558460 total), plus
++ordinary array headers. The added frontier rank scratch is 32776 bytes per active
++engine. These capacities must be weighed against measured search and load CPU;
++they do not establish physical memory or battery acceptance.

@@ -1,0 +1,9 @@
+{
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt": "083b337c8931e24b12fb6862978cec0d2f2ea2544b461b8e7e072d1668048275",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d",
+  "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSevenTest.kt": "9589feac6468992451a41448d1ab4ec5f0ceab6e9b023219568c4dff8ef866ef",
+  "docs/ARCHITECTURE.md": "9ec7c0fda1de760ea3bcce9f0bd2462a83b7ef1ccf71cef24186dc6aa6cc83c8",
+  "tools/lexicon/smart-typing-0.3/top-seven/README.md": "dbb6441a6925ba83cc41133fad6f04744fc75e9f19f32daa72cae3f7d0dd41fd",
+  "tools/lexicon/smart-typing-0.3/top-seven/compare_prefix_reuse.py": "5c5a2059be92f6cca5ecc6d1ee94a1d0a68cc1b5981ff1559e51cae611ff50d4",
+  "tools/lexicon/smart-typing-0.3/top-seven/test_compare_prefix_reuse.py": "280f17f41401c62a7554c85648173056f087c93a5c16fc71c6729a656a161f38"
+}
