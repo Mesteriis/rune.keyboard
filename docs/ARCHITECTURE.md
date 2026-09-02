@@ -53,9 +53,13 @@ Rune регистрирует один системный subtype на три я
 - `intelligence/model` — descriptor/snapshot/operation types и строгий manifest schema;
 - `intelligence/delivery` — DownloadManager adapter, AtomicFile journal, private candidate install и SAF transfer.
 - `intelligence/runtime` — self-test orchestration, атомарный active pointer и единственный rollback slot;
-- `:runtime-llama` — pinned llama.cpp, opaque JNI handle и CPU-only `load/selfTest/cancel/unload`.
+- `intelligence/storage` — read-only active-model resolver, pointer codec и общий межпроцессный operation lock;
+- `intelligence/ipc` — bounded request и числовой reply, oneway AIDL;
+- `intelligence/client` — main-thread binding lifecycle, session/revision/request guards и cancellation;
+- `intelligence/inference` — private scoring service, один worker и узкий native adapter;
+- `:runtime-llama` — pinned llama.cpp, opaque JNI handle и CPU-only `load/selfTest/scoreCandidates/cancel/unload`.
 
-Подсистема модели не зависит от `ime/**`, а статический gate запрещает обратную зависимость. Runtime предоставляет `load/selfTest/cancel/unload` и bounded `scoreCandidates`; IME ещё не вызывает модель. Общего `generate()` нет.
+Подсистема модели не зависит от `ime/**`. Статический gate разрешает IME только scoring client interface и bounded value contracts; delivery, activation, storage, JNI и network недоступны транзитивно. Runtime предоставляет `load/selfTest/cancel/unload` и bounded `scoreCandidates`; IME ещё не вызывает модель. Общего `generate()` нет.
 
 Scoring получает 1–8 продолжений с уникальными числовыми IDs. Kotlin и JNI
 независимо проверяют строгий UTF-8 и byte limits; tokenizer дополнительно
@@ -75,6 +79,42 @@ QWEN2 pre-split и BPE loops. Runtime отклоняет неподдержив�
 Периодического polling для этой гарантии нет.
 
 Платформенные `android.inputmethodservice.Keyboard` и `KeyboardView` не используются: они deprecated с API 29. View-подход выбран вместо Canvas, чтобы каждая клавиша сразу имела корректную focus/click/long-click семантику TalkBack без отдельного виртуального accessibility tree.
+
+## Приватный inference process
+
+`ModelInferenceService` работает в `:model_runtime`: `exported=false`, без
+intent-filter, foreground service и отдельного permission. Оба направления
+AIDL — oneway. Request содержит bounded prefix/continuations и session,
+revision, request, candidate IDs; callback содержит только эти IDs, числовые
+scores/counts, duration и код. Parcel проверяет длины до выделения массивов.
+
+Один serial worker держит максимум один active и один заменяющий pending request.
+Отмена сначала отмечает request token, затем вызывает native cancellation;
+Binder не ставит cancel в очередь scoring. Idle unload происходит через 60 секунд
+без работы; critical memory pressure, unbind и invalidation отменяют работу и
+запрашивают unload. Закрытие service не ждёт native teardown на main thread.
+
+Resolver читает active pointer и manifest под общим operation lock с install
+worker. Load удерживает read lock; scoring его освобождает. После scoring
+identity проверяется снова под lock. Это точка проверки версии, а не обещание
+атомарности с будущей установкой между проверкой и доставкой callback.
+Три FileObserver следят за root, versions и активной версией; регистрация
+подтверждается read-only OPEN handshake. Отсутствующая регистрация запрещает load.
+Resolver не выполняет AtomicFile recovery, не создаёт storage и не зависит от
+delivery; mutable activation остаётся у install worker.
+
+Client принимает только актуальный session/revision/request/candidate набор и
+текущую revision composition. После смерти Binder он становится unavailable;
+одна отложенная попытка rebind допускается только пока session eligible. Старый
+payload не воспроизводится. Завершение/смена session снимает retry и binding.
+В текущем срезе IME ещё не создаёт client: это инфраструктура для последующего
+model-assisted ranking, не включение модели при обычном вводе.
+
+`imeIntelligenceBoundary` проверяет также client, IPC, storage и inference с
+транзитивными зависимостями. Отрицательные fixtures подтверждают обнаружение
+network, delivery, JNI, logging, filesystem/payload persistence и обходов
+через helper. Native разрешён только adapter; URI разрешён только pure manifest
+parser. Это source-level gate, дополняющий dependency и manifest проверки.
 
 ## Настройки и session state
 
@@ -116,9 +156,9 @@ Original не пишет в редактор и сохраняется до гр
 ## Приватность и безопасность
 
 - manifest объявляет ровно `android.permission.INTERNET`; сеть используется только после явного скачивания модели через системный DownloadManager;
-- введённый текст не передаётся в delivery/runtime, не отправляется и не логируется;
+- введённый текст не передаётся в delivery/activation; bounded scoring contract допускает эфемерную передачу Rune-owned контекста в приватный процесс того же приложения, без сети, логов или сохранения; IME consumer ещё не подключён;
 - `privacyGateRelease` проверяет точный permission set, отключённые backup/cleartext и отсутствие логирования;
-- service экспортирован только с signature permission `android.permission.BIND_INPUT_METHOD`;
+- IME service экспортирован только с signature permission `android.permission.BIND_INPUT_METHOD`; interactive inference service приватный и отдельно проверяет UID caller;
 - backup и cleartext traffic отключены;
 - вибрация реализована через `View.performHapticFeedback`, поэтому Rune не просит `android.permission.VIBRATE`; интенсивности выражены платформенными haptic-константами, а не амплитудами;
 - `EditorContext.inputPolicy` (`NORMAL`/`SENSITIVE`) — единая точка, которую обязаны спрашивать компоненты, работающие с текстом. `SENSITIVE` включается для password-полей и `IME_FLAG_NO_PERSONALIZED_LEARNING`; он, в частности, выключает popup preview. Значение `INCOGNITO` появится вместе с первой обучающейся подсистемой — пустую заглушку заранее не вводим;
@@ -149,7 +189,7 @@ Pinned JNI runtime загружает candidate с отключённым logger
 
 ## Производительность
 
-- IME остаётся в основном процессе; install/self-test выполняются worker service в `:model_worker`;
+- IME остаётся в основном процессе; install/self-test выполняются в `:model_worker`, interactive scoring — в отдельном `:model_runtime`;
 - нет runtime-зависимостей кроме Kotlin stdlib, встроенной AGP;
 - нет I/O на пути нажатия клавиши;
 - обновление слова — один `setComposingText`; граница слова и удаление последнего composing grapheme дополнительно завершают span (двойной пробел и его Undo — замена собственного span);

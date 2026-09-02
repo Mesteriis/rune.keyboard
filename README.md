@@ -22,7 +22,7 @@ Rune Keyboard — компактная приватная Android-клавиат
 
 Автокоррекция, автоматическая пунктуация, composing, inference из IME и общий `generate()` намеренно не входят в 0.2. Скользящий ввод, подсказки, словарь, Emoji-панель, one-handed и split-режимы, свайп по Backspace и голосовой ввод отложены на следующие версии.
 
-В текущей ветке разработки 0.3 добавляется отдельная composing-сессия с ограниченным RAM-контекстом. Это ещё не квалифицированный релиз: [ход реализации](docs/plans/2026-09-02-smart-typing-progress.md) отдельно фиксирует локальные проверки, качество модели и device gates. Версия приложения остаётся 0.2.0 до закрытия release gates.
+В текущей ветке разработки 0.3 добавлены отдельная composing-сессия с ограниченным RAM-контекстом, постоянная полоса кандидатов и bounded native scoring. Приватный inference process проходит интеграционные проверки; IME ещё не вызывает модель. Это ещё не квалифицированный релиз: [ход реализации](docs/plans/2026-09-02-smart-typing-progress.md) отдельно фиксирует локальные проверки, качество модели и device gates. Версия приложения остаётся 0.2.0 до закрытия release gates.
 
 ## Требования
 
@@ -46,7 +46,7 @@ git submodule update --init --recursive
   forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate
 ```
 
-`privacyGateRelease` проверяет ровно одно разрешение `INTERNET`, отключённые cleartext/backup и отсутствие логирования. `imeIntelligenceBoundary` запрещает сети, доставке модели и native runtime попадать в `ime/**`; native gate проверяет ABI, зависимости и отсутствие JNI/log/network symbols.
+`privacyGateRelease` проверяет ровно одно разрешение `INTERNET`, отключённые cleartext/backup и отсутствие логирования. `imeIntelligenceBoundary` разрешает IME только bounded client interface/value contracts и проверяет транзитивные границы client/IPC/storage/inference, запрещая сеть, delivery, JNI вне adapter и сохранение payload; native gate проверяет ABI, зависимости и отсутствие JNI/log/network symbols.
 
 Подпись release-сборки описана в [docs/RELEASE.md](docs/RELEASE.md); без keystore release собирается неподписанным.
 

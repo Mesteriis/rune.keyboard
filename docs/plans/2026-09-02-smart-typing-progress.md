@@ -25,8 +25,8 @@ qualifying a resource-bounded model path. Preserve all quality/privacy gates;
 do not treat switching models as permission to weaken them. Model execution
 must be demand-driven, cancellable, and absent in sensitive/ineligible sessions.
 
-Current slice: `feature/smart-typing-03-pr02-native-scoring`, based on the PR5
-strip commit `1e100db8e9dce81d3b0c5acc8a636298c8ebef41`. PR4 and the PR5
+Current slice: `feature/smart-typing-03-pr03-private-inference`, based on PR2
+commit `585f380691baabb7bec25ae5bd25067880d54158`. PR4 and the PR5
 strip/owned-boundary Undo foundation have local JVM/build gates and API36 Binder
 evidence. API26/37 and physical Fold are recorded separately; PR2/3/6/7/8/9/10
 and full-word autocorrection Undo remain required. No push, remote PR or
@@ -61,7 +61,7 @@ publication is authorized by this resume.
 - Acceptance checkpoint: `docs/acceptance/2026-09-02-smart-typing-0.3-pr05.md`. Full-word autocorrection Undo still needs its later consumer and end-to-end test; only current owned-boundary Undo is qualified here.
 - Strip commit: `1e100db8e9dce81d3b0c5acc8a636298c8ebef41`; mandatory post-commit fresh JVM rerun PASS, 292/292, zero failures/errors/skips (44 tasks executed). Working tree was clean before starting PR2.
 
-### PR2 integration in progress
+### PR2 local integration checkpoint
 
 - The independently reviewed bounded scoring API/JNI proposal is applied. It shares the evaluator C++ core; serial teacher forcing/KV clearing, strict byte-array UTF-8, LCP divergent scoring and whole-set zero-span refusal are preserved. Four error codes append to the existing stable values.
 - CMake prepares a private archive copy of the clean pinned source and applies tokenizer patch SHA `0a043ce8a57b8534ef2f409443d2dd6ecf00042bd9c2b661b31d94618eb4dc95`. Upstream gitlink remains `36b10154383b60eb15baac2c7a40d2a5f784faa7`.
@@ -77,6 +77,28 @@ publication is authorized by this resume.
 
 - Final full prescribed gates PASS after all PR2 test additions (292 tasks, 19 executed); `git diff --check` PASS. Local API26/API37 results cover this slice, not unimplemented PR3/6/7/8/9/10 or the final release matrix. Remote CI and physical Fold remain unrun.
 - Acceptance: `docs/acceptance/2026-09-02-smart-typing-0.3-pr02.md`.
+
+- Local PR2 commit: `585f380691baabb7bec25ae5bd25067880d54158`; required post-commit JVM rerun PASS, 305/305, no failures/errors/skips (44 tasks executed). The tree was clean before PR3.
+
+### PR3 integration in progress
+
+- Applied independently reviewed private service/client/read-only model resolver proposal (patch SHA `44cb5d9e7606d0939c7adf032cee063c75d61fb1412af766687116f8608d25f4`). The transport is not yet wired to the IME; no model runs simply because this infrastructure exists.
+- Prototype host checks passed 23 JVM contracts, AIDL/Kotlin compilation and boundary fixtures. Actual Binder service lifecycle and FileObserver tests are being added and have not yet run on Android. Prototype results alone do not close PR3.
+
+- Integrated base PR3 JVM tests PASS, 313/313 (ordinary incremental run); Android test APK and debug build PASS. Initial release/profile/lint/privacy/dependency/native gates PASS (216 tasks, 60 executed). API37 first six IPC/observer/bind-cleanup cases PASS in 7.079 s.
+- Lifecycle extension review found one P2: a callback test could pass via server-side suppression rather than the client guard. Fixed test requires observed post-dispatch idle completion, mandatory main-thread evaluation of request 601, and no delivery before request 602. Host positive/missing-callback/broken-cancel controls confirm sensitivity; scoped re-review and actual Android execution follow.
+- Ruling: the runtime pool rejected a new independent agent after reaching its thread limit. Reuse an available agent for the unrelated source-pipeline task and another for the narrow lifecycle re-review, with explicit scoped briefs; do not repeat completed index work or weaken independent review.
+
+- Lifecycle P2 scoped re-review approved. Applied extension SHA `25e29bbfa63784c075762dd75e5d01722f388c5a167d1177f72e1b15118ce139`; all 22 PR3 IPC/client/lifecycle/active-model Android cases PASS on API37 in 15.219 s. The full API37 app run then passed 79/79 in 486.037 s.
+- Final integrated fresh JVM PASS 313/313, zero failures/errors/skips. All requested build/lint/privacy/dependency/native gates PASS (248 tasks executed). Release/profile merged manifests preserve the exact private service contract; APK Analyzer with R8 mappings confirms no defined LifecycleModelInferenceService, ILifecycleControl or ILifecycleSnapshot in either DEX.
+- PR6 source and index work remains ignored/prototyped: frozen dictionary sources are verified; exact top-seven DFS matches all 720 offline references but capped completion is EN113/240, ES99/240, RU48/240. Global best-first improves only to116/106/56 while increasing warm p95 and scratch65.4%; it is not adopted. Full-data three-format selection, weighted ranking and API26 remain open. Cap exhaustion never authorizes AutoReplace.
+
+- API26 first complete PR3 app run: 76/79 passed in 380.082 s. All three failures are NoSuchMethodError at direct test-injected ServiceConnection.onNullBinding calls in the two binding/lifecycle test files; that platform method is unavailable on API26. Preserve this failed log. The scoped fix will gate only the unavailable injected callback, retaining all supported callback and cleanup assertions; no product change or whole-test skip is warranted.
+- PR6 orthography-policy prototype independently approved: 19 JVM cases including 6,400 independent shortest-edit-path comparisons. Source-pipeline promotion review found two P2s (leaf write-path symlink escapes and unverified frozen-manifest digest); fixes required before promotion/cold reproduction.
+
+- API26 callback compatibility fix independently approved and applied (patch SHA `66364e328540956860816f9dcedb7d698fc314029c0ce6f43c17a545e10c2fcc`). All three affected tests PASS in 8.384 s, then full final API26 app suite PASS 79/79 in 382.370 s. Only direct test-injected onNullBinding calls are guarded at API28; no product change or whole-test skip. Final post-fix full requested gates PASS, 238 tasks / 17 executed. API37 79/79 above predates this true-branch-preserving test guard.
+- Investigated potential idle-worker payload retention using the actual compiled class: default JVM and interpreted success/cancel weak-reference probes collected request/prefix/continuations while worker remained waiting; retained-reference positive control behaved as expected. No reproduced defect, no production patch; host GC evidence is not an ART secure-erasure claim.
+- PR6 source-pipeline two P2 fixes independently approved (proposal SHA `22e03fb6aca56c807ce0e6d871e6d996f98bcc6c3ea5f2dad59559c6c5c93063`). Parent full cold reproduction exited 0: two fresh expansions/builds and final 24 frozen output/notice/lock identities PASS. RU/ES/EN counts and hashes unchanged; known legacy unmunch rejection is an expected comparison result, not a failed finite-expansion run. Actual API26 three-format smoke benchmark started; selection remains open.
 
 ### Historical PR1 result
 

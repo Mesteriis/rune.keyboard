@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
   <application>
+    <service
+        android:name=".intelligence.inference.LifecycleModelInferenceService"
+        android:exported="false"
+        android:process=":model_runtime" />
     <activity
         android:name=".qa.ImeQaActivity"
         android:excludeFromRecents="true"

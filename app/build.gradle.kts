@@ -15,6 +15,7 @@ val keystoreProperties = Properties().apply {
 android {
     namespace = "io.github.mesteriis.rune.keyboard"
     compileSdk = 37
+    buildFeatures { aidl = true }
 
     defaultConfig {
         applicationId = "io.github.mesteriis.rune.keyboard"
@@ -129,29 +130,6 @@ abstract class PrivacyGateTask : DefaultTask() {
     }
 }
 
-abstract class ImeIntelligenceBoundaryTask : DefaultTask() {
-    @get:InputDirectory
-    abstract val imeSourceDirectory: DirectoryProperty
-
-    @TaskAction
-    fun verify() {
-        val forbidden = Regex(
-            """DownloadManager|java\.net\.|android\.net\.|\b(?:Socket|ServerSocket|URL)\s*\(|intelligence|runtime[-_.]llama""",
-        )
-        val offenders = imeSourceDirectory.asFileTree
-            .matching { include("**/*.kt", "**/*.java") }
-            .filter { forbidden.containsMatchIn(it.readText()) }
-            .map { it.path }
-            .sorted()
-        if (offenders.isNotEmpty()) {
-            throw GradleException(
-                "IME sources must not depend on model delivery, runtime, or network APIs:\n" +
-                    offenders.joinToString("\n"),
-            )
-        }
-    }
-}
-
 abstract class ForbiddenRuntimeDependencyTask : DefaultTask() {
     @get:Input
     abstract val componentNames: ListProperty<String>
@@ -168,10 +146,14 @@ abstract class ForbiddenRuntimeDependencyTask : DefaultTask() {
     }
 }
 
-val imeIntelligenceBoundary = tasks.register<ImeIntelligenceBoundaryTask>("imeIntelligenceBoundary") {
+val imeIntelligenceBoundary = tasks.register<Exec>("imeIntelligenceBoundary") {
     group = "verification"
-    description = "Keeps model delivery, runtime, and network APIs out of ime/**."
-    imeSourceDirectory.set(layout.projectDirectory.dir("src/main/java/io/github/mesteriis/rune/keyboard/ime"))
+    description = "Checks exact IME/client, service, and neutral storage dependency boundaries."
+    inputs.dir(layout.projectDirectory.dir("src/main/java"))
+    inputs.dir(project(":runtime-llama").layout.projectDirectory.dir("src/main/java"))
+    inputs.file(rootProject.file("tools/verify-scoring-boundaries.py"))
+    commandLine("python3", rootProject.file("tools/verify-scoring-boundaries.py"),
+        "--root", rootProject.projectDir, "--self-test")
 }
 
 val forbiddenRuntimeDependencies = tasks.register<ForbiddenRuntimeDependencyTask>("forbiddenRuntimeDependencies") {

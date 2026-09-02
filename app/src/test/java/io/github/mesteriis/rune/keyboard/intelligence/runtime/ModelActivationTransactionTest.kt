@@ -1,5 +1,6 @@
 package io.github.mesteriis.rune.keyboard.intelligence.runtime
 
+import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelPointer
 import java.io.File
 import java.nio.file.Files
 import org.junit.Assert.assertEquals

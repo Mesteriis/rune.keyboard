@@ -1,5 +1,7 @@
 package io.github.mesteriis.rune.keyboard.intelligence.runtime
 
+import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelPointerCodec
+import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelPointer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.mesteriis.rune.keyboard.intelligence.delivery.ActivationPhase
