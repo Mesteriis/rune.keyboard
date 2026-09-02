@@ -28,17 +28,30 @@ must be demand-driven, cancellable, and absent in sensitive/ineligible sessions.
 Current slice: `feature/smart-typing-03-pr06-lexicons`, following bounded client
 commit `b4d76cdbd53780ed83f77ef5e15f3e3022fbe4dc`. PR2/3 runtime and private
 inference foundations, PR4 composing and PR5 strip/owned-boundary Undo are
-integrated. IME model inference and automatic spelling replacement remain off.
+integrated. IME suggestion-only model inference is connected in the current Android
+consumer slice; automatic spelling replacement remains off.
 PR6 has scoped live-suggestion evidence on API26/37 and Fold. PR7 duty and
 bound-worker CPU control has JVM/API26/API37 functional evidence. Nine
 virtual-clock worker traces pass; real CPU/device trace qualification remains
 unrun. PR7 optional suggestion consumer now retains/ranks the full candidate set
-with fake-client integration coverage; production Ready/factory wiring, calibrated
-combined ranking and AutoReplace remain open, along with PR9 contextual,
+with fake-client integration coverage. Production Ready/factory wiring now has
+scoped Android coverage; calibrated combined ranking and AutoReplace remain open, along with PR9 contextual,
 and full autocorrection Undo plus final device/performance matrices are required.
 PR8 mechanical punctuation and schema3 persistence have local integration
 evidence, while settings consumers/UI have scoped API26/API37 integration
 evidence. No push, remote PR or publication is authorized.
+
+### Android model consumer integration — 2026-09-03
+
+- Baseline `f65c079cf7df488366a58e60b42406c5761dbad9`; its mandatory post-commit JVM rerun passed 574/574.
+- Production IME now creates the optional suggestion ranker through the exact Android factory. Metadata readiness runs off main with one worker/replacing epoch and a nonblocking shared operation lock. It receives no editor payload and never opens GGUF or creates the model store.
+- Ready does not trigger replay/binding; the next accepted local candidate action may request scoring. Current missing/load failures reset demand, stale failures cannot detach newer work. Automatic replacement and combined confidence remain unavailable.
+- New source-boundary fixtures: 16 negative/4 positive PASS, including helper and pure-contract bypasses. Transitive client/readiness/storage dependencies are checked.
+- Fresh JVM 586/586 PASS, zero failures/errors/skips. Required full local gates and Android test assembly PASS (267 tasks, 48 executed, 1 from cache).
+- API26 54/54 PASS (211.299 s); API37 54/54 PASS (256.049 s), single completed runs. New factory coverage uses real Binder with a synthetic engine/owned editor callback; existing real IME InputConnection regressions are separate cases in the same run. No actual GGUF typing or battery claim.
+- Initial malformed pointer fixture failure retained; fixture corrected to the existing pointer codec. No assertions or product parsing weakened.
+- Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-android-model-consumer.md`. Evidence: `tools/qa/smart-typing-0.3/results/2026-09-03-android-model-consumer/`.
+- Remaining: calibrated full pipeline, automatic word replacement with immediate Undo, contextual suggestions, real-device/model/energy qualification, final release matrix and publication. Original failed holdout remains immutable.
 
 ### PR4 local evidence
 

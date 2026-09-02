@@ -2,7 +2,10 @@ package io.github.mesteriis.rune.keyboard.smarttyping.session
 
 import io.github.mesteriis.rune.keyboard.intelligence.client.ModelScoringClient
 import io.github.mesteriis.rune.keyboard.intelligence.client.ModelScoringListener
+import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessSource
+import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringCode
 
 /** Owner-thread scheduling seam. A delayed task contains numeric identity only, never input text. */
 interface ModelPauseScheduler {
@@ -19,7 +22,7 @@ class ModelCandidateCoordinator(
     clientFactory: (ModelScoringListener) -> ModelScoringClient,
     private val scheduler: ModelPauseScheduler,
     private val ownerState: () -> CandidateOwnerState,
-    private val modelReady: () -> Boolean,
+    private val readiness: ModelReadinessSource,
     private val changed: () -> Unit,
 ) : ModelScoringListener, AutoCloseable {
     private val ownerThread = Thread.currentThread()
@@ -30,6 +33,10 @@ class ModelCandidateCoordinator(
     private var closed = false
     private var pendingOwner: CandidateOwnerState? = null
 
+    /** Cached metadata only, independent of transport connectivity and quality qualification. */
+    val modelReadinessHint: ModelReadinessHint
+        get() { checkOwner(); return readiness.hint }
+
     /** Called only after a newly accepted local candidate result, never by rendering/readiness. */
     fun candidatesChanged() {
         checkOwner()
@@ -37,6 +44,7 @@ class ModelCandidateCoordinator(
         cancel()
         val session = controller.state.sessionId
         val revision = controller.state.revision
+        readiness.setActive(featureEligible())
         if (!eligible() || !controller.canRequestModelRanking) { client.attachSession(session, false); return }
         val owner = ownerState()
         client.attachSession(session, true)
@@ -74,12 +82,17 @@ class ModelCandidateCoordinator(
         if (closed) return
         cancel()
         client.attachSession(null, false)
+        readiness.setActive(featureEligible())
     }
 
     override fun currentCompositionRevision(): Long { checkOwner(); return controller.state.revision }
     override fun onReply(reply: ScoringReply) {
         checkOwner()
-        if (closed || !eligible() || pendingOwner != ownerState()) return
+        if (closed || !eligible() || pendingOwner != ownerState() || !controller.isCurrentModelRanking(reply.token)) return
+        if (reply.code == ScoringCode.NO_MODEL || reply.code == ScoringCode.LOAD_FAILED) {
+            cancel(); client.attachSession(null, false); readiness.setActive(false)
+            return
+        }
         if (controller.acceptModelRanking(reply)) { pendingOwner = null; changed() }
     }
     override fun onAvailabilityChanged(available: Boolean) {
@@ -90,9 +103,10 @@ class ModelCandidateCoordinator(
     override fun close() {
         checkOwner()
         if (closed) return
-        cancel(); closed = true; client.close()
+        cancel(); closed = true; client.close(); readiness.close()
     }
-    private fun eligible() = !closed && ownerState().canRequestSpelling && modelReady() &&
+    private fun featureEligible() = !closed && ownerState().canRequestSpelling && controller.state.enabled
+    private fun eligible() = featureEligible() && readiness.hint == ModelReadinessHint.READY &&
         controller.canRequestCandidates
     private fun checkOwner() = check(Thread.currentThread() === ownerThread) { "Model candidate owner thread required" }
     companion object {

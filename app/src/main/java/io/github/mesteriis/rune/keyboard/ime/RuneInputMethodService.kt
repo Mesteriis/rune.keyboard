@@ -41,6 +41,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunct
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.AndroidLazyPackedLexicons
 import io.github.mesteriis.rune.keyboard.smarttyping.session.CandidateOwnerState
 import io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinator
+import io.github.mesteriis.rune.keyboard.smarttyping.android.AndroidModelCandidates
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionController
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingTextResult
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
@@ -91,6 +92,7 @@ class RuneInputMethodService : InputMethodService() {
             Executor { action -> check(mainHandler.post(action)) { "Candidate owner dispatcher stopped" } },
             ::candidateOwnerState,
             ::renderCandidates,
+            AndroidModelCandidates.create(applicationContext, typingSession, ::candidateOwnerState, ::renderCandidates),
         )
         keyboardPreferences.registerListener(preferencesListener)
     }

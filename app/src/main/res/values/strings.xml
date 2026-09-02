@@ -27,7 +27,7 @@
   <string name="setup_settings_button">Open Rune settings</string>
   <string name="setup_privacy_title">Private by default</string>
   <string name="setup_privacy_description">Network access is used only after you explicitly download the optional local model. Typed text is never sent. Rune has no telemetry, ads, input history, or clipboard access.</string>
-  <string name="setup_mvp_note">Rune 0.2 adds delivery and a self-test for one optional local model. The model is not connected to typing. Swipe typing, suggestions, punctuation and autocorrect are intentionally out of scope.</string>
+  <string name="setup_mvp_note">Rune offers word suggestions and mechanical punctuation. An optional local model can order suggestions using text typed with Rune. Automatic word replacement and contextual punctuation suggestions are not available yet.</string>
 
   <string name="key_shift">Shift</string>
   <string name="key_shift_on">Shift on</string>
@@ -57,8 +57,8 @@
   <string name="smart_typing_suggestions">Suggestions</string>
   <string name="smart_typing_high_confidence">High confidence</string>
   <string name="settings_autocorrection_off_summary">Spelling corrections are off. Mechanical punctuation is controlled separately.</string>
-  <string name="settings_autocorrection_suggestions_summary">Dictionary suggestions only. Tap a suggestion to replace the word.</string>
-  <string name="settings_autocorrection_high_confidence_summary">Dictionary suggestions only. Automatic replacement is not available in this version.</string>
+  <string name="settings_autocorrection_suggestions_summary">Tap a suggestion to replace the word. A ready local model can order suggestions using context.</string>
+  <string name="settings_autocorrection_high_confidence_summary">Word suggestions are available, with context ordering when the local model is ready. Automatic replacement is not available in this version.</string>
   <string name="settings_suggestions_hidden">Suggestions are hidden while the candidate strip is off.</string>
   <string name="settings_mechanical_punctuation">Mechanical punctuation</string>
   <string name="settings_mechanical_punctuation_summary">Adjust punctuation spacing and sentence capitalization in text typed with Rune.</string>

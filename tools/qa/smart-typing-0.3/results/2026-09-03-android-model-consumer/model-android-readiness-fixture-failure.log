@@ -1,0 +1,68 @@
+Calculating task graph as no cached configuration is available for tasks: :app:testDebugUnitTest --tests *Readiness*Test --tests *TypingCandidateSelectionTest --tests *LocalCandidateCoordinatorTest
+> Task :runtime-llama:preBuild UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :runtime-llama:preDebugBuild UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths
+> Task :runtime-llama:writeDebugAarMetadata
+> Task :app:createDebugCompatibleScreenManifests
+> Task :runtime-llama:generateDebugResources
+> Task :app:javaPreCompileDebug
+> Task :app:generateDebugResources
+> Task :runtime-llama:processDebugNavigationResources
+> Task :runtime-llama:javaPreCompileDebug
+> Task :app:checkDebugAarMetadata
+> Task :app:extractDeepLinksDebug
+> Task :runtime-llama:extractDeepLinksDebug
+> Task :runtime-llama:mapDebugSourceSetPaths
+> Task :app:processDebugNavigationResources
+> Task :app:javaPreCompileDebugUnitTest
+> Task :runtime-llama:packageDebugResources
+> Task :app:compileDebugNavigationResources
+> Task :runtime-llama:compileDebugLibraryResources
+> Task :runtime-llama:processDebugManifest
+> Task :runtime-llama:parseDebugLocalResources
+> Task :runtime-llama:generateDebugRFile
+> Task :app:processDebugMainManifest
+> Task :app:processDebugManifest
+> Task :app:processDebugManifestForPackage
+> Task :app:packageDebugResources
+> Task :app:mergeDebugResources
+> Task :app:parseDebugLocalResources
+> Task :app:generateDebugRFile
+> Task :app:compileDebugAidl
+> Task :app:processDebugResources
+> Task :runtime-llama:compileDebugKotlin
+> Task :runtime-llama:compileDebugJavaWithJavac NO-SOURCE
+> Task :runtime-llama:processDebugJavaRes
+> Task :runtime-llama:bundleLibRuntimeToJarDebug
+> Task :runtime-llama:bundleLibCompileToJarDebug
+> Task :app:compileDebugKotlin
+> Task :app:processDebugJavaRes
+> Task :app:compileDebugJavaWithJavac
+> Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:bundleDebugClassesToCompileJar
+> Task :app:compileDebugUnitTestKotlin
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:processDebugUnitTestJavaRes
+
+> Task :app:testDebugUnitTest FAILED
+
+DiskModelReadinessProbeTest > readyIsOnlyMetadataAndBadOrDeletedActiveVersionFailsClosed FAILED
+    java.lang.AssertionError at DiskModelReadinessProbeTest.kt:56
+
+77 tests completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:testDebugUnitTest'.
+> There were failing tests. See the report at: file:///Users/avm/projects/Personal/rune-keyboard/app/build/reports/tests/testDebugUnitTest/index.html
+
+* Try:
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 10s
+41 actionable tasks: 41 executed
+Configuration cache entry stored.

@@ -1,0 +1,12 @@
+{
+  "boundary-fixtures.log": "01b3e1581e103cd76e4fd916f25f2c0b1e1064bb5f7e0459f9652c5a10c01186",
+  "metrics.json": "607674c89aeb4a02d35758313209d0c992615da39755c15af16b17c1bf07e0e8",
+  "model-android-api26-install.log": "50daa2ba76a5c9784728abf9461823bc72d3c4835986fc7ba7cdd96abebea397",
+  "model-android-api26.log": "30db6529bb8fcf5115e0b836cd7a0070f3dcb044d31af57231c6644b0f9a09eb",
+  "model-android-api37-install.log": "50daa2ba76a5c9784728abf9461823bc72d3c4835986fc7ba7cdd96abebea397",
+  "model-android-api37.log": "da159efdf65845c87d788098dfe19a14231fe85aec1275568c91c9613f9e18ad",
+  "model-android-gates.log": "6943fbd0631f29eadbe1b6f9c807e05619581aa0416744d02e4efa63195d7937",
+  "model-android-jvm.log": "0f5f30d1623ca60d873e1158ab1545470a36ebc07655b661d6ad334b8a010b70",
+  "model-android-readiness-fixture-failure.log": "9de4a1ef491733cb4d663240cecdd09b26dbead9ca1061a9aaabd162e52af761",
+  "source-identities.json": "6d6f78dd9b0b748565bae563b9abc1da4c74e03e92a52945ac16a6368f46f78d"
+}

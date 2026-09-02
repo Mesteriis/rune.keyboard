@@ -27,7 +27,7 @@
   <string name="setup_settings_button">Открыть настройки Rune</string>
   <string name="setup_privacy_title">Приватность по умолчанию</string>
   <string name="setup_privacy_description">Сеть используется только после явного скачивания необязательной локальной модели. Введённый текст не отправляется. В Rune нет телеметрии, рекламы, истории ввода и доступа к буферу обмена.</string>
-  <string name="setup_mvp_note">Rune 0.2 добавляет доставку и самопроверку одной необязательной локальной модели. Модель не подключена к вводу. Свайп-ввод, подсказки, пунктуация и автокоррекция намеренно не входят в эту версию.</string>
+  <string name="setup_mvp_note">Rune предлагает подсказки слов и механическую пунктуацию. Необязательная локальная модель может упорядочивать подсказки с учётом текста, набранного Rune. Автоматическая замена слов и подсказки контекстной пунктуации пока недоступны.</string>
 
   <string name="key_shift">Shift</string>
   <string name="key_shift_on">Shift включён</string>
@@ -57,8 +57,8 @@
   <string name="smart_typing_suggestions">Подсказки</string>
   <string name="smart_typing_high_confidence">Высокая уверенность</string>
   <string name="settings_autocorrection_off_summary">Исправления слов выключены. Механическая пунктуация настраивается отдельно.</string>
-  <string name="settings_autocorrection_suggestions_summary">Словарные подсказки. Нажмите на подсказку, чтобы заменить слово.</string>
-  <string name="settings_autocorrection_high_confidence_summary">Доступны только словарные подсказки. Автоматическая замена в этой версии недоступна.</string>
+  <string name="settings_autocorrection_suggestions_summary">Нажмите на подсказку, чтобы заменить слово. Готовая локальная модель может упорядочивать подсказки с учётом контекста.</string>
+  <string name="settings_autocorrection_high_confidence_summary">Доступны подсказки слов с учётом контекста при готовой локальной модели. Автоматическая замена в этой версии недоступна.</string>
   <string name="settings_suggestions_hidden">Подсказки скрыты, пока строка подсказок выключена.</string>
   <string name="settings_mechanical_punctuation">Механическая пунктуация</string>
   <string name="settings_mechanical_punctuation_summary">Корректирует пробелы у знаков пунктуации и заглавную букву предложения в тексте, набранном Rune.</string>

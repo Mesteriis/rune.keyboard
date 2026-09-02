@@ -155,20 +155,34 @@ Client принимает только актуальный session/revision/req
 NORMAL text session и наличие включённого реализованного модельного потребителя.
 Без READY или такого потребителя спрос отсутствует. Словарные подсказки,
 видимость полоски, механика и double-space сами по себе не являются модельным
-спросом; spelling/contextual потребители независимы. В текущем срезе IME ещё
-не создаёт client: readiness monitor, Android pause scheduler и
-подключение model-assisted ranking остаются последующей интеграцией. Конечное число bind
-попыток не доказывает ограничение inference CPU или экономию батареи.
+спросом; spelling/contextual потребители независимы. IME создаёт потребителя через единственную Android-фабрику
+`AndroidModelCandidates`: main Handler управляет паузой, `BoundModelScoringClient`
+передаёт bounded request приватному процессу. Конечное число bind попыток
+не доказывает ограничение inference CPU или экономию батареи.
 
-`imeIntelligenceBoundary` проверяет также client, IPC, storage и inference с
+`ActiveModelReadiness` читает только metadata через `DiskModelReadinessProbe`
+на отдельном serial worker. Один заменяющий numeric epoch ограничивает очередь;
+смена активности и close отбрасывают старый результат без ожидания worker.
+Путь не создаёт model store, не открывает/хеширует GGUF и не получает текст.
+Общий operation lock берётся неблокирующим read-only способом: занятый lock
+даёт UNKNOWN. Повтор UNKNOWN допускается при следующем явном candidate action;
+READY/MISSING/BROKEN не опрашиваются таймером. Переход inactive → active обновляет
+metadata. READY означает доступность descriptor/file stat, а не загрузку,
+проверенный digest или пройденную quality qualification. Сам ответ Ready
+не инициирует binding/scoring. Актуальные NO_MODEL/LOAD_FAILED отменяют спрос
+и сбрасывают hint; устаревшие ошибки не затрагивают новый запрос.
+
+`imeIntelligenceBoundary` проверяет также client, IPC, readiness, storage и inference с
 транзитивными зависимостями. Отрицательные fixtures подтверждают обнаружение
 network, delivery, JNI, logging, filesystem/payload persistence и обходов
-через helper. Native разрешён только adapter; URI разрешён только pure manifest
+через helper. Только точная Android-фабрика допускает вход из IME в реализации
+client/readiness; pure contracts и все транзитивные зависимости продолжают проверяться.
+Native разрешён только adapter; URI разрешён только pure manifest
 parser. Это source-level gate, дополняющий dependency и manifest проверки.
 
 ## Настройки и session state
 
-Persistent (`SharedPreferences`, файл `keyboard_preferences`): включённые языки и их порядок, стартовый язык, высота по профилям экрана, отступы, цифровой ряд, тема, haptic, звук, preview, двойной пробел и независимые предпочтения Smart Typing. `SettingsCodec` читает их в immutable снапшот `KeyboardSettings`. Схема 3 добавляет `autocorrectionMode` (default `HIGH_CONFIDENCE`), `mechanicalPunctuation` (true), `contextualPunctuationMode` (`SUGGESTIONS`) и `candidateStrip` (true). Сохранённое предпочтение не зависит от готовности модели и само по себе не разрешает автозамену до прохождения quality gates. Экран настроек показывает независимые переключатели и режимы, сохраняя выбранное предпочтение отдельно от доступности. В текущей версии `SUGGESTIONS` и `HIGH_CONFIDENCE` дают только ручные словарные подсказки; UI явно сообщает о недоступности автоматической замены и контекстной пунктуации.
+Persistent (`SharedPreferences`, файл `keyboard_preferences`): включённые языки и их порядок, стартовый язык, высота по профилям экрана, отступы, цифровой ряд, тема, haptic, звук, preview, двойной пробел и независимые предпочтения Smart Typing. `SettingsCodec` читает их в immutable снапшот `KeyboardSettings`. Схема 3 добавляет `autocorrectionMode` (default `HIGH_CONFIDENCE`), `mechanicalPunctuation` (true), `contextualPunctuationMode` (`SUGGESTIONS`) и `candidateStrip` (true). Сохранённое предпочтение не зависит от готовности модели и само по себе не разрешает автозамену до прохождения quality gates. Экран настроек показывает независимые переключатели и режимы, сохраняя выбранное предпочтение отдельно от доступности. В текущей версии `SUGGESTIONS` и `HIGH_CONFIDENCE` дают подсказки для ручного выбора с опциональным модельным упорядочиванием; UI явно сообщает о недоступности автоматической замены и контекстной пунктуации.
 
 Отсутствующие поля старой схемы 1/2 или нового хранилища получают defaults; отсутствующие поля схемы 3 и повреждённые отдельные значения получают `OFF`/false. Это относится и к некорректному `doubleSpacePeriod`. Независимые корректные настройки сохраняются. Неизвестная или повреждённая версия схемы отключает эффективные Smart Typing preferences; обычные визуальные настройки сохраняют прежние defaults. Чтение ничего не записывает. Любой существующий writer мигрирует поддерживаемое хранилище одним `SharedPreferences.Editor` вместе с явным изменением, сериализуя snapshot и запись между владельцами одного `SharedPreferences`. Более новая числовая версия и остальные её исходные поля не понижаются и не нормализуются: writer сохраняет только явно выбранный ключ, а Smart Typing остаётся выключенным до совместимого reader. Текст редактора в preferences не попадает.
 
@@ -215,7 +229,7 @@ Typing-контроллер сохраняет Original и до семи пол�
 индекс кандидата и не меняет смысл при перестановке. Невидимый ID не допускается
 к выбору, даже если этот вариант остаётся в полном наборе.
 
-Опциональный `ModelCandidateCoordinator` подключён к выходу local coordinator.
+`ModelCandidateCoordinator` подключён к выходу local coordinator.
 Он использует cached eligibility/Ready, ждёт паузу 400 ms после принятого
 словарного результата и отправляет полный набор только через `ModelScoringClient`.
 Таймер хранит числовую identity и policy, а не текст. Snapshot собирается в момент
@@ -228,9 +242,9 @@ payload. 400 ms — development debounce, не измеренный performance 
 текущей composition и неизменной owner policy. Нормализация — sum/tokenCount;
 при равенстве сохраняется исходный порядок, Original имеет первый ID.
 Результат меняет только порядок и выделение подсказок, никогда editor text.
-Это ещё не калиброванный combined ranker или AutoReplace. Production IME пока
-не передаёт model coordinator: Android-фабрика и read-only Ready bridge остаются
-следующим срезом; текущая клавиатура продолжает словарный путь.
+Это ещё не калиброванный combined ranker или AutoReplace. Production IME
+создаёт coordinator через Android-фабрику с read-only metadata Ready bridge.
+Без актуального результата сохраняется немедленный словарный путь.
 
 `RuneKeyboardView` содержит постоянные `CandidateStripView` и контейнер клавиш.
 Обновление кандидатов меняет только три постоянные ячейки полосы, сохраняя
@@ -251,7 +265,7 @@ Original восстанавливает введённое слово после
 ## Приватность и безопасность
 
 - manifest объявляет ровно `android.permission.INTERNET`; сеть используется только после явного скачивания модели через системный DownloadManager;
-- введённый текст не передаётся в delivery/activation; bounded scoring contract допускает эфемерную передачу Rune-owned контекста в приватный процесс того же приложения, без сети, логов или сохранения; IME consumer ещё не подключён;
+- введённый текст не передаётся в delivery/activation; bounded scoring contract допускает эфемерную передачу Rune-owned контекста в приватный процесс того же приложения, без сети, логов или сохранения; IME consumer использует этот путь только для актуальных допустимых подсказок;
 - `privacyGateRelease` проверяет точный permission set, отключённые backup/cleartext и отсутствие логирования;
 - IME service экспортирован только с signature permission `android.permission.BIND_INPUT_METHOD`; interactive inference service приватный и отдельно проверяет UID caller;
 - backup и cleartext traffic отключены;

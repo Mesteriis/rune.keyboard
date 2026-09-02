@@ -1,0 +1,31 @@
+{
+  "jvm": {
+    "tests": 586,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "gates": {
+    "tasks": 267,
+    "executed": 48,
+    "fromCache": 1,
+    "upToDate": 218
+  },
+  "api26": {
+    "tests": 54,
+    "failures": 0,
+    "seconds": 211.299
+  },
+  "api37": {
+    "tests": 54,
+    "failures": 0,
+    "seconds": 256.049
+  },
+  "factoryBinder": "real remote Binder with synthetic engine and owned editor callback fixture",
+  "realImeRegression": "existing composing/candidate view tests through Binder InputConnection",
+  "realModel": "UNRUN in this slice",
+  "physicalFold": "UNRUN in this slice",
+  "quality": "NOT_QUALIFIED",
+  "battery": "NOT_QUALIFIED",
+  "modelConsumerInIme": "CONNECTED_SUGGESTIONS_ONLY"
+}

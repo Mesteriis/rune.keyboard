@@ -4,6 +4,8 @@ import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import io.github.mesteriis.rune.keyboard.intelligence.client.ModelScoringClient
 import io.github.mesteriis.rune.keyboard.intelligence.client.ModelScoringListener
+import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessSource
+import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringInput
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringCode
@@ -510,6 +512,24 @@ class LocalCandidateCoordinatorTest {
         assertTrue(h.model.closed); assertTrue(h.model.requests.isEmpty())
     }
 
+    @Test fun `stale missing model error cannot detach a newer request`() {
+        Harness(withModel = true).use { h ->
+            h.type("helo"); h.deliver(); h.pause.fire()
+            val old = h.model.requests.single()
+            h.type("s"); h.deliver(); h.pause.fire()
+            val current = h.model.requests.last()
+            val attempts = h.model.attachments.size
+            h.model.listener.onReply(ScoringReply(old.token, ScoringCode.NO_MODEL, 0, emptyList()))
+            assertEquals(attempts, h.model.attachments.size)
+            assertTrue(h.model.attachments.last().second)
+            h.model.listener.onReply(ScoringReply(current.token, ScoringCode.NO_MODEL, 0, emptyList()))
+            assertFalse(h.model.attachments.last().second)
+            val published = h.published
+            h.model.reply(current, 1)
+            assertEquals(published, h.published)
+        }
+    }
+
     private class Pause : ModelPauseScheduler {
         var task: Runnable? = null
         var delay = 0L
@@ -545,7 +565,11 @@ class LocalCandidateCoordinatorTest {
         val model = FakeModel()
         val pause = Pause()
         private val ranking = if (withModel) ModelCandidateCoordinator(controller,
-            { model.listener = it; model }, pause, { owner }, { modelReady }, { published++ }) else null
+            { model.listener = it; model }, pause, { owner }, object : ModelReadinessSource {
+                override val hint get() = if (modelReady) ModelReadinessHint.READY else ModelReadinessHint.MISSING
+                override fun setActive(active: Boolean) = Unit
+                override fun close() = Unit
+            }, { published++ }) else null
         val commands = mutableListOf<TypingEdit>()
         val execute: (TypingEdit) -> Boolean = { commands.add(it); true }
         private val queue = ConcurrentLinkedQueue<Runnable>()

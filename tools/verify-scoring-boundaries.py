@@ -6,8 +6,17 @@ from pathlib import Path
 
 BASE = 'io.github.mesteriis.rune.keyboard.'
 RUNTIME = 'io.github.mesteriis.rune.runtime.llama.'
-AREAS = ('ime', 'intelligence.client', 'intelligence.ipc', 'intelligence.storage', 'intelligence.inference')
+AREAS = ('ime', 'intelligence.client', 'intelligence.ipc', 'intelligence.storage', 'intelligence.inference', 'intelligence.readiness')
 PURE_MODEL = {'ModelTypes.kt', 'ModelManifestParser.kt'}
+PURE_CLIENT = {'ModelScoringClient.kt', 'ModelDemand.kt', 'ModelReadinessSource.kt'}
+FACTORY = 'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/android/AndroidModelCandidates.kt'
+IME_INTELLIGENCE = {
+    'intelligence.client': PURE_CLIENT | {'BoundModelScoringClient.kt', 'LatestReplyGuard.kt'},
+    'intelligence.ipc': {'ScoringContract.kt', 'ScoringParcels.kt'},
+    'intelligence.readiness': {'ActiveModelReadiness.kt', 'DiskModelReadinessProbe.kt'},
+    'intelligence.storage': {'ActiveModelResolver.kt', 'ActiveModelPointer.kt', 'ActiveModelPointerCodec.kt', 'ModelOperationGate.kt'},
+    'intelligence.model': PURE_MODEL,
+}
 GENERATED = {BASE + 'R', BASE + 'BuildConfig', BASE + 'intelligence.ipc.IModelScoringService', BASE + 'intelligence.ipc.IModelScoringCallback'}
 STRINGS_COMMENTS = re.compile(r'"""[\s\S]*?"""|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/')
 NETWORK = re.compile(r'\b(?:java\.net\.(?!URI\b)|javax\.net\.|android\.net\.|DownloadManager|Socket|ServerSocket|URLConnection|HttpURLConnection|okhttp|retrofit|ktor|firebase|analytics|Sentry)')
@@ -49,6 +58,21 @@ def inspect(sources):
             if p in seen: continue
             seen.add(p); pending.extend(edges.get(p,()))
             text = clean[p]; package = packages[p]; name = Path(p).name
+            if package == BASE+'intelligence.client' and name in PURE_CLIENT:
+                for dependency in edges.get(p, ()):
+                    if not (packages[dependency] == BASE+'intelligence.client' and Path(dependency).name in PURE_CLIENT or
+                            packages[dependency] == BASE+'intelligence.ipc' and Path(dependency).name == 'ScoringContract.kt'):
+                        errors.append(f'{area}: {p}: impure client contract')
+            if area == 'ime':
+                for dependency in edges.get(p, ()):
+                    target = packages[dependency]
+                    pure = (target == BASE+'intelligence.client' and Path(dependency).name in PURE_CLIENT or
+                            target == BASE+'intelligence.ipc' and Path(dependency).name == 'ScoringContract.kt')
+                    if target.startswith(BASE+'intelligence.') and not pure and not package.startswith(BASE+'intelligence.') and p != FACTORY:
+                        errors.append(f'{area}: {p}: intelligence implementation entry only through AndroidModelCandidates')
+            if p == FACTORY and (LOGS.search(text) or PERSIST.search(text) or
+                    re.search(r'getTextBeforeCursor|getTextAfterCursor|getSurroundingText|getExtractedText', text)):
+                errors.append(f'{area}: {p}: factory payload I/O')
             if NETWORK.search(text) or REFLECTION.search(text) or re.search(r'\b(?:openConnection|openStream|toURL|connect|sendto)\s*\(', text): errors.append(f'{area}: {p}: network/reflection')
             if re.search(r'\bjava\.net\.URI\b',text) and name != 'ModelManifestParser.kt': errors.append(f'{area}: {p}: URI only allowed in manifest parser')
             if '.intelligence.delivery' in package or '.intelligence.runtime' in package: errors.append(f'{area}: {p}: delivery/activation')
@@ -60,11 +84,15 @@ def inspect(sources):
                     if not package.startswith((BASE+'intelligence.client',BASE+'intelligence.ipc')): errors.append(f'{area}: {p}: dependency outside bounded client/IPC')
                     if re.search(r'\b(?:java\.io|java\.nio\.file|File|RandomAccessFile)\b',text): errors.append(f'{area}: {p}: filesystem')
                 if area == 'intelligence.storage' and not (package.startswith(BASE+'intelligence.storage') or package == BASE+'intelligence.model' and name in PURE_MODEL): errors.append(f'{area}: {p}: non-neutral storage dependency')
+                if area == 'intelligence.readiness' and not (package.startswith((BASE+'intelligence.readiness', BASE+'intelligence.storage')) or
+                        package == BASE+'intelligence.client' and name in ('ModelReadinessSource.kt', 'ModelDemand.kt') or
+                        package == BASE+'intelligence.model' and name in PURE_MODEL):
+                    errors.append(f'{area}: {p}: readiness must stay payload-free and read-only')
                 if area == 'intelligence.inference' and not (package.startswith((BASE+'intelligence.inference', BASE+'intelligence.ipc', BASE+'intelligence.storage', RUNTIME.rstrip('.'))) or package == BASE+'intelligence.model' and name in PURE_MODEL): errors.append(f'{area}: {p}: dependency outside service adapter boundary')
                 if area == 'intelligence.inference' and package == BASE+'intelligence.model' and name not in PURE_MODEL: errors.append(f'{area}: {p}: non-pure model dependency')
                 if 'RandomAccessFile' in text and name != 'ModelOperationGate.kt': errors.append(f'{area}: {p}: arbitrary file writes')
-            if area == 'ime' and package.startswith(BASE+'intelligence.') and not (package == BASE+'intelligence.client' and name in ('ModelScoringClient.kt', 'ModelDemand.kt') or package == BASE+'intelligence.ipc' and name == 'ScoringContract.kt'):
-                errors.append(f'{area}: {p}: only ModelScoringClient/Listener, pure demand and scoring value contracts allowed')
+            if area == 'ime' and package.startswith(BASE+'intelligence.') and name not in IME_INTELLIGENCE.get(package.removeprefix(BASE), set()):
+                errors.append(f'{area}: {p}: outside exact IME model composition allowlist')
     return sorted(set(errors))
 
 def collect(root):
@@ -87,6 +115,18 @@ def self_test():
         {'Client.kt':source('intelligence.client','class Client { val x = Class.forName("hidden") }')},
     ]
     tests += [
+        {FACTORY:source('smarttyping.android','import java.io.FileWriter\nclass AndroidModelCandidates'),
+         'Ime.kt':source('ime','import '+BASE+'smarttyping.android.AndroidModelCandidates\nclass Ime')},
+        {'Hint.kt':source('intelligence.readiness','import '+BASE+'intelligence.delivery.Manager\nclass Hint'),
+         'Manager.kt':source('intelligence.delivery','class Manager')},
+        {'Hint.kt':source('intelligence.readiness','import '+BASE+'smarttyping.session.Payload\nclass Hint'),
+         'Payload.kt':source('smarttyping.session','class Payload')},
+        {'Ime.kt':source('ime','import '+BASE+'helper.Helper\nclass Ime'),
+         'Helper.kt':source('helper','import '+BASE+'intelligence.client.BoundModelScoringClient\nclass Helper'),
+         'BoundModelScoringClient.kt':source('intelligence.client','class BoundModelScoringClient')},
+        {'Ime.kt':source('ime','import '+BASE+'intelligence.client.ModelScoringClient\nclass Ime'),
+         'ModelScoringClient.kt':source('intelligence.client','import '+BASE+'intelligence.client.BoundModelScoringClient\nclass ModelScoringClient'),
+         'BoundModelScoringClient.kt':source('intelligence.client','class BoundModelScoringClient')},
         {'Controller.kt':source('ime','import '+BASE+'intelligence.client.ModelDemand\nclass Controller'),
          'ModelDemand.kt':source('intelligence.client','import java.io.File\nclass ModelDemand')},
         {'Service.kt':source('intelligence.inference','import '+RUNTIME+'Adapter\nclass Service'), 'Adapter.kt':'package '+RUNTIME.rstrip('.')+'\nclass Adapter'},
@@ -101,7 +141,11 @@ def self_test():
     demand={'Controller.kt':source('ime','import '+BASE+'intelligence.client.ModelDemand\nclass Controller'),
             'ModelDemand.kt':source('intelligence.client','class ModelDemand')}
     assert not inspect(demand)
-    print(f'boundary fixtures PASS: {len(tests)} negative, 3 positive')
+    factory={'Ime.kt':source('ime','import '+BASE+'smarttyping.android.AndroidModelCandidates\nclass Ime'),
+             FACTORY:source('smarttyping.android','import '+BASE+'intelligence.client.BoundModelScoringClient\nclass AndroidModelCandidates'),
+             'BoundModelScoringClient.kt':source('intelligence.client','class BoundModelScoringClient')}
+    assert not inspect(factory)
+    print(f'boundary fixtures PASS: {len(tests)} negative, 4 positive')
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--root',type=Path);parser.add_argument('--self-test',action='store_true');args=parser.parse_args()

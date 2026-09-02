@@ -157,13 +157,10 @@ class TypingSessionController internal constructor(
 
     /** Numeric suggestion ordering only. No confidence bucket, automatic replacement or editor command. */
     fun acceptModelRanking(reply: ScoringReply): Boolean {
-        val pending = pendingModelRanking ?: return false
-        if (reply.token != pending.token) return false
+        if (!isCurrentModelRanking(reply.token)) return false
         pendingModelRanking = null
         val selection = candidateSelection ?: return false
-        if (selection !== pending.selection || !canRequestCandidates ||
-            state.sessionId != reply.token.sessionId || state.revision != reply.token.revision ||
-            state.composing?.typedWord != selection.original || reply.code != ScoringCode.OK) return false
+        if (reply.code != ScoringCode.OK) return false
         val ranked = reply.scores.sortedWith(compareByDescending<NumericScore> {
             it.sumLogProbability / it.tokenCount
         }.thenBy { it.candidateId })
@@ -173,6 +170,14 @@ class TypingSessionController internal constructor(
             modelRanked = true,
         )
         return true
+    }
+
+    fun isCurrentModelRanking(token: ScoringToken): Boolean {
+        val pending = pendingModelRanking ?: return false
+        val selection = candidateSelection ?: return false
+        return token == pending.token && selection === pending.selection && canRequestCandidates &&
+            state.sessionId == token.sessionId && state.revision == token.revision &&
+            state.composing?.typedWord == selection.original
     }
 
     /** Cancels ranking ownership without removing the current deterministic/manual strip. */

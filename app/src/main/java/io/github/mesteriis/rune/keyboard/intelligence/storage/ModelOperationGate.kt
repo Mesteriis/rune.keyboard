@@ -2,6 +2,7 @@ package io.github.mesteriis.rune.keyboard.intelligence.storage
 
 import java.io.File
 import java.io.RandomAccessFile
+import java.nio.channels.OverlappingFileLockException
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
@@ -24,6 +25,19 @@ class ModelOperationGate(private val root: File) {
         RandomAccessFile(lockFile, "r").use { file ->
             file.channel.lock(0L, Long.MAX_VALUE, true).use { return block() }
         }
+    }
+
+    /** Metadata hints must not queue behind installation or loading. Null means busy/unavailable. */
+    fun <T> tryWithReadLock(block: () -> T): T? {
+        if (!localLock.tryLock()) return null
+        try {
+            if (!root.isDirectory || !lockFile.isFile) return null
+            return RandomAccessFile(lockFile, "r").use { file ->
+                val acquired = try { file.channel.tryLock(0L, Long.MAX_VALUE, true) }
+                catch (_: OverlappingFileLockException) { null }
+                acquired?.use { block() }
+            }
+        } finally { localLock.unlock() }
     }
 
     private companion object {

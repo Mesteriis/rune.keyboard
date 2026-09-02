@@ -1,0 +1,24 @@
+{
+  "baseline": "f65c079cf7df488366a58e60b42406c5761dbad9",
+  "sources": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/intelligence/readiness/AndroidModelCandidatesInstrumentedTest.kt": "aab65aa76f58b7b12c54eaa4619798ae06147a8df0b50b885afbdcb3ba7a53fe",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt": "e917626a231dfdc211217535084108e22d8b644691df2b5a42b35fe6a382c2a2",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelReadinessSource.kt": "865ff97c18937864653589c5628b622db5593b71c5b765686bc98143af0c650c",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/readiness/ActiveModelReadiness.kt": "6467a58f67cbeb6f71ee58abf198474271a4caeb7202facdf9792fbc4367850a",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/readiness/DiskModelReadinessProbe.kt": "1f12ce9d0fa7fb0a1a5bae9bb292674b1a06581c18b6bc582028237a47f4bcd4",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/storage/ModelOperationGate.kt": "9d41869575175a6a0e4b0c04fb71c2470adb4891714fba35f4028be024bc85a3",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/android/AndroidModelCandidates.kt": "c55979e8507209ff4ecae3d08ef38b68ff583d65d9fc74bd0d23ac94286808b6",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelCandidateCoordinator.kt": "a15b191257c387f50f0d30e45ffe17948c20c57649ce4a6119b8da667ea0e3fc",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "6678e2ec3facfd02ed4718f30f4a2698bee4fff9a7fd4b90802fbc752bcb818c",
+    "app/src/main/res/values-ru/strings.xml": "443f02b47fcec233ef941ae770a49ce09de9ab2b9382ca200e70319ae8a41f50",
+    "app/src/main/res/values/strings.xml": "6a4754a726a11d1d8adc8436fa0d193ed8f3a3de21e622111431131f9cf9d1b6",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/intelligence/readiness/ActiveModelReadinessTest.kt": "c956d0050a6440d684fd00573e84dafdbb6ebe0712352e29e2a98fff119d8727",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/intelligence/readiness/DiskModelReadinessProbeTest.kt": "023373a79d0d8c7ccb7997a3b7f06e620bb9cb45de467a5621bbfb43f33ea476",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinatorTest.kt": "d2dbe136afecd471fd17d34959611f43487dbf2174c37caaa2fc48c69aa5e258",
+    "tools/verify-scoring-boundaries.py": "58867ce3950b119d1b8a968d7a654f701e122635acd72674de8681db6a0dd04a"
+  },
+  "builtApks": {
+    "app/build/outputs/apk/debug/app-debug.apk": "f83bface8116bba385f210ec2adab0c27501dcb6bc073624a96d28bca1f2247b",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "eb1b7bb9616a5b77924f3030795e8cdebab676fdf2655edd928257f64af1b100"
+  }
+}
