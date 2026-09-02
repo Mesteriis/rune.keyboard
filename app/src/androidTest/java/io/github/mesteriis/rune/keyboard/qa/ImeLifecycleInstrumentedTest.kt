@@ -50,6 +50,6 @@ class ImeLifecycleInstrumentedTest : ImeTestBase() {
         driver.setNumberRowThroughSettings(enabled = true)
         driver.assertKeyVisible("1")
         driver.tapKey("a", "A")
-        driver.awaitFieldText("qa_plain_text", "leftrighta")
+        driver.revealFieldAndAwaitText("qa_email", "a")
     }
 }

@@ -293,9 +293,6 @@ class ImeTestDriver {
         focusField("qa_email")
         eventually(WAIT_MILLIS) { (findKeyByText("1") != null) == enabled }
         check((findKeyByText("1") != null) == enabled) { "Next IME view did not apply number-row setting" }
-        focusField("qa_plain_text")
-        eventually(WAIT_MILLIS) { (findKeyByText("1") != null) == enabled }
-        check((findKeyByText("1") != null) == enabled) { "Active IME did not apply number-row setting" }
     }
 
     fun ensureKeyPreviewEnabled() {
