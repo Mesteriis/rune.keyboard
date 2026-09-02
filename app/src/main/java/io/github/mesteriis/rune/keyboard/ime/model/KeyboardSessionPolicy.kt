@@ -4,7 +4,7 @@ import io.github.mesteriis.rune.keyboard.settings.KeyboardSettings
 import io.github.mesteriis.rune.keyboard.settings.StartingLanguage
 
 /**
- * Decides what survives an editor session boundary.
+ * Decides what survives an editor session boundary and preserves the existing caps lookup policy.
  *
  * A configuration change — most importantly folding or unfolding the device — re-delivers
  * `onStartInput(restarting = true)` for the same editor. Keeping the previous state there is what
@@ -28,6 +28,23 @@ object KeyboardSessionPolicy {
             enabledLanguages = settings.enabledLanguages,
             doubleSpacePeriodEnabled = settings.doubleSpacePeriod,
         )
+    }
+
+    /** No new editor read: the callback is the service's pre-existing NORMAL caps-mode lookup. */
+    fun withAutomaticCapitalization(
+        state: KeyboardState,
+        editor: EditorContext,
+        hasComposingWord: Boolean,
+        ownedSentenceBoundary: Boolean,
+        readCursorCapsMode: () -> Int?,
+    ): KeyboardState {
+        if (!editor.supportsAutomaticCapitalization || state.layer != KeyboardLayer.LETTERS) {
+            return state.withAutomaticCapitalization(false)
+        }
+        if (hasComposingWord) return state
+        if (ownedSentenceBoundary) return state.withAutomaticCapitalization(true)
+        val caps = readCursorCapsMode() ?: return state
+        return state.withAutomaticCapitalization(caps != 0)
     }
 
     fun resolveStartLanguage(

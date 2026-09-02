@@ -94,14 +94,13 @@ class TypingSessionControllerTest {
     }
 
     @Test
-    fun `repeated spaces finish previous pending boundary instead of duplicating it`() {
+    fun `repeated spaces retain one pending boundary without duplicating it`() {
         start()
         controller.typeText(" ", execute)
         controller.typeText(" ", execute)
         assertEquals("  ", controller.state.contextText)
-        assertEquals(ComposingSegment(" ", ""), controller.state.composing)
-        assertEquals(listOf(TypingEdit.SetComposingText(" "), TypingEdit.FinishComposingText,
-            TypingEdit.SetComposingText(" ")), edits)
+        assertEquals(ComposingSegment("  ", ""), controller.state.composing)
+        assertEquals(listOf(TypingEdit.SetComposingText(" "), TypingEdit.SetComposingText("  ")), edits)
     }
 
     @Test
@@ -507,15 +506,15 @@ class TypingSessionControllerTest {
     }
 
     @Test
-    fun `double space preserves existing preceding character rules using owned context`() {
-        for (prefix in listOf("a", "я", "5", ":", ";", "e\u0301", "😀", "👩🏽‍💻", "🇷🇺")) {
+    fun `double space requires a complete ordinary word in owned context`() {
+        for (prefix in listOf("a", "я", "e\u0301")) {
             pendingSpace(prefix)
             assertEquals(prefix, TypingTextResult.HANDLED, controller.doubleSpace(execute))
             assertEquals(prefix + ". ", controller.state.contextText)
             controller.deletePrevious(execute)
             assertEquals(prefix + " ", controller.state.contextText)
         }
-        for (prefix in listOf("", " ", "\n", "\t", ".", ",", "!", "?")) {
+        for (prefix in listOf("", " ", "\n", "\t", ".", ",", "!", "?", "5", ":", ";", "😀", "👩🏽‍💻", "🇷🇺")) {
             pendingSpace(prefix)
             assertEquals(prefix, TypingTextResult.BYPASS, controller.doubleSpace(execute))
             assertTrue(edits.isEmpty())
@@ -573,9 +572,9 @@ class TypingSessionControllerTest {
             pendingSpace(prefix)
             assertEquals(TypingTextResult.BYPASS, controller.doubleSpace(execute))
             assertEquals(TypingTextResult.HANDLED, controller.typeText(" ", execute))
-            assertEquals(listOf(TypingEdit.FinishComposingText, TypingEdit.SetComposingText(" ")), edits)
+            assertEquals(listOf(TypingEdit.SetComposingText(prefix + "  ")), edits)
             assertEquals(prefix + "  ", controller.state.contextText)
-            assertEquals(ComposingSegment(" "), controller.state.composing)
+            assertEquals(ComposingSegment(prefix + "  "), controller.state.composing)
             assertNull(controller.state.lastAutoEdit)
         }
     }
@@ -593,20 +592,20 @@ class TypingSessionControllerTest {
 
     @Test
     fun `double space and undo accept synchronous callbacks and delayed following typing`() {
-        pendingSpace("a", 10)
+        pendingSpace("a")
         assertEquals(TypingTextResult.HANDLED, controller.doubleSpace {
             edits.add(it)
-            assertFalse(selection(13, 13, 11, 13))
+            assertFalse(selection(3, 3, 1, 3))
             true
         })
         assertEquals(TypingTextResult.HANDLED, controller.deletePrevious {
             edits.add(it)
-            assertFalse(selection(12, 12, 11, 12))
+            assertFalse(selection(2, 2, 1, 2))
             true
         })
         controller.typeText("b", execute)
         controller.typeText("c", execute)
-        assertFalse(selection(14, 14, 11, 14))
+        assertFalse(selection(4, 4, 1, 4))
         assertEquals("a bc", controller.state.contextText)
     }
 
@@ -752,7 +751,7 @@ class TypingSessionControllerTest {
 
     @Test
     fun `undo restores bounded context prefix evicted by conversion without breaking Unicode`() {
-        for (prefix in listOf("x".repeat(1_023), "😀".repeat(1_022) + "a")) {
+        for (prefix in listOf("x ".repeat(509) + "hello", "😀".repeat(1_017) + "\nhello")) {
             pendingSpace(prefix)
             val original = controller.state.contextText
             assertEquals(1_024, original.codePointCount(0, original.length))

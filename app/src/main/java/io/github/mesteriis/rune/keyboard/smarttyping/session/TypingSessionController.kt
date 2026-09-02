@@ -1,8 +1,17 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.session
 
-import io.github.mesteriis.rune.keyboard.ime.editor.DoubleSpacePeriod
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLayer
+import io.github.mesteriis.rune.keyboard.ime.model.EditorMode
+import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlanner
+import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlan
+import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalEditKind
+import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.OwnedPunctuationSuffix
+import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.PunctuationAction
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.ProtectedTokenPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.ProtectedTokenReason
@@ -26,6 +35,10 @@ class TypingSessionController internal constructor(
     constructor() : this(IcuGraphemeSegmenter)
 
     var state = TypingSessionState()
+        private set
+
+    /** Acknowledged gesture hint only; visual Shift remains owned by KeyboardState. */
+    var sentenceCapitalizationPending: Boolean = false
         private set
 
     private var context: SessionTextContext? = null
@@ -200,9 +213,16 @@ class TypingSessionController internal constructor(
     fun typeText(text: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
         if (text.isNotEmpty()) discardUndo()
         if (!state.enabled || awaitingEditorSelection || text.isEmpty()) return TypingTextResult.BYPASS
-        if (text == " ") {
-            if (!finishComposition(execute)) return TypingTextResult.REJECTED
-            return compose(ComposingSegment(leadingBoundary = " "), text, execute)
+        if (text.length == 1 && text[0] in PENDING_BOUNDARY) {
+            val current = state.composing
+            // Freeze the word exactly once, then retain only the current punctuation boundary.
+            if (current?.typedWord?.isNotEmpty() == true || plainWordUntilBoundary ||
+                (current?.text?.length ?: 0) + text.length > MAX_COMPOSING_UTF16
+            ) {
+                if (!finishComposition(execute)) return TypingTextResult.REJECTED
+            }
+            val pending = state.composing?.leadingBoundary.orEmpty()
+            return compose(ComposingSegment(leadingBoundary = pending + text), text, execute)
         }
         if (text.codePoints().allMatch(::isWordCodePoint)) {
             if (plainWordUntilBoundary) return commitPlain(text, execute)
@@ -310,41 +330,116 @@ class TypingSessionController internal constructor(
         return finished
     }
 
-    /** Converts only the pending space and preceding suffix accepted from Rune commands. */
+    /** Actual service entry: attempt one owned transaction before the raw action. */
+    fun typeText(
+        text: String,
+        policy: MechanicalPunctuationPolicy,
+        keyboard: KeyboardState,
+        doubleSpaceGesture: Boolean = false,
+        execute: (TypingEdit) -> Boolean,
+    ): TypingTextResult {
+        if (text.isNotEmpty()) discardUndo()
+        val action = if (doubleSpaceGesture) PunctuationAction.DoubleSpaceGesture else PunctuationAction.Text(text)
+        val transformed = applyPunctuation(action, policy, keyboard, execute)
+        // An ineligible gesture follows the ordinary space path once, never the legacy converter.
+        return if (transformed == TypingTextResult.BYPASS) typeText(text, execute) else transformed
+    }
+
+    /** Compatibility entry for a recognized gesture; all conversion now uses the same planner. */
     fun doubleSpace(executeTypingEdit: (TypingEdit) -> Boolean): TypingTextResult {
         discardUndo()
-        val previous = state.composing
-        val before = context?.text ?: return TypingTextResult.BYPASS
-        if (!state.enabled || awaitingEditorSelection || previous?.leadingBoundary != " " ||
-            previous.typedWord.isNotEmpty() || composingStart < 0 ||
-            selectionStart != selectionEnd || selectionStart == Int.MAX_VALUE ||
-            selectionStart.toLong() != composingStart.toLong() + previous.text.length ||
-            !DoubleSpacePeriod.canConvert(before)
-        ) return TypingTextResult.BYPASS
+        return applyPunctuation(PunctuationAction.DoubleSpaceGesture,
+            MechanicalPunctuationPolicy(InputPolicy.NORMAL, EditorMode.TEXT, false, false, true),
+            KeyboardState(KeyboardLanguage.ENGLISH), executeTypingEdit)
+    }
 
-        val next = ComposingSegment(leadingBoundary = ". ")
-        val caret = selectionStart + 1
-        val expected = EditorSelection(caret, caret, composingStart, caret)
-        return applyEdit(TypingEdit.SetComposingText(next.text), expected, executeTypingEdit) {
-            check(context?.replaceSuffix(previous.text, next.text) == true)
-            state = state.copy(
-                composing = next,
-                lastAutoEdit = UndoableTextEdit(
-                    original = previous.text,
-                    applied = next.text,
-                    sessionId = state.sessionId,
-                    revision = state.revision,
-                    restoreComposition = previous,
-                    contextBefore = before,
-                ),
-            )
+    private fun punctuationEvidence(): OwnedPunctuationSuffix? {
+        if (!state.enabled || awaitingEditorSelection || editorEditDepth != 0 ||
+            selectionStart < 0 || selectionStart != selectionEnd || plainWordUntilBoundary
+        ) return null
+        val before = context?.text ?: return null
+        val live = state.composing?.text
+        if (live != null && (composingStart < 0 ||
+                composingStart.toLong() + live.length != selectionStart.toLong() || !before.endsWith(live))) return null
+        val count = before.codePointCount(0, before.length)
+        val minimum = if (count > 256) before.offsetByCodePoints(0, count - 256) else 0
+        val start = if (minimum == 0) 0 else graphemes.boundaries(before).first { it >= minimum }
+        if (start > before.length - live.orEmpty().length) return null
+        // A cut through a word is not evidence of a whole word. Only document start or an
+        // actually retained Rune whitespace immediately before the slice establishes this flag.
+        val tokenBoundary = if (start == 0) selectionStart.toLong() - before.length == 0L
+            else before[start - 1].isWhitespace()
+        return OwnedPunctuationSuffix(before.substring(start), live, tokenBoundary, state.sessionId, state.revision)
+    }
+
+    private fun applyPunctuation(
+        action: PunctuationAction,
+        policy: MechanicalPunctuationPolicy,
+        keyboard: KeyboardState,
+        execute: (TypingEdit) -> Boolean,
+    ): TypingTextResult {
+        val owned = punctuationEvidence() ?: return TypingTextResult.BYPASS
+        val plan = MechanicalPunctuationPlanner.plan(owned, action, policy) as? MechanicalPunctuationPlan.Replace
+            ?: return TypingTextResult.BYPASS
+        var rendered = plan.replacementComposing
+        plan.sentenceCapsForNewTextAt?.takeIf { keyboard.layer == KeyboardLayer.LETTERS }?.let { offset ->
+            val end = offset + Character.charCount(rendered.codePointAt(offset))
+            val caps = keyboard.withAutomaticCapitalization(true)
+            // Same locale/Shift casing as CommitLetter, restricted to the new first code point.
+            val first = rendered.substring(offset, end)
+            val cased = if (caps.shiftMode.usesUppercase) first.uppercase(caps.language.locale)
+                else first // Manual lowercase suppresses this automatic edit; never lower explicit text.
+            rendered = rendered.substring(0, offset) + cased + rendered.substring(end)
+        }
+        if (rendered == plan.undoOriginal && plan.kind != MechanicalEditKind.DOUBLE_SPACE_PERIOD) {
+            return TypingTextResult.BYPASS
+        }
+        if (rendered.length > MAX_COMPOSING_UTF16 || rendered.codePointCount(0, rendered.length) > 128) {
+            return TypingTextResult.BYPASS
+        }
+        val current = punctuationEvidence() ?: return TypingTextResult.REJECTED
+        if (plan.sessionId != current.sessionId || plan.revision != current.revision ||
+            plan.expectedComposing != current.composingText || current.text != owned.text
+        ) return TypingTextResult.REJECTED
+        val previous = state.composing
+        val start = if (previous == null) selectionStart else composingStart
+        val caret = start.toLong() + rendered.length
+        val undoCaret = start.toLong() + plan.undoOriginal.length
+        if (caret > Int.MAX_VALUE || undoCaret > Int.MAX_VALUE) return TypingTextResult.BYPASS
+        val before = context!!.text
+        val rawContext = SessionTextContext(graphemes).apply {
+            restore(before.dropLast(previous?.text?.length ?: 0))
+            append(plan.undoOriginal)
+        }.text
+        val next = splitComposition(rendered)
+        val restore = splitComposition(plan.undoOriginal)
+        val expected = EditorSelection(caret.toInt(), caret.toInt(), start, caret.toInt())
+        return applyEdit(TypingEdit.SetComposingText(rendered), expected, execute) {
+            // The read-only prefix is never sent to the editor or adopted as composing.
+            context!!.restore(before.dropLast(previous?.text?.length ?: 0))
+            context!!.append(rendered)
+            composingStart = start
+            sentenceCapitalizationPending = plan.kind == MechanicalEditKind.DOUBLE_SPACE_PERIOD
+            state = state.copy(composing = next,
+                originalSelected = state.originalSelected && previous?.typedWord?.isNotEmpty() == true,
+                lastAutoEdit = UndoableTextEdit(plan.undoOriginal, rendered, state.sessionId,
+                    state.revision, restore, rawContext))
             publish()
         }
+    }
+
+    private fun splitComposition(text: String): ComposingSegment {
+        var start = text.length
+        while (start > 0 && isWordCodePoint(text.codePointBefore(start))) {
+            start -= Character.charCount(text.codePointBefore(start))
+        }
+        return ComposingSegment(text.substring(0, start), text.substring(start))
     }
 
     /** Settings and non-text boundaries can close Undo without making an editor call. */
     fun discardUndo() {
         if (state.lastAutoEdit != null) state = state.copy(lastAutoEdit = null)
+        sentenceCapitalizationPending = false
     }
 
     /** Returns true when the callback cannot be attributed to a recent Rune edit. */
@@ -370,6 +465,7 @@ class TypingSessionController internal constructor(
             candidatesStart == -1 && candidatesEnd == -1
         ) return false
 
+        sentenceCapitalizationPending = false
         val hadComposition = state.composing != null ||
             (expectedEditorSelection?.composingStart ?: -1) >= 0
         val stillOwnsSpan = state.composing != null && candidatesStart == composingStart &&
@@ -401,6 +497,7 @@ class TypingSessionController internal constructor(
     }
 
     fun endSession() {
+        sentenceCapitalizationPending = false
         clearCandidates()
         context?.clear()
         context = null
@@ -491,6 +588,7 @@ class TypingSessionController internal constructor(
     }
 
     private fun disableSession() {
+        sentenceCapitalizationPending = false
         clearCandidates()
         context?.clear()
         context = null
@@ -528,6 +626,7 @@ class TypingSessionController internal constructor(
     private companion object {
         const val MAX_COMPOSING_UTF16 = 256
         const val MAX_EXPECTED_SELECTIONS = 512
+        const val PENDING_BOUNDARY = " ,.!?:;"
 
         fun isWordCodePoint(codePoint: Int): Boolean {
             val type = Character.getType(codePoint)

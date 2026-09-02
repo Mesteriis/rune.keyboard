@@ -1,0 +1,23 @@
+{
+  "baseline": "225d0a8cfea2d86f46e63b69572f76212a0ef9c3",
+  "sources": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt": "cefea961741c08e8a95238f2465cd2185d62665e0b394e05f5ab710d3825cdbb",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/MechanicalPunctuationInstrumentedTest.kt": "61fd84f331fbba4424d4776855660932d9eb1865464105d4b213e463cb751a26",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt": "85f830eca2e3b9ece9f969250277a1dce6bbeaad3bead4c40aae5be8eaf738d4",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/layout/LongPressAlternates.kt": "b9093984aefe7c5513cc98fff04c33f2530e76c1ab65745918373fceb4c602e2",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardSessionPolicy.kt": "facb99057a812228389b827ff9317bd4e653c1576e94414a07141359c2c11c26",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt": "0cef9c7a1e72e77d1c3f5e58c5a7b344900b60bff5a1096449d6e0534dd9ad26",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt": "46b8bd16696a6f1e46acb5678abbf41c463fd7c344a7ad22b6d9dec5d7f8e68a",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "7a28675432680add10ae442b33c4c211e095127271d9f1d359e5192325e4fc58",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/ime/layout/MechanicalPunctuationAccessTest.kt": "d9976098284c69410982f35218acb887733ab3466820c90dbbbb658f433c38f6",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/ime/model/MechanicalCapitalizationStateTest.kt": "6bdb086ffc1cf5c7d38c1404da424bba3f49f6ac096c30f6434c1fbf1a7bc214",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlannerTest.kt": "5e0d9e2995196850b6c8500eb5c1a266bd9a96b9952b151ffed768fbdf4d06d8",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/MechanicalTypingSessionTest.kt": "0c6fd0b386049969b58fbeca05405b31be037e0940ed093ad08d359af048dd15",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionControllerTest.kt": "78be9db09f8e34a60082f74d4884d8411379c4d45eaf78bda83de14369094281"
+  },
+  "apk": {
+    "app/build/outputs/apk/debug/app-debug.apk": "a3a2f8ea5fe51154bd22ac3258ccb2bf949091ac55f74c6d5ace347c663c55b8",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "0d38a6f8c62f694299aa3d25992f7d93f1920b03a4e955f0f60968049fa54a37"
+  }
+}

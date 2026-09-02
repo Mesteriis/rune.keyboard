@@ -37,6 +37,7 @@ import io.github.mesteriis.rune.keyboard.settings.SettingsCodec
 import io.github.mesteriis.rune.keyboard.settings.SizeBucket
 import io.github.mesteriis.rune.keyboard.settings.ThemeOverride
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingEdit
+import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.AndroidLazyPackedLexicons
 import io.github.mesteriis.rune.keyboard.smarttyping.session.CandidateOwnerState
 import io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinator
@@ -204,6 +205,7 @@ class RuneInputMethodService : InputMethodService() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         candidates.invalidate()
+        typingSession.invalidate(::executeTypingEdit)
         super.onConfigurationChanged(newConfig)
     }
 
@@ -234,7 +236,13 @@ class RuneInputMethodService : InputMethodService() {
                 state = withAutomaticCapitalization(state)
             }
 
-            val outcome = transition.command?.let(::executeTypingOrEditorCommand) ?: CommandOutcome.NO_COMMAND
+            val outcome = transition.command?.let { executeTypingOrEditorCommand(it, previousState) }
+                ?: CommandOutcome.NO_COMMAND
+            if (outcome == CommandOutcome.DELIVERED && typingSession.sentenceCapitalizationPending) {
+                // The gesture consumed this action. Prime the next key from the post-action state.
+                state = state.withAutomaticCapitalization(editorContext.supportsAutomaticCapitalization &&
+                    state.layer == KeyboardLayer.LETTERS)
+            }
             val stateChanged = state != previousState
             provideFeedback(action, stateChanged, outcome)
             if (stateChanged) renderKeyboard() else renderCandidates()
@@ -258,20 +266,18 @@ class RuneInputMethodService : InputMethodService() {
         else -> false
     }
 
-    private fun executeTypingOrEditorCommand(command: EditorCommand): CommandOutcome {
+    private fun executeTypingOrEditorCommand(command: EditorCommand, beforeAction: KeyboardState): CommandOutcome {
+        val punctuation = MechanicalPunctuationPolicy(editorContext.inputPolicy, editorContext.mode,
+            editorContext.requiresRawKeyEvents, settings.mechanicalPunctuation, settings.doubleSpacePeriod)
         val result = if (command is EditorCommand.CommitText || command == EditorCommand.DeletePreviousCodePoint ||
             command == EditorCommand.ConvertPrecedingSpaceToPeriod) {
             candidates.edit {
                 when (command) {
-                    is EditorCommand.CommitText -> typingSession.typeText(command.value, ::executeTypingEdit)
+                    is EditorCommand.CommitText -> typingSession.typeText(command.value, punctuation, beforeAction,
+                        execute = ::executeTypingEdit)
                     EditorCommand.DeletePreviousCodePoint -> typingSession.deletePrevious(::executeTypingEdit)
-                    EditorCommand.ConvertPrecedingSpaceToPeriod -> {
-                        val boundary = typingSession.doubleSpace(::executeTypingEdit)
-                        if (boundary == TypingTextResult.BYPASS) {
-                            // Finish the pending span before inserting an ordinary second space.
-                            typingSession.typeText(" ", ::executeTypingEdit)
-                        } else boundary
-                    }
+                    EditorCommand.ConvertPrecedingSpaceToPeriod -> typingSession.typeText(" ", punctuation,
+                        beforeAction, doubleSpaceGesture = true, execute = ::executeTypingEdit)
                     else -> TypingTextResult.BYPASS
                 }
             }
@@ -279,7 +285,9 @@ class RuneInputMethodService : InputMethodService() {
         return when (result) {
             TypingTextResult.HANDLED -> CommandOutcome.DELIVERED
             TypingTextResult.REJECTED -> CommandOutcome.DROPPED
-            TypingTextResult.BYPASS -> executeCommand(command)
+            TypingTextResult.BYPASS -> executeCommand(
+                if (command == EditorCommand.ConvertPrecedingSpaceToPeriod) EditorCommand.CommitText(" ") else command,
+            )
         }
     }
 
@@ -344,6 +352,12 @@ class RuneInputMethodService : InputMethodService() {
             state = state
                 .withEnabledLanguages(settings.enabledLanguages)
                 .copy(doubleSpacePeriodEnabled = settings.doubleSpacePeriod)
+            if (settings.mechanicalPunctuation != previous.mechanicalPunctuation ||
+                settings.doubleSpacePeriod != previous.doubleSpacePeriod
+            ) {
+                typingSession.discardUndo()
+                candidates.invalidate()
+            }
             if (settings.enabledLanguages != previous.enabledLanguages) candidates.invalidate()
             if (state.language != selectedLanguage) {
                 candidates.invalidate()
@@ -375,15 +389,13 @@ class RuneInputMethodService : InputMethodService() {
         }
     }
 
-    private fun withAutomaticCapitalization(candidate: KeyboardState): KeyboardState {
-        if (!editorContext.supportsAutomaticCapitalization || candidate.layer != KeyboardLayer.LETTERS) {
-            return candidate.withAutomaticCapitalization(false)
-        }
-        if (!typingSession.state.composing?.typedWord.isNullOrEmpty()) return candidate
-        val connection = currentInputConnection ?: return candidate
-        val shouldCapitalize = connection.getCursorCapsMode(editorContext.inputType) != 0
-        return candidate.withAutomaticCapitalization(shouldCapitalize)
-    }
+    private fun withAutomaticCapitalization(candidate: KeyboardState): KeyboardState =
+        KeyboardSessionPolicy.withAutomaticCapitalization(
+            state = candidate,
+            editor = editorContext,
+            hasComposingWord = !typingSession.state.composing?.typedWord.isNullOrEmpty(),
+            ownedSentenceBoundary = typingSession.sentenceCapitalizationPending,
+        ) { currentInputConnection?.getCursorCapsMode(editorContext.inputType) }
 
     private fun renderKeyboard() {
         val view = keyboardView ?: return

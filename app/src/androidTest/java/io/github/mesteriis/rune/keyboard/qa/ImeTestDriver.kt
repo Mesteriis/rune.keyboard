@@ -7,6 +7,7 @@ import android.graphics.Rect
 import android.os.SystemClock
 import android.view.InputDevice
 import android.view.MotionEvent
+import android.view.ViewConfiguration
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
@@ -15,6 +16,9 @@ import androidx.test.uiautomator.UiScrollable
 import androidx.test.uiautomator.UiSelector
 import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
+import io.github.mesteriis.rune.keyboard.settings.SettingsCodec
+import io.github.mesteriis.rune.keyboard.settings.KeyboardSettings
+import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import java.io.File
 import java.io.FileOutputStream
 import org.junit.rules.TestWatcher
@@ -60,6 +64,24 @@ class ImeTestDriver {
         if (!runeWasEnabled) shell("ime disable $IME_COMPONENT")
         val hardKeyboardSetting = previousHardKeyboardSetting.takeUnless { it.isBlank() || it == "null" } ?: "0"
         shell("settings put secure show_ime_with_hard_keyboard $hardKeyboardSetting")
+    }
+
+    /** Deterministic temporary QA settings; tearDown restores the full pre-test raw map. */
+    fun configureMechanicalPunctuation(mechanical: Boolean, doubleSpace: Boolean) {
+        val preferences = targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+        synchronized(preferences) {
+            val defaults = KeyboardSettings.DEFAULT
+            // A schema-3 marker requires all five Smart Typing keys, not a partial test map.
+            check(preferences.edit()
+                .putInt(SettingsCodec.KEY_SCHEMA_VERSION, SettingsCodec.SCHEMA_VERSION)
+                .putString(SettingsCodec.KEY_AUTOCORRECTION_MODE, AutocorrectionMode.OFF.name)
+                .putBoolean(SettingsCodec.KEY_MECHANICAL_PUNCTUATION, mechanical)
+                .putString(SettingsCodec.KEY_CONTEXTUAL_PUNCTUATION_MODE, defaults.contextualPunctuationMode.name)
+                .putBoolean(SettingsCodec.KEY_CANDIDATE_STRIP, defaults.candidateStrip)
+                .putBoolean(SettingsCodec.KEY_DOUBLE_SPACE_PERIOD, doubleSpace)
+                .commit()) { "QA settings write failed" }
+        }
+        instrumentation.waitForIdleSync()
     }
 
     fun launchQa() {
@@ -203,6 +225,24 @@ class ImeTestDriver {
         val downTime = SystemClock.uptimeMillis()
         inject(downTime, downTime, MotionEvent.ACTION_DOWN, bounds.exactCenterX(), bounds.exactCenterY())
         return TouchHandle(downTime, bounds.exactCenterX(), bounds.exactCenterY())
+    }
+
+    /** The real popup preselects its first alternate; release without an accessibility-cell lookup. */
+    fun selectFirstAlternate(keyLabel: String, beforeRelease: () -> Unit) {
+        val touch = touchDown(keyByText(keyLabel))
+        var released = false
+        try {
+            // Match KeyboardKeyView's platform timer, then allow a bounded UI/Binder settle.
+            // The caller verifies no fallback committed early; its final text assertion proves
+            // the alternate was delivered by this release, not that a timeout merely elapsed.
+            SystemClock.sleep(ViewConfiguration.getLongPressTimeout().toLong() + INPUT_CONNECTION_SETTLE_MILLIS)
+            beforeRelease()
+            releaseTouch(touch)
+            released = true
+        } finally {
+            if (!released) cancelTouch(touch)
+        }
+        device.waitForIdle()
     }
 
     fun cancelTouch(handle: TouchHandle) {

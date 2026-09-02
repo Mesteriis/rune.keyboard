@@ -1,0 +1,41 @@
+{
+  "baseline": "225d0a8cfea2d86f46e63b69572f76212a0ef9c3",
+  "scope": "Local mechanical/composing functional integration; not latency, energy, full Fold or release qualification",
+  "jvm": {
+    "tests": 517,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "tasksExecuted": 46
+  },
+  "finalLocalGates": {
+    "result": "PASS",
+    "tasks": 267,
+    "executed": 21
+  },
+  "android": {
+    "api26": {
+      "tests": 18,
+      "failures": 0,
+      "seconds": 146.564
+    },
+    "api37": {
+      "tests": 18,
+      "failures": 0,
+      "seconds": 197.944
+    },
+    "api37Initial": {
+      "tests": 3,
+      "failures": 1,
+      "seconds": 45.839,
+      "reason": "Alternate accessibility node unavailable"
+    },
+    "fold": {
+      "status": "BLOCKED",
+      "reason": "No USB device available; no run or install in this slice"
+    }
+  },
+  "failureArtifacts": false,
+  "remoteCI": "UNRUN",
+  "version": "0.2.0"
+}
