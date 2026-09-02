@@ -17,6 +17,11 @@ android {
     compileSdk = 37
     buildFeatures { aidl = true }
 
+    androidResources {
+        // Packed lexicon components are read-only APK mappings opened through AssetManager.openFd.
+        noCompress += listOf("trie", "lengths", "ranks")
+    }
+
     defaultConfig {
         applicationId = "io.github.mesteriis.rune.keyboard"
         minSdk = 26

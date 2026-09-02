@@ -1,0 +1,33 @@
+Performing Streamed Install
+Success
+Performing Streamed Install
+Success
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconAssetsInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconAssetsInstrumentedTest:
+INSTRUMENTATION_STATUS: test=packagedMappingsNoticesAndExactReferencesAreAvailableOffMainThread
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: packed_reader_contract=v1 language=0 open_ns=107209 load_ns=688488084 cpu_ns=665430123 mapped_bytes=5388002 words=121255 nodes=272385 references=8 java_before=3810928 java_after=18146928 pss_kib_before=37820 pss_kib_after=56837
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: packed_reader_contract=v1 language=1 open_ns=134500 load_ns=2922885044 cpu_ns=2741246038 mapped_bytes=25190742 words=668267 nodes=1250979 references=8 java_before=18146928 java_after=2925600 pss_kib_before=56837 pss_kib_after=67479
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: packed_reader_contract=v1 language=2 open_ns=217792 load_ns=6658109419 cpu_ns=6166309421 mapped_bytes=46351852 words=1436553 nodes=2255866 references=8 java_before=2958368 java_after=2483232 pss_kib_before=67495 pss_kib_after=107197
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconAssetsInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=packagedMappingsNoticesAndExactReferencesAreAvailableOffMainThread
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 10.423
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1

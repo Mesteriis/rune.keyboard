@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "source_lock_sha256": "28750e183ef99ea33da58b20036e2f0dcb3f7e1f76e8528c21074ac7d6615b70",
+  "frozen_output_manifest_sha256": "ec26c80edd28f2b42008a844c8b0ce83c11759386ccc9de591cb038a7a4f3c48",
+  "packed_asset_manifest_sha256": "7ce207ab7d05b8800a1d8921f6e55fe81f429f8158bf8ebcebf581cbee7255f0",
+  "normalization": "NFC_ROOT_LOWER_NFC_32_V1",
+  "transformation_sources": [
+    {
+      "path": "tools/lexicon/smart-typing-0.3/scripts/expand_affixes.py",
+      "sha256": "6d1f8085fd62fc8c5f0299a5a6fb89438d6429ce1ad8da8981012fa39e342fa1"
+    },
+    {
+      "path": "tools/lexicon/smart-typing-0.3/scripts/finalize_inputs.py",
+      "sha256": "41120e142ad393d45070875e8f360fc33253d272f06d65e5f9d5c493ad3fd5de"
+    },
+    {
+      "path": "tools/lexicon/smart-typing-0.3/benchmark/source/builders/build.py",
+      "sha256": "85d818df36c60e25b70e2a04aae00ff6f83f6f1471acee3ce555a61f09ebae6d"
+    },
+    {
+      "path": "tools/lexicon/smart-typing-0.3/benchmark/source/builders/build_lengths.py",
+      "sha256": "0f86a113818dea58ab4c760906c3875dcdf1bea61f0fed0721e15a128eeaa228"
+    },
+    {
+      "path": "tools/lexicon/smart-typing-0.3/build_packed_assets.py",
+      "sha256": "21ef62831d9cddbb38fce303e130359ce9098aa4e6aa3bbbc605f7c2c13885bf"
+    }
+  ],
+  "components": [
+    {
+      "files": [
+        "en.trie",
+        "en.trie.lengths"
+      ],
+      "source": "https://github.com/en-wl/wordlist/tree/5ef55f9c42730ebe4394a78b77855468a6f15dd2",
+      "license_notice": "notices/SCOWL-Copyright.txt"
+    },
+    {
+      "files": [
+        "es.trie",
+        "es.trie.lengths"
+      ],
+      "source": "https://github.com/LibreOffice/dictionaries/tree/32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4/es",
+      "license_notice": "notices/ES-MPL-1.1.txt"
+    },
+    {
+      "files": [
+        "ru.trie",
+        "ru.trie.lengths"
+      ],
+      "source": "https://github.com/LibreOffice/dictionaries/tree/32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4/ru_RU",
+      "license_notice": "notices/RU-Lebedev.txt"
+    },
+    {
+      "files": [
+        "frequency/en.ranks",
+        "frequency/es.ranks",
+        "frequency/ru.ranks"
+      ],
+      "source": "https://github.com/hermitdave/FrequencyWords/tree/525f9b560de45753a5ea01069454e72e9aa541c6",
+      "license_notice": "notices/CC-BY-SA-4.0.txt",
+      "attribution_notice": "notices/FrequencyWords-README.md",
+      "change": "Ranks mapped to canonical terminal ordinals; absent source keys use sentinel 2147483647."
+    }
+  ],
+  "hunspell": "Host validation/transformation tool only; original notices preserved, executable and source archives not packaged.",
+  "qualification": "File hashes establish source/artifact identity; this record does not assert a newly executed cold source rebuild."
+}

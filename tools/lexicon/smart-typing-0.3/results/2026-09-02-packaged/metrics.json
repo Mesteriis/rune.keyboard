@@ -1,0 +1,143 @@
+{
+  "api26": {
+    "test_pass": true,
+    "rows": [
+      {
+        "language": 0,
+        "open_ns": 43375,
+        "load_ns": 816232417,
+        "cpu_ns": 773919420,
+        "mapped_bytes": 5388002,
+        "words": 121255,
+        "nodes": 272385,
+        "references": 8,
+        "java_before": 1350904,
+        "java_after": 1711776,
+        "pss_kib_before": 17184,
+        "pss_kib_after": 23355
+      },
+      {
+        "language": 1,
+        "open_ns": 121790,
+        "load_ns": 4730394836,
+        "cpu_ns": 4677280898,
+        "mapped_bytes": 25190742,
+        "words": 668267,
+        "nodes": 1250979,
+        "references": 8,
+        "java_before": 1728160,
+        "java_after": 1249912,
+        "pss_kib_before": 23367,
+        "pss_kib_after": 46026
+      },
+      {
+        "language": 2,
+        "open_ns": 243459,
+        "load_ns": 11279130005,
+        "cpu_ns": 11227102089,
+        "mapped_bytes": 46351852,
+        "words": 1436553,
+        "nodes": 2255866,
+        "references": 8,
+        "java_before": 1249912,
+        "java_after": 865456,
+        "pss_kib_before": 46034,
+        "pss_kib_after": 86109
+      }
+    ]
+  },
+  "api37": {
+    "test_pass": true,
+    "rows": [
+      {
+        "language": 0,
+        "open_ns": 107209,
+        "load_ns": 688488084,
+        "cpu_ns": 665430123,
+        "mapped_bytes": 5388002,
+        "words": 121255,
+        "nodes": 272385,
+        "references": 8,
+        "java_before": 3810928,
+        "java_after": 18146928,
+        "pss_kib_before": 37820,
+        "pss_kib_after": 56837
+      },
+      {
+        "language": 1,
+        "open_ns": 134500,
+        "load_ns": 2922885044,
+        "cpu_ns": 2741246038,
+        "mapped_bytes": 25190742,
+        "words": 668267,
+        "nodes": 1250979,
+        "references": 8,
+        "java_before": 18146928,
+        "java_after": 2925600,
+        "pss_kib_before": 56837,
+        "pss_kib_after": 67479
+      },
+      {
+        "language": 2,
+        "open_ns": 217792,
+        "load_ns": 6658109419,
+        "cpu_ns": 6166309421,
+        "mapped_bytes": 46351852,
+        "words": 1436553,
+        "nodes": 2255866,
+        "references": 8,
+        "java_before": 2958368,
+        "java_after": 2483232,
+        "pss_kib_before": 67495,
+        "pss_kib_after": 107197
+      }
+    ]
+  },
+  "fold": {
+    "test_pass": true,
+    "rows": [
+      {
+        "language": 0,
+        "open_ns": 155104,
+        "load_ns": 1028340886,
+        "cpu_ns": 1022284856,
+        "mapped_bytes": 5388002,
+        "words": 121255,
+        "nodes": 272385,
+        "references": 8,
+        "java_before": 6293824,
+        "java_after": 20617536,
+        "pss_kib_before": 37107,
+        "pss_kib_after": 54919
+      },
+      {
+        "language": 1,
+        "open_ns": 270260,
+        "load_ns": 4101587655,
+        "cpu_ns": 4065511415,
+        "mapped_bytes": 25190742,
+        "words": 668267,
+        "nodes": 1250979,
+        "references": 8,
+        "java_before": 20617536,
+        "java_after": 9790736,
+        "pss_kib_before": 54931,
+        "pss_kib_after": 72289
+      },
+      {
+        "language": 2,
+        "open_ns": 268438,
+        "load_ns": 9453971976,
+        "cpu_ns": 9332753865,
+        "mapped_bytes": 46351852,
+        "words": 1436553,
+        "nodes": 2255866,
+        "references": 8,
+        "java_before": 9790736,
+        "java_after": 2860304,
+        "pss_kib_before": 72293,
+        "pss_kib_after": 105625
+      }
+    ]
+  }
+}

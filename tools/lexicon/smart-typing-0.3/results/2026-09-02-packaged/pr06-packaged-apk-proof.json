@@ -1,0 +1,26 @@
+[
+  {
+    "variant": "debug",
+    "apk_bytes": 97172842,
+    "apk_sha256": "13004952b938200d271d7dd360ed4290b8411718cddf8002ad0931cf182e5bd7",
+    "asset_entries": 28,
+    "stored_binaries": 9,
+    "compressed_asset_bytes": 76997895
+  },
+  {
+    "variant": "release",
+    "apk_bytes": 87610860,
+    "apk_sha256": "bdc49a784caa565805ce6253a8b412aa2340f0c419b88cd5bee2ba80aba5d754",
+    "asset_entries": 28,
+    "stored_binaries": 9,
+    "compressed_asset_bytes": 76990627
+  },
+  {
+    "variant": "profile",
+    "apk_bytes": 87614992,
+    "apk_sha256": "d8ca9376ade6238088640c9420c623a7f8207927c9c3831800a9e26397c69917",
+    "asset_entries": 28,
+    "stored_binaries": 9,
+    "compressed_asset_bytes": 76990627
+  }
+]

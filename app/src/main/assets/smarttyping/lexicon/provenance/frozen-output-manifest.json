@@ -1,0 +1,319 @@
+{
+  "schema": 1,
+  "status": "OFFLINE_PROTOTYPE_NOT_PRODUCT_QUALIFICATION",
+  "normalization": "NFC -> RU/EN/ES Unicode lowercase -> NFC; sorted Unicode codepoints (same order as UTF-8 bytes); LF; unique keys; original-case NFC surfaces retained separately; no accent stripping, no yo/e collapse, no NFKC/casefold",
+  "languages": [
+    {
+      "language": "en",
+      "profile": "SCOWL60-en_US-default-nonvariants-accents-keep-max32",
+      "input_encoding": "ISO-8859-1",
+      "selected_source_rows": 123679,
+      "over_32_codepoints": 0,
+      "nfc_changed": 0,
+      "case_changed": 21511,
+      "surface_forms": {
+        "path": "outputs/en.surface-forms.txt",
+        "sha256": "f0fe081e19e2dd01a78f1f8b21bb80ab4c3bceb858ebba9106c98f4e6ad8b557",
+        "bytes": 1191686,
+        "rows": 123679
+      },
+      "canonical_keys": {
+        "path": "outputs/en.words.txt",
+        "sha256": "67f5299ebd264abb62518b01dae9ea36837d39dfcfe76d731983841bc9794d26",
+        "bytes": 1173857,
+        "rows": 121255
+      }
+    },
+    {
+      "language": "es",
+      "profile": "finite-affixes-v1-max32-no-implicit-compounds",
+      "dictionary_entries": 58221,
+      "rules": 6742,
+      "directives": {
+        "FLAG": 1,
+        "MAP": 7,
+        "PFX": 109,
+        "REP": 21,
+        "SET": 1,
+        "SFX": 6732,
+        "TRY": 1
+      },
+      "enumerated_candidates": 668561,
+      "oracle_accepted": 668557,
+      "oracle_rejected": 4,
+      "surface_forms": {
+        "path": "outputs/es.surface-forms.txt",
+        "sha256": "aecce00304f5c608f1dcc16f3f27aba16c2248231e8927c6374cd3fab0b3bf92",
+        "bytes": 7793658,
+        "rows": 668557
+      },
+      "canonical_keys": {
+        "path": "outputs/es.words.txt",
+        "sha256": "0a304ca9c3269498f82e573b44c9b80f4135e6e596ed947205cfa26b6f4530dd",
+        "bytes": 7791505,
+        "rows": 668267
+      },
+      "nfc_changed": 0,
+      "case_changed": 1332,
+      "non_bmp_flag_strings": 29,
+      "known_frequency_words": 37826,
+      "missing_frequency_words": {
+        "path": "reports/es-finite-missing-known.txt",
+        "sha256": "6b732533551620abb150a0b5fa47a3bba315d53a3acd3b0fba63c90b0062bf0c",
+        "bytes": 875,
+        "rows": 143
+      },
+      "accepted_unmunch_not_enumerated": {
+        "path": "reports/es-legacy-extra-accepted.txt",
+        "sha256": "d99cc861195f6fc77295433596543aab00a06ce0ad3a86507713659a98fbed61",
+        "bytes": 7,
+        "rows": 1
+      },
+      "residual_categories": {
+        "hyphenated": 105,
+        "trailing_period": 38,
+        "other": 0
+      },
+      "residual_scope": "Categories describe spelling shape, not proof that every omission is an implicit BREAK derivation. The finite profile intentionally does not synthesize hyphen joins or terminal-dot variants.",
+      "rejected_forms": [
+        "deshice",
+        "deshizo",
+        "rehíce",
+        "rehízo"
+      ]
+    },
+    {
+      "language": "ru",
+      "profile": "finite-affixes-v1-max32-no-implicit-compounds",
+      "dictionary_entries": 146269,
+      "rules": 1581,
+      "directives": {
+        "SET": 1,
+        "SFX": 1606,
+        "TRY": 1
+      },
+      "enumerated_candidates": 1437107,
+      "oracle_accepted": 1437107,
+      "oracle_rejected": 0,
+      "surface_forms": {
+        "path": "outputs/ru.surface-forms.txt",
+        "sha256": "8821c4e9ec7b78b730af090167b7cb873e975659636a02b282c74895b18039ed",
+        "bytes": 33017577,
+        "rows": 1437107
+      },
+      "canonical_keys": {
+        "path": "outputs/ru.words.txt",
+        "sha256": "b54c01203aad985845c7b79116e57b818fde5e647f66f735bddb0b3239249401",
+        "bytes": 33008833,
+        "rows": 1436553
+      },
+      "nfc_changed": 0,
+      "case_changed": 17049,
+      "non_bmp_flag_strings": 0,
+      "known_frequency_words": 42344,
+      "missing_frequency_words": {
+        "path": "reports/ru-finite-missing-known.txt",
+        "sha256": "c4db4e05107ae4c164963131fada369e254ae28d2b1538432467d1d3f914ef92",
+        "bytes": 7093,
+        "rows": 435
+      },
+      "accepted_unmunch_not_enumerated": {
+        "path": "reports/ru-legacy-extra-accepted.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "rows": 0
+      },
+      "residual_categories": {
+        "hyphenated": 395,
+        "trailing_period": 40,
+        "other": 0
+      },
+      "residual_scope": "Categories describe spelling shape, not proof that every omission is an implicit BREAK derivation. The finite profile intentionally does not synthesize hyphen joins or terminal-dot variants.",
+      "rejected_forms": []
+    }
+  ],
+  "frequency": [
+    {
+      "language": "ru",
+      "license": "CC-BY-SA-4.0",
+      "data": {
+        "path": "outputs/frequency/ru.tsv",
+        "sha256": "53f49acb173ebb131ed15ecc31acfc7bda778bd1a25fdaa8b7d3ab833e9cb97f",
+        "bytes": 2074403,
+        "rows": 50001
+      },
+      "source_rows": 50000,
+      "normalized_key_collision_groups": 0,
+      "policy": "Preserve every source rank, source word and source count. Never aggregate or mix with orthographic assets."
+    },
+    {
+      "language": "en",
+      "license": "CC-BY-SA-4.0",
+      "data": {
+        "path": "outputs/frequency/en.tsv",
+        "sha256": "2534369e870173a436634cf4065e05e2463053ea3bce747f4ea23ae1119c8f51",
+        "bytes": 1312125,
+        "rows": 50001
+      },
+      "source_rows": 50000,
+      "normalized_key_collision_groups": 0,
+      "policy": "Preserve every source rank, source word and source count. Never aggregate or mix with orthographic assets."
+    },
+    {
+      "language": "es",
+      "license": "CC-BY-SA-4.0",
+      "data": {
+        "path": "outputs/frequency/es.tsv",
+        "sha256": "c845ccf663b3b291197988f380b034cdd35f2e3c732684ae8ef02171ecf9a7e7",
+        "bytes": 1384810,
+        "rows": 50001
+      },
+      "source_rows": 50000,
+      "normalized_key_collision_groups": 0,
+      "policy": "Preserve every source rank, source word and source count. Never aggregate or mix with orthographic assets."
+    }
+  ],
+  "notices": [
+    {
+      "path": "notices/CC-BY-SA-4.0.txt",
+      "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5",
+      "bytes": 20138,
+      "rows": 428
+    },
+    {
+      "path": "notices/ES-LICENSE.md",
+      "sha256": "2b70fd5cb8d3b34cc6ae322c969557a2270b99017594addb2531ef5ffd9e1b17",
+      "bytes": 991,
+      "rows": 25
+    },
+    {
+      "path": "notices/ES-MPL-1.1.txt",
+      "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f",
+      "bytes": 25755,
+      "rows": 470
+    },
+    {
+      "path": "notices/ES-README.txt",
+      "sha256": "0b5c39a863ecb61f5c5631ec1cd977667ef9bda6da6f90e80e9fc0edcbfadd97",
+      "bytes": 2615,
+      "rows": 75
+    },
+    {
+      "path": "notices/FrequencyWords-README.md",
+      "sha256": "a92fcc50e27f7b2d5860ec1c1ce794dc4c892d945bfa4c8c3136cdfd213ee710",
+      "bytes": 913,
+      "rows": 26
+    },
+    {
+      "path": "notices/FrequencyWords-code-MIT.txt",
+      "sha256": "e08d916cc953f85f7dfa0df530f6d7931f14ce804d053602662d8649b5fac829",
+      "bytes": 1068,
+      "rows": 21
+    },
+    {
+      "path": "notices/Hunspell-AUTHORS.txt",
+      "sha256": "a0f915313286a6e359ffb3e6586adb445849a79f2e9f0380fae14365fc064519",
+      "bytes": 759,
+      "rows": 23
+    },
+    {
+      "path": "notices/Hunspell-COPYING.LESSER.txt",
+      "sha256": "7c6699c75f87b52bdc542db26d6b1b92892577cda46e20eceb79e2790a1c291b",
+      "bytes": 26531,
+      "rows": 503
+    },
+    {
+      "path": "notices/Hunspell-COPYING.MPL.txt",
+      "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f",
+      "bytes": 25755,
+      "rows": 470
+    },
+    {
+      "path": "notices/Hunspell-COPYING.txt",
+      "sha256": "640d90f6ee401241ff62834d0d1b33f83049e99b8bfdfa04ed1b0a1635dde3e7",
+      "bytes": 18093,
+      "rows": 340
+    },
+    {
+      "path": "notices/Hunspell-license.hunspell.txt",
+      "sha256": "3f7ddd07c296edbfe0a47c7bcc82038ad347a2c4f672345b24f95c624db68513",
+      "bytes": 1973,
+      "rows": 54
+    },
+    {
+      "path": "notices/Hunspell-license.myspell.txt",
+      "sha256": "dcda061adeed22b26f276c01ec374f930789ae0d684e5aa8f8be309dd680ff20",
+      "bytes": 2912,
+      "rows": 61
+    },
+    {
+      "path": "notices/RU-Lebedev.txt",
+      "sha256": "262af2f6ad70a61e5ee1332ff44fa8ee50edca819cf33207d8ad6ba6a0c9be52",
+      "bytes": 1886,
+      "rows": 38
+    },
+    {
+      "path": "notices/SCOWL-Copyright.txt",
+      "sha256": "283326a422e29c510e2ba6805518c418ce3c35ed1fadc3eec83d2da4f6c5a055",
+      "bytes": 11758,
+      "rows": 248
+    }
+  ],
+  "finite_repeat_identical": true,
+  "source_lock": {
+    "path": "source-lock.json",
+    "sha256": "28750e183ef99ea33da58b20036e2f0dcb3f7e1f76e8528c21074ac7d6615b70",
+    "bytes": 6412,
+    "rows": 133
+  },
+  "transformation_sources": [
+    {
+      "path": "scripts/build_host_tools.py",
+      "sha256": "9ad76235e75fc8b1c8882c35a3ef2c6b98aecd119deb20108061fce0beb552b7",
+      "bytes": 5346,
+      "rows": 99
+    },
+    {
+      "path": "scripts/check_unmunch.py",
+      "sha256": "45162e8a55ea9b34983bfdc341504d5ed12a691c44c93dd114b80c356ae93471",
+      "bytes": 3288,
+      "rows": 62
+    },
+    {
+      "path": "scripts/expand_affixes.py",
+      "sha256": "21aabbd8edc7bd9b455ba85ac1d11349f25a0eafa3fed62b1c5602edefee3040",
+      "bytes": 12307,
+      "rows": 263
+    },
+    {
+      "path": "scripts/fetch_sources.py",
+      "sha256": "4b67d87adf9e615599ad99921130db0620b9682f8d59f534392af61474e6e2c3",
+      "bytes": 1787,
+      "rows": 45
+    },
+    {
+      "path": "scripts/finalize_inputs.py",
+      "sha256": "6572d297997bbe24a68a33d3c63786892a27df81f36d37b16263c5abac75aa83",
+      "bytes": 9587,
+      "rows": 158
+    },
+    {
+      "path": "scripts/spell_oracle.cxx",
+      "sha256": "9bb6c0237a12e305f7a07de802b2e60d7c32a2c0eb9d093d134edee7e47a5aa7",
+      "bytes": 1212,
+      "rows": 36
+    },
+    {
+      "path": "scripts/test_source_pipeline.py",
+      "sha256": "74ed72fbc38aed00f592e5a1366c8bb0bd8578ad15a2cf7ffadfc36128fa76b9",
+      "bytes": 6764,
+      "rows": 133
+    },
+    {
+      "path": "scripts/verify_outputs.py",
+      "sha256": "e69c42c40c681ae38d8c263a9b0016a0ef956db9359c2c9c84279e20979660df",
+      "bytes": 3227,
+      "rows": 60
+    }
+  ]
+}

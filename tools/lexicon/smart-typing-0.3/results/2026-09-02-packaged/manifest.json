@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "scope": "Packaged reader functional compatibility only; not full IME, latency distribution, energy or release qualification.",
+  "base_commit": "00fd271a5a3c642a6b64b89113e34f214699431b",
+  "fixed_proposal_sha256": "d9e9e0412027d89983c1ef6304c530ea6c3c6ceb1ec289656d6373cc7de9ae40",
+  "files": [
+    {
+      "path": "pr06-packed-api26.log",
+      "bytes": 1895,
+      "sha256": "15c95ebf8aec6087b2172e4b4da31e59cf72347d305c0d1d494ca90cd315aa50"
+    },
+    {
+      "path": "pr06-packed-fold.log",
+      "bytes": 2766,
+      "sha256": "ae8cbecc93cdc11d6f723e3f46dc3b72197626341a5d473a50d5129a3dfb1314"
+    },
+    {
+      "path": "pr06-packed-api37.log",
+      "bytes": 2814,
+      "sha256": "2d45ea650a875ad643072a07fd18d9c5971c8b86138f4870dd73a047c5e2f391"
+    },
+    {
+      "path": "pr06-packed-fold-stage.log",
+      "bytes": 2778,
+      "sha256": "8c3615e7d76faf03515a4db83804face69fe42f414d1291a589a49e4b560e34c"
+    },
+    {
+      "path": "pr06-packed-fold-region.log",
+      "bytes": 3080,
+      "sha256": "cf07300d06057437f90feb981f14006beb294748dd7e850fb2e1fa23dfcf019a"
+    },
+    {
+      "path": "pr06-packed-api26-fixed.log",
+      "bytes": 1891,
+      "sha256": "df8986ce9a2561d22a14ccbb2501e036ac56512acb15e5fb66d26fef6061bd8f"
+    },
+    {
+      "path": "pr06-packed-api37-fixed.log",
+      "bytes": 1896,
+      "sha256": "bdde86e3ecc9422894c6b2223bf86f52add5d145ae4d5092dea30b7ff3608db2"
+    },
+    {
+      "path": "pr06-packed-fold-fixed.log",
+      "bytes": 1898,
+      "sha256": "cbb300501a046428e5640bd3f549442d11474fe9703810972775ba9b7d564e34"
+    },
+    {
+      "path": "pr06-packaged-apk-proof.json",
+      "bytes": 715,
+      "sha256": "d3bf493fa9b2c7ba0c1de3de6d195353df6c4a74bfaf3b73547dea9d60361921"
+    },
+    {
+      "path": "pr06-packaged-apk-proof-fixed.json",
+      "bytes": 934,
+      "sha256": "a5845ca2ffa70b23c9a1b8ef2f03036ddad9ae05c481c909b75a11e607cb00af"
+    },
+    {
+      "path": "pr06-packaged-assets-host-integrated.log",
+      "bytes": 1182,
+      "sha256": "e29e55daf1a81ce1b314c10a8dfe47d4d4a25a29d09487bfcc3c1bdcd6be99cb"
+    },
+    {
+      "path": "metrics.json",
+      "bytes": 3466,
+      "sha256": "3f167d1f5e9a1f31fb89a6831e38ce95782e9194d069abb458502f0e1a65d7d9"
+    }
+  ],
+  "sources": [
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/AndroidPackedLexiconLoader.kt",
+      "sha256": "a33b856e02bad8ba599f58e2458532b7e38944aba4b51fe8f09f225d445437b4"
+    },
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedAssetMapping.kt",
+      "sha256": "35e3fcf1264f2876d7f62a8aaf59729ad025e2a1be39600985917dcf70d703b4"
+    },
+    {
+      "path": "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconAssetsInstrumentedTest.kt",
+      "sha256": "48f9b4df4342aaee91985106deb1c404ce512ff1436ee506354bc1d109812445"
+    },
+    {
+      "path": "tools/lexicon/smart-typing-0.3/stage_packed_assets.py",
+      "sha256": "55397ebf0204e1f3f0040b51b63f5735445d11fe915d9be22d9d220ef2d4103b"
+    },
+    {
+      "path": "tools/lexicon/smart-typing-0.3/test_stage_packed_assets.py",
+      "sha256": "8861a65e382893e63e532c19fd000be2c3455b94a05789ae5ac2be95efc18fb6"
+    }
+  ]
+}

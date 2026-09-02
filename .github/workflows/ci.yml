@@ -27,6 +27,7 @@ jobs:
         run: |
           python3 tools/lexicon/smart-typing-0.3/pipeline.py --build-dir build/lexicon-regression test
           python3 -m unittest discover -s tools/lexicon/smart-typing-0.3 -p test_build_packed_assets.py
+          python3 -m unittest discover -s tools/lexicon/smart-typing-0.3 -p test_stage_packed_assets.py
           python3 -m unittest discover -s tools/lexicon/smart-typing-0.3/benchmark -p test_contracts.py
       - name: Verify offline scoring harness without a model
         run: |

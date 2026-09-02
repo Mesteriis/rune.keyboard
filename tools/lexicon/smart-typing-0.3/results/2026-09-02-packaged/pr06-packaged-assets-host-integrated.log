@@ -1,0 +1,18 @@
+....E
+======================================================================
+ERROR: test_output_scope_traversal_and_symlinks_fail_closed (test_stage_packed_assets.AssetStagingTest.test_output_scope_traversal_and_symlinks_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/lexicon/smart-typing-0.3/test_stage_packed_assets.py", line 62, in test_output_scope_traversal_and_symlinks_fail_closed
+    self.assertEqual(self.output, output_root(self.output, self.root))
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/lexicon/smart-typing-0.3/stage_packed_assets.py", line 30, in output_root
+    require('..' not in path.parts and path.is_relative_to(build) and path != build, 'OUTPUT_SCOPE')
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/lexicon/smart-typing-0.3/stage_packed_assets.py", line 16, in require
+    raise ValueError(code)
+ValueError: OUTPUT_SCOPE
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.014s
+
+FAILED (errors=1)

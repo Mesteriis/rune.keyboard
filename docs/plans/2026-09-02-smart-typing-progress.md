@@ -141,6 +141,16 @@ publication is authorized by this resume.
 - Local candidate worker independently approved and promoted (proposal `a1bc7446b737b8f4210b0209f05e230e598eb97ea06f6487d9c67852cf888078`). It uses one serial thread, one replacing pending slot, direct cancellation, a payload-free coalesced owner action and completion/delivery freshness guards. Actual JVM reachability tests include positive controls; this is not ART secure-erasure evidence. Integrated fresh JVM PASS 391/391, zero failures/errors/skips. Live composing integration/index loading remain separate.
 - Read-only backup of the currently installed Fold Rune APK completed (one APK) for possible reversible QA updates. User Rune/data were not changed. Separate runtime qualification GGUF remains in the dedicated test package for ongoing device work.
 
+### PR6 worker commit and packaged-asset compatibility
+
+- Local worker committed separately as `00fd271a5a3c642a6b64b89113e34f214699431b`; required post-commit fresh JVM PASS 391/391, zero failures/errors/skips, 46 tasks executed (`pr06-worker-jvm-postcommit-00fd271.log`).
+- Packaging contains 28 exact reviewed assets (9 binary components, 14 original notices, 5 provenance files), 77,106,788 raw bytes. All 9 mapped components are ZIP STORE in debug/release/profile; all 28 entry hashes match staged inputs. No dictionary generation or download occurs in Gradle.
+- Root staging tests initially failed because macOS temp aliases differed from the canonical project path. The independently reviewed fixture-only fix resolves its temporary project root; production scope/symlink checks remain unchanged. Final 5/5 PASS.
+- Actual initial API26 packaged test passed; API37 and physical Fold failed. Numeric Fold diagnostics proved ASSET_RANGE: asset offset 19,591,892 and length/channel-size 4,358,176 within an APK FD of 97,172,842 bytes. The asset-bounded channel was incorrectly used with absolute APK offsets.
+- Independently reviewed adapter fix uses an owned duplicated raw descriptor and a whole-file channel. Exact range checks, read-only maps and full hashes remain unchanged. The Android regression checks a positive-offset region, all five rejected ranges, descriptor closure on success/failure and map readability after closure. No extraction or mutable fallback.
+- Fixed full prescribed gates PASS (298 tasks / 48 executed). Fixed Fold and API37 packaged contract each PASS (one test). Final API26 packaged contract also PASS (one test, same final APK pair); these are packaged-reader functional checks, not full IME/lifecycle/energy acceptance. The Fold app was updated with `install -r`, preserving data; its previous APK backup remains available.
+- Weighted development qualification independently approved: 775/775 contracts, but only 72/716 retrieval requests complete; 602 state and 42 verification exhaustions keep their veto. This is development correctness/feasibility evidence, not a quality holdout pass. Separate exact weighted top-seven design must preserve the earlier proof-before-adoption ruling and original caps.
+
 ### Historical PR1 result
 
 - PR 1 implementation and full evaluation complete: suitability **FAIL**. This ledger and the dated acceptance/evidence files are included in the closing evidence commit; the required post-commit JVM result is reported with its exact SHA in the task's final response.

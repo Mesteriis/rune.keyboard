@@ -1,0 +1,296 @@
+[
+  {
+    "language": "ENGLISH",
+    "words": 121255,
+    "nodes": 272385,
+    "maximum_frequency_rank": 50000,
+    "trie": {
+      "path": "smarttyping/lexicon/en.trie",
+      "bytes": 4358176,
+      "sha256": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc"
+    },
+    "lengths": {
+      "path": "smarttyping/lexicon/en.trie.lengths",
+      "bytes": 544786,
+      "sha256": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4"
+    },
+    "ranks": {
+      "path": "smarttyping/lexicon/frequency/en.ranks",
+      "bytes": 485040,
+      "sha256": "a8786c4d9fa1d7522e8c9d068679e3c61e32ee49dc3ca34898ccbd0fd19f4c6f"
+    },
+    "canonical_words_sha256": "67f5299ebd264abb62518b01dae9ea36837d39dfcfe76d731983841bc9794d26",
+    "provenance_sha256": "ec26c80edd28f2b42008a844c8b0ce83c11759386ccc9de591cb038a7a4f3c48",
+    "notices": [
+      {
+        "path": "smarttyping/lexicon/notices/CC-BY-SA-4.0.txt",
+        "bytes": 20138,
+        "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/ES-LICENSE.md",
+        "bytes": 991,
+        "sha256": "2b70fd5cb8d3b34cc6ae322c969557a2270b99017594addb2531ef5ffd9e1b17"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/ES-MPL-1.1.txt",
+        "bytes": 25755,
+        "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/ES-README.txt",
+        "bytes": 2615,
+        "sha256": "0b5c39a863ecb61f5c5631ec1cd977667ef9bda6da6f90e80e9fc0edcbfadd97"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/FrequencyWords-README.md",
+        "bytes": 913,
+        "sha256": "a92fcc50e27f7b2d5860ec1c1ce794dc4c892d945bfa4c8c3136cdfd213ee710"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/FrequencyWords-code-MIT.txt",
+        "bytes": 1068,
+        "sha256": "e08d916cc953f85f7dfa0df530f6d7931f14ce804d053602662d8649b5fac829"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-AUTHORS.txt",
+        "bytes": 759,
+        "sha256": "a0f915313286a6e359ffb3e6586adb445849a79f2e9f0380fae14365fc064519"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-COPYING.LESSER.txt",
+        "bytes": 26531,
+        "sha256": "7c6699c75f87b52bdc542db26d6b1b92892577cda46e20eceb79e2790a1c291b"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-COPYING.MPL.txt",
+        "bytes": 25755,
+        "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-COPYING.txt",
+        "bytes": 18093,
+        "sha256": "640d90f6ee401241ff62834d0d1b33f83049e99b8bfdfa04ed1b0a1635dde3e7"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-license.hunspell.txt",
+        "bytes": 1973,
+        "sha256": "3f7ddd07c296edbfe0a47c7bcc82038ad347a2c4f672345b24f95c624db68513"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-license.myspell.txt",
+        "bytes": 2912,
+        "sha256": "dcda061adeed22b26f276c01ec374f930789ae0d684e5aa8f8be309dd680ff20"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/RU-Lebedev.txt",
+        "bytes": 1886,
+        "sha256": "262af2f6ad70a61e5ee1332ff44fa8ee50edca819cf33207d8ad6ba6a0c9be52"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/SCOWL-Copyright.txt",
+        "bytes": 11758,
+        "sha256": "283326a422e29c510e2ba6805518c418ce3c35ed1fadc3eec83d2da4f6c5a055"
+      }
+    ],
+    "rank_component_license": "CC-BY-SA-4.0",
+    "frozen_frequency_sha256": "2534369e870173a436634cf4065e05e2463053ea3bce747f4ea23ae1119c8f51",
+    "identity_sha256": "596255698ec63d1e88917d2b0e2e28a2be37131a5f0692f8399f7a63cea2d181"
+  },
+  {
+    "language": "SPANISH",
+    "words": 668267,
+    "nodes": 1250979,
+    "maximum_frequency_rank": 50000,
+    "trie": {
+      "path": "smarttyping/lexicon/es.trie",
+      "bytes": 20015680,
+      "sha256": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681"
+    },
+    "lengths": {
+      "path": "smarttyping/lexicon/es.trie.lengths",
+      "bytes": 2501974,
+      "sha256": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78"
+    },
+    "ranks": {
+      "path": "smarttyping/lexicon/frequency/es.ranks",
+      "bytes": 2673088,
+      "sha256": "5fb3e5cca1493e1aebb64f2960ac823fe50ee189c222a9df952b622ebd3cf613"
+    },
+    "canonical_words_sha256": "0a304ca9c3269498f82e573b44c9b80f4135e6e596ed947205cfa26b6f4530dd",
+    "provenance_sha256": "ec26c80edd28f2b42008a844c8b0ce83c11759386ccc9de591cb038a7a4f3c48",
+    "notices": [
+      {
+        "path": "smarttyping/lexicon/notices/CC-BY-SA-4.0.txt",
+        "bytes": 20138,
+        "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/ES-LICENSE.md",
+        "bytes": 991,
+        "sha256": "2b70fd5cb8d3b34cc6ae322c969557a2270b99017594addb2531ef5ffd9e1b17"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/ES-MPL-1.1.txt",
+        "bytes": 25755,
+        "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/ES-README.txt",
+        "bytes": 2615,
+        "sha256": "0b5c39a863ecb61f5c5631ec1cd977667ef9bda6da6f90e80e9fc0edcbfadd97"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/FrequencyWords-README.md",
+        "bytes": 913,
+        "sha256": "a92fcc50e27f7b2d5860ec1c1ce794dc4c892d945bfa4c8c3136cdfd213ee710"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/FrequencyWords-code-MIT.txt",
+        "bytes": 1068,
+        "sha256": "e08d916cc953f85f7dfa0df530f6d7931f14ce804d053602662d8649b5fac829"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-AUTHORS.txt",
+        "bytes": 759,
+        "sha256": "a0f915313286a6e359ffb3e6586adb445849a79f2e9f0380fae14365fc064519"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-COPYING.LESSER.txt",
+        "bytes": 26531,
+        "sha256": "7c6699c75f87b52bdc542db26d6b1b92892577cda46e20eceb79e2790a1c291b"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-COPYING.MPL.txt",
+        "bytes": 25755,
+        "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-COPYING.txt",
+        "bytes": 18093,
+        "sha256": "640d90f6ee401241ff62834d0d1b33f83049e99b8bfdfa04ed1b0a1635dde3e7"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-license.hunspell.txt",
+        "bytes": 1973,
+        "sha256": "3f7ddd07c296edbfe0a47c7bcc82038ad347a2c4f672345b24f95c624db68513"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-license.myspell.txt",
+        "bytes": 2912,
+        "sha256": "dcda061adeed22b26f276c01ec374f930789ae0d684e5aa8f8be309dd680ff20"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/RU-Lebedev.txt",
+        "bytes": 1886,
+        "sha256": "262af2f6ad70a61e5ee1332ff44fa8ee50edca819cf33207d8ad6ba6a0c9be52"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/SCOWL-Copyright.txt",
+        "bytes": 11758,
+        "sha256": "283326a422e29c510e2ba6805518c418ce3c35ed1fadc3eec83d2da4f6c5a055"
+      }
+    ],
+    "rank_component_license": "CC-BY-SA-4.0",
+    "frozen_frequency_sha256": "c845ccf663b3b291197988f380b034cdd35f2e3c732684ae8ef02171ecf9a7e7",
+    "identity_sha256": "152675e27e900c2bd968e7b320500ab6c195213c1c8276cafc701c6d2f3e0d1c"
+  },
+  {
+    "language": "RUSSIAN",
+    "words": 1436553,
+    "nodes": 2255866,
+    "maximum_frequency_rank": 50000,
+    "trie": {
+      "path": "smarttyping/lexicon/ru.trie",
+      "bytes": 36093872,
+      "sha256": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b"
+    },
+    "lengths": {
+      "path": "smarttyping/lexicon/ru.trie.lengths",
+      "bytes": 4511748,
+      "sha256": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c"
+    },
+    "ranks": {
+      "path": "smarttyping/lexicon/frequency/ru.ranks",
+      "bytes": 5746232,
+      "sha256": "09cb1675723b66703e76f871b621068df6c0677b4c17b71e6a68fe2c8d3f328b"
+    },
+    "canonical_words_sha256": "b54c01203aad985845c7b79116e57b818fde5e647f66f735bddb0b3239249401",
+    "provenance_sha256": "ec26c80edd28f2b42008a844c8b0ce83c11759386ccc9de591cb038a7a4f3c48",
+    "notices": [
+      {
+        "path": "smarttyping/lexicon/notices/CC-BY-SA-4.0.txt",
+        "bytes": 20138,
+        "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/ES-LICENSE.md",
+        "bytes": 991,
+        "sha256": "2b70fd5cb8d3b34cc6ae322c969557a2270b99017594addb2531ef5ffd9e1b17"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/ES-MPL-1.1.txt",
+        "bytes": 25755,
+        "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/ES-README.txt",
+        "bytes": 2615,
+        "sha256": "0b5c39a863ecb61f5c5631ec1cd977667ef9bda6da6f90e80e9fc0edcbfadd97"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/FrequencyWords-README.md",
+        "bytes": 913,
+        "sha256": "a92fcc50e27f7b2d5860ec1c1ce794dc4c892d945bfa4c8c3136cdfd213ee710"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/FrequencyWords-code-MIT.txt",
+        "bytes": 1068,
+        "sha256": "e08d916cc953f85f7dfa0df530f6d7931f14ce804d053602662d8649b5fac829"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-AUTHORS.txt",
+        "bytes": 759,
+        "sha256": "a0f915313286a6e359ffb3e6586adb445849a79f2e9f0380fae14365fc064519"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-COPYING.LESSER.txt",
+        "bytes": 26531,
+        "sha256": "7c6699c75f87b52bdc542db26d6b1b92892577cda46e20eceb79e2790a1c291b"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-COPYING.MPL.txt",
+        "bytes": 25755,
+        "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-COPYING.txt",
+        "bytes": 18093,
+        "sha256": "640d90f6ee401241ff62834d0d1b33f83049e99b8bfdfa04ed1b0a1635dde3e7"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-license.hunspell.txt",
+        "bytes": 1973,
+        "sha256": "3f7ddd07c296edbfe0a47c7bcc82038ad347a2c4f672345b24f95c624db68513"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/Hunspell-license.myspell.txt",
+        "bytes": 2912,
+        "sha256": "dcda061adeed22b26f276c01ec374f930789ae0d684e5aa8f8be309dd680ff20"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/RU-Lebedev.txt",
+        "bytes": 1886,
+        "sha256": "262af2f6ad70a61e5ee1332ff44fa8ee50edca819cf33207d8ad6ba6a0c9be52"
+      },
+      {
+        "path": "smarttyping/lexicon/notices/SCOWL-Copyright.txt",
+        "bytes": 11758,
+        "sha256": "283326a422e29c510e2ba6805518c418ce3c35ed1fadc3eec83d2da4f6c5a055"
+      }
+    ],
+    "rank_component_license": "CC-BY-SA-4.0",
+    "frozen_frequency_sha256": "53f49acb173ebb131ed15ecc31acfc7bda778bd1a25fdaa8b7d3ab833e9cb97f",
+    "identity_sha256": "f08c2cccb75aeb1b7c80e0a06b5fc6befa8ed46e344004ed7bb1f63fc62ef632"
+  }
+]
