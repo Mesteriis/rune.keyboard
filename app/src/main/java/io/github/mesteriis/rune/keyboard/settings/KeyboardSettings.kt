@@ -36,6 +36,17 @@ enum class SoundMode {
     NORMAL,
 }
 
+enum class AutocorrectionMode {
+    OFF,
+    SUGGESTIONS,
+    HIGH_CONFIDENCE,
+}
+
+enum class ContextualPunctuationMode {
+    OFF,
+    SUGGESTIONS,
+}
+
 enum class SizeBucket {
     COVER_PORTRAIT,
     COVER_LANDSCAPE,
@@ -77,6 +88,10 @@ data class KeyboardSettings(
     val soundMode: SoundMode,
     val keyPreview: Boolean,
     val doubleSpacePeriod: Boolean,
+    val autocorrectionMode: AutocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE,
+    val mechanicalPunctuation: Boolean = true,
+    val contextualPunctuationMode: ContextualPunctuationMode = ContextualPunctuationMode.SUGGESTIONS,
+    val candidateStrip: Boolean = true,
 ) {
     init {
         require(enabledLanguages.isNotEmpty()) { "At least one language must stay enabled" }

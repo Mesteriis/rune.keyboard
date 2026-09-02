@@ -4,11 +4,12 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 
 /**
  * Translates the stored preference map into an immutable [KeyboardSettings] snapshot.
- * Every value falls back to its default when missing, malformed, or no longer valid, so a
- * corrupted preference file can never keep the keyboard from starting.
+ * Ordinary display settings retain their historical defaults. Smart Typing values fail closed
+ * when malformed; absent legacy values migrate to defaults, absent schema-3 values fail closed.
+ * Unsupported schemas cannot enable Smart Typing. Decoding never persists or reads model state.
  */
 object SettingsCodec {
-    const val SCHEMA_VERSION = 2
+    const val SCHEMA_VERSION = 3
 
     const val KEY_SCHEMA_VERSION = "schema_version"
     const val KEY_LANGUAGE = "language"
@@ -21,6 +22,10 @@ object SettingsCodec {
     const val KEY_SOUND_MODE = "sound_mode"
     const val KEY_KEY_PREVIEW = "key_preview"
     const val KEY_DOUBLE_SPACE_PERIOD = "double_space_period"
+    const val KEY_AUTOCORRECTION_MODE = "autocorrection_mode"
+    const val KEY_MECHANICAL_PUNCTUATION = "mechanical_punctuation"
+    const val KEY_CONTEXTUAL_PUNCTUATION_MODE = "contextual_punctuation_mode"
+    const val KEY_CANDIDATE_STRIP = "candidate_strip"
 
     const val STARTING_LANGUAGE_LAST_USED = "LAST_USED"
 
@@ -47,6 +52,9 @@ object SettingsCodec {
 
     fun decode(raw: Map<String, Any?>): KeyboardSettings {
         val defaults = KeyboardSettings.DEFAULT
+        val schema = raw[KEY_SCHEMA_VERSION] as? Int
+        val legacy = !raw.containsKey(KEY_SCHEMA_VERSION) || schema == 1 || schema == 2
+        val supported = legacy || schema == SCHEMA_VERSION
         val enabledLanguages = decodeLanguages(raw[KEY_LANGUAGES_ENABLED] as? String)
         val heightPresets = SizeBucket.entries.associateWith { bucket ->
             enumOrDefault(raw[heightKey(bucket)] as? String, HeightPreset.NORMAL)
@@ -64,9 +72,28 @@ object SettingsCodec {
             hapticMode = enumOrDefault(raw[KEY_HAPTIC_MODE] as? String, defaults.hapticMode),
             soundMode = enumOrDefault(raw[KEY_SOUND_MODE] as? String, defaults.soundMode),
             keyPreview = raw[KEY_KEY_PREVIEW] as? Boolean ?: defaults.keyPreview,
-            doubleSpacePeriod = raw[KEY_DOUBLE_SPACE_PERIOD] as? Boolean ?: defaults.doubleSpacePeriod,
+            doubleSpacePeriod = supported && strictBoolean(raw, KEY_DOUBLE_SPACE_PERIOD, legacy && defaults.doubleSpacePeriod),
+            autocorrectionMode = if (supported) strictEnum(raw, KEY_AUTOCORRECTION_MODE,
+                if (legacy) defaults.autocorrectionMode else AutocorrectionMode.OFF, AutocorrectionMode.OFF)
+                else AutocorrectionMode.OFF,
+            mechanicalPunctuation = supported && strictBoolean(raw, KEY_MECHANICAL_PUNCTUATION,
+                legacy && defaults.mechanicalPunctuation),
+            contextualPunctuationMode = if (supported) strictEnum(raw, KEY_CONTEXTUAL_PUNCTUATION_MODE,
+                if (legacy) defaults.contextualPunctuationMode else ContextualPunctuationMode.OFF, ContextualPunctuationMode.OFF)
+                else ContextualPunctuationMode.OFF,
+            candidateStrip = supported && strictBoolean(raw, KEY_CANDIDATE_STRIP, legacy && defaults.candidateStrip),
         )
     }
+
+    /** A downgraded app must not overwrite a valid future schema marker on an unrelated write. */
+    internal fun isFutureSchema(raw: Map<String, Any?>): Boolean =
+        (raw[KEY_SCHEMA_VERSION] as? Int)?.let { it > SCHEMA_VERSION } == true
+
+    private fun strictBoolean(raw: Map<String, Any?>, key: String, absent: Boolean): Boolean =
+        if (!raw.containsKey(key)) absent else raw[key] as? Boolean ?: false
+
+    private inline fun <reified T : Enum<T>> strictEnum(raw: Map<String, Any?>, key: String, absent: T, invalid: T): T =
+        if (!raw.containsKey(key)) absent else enumOrDefault(raw[key] as? String, invalid)
 
     fun decodeLastUsedLanguage(raw: Map<String, Any?>): KeyboardLanguage? =
         languageOrNull((raw[KEY_LANGUAGE] as? String)?.trim())
