@@ -49,8 +49,11 @@ class ActiveModelScoringEngine(root: File, changed: () -> Unit,
                 request.token.candidateIds.zip(request.continuations) { id, text -> ScoringCandidate(id, text) }),
                 cancelled::get)
             // Score does not hold the filesystem lock. This is the version-validity linearization point.
-            val sameVersion = gate.withReadLock { resolver.resolve() == loaded }
-            if (cancelled.get() || !sameVersion) { unload(); return failure(ScoringCode.CANCELLED) }
+            val sameVersion = gate.withReadLock { loaded != null && resolver.resolve() == loaded }
+            if (!sameVersion) { unload(); return failure(ScoringCode.CANCELLED) }
+            // Ordinary revision cancellation discards the reply, not the validated warm model.
+            // Worker invalidation still requests its own unload, even when metadata is unchanged.
+            if (cancelled.get()) return failure(ScoringCode.CANCELLED)
             return when (result) {
                 is CandidateScoringResult.Failure -> failure(result.error.stableCode)
                 is CandidateScoringResult.Success -> ScoringReply(request.token, 0, result.durationMillis,

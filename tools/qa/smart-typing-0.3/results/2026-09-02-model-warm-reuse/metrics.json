@@ -1,0 +1,43 @@
+{
+  "scope": "Actual Android adapter/lock/watch with synthetic numeric runtime; no real model or energy measurement",
+  "initial": {
+    "api26": {
+      "tests": 12,
+      "failures": 2,
+      "seconds": 4.211
+    },
+    "api37": {
+      "tests": 12,
+      "failures": 0,
+      "seconds": 0.213
+    }
+  },
+  "oldWatchControl": {
+    "api": 26,
+    "tests": 1,
+    "failures": 1,
+    "seconds": 0.022,
+    "expectedInvalidations": 0,
+    "actualInvalidations": 1
+  },
+  "final": {
+    "api26": {
+      "tests": 15,
+      "failures": 0,
+      "seconds": 0.193
+    },
+    "api37": {
+      "tests": 15,
+      "failures": 0,
+      "seconds": 0.266
+    }
+  },
+  "finalBuildGates": {
+    "status": "PASS",
+    "tasks": 267,
+    "executed": 42
+  },
+  "physicalFold": "UNRUN - no USB device",
+  "remoteCI": "UNRUN",
+  "oldScoringAdapterControl": "UNRUN - distinct from executed old-watch control"
+}

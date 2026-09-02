@@ -1,0 +1,47 @@
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest:
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=retiredWatchCallbacksAfterCloseCannotInvalidate
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+Error in retiredWatchCallbacksAfterCloseCannotInvalidate(io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest):
+java.lang.AssertionError: expected:<0> but was:<1>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest.retiredWatchCallbacksAfterCloseCannotInvalidate(ActiveModelLifecycleInstrumentedTest.kt:280)
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=retiredWatchCallbacksAfterCloseCannotInvalidate
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<0> but was:<1>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest.retiredWatchCallbacksAfterCloseCannotInvalidate(ActiveModelLifecycleInstrumentedTest.kt:280)
+
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.022
+There was 1 failure:
+1) retiredWatchCallbacksAfterCloseCannotInvalidate(io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest)
+java.lang.AssertionError: expected:<0> but was:<1>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest.retiredWatchCallbacksAfterCloseCannotInvalidate(ActiveModelLifecycleInstrumentedTest.kt:280)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

@@ -1,0 +1,214 @@
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest:
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=ordinaryCancellationSuppressesLateSuccessAndReusesValidatedModel
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=ordinaryCancellationSuppressesLateSuccessAndReusesValidatedModel
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=explicitInvalidationOfUnchangedIdentityStillUnloadsBeforeReload
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+Error in explicitInvalidationOfUnchangedIdentityStillUnloadsBeforeReload(io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest):
+java.lang.IllegalStateException: adapter reply timeout
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest$ModelFixture.reply(ActiveModelLifecycleInstrumentedTest.kt:314)
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest.explicitInvalidationOfUnchangedIdentityStillUnloadsBeforeReload(ActiveModelLifecycleInstrumentedTest.kt:210)
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=explicitInvalidationOfUnchangedIdentityStillUnloadsBeforeReload
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: adapter reply timeout
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest$ModelFixture.reply(ActiveModelLifecycleInstrumentedTest.kt:314)
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest.explicitInvalidationOfUnchangedIdentityStillUnloadsBeforeReload(ActiveModelLifecycleInstrumentedTest.kt:210)
+
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=committedBackupWinsWithoutReadSideRecovery
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=committedBackupWinsWithoutReadSideRecovery
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=modelSizeAndSymlinkEscapeAreRejectedBeforeLoad
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=modelSizeAndSymlinkEscapeAreRejectedBeforeLoad
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=pointerRotationCancelsBlockedScoreAndReloadsNextIdentity
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=pointerRotationCancelsBlockedScoreAndReloadsNextIdentity
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=pointerDeletionCancelsBlockedScoreAndLeavesNoModel
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=pointerDeletionCancelsBlockedScoreAndLeavesNoModel
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=missingWatchDirectoryFailsRegistrationAndRealWatchObservesVersionDeletion
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=missingWatchDirectoryFailsRegistrationAndRealWatchObservesVersionDeletion
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=cancellationBeforeAdapterAdmissionDoesNotLoadScoreOrDiscardWarmModel
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=cancellationBeforeAdapterAdmissionDoesNotLoadScoreOrDiscardWarmModel
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=closeStillReleasesAValidatedWarmModel
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=closeStillReleasesAValidatedWarmModel
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=absentCorruptAndOversizedPointersFailClosedBeforeRuntimeLoad
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=absentCorruptAndOversizedPointersFailClosedBeforeRuntimeLoad
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=cancellationDuringPartialLoadUnloadsAndNextRequestLoadsAfresh
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+Error in cancellationDuringPartialLoadUnloadsAndNextRequestLoadsAfresh(io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest):
+java.lang.AssertionError: expected:<1> but was:<2>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest.cancellationDuringPartialLoadUnloadsAndNextRequestLoadsAfresh(ActiveModelLifecycleInstrumentedTest.kt:246)
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=cancellationDuringPartialLoadUnloadsAndNextRequestLoadsAfresh
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<2>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest.cancellationDuringPartialLoadUnloadsAndNextRequestLoadsAfresh(ActiveModelLifecycleInstrumentedTest.kt:246)
+
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=nativeLoadKeepsSharedPhysicalLockUntilSourceIsConsumed
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=nativeLoadKeepsSharedPhysicalLockUntilSourceIsConsumed
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 4.211
+There were 2 failures:
+1) explicitInvalidationOfUnchangedIdentityStillUnloadsBeforeReload(io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest)
+java.lang.IllegalStateException: adapter reply timeout
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest$ModelFixture.reply(ActiveModelLifecycleInstrumentedTest.kt:314)
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest.explicitInvalidationOfUnchangedIdentityStillUnloadsBeforeReload(ActiveModelLifecycleInstrumentedTest.kt:210)
+2) cancellationDuringPartialLoadUnloadsAndNextRequestLoadsAfresh(io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest)
+java.lang.AssertionError: expected:<1> but was:<2>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest.cancellationDuringPartialLoadUnloadsAndNextRequestLoadsAfresh(ActiveModelLifecycleInstrumentedTest.kt:246)
+
+FAILURES!!!
+Tests run: 12,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

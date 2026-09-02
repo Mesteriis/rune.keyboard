@@ -98,17 +98,28 @@ Resolver читает active pointer и manifest под общим operation loc
 worker. Load удерживает read lock; scoring его освобождает. После scoring
 identity проверяется снова под lock. Это точка проверки версии, а не обещание
 атомарности с будущей установкой между проверкой и доставкой callback.
+Обычная отмена запроса отбрасывает ответ, сохраняя полностью загруженную модель,
+если эта проверка подтвердила ту же identity. Смена/удаление модели, ошибка
+проверки и неполная загрузка требуют cleanup. Явная worker invalidation
+всегда запрашивает отдельный serial unload, даже при неизменных метаданных.
 Три FileObserver следят за root, versions и активной версией; регистрация
 подтверждается read-only OPEN handshake. Отсутствующая регистрация запрещает load.
+Каждая регистрация имеет отдельную identity; close сначала делает её неактивной,
+затем останавливает native watches. Проверка identity и доставка invalidation
+синхронизированы, поэтому поздний callback закрытой регистрации не отменяет новую.
+Ожидание OPEN handshake выполняется вне этой блокировки. Неизвестные события
+текущей регистрации по-прежнему вызывают invalidation.
 Resolver не выполняет AtomicFile recovery, не создаёт storage и не зависит от
 delivery; mutable activation остаётся у install worker.
 
 Client принимает только актуальный session/revision/request/candidate набор и
 текущую revision composition. После смерти Binder он становится unavailable;
-одна отложенная попытка rebind допускается только пока session eligible. Старый
+одновременно не более одной отложенной попытки rebind допускается только пока session eligible. Старый
 payload не воспроизводится. Завершение/смена session снимает retry и binding.
 В текущем срезе IME ещё не создаёт client: это инфраструктура для последующего
 model-assisted ranking, не включение модели при обычном вводе.
+Ограничение общего числа повторов, demand-only binding и process-CPU budget
+ещё должны быть реализованы и измерены до включения модельного потребителя.
 
 `imeIntelligenceBoundary` проверяет также client, IPC, storage и inference с
 транзитивными зависимостями. Отрицательные fixtures подтверждают обнаружение

@@ -1,0 +1,12 @@
+{
+  "baseline": "bc16e9d1dae774bbf378229bcd97d4273e4c5223",
+  "sources": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ActiveModelScoringEngine.kt": "50f1a84890dee7d6a8c27965c5d9c6b9ed2d7c297441efb362092af469bab3e4",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ActiveModelWatch.kt": "3dfc1551c9dae849f45298d5d2e2b9af2c4ab158f344bc525023562a7b467ffd",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ActiveModelLifecycleInstrumentedTest.kt": "0a9ff2cf78e72432c60fc69cf8f14f97498feaddc490f63829ad6fdcfab6af46"
+  },
+  "builtApks": {
+    "app/build/outputs/apk/debug/app-debug.apk": "cd24c268851e7eedb0ccdb6f7b5a1e04e03a601d23ddfdb56089ab230b7ab081",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "937688cec36890f9f94284152d9806b049545e0306e4aedb6fed1e77135c1358"
+  }
+}

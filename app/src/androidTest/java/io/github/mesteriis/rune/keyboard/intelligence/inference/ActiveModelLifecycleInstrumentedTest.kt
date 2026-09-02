@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.intelligence.inference
 
 import android.content.Context
+import android.os.FileObserver
 import android.system.Os
 import android.util.AtomicFile
 import androidx.test.core.app.ApplicationProvider
@@ -23,6 +24,7 @@ import org.junit.Test
 import java.io.File
 import java.nio.file.Files
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
@@ -160,6 +162,168 @@ class ActiveModelLifecycleInstrumentedTest {
         assertEquals(1, f.runtime.loadedId.get())
     }
 
+    @Test fun ordinaryCancellationSuppressesLateSuccessAndReusesValidatedModel() = ModelFixture().use { f ->
+        f.activate(1)
+        assertTrue(f.score(60).await(3, TimeUnit.SECONDS))
+        assertEquals(ScoringCode.OK, f.reply(60).code)
+        val blocked = f.runtime.blockNextScore(returnLateSuccess = true)
+        val completed = f.score(61)
+        assertTrue(blocked.entered.await(3, TimeUnit.SECONDS))
+        f.cancel(61)
+        assertTrue(f.runtime.cancelled.await(3, TimeUnit.SECONDS))
+        blocked.release.countDown()
+        // Worker.finished runs after adapter return AND the delivery/suppression decision.
+        assertTrue(completed.await(3, TimeUnit.SECONDS))
+        assertEquals(1, f.runtime.lateSuccesses.get())
+        assertEquals(ScoringCode.CANCELLED, f.adapterCode(61))
+        assertTrue(f.replies.isEmpty())
+        assertEquals(1, f.runtime.loadedId.get())
+        assertEquals(1, f.runtime.loads.get())
+        assertEquals(0, f.runtime.unloads.get())
+        assertTrue(f.score(62).await(3, TimeUnit.SECONDS))
+        assertEquals(ScoringCode.OK, f.reply(62).code)
+        assertEquals(1, f.runtime.loadCalls.get())
+        assertEquals(1, f.runtime.loads.get())
+        assertEquals(0, f.runtime.unloads.get())
+        assertEquals(3, f.runtime.scoreCalls.get())
+        assertEquals(0, f.runtime.orderViolations.get())
+    }
+
+    @Test fun explicitInvalidationOfUnchangedIdentityStillUnloadsBeforeReload() = ModelFixture().use { f ->
+        f.activate(1)
+        assertTrue(f.score(70).await(3, TimeUnit.SECONDS))
+        assertEquals(ScoringCode.OK, f.reply(70).code)
+        val pointerBefore = f.pointer.readBytes()
+        val blocked = f.runtime.blockNextScore(returnLateSuccess = true)
+        val completed = f.score(71)
+        assertTrue(blocked.entered.await(3, TimeUnit.SECONDS))
+        f.invalidate() // No filesystem/metadata mutation: explicit lifecycle invalidation is authoritative.
+        assertTrue(f.runtime.cancelled.await(3, TimeUnit.SECONDS))
+        blocked.release.countDown()
+        assertTrue(completed.await(3, TimeUnit.SECONDS))
+        assertTrue(f.runtime.firstUnload.await(3, TimeUnit.SECONDS))
+        assertEquals(ScoringCode.CANCELLED, f.adapterCode(71))
+        assertTrue(f.replies.isEmpty())
+        assertEquals(0, f.runtime.loadedId.get())
+        assertTrue(f.runtime.unloads.get() >= 1)
+        assertArrayEquals(pointerBefore, f.pointer.readBytes())
+        assertTrue(f.score(72).await(3, TimeUnit.SECONDS))
+        assertEquals(ScoringCode.OK, f.reply(72).code)
+        assertEquals(2, f.runtime.loadCalls.get())
+        assertEquals(2, f.runtime.loads.get())
+        assertEquals(1, f.runtime.loadedId.get())
+        assertEquals(0, f.runtime.orderViolations.get())
+    }
+
+    @Test fun cancellationBeforeAdapterAdmissionDoesNotLoadScoreOrDiscardWarmModel() = ModelFixture().use { f ->
+        f.activate(1)
+        assertEquals(ScoringCode.CANCELLED, f.cancelledBeforeAdmission(80).code)
+        assertEquals(0, f.runtime.loadCalls.get())
+        assertEquals(0, f.runtime.scoreCalls.get())
+        assertEquals(0, f.runtime.unloads.get())
+        assertTrue(f.score(81).await(3, TimeUnit.SECONDS))
+        assertEquals(ScoringCode.OK, f.reply(81).code)
+        // Worker is idle after its completion barrier; direct adapter calls stay serial here.
+        assertEquals(ScoringCode.CANCELLED, f.cancelledBeforeAdmission(82).code)
+        assertEquals(1, f.runtime.loadCalls.get())
+        assertEquals(1, f.runtime.scoreCalls.get())
+        assertEquals(0, f.runtime.unloads.get())
+        assertEquals(1, f.runtime.loadedId.get())
+    }
+
+    @Test fun cancellationDuringPartialLoadUnloadsAndNextRequestLoadsAfresh() = ModelFixture().use { f ->
+        f.activate(1)
+        val blocked = f.runtime.blockNextLoad()
+        val completed = f.score(90)
+        assertTrue(blocked.entered.await(3, TimeUnit.SECONDS))
+        assertEquals(-1, f.runtime.loadedId.get()) // synthetic partially allocated native state
+        f.cancel(90)
+        blocked.release.countDown()
+        assertTrue(completed.await(3, TimeUnit.SECONDS))
+        assertEquals(ScoringCode.CANCELLED, f.adapterCode(90))
+        assertTrue(f.replies.isEmpty())
+        assertEquals(0, f.runtime.loadedId.get())
+        assertEquals(0, f.runtime.loads.get())
+        assertEquals(1, f.runtime.unloads.get())
+        assertEquals(0, f.runtime.scoreCalls.get())
+        assertTrue(f.score(91).await(3, TimeUnit.SECONDS))
+        assertEquals(ScoringCode.OK, f.reply(91).code)
+        assertEquals(2, f.runtime.loadCalls.get())
+        assertEquals(1, f.runtime.loads.get())
+        assertEquals(0, f.runtime.orderViolations.get())
+    }
+
+    @Test fun closeStillReleasesAValidatedWarmModel() {
+        val f = ModelFixture()
+        f.use {
+            f.activate(1)
+            assertTrue(f.score(100).await(3, TimeUnit.SECONDS))
+            assertEquals(ScoringCode.OK, f.reply(100).code)
+            assertEquals(1, f.runtime.loadedId.get())
+            assertEquals(0, f.runtime.unloads.get())
+        }
+        assertEquals(0L, f.runtime.closed.count)
+        assertEquals(0, f.runtime.loadedId.get())
+        assertTrue(f.runtime.unloads.get() >= 1)
+    }
+
+    @Test fun retiredWatchCallbacksAfterCloseCannotInvalidate() = ModelFixture().use { f ->
+        f.activate(1)
+        val changes = AtomicInteger()
+        ActiveModelWatch(f.root) { changes.incrementAndGet() }.use { watch ->
+            assertTrue(watch.start(directory(1)))
+            val retired = registeredObservers(watch)
+            watch.close()
+            // Dispatch actual observer callbacks after retirement. The arbitrary non-OPEN null
+            // event represents a permitted delayed callback, not a claim about a captured kernel mask.
+            retired.forEach { it.onEvent(0, null) }
+            assertEquals(0, changes.get())
+        }
+    }
+
+    @Test fun retiredWatchCallbacksAfterRestartCannotPoisonCurrentRegistration() = ModelFixture().use { f ->
+        f.activate(1)
+        val changes = AtomicInteger()
+        ActiveModelWatch(f.root) { changes.incrementAndGet() }.use { watch ->
+            assertTrue(watch.start(directory(1)))
+            val retired = registeredObservers(watch)
+            assertTrue(watch.start(directory(1)))
+            val current = registeredObservers(watch)
+            retired.forEach { it.onEvent(0, null) }
+            retired.first().onEvent(FileObserver.CLOSE_WRITE, "active-model.json")
+            assertEquals(0, changes.get())
+            current.first().onEvent(FileObserver.CLOSE_WRITE, "irrelevant-file")
+            assertEquals(0, changes.get())
+            current.first().onEvent(0, null) // A current unknown/null event must remain fail-closed.
+            assertEquals(1, changes.get())
+            current.last().onEvent(FileObserver.DELETE_SELF, null)
+            assertEquals(1, changes.get()) // One invalidation for the current registration.
+        }
+    }
+
+    @Test fun failedWatchRestartRetiresCallbacksAndLaterCurrentEventStillInvalidates() = ModelFixture().use { f ->
+        f.activate(1)
+        val changes = AtomicInteger()
+        ActiveModelWatch(f.root) { changes.incrementAndGet() }.use { watch ->
+            assertTrue(watch.start(directory(1)))
+            val retired = registeredObservers(watch)
+            assertFalse(watch.start("missing-1.0.0"))
+            retired.forEach { it.onEvent(0, null) }
+            assertEquals(0, changes.get())
+            assertTrue(watch.start(directory(1)))
+            registeredObservers(watch).first().onEvent(FileObserver.CLOSE_WRITE, "active-model.json")
+            assertEquals(1, changes.get())
+        }
+    }
+
+    /** Test-only capture of real callbacks; no production observer factory or synthetic watch. */
+    private fun registeredObservers(watch: ActiveModelWatch): List<FileObserver> {
+        val field = ActiveModelWatch::class.java.getDeclaredField("watchers").apply { isAccessible = true }
+        val result = (field.get(watch) as List<*>).map { it as FileObserver }
+        assertEquals(3, result.size)
+        return result
+    }
+
     private class ModelFixture : AutoCloseable {
         val root = Files.createTempDirectory(
             ApplicationProvider.getApplicationContext<Context>().cacheDir.toPath(), "scoring-model-").toFile()
@@ -174,7 +338,10 @@ class ActiveModelLifecycleInstrumentedTest {
             invalidation.get()?.countDown()
         }, createRuntime = { runtime })
         private val stopped = CountDownLatch(1)
+        private val adapterCodes = ConcurrentHashMap<Long, Int>() // numeric diagnostics only
         private val worker: LatestScoringWorker = LatestScoringWorker(object : ScoringEngine by engine {
+            override fun score(request: ScoringInput, cancelled: AtomicBoolean): ScoringReply =
+                engine.score(request, cancelled).also { adapterCodes[request.token.requestId] = it.code }
             override fun close() { try { engine.close() } finally { stopped.countDown() } }
         })
         init { gate.withLock { check(File(root, "versions").mkdirs()) } }
@@ -193,8 +360,14 @@ class ActiveModelLifecycleInstrumentedTest {
             try { stream.write(pointer(id).toByteArray()); file.finishWrite(stream) }
             catch (failure: Exception) { file.failWrite(stream); throw failure }
         }
-        fun score(id: Long) = worker.submit(ScoringInput(ScoringToken(1, 1, id, listOf(3)),
-            "fixture", listOf(" value")), { replies.add(it) })
+        private fun input(id: Long) = ScoringInput(ScoringToken(1, 1, id, listOf(3)), "fixture", listOf(" value"))
+        fun score(id: Long): CountDownLatch = CountDownLatch(1).also { completed ->
+            worker.submit(input(id), { replies.add(it) }, completed::countDown)
+        }
+        fun cancel(id: Long) = worker.cancel(1, id)
+        fun invalidate() = worker.invalidate()
+        fun adapterCode(id: Long): Int = checkNotNull(adapterCodes[id]) { "adapter completion absent" }
+        fun cancelledBeforeAdmission(id: Long) = engine.score(input(id), AtomicBoolean(true))
         fun reply(id: Long): ScoringReply {
             val result = checkNotNull(replies.poll(4, TimeUnit.SECONDS)) { "adapter reply timeout" }
             assertEquals(id, result.token.requestId)
@@ -209,7 +382,7 @@ class ActiveModelLifecycleInstrumentedTest {
         }
     }
 
-    private class Block {
+    private class Block(val returnLateSuccess: Boolean = false) {
         val entered = CountDownLatch(1)
         val release = CountDownLatch(1)
         val finished = CountDownLatch(1)
@@ -219,6 +392,11 @@ class ActiveModelLifecycleInstrumentedTest {
     private class NumericRuntime : LocalModelRuntime {
         val loadedId = AtomicInteger()
         val loads = AtomicInteger()
+        val loadCalls = AtomicInteger()
+        val unloads = AtomicInteger()
+        val scoreCalls = AtomicInteger()
+        val lateSuccesses = AtomicInteger()
+        val firstUnload = CountDownLatch(1)
         val orderViolations = AtomicInteger()
         val timeouts = AtomicInteger()
         val cancelled = CountDownLatch(1)
@@ -229,7 +407,9 @@ class ActiveModelLifecycleInstrumentedTest {
         private val activeCancellation = AtomicReference<(() -> Boolean)?>()
         private val nativeCancelled = AtomicBoolean()
 
-        fun blockNextScore() = Block().also { check(nextScore.compareAndSet(null, it)) }
+        fun blockNextScore(returnLateSuccess: Boolean = false) = Block(returnLateSuccess).also {
+            check(nextScore.compareAndSet(null, it))
+        }
         fun blockNextLoad() = Block().also { check(nextLoad.compareAndSet(null, it)) }
         private fun admission(cancel: () -> Boolean): Boolean {
             nativeCancelled.set(false) // same ordering contract as PR2 native admission
@@ -241,7 +421,9 @@ class ActiveModelLifecycleInstrumentedTest {
             if (!it.release.await(8, TimeUnit.SECONDS)) timeouts.incrementAndGet()
         }
         override fun load(modelFile: File, isCancelled: () -> Boolean): ModelLoadResult {
+            loadCalls.incrementAndGet()
             if (!admission(isCancelled)) return ModelLoadResult.Failure(RuntimeErrorCode.CANCELLED)
+            loadedId.set(-1) // partial allocation must be cleared even when load never succeeds
             val blocked = block(nextLoad)
             return try {
                 if (isCancelled() || nativeCancelled.get()) ModelLoadResult.Failure(RuntimeErrorCode.CANCELLED)
@@ -253,11 +435,16 @@ class ActiveModelLifecycleInstrumentedTest {
         }
         override fun scoreCandidates(request: CandidateScoringRequest,
             isCancelled: () -> Boolean): CandidateScoringResult {
+            scoreCalls.incrementAndGet()
             if (!admission(isCancelled)) return CandidateScoringResult.Failure(RuntimeErrorCode.CANCELLED)
             val blocked = block(nextScore)
             return try {
-                if (isCancelled() || nativeCancelled.get()) CandidateScoringResult.Failure(RuntimeErrorCode.CANCELLED)
-                else CandidateScoringResult.Success(request.candidates.map { CandidateScore(it.id, -1.0, 1) }, 0)
+                val cancelled = isCancelled() || nativeCancelled.get()
+                if (cancelled && blocked?.returnLateSuccess != true) CandidateScoringResult.Failure(RuntimeErrorCode.CANCELLED)
+                else {
+                    if (cancelled) lateSuccesses.incrementAndGet()
+                    CandidateScoringResult.Success(request.candidates.map { CandidateScore(it.id, -1.0, 1) }, 0)
+                }
             } finally { blocked?.finished?.countDown(); activeBlock.set(null); activeCancellation.set(null) }
         }
         override fun cancelCurrentOperation() {
@@ -269,7 +456,7 @@ class ActiveModelLifecycleInstrumentedTest {
             nextScore.get()?.release?.countDown(); nextLoad.get()?.release?.countDown()
             activeBlock.get()?.release?.countDown()
         }
-        override fun unload() { loadedId.set(0) }
+        override fun unload() { loadedId.set(0); unloads.incrementAndGet(); firstUnload.countDown() }
         override fun close() { unload(); closed.countDown() }
     }
 
