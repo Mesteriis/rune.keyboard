@@ -41,6 +41,13 @@ PR8 mechanical punctuation and schema3 persistence have local integration
 evidence, while settings consumers/UI have scoped API26/API37 integration
 evidence. No push, remote PR or publication is authorized.
 
+### Duty fixture retirement synchronization — 2026-09-03
+
+- Exact top-seven integration committed as `17d539c0b1f938d31a92d389689411b0b1a14691`. Its mandatory fresh JVM rerun reported593 tests/1 failure in `ModelDutyWorkerTest.deniedRequestsNeverEnterEngineOrExtendExistingIdleUnload`; the initial failure is preserved.
+- Confirmed fixture race: its engine-unloaded latch signals inside `engine.unload`, before worker finally retires the CPU-check timer. The timer correctly remains active during cleanup. Test now waits for an observed scheduler stop; a blocked-unload regression demonstrates both phases deterministically. A no-op completed-request control roundtrip also finishes idleAt accounting before advancing virtual time.
+- Production worker, runtime and policies are unchanged. Targeted18 duty tests PASS; final full JVM594/594 PASS, zero failures/errors/skips. Prescribed product gates PASS238/27. No new device/runtime performance claim follows from this test-only repair.
+- Evidence: `tools/qa/smart-typing-0.3/results/2026-09-03-duty-retirement-fixture/`; acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-duty-retirement-fixture.md`.
+
 ### Exact top-seven production integration — 2026-09-03
 
 - Baseline `991d7c56aa503fec023ce6b434ddd9737940d0ed`; its required post-commit JVM run passed 586/586.

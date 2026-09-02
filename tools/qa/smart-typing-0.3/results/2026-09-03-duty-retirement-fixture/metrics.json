@@ -1,0 +1,21 @@
+{
+  "baselineCommit": "17d539c0b1f938d31a92d389689411b0b1a14691",
+  "initialPostCommit": {
+    "tests": 593,
+    "failures": 1
+  },
+  "targetedDutyTests": 18,
+  "finalJvm": {
+    "tests": 594,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "gates": {
+    "tasks": 238,
+    "executed": 27,
+    "upToDate": 211
+  },
+  "productionChanged": false,
+  "testSourceSha256": "40a034ae793a730a3d2709e8472a46426e8e1d9907935b0ab135ae51377d562c"
+}

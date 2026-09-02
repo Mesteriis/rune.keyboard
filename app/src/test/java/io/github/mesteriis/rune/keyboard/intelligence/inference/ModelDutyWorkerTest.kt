@@ -110,12 +110,32 @@ class ModelDutyWorkerTest {
     @Test fun deniedRequestsNeverEnterEngineOrExtendExistingIdleUnload() {
         val clock = DutyClock(); Probe(ModelDutyOwner(clock::sample), idleMillis = 1000).use { p ->
             p.submit(1).awaitDone(); assertEquals(ScoringCode.OK, p.replies.take().code)
+            assertNotNull(p.scheduler.stops.poll(3, TimeUnit.SECONDS)) // score operation retired
+            // Finish callback precedes idleAt accounting under the worker monitor. This no-op
+            // control roundtrip waits for that tail before advancing the virtual clock.
+            p.worker.cancel(1, 1)
             clock.elapsed = 500; clock.cpu = 2000
             p.submit(2).awaitDone(); assertEquals(ScoringCode.UNAVAILABLE, p.replies.take().code)
             clock.elapsed = 1000
             p.submit(3).awaitDone(); assertEquals(ScoringCode.UNAVAILABLE, p.replies.take().code)
             p.engine.unloaded.awaitDone()
             assertEquals(1, p.engine.starts.get()); assertEquals(1, p.engine.unloads.get())
+            // Engine entry is before the worker's finally; only scheduler.stop proves retirement.
+            assertNotNull(p.scheduler.stops.poll(3, TimeUnit.SECONDS))
+            assertNull(p.scheduler.task)
+        }
+    }
+    @Test fun unloadEntryPrecedesDutyTimerRetirement() {
+        val clock = DutyClock(); Probe(ModelDutyOwner(clock::sample)).use { p ->
+            p.submit(1).awaitDone(); assertEquals(ScoringCode.OK, p.replies.take().code)
+            assertNotNull(p.scheduler.stops.poll(3, TimeUnit.SECONDS))
+            p.engine.unloadRelease = CountDownLatch(1)
+            p.worker.invalidate()
+            p.engine.unloaded.awaitDone()
+            assertNotNull(p.scheduler.task) // Cleanup CPU is still accounted while native unload runs.
+            assertTrue(p.scheduler.stops.isEmpty())
+            p.engine.unloadRelease!!.countDown()
+            assertNotNull(p.scheduler.stops.poll(3, TimeUnit.SECONDS))
             assertNull(p.scheduler.task)
         }
     }
@@ -241,9 +261,10 @@ class ModelDutyWorkerTest {
     }
     private class Scheduler : ModelDutyScheduler {
         @Volatile var task: Runnable? = null
+        val stops = LinkedBlockingQueue<Unit>()
         val closed = CountDownLatch(1)
         override fun start(task: Runnable) { check(this.task == null); this.task = task }
-        override fun stop() { task = null }
+        override fun stop() { task = null; stops.add(Unit) }
         override fun close() { stop(); closed.countDown() }
         fun tick() { task?.run() }
     }
@@ -251,6 +272,7 @@ class ModelDutyWorkerTest {
         var block = false
         var failClose = false
         var closeRelease: CountDownLatch? = null
+        var unloadRelease: CountDownLatch? = null
         var onScore: (() -> Int)? = null
         var entered = CountDownLatch(1)
         var release = CountDownLatch(1)
@@ -268,7 +290,7 @@ class ModelDutyWorkerTest {
                 request.token.candidateIds.map { NumericScore(it, -1.0, 1) } else emptyList())
         }
         override fun cancel() { if (flag?.get() == false) orderViolations.incrementAndGet(); cancels.incrementAndGet() }
-        override fun unload() { unloads.incrementAndGet(); unloaded.countDown() }
+        override fun unload() { unloads.incrementAndGet(); unloaded.countDown(); unloadRelease?.awaitDone() }
         override fun close() {
             closes.incrementAndGet(); closeEntered.countDown(); closeRelease?.awaitDone()
             if (failClose) throw IllegalStateException()
@@ -284,7 +306,7 @@ class ModelDutyWorkerTest {
             finished.incrementAndGet(); done.countDown()
         }) }
         override fun close() {
-            engine.release.countDown(); engine.closeRelease?.countDown(); worker.close()
+            engine.release.countDown(); engine.closeRelease?.countDown(); engine.unloadRelease?.countDown(); worker.close()
             scheduler.closed.awaitDone()
         }
     }

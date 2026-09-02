@@ -93,3 +93,8 @@ API26/API37 functional gates for this slice PASS. Physical Fold/performance,
 final spelling quality, contextual punctuation and model publication remain
 BLOCKED/unqualified. AutoReplace remains off; version remains 0.2.0. No push,
 remote PR, model change or publication was performed.
+
+The mandatory JVM rerun after commit `17d539c` subsequently exposed a pre-existing
+duty-test synchronization race (592 passes / 1 failure). The separate
+`2026-09-03-smart-typing-0.3-duty-retirement-fixture.md` report preserves that
+failure and its test-only correction; the resulting full suite is 594/594 PASS.
