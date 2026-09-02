@@ -17,6 +17,8 @@ import java.util.concurrent.atomic.AtomicBoolean
 class LifecycleModelInferenceService : ModelInferenceService() {
     private val engine = ControlledEngine()
     private lateinit var invalidate: () -> Unit
+    @Volatile private var scoringUnbound = CountDownLatch(1)
+    @Volatile private var scoringBound = CountDownLatch(1)
     override val idleMillis: Long get() = 750
     override fun createEngine(onInvalidated: () -> Unit): ScoringEngine {
         invalidate = onInvalidated
@@ -33,6 +35,10 @@ class LifecycleModelInferenceService : ModelInferenceService() {
                 RELEASE -> engine.release()
                 INVALIDATE -> invalidate()
                 TRIM_CRITICAL -> onTrimMemory(ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL)
+                TRIM_BACKGROUND -> onTrimMemory(ComponentCallbacks2.TRIM_MEMORY_BACKGROUND)
+                LOW_MEMORY -> onLowMemory()
+                AWAIT_SCORING_UNBOUND -> if (!scoringUnbound.await(3, TimeUnit.SECONDS)) engine.recordTimeout()
+                AWAIT_SCORING_BOUND -> if (!scoringBound.await(3, TimeUnit.SECONDS)) engine.recordTimeout()
                 KILL_PROCESS -> { Process.killProcess(Process.myPid()); return }
                 else -> return
             }
@@ -40,13 +46,26 @@ class LifecycleModelInferenceService : ModelInferenceService() {
         }
     }
 
-    override fun onBind(intent: Intent?): IBinder =
-        if (intent?.action == CONTROL_ACTION) control else super.onBind(intent)
+    override fun onBind(intent: Intent?): IBinder {
+        if (intent?.action == CONTROL_ACTION) return control
+        scoringUnbound = CountDownLatch(1)
+        return super.onBind(intent).also { scoringBound.countDown() }
+    }
+
+    override fun onRebind(intent: Intent?) {
+        if (intent?.action == CONTROL_ACTION) return
+        scoringUnbound = CountDownLatch(1)
+        super.onRebind(intent)
+        scoringBound.countDown()
+    }
 
     // Android tracks onUnbind separately for the two explicit Intent actions.
     // Releasing the test-only control binding must not invalidate a live scoring binding.
-    override fun onUnbind(intent: Intent?): Boolean =
-        if (intent?.action == CONTROL_ACTION) false else super.onUnbind(intent)
+    override fun onUnbind(intent: Intent?): Boolean {
+        if (intent?.action == CONTROL_ACTION) return false
+        scoringBound = CountDownLatch(1)
+        return super.onUnbind(intent).also { scoringUnbound.countDown() }
+    }
 
     private class ControlledEngine : ScoringEngine {
         private val lock = Any()
@@ -65,6 +84,8 @@ class LifecycleModelInferenceService : ModelInferenceService() {
         private var unloadedCompletions = 0
         private var orderViolations = 0
         private var timeouts = 0
+
+        fun recordTimeout() = synchronized(lock) { timeouts++ }
 
         fun blockNext() = synchronized(lock) {
             check(next == null && blocked == null)
@@ -118,5 +139,9 @@ class LifecycleModelInferenceService : ModelInferenceService() {
         const val INVALIDATE = 3
         const val TRIM_CRITICAL = 4
         const val KILL_PROCESS = 5
+        const val TRIM_BACKGROUND = 6
+        const val LOW_MEMORY = 7
+        const val AWAIT_SCORING_UNBOUND = 8
+        const val AWAIT_SCORING_BOUND = 9
     }
 }

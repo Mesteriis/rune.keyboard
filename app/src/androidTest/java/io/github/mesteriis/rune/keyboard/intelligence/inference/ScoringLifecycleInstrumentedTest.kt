@@ -18,6 +18,7 @@ import io.github.mesteriis.rune.keyboard.intelligence.ipc.IModelScoringCallback
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.IModelScoringService
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoreReplyParcel
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoreRequestParcel
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringCode
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringInput
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringToken
@@ -103,8 +104,40 @@ class ScoringLifecycleInstrumentedTest {
                 assertEquals(base.starts + 1, after.starts)
                 assertEquals(base.cancelledCompletions + 1, after.cancelledCompletions)
                 f.score(303)
-                assertEquals(303L, f.replies.poll(3, TimeUnit.SECONDS))
+                if (operation == LifecycleModelInferenceService.TRIM_CRITICAL) {
+                    assertEquals(-303L, f.replies.poll(3, TimeUnit.SECONDS))
+                    assertEquals(ScoringCode.UNAVAILABLE, f.codes.poll(3, TimeUnit.SECONDS))
+                    assertEquals(base.starts + 1, f.command().starts)
+                    f.rebindScoring()
+                    f.score(304)
+                    assertEquals(304L, f.replies.poll(3, TimeUnit.SECONDS))
+                } else assertEquals(303L, f.replies.poll(3, TimeUnit.SECONDS))
                 assertTrue(f.replies.isEmpty())
+                f.assertHealthy(f.command())
+            }
+        }
+    }
+
+    @Test fun criticalBackgroundAndLowMemoryRemainSuspendedUntilActualUnbindBind() {
+        for (pressure in listOf(LifecycleModelInferenceService.TRIM_CRITICAL,
+            LifecycleModelInferenceService.TRIM_BACKGROUND, LifecycleModelInferenceService.LOW_MEMORY)) {
+            Fixture().use { f ->
+                val base = f.command()
+                f.command(pressure)
+                f.score(701)
+                assertEquals(-701L, f.replies.poll(3, TimeUnit.SECONDS))
+                assertEquals(ScoringCode.UNAVAILABLE, f.codes.poll(3, TimeUnit.SECONDS))
+                f.command(LifecycleModelInferenceService.INVALIDATE) // version invalidation cannot clear pressure
+                f.score(702)
+                assertEquals(-702L, f.replies.poll(3, TimeUnit.SECONDS))
+                assertEquals(ScoringCode.UNAVAILABLE, f.codes.poll(3, TimeUnit.SECONDS))
+                assertEquals(base.starts, f.command().starts)
+                // Control stays bound, so the same Service/worker/owner survives this real lifecycle edge.
+                f.rebindScoring()
+                f.score(703)
+                assertEquals(703L, f.replies.poll(3, TimeUnit.SECONDS))
+                assertEquals(ScoringCode.OK, f.codes.poll(3, TimeUnit.SECONDS))
+                assertEquals(base.starts + 1, f.command().starts)
                 f.assertHealthy(f.command())
             }
         }
@@ -227,16 +260,24 @@ class ScoringLifecycleInstrumentedTest {
         val component = ComponentName(context, LifecycleModelInferenceService::class.java)
         private var controlBinding = RealBinding(context, Intent().setComponent(component)
             .setAction(LifecycleModelInferenceService.CONTROL_ACTION))
-        private val scoringBinding = RealBinding(context, Intent().setComponent(component))
-        val rawBinder = scoringBinding.binder()
-        val service: IModelScoringService = IModelScoringService.Stub.asInterface(rawBinder)
+        private var scoringBinding = RealBinding(context, Intent().setComponent(component))
+        val rawBinder get() = scoringBinding.binder()
+        val service: IModelScoringService get() = IModelScoringService.Stub.asInterface(rawBinder)
         val replies = LinkedBlockingQueue<Long>()
+        val codes = LinkedBlockingQueue<Int>()
         private val callback = object : IModelScoringCallback.Stub() {
-            override fun onResult(reply: ScoreReplyParcel?) { reply?.value?.let { replies.add(checkedId(it)) } }
+            override fun onResult(reply: ScoreReplyParcel?) { reply?.value?.let { codes.add(it.code); replies.add(checkedId(it)) } }
         }
         private var killed = false
         init { command(LifecycleModelInferenceService.RELEASE); await { it.active == 0 } }
         fun score(id: Long) = service.score(ScoreRequestParcel(input(id)), callback)
+        fun rebindScoring() {
+            scoringBinding.close()
+            assertHealthy(command(LifecycleModelInferenceService.AWAIT_SCORING_UNBOUND))
+            scoringBinding = RealBinding(context, Intent().setComponent(component))
+            scoringBinding.binder()
+            assertHealthy(command(LifecycleModelInferenceService.AWAIT_SCORING_BOUND))
+        }
         fun command(operation: Int = LifecycleModelInferenceService.SNAPSHOT): Snapshot {
             val result = LinkedBlockingQueue<Snapshot>(1)
             ILifecycleControl.Stub.asInterface(controlBinding.binder()).command(operation,

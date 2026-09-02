@@ -1,0 +1,21 @@
+{
+  "baseline": "b4d76cdbd53780ed83f77ef5e15f3e3022fbe4dc",
+  "reviewedProposalSha256": "d10b6a56ce939df1997a2e241ceb573ed07c3be81441b2a4f6f536496ea6b817",
+  "sources": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ActiveModelLifecycleInstrumentedTest.kt": "2f45311e25956d4ec6e62e025ba8f06fcf90068f418931493a9d80e2f88efe98",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ScoringLifecycleInstrumentedTest.kt": "7b170b16faa31354bc5106d75c7a69156b2f6cd36444293ff069d761f4aa52ca",
+    "app/src/debug/java/io/github/mesteriis/rune/keyboard/intelligence/inference/LifecycleModelInferenceService.kt": "215580e5b9a78d216ce26cafad6b0eb2ae479cd2564ab25403c4af6c4064fb44",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/inference/LatestScoringWorker.kt": "83440c4456bd42b713052c9600e9ba0ed03e07c1e3ad4baf3af9df27f89fc2c2",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ModelDutyOwner.kt": "b92721f04018d2e16c6d526dd2ab2f9e145a7406c93bbe664d29bd7274415f70",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ModelDutyScheduler.kt": "81df2a382427e651ea55154745430b498aa45ac222c790a3345c2b6c96ff49d2",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ModelInferenceService.kt": "c36d1482c9f6a3b5a8185e71f0a72c7cc5d183c2e64757859328e5a87e365f82",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ProcessModelDuty.kt": "48f3a93b0a76a490052e77f4cfa2511463b65bec549ee289ebb23e6becda4bcd",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ModelDutyOwnerTest.kt": "b95be4f2d2d0f8b2df575bf3d188112fab353d2b3f731925e94ec001a9f1a0c5",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ModelDutyWorkerTest.kt": "314c588251300a4aa4861a99de4a502eab9b338363e97d6d1c3af7fc272be7b6",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ScoringInfrastructureTest.kt": "fb916cca3beebce0e2230d274b03d1fa8fd298942ac6851f7e399ff9c007a53b"
+  },
+  "builtApks": {
+    "app/build/outputs/apk/debug/app-debug.apk": "c3c5bbf7f318a2857e589bf7744eeecd62c947711a72304a3cd640ce90571d3d",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "6a9ccc6e3dcf2a757c9da2990bbe5507720a3ac81542fda1e11ed9008a50892e"
+  }
+}

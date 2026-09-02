@@ -1,0 +1,16 @@
+{
+  "AMENDED-REVIEW.md": "ffce311bdcef9aeb2239f289fb2889d9338324f5a04de7422dde6bee0edc76a4",
+  "IMPLEMENTATION-REVIEW.md": "fd854c1ca580d4c4995146676c5578750bba1554940d9337baf9311196547d78",
+  "PROPOSAL.md": "52d5c1ec960f328149857e2f9ee40af44ae54f149cb2c0e0b4c93ff6c06bd939",
+  "metrics.json": "03c651f5a65b66cefe936646a9f85685f9f3286db696d8d764b4a29c1a7c3a9e",
+  "model-duty-api26-install.log": "50daa2ba76a5c9784728abf9461823bc72d3c4835986fc7ba7cdd96abebea397",
+  "model-duty-api26-rebind-failure.log": "a884cad9c5cf624ee44fcc1d23e7d1f38b9fa10fc188fcad4439d846d85111d9",
+  "model-duty-api26.log": "22b8fa727cef4c036695c48f2e697eadfa5bab9552ceb875ac9da3cfd396947e",
+  "model-duty-api37-install.log": "50daa2ba76a5c9784728abf9461823bc72d3c4835986fc7ba7cdd96abebea397",
+  "model-duty-api37-rebind-failure.log": "28b4d67fd18ceaf6ffa84c6b242c97f7371db9016868c7d44b62bb9c4fc1d21b",
+  "model-duty-api37.log": "ac76e4645729c856f35da555c02844e9899554f8b365a3de7c3dccda57b79406",
+  "model-duty-gates-fixed-rate-failure.log": "9e1b4e869bdc2220e8cedb511652e759ad670ebe36ce21bc1c03d4d536ba1b85",
+  "model-duty-gates.log": "7261d1935a6858991541bdcf68d136f2210b27dbbf97c2a5759409beb5041a7c",
+  "model-duty-jvm.log": "88ffe38c442c3e979aba3a4754f5a9fd632f5f903c8721bef3897b25e8cb1083",
+  "source-identities.json": "4f88bc62dec0b7299631960781d7976d80213cb0e33b3b015820629b5123ac5b"
+}

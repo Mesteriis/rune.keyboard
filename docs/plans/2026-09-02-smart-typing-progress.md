@@ -25,16 +25,17 @@ qualifying a resource-bounded model path. Preserve all quality/privacy gates;
 do not treat switching models as permission to weaken them. Model execution
 must be demand-driven, cancellable, and absent in sensitive/ineligible sessions.
 
-Current slice: `feature/smart-typing-03-pr06-lexicons`, following settings-render
-checkpoint `e4a43059143c79773424a96ff57ad0e8770fb141`. PR2/3 runtime and private
+Current slice: `feature/smart-typing-03-pr06-lexicons`, following bounded client
+commit `b4d76cdbd53780ed83f77ef5e15f3e3022fbe4dc`. PR2/3 runtime and private
 inference foundations, PR4 composing and PR5 strip/owned-boundary Undo are
-integrated; IME model inference and automatic spelling replacement remain off.
-PR6 has scoped live-suggestion evidence on API26/37 and Fold. PR8 mechanical
-punctuation and schema3 persistence have local integration evidence, while
-settings consumers/UI have scoped API26/API37 integration evidence.
-Retrieval/quality, PR7/9, full autocorrection Undo and final device/performance
-matrices remain required. No push, remote PR or publication
-is authorized.
+integrated. IME model inference and automatic spelling replacement remain off.
+PR6 has scoped live-suggestion evidence on API26/37 and Fold. PR7 duty and
+bound-worker CPU control has JVM/API26/API37 functional evidence; its trace
+experiment remains unrun. Remaining PR7 ranking and AutoReplace, PR9 contextual,
+and full autocorrection Undo plus final device/performance matrices are required.
+PR8 mechanical punctuation and schema3 persistence have local integration
+evidence, while settings consumers/UI have scoped API26/API37 integration
+evidence. No push, remote PR or publication is authorized.
 
 ### PR4 local evidence
 
@@ -209,6 +210,10 @@ is authorized.
 - Service CPU-duty proposal independently reviewed and amended before implementation (`model-duty-implementation/AMENDED-REVIEW.md`, SHA `ffce311bdcef9aeb2239f289fb2889d9338324f5a04de7422dde6bee0edc76a4`). Ruling: duty/debt and a native lifetime/cleanup lease must survive Service recreation in the same process; a bound-only Service can be replaced before async old close completes. Pressure latches before cancellation, and only later bind-after-unbind can rearm without forgiving debt. Proposed development profile is8000CPU-ms capacity/refill per60000elapsed-ms,7500minimum admission,3000ms active/queue age,50ms active checks. The explicit7500 threshold replaces the original full-credit condition after review showed long-idle CPU debit could starve it; it is not measured overhead or battery qualification. Conservative refill-cap-debit preserves fractional carry; invalid clocks fault closed until process restart. No duty implementation or trace run is claimed.
 
 - Bounded client proposal independently approved (`b477e8f1ddb076141abc2ad989aa35a88f965f8392104eb53785a652496cd0d1`, review `acc643de380d8e8050af0b428637afc4174b1540cff049c2b6e9aefcf470a12e`) and integrated. Root JVM530/530 PASS; prescribed full gates plus test APK PASS277/53. Actual client/main Handler + remote Binder lifecycle matrix22/22 PASS on API26(17.089s) and API37(17.423s), including process death/no replay and real late-callback cancellation barrier. No model consumer or energy qualification follows. Scoped acceptance/evidence accompanies the client commit. Service CPU-duty implementation is independently in progress in ignored overlay; no root service mutation or trace claim.
+
+- Bounded client committed `b4d76cdbd53780ed83f77ef5e15f3e3022fbe4dc`; mandatory fresh post-commit JVM530/530 PASS, zero failures/errors/skips,46 executed (`model-demand-client-jvm-postcommit.log`). Previous goal turn is progress through committed production lifecycle behavior and actual API26/API37 tests. Current duty author is live, with controlled-clock actual-worker tests progressing in ignored overlay; not treated as a stopped task or restarted.
+
+- Duty proposal integrated; fresh parent tests found and fixed two defects. Lint rejected fixed-rate catch-up scheduling; changed to fixed delay without suppression. Both Android matrices initially failed the two same-Service rebind recovery cases (40/42 PASS each). The earlier `onUnbind=false` decision was incorrect for a retained Service/Binder: production now returns true and rearms through actual `onRebind`; debug latches acknowledge lifecycle completion. No pressure/debt assertion was relaxed. Final root JVM555/555 PASS, full prescribed gates plus test APK PASS267/45, final complete API26 42/42 PASS17.446s and API37 42/42 PASS17.850s. Evidence, initial failures, source/APK identities and dated acceptance archived under `2026-09-02-model-duty`. The saved independent review covers the initial proposal, not the parent corrections. Trace experiment/energy remain UNRUN, physical USB Fold absent; no consumer or release qualification. This goal turn made concrete progress through production corrections and fresh integration evidence.
 
 ### Historical PR1 result
 

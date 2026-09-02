@@ -343,7 +343,10 @@ class ActiveModelLifecycleInstrumentedTest {
             override fun score(request: ScoringInput, cancelled: AtomicBoolean): ScoringReply =
                 engine.score(request, cancelled).also { adapterCodes[request.token.requestId] = it.code }
             override fun close() { try { engine.close() } finally { stopped.countDown() } }
-        })
+        }, 60_000, ModelDutyOwner {
+            // Adapter/watch tests isolate their numeric budget; production Service uses the process singleton.
+            ModelDutySample(android.os.SystemClock.elapsedRealtime(), android.os.Process.getElapsedCpuTime())
+        }, ScheduledModelDutyChecks())
         init { gate.withLock { check(File(root, "versions").mkdirs()) } }
         fun nextInvalidation() = CountDownLatch(1).also { invalidation.set(it) }
         fun model(id: Int) = File(root, "versions/${directory(id)}/fixture.gguf")

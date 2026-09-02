@@ -94,6 +94,31 @@ Binder не ставит cancel в очередь scoring. Idle unload прои�
 без работы; critical memory pressure, unbind и invalidation отменяют работу и
 запрашивают unload. Закрытие service не ждёт native teardown на main thread.
 
+`ProcessModelDuty` хранит числовой бюджет на время жизни процесса, отдельно от
+Service. Единственная lease остаётся у worker до завершения serial cleanup;
+новый Service не может параллельно войти в native runtime. Пересоздание Service
+и смена session не сбрасывают расход. Учитывается CPU всего процесса через
+`Process.getElapsedCpuTime`, включая загрузку, ошибки и обязательный cleanup.
+Некорректные часы запрещают модельную работу до перезапуска процесса.
+
+Экспериментальный профиль: ёмкость 8000 CPU-ms, пополнение 8000 CPU-ms за 60 s,
+вход при остатке не менее 7500 CPU-ms, возраст очереди и активный deadline по
+3000 ms. Проверки идут только во время работы/cleanup, с паузой 50 ms после
+предыдущей проверки (`scheduleWithFixedDelay`), без догоняющих вызовов после
+заморозки процесса. Отказ немедленно возвращает UNAVAILABLE без retry;
+он не продлевает idle unload. Cleanup выполняется даже при отрицательном
+бюджете. Это sampled cancellation policy: cooperative native cancellation
+может превысить бюджет, и этот расход остаётся долгом. Числа пока не являются
+измеренным батарейным бюджетом или release qualification.
+
+Critical/background/low-memory сначала блокируют новые admissions, затем
+отменяют работу и запрашивают выгрузку. Только последующий настоящий
+unbind/bind снимает блокировку, сохраняя долг; revision, submit и invalidation
+её не снимают. Проверки таймера отсутствуют в idle/unloaded состоянии.
+`onUnbind` возвращает true: если Service остаётся жив, Android вызывает
+`onRebind`, который восстанавливает worker binding. Повторный `onBind` для
+уже выданного Binder не предполагается; сервис остаётся только bound.
+
 Resolver читает active pointer и manifest под общим operation lock с install
 worker. Load удерживает read lock; scoring его освобождает. После scoring
 identity проверяется снова под lock. Это точка проверки версии, а не обещание
@@ -131,7 +156,7 @@ NORMAL text session и наличие включённого реализова�
 Без READY или такого потребителя спрос отсутствует. Словарные подсказки,
 видимость полоски, механика и double-space сами по себе не являются модельным
 спросом; spelling/contextual потребители независимы. В текущем срезе IME ещё
-не создаёт client: readiness monitor, consumer scheduling, process-CPU budget и
+не создаёт client: readiness monitor, consumer scheduling и
 model-assisted ranking остаются последующей интеграцией. Конечное число bind
 попыток не доказывает ограничение inference CPU или экономию батареи.
 

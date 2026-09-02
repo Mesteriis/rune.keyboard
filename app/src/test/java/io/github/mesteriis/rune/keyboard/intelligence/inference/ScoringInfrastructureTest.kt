@@ -14,6 +14,9 @@ import java.util.concurrent.atomic.AtomicInteger
 
 private fun CountDownLatch.done() = check(await(3, TimeUnit.SECONDS)) { "test timeout" }
 private fun input(id: Long) = ScoringInput(ScoringToken(1, id, id, listOf(3, 4)), "prefix", listOf(" a", " b"))
+// Existing worker infrastructure cases use an isolated deterministic CPU source; production uses Process CPU.
+private fun testWorker(engine: ScoringEngine, idleMillis: Long = 60_000) = LatestScoringWorker(engine, idleMillis,
+    ModelDutyOwner { ModelDutySample(System.nanoTime() / 1_000_000, 0) }, ScheduledModelDutyChecks())
 private fun success(input: ScoringInput) = ScoringReply(input.token, 0, 1, listOf(NumericScore(3,-1.0,1),NumericScore(4,-2.0,2)))
 private class FakeEngine : ScoringEngine {
     val first = CountDownLatch(1); val release = CountDownLatch(1); val cancelled = CountDownLatch(1)
@@ -45,7 +48,7 @@ class ScoringInfrastructureTest {
         val ids=mutableListOf(1); val token=ScoringToken(1,0,1,ids);ids[0]=2;check(token.candidateIds==listOf(1))
     }
     @org.junit.Test fun replacingPending() {
-        val engine=FakeEngine(); val worker=LatestScoringWorker(engine);val done=CountDownLatch(1)
+        val engine=FakeEngine(); val worker=testWorker(engine);val done=CountDownLatch(1)
         val replies=CopyOnWriteArrayList<Long>();val finished=AtomicInteger()
         worker.submit(input(1), { replies+=it.token.requestId }, {finished.incrementAndGet()});engine.first.done()
         worker.submit(input(2), { replies+=it.token.requestId }, {finished.incrementAndGet()})
@@ -55,19 +58,19 @@ class ScoringInfrastructureTest {
         check(engine.seen==listOf(1L,3L) && replies==listOf(3L));check(finished.get()==3)
     }
     @org.junit.Test fun callbackDeathCancellation() {
-        val engine=FakeEngine();val worker=LatestScoringWorker(engine);val replies=CopyOnWriteArrayList<Long>()
+        val engine=FakeEngine();val worker=testWorker(engine);val replies=CopyOnWriteArrayList<Long>()
         worker.submit(input(1), {replies+=it.token.requestId});engine.first.done()
         worker.submit(input(2), {replies+=it.token.requestId});worker.cancel(1,2)
         engine.release.countDown();worker.close();engine.closed.done();check(replies.isEmpty());check(engine.seen==listOf(1L))
     }
     @org.junit.Test fun idleUnload() {
-        val engine=FakeEngine();val worker=LatestScoringWorker(engine,30);val done=CountDownLatch(1)
+        val engine=FakeEngine();val worker=testWorker(engine,30);val done=CountDownLatch(1)
         worker.submit(input(1), {done.countDown()});engine.first.done();check(engine.unloads.get()==0)
         engine.release.countDown();done.done();engine.unloaded.done();check(engine.unloads.get()==1)
         worker.close();engine.closed.done()
     }
     @org.junit.Test fun memoryAndModelInvalidation() {
-        val engine=FakeEngine();val worker=LatestScoringWorker(engine);val replies=AtomicInteger()
+        val engine=FakeEngine();val worker=testWorker(engine);val replies=AtomicInteger()
         worker.submit(input(1), {replies.incrementAndGet()});engine.first.done()
         worker.submit(input(2), {replies.incrementAndGet()});worker.invalidate();engine.cancelled.done()
         check(engine.unloads.get()==0);engine.release.countDown();engine.unloaded.done();worker.close();engine.closed.done()
@@ -89,7 +92,7 @@ class ScoringInfrastructureTest {
             override fun score(request:ScoringInput,cancelled:AtomicBoolean):ScoringReply { throw IllegalStateException() }
             override fun cancel() {}; override fun unload() {}; override fun close() {closed.countDown()}
         }
-        val worker=LatestScoringWorker(engine)
+        val worker=testWorker(engine)
         worker.submit(input(2), {check(it.code==ScoringCode.INTERNAL && it.scores.isEmpty());done.countDown()})
         done.done();worker.close();closed.done()
     }

@@ -1,0 +1,26 @@
+{
+  "jvm": {
+    "tests": 555,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "android": {
+    "26": {
+      "tests": 42,
+      "failures": 0,
+      "elapsedSeconds": 17.446
+    },
+    "37": {
+      "tests": 42,
+      "failures": 0,
+      "elapsedSeconds": 17.85
+    }
+  },
+  "gates": {
+    "status": "PASS",
+    "tasks": 267,
+    "executed": 45,
+    "upToDate": 222
+  }
+}

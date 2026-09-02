@@ -22,7 +22,8 @@ open class ModelInferenceService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        worker = LatestScoringWorker(createEngine { worker.invalidate() }, idleMillis)
+        val duty = ProcessModelDuty.owner // establish the process baseline before engine construction
+        worker = LatestScoringWorker(createEngine { worker.invalidate() }, idleMillis, duty, ScheduledModelDutyChecks())
     }
     private val endpoint = object : IModelScoringService.Stub() {
         override fun score(request: ScoreRequestParcel?, callback: IModelScoringCallback?) {
@@ -46,16 +47,18 @@ open class ModelInferenceService : Service() {
             requireSameUid(); worker.cancel(sessionId, requestId)
         }
     }
-    override fun onBind(intent: Intent?): IBinder = endpoint
-    override fun onUnbind(intent: Intent?): Boolean { worker.invalidate(); return false }
+    override fun onBind(intent: Intent?): IBinder { worker.onBind(); return endpoint }
+    // Android may retain this Service and its Binder after the last scoring client leaves.
+    override fun onUnbind(intent: Intent?): Boolean { worker.onUnbind(); return true }
+    override fun onRebind(intent: Intent?) { super.onRebind(intent); worker.onBind() }
     @Suppress("DEPRECATION")
     override fun onTrimMemory(level: Int) {
-        super.onTrimMemory(level)
         if (level == ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL || level >= ComponentCallbacks2.TRIM_MEMORY_BACKGROUND) {
-            worker.invalidate()
+            worker.suspendForMemoryPressure()
         }
+        super.onTrimMemory(level)
     }
-    override fun onLowMemory() { super.onLowMemory(); worker.invalidate() }
+    override fun onLowMemory() { worker.suspendForMemoryPressure(); super.onLowMemory() }
     override fun onDestroy() { worker.close(); super.onDestroy() }
     private fun requireSameUid() { check(Binder.getCallingUid() == Process.myUid()) { "private scoring service" } }
 }
