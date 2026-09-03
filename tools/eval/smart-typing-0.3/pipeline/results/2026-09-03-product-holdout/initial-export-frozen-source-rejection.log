@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/export_product_holdout.py", line 171, in <module>
+    run(parser.parse_args())
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/export_product_holdout.py", line 86, in run
+    combined, deterministic, frozen_receipt = verified_configs(
+                                              ^^^^^^^^^^^^^^^^^
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/export_product_holdout.py", line 35, in verified_configs
+    calibration.require(all(calibration.sha(calibration.REPO / name) == digest
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/export_calibration.py", line 45, in require
+    raise ValueError(code)
+ValueError: FROZEN_SOURCE_DRIFT

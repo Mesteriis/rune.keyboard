@@ -1,0 +1,53 @@
+{
+  "autoReplaceEnabled": false,
+  "decisionPolicyApplied": false,
+  "holdoutExecuted": true,
+  "languages": {
+    "en": {
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 925,
+        "value": 0.925,
+        "wilson95RowDescriptive": [
+          0.9069990602607456,
+          0.9397481950265327
+        ]
+      },
+      "originalAvailable": true,
+      "retrievalAllowsAutoReplace": 443,
+      "rows": 2000,
+      "typoRows": 1000
+    },
+    "es": {
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 892,
+        "value": 0.892,
+        "wilson95RowDescriptive": [
+          0.8712410199098767,
+          0.9097588014374481
+        ]
+      },
+      "originalAvailable": true,
+      "retrievalAllowsAutoReplace": 617,
+      "rows": 2000,
+      "typoRows": 1000
+    },
+    "ru": {
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 917,
+        "value": 0.917,
+        "wilson95RowDescriptive": [
+          0.8982635048659464,
+          0.9325449785571007
+        ]
+      },
+      "originalAvailable": true,
+      "retrievalAllowsAutoReplace": 676,
+      "rows": 2000,
+      "typoRows": 1000
+    }
+  },
+  "split": "holdout"
+}

@@ -137,3 +137,50 @@ order suggestions but never supplies a preferred correction. Full numeric oracle
 parity covers the product policy constants as well as the arithmetic kernel.
 This is suggestion integration only: calibration carries no editor-write
 authority. AutoReplace/Undo and the frozen final pipeline holdout remain open.
+
+## Frozen product spelling holdout
+
+The product holdout is a separate one-way pipeline. It requires the immutable
+combined and deterministic calibration configs plus the exact calibration
+generator receipt. `export_product_holdout.py` rejects changed production
+generator sources, lexicon assets, candidate width, corpus or config linkage,
+then runs the production generator on the 6,000 spelling holdout rows. It has no
+fit or threshold-search function. The historical deterministic config source
+map remains protected by its canonical config digest; executable ranker sources
+are checked against the later combined config that consumed that fallback.
+
+```sh
+python3 tools/eval/smart-typing-0.3/pipeline/export_product_holdout.py \
+  --output build/smart-typing-0.3/product-holdout-export \
+  --combined-config tools/eval/smart-typing-0.3/pipeline/results/2026-09-03-combined-calibration/config.json \
+  --deterministic-config tools/eval/smart-typing-0.3/pipeline/results/2026-09-03-deterministic-calibration/width-4-config.json \
+  --calibration-export build/smart-typing-0.3/production-width-4-02/export \
+  --index-dir build/smart-typing-0.3/lexicon-index-prototype/assets \
+  --rank-dir build/smart-typing-0.3/packed-lexicon-reader-prototype/rank-assets \
+  --java /path/to/jdk17/bin/java \
+  --gradle-cache /path/to/.gradle/caches/modules-2/files-2.1
+
+python3 -u tools/eval/smart-typing-0.3/pipeline/score_product_holdout.py \
+  --holdout-export build/smart-typing-0.3/product-holdout-export \
+  --output build/smart-typing-0.3/product-holdout-scores \
+  --combined-config tools/eval/smart-typing-0.3/pipeline/results/2026-09-03-combined-calibration/config.json \
+  --runner build/smart-typing-0.3/native/rune-score \
+  --model build/smart-typing-0.3/model/rune-text-v1-0.1.0-q4_k_m.gguf
+
+python3 tools/eval/smart-typing-0.3/pipeline/evaluate_product_holdout.py \
+  --holdout-export build/smart-typing-0.3/product-holdout-export \
+  --scoring build/smart-typing-0.3/product-holdout-scores \
+  --combined-config tools/eval/smart-typing-0.3/pipeline/results/2026-09-03-combined-calibration/config.json \
+  --deterministic-config tools/eval/smart-typing-0.3/pipeline/results/2026-09-03-deterministic-calibration/width-4-config.json \
+  --calibration-export build/smart-typing-0.3/production-width-4-02/export \
+  --output build/smart-typing-0.3/product-holdout-report
+```
+
+Scoring is resumable and stores only public corpus IDs plus numeric results.
+`evaluate_product_holdout.py` applies the frozen policies once and reports exact
+counts, candidate recall, coverage, abstention, precision and false-change with
+Wilson 95% row-descriptive intervals. A report may authorize production only if
+every language has at least 300 replacements, at least 99% precision, at most
+0.5% false changes among all correct/protected rows, and Original in every set.
+Host ideal availability does not qualify model latency, energy, physical-device
+availability or the real Binder boundary.

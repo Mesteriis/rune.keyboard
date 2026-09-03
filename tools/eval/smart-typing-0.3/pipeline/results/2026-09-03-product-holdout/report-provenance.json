@@ -1,0 +1,18 @@
+{
+  "combinedConfigSha256": "a4375144211a719aec3fd3e131174e78403fa36de4e234787936bde27aca4bbc",
+  "deterministicConfigSha256": "c901c510a9b2392ad71b73a8cc48c89f07bc92f6f47330a05d5e435a6ed8f1c1",
+  "holdoutExecuted": true,
+  "holdoutGeneratorReceiptSha256": "a523ac829ac7b25c4b19774e2f9963c0b6b93ba9080f9d730b4b8ee79a848c25",
+  "holdoutScoresCompleteSha256": "2461cee0d8a48c25987426afb78d70ce590a849ec8c26fd1d772d61544a7376e",
+  "holdoutScoresSha256": "689545ffd51c3daae20d90ece3f451dee9321c4d70b8425b87c56624a5b862a6",
+  "reportSha256": "7fb01eef02bba149b7503a9d36f0b3f58b1970e5e8c23d7f1027199f09baf153",
+  "scope": "final-product-spelling-holdout",
+  "sources": {
+    "tools/eval/smart-typing-0.3/evaluate.py": "ca9a03240b899b7c525e3ac99ed6bd6a01d8bd6738a4bca19628762ee219373b",
+    "tools/eval/smart-typing-0.3/pipeline/calibrate_combined.py": "84fc44299c6c976e49b842470313da4e9007e3323bad138247ac7295290a8e59",
+    "tools/eval/smart-typing-0.3/pipeline/calibrate_deterministic.py": "408f67b08f9e170f60bd716a0fb78e1c843e35b001c4e9600d34d492854fc8d9",
+    "tools/eval/smart-typing-0.3/pipeline/deterministic_policy.py": "cd162cc85286410fee77f255116304bb94ceacdaf6111cc515e5390d63308ef9",
+    "tools/eval/smart-typing-0.3/pipeline/evaluate_product_holdout.py": "48a12cfd8ed326eec1e13e97876ed9fb9ff45da21351d5bfe561b9e11de07b91"
+  },
+  "thresholdsFittedOnHoldout": false
+}

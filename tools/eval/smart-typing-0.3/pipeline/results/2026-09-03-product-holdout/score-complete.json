@@ -1,0 +1,20 @@
+{
+  "combinedConfigSha256": "a4375144211a719aec3fd3e131174e78403fa36de4e234787936bde27aca4bbc",
+  "holdoutExecuted": true,
+  "holdoutGeneratorReceiptSha256": "a523ac829ac7b25c4b19774e2f9963c0b6b93ba9080f9d730b4b8ee79a848c25",
+  "identity": {
+    "corpusSha256": "75fedb01d250b525a260b4cc7ae1202197fcc98f098cf6c83d956029a39b6401",
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "f2f8e9e21a028871da4b9ced6ce0492eb692f742c4de765467a2d44a18535973"
+  },
+  "omittedOriginalOnly": 3060,
+  "requests": 2940,
+  "runtimeErrors": 14,
+  "scope": "product-spelling-holdout-model-scores",
+  "scores": 2940,
+  "scoresSha256": "689545ffd51c3daae20d90ece3f451dee9321c4d70b8425b87c56624a5b862a6",
+  "sources": {
+    "tools/eval/smart-typing-0.3/pipeline/score_product_holdout.py": "8b5244542fa224a3d75b22b1c3d93e68d947bd19e675c939eae918979e3fa73b"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "files": {
+    "actual.tsv.gz": "6c439927130a8d9affeccfd36abb5fc8d4917da4322c55187859c6acc24db3d3",
+    "candidate-provenance.json": "a523ac829ac7b25c4b19774e2f9963c0b6b93ba9080f9d730b4b8ee79a848c25",
+    "candidate-summary.json": "f9c6f03872338490ed60b26388a52dad8b045f3f12134276ab94fea7e49f0a22",
+    "candidates.jsonl.gz": "907c9796153f5dbeefa906452cad0e65a822983bff1b799741c9ee1d8ac308da",
+    "final-report-exit-two.log": "4f8e9e45f8a9e1843b81eaf3bdf52a6b778d415d23bf985774a9d34a43f69bd5",
+    "initial-export-frozen-source-rejection.log": "5eb5d3a6e7513f5e08073ecf5457f901204f09e5cd62d126962321db68d297b7",
+    "initial-report-exit-zero.log": "4f8e9e45f8a9e1843b81eaf3bdf52a6b778d415d23bf985774a9d34a43f69bd5",
+    "initial-score-zero-response.log": "e6f22ee35bd3d868f262da859f73fd73182d853787129ba7ffc86294dcd9e014",
+    "inputs.tsv.gz": "9e8e5251e895793b86c53542b1d28d4a5f6c387329aa29c4df1d37cab3296b35",
+    "local-gates.log": "9c3cbfc8038bdb63fa30bf7170783c2ad1a770488acd8ad09c0452e5bd4264c6",
+    "python-tests-final.log": "3a6eb57971c6f93325cb655685d7ff2a97708f5723175bf1d4132e6d38063ba9",
+    "python-tests.log": "e57770bffed88f937b201dd498bf28634d0a13ac1a1721e5c8d436dad0d6c413",
+    "report-provenance.json": "1776aa0a966a47032fc8587a90cb6ebe99b3a45487e3e708474210842f7f9bc6",
+    "report.json": "7fb01eef02bba149b7503a9d36f0b3f58b1970e5e8c23d7f1027199f09baf153",
+    "score-complete.json": "2461cee0d8a48c25987426afb78d70ce590a849ec8c26fd1d772d61544a7376e",
+    "score-full.log": "cfed70bd5ec73ef2a8253351c64542e11659ef304bf0a47fa9719ef0aec4d156",
+    "score-progress.log": "33cb587d87e8d60b5f91381f0286ebe9a3e04a8b1cac4501fca503649fa8a7d8",
+    "score-run-input.json": "dc9c16aff5de4441c70b1002f9f53837098d289db04d453e6e0c20d66daf304a",
+    "score-smoke.log": "3f91d7714b74bbee967571fdcc79c97987c539e7f544c8a9d1ba86727b9041f3",
+    "scores.jsonl.gz": "98af884c0fd85ce878baa23d0315065611c32aed67e1033f9350b05cbbf5d873"
+  },
+  "identities": {
+    "candidateReceipt": "a523ac829ac7b25c4b19774e2f9963c0b6b93ba9080f9d730b4b8ee79a848c25",
+    "combinedConfig": "a4375144211a719aec3fd3e131174e78403fa36de4e234787936bde27aca4bbc",
+    "model": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "runner": "f2f8e9e21a028871da4b9ced6ce0492eb692f742c4de765467a2d44a18535973",
+    "scores": "689545ffd51c3daae20d90ece3f451dee9321c4d70b8425b87c56624a5b862a6"
+  },
+  "localGates": "PASS: 267 actionable, 25 executed, 242 up-to-date",
+  "notes": {
+    "final-report-exit-two.log": "final evaluator reports FAIL and returns status 2",
+    "initial-export-frozen-source-rejection.log": "superseded verifier rejected historical deterministic source map before holdout export",
+    "initial-report-exit-zero.log": "superseded evaluator printed FAIL but returned zero",
+    "initial-score-zero-response.log": "superseded wrapper selected calibration split and scored zero requests"
+  },
+  "result": "FAIL",
+  "scope": "final-product-spelling-holdout"
+}

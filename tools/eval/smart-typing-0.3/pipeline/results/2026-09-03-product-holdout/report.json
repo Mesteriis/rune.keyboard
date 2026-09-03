@@ -1,0 +1,384 @@
+{
+  "allLanguagesPass": false,
+  "autoReplaceEnabled": false,
+  "holdoutExecuted": true,
+  "languages": {
+    "en": {
+      "deterministic": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1746,
+          "value": 0.873,
+          "wilson95RowDescriptive": [
+            0.8576884946056319,
+            0.8868813881225533
+          ]
+        },
+        "automaticReplacements": 254,
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 925,
+          "value": 0.925,
+          "wilson95RowDescriptive": [
+            0.9069990602607456,
+            0.9397481950265327
+          ]
+        },
+        "correctReplacements": 249,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 254,
+          "value": 0.127,
+          "wilson95RowDescriptive": [
+            0.11311861187744655,
+            0.14231150539436807
+          ]
+        },
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 1,
+          "value": 0.001,
+          "wilson95RowDescriptive": [
+            0.00017654637062607809,
+            0.0056425585979579355
+          ]
+        },
+        "gate": {
+          "falseChangeAtMost0_5Percent": true,
+          "minimum300": false,
+          "pass": false,
+          "precisionAtLeast99Percent": false
+        },
+        "incorrectReplacements": 5,
+        "negativeRows": 1000,
+        "originalAlwaysAvailable": true,
+        "precision": {
+          "denominator": 254,
+          "numerator": 249,
+          "value": 0.9803149606299213,
+          "wilson95RowDescriptive": [
+            0.9547548132607326,
+            0.991563133883991
+          ]
+        },
+        "rows": 2000,
+        "typoRows": 1000
+      },
+      "modelAssisted": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1696,
+          "value": 0.848,
+          "wilson95RowDescriptive": [
+            0.8315993113023692,
+            0.8630664237898786
+          ]
+        },
+        "automaticReplacements": 304,
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 925,
+          "value": 0.925,
+          "wilson95RowDescriptive": [
+            0.9069990602607456,
+            0.9397481950265327
+          ]
+        },
+        "correctReplacements": 293,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 304,
+          "value": 0.152,
+          "wilson95RowDescriptive": [
+            0.1369335762101213,
+            0.1684006886976307
+          ]
+        },
+        "deterministicFallbackRows": 1557,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "gate": {
+          "falseChangeAtMost0_5Percent": true,
+          "minimum300": true,
+          "pass": false,
+          "precisionAtLeast99Percent": false
+        },
+        "incorrectReplacements": 11,
+        "modelAvailableRows": 443,
+        "modelErrors": 2,
+        "negativeRows": 1000,
+        "originalAlwaysAvailable": true,
+        "precision": {
+          "denominator": 304,
+          "numerator": 293,
+          "value": 0.9638157894736842,
+          "wilson95RowDescriptive": [
+            0.9363786768920008,
+            0.9796772730775392
+          ]
+        },
+        "rows": 2000,
+        "typoRows": 1000
+      }
+    },
+    "es": {
+      "deterministic": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1735,
+          "value": 0.8675,
+          "wilson95RowDescriptive": [
+            0.8519344977866566,
+            0.8816564724616224
+          ]
+        },
+        "automaticReplacements": 265,
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 892,
+          "value": 0.892,
+          "wilson95RowDescriptive": [
+            0.8712410199098767,
+            0.9097588014374481
+          ]
+        },
+        "correctReplacements": 262,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 265,
+          "value": 0.1325,
+          "wilson95RowDescriptive": [
+            0.11834352753837758,
+            0.14806550221334328
+          ]
+        },
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "gate": {
+          "falseChangeAtMost0_5Percent": true,
+          "minimum300": false,
+          "pass": false,
+          "precisionAtLeast99Percent": false
+        },
+        "incorrectReplacements": 3,
+        "negativeRows": 1000,
+        "originalAlwaysAvailable": true,
+        "precision": {
+          "denominator": 265,
+          "numerator": 262,
+          "value": 0.9886792452830189,
+          "wilson95RowDescriptive": [
+            0.9672504834163683,
+            0.996142592696725
+          ]
+        },
+        "rows": 2000,
+        "typoRows": 1000
+      },
+      "modelAssisted": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1592,
+          "value": 0.796,
+          "wilson95RowDescriptive": [
+            0.7777797978268458,
+            0.8130853101826524
+          ]
+        },
+        "automaticReplacements": 408,
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 892,
+          "value": 0.892,
+          "wilson95RowDescriptive": [
+            0.8712410199098767,
+            0.9097588014374481
+          ]
+        },
+        "correctReplacements": 396,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 408,
+          "value": 0.204,
+          "wilson95RowDescriptive": [
+            0.18691468981734755,
+            0.22222020217315414
+          ]
+        },
+        "deterministicFallbackRows": 1384,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "gate": {
+          "falseChangeAtMost0_5Percent": true,
+          "minimum300": true,
+          "pass": false,
+          "precisionAtLeast99Percent": false
+        },
+        "incorrectReplacements": 12,
+        "modelAvailableRows": 616,
+        "modelErrors": 2,
+        "negativeRows": 1000,
+        "originalAlwaysAvailable": true,
+        "precision": {
+          "denominator": 408,
+          "numerator": 396,
+          "value": 0.9705882352941176,
+          "wilson95RowDescriptive": [
+            0.9493009746302344,
+            0.9830966550294457
+          ]
+        },
+        "rows": 2000,
+        "typoRows": 1000
+      }
+    },
+    "ru": {
+      "deterministic": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1665,
+          "value": 0.8325,
+          "wilson95RowDescriptive": [
+            0.81550022975326,
+            0.8482249338047069
+          ]
+        },
+        "automaticReplacements": 335,
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 917,
+          "value": 0.917,
+          "wilson95RowDescriptive": [
+            0.8982635048659464,
+            0.9325449785571007
+          ]
+        },
+        "correctReplacements": 313,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 335,
+          "value": 0.1675,
+          "wilson95RowDescriptive": [
+            0.15177506619529307,
+            0.18449977024674008
+          ]
+        },
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 1,
+          "value": 0.001,
+          "wilson95RowDescriptive": [
+            0.00017654637062607809,
+            0.0056425585979579355
+          ]
+        },
+        "gate": {
+          "falseChangeAtMost0_5Percent": true,
+          "minimum300": true,
+          "pass": false,
+          "precisionAtLeast99Percent": false
+        },
+        "incorrectReplacements": 22,
+        "negativeRows": 1000,
+        "originalAlwaysAvailable": true,
+        "precision": {
+          "denominator": 335,
+          "numerator": 313,
+          "value": 0.9343283582089552,
+          "wilson95RowDescriptive": [
+            0.9025738978962466,
+            0.956234823482767
+          ]
+        },
+        "rows": 2000,
+        "typoRows": 1000
+      },
+      "modelAssisted": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1641,
+          "value": 0.8205,
+          "wilson95RowDescriptive": [
+            0.8030713141807578,
+            0.836699858511959
+          ]
+        },
+        "automaticReplacements": 359,
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 917,
+          "value": 0.917,
+          "wilson95RowDescriptive": [
+            0.8982635048659464,
+            0.9325449785571007
+          ]
+        },
+        "correctReplacements": 342,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 359,
+          "value": 0.1795,
+          "wilson95RowDescriptive": [
+            0.16330014148804087,
+            0.1969286858192422
+          ]
+        },
+        "deterministicFallbackRows": 1332,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 1,
+          "value": 0.001,
+          "wilson95RowDescriptive": [
+            0.00017654637062607809,
+            0.0056425585979579355
+          ]
+        },
+        "gate": {
+          "falseChangeAtMost0_5Percent": true,
+          "minimum300": true,
+          "pass": false,
+          "precisionAtLeast99Percent": false
+        },
+        "incorrectReplacements": 17,
+        "modelAvailableRows": 668,
+        "modelErrors": 10,
+        "negativeRows": 1000,
+        "originalAlwaysAvailable": true,
+        "precision": {
+          "denominator": 359,
+          "numerator": 342,
+          "value": 0.9526462395543176,
+          "wilson95RowDescriptive": [
+            0.9254806550649473,
+            0.9702273521079756
+          ]
+        },
+        "rows": 2000,
+        "typoRows": 1000
+      }
+    }
+  },
+  "split": "holdout",
+  "thresholdsFittedOnHoldout": false
+}
