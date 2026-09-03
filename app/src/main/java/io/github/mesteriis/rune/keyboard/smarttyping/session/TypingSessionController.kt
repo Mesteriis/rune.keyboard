@@ -13,18 +13,19 @@ import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalEditK
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.OwnedPunctuationSuffix
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.PunctuationAction
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.CalibratedSpellingPolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.RankingModelScore
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.ProtectedTokenPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.ProtectedTokenReason
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.TokenUnicode
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateCompletion
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneration
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGenerator
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateSearchControl
-import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidate
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringInput
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringToken
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringCode
-import io.github.mesteriis.rune.keyboard.intelligence.ipc.NumericScore
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateReply
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateRequest
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
@@ -85,7 +86,7 @@ class TypingSessionController internal constructor(
         if (!canRequestCandidates || requestId < 0 || requestId <= lastCandidateRequestId) return null
         clearCandidates()
         lastCandidateRequestId = requestId
-        pendingCandidate = CandidateStamp(state.sessionId, state.revision, requestId)
+        pendingCandidate = CandidateStamp(state.sessionId, state.revision, requestId, activeLanguage)
         return LocalCandidateRequest(state.sessionId, state.revision, requestId,
             state.composing!!.typedWord, activeLanguage, eligible = true)
     }
@@ -93,7 +94,7 @@ class TypingSessionController internal constructor(
     /** Service rechecks its policy/language/lifetime first; this owner checks the exact live word. */
     fun acceptCandidates(reply: LocalCandidateReply): Boolean {
         val stamp = pendingCandidate ?: return false
-        if (stamp != CandidateStamp(reply.sessionId, reply.revision, reply.requestId)) return false
+        if (stamp.sessionId != reply.sessionId || stamp.revision != reply.revision || stamp.requestId != reply.requestId) return false
         pendingCandidate = null
         val generation = reply.generation
         if (state.sessionId != stamp.sessionId || state.revision != stamp.revision ||
@@ -120,8 +121,11 @@ class TypingSessionController internal constructor(
                 !seen.add(TokenUnicode.folded(candidate.text))) return false
         }
         val alternatives = generation.alternatives.toList()
-        candidateSelection = CandidateSelection(original, alternatives, stamp.requestId,
-            generation.completion, selectedIndex = if (alternatives.isEmpty()) -1 else 0)
+        val snapshot = generation.copy(alternatives = alternatives)
+        val ranking = CalibratedSpellingPolicy.rank(snapshot, stamp.language)
+        candidateSelection = CandidateSelection(snapshot, stamp.language, stamp.requestId,
+            selectedIndex = (ranking?.preferredId ?: 0) - 1,
+            order = ranking?.candidateIds?.map { it - 1 } ?: alternatives.indices.toList())
         return true
     }
 
@@ -155,18 +159,17 @@ class TypingSessionController internal constructor(
         return input
     }
 
-    /** Numeric suggestion ordering only. No confidence bucket, automatic replacement or editor command. */
+    /** Calibrated numeric suggestion ordering only; automatic replacement remains unqualified. */
     fun acceptModelRanking(reply: ScoringReply): Boolean {
         if (!isCurrentModelRanking(reply.token)) return false
         pendingModelRanking = null
         val selection = candidateSelection ?: return false
         if (reply.code != ScoringCode.OK) return false
-        val ranked = reply.scores.sortedWith(compareByDescending<NumericScore> {
-            it.sumLogProbability / it.tokenCount
-        }.thenBy { it.candidateId })
+        val ranking = CalibratedSpellingPolicy.rank(selection.generation, selection.language,
+            reply.scores.map { RankingModelScore(it.candidateId, it.sumLogProbability, it.tokenCount) }) ?: return false
         candidateSelection = selection.copy(
-            order = ranked.filter { it.candidateId != 0 }.map { it.candidateId - 1 },
-            selectedIndex = ranked.first().candidateId - 1,
+            order = ranking.candidateIds.map { it - 1 },
+            selectedIndex = ranking.preferredId - 1,
             modelRanked = true,
         )
         return true
@@ -669,20 +672,23 @@ class TypingSessionController internal constructor(
 
     private data class EditorSelection(val start: Int, val end: Int, val composingStart: Int, val composingEnd: Int)
 
-    private data class CandidateStamp(val sessionId: Long, val revision: Long, val requestId: Long)
+    private data class CandidateStamp(val sessionId: Long, val revision: Long, val requestId: Long,
+        val language: KeyboardLanguage)
 
     private class ModelRankingStamp(val token: ScoringToken, val selection: CandidateSelection)
 
     private data class CandidateSelection(
-        val original: String,
-        val alternatives: List<GeneratedCandidate>,
+        val generation: CandidateGeneration,
+        val language: KeyboardLanguage,
         val requestId: Long,
-        val completion: CandidateCompletion,
         val selectedIndex: Int,
         val manual: Boolean = false,
-        val order: List<Int> = alternatives.indices.toList(),
+        val order: List<Int> = generation.alternatives.indices.toList(),
         val modelRanked: Boolean = false,
     ) {
+        val original get() = generation.original!!
+        val alternatives get() = generation.alternatives
+        val completion get() = generation.completion
         val visibleIndices get() = order.take(SmartTypingViewState.MAX_VISIBLE_CANDIDATES - 1)
         override fun toString(): String = "CandidateSelection(redacted)"
     }

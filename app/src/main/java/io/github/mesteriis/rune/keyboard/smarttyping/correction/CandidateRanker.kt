@@ -19,6 +19,10 @@ data class RankingThresholds(val originalPenalty: Int, val minimumMargin: Int, v
 /** Request-local raw evidence; IDs must cover original0 and every current alternative exactly once. */
 data class RankingModelScore(val candidateId: Int, val sumLogProbability: Double, val tokenCount: Int)
 
+data class RankedCandidate(val candidateId: Int, val penalty: Double) {
+    init { require(candidateId in 1..7 && penalty.isFinite()) }
+}
+
 /** Numeric proposal only. The owner still requires quality, input-policy, mode and revision gates. */
 data class RankingProposal(val candidateId: Int, val penalty: Double, val runnerUpPenalty: Double?, val tokenLength: Int) {
     init {
@@ -31,8 +35,16 @@ data class RankingProposal(val candidateId: Int, val penalty: Double, val runner
 object CandidateRanker {
     fun propose(generation: CandidateGeneration, weights: RankingWeights, modelWeight: Int = 0,
         modelScores: List<RankingModelScore>? = null): RankingProposal? {
+        if (generation.prohibitsAutoReplace) return null
+        val ranked = rank(generation, weights, modelWeight, modelScores) ?: return null
+        return proposal(generation, ranked)
+    }
+
+    /** Partial searches may order suggestions, but can never produce an automatic proposal. */
+    fun rank(generation: CandidateGeneration, weights: RankingWeights, modelWeight: Int = 0,
+        modelScores: List<RankingModelScore>? = null): List<RankedCandidate>? {
         require(modelWeight in listOf(0, 1, 2, 4, 8))
-        if (generation.prohibitsAutoReplace || generation.alternatives.isEmpty()) return null
+        if (generation.alternatives.isEmpty()) return null
         val original = generation.original ?: return null
         val tokenLength = original.codePointCount(0, original.length)
         if (tokenLength !in 1..32) return null
@@ -49,9 +61,7 @@ object CandidateRanker {
                 means[score.candidateId] = score.sumLogProbability / score.tokenCount
             }
         }
-        var bestId = 0
-        var best = Double.POSITIVE_INFINITY
-        var runnerUp = Double.POSITIVE_INFINITY
+        val ranked = ArrayList<RankedCandidate>(count)
         for ((index, candidate) in generation.alternatives.withIndex()) {
             val quarters = candidate.editFeatures.editCost * 4
             if (!quarters.isFinite() || quarters !in 0.0..256.0 || quarters != quarters.toInt().toDouble() ||
@@ -65,13 +75,16 @@ object CandidateRanker {
             // thresholds supply its independent OOV penalty. Nonfinite evidence fails closed.
             val penalty = deterministic - modelWeight * (means[index + 1] - means[0])
             if (!penalty.isFinite()) return null
-            if (penalty < best) {
-                runnerUp = best
-                best = penalty
-                bestId = index + 1
-            } else if (penalty < runnerUp) runnerUp = penalty
+            ranked.add(RankedCandidate(index + 1, penalty))
         }
-        return RankingProposal(bestId, best, runnerUp.takeIf { it.isFinite() }, tokenLength)
+        return ranked.sortedWith(compareBy<RankedCandidate> { it.penalty }.thenBy { it.candidateId })
+    }
+
+    internal fun proposal(generation: CandidateGeneration, ranked: List<RankedCandidate>): RankingProposal? {
+        if (generation.prohibitsAutoReplace || ranked.isEmpty()) return null
+        val original = generation.original ?: return null
+        return RankingProposal(ranked.first().candidateId, ranked.first().penalty,
+            ranked.getOrNull(1)?.penalty, original.codePointCount(0, original.length))
     }
 
     /** Original0 when either margin or minimum length is insufficient. No editor mutation. */

@@ -1,0 +1,108 @@
+Calculating task graph as no cached configuration is available for tasks: :app:testDebugUnitTest --tests *CandidateRankerTest --tests *TypingCandidateSelectionTest --tests *LocalCandidateCoordinatorTest
+> Task :app:preBuild UP-TO-DATE
+> Task :runtime-llama:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :runtime-llama:preDebugBuild UP-TO-DATE
+> Task :runtime-llama:processDebugNavigationResources UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :runtime-llama:javaPreCompileDebug UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :runtime-llama:generateDebugResources UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :runtime-llama:writeDebugAarMetadata UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :runtime-llama:extractDeepLinksDebug UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :runtime-llama:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :runtime-llama:packageDebugResources UP-TO-DATE
+> Task :runtime-llama:processDebugManifest UP-TO-DATE
+> Task :runtime-llama:parseDebugLocalResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :runtime-llama:compileDebugLibraryResources UP-TO-DATE
+> Task :app:compileDebugAidl UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :runtime-llama:generateDebugRFile UP-TO-DATE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :runtime-llama:compileDebugKotlin UP-TO-DATE
+> Task :runtime-llama:compileDebugJavaWithJavac NO-SOURCE
+> Task :runtime-llama:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :runtime-llama:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :runtime-llama:processDebugJavaRes UP-TO-DATE
+
+> Task :app:compileDebugKotlin
+w: file:///Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt:9:33 Non-public primary constructor is exposed via the generated 'copy()' method of the 'data' class.
+
+The generated 'copy()' will change its visibility in future releases.
+
+To suppress the warning do one of the following:
+- Annotate the data class with the '@ConsistentCopyVisibility' annotation.
+- Use the '-Xconsistent-data-class-copy-visibility' compiler flag.
+- Annotate the data class with the '@ExposedCopyVisibility' annotation 
+  (Discouraged, but can be used to keep binary compatibility).
+
+To learn more, see the documentation of the '@ConsistentCopyVisibility' and '@ExposedCopyVisibility' annotations.
+
+This will become an error in language version 2.3.
+w: file:///Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt:22:28 Non-public primary constructor is exposed via the generated 'copy()' method of the 'data' class.
+
+The generated 'copy()' will change its visibility in future releases.
+
+To suppress the warning do one of the following:
+- Annotate the data class with the '@ConsistentCopyVisibility' annotation.
+- Use the '-Xconsistent-data-class-copy-visibility' compiler flag.
+- Annotate the data class with the '@ExposedCopyVisibility' annotation 
+  (Discouraged, but can be used to keep binary compatibility).
+
+To learn more, see the documentation of the '@ConsistentCopyVisibility' and '@ExposedCopyVisibility' annotations.
+
+This will become an error in language version 2.3.
+
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:bundleDebugClassesToCompileJar
+> Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:compileDebugUnitTestKotlin
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:processDebugUnitTestJavaRes UP-TO-DATE
+
+> Task :app:testDebugUnitTest FAILED
+
+TypingCandidateSelectionTest > model uses average log probability and original wins exact ties FAILED
+    org.junit.ComparisonFailure at TypingCandidateSelectionTest.kt:523
+
+TypingCandidateSelectionTest > model snapshot includes full candidate set and only owned prefix FAILED
+    java.lang.AssertionError at TypingCandidateSelectionTest.kt:491
+
+TypingCandidateSelectionTest > manual length changing tap and original restoration each replace whole owned segment once FAILED
+    java.lang.AssertionError at TypingCandidateSelectionTest.kt:84
+
+TypingCandidateSelectionTest > projection keeps source original and first two ordered alternatives without editing FAILED
+    java.lang.AssertionError at TypingCandidateSelectionTest.kt:67
+
+TypingCandidateSelectionTest > model ordering keeps original and stable identities without editing FAILED
+    org.junit.ComparisonFailure at TypingCandidateSelectionTest.kt:508
+
+71 tests completed, 5 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:testDebugUnitTest'.
+> There were failing tests. See the report at: file:///Users/avm/projects/Personal/rune-keyboard/app/build/reports/tests/testDebugUnitTest/index.html
+
+* Try:
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 5s
+41 actionable tasks: 5 executed, 36 up-to-date
+Configuration cache entry stored.

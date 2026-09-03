@@ -127,5 +127,13 @@ control set for `CandidateRankerTest`: 6000 inputs with expected deterministic
 and combined decisions. No typed words, expected spellings or annotation labels
 enter the Kotlin fixture. Kotlin validates bounded finite scores and candidate
 IDs, normalizes in the same operation order, and applies both rival margins.
-This pure calculation kernel carries no qualification or editor-write authority;
-controller integration and the frozen final pipeline holdout remain separate.
+The controller now uses the same six fixed language/mode coefficient sets for
+suggestion order and selected state. The active language is captured with the
+local request; the callback cannot infer or change it from a winning candidate.
+The production coordinator requests exactly three alternatives before search,
+then submits original plus those actual alternatives to the model. Original
+remains visible and preferred below the calibrated margin. Partial retrieval may
+order suggestions but never supplies a preferred correction. Full numeric oracle
+parity covers the product policy constants as well as the arithmetic kernel.
+This is suggestion integration only: calibration carries no editor-write
+authority. AutoReplace/Undo and the frozen final pipeline holdout remain open.

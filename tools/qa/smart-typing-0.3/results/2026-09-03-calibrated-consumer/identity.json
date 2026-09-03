@@ -1,0 +1,22 @@
+{
+  "apks": {
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "fa623cd44cbac158ee12a1129281d416d75547c763e870c43ebe8760c55bbce4",
+    "app/build/outputs/apk/debug/app-debug.apk": "9675067496e9509af9350969b7e5fa87aa2c974006b2477a388c89ea297a7157"
+  },
+  "phone": {
+    "android": 16,
+    "install": "PASS",
+    "launch": "PASS",
+    "model": "SM-F966B",
+    "profile": "phone",
+    "setupKeyboardStatus": "not enabled",
+    "typingQualification": "UNRUN"
+  },
+  "sources": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/intelligence/readiness/AndroidModelCandidatesInstrumentedTest.kt": "d07dde57844228c61e17ca8edebe7d981ee7c5a2539c034546a13d08963296b8",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt": "2a4c6a945425eb6a7c49f671e1b12ed410a53357bfee698ec45f0b4ea88a14c7",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt": "de5bf01aea98eedc42852d99185e1c1c2a136ae2f3795e98a5945ec55bc86333",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt": "b0bdb7bd9df1423c80a935aa5c742567f927a2fe37d1cdc1cc17eeff0a098b54",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "1840c9336fa07b4d1d8e41e71212a6366e2beb62944f07f8d94451aa6e3f9bc2"
+  }
+}

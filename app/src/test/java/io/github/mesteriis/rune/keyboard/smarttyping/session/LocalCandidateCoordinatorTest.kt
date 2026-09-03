@@ -17,6 +17,8 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
 import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
 import io.github.mesteriis.rune.keyboard.ime.model.EditorMode
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.TopCandidateSelection
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateLexicon
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateSearchControl
@@ -432,6 +434,19 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
+    @Test fun `production coordinator requests four total candidates before search and model submission`() {
+        Harness(withModel = true).use { h ->
+            h.lexicon.extraNeighbors = true
+            h.type("helo"); h.deliver(); h.pause.fire()
+            val request = h.model.requests.single()
+            assertEquals("helo", request.continuations.first())
+            assertEquals(4, request.continuations.size)
+            assertEquals(listOf(0, 1, 2, 3), request.token.candidateIds)
+            assertEquals(3, h.coordinator.viewState.candidates.size)
+            assertEquals(listOf(3), h.lexicon.requestedWidths.toList())
+        }
+    }
+
     @Test fun `local generation renders before model pause then numeric reply reorders without editor work`() {
         Harness(withModel = true).use { h ->
             h.type("helo"); h.deliver()
@@ -606,6 +621,14 @@ class LocalCandidateCoordinatorTest {
         private val concurrent = AtomicInteger()
         @Volatile var hold: Hold? = null
         @Volatile var fail = false
+        @Volatile var extraNeighbors = false
+        val requestedWidths = ConcurrentLinkedQueue<Int>()
+
+        override fun selectTop(key: String, route: LanguageRoute, pattern: CasePattern,
+            control: CandidateSearchControl, maximumAlternatives: Int): TopCandidateSelection? {
+            requestedWidths.add(maximumAlternatives)
+            return null // Exercise the real generator's generic fallback after checking admission width.
+        }
 
         override fun exact(language: KeyboardLanguage, key: String, control: CandidateSearchControl): ExactMembership {
             exactCalls.incrementAndGet()
@@ -626,7 +649,11 @@ class LocalCandidateCoordinatorTest {
                     }
                 }
                 // Valid radius neighbors for the only tested spellings. Each language emits once.
-                val words = when (key) { "helo" -> listOf("hello", "help"); "helos" -> listOf("hellos"); else -> emptyList() }
+                val words = when (key) {
+                    "helo" -> if (extraNeighbors) listOf("hello", "help", "held", "hero", "halo", "hell", "helm") else listOf("hello", "help")
+                    "helos" -> listOf("hellos")
+                    else -> emptyList()
+                }
                 for ((index, word) in words.withIndex()) {
                     if (!control.inspectState() || !visitor.visit(word, index + 1)) return LexiconScanStatus.UNAVAILABLE
                 }

@@ -31,6 +31,10 @@ class CandidateRankerTest {
                 val n = f.drop(3).map(String::toInt)
                 policies[f[1] to f[2].toInt()] = Triple(RankingWeights(n[0], n[1], n[2], n[3], n[4]),
                     RankingThresholds(n[5], n[6], n[7]), n[8])
+                val selected = CalibratedSpellingPolicy.coefficients(language(f[1]), f[2] == "1")
+                assertEquals(selected.weights, policies.getValue(f[1] to f[2].toInt()).first)
+                assertEquals(selected.thresholds, policies.getValue(f[1] to f[2].toInt()).second)
+                assertEquals(selected.modelWeight, n[8])
                 continue
             }
             assertEquals("R", f[0]); assertEquals(requests++, f[1].toInt())
@@ -51,6 +55,10 @@ class CandidateRankerTest {
             val combined = if (proposal == null) fallback else CandidateRanker.choose(proposal, model.second)
             assertEquals("deterministic ${f[1]}", f[7].toInt(), fallback)
             assertEquals("combined ${f[1]}", f[8].toInt(), combined)
+            assertEquals("production deterministic ${f[1]}", fallback,
+                CalibratedSpellingPolicy.rank(input, language(f[2]))?.preferredId ?: 0)
+            assertEquals("production combined ${f[1]}", combined,
+                CalibratedSpellingPolicy.rank(input, language(f[2]), scores)?.preferredId ?: 0)
         }
         assertEquals(6, policies.size); assertEquals(6000, requests)
     }
@@ -97,5 +105,24 @@ class CandidateRankerTest {
         assertThrows(IllegalArgumentException::class.java) { RankingProposal(1, Double.NEGATIVE_INFINITY, null, 3) }
     }
 
+    @Test fun `unusable model falls back and oversized returned sets do not inherit confidence`() {
+        val input = generation(listOf(candidate(1)))
+        val deterministic = CalibratedSpellingPolicy.rank(input, KeyboardLanguage.ENGLISH)!!
+        assertEquals(1, deterministic.preferredId)
+        val malformed = listOf(RankingModelScore(0, -2.0, 1), RankingModelScore(1, Double.NaN, 1))
+        assertEquals(deterministic, CalibratedSpellingPolicy.rank(input, KeyboardLanguage.ENGLISH, malformed))
+        val wide = generation((1..7).map { candidate(it, quarters = if (it == 1) 1 else 8) })
+        val ranked = CalibratedSpellingPolicy.rank(wide, KeyboardLanguage.ENGLISH)!!
+        assertEquals(7, ranked.candidateIds.size)
+        assertEquals(0, ranked.preferredId)
+    }
+
     companion object { private const val FIXTURE_SHA = "bfc1dfd94aea987ee0624d30e5a1c5defa032286e771606c5d2a4ee09bdd9f79" }
+
+    private fun language(value: String) = when (value) {
+        "en" -> KeyboardLanguage.ENGLISH
+        "ru" -> KeyboardLanguage.RUSSIAN
+        "es" -> KeyboardLanguage.SPANISH
+        else -> error("Unknown fixture language")
+    }
 }

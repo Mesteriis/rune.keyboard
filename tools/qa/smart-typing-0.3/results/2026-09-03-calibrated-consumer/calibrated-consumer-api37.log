@@ -1,0 +1,206 @@
+app-debug.apk sha256=9675067496e9509af9350969b7e5fa87aa2c974006b2477a388c89ea297a7157
+Performing Streamed Install
+Success
+app-debug-androidTest.apk sha256=fa623cd44cbac158ee12a1129281d416d75547c763e870c43ebe8760c55bbce4
+Performing Streamed Install
+Success
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest:
+INSTRUMENTATION_STATUS: test=boundaryKeepsTypedOriginalAndDropsPreviousSuggestions
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=boundaryKeepsTypedOriginalAndDropsPreviousSuggestions
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=correctionAndOriginalTapsReplaceOnlyOwnedWordWithNoReadback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=correctionAndOriginalTapsReplaceOnlyOwnedWordWithNoReadback
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sensitiveEditorTransitionClearsLoadedSuggestionsAndPreservesPlainTyping
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=sensitiveEditorTransitionClearsLoadedSuggestionsAndPreservesPlainTyping
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest:
+INSTRUMENTATION_STATUS: test=spellingAndStripChangesPreserveMechanicalUndoAndIndependentDoubleSpace
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=spellingAndStripChangesPreserveMechanicalUndoAndIndependentDoubleSpace
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=stripToggleCancelAndPrivateTransitionCannotResurrectOldCandidateContent
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=stripToggleCancelAndPrivateTransitionCannotResurrectOldCandidateContent
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=controlsPersistIndependentlyAndExplainUnavailableCapabilities
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=controlsPersistIndependentlyAndExplainUnavailableCapabilities
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=disablingSpellingCancelsHeldCorrectionWithoutEditorMutation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=disablingSpellingCancelsHeldCorrectionWithoutEditorMutation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=liveOffDropsCorrectionsAndEnableWaitsForExplicitEdit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=liveOffDropsCorrectionsAndEnableWaitsForExplicitEdit
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=stripBothDirectionsAndRepeatedTogglesPreserveHeldKeyAndSingleRelease
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=stripBothDirectionsAndRepeatedTogglesPreserveHeldKeyAndSingleRelease
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest:
+INSTRUMENTATION_STATUS: test=endingSessionClearsReadyAndLaterSessionRechecksRemovedModel
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=endingSessionClearsReadyAndLaterSessionRechecksRemovedModel
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=inactiveOrSensitiveFactoryNeverReadsMetadataOrBinds
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=inactiveOrSensitiveFactoryNeverReadsMetadataOrBinds
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=readyDoesNotReplayAndNextEditUsesRealRemoteClientWithoutEditorWrite
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest.readyDoesNotReplayAndNextEditUsesRealRemoteClientWithoutEditorWrite(AndroidModelCandidatesInstrumentedTest.kt:54)
+
+INSTRUMENTATION_STATUS: stream=
+Error in readyDoesNotReplayAndNextEditUsesRealRemoteClientWithoutEditorWrite(io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest):
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest.readyDoesNotReplayAndNextEditUsesRealRemoteClientWithoutEditorWrite(AndroidModelCandidatesInstrumentedTest.kt:54)
+
+INSTRUMENTATION_STATUS: test=readyDoesNotReplayAndNextEditUsesRealRemoteClientWithoutEditorWrite
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 268.482
+There was 1 failure:
+1) readyDoesNotReplayAndNextEditUsesRealRemoteClientWithoutEditorWrite(io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest.readyDoesNotReplayAndNextEditUsesRealRemoteClientWithoutEditorWrite(AndroidModelCandidatesInstrumentedTest.kt:54)
+
+FAILURES!!!
+Tests run: 12,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

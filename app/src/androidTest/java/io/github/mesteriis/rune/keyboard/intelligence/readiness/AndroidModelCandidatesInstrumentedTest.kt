@@ -58,8 +58,11 @@ class AndroidModelCandidatesInstrumentedTest {
         assertEquals(writes, f.editorWrites.get())
         onMain {
             assertEquals("helos", f.controller.state.composing!!.typedWord)
-            // Synthetic equal scores select Original, proving receipt and application of numeric result.
-            assertEquals(f.controller.originalCandidateId, f.controller.candidateViewState.selectedCandidateId)
+            // With equal model evidence the calibrated OOV/lexicon margin still prefers the
+            // only alternative. Completion consumes the request without mutating the editor.
+            val view = f.controller.candidateViewState
+            assertEquals(view.candidates.single { it.text == "hellos" }.id, view.selectedCandidateId)
+            assertFalse(f.controller.canRequestModelRanking)
             assertFalse(f.controller.state.originalSelected)
         }
     }

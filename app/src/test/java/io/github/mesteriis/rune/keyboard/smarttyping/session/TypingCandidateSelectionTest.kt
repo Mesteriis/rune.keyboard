@@ -59,15 +59,15 @@ class TypingCandidateSelectionTest {
         assertEquals(1, edits.size)
     }
 
-    @Test fun `projection keeps source original and first two ordered alternatives without editing`() {
+    @Test fun `projection keeps source original and calibrated alternatives without editing`() {
         start("helo")
         val before = controller.state
         publish("hello", "help", "held", "hero", "halo", "hell", "helm")
         assertEquals(before, controller.state)
-        assertEquals(listOf("helo", "hello", "help"), labels())
+        assertEquals(listOf("helo", "help", "held"), labels())
         val view = controller.candidateViewState
         assertTrue(view.candidates.first() is CandidateUiItem.Original)
-        assertEquals(view.candidates[1].id, view.selectedCandidateId)
+        assertEquals(view.candidates[0].id, view.selectedCandidateId)
         assertEquals(1, edits.size)
         assertTrue(view.candidates.all { it.id.length <= CandidateUiItem.MAX_ID_LENGTH })
     }
@@ -78,13 +78,13 @@ class TypingCandidateSelectionTest {
         controller.typeText("helo", execute)
         publish("hello", "help")
         val originalId = controller.originalCandidateId!!
-        val correctionId = correction()
+        val correctionId = controller.candidateViewState.candidates.single { it.text == "hello" }.id
         edits.clear()
         assertEquals(TypingTextResult.HANDLED, controller.selectCandidate(correctionId, execute))
         assertEquals(listOf(TypingEdit.SetComposingText(" hello")), edits)
         assertEquals(ComposingSegment(" ", "hello"), controller.state.composing)
         assertEquals("I hello", controller.state.contextText)
-        assertEquals(listOf("helo", "hello", "help"), labels())
+        assertEquals(listOf("helo", "help", "hello"), labels())
         assertFalse(controller.canRequestCandidates)
         assertFalse(controller.selectOriginal(controller.originalCandidateId!!))
         assertEquals(TypingTextResult.REJECTED, controller.selectCandidate(originalId, execute))
@@ -488,7 +488,7 @@ class TypingCandidateSelectionTest {
         assertEquals("I ", snapshot.prefix)
         assertEquals(listOf("helo", "hello", "help", "held", "hero", "halo", "hell", "helm"), snapshot.continuations)
         assertEquals((0..7).toList(), snapshot.token.candidateIds)
-        assertEquals(listOf("helo", "hello", "help"), labels())
+        assertEquals(listOf("helo", "help", "held"), labels())
         assertEquals(before, controller.state)
         assertNull(controller.beginModelRanking(1))
     }
@@ -497,15 +497,16 @@ class TypingCandidateSelectionTest {
         start("helo"); publish("hello", "help", "held", "hero", "halo", "hell", "helm")
         val before = controller.state
         val original = controller.originalCandidateId
-        val hello = correction()
-        val help = controller.candidateViewState.candidates[2].id
+        val help = correction()
+        // The model may promote an alternative that was outside the visible deterministic strip.
         val input = controller.beginModelRanking(1)!!
         edits.clear()
         assertTrue(controller.acceptModelRanking(modelReply(input, 7)))
         assertEquals(listOf("helo", "helm", "hello"), labels())
         assertEquals(before, controller.state)
         assertEquals(original, controller.originalCandidateId)
-        assertEquals(hello, controller.candidateViewState.candidates[2].id)
+        val hello = controller.candidateViewState.candidates[2].id
+        assertEquals("hello", controller.candidateViewState.candidates[2].text)
         assertTrue(edits.isEmpty())
         assertFalse(controller.acceptModelRanking(modelReply(input, 1)))
         assertNull(controller.beginModelRanking(2))
@@ -514,13 +515,13 @@ class TypingCandidateSelectionTest {
         assertEquals("hello", controller.state.composing!!.typedWord)
     }
 
-    @Test fun `model uses average log probability and original wins exact ties`() {
+    @Test fun `model uses averages but original remains preferred below calibrated margin`() {
         start("helo"); publish("hello", "help")
         var input = controller.beginModelRanking(1)!!
         assertTrue(controller.acceptModelRanking(ScoringReply(input.token, ScoringCode.OK, 0,
             listOf(NumericScore(0, -4.0, 1), NumericScore(1, -2.0, 1), NumericScore(2, -3.0, 3)))))
         assertEquals(listOf("helo", "help", "hello"), labels())
-        assertEquals(controller.candidateViewState.candidates[1].id, controller.candidateViewState.selectedCandidateId)
+        assertEquals(controller.originalCandidateId, controller.candidateViewState.selectedCandidateId)
         start("helo"); publish("hello", "help"); input = controller.beginModelRanking(2)!!
         assertTrue(controller.acceptModelRanking(ScoringReply(input.token, ScoringCode.OK, 0,
             input.token.candidateIds.map { NumericScore(it, -1.0, 1) })))
@@ -560,6 +561,52 @@ class TypingCandidateSelectionTest {
         }
     }
 
+    @Test fun `combined ordering can reject the raw model favorite using generated features`() {
+        start("helo")
+        val request = request()
+        val response = reply(request, "hello", "help")
+        val alternatives = response.generation.alternatives.mapIndexed { index, candidate ->
+            if (index == 0) candidate.copy(frequencyRank = 32768, editFeatures = EditFeatures(2.0, 0, 0.0)) else candidate
+        }
+        assertTrue(controller.acceptCandidates(response.copy(generation = response.generation.copy(alternatives = alternatives))))
+        val input = controller.beginModelRanking(1)!!
+        edits.clear()
+        assertTrue(controller.acceptModelRanking(modelReply(input, 1)))
+        assertEquals(listOf("helo", "help", "hello"), labels())
+        assertEquals(controller.candidateViewState.candidates[1].id, controller.candidateViewState.selectedCandidateId)
+        assertTrue(edits.isEmpty())
+        controller.typeText(" ", execute)
+        assertEquals("helo ", controller.state.contextText) // Calibration alone never enables AutoReplace.
+    }
+
+    @Test fun `request language fixes coefficients without inferring language from candidate output`() {
+        for ((index, language) in listOf(KeyboardLanguage.ENGLISH, KeyboardLanguage.RUSSIAN, KeyboardLanguage.SPANISH).withIndex()) {
+            start("helo")
+            val request = controller.beginCandidateRequest(++requestId, language)!!
+            assertTrue(controller.acceptCandidates(reply(request, "hello", "help")))
+            val input = controller.beginModelRanking((index + 1).toLong())!!
+            assertTrue(controller.acceptModelRanking(modelReply(input, 1)))
+            val view = controller.candidateViewState
+            assertEquals(if (language == KeyboardLanguage.ENGLISH) view.candidates[1].id else controller.originalCandidateId,
+                view.selectedCandidateId)
+            assertEquals("helo", controller.state.composing?.typedWord)
+        }
+    }
+
+    @Test fun `partial generation may reorder suggestions but cannot select a calibrated winner`() {
+        for ((index, completion) in listOf(CandidateCompletion.STATES_EXHAUSTED, CandidateCompletion.VERIFIED_EXHAUSTED).withIndex()) {
+            start("helo")
+            val response = reply(request(), "hello", "help")
+            assertTrue(controller.acceptCandidates(response.copy(generation = response.generation.copy(completion = completion))))
+            val input = controller.beginModelRanking((index + 1).toLong())!!
+            assertTrue(controller.acceptModelRanking(modelReply(input, 1)))
+            assertEquals(listOf("helo", "hello", "help"), labels())
+            assertEquals(controller.originalCandidateId, controller.candidateViewState.selectedCandidateId)
+            assertEquals(completion, controller.candidateCompletion)
+            assertNull(controller.state.lastAutoEdit)
+        }
+    }
+
     private fun modelReply(input: ScoringInput, winner: Int) = ScoringReply(input.token, ScoringCode.OK, 0,
         input.token.candidateIds.map { NumericScore(it, if (it == winner) -1.0 else -10.0, 1) })
 
@@ -586,7 +633,7 @@ class TypingCandidateSelectionTest {
             val key = if (TokenUnicode.bounded(word)) TokenUnicode.folded(word) else "invalid"
             GeneratedCandidate(word, key, key,
                 KeyboardLanguage.ENGLISH, false, 4, 1, 1, EditFeatures(1.0, 0, 0.0),
-                word.length - request.token.length, CasePattern.analyze(request.token))
+                kotlin.math.abs(word.length - request.token.length), CasePattern.analyze(request.token))
         }
         return LocalCandidateReply(request.sessionId, request.revision, request.requestId,
             CandidateGeneration(request.token, alternatives, CandidateCompletion.COMPLETE,

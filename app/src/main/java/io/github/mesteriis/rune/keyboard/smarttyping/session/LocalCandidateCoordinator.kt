@@ -3,6 +3,7 @@ package io.github.mesteriis.rune.keyboard.smarttyping.session
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLayer
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGenerator
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.CalibratedSpellingPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateLexicon
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LanguageRoute
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LanguageRouter
@@ -149,7 +150,8 @@ class LocalCandidateCoordinator internal constructor(
         val route = LanguageRouter.route(controller.state.composing!!.typedWord, owner.language)
         if (!requestRoute(route)) return
         // No worker is created until the complete route is ready; later Ready additions use its bridge.
-        val target = worker ?: LocalCandidateWorker(CandidateGenerator(lexicon), ownerDispatcher, ::acceptReply)
+        val target = worker ?: LocalCandidateWorker(CandidateGenerator(lexicon, CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES),
+            ownerDispatcher, ::acceptReply)
             .also { worker = it }
         if (requestId == Long.MAX_VALUE) return
         val request = controller.beginCandidateRequest(++requestId, owner.language) ?: return

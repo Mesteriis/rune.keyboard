@@ -1,0 +1,37 @@
+{
+  "api26": {
+    "failures": 0,
+    "seconds": 223.156,
+    "tests": 12
+  },
+  "api37Final": {
+    "failures": 0,
+    "seconds": 151.343,
+    "tests": 12
+  },
+  "api37Initial": {
+    "failure": "Model callback wait expired; root cause not established. Exact unchanged isolated and full retries passed.",
+    "failures": 1,
+    "seconds": 268.482,
+    "tests": 12
+  },
+  "api37IsolatedRetry": {
+    "failures": 0,
+    "seconds": 0.478,
+    "tests": 1
+  },
+  "files": {
+    "calibrated-consumer-api26.log": "7a8ea149ad29e55fca07cc6c42f9b00f3ac2500273cbd3778c46f24342aacd5e",
+    "calibrated-consumer-api37-full-retry.log": "7dea1f20f3b89003ffd02a5553db814e5f8c58a2954507ebaf577d0ec664ae57",
+    "calibrated-consumer-api37-model-retry.log": "37c056382b4070a43f3616459ed1cdfb7f0c3fa6e04280b6eadae2177c6322cd",
+    "calibrated-consumer-api37.log": "47ee6afd748b0c5662f0972ca32f38b1bcf4b42825f8520bcfd77a4e081f0752",
+    "calibrated-consumer-gates-final.log": "a3b6485a8390ee9e11ca85430f56cce08cfdfe0cbc99850f241f1b617c7e2a79",
+    "calibrated-consumer-gates.log": "43f82756c53029c050bb48ebc41991e98e3cb0a20f266ee755b2f4db18d15e43",
+    "calibrated-consumer-python.log": "94f7f87d6f8cbcd4fa58cd7f08e000039b850c645cbced8f3f2e36e5212b20d7",
+    "calibrated-consumer-targeted-02.log": "ff1eb8d7c2b09f48b1619ac2c4bfd084108d75d595d1d2566caee36549e5669d",
+    "calibrated-consumer-targeted-final.log": "9b5eccbdc2cc7d032db6fd5eb76c519cb6835577e8d5366ab121097072ac04ac",
+    "calibrated-consumer-targeted.log": "bbab2c6fd18be53aa246abcef39402a0fa2402ce0ff8b7a1e57170158c9cab9f",
+    "combined-ranker-jvm-postcommit.log": "531050e0c59c4fa1f6ec271e76862d025886c9cc1a0a1d0bbf6485385ee306cd",
+    "identity.json": "c0435dc228cfdf9d931bdf9c3244fead12b3e45079a83e5e26f513df0912742b"
+  }
+}
