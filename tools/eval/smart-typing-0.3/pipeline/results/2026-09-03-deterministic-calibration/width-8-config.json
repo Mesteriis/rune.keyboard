@@ -1,0 +1,116 @@
+{
+  "calibrationRowsSha256": "b05cdfb063759ac900159a30c0ecde3aba989e9f36fbcab3f74ee58ba6a11b0d",
+  "configSha256": "beda4bf784eedde103063b9de0be08c0c4dee589acfeceffa9f405a364de0af0",
+  "generatorReceiptSha256": "d707aa4221b31d7c7d81f0e619381a846608bc48f8603c87caad2f702820729c",
+  "grid": {
+    "edit": [
+      2,
+      4,
+      8
+    ],
+    "fallback": [
+      0,
+      4
+    ],
+    "frequency": [
+      0,
+      1,
+      2
+    ],
+    "length": [
+      0,
+      1
+    ],
+    "minimum_length": [
+      1,
+      5,
+      9
+    ],
+    "minimum_margin": [
+      1,
+      2,
+      4,
+      8,
+      12
+    ],
+    "original_penalty": [
+      8,
+      12,
+      16,
+      20,
+      24,
+      28,
+      32,
+      40,
+      48,
+      64
+    ],
+    "repetition": [
+      0,
+      2
+    ]
+  },
+  "holdoutQualified": false,
+  "languages": {
+    "en": {
+      "policy": {
+        "thresholds": {
+          "minimum_length": 1,
+          "minimum_margin": 8,
+          "original_penalty": 48
+        },
+        "weights": {
+          "edit": 4,
+          "fallback": 4,
+          "frequency": 1,
+          "length": 0,
+          "repetition": 2
+        }
+      },
+      "trials": 10800
+    },
+    "es": {
+      "policy": {
+        "thresholds": {
+          "minimum_length": 5,
+          "minimum_margin": 8,
+          "original_penalty": 48
+        },
+        "weights": {
+          "edit": 4,
+          "fallback": 4,
+          "frequency": 1,
+          "length": 1,
+          "repetition": 2
+        }
+      },
+      "trials": 10800
+    },
+    "ru": {
+      "policy": {
+        "thresholds": {
+          "minimum_length": 5,
+          "minimum_margin": 8,
+          "original_penalty": 64
+        },
+        "weights": {
+          "edit": 4,
+          "fallback": 0,
+          "frequency": 1,
+          "length": 0,
+          "repetition": 2
+        }
+      },
+      "trials": 10800
+    }
+  },
+  "maximumAlternatives": 7,
+  "schemaVersion": 1,
+  "scope": "deterministic-calibration-only",
+  "sources": {
+    "tools/eval/smart-typing-0.3/evaluate.py": "ca9a03240b899b7c525e3ac99ed6bd6a01d8bd6738a4bca19628762ee219373b",
+    "tools/eval/smart-typing-0.3/pipeline/calibrate_deterministic.py": "408f67b08f9e170f60bd716a0fb78e1c843e35b001c4e9600d34d492854fc8d9",
+    "tools/eval/smart-typing-0.3/pipeline/deterministic_policy.py": "4fbb38c2e4c0d6927d1d6cff6946c64fe0c0d27f9cb9a75772f152a0cc59da27",
+    "tools/eval/smart-typing-0.3/pipeline/export_calibration.py": "ffe2be0d5b9544a35e88769ae7551393338ba8bc71c9921794eba3436a9466ce"
+  }
+}

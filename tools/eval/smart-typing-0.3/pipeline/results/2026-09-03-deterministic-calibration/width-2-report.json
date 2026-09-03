@@ -1,0 +1,168 @@
+{
+  "autoReplaceEnabled": false,
+  "holdoutExecuted": false,
+  "languages": {
+    "en": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1894,
+        "value": 0.947,
+        "wilson95RowDescriptive": [
+          0.9362966169363569,
+          0.9559895427942029
+        ]
+      },
+      "calibrationCountAtLeast300": false,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 855,
+        "value": 0.855,
+        "wilson95RowDescriptive": [
+          0.8318179377037748,
+          0.875465063771481
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 106,
+        "value": 0.053,
+        "wilson95RowDescriptive": [
+          0.04401045720579706,
+          0.06370338306364304
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "holdoutQualified": false,
+      "precision": {
+        "denominator": 106,
+        "numerator": 105,
+        "value": 0.9905660377358491,
+        "wilson95RowDescriptive": [
+          0.9484864519702955,
+          0.9983327282972411
+        ]
+      },
+      "provisionalReplacements": 106,
+      "rows": 2000,
+      "uniqueInputs": 1500
+    },
+    "es": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1854,
+        "value": 0.927,
+        "wilson95RowDescriptive": [
+          0.9147622011152128,
+          0.9376006405065973
+        ]
+      },
+      "calibrationCountAtLeast300": false,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 813,
+        "value": 0.813,
+        "wilson95RowDescriptive": [
+          0.7876522642371055,
+          0.8359521849509368
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 146,
+        "value": 0.073,
+        "wilson95RowDescriptive": [
+          0.06239935949340271,
+          0.08523779888478729
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "holdoutQualified": false,
+      "precision": {
+        "denominator": 146,
+        "numerator": 145,
+        "value": 0.9931506849315068,
+        "wilson95RowDescriptive": [
+          0.9622258343645365,
+          0.9987899027574292
+        ]
+      },
+      "provisionalReplacements": 146,
+      "rows": 2000,
+      "uniqueInputs": 1499
+    },
+    "ru": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1943,
+        "value": 0.9715,
+        "wilson95RowDescriptive": [
+          0.9632547404683076,
+          0.9779374839454709
+        ]
+      },
+      "calibrationCountAtLeast300": false,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 798,
+        "value": 0.798,
+        "wilson95RowDescriptive": [
+          0.771996830196033,
+          0.8217224217465763
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 57,
+        "value": 0.0285,
+        "wilson95RowDescriptive": [
+          0.022062516054529094,
+          0.03674525953169242
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "holdoutQualified": false,
+      "precision": {
+        "denominator": 57,
+        "numerator": 57,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9368611651470209,
+          0.9999999999999998
+        ]
+      },
+      "provisionalReplacements": 57,
+      "rows": 2000,
+      "uniqueInputs": 1500
+    }
+  },
+  "limitations": [
+    "Repeated lexical families/panels; Wilson intervals are row-descriptive only.",
+    "Fitting uses only calibration; these policies do not authorize production AutoReplace."
+  ],
+  "modelUsed": false,
+  "split": "calibration"
+}

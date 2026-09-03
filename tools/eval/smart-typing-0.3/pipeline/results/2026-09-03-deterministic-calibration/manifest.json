@@ -1,0 +1,22 @@
+{
+  "baseline": "0117d2932217d804b2fdc4c4c5b77dd54f8d4b26",
+  "modelRunComplete": false,
+  "smokeResponses": 3,
+  "repeatedWidth4ByteIdentical": true,
+  "pythonTests": 16,
+  "jvmTests": 598,
+  "sha256": {
+    "gates.log.gz": "5a4ff7ba065ade2520354a6b7a2cc2f8accf9108490478baa43657c3e02c6586",
+    "model-run-input.json": "bb15e79c3d07eebbec8ea7e3369578c8fb6ee868cb93b42da01dfe132f7c54d0",
+    "model-smoke-scores.jsonl": "e7e02331d29a603cc3ec91221d4c60e46f5aa600c1714e39f999833b9dad6ab2",
+    "model-smoke.log.gz": "77231d16e908123324f598c8ea0ffe25338310f97e0a5b65e28de1f7f5ba6a3a",
+    "native-build.log.gz": "78adf92b877dbe8b2734b148a660609cc0321f9112ba7831ab737e147aee9308",
+    "python.log.gz": "7a7991712e2fb6aeb0e167b2f4954724e86171cb327f3b9dbd909af715ebf68e",
+    "width-2-config.json": "465879a40e9d7643ad330c0fc97b4532975d6a51206aa480360b112ca30c115c",
+    "width-2-report.json": "9203c7eb4de3bacd5c260a0e71947e87b7f9d3b5b8f763e75923234aedf97981",
+    "width-4-config.json": "920e2a592337475d33b2d13085e8c2751fe09b940deeb20f85e54c0798e8636a",
+    "width-4-report.json": "6bf343eab2a49178833e84a19e7ace9eb47d8192c289b598bda0dcb359deba7a",
+    "width-8-config.json": "6c049d745a9e70886fa846ed0c84de43eddbb4de95a040551f5e7fcab618ccd5",
+    "width-8-report.json": "7606142624a748345692eec8b7a47b157166ad3ebc0e1f98e4d61e17baa5e3de"
+  }
+}

@@ -41,6 +41,10 @@ PR8 mechanical punctuation and schema3 persistence have local integration
 evidence, while settings consumers/UI have scoped API26/API37 integration
 evidence. No push, remote PR or publication is authorized.
 
+### Deterministic calibration and actual model candidates — 2026-09-03
+
+- `0117d29` required fresh JVM598/598 PASS with clean tree. Next slice fits a declared integer policy grid on verified calibration exports, with no runtime label/noAuto leakage. Best correct-change counts within the2/4/8 grid occur at4 total candidates: EN316/318, RU323/326, ES255/257; all false-change counts0/1000. These are calibration-only, not holdout qualification; ES volume remains insufficient. Four-candidate config/report reproduced byte-for-byte. Python16/16, JVM598/598 and full local gates PASS. Generated-model bridge received3/3 valid real numeric responses from the exact digest and started2953-set scoring under `build/smart-typing-0.3/generated-model-calibration-4-01`; completion requires live cache/process verification. APK behavior remains unchanged. This goal turn is concrete calibration/scoring progress; calibrated Kotlin ranking, AutoReplace/Undo, contextual and release work remain open.
+
 ### Production requested-width contract — 2026-09-03
 
 - `7816103` fixes the two fixture races; mandatory post-commit JVM596/596 PASS. Next slice integrates immutable1–7 alternatives and width-bound certificates into actual packed/generic generation. Default remains7 until calibration. JVM598/598 and full gates/test APK PASS; all3 calibration/oracle exports reproduce frozen experiment outputs exactly. Requested-width API26/API37 tests1/1 each PASS with900 numeric observations each. Physical SM-F966B/API36 was present and user approved app/test APK installation; both succeeded. Requested-width test1/1 PASS with900 numeric observations; four total candidates used38.6% less aggregate CPU than eight in this debug search run. This is scoped physical evidence, not energy or full Fold qualification. Combined ranking/AutoReplace, complete correction Undo, PR9 and release work remain open.

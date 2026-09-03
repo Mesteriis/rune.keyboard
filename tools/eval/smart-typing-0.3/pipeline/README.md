@@ -49,3 +49,57 @@ require a frozen calibration configuration and preserve the earlier model report
 The output text is permitted only because these are checked-in public authored
 fixtures. This developer harness is not packaged in the APK and is never an IME
 logging/export path.
+
+## Deterministic calibration and generated-candidate model scores
+
+`calibrate_deterministic.py` consumes a verified production export and fits a
+bounded integer policy grid on calibration only. The decision function receives
+only generated features and retrieval veto, never corpus labels. It ranks by
+quarter-unit edit cost, integer `ceil(log2(frequencyRank))`, repetition, fallback
+and length difference. A replacement must beat both the original's calibrated
+OOV penalty and the next returned alternative by a positive margin. Missing or
+incomplete retrieval abstains. The chosen minimum word length is also calibrated.
+
+The fixed grid has10800 parameter combinations per language and width. Selection
+requires >=99% calibration precision and <=0.5% false changes among all
+correct/protected rows. Among admissible combinations it maximizes correct
+replacements, then minimizes errors, then prefers larger margin/minimum length
+and smaller original penalty. Remaining ties keep the declared grid order.
+Corpus `noAuto` annotations are evaluation errors for replacements, not runtime
+vetoes. Reports retain all2000 rows/language and count repeated inputs explicitly.
+Wilson intervals are descriptive for these correlated authored rows.
+
+```sh
+python3 tools/eval/smart-typing-0.3/pipeline/calibrate_deterministic.py \
+  --compiled-export build/smart-typing-0.3/production-width-4-02/export \
+  --output build/smart-typing-0.3/deterministic-calibration-four-fresh
+```
+
+The output is a new directory with immutable config/report files. Configuration
+hashes bind the exact grid, generator receipt, corpus and evaluator sources.
+This provisional calibration does not authorize AutoReplace. Kotlin integration
+and the final combined pipeline require their own frozen configuration and
+holdout gate. No holdout option is provided here.
+
+`score_generated.py` replaces every prepared candidate panel with the actual
+original + generated alternatives. Only IDs, prefix and those candidates reach
+the CLI. Original-only sets are omitted because the product does not submit them;
+incomplete sets with alternatives remain available for suggestion evaluation.
+The space goes into the owned prefix, matching the current controller boundary.
+Authored annotations and expected answers never reach the model. A new score
+cache identity binds the actual requests, executable and exact model digest;
+the earlier failed prepared-candidate holdout stays untouched.
+
+```sh
+python3 -u tools/eval/smart-typing-0.3/pipeline/score_generated.py \
+  --compiled-export build/smart-typing-0.3/production-width-4-02/export \
+  --output build/smart-typing-0.3/generated-model-calibration-four-fresh \
+  --runner build/smart-typing-0.3/native/rune-score \
+  --model build/smart-typing-0.3/model/rune-text-v1-0.1.0-q4_k_m.gguf
+```
+
+Use `--limit 3` for a smoke run; the identical full command resumes the validated
+cache. Only `complete.json` plus a fully validated cache proves completion.
+`run-input.json`, a process log, or a partial cache alone does not. Scores contain
+IDs/numbers only. Model errors remain explicit and cannot authorize replacement.
+These host measurements are not device latency or battery results.
