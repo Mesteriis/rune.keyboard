@@ -103,3 +103,29 @@ cache. Only `complete.json` plus a fully validated cache proves completion.
 `run-input.json`, a process log, or a partial cache alone does not. Scores contain
 IDs/numbers only. Model errors remain explicit and cannot authorize replacement.
 These host measurements are not device latency or battery results.
+
+## Combined calibration and Kotlin parity
+
+`calibrate_combined.py` fits deterministic features plus the difference between
+candidate and original average log probabilities. It searches 43200 combinations
+per language using the same precision and false-change constraints and adds
+model weights 1/2/4/8. The preselected deterministic policy handles absent or
+failed scoring. All rows remain in the report. Model-ready calibration assumes
+results are available at the boundary; it does not measure device availability.
+
+```sh
+python3 tools/eval/smart-typing-0.3/pipeline/calibrate_combined.py \
+  --compiled-export build/smart-typing-0.3/production-width-4-02/export \
+  --scoring build/smart-typing-0.3/generated-model-calibration-4-01 \
+  --deterministic-config build/smart-typing-0.3/deterministic-calibration-4-01/config.json \
+  --output build/smart-typing-0.3/combined-calibration-fresh
+```
+
+`export_ranker_controls.py` accepts those same first three arguments, plus
+`--combined-config` and a fresh `--output`. It produces a hash-bound numeric-only
+control set for `CandidateRankerTest`: 6000 inputs with expected deterministic
+and combined decisions. No typed words, expected spellings or annotation labels
+enter the Kotlin fixture. Kotlin validates bounded finite scores and candidate
+IDs, normalizes in the same operation order, and applies both rival margins.
+This pure calculation kernel carries no qualification or editor-write authority;
+controller integration and the frozen final pipeline holdout remain separate.

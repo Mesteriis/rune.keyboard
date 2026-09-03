@@ -1,0 +1,24 @@
+test_average_model_evidence_combines_with_integer_features (test_calibrate_combined.CombinedPolicyTest.test_average_model_evidence_combines_with_integer_features) ... ok
+test_unusable_models_and_retrieval_veto_never_create_proposals (test_calibrate_combined.CombinedPolicyTest.test_unusable_models_and_retrieval_veto_never_create_proposals) ... ok
+test_wrong_ids_and_holdout_are_rejected (test_calibrate_combined.CombinedPolicyTest.test_wrong_ids_and_holdout_are_rejected) ... ok
+test_holdout_and_mismatched_label_counts_are_rejected (test_calibrate_deterministic.CalibrationBoundaryTest.test_holdout_and_mismatched_label_counts_are_rejected) ... ok
+test_policy_annotations_never_hide_false_changes (test_calibrate_deterministic.CalibrationBoundaryTest.test_policy_annotations_never_hide_false_changes) ... ok
+test_all_features_are_integer_and_directional (test_deterministic_policy.DeterministicPolicyTest.test_all_features_are_integer_and_directional) ... ok
+test_both_original_and_runner_up_margins_are_required (test_deterministic_policy.DeterministicPolicyTest.test_both_original_and_runner_up_margins_are_required) ... ok
+test_veto_empty_ties_and_invalid_threshold_abstain_or_fail (test_deterministic_policy.DeterministicPolicyTest.test_veto_empty_ties_and_invalid_threshold_abstain_or_fail) ... ok
+test_duplicate_observations_remain_visible_in_counts (test_export_calibration.ExportContractTest.test_duplicate_observations_remain_visible_in_counts) ... ok
+test_experimental_sources_require_explicit_identity_and_known_scoped_paths (test_export_calibration.ExportContractTest.test_experimental_sources_require_explicit_identity_and_known_scoped_paths) ... ok
+test_limits_and_veto_cannot_be_forged (test_export_calibration.ExportContractTest.test_limits_and_veto_cannot_be_forged) ... ok
+test_missing_expected_word_is_not_injected (test_export_calibration.ExportContractTest.test_missing_expected_word_is_not_injected) ... ok
+test_nonfinite_and_malformed_utf8_fail (test_export_calibration.ExportContractTest.test_nonfinite_and_malformed_utf8_fail) ... ok
+test_original_is_present_for_protected_no_alternatives (test_export_calibration.ExportContractTest.test_original_is_present_for_protected_no_alternatives) ... ok
+test_partial_recall_never_clears_retrieval_veto (test_export_calibration.ExportContractTest.test_partial_recall_never_clears_retrieval_veto) ... ok
+test_real_candidate_features_and_original_survive_protocol (test_export_calibration.ExportContractTest.test_real_candidate_features_and_original_survive_protocol) ... ok
+test_wrong_owner_order_count_and_duplicate_fail (test_export_calibration.ExportContractTest.test_wrong_owner_order_count_and_duplicate_fail) ... ok
+test_holdout_and_identity_mismatch_fail_before_scoring (test_score_generated.GeneratedScoringBoundaryTest.test_holdout_and_identity_mismatch_fail_before_scoring) ... ok
+test_only_actual_candidates_reach_scorer_without_policy_labels (test_score_generated.GeneratedScoringBoundaryTest.test_only_actual_candidates_reach_scorer_without_policy_labels) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.001s
+
+OK

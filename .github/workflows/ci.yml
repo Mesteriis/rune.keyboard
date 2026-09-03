@@ -39,6 +39,7 @@ jobs:
         run: |
           python3 tools/eval/smart-typing-0.3/evaluate.py validate
           python3 -m unittest discover -s tools/eval/smart-typing-0.3 -p 'test_*.py' -v
+          python3 -m unittest discover -s tools/eval/smart-typing-0.3/pipeline -p 'test_*.py' -v
           sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
           cmake_bin="$sdk_root/cmake/3.31.6/bin/cmake"
           "$cmake_bin" -S tools/eval/smart-typing-0.3 -B build/scoring-eval-ci -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM="$sdk_root/cmake/3.31.6/bin/ninja"

@@ -1,0 +1,23 @@
+{
+  "files": {
+    "candidate-ranker-gates.log": "d188e61fbcd9c77663ebd10e57404ec7b19ef21894f3e9c8e812f0e23d759ece",
+    "candidate-ranker-targeted.log": "8d411ff17e2bf72df289057ce2d8a7a38637a7b695f87291c8cb90b149f211c4",
+    "combined-calibration-python.log": "954bba348d3f4c3c2cb0246c1c46148b2b57b95cfef09645222efe44f1b604f7",
+    "complete.json": "ad5362c27c40b9b3957232dcd85b35e001d4b72f5d54704d22a5ef85a194083a",
+    "config.json": "ab7d50c19d4401fdca2c20e3ef2fa3e9b9e5a06368d62c7352b8b90042e46858",
+    "ranker-controls-manifest.json": "8861521999a2bea9bbb9ec94d5491e7d1a01292efe6c56f5882a807d29be2609",
+    "report.json": "d09b3b05cdd27df6541e0d5b404c1f7fcf7517015caa8463f19345c047424c8d",
+    "run-input.json": "bb15e79c3d07eebbec8ea7e3369578c8fb6ee868cb93b42da01dfe132f7c54d0",
+    "scores.jsonl.gz": "3f0c58c94f4d7c6eef256e3877060f9653fc2c8a0f9b13e8eb279bb90b5d18d3",
+    "zero-span-final-results.jsonl": "65fc8b45ed66208ab31ebf0c858009288dad5a2ef0d768ec910b0dda1568d396",
+    "zero-span-probe.cpp": "6d2f39c0ebdf4d8087cb9a5c3cc6ecdd4b6cd9f375c23b84e57d5d334396f48e"
+  },
+  "jvmErrors": 0,
+  "jvmFailures": 0,
+  "jvmSkipped": 0,
+  "jvmTests": 602,
+  "modelErrors": 9,
+  "modelRequests": 2953,
+  "positiveProbeControls": 3,
+  "zeroSpanErrorsVerified": 9
+}

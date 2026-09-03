@@ -21,8 +21,8 @@ class Thresholds:
 @dataclass(frozen=True)
 class Proposal:
     candidate_id: int
-    penalty: int
-    runner_up_penalty: int | None
+    penalty: float
+    runner_up_penalty: float | None
     token_length: int
 
 

@@ -1,0 +1,10 @@
+{
+  "combinedConfigSha256": "a4375144211a719aec3fd3e131174e78403fa36de4e234787936bde27aca4bbc",
+  "content": "Numeric ranking features, scores and expected IDs only; no typed text or corpus labels.",
+  "deterministicConfigSha256": "c901c510a9b2392ad71b73a8cc48c89f07bc92f6f47330a05d5e435a6ed8f1c1",
+  "generatorReceiptSha256": "5c98277aaf9c1f159c667f2baec3ed1d2e3bb5349abc662466d51a8ee8936867",
+  "modelCacheSha256": "60ba66ee74823937a7486cb0b4b1b0b175c25a4887d13b6c43b65a7216b68aad",
+  "rows": 6000,
+  "scriptSha256": "19721df61bc7059c5aa0ba20ca08f6fe0fce60c5a9dcd9651e7e6f51f90f8c47",
+  "sha256": "bfc1dfd94aea987ee0624d30e5a1c5defa032286e771606c5d2a4ee09bdd9f79"
+}

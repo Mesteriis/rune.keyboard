@@ -1,0 +1,255 @@
+{
+  "autoReplaceEnabled": false,
+  "availabilityAssumption": "Every valid model result is available; missing/error results use deterministic fallback.",
+  "holdoutExecuted": false,
+  "languages": {
+    "en": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1653,
+        "value": 0.8265,
+        "wilson95RowDescriptive": [
+          0.8092821571843397,
+          0.8424660109410022
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 347,
+        "value": 0.1735,
+        "wilson95RowDescriptive": [
+          0.15753398905899782,
+          0.19071784281566026
+        ]
+      },
+      "fallback": {
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "precision": {
+          "denominator": 0,
+          "numerator": 0,
+          "value": null,
+          "wilson95RowDescriptive": null
+        },
+        "provisionalReplacements": 0
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "holdoutQualified": false,
+      "model": {
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "precision": {
+          "denominator": 347,
+          "numerator": 344,
+          "value": 0.9913544668587896,
+          "wilson95RowDescriptive": [
+            0.9748935174146227,
+            0.9970554681648613
+          ]
+        },
+        "provisionalReplacements": 347
+      },
+      "modelErrors": 0,
+      "precision": {
+        "denominator": 347,
+        "numerator": 344,
+        "value": 0.9913544668587896,
+        "wilson95RowDescriptive": [
+          0.9748935174146227,
+          0.9970554681648613
+        ]
+      },
+      "provisionalReplacements": 347,
+      "rows": 2000
+    },
+    "es": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1566,
+        "value": 0.783,
+        "wilson95RowDescriptive": [
+          0.7644014031420224,
+          0.8005135480967883
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 434,
+        "value": 0.217,
+        "wilson95RowDescriptive": [
+          0.19948645190321157,
+          0.23559859685797752
+        ]
+      },
+      "fallback": {
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "precision": {
+          "denominator": 0,
+          "numerator": 0,
+          "value": null,
+          "wilson95RowDescriptive": null
+        },
+        "provisionalReplacements": 0
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "holdoutQualified": false,
+      "model": {
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "precision": {
+          "denominator": 434,
+          "numerator": 430,
+          "value": 0.9907834101382489,
+          "wilson95RowDescriptive": [
+            0.9765447402083653,
+            0.9964101762753581
+          ]
+        },
+        "provisionalReplacements": 434
+      },
+      "modelErrors": 2,
+      "precision": {
+        "denominator": 434,
+        "numerator": 430,
+        "value": 0.9907834101382489,
+        "wilson95RowDescriptive": [
+          0.9765447402083653,
+          0.9964101762753581
+        ]
+      },
+      "provisionalReplacements": 434,
+      "rows": 2000
+    },
+    "ru": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1643,
+        "value": 0.8215,
+        "wilson95RowDescriptive": [
+          0.8041059649418224,
+          0.837661373656332
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 357,
+        "value": 0.1785,
+        "wilson95RowDescriptive": [
+          0.16233862634366797,
+          0.1958940350581776
+        ]
+      },
+      "fallback": {
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "precision": {
+          "denominator": 0,
+          "numerator": 0,
+          "value": null,
+          "wilson95RowDescriptive": null
+        },
+        "provisionalReplacements": 0
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "holdoutQualified": false,
+      "model": {
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "precision": {
+          "denominator": 357,
+          "numerator": 354,
+          "value": 0.9915966386554622,
+          "wilson95RowDescriptive": [
+            0.9755882987267157,
+            0.9971380646660661
+          ]
+        },
+        "provisionalReplacements": 357
+      },
+      "modelErrors": 7,
+      "precision": {
+        "denominator": 357,
+        "numerator": 354,
+        "value": 0.9915966386554622,
+        "wilson95RowDescriptive": [
+          0.9755882987267157,
+          0.9971380646660661
+        ]
+      },
+      "provisionalReplacements": 357,
+      "rows": 2000
+    }
+  },
+  "limitations": [
+    "Offline ideal-availability calibration, not physical boundary coverage.",
+    "Correlated authored rows; Wilson intervals are descriptive."
+  ],
+  "split": "calibration"
+}
