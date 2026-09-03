@@ -370,7 +370,7 @@ class TypingSessionControllerTest {
                     assertFalse(selection(0, 0, 0, 0))
                 }
                 TypingEdit.FinishComposingText -> assertFalse(selection(0, 0, -1, -1))
-                is TypingEdit.CommitText -> throw AssertionError("Unexpected commit")
+                else -> throw AssertionError("Unexpected edit")
             }
             true
         }

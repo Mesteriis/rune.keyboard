@@ -32,7 +32,7 @@ def inspect(sources):
         package = re.search(r'^package\s+([\w.]+)', text, re.M)
         if not package: continue
         packages[p] = package.group(1)
-        for name in re.findall(r'\b(?:class|interface|object|typealias)\s+(\w+)|^(?:private |internal )?fun\s+(\w+)', text, re.M):
+        for name in re.findall(r'\b(?:class|interface|object|typealias)\s+(\w+)|^(?:private |internal )?fun\s+(?!interface\b)(\w+)', text, re.M):
             for n in name:
                 if n: symbols[packages[p]+'.'+n] = p
         imports[p] = re.findall(r'^import\s+([\w.*]+)', text, re.M)
@@ -132,6 +132,13 @@ def self_test():
         {'Service.kt':source('intelligence.inference','import '+RUNTIME+'Adapter\nclass Service'), 'Adapter.kt':'package '+RUNTIME.rstrip('.')+'\nclass Adapter'},
         {'Store.kt':source('intelligence.storage','import '+BASE+'helper.Helper\nclass Store'), 'Helper.kt':source('helper','import '+BASE+'intelligence.delivery.Manager\nclass Helper'), 'Manager.kt':source('intelligence.delivery','class Manager')},
     ]
+    functional = {'Controller.kt':source('ime','import '+BASE+'helper.Admission\nclass Controller'),
+                  'Admission.kt':source('helper','internal fun interface Admission { fun allows(): Boolean }')}
+    assert not inspect(functional)
+    unsafe_functional = {**functional, 'Admission.kt':source('helper',
+        'import java.net.Socket\ninternal fun interface Admission { fun allows(): Boolean }')}
+    assert any('network/reflection' in error for error in inspect(unsafe_functional))
+    tests.append(unsafe_functional)
     for n,case in enumerate(tests):
         if not inspect(case): raise AssertionError(f'negative fixture {n} escaped')
     positive={'Client.kt':source('intelligence.client','import '+BASE+'intelligence.ipc.Token\nclass Client'),'Token.kt':source('intelligence.ipc','class Token')}
@@ -145,7 +152,7 @@ def self_test():
              FACTORY:source('smarttyping.android','import '+BASE+'intelligence.client.BoundModelScoringClient\nclass AndroidModelCandidates'),
              'BoundModelScoringClient.kt':source('intelligence.client','class BoundModelScoringClient')}
     assert not inspect(factory)
-    print(f'boundary fixtures PASS: {len(tests)} negative, 4 positive')
+    print(f'boundary fixtures PASS: {len(tests)} negative, 5 positive')
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--root',type=Path);parser.add_argument('--self-test',action='store_true');args=parser.parse_args()

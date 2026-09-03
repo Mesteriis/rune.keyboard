@@ -1,0 +1,65 @@
+Reusing configuration cache.
+> Task :runtime-llama:preBuild UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :runtime-llama:preDebugBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :runtime-llama:processDebugNavigationResources UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :runtime-llama:generateDebugResources UP-TO-DATE
+> Task :runtime-llama:javaPreCompileDebug UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :runtime-llama:writeDebugAarMetadata UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :runtime-llama:extractDeepLinksDebug UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :runtime-llama:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :runtime-llama:packageDebugResources UP-TO-DATE
+> Task :runtime-llama:processDebugManifest UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :runtime-llama:parseDebugLocalResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :runtime-llama:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :runtime-llama:compileDebugLibraryResources UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :runtime-llama:compileDebugKotlin UP-TO-DATE
+> Task :runtime-llama:processDebugJavaRes UP-TO-DATE
+> Task :runtime-llama:compileDebugJavaWithJavac NO-SOURCE
+> Task :runtime-llama:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :runtime-llama:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :app:compileDebugAidl UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:compileDebugKotlin
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:bundleDebugClassesToCompileJar
+
+> Task :app:compileDebugUnitTestKotlin FAILED
+e: file:///Users/avm/projects/Personal/rune-keyboard/app/src/test/java/io/github/mesteriis/rune/keyboard/ime/editor/EditorCommandExecutorTest.kt:39:85 Unresolved reference 'NO_PERSONALIZED_LEARNING'.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugUnitTestKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 2s
+39 actionable tasks: 4 executed, 35 up-to-date
+Configuration cache entry reused.

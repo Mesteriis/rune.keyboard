@@ -1,0 +1,62 @@
+{
+  "android": {
+    "api26": {
+      "failures": 0,
+      "scope": "composing/live/mechanical/protocol before final conservative controller guards",
+      "seconds": 346.855,
+      "tests": 22
+    },
+    "api37": {
+      "failures": 0,
+      "scope": "composing/live/mechanical/protocol before final conservative controller guards",
+      "seconds": 518.148,
+      "tests": 22
+    },
+    "final-api26": {
+      "failures": 0,
+      "scope": "final APK executor protocol",
+      "seconds": 9.171,
+      "tests": 1
+    },
+    "final-api37": {
+      "failures": 0,
+      "scope": "final APK executor protocol",
+      "seconds": 12.556,
+      "tests": 1
+    }
+  },
+  "files": {
+    "TEST-io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest.xml.gz": "df8e75b321674199aa5d5608be8e43ac601ac278efbdd5810b4039697e05b366",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest.xml.gz": "586b31a219bc6381e4d0f19af5b38856818f79d4810ea47955d817a1dc5c7665",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest.xml.gz": "f063574d3016ea77e0c0c16d7e5f853c0741f3b227821709f6d4d9847a4d383c",
+    "correction-boundary-api26.log": "20322c2675189984d17fdb2e3d704177e2884f223ba8e181ae47a35f093d5b6d",
+    "correction-boundary-api37.log": "1a73ccebbaaadce9b4037cb61d5ac64ff9d52b425dc47e6d022cc396732617c2",
+    "correction-boundary-compile.log": "5f4035474a0d00eb80808146c4bfe4135f8fd8f3c7651d1619cbc291537fd85c",
+    "correction-boundary-final-api26.log": "8903f93bbf2e480829757094cd63368ebb71130230a4610421699335ac4f20fd",
+    "correction-boundary-final-api37.log": "67acc19a751376c6c3be94e38519f24cbd0fdb7ea3026f83eb670b82f5993b97",
+    "correction-boundary-fixtures.log": "ce043e2248f49b18987f0850869571aa71c8e88f6828d2fe4c08eb983bfdca8c",
+    "correction-boundary-gates-complete.log": "87e55a514dcb396c9da41101ae146e29964b3ab401cfa45d5045d35eb778ef0b",
+    "correction-boundary-gates-final.log": "9666209011e416fcca15585192eff59e7b3687631a1f38bfedd5d745d006f788",
+    "correction-boundary-gates-protected.log": "ecde8948fb5bd3d87cc08e4100f2a2eb37e923e23e4349fc48d5f95f26af229d",
+    "correction-boundary-gates-release-check.log": "ad7074db54d5a411546bd4f493c7f69863d76b4a94d621baa90f6d572d3c7854",
+    "correction-boundary-gates.log": "61cc1a87d01a2583d4d5e153093e712eb8e51b475f238f2ad793b29ad591741c",
+    "correction-boundary-targeted-01.log": "8f4d81457bc4fae3f27d954611258dd1d1a5866b99d8a73351d93130aaac74b1",
+    "correction-boundary-targeted-02.log": "4562bbcebf95fdfb8168a68564d16a69cac090dd08c60195f58948c7f7eaf9fc",
+    "correction-boundary-targeted-03.log": "62f98101bafb8ba321536d23adfe3c0505bb053cfb304a17715df5859baf97df",
+    "identity.json": "95d8d90e98b36b2dafa3029b02f0316d2300c34016a408e8688a783f7ebda098"
+  },
+  "fold": {
+    "apkSha256": "617e97a9d250c9bcbc409b20a7b3c66275351a398a399570c4418865dfdbf4a7",
+    "installation": "PASS",
+    "keyboardStatus": "not enabled",
+    "launch": "PASS",
+    "typingAndEnergy": "BLOCKED: not qualified"
+  },
+  "jvm": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 630
+  },
+  "qualityQualification": "BLOCKED: final product holdout required; production automatic spelling disabled"
+}

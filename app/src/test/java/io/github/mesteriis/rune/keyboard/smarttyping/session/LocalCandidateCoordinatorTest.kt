@@ -18,6 +18,7 @@ import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
 import io.github.mesteriis.rune.keyboard.ime.model.EditorMode
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.TopCandidateSelection
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateLexicon
@@ -35,6 +36,22 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class LocalCandidateCoordinatorTest {
+    @Test fun `boundary action consumes accepted decision after cancelling pending work`() {
+        Harness(qualified = true).use { h ->
+            h.type("helos"); h.deliver()
+            val result = h.coordinator.edit {
+                h.controller.typeText(" ", MechanicalPunctuationPolicy(InputPolicy.NORMAL, EditorMode.TEXT, false, false, false),
+                    KeyboardState(KeyboardLanguage.ENGLISH), autocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE,
+                    execute = h.execute)
+            }
+            assertEquals(TypingTextResult.HANDLED, result)
+            assertEquals("hellos ", h.controller.state.contextText)
+            assertNotNull(h.controller.state.lastAutoEdit)
+            assertTrue(h.commands.last() is TypingEdit.Batch)
+            assertTrue(h.coordinator.viewState.candidates.isEmpty())
+        }
+    }
+
     @Test fun `loading requests only enum route and readiness or render cannot submit saved text`() {
         Harness(ready = false).use { h ->
             h.type("helo")
@@ -566,8 +583,8 @@ class LocalCandidateCoordinatorTest {
             input.token.candidateIds.map { NumericScore(it, if (it == winner) -1.0 else -10.0, 1) }))
     }
 
-    private class Harness(ready: Boolean = true, withModel: Boolean = false) : AutoCloseable {
-        val controller = TypingSessionController(jvmGraphemes)
+    private class Harness(ready: Boolean = true, withModel: Boolean = false, qualified: Boolean = false) : AutoCloseable {
+        val controller = TypingSessionController(jvmGraphemes, SpellingQualification { _, _ -> qualified })
         val lexicon = FixtureLexicon()
         var ready = ready
         var routeRequests = 0

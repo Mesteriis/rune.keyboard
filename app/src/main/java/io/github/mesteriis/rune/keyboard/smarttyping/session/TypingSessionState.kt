@@ -24,6 +24,21 @@ sealed interface TypingEdit {
     }
 
     data object FinishComposingText : TypingEdit
+
+    data class SetComposingRegion(val start: Int, val end: Int) : TypingEdit {
+        init { require(start >= 0 && end > start && end.toLong() - start <= 256) }
+    }
+
+    /** Guard is checked between editor calls; a reentrant ownership loss stops the batch. */
+    class Batch(edits: List<TypingEdit>, val isCurrent: () -> Boolean) : TypingEdit {
+        val edits = edits.toList()
+        init {
+            require(edits.size in 1..3 && edits.all {
+                it is SetComposingText || it is CommitText || it is SetComposingRegion
+            })
+        }
+        override fun toString(): String = "TypingBatch(redacted)"
+    }
 }
 
 enum class TypingTextResult {

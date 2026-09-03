@@ -1,0 +1,29 @@
+app-debug.apk sha256=617e97a9d250c9bcbc409b20a7b3c66275351a398a399570c4418865dfdbf4a7
+Performing Streamed Install
+Success
+app-debug-androidTest.apk sha256=1a739d603150fa8cf9ede9e8686b403ef91d9909a6b2cece0e57f65246502bde
+Performing Streamed Install
+Success
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.OwnedBatchInstrumentedTest:
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=commitBoundaryAndRestoreOwnedRegionPreserveTextAndDoNotReadEditor
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.OwnedBatchInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=commitBoundaryAndRestoreOwnedRegionPreserveTextAndDoNotReadEditor
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.OwnedBatchInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 9.171
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1

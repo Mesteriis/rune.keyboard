@@ -6,6 +6,18 @@ sealed interface EditorCommand {
         override fun toString(): String = "SetComposingText(redacted)"
     }
     data object FinishComposingText : EditorCommand
+    data class SetComposingRegion(val start: Int, val end: Int) : EditorCommand {
+        init { require(start >= 0 && end > start && end.toLong() - start <= 256) }
+    }
+    class Batch(commands: List<EditorCommand>, val isCurrent: () -> Boolean) : EditorCommand {
+        val commands = commands.toList()
+        init {
+            require(commands.size in 1..3 && commands.all {
+                it is SetComposingText || it is CommitText || it is SetComposingRegion
+            })
+        }
+        override fun toString(): String = "EditorBatch(redacted)"
+    }
     data object DeletePreviousCodePoint : EditorCommand
     data class PerformEditorAction(val actionId: Int) : EditorCommand
     data object InsertNewline : EditorCommand

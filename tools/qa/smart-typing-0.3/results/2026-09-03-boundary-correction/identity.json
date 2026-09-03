@@ -1,0 +1,30 @@
+{
+  "apks": {
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "1a739d603150fa8cf9ede9e8686b403ef91d9909a6b2cece0e57f65246502bde",
+    "app/build/outputs/apk/debug/app-debug.apk": "617e97a9d250c9bcbc409b20a7b3c66275351a398a399570c4418865dfdbf4a7"
+  },
+  "baseline": "c1a2bc75e68fe248f66ef1c08d74135b8e509da9",
+  "jvm": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 630
+  },
+  "sources": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/OwnedBatchInstrumentedTest.kt": "e283ec1bf9d572baa4c9888b3ceafffc94a34f1405e1a8343d918e3846c6ad1e",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt": "443cec9032e5a2a2a3f1c348577ec2701e881998d10b654fbc103f314b76b481",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/EditorCommandExecutor.kt": "73b85967c06ef2c066e3a47bf759aee9e474d5c551cafef7fa92b46f4e3bd9e9",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorCommand.kt": "c0db6efbf5bdba402958207d8d407d265569d5f82b4743a2832a210fb8776f91",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt": "e996a32ec62b4e3149e55e42c327455331c35ecb176acf28a70db1788c8cecea",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt": "b6ef88d803ace24d3f70badbfffd48862d95ab3123987c1f67c35aafcede74d4",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "b4f5ac88fa31589671c908702fe22ce659570cf8c3a60c8ec4185c7e4f56c650",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/ime/editor/EditorCommandExecutorTest.kt": "d1594a6a2e2e7c398fa844f6ee61f0a5010d39874775cdbfaee073fdac855a46",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/CorrectionBoundaryTest.kt": "e4f719daeb1a089958836b9464e50be74e67631658f59e9f07d39ffb16d8e7e4",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinatorTest.kt": "a1b0cee5f4f251c1be8bc97072058ddea8d732b52380bb25230a459fd4c00ea3",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/MechanicalTypingSessionTest.kt": "5b6d67818cd1a5777fd4a63feee96ed4b6392135007ea5b47a61239567afa252",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionControllerTest.kt": "6b683fcfaddd0c5b694e4711fd5b682a2ba43edb7ae8be61f74624ebd3f114a5",
+    "tools/verify-scoring-boundaries.py": "e561707fc29b9b2c40061eed91d508e9c0bfbd72157c0ba51eab2fea60170971"
+  }
+}

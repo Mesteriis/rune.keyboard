@@ -276,10 +276,12 @@ class RuneInputMethodService : InputMethodService() {
             candidates.edit {
                 when (command) {
                     is EditorCommand.CommitText -> typingSession.typeText(command.value, punctuation, beforeAction,
+                        autocorrectionMode = settings.autocorrectionMode,
                         execute = ::executeTypingEdit)
                     EditorCommand.DeletePreviousCodePoint -> typingSession.deletePrevious(::executeTypingEdit)
                     EditorCommand.ConvertPrecedingSpaceToPeriod -> typingSession.typeText(" ", punctuation,
-                        beforeAction, doubleSpaceGesture = true, execute = ::executeTypingEdit)
+                        beforeAction, doubleSpaceGesture = true, autocorrectionMode = settings.autocorrectionMode,
+                        execute = ::executeTypingEdit)
                     else -> TypingTextResult.BYPASS
                 }
             }
@@ -294,14 +296,17 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     private fun executeTypingEdit(edit: TypingEdit): Boolean = RuneTrace.section("Rune#composeUpdate") {
-        executeCommand(
+        executeCommand(editorCommand(edit)) == CommandOutcome.DELIVERED
+    }
+
+    private fun editorCommand(edit: TypingEdit): EditorCommand =
             when (edit) {
                 is TypingEdit.SetComposingText -> EditorCommand.SetComposingText(edit.value)
                 is TypingEdit.CommitText -> EditorCommand.CommitText(edit.value)
                 TypingEdit.FinishComposingText -> EditorCommand.FinishComposingText
-            },
-        ) == CommandOutcome.DELIVERED
-    }
+                is TypingEdit.SetComposingRegion -> EditorCommand.SetComposingRegion(edit.start, edit.end)
+                is TypingEdit.Batch -> EditorCommand.Batch(edit.edits.map(::editorCommand), edit.isCurrent)
+            }
 
     private fun executeCommand(command: EditorCommand): CommandOutcome {
         when (command) {
@@ -340,6 +345,7 @@ class RuneInputMethodService : InputMethodService() {
     private fun mutatesText(command: EditorCommand?): Boolean = when (command) {
         is EditorCommand.CommitText,
         is EditorCommand.SetComposingText,
+        is EditorCommand.Batch,
         EditorCommand.DeletePreviousCodePoint,
         EditorCommand.InsertNewline,
         EditorCommand.ConvertPrecedingSpaceToPeriod,

@@ -1,0 +1,264 @@
+Reusing configuration cache.
+> Task :runtime-llama:generateDebugAssets UP-TO-DATE
+> Task :runtime-llama:preBuild UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :runtime-llama:preDebugBuild UP-TO-DATE
+> Task :runtime-llama:generateReleaseAssets UP-TO-DATE
+> Task :app:generateReleaseAssets UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :runtime-llama:writeDebugAarMetadata
+> Task :runtime-llama:prepareLintJarForPublish
+> Task :app:mapDebugSourceSetPaths
+> Task :app:checkDebugAarMetadata
+> Task :app:createDebugCompatibleScreenManifests
+> Task :runtime-llama:processDebugNavigationResources
+> Task :app:generateDebugResources
+> Task :runtime-llama:generateDebugResources
+> Task :runtime-llama:javaPreCompileDebug
+> Task :app:javaPreCompileDebug
+> Task :app:processDebugNavigationResources
+> Task :app:extractDeepLinksDebug
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :runtime-llama:mapDebugSourceSetPaths
+> Task :runtime-llama:preDebugUnitTestBuild UP-TO-DATE
+> Task :runtime-llama:extractDeepLinksDebug
+> Task :runtime-llama:checkDebugAarMetadata
+> Task :app:javaPreCompileDebugUnitTest
+> Task :runtime-llama:javaPreCompileDebugUnitTest
+> Task :runtime-llama:packageDebugResources
+> Task :app:compileDebugNavigationResources
+> Task :runtime-llama:processDebugManifest
+> Task :runtime-llama:parseDebugLocalResources
+> Task :app:processDebugMainManifest
+> Task :app:processDebugManifest
+> Task :runtime-llama:mergeDebugJniLibFolders
+> Task :app:processDebugManifestForPackage
+> Task :runtime-llama:generateDebugRFile
+> Task :runtime-llama:extractDeepLinksForAarDebug
+> Task :app:packageDebugResources
+> Task :runtime-llama:generateDebugUnitTestStubRFile
+> Task :runtime-llama:extractDebugAnnotations
+> Task :runtime-llama:mergeDebugAssets
+> Task :runtime-llama:prepareDebugArtProfile
+> Task :app:preDebugAndroidTestBuild SKIPPED
+> Task :runtime-llama:writeDebugLintModelMetadata
+> Task :app:extractProguardFiles
+> Task :runtime-llama:extractProguardFiles
+> Task :runtime-llama:preDebugAndroidTestBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :runtime-llama:compileDebugLibraryResources
+> Task :app:parseDebugLocalResources
+> Task :runtime-llama:configureCMakeDebug[x86_64]
+> Task :runtime-llama:configureCMakeDebug[arm64-v8a]
+> Task :app:generateDebugRFile
+> Task :app:mergeDebugResources
+> Task :app:checkDebugDuplicateClasses
+> Task :app:desugarDebugFileDependencies
+> Task :runtime-llama:buildCMakeDebug[arm64-v8a]
+> Task :runtime-llama:buildCMakeDebug[x86_64]
+> Task :app:mergeDebugJniLibFolders
+> Task :app:mergeDebugAssets
+> Task :app:validateSigningDebug
+> Task :app:writeDebugAppMetadata
+> Task :app:writeDebugSigningConfigVersions
+> Task :app:preReleaseBuild UP-TO-DATE
+> Task :app:mergeReleaseJniLibFolders
+> Task :runtime-llama:preReleaseBuild UP-TO-DATE
+> Task :runtime-llama:configureCMakeRelWithDebInfo[arm64-v8a]
+> Task :app:processDebugResources
+> Task :app:compileDebugAidl
+> Task :runtime-llama:buildCMakeRelWithDebInfo[arm64-v8a]
+> Task :runtime-llama:configureCMakeRelWithDebInfo[x86_64]
+> Task :runtime-llama:mergeReleaseJniLibFolders
+> Task :runtime-llama:generateReleaseResources
+> Task :runtime-llama:processReleaseNavigationResources
+> Task :runtime-llama:javaPreCompileRelease
+> Task :app:checkReleaseDuplicateClasses
+> Task :runtime-llama:buildCMakeRelWithDebInfo[x86_64]
+> Task :runtime-llama:packageReleaseResources
+> Task :runtime-llama:parseReleaseLocalResources
+> Task :runtime-llama:generateReleaseRFile
+> Task :app:compileReleaseAidl
+> Task :app:generateReleaseResources
+> Task :runtime-llama:compileDebugKotlin
+> Task :runtime-llama:compileDebugJavaWithJavac NO-SOURCE
+> Task :runtime-llama:bundleLibCompileToJarDebug
+> Task :runtime-llama:mergeDebugNativeLibs
+> Task :runtime-llama:mergeReleaseNativeLibs
+> Task :runtime-llama:bundleLibRuntimeToJarDebug
+> Task :app:packageReleaseResources
+> Task :runtime-llama:processDebugJavaRes
+> Task :runtime-llama:mergeDebugGeneratedProguardFiles
+> Task :runtime-llama:mergeDebugConsumerProguardFiles
+> Task :app:generateDebugGlobalSynthetics
+> Task :runtime-llama:createFullJarDebug
+> Task :runtime-llama:generateDebugLintModel
+> Task :runtime-llama:mergeDebugJavaResource
+> Task :runtime-llama:syncDebugLibJars
+> Task :runtime-llama:generateDebugLintReportModel
+> Task :runtime-llama:bundleLibRuntimeToDirDebug
+> Task :runtime-llama:stripDebugDebugSymbols
+> Task :runtime-llama:compileReleaseKotlin
+> Task :runtime-llama:copyDebugJniLibsProjectAndLocalJars
+> Task :app:mergeLibDexDebug
+> Task :app:mergeExtDexDebug
+> Task :runtime-llama:bundleDebugLocalLintAar
+> Task :runtime-llama:compileDebugUnitTestKotlin
+> Task :runtime-llama:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :runtime-llama:processDebugUnitTestJavaRes
+> Task :runtime-llama:copyReleaseJniLibsProjectOnly
+> Task :runtime-llama:generateDebugUnitTestLintModel
+> Task :runtime-llama:copyDebugJniLibsProjectOnly
+> Task :runtime-llama:generateDebugAndroidTestLintModel
+> Task :runtime-llama:testDebugUnitTest
+> Task :runtime-llama:bundleDebugAar
+> Task :runtime-llama:assembleDebug
+> Task :runtime-llama:compileReleaseJavaWithJavac NO-SOURCE
+> Task :runtime-llama:mergeReleaseGeneratedProguardFiles
+> Task :runtime-llama:exportReleaseConsumerProguardFiles
+> Task :app:processReleaseNavigationResources
+> Task :app:mergeDebugNativeLibs
+> Task :app:parseReleaseLocalResources
+> Task :app:generateReleaseRFile
+> Task :runtime-llama:bundleLibCompileToJarRelease
+> Task :app:stripDebugDebugSymbols
+> Task :app:javaPreCompileRelease
+> Task :runtime-llama:prepareReleaseArtProfile
+> Task :app:mergeReleaseNativeLibs
+> Task :app:mergeReleaseArtProfile
+> Task :runtime-llama:writeReleaseAarMetadata
+> Task :app:checkReleaseAarMetadata
+> Task :app:mapReleaseSourceSetPaths
+> Task :app:compileReleaseNavigationResources
+> Task :app:stripReleaseDebugSymbols
+> Task :app:mergeReleaseResources
+> Task :app:createReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksRelease
+> Task :runtime-llama:extractDeepLinksRelease
+> Task :app:extractReleaseNativeSymbolTables
+> Task :runtime-llama:processReleaseManifest
+> Task :app:processReleaseMainManifest
+> Task :app:processReleaseManifest
+> Task :app:processReleaseManifestForPackage
+> Task :runtime-llama:mapReleaseSourceSetPaths
+> Task :runtime-llama:compileReleaseLibraryResources
+> Task :runtime-llama:lintAnalyzeDebug
+> Task :runtime-llama:bundleLibRuntimeToJarRelease
+> Task :runtime-llama:processReleaseJavaRes
+> Task :app:mergeReleaseStartupProfile
+> Task :runtime-llama:mergeReleaseAssets
+> Task :app:mergeReleaseAssets
+> Task :app:processReleaseResources
+> Task :app:extractReleaseVersionControlInfo
+> Task :runtime-llama:createFullJarRelease
+> Task :runtime-llama:generateReleaseLintModel
+> Task :runtime-llama:checkReleaseAarMetadata
+> Task :runtime-llama:stripReleaseDebugSymbols
+> Task :runtime-llama:copyReleaseJniLibsProjectAndLocalJars
+> Task :runtime-llama:extractDeepLinksForAarRelease
+> Task :runtime-llama:extractReleaseAnnotations
+> Task :runtime-llama:mergeReleaseConsumerProguardFiles
+> Task :runtime-llama:mergeReleaseJavaResource
+> Task :runtime-llama:syncReleaseLibJars
+> Task :runtime-llama:bundleReleaseLocalLintAar
+> Task :runtime-llama:lintAnalyzeDebugUnitTest
+> Task :runtime-llama:writeReleaseLintModelMetadata
+> Task :runtime-llama:generateReleaseLintVitalModel
+> Task :app:collectReleaseDependencies
+> Task :app:sdkReleaseDependencyData
+> Task :app:writeReleaseAppMetadata
+> Task :app:writeReleaseSigningConfigVersions
+> Task :app:mergeReleaseNativeDebugMetadata
+> Task :runtime-llama:mergeReleaseResources
+> Task :runtime-llama:verifyReleaseResources
+> Task :app:preProfileBuild UP-TO-DATE
+> Task :app:mergeProfileJniLibFolders
+> Task :app:mergeProfileNativeLibs
+> Task :runtime-llama:lintAnalyzeDebugAndroidTest
+> Task :runtime-llama:lintVitalAnalyzeRelease
+> Task :runtime-llama:lintReportDebug
+> Task :runtime-llama:lintDebug
+> Task :runtime-llama:lint
+> Task :app:checkProfileDuplicateClasses
+> Task :app:generateProfileResources
+> Task :app:stripProfileDebugSymbols
+> Task :app:packageProfileResources
+> Task :app:processProfileNavigationResources
+> Task :runtime-llama:bundleReleaseAar
+> Task :runtime-llama:assembleRelease
+> Task :app:javaPreCompileProfile
+> Task :app:mergeProfileArtProfile
+> Task :app:checkProfileAarMetadata
+> Task :app:mapProfileSourceSetPaths
+> Task :app:compileProfileNavigationResources
+> Task :app:parseProfileLocalResources
+> Task :app:generateProfileRFile
+> Task :app:createProfileCompatibleScreenManifests
+> Task :app:extractDeepLinksProfile
+> Task :app:processProfileMainManifest
+> Task :app:processProfileManifest
+> Task :app:processProfileManifestForPackage
+> Task :app:mergeProfileStartupProfile
+> Task :app:generateProfileAssets UP-TO-DATE
+> Task :app:mergeProfileAssets
+> Task :app:compileProfileAidl
+> Task :app:mergeProfileResources
+> Task :app:extractProfileNativeSymbolTables
+> Task :app:processProfileResources
+> Task :app:extractProfileVersionControlInfo
+> Task :app:collectProfileDependencies
+> Task :app:sdkProfileDependencyData
+> Task :app:validateSigningProfile
+> Task :app:writeProfileAppMetadata
+> Task :app:writeProfileSigningConfigVersions
+> Task :app:privacyGateRelease
+> Task :app:privacyGateProfile
+> Task :app:compressDebugAssets
+> Task :app:forbiddenRuntimeDependencies
+> Task :app:mergeProfileNativeDebugMetadata
+> Task :app:compileDebugAndroidTestAidl NO-SOURCE
+> Task :app:generateDebugAndroidTestResources
+> Task :app:packageDebugAndroidTestResources
+> Task :app:processDebugAndroidTestNavigationResources
+> Task :app:parseDebugAndroidTestLocalResources
+> Task :app:generateDebugAndroidTestRFile
+> Task :app:javaPreCompileDebugAndroidTest
+> Task :app:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :app:mergeDebugAndroidTestAssets
+
+> Task :runtime-llama:nativeSymbolGate
+Native runtime gate passed for arm64-v8a and x86_64.
+
+> Task :app:compressDebugAndroidTestAssets
+> Task :app:checkDebugAndroidTestDuplicateClasses
+> Task :app:desugarDebugAndroidTestFileDependencies
+
+> Task :app:imeIntelligenceBoundary
+boundary fixtures PASS: 16 negative, 4 positive
+app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt: unresolved local dependency io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification
+
+> Task :app:imeIntelligenceBoundary FAILED
+> Task :app:generateDebugAndroidTestGlobalSynthetics
+> Task :app:mergeExtDexDebugAndroidTest
+> Task :app:compileDebugKotlin
+> Task :app:compressReleaseAssets
+> Task :app:compileReleaseKotlin
+> Task :app:compressProfileAssets
+> Task :app:compileProfileKotlin
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:imeIntelligenceBoundary'.
+> Process 'command 'python3'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 33s
+214 actionable tasks: 214 executed
+Configuration cache entry reused.

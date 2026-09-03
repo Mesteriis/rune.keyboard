@@ -72,7 +72,10 @@ class LocalCandidateCoordinator internal constructor(
     fun edit(action: () -> TypingTextResult): TypingTextResult {
         checkOwner()
         if (closed) return action()
-        cancelCandidates(clearAllowlist = true)
+        // Retain the latest accepted decision until this action consumes its exact word.
+        // Cancel worker/callback ownership first, so late work cannot race a boundary commit.
+        val owner = ownerState?.invoke()
+        cancelCandidates(clearAllowlist = owner?.baseEligible != true || !owner.spellingEnabled)
         val editEpoch = epoch
         val session = controller.state.sessionId
         val revision = controller.state.revision
@@ -81,6 +84,7 @@ class LocalCandidateCoordinator internal constructor(
             controller.state.revision != revision && result == TypingTextResult.HANDLED) {
             requestCurrentWord()
         } else if (!closed && epoch == editEpoch) {
+            controller.clearCandidates()
             invalidateLoads()
         }
         return result

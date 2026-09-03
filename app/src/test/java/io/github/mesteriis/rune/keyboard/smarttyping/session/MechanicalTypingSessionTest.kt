@@ -336,9 +336,10 @@ class MechanicalTypingSessionTest {
                 is TypingEdit.SetComposingText -> EditorCommand.SetComposingText(edit.value)
                 is TypingEdit.CommitText -> EditorCommand.CommitText(edit.value)
                 TypingEdit.FinishComposingText -> EditorCommand.FinishComposingText
+                else -> throw AssertionError("Unexpected correction command without qualification")
             }, connection, false, false).handled
         }
-        fun type(text: String, gesture: Boolean = false) = controller.typeText(text, policy, keyboard, gesture, execute)
+        fun type(text: String, gesture: Boolean = false) = controller.typeText(text, policy, keyboard, gesture, execute = execute)
         fun raw(text: String) = controller.typeText(text, execute)
         fun rawSequence(text: String) { text.codePoints().forEach { raw(String(Character.toChars(it))) } }
         fun undo() = controller.deletePrevious(execute)

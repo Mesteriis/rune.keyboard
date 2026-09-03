@@ -35,6 +35,14 @@ object EditorCommandExecutor {
         deleteMode: DeleteMode,
         inputPolicy: InputPolicy = InputPolicy.NORMAL,
     ): EditorExecutionResult = when (command) {
+        is EditorCommand.Batch -> textMutationResult(
+            inputPolicy == InputPolicy.NORMAL && deleteMode != DeleteMode.RAW_KEY_EVENT && !hasSelection &&
+                executeBatch(command, inputConnection, deleteMode),
+        )
+        is EditorCommand.SetComposingRegion -> EditorExecutionResult(
+            handled = inputPolicy == InputPolicy.NORMAL && deleteMode != DeleteMode.RAW_KEY_EVENT && !hasSelection &&
+                inputConnection.setComposingRegion(command.start, command.end),
+        )
         is EditorCommand.SetComposingText -> textMutationResult(
             inputPolicy == InputPolicy.NORMAL && deleteMode != DeleteMode.RAW_KEY_EVENT &&
                 inputConnection.setComposingText(command.value, 1),
@@ -91,6 +99,25 @@ object EditorCommandExecutor {
     }
 
     internal data class CursorKeyPlan(val keyCode: Int, val presses: Int)
+
+    private fun executeBatch(command: EditorCommand.Batch, connection: InputConnection, deleteMode: DeleteMode): Boolean {
+        if (!command.isCurrent()) return false
+        val began = try { connection.beginBatchEdit() } catch (_: RuntimeException) { false }
+        if (!began) return false
+        // Keep the same connection for the entire batch, including cleanup after lifecycle changes.
+        var cleanupSucceeded = true
+        val handled = try {
+            command.commands.all { next ->
+                command.isCurrent() && execute(next, connection, false, deleteMode, InputPolicy.NORMAL).handled
+            }
+        } catch (_: RuntimeException) {
+            false
+        } finally {
+            // Android's endBatchEdit may return false when the nesting level becomes zero.
+            try { connection.endBatchEdit() } catch (_: RuntimeException) { cleanupSucceeded = false }
+        }
+        return handled && cleanupSucceeded && command.isCurrent()
+    }
 
     /**
      * Cursor mode moves through the editor's own arrow-key handling: it steps by grapheme
