@@ -30,13 +30,13 @@ interface CandidateLexicon {
     ): LexiconScanStatus
 
     /**
-     * Optional exact global top-seven selection after shared membership/protection checks.
+     * Optional exact global requested-width selection after shared membership/protection checks.
      * Null selects the exhaustive scan path. COMPLETE requires a full-comparator certificate,
      * including display-case dedup BEFORE fallback quota. The SAME control charges all routes;
      * budget exhaustion retains its veto. Never reinterpret scan COMPLETE as a top-N result.
      */
     fun selectTop(key: String, route: LanguageRoute, pattern: CasePattern,
-        control: CandidateSearchControl): TopCandidateSelection? = null
+        control: CandidateSearchControl, maximumAlternatives: Int): TopCandidateSelection? = null
 }
 
 enum class ExactMembership { PRESENT, ABSENT, UNAVAILABLE }

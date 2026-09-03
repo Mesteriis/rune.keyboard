@@ -22,7 +22,7 @@ class PackedCandidateLexicon(handles: Collection<PackedLexiconData>) : Candidate
     internal fun handle(language: KeyboardLanguage): PackedLexiconData? = indices[language.ordinal]
 
     override fun selectTop(key: String, route: LanguageRoute, pattern: CasePattern,
-        control: CandidateSearchControl): TopCandidateSelection = topSeven.select(key, route, pattern, control)
+        control: CandidateSearchControl, maximumAlternatives: Int): TopCandidateSelection = topSeven.select(key, route, pattern, control, maximumAlternatives)
 
     init {
         require(handles.size <= indices.size) { "PACKED_HANDLE_COUNT" }

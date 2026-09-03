@@ -12,7 +12,8 @@ import kotlin.system.exitProcess
 object CandidateExport {
     @JvmStatic fun main(args: Array<String>) {
         try {
-            check(args.size == 3)
+            check(args.size == 3 || args.size == 4)
+            val maximumAlternatives = if (args.size == 4) args[3].toInt() else CandidateGenerator.MAX_ALTERNATIVES
             fun mapping(file: File) = FileChannel.open(file.toPath(), StandardOpenOption.READ).use {
                 it.map(FileChannel.MapMode.READ_ONLY, 0, it.size())
             }
@@ -25,7 +26,7 @@ object CandidateExport {
                 check(loaded is PackedLexiconLoad.Ready)
                 loaded.lexicon
             }
-            val generator = CandidateGenerator(PackedCandidateLexicon(handles))
+            val generator = CandidateGenerator(PackedCandidateLexicon(handles), maximumAlternatives)
             val decoder = Charsets.UTF_8.newDecoder().onMalformedInput(CodingErrorAction.REPORT)
                 .onUnmappableCharacter(CodingErrorAction.REPORT)
             File(args[0]).bufferedReader(Charsets.US_ASCII).useLines { lines ->

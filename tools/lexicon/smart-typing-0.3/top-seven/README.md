@@ -41,7 +41,7 @@ The pending heap contains verified exact comparator keys. Its minimum may stream
 only when strictly before every unresolved lower bound. Frequency/lexical bounds
 remain conservative bottom values, so equality in weighted cost and prior never
 certifies. A streamed display is marked seen even when skipped by the fallback
-quota. Seven accepted globally ordered representations prove the exact top-seven;
+quota. The requested number (1–7) of accepted globally ordered representations proves its exact prefix;
 otherwise frontier exhaustion and drained pending prove the shorter list.
 
 `TopCandidateProof` distinguishes those outcomes from no proof. Budget exhaustion
@@ -137,9 +137,10 @@ No AutoReplace, model quality or release gate is enabled by an exact set certifi
 
 The product currently requests seven alternatives. The user contract allows up
 to seven, so this is a configurable design choice to evaluate before ranking
-calibration. `candidate_budget.py` creates explicit host-only source overlays
-for exact top1/top3/top7 alternatives (total set widths2/4/8 including original).
-It does not change product source files, search/verification limits, protected
+calibration. `CandidateGenerator` now accepts an immutable `maximumAlternatives`
+constructor argument (1–7, default7). `candidate_budget.py` exercises that actual
+production API for exact top1/top3/top7 alternatives (total set widths2/4/8 including original).
+No source overlays are used. It does not change search/verification limits, protected
 tokens, original preservation, comparator or language fallback policy.
 The width is selected before the request; a budget-exhausted request is never
 reinterpreted as a successful smaller request.
@@ -163,6 +164,8 @@ Use fresh directories and corresponding explicit widths for the2/8 controls.
 The oracle is always the preserved full-neighborhood oracle; the declared
 requested prefix is compared exactly. Verifier metadata must match the request,
 and every incomplete request must retain its veto. Width8 is also compared
-byte-for-byte with the production calibration export as a transformation control.
+byte-for-byte with the production calibration export as a default-width compatibility control.
+The earlier overlay experiment is reproducible at commit `03cea45`; its frozen
+outputs remain unchanged. New provenance records the numeric harness argument.
 Evidence and limitations: `results/2026-09-03-candidate-widths/` and
 `docs/acceptance/2026-09-03-smart-typing-0.3-candidate-widths.md`.

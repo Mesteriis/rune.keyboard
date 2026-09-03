@@ -101,22 +101,24 @@ class PackedTopSevenTest {
             val handles = dictionaries.getValue(id).groupBy { it[1].toInt() }.map { (language, words) ->
                 handle(words.associate { unhex(it[2]) to it[3].toInt() }, KeyboardLanguage.entries[language])
             }
-            val actual = CandidateGenerator(PackedCandidateLexicon(handles)).generate(token, lang)
-            assertEquals("case $id", r[3].toInt(), actual.completion.ordinal)
-            assertEquals(token, actual.original)
-            assertEquals(r[4].toInt(), actual.protectedReason?.ordinal ?: -1)
-            assertEquals(r[5].toInt(), actual.alternatives.size)
-            val want = expected[id] ?: emptyList()
-            assertEquals(want.size, actual.alternatives.size)
-            actual.alternatives.zip(want).forEach { (a, e) ->
-                assertEquals(e[2].toInt(), a.language.ordinal)
-                assertEquals(unhex(e[3]), a.terminalKey); assertEquals(unhex(e[4]), a.text)
-                assertEquals(unhex(e[5]), a.canonicalKey); assertEquals(e[6].toInt(), a.frequencyRank)
-                assertEquals(e[7].toInt(), a.languagePrior); assertEquals(e[8] == "1", a.isFallback)
-                assertEquals(e[9].toInt(), a.unitDistance); assertEquals(e[10].toInt(), (a.editFeatures.editCost * 4).toInt())
-                assertEquals(e[11].toInt(), a.editFeatures.repeatedCharacterEdits)
-                assertEquals(e[11].toInt() * 0.25, a.editFeatures.repetitionBonus, 0.0)
-                assertEquals(e[12].toInt(), a.lengthDifference); assertEquals(e[13].toInt(), a.casePattern.ordinal)
+            for (maximum in 1..CandidateGenerator.MAX_ALTERNATIVES) {
+                val actual = CandidateGenerator(PackedCandidateLexicon(handles), maximum).generate(token, lang)
+                assertEquals("case $id", r[3].toInt(), actual.completion.ordinal)
+                assertEquals(token, actual.original)
+                assertEquals(r[4].toInt(), actual.protectedReason?.ordinal ?: -1)
+                assertEquals(minOf(maximum, r[5].toInt()), actual.alternatives.size)
+                val want = (expected[id] ?: emptyList()).take(maximum)
+                assertEquals(want.size, actual.alternatives.size)
+                actual.alternatives.zip(want).forEach { (a, e) ->
+                    assertEquals(e[2].toInt(), a.language.ordinal)
+                    assertEquals(unhex(e[3]), a.terminalKey); assertEquals(unhex(e[4]), a.text)
+                    assertEquals(unhex(e[5]), a.canonicalKey); assertEquals(e[6].toInt(), a.frequencyRank)
+                    assertEquals(e[7].toInt(), a.languagePrior); assertEquals(e[8] == "1", a.isFallback)
+                    assertEquals(e[9].toInt(), a.unitDistance); assertEquals(e[10].toInt(), (a.editFeatures.editCost * 4).toInt())
+                    assertEquals(e[11].toInt(), a.editFeatures.repeatedCharacterEdits)
+                    assertEquals(e[11].toInt() * 0.25, a.editFeatures.repetitionBonus, 0.0)
+                    assertEquals(e[12].toInt(), a.lengthDifference); assertEquals(e[13].toInt(), a.casePattern.ordinal)
+                }
             }
             cases++
         }
@@ -139,14 +141,18 @@ class PackedTopSevenTest {
 
     @Test fun `verification cap is shared and cannot be hidden by early certification`() {
         val words = (0..3).flatMap { pos -> "bcdefghijklmnoprtuvxy".map { "aaaaa".replaceRange(pos, pos + 1, it.toString()) } }
-        for (split in listOf(0, 5)) for (count in 64..65) {
+        for (maximum in 1..7) for (split in listOf(0, 5)) for (count in 64..65) {
             val primary = if (split == 0) words.take(count) else words.take(split)
             val fallback = if (split == 0) listOf("zzzzzzzz") else words.take(count - split)
             val handles = listOf(handle(primary.associateWith { 1 }, en), handle(fallback.associateWith { 1 }, es))
-            val result = CandidateGenerator(PackedCandidateLexicon(handles)).generate("aaaaa", en)
-            assertEquals(64, result.verifiedTerminals)
-            assertEquals(if (count == 64) CandidateCompletion.COMPLETE else CandidateCompletion.VERIFIED_EXHAUSTED, result.completion)
-            assertEquals(count == 65, result.prohibitsAutoReplace)
+            val result = CandidateGenerator(PackedCandidateLexicon(handles), maximum).generate("aaaaa", en)
+            // Five primary candidates precede the entire lower-prior fallback frontier.
+            // A requested prefix of those five has a proof without exhausting fallback.
+            val primaryCertificate = split == 5 && maximum <= 5
+            assertEquals(if (primaryCertificate) 5 else 64, result.verifiedTerminals)
+            val exhausted = count == 65 && !primaryCertificate
+            assertEquals(if (exhausted) CandidateCompletion.VERIFIED_EXHAUSTED else CandidateCompletion.COMPLETE, result.completion)
+            assertEquals(exhausted, result.prohibitsAutoReplace)
         }
     }
 
@@ -155,16 +161,18 @@ class PackedTopSevenTest {
             .associateBy { it.language }
         val engine = PackedTopSeven(handles::get)
         val route = LanguageRouter.route("cut", en)
-        var calls = 0
-        val baseline = engine.select("cut", route, CasePattern.LOWER, CandidateSearchControl { calls++; false })
-        assertEquals(CandidateCompletion.COMPLETE, baseline.completion)
-        assertTrue(calls > 20)
-        for (cancelAt in 1..calls) {
-            var current = 0
-            val result = engine.select("cut", route, CasePattern.LOWER, CandidateSearchControl { ++current >= cancelAt })
-            assertEquals(CandidateCompletion.CANCELLED, result.completion)
-            assertTrue(result.alternatives.isEmpty()); assertTrue(engine.isClear())
-            assertEquals(baseline, engine.select("cut", route, CasePattern.LOWER, control()))
+        for (maximum in listOf(1, 3, 7)) {
+            var calls = 0
+            val baseline = engine.select("cut", route, CasePattern.LOWER, CandidateSearchControl { calls++; false }, maximum)
+            assertEquals(CandidateCompletion.COMPLETE, baseline.completion)
+            assertTrue(calls > 20)
+            for (cancelAt in 1..calls) {
+                var current = 0
+                val result = engine.select("cut", route, CasePattern.LOWER, CandidateSearchControl { ++current >= cancelAt }, maximum)
+                assertEquals(CandidateCompletion.CANCELLED, result.completion)
+                assertTrue(result.alternatives.isEmpty()); assertTrue(engine.isClear())
+                assertEquals(baseline, engine.select("cut", route, CasePattern.LOWER, control(), maximum))
+            }
         }
     }
 
@@ -182,5 +190,47 @@ class PackedTopSevenTest {
         assertEquals(TopCandidateSelection(CandidateCompletion.UNAVAILABLE),
             engine.select("cut", LanguageRouter.route("cut", en), CasePattern.LOWER, control()))
         assertTrue(engine.isClear())
+    }
+
+    @Test fun `requested width binds the certificate and mismatched readers fail closed`() {
+        val reader = PackedCandidateLexicon(listOf(
+            handle(mapOf("cat" to 1, "cot" to 2, "cit" to 3), en), handle(mapOf("zzzzz" to 1), es)))
+        val route = LanguageRouter.route("cut", en)
+        val one = reader.selectTop("cut", route, CasePattern.LOWER, control(), 1)
+        assertEquals(1, one.maximumAlternatives)
+        assertEquals(TopCandidateProof.REQUESTED_IN_GLOBAL_ORDER, one.proof)
+        assertEquals(1, one.alternatives.size)
+        val wrong = object : CandidateLexicon by reader {
+            override fun selectTop(key: String, route: LanguageRoute, pattern: CasePattern,
+                control: CandidateSearchControl, maximumAlternatives: Int): TopCandidateSelection =
+                reader.selectTop(key, route, pattern, control, 7)
+        }
+        val rejected = CandidateGenerator(wrong, 1).generate("cut", en)
+        assertEquals(CandidateCompletion.READER_FAILURE, rejected.completion)
+        assertTrue(rejected.prohibitsAutoReplace)
+        assertTrue(rejected.alternatives.isEmpty())
+        for (bad in listOf(Int.MIN_VALUE, 0, 8, Int.MAX_VALUE)) {
+            assertThrows(IllegalArgumentException::class.java) { CandidateGenerator(reader, bad) }
+            assertThrows(IllegalArgumentException::class.java) { one.copy(maximumAlternatives = bad) }
+        }
+        assertThrows(IllegalArgumentException::class.java) { one.copy(maximumAlternatives = 3) }
+    }
+
+    @Test fun `generic reader selects the same requested prefix after exhaustive retrieval`() {
+        val reader = PackedCandidateLexicon(listOf(
+            handle(mapOf("cat" to 1, "cot" to 2, "cit" to 3, "but" to 4, "hut" to 5), en),
+            handle(mapOf("cat" to 1, "rut" to 2, "tut" to 3), es)))
+        val exhaustive = object : CandidateLexicon by reader {
+            override fun selectTop(key: String, route: LanguageRoute, pattern: CasePattern,
+                control: CandidateSearchControl, maximumAlternatives: Int): TopCandidateSelection? = null
+        }
+        val full = CandidateGenerator(exhaustive).generate("cut", en)
+        assertEquals(CandidateCompletion.COMPLETE, full.completion)
+        for (maximum in 1..7) for (strategy in listOf(reader, exhaustive)) {
+            val result = CandidateGenerator(strategy, maximum).generate("cut", en)
+            assertEquals(CandidateCompletion.COMPLETE, result.completion)
+            assertEquals(full.alternatives.take(maximum), result.alternatives)
+            assertEquals("cut", result.original)
+        }
     }
 }

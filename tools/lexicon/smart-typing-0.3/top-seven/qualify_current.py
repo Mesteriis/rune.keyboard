@@ -51,8 +51,10 @@ def excluded_controls(inputs):
 def requested_width(receipt, maximum):
     assert type(maximum) is int and maximum in (1, 3, 7)
     experiment = receipt.get("experiment")
+    if receipt.get("harnessWidthArgument") is True:
+        assert receipt["maximumAlternatives"] == maximum
     if experiment is None:
-        assert maximum == 7
+        assert maximum == 7 or receipt.get("harnessWidthArgument") is True
     else:
         assert experiment["name"] == "exact-candidate-budget"
         assert experiment["maximumAlternatives"] == maximum and experiment["totalCandidates"] == maximum + 1
@@ -101,7 +103,8 @@ def run(args):
         subprocess.run([args.java, "-XX:ActiveProcessorCount=2", "-Xmx768m", "-cp",
             os.pathsep.join(map(str, [home / "generator.jar", *jars])),
             "io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateExport", str(output / "inputs.tsv"),
-            str(index), str(rank)], stdout=raw, stderr=log, timeout=300, check=True)
+            str(index), str(rank)] + ([str(maximum)] if receipt.get("harnessWidthArgument") else []),
+            stdout=raw, stderr=log, timeout=300, check=True)
     rows = [{"id": r["id"], "typed": r["query"]} for r in selected]
     actual = export.parse_output((output / "actual.tsv").read_text(), rows)
     counts = {"complete": 0, "incomplete": 0, "policy": 0}

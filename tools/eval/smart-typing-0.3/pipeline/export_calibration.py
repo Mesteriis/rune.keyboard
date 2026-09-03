@@ -127,6 +127,8 @@ def selected_sources(production_sources, source_overrides, experiment):
 def run(args, source_overrides=None, experiment=None):
     """CLI always uses production sources; controlled host experiments may provide hashed overlays."""
     exporter_sha = sha(Path(__file__))
+    maximum = getattr(args, "maximum_alternatives", 7)
+    require(type(maximum) is int and 1 <= maximum <= 7, "CANDIDATE_WIDTH")
     manifest = json.loads((CORPUS / "manifest.json").read_text())
     for name, digest in manifest["files"].items():
         require(sha(CORPUS / name) == digest, "CORPUS_DIGEST")
@@ -169,10 +171,11 @@ def run(args, source_overrides=None, experiment=None):
         subprocess.run(command, stdout=log, stderr=log, timeout=120, check=True)
     command = [args.java, "-XX:ActiveProcessorCount=2", "-Xmx768m", "-cp",
                os.pathsep.join(map(str, [binary, *jars[1:3]])),
-               "io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateExport", str(inputs), str(index), str(rank)]
+               "io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateExport", str(inputs), str(index), str(rank), str(maximum)]
     with (output / "actual.tsv").open("xb") as data, (output / "run.log").open("xb") as log:
         subprocess.run(command, stdout=data, stderr=log, timeout=600, check=True)
     results = parse_output((output / "actual.tsv").read_text(encoding="ascii"), rows)
+    require(all(len(r["alternatives"]) <= maximum for r in results), "REQUESTED_WIDTH")
     require(source_hashes == {str(p.relative_to(REPO)): sha(p) for p in sources}
             and asset_hashes == {p.name: sha(p) for p in assets}
             and exporter_sha == sha(Path(__file__)), "EXECUTION_INPUT_DRIFT")
@@ -189,6 +192,7 @@ def run(args, source_overrides=None, experiment=None):
         "binary": sha(binary), "inputs": sha(inputs), "actual": sha(output / "actual.tsv"),
         "candidates": sha(output / "candidates.jsonl"), "summary": sha(output / "summary.json"),
         "hostTimingIsNotDeviceMeasurement": True, "freshExecution": True,
+        "maximumAlternatives": maximum, "harnessWidthArgument": True,
         "experiment": experiment, "sourceOverrides": {str(p.relative_to(REPO)): str(v.relative_to(REPO))
             for p, v in source_overrides.items()}})
     print("Calibration candidate export complete; no model, holdout or AutoReplace qualification.")
@@ -198,4 +202,5 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("output", "index-dir", "rank-dir", "java", "gradle-cache"):
         parser.add_argument("--" + name, required=True)
+    parser.add_argument("--maximum-alternatives", type=int, choices=range(1, 8), default=7)
     run(parser.parse_args())

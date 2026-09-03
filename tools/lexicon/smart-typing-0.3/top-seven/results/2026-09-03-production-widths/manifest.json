@@ -1,0 +1,82 @@
+{
+  "baseline": "7816103",
+  "jvm": {
+    "tests": 598,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "pythonTests": 20,
+  "apkSha256": {
+    "app": "3b694addb106d579ceb2ad280954bf53c161be385dac637545ffdc09e1744ea3",
+    "test": "8cb12bafdc2c6ddce4349626d488366db9cab682456b9b08401238e9744536fe"
+  },
+  "android": {
+    "api26": {
+      "passed": 1,
+      "seconds": 24.115
+    },
+    "api37": {
+      "passed": 1,
+      "seconds": 21.469
+    },
+    "physicalFoldApi36": {
+      "passed": 1,
+      "seconds": 39.937
+    }
+  },
+  "physicalEnergyQualified": false,
+  "defaultMaximumAlternatives": 7,
+  "calibrationByteIdenticalToFrozenOverlay": true,
+  "sources": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "02f2b077c979aee82bb9dd222bc1ccf4b9a4995bc815eac59b7c599ee73c9bf3",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt": "e64190f43dfc40e1b4bd19dbc331709883907b2b7a500bce7947dc3fc5ae24db",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt": "fe942a648ef5bdbd5a7e5407c70e099c69cebd741f91ab2250d91d4fa66a7bdf",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LazyPackedLexicons.kt": "587d52b3062559e00a255817f831dbba2b9fe4189a8c38d06e065fc889888d64",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopSevenInstrumentedTest.kt": "f2f3f94f265c2a20092869da281a44155220156c19910f461c7fa7c8bc3636a0"
+  },
+  "sha256": {
+    "CandidateGeneratorTest.xml": "2202088aa0c08b76c593e7d108f4c94db35760bc15c62e3eeaf2708e28c57e11",
+    "PackedTopSevenTest.xml": "659b3d9fca861b33f7e4bf472fc69a0bee1c7c15c575178bc1dc37a824c8fc01",
+    "api26.json.gz": "bfc8059932630205f523988650933674454ba505664290431a293167f5f5feb1",
+    "api26.log.gz": "332e28afbb364ba71a3e88eca1ded4296a903aa2d2d5056fa230d5d100689092",
+    "api37.json.gz": "c8aa3338241d5e3c5664b4c518afe90799e3a8ec89f43f6c1211466ab05170a1",
+    "api37.log.gz": "896bf95301e0c8df309b59387b6ea1ee331b65822e9b04e8c4f45e2aca9c86c6",
+    "fold.json.gz": "4583420310ce0944fc1b65665833f420acb3bff058e83bf69e72c84a98900a3a",
+    "fold.log.gz": "474d3ba2c7e8326e92053ffbf064eca00825ce3773b127c23ddd0a6d0c66668e",
+    "gates.log.gz": "5f6f989902946e5e1a46760b995707cf48ab1257eee00f7fe63f2930c2e0f960",
+    "initial-gates.log.gz": "3872aa72be810fda7d989490f003bd7344d8c54a9eb08a83f95d09e87c99bb73",
+    "initial-parallel-compile-4.log.gz": "645f67d8e3956dc35fbf17dd18a0ef57ae6beed694ce29a57764e7a00918f76c",
+    "initial-parallel-compile-8.log.gz": "a6153b542aea07094e13da195e4aaadf6ba4749a1f72fdb34e954447cb323b0a",
+    "initial-parallel-compile.log.gz": "a62b126ec1c6c68da13f0e135dc714f9da418ced5d9698e1146b17f0000977ee",
+    "initial-targeted.log.gz": "8bb7d60b35cef7b45a45c14eb3ca09699cc6e7c41cc44e345099d72e3aefe4c9",
+    "oracle-2-actual.tsv.gz": "03a705a34ff778c621978046217f9b82e6498c79dcabd6e3ee7ccef12e62a2ce",
+    "oracle-2-inputs.tsv.gz": "5c9822d3d27f423c4ed90f4286e14c738ad6021443b97885dec9e3083403d91a",
+    "oracle-2-report.json.gz": "62c42e4b549976af7d7f3ae8567ee2e0c7fc763cbab89858ecf5db94a1530d8c",
+    "oracle-4-actual.tsv.gz": "213bd7e10c95fd9f835efedf0b65915dee7c73249492643c098ecce199af6812",
+    "oracle-4-inputs.tsv.gz": "5c9822d3d27f423c4ed90f4286e14c738ad6021443b97885dec9e3083403d91a",
+    "oracle-4-report.json.gz": "8fa7e47842f6256bff709a55591bf8b608371e3fcac9be86d011469e0ebb4974",
+    "oracle-8-actual.tsv.gz": "820f18523c42a7e450eee0f294256d391c402a99d96f42452bb8f209c47da7b0",
+    "oracle-8-inputs.tsv.gz": "5c9822d3d27f423c4ed90f4286e14c738ad6021443b97885dec9e3083403d91a",
+    "oracle-8-report.json.gz": "0ebd167302a57c80748b098d54b3af41ff4a1cee867b8b3cb53e43660a6447a2",
+    "python.log": "50eb721a5f29f8a0c68478f0ad03e1766f4b18fdb7cc15a2dfe7293333372b52",
+    "targeted.log.gz": "95fc958a98e455bbf4dec4c2c425c740e57185603f1b12400fe79cf4c874f387",
+    "width-2-actual.tsv.gz": "bbb9958d58974939d9aeb0b34d17f5fa13e6207b3369cac3645254a3b0bf4c10",
+    "width-2-candidates.jsonl.gz": "4d5ef31d9eacb4b8aed0691a0eb1616199e5f52e1becefbc32776b5f0ecaba33",
+    "width-2-inputs.tsv.gz": "9db54bbab2ef8b58e5009ba6c0ec46f1a94aceb95c2d296e765f020732aa4068",
+    "width-2-provenance.json.gz": "3097fe6ddca4a17f54495c001744312fc6815ab927d12da0c57fbe829bec43f4",
+    "width-2-summary.json.gz": "4c5d00f5e95c025122432db4632ccd739930dc224cb2611ae7e4877c75cf2534",
+    "width-4-actual.tsv.gz": "47c1738b1380138425b978041f317b1f87727eeef81bbabe644e332200408ed1",
+    "width-4-candidates.jsonl.gz": "277afe4d37701a7aaf051ca975091319f78c1541b5b0293bcc25c5d1e5006ad9",
+    "width-4-inputs.tsv.gz": "9db54bbab2ef8b58e5009ba6c0ec46f1a94aceb95c2d296e765f020732aa4068",
+    "width-4-provenance.json.gz": "28571d783ca67139cbe473cdc736215968163f8dc4c1fd863c769eda3af95a37",
+    "width-4-summary.json.gz": "e4d7989b361584d916887759f7593c9768377097cb12af035bebfda7cf2dc9e0",
+    "width-8-actual.tsv.gz": "5867b8267140ffe05d97cdcc493a50850b09428375ce0f886b37aee5368b5d86",
+    "width-8-candidates.jsonl.gz": "16e08d8e273b36c8ca481a90eea7c86a9b7b5e4238bb191bdff78c4879de02ab",
+    "width-8-inputs.tsv.gz": "9db54bbab2ef8b58e5009ba6c0ec46f1a94aceb95c2d296e765f020732aa4068",
+    "width-8-provenance.json.gz": "605e31e80003d605ef0d4b2fe3da22e02f23065beedad593addc585f4cb740f1",
+    "width-8-summary.json.gz": "e8c70320d98cf194a77222fdee41ef3722ef66b4a2f0b37961c9db977fa0a1d6"
+  }
+}

@@ -10,7 +10,9 @@ The exact existing corpus files are hash-checked and validated. Only the 6,000
 calibration spelling rows reach the generator; its input contains a numeric
 row index, language and typed token. Prepared candidate sets, expected answers,
 labels and context never reach generation. It exports original plus up to seven
-actual alternatives and features. Missing expected words stay missing. Partial
+actual alternatives and features. `--maximum-alternatives` fixes the requested
+limit (1–7, default7) before execution using the production constructor. The
+receipt records that limit; it cannot be lowered after a search exhausts its budget. Missing expected words stay missing. Partial
 search results keep their AutoReplace veto. Results are not confidence estimates
 or an AutoReplace policy.
 

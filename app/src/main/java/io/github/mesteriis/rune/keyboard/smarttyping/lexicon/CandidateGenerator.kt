@@ -55,14 +55,18 @@ data class CandidateGeneration(
 
 /**
  * Worker-confined suggestion foundation, with no editor, model, logging or persistence dependency.
- * Packed selection requires an exact global top-seven certificate; generic readers exhaust the
+ * Packed selection requires an exact global requested-width certificate; generic readers exhaust the
  * neighborhood before display-case/dedup/quota/top-N selection. INITIAL
  * edit cost, descending route prior, frequency rank, Unicode scalar lexical order, then language
  * ordinal and original terminal identity define a deterministic proposal comparator, NOT a
  * calibrated CandidateRanker. The last tie resolves equal-ranked display expansion collisions.
  * Repetition and length features are retained without inventing further ranking coefficients.
  */
-class CandidateGenerator(private val lexicon: CandidateLexicon) {
+class CandidateGenerator(
+    private val lexicon: CandidateLexicon,
+    private val maximumAlternatives: Int = MAX_ALTERNATIVES,
+) {
+    init { require(maximumAlternatives in 1..MAX_ALTERNATIVES) { "CANDIDATE_WIDTH" } }
     private val unit = WeightedDamerauLevenshtein(EditCostProfile.UNIT)
     private val weighted = WeightedDamerauLevenshtein()
     private val candidates = arrayOfNulls<GeneratedCandidate>(CandidateSearchControl.MAX_VERIFIED)
@@ -109,9 +113,10 @@ class CandidateGenerator(private val lexicon: CandidateLexicon) {
             }
             val length = key.codePointCount(0, key.length)
             val radius = if (length < 5) 1 else 2
-            val top = lexicon.selectTop(key, route, pattern, control)
+            val top = lexicon.selectTop(key, route, pattern, control, maximumAlternatives)
             if (top != null) {
                 if (!control.cancellationCheckpoint()) return result(CandidateCompletion.CANCELLED)
+                check(top.maximumAlternatives == maximumAlternatives) { "TOP_SELECTION_WIDTH" }
                 check(control.stop == null || control.stop == top.completion) { "TOP_SELECTION_STOP" }
                 check(top.alternatives.size <= control.verifiedTerminals) { "TOP_SELECTION_VERIFICATION" }
                 return result(top.completion, top.alternatives)
@@ -165,7 +170,7 @@ class CandidateGenerator(private val lexicon: CandidateLexicon) {
             // Bounded <=64 object collection. No per-index-state candidate objects or rank pruning.
             val sorted = (0 until candidateCount).map { candidates[it]!! }.sortedWith(COMPARATOR)
             val seen = HashSet<String>()
-            val selected = ArrayList<GeneratedCandidate>(MAX_ALTERNATIVES)
+            val selected = ArrayList<GeneratedCandidate>(maximumAlternatives)
             var fallbackCount = 0
             for (candidate in sorted) {
                 if (!control.cancellationCheckpoint()) return result(CandidateCompletion.CANCELLED)
@@ -174,7 +179,7 @@ class CandidateGenerator(private val lexicon: CandidateLexicon) {
                 if (candidate.isFallback && fallbackCount == route.fallbackCandidateLimit) continue
                 selected.add(candidate)
                 if (candidate.isFallback) fallbackCount++
-                if (selected.size == MAX_ALTERNATIVES) break
+                if (selected.size == maximumAlternatives) break
             }
             if (!control.cancellationCheckpoint()) return result(CandidateCompletion.CANCELLED)
             return result(completion, selected.toList())

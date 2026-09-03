@@ -21,7 +21,7 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
     private val restore = IntArray(32)
     private val pending = IntArray(64)
     private val seen = IntArray(64)
-    private val selected = IntArray(7)
+    private val selected = IntArray(CandidateGenerator.MAX_ALTERNATIVES)
     private val candidates = arrayOfNulls<GeneratedCandidate>(64)
     private val prefix = PrefixDistance()
     private val unitVerifier = WeightedDamerauLevenshtein(EditCostProfile.UNIT)
@@ -37,18 +37,19 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
     private var fallbackPrior = 0
 
     fun select(key: String, route: LanguageRoute, pattern: CasePattern,
-        control: CandidateSearchControl): TopCandidateSelection {
-        val primary = route.primary?.ordinal ?: return TopCandidateSelection(CandidateCompletion.UNAVAILABLE)
+        control: CandidateSearchControl, maximumAlternatives: Int = CandidateGenerator.MAX_ALTERNATIVES): TopCandidateSelection {
+        require(maximumAlternatives in 1..CandidateGenerator.MAX_ALTERNATIVES) { "CANDIDATE_WIDTH" }
+        val primary = route.primary?.ordinal ?: return TopCandidateSelection(CandidateCompletion.UNAVAILABLE, maximumAlternatives = maximumAlternatives)
         val size = key.codePointCount(0, key.length)
         val radius = if (size < 5) 1 else 2
         val quota = route.fallbackCandidateLimit
         fun finish(status: CandidateCompletion, proof: TopCandidateProof = TopCandidateProof.NONE,
-            alternatives: List<GeneratedCandidate> = emptyList()) = TopCandidateSelection(status, alternatives, proof)
+            alternatives: List<GeneratedCandidate> = emptyList()) = TopCandidateSelection(status, alternatives, proof, maximumAlternatives)
         fun stopped(): TopCandidateSelection {
             if (!control.cancellationCheckpoint()) return finish(CandidateCompletion.CANCELLED)
             val status = control.stop ?: CandidateCompletion.UNAVAILABLE
             if (status != CandidateCompletion.STATES_EXHAUSTED && status != CandidateCompletion.VERIFIED_EXHAUSTED) return finish(status)
-            val partial = selectSubset((0 until candidateCount).map { candidates[it]!! }, quota, control)
+            val partial = selectSubset((0 until candidateCount).map { candidates[it]!! }, quota, control, maximumAlternatives)
             return if (!control.cancellationCheckpoint()) finish(CandidateCompletion.CANCELLED) else finish(status, alternatives = partial)
         }
         try {
@@ -79,9 +80,9 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
                             if (candidate.isFallback) fallbackCount++
                         }
                     }
-                    if (selectedCount == 7) {
+                    if (selectedCount == maximumAlternatives) {
                         if (!control.cancellationCheckpoint()) return finish(CandidateCompletion.CANCELLED)
-                        return finish(CandidateCompletion.COMPLETE, TopCandidateProof.SEVEN_IN_GLOBAL_ORDER,
+                        return finish(CandidateCompletion.COMPLETE, TopCandidateProof.REQUESTED_IN_GLOBAL_ORDER,
                             (0 until selectedCount).map { candidates[selected[it]]!! })
                     }
                     continue
@@ -216,14 +217,14 @@ internal class PackedTopSeven(private val lookup: (KeyboardLanguage) -> PackedLe
         // Frequency and lexical bounds are deliberately bottom: equal cost/prior cannot certify.
         internal fun precedesBound(candidate: GeneratedCandidate, weighted: Int, prior: Int): Boolean =
             quarters(candidate) < weighted || (quarters(candidate) == weighted && candidate.languagePrior > prior)
-        fun selectSubset(all: List<GeneratedCandidate>, quota: Int, control: CandidateSearchControl): List<GeneratedCandidate> {
-            val seen = HashSet<String>(); val result = ArrayList<GeneratedCandidate>(7); var fallbacks = 0
+        fun selectSubset(all: List<GeneratedCandidate>, quota: Int, control: CandidateSearchControl, maximumAlternatives: Int): List<GeneratedCandidate> {
+            val seen = HashSet<String>(); val result = ArrayList<GeneratedCandidate>(maximumAlternatives); var fallbacks = 0
             for (candidate in all.sortedWith(COMPARATOR)) {
                 if (!control.cancellationCheckpoint()) return emptyList()
                 if (!seen.add(candidate.canonicalKey)) continue
                 if (candidate.isFallback && fallbacks == quota) continue
                 result.add(candidate); if (candidate.isFallback) fallbacks++
-                if (result.size == 7) break
+                if (result.size == maximumAlternatives) break
             }
             return result
         }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-09-03T05:10:57.522Z" hostname="mbw.local" time="0.787">
+  <properties/>
+  <testcase name="strict cost prior bound cannot certify equality regardless of frequency" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest" time="0.003"/>
+  <testcase name="last state can finish but unfinished child expansion cannot certify" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest" time="0.012"/>
+  <testcase name="common prefix work is reused and adjacency language changes invalidate it" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest" time="0.0"/>
+  <testcase name="verification cap is shared and cannot be hidden by early certification" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest" time="0.157"/>
+  <testcase name="cached prefixes preserve full recurrence across branches languages and queries" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest" time="0.019"/>
+  <testcase name="production generator matches independently frozen full policy cases" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest" time="0.184"/>
+  <testcase name="unavailable selection does not expose earlier candidate payload" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest" time="0.001"/>
+  <testcase name="all prefix cuts are bounded by independent edit graph distances" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest" time="0.172"/>
+  <testcase name="requested width binds the certificate and mismatched readers fail closed" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest" time="0.1"/>
+  <testcase name="every cancellation checkpoint discards payload and permits immediate reuse" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest" time="0.13"/>
+  <testcase name="generic reader selects the same requested prefix after exhaustive retrieval" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

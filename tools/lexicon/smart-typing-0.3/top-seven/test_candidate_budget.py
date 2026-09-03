@@ -1,6 +1,6 @@
 import unittest
 
-from candidate_budget import changed, once
+from candidate_budget import maximum_alternatives
 from qualify_current import requested_width
 
 
@@ -23,15 +23,16 @@ class CandidateBudgetContracts(unittest.TestCase):
             requested_width({"experiment": {"name": "exact-candidate-budget", "maximumAlternatives": 7,
                 "totalCandidates": 8, "stateCap": 8192, "verificationCap": 64}}, 3)
 
-    def test_source_transform_is_bounded_and_rejects_ambiguous_source(self):
-        for maximum in (1, 3, 7):
-            self.assertEqual(f"const val MAX_ALTERNATIVES = {maximum}",
-                changed("const val MAX_ALTERNATIVES = 7", "CandidateGenerator", maximum))
-        for maximum in (0, 2, 8):
+    def test_production_width_is_explicit_and_mismatch_fails(self):
+        for total in (2, 4, 8):
+            maximum = maximum_alternatives(total)
+            receipt = {"harnessWidthArgument": True, "maximumAlternatives": maximum}
+            self.assertEqual(maximum, requested_width(receipt, maximum))
+            with self.assertRaises(AssertionError):
+                requested_width(receipt, 3 if maximum != 3 else 1)
+        for total in (0, 1, 3, 7, 9, True):
             with self.assertRaises(ValueError):
-                changed("const val MAX_ALTERNATIVES = 7", "CandidateGenerator", maximum)
-        with self.assertRaises(ValueError):
-            once("repeat repeat", "repeat", "changed")
+                maximum_alternatives(total)
 
 
 if __name__ == "__main__":

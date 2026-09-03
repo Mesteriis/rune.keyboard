@@ -155,7 +155,7 @@ class LazyPackedLexicons internal constructor(
             state.snapshot.reader(language)?.scan(language, key, unitRadius, control, visitor) ?: LexiconScanStatus.UNAVAILABLE
 
         override fun selectTop(key: String, route: LanguageRoute, pattern: CasePattern,
-            control: CandidateSearchControl): TopCandidateSelection = topSeven.select(key, route, pattern, control)
+            control: CandidateSearchControl, maximumAlternatives: Int): TopCandidateSelection = topSeven.select(key, route, pattern, control, maximumAlternatives)
     }
 
     private class Work(val language: KeyboardLanguage, val generation: Long, val source: PackedLanguageSource)

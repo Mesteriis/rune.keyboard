@@ -41,6 +41,10 @@ PR8 mechanical punctuation and schema3 persistence have local integration
 evidence, while settings consumers/UI have scoped API26/API37 integration
 evidence. No push, remote PR or publication is authorized.
 
+### Production requested-width contract — 2026-09-03
+
+- `7816103` fixes the two fixture races; mandatory post-commit JVM596/596 PASS. Next slice integrates immutable1–7 alternatives and width-bound certificates into actual packed/generic generation. Default remains7 until calibration. JVM598/598 and full gates/test APK PASS; all3 calibration/oracle exports reproduce frozen experiment outputs exactly. Requested-width API26/API37 tests1/1 each PASS with900 numeric observations each. Physical SM-F966B/API36 was present and user approved app/test APK installation; both succeeded. Requested-width test1/1 PASS with900 numeric observations; four total candidates used38.6% less aggregate CPU than eight in this debug search run. This is scoped physical evidence, not energy or full Fold qualification. Combined ranking/AutoReplace, complete correction Undo, PR9 and release work remain open.
+
 ### Duty trace idle snapshot synchronization — 2026-09-03
 
 - Final JVM596/596 and full prescribed gates PASS. Combined validation also exposed a lexicon test release/interrupt observation race; the fixture now acknowledges interruption before release. Production behavior and all assertions remain unchanged. Initial failures, final logs/XML and nine numerically unchanged trace rows are preserved in `2026-09-03-duty-trace-idle-transition`. Post-commit verification remains required.
