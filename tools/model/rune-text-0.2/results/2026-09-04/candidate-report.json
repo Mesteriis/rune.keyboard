@@ -1,0 +1,424 @@
+{
+  "authoredCalibration": {
+    "en": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1551,
+        "value": 0.7755,
+        "wilson95RowDescriptive": [
+          0.7566951910008709,
+          0.7932485159471586
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 449,
+        "value": 0.2245,
+        "wilson95RowDescriptive": [
+          0.20675148405284127,
+          0.24330480899912904
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "modelErrors": 0,
+      "precision": {
+        "denominator": 449,
+        "numerator": 445,
+        "value": 0.9910913140311804,
+        "wilson95RowDescriptive": [
+          0.9773204752417136,
+          0.9965302873374636
+        ]
+      },
+      "provisionalReplacements": 449
+    },
+    "es": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1531,
+        "value": 0.7655,
+        "wilson95RowDescriptive": [
+          0.7464333372693721,
+          0.7835487106242824
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 469,
+        "value": 0.2345,
+        "wilson95RowDescriptive": [
+          0.21645128937571745,
+          0.2535666627306278
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "modelErrors": 2,
+      "precision": {
+        "denominator": 469,
+        "numerator": 465,
+        "value": 0.9914712153518124,
+        "wilson95RowDescriptive": [
+          0.9782783427978486,
+          0.9966784665093814
+        ]
+      },
+      "provisionalReplacements": 469
+    },
+    "ru": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1576,
+        "value": 0.788,
+        "wilson95RowDescriptive": [
+          0.7695437267430473,
+          0.805352054022951
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 424,
+        "value": 0.212,
+        "wilson95RowDescriptive": [
+          0.19464794597704893,
+          0.23045627325695267
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "modelErrors": 7,
+      "precision": {
+        "denominator": 424,
+        "numerator": 421,
+        "value": 0.9929245283018868,
+        "wilson95RowDescriptive": [
+          0.9794065740961435,
+          0.9975908425454763
+        ]
+      },
+      "provisionalReplacements": 424
+    }
+  },
+  "candidate": {
+    "architecture": "qwen3-0.6B",
+    "artifact": {
+      "bytes": 396704416,
+      "name": "rune-text-v1-0.2.0-q4_k_m.gguf",
+      "sha256": "a400b8a4514a332bfe6f38964f31383f4da6cc42ec1d0c1dbb605855917ada0d"
+    },
+    "quantization": "Q4_K_M",
+    "runtimeAdapter": false
+  },
+  "date": "2026-09-04",
+  "decision": {
+    "api26Qualified": false,
+    "api37Qualified": false,
+    "newFrozenHoldoutExecuted": false,
+    "physicalFoldQualified": false,
+    "publishable": false,
+    "reason": "Calibration precision did not transfer to the disjoint revealed development rows; a larger public multilingual contextual corpus is required.",
+    "releaseQualified": false
+  },
+  "provenance": {
+    "adapterProvenanceSha256": "0194a44ef68475cbfc5680e443a709707577972527359d298b13047fd685491a",
+    "calibrationScoresSha256": "0ea4009754a1aee84babde84fdc4ca0b2fbf49a6ad27730fb84e9f35e553a3a8",
+    "fusedManifestSha256": "bc605f3643024355f5f7e660835df80878cd5aa6dcb1e72f4162a0c48e9fc29a",
+    "ggufProvenanceSha256": "707e6ae6803ba8d921214f3c03bf90e63813d1f3e295a85ebb760f2796d17227",
+    "revealedDevelopmentScoresSha256": "4d703b7e6dc2f31a34d22c1b011db868e1ace91f4711afd7d55ddfe6261c4ca0",
+    "trainingDataManifestSha256": "7841b01e114c187a72bdf167068c489d01c90e73c754506da4b8b625cb94c072"
+  },
+  "revealedDevelopmentHoldout": {
+    "en": {
+      "automaticReplacements": 359,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 925,
+        "value": 0.925,
+        "wilson95RowDescriptive": [
+          0.9069990602607456,
+          0.9397481950265327
+        ]
+      },
+      "correctReplacements": 338,
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 359,
+        "value": 0.1795,
+        "wilson95RowDescriptive": [
+          0.16330014148804087,
+          0.1969286858192422
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "gate": {
+        "falseChangeAtMost0_5Percent": true,
+        "minimum300": true,
+        "pass": false,
+        "precisionAtLeast99Percent": false
+      },
+      "incorrectReplacements": 21,
+      "precision": {
+        "denominator": 359,
+        "numerator": 338,
+        "value": 0.9415041782729805,
+        "wilson95RowDescriptive": [
+          0.9122346523553817,
+          0.9614251577178998
+        ]
+      }
+    },
+    "es": {
+      "automaticReplacements": 428,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 892,
+        "value": 0.892,
+        "wilson95RowDescriptive": [
+          0.8712410199098767,
+          0.9097588014374481
+        ]
+      },
+      "correctReplacements": 421,
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 428,
+        "value": 0.214,
+        "wilson95RowDescriptive": [
+          0.19658287469350122,
+          0.23251367635137538
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "gate": {
+        "falseChangeAtMost0_5Percent": true,
+        "minimum300": true,
+        "pass": false,
+        "precisionAtLeast99Percent": false
+      },
+      "incorrectReplacements": 7,
+      "precision": {
+        "denominator": 428,
+        "numerator": 421,
+        "value": 0.9836448598130841,
+        "wilson95RowDescriptive": [
+          0.9666296845689576,
+          0.9920554799601339
+        ]
+      }
+    },
+    "ru": {
+      "automaticReplacements": 408,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 917,
+        "value": 0.917,
+        "wilson95RowDescriptive": [
+          0.8982635048659464,
+          0.9325449785571007
+        ]
+      },
+      "correctReplacements": 394,
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 408,
+        "value": 0.204,
+        "wilson95RowDescriptive": [
+          0.18691468981734755,
+          0.22222020217315414
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 1,
+        "value": 0.001,
+        "wilson95RowDescriptive": [
+          0.00017654637062607809,
+          0.0056425585979579355
+        ]
+      },
+      "gate": {
+        "falseChangeAtMost0_5Percent": true,
+        "minimum300": true,
+        "pass": false,
+        "precisionAtLeast99Percent": false
+      },
+      "incorrectReplacements": 14,
+      "precision": {
+        "denominator": 408,
+        "numerator": 394,
+        "value": 0.9656862745098039,
+        "wilson95RowDescriptive": [
+          0.9432332674451014,
+          0.9794518869056239
+        ]
+      }
+    }
+  },
+  "schemaVersion": 1,
+  "scope": "rune-text-0.2-rejected-candidate-report",
+  "training": {
+    "baseFiles": {
+      ".gitattributes": "11ad7efa24975ee4b0c3c3a38ed18737f0658a5f75a0a96787b576a78a023361",
+      "LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+      "README.md": "910d9be25c648ab1cb5a7b1d20d67ca6d43d43559a705010198886f9af68e8f1",
+      "config.json": "504a6b58c4271583724e66584b6b7698aea18450209df6b2f7582df0e89cee59",
+      "generation_config.json": "8c970692323e3ea0e9b8b0a4dca79388d31226e41f83c9fd6014804280ebf6e8",
+      "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "model.safetensors": "cd2a512003e2f9f3cd3c32a9c3573f820bb28c940f73c57b1ddaa983d9223eba",
+      "tokenizer.json": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+      "tokenizer_config.json": "3c04ed3ca964ea2f6b2b5faf0dc4d31aec1cb1e8b4bcf63f402d295046b422b5",
+      "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    },
+    "baseline": {
+      "accuracy": 0.778,
+      "correct": 389,
+      "languages": {
+        "en": {
+          "accuracy": 0.6369047619047619,
+          "correct": 107,
+          "meanMargin": 1.256065011024475,
+          "pairs": 168
+        },
+        "es": {
+          "accuracy": 0.8614457831325302,
+          "correct": 143,
+          "meanMargin": 4.26417114361223,
+          "pairs": 166
+        },
+        "ru": {
+          "accuracy": 0.8373493975903614,
+          "correct": 139,
+          "meanMargin": 2.6394275369414366,
+          "pairs": 166
+        }
+      },
+      "meanMargin": 2.714032611846924,
+      "pairs": 500,
+      "sampleSources": {
+        "frequency": {
+          "languages": {
+            "en": 84,
+            "es": 83,
+            "ru": 83
+          },
+          "pairs": 250
+        },
+        "product_calibration": {
+          "languages": {
+            "en": 84,
+            "es": 83,
+            "ru": 83
+          },
+          "pairs": 250
+        }
+      }
+    },
+    "configSha256": "d2cfb154b999cef7cc664286426e0408de4aba7aa31f107600eb560b9aa3ad42",
+    "dataManifestSha256": "7841b01e114c187a72bdf167068c489d01c90e73c754506da4b8b625cb94c072",
+    "final": {
+      "accuracy": 0.96,
+      "correct": 480,
+      "languages": {
+        "en": {
+          "accuracy": 0.9761904761904762,
+          "correct": 164,
+          "meanMargin": 3.983751112506503,
+          "pairs": 168
+        },
+        "es": {
+          "accuracy": 0.963855421686747,
+          "correct": 160,
+          "meanMargin": 4.012590385345091,
+          "pairs": 166
+        },
+        "ru": {
+          "accuracy": 0.9397590361445783,
+          "correct": 156,
+          "meanMargin": 2.9261919087674246,
+          "pairs": 166
+        }
+      },
+      "meanMargin": 3.6422160897254945,
+      "pairs": 500,
+      "sampleSources": {
+        "frequency": {
+          "languages": {
+            "en": 84,
+            "es": 83,
+            "ru": 83
+          },
+          "pairs": 250
+        },
+        "product_calibration": {
+          "languages": {
+            "en": 84,
+            "es": 83,
+            "ru": 83
+          },
+          "pairs": 250
+        }
+      }
+    },
+    "outputs": {
+      "adapter_config.json": "b3d608dc377e960ce140bd79db1ab60936120bbaeb9f6dd853d85a646a2196c7",
+      "adapters.safetensors": "5d4c9aea867e17df8085ba2c43f4ff08c90939c340aff2a8bdc021f597bb757c"
+    },
+    "schemaVersion": 1,
+    "scope": "rune-text-0.2-pairwise-adapter",
+    "smokeOnly": false,
+    "sourceLockSha256": "ac1fb8be976a4e9b8e08ad082511018114dec7f71ba624c6e6d545e9f671660f",
+    "sources": {
+      "tools/model/rune-text-0.2/train_pairwise.py": "dcf326d5e06131d0dc255fb347e8cfefa3065afed0f4a28793c947d085922b31",
+      "tools/model/rune-text-0.2/validation_sampling.py": "c6400bb5e65be698e2b3a94e3f779b7b968cb30273d5788616778b80967005e7"
+    },
+    "tokenizedRows": {
+      "train": 58952,
+      "trainSkippedZeroSpan": 2572,
+      "valid": 4411,
+      "validSkippedZeroSpan": 187
+    },
+    "toolchain": {
+      "mlx-lm": "0.31.3",
+      "python": "3.11.14"
+    },
+    "trainableParameters": 2162688
+  }
+}

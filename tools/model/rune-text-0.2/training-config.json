@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "baseModel": "Qwen/Qwen3-0.6B-Base",
+  "baseRevision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+  "objective": "reference-free-pairwise-average-log-probability",
+  "seed": 3042026,
+  "trainWordsPerLanguage": 6000,
+  "validationWordsPerLanguage": 1000,
+  "mutationsPerTrainWord": 2,
+  "mutationsPerValidationWord": 1,
+  "productCalibration": {
+    "maximumAlternatives": 3,
+    "trainingFamilyPercent": 80,
+    "trainingRepeat": 4
+  },
+  "minimumWordCodePoints": 4,
+  "maximumWordCodePoints": 20,
+  "maximumSequenceTokens": 96,
+  "lora": {
+    "rank": 8,
+    "scale": 16.0,
+    "dropout": 0.0,
+    "numLayers": 12
+  },
+  "training": {
+    "iterations": 4000,
+    "batchSize": 2,
+    "gradientAccumulationSteps": 4,
+    "learningRate": 0.00002,
+    "marginTemperature": 0.2,
+    "chosenNllWeight": 0.02,
+    "validationBatches": 250,
+    "reportEvery": 25,
+    "evaluateEvery": 250,
+    "saveEvery": 500,
+    "clearCacheThresholdBytes": 1073741824
+  },
+  "output": {
+    "architecture": "qwen3",
+    "quantization": "Q4_K_M",
+    "runtimeAdapter": false
+  }
+}

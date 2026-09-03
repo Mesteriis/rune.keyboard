@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "baseModel": {
+    "repository": "Qwen/Qwen3-0.6B-Base",
+    "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+    "sha256Manifest": "../rune-text-0.1/source.sha256"
+  },
+  "frequencyWords": {
+    "revision": "525f9b560de45753a5ea01069454e72e9aa541c6",
+    "files": {
+      "en_50k.txt": "5351ff405b1126ef555791dd4d9798a48e3e9a501a9fc481a9da957752cfb458",
+      "es_50k.txt": "dcff3ad4316192f4dc4ff7d26e637c6ff314ef1ca0f3f720c5649018a71056c0",
+      "ru_50k.txt": "6095f507cc167488ec66ada5a85ac50433503a08ad24a07c6eabdf54352c4e7f"
+    }
+  },
+  "trainingToolchain": {
+    "mlx-lm": {
+      "version": "0.31.3",
+      "gitRevision": "dcbf6e33d135a1b7c6767ca0fe7ebbd23df814a7"
+    },
+    "mlx": "0.32.2",
+    "python": "3.11"
+  },
+  "converter": {
+    "repository": "ggml-org/llama.cpp",
+    "revision": "36b10154383b60eb15baac2c7a40d2a5f784faa7"
+  }
+}
