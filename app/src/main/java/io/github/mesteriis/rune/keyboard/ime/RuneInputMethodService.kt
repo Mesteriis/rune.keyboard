@@ -36,6 +36,8 @@ import io.github.mesteriis.rune.keyboard.settings.KeyboardViewMetrics
 import io.github.mesteriis.rune.keyboard.settings.SettingsCodec
 import io.github.mesteriis.rune.keyboard.settings.SizeBucket
 import io.github.mesteriis.rune.keyboard.settings.ThemeOverride
+import io.github.mesteriis.rune.keyboard.settings.ContextualPunctuationMode
+import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingEdit
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.AndroidLazyPackedLexicons
@@ -398,7 +400,8 @@ class RuneInputMethodService : InputMethodService() {
                 candidates.invalidate()
             }
             if (settings.autocorrectionMode != previous.autocorrectionMode ||
-                settings.candidateStrip != previous.candidateStrip
+                settings.candidateStrip != previous.candidateStrip ||
+                settings.contextualPunctuationMode != previous.contextualPunctuationMode
             ) candidates.invalidate()
             if (settings.enabledLanguages != previous.enabledLanguages) candidates.invalidate()
             if (state.language != selectedLanguage) {
@@ -474,6 +477,8 @@ class RuneInputMethodService : InputMethodService() {
         candidateStripEnabled = settings.candidateStrip,
         deterministicAutoReplaceQualified = typingSession.isSpellingQualified(state.language, false),
         modelAutoReplaceQualified = typingSession.isSpellingQualified(state.language, true),
+        contextualPunctuationEnabled = settings.contextualPunctuationMode == ContextualPunctuationMode.SUGGESTIONS,
+        contextualModelReady = candidates.modelReadinessHint == ModelReadinessHint.READY,
     )
 
     private fun renderCandidates() {

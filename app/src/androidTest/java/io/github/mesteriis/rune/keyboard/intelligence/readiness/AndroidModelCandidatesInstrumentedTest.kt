@@ -28,6 +28,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidate
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateReply
 import io.github.mesteriis.rune.keyboard.smarttyping.session.CandidateOwnerState
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionController
+import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import org.junit.Assert.*
 import org.junit.Test
 import java.io.File
@@ -39,6 +40,30 @@ import java.util.concurrent.atomic.AtomicInteger
 
 /** Real factory, metadata reader, Handler, client and remote Binder; synthetic engine and owned editor fixture. */
 class AndroidModelCandidatesInstrumentedTest {
+    @Test fun contextualCandidatesUseOneBoundedRemoteRequestAndEqualScoresKeepOriginal() = Fixture().use { f ->
+        onMain {
+            f.owner = f.owner.copy(autocorrectionMode = AutocorrectionMode.OFF,
+                contextualPunctuationEnabled = true)
+            f.ranking.invalidate()
+        }
+        await { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
+        onMain {
+            f.owner = f.owner.copy(contextualModelReady = true)
+            f.prepareContextual("hello", "world", 1)
+            assertTrue(f.controller.canRequestContextualRanking)
+            f.ranking.candidatesChanged()
+        }
+        await { f.context.remote.get() > 0 && onMain { !f.controller.canRequestContextualRanking } }
+        assertEquals(1, f.context.attempts.get())
+        assertEquals(0, f.context.mainReads.get())
+        onMain {
+            assertEquals("hello world", f.controller.state.contextText)
+            assertTrue(f.controller.candidateViewState.candidates.none {
+                it is io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem.Punctuation
+            })
+        }
+    }
+
     @Test fun readyDoesNotReplayAndNextEditUsesRealRemoteClientWithoutEditorWrite() = Fixture().use { f ->
         onMain { f.prepare("helo", "hello", 1); f.ranking.candidatesChanged() }
         await { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
@@ -130,6 +155,14 @@ class AndroidModelCandidatesInstrumentedTest {
                 false, 4, 1, 1, EditFeatures(1.0, 0, 0.0), 1, CasePattern.LOWER)
             assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
                 CandidateGeneration(request.token, listOf(item), CandidateCompletion.COMPLETE, false, null, 1, 1))))
+        }
+        fun prepareContextual(left: String, word: String, id: Long) {
+            controller.typeText(left) { editorWrites.incrementAndGet(); true }
+            controller.typeText(" ") { editorWrites.incrementAndGet(); true }
+            controller.typeText(word) { editorWrites.incrementAndGet(); true }
+            val request = checkNotNull(controller.beginCandidateRequest(id, KeyboardLanguage.ENGLISH))
+            assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
+                CandidateGeneration(request.token, emptyList(), CandidateCompletion.COMPLETE, true, null, 1, 1))))
         }
         override fun close() {
             onMain { ranking.close(); controller.endSession() }

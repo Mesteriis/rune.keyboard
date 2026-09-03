@@ -27,7 +27,7 @@
   <string name="setup_settings_button">Открыть настройки Rune</string>
   <string name="setup_privacy_title">Приватность по умолчанию</string>
   <string name="setup_privacy_description">Сеть используется только после явного скачивания необязательной локальной модели. Введённый текст не отправляется. В Rune нет телеметрии, рекламы, истории ввода и доступа к буферу обмена.</string>
-  <string name="setup_mvp_note">Rune предлагает подсказки слов и механическую пунктуацию. Необязательная локальная модель может упорядочивать подсказки с учётом текста, набранного Rune. Автоматическая замена слов и подсказки контекстной пунктуации пока недоступны.</string>
+  <string name="setup_mvp_note">Rune предлагает подсказки слов и механическую пунктуацию. Готовая локальная модель может ранжировать орфографические подсказки и предлагать контекстную пунктуацию с учётом текста, набранного Rune. Автозамена остаётся под контролем проверки качества.</string>
 
   <string name="key_shift">Shift</string>
   <string name="key_shift_on">Shift включён</string>
@@ -63,7 +63,8 @@
   <string name="settings_mechanical_punctuation">Механическая пунктуация</string>
   <string name="settings_mechanical_punctuation_summary">Корректирует пробелы у знаков пунктуации и заглавную букву предложения в тексте, набранном Rune.</string>
   <string name="settings_contextual_punctuation">Контекстная пунктуация</string>
-  <string name="settings_contextual_unavailable">Недоступно в этой версии. Выбор сохранён. Установка модели пока не включает эту функцию.</string>
+  <string name="settings_contextual_unavailable">Доступно, когда локальная модель готова. Выбор сохранён.</string>
+  <string name="settings_contextual_ready">Готово. Пунктуация предлагается после паузы и применяется только по нажатию.</string>
   <string name="settings_candidate_strip">Строка подсказок</string>
   <string name="settings_candidate_strip_summary">Показывает исходное слово и доступные подсказки. Скрытие строки не выключает механическую пунктуацию.</string>
   <string name="settings_section_typing">Ввод</string>

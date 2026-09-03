@@ -26,6 +26,8 @@ data class CandidateOwnerState(
     val candidateStripEnabled: Boolean = true,
     val deterministicAutoReplaceQualified: Boolean = false,
     val modelAutoReplaceQualified: Boolean = false,
+    val contextualPunctuationEnabled: Boolean = false,
+    val contextualModelReady: Boolean = false,
 ) {
     val baseEligible: Boolean
         get() = editorAllowsSmartTyping && inputViewActive && layer == KeyboardLayer.LETTERS && !hasSelection
@@ -43,6 +45,12 @@ data class CandidateOwnerState(
     val canRequestModelSpelling: Boolean
         get() = baseEligible && spellingEnabled &&
             (candidateStripEnabled || automaticMode && modelAutoReplaceQualified)
+    val canRequestContextual: Boolean
+        get() = baseEligible && candidateStripEnabled && contextualPunctuationEnabled && contextualModelReady
+    val canRequestCandidateWork: Boolean
+        get() = canRequestSpelling || canRequestContextual
+    val canActivateAnyModelCandidate: Boolean
+        get() = canRequestModelSpelling || baseEligible && candidateStripEnabled && contextualPunctuationEnabled
 }
 
 /** Main owner only; readiness never calls back, renders never submit, and no request survives a boundary. */
@@ -77,6 +85,13 @@ class LocalCandidateCoordinator internal constructor(
     private var requestId = 0L
     private var closed = false
 
+    val modelReadinessHint: io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
+        get() {
+            checkOwner()
+            return modelRanking?.modelReadinessHint
+                ?: io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint.MISSING
+        }
+
     /** Wrap only actual typing commands. Their controller result decides whether admission is allowed. */
     fun edit(action: () -> TypingTextResult): TypingTextResult {
         checkOwner()
@@ -84,7 +99,7 @@ class LocalCandidateCoordinator internal constructor(
         // Retain the latest accepted decision until this action consumes its exact word.
         // Cancel worker/callback ownership first, so late work cannot race a boundary commit.
         val owner = ownerState?.invoke()
-        cancelCandidates(clearAllowlist = owner?.canRequestSpelling != true)
+        cancelCandidates(clearAllowlist = owner?.canRequestCandidateWork != true)
         val editEpoch = epoch
         val session = controller.state.sessionId
         val revision = controller.state.revision
@@ -118,11 +133,12 @@ class LocalCandidateCoordinator internal constructor(
         }
         val item = viewState.candidates.firstOrNull { it.id == id } ?: return TypingTextResult.REJECTED
         if (item is CandidateUiItem.Correction && !owner.spellingEnabled) return TypingTextResult.REJECTED
+        if (item is CandidateUiItem.Punctuation && !owner.canRequestContextual) return TypingTextResult.REJECTED
         cancelCandidates(clearAllowlist = false)
         invalidateLoads()
         // Under OFF, Original can acknowledge only the current spelling, never restore a prior
         // manual correction if a caller changed policy without clearing its old metadata.
-        if (!owner.spellingEnabled) {
+        if (!owner.spellingEnabled && item !is CandidateUiItem.Punctuation) {
             return if (controller.selectOriginal(id)) TypingTextResult.HANDLED else TypingTextResult.REJECTED
         }
         return controller.selectCandidate(id, execute)
@@ -135,10 +151,18 @@ class LocalCandidateCoordinator internal constructor(
             val owner = ownerState?.invoke()
             if (closed || owner?.showsCandidates != true) return SmartTypingViewState.HIDDEN
             val view = controller.candidateViewState
-            if (owner.spellingEnabled || !view.enabled) return view
+            if (!view.enabled) return view
+            if (owner.spellingEnabled) {
+                if (owner.canRequestContextual || view.candidates.none { it is CandidateUiItem.Punctuation }) return view
+                val visible = view.candidates.filterNot { it is CandidateUiItem.Punctuation }
+                val selected = view.selectedCandidateId?.takeIf { id -> visible.any { it.id == id } }
+                    ?: visible.firstOrNull()?.id
+                return SmartTypingViewState(true, visible, selected)
+            }
             val originalId = controller.originalCandidateId ?: return SmartTypingViewState.EMPTY
             val original = CandidateUiItem.Original(originalId, controller.state.composing!!.typedWord)
-            return SmartTypingViewState(true, listOf(original), original.id)
+            val contextual = view.candidates.filterIsInstance<CandidateUiItem.Punctuation>().take(1)
+            return SmartTypingViewState(true, listOf(original) + contextual, original.id)
         }
 
     override fun close() {
@@ -156,7 +180,7 @@ class LocalCandidateCoordinator internal constructor(
 
     private fun requestCurrentWord() {
         val owner = ownerState?.invoke() ?: return
-        if (!owner.canRequestSpelling || !controller.canRequestCandidates) {
+        if (!owner.canRequestCandidateWork || !controller.canRequestCandidates) {
             invalidateLoads()
             return
         }
@@ -183,7 +207,7 @@ class LocalCandidateCoordinator internal constructor(
         val owner = ownerState?.invoke()
         val typing = controller.state
         val original = typing.composing?.typedWord
-        if (owner?.canRequestSpelling != true || owner.language != current.language ||
+        if (owner?.canRequestCandidateWork != true || owner.language != current.language ||
             typing.sessionId != current.sessionId || typing.revision != current.revision ||
             !controller.canRequestCandidates || original == null || reply.generation.original != original ||
             !routeReady(LanguageRouter.route(original, owner.language))) {

@@ -12,6 +12,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunct
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalEditKind
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.OwnedPunctuationSuffix
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.PunctuationAction
+import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationEngine
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CalibratedSpellingPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.RankingModelScore
@@ -71,6 +72,9 @@ class TypingSessionController internal constructor(
     private var pendingCandidate: CandidateStamp? = null
     private var candidateSelection: CandidateSelection? = null
     private var pendingModelRanking: ModelRankingStamp? = null
+    private var pendingContextualRanking: ContextualRankingStamp? = null
+    private var contextualSelection: ContextualSelection? = null
+    private var contextualCompletedSelection: CandidateSelection? = null
     private var lastModelRequestId = 0L
 
     /** Owner must additionally check the active view, editor policy, layer, language and readiness. */
@@ -143,6 +147,9 @@ class TypingSessionController internal constructor(
         pendingCandidate = null
         candidateSelection = null
         pendingModelRanking = null
+        pendingContextualRanking = null
+        contextualSelection = null
+        contextualCompletedSelection = null
     }
 
     /** Snapshot only after consumer eligibility checks. Full candidate set; Rune-owned prefix only. */
@@ -193,7 +200,64 @@ class TypingSessionController internal constructor(
     }
 
     /** Cancels ranking ownership without removing the current deterministic/manual strip. */
-    fun cancelModelRanking() { pendingModelRanking = null }
+    fun cancelModelRanking() {
+        pendingModelRanking = null
+        pendingContextualRanking = null
+    }
+
+    val canRequestContextualRanking: Boolean
+        get() {
+            val selection = candidateSelection ?: return false
+            val composing = state.composing ?: return false
+            return canRequestCandidates && selection.generation.isValidWord &&
+                selection.alternatives.isEmpty() && contextualCompletedSelection !== selection &&
+                composing.leadingBoundary == " " &&
+                contextualInput(selection.language) != null
+        }
+
+    fun beginContextualRanking(requestId: Long): ScoringInput? {
+        if (!canRequestContextualRanking || requestId <= lastModelRequestId) return null
+        val selection = candidateSelection ?: return null
+        val (prefix, variants) = contextualInput(selection.language) ?: return null
+        val token = ScoringToken(state.sessionId, state.revision, requestId, variants.map { it.id })
+        val input = try { ScoringInput(token, prefix, variants.map { it.continuation }) }
+        catch (_: IllegalArgumentException) { return null }
+        lastModelRequestId = requestId
+        pendingContextualRanking = ContextualRankingStamp(token, selection, variants)
+        return input
+    }
+
+    fun isCurrentContextualRanking(token: ScoringToken): Boolean {
+        val pending = pendingContextualRanking ?: return false
+        return token == pending.token && candidateSelection === pending.selection &&
+            canRequestContextualRanking && state.sessionId == token.sessionId && state.revision == token.revision
+    }
+
+    fun acceptContextualRanking(reply: ScoringReply): Boolean {
+        if (!isCurrentContextualRanking(reply.token)) return false
+        val pending = pendingContextualRanking ?: return false
+        pendingContextualRanking = null
+        if (reply.code != ScoringCode.OK || reply.scores.size != pending.variants.size) return false
+        contextualCompletedSelection = pending.selection
+        val averages = reply.scores.associate { it.candidateId to it.sumLogProbability / it.tokenCount }
+        val original = averages[0]?.takeIf(Double::isFinite) ?: return false
+        val winner = pending.variants.filter { it.id != 0 }.maxWithOrNull(
+            compareBy<ContextualPunctuationEngine.Variant> { averages[it.id] ?: Double.NEGATIVE_INFINITY }
+                .thenBy { -it.id }) ?: return false
+        val winnerScore = averages[winner.id]?.takeIf(Double::isFinite) ?: return false
+        if (winnerScore <= original) return false
+        contextualSelection = ContextualSelection(pending.token, pending.selection, winner)
+        return true
+    }
+
+    private fun contextualInput(language: KeyboardLanguage): Pair<String, List<ContextualPunctuationEngine.Variant>>? {
+        val composing = state.composing ?: return null
+        val text = context?.text ?: return null
+        if (!text.endsWith(composing.text)) return null
+        val prefix = text.dropLast(composing.text.length)
+        val variants = ContextualPunctuationEngine.variants(prefix, composing.typedWord, language)
+        return variants.takeIf { it.size in 2..8 }?.let { prefix to it }
+    }
 
     /** Diagnostic completion only: this controller never authorizes automatic replacement. */
     val candidateCompletion: CandidateCompletion?
@@ -209,6 +273,12 @@ class TypingSessionController internal constructor(
                 add(CandidateUiItem.Original(originalId, selection?.original ?: state.composing!!.typedWord))
                 selection?.visibleIndices?.forEach { index ->
                     add(CandidateUiItem.Correction(correctionId(selection.requestId, index), selection.alternatives[index].text))
+                }
+                contextualSelection?.takeIf { it.selection === selection }?.let { contextual ->
+                    if (size < SmartTypingViewState.MAX_VISIBLE_CANDIDATES) {
+                        add(CandidateUiItem.Punctuation(contextualId(contextual),
+                            contextual.variant.boundary.trimEnd()))
+                    }
                 }
             }
             val selectedId = if (selection != null && selection.selectedIndex >= 0 &&
@@ -238,6 +308,9 @@ class TypingSessionController internal constructor(
     /** Explicit user choice only. Unknown/stale IDs are REJECTED and must never fall back/replay. */
     fun selectCandidate(candidateId: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
         if (!ownsCandidateComposition) return TypingTextResult.REJECTED
+        contextualSelection?.takeIf { candidateId == contextualId(it) }?.let {
+            return selectContextual(it, execute)
+        }
         val selection = candidateSelection
         val index = if (candidateId == originalCandidateId) -1 else {
             selection?.visibleIndices?.firstOrNull {
@@ -266,6 +339,33 @@ class TypingSessionController internal constructor(
 
     private fun correctionId(requestId: Long, index: Int): String =
         "correction:${state.sessionId}:${state.revision}:$requestId:$index"
+
+    private fun contextualId(value: ContextualSelection) =
+        "punctuation:${value.token.sessionId}:${value.token.revision}:${value.token.requestId}:${value.variant.id}"
+
+    private fun selectContextual(selection: ContextualSelection, execute: (TypingEdit) -> Boolean): TypingTextResult {
+        if (!isCurrentContextualSelection(selection)) return TypingTextResult.REJECTED
+        val previous = state.composing!!
+        val replacement = selection.variant.continuation
+        if (replacement.length > MAX_COMPOSING_UTF16 || replacement.codePointCount(0, replacement.length) > 128) {
+            return TypingTextResult.REJECTED
+        }
+        val end = composingStart.toLong() + replacement.length
+        if (end > Int.MAX_VALUE) return TypingTextResult.REJECTED
+        discardUndo()
+        return applyEdit(TypingEdit.SetComposingText(replacement),
+            EditorSelection(end.toInt(), end.toInt(), composingStart, end.toInt()), execute) {
+            check(context?.replaceSuffix(previous.text, replacement) == true) { "Contextual ownership mismatch" }
+            state = state.copy(composing = ComposingSegment(selection.variant.boundary,
+                replacement.removePrefix(selection.variant.boundary)))
+            publish()
+        }
+    }
+
+    private fun isCurrentContextualSelection(value: ContextualSelection): Boolean =
+        contextualSelection === value && candidateSelection === value.selection &&
+            state.sessionId == value.token.sessionId && state.revision == value.token.revision &&
+            state.composing?.leadingBoundary == " " && ownsCandidateComposition
 
     fun startSession(editor: EditorContext, selectionStart: Int, selectionEnd: Int) {
         endSession()
@@ -823,6 +923,10 @@ class TypingSessionController internal constructor(
         val language: KeyboardLanguage)
 
     private class ModelRankingStamp(val token: ScoringToken, val selection: CandidateSelection)
+    private class ContextualRankingStamp(val token: ScoringToken, val selection: CandidateSelection,
+        val variants: List<ContextualPunctuationEngine.Variant>)
+    private class ContextualSelection(val token: ScoringToken, val selection: CandidateSelection,
+        val variant: ContextualPunctuationEngine.Variant)
 
     private data class CandidateSelection(
         val generation: CandidateGeneration,

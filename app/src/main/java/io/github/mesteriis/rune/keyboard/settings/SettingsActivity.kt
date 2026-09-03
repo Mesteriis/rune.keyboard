@@ -10,6 +10,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsActivity
+import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
+import io.github.mesteriis.rune.keyboard.intelligence.readiness.DiskModelReadinessProbe
+import java.io.File
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * Rune's configuration screen, built from plain framework views to keep the app dependency-free.
@@ -22,6 +26,8 @@ class SettingsActivity : ThemedActivity() {
     private lateinit var inflater: LayoutInflater
     private var settings = KeyboardSettings.DEFAULT
     private var appliedTheme = ThemePreference.SYSTEM
+    private var contextualModelReady = false
+    private val readinessGeneration = AtomicInteger()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +47,29 @@ class SettingsActivity : ThemedActivity() {
             return
         }
         reload()
+        refreshModelReadiness()
+    }
+
+    override fun onPause() {
+        readinessGeneration.incrementAndGet()
+        super.onPause()
+    }
+
+    private fun refreshModelReadiness() {
+        val generation = readinessGeneration.incrementAndGet()
+        Thread({
+            val hint = DiskModelReadinessProbe { File(noBackupFilesDir, "model-delivery") }
+                .read { readinessGeneration.get() != generation }
+            runOnUiThread {
+                if (readinessGeneration.get() == generation && !isFinishing && !isDestroyed) {
+                    val ready = hint == ModelReadinessHint.READY
+                    if (contextualModelReady != ready) {
+                        contextualModelReady = ready
+                        buildRows()
+                    }
+                }
+            }
+        }, "Rune-settings-readiness").apply { isDaemon = true }.start()
     }
 
     private fun reload() {
@@ -77,8 +106,8 @@ class SettingsActivity : ThemedActivity() {
             values = ContextualPunctuationMode.entries,
             labels = ContextualPunctuationMode.entries.map { getString(contextualLabel(it)) },
             selected = settings.contextualPunctuationMode,
-            summary = if (settings.contextualPunctuationMode == ContextualPunctuationMode.SUGGESTIONS)
-                getString(R.string.settings_contextual_unavailable) else null,
+            summary = ContextualAvailability.summaryResource(settings.contextualPunctuationMode, contextualModelReady)
+                ?.let(::getString),
         ) { preferences.writeContextualPunctuationMode(it) }
         addToggleRow(
             titleRes = R.string.settings_candidate_strip,

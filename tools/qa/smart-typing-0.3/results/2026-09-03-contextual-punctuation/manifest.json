@@ -1,0 +1,28 @@
+{
+  "files": {
+    "TEST-io.github.mesteriis.rune.keyboard.settings.ContextualAvailabilityTest.xml.gz": "711d2890416c0bd0bf9d2a3072c7e94bf31c8929cbe838e748cb9abd74738665",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationEngineTest.xml.gz": "bdc79383e918cbe953c401f4741f9464a7fb4e59dc348c9b060cd4e44c1378f2",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest.xml.gz": "fba212c93beffd40cb10122cc0e1c7dcbc24e9d1e332df8f5e017b2316ffeb55",
+    "contextual-api26.log": "188ab76990c8a158f61f6a667a3d4ec225fbc91c473e076ac05bf5621524a2df",
+    "contextual-api37.log": "83268c6a85a39a5e2db53e4e3e64680d0ccc124006d3f3fdc18b1798abcd028d",
+    "contextual-gates-final-02.log": "dae124862dc4b08b37c358cc1117e60f982df69166999237162e1837c38697be",
+    "contextual-gates-final.log": "e72d65682d6e9bcad1803851a004c16429df88e8554eea524d3db50cb01aaaf9",
+    "contextual-gates.log": "bca45f16dc14f676ade93ac5abbc276aaf32e9c9735a69b1c3e0f454c7e8e0a2",
+    "contextual-targeted-02.log": "a30c372ed081cd7372b0900439fd2c9f63bdd47d6e59e817a6d5860e7dfd02db",
+    "contextual-targeted-03.log": "53bc6b79a31b64b961f5a81388f8221aa1a054224b9db1bf20c37146dbf62544",
+    "contextual-targeted-04.log": "e908c629c12000fd49ed474449876f2ecd9192b54ad7beb77945fd380a5b8245",
+    "contextual-targeted-05.log": "5d8ceb978ef762c88b8cac667686f828a24b0d1aca37c65733eaec26d2b57fd6",
+    "contextual-targeted-06.log": "9a2401e7f2003ac01979db3b7543086463978bb054a4449347c8096c7572c4b7",
+    "contextual-targeted-07.log": "edb803015cfcfd83a7acba77a3aba03dd0b1b523e35078269dcdf06206434744",
+    "contextual-targeted-final.log": "e59ca71f6bff0e552adb0bcb113f1885115d30a6d8aa4b7db9b73c4e3ff77eff",
+    "contextual-targeted.log": "cc1c7a0373b3e6c1e4c9c6ab25d2bb1132c10dee91f835d40ff00368ccd851f9",
+    "identity.json": "19b33afda4f849404f0014c62e5023030475f0b420be79810b9023a92e969ae6"
+  },
+  "notes": {
+    "contextual-gates-final-02.log": "clean isolated final-source PASS",
+    "contextual-gates.log": "initial concurrent duplicate gate race; excluded",
+    "contextual-targeted-02.log": "retained initial policy-test failure",
+    "contextual-targeted-04.log": "retained intermediate compile failure",
+    "contextual-targeted.log": "retained initial compile failure"
+  }
+}

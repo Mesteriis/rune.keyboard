@@ -32,6 +32,7 @@ class ModelCandidateCoordinator(
     private var requestId = 0L
     private var closed = false
     private var pendingOwner: CandidateOwnerState? = null
+    private var pendingKind: RequestKind? = null
 
     /** Cached metadata only, independent of transport connectivity and quality qualification. */
     val modelReadinessHint: ModelReadinessHint
@@ -45,7 +46,8 @@ class ModelCandidateCoordinator(
         val session = controller.state.sessionId
         val revision = controller.state.revision
         readiness.setActive(featureEligible())
-        if (!eligible() || !controller.canRequestModelRanking) { client.attachSession(session, false); return }
+        val kind = requestKind() ?: run { client.attachSession(session, false); return }
+        if (!eligible()) { client.attachSession(session, false); return }
         val owner = ownerState()
         client.attachSession(session, true)
         val scheduledEpoch = epoch
@@ -54,10 +56,15 @@ class ModelCandidateCoordinator(
                 checkOwner()
                 if (closed || timer !== this || epoch != scheduledEpoch) return
                 timer = null
-                if (!eligible() || ownerState() != owner || controller.state.sessionId != session ||
+                if (!eligible() || requestKind() != kind || ownerState() != owner || controller.state.sessionId != session ||
                     controller.state.revision != revision || !client.available || requestId == Long.MAX_VALUE) return
-                val input = controller.beginModelRanking(++requestId) ?: return
+                val nextId = ++requestId
+                val input = when (kind) {
+                    RequestKind.SPELLING -> controller.beginModelRanking(nextId)
+                    RequestKind.CONTEXTUAL -> controller.beginContextualRanking(nextId)
+                } ?: return
                 pendingOwner = owner
+                pendingKind = kind
                 client.score(input)
             }
         }
@@ -71,6 +78,7 @@ class ModelCandidateCoordinator(
         if (closed) return
         epoch++
         pendingOwner = null
+        pendingKind = null
         timer?.let(scheduler::remove); timer = null
         controller.cancelModelRanking()
         client.cancel()
@@ -88,12 +96,19 @@ class ModelCandidateCoordinator(
     override fun currentCompositionRevision(): Long { checkOwner(); return controller.state.revision }
     override fun onReply(reply: ScoringReply) {
         checkOwner()
-        if (closed || !eligible() || pendingOwner != ownerState() || !controller.isCurrentModelRanking(reply.token)) return
+        val kind = pendingKind ?: return
+        if (closed || !eligible() || pendingOwner != ownerState() || !isCurrent(kind, reply)) return
         if (reply.code == ScoringCode.NO_MODEL || reply.code == ScoringCode.LOAD_FAILED) {
             cancel(); client.attachSession(null, false); readiness.setActive(false)
             return
         }
-        if (controller.acceptModelRanking(reply)) { pendingOwner = null; changed() }
+        val accepted = when (kind) {
+            RequestKind.SPELLING -> controller.acceptModelRanking(reply)
+            RequestKind.CONTEXTUAL -> controller.acceptContextualRanking(reply)
+        }
+        pendingOwner = null
+        pendingKind = null
+        if (accepted) changed()
     }
     override fun onAvailabilityChanged(available: Boolean) {
         checkOwner()
@@ -105,10 +120,20 @@ class ModelCandidateCoordinator(
         if (closed) return
         cancel(); closed = true; client.close(); readiness.close()
     }
-    private fun featureEligible() = !closed && ownerState().canRequestModelSpelling && controller.state.enabled
+    private fun featureEligible() = !closed && ownerState().canActivateAnyModelCandidate && controller.state.enabled
     private fun eligible() = featureEligible() && readiness.hint == ModelReadinessHint.READY &&
         controller.canRequestCandidates
+    private fun requestKind(): RequestKind? = when {
+        ownerState().canRequestModelSpelling && controller.canRequestModelRanking -> RequestKind.SPELLING
+        ownerState().canRequestContextual && controller.canRequestContextualRanking -> RequestKind.CONTEXTUAL
+        else -> null
+    }
+    private fun isCurrent(kind: RequestKind, reply: ScoringReply) = when (kind) {
+        RequestKind.SPELLING -> controller.isCurrentModelRanking(reply.token)
+        RequestKind.CONTEXTUAL -> controller.isCurrentContextualRanking(reply.token)
+    }
     private fun checkOwner() = check(Thread.currentThread() === ownerThread) { "Model candidate owner thread required" }
+    private enum class RequestKind { SPELLING, CONTEXTUAL }
     companion object {
         /** Development pause, not a measured latency/energy budget; service CPU duty still applies. */
         const val PAUSE_MILLIS = 400L

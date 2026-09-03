@@ -1,0 +1,33 @@
+{
+  "api26": {
+    "api": 26,
+    "failures": 0,
+    "seconds": 124.366,
+    "tests": 10
+  },
+  "api37": {
+    "api": 37,
+    "failures": 0,
+    "seconds": 151.64,
+    "tests": 10
+  },
+  "baseline": "c887e49ebc50d06e1aa18ee1f5b55e9c11858320",
+  "branch": "feature/smart-typing-03-pr06-lexicons",
+  "debugApkSha256": "7db7dfd49c5ec8e07972f672a44ddc1de12382690a8edf636aeedda5b7e3417a",
+  "jvm": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 651
+  },
+  "localGates": {
+    "executed": 277,
+    "result": "PASS",
+    "seconds": 47,
+    "tasks": 277
+  },
+  "physicalFold": "OPEN: installation follows the local commit and mandatory post-commit JVM run",
+  "publication": "BLOCKED: immutable public model release absent",
+  "quality": "OPEN: real-model contextual holdout not run",
+  "testApkSha256": "b84ddf2dfc5be6f88d38dc1e88143c3a7e9a0c4600e84513a4602166c5da093b"
+}

@@ -21,6 +21,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.TopCandidateSelection
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateLexicon
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateSearchControl
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateVisitor
@@ -652,6 +653,103 @@ class LocalCandidateCoordinatorTest {
         assertTrue(h.model.closed); assertTrue(h.model.requests.isEmpty())
     }
 
+    @Test fun `valid word contextual request is bounded and explicit tap changes only owned boundary`() {
+        Harness(withModel = true).use { h ->
+            h.owner = h.owner.copy(autocorrectionMode = AutocorrectionMode.OFF,
+                contextualPunctuationEnabled = true, contextualModelReady = true)
+            h.lexicon.validWords += listOf("hello", "world")
+            h.type("hello"); h.deliver()
+            assertNull(h.pause.task)
+            h.type(" "); h.type("world"); h.deliver()
+            assertEquals(400L, h.pause.delay); h.pause.fire()
+            val request = h.model.requests.single()
+            assertEquals("hello", request.prefix)
+            assertEquals(listOf(" world", ", world", ": world", "; world", ". World", "? World", "! World"),
+                request.continuations)
+            assertEquals((0..6).toList(), request.token.candidateIds)
+            h.model.reply(request, 1)
+            assertEquals(listOf("world", ","), h.labels())
+            val punctuation = h.coordinator.viewState.candidates.single { it is CandidateUiItem.Punctuation }
+            h.commands.clear()
+            assertEquals(TypingTextResult.HANDLED, h.coordinator.selectCandidate(punctuation.id, h.execute))
+            assertEquals("hello, world", h.controller.state.contextText)
+            assertEquals(listOf(TypingEdit.SetComposingText(", world")), h.commands)
+            assertNull(h.controller.state.lastAutoEdit)
+        }
+    }
+
+    @Test fun `contextual result is suggestion only and stale reply cannot mutate or render`() {
+        Harness(withModel = true).use { h ->
+            h.owner = h.owner.copy(contextualPunctuationEnabled = true, contextualModelReady = true)
+            h.lexicon.validWords += listOf("hello", "world")
+            h.type("hello"); h.deliver(); h.type(" "); h.type("world"); h.deliver(); h.pause.fire()
+            val request = h.model.requests.single()
+            assertEquals("hello world", h.controller.state.contextText)
+            assertTrue(h.commands.last() is TypingEdit.SetComposingText)
+            h.model.reply(request, 4)
+            val stale = h.coordinator.viewState.candidates.single { it is CandidateUiItem.Punctuation }.id
+            h.owner = h.owner.copy(contextualPunctuationEnabled = false)
+            assertTrue(h.coordinator.viewState.candidates.none { it is CandidateUiItem.Punctuation })
+            assertEquals(TypingTextResult.REJECTED, h.coordinator.selectCandidate(stale, h.execute))
+            h.owner = h.owner.copy(contextualPunctuationEnabled = true)
+            h.type("s")
+            val before = h.controller.state.contextText
+            h.model.reply(request, 4)
+            assertEquals(before, h.controller.state.contextText)
+            assertTrue(h.coordinator.viewState.candidates.none { it is CandidateUiItem.Punctuation })
+        }
+    }
+
+    @Test fun `sentence contextual tap capitalizes first code point only`() {
+        Harness(withModel = true).use { h ->
+            h.owner = h.owner.copy(contextualPunctuationEnabled = true, contextualModelReady = true)
+            h.lexicon.validWords += listOf("hello", "world")
+            h.type("hello"); h.deliver(); h.type(" "); h.type("world"); h.deliver(); h.pause.fire()
+            val request = h.model.requests.single(); h.model.reply(request, 4)
+            val punctuation = h.coordinator.viewState.candidates.single { it is CandidateUiItem.Punctuation }
+            assertEquals(TypingTextResult.HANDLED, h.coordinator.selectCandidate(punctuation.id, h.execute))
+            assertEquals("hello. World", h.controller.state.contextText)
+            assertEquals(ComposingSegment(". ", "World"), h.controller.state.composing)
+        }
+    }
+
+    @Test fun `missing contextual model activates metadata but performs no lexicon or inference work`() {
+        Harness(withModel = true).use { h ->
+            h.modelReady = false
+            h.owner = h.owner.copy(autocorrectionMode = AutocorrectionMode.OFF,
+                contextualPunctuationEnabled = true, contextualModelReady = false)
+            h.coordinator.invalidate()
+            h.type("hello")
+            assertEquals(0, h.routeRequests); assertEquals(0, h.lexicon.exactCalls.get())
+            assertTrue(h.model.requests.isEmpty()); assertNull(h.pause.task)
+            assertTrue(h.readinessActivity.last())
+        }
+    }
+
+    @Test fun `typo spelling gets one model request even while contextual suggestions are enabled`() {
+        Harness(withModel = true).use { h ->
+            h.owner = h.owner.copy(contextualPunctuationEnabled = true, contextualModelReady = true)
+            h.type("hello"); h.type(" "); h.type("helo"); h.deliver(); h.pause.fire()
+            assertEquals(1, h.model.requests.size)
+            assertEquals(listOf("helo", "help", "hello"), h.model.requests.single().continuations)
+        }
+    }
+
+    @Test fun `contextual Original decision completes the revision without a duplicate request`() {
+        Harness(withModel = true).use { h ->
+            h.owner = h.owner.copy(autocorrectionMode = AutocorrectionMode.OFF,
+                contextualPunctuationEnabled = true, contextualModelReady = true)
+            h.lexicon.validWords += listOf("hello", "world")
+            h.type("hello"); h.deliver(); h.type(" "); h.type("world"); h.deliver(); h.pause.fire()
+            val request = h.model.requests.single(); h.model.reply(request, 0)
+            assertFalse(h.controller.canRequestContextualRanking)
+            assertTrue(h.coordinator.viewState.candidates.none { it is CandidateUiItem.Punctuation })
+            h.model.listener.onAvailabilityChanged(true)
+            repeat(3) { h.coordinator.viewState }
+            assertEquals(1, h.model.requests.size); assertNull(h.pause.task)
+        }
+    }
+
     @Test fun `stale missing model error cannot detach a newer request`() {
         Harness(withModel = true).use { h ->
             h.type("helo"); h.deliver(); h.pause.fire()
@@ -704,10 +802,11 @@ class LocalCandidateCoordinatorTest {
         var modelReady = true
         val model = FakeModel()
         val pause = Pause()
+        val readinessActivity = mutableListOf<Boolean>()
         private val ranking = if (withModel) ModelCandidateCoordinator(controller,
             { model.listener = it; model }, pause, { owner }, object : ModelReadinessSource {
                 override val hint get() = if (modelReady) ModelReadinessHint.READY else ModelReadinessHint.MISSING
-                override fun setActive(active: Boolean) = Unit
+                override fun setActive(active: Boolean) { readinessActivity += active }
                 override fun close() = Unit
             }, { published++ }) else null
         val commands = mutableListOf<TypingEdit>()
@@ -748,6 +847,7 @@ class LocalCandidateCoordinatorTest {
         @Volatile var fail = false
         @Volatile var extraNeighbors = false
         val requestedWidths = ConcurrentLinkedQueue<Int>()
+        val validWords = mutableSetOf<String>()
 
         override fun selectTop(key: String, route: LanguageRoute, pattern: CasePattern,
             control: CandidateSearchControl, maximumAlternatives: Int): TopCandidateSelection? {
@@ -759,7 +859,7 @@ class LocalCandidateCoordinatorTest {
             exactCalls.incrementAndGet()
             if (!control.inspectState()) return ExactMembership.UNAVAILABLE
             if (fail) throw IllegalStateException("public fixture failure")
-            return ExactMembership.ABSENT
+            return if (key in validWords) ExactMembership.PRESENT else ExactMembership.ABSENT
         }
 
         override fun scan(language: KeyboardLanguage, key: String, unitRadius: Int,

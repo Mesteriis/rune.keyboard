@@ -1,5 +1,7 @@
 # Rune Smart Typing 0.3 execution ledger
 
+- 2026-09-03 contextual punctuation slice from `c887e49`: exact valid words can use the existing private scorer after the 400 ms pause for one of seven bounded leading-boundary variants. A typo prioritizes spelling, so Rune performs at most one model request per word. Only a strictly better non-space result is shown and it applies solely by explicit tap to the owned composition; sentence marks may capitalize the first code point. Technical/mixed/all-caps inputs abstain, Spanish inverted marks remain manual, stale identities cannot render or mutate, and missing-model readiness performs no lexicon/inference work. Settings now show descriptor Ready off main. Fresh final-source JVM651/651 and all277 prescribed gates PASS; API26/API37 production Binder synthetic-engine and settings matrices10/10 each PASS (124.366s/151.640s). The initial concurrent duplicate gate race is retained and excluded. Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-contextual-punctuation.md`. Real-model contextual holdout, full automatic Binder/Fold/energy/release gates and publication remain open; this is implementation progress, not goal completion.
+
 Baseline: b5400cbadadd29e8ee915a0fb33fb11ec5bebc79. Binding requirements: `2026-09-02-smart-typing-spec.txt` and the user-approved implementation plan in this task.
 
 ## Accepted refinements

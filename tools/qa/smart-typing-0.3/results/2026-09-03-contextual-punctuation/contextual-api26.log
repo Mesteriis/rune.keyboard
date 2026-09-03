@@ -1,0 +1,13 @@
+app-debug.apk sha256=7db7dfd49c5ec8e07972f672a44ddc1de12382690a8edf636aeedda5b7e3417a
+Performing Streamed Install
+Success
+test-apk sha256=b84ddf2dfc5be6f88d38dc1e88143c3a7e9a0c4600e84513a4602166c5da093b
+Performing Streamed Install
+Success
+
+io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest:....
+io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest:......
+
+Time: 124.366
+
+OK (10 tests)
