@@ -1,0 +1,20 @@
+{
+  "baseline": "03cea4523079d57b3efc9066157f09cbe807ee4e",
+  "tests": 596,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "traceRowsUnchanged": true,
+  "sha256": {
+    "LazyPackedLexiconsTest.xml": "38f8b752691ab9d24270ed561e9912b6f9580b1d2942420bf4ac7ba1c4964d93",
+    "ModelDutyTraceTest.xml": "53155d681c0401956ac3ccd6f9bd74b493b1a8a6fdc7ea3e85ea3c64e8e32c4a",
+    "REPORT.md": "57aeda8f161ea4096bd874953a5ac5b592398c7a83fdb6d27ebaf0425f0ea407",
+    "final-gates.log": "57d70247b032363b8e0005689fede7db094d294f9daa9db70c6ddc2f36c79fce",
+    "initial-combined-jvm.log": "3f516bc8d01221911518c33b04b44bb54546762e5f288fe363c016dc3d5b7bf3",
+    "initial-execution.xml": "4c95650896e87da99484780ca0418f861a728ec84908579f74a0b43f12fc7208",
+    "initial-lexicon-execution.xml": "c4e8b5d03bb77ad2a148bb0381f4ab867b75ac66e53b1971903ea9161eb074a9",
+    "initial-postcommit-jvm.log": "5285f88f6d1ced58775b53cad06cb72e8642d48ce7f4fd5ecc8f749329554883",
+    "results.json": "0298f401eb1d9e717dd21d73c7a6073e6c68eb95bb9eec1d061c20f74fac5eee",
+    "targeted.log": "c64524219baeba7b754b78b39e158334987b98fdde7489e67c7cb71dc1cae597"
+  }
+}

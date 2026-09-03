@@ -148,6 +148,9 @@ class LazyPackedLexiconsTest {
             loader.request(LanguageRouter.route("casa", EN))
             gate.awaitEntered()
             loader.invalidate()
+            // Observe the injected interrupt before releasing the source. Otherwise release can
+            // win before await starts, so no InterruptedException is required to be thrown.
+            until { gate.interrupted.get() }
             assertEquals(LexiconAvailability.NOT_REQUESTED, loader.availability(EN))
             assertEquals(LexiconAvailability.NOT_REQUESTED, loader.availability(ES))
             loader.request(single(RU))

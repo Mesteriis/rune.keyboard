@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest" tests="9" skipped="0" failures="1" errors="0" timestamp="2026-09-02T23:47:04.816Z" hostname="mbw.local" time="0.031">
+  <properties/>
+  <testcase name="fixedTypingPressureAndRecoveryTrace[EN-2]" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest" time="0.017"/>
+  <testcase name="fixedTypingPressureAndRecoveryTrace[EN-4]" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest" time="0.001"/>
+  <testcase name="fixedTypingPressureAndRecoveryTrace[EN-8]" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest" time="0.001"/>
+  <testcase name="fixedTypingPressureAndRecoveryTrace[RU-2]" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest" time="0.001"/>
+  <testcase name="fixedTypingPressureAndRecoveryTrace[RU-4]" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest" time="0.002"/>
+  <testcase name="fixedTypingPressureAndRecoveryTrace[RU-8]" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest" time="0.002"/>
+  <testcase name="fixedTypingPressureAndRecoveryTrace[ES-2]" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest" time="0.001"/>
+  <testcase name="fixedTypingPressureAndRecoveryTrace[ES-4]" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest" time="0.001"/>
+  <testcase name="fixedTypingPressureAndRecoveryTrace[ES-8]" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest" time="0.003">
+    <failure message="java.lang.AssertionError: expected null, but was:&lt;io.github.mesteriis.rune.keyboard.intelligence.inference.LatestScoringWorker$$Lambda$146/0x000000980114c428@9573584&gt;" type="java.lang.AssertionError">java.lang.AssertionError: expected null, but was:&lt;io.github.mesteriis.rune.keyboard.intelligence.inference.LatestScoringWorker$$Lambda$146/0x000000980114c428@9573584&gt;
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotNull(Assert.java:756)
+	at org.junit.Assert.assertNull(Assert.java:738)
+	at org.junit.Assert.assertNull(Assert.java:748)
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest$Trace.idle(ModelDutyTraceTest.kt:161)
+	at io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest.fixedTypingPressureAndRecoveryTrace(ModelDutyTraceTest.kt:31)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runners.Suite.runChild(Suite.java:128)
+	at org.junit.runners.Suite.runChild(Suite.java:27)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestExecutor.runRequest(JUnitTestExecutor.java:175)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestExecutor.accept(JUnitTestExecutor.java:84)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestExecutor.accept(JUnitTestExecutor.java:47)
+	at org.gradle.api.internal.tasks.testing.junit.AbstractJUnitTestDefinitionProcessor.processTestDefinition(AbstractJUnitTestDefinitionProcessor.java:65)
+	at org.gradle.api.internal.tasks.testing.SuiteTestDefinitionProcessor.processTestDefinition(SuiteTestDefinitionProcessor.java:53)
+	at jdk.internal.reflect.GeneratedMethodAccessor5.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.gradle.internal.dispatch.MethodInvocation.invokeOn(MethodInvocation.java:77)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:28)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:19)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:88)
+	at jdk.proxy1/jdk.proxy1.$Proxy4.processTestDefinition(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$2.run(TestWorker.java:178)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:126)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+</failure>
+  </testcase>
+  <system-out><![CDATA[DUTY_TRACE_V1 {"language":"EN","candidates":2,"submitted":11,"admitted":6,"denied":4,"expired":1,"cancelled":3,"completed":2,"failed":1,"replacedPending":1,"usableBefore1000msBoundary":1,"boundaryProbes":1,"simulatedCpuMillis":11079,"simulatedWallMillis":276024,"finalCreditUnits":-7450,"simulatedExhaustionTailCpuMillis":100,"simulatedExhaustionTailWallMillis":25}
+DUTY_TRACE_V1 {"language":"EN","candidates":4,"submitted":11,"admitted":6,"denied":4,"expired":1,"cancelled":3,"completed":2,"failed":1,"replacedPending":1,"usableBefore1000msBoundary":1,"boundaryProbes":1,"simulatedCpuMillis":12687,"simulatedWallMillis":276448,"finalCreditUnits":-7450,"simulatedExhaustionTailCpuMillis":100,"simulatedExhaustionTailWallMillis":25}
+DUTY_TRACE_V1 {"language":"EN","candidates":8,"submitted":11,"admitted":6,"denied":4,"expired":1,"cancelled":3,"completed":2,"failed":1,"replacedPending":1,"usableBefore1000msBoundary":0,"boundaryProbes":1,"simulatedCpuMillis":16623,"simulatedWallMillis":277518,"finalCreditUnits":-7450,"simulatedExhaustionTailCpuMillis":100,"simulatedExhaustionTailWallMillis":25}
+DUTY_TRACE_V1 {"language":"RU","candidates":2,"submitted":11,"admitted":6,"denied":4,"expired":1,"cancelled":3,"completed":2,"failed":1,"replacedPending":1,"usableBefore1000msBoundary":1,"boundaryProbes":1,"simulatedCpuMillis":13631,"simulatedWallMillis":276710,"finalCreditUnits":-7450,"simulatedExhaustionTailCpuMillis":100,"simulatedExhaustionTailWallMillis":25}
+DUTY_TRACE_V1 {"language":"RU","candidates":4,"submitted":11,"admitted":6,"denied":4,"expired":1,"cancelled":3,"completed":2,"failed":1,"replacedPending":1,"usableBefore1000msBoundary":0,"boundaryProbes":1,"simulatedCpuMillis":17229,"simulatedWallMillis":277662,"finalCreditUnits":-7450,"simulatedExhaustionTailCpuMillis":100,"simulatedExhaustionTailWallMillis":25}
+DUTY_TRACE_V1 {"language":"RU","candidates":8,"submitted":11,"admitted":6,"denied":4,"expired":1,"cancelled":3,"completed":2,"failed":1,"replacedPending":1,"usableBefore1000msBoundary":0,"boundaryProbes":1,"simulatedCpuMillis":24667,"simulatedWallMillis":279636,"finalCreditUnits":-7450,"simulatedExhaustionTailCpuMillis":100,"simulatedExhaustionTailWallMillis":25}
+DUTY_TRACE_V1 {"language":"ES","candidates":2,"submitted":11,"admitted":6,"denied":4,"expired":1,"cancelled":3,"completed":2,"failed":1,"replacedPending":1,"usableBefore1000msBoundary":1,"boundaryProbes":1,"simulatedCpuMillis":11899,"simulatedWallMillis":276248,"finalCreditUnits":-7450,"simulatedExhaustionTailCpuMillis":100,"simulatedExhaustionTailWallMillis":25}
+DUTY_TRACE_V1 {"language":"ES","candidates":4,"submitted":11,"admitted":6,"denied":4,"expired":1,"cancelled":3,"completed":2,"failed":1,"replacedPending":1,"usableBefore1000msBoundary":1,"boundaryProbes":1,"simulatedCpuMillis":14759,"simulatedWallMillis":277044,"finalCreditUnits":-7450,"simulatedExhaustionTailCpuMillis":100,"simulatedExhaustionTailWallMillis":25}
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -41,6 +41,14 @@ PR8 mechanical punctuation and schema3 persistence have local integration
 evidence, while settings consumers/UI have scoped API26/API37 integration
 evidence. No push, remote PR or publication is authorized.
 
+### Duty trace idle snapshot synchronization — 2026-09-03
+
+- Final JVM596/596 and full prescribed gates PASS. Combined validation also exposed a lexicon test release/interrupt observation race; the fixture now acknowledges interruption before release. Production behavior and all assertions remain unchanged. Initial failures, final logs/XML and nine numerically unchanged trace rows are preserved in `2026-09-03-duty-trace-idle-transition`. Post-commit verification remains required.
+
+- Candidate-width experiments committed as `03cea4523079d57b3efc9066157f09cbe807ee4e`. Mandatory post-commit JVM:596 tests/1 failure in the ES-8 trace's idle timer assertion; failure saved.
+- The fixture's non-atomic90-second virtual-clock jump let the worker start legitimate idle-unload CPU accounting between assertions. Wrapped the existing advance/account/assertion snapshot in the synchronized owner's monitor; no assertion, profile, request or production code changed.
+- Targeted27 trace/worker tests PASS; all nine numeric rows exactly match the frozen trace report. Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-duty-trace-idle.md`. This is fixture synchronization, not physical energy qualification.
+
 ### Exact candidate-width feasibility — 2026-09-03
 
 - Baseline `ab8029b729c1cc12d15c2b487b401ca0b08c19ca`. The user requires at most7 alternatives; always requesting7 was an implementation choice. Compared predeclared exact widths2/4/8 including original, with unchanged8192/64 caps, protection, ranking and corpus.

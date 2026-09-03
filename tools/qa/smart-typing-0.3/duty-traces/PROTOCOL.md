@@ -1,5 +1,11 @@
 # CPU duty synthetic trace v1
 
+Synchronization clarification,2026-09-03: an idle clock advance and its credit/
+timer assertions are one atomic snapshot under the owner's existing monitor.
+After that snapshot, the worker may observe the advanced time and run mandatory
+idle unload with its legitimate cleanup timer. This does not add a periodic
+idle scoring watchdog or change any frozen request, cost, count or expected row.
+
 Frozen before first execution on source baseline `6fb5880`. This is ordinary-CI
 simulation of the actual worker, not native execution, service throughput,
 latency, quality, a battery measurement or physical trace qualification.

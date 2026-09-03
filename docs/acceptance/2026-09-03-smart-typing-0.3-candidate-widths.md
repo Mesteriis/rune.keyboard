@@ -95,3 +95,8 @@ retain the maximum of seven, qualify all widths and cancellation paths, then
 calibrate deterministic/model-assisted decisions and measure device costs.
 PR7 automatic replacement/Undo, PR9 contextual punctuation, physical Fold,
 final quality/energy/release gates and model publication remain open.
+
+Post-commit JVM follow-up: the fresh run after `03cea45` reported596 tests /1
+failure in an existing duty-trace fixture. Root cause and atomic-clock correction
+are documented in `2026-09-03-smart-typing-0.3-duty-trace-idle.md`; the initial
+failure is preserved rather than reported as a passing run.

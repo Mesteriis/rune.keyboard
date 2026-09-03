@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-09-03T00:00:56.674Z" hostname="mbw.local" time="0.548">
+  <properties/>
+  <testcase name="existingReadySurvivesInvalidationAndLaterPublicationOnTheSameBridge" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.337"/>
+  <testcase name="wrongThreadMutationAndUnexpectedWorkerFailureAreContentFree" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.006"/>
+  <testcase name="constructionAndProtectedRouteNeverStartLoading" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.022"/>
+  <testcase name="closeIsNonjoiningRejectsLateReadyAndStopsAnyFurtherDemand" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.014"/>
+  <testcase name="rejectedThreadStartStopsWithoutRetryOrPayload" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.002"/>
+  <testcase name="sameLanguageCanBeRequestedAgainAfterInvalidationWithoutObsoletePublication" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.005"/>
+  <testcase name="approvedRouterRequestsOnlySpanishOrRussianForStrongEvidence" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.012"/>
+  <testcase name="failuresAndWrongLanguageNeverPublishOrRetryWithinLifetime" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.042"/>
+  <testcase name="bridgeDoesNotRetainQueryControlOrVisitorWhileLoaderRemainsIdle" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.018"/>
+  <testcase name="invalidationDropsPendingAndRejectsLateReadyEvenIfSourceIgnoresInterrupt" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.011"/>
+  <testcase name="recoverableAndInterruptedLoadsAreRedactedAndDoNotPoisonNextLanguage" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.013"/>
+  <testcase name="closedOwnerAndSourceCanBeCollectedWithLoaderAndBridgeStillRetained" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.018"/>
+  <testcase name="coalescesSerialEnumDemandAndRequiresBothRoutesReady" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.015"/>
+  <testcase name="bridgePreservesSharedAccountingVisitorStopAndCancellation" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest" time="0.012"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

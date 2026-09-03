@@ -154,7 +154,10 @@ class ModelDutyTraceTest(private val language: String, private val count: Int,
             assertEquals(true, checks.stopped.poll(3, TimeUnit.SECONDS))
         }
         fun advance(wall: Long, cpu: Long) { clock.advance(wall, cpu); checks.task?.run() }
-        fun idle(wall: Long) {
+        fun idle(wall: Long) = synchronized(owner) {
+            // One atomic virtual-clock transition and assertion snapshot. Otherwise the worker
+            // may observe the new idle age and start mandatory unload between these assertions;
+            // its cleanup timer is legitimate. Never acquire the worker monitor in this block.
             assertNull(checks.task)
             clock.advance(wall, 0)
             assertEquals(ModelDutyProfile.CAPACITY_UNITS, owner.account().creditUnits)
