@@ -1,0 +1,16 @@
+{
+  "actual": "12c99573c6e74fd133359d2fff676f805177a86f3b84033fbb49993e121c5980",
+  "binary": "c7d3cc50644cf06626e30a5cab8886e071418e096fad3439eb9d33c8406d3613",
+  "corpusManifest": "b70f82f8cb4b1cf6fc811fa1446a7866ba8117828d29a702189da5cd43e42bda",
+  "exporter": "3d7238b86ff9c1cfbbdafe332f7bea0b9e6cc04508c6f498343cfcabad223179",
+  "holdoutScored": false,
+  "inputs": "28cde16c3921a63f97f04565129155b9c039f8a4682425f34723282502889a1e",
+  "records": "961bcd0444c3f46cec9ed37767163dd3373532b184a15e37ad3a60930fc8d969",
+  "rows": "1842a03964c7c28fb11d384769d65acbd964c70b66f8d67061c5fb9c52a8810b",
+  "scope": "production-contextual-export",
+  "sources": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+    "tools/eval/smart-typing-0.3/pipeline/ContextualExport.kt": "274de10d00612b580edf687c237b4e811e6a199b3e9448ffe4a4c0baaeb5f60b"
+  }
+}

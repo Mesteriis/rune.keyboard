@@ -1,0 +1,156 @@
+{
+  "calibrationCompleteSha256": "13cc02d6613290979ebe81a61e7878add4115e898906be505b33df9d61088722",
+  "calibrationMetrics": {
+    "en": {
+      "ambiguousNonSpaceSuggestion": {
+        "denominator": 100,
+        "numerator": 88,
+        "value": 0.88,
+        "wilson95RowDescriptive": [
+          0.8018790057328857,
+          0.9300059356298052
+        ]
+      },
+      "ambiguousRows": 100,
+      "automaticReplacements": 0,
+      "correctSuggestions": 100,
+      "rows": 200,
+      "runtimeErrors": 0,
+      "suggestionPrecision": {
+        "denominator": 100,
+        "numerator": 100,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9630065017930143,
+          1.0
+        ]
+      },
+      "suggestions": 100,
+      "unambiguousAbstention": {
+        "denominator": 100,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          3.469446951953614e-18,
+          0.03699349820698568
+        ]
+      },
+      "unambiguousRows": 100,
+      "unambiguousTop1Coverage": {
+        "denominator": 100,
+        "numerator": 100,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9630065017930143,
+          1.0
+        ]
+      }
+    },
+    "es": {
+      "ambiguousNonSpaceSuggestion": {
+        "denominator": 100,
+        "numerator": 100,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9630065017930143,
+          1.0
+        ]
+      },
+      "ambiguousRows": 100,
+      "automaticReplacements": 0,
+      "correctSuggestions": 73,
+      "rows": 200,
+      "runtimeErrors": 0,
+      "suggestionPrecision": {
+        "denominator": 100,
+        "numerator": 73,
+        "value": 0.73,
+        "wilson95RowDescriptive": [
+          0.6356788323205499,
+          0.8073041585042365
+        ]
+      },
+      "suggestions": 100,
+      "unambiguousAbstention": {
+        "denominator": 100,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          3.469446951953614e-18,
+          0.03699349820698568
+        ]
+      },
+      "unambiguousRows": 100,
+      "unambiguousTop1Coverage": {
+        "denominator": 100,
+        "numerator": 73,
+        "value": 0.73,
+        "wilson95RowDescriptive": [
+          0.6356788323205499,
+          0.8073041585042365
+        ]
+      }
+    },
+    "ru": {
+      "ambiguousNonSpaceSuggestion": {
+        "denominator": 100,
+        "numerator": 100,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9630065017930143,
+          1.0
+        ]
+      },
+      "ambiguousRows": 100,
+      "automaticReplacements": 0,
+      "correctSuggestions": 91,
+      "rows": 200,
+      "runtimeErrors": 0,
+      "suggestionPrecision": {
+        "denominator": 100,
+        "numerator": 91,
+        "value": 0.91,
+        "wilson95RowDescriptive": [
+          0.837737871472837,
+          0.9519274599974348
+        ]
+      },
+      "suggestions": 100,
+      "unambiguousAbstention": {
+        "denominator": 100,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          3.469446951953614e-18,
+          0.03699349820698568
+        ]
+      },
+      "unambiguousRows": 100,
+      "unambiguousTop1Coverage": {
+        "denominator": 100,
+        "numerator": 91,
+        "value": 0.91,
+        "wilson95RowDescriptive": [
+          0.837737871472837,
+          0.9519274599974348
+        ]
+      }
+    }
+  },
+  "calibrationScoresSha256": "82aadae3524a93a20ec5b9a4a7eff36ea008c544b4419be0b3c39cc2b6fb5089",
+  "configSha256": "38eb7d5a93130c1fbdbaae050244a237501a4bd79c25cfb85892123b3dab9d11",
+  "engineSha256": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+  "exportReceiptSha256": "c52f41f5ae8fb9efec6698bbe950de409bf2bc859b255f2e22f8175eaf0397d6",
+  "minimumDelta": 0.0,
+  "modelIdentity": {
+    "corpusSha256": "c6eca4bbaf05bcd90a4511dd2feb2a8865488206f6cac3bcb27439fb6fb09b33",
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "f2f8e9e21a028871da4b9ced6ce0492eb692f742c4de765467a2d44a18535973"
+  },
+  "qualitySourceSha256": "677130727f53720e4809a7e58e111f634737ad94062fe43a5eb5a11164c6ddd1",
+  "schemaVersion": 1,
+  "scope": "contextual-fixed-rule-calibration",
+  "selectionRule": "best non-original average log probability strictly greater than Original; stable lower ID",
+  "thresholdSearchPerformed": false
+}

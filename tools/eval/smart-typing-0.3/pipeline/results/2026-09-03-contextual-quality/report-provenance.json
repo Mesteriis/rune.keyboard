@@ -1,0 +1,7 @@
+{
+  "configSha256": "38eb7d5a93130c1fbdbaae050244a237501a4bd79c25cfb85892123b3dab9d11",
+  "holdoutExecuted": true,
+  "reportSha256": "1ae4b08f49f3d7907cd974920913c08b22c356b7f248a9bcbf944395e7f09606",
+  "scope": "contextual-suggestion-holdout",
+  "scoresSha256": "4cf25f5f6d2090aa476191e9708e8cadc07d2a792dfafcdb640de026334850be"
+}

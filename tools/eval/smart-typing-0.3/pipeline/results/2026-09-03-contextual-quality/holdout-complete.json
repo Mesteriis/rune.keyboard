@@ -1,0 +1,16 @@
+{
+  "exportReceiptSha256": "c52f41f5ae8fb9efec6698bbe950de409bf2bc859b255f2e22f8175eaf0397d6",
+  "frozenConfigSha256": "38eb7d5a93130c1fbdbaae050244a237501a4bd79c25cfb85892123b3dab9d11",
+  "identity": {
+    "corpusSha256": "e8869c562a48767b57bb1a0e4339018326bb600218cc3c513ad7e549487f631a",
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "f2f8e9e21a028871da4b9ced6ce0492eb692f742c4de765467a2d44a18535973"
+  },
+  "requests": 600,
+  "runtimeErrors": 0,
+  "scope": "contextual-holdout-scores",
+  "scores": 600,
+  "scoresSha256": "4cf25f5f6d2090aa476191e9708e8cadc07d2a792dfafcdb640de026334850be",
+  "split": "holdout"
+}

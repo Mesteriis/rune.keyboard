@@ -1,0 +1,142 @@
+{
+  "automaticReplacements": 0,
+  "languages": {
+    "en": {
+      "ambiguousNonSpaceSuggestion": {
+        "denominator": 100,
+        "numerator": 97,
+        "value": 0.97,
+        "wilson95RowDescriptive": [
+          0.9154806357094724,
+          0.9897454759759611
+        ]
+      },
+      "ambiguousRows": 100,
+      "automaticReplacements": 0,
+      "correctSuggestions": 100,
+      "rows": 200,
+      "runtimeErrors": 0,
+      "suggestionPrecision": {
+        "denominator": 100,
+        "numerator": 100,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9630065017930143,
+          1.0
+        ]
+      },
+      "suggestions": 100,
+      "unambiguousAbstention": {
+        "denominator": 100,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          3.469446951953614e-18,
+          0.03699349820698568
+        ]
+      },
+      "unambiguousRows": 100,
+      "unambiguousTop1Coverage": {
+        "denominator": 100,
+        "numerator": 100,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9630065017930143,
+          1.0
+        ]
+      }
+    },
+    "es": {
+      "ambiguousNonSpaceSuggestion": {
+        "denominator": 100,
+        "numerator": 100,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9630065017930143,
+          1.0
+        ]
+      },
+      "ambiguousRows": 100,
+      "automaticReplacements": 0,
+      "correctSuggestions": 49,
+      "rows": 200,
+      "runtimeErrors": 0,
+      "suggestionPrecision": {
+        "denominator": 100,
+        "numerator": 49,
+        "value": 0.49,
+        "wilson95RowDescriptive": [
+          0.3942199893044113,
+          0.5865198806597283
+        ]
+      },
+      "suggestions": 100,
+      "unambiguousAbstention": {
+        "denominator": 100,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          3.469446951953614e-18,
+          0.03699349820698568
+        ]
+      },
+      "unambiguousRows": 100,
+      "unambiguousTop1Coverage": {
+        "denominator": 100,
+        "numerator": 49,
+        "value": 0.49,
+        "wilson95RowDescriptive": [
+          0.3942199893044113,
+          0.5865198806597283
+        ]
+      }
+    },
+    "ru": {
+      "ambiguousNonSpaceSuggestion": {
+        "denominator": 100,
+        "numerator": 96,
+        "value": 0.96,
+        "wilson95RowDescriptive": [
+          0.9016292856411208,
+          0.9843366960084523
+        ]
+      },
+      "ambiguousRows": 100,
+      "automaticReplacements": 0,
+      "correctSuggestions": 58,
+      "rows": 200,
+      "runtimeErrors": 0,
+      "suggestionPrecision": {
+        "denominator": 98,
+        "numerator": 58,
+        "value": 0.5918367346938775,
+        "wilson95RowDescriptive": [
+          0.4928537159343792,
+          0.683891592002455
+        ]
+      },
+      "suggestions": 98,
+      "unambiguousAbstention": {
+        "denominator": 100,
+        "numerator": 2,
+        "value": 0.02,
+        "wilson95RowDescriptive": [
+          0.00550196755016235,
+          0.07001179072854388
+        ]
+      },
+      "unambiguousRows": 100,
+      "unambiguousTop1Coverage": {
+        "denominator": 100,
+        "numerator": 58,
+        "value": 0.58,
+        "wilson95RowDescriptive": [
+          0.4820648670304296,
+          0.6720161732564526
+        ]
+      }
+    }
+  },
+  "split": "holdout",
+  "thresholdsFittedOnHoldout": false
+}

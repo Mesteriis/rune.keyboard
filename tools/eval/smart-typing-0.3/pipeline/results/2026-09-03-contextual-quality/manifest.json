@@ -1,0 +1,35 @@
+{
+  "automaticReplacements": 0,
+  "files": {
+    "actual.tsv.gz": "88437664704c1ee47a04aea62f921ee89a61c0ffae915177bc59e9b0a110f373",
+    "calibration-complete.json": "13cc02d6613290979ebe81a61e7878add4115e898906be505b33df9d61088722",
+    "calibration-progress.log": "a38d536c5a595a037fbfccd05ac6a7b51ece1151357b4d2fc983743d3a6b02de",
+    "calibration-score.log": "07cbe200693cc18c36e76ce402be310071f455b9d65874ae47ecf645cdd0df1a",
+    "calibration-scores.jsonl.gz": "149082bb78597b69869e50e0aed49a3c578463ba75cab4d57df555b886c597fa",
+    "config.json": "ae8832d12dd29767b04c6654e48f81ed32ae8c2f9c82a8be3d69e55d3e8de2d7",
+    "export-provenance.json": "c52f41f5ae8fb9efec6698bbe950de409bf2bc859b255f2e22f8175eaf0397d6",
+    "export.log": "ba66d43dfdf0f4df3aefac92fba4f135e6acf2d48be8e932c951f106b77c71c4",
+    "freeze.log": "03b89076a3df79be9a905673503b1ca7874383034a4e028d84778ecbbebc7cc1",
+    "holdout-complete.json": "050d7a8ccd1b5473ef1e2a0760c77730ec77d8b7cf2e8163bb2391ecf4e4a094",
+    "holdout-progress.log": "a38d536c5a595a037fbfccd05ac6a7b51ece1151357b4d2fc983743d3a6b02de",
+    "holdout-score.log": "232656cc11e561d1e5402d51bd3b9d5285a5f9959d0dff95224e12f2208bc3a0",
+    "holdout-scores.jsonl.gz": "97029bd4150849caa94f73ce70852e13d54ed6ca3e11daeae7ca4332b5f54c13",
+    "inputs.tsv.gz": "523159999b5d8690766b2c377f665fa3cbcab753c8b49c044b5b0f7fbffae4ec",
+    "local-gates.log": "9c13827d865b5e4a46e81275e6c9b84098f4896f711aa2c8c56a3a9a9bb646b5",
+    "python-tests-final.log": "972b78ba10ebc395487483ce8dbb69d555ce0244a8df71482a48672795c29224",
+    "python-tests.log": "b84b0895606e3d1617bcb41d699aa30953797449df1278ef741c1d2ef17ad9d5",
+    "report-provenance.json": "7fd6ef9124a5d014f65e054212c524434e75b871da913796aee4c17c89548647",
+    "report.json": "1ae4b08f49f3d7907cd974920913c08b22c356b7f248a9bcbf944395e7f09606",
+    "rows.jsonl.gz": "a7fd0d36e302d66d2e5066b7f281fa9321cad856b44602541c16fc877c1d8592"
+  },
+  "identities": {
+    "calibrationScores": "82aadae3524a93a20ec5b9a4a7eff36ea008c544b4419be0b3c39cc2b6fb5089",
+    "config": "38eb7d5a93130c1fbdbaae050244a237501a4bd79c25cfb85892123b3dab9d11",
+    "holdoutScores": "4cf25f5f6d2090aa476191e9708e8cadc07d2a792dfafcdb640de026334850be",
+    "model": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "runner": "f2f8e9e21a028871da4b9ced6ce0492eb692f742c4de765467a2d44a18535973"
+  },
+  "localGates": "PASS: 267 actionable, 25 executed, 242 up-to-date",
+  "result": "FAIL_RU_ES_AND_AMBIGUOUS_COVERAGE",
+  "scope": "production-contextual-suggestion-quality"
+}
