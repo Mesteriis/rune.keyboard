@@ -296,8 +296,32 @@ class ScoringLifecycleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             model = Path(directory) / "invalid.gguf"
             model.write_bytes(b"GGUF")
-            with self.assertRaisesRegex(ValueError, "frozen Rune"):
+            with self.assertRaisesRegex(ValueError, "expected size and digest"):
                 ev.cache_identity([row()], model, model)
+
+    def test_explicit_model_identity_accepts_only_exact_artifact(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            artifact = Path(directory) / "candidate.gguf"
+            runner = Path(directory) / "runner"
+            artifact.write_bytes(b"candidate model")
+            runner.write_bytes(b"runner")
+            expected_sha = ev.file_hash(artifact)
+            identity = ev.cache_identity(
+                [row()], runner, artifact,
+                expected_model_sha256=expected_sha,
+                expected_model_size=artifact.stat().st_size,
+            )
+            self.assertEqual(expected_sha, identity["modelSha256"])
+            for digest, size in ((expected_sha.upper(), artifact.stat().st_size),
+                                 ("0" * 63, artifact.stat().st_size),
+                                 (expected_sha, 0),
+                                 (expected_sha, True)):
+                with self.subTest(digest=digest, size=size):
+                    with self.assertRaisesRegex(ValueError, "invalid expected model identity"):
+                        ev.cache_identity([row()], runner, artifact, digest, size)
+            with self.assertRaisesRegex(ValueError, "expected size and digest"):
+                ev.cache_identity([row()], runner, artifact, "0" * 64,
+                                  artifact.stat().st_size)
 
     def test_timeout_kills_runner_without_caching_result(self) -> None:
         samples = [row()]

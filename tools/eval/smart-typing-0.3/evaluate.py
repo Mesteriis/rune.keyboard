@@ -199,10 +199,20 @@ def validate_response(row: dict, result: dict) -> None:
             raise ValueError("zero-token score has nonzero sum")
 
 
-def cache_identity(rows: list[dict], runner: Path, model: Path) -> dict:
-    if model.stat().st_size != MODEL_SIZE or file_hash(model) != MODEL_SHA256:
-        raise ValueError("model must match the frozen Rune Text 0.1 size and digest")
-    return {"protocol": PROTOCOL, "corpusSha256": digest(rows), "runnerSha256": file_hash(runner), "modelSha256": MODEL_SHA256}
+def cache_identity(rows: list[dict], runner: Path, model: Path,
+                   expected_model_sha256: str = MODEL_SHA256,
+                   expected_model_size: int = MODEL_SIZE) -> dict:
+    if (not isinstance(expected_model_sha256, str)
+            or len(expected_model_sha256) != 64
+            or any(char not in "0123456789abcdef" for char in expected_model_sha256)
+            or type(expected_model_size) is not int
+            or expected_model_size <= 0):
+        raise ValueError("invalid expected model identity")
+    if (model.stat().st_size != expected_model_size
+            or file_hash(model) != expected_model_sha256):
+        raise ValueError("model does not match expected size and digest")
+    return {"protocol": PROTOCOL, "corpusSha256": digest(rows),
+            "runnerSha256": file_hash(runner), "modelSha256": expected_model_sha256}
 
 
 def load_cache(path: Path, rows: list[dict], identity: dict | None = None) -> tuple[dict, dict]:
@@ -253,8 +263,13 @@ def repair_incomplete_tail(path: Path, rows: list[dict]) -> bool:
     return True
 
 
-def score_corpus(rows: list[dict], runner: Path, model: Path, cache: Path, timeout: float, limit: int | None = None, split: str = "calibration", config_path: Path | None = None) -> None:
-    identity = cache_identity(rows, runner, model)
+def score_corpus(rows: list[dict], runner: Path, model: Path, cache: Path,
+                 timeout: float, limit: int | None = None,
+                 split: str = "calibration", config_path: Path | None = None,
+                 expected_model_sha256: str = MODEL_SHA256,
+                 expected_model_size: int = MODEL_SIZE) -> None:
+    identity = cache_identity(rows, runner, model, expected_model_sha256,
+                              expected_model_size)
     if cache.exists():
         _, completed = load_cache(cache, rows, identity)
     else:
@@ -467,6 +482,10 @@ def main() -> int:
     score = commands.add_parser("score")
     score.add_argument("--runner", type=Path, required=True)
     score.add_argument("--model", type=Path, required=True)
+    score.add_argument("--expected-model-sha256", default=MODEL_SHA256,
+                       help="exact lowercase SHA-256 required for --model")
+    score.add_argument("--expected-model-bytes", type=int, default=MODEL_SIZE,
+                       help="exact byte length required for --model")
     score.add_argument("--cache", type=Path, required=True)
     score.add_argument("--timeout", type=float, default=120)
     score.add_argument("--limit", type=int, help="bounded smoke run; resume uses same cache")
@@ -491,7 +510,9 @@ def main() -> int:
             raise ValueError("timeout/limit must be positive")
         if args.repair_incomplete_tail and args.cache.exists():
             repair_incomplete_tail(args.cache, rows)
-        score_corpus(rows, args.runner, args.model, args.cache, args.timeout, args.limit, args.split, args.config)
+        score_corpus(rows, args.runner, args.model, args.cache, args.timeout,
+                     args.limit, args.split, args.config,
+                     args.expected_model_sha256, args.expected_model_bytes)
         return 0
     identity, scores = load_cache(args.cache, rows)
     if args.command == "calibrate":
