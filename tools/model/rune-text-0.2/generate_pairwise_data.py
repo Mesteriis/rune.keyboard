@@ -214,12 +214,71 @@ def load_product_calibration(export: Path, corpus: Path, maximum_alternatives: i
     return rows, generated, receipt
 
 
+def load_context_pool(directory: Path, config_path: Path, lock_path: Path) -> tuple[list[dict], dict]:
+    manifest_path = directory / "manifest.json"
+    pairs_path = directory / "pairs.jsonl"
+    manifest = json.loads(manifest_path.read_text())
+    if (manifest.get("scope") != "rune-text-0.2-wikipedia-context-pool"
+            or manifest.get("configSha256") != sha(config_path)
+            or manifest.get("sourceLockSha256") != sha(lock_path)
+            or manifest.get("outputs", {}).get("pairs.jsonl") != sha(pairs_path)
+            or manifest.get("containsPersonalMessages") is not False):
+        raise ValueError("Wikipedia context pool provenance mismatch")
+    if any(sha(REPO / name) != digest for name, digest in manifest.get("sources", {}).items()):
+        raise ValueError("Wikipedia context pool source drift")
+    rows = [json.loads(line) for line in pairs_path.read_text(encoding="utf-8").splitlines()]
+    if (len(rows) != manifest.get("rows") or len({row["id"] for row in rows}) != len(rows)
+            or len({(row.get("language"), row.get("family")) for row in rows}) != len(rows)):
+        raise ValueError("Wikipedia context pool row count, ids, or families mismatch")
+    if any(row.get("split") != "pool" or row.get("source") != "wikimedia_wikipedia_20231101"
+           or row.get("language") not in LANGUAGES for row in rows):
+        raise ValueError("invalid Wikipedia context pool row")
+    return rows, manifest
+
+
+def split_context_pool(pool: list[dict], existing_train: list[dict], existing_valid: list[dict],
+                       seed: int, train_per_language: int,
+                       valid_per_language: int) -> tuple[list[dict], list[dict], dict]:
+    occupied = {(row["language"], row["family"]) for row in existing_train + existing_valid}
+    output_train: list[dict] = []
+    output_valid: list[dict] = []
+    receipt: dict[str, dict] = {}
+    for language in LANGUAGES:
+        eligible = [row for row in pool
+                    if row["language"] == language and (language, row["family"]) not in occupied]
+        eligible.sort(key=lambda row: hashlib.sha256(
+            f"{seed}:wikipedia-split:{language}:{row['family']}".encode()).digest())
+        required = train_per_language + valid_per_language
+        if len(eligible) < required:
+            raise ValueError(f"insufficient disjoint Wikipedia contexts for {language}: {len(eligible)}")
+        selected_train = eligible[:train_per_language]
+        selected_valid = eligible[train_per_language:required]
+        for split, rows, target in (("train", selected_train, output_train),
+                                    ("valid", selected_valid, output_valid)):
+            for row in rows:
+                item = dict(row)
+                item["split"] = split
+                target.append(item)
+        receipt[language] = {
+            "poolRows": sum(row["language"] == language for row in pool),
+            "eligibleAfterExistingFamilies": len(eligible),
+            "trainingRows": len(selected_train),
+            "validationRows": len(selected_valid),
+            "trainingFamiliesSha256": hashlib.sha256(canonical(
+                [row["family"] for row in selected_train])).hexdigest(),
+            "validationFamiliesSha256": hashlib.sha256(canonical(
+                [row["family"] for row in selected_valid])).hexdigest(),
+        }
+    return output_train, output_valid, receipt
+
+
 def run(args: argparse.Namespace) -> None:
     config_path = Path(args.config).resolve(strict=True)
     lock_path = Path(args.lock).resolve(strict=True)
     inputs = Path(args.inputs).resolve(strict=True)
     corpus = Path(args.excluded_corpus).resolve(strict=True)
     calibration_export = Path(args.calibration_export).resolve(strict=True)
+    context_pool = Path(args.context_pool).resolve(strict=True)
     output = Path(args.output).resolve()
     if output.exists() or not output.is_relative_to(REPO / "build"):
         raise ValueError("output must be a fresh directory below build")
@@ -264,6 +323,13 @@ def run(args: argparse.Namespace) -> None:
         product_config["trainingFamilyPercent"], product_config["trainingRepeat"])
     train_rows += product_train
     valid_rows += product_valid
+    context_rows, context_manifest = load_context_pool(context_pool, config_path, lock_path)
+    context_config = config["wikipediaContext"]
+    context_train, context_valid, context_receipt = split_context_pool(
+        context_rows, train_rows, valid_rows, config["seed"],
+        context_config["trainingRowsPerLanguage"], context_config["validationRowsPerLanguage"])
+    train_rows += context_train
+    valid_rows += context_valid
     if {(row["language"], row["family"]) for row in train_rows} & {
             (row["language"], row["family"]) for row in valid_rows}:
         raise ValueError("train/validation family overlap")
@@ -285,7 +351,17 @@ def run(args: argparse.Namespace) -> None:
             "candidatesSha256": sha(calibration_export / "candidates.jsonl"),
             "trainingRows": len(product_train), "validationRows": len(product_valid),
         },
-        "sources": {str(Path(__file__).resolve().relative_to(REPO)): sha(Path(__file__).resolve())},
+        "wikipediaContext": {
+            "manifestSha256": sha(context_pool / "manifest.json"),
+            "pairsSha256": sha(context_pool / "pairs.jsonl"),
+            "source": context_manifest["sourceDataset"],
+            "splits": context_receipt,
+            "trainingRows": len(context_train), "validationRows": len(context_valid),
+        },
+        "sources": {
+            **context_manifest["sources"],
+            str(Path(__file__).resolve().relative_to(REPO)): sha(Path(__file__).resolve()),
+        },
         "splits": split_receipt,
         "rows": {"train": len(train_rows), "valid": len(valid_rows)},
         "outputs": {"train.jsonl": sha(output / "train.jsonl"), "valid.jsonl": sha(output / "valid.jsonl")},
@@ -301,5 +377,6 @@ if __name__ == "__main__":
     parser.add_argument("--inputs", required=True)
     parser.add_argument("--excluded-corpus", default=REPO / "tools/eval/smart-typing-0.3")
     parser.add_argument("--calibration-export", required=True)
+    parser.add_argument("--context-pool", required=True)
     parser.add_argument("--output", required=True)
     run(parser.parse_args())

@@ -13,6 +13,13 @@
     "trainingFamilyPercent": 80,
     "trainingRepeat": 4
   },
+  "wikipediaContext": {
+    "poolRowsPerLanguage": 20000,
+    "trainingRowsPerLanguage": 8000,
+    "validationRowsPerLanguage": 2000,
+    "minimumContextWords": 4,
+    "maximumPrefixUtf8Bytes": 256
+  },
   "minimumWordCodePoints": 4,
   "maximumWordCodePoints": 20,
   "maximumSequenceTokens": 96,

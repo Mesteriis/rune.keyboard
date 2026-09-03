@@ -79,21 +79,24 @@ class PairDataset:
         self.languages = []
         self.sources = []
         self.skipped_zero_span = 0
+        self.skipped_overlong = 0
         for line in path.read_text(encoding="utf-8").splitlines():
             row = json.loads(line)
             chosen = tokenizer.encode(row["prefix"] + row["chosen"], add_special_tokens=True)
             rejected = tokenizer.encode(row["prefix"] + row["rejected"], add_special_tokens=True)
             start = common_prefix(chosen, rejected)
             if max(len(chosen), len(rejected)) > maximum_tokens:
-                raise ValueError(f"invalid divergent span: {row['id']}")
+                self.skipped_overlong += 1
+                continue
             if start < 1 or start >= min(len(chosen), len(rejected)):
                 self.skipped_zero_span += 1
                 continue
             self.rows.append((chosen, rejected, start))
             self.languages.append(row["language"])
             self.sources.append(row.get("source", "frequency"))
-        if not self.rows or self.skipped_zero_span > len(self.rows) // 4:
-            raise ValueError("too many zero-span training pairs")
+        if (not self.rows
+                or self.skipped_zero_span + self.skipped_overlong > len(self.rows) // 4):
+            raise ValueError("too many unusable training pairs")
 
     def __len__(self) -> int:
         return len(self.rows)
@@ -165,6 +168,7 @@ def evaluate_accuracy(model, dataset: PairDataset, batch_size: int, maximum_toke
     margin_sum = 0.0
     per_language = {language: {"pairs": 0, "correct": 0, "margin": 0.0}
                     for language in sorted(set(dataset.languages))}
+    per_source: dict[str, dict] = {}
     limit = None if limit_batches is None else limit_batches * batch_size
     groups = [f"{language}:{source}" for language, source in
               zip(dataset.languages, dataset.sources, strict=True)]
@@ -187,23 +191,43 @@ def evaluate_accuracy(model, dataset: PairDataset, batch_size: int, maximum_toke
         total += len(values)
         margin_sum += float(values.sum())
         for value, index in zip(values, batch_indices, strict=True):
-            metrics = per_language[dataset.languages[index]]
+            language = dataset.languages[index]
+            source = dataset.sources[index]
+            metrics = per_language[language]
             metrics["pairs"] += 1
             metrics["correct"] += int(value > 0)
             metrics["margin"] += float(value)
+            source_metrics = per_source.setdefault(
+                source, {"pairs": 0, "correct": 0, "margin": 0.0, "languages": {}})
+            source_metrics["pairs"] += 1
+            source_metrics["correct"] += int(value > 0)
+            source_metrics["margin"] += float(value)
+            source_language = source_metrics["languages"].setdefault(
+                language, {"pairs": 0, "correct": 0, "margin": 0.0})
+            source_language["pairs"] += 1
+            source_language["correct"] += int(value > 0)
+            source_language["margin"] += float(value)
     model.train()
     languages = {language: {"pairs": value["pairs"], "correct": value["correct"],
                  "accuracy": value["correct"] / value["pairs"],
                  "meanMargin": value["margin"] / value["pairs"]}
                  for language, value in per_language.items() if value["pairs"]}
-    source_metrics = {}
-    for source in sorted(set(dataset.sources)):
-        selected = [position for position, index in enumerate(indices)
-                    if dataset.sources[index] == source]
-        source_values = [dataset.languages[indices[position]] for position in selected]
-        source_metrics[source] = {"pairs": len(selected),
-                                  "languages": {language: source_values.count(language)
-                                                for language in sorted(set(source_values))}}
+    source_metrics = {
+        source: {
+            "pairs": value["pairs"], "correct": value["correct"],
+            "accuracy": value["correct"] / value["pairs"],
+            "meanMargin": value["margin"] / value["pairs"],
+            "languages": {
+                language: {
+                    "pairs": metrics["pairs"], "correct": metrics["correct"],
+                    "accuracy": metrics["correct"] / metrics["pairs"],
+                    "meanMargin": metrics["margin"] / metrics["pairs"],
+                }
+                for language, metrics in sorted(value["languages"].items())
+            },
+        }
+        for source, value in sorted(per_source.items())
+    }
     return {"pairs": total, "correct": correct, "accuracy": correct / total,
             "meanMargin": margin_sum / total, "languages": languages,
             "sampleSources": source_metrics}
@@ -273,6 +297,8 @@ def run(args: argparse.Namespace) -> None:
             "train": len(train_data), "valid": len(valid_data),
             "trainSkippedZeroSpan": train_data.skipped_zero_span,
             "validSkippedZeroSpan": valid_data.skipped_zero_span,
+            "trainSkippedOverlong": train_data.skipped_overlong,
+            "validSkippedOverlong": valid_data.skipped_overlong,
         },
         "toolchain": {"python": platform.python_version(), "mlx-lm": mlx_lm.__version__},
         "sources": {str(path.relative_to(HERE.parents[2])): sha(path) for path in

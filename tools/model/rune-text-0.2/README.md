@@ -12,11 +12,21 @@ candidate has the same parameter count and inference graph class as Rune Text
 0.1; physical Fold latency, memory, thermal and energy gates still must be run
 for its exact final digest.
 
-`generate_pairwise_data.py` verifies the pinned FrequencyWords inputs, excludes
-every family in the already revealed Smart Typing corpus, and creates disjoint
-train/validation word families. It emits only synthetic word-label contexts;
-there are no messages or user data. A mutation that is itself present in the
-50k vocabulary is never used as a negative.
+`download_wikipedia_context.py` fetches three bounded parquet shards from the
+pinned Wikimedia Wikipedia `20231101` conversion and verifies their sizes and
+SHA-256 digests. `prepare_wikipedia_context.py` extracts public encyclopedic
+prefixes, excludes every family in the already revealed Smart Typing corpus,
+keeps one deterministic context per word family, and caps every prefix at 256
+UTF-8 bytes. The parquet files and extracted text remain under ignored
+`build/`; none is packaged in the application. See `WIKIMEDIA_NOTICE.md` for
+source attribution and licenses.
+
+`generate_pairwise_data.py` also verifies the pinned FrequencyWords inputs and
+creates disjoint train/validation word families. It joins the independently
+verified Wikipedia pool only after excluding every family already assigned to
+the frequency or product-calibration splits. A mutation that is itself present
+in the 50k vocabulary is never used as a negative. There are no personal
+messages or user data.
 
 `train_pairwise.py` optimizes the same per-token average log probability used by
 the product scorer, starting at the first divergent token and adding no EOS.
@@ -32,9 +42,19 @@ uv venv --python 3.11 build/smart-typing-0.3/model-v02/venv
 uv pip sync --python build/smart-typing-0.3/model-v02/venv/bin/python \
   tools/model/rune-text-0.2/requirements-lock.txt
 
+python3 tools/model/rune-text-0.2/download_wikipedia_context.py \
+  --output build/smart-typing-0.3/model-v02/wikipedia-20231101
+
+build/smart-typing-0.3/model-v02/venv/bin/python \
+  tools/model/rune-text-0.2/prepare_wikipedia_context.py \
+  --inputs build/smart-typing-0.3/model-v02/wikipedia-20231101 \
+  --frequency-inputs build/smart-typing-0.3/corpus-inputs \
+  --output build/smart-typing-0.3/model-v02/wikipedia-context
+
 python3 tools/model/rune-text-0.2/generate_pairwise_data.py \
   --inputs build/smart-typing-0.3/corpus-inputs \
   --calibration-export build/smart-typing-0.3/model-v02/calibration-export \
+  --context-pool build/smart-typing-0.3/model-v02/wikipedia-context \
   --output build/smart-typing-0.3/model-v02/data
 
 build/smart-typing-0.3/model-v02/venv/bin/python \

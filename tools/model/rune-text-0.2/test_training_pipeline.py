@@ -21,6 +21,10 @@ GGUF_SPEC.loader.exec_module(GGUF)
 SAMPLING_SPEC = importlib.util.spec_from_file_location("validation_sampling", HERE / "validation_sampling.py")
 SAMPLING = importlib.util.module_from_spec(SAMPLING_SPEC)
 SAMPLING_SPEC.loader.exec_module(SAMPLING)
+CONTEXT_SPEC = importlib.util.spec_from_file_location(
+    "prepare_wikipedia_context", HERE / "prepare_wikipedia_context.py")
+CONTEXT = importlib.util.module_from_spec(CONTEXT_SPEC)
+CONTEXT_SPEC.loader.exec_module(CONTEXT)
 
 
 class PairwiseDataTest(unittest.TestCase):
@@ -56,9 +60,13 @@ class PairwiseDataTest(unittest.TestCase):
             "num_attention_heads", "num_key_value_heads", "vocab_size", "head_dim"))
 
     def test_every_artifact_stage_records_source_identity(self):
-        for name in ("generate_pairwise_data.py", "train_pairwise.py",
+        for name in ("download_wikipedia_context.py", "prepare_wikipedia_context.py",
+                     "generate_pairwise_data.py", "train_pairwise.py",
                      "fuse_candidate.py", "build_gguf.py"):
-            self.assertIn('"sources"', (HERE / name).read_text())
+            if name.startswith("download_"):
+                self.assertIn('"sha256"', (HERE / name).read_text())
+            else:
+                self.assertIn('"sources"', (HERE / name).read_text())
 
     def test_candidate_size_does_not_expand_current_compute_class(self):
         self.assertEqual(GGUF.ASSET, "rune-text-v1-0.2.0-q4_k_m.gguf")
@@ -91,6 +99,49 @@ class PairwiseDataTest(unittest.TestCase):
         self.assertTrue(all(row["prefix"] == "Check the " and row["chosen"] == "word"
                             and row["rejected"] != "word" for row in pairs))
         self.assertTrue(all("holdout" not in row["id"] for row in pairs))
+
+    def test_wikipedia_context_uses_real_prefix_and_safe_mutation(self):
+        rows = CONTEXT.context_pairs(
+            "People often use a compact keyboard for writing.", "en",
+            {"people", "often", "use", "compact", "keyboard", "writing"}, set(),
+            4, 20, 4, 256, 3042026)
+        keyboard = [row for row in rows if row["chosen"] == "keyboard"]
+        self.assertEqual(len(keyboard), 1)
+        self.assertEqual(keyboard[0]["prefix"], "People often use a compact ")
+        self.assertNotIn(keyboard[0]["rejected"], {
+            "people", "often", "use", "compact", "keyboard", "writing"})
+        self.assertEqual(keyboard[0]["source"], "wikimedia_wikipedia_20231101")
+
+    def test_wikipedia_prefix_is_utf8_bounded_at_a_word_boundary(self):
+        prefix = CONTEXT.bounded_prefix("раз два три четыре пять ", 22)
+        self.assertLessEqual(len(prefix.encode("utf-8")), 22)
+        self.assertTrue(prefix.endswith(" "))
+        self.assertFalse(prefix.startswith(" "))
+
+    def test_wikipedia_selection_keeps_one_context_per_family(self):
+        rows = [
+            {"family": "word", "selectionHash": "b", "id": "second"},
+            {"family": "word", "selectionHash": "a", "id": "first"},
+            {"family": "other", "selectionHash": "c", "id": "other"},
+        ]
+        self.assertEqual([row["id"] for row in CONTEXT.select_unique(rows, 2)],
+                         ["first", "other"])
+
+    def test_wikipedia_split_excludes_existing_and_is_family_disjoint(self):
+        pool = [{"id": f"pool-{index}", "language": language, "family": f"family-{index}",
+                 "split": "pool", "source": "wikimedia_wikipedia_20231101"}
+                for language in DATA.LANGUAGES for index in range(8)]
+        existing_train = [{"language": language, "family": "family-0"}
+                          for language in DATA.LANGUAGES]
+        train, valid, receipt = DATA.split_context_pool(
+            pool, existing_train, [], 3042026, 3, 2)
+        self.assertEqual(len(train), 9)
+        self.assertEqual(len(valid), 6)
+        self.assertFalse({(row["language"], row["family"]) for row in train} &
+                         {(row["language"], row["family"]) for row in valid})
+        self.assertTrue(all(row["family"] != "family-0" for row in train + valid))
+        self.assertTrue(all(receipt[language]["eligibleAfterExistingFamilies"] == 7
+                            for language in DATA.LANGUAGES))
 
 
 if __name__ == "__main__":
