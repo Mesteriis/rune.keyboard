@@ -1,0 +1,19 @@
+{
+  "android": "Not rerun for this slice; qualified hidden consumption is covered by JVM fakes, not Binder qualification",
+  "files": {
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest.xml.gz": "3ce048617e851d23f848e533ea39b9997c9a24e8ff771cc3efc176d24d451f62",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest.xml.gz": "0025f675e6eec1bafb439b3f5c1bd9e8db49e438e2f52175e0ec6386e3f863c7",
+    "correction-boundary-postcommit.log": "a228c31fd8ac39a89f98523cb1df7e8aaf48c37257147a7f31efe6cb3f620d57",
+    "hidden-spelling-gates.log": "7855b110943589b54c6bcc532ebc79f9c7de258ea6c83b7909a9b7683c237e81",
+    "hidden-spelling-targeted.log": "f4187ded6bf35b506120003fa575fd84b4baf91669770c7a4600d9ce59f9247c",
+    "identity.json": "e129387c0f3f74e6fbdd235b6158e9b0730b7df3be52adcfa90bbd758e5ad6c3"
+  },
+  "jvm": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 635
+  },
+  "localGates": "PASS: fresh 277 tasks; full variants/lint/privacy/dependency/native and test assembly",
+  "qualification": "CLOSED: final product holdout required"
+}

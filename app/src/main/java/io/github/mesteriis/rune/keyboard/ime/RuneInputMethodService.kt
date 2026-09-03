@@ -441,6 +441,8 @@ class RuneInputMethodService : InputMethodService() {
         hasSelection = hasSelection,
         autocorrectionMode = settings.autocorrectionMode,
         candidateStripEnabled = settings.candidateStrip,
+        deterministicAutoReplaceQualified = typingSession.isSpellingQualified(state.language, false),
+        modelAutoReplaceQualified = typingSession.isSpellingQualified(state.language, true),
     )
 
     private fun renderCandidates() {

@@ -14,7 +14,7 @@ interface ModelPauseScheduler {
 }
 
 /**
- * Suggestion-only consumer. Local candidates render immediately; model results reorder that allowlist.
+ * Local candidates are ready immediately; model results rank only that allowlist.
  * Eligibility/readiness are cached owner facts. Neither a timer nor a reconnect replays old input.
  */
 class ModelCandidateCoordinator(
@@ -105,7 +105,7 @@ class ModelCandidateCoordinator(
         if (closed) return
         cancel(); closed = true; client.close(); readiness.close()
     }
-    private fun featureEligible() = !closed && ownerState().canRequestSpelling && controller.state.enabled
+    private fun featureEligible() = !closed && ownerState().canRequestModelSpelling && controller.state.enabled
     private fun eligible() = featureEligible() && readiness.hint == ModelReadinessHint.READY &&
         controller.canRequestCandidates
     private fun checkOwner() = check(Thread.currentThread() === ownerThread) { "Model candidate owner thread required" }

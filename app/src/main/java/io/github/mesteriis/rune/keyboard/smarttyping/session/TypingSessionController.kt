@@ -45,6 +45,10 @@ class TypingSessionController internal constructor(
 ) {
     constructor() : this(IcuGraphemeSegmenter)
 
+    /** Content-free availability; preferences and model readiness do not grant qualification. */
+    internal fun isSpellingQualified(language: KeyboardLanguage, modelAssisted: Boolean): Boolean =
+        spellingQualification.allows(language, modelAssisted)
+
     var state = TypingSessionState()
         private set
 

@@ -24,6 +24,8 @@ data class CandidateOwnerState(
     val hasSelection: Boolean,
     val autocorrectionMode: AutocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE,
     val candidateStripEnabled: Boolean = true,
+    val deterministicAutoReplaceQualified: Boolean = false,
+    val modelAutoReplaceQualified: Boolean = false,
 ) {
     val baseEligible: Boolean
         get() = editorAllowsSmartTyping && inputViewActive && layer == KeyboardLayer.LETTERS && !hasSelection
@@ -31,9 +33,16 @@ data class CandidateOwnerState(
         get() = autocorrectionMode != AutocorrectionMode.OFF
     val showsCandidates: Boolean
         get() = baseEligible && candidateStripEnabled
-    /** Manual strip selection is the only implemented spelling consumer. */
+    private val automaticMode: Boolean
+        get() = autocorrectionMode == AutocorrectionMode.HIGH_CONFIDENCE
+    /** Retrieval serves visible suggestions and either qualified automatic branch. */
     val canRequestSpelling: Boolean
-        get() = showsCandidates && spellingEnabled
+        get() = baseEligible && spellingEnabled && (candidateStripEnabled ||
+            automaticMode && (deterministicAutoReplaceQualified || modelAutoReplaceQualified))
+    /** A hidden strip and deterministic-only qualification must not bind the model process. */
+    val canRequestModelSpelling: Boolean
+        get() = baseEligible && spellingEnabled &&
+            (candidateStripEnabled || automaticMode && modelAutoReplaceQualified)
 }
 
 /** Main owner only; readiness never calls back, renders never submit, and no request survives a boundary. */
@@ -75,7 +84,7 @@ class LocalCandidateCoordinator internal constructor(
         // Retain the latest accepted decision until this action consumes its exact word.
         // Cancel worker/callback ownership first, so late work cannot race a boundary commit.
         val owner = ownerState?.invoke()
-        cancelCandidates(clearAllowlist = owner?.baseEligible != true || !owner.spellingEnabled)
+        cancelCandidates(clearAllowlist = owner?.canRequestSpelling != true)
         val editEpoch = epoch
         val session = controller.state.sessionId
         val revision = controller.state.revision

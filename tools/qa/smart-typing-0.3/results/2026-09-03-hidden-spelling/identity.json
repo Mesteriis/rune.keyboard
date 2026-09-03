@@ -1,0 +1,17 @@
+{
+  "apkSha256": "e4e0d67503556df3fc6fe4dde875a9077d6ca600fbe706761ad9b610cf494f15",
+  "baseline": "0958a8e246d462fe36704da2bbe408580fb3f4b2",
+  "jvm": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 635
+  },
+  "sourceSha256": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt": "669ef10087326df55d02a6f0f734de70c0a23bf40c455d30bab94c751023d607",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt": "3c2a69f921005f13d7bc898244aea7921a131b18bde9f8fffd794eca5eeb5fa7",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelCandidateCoordinator.kt": "bf554e3e8fef2a4e259456cc3b5a8dd0ae4f56e4fdfe5a313824b17642a649e0",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "5c62620a22bd2ab108822477a72751d9b20c0e0bf6db454ce66c912d9eba86d5",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinatorTest.kt": "033147a5722d6b3e9e5919a2f90a827d92d9a211965b02d2a00e62f2109995bd"
+  }
+}

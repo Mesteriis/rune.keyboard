@@ -330,7 +330,7 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
-    @Test fun `all six mode and strip combinations admit only the current manual consumer`() {
+    @Test fun `unqualified mode and strip combinations admit only the visible manual consumer`() {
         for (mode in AutocorrectionMode.entries) for (strip in listOf(false, true)) Harness().use { h ->
             h.configure(mode, strip)
             h.type("helo")
@@ -345,6 +345,114 @@ class LocalCandidateCoordinatorTest {
             val view = h.coordinator.viewState
             assertTrue(view.selectedCandidateId == null || view.candidates.any { it.id == view.selectedCandidateId })
             assertNull(h.controller.state.lastAutoEdit)
+        }
+    }
+
+    @Test fun `hidden automatic branches request only their qualified local or model work`() {
+        for (mode in AutocorrectionMode.entries) for (strip in listOf(false, true)) {
+            for (deterministic in listOf(false, true)) for (model in listOf(false, true)) {
+                Harness(withModel = true, qualified = true).use { h ->
+                    h.owner = h.owner.copy(deterministicAutoReplaceQualified = deterministic,
+                        modelAutoReplaceQualified = model)
+                    h.configure(mode, strip)
+                    h.type("helos")
+                    val localWork = when (mode) {
+                        AutocorrectionMode.OFF -> false
+                        AutocorrectionMode.SUGGESTIONS -> strip
+                        AutocorrectionMode.HIGH_CONFIDENCE -> strip || deterministic || model
+                    }
+                    val modelWork = localWork && (strip || model)
+                    if (localWork) h.deliver()
+                    assertEquals(if (localWork) 1 else 0, h.routeRequests)
+                    assertEquals(modelWork, h.model.attachments.any { it.second })
+                    assertEquals(modelWork, h.pause.task != null)
+                    h.pause.fire()
+                    assertEquals(if (modelWork) 1 else 0, h.model.requests.size)
+                    assertEquals(strip, h.coordinator.viewState.enabled)
+                    assertEquals(listOf(TypingEdit.SetComposingText("helos")), h.commands)
+                }
+            }
+        }
+    }
+
+    @Test fun `qualified deterministic correction and Undo work with hidden strip and zero model demand`() {
+        Harness(withModel = true, qualified = true).use { h ->
+            h.owner = h.owner.copy(deterministicAutoReplaceQualified = true)
+            h.configure(AutocorrectionMode.HIGH_CONFIDENCE, false)
+            h.type("helos"); h.deliver()
+            assertFalse(h.coordinator.viewState.enabled)
+            assertTrue(h.model.attachments.none { it.second }); assertNull(h.pause.task)
+            h.coordinator.edit {
+                h.controller.typeText(" ", MechanicalPunctuationPolicy(InputPolicy.NORMAL, EditorMode.TEXT, false, false, false),
+                    KeyboardState(KeyboardLanguage.ENGLISH), autocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE,
+                    execute = h.execute)
+            }
+            assertEquals("hellos ", h.controller.state.contextText)
+            assertNotNull(h.controller.state.lastAutoEdit)
+            h.coordinator.edit { h.controller.deletePrevious(h.execute) }
+            assertEquals("helos", h.controller.state.contextText)
+            assertTrue(h.controller.state.originalSelected)
+            assertFalse(h.coordinator.viewState.enabled)
+            assertEquals(1, h.routeRequests)
+            assertTrue(h.model.requests.isEmpty())
+        }
+    }
+
+    @Test fun `hidden model branch accepts ready result without rendering or scheduling at boundary`() {
+        Harness(withModel = true, qualified = true).use { h ->
+            h.owner = h.owner.copy(modelAutoReplaceQualified = true)
+            h.configure(AutocorrectionMode.HIGH_CONFIDENCE, false)
+            h.type("helos"); h.deliver(); h.pause.fire()
+            val request = h.model.requests.single()
+            h.model.reply(request, 1)
+            assertFalse(h.coordinator.viewState.enabled)
+            h.coordinator.edit {
+                h.controller.typeText(" ", MechanicalPunctuationPolicy(InputPolicy.NORMAL, EditorMode.TEXT, false, false, false),
+                    KeyboardState(KeyboardLanguage.ENGLISH), autocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE,
+                    execute = h.execute)
+            }
+            assertEquals("hellos ", h.controller.state.contextText)
+            assertNotNull(h.controller.state.lastAutoEdit)
+            val count = h.published
+            h.model.reply(request, 1)
+            assertEquals(count, h.published)
+            assertEquals(1, h.model.requests.size)
+            assertNull(h.pause.task)
+        }
+    }
+
+    @Test fun `hiding strip retires suggestion model even when deterministic automation remains eligible`() {
+        Harness(withModel = true, qualified = true).use { h ->
+            h.owner = h.owner.copy(deterministicAutoReplaceQualified = true)
+            h.type("helo"); h.deliver(); h.pause.fire()
+            val old = h.model.requests.single()
+            h.configure(AutocorrectionMode.HIGH_CONFIDENCE, false)
+            assertFalse(h.model.attachments.last().second)
+            h.model.reply(old, 2)
+            val published = h.published
+            repeat(3) { h.coordinator.viewState }
+            h.model.listener.onAvailabilityChanged(true)
+            assertEquals(published, h.published); assertNull(h.pause.task)
+            h.type("s"); h.deliver()
+            assertEquals(2, h.routeRequests)
+            assertEquals(1, h.model.requests.size)
+            assertFalse(h.model.attachments.last().second)
+            assertFalse(h.coordinator.viewState.enabled)
+        }
+    }
+
+    @Test fun `privacy selection and view ownership veto even fully qualified hidden automation`() {
+        for (change in listOf<(CandidateOwnerState) -> CandidateOwnerState>(
+            { it.copy(editorAllowsSmartTyping = false) }, { it.copy(inputViewActive = false) },
+            { it.copy(hasSelection = true) }, { it.copy(layer = KeyboardLayer.SYMBOLS) })) {
+            Harness(withModel = true, qualified = true).use { h ->
+                h.owner = change(h.owner.copy(candidateStripEnabled = false,
+                    deterministicAutoReplaceQualified = true, modelAutoReplaceQualified = true))
+                h.type("helos")
+                assertEquals(0, h.routeRequests); assertEquals(0, h.lexicon.exactCalls.get())
+                assertTrue(h.model.attachments.none { it.second }); assertNull(h.pause.task)
+                assertFalse(h.coordinator.viewState.enabled)
+            }
         }
     }
 
