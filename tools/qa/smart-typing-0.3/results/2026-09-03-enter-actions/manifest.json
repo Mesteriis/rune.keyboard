@@ -1,0 +1,32 @@
+{
+  "api26": {
+    "failures": 0,
+    "seconds": 348.546,
+    "tests": 2
+  },
+  "api37": {
+    "failures": 0,
+    "seconds": 264.047,
+    "tests": 2
+  },
+  "automaticBinderQualification": "OPEN: production quality gate is closed; automatic action correction is covered with injected admission in JVM",
+  "files": {
+    "TEST-io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest.xml.gz": "f3ff1e27cc427ea8112dd503c7b5a7222a50f9fbcc823d2de00f6c076a726a22",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest.xml.gz": "cdb89bd77f94f17729ea5c2587ae49e82f10d633274b117a3d413be3d6d57dcb",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest.xml.gz": "ba8308d1dd2bfb3e7e9a07143de46c8b8c04b79db77d62c81d279280116e15b6",
+    "api26-editor-actions.log": "7b6846cf74124d5ca84e842b1439d3ce5b119c49fd58935564d51174a8e435f3",
+    "api37-editor-actions.log": "999c91342b4d44036d0ed28fc4e59b7447b46083c5cefe561037f1ef55459d2f",
+    "enter-gates-final.log": "e060e3f6d664879d81f638fc025de3c7998ed71691a21da8f7e8ec503cdaf2d9",
+    "enter-gates.log": "bcc152ce3c59efb6d3eb0b0d765d67f55acee9bbdb88939793f9c1386ead8e0f",
+    "enter-targeted-final.log": "330fb97afadb604eb58ef4ca5501d4ce0a854293e5b2ba5acff14157fe85d5b5",
+    "enter-targeted.log": "34158aa215daf3f8b1bc2636460a8f434641a6aaff50b4f23c998dc31d2a0420",
+    "identity.json": "6f1c24899d071a63df7892c816ca032cb67718c024d3a91bf4b1a1bad7e93a84"
+  },
+  "jvm": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 641
+  },
+  "localGates": "PASS: final-source 277 tasks"
+}

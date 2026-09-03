@@ -1,0 +1,5 @@
+device=emulator api=37 qemu=1
+app-debug.apk sha256=f187e68922cc37071204fb133ae276bfd37469640f323c98e44518d25e64f11d
+app-debug-androidTest.apk sha256=045ea500fa69296f4c7f97abe23d057999d05e683829fa4d98a22b5e10d1415a
+Time: 264.047
+OK (2 tests)

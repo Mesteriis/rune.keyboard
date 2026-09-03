@@ -41,6 +41,10 @@ PR8 mechanical punctuation and schema3 persistence have local integration
 evidence, while settings consumers/UI have scoped API26/API37 integration
 evidence. No push, remote PR or publication is authorized.
 
+### Enter and editor actions — 2026-09-03
+
+- `f060da1` mandatory fresh JVM635/635 PASS. Multiline Enter and SEND/editor actions now consume the last ready decision without waiting. Newline closes composition; exact actions add no punctuation. Explicit action refusal gets an owned newline fallback whose correction Undo restores the full suffix; unknown outcomes are never replayed. Six new JVM tests, fresh641/641, all277 final-source gates, and real API26/API37 editor-action suites2/2 each PASS. Production quality remains closed, so final automatic Binder/Fold evidence remains open. Contextual punctuation, final holdout, energy and release gates remain required.
+
 ### Independent spelling availability — 2026-09-03
 
 - `0958a8e` mandatory fresh JVM630/630 PASS. Presentation, local retrieval and model demand now have independent eligibility: hidden HIGH_CONFIDENCE uses qualified automatic branches; deterministic-only eligibility never attaches the model. Actual service reads immutable branch qualification from its controller; production gates remain closed. Five new coordinator tests cover 48 settings/qualification combinations, hidden correction/Undo, numeric model consumption, cancellation and privacy. Fresh JVM635/635 and all277 local gates/test APK assembly PASS. No new Binder or Fold behavior/energy qualification is claimed. Enter/editor actions, contextual suggestions, final product holdout and release matrices remain open.

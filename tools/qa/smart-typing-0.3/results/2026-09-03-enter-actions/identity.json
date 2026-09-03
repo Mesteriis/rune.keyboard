@@ -1,0 +1,18 @@
+{
+  "apkSha256": "f187e68922cc37071204fb133ae276bfd37469640f323c98e44518d25e64f11d",
+  "baseline": "f060da1a3f069c5a53c9c786269724818811a44d",
+  "jvm": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 641
+  },
+  "sourceSha256": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt": "042519fddfd352a9f6e9d41f974c6ec51121097689f8460aba3c1cf220b77538",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/EditorCommandExecutor.kt": "dc54b858885b8f362c6babeeefff007cd931cdb036ea1c33c89f064dc37e07cf",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "d4575110f62f3c973d613d7d928ff262dc47128760cd6424f6791cbae1b88554",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/ime/editor/EditorCommandExecutorTest.kt": "52b35a3369294094f4362bd3e703611133ed075cd2876bacad062d525f5ca0e1",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/CorrectionBoundaryTest.kt": "8e6180acc89ad9619ba4cd7c132be8e0b19707d7d7f76d2a064f9a457805b904"
+  },
+  "testApkSha256": "045ea500fa69296f4c7f97abe23d057999d05e683829fa4d98a22b5e10d1415a"
+}

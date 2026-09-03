@@ -13,6 +13,16 @@ internal data class EditorExecutionResult(
 )
 
 object EditorCommandExecutor {
+    /** Exact editor action for the typing-session path; caller owns a rejected-action fallback. */
+    internal fun performEditorActionOnly(inputConnection: InputConnection, actionId: Int): EditorActionResult =
+        try {
+            if (inputConnection.performEditorAction(actionId)) EditorActionResult.ACCEPTED else EditorActionResult.REFUSED
+        } catch (_: RuntimeException) {
+            EditorActionResult.UNKNOWN
+        }
+
+    internal enum class EditorActionResult { ACCEPTED, REFUSED, UNKNOWN }
+
     /** Kept for reducer-adjacent JVM tests and raw-editor callers. */
     internal fun execute(
         command: EditorCommand,

@@ -14,6 +14,58 @@ import org.junit.Test
 
 /** Real owner/executor with an independent editor document. Synthetic quality admission only. */
 class CorrectionBoundaryTest {
+    @Test fun `multiline Enter consumes ready correction commits newline and Undo restores original`() {
+        val f = Fixture(); f.raw("helllo"); f.publish("hello"); f.calls.clear()
+        assertEquals(TypingTextResult.HANDLED, f.type("\n"))
+        assertEquals("hello\n", f.document); assertNull(f.controller.state.composing)
+        assertEquals(-1, f.composingStart)
+        assertEquals(listOf("beginBatchEdit", "commitText", "endBatchEdit"), f.calls)
+        f.calls.clear(); assertEquals(TypingTextResult.HANDLED, f.undo())
+        assertEquals("helllo", f.document)
+        assertEquals(ComposingSegment(typedWord = "helllo"), f.controller.state.composing)
+        assertTrue(f.controller.state.originalSelected)
+        assertEquals(listOf("beginBatchEdit", "setComposingRegion", "setComposingText", "endBatchEdit"), f.calls)
+    }
+
+    @Test fun `multiline Enter without an admitted correction finishes span and commits exact newline`() {
+        for (mode in AutocorrectionMode.entries) {
+            val f = Fixture(qualified = false); f.mode = mode; f.raw("helllo"); f.publish("hello"); f.calls.clear()
+            assertEquals(TypingTextResult.HANDLED, f.type("\n"))
+            assertEquals("helllo\n", f.document); assertNull(f.controller.state.composing)
+            assertEquals(listOf("finishComposingText", "commitText"), f.calls)
+            assertNull(f.controller.state.lastAutoEdit)
+        }
+    }
+
+    @Test fun `editor action adds no punctuation and rejected action newline remains in correction Undo`() {
+        val f = Fixture(); f.raw("helllo"); f.publish("hello"); f.calls.clear()
+        assertEquals(TypingTextResult.HANDLED, f.controller.prepareEditorAction(f.policy, f.keyboard, f.mode, f.execute))
+        assertEquals("hello", f.document); assertNull(f.controller.state.composing)
+        assertFalse(f.document.endsWith('.'))
+        assertEquals(TypingTextResult.HANDLED, f.controller.appendEditorActionFallbackNewline(f.execute))
+        assertEquals("hello\n", f.document)
+        f.calls.clear(); assertEquals(TypingTextResult.HANDLED, f.undo())
+        assertEquals("helllo", f.document); assertTrue(f.controller.state.originalSelected)
+    }
+
+    @Test fun `editor action without ready correction closes original and fallback newline has no synthetic Undo`() {
+        val f = Fixture(); f.raw("hello"); f.calls.clear()
+        assertEquals(TypingTextResult.HANDLED, f.controller.prepareEditorAction(f.policy, f.keyboard, f.mode, f.execute))
+        assertEquals("hello", f.document); assertNull(f.controller.state.composing)
+        assertEquals(listOf("finishComposingText"), f.calls)
+        assertEquals(TypingTextResult.HANDLED, f.controller.appendEditorActionFallbackNewline(f.execute))
+        assertEquals("hello\n", f.document); assertNull(f.controller.state.lastAutoEdit)
+    }
+
+    @Test fun `failed editor action preparation never executes fallback over uncertain text`() {
+        val f = Fixture(); f.raw("helllo"); f.publish("hello"); f.calls.clear(); f.fail = "commitText"
+        assertEquals(TypingTextResult.REJECTED,
+            f.controller.prepareEditorAction(f.policy, f.keyboard, f.mode, f.execute))
+        assertFalse(f.controller.state.enabled)
+        assertEquals(TypingTextResult.REJECTED, f.controller.appendEditorActionFallbackNewline(f.execute))
+        assertEquals("helllo", f.document)
+    }
+
     @Test fun `space and punctuation commit corrected word but compose only the boundary`() {
         for (boundary in listOf(" ", ",", "!", "?", ";")) {
             val f = Fixture(); f.raw("helllo"); f.publish("hello"); f.calls.clear()

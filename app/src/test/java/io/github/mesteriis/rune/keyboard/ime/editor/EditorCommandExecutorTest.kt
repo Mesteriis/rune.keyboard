@@ -14,6 +14,23 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class EditorCommandExecutorTest {
+    @Test fun `exact editor action reports refusal or exception without inserting fallback text`() {
+        for ((result, throws, expected) in listOf(
+            Triple(true, false, EditorCommandExecutor.EditorActionResult.ACCEPTED),
+            Triple(false, false, EditorCommandExecutor.EditorActionResult.REFUSED),
+            Triple(false, true, EditorCommandExecutor.EditorActionResult.UNKNOWN))) {
+            val calls = mutableListOf<String>()
+            val connection = Proxy.newProxyInstance(InputConnection::class.java.classLoader,
+                arrayOf(InputConnection::class.java)) { _, method, _ ->
+                calls += method.name
+                if (throws) throw IllegalStateException("synthetic")
+                result
+            } as InputConnection
+            assertEquals(expected, EditorCommandExecutor.performEditorActionOnly(connection, 4))
+            assertEquals(listOf("performEditorAction"), calls)
+        }
+    }
+
     @Test fun `owned batch checks guard between writes and ends on the original connection`() {
         for (loseOwnership in listOf(false, true)) {
             val calls = mutableListOf<String>()

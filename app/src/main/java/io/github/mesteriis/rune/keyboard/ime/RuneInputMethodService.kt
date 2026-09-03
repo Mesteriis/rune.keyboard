@@ -214,18 +214,22 @@ class RuneInputMethodService : InputMethodService() {
     private fun handleAction(action: KeyboardAction) {
         RuneTrace.section("Rune#touchUpDispatch") {
             val previousState = state
-            if (invalidatesTyping(action)) candidates.invalidate()
-            if (action is KeyboardAction.MoveCursor || action == KeyboardAction.Enter) {
-                typingSession.awaitEditorSelection(::executeTypingEdit)
-            } else if (invalidatesTyping(action)) {
-                typingSession.invalidate(::executeTypingEdit)
-            }
             val transition = KeyboardReducer.reduce(
                 state = state,
                 action = action,
                 editorContext = editorContext,
                 nowMillis = SystemClock.uptimeMillis(),
             )
+            val ownedEnter = action == KeyboardAction.Enter && editorContext.supportsSmartTyping &&
+                (transition.command == EditorCommand.InsertNewline || transition.command is EditorCommand.PerformEditorAction)
+            if (!ownedEnter && invalidatesTyping(action)) {
+                candidates.invalidate()
+                if (action is KeyboardAction.MoveCursor || action == KeyboardAction.Enter) {
+                    typingSession.awaitEditorSelection(::executeTypingEdit)
+                } else {
+                    typingSession.invalidate(::executeTypingEdit)
+                }
+            }
             state = transition.state
             if (action is KeyboardAction.SwitchLanguage) {
                 if (state.language != previousState.language) {
@@ -271,8 +275,27 @@ class RuneInputMethodService : InputMethodService() {
     private fun executeTypingOrEditorCommand(command: EditorCommand, beforeAction: KeyboardState): CommandOutcome {
         val punctuation = MechanicalPunctuationPolicy(editorContext.inputPolicy, editorContext.mode,
             editorContext.requiresRawKeyEvents, settings.mechanicalPunctuation, settings.doubleSpacePeriod)
+        if (command is EditorCommand.PerformEditorAction && editorContext.supportsSmartTyping) {
+            val prepared = candidates.edit { typingSession.prepareEditorAction(punctuation, beforeAction,
+                settings.autocorrectionMode, ::executeTypingEdit) }
+            if (prepared == TypingTextResult.REJECTED) return CommandOutcome.DROPPED
+            return when (executeEditorActionOnly(command.actionId)) {
+                EditorCommandExecutor.EditorActionResult.ACCEPTED -> CommandOutcome.DELIVERED
+                EditorCommandExecutor.EditorActionResult.REFUSED -> when (candidates.edit {
+                    typingSession.appendEditorActionFallbackNewline(::executeTypingEdit)
+                }) {
+                    TypingTextResult.HANDLED -> CommandOutcome.DELIVERED
+                    else -> CommandOutcome.DROPPED
+                }
+                EditorCommandExecutor.EditorActionResult.UNKNOWN -> {
+                    candidates.invalidate()
+                    typingSession.awaitEditorSelection(::executeTypingEdit)
+                    CommandOutcome.DROPPED
+                }
+            }
+        }
         val result = if (command is EditorCommand.CommitText || command == EditorCommand.DeletePreviousCodePoint ||
-            command == EditorCommand.ConvertPrecedingSpaceToPeriod) {
+            command == EditorCommand.ConvertPrecedingSpaceToPeriod || command == EditorCommand.InsertNewline) {
             candidates.edit {
                 when (command) {
                     is EditorCommand.CommitText -> typingSession.typeText(command.value, punctuation, beforeAction,
@@ -282,6 +305,8 @@ class RuneInputMethodService : InputMethodService() {
                     EditorCommand.ConvertPrecedingSpaceToPeriod -> typingSession.typeText(" ", punctuation,
                         beforeAction, doubleSpaceGesture = true, autocorrectionMode = settings.autocorrectionMode,
                         execute = ::executeTypingEdit)
+                    EditorCommand.InsertNewline -> typingSession.typeText("\n", punctuation, beforeAction,
+                        autocorrectionMode = settings.autocorrectionMode, execute = ::executeTypingEdit)
                     else -> TypingTextResult.BYPASS
                 }
             }
@@ -297,6 +322,12 @@ class RuneInputMethodService : InputMethodService() {
 
     private fun executeTypingEdit(edit: TypingEdit): Boolean = RuneTrace.section("Rune#composeUpdate") {
         executeCommand(editorCommand(edit)) == CommandOutcome.DELIVERED
+    }
+
+    private fun executeEditorActionOnly(actionId: Int): EditorCommandExecutor.EditorActionResult =
+        RuneTrace.section("Rune#editorCommand") {
+            currentInputConnection?.let { EditorCommandExecutor.performEditorActionOnly(it, actionId) }
+                ?: EditorCommandExecutor.EditorActionResult.UNKNOWN
     }
 
     private fun editorCommand(edit: TypingEdit): EditorCommand =

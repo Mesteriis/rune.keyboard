@@ -420,6 +420,38 @@ class TypingSessionController internal constructor(
         return if (transformed == TypingTextResult.BYPASS) typeText(text, execute) else transformed
     }
 
+    /** Prepare SEND/GO/etc. from the last ready decision; never invent punctuation or wait. */
+    fun prepareEditorAction(
+        policy: MechanicalPunctuationPolicy,
+        keyboard: KeyboardState,
+        autocorrectionMode: AutocorrectionMode,
+        execute: (TypingEdit) -> Boolean,
+    ): TypingTextResult {
+        discardUndo()
+        val correction = applyBoundaryCorrection("", policy, keyboard, autocorrectionMode, execute)
+        if (correction != TypingTextResult.BYPASS) return correction
+        return if (finishComposition(execute)) TypingTextResult.HANDLED else TypingTextResult.REJECTED
+    }
+
+    /** Preserve one correction transaction when a rejected editor action falls back to newline. */
+    fun appendEditorActionFallbackNewline(execute: (TypingEdit) -> Boolean): TypingTextResult {
+        if (!state.enabled || awaitingEditorSelection || state.composing != null) return TypingTextResult.REJECTED
+        val previousUndo = state.lastAutoEdit
+        val caret = selectionStart.toLong() + 1
+        if (selectionStart != selectionEnd || caret > Int.MAX_VALUE) return TypingTextResult.REJECTED
+        val expected = EditorSelection(caret.toInt(), caret.toInt(), -1, -1)
+        return applyEdit(TypingEdit.CommitText("\n"), expected, execute) {
+            context?.append("\n")
+            if (previousUndo != null && previousUndo.sessionId == state.sessionId) {
+                state = state.copy(lastAutoEdit = UndoableTextEdit(previousUndo.original,
+                    previousUndo.applied + "\n", state.sessionId, state.revision,
+                    previousUndo.restoreComposition, previousUndo.contextBefore,
+                    previousUndo.committedStart, null, previousUndo.correction))
+            }
+            publish()
+        }
+    }
+
     /** Compatibility entry for a recognized gesture; all conversion now uses the same planner. */
     fun doubleSpace(executeTypingEdit: (TypingEdit) -> Boolean): TypingTextResult {
         discardUndo()
@@ -514,8 +546,10 @@ class TypingSessionController internal constructor(
     /** Latest accepted numeric decision only. No scoring, waiting, editor reads or text reconstruction. */
     private fun applyBoundaryCorrection(boundary: String, policy: MechanicalPunctuationPolicy,
         keyboard: KeyboardState, mode: AutocorrectionMode, execute: (TypingEdit) -> Boolean): TypingTextResult {
-        if (mode != AutocorrectionMode.HIGH_CONFIDENCE || boundary.length != 1 ||
-            boundary[0] !in PENDING_BOUNDARY || policy.inputPolicy != InputPolicy.NORMAL ||
+        val closesComposition = boundary.isEmpty() || boundary == "\n"
+        if (mode != AutocorrectionMode.HIGH_CONFIDENCE ||
+            (!closesComposition && (boundary.length != 1 || boundary[0] !in PENDING_BOUNDARY)) ||
+            policy.inputPolicy != InputPolicy.NORMAL ||
             policy.mode != EditorMode.TEXT || policy.requiresRawKeyEvents || keyboard.layer != KeyboardLayer.LETTERS ||
             !canRequestCandidates) return TypingTextResult.BYPASS
         // A first dot/colon can still start a hostname or URI scheme. Do not change a word
@@ -539,8 +573,9 @@ class TypingSessionController internal constructor(
             owned.text.substring(tokenStart) != previous.typedWord) return TypingTextResult.BYPASS
         val virtual = OwnedPunctuationSuffix(owned.text.dropLast(previous.text.length) + corrected.text,
             corrected.text, owned.startsAtTokenBoundary, owned.sessionId, owned.revision)
-        val punctuation = MechanicalPunctuationPlanner.plan(virtual, PunctuationAction.Text(boundary), policy)
-            as? MechanicalPunctuationPlan.Replace
+        val punctuation = if (closesComposition) null else
+            MechanicalPunctuationPlanner.plan(virtual, PunctuationAction.Text(boundary), policy)
+                as? MechanicalPunctuationPlan.Replace
         val rendered = punctuation?.replacementComposing ?: (corrected.text + boundary)
         if (!rendered.endsWith(boundary) || rendered.length > MAX_COMPOSING_UTF16 ||
             rendered.codePointCount(0, rendered.length) > 128) return TypingTextResult.BYPASS
@@ -550,14 +585,16 @@ class TypingSessionController internal constructor(
         val end = caret.toInt()
         val boundaryStart = end - boundary.length
         val before = context!!.text
-        val next = ComposingSegment(leadingBoundary = boundary)
+        val next = if (closesComposition) null else ComposingSegment(leadingBoundary = boundary)
         // Intermediate commit acknowledgement can arrive synchronously before region creation.
         remember(EditorSelection(end, end, -1, -1))
-        return applyGuardedBatch(listOf(TypingEdit.CommitText(rendered),
-            TypingEdit.SetComposingRegion(boundaryStart, end)),
-            EditorSelection(end, end, boundaryStart, end), execute) {
+        val edits = if (next == null) listOf(TypingEdit.CommitText(rendered)) else
+            listOf(TypingEdit.CommitText(rendered), TypingEdit.SetComposingRegion(boundaryStart, end))
+        val expected = if (next == null) EditorSelection(end, end, -1, -1) else
+            EditorSelection(end, end, boundaryStart, end)
+        return applyGuardedBatch(edits, expected, execute) {
             check(context!!.replaceSuffix(previous.text, rendered)) { "Correction ownership mismatch" }
-            composingStart = boundaryStart
+            composingStart = if (next == null) -1 else boundaryStart
             state = state.copy(composing = next, originalSelected = false,
                 lastAutoEdit = UndoableTextEdit(previous.text, rendered, state.sessionId, state.revision,
                     previous, before, start, next,
@@ -571,7 +608,9 @@ class TypingSessionController internal constructor(
         val end = start.toLong() + edit.applied.length
         if (edit.sessionId != state.sessionId || edit.revision != state.revision ||
             state.composing != edit.composingAfter || selectionStart != selectionEnd || selectionStart.toLong() != end ||
-            composingStart.toLong() != end - edit.composingAfter?.text.orEmpty().length || context?.text?.endsWith(edit.applied) != true) {
+            (edit.composingAfter == null && composingStart != -1) ||
+            (edit.composingAfter != null && composingStart.toLong() != end - edit.composingAfter.text.length) ||
+            context?.text?.endsWith(edit.applied) != true) {
             // Uncertain committed text must not be adopted as a new composing span.
             disableSession()
             return TypingTextResult.REJECTED
