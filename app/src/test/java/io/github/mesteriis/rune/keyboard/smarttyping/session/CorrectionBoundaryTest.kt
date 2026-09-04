@@ -247,6 +247,36 @@ class CorrectionBoundaryTest {
         }
     }
 
+    @Test fun `canonical case auto replaces on boundary and Undo restores lowercase original`() {
+        for (unambiguous in listOf(true, false)) {
+            val f = Fixture(qualified = false)
+            f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+            f.raw("москва")
+            f.publishCanonical("Москва", unambiguous)
+
+            assertEquals(TypingTextResult.HANDLED, f.type(" "))
+            assertEquals("Москва ", f.document)
+            assertNotNull(f.controller.state.lastAutoEdit)
+            assertEquals(TypingTextResult.HANDLED, f.undo())
+            assertEquals("москва", f.document)
+            assertEquals("москва", f.controller.state.composing?.typedWord)
+            assertTrue(f.controller.state.originalSelected)
+        }
+    }
+
+    @Test fun `disabled autocorrection keeps canonical case as a suggestion`() {
+        for (mode in listOf(AutocorrectionMode.SUGGESTIONS, AutocorrectionMode.OFF)) {
+            val f = Fixture(qualified = false)
+            f.keyboard = KeyboardState(KeyboardLanguage.SPANISH)
+            f.mode = mode
+            f.raw("juan")
+            f.publishCanonical("Juan", unambiguous = false)
+            f.type(" ")
+            assertEquals("juan ", f.document)
+            assertNull(f.controller.state.lastAutoEdit)
+        }
+    }
+
     @Test fun `first dot or colon cannot change a future hostname or scheme`() {
         for (boundary in listOf(".", ":")) {
             val f = Fixture(); f.raw("helllo"); f.publish("hello"); f.type(boundary)
@@ -363,6 +393,15 @@ class CorrectionBoundaryTest {
                 kotlin.math.abs(word.length - request.token.length), CasePattern.analyze(request.token))
             assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
                 CandidateGeneration(request.token, listOf(item), completion, false, null, 1, 1))))
+        }
+        fun publishCanonical(word: String, unambiguous: Boolean) {
+            val request = controller.beginCandidateRequest(++requestId, keyboard.language)!!
+            val item = GeneratedCandidate(word, word, TokenUnicode.folded(word), keyboard.language,
+                false, 4, 1, 0, EditFeatures(0.0, 0, 0.0), 0, CasePattern.TITLE,
+                GeneratedCandidateKind.CANONICAL_CASE, canonicalCaseUnambiguous = unambiguous)
+            assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision,
+                request.requestId, CandidateGeneration(request.token, listOf(item),
+                    CandidateCompletion.VALID_WORD, true, null, 1, 0))))
         }
     }
 }

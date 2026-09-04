@@ -31,7 +31,7 @@ data class GeneratedCandidate(
     val lengthDifference: Int,
     val casePattern: CasePattern,
     val kind: GeneratedCandidateKind = GeneratedCandidateKind.SPELLING,
-    /** Source ambiguity metadata only; it does not authorize automatic replacement. */
+    /** Source ambiguity metadata retained for quality reports and future policy changes. */
     val canonicalCaseUnambiguous: Boolean = false,
 ) {
     override fun toString(): String = "GeneratedCandidate(redacted)"

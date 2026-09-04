@@ -149,7 +149,9 @@ class TypingSessionController internal constructor(
         }
         val alternatives = generation.alternatives.toList()
         val snapshot = generation.copy(alternatives = alternatives)
-        val ranking = trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
+        val ranking = if (snapshot.isCanonicalCaseCorrection()) {
+            CalibratedRanking(listOf(1), preferredId = 1, usedModel = false)
+        } else trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
             CalibratedSpellingPolicy.rank(snapshot, stamp.language)
         }
         candidateSelection = CandidateSelection(snapshot, stamp.language, stamp.requestId,
@@ -172,7 +174,8 @@ class TypingSessionController internal constructor(
     /** Snapshot only after consumer eligibility checks. Full candidate set; Rune-owned prefix only. */
     val canRequestModelRanking: Boolean
         get() = canRequestCandidates && candidateSelection?.let {
-            !it.modelRanked && it.alternatives.isNotEmpty() && state.composing?.typedWord == it.original
+            !it.modelRanked && !it.generation.isValidWord && it.alternatives.isNotEmpty() &&
+                state.composing?.typedWord == it.original
         } == true
 
     fun beginModelRanking(requestId: Long): ScoringInput? {
@@ -680,8 +683,10 @@ class TypingSessionController internal constructor(
         if (boundary == "." || boundary == ":") return TypingTextResult.BYPASS
         val selection = candidateSelection ?: return TypingTextResult.BYPASS
         val ranking = selection.ranking ?: return TypingTextResult.BYPASS
-        if (selection.language != keyboard.language || selection.generation.prohibitsAutoReplace ||
-            ranking.preferredId <= 0 || !spellingQualification.allows(selection.language, ranking.usedModel)) {
+        val canonicalCase = selection.generation.isCanonicalCaseCorrection()
+        if (selection.language != keyboard.language || ranking.preferredId <= 0 ||
+            (!canonicalCase && (selection.generation.prohibitsAutoReplace ||
+                !spellingQualification.allows(selection.language, ranking.usedModel)))) {
             return TypingTextResult.BYPASS
         }
         val previous = state.composing ?: return TypingTextResult.BYPASS
@@ -983,5 +988,9 @@ class TypingSessionController internal constructor(
                 type == Character.COMBINING_SPACING_MARK.toInt() ||
                 type == Character.ENCLOSING_MARK.toInt()
         }
+
+        fun CandidateGeneration.isCanonicalCaseCorrection(): Boolean =
+            completion == CandidateCompletion.VALID_WORD && isValidWord && protectedReason == null &&
+                alternatives.size == 1 && alternatives[0].kind == GeneratedCandidateKind.CANONICAL_CASE
     }
 }

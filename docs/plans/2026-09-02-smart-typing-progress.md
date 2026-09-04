@@ -398,3 +398,12 @@ Each language/split contains exactly 1,000 typo, 1,000 correct/protected and 200
 The holdout row gate requires at least 300 automatic replacements per language, precision >=99% and correct/protected false-change <=0.5%. Thresholds may not be retuned after seeing holdout. A failed suitability gate stops model-dependent implementation; fine-tuning is a separate milestone. Independent deterministic features do not establish model-assisted quality.
 
 After each local commit run `./gradlew testDebugUnitTest --rerun-tasks`. Before closing a PR slice run lint, debug/release/profile assembly, release/profile privacy gates, `imeIntelligenceBoundary`, `forbiddenRuntimeDependencies`, and `:runtime-llama:nativeSymbolGate`. New API26, API37, physical Fold, performance and model publication are separate gates. No version bump, push, remote PR, or model publication is implied by local test success.
+# Canonical-case AutoReplace — 2026-09-04
+
+- Lowercase valid names and geographic forms with one packaged canonical candidate now AutoReplace
+  on a supported boundary under `HIGH_CONFIDENCE`, independent of model/spelling qualification, and
+  immediate Backspace restores the exact Original composition. Sensitive/raw/non-text/layer and
+  settings vetoes remain. Fresh JVM 662/662 PASS. Physical Fold/API36 manual fixtures exposed
+  `Москва`, `Россия`, and `Иван`; the new real Binder boundary/Undo test passed 1/1 after one recorded
+  fixture-capitalization correction. Candidate-05 calibration remains separate; no publication or
+  version bump. Evidence: `docs/acceptance/2026-09-04-smart-typing-0.3-canonical-autoreplace.md`.

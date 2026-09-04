@@ -7,6 +7,7 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
+import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -15,6 +16,36 @@ import org.junit.runner.RunWith
 /** Public fixture only; observations cross the existing :qa_editor Binder connection. */
 @RunWith(AndroidJUnit4::class)
 class LiveCandidatesInstrumentedTest : ImeTestBase() {
+    @Test fun canonicalCaseAutoReplacesOnBoundaryAndBackspaceRestoresOriginal() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa()
+        driver.switchToRussian()
+        driver.tapKey("Я", "я")
+        space()
+        for (key in listOf("м", "о", "с", "к", "в")) driver.tapKey(key)
+        val deadline = SystemClock.uptimeMillis() + 120_000L
+        var canonical: UiObject2? = null
+        do {
+            driver.tapKey("а")
+            driver.awaitFieldText(FIELD, "я москва")
+            canonical = driver.device.wait(Until.findObject(By.desc(
+                description(R.string.candidate_correction, "Москва"))), 2_000L)
+            if (canonical == null) {
+                driver.tapDelete()
+                driver.awaitFieldText(FIELD, "я москв")
+            }
+        } while (canonical == null && SystemClock.uptimeMillis() < deadline)
+        assertTrue("Canonical case candidate unavailable", checkNotNull(canonical).isSelected)
+
+        space()
+        driver.awaitFieldText(FIELD, "я Москва ")
+        driver.tapDelete()
+        driver.awaitFieldText(FIELD, "я москва")
+        assertTrue(awaitCandidate(R.string.candidate_original, "москва").isSelected)
+        noReadback()
+    }
+
     @Test fun correctionAndOriginalTapsReplaceOnlyOwnedWordWithNoReadback() {
         val correction = prepareCorrection()
         val before = stats()

@@ -354,7 +354,7 @@ class TypingCandidateSelectionTest {
         }
     }
 
-    @Test fun `valid lowercase proper noun can expose and apply one canonical case suggestion`() {
+    @Test fun `lowercase proper noun is a preferred canonical case correction`() {
         start("london")
         val request = request()
         val candidate = GeneratedCandidate("London", "London", "london",
@@ -365,7 +365,8 @@ class TypingCandidateSelectionTest {
         assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision,
             request.requestId, generation)))
         assertEquals(listOf("london", "London"), labels())
-        assertEquals(controller.originalCandidateId, controller.candidateViewState.selectedCandidateId)
+        assertEquals(correction(), controller.candidateViewState.selectedCandidateId)
+        assertFalse(controller.canRequestModelRanking)
         assertEquals(TypingTextResult.HANDLED, controller.selectCandidate(correction(), execute))
         assertEquals("London", controller.state.composing!!.typedWord)
     }
