@@ -1,0 +1,162 @@
+{
+  "autoReplaceEnabled": false,
+  "holdoutExecuted": false,
+  "languages": {
+    "en": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 2000,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9980829527187469,
+          0.9999999999999998
+        ]
+      },
+      "calibrationCountAtLeast300": false,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 419,
+        "value": 0.419,
+        "wilson95RowDescriptive": [
+          0.3887865610288496,
+          0.4498333738458103
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          1.0842021724855044e-19,
+          0.001917047281252934
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "holdoutQualified": false,
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "value": null,
+        "wilson95RowDescriptive": null
+      },
+      "provisionalReplacements": 0,
+      "rows": 2000,
+      "uniqueInputs": 1729
+    },
+    "es": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 2000,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9980829527187469,
+          0.9999999999999998
+        ]
+      },
+      "calibrationCountAtLeast300": false,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 476,
+        "value": 0.476,
+        "wilson95RowDescriptive": [
+          0.4451969584283181,
+          0.5069867259789885
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          1.0842021724855044e-19,
+          0.001917047281252934
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "holdoutQualified": false,
+      "precision": {
+        "denominator": 0,
+        "numerator": 0,
+        "value": null,
+        "wilson95RowDescriptive": null
+      },
+      "provisionalReplacements": 0,
+      "rows": 2000,
+      "uniqueInputs": 1729
+    },
+    "ru": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1998,
+        "value": 0.999,
+        "wilson95RowDescriptive": [
+          0.9963610657309615,
+          0.9997257210823479
+        ]
+      },
+      "calibrationCountAtLeast300": false,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 518,
+        "value": 0.518,
+        "wilson95RowDescriptive": [
+          0.48702069136344844,
+          0.5488415453310715
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 2,
+        "value": 0.001,
+        "wilson95RowDescriptive": [
+          0.0002742789176520342,
+          0.003638934269038394
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "holdoutQualified": false,
+      "precision": {
+        "denominator": 2,
+        "numerator": 2,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.34238022750665303,
+          1.0
+        ]
+      },
+      "provisionalReplacements": 2,
+      "rows": 2000,
+      "uniqueInputs": 1730
+    }
+  },
+  "limitations": [
+    "Repeated lexical families/panels; Wilson intervals are row-descriptive only.",
+    "Fitting uses only calibration; these policies do not authorize production AutoReplace."
+  ],
+  "modelUsed": false,
+  "split": "calibration"
+}

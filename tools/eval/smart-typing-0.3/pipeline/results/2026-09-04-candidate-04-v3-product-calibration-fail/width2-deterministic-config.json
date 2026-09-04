@@ -1,0 +1,90 @@
+{
+  "calibrationRowsSha256": "088fa80e1654b6b30df62415dd8736107d5e29c047e5cf5848bd5cd6e9f8aacc",
+  "configSha256": "b907d3ab63763817c94465aae974eb46b3673cb73fd21e599914f0eab5ca5647",
+  "generatorReceiptSha256": "f8cc1fe1bd0968b6e5f580751a603b7624d192bf6792cdf098fb90e6f14d098a",
+  "grid": {
+    "edit": [
+      2,
+      4,
+      8
+    ],
+    "fallback": [
+      0,
+      4
+    ],
+    "frequency": [
+      0,
+      1,
+      2
+    ],
+    "length": [
+      0,
+      1
+    ],
+    "minimum_length": [
+      1,
+      5,
+      9
+    ],
+    "minimum_margin": [
+      1,
+      2,
+      4,
+      8,
+      12
+    ],
+    "original_penalty": [
+      8,
+      12,
+      16,
+      20,
+      24,
+      28,
+      32,
+      40,
+      48,
+      64
+    ],
+    "repetition": [
+      0,
+      2
+    ]
+  },
+  "holdoutQualified": false,
+  "languages": {
+    "en": {
+      "policy": null,
+      "trials": 10800
+    },
+    "es": {
+      "policy": null,
+      "trials": 10800
+    },
+    "ru": {
+      "policy": {
+        "thresholds": {
+          "minimum_length": 9,
+          "minimum_margin": 12,
+          "original_penalty": 40
+        },
+        "weights": {
+          "edit": 2,
+          "fallback": 0,
+          "frequency": 2,
+          "length": 0,
+          "repetition": 0
+        }
+      },
+      "trials": 10800
+    }
+  },
+  "maximumAlternatives": 1,
+  "schemaVersion": 1,
+  "scope": "deterministic-calibration-only",
+  "sources": {
+    "tools/eval/smart-typing-0.3/evaluate.py": "d09147b675f33258251c802ebda856d07024499e3bb021c1cdfdaa61313bd0b8",
+    "tools/eval/smart-typing-0.3/pipeline/calibrate_deterministic.py": "645bdb1ea16b3ea0d65861708824ceaef69c9b99b3a7f69744a85b8657c35db6",
+    "tools/eval/smart-typing-0.3/pipeline/deterministic_policy.py": "cd162cc85286410fee77f255116304bb94ceacdaf6111cc515e5390d63308ef9",
+    "tools/eval/smart-typing-0.3/pipeline/export_calibration.py": "40d4e77a0738449791a5772709c55ed830f0f1683672553bc50c13362833b518"
+  }
+}

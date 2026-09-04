@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-04",
+  "result": "FAIL_BEFORE_HOLDOUT",
+  "modelIncluded": false,
+  "productHoldoutRequests": 0,
+  "files": {
+    "README.md": "07eb3a3eac18f71ceb8e0be0e95a9c2408eda605336da8d65971a0aa6f0062ca",
+    "provenance.json": "295522e15d32da2b70cb12a773fbe9711856ec257825538f0b4d9c624bd9844c",
+    "width2-combined-config.json": "dd425dfb1fd7f894d2af334bb93ec45bb9f4cb38dae1a80c5f6cae25c8c1701a",
+    "width2-combined-report.json": "bc3f5ecb5ab08371d833d40f8021bd0b394a8136a56ff0d1990021cec6c03b56",
+    "width2-deterministic-config.json": "f746777fe5a5d8d2cdeeab01a23d920604b0f5ceab9567cc35ac0383d5cbbadc",
+    "width2-deterministic-report.json": "23133be945a03fde53b3e3d4a2803ad40771a213150b7f05a5b50454a112f66c",
+    "width2-generator-provenance.json": "f8cc1fe1bd0968b6e5f580751a603b7624d192bf6792cdf098fb90e6f14d098a",
+    "width2-generator-summary.json": "174d868bca83312ed9e27893fd5da82dc53c364d21b8ebb6aa5d07e3aac8fb8b",
+    "width2-model-complete.json": "17a058e1fd94620d090c37da48699c95a1874b09822723fe7267c29beb934c1d",
+    "width2-model-scores.jsonl.gz": "630f2fa3ffc04cfd561368ba341527d3f048e5112e4c670358cbb8483d49687c",
+    "width4-combined-config.json": "ad81b083caad64360947d51d450a19564e100116f0bdda44055448f6a5e331fb",
+    "width4-combined-report.json": "033d40bb19d1b1a5d210bb365a3d60eb4fcf363c290e9358ca61ee584e8cfc5d",
+    "width4-deterministic-config.json": "60e00912791147700bf4d2f54396f0ae50f13c4c8151bb143929ce3d0cdc2d6b",
+    "width4-deterministic-report.json": "4d06790b2f3bd87dd38c0d7822bb7b714d7a589eb063875460da352abf72356a",
+    "width4-generator-provenance.json": "2fa8d15d3920072588b288a3dbb961769ed4c59d85cfe04ce12b58ae0f553654",
+    "width4-generator-summary.json": "6d254bdb3b0c3a23db7b1fab3f52e30a57692d473f3d3edd17a092df7d336d6f",
+    "width4-model-complete.json": "1a1a43c9a7c779c6cd4a1d9be16fdefea791dfc09dc8a861c9f7d6003f41b563",
+    "width4-model-scores.jsonl.gz": "0f50d83deb368ca0e18af935f5259a9024b7ae6f4b93bd611fe413562f232305"
+  }
+}

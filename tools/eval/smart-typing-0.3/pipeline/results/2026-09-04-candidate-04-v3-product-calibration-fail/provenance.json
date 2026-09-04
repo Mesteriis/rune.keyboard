@@ -1,0 +1,36 @@
+{
+  "date": "2026-09-04",
+  "result": "FAIL_BEFORE_HOLDOUT",
+  "scope": "production-candidate calibration only",
+  "branch": "feature/smart-typing-03-pr06-lexicons",
+  "sourceCommit": "a132a07",
+  "modelSha256": "bff8899af525c30bf1a0939f49c073fbac6cf3fed490018a088d2e831cfcdc71",
+  "modelBytes": 396704416,
+  "productHoldoutExported": false,
+  "productHoldoutRequests": 0,
+  "reason": "No calibrated width reaches 300 safe replacements in every language.",
+  "variants": {
+    "width4": {
+      "maximumAlternatives": 3,
+      "combinedConfigSha256": "251090bb036b999583d04c45f972d6a2b1495da885409ff548772bc87683f5a0",
+      "requests": 3027,
+      "runtimeErrors": 24,
+      "replacements": {
+        "en": 36,
+        "ru": 65,
+        "es": 69
+      }
+    },
+    "width2": {
+      "maximumAlternatives": 1,
+      "combinedConfigSha256": "2255a585af495d27a5fe224a020c6b43ff80a3dc20384649b1b60cbf55cf13c4",
+      "requests": 3027,
+      "runtimeErrors": 55,
+      "replacements": {
+        "en": 11,
+        "ru": 10,
+        "es": 4
+      }
+    }
+  }
+}

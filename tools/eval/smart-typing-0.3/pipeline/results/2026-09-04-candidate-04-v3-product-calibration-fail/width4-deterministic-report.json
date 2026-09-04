@@ -1,0 +1,168 @@
+{
+  "autoReplaceEnabled": false,
+  "holdoutExecuted": false,
+  "languages": {
+    "en": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1973,
+        "value": 0.9865,
+        "wilson95RowDescriptive": [
+          0.9804292069930002,
+          0.9907055060023408
+        ]
+      },
+      "calibrationCountAtLeast300": false,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 602,
+        "value": 0.602,
+        "wilson95RowDescriptive": [
+          0.5713271941320692,
+          0.6318921471368775
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 27,
+        "value": 0.0135,
+        "wilson95RowDescriptive": [
+          0.009294493997659236,
+          0.019570793006999862
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "holdoutQualified": false,
+      "precision": {
+        "denominator": 27,
+        "numerator": 27,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.8754449702581328,
+          0.9999999999999998
+        ]
+      },
+      "provisionalReplacements": 27,
+      "rows": 2000,
+      "uniqueInputs": 1729
+    },
+    "es": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1964,
+        "value": 0.982,
+        "wilson95RowDescriptive": [
+          0.9751819578651543,
+          0.9869700085557177
+        ]
+      },
+      "calibrationCountAtLeast300": false,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 683,
+        "value": 0.683,
+        "wilson95RowDescriptive": [
+          0.6535068964204829,
+          0.7110925099738041
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 36,
+        "value": 0.018,
+        "wilson95RowDescriptive": [
+          0.01302999144428223,
+          0.024818042134845595
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "holdoutQualified": false,
+      "precision": {
+        "denominator": 36,
+        "numerator": 36,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9035813714055363,
+          1.0
+        ]
+      },
+      "provisionalReplacements": 36,
+      "rows": 2000,
+      "uniqueInputs": 1729
+    },
+    "ru": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1970,
+        "value": 0.985,
+        "wilson95RowDescriptive": [
+          0.9786675621742913,
+          0.9894729019628932
+        ]
+      },
+      "calibrationCountAtLeast300": false,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 725,
+        "value": 0.725,
+        "wilson95RowDescriptive": [
+          0.6965038327040266,
+          0.7517741259774736
+        ]
+      },
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 30,
+        "value": 0.015,
+        "wilson95RowDescriptive": [
+          0.010527098037106688,
+          0.021332437825708653
+        ]
+      },
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "holdoutQualified": false,
+      "precision": {
+        "denominator": 30,
+        "numerator": 30,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.8864866068260312,
+          0.9999999999999999
+        ]
+      },
+      "provisionalReplacements": 30,
+      "rows": 2000,
+      "uniqueInputs": 1730
+    }
+  },
+  "limitations": [
+    "Repeated lexical families/panels; Wilson intervals are row-descriptive only.",
+    "Fitting uses only calibration; these policies do not authorize production AutoReplace."
+  ],
+  "modelUsed": false,
+  "split": "calibration"
+}

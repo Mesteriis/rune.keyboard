@@ -1,0 +1,22 @@
+{
+  "generatorReceiptSha256": "2fa8d15d3920072588b288a3dbb961769ed4c59d85cfe04ce12b58ae0f553654",
+  "holdoutExecuted": false,
+  "identity": {
+    "corpusSha256": "e1c4b67d37540c5a5adfd6706b4ba4e1685b0e18009f286d0bccc713d27c7c26",
+    "modelSha256": "bff8899af525c30bf1a0939f49c073fbac6cf3fed490018a088d2e831cfcdc71",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "f2f8e9e21a028871da4b9ced6ce0492eb692f742c4de765467a2d44a18535973"
+  },
+  "maximumAlternatives": 3,
+  "omittedOriginalOnly": 2973,
+  "requests": 3027,
+  "runtimeErrors": 24,
+  "scope": "generated-calibration-model-scores",
+  "scores": 3027,
+  "scoresSha256": "760d4e0d32cfc4940bc08099ce0423c9463bbde7e33fd3206cbaa669cd4ac09c",
+  "sources": {
+    "tools/eval/smart-typing-0.3/evaluate.py": "d09147b675f33258251c802ebda856d07024499e3bb021c1cdfdaa61313bd0b8",
+    "tools/eval/smart-typing-0.3/pipeline/calibrate_deterministic.py": "645bdb1ea16b3ea0d65861708824ceaef69c9b99b3a7f69744a85b8657c35db6",
+    "tools/eval/smart-typing-0.3/pipeline/score_generated.py": "34ccafc158589a857d3d52393106c9e25ded5b83c5ec0fc77c4eee470285e9c8"
+  }
+}
