@@ -22,11 +22,18 @@ def requests_from(rows: list[dict], generated: list[dict]) -> list[dict]:
 def run(args) -> None:
     root = Path(args.output).resolve()
     export.require(root.is_relative_to(export.REPO / "build"), "BUILD_OUTPUT_REQUIRED")
-    rows, generated, receipt = load_verified(Path(args.compiled_export).resolve(strict=True))
+    rows, generated, receipt = load_verified(Path(args.compiled_export).resolve(strict=True),
+                                             Path(getattr(args, "corpus", export.CORPUS)))
     requests = requests_from(rows, generated)
     ev = evaluator()
-    identity = ev.cache_identity(requests, Path(args.runner), Path(args.model))
-    source_paths = [Path(__file__), Path(__file__).with_name("calibrate_deterministic.py"), export.CORPUS / "evaluate.py"]
+    expected_sha = getattr(args, "expected_model_sha256", None)
+    expected_bytes = getattr(args, "expected_model_bytes", None)
+    expected_sha = ev.MODEL_SHA256 if expected_sha is None else expected_sha
+    expected_bytes = ev.MODEL_SIZE if expected_bytes is None else expected_bytes
+    identity = ev.cache_identity(requests, Path(args.runner), Path(args.model),
+                                 expected_sha, expected_bytes)
+    source_paths = [Path(__file__), Path(__file__).with_name("calibrate_deterministic.py"),
+                    export.EVALUATOR_ROOT / "evaluate.py"]
     sources = {str(p.relative_to(export.REPO)): export.sha(p) for p in source_paths}
     run_input = {"scope": "generated-calibration-model-scores", "holdoutExecuted": False,
                  "requests": len(requests), "omittedOriginalOnly": len(rows) - len(requests),
@@ -39,9 +46,12 @@ def run(args) -> None:
         export.require(json.loads(info.read_text()) == run_input, "RESUME_IDENTITY_MISMATCH")
     else:
         export.write_json(info, run_input)
-    ev.score_corpus(requests, Path(args.runner), Path(args.model), root / "scores.jsonl", 60, limit=args.limit)
+    ev.score_corpus(requests, Path(args.runner), Path(args.model), root / "scores.jsonl", 60,
+                    limit=args.limit, expected_model_sha256=expected_sha,
+                    expected_model_size=expected_bytes)
     export.require(sources == {p: export.sha(export.REPO / p) for p in sources}, "SOURCE_DRIFT")
-    export.require(identity == ev.cache_identity(requests, Path(args.runner), Path(args.model)), "EXECUTION_DRIFT")
+    export.require(identity == ev.cache_identity(requests, Path(args.runner), Path(args.model),
+                                                 expected_sha, expected_bytes), "EXECUTION_DRIFT")
     _, scores = ev.load_cache(root / "scores.jsonl", requests, identity)
     if len(scores) == len(requests) and not (root / "complete.json").exists():
         export.write_json(root / "complete.json", {**run_input, "scores": len(scores),
@@ -54,5 +64,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     for option in ("compiled-export", "output", "runner", "model"):
         parser.add_argument("--" + option, required=True)
+    parser.add_argument("--corpus", default=export.CORPUS)
+    parser.add_argument("--expected-model-sha256")
+    parser.add_argument("--expected-model-bytes", type=int)
     parser.add_argument("--limit", type=int)
     run(parser.parse_args())

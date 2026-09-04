@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 
 from evaluate_product_holdout import metrics
-from export_product_holdout import evaluator, summary
+from export_product_holdout import evaluator, holdout_rows, summary
 from score_product_holdout import requests_from, score_requests
 
 
@@ -21,6 +21,16 @@ def generation(identifier="en-holdout-1", alternatives=True):
 
 
 class ProductHoldoutTest(unittest.TestCase):
+    def test_final_qualification_corpus_is_selectable_without_mixing_evaluator_code(self):
+        corpus = Path(__file__).resolve().parent.parent / "qualification-v2/corpus"
+        ev, rows = holdout_rows(corpus)
+        self.assertEqual(6000, len(rows))
+        self.assertEqual({"en", "ru", "es"}, {item["language"] for item in rows})
+        self.assertTrue(all(item["split"] == "holdout" and item["task"] == "spelling"
+                            for item in rows))
+        self.assertEqual(6000, sum(item["split"] == "holdout" for item in rows))
+        self.assertTrue(callable(ev.cache_identity))
+
     def test_requests_are_holdout_only_and_never_include_labels(self):
         request = requests_from([row()], [generation()])[0]
         self.assertEqual(request, {"id": "en-holdout-1", "split": "holdout",
@@ -95,6 +105,30 @@ for line in sys.stdin:
             identity, scores = ev.load_cache(cache, requests, ev.cache_identity(requests, runner, model))
             self.assertEqual(set(scores), {"one", "two"})
             self.assertEqual(identity["protocol"], "rune-score-jsonl-v1")
+
+    def test_holdout_transport_binds_explicit_candidate_artifact(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            runner = root / "runner.py"
+            runner.write_text("""#!/usr/bin/env python3
+import json,sys
+for line in sys.stdin:
+ r=json.loads(line); print(json.dumps({'id':r['id'],'scores':[{'id':i,'sumLogProbability':-1.0-i,'scoredTokenCount':1} for i in range(len(r['candidates']))],'durationMillis':1}),flush=True)
+""")
+            runner.chmod(0o755)
+            model = root / "candidate.gguf"
+            model.write_bytes(b"candidate")
+            request = {"id": "one", "split": "holdout", "prefix": "a ",
+                       "candidates": ["x", "y"]}
+            ev = evaluator()
+            digest = ev.file_hash(model)
+            cache = root / "scores.jsonl"
+            score_requests([request], runner, model, cache, ev,
+                           expected_model_sha256=digest,
+                           expected_model_size=model.stat().st_size)
+            identity = ev.cache_identity([request], runner, model, digest,
+                                         model.stat().st_size)
+            self.assertEqual(digest, ev.load_cache(cache, [request], identity)[0]["modelSha256"])
 
 
 if __name__ == "__main__":

@@ -20,6 +20,18 @@ Run from the repository with Python 3.11+, JDK17 and the existing hash-pinned Ko
 cache. Index/rank arguments identify pre-existing caches with the frozen bytes;
 replace the example paths if the cache layout differs. No download occurs.
 
+The default corpus remains the original evaluation directory. A later frozen
+corpus must be selected explicitly with the same `--corpus <directory>` on
+calibration export, deterministic fitting, generated-candidate scoring,
+combined fitting, ranker-control export, and every product-holdout command.
+Receipts bind the selected relative directory and manifest digest so artifacts
+from two corpora cannot be combined. For a candidate other than the original
+Rune Text 0.1 artifact, generated scoring also requires its exact
+`--expected-model-sha256` and `--expected-model-bytes`; product and contextual
+holdout scoring inherit the digest from the frozen model config and require the
+exact byte count. The evaluator rejects malformed identities before launching
+the native runner.
+
 ```sh
 python3 tools/eval/smart-typing-0.3/pipeline/export_calibration.py \
   --output build/smart-typing-0.3/pipeline-calibration-01 \

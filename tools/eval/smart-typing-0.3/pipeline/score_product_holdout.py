@@ -15,12 +15,16 @@ import export_calibration as calibration
 import export_product_holdout as holdout
 
 
-def load_verified(directory: Path) -> tuple[list[dict], list[dict], dict]:
-    ev, rows = holdout.holdout_rows()
+def load_verified(directory: Path, corpus_directory: Path = calibration.CORPUS) -> tuple[list[dict], list[dict], dict]:
+    corpus_directory = Path(corpus_directory).resolve(strict=True)
+    ev, rows = holdout.holdout_rows(corpus_directory)
     receipt = json.loads((directory / "provenance.json").read_text())
     calibration.require(receipt.get("scope") == "product-spelling-holdout-candidates"
                         and receipt.get("holdoutExecuted") is True
-                        and receipt["holdoutRows"] == ev.digest(rows), "HOLDOUT_RECEIPT")
+                        and receipt["holdoutRows"] == ev.digest(rows)
+                        and receipt.get("corpusDirectory") == str(corpus_directory.relative_to(calibration.REPO))
+                        and receipt.get("corpusManifest") == calibration.sha(corpus_directory / "manifest.json"),
+                        "HOLDOUT_RECEIPT")
     for name, key in (("inputs.tsv", "inputs"), ("actual.tsv", "actual"),
                       ("generator.jar", "binary"), ("candidates.jsonl", "candidates")):
         calibration.require(calibration.sha(directory / name) == receipt[key], "HOLDOUT_EXPORT_DIGEST")
@@ -44,9 +48,13 @@ def requests_from(rows: list[dict], generated: list[dict]) -> list[dict]:
 
 
 def score_requests(requests: list[dict], runner: Path, model: Path, cache: Path,
-                   ev, limit: int | None = None) -> None:
+                   ev, limit: int | None = None, expected_model_sha256: str | None = None,
+                   expected_model_size: int | None = None) -> None:
     """Bounded resumable transport; holdout admission was verified before this call."""
-    identity = ev.cache_identity(requests, runner, model)
+    identity = (ev.cache_identity(requests, runner, model)
+                if expected_model_sha256 is None and expected_model_size is None
+                else ev.cache_identity(requests, runner, model, expected_model_sha256,
+                                       expected_model_size))
     if cache.exists():
         _, completed = ev.load_cache(cache, requests, identity)
     else:
@@ -106,7 +114,8 @@ def score_requests(requests: list[dict], runner: Path, model: Path, cache: Path,
 def run(args) -> None:
     output = Path(args.output).resolve()
     calibration.require(output.is_relative_to(calibration.REPO / "build"), "BUILD_OUTPUT_REQUIRED")
-    rows, generated, receipt = load_verified(Path(args.holdout_export).resolve(strict=True))
+    rows, generated, receipt = load_verified(Path(args.holdout_export).resolve(strict=True),
+                                             Path(getattr(args, "corpus", calibration.CORPUS)))
     requests = requests_from(rows, generated)
     config_path = Path(args.combined_config).resolve(strict=True)
     config = json.loads(config_path.read_text())
@@ -118,7 +127,10 @@ def run(args) -> None:
     model_identity = config["modelIdentity"]
     calibration.require(calibration.sha(runner) == model_identity["runnerSha256"]
                         and calibration.sha(model) == model_identity["modelSha256"], "FROZEN_MODEL_IDENTITY")
-    identity = ev.cache_identity(requests, runner, model)
+    expected_bytes = getattr(args, "expected_model_bytes", None)
+    expected_bytes = ev.MODEL_SIZE if expected_bytes is None else expected_bytes
+    identity = ev.cache_identity(requests, runner, model, model_identity["modelSha256"],
+                                 expected_bytes)
     run_input = {"scope": "product-spelling-holdout-model-scores", "holdoutExecuted": True,
         "requests": len(requests), "omittedOriginalOnly": len(rows) - len(requests),
         "holdoutGeneratorReceiptSha256": calibration.sha(Path(args.holdout_export) / "provenance.json"),
@@ -131,8 +143,10 @@ def run(args) -> None:
         calibration.require(json.loads(info.read_text()) == run_input, "RESUME_IDENTITY_MISMATCH")
     else:
         calibration.write_json(info, run_input)
-    score_requests(requests, runner, model, output / "scores.jsonl", ev, args.limit)
-    calibration.require(identity == ev.cache_identity(requests, runner, model), "EXECUTION_DRIFT")
+    score_requests(requests, runner, model, output / "scores.jsonl", ev, args.limit,
+                   model_identity["modelSha256"], expected_bytes)
+    calibration.require(identity == ev.cache_identity(requests, runner, model,
+                        model_identity["modelSha256"], expected_bytes), "EXECUTION_DRIFT")
     _, scores = ev.load_cache(output / "scores.jsonl", requests, identity)
     if len(scores) == len(requests) and not (output / "complete.json").exists():
         calibration.write_json(output / "complete.json", {**run_input, "scores": len(scores),
@@ -145,5 +159,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     for option in ("holdout-export", "output", "combined-config", "runner", "model"):
         parser.add_argument("--" + option, required=True)
+    parser.add_argument("--corpus", default=calibration.CORPUS)
+    parser.add_argument("--expected-model-bytes", type=int)
     parser.add_argument("--limit", type=int)
     run(parser.parse_args())

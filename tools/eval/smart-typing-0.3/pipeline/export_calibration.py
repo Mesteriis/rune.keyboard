@@ -15,7 +15,8 @@ import subprocess
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[3]
-CORPUS = HERE.parent
+EVALUATOR_ROOT = HERE.parent
+CORPUS = EVALUATOR_ROOT
 LEXICON = REPO / "tools/lexicon/smart-typing-0.3"
 PRODUCTION = "app/src/main/java/io/github/mesteriis/rune/keyboard/"
 SOURCES = ["ime/model/KeyboardState.kt"] + [f"smarttyping/correction/{s}.kt" for s in (
@@ -129,13 +130,15 @@ def run(args, source_overrides=None, experiment=None):
     exporter_sha = sha(Path(__file__))
     maximum = getattr(args, "maximum_alternatives", 7)
     require(type(maximum) is int and 1 <= maximum <= 7, "CANDIDATE_WIDTH")
-    manifest = json.loads((CORPUS / "manifest.json").read_text())
+    corpus = Path(getattr(args, "corpus", CORPUS)).resolve(strict=True)
+    require(corpus.is_relative_to(REPO), "CORPUS_SCOPE")
+    manifest = json.loads((corpus / "manifest.json").read_text())
     for name, digest in manifest["files"].items():
-        require(sha(CORPUS / name) == digest, "CORPUS_DIGEST")
-    spec = importlib.util.spec_from_file_location("prepared_evaluator", CORPUS / "evaluate.py")
+        require(sha(corpus / name) == digest, "CORPUS_DIGEST")
+    spec = importlib.util.spec_from_file_location("prepared_evaluator", EVALUATOR_ROOT / "evaluate.py")
     evaluator = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(evaluator)
-    all_rows = evaluator.load_corpus()
+    all_rows = evaluator.load_corpus(corpus)
     evaluator.validate(all_rows)
     rows = [r for r in all_rows if r["split"] == "calibration" and r["task"] == "spelling"]
     require(len(rows) == 6000, "CALIBRATION_COUNT")
@@ -187,7 +190,9 @@ def run(args, source_overrides=None, experiment=None):
         summary["experiment"] = experiment
     write_json(output / "summary.json", summary)
     write_json(output / "provenance.json", {"sources": source_hashes, "assets": asset_hashes,
-        "corpusManifest": sha(CORPUS / "manifest.json"), "calibrationRows": evaluator.digest(rows),
+        "corpusManifest": sha(corpus / "manifest.json"),
+        "corpusDirectory": str(corpus.relative_to(REPO)),
+        "calibrationRows": evaluator.digest(rows),
         "exporter": exporter_sha, "toolchainManifest": sha(LEXICON / "weighted-qualification/manifests/reproduction-toolchain.json"),
         "binary": sha(binary), "inputs": sha(inputs), "actual": sha(output / "actual.tsv"),
         "candidates": sha(output / "candidates.jsonl"), "summary": sha(output / "summary.json"),
@@ -202,5 +207,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("output", "index-dir", "rank-dir", "java", "gradle-cache"):
         parser.add_argument("--" + name, required=True)
+    parser.add_argument("--corpus", default=CORPUS)
     parser.add_argument("--maximum-alternatives", type=int, choices=range(1, 8), default=7)
     run(parser.parse_args())

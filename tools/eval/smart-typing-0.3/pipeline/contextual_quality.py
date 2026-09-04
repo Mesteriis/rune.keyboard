@@ -23,15 +23,16 @@ BOUNDARIES = [" ", ", ", ": ", "; ", ". ", "? ", "! "]
 
 
 def evaluator():
-    spec = importlib.util.spec_from_file_location("contextual_evaluator", shared.CORPUS / "evaluate.py")
+    spec = importlib.util.spec_from_file_location("contextual_evaluator",
+                                                  shared.EVALUATOR_ROOT / "evaluate.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
 
 
-def corpus_rows() -> list[dict]:
+def corpus_rows(corpus_directory: Path = shared.CORPUS) -> list[dict]:
     ev = evaluator()
-    corpus = ev.load_corpus()
+    corpus = ev.load_corpus(Path(corpus_directory).resolve(strict=True))
     ev.validate(corpus)
     rows = [row for row in corpus if row["task"] == "punctuation"]
     shared.require(len(rows) == 1200, "CONTEXTUAL_ROWS")
@@ -82,7 +83,9 @@ def toolchain(gradle_cache: Path) -> list[Path]:
 def export_run(args) -> None:
     output = Path(args.output).resolve()
     shared.require(output.is_relative_to(shared.REPO / "build") and not output.exists(), "FRESH_OUTPUT")
-    rows = corpus_rows()
+    corpus_directory = Path(getattr(args, "corpus", shared.CORPUS)).resolve(strict=True)
+    shared.require(corpus_directory.is_relative_to(shared.REPO), "CORPUS_SCOPE")
+    rows = corpus_rows(corpus_directory)
     sources = [LANGUAGE, ENGINE, HARNESS]
     source_hashes = {str(path.relative_to(shared.REPO)): shared.sha(path) for path in sources}
     jars = toolchain(Path(args.gradle_cache))
@@ -112,7 +115,9 @@ def export_run(args) -> None:
     shared.require(source_hashes == {str(path.relative_to(shared.REPO)): shared.sha(path) for path in sources},
                    "SOURCE_DRIFT")
     shared.write_json(output / "provenance.json", {"scope": "production-contextual-export",
-        "corpusManifest": shared.sha(shared.CORPUS / "manifest.json"), "rows": evaluator().digest(rows),
+        "corpusManifest": shared.sha(corpus_directory / "manifest.json"),
+        "corpusDirectory": str(corpus_directory.relative_to(shared.REPO)),
+        "rows": evaluator().digest(rows),
         "sources": source_hashes, "inputs": shared.sha(inputs), "actual": shared.sha(output / "actual.tsv"),
         "records": shared.sha(output / "rows.jsonl"), "binary": shared.sha(binary),
         "exporter": shared.sha(Path(__file__)), "holdoutScored": False})
@@ -157,9 +162,12 @@ def score_run(args) -> None:
     output = Path(args.output).resolve()
     shared.require(output.is_relative_to(shared.REPO / "build"), "BUILD_OUTPUT")
     runner, model = Path(args.runner).resolve(strict=True), Path(args.model).resolve(strict=True)
-    verified_model(Path(args.model_config).resolve(strict=True), runner, model)
+    model_identity = verified_model(Path(args.model_config).resolve(strict=True), runner, model)
     ev = evaluator()
-    identity = ev.cache_identity(selected, runner, model)
+    expected_bytes = getattr(args, "expected_model_bytes", None)
+    expected_bytes = ev.MODEL_SIZE if expected_bytes is None else expected_bytes
+    identity = ev.cache_identity(selected, runner, model, model_identity["modelSha256"],
+                                 expected_bytes)
     export_receipt = shared.sha(export_dir / "provenance.json")
     frozen = None
     if args.split == "holdout":
@@ -178,7 +186,8 @@ def score_run(args) -> None:
     info = output / "run-input.json"
     if info.exists(): shared.require(json.loads(info.read_text()) == run_input, "RESUME_IDENTITY")
     else: shared.write_json(info, run_input)
-    score_requests(selected, runner, model, output / "scores.jsonl", ev, args.limit)
+    score_requests(selected, runner, model, output / "scores.jsonl", ev, args.limit,
+                   model_identity["modelSha256"], expected_bytes)
     _, scores = ev.load_cache(output / "scores.jsonl", selected, identity)
     if len(scores) == len(selected) and not (output / "complete.json").exists():
         shared.write_json(output / "complete.json", {**run_input, "scores": len(scores),
@@ -283,12 +292,14 @@ def main() -> None:
     commands = parser.add_subparsers(dest="command", required=True)
     export_parser = commands.add_parser("export")
     for option in ("output", "java", "gradle-cache"): export_parser.add_argument("--" + option, required=True)
+    export_parser.add_argument("--corpus", default=shared.CORPUS)
     score_parser = commands.add_parser("score")
     for option in ("export", "output", "model-config", "runner", "model"):
         score_parser.add_argument("--" + option, required=True)
     score_parser.add_argument("--split", choices=("calibration", "holdout"), required=True)
     score_parser.add_argument("--frozen-config")
     score_parser.add_argument("--limit", type=int)
+    score_parser.add_argument("--expected-model-bytes", type=int)
     freeze_parser = commands.add_parser("freeze")
     for option in ("export", "scoring", "output"): freeze_parser.add_argument("--" + option, required=True)
     report_parser = commands.add_parser("report")

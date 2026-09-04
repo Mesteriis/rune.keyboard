@@ -27,7 +27,7 @@ def evaluator():
     return module
 
 
-def load_verified(directory: Path) -> tuple[list[dict], list[dict], dict]:
+def load_verified(directory: Path, corpus_directory: Path = export.CORPUS) -> tuple[list[dict], list[dict], dict]:
     receipt = json.loads((directory / "provenance.json").read_text())
     export.require(receipt.get("sourceOverrides") == {} and receipt.get("harnessWidthArgument") is True,
                    "PRODUCTION_EXPORT_REQUIRED")
@@ -38,12 +38,18 @@ def load_verified(directory: Path) -> tuple[list[dict], list[dict], dict]:
         export.require(export.sha(directory / name) == receipt[key], "EXPORT_DIGEST")
     export.require(all(export.sha(export.REPO / path) == digest for path, digest in receipt["sources"].items()),
                    "PRODUCTION_SOURCE_DRIFT")
-    manifest = json.loads((export.CORPUS / "manifest.json").read_text())
-    export.require(export.sha(export.CORPUS / "manifest.json") == receipt["corpusManifest"], "CORPUS_MANIFEST")
+    corpus_directory = Path(corpus_directory).resolve(strict=True)
+    relative_corpus = str(corpus_directory.relative_to(export.REPO)) if corpus_directory.is_relative_to(export.REPO) else None
+    recorded_corpus = receipt.get("corpusDirectory")
+    export.require(relative_corpus is not None and (recorded_corpus == relative_corpus
+                   or recorded_corpus is None and corpus_directory == export.CORPUS.resolve()),
+                   "CORPUS_DIRECTORY")
+    manifest = json.loads((corpus_directory / "manifest.json").read_text())
+    export.require(export.sha(corpus_directory / "manifest.json") == receipt["corpusManifest"], "CORPUS_MANIFEST")
     for name, digest in manifest["files"].items():
-        export.require(export.sha(export.CORPUS / name) == digest, "CORPUS_DIGEST")
+        export.require(export.sha(corpus_directory / name) == digest, "CORPUS_DIGEST")
     ev = evaluator()
-    corpus = ev.load_corpus()
+    corpus = ev.load_corpus(corpus_directory)
     ev.validate(corpus)
     rows = [r for r in corpus if r["split"] == "calibration" and r["task"] == "spelling"]
     export.require(len(rows) == 6000 and ev.digest(rows) == receipt["calibrationRows"], "CALIBRATION_ROWS")
@@ -124,7 +130,8 @@ def run(args) -> None:
     export.require(output.is_relative_to(export.REPO / "build") and not output.exists(), "FRESH_BUILD_OUTPUT")
     sources = {str(p.relative_to(export.REPO)): export.sha(p) for p in
                [Path(__file__), HERE / "deterministic_policy.py", HERE / "export_calibration.py", HERE.parent / "evaluate.py"]}
-    rows, generated, receipt = load_verified(Path(args.compiled_export).resolve(strict=True))
+    rows, generated, receipt = load_verified(Path(args.compiled_export).resolve(strict=True),
+                                             Path(getattr(args, "corpus", export.CORPUS)))
     output.mkdir(parents=True)
     fits, reports = {}, {}
     for language in ("en", "ru", "es"):
@@ -150,4 +157,5 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--compiled-export", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--corpus", default=export.CORPUS)
     run(parser.parse_args())

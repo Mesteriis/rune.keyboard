@@ -17,7 +17,8 @@ HERE = Path(__file__).resolve().parent
 
 
 def evaluator():
-    spec = importlib.util.spec_from_file_location("product_holdout_evaluator", calibration.CORPUS / "evaluate.py")
+    spec = importlib.util.spec_from_file_location("product_holdout_evaluator",
+                                                  calibration.EVALUATOR_ROOT / "evaluate.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -52,9 +53,9 @@ def verified_configs(combined_path: Path, deterministic_path: Path, calibration_
     return combined, deterministic, receipt
 
 
-def holdout_rows() -> tuple[object, list[dict]]:
+def holdout_rows(corpus_directory: Path = calibration.CORPUS) -> tuple[object, list[dict]]:
     ev = evaluator()
-    corpus = ev.load_corpus()
+    corpus = ev.load_corpus(Path(corpus_directory).resolve(strict=True))
     ev.validate(corpus)
     rows = [row for row in corpus if row["split"] == "holdout" and row["task"] == "spelling"]
     calibration.require(len(rows) == 6000 and all(row["split"] == "holdout" for row in rows), "HOLDOUT_ROWS")
@@ -87,9 +88,15 @@ def run(args) -> None:
     combined_path = Path(args.combined_config).resolve(strict=True)
     deterministic_path = Path(args.deterministic_config).resolve(strict=True)
     calibration_export = Path(args.calibration_export).resolve(strict=True)
+    corpus_directory = Path(getattr(args, "corpus", calibration.CORPUS)).resolve(strict=True)
+    calibration.require(corpus_directory.is_relative_to(calibration.REPO), "CORPUS_SCOPE")
     combined, deterministic, frozen_receipt = verified_configs(
         combined_path, deterministic_path, calibration_export)
-    ev, rows = holdout_rows()
+    recorded_corpus = frozen_receipt.get("corpusDirectory")
+    calibration.require(recorded_corpus == str(corpus_directory.relative_to(calibration.REPO))
+                        or recorded_corpus is None and corpus_directory == calibration.CORPUS.resolve(),
+                        "CORPUS_DIRECTORY")
+    ev, rows = holdout_rows(corpus_directory)
 
     index = Path(args.index_dir).resolve(strict=True)
     rank = Path(args.rank_dir).resolve(strict=True)
@@ -154,7 +161,8 @@ def run(args) -> None:
         "deterministicConfigSha256": deterministic["configSha256"],
         "calibrationGeneratorReceiptSha256": calibration.sha(calibration_export / "provenance.json"),
         "sources": source_hashes, "assets": asset_hashes,
-        "corpusManifest": calibration.sha(calibration.CORPUS / "manifest.json"),
+        "corpusManifest": calibration.sha(corpus_directory / "manifest.json"),
+        "corpusDirectory": str(corpus_directory.relative_to(calibration.REPO)),
         "toolchainManifest": calibration.sha(calibration.LEXICON /
             "weighted-qualification/manifests/reproduction-toolchain.json"),
         "binary": calibration.sha(binary), "inputs": calibration.sha(inputs),
@@ -172,4 +180,5 @@ if __name__ == "__main__":
     for option in ("output", "combined-config", "deterministic-config", "calibration-export",
                    "index-dir", "rank-dir", "java", "gradle-cache"):
         parser.add_argument("--" + option, required=True)
+    parser.add_argument("--corpus", default=calibration.CORPUS)
     run(parser.parse_args())

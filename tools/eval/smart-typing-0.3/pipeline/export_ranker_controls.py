@@ -15,7 +15,8 @@ from score_generated import requests_from
 def run(args):
     output = Path(args.output).resolve()
     export.require(output.is_relative_to(export.REPO / "build") and not output.exists(), "FRESH_BUILD_OUTPUT")
-    rows, generated, receipt = base.load_verified(Path(args.compiled_export))
+    rows, generated, receipt = base.load_verified(
+        Path(args.compiled_export), Path(getattr(args, "corpus", export.CORPUS)))
     ev = base.evaluator()
     deterministic = json.loads(Path(args.deterministic_config).read_text())
     combined = json.loads(Path(args.combined_config).read_text())
@@ -60,4 +61,5 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     for option in ("compiled-export", "scoring", "deterministic-config", "combined-config", "output"):
         parser.add_argument("--" + option, required=True)
+    parser.add_argument("--corpus", default=export.CORPUS)
     run(parser.parse_args())

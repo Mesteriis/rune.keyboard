@@ -67,7 +67,8 @@ def run(args) -> bool:
     calibration.require(output.is_relative_to(calibration.REPO / "build") and not output.exists(),
                         "FRESH_BUILD_OUTPUT")
     export_path = Path(args.holdout_export).resolve(strict=True)
-    rows, generated, receipt = scoring.load_verified(export_path)
+    rows, generated, receipt = scoring.load_verified(
+        export_path, Path(getattr(args, "corpus", calibration.CORPUS)))
     combined_path = Path(args.combined_config).resolve(strict=True)
     deterministic_path = Path(args.deterministic_config).resolve(strict=True)
     combined, deterministic, _ = holdout.verified_configs(
@@ -125,7 +126,8 @@ def run(args) -> bool:
         "reportSha256": calibration.sha(output / "report.json"),
         "sources": {str(path.resolve().relative_to(calibration.REPO)): calibration.sha(path.resolve()) for path in
                     (Path(__file__), Path(combined_ranker.__file__), Path(deterministic_ranker.__file__),
-                     Path(__file__).with_name("deterministic_policy.py"), calibration.CORPUS / "evaluate.py")},
+                     Path(__file__).with_name("deterministic_policy.py"),
+                     calibration.EVALUATOR_ROOT / "evaluate.py")},
     })
     print("PASS" if report["allLanguagesPass"] else "FAIL")
     return report["allLanguagesPass"]
@@ -136,4 +138,5 @@ if __name__ == "__main__":
     for option in ("holdout-export", "scoring", "combined-config", "deterministic-config",
                    "calibration-export", "output"):
         parser.add_argument("--" + option, required=True)
+    parser.add_argument("--corpus", default=calibration.CORPUS)
     sys.exit(0 if run(parser.parse_args()) else 2)

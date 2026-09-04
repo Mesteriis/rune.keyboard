@@ -94,7 +94,8 @@ def metrics(rows: list[dict], generated: list[dict], scores: dict, combined: dic
 def run(args) -> None:
     output = Path(args.output).resolve()
     export.require(output.is_relative_to(export.REPO / "build") and not output.exists(), "FRESH_BUILD_OUTPUT")
-    rows, generated, receipt = base.load_verified(Path(args.compiled_export))
+    rows, generated, receipt = base.load_verified(
+        Path(args.compiled_export), Path(getattr(args, "corpus", export.CORPUS)))
     ev = base.evaluator()
     requests = requests_from(rows, generated)
     scoring = Path(args.scoring)
@@ -108,7 +109,8 @@ def run(args) -> None:
     content = {k: v for k, v in fallback.items() if k != "configSha256"}
     export.require(ev.digest(content) == fallback["configSha256"] and fallback["maximumAlternatives"] == receipt["maximumAlternatives"]
                    and fallback["generatorReceiptSha256"] == complete["generatorReceiptSha256"], "FALLBACK_IDENTITY")
-    source_paths = [Path(__file__), Path(base.__file__), Path(__file__).with_name("deterministic_policy.py"), export.CORPUS / "evaluate.py"]
+    source_paths = [Path(__file__), Path(base.__file__), Path(__file__).with_name("deterministic_policy.py"),
+                    export.EVALUATOR_ROOT / "evaluate.py"]
     sources = {str(p.relative_to(export.REPO)): export.sha(p) for p in source_paths}
     output.mkdir(parents=True)
     fits, reports = {}, {}
@@ -133,4 +135,5 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     for option in ("compiled-export", "scoring", "deterministic-config", "output"):
         parser.add_argument("--" + option, required=True)
+    parser.add_argument("--corpus", default=export.CORPUS)
     run(parser.parse_args())
