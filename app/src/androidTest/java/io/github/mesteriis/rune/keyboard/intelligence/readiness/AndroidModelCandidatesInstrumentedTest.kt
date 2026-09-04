@@ -12,8 +12,11 @@ import android.text.InputType
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
+import io.github.mesteriis.rune.keyboard.ime.model.EditorMode
+import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLayer
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
 import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
 import io.github.mesteriis.rune.keyboard.intelligence.inference.LifecycleModelInferenceService
 import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelPointer
@@ -28,6 +31,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidate
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateReply
 import io.github.mesteriis.rune.keyboard.smarttyping.session.CandidateOwnerState
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionController
+import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingTextResult
+import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import org.junit.Assert.*
 import org.junit.Test
@@ -40,6 +45,36 @@ import java.util.concurrent.atomic.AtomicInteger
 
 /** Real factory, metadata reader, Handler, client and remote Binder; synthetic engine and owned editor fixture. */
 class AndroidModelCandidatesInstrumentedTest {
+    @Test fun current95ProfileAppliesRemoteModelCorrectionAndImmediateUndo() = Fixture().use { f ->
+        onMain { f.ranking.invalidate() }
+        await { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
+        onMain {
+            f.prepare("helos", "hellos", 1)
+            f.ranking.candidatesChanged()
+        }
+        await { f.context.remote.get() > 0 && onMain { !f.controller.canRequestModelRanking } }
+        onMain {
+            assertEquals("hellos", f.controller.candidateViewState.candidates.single {
+                it.id == f.controller.candidateViewState.selectedCandidateId
+            }.text)
+            val policy = MechanicalPunctuationPolicy(
+                InputPolicy.NORMAL, EditorMode.TEXT, false, false, false)
+            assertEquals(TypingTextResult.HANDLED,
+                f.controller.typeText(" ", policy, KeyboardState(KeyboardLanguage.ENGLISH),
+                autocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE) {
+                    f.editorWrites.incrementAndGet(); true
+                })
+            assertEquals("hellos ", f.controller.state.contextText)
+            assertNotNull(f.controller.state.lastAutoEdit)
+            assertEquals(TypingTextResult.HANDLED,
+                f.controller.deletePrevious { f.editorWrites.incrementAndGet(); true })
+            assertEquals("helos", f.controller.state.contextText)
+            assertTrue(f.controller.state.originalSelected)
+        }
+        assertEquals(1, f.context.attempts.get())
+        assertEquals(0, f.context.mainReads.get())
+    }
+
     @Test fun contextualCandidatesUseOneBoundedRemoteRequestAndEqualScoresKeepOriginal() = Fixture().use { f ->
         onMain {
             f.owner = f.owner.copy(autocorrectionMode = AutocorrectionMode.OFF,

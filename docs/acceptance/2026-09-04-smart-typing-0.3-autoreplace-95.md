@@ -23,4 +23,7 @@ Focused checks: evaluator 28/28 PASS, product evaluator 8/8 PASS, and JVM correc
 PASS. Complete JVM passed app 644/644 plus runtime 19/19. Lint, debug/release/profile,
 privacy release/profile, dependency boundaries and native symbols passed. The physical Fold/API 36
 settings journey passed 1/1 in 14.156 seconds with the new RU/EN 95% text and independent preference
-persistence. Physical ordinary-typo/model behavior and immutable model publication remain pending.
+persistence. A second physical Fold/API 36 test used the production readiness resolver, Binder
+client and separate model process with only the numeric engine synthetic: `helos` became `hellos `,
+the first Backspace restored `helos`, and main-thread metadata reads remained zero. It passed 1/1 in
+0.467 seconds. Real-GGUF device behavior, performance/energy and immutable publication remain pending.
