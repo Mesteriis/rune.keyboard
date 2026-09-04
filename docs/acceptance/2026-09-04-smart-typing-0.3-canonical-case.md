@@ -16,6 +16,8 @@ serial candidate worker. It performs no model binding, network access, editor re
 scan, and a malformed or mismatched asset fails to Original.
 
 Host coverage verifies deterministic derivation, malformed UTF-8/order/case rejection, exact lookup,
-valid-word candidate admission, explicit replacement and the automatic-replacement veto. This
-checkpoint does not claim proper-name precision, automatic capitalization qualification, API 26/API
+valid-word candidate admission, explicit replacement and the automatic-replacement veto. A physical
+Fold API 36 instrumentation run additionally loaded the real EN/ES/RU packed and canonical assets and
+produced `London`, `Juan` and `Москва` through `CandidateGenerator`; the one-test contract passed.
+This checkpoint does not claim proper-name precision, automatic capitalization qualification, API 26/API
 37 instrumentation or physical Fold battery/performance results; those remain release gates.

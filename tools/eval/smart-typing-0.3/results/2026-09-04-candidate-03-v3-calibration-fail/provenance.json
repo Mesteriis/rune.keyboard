@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-04",
+  "result": "FAIL_BEFORE_HOLDOUT",
+  "scope": "prepared-candidate synthetic stress suitability calibration",
+  "branch": "feature/smart-typing-03-pr06-lexicons",
+  "scoringSourceCommit": "8965be5",
+  "corpusDirectory": "tools/eval/smart-typing-0.3/qualification-v3/corpus",
+  "corpusManifestSha256": "56a5b994bc2048c4cf434a123ebbe2e2f7a746102b936a83d535fc582ceecee3",
+  "evaluatorSha256": "d09147b675f33258251c802ebda856d07024499e3bb021c1cdfdaa61313bd0b8",
+  "model": {
+    "sha256": "7a61cd75e672533beba48480f972688baf281f3d0867e11ca63aee5a17228f65",
+    "bytes": 396704416,
+    "format": "GGUF v3",
+    "architecture": "qwen3",
+    "quantization": "Q4_K_M",
+    "included": false
+  },
+  "runnerSha256": "f2f8e9e21a028871da4b9ced6ce0492eb692f742c4de765467a2d44a18535973",
+  "cache": {
+    "jsonlRecords": 6601,
+    "responseRecords": 6600,
+    "uniqueResponseIds": 6600,
+    "sha256": "39f510dee54dbd53e738cf1a89303fe51f46c1ce0b6ce76dad4daf548389bfdd"
+  },
+  "frozenConfigSha256": "d416855d391eaf1825f1270941320d392350252a1dcff5c2d42fbf0b358ea078",
+  "reportExitCode": 2,
+  "holdoutScoreRequests": 0,
+  "productModelDependentWorkAllowed": false,
+  "reason": "EN has no calibration bucket satisfying the frozen Wilson-95 selection rule; its frozen configuration abstains, so the three-language minimum-volume gate is impossible before holdout."
+}

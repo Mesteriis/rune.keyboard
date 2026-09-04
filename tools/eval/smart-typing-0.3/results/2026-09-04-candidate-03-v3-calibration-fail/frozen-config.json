@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "protocol": "rune-score-jsonl-v1",
+  "modelSha256": "7a61cd75e672533beba48480f972688baf281f3d0867e11ca63aee5a17228f65",
+  "runnerSha256": "f2f8e9e21a028871da4b9ced6ce0492eb692f742c4de765467a2d44a18535973",
+  "calibrationCorpusSha256": "70858564d3581a79ada8c123166c44bcbb3c0898697ab27938af40f871924247",
+  "calibrationScoresSha256": "82c206204e714dc951102a01315bf079068fe16b777375a7e8bd7f4ea354e769",
+  "languages": {
+    "ru": {
+      "margin": 2.0,
+      "confidence": 0.9
+    },
+    "en": {
+      "margin": 1000000000.0,
+      "confidence": 1.0
+    },
+    "es": {
+      "margin": 2.0,
+      "confidence": 0.95
+    }
+  },
+  "confidenceMeaning": "softmax of average log probabilities; not an empirical correctness probability",
+  "selectionSafety": {
+    "method": "wilson95",
+    "minimumAutomaticReplacements": 300,
+    "minimumPrecisionWilson95Lower": 0.99,
+    "maximumFalseChangeWilson95Upper": 0.005
+  },
+  "frozenConfigSha256": "d416855d391eaf1825f1270941320d392350252a1dcff5c2d42fbf0b358ea078"
+}

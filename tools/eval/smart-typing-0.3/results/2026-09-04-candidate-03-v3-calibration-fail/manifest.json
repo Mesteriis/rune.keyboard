@@ -1,0 +1,15 @@
+{
+  "date": "2026-09-04",
+  "result": "FAIL_BEFORE_HOLDOUT",
+  "modelIncluded": false,
+  "calibrationResponseCount": 6600,
+  "holdoutResponseCount": 0,
+  "files": {
+    "README.md": "f7bec5a426ef8cf5483af237fc5309841cc97d8a51ee7df210cd8f199f3b5fb0",
+    "frozen-config.json": "d0a234d04e73b8fe7ba6f2ebe8812a706d7c307e1cac96920d31f390784a49f4",
+    "provenance.json": "ab2c8334af281b2da496238c7d5aad8021c89bb9bffb13ee221628b2cd76021e",
+    "report.json": "fc7f454ffab7445f4ce2e6f4fecce7f71c7428c8928e4aa695349112bca6152d",
+    "report.md": "a502f32adaf6b70df72bc146df59548cbe24fdb6621cfa8587e1dba9e9b51d0e",
+    "scores.jsonl.gz": "9b7d55bec4ee14614ce46f7544488198006db5d44d4e4283a9fe45a99977a60d"
+  }
+}
