@@ -22,7 +22,7 @@ PRODUCTION = "app/src/main/java/io/github/mesteriis/rune/keyboard/"
 SOURCES = ["ime/model/KeyboardState.kt"] + [f"smarttyping/correction/{s}.kt" for s in (
     "TokenUnicode", "ProtectedTokenPolicy", "CasePattern", "KeyboardDistance", "WeightedDamerauLevenshtein"
 )] + [f"smarttyping/lexicon/{s}.kt" for s in (
-    "LanguageRouter", "CandidateLexicon", "CandidateGenerator", "PackedCandidateLexicon",
+    "LanguageRouter", "CandidateLexicon", "CanonicalCaseLexicon", "CandidateGenerator", "PackedCandidateLexicon",
     "PackedLexiconData", "PackedLexiconManifest", "FrozenPackedLexicons",
     "TopCandidateSelection", "PackedTopSeven", "PrefixDistance"
 )]

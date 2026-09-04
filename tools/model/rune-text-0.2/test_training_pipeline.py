@@ -82,6 +82,10 @@ class PairwiseDataTest(unittest.TestCase):
             else:
                 self.assertIn('"sources"', (HERE / name).read_text())
 
+    def test_production_export_source_closure_includes_canonical_case_contract(self):
+        exporter = (HERE.parents[1] / "eval/smart-typing-0.3/pipeline/export_calibration.py").read_text()
+        self.assertIn('"CanonicalCaseLexicon"', exporter)
+
     def test_candidate_size_does_not_expand_current_compute_class(self):
         self.assertEqual(GGUF.ASSET, "rune-text-v1-0.2.0-q4_k_m.gguf")
         self.assertLessEqual(GGUF.MAXIMUM_ARTIFACT_BYTES, 420_000_000)
