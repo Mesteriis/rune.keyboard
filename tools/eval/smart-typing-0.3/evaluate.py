@@ -282,7 +282,10 @@ def score_corpus(rows: list[dict], runner: Path, model: Path, cache: Path,
         if config_path is None:
             raise ValueError("holdout scoring requires a previously frozen calibration config")
         frozen = json.loads(config_path.read_text(encoding="utf-8"))
-        if frozen != calibrate(rows, completed, identity):
+        safety = "wilson95" if "selectionSafety" in frozen else "legacy-point-estimate"
+        minimum_precision_percent = frozen.get("minimumPrecisionPercent",
+            frozen.get("selectionSafety", {}).get("minimumPrecisionPercent", 99))
+        if frozen != calibrate(rows, completed, identity, safety, minimum_precision_percent):
             raise ValueError("holdout config does not match completed calibration")
     elif any(row["split"] == "holdout" and row["id"] in completed for row in rows):
         raise ValueError("calibration cannot be resumed after holdout scoring started")
@@ -452,6 +455,8 @@ def calibrate(rows: list[dict], scores: dict, identity: dict,
               "calibrationCorpusSha256": digest(calibration),
               "calibrationScoresSha256": digest(calibration_scores), "languages": configs,
               "confidenceMeaning": "softmax of average log probabilities; not an empirical correctness probability"}
+    if selection_safety == "legacy-point-estimate" and minimum_precision_percent != 99:
+        config["minimumPrecisionPercent"] = minimum_precision_percent
     if selection_safety != "legacy-point-estimate":
         selection = {
             "method": selection_safety,
@@ -471,7 +476,8 @@ def report(rows: list[dict], scores: dict, identity: dict, frozen: dict) -> dict
     if frozen["frozenConfigSha256"] != digest(content):
         raise ValueError("frozen configuration modified")
     safety = "wilson95" if "selectionSafety" in frozen else "legacy-point-estimate"
-    minimum_precision_percent = frozen.get("selectionSafety", {}).get("minimumPrecisionPercent", 99)
+    minimum_precision_percent = frozen.get("minimumPrecisionPercent",
+        frozen.get("selectionSafety", {}).get("minimumPrecisionPercent", 99))
     expected = calibrate(rows, scores, identity, safety, minimum_precision_percent)
     if frozen != expected:
         raise ValueError("frozen configuration does not match calibration-only evidence")
@@ -534,6 +540,8 @@ def main() -> int:
     freeze.add_argument("--cache", type=Path, required=True)
     freeze.add_argument("--out", type=Path, required=True)
     freeze.add_argument("--minimum-precision-percent", type=int, choices=(95, 97, 99), default=99)
+    freeze.add_argument("--selection-safety", choices=("legacy-point-estimate", "wilson95"),
+                        default="wilson95")
     make_report = commands.add_parser("report")
     make_report.add_argument("--cache", type=Path, required=True)
     make_report.add_argument("--config", type=Path, required=True)
@@ -557,7 +565,7 @@ def main() -> int:
     if args.command == "calibrate":
         if any(row["split"] == "holdout" and row["id"] in scores for row in rows):
             raise ValueError("cannot freeze thresholds after holdout scoring started")
-        value = calibrate(rows, scores, identity,
+        value = calibrate(rows, scores, identity, args.selection_safety,
                           minimum_precision_percent=args.minimum_precision_percent)
         args.out.parent.mkdir(parents=True, exist_ok=True)
         # A frozen file is immutable by this command; new experiments need new paths.

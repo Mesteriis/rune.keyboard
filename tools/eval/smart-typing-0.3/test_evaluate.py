@@ -265,6 +265,12 @@ class NumericTests(unittest.TestCase):
             ev.calibrate(sufficient, sufficient_scores, identity,
                          minimum_precision_percent=94)
 
+        point_95 = ev.calibrate(sufficient, sufficient_scores, identity,
+                                "legacy-point-estimate", 95)
+        self.assertEqual(1, point_95["version"])
+        self.assertEqual(95, point_95["minimumPrecisionPercent"])
+        self.assertNotIn("selectionSafety", point_95)
+
     def test_unknown_calibration_selection_safety_rejected(self) -> None:
         with self.assertRaisesRegex(ValueError, "unknown calibration selection safety"):
             ev.calibrate([], {}, {"modelSha256": "model", "runnerSha256": "runner"},
