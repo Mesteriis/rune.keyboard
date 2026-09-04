@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "repository": "wikimedia/wikipedia",
+  "datasetCardRevision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+  "snapshot": "20231101",
+  "parquetRevision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+  "licenses": [
+    "CC-BY-SA-3.0",
+    "GFDL-1.3"
+  ],
+  "corpusSeed": 3052026,
+  "articleSelection": {
+    "seed": 3052026,
+    "modulus": 4,
+    "residue": 1
+  },
+  "frequencyWords": {
+    "en_50k.txt": "5351ff405b1126ef555791dd4d9798a48e3e9a501a9fc481a9da957752cfb458",
+    "es_50k.txt": "dcff3ad4316192f4dc4ff7d26e637c6ff314ef1ca0f3f720c5649018a71056c0",
+    "ru_50k.txt": "6095f507cc167488ec66ada5a85ac50433503a08ad24a07c6eabdf54352c4e7f"
+  },
+  "languageFiles": {
+    "en": "en-0030.parquet",
+    "ru": "ru-0010.parquet",
+    "es": "es-0005.parquet"
+  },
+  "files": {
+    "en-0030.parquet": {
+      "repositoryPath": "20231101.en/train/0030.parquet",
+      "bytes": 203945186,
+      "sha256": "1de329963a4aaed0c40d820a564487dc98ef113c8ca6b88b11d495d6a4b98774"
+    },
+    "es-0005.parquet": {
+      "repositoryPath": "20231101.es/train/0005.parquet",
+      "bytes": 177861407,
+      "sha256": "f62215c55935e6e0d4df9c0b4dd35be38899126457f233d229119c35bec749ae"
+    },
+    "ru-0010.parquet": {
+      "repositoryPath": "20231101.ru/train/0010.parquet",
+      "bytes": 179168665,
+      "sha256": "f480c34cd725c63ce276a322ac2f06aa97c3b356c4574a94fb5a273a1501857b"
+    }
+  }
+}

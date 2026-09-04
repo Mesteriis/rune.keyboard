@@ -69,6 +69,9 @@ def orthographic_base(value: str) -> str:
 
 
 def validate(rows: list[dict], minimums: bool = True) -> dict:
+    versions = {row.get("corpusVersion") for row in rows}
+    if len(versions) != 1 or not versions.issubset({2, 3}):
+        raise ValueError("unsupported or mixed corpus version")
     ids, observations = set(), set()
     families = {split: set() for split in ("calibration", "holdout")}
     templates = {split: set() for split in families}
@@ -80,8 +83,6 @@ def validate(rows: list[dict], minimums: bool = True) -> dict:
         if not isinstance(sid, str) or not sid or sid in ids:
             raise ValueError("invalid or duplicate sample id")
         ids.add(sid)
-        if row.get("corpusVersion") != 2:
-            raise ValueError(f"{sid}: unsupported corpus version")
         if lang not in LANGUAGES or split not in families:
             raise ValueError(f"{sid}: invalid language or split")
         for field in ("family", "template", "source", "category", "prefix"):
