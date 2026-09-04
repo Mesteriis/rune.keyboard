@@ -70,7 +70,7 @@ def orthographic_base(value: str) -> str:
 
 def validate(rows: list[dict], minimums: bool = True) -> dict:
     versions = {row.get("corpusVersion") for row in rows}
-    if len(versions) != 1 or not versions.issubset({2, 3}):
+    if len(versions) != 1 or not versions.issubset({2, 3, 4}):
         raise ValueError("unsupported or mixed corpus version")
     ids, observations = set(), set()
     families = {split: set() for split in ("calibration", "holdout")}

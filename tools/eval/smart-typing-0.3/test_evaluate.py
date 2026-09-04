@@ -107,12 +107,15 @@ class CorpusTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "duplicate"):
             ev.validate([first, first], False)
 
-    def test_v3_corpus_is_supported_but_mixed_versions_are_rejected(self) -> None:
-        sample = row()
-        sample["corpusVersion"] = 3
-        ev.validate([sample], False)
+    def test_v3_and_v4_corpora_are_supported_but_mixed_versions_are_rejected(self) -> None:
+        samples = []
+        for version in (3, 4):
+            sample = row(f"v{version}")
+            sample["corpusVersion"] = version
+            ev.validate([sample], False)
+            samples.append(sample)
         with self.assertRaisesRegex(ValueError, "mixed corpus version"):
-            ev.validate([row(), sample], False)
+            ev.validate(samples, False)
 
     def test_punctuation_preserves_word_and_labels(self) -> None:
         samples = corpus.punctuation_rows()
