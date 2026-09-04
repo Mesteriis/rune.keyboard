@@ -407,7 +407,10 @@ def language_metrics(rows: list[dict], scores: dict, config: dict) -> dict:
     }
 
 
-def calibrate(rows: list[dict], scores: dict, identity: dict) -> dict:
+def calibrate(rows: list[dict], scores: dict, identity: dict,
+              selection_safety: str = "wilson95") -> dict:
+    if selection_safety not in ("legacy-point-estimate", "wilson95"):
+        raise ValueError("unknown calibration selection safety")
     calibration = [row for row in rows if row["split"] == "calibration"]
     if any(row["id"] not in scores for row in calibration):
         raise ValueError("calibration scores incomplete")
@@ -424,11 +427,31 @@ def calibrate(rows: list[dict], scores: dict, identity: dict) -> dict:
                 correct = sum(feature["best"] == row["expectedCandidate"] for row, feature in auto)
                 negative_count = sum(row["cohort"] != "typo" for row in subset)
                 false_changes = sum(row["cohort"] != "typo" for row, _ in auto)
-                if auto and correct / len(auto) >= .99 and negative_count and false_changes / negative_count <= .005:
+                precision_interval = wilson(correct, len(auto))
+                false_change_interval = wilson(false_changes, negative_count)
+                legacy_pass = bool(auto and correct / len(auto) >= .99 and negative_count
+                                   and false_changes / negative_count <= .005)
+                conservative_pass = bool(
+                    len(auto) >= 300 and precision_interval and false_change_interval
+                    and precision_interval[0] >= .99 and false_change_interval[1] <= .005)
+                selected = legacy_pass if selection_safety == "legacy-point-estimate" else conservative_pass
+                if selected:
                     candidates.append((len(auto), margin, confidence, config))
         configs[lang] = max(candidates, key=lambda item: item[:3])[3] if candidates else {"margin": 1e9, "confidence": 1.0}
     calibration_scores = [scores[row["id"]] for row in calibration]
-    config = {"version": 1, "protocol": PROTOCOL, "modelSha256": identity["modelSha256"], "runnerSha256": identity["runnerSha256"], "calibrationCorpusSha256": digest(calibration), "calibrationScoresSha256": digest(calibration_scores), "languages": configs, "confidenceMeaning": "softmax of average log probabilities; not an empirical correctness probability"}
+    config = {"version": 1 if selection_safety == "legacy-point-estimate" else 2,
+              "protocol": PROTOCOL, "modelSha256": identity["modelSha256"],
+              "runnerSha256": identity["runnerSha256"],
+              "calibrationCorpusSha256": digest(calibration),
+              "calibrationScoresSha256": digest(calibration_scores), "languages": configs,
+              "confidenceMeaning": "softmax of average log probabilities; not an empirical correctness probability"}
+    if selection_safety != "legacy-point-estimate":
+        config["selectionSafety"] = {
+            "method": selection_safety,
+            "minimumAutomaticReplacements": 300,
+            "minimumPrecisionWilson95Lower": .99,
+            "maximumFalseChangeWilson95Upper": .005,
+        }
     return {**config, "frozenConfigSha256": digest(config)}
 
 
@@ -436,7 +459,8 @@ def report(rows: list[dict], scores: dict, identity: dict, frozen: dict) -> dict
     content = {key: value for key, value in frozen.items() if key != "frozenConfigSha256"}
     if frozen["frozenConfigSha256"] != digest(content):
         raise ValueError("frozen configuration modified")
-    expected = calibrate(rows, scores, identity)
+    safety = "wilson95" if "selectionSafety" in frozen else "legacy-point-estimate"
+    expected = calibrate(rows, scores, identity, safety)
     if frozen != expected:
         raise ValueError("frozen configuration does not match calibration-only evidence")
     result = {"version": 2, "scope": "prepared-candidate synthetic stress suitability only", "identity": identity, "frozenConfigSha256": frozen["frozenConfigSha256"], "limitations": ["Rows share lexical families and authored context templates; Wilson intervals describe row counts and are not independent-sample confidence guarantees.", "Synthetic typo and protected-token distributions do not represent real typing. Prepared candidates do not test production candidate generation.", "noAuto is an authored policy annotation. Production protection detection is not implemented or evaluated.", "Punctuation ambiguity is authored; ambiguous rows have no single correct suggestion and are excluded from suggestion accuracy.", "Runtime errors and zero-token scores abstain and remain in metric denominators.", "Abstention uses all spelling rows, including protected, error and missing-score rows. Prepared oracle candidate recall uses all typo rows; expected spellings are injected by construction, so 100% is not production candidate-generator evidence."], "splits": {}}
@@ -450,7 +474,7 @@ def report(rows: list[dict], scores: dict, identity: dict, frozen: dict) -> dict
 
 
 def markdown_report(value: dict) -> str:
-    lines = ["# Rune Text 0.1 prepared-candidate suitability", "", f"Row gate: **{'PASS' if value['preparedCandidateRowGatePass'] else 'FAIL'}**. Production qualification: **not established**.", "", "Lexical families and templates repeat. Wilson 95% intervals below are row-level descriptive intervals, not independent-sample guarantees.", "", "| Split | Language | Auto | Precision (correct/auto) | False change (changed/negative) | Correct-only false change | Typo coverage | Families with auto | Rejected/missing |", "| --- | --- | ---: | --- | --- | --- | --- | ---: | ---: |"]
+    lines = ["# Rune Text candidate prepared-candidate suitability", "", f"Row gate: **{'PASS' if value['preparedCandidateRowGatePass'] else 'FAIL'}**. Production qualification: **not established**.", "", "Lexical families and templates repeat. Wilson 95% intervals below are row-level descriptive intervals, not independent-sample guarantees.", "", "| Split | Language | Auto | Precision (correct/auto) | False change (changed/negative) | Correct-only false change | Typo coverage | Families with auto | Rejected/missing |", "| --- | --- | ---: | --- | --- | --- | --- | ---: | ---: |"]
     def cell(metric: dict) -> str:
         if metric["value"] is None:
             return f"undefined (0/{metric['denominator']})"

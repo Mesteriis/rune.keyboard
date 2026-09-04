@@ -190,6 +190,7 @@ class NumericTests(unittest.TestCase):
         metric = ev.language_metrics([sample], {}, {"margin": 0, "confidence": 0})
         value = {"preparedCandidateRowGatePass": False, "frozenConfigSha256": "test", "identity": {}, "limitations": [], "splits": {"calibration": {"en": metric}, "holdout": {"en": metric}}}
         markdown = ev.markdown_report(value)
+        self.assertTrue(markdown.startswith("# Rune Text candidate"))
         self.assertIn("Abstention (no auto/all spelling)", markdown)
         self.assertIn("Prepared oracle candidate recall (contained/all typos)", markdown)
         self.assertIn("100.00% (1/1)", markdown)
@@ -216,6 +217,38 @@ class NumericTests(unittest.TestCase):
         self.assertEqual(original, ev.calibrate(samples, scores, identity))
         scores["c"] = response(samples[0], (-.1, -20, -30))
         self.assertNotEqual(original, ev.calibrate(samples, scores, identity))
+
+    def test_conservative_calibration_uses_wilson_bounds_and_minimum_volume(self) -> None:
+        identity = {"modelSha256": "model", "runnerSha256": "runner"}
+
+        def calibration_set(typo_count: int) -> tuple[list[dict], dict]:
+            samples = [row(f"typo-{index}") for index in range(typo_count)]
+            samples += [row(f"correct-{index}", cohort="correct") for index in range(1000)]
+            scores = {
+                sample["id"]: response(sample, (-4., -.1, -3.))
+                if sample["cohort"] == "typo" else response(sample, (-.1, -4., -5.))
+                for sample in samples
+            }
+            return samples, scores
+
+        insufficient, insufficient_scores = calibration_set(300)
+        legacy = ev.calibrate(insufficient, insufficient_scores, identity,
+                              "legacy-point-estimate")
+        conservative = ev.calibrate(insufficient, insufficient_scores, identity)
+        self.assertNotEqual(1e9, legacy["languages"]["en"]["margin"])
+        self.assertEqual({"margin": 1e9, "confidence": 1.0},
+                         conservative["languages"]["en"])
+
+        sufficient, sufficient_scores = calibration_set(500)
+        conservative = ev.calibrate(sufficient, sufficient_scores, identity)
+        self.assertEqual(2, conservative["version"])
+        self.assertEqual("wilson95", conservative["selectionSafety"]["method"])
+        self.assertNotEqual(1e9, conservative["languages"]["en"]["margin"])
+
+    def test_unknown_calibration_selection_safety_rejected(self) -> None:
+        with self.assertRaisesRegex(ValueError, "unknown calibration selection safety"):
+            ev.calibrate([], {}, {"modelSha256": "model", "runnerSha256": "runner"},
+                         "unsupported")
 
     def test_frozen_config_modification_rejected(self) -> None:
         samples = [row()]
