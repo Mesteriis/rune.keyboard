@@ -1,0 +1,29 @@
+{
+  "date": "2026-09-04",
+  "result": "PASS",
+  "scope": "prepared-candidate synthetic stress suitability only",
+  "branch": "feature/smart-typing-03-pr06-lexicons",
+  "scoringSourceCommit": "dbc8797",
+  "corpusDirectory": "tools/eval/smart-typing-0.3/qualification-v3/corpus",
+  "corpusManifestSha256": "56a5b994bc2048c4cf434a123ebbe2e2f7a746102b936a83d535fc582ceecee3",
+  "evaluatorSha256": "d09147b675f33258251c802ebda856d07024499e3bb021c1cdfdaa61313bd0b8",
+  "model": {
+    "sha256": "bff8899af525c30bf1a0939f49c073fbac6cf3fed490018a088d2e831cfcdc71",
+    "bytes": 396704416,
+    "format": "GGUF v3",
+    "architecture": "qwen3",
+    "quantization": "Q4_K_M",
+    "included": false
+  },
+  "runnerSha256": "f2f8e9e21a028871da4b9ced6ce0492eb692f742c4de765467a2d44a18535973",
+  "cache": {
+    "jsonlRecords": 13201,
+    "responseRecords": 13200,
+    "uniqueResponseIds": 13200,
+    "sha256": "7de1300499da4a3a4f1b1587fc01a0ef0624ff1e399ff97e6066b485f7cd8515"
+  },
+  "frozenConfigSha256": "b7e07c54e76e961efd9e33e28c6b9be066167b1dace4e2e815b2fc472682ed69",
+  "reportExitCode": 0,
+  "productModelDependentWorkAllowed": true,
+  "reason": "All three languages meet prepared-candidate holdout volume, precision and false-change row gates; production qualification remains separate."
+}

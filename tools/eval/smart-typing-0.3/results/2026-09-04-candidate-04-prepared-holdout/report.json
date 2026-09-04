@@ -1,0 +1,738 @@
+{
+  "version": 2,
+  "scope": "prepared-candidate synthetic stress suitability only",
+  "identity": {
+    "corpusSha256": "c12064a03e4dc604461ca8ffbacfa190a1560ea6dca68585140813659909aafb",
+    "modelSha256": "bff8899af525c30bf1a0939f49c073fbac6cf3fed490018a088d2e831cfcdc71",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "f2f8e9e21a028871da4b9ced6ce0492eb692f742c4de765467a2d44a18535973"
+  },
+  "frozenConfigSha256": "b7e07c54e76e961efd9e33e28c6b9be066167b1dace4e2e815b2fc472682ed69",
+  "limitations": [
+    "Rows share lexical families and authored context templates; Wilson intervals describe row counts and are not independent-sample confidence guarantees.",
+    "Synthetic typo and protected-token distributions do not represent real typing. Prepared candidates do not test production candidate generation.",
+    "noAuto is an authored policy annotation. Production protection detection is not implemented or evaluated.",
+    "Punctuation ambiguity is authored; ambiguous rows have no single correct suggestion and are excluded from suggestion accuracy.",
+    "Runtime errors and zero-token scores abstain and remain in metric denominators.",
+    "Abstention uses all spelling rows, including protected, error and missing-score rows. Prepared oracle candidate recall uses all typo rows; expected spellings are injected by construction, so 100% is not production candidate-generator evidence."
+  ],
+  "splits": {
+    "calibration": {
+      "ru": {
+        "automaticReplacements": 506,
+        "precision": {
+          "numerator": 506,
+          "denominator": 506,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.992465385554208,
+            1.0
+          ]
+        },
+        "falseChange": {
+          "numerator": 0,
+          "denominator": 1000,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "falseChangeByCohort": {
+          "correct": {
+            "numerator": 0,
+            "denominator": 700,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.005457846753060833
+            ]
+          },
+          "protected": {
+            "numerator": 0,
+            "denominator": 300,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              8.673617379884035e-19,
+              0.012642971224546034
+            ]
+          }
+        },
+        "coverageAllSpelling": {
+          "numerator": 506,
+          "denominator": 2000,
+          "value": 0.253,
+          "wilson95RowDescriptive": [
+            0.23443331910658927,
+            0.27251370225034965
+          ]
+        },
+        "abstentionAllSpelling": {
+          "numerator": 1494,
+          "denominator": 2000,
+          "value": 0.747,
+          "wilson95RowDescriptive": [
+            0.7274862977496503,
+            0.7655666808934107
+          ]
+        },
+        "preparedOracleCandidateRecall": {
+          "numerator": 1000,
+          "denominator": 1000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.996173241514445,
+            1.0
+          ]
+        },
+        "typoCorrectionCoverage": {
+          "numerator": 506,
+          "denominator": 1000,
+          "value": 0.506,
+          "wilson95RowDescriptive": [
+            0.47504885836338107,
+            0.5369052205347923
+          ]
+        },
+        "eligibleTypoCount": 1000,
+        "typoCount": 1000,
+        "negativeCount": 1000,
+        "top1Spelling": {
+          "numerator": 1762,
+          "denominator": 2000,
+          "value": 0.881,
+          "wilson95RowDescriptive": [
+            0.8660740142339232,
+            0.8944651957377621
+          ]
+        },
+        "top1Typo": {
+          "numerator": 931,
+          "denominator": 1000,
+          "value": 0.931,
+          "wilson95RowDescriptive": [
+            0.9135852797713628,
+            0.9451160544140889
+          ]
+        },
+        "punctuationSuggestionTop1Unambiguous": {
+          "numerator": 73,
+          "denominator": 150,
+          "value": 0.4866666666666667,
+          "wilson95RowDescriptive": [
+            0.40801711922387535,
+            0.5659820872926068
+          ]
+        },
+        "punctuationAmbiguousCount": 50,
+        "punctuationAutomaticReplacements": 0,
+        "rejectedOrMissingScores": 86,
+        "runtimeErrors": 86,
+        "missingScores": 0,
+        "wordFamilies": 1730,
+        "typoWordFamilies": 1000,
+        "contextTemplates": 2200,
+        "automaticReplacementFamilies": 506,
+        "falsePositiveIds": [],
+        "passesRowGate": true
+      },
+      "en": {
+        "automaticReplacements": 840,
+        "precision": {
+          "numerator": 840,
+          "denominator": 840,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9954476533707379,
+            1.0
+          ]
+        },
+        "falseChange": {
+          "numerator": 0,
+          "denominator": 1000,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "falseChangeByCohort": {
+          "correct": {
+            "numerator": 0,
+            "denominator": 700,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.005457846753060833
+            ]
+          },
+          "protected": {
+            "numerator": 0,
+            "denominator": 300,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              8.673617379884035e-19,
+              0.012642971224546034
+            ]
+          }
+        },
+        "coverageAllSpelling": {
+          "numerator": 840,
+          "denominator": 2000,
+          "value": 0.42,
+          "wilson95RowDescriptive": [
+            0.3985428052945065,
+            0.4417639222704939
+          ]
+        },
+        "abstentionAllSpelling": {
+          "numerator": 1160,
+          "denominator": 2000,
+          "value": 0.58,
+          "wilson95RowDescriptive": [
+            0.558236077729506,
+            0.6014571947054935
+          ]
+        },
+        "preparedOracleCandidateRecall": {
+          "numerator": 1000,
+          "denominator": 1000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.996173241514445,
+            1.0
+          ]
+        },
+        "typoCorrectionCoverage": {
+          "numerator": 840,
+          "denominator": 1000,
+          "value": 0.84,
+          "wilson95RowDescriptive": [
+            0.8159830663133126,
+            0.8614147379165099
+          ]
+        },
+        "eligibleTypoCount": 1000,
+        "typoCount": 1000,
+        "negativeCount": 1000,
+        "top1Spelling": {
+          "numerator": 1801,
+          "denominator": 2000,
+          "value": 0.9005,
+          "wilson95RowDescriptive": [
+            0.8866037634261721,
+            0.9128606817015441
+          ]
+        },
+        "top1Typo": {
+          "numerator": 959,
+          "denominator": 1000,
+          "value": 0.959,
+          "wilson95RowDescriptive": [
+            0.9448520067923587,
+            0.9696350289179017
+          ]
+        },
+        "punctuationSuggestionTop1Unambiguous": {
+          "numerator": 82,
+          "denominator": 150,
+          "value": 0.5466666666666666,
+          "wilson95RowDescriptive": [
+            0.4668277632715898,
+            0.6241750139207229
+          ]
+        },
+        "punctuationAmbiguousCount": 50,
+        "punctuationAutomaticReplacements": 0,
+        "rejectedOrMissingScores": 35,
+        "runtimeErrors": 35,
+        "missingScores": 0,
+        "wordFamilies": 1730,
+        "typoWordFamilies": 1000,
+        "contextTemplates": 2200,
+        "automaticReplacementFamilies": 840,
+        "falsePositiveIds": [],
+        "passesRowGate": true
+      },
+      "es": {
+        "automaticReplacements": 626,
+        "precision": {
+          "numerator": 626,
+          "denominator": 626,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.993900911464471,
+            1.0
+          ]
+        },
+        "falseChange": {
+          "numerator": 0,
+          "denominator": 1000,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "falseChangeByCohort": {
+          "correct": {
+            "numerator": 0,
+            "denominator": 700,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.005457846753060833
+            ]
+          },
+          "protected": {
+            "numerator": 0,
+            "denominator": 300,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              8.673617379884035e-19,
+              0.012642971224546034
+            ]
+          }
+        },
+        "coverageAllSpelling": {
+          "numerator": 626,
+          "denominator": 2000,
+          "value": 0.313,
+          "wilson95RowDescriptive": [
+            0.2930520083961643,
+            0.3336649672870242
+          ]
+        },
+        "abstentionAllSpelling": {
+          "numerator": 1374,
+          "denominator": 2000,
+          "value": 0.687,
+          "wilson95RowDescriptive": [
+            0.6663350327129758,
+            0.7069479916038357
+          ]
+        },
+        "preparedOracleCandidateRecall": {
+          "numerator": 1000,
+          "denominator": 1000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.996173241514445,
+            1.0
+          ]
+        },
+        "typoCorrectionCoverage": {
+          "numerator": 626,
+          "denominator": 1000,
+          "value": 0.626,
+          "wilson95RowDescriptive": [
+            0.5955817549893309,
+            0.6554539018723092
+          ]
+        },
+        "eligibleTypoCount": 1000,
+        "typoCount": 1000,
+        "negativeCount": 1000,
+        "top1Spelling": {
+          "numerator": 1795,
+          "denominator": 2000,
+          "value": 0.8975,
+          "wilson95RowDescriptive": [
+            0.883436204935987,
+            0.9100397424754167
+          ]
+        },
+        "top1Typo": {
+          "numerator": 963,
+          "denominator": 1000,
+          "value": 0.963,
+          "wilson95RowDescriptive": [
+            0.9494176025179306,
+            0.9730388191244452
+          ]
+        },
+        "punctuationSuggestionTop1Unambiguous": {
+          "numerator": 96,
+          "denominator": 150,
+          "value": 0.64,
+          "wilson95RowDescriptive": [
+            0.5605741640813748,
+            0.7124341674955637
+          ]
+        },
+        "punctuationAmbiguousCount": 50,
+        "punctuationAutomaticReplacements": 0,
+        "rejectedOrMissingScores": 34,
+        "runtimeErrors": 34,
+        "missingScores": 0,
+        "wordFamilies": 1730,
+        "typoWordFamilies": 1000,
+        "contextTemplates": 2200,
+        "automaticReplacementFamilies": 626,
+        "falsePositiveIds": [],
+        "passesRowGate": true
+      }
+    },
+    "holdout": {
+      "ru": {
+        "automaticReplacements": 484,
+        "precision": {
+          "numerator": 484,
+          "denominator": 484,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9921255999234249,
+            0.9999999999999998
+          ]
+        },
+        "falseChange": {
+          "numerator": 0,
+          "denominator": 1000,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "falseChangeByCohort": {
+          "correct": {
+            "numerator": 0,
+            "denominator": 700,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.005457846753060833
+            ]
+          },
+          "protected": {
+            "numerator": 0,
+            "denominator": 300,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              8.673617379884035e-19,
+              0.012642971224546034
+            ]
+          }
+        },
+        "coverageAllSpelling": {
+          "numerator": 484,
+          "denominator": 2000,
+          "value": 0.242,
+          "wilson95RowDescriptive": [
+            0.22373559735998083,
+            0.2612535990371456
+          ]
+        },
+        "abstentionAllSpelling": {
+          "numerator": 1516,
+          "denominator": 2000,
+          "value": 0.758,
+          "wilson95RowDescriptive": [
+            0.7387464009628544,
+            0.7762644026400192
+          ]
+        },
+        "preparedOracleCandidateRecall": {
+          "numerator": 1000,
+          "denominator": 1000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.996173241514445,
+            1.0
+          ]
+        },
+        "typoCorrectionCoverage": {
+          "numerator": 484,
+          "denominator": 1000,
+          "value": 0.484,
+          "wilson95RowDescriptive": [
+            0.4531466082917357,
+            0.514975847979802
+          ]
+        },
+        "eligibleTypoCount": 1000,
+        "typoCount": 1000,
+        "negativeCount": 1000,
+        "top1Spelling": {
+          "numerator": 1797,
+          "denominator": 2000,
+          "value": 0.8985,
+          "wilson95RowDescriptive": [
+            0.8844916613108394,
+            0.9109804520060018
+          ]
+        },
+        "top1Typo": {
+          "numerator": 933,
+          "denominator": 1000,
+          "value": 0.933,
+          "wilson95RowDescriptive": [
+            0.9157879467581331,
+            0.9468980803933762
+          ]
+        },
+        "punctuationSuggestionTop1Unambiguous": {
+          "numerator": 84,
+          "denominator": 150,
+          "value": 0.56,
+          "wilson95RowDescriptive": [
+            0.4800485326362731,
+            0.6369550380395579
+          ]
+        },
+        "punctuationAmbiguousCount": 50,
+        "punctuationAutomaticReplacements": 0,
+        "rejectedOrMissingScores": 94,
+        "runtimeErrors": 94,
+        "missingScores": 0,
+        "wordFamilies": 1730,
+        "typoWordFamilies": 1000,
+        "contextTemplates": 2200,
+        "automaticReplacementFamilies": 484,
+        "falsePositiveIds": [],
+        "passesRowGate": true
+      },
+      "en": {
+        "automaticReplacements": 868,
+        "precision": {
+          "numerator": 867,
+          "denominator": 868,
+          "value": 0.9988479262672811,
+          "wilson95RowDescriptive": [
+            0.9935032594192776,
+            0.9997966017405764
+          ]
+        },
+        "falseChange": {
+          "numerator": 1,
+          "denominator": 1000,
+          "value": 0.001,
+          "wilson95RowDescriptive": [
+            0.00017654637062607809,
+            0.0056425585979579355
+          ]
+        },
+        "falseChangeByCohort": {
+          "correct": {
+            "numerator": 1,
+            "denominator": 700,
+            "value": 0.0014285714285714286,
+            "wilson95RowDescriptive": [
+              0.0002522224622331505,
+              0.00804717330010465
+            ]
+          },
+          "protected": {
+            "numerator": 0,
+            "denominator": 300,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              8.673617379884035e-19,
+              0.012642971224546034
+            ]
+          }
+        },
+        "coverageAllSpelling": {
+          "numerator": 868,
+          "denominator": 2000,
+          "value": 0.434,
+          "wilson95RowDescriptive": [
+            0.4124256686636799,
+            0.4558273815774454
+          ]
+        },
+        "abstentionAllSpelling": {
+          "numerator": 1132,
+          "denominator": 2000,
+          "value": 0.566,
+          "wilson95RowDescriptive": [
+            0.5441726184225546,
+            0.58757433133632
+          ]
+        },
+        "preparedOracleCandidateRecall": {
+          "numerator": 1000,
+          "denominator": 1000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.996173241514445,
+            1.0
+          ]
+        },
+        "typoCorrectionCoverage": {
+          "numerator": 867,
+          "denominator": 1000,
+          "value": 0.867,
+          "wilson95RowDescriptive": [
+            0.8445423199288764,
+            0.8866488393427261
+          ]
+        },
+        "eligibleTypoCount": 1000,
+        "typoCount": 1000,
+        "negativeCount": 1000,
+        "top1Spelling": {
+          "numerator": 1824,
+          "denominator": 2000,
+          "value": 0.912,
+          "wilson95RowDescriptive": [
+            0.8987812438332999,
+            0.9236391092069477
+          ]
+        },
+        "top1Typo": {
+          "numerator": 965,
+          "denominator": 1000,
+          "value": 0.965,
+          "wilson95RowDescriptive": [
+            0.9517133776255466,
+            0.9747277369828871
+          ]
+        },
+        "punctuationSuggestionTop1Unambiguous": {
+          "numerator": 85,
+          "denominator": 150,
+          "value": 0.5666666666666667,
+          "wilson95RowDescriptive": [
+            0.4866798706275503,
+            0.6433240967900394
+          ]
+        },
+        "punctuationAmbiguousCount": 50,
+        "punctuationAutomaticReplacements": 0,
+        "rejectedOrMissingScores": 39,
+        "runtimeErrors": 39,
+        "missingScores": 0,
+        "wordFamilies": 1730,
+        "typoWordFamilies": 1000,
+        "contextTemplates": 2200,
+        "automaticReplacementFamilies": 868,
+        "falsePositiveIds": [
+          "en-holdout-v3-correct-0282"
+        ],
+        "passesRowGate": true
+      },
+      "es": {
+        "automaticReplacements": 635,
+        "precision": {
+          "numerator": 635,
+          "denominator": 635,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9939868354383488,
+            1.0
+          ]
+        },
+        "falseChange": {
+          "numerator": 0,
+          "denominator": 1000,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "falseChangeByCohort": {
+          "correct": {
+            "numerator": 0,
+            "denominator": 700,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.005457846753060833
+            ]
+          },
+          "protected": {
+            "numerator": 0,
+            "denominator": 300,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              8.673617379884035e-19,
+              0.012642971224546034
+            ]
+          }
+        },
+        "coverageAllSpelling": {
+          "numerator": 635,
+          "denominator": 2000,
+          "value": 0.3175,
+          "wilson95RowDescriptive": [
+            0.2974651961300736,
+            0.33823452612758365
+          ]
+        },
+        "abstentionAllSpelling": {
+          "numerator": 1365,
+          "denominator": 2000,
+          "value": 0.6825,
+          "wilson95RowDescriptive": [
+            0.6617654738724162,
+            0.7025348038699263
+          ]
+        },
+        "preparedOracleCandidateRecall": {
+          "numerator": 1000,
+          "denominator": 1000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.996173241514445,
+            1.0
+          ]
+        },
+        "typoCorrectionCoverage": {
+          "numerator": 635,
+          "denominator": 1000,
+          "value": 0.635,
+          "wilson95RowDescriptive": [
+            0.6046972526360328,
+            0.6642695225728674
+          ]
+        },
+        "eligibleTypoCount": 1000,
+        "typoCount": 1000,
+        "negativeCount": 1000,
+        "top1Spelling": {
+          "numerator": 1828,
+          "denominator": 2000,
+          "value": 0.914,
+          "wilson95RowDescriptive": [
+            0.9009052255315119,
+            0.9255074593196108
+          ]
+        },
+        "top1Typo": {
+          "numerator": 963,
+          "denominator": 1000,
+          "value": 0.963,
+          "wilson95RowDescriptive": [
+            0.9494176025179306,
+            0.9730388191244452
+          ]
+        },
+        "punctuationSuggestionTop1Unambiguous": {
+          "numerator": 89,
+          "denominator": 150,
+          "value": 0.5933333333333334,
+          "wilson95RowDescriptive": [
+            0.5133466505133206,
+            0.6686589038713051
+          ]
+        },
+        "punctuationAmbiguousCount": 50,
+        "punctuationAutomaticReplacements": 0,
+        "rejectedOrMissingScores": 36,
+        "runtimeErrors": 36,
+        "missingScores": 0,
+        "wordFamilies": 1730,
+        "typoWordFamilies": 1000,
+        "contextTemplates": 2200,
+        "automaticReplacementFamilies": 635,
+        "falsePositiveIds": [],
+        "passesRowGate": true
+      }
+    }
+  },
+  "allScoresPresent": true,
+  "preparedCandidateRowGatePass": true,
+  "productionQualified": false
+}
