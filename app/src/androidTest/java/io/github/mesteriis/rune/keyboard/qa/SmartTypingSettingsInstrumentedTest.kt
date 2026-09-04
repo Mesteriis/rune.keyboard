@@ -52,8 +52,8 @@ class SmartTypingSettingsInstrumentedTest : ImeTestBase() {
         assertSummary(R.string.settings_contextual_punctuation, R.string.settings_contextual_unavailable)
         assertFalse(preferences.readSettings().candidateStrip)
         for ((language, automatic, unavailable) in listOf(
-            Triple("en", "Automatic replacement is not available in this version.", "Available when the local model is Ready."),
-            Triple("ru", "Автоматическая замена в этой версии недоступна.", "Доступно, когда локальная модель готова."))) {
+            Triple("en", "ready local model automatically applies spelling corrections", "Available when the local model is Ready."),
+            Triple("ru", "Готовая локальная модель автоматически применяет исправления", "Доступно, когда локальная модель готова."))) {
             val config = Configuration(context.resources.configuration).apply { setLocale(Locale.forLanguageTag(language)) }
             val localized = context.createConfigurationContext(config)
             assertTrue(localized.getString(R.string.settings_autocorrection_high_confidence_summary).contains(automatic))

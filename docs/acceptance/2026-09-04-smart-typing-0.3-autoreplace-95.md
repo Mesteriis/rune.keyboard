@@ -20,5 +20,7 @@ correctly returned `HOLDOUT_RECEIPT`; the old report and numeric evidence were n
 Candidate-05 evaluation uses the new explicit profile end to end and remains a publication gate.
 
 Focused checks: evaluator 28/28 PASS, product evaluator 8/8 PASS, and JVM correction/settings 41/41
-PASS. Full JVM, local release gates, physical ordinary-typo/model behavior and immutable model
-publication remain pending for this slice.
+PASS. Complete JVM passed app 644/644 plus runtime 19/19. Lint, debug/release/profile,
+privacy release/profile, dependency boundaries and native symbols passed. The physical Fold/API 36
+settings journey passed 1/1 in 14.156 seconds with the new RU/EN 95% text and independent preference
+persistence. Physical ordinary-typo/model behavior and immutable model publication remain pending.
