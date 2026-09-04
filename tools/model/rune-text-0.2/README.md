@@ -77,7 +77,8 @@ python3 tools/model/rune-text-0.2/fuse_candidate.py \
   --python build/smart-typing-0.3/model-v02/venv/bin/python \
   --base build/smart-typing-0.3/model-v02/base \
   --adapter build/smart-typing-0.3/model-v02/adapters \
-  --output build/smart-typing-0.3/model-v02/fused-candidate
+  --output build/smart-typing-0.3/model-v02/fused-candidate \
+  --config tools/model/rune-text-0.2/training-config-candidate-04.json
 ```
 
 Candidate 04 uses `training-config-candidate-04.json`. It keeps the same base architecture and final
@@ -101,5 +102,6 @@ python3 tools/model/rune-text-0.2/build_gguf.py \
   --converter-python /absolute/path/to/pinned-converter-python \
   --fused build/smart-typing-0.3/model-v02/fused-candidate \
   --llama runtime-llama/src/main/cpp/llama.cpp \
-  --output build/smart-typing-0.3/model-v02/gguf-candidate
+  --output build/smart-typing-0.3/model-v02/gguf-candidate \
+  --config tools/model/rune-text-0.2/training-config-candidate-04.json
 ```

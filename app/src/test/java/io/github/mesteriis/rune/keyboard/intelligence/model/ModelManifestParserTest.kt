@@ -35,6 +35,20 @@ class ModelManifestParserTest {
     }
 
     @Test
+    fun parsesImmutableHuggingFaceCommitUrl() {
+        val commit = "0123456789abcdef0123456789abcdef01234567"
+        val huggingFace = valid.replace(
+            "https://github.com/Mesteriis/rune.keyboard/releases/download/model-rune-text-v0.1.0/rune-text-v1-0.1.0-q4_k_m.gguf",
+            "https://huggingface.co/Mesteriis/rune-text-0.3-gguf/resolve/$commit/rune-text-v1-0.1.0-q4_k_m.gguf",
+        )
+
+        assertEquals(
+            "https://huggingface.co/Mesteriis/rune-text-0.3-gguf/resolve/$commit/rune-text-v1-0.1.0-q4_k_m.gguf",
+            ModelManifestParser.parse(huggingFace).downloadUrl,
+        )
+    }
+
+    @Test
     fun rejectsUnknownDuplicateAndUnsafeFields() {
         assertThrows(ManifestValidationException::class.java) {
             ModelManifestParser.parse(valid.replace("\"schemaVersion\": 1,", "\"schemaVersion\": 1, \"extra\": true,"))
@@ -60,6 +74,24 @@ class ModelManifestParserTest {
         }
         assertThrows(ManifestValidationException::class.java) {
             ModelManifestParser.parse(valid.replace("https://github.com/", "https://example.com/"))
+        }
+    }
+
+    @Test
+    fun rejectsMovingOrIndirectHuggingFaceUrls() {
+        val releaseUrl = "https://github.com/Mesteriis/rune.keyboard/releases/download/model-rune-text-v0.1.0/rune-text-v1-0.1.0-q4_k_m.gguf"
+        val artifact = "rune-text-v1-0.1.0-q4_k_m.gguf"
+        val immutable = "https://huggingface.co/Mesteriis/rune-text-0.3-gguf/resolve/0123456789abcdef0123456789abcdef01234567/$artifact"
+        listOf(
+            "https://huggingface.co/Mesteriis/rune-text-0.3-gguf/resolve/main/$artifact",
+            "https://huggingface.co/Mesteriis/rune-text-0.3-gguf/resolve/v0.3.0/$artifact",
+            "$immutable?download=true",
+            immutable.replace("huggingface.co", "hf.co"),
+            immutable.replace("/$artifact", "/other.gguf"),
+        ).forEach { url ->
+            assertThrows(ManifestValidationException::class.java) {
+                ModelManifestParser.parse(valid.replace(releaseUrl, url))
+            }
         }
     }
 }

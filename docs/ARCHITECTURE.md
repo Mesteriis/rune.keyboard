@@ -321,6 +321,12 @@ Direct Boot в 0.2 выключен: его нельзя честно включ
 
 ## Доставка, self-test и активация
 
+Встроенный model manifest принимает два вида источников: asset неизменяемого GitHub Release Rune
+или файл публичного Hugging Face model repository, закреплённый полным 40-символьным commit SHA.
+Ветки, теги, query/fragment, сокращённый `hf.co` и косвенные download-hosts отклоняются до постановки
+загрузки. Имя файла в URL обязано совпадать с manifest; размер и SHA-256 проверяются независимо после
+загрузки. Это позволяет доставлять квалифицированный GGUF через HF без moving target.
+
 External app-specific каталог — только недоверенный staging системного `DownloadManager`. Worker в процессе `:model_worker` открывает результат через `openDownloadedFile()`, одним ограниченным проходом копирует его в private `.installing`, считает SHA-256, делает `fsync` и только затем проверяет GGUF v3, `qwen3` и `file_type=15`. Кандидат публикуется атомарным rename в `noBackupFilesDir`; старый active при этом не скрывается.
 
 Pinned JNI runtime загружает candidate с отключённым logger, выполняет warm-up и не более четырёх greedy tokens при `n_ctx=256`/`n_batch=64`, проверяет непустой UTF-8 и не возвращает output. После успеха candidate атомарно становится versioned active, прежний active — единственным rollback. Opaque handle владеет model через RAII; глобальные model/context pointers отсутствуют. Отмена соединена с load-progress и decode-abort callbacks.

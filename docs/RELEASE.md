@@ -53,11 +53,12 @@ unsigned release output as `rune-release-unsigned.apk`, plus `lint-results` and
    CI checks `app-release-unsigned.apk`. The gate confirms exactly `arm64-v8a + x86_64`,
    `JNI_OnLoad`, allowed native dependencies, the packaged llama.cpp license, and no Rune JNI
    logging/network symbols.
-3. The embedded model size/SHA match the immutable `model-rune-text-v0.1.0` asset and its
+3. The embedded model size/SHA match the qualified immutable asset and its
    two-run reproducibility/Fold qualification evidence. The immutable release record also archives
    `build-provenance.txt`, `gguf-metadata.json`, `QWEN3-BASE-APACHE-2.0.txt`,
    `LLAMA-CPP-MIT.txt`, `THIRD_PARTY_NOTICES.md`, `python-sbom.txt` and `debian-sbom.txt`
-   from the qualified output.
+   from the qualified output. A Hugging Face source must use the full repository commit SHA in
+   `/resolve/<commit>/<file>`; branches, tags and `?download=true` URLs are not release inputs.
 4. Work through `docs/ACCEPTANCE.md` on a physical device, including model delivery/runtime, fold and settings.
 5. GitHub Actions passes the complete API 26 `google_apis/x86_64` and API 37
    `google_apis_ps16k/x86_64` instrumentation matrix.
