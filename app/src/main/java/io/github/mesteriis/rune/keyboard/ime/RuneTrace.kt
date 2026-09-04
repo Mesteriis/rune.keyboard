@@ -1,11 +1,15 @@
 package io.github.mesteriis.rune.keyboard.ime
 
+import android.annotation.SuppressLint
 import android.os.Trace
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceSection
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTracer
 
 /** Perfetto sections are constant and must never contain editor or user content. */
 internal object RuneTrace : SmartTypingTracer {
+    // SmartTypingTracer.section owns the matching end() in a finally block; lint cannot follow
+    // the interface callback across that helper boundary.
+    @SuppressLint("UnclosedTrace")
     override fun begin(section: SmartTypingTraceSection) = Trace.beginSection(section.sectionName)
     override fun end() = Trace.endSection()
 

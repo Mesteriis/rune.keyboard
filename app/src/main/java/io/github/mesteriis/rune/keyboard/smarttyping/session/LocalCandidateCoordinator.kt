@@ -5,6 +5,7 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLayer
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGenerator
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CalibratedSpellingPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateLexicon
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CanonicalCaseLexicon
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LanguageRoute
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LanguageRouter
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexicons
@@ -68,6 +69,7 @@ class LocalCandidateCoordinator internal constructor(
     onCandidatesChanged: () -> Unit,
     private val modelRanking: ModelCandidateCoordinator? = null,
     private val trace: SmartTypingTracer = NoopSmartTypingTracer,
+    private val canonicalCaseLexicon: CanonicalCaseLexicon = CanonicalCaseLexicon.EMPTY,
 ) : AutoCloseable {
     constructor(
         controller: TypingSessionController,
@@ -77,8 +79,10 @@ class LocalCandidateCoordinator internal constructor(
         onCandidatesChanged: () -> Unit,
         modelRanking: ModelCandidateCoordinator? = null,
         trace: SmartTypingTracer = NoopSmartTypingTracer,
+        canonicalCaseLexicon: CanonicalCaseLexicon = CanonicalCaseLexicon.EMPTY,
     ) : this(controller, lexicons.lexicon, lexicons::request, lexicons::isReady,
-        lexicons::invalidate, lexicons::close, ownerDispatcher, ownerState, onCandidatesChanged, modelRanking, trace)
+        lexicons::invalidate, lexicons::close, ownerDispatcher, ownerState, onCandidatesChanged,
+        modelRanking, trace, canonicalCaseLexicon)
 
     private val ownerThread = Thread.currentThread()
     private var ownerState: (() -> CandidateOwnerState)? = ownerState
@@ -191,7 +195,8 @@ class LocalCandidateCoordinator internal constructor(
         val route = LanguageRouter.route(controller.state.composing!!.typedWord, owner.language)
         if (!requestRoute(route)) return
         // No worker is created until the complete route is ready; later Ready additions use its bridge.
-        val target = worker ?: LocalCandidateWorker(CandidateGenerator(lexicon, CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES),
+        val target = worker ?: LocalCandidateWorker(CandidateGenerator(lexicon,
+            CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES, canonicalCaseLexicon),
             ownerDispatcher, ::acceptReply, trace)
             .also { worker = it }
         if (requestId == Long.MAX_VALUE) return

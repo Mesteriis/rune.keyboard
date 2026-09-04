@@ -19,6 +19,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateSearchCont
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateVisitor
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.ExactMembership
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidate
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidateKind
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LexiconScanStatus
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateReply
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateRequest
@@ -351,6 +352,22 @@ class TypingCandidateSelectionTest {
             assertFalse(controller.acceptCandidates(result))
             assertEquals(listOf("helo"), labels())
         }
+    }
+
+    @Test fun `valid lowercase proper noun can expose and apply one canonical case suggestion`() {
+        start("london")
+        val request = request()
+        val candidate = GeneratedCandidate("London", "London", "london",
+            KeyboardLanguage.ENGLISH, false, 4, 1, 0, EditFeatures(0.0, 0, 0.0), 0,
+            CasePattern.TITLE, GeneratedCandidateKind.CANONICAL_CASE)
+        val generation = CandidateGeneration(request.token, listOf(candidate),
+            CandidateCompletion.VALID_WORD, true, null, 1, 0)
+        assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision,
+            request.requestId, generation)))
+        assertEquals(listOf("london", "London"), labels())
+        assertEquals(controller.originalCandidateId, controller.candidateViewState.selectedCandidateId)
+        assertEquals(TypingTextResult.HANDLED, controller.selectCandidate(correction(), execute))
+        assertEquals("London", controller.state.composing!!.typedWord)
     }
 
     @Test fun `protected overlong and inactive words never enter request snapshot`() {

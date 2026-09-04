@@ -14,6 +14,8 @@ enum class CandidateCompletion {
     CANCELLED, UNAVAILABLE, READER_FAILURE,
 }
 
+enum class GeneratedCandidateKind { SPELLING, CANONICAL_CASE }
+
 data class GeneratedCandidate(
     val text: String,
     /** Folded display after case preservation; used for duplicate and original suppression. */
@@ -28,6 +30,9 @@ data class GeneratedCandidate(
     val editFeatures: EditFeatures,
     val lengthDifference: Int,
     val casePattern: CasePattern,
+    val kind: GeneratedCandidateKind = GeneratedCandidateKind.SPELLING,
+    /** Source ambiguity metadata only; it does not authorize automatic replacement. */
+    val canonicalCaseUnambiguous: Boolean = false,
 ) {
     override fun toString(): String = "GeneratedCandidate(redacted)"
 }
@@ -65,6 +70,7 @@ data class CandidateGeneration(
 class CandidateGenerator(
     private val lexicon: CandidateLexicon,
     private val maximumAlternatives: Int = MAX_ALTERNATIVES,
+    private val canonicalCaseLexicon: CanonicalCaseLexicon = CanonicalCaseLexicon.EMPTY,
 ) {
     init { require(maximumAlternatives in 1..MAX_ALTERNATIVES) { "CANDIDATE_WIDTH" } }
     private val unit = WeightedDamerauLevenshtein(EditCostProfile.UNIT)
@@ -105,7 +111,27 @@ class CandidateGenerator(
                 when (membership) {
                     ExactMembership.PRESENT -> {
                         validWord = true
-                        return result(CandidateCompletion.VALID_WORD)
+                        val canonical = if (pattern == CasePattern.LOWER)
+                            canonicalCaseLexicon.lookup(language, key) else null
+                        if (!control.cancellationCheckpoint()) return result(CandidateCompletion.CANCELLED)
+                        val alternative = canonical?.takeIf { it.text != token }?.let {
+                            GeneratedCandidate(
+                                text = it.text,
+                                canonicalKey = it.text,
+                                terminalKey = key,
+                                language = language,
+                                isFallback = language != primary,
+                                languagePrior = if (language == primary) route.primaryPrior else route.fallbackPrior,
+                                frequencyRank = 1,
+                                unitDistance = 0,
+                                editFeatures = EditFeatures(0.0, 0, 0.0),
+                                lengthDifference = 0,
+                                casePattern = CasePattern.TITLE,
+                                kind = GeneratedCandidateKind.CANONICAL_CASE,
+                                canonicalCaseUnambiguous = it.unambiguous,
+                            )
+                        }
+                        return result(CandidateCompletion.VALID_WORD, listOfNotNull(alternative))
                     }
                     ExactMembership.UNAVAILABLE -> return result(CandidateCompletion.UNAVAILABLE)
                     ExactMembership.ABSENT -> Unit

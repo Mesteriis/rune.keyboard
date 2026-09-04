@@ -23,6 +23,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.correction.ProtectedTokenPo
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.ProtectedTokenReason
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.TokenUnicode
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateCompletion
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidateKind
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneration
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGenerator
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateSearchControl
@@ -126,17 +127,25 @@ class TypingSessionController internal constructor(
         val suggests = generation.completion == CandidateCompletion.COMPLETE ||
             generation.completion == CandidateCompletion.STATES_EXHAUSTED ||
             generation.completion == CandidateCompletion.VERIFIED_EXHAUSTED
+        val canonicalCaseOnly = generation.alternatives.isNotEmpty() &&
+            generation.alternatives.all { it.kind == GeneratedCandidateKind.CANONICAL_CASE }
         if ((!suggests || generation.isValidWord || generation.protectedReason != null) &&
-            generation.alternatives.isNotEmpty()) return false
+            generation.alternatives.isNotEmpty() && !(generation.isValidWord && canonicalCaseOnly)) return false
         val original = generation.original!!
         val originalCase = CasePattern.analyze(original)
         val seen = hashSetOf(TokenUnicode.folded(original))
+        var canonicalCaseCount = 0
         for (candidate in generation.alternatives) {
             val reason = ProtectedTokenPolicy.reason(candidate.text)
             // Eligible one-letter uppercase input can expand to a multi-letter uppercase display.
             // Source admission stays protected; only its preserved ALL_CAPS output is allowed.
+            val canonicalCase = candidate.kind == GeneratedCandidateKind.CANONICAL_CASE
+            if (canonicalCase) canonicalCaseCount++
             if ((reason != null && !(reason == ProtectedTokenReason.ALL_CAPS && originalCase == CasePattern.UPPER)) ||
-                !seen.add(TokenUnicode.folded(candidate.text))) return false
+                canonicalCase && (canonicalCaseCount > 1 || originalCase != CasePattern.LOWER ||
+                    CasePattern.analyze(candidate.text) != CasePattern.TITLE ||
+                    TokenUnicode.folded(candidate.text) != TokenUnicode.folded(original)) ||
+                !canonicalCase && !seen.add(TokenUnicode.folded(candidate.text))) return false
         }
         val alternatives = generation.alternatives.toList()
         val snapshot = generation.copy(alternatives = alternatives)

@@ -41,6 +41,7 @@ import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingEdit
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.AndroidLazyPackedLexicons
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.AndroidCanonicalCaseLexicon
 import io.github.mesteriis.rune.keyboard.smarttyping.session.CandidateOwnerState
 import io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinator
 import io.github.mesteriis.rune.keyboard.smarttyping.android.AndroidModelCandidates
@@ -98,6 +99,7 @@ class RuneInputMethodService : InputMethodService() {
             AndroidModelCandidates.create(applicationContext, typingSession, ::candidateOwnerState, ::renderCandidates,
                 RuneTrace),
             RuneTrace,
+            AndroidCanonicalCaseLexicon(applicationContext.assets),
         )
         keyboardPreferences.registerListener(preferencesListener)
     }

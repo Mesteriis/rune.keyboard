@@ -47,6 +47,37 @@ class CandidateGeneratorTest {
     }
 
     @Test
+    fun `lowercase valid proper noun exposes canonical title case without automatic eligibility`() {
+        val lexicon = ScriptedLexicon(mapOf(
+            ru to listOf(Entry("москва")),
+            en to listOf(Entry("london")),
+            es to listOf(Entry("juan")),
+        ))
+        val canonical = CanonicalCaseLexicon { language, key -> when (language to key) {
+            ru to "москва" -> CanonicalCase("Москва", true)
+            en to "london" -> CanonicalCase("London", true)
+            es to "juan" -> CanonicalCase("Juan", false)
+            else -> null
+        } }
+        for ((token, language, expected) in listOf(
+            Triple("москва", ru, "Москва"),
+            Triple("london", en, "London"),
+            Triple("juan", es, "Juan"),
+        )) {
+            val result = CandidateGenerator(lexicon, canonicalCaseLexicon = canonical)
+                .generate(token, language)
+            assertEquals(CandidateCompletion.VALID_WORD, result.completion)
+            assertTrue(result.isValidWord)
+            assertTrue(result.prohibitsAutoReplace)
+            assertEquals(listOf(expected), result.alternatives.map { it.text })
+            assertEquals(GeneratedCandidateKind.CANONICAL_CASE, result.alternatives.single().kind)
+            assertEquals(token != "juan", result.alternatives.single().canonicalCaseUnambiguous)
+        }
+        assertTrue(CandidateGenerator(lexicon, canonicalCaseLexicon = canonical)
+            .generate("London", en).alternatives.isEmpty())
+    }
+
+    @Test
     fun `script and Spanish accents route before layout and preserve canonical accents and title case`() {
         val lexicon = ScriptedLexicon(mapOf(
             ru to listOf(Entry("ёжик")), es to listOf(Entry("niño"), Entry("café")),

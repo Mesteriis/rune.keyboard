@@ -32,9 +32,12 @@ def inspect(sources):
         package = re.search(r'^package\s+([\w.]+)', text, re.M)
         if not package: continue
         packages[p] = package.group(1)
-        for name in re.findall(r'\b(?:class|interface|object|typealias)\s+(\w+)|^(?:private |internal )?fun\s+(?!interface\b)(\w+)', text, re.M):
-            for n in name:
-                if n: symbols[packages[p]+'.'+n] = p
+        for name in re.findall(r'\b(?:class|interface|object|typealias)\s+(\w+)', text):
+            symbols[packages[p]+'.'+name] = p
+        modifiers = r'(?:(?:private|internal|public|protected|inline|suspend|operator|infix|tailrec)\s+)*'
+        functions = r'^'+modifiers+r'fun\s+(?:<[^>\n]+>\s*)?(?:[\w.<>?, ]+\.)?(\w+)\s*\('
+        for name in re.findall(functions, text, re.M):
+            symbols[packages[p]+'.'+name] = p
         imports[p] = re.findall(r'^import\s+([\w.*]+)', text, re.M)
     errors = []
     for p, text in clean.items():
@@ -152,7 +155,10 @@ def self_test():
              FACTORY:source('smarttyping.android','import '+BASE+'intelligence.client.BoundModelScoringClient\nclass AndroidModelCandidates'),
              'BoundModelScoringClient.kt':source('intelligence.client','class BoundModelScoringClient')}
     assert not inspect(factory)
-    print(f'boundary fixtures PASS: {len(tests)} negative, 5 positive')
+    extension={'Controller.kt':source('ime','import '+BASE+'telemetry.section\nclass Controller'),
+               'Trace.kt':source('telemetry','interface Trace\ninternal inline fun <T> Trace.section(block: () -> T): T = block()')}
+    assert not inspect(extension)
+    print(f'boundary fixtures PASS: {len(tests)} negative, 6 positive')
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--root',type=Path);parser.add_argument('--self-test',action='store_true');args=parser.parse_args()
