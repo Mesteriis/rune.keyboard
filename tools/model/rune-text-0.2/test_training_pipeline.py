@@ -54,6 +54,20 @@ class PairwiseDataTest(unittest.TestCase):
             "architecture": "qwen3", "quantization": "Q4_K_M", "runtimeAdapter": False})
         self.assertLessEqual(config["maximumSequenceTokens"], 256)
 
+    def test_candidate_04_expands_training_only_and_preserves_runtime_compute_class(self):
+        previous = json.loads((HERE / "training-config.json").read_text())
+        candidate = json.loads((HERE / "training-config-candidate-04.json").read_text())
+        self.assertEqual(candidate["baseModel"], previous["baseModel"])
+        self.assertEqual(candidate["baseRevision"], previous["baseRevision"])
+        self.assertEqual(candidate["objective"], previous["objective"])
+        self.assertEqual(candidate["output"], previous["output"])
+        self.assertGreater(candidate["trainWordsPerLanguage"], previous["trainWordsPerLanguage"])
+        self.assertGreater(candidate["wikipediaContext"]["trainingRowsPerLanguage"],
+                           previous["wikipediaContext"]["trainingRowsPerLanguage"])
+        self.assertGreater(candidate["validationWordsPerLanguage"],
+                           previous["validationWordsPerLanguage"])
+        self.assertLessEqual(candidate["maximumSequenceTokens"], 256)
+
     def test_fused_architecture_contract_is_complete(self):
         self.assertEqual(FUSE.ARCHITECTURE_KEYS, (
             "model_type", "hidden_size", "intermediate_size", "num_hidden_layers",

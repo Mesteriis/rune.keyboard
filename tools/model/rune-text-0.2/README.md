@@ -80,6 +80,11 @@ python3 tools/model/rune-text-0.2/fuse_candidate.py \
   --output build/smart-typing-0.3/model-v02/fused-candidate
 ```
 
+Candidate 04 uses `training-config-candidate-04.json`. It keeps the same base architecture and final
+Q4_K_M runtime format while expanding only the offline data, LoRA capacity and validation work. Pass
+that file explicitly to context preparation, pair generation and training; the original
+`training-config.json` remains frozen for reproduction of the rejected candidate.
+
 The final local builder requires the clean pinned llama.cpp submodule. It
 records the F16 identity, removes that temporary file and the host build after
 successful Q4_K_M conversion, and leaves the candidate explicitly
