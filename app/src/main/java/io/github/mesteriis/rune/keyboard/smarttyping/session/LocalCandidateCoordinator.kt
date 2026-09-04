@@ -13,6 +13,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorke
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.NoopSmartTypingTracer
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTracer
 import java.util.concurrent.Executor
 
 /** Only non-text live eligibility. The service derives editorAllowsSmartTyping from EditorContext. */
@@ -65,6 +67,7 @@ class LocalCandidateCoordinator internal constructor(
     ownerState: () -> CandidateOwnerState,
     onCandidatesChanged: () -> Unit,
     private val modelRanking: ModelCandidateCoordinator? = null,
+    private val trace: SmartTypingTracer = NoopSmartTypingTracer,
 ) : AutoCloseable {
     constructor(
         controller: TypingSessionController,
@@ -73,8 +76,9 @@ class LocalCandidateCoordinator internal constructor(
         ownerState: () -> CandidateOwnerState,
         onCandidatesChanged: () -> Unit,
         modelRanking: ModelCandidateCoordinator? = null,
+        trace: SmartTypingTracer = NoopSmartTypingTracer,
     ) : this(controller, lexicons.lexicon, lexicons::request, lexicons::isReady,
-        lexicons::invalidate, lexicons::close, ownerDispatcher, ownerState, onCandidatesChanged, modelRanking)
+        lexicons::invalidate, lexicons::close, ownerDispatcher, ownerState, onCandidatesChanged, modelRanking, trace)
 
     private val ownerThread = Thread.currentThread()
     private var ownerState: (() -> CandidateOwnerState)? = ownerState
@@ -188,7 +192,7 @@ class LocalCandidateCoordinator internal constructor(
         if (!requestRoute(route)) return
         // No worker is created until the complete route is ready; later Ready additions use its bridge.
         val target = worker ?: LocalCandidateWorker(CandidateGenerator(lexicon, CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES),
-            ownerDispatcher, ::acceptReply)
+            ownerDispatcher, ::acceptReply, trace)
             .also { worker = it }
         if (requestId == Long.MAX_VALUE) return
         val request = controller.beginCandidateRequest(++requestId, owner.language) ?: return

@@ -47,6 +47,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.android.AndroidModelCandida
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionController
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingTextResult
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceSection
 import java.util.concurrent.Executor
 
 class RuneInputMethodService : InputMethodService() {
@@ -59,7 +60,7 @@ class RuneInputMethodService : InputMethodService() {
     private var state = KeyboardState.initial(KeyboardLanguage.ENGLISH, automaticCapitalization = false)
     private var selectedLanguage = KeyboardLanguage.ENGLISH
     private var hasSelection = false
-    private val typingSession = TypingSessionController()
+    private val typingSession = TypingSessionController(RuneTrace)
     private lateinit var candidates: LocalCandidateCoordinator
     private var inputViewActive = false
 
@@ -94,7 +95,9 @@ class RuneInputMethodService : InputMethodService() {
             Executor { action -> check(mainHandler.post(action)) { "Candidate owner dispatcher stopped" } },
             ::candidateOwnerState,
             ::renderCandidates,
-            AndroidModelCandidates.create(applicationContext, typingSession, ::candidateOwnerState, ::renderCandidates),
+            AndroidModelCandidates.create(applicationContext, typingSession, ::candidateOwnerState, ::renderCandidates,
+                RuneTrace),
+            RuneTrace,
         )
         keyboardPreferences.registerListener(preferencesListener)
     }
@@ -322,7 +325,7 @@ class RuneInputMethodService : InputMethodService() {
         }
     }
 
-    private fun executeTypingEdit(edit: TypingEdit): Boolean = RuneTrace.section("Rune#composeUpdate") {
+    private fun executeTypingEdit(edit: TypingEdit): Boolean = RuneTrace.section(SmartTypingTraceSection.COMPOSE_UPDATE) {
         executeCommand(editorCommand(edit)) == CommandOutcome.DELIVERED
     }
 

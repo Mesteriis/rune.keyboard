@@ -10,13 +10,16 @@ import io.github.mesteriis.rune.keyboard.smarttyping.session.CandidateOwnerState
 import io.github.mesteriis.rune.keyboard.smarttyping.session.ModelCandidateCoordinator
 import io.github.mesteriis.rune.keyboard.smarttyping.session.ModelPauseScheduler
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionController
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.NoopSmartTypingTracer
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTracer
 import java.io.File
 import java.util.concurrent.Executor
 
 /** Composition root only. Storage receives no typing/controller/owner payload or callback. */
 object AndroidModelCandidates {
     fun create(context: Context, controller: TypingSessionController,
-        ownerState: () -> CandidateOwnerState, changed: () -> Unit): ModelCandidateCoordinator {
+        ownerState: () -> CandidateOwnerState, changed: () -> Unit,
+        trace: SmartTypingTracer = NoopSmartTypingTracer): ModelCandidateCoordinator {
         val app = context.applicationContext
         val handler = Handler(Looper.getMainLooper())
         val readiness = ActiveModelReadiness(
@@ -30,6 +33,6 @@ object AndroidModelCandidates {
             override fun remove(task: Runnable) { handler.removeCallbacks(task) }
         }
         return ModelCandidateCoordinator(controller, { listener -> BoundModelScoringClient(app, listener) },
-            pause, ownerState, readiness, changed)
+            pause, ownerState, readiness, changed, trace)
     }
 }

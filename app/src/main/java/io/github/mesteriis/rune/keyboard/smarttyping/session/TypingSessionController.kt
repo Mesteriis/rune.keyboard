@@ -34,6 +34,10 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateReply
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateRequest
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.NoopSmartTypingTracer
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceSection
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTracer
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.section
 import java.util.ArrayDeque
 
 /**
@@ -43,8 +47,10 @@ import java.util.ArrayDeque
 class TypingSessionController internal constructor(
     private val graphemes: GraphemeSegmenter,
     private val spellingQualification: SpellingQualification = SpellingQualification.CURRENT,
+    private val trace: SmartTypingTracer = NoopSmartTypingTracer,
 ) {
     constructor() : this(IcuGraphemeSegmenter)
+    internal constructor(trace: SmartTypingTracer) : this(IcuGraphemeSegmenter, SpellingQualification.CURRENT, trace)
 
     /** Content-free availability; preferences and model readiness do not grant qualification. */
     internal fun isSpellingQualified(language: KeyboardLanguage, modelAssisted: Boolean): Boolean =
@@ -134,7 +140,9 @@ class TypingSessionController internal constructor(
         }
         val alternatives = generation.alternatives.toList()
         val snapshot = generation.copy(alternatives = alternatives)
-        val ranking = CalibratedSpellingPolicy.rank(snapshot, stamp.language)
+        val ranking = trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
+            CalibratedSpellingPolicy.rank(snapshot, stamp.language)
+        }
         candidateSelection = CandidateSelection(snapshot, stamp.language, stamp.requestId,
             selectedIndex = (ranking?.preferredId ?: 0) - 1,
             order = ranking?.candidateIds?.map { it - 1 } ?: alternatives.indices.toList(), ranking = ranking)
@@ -180,8 +188,10 @@ class TypingSessionController internal constructor(
         pendingModelRanking = null
         val selection = candidateSelection ?: return false
         if (reply.code != ScoringCode.OK) return false
-        val ranking = CalibratedSpellingPolicy.rank(selection.generation, selection.language,
-            reply.scores.map { RankingModelScore(it.candidateId, it.sumLogProbability, it.tokenCount) }) ?: return false
+        val ranking = trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
+            CalibratedSpellingPolicy.rank(selection.generation, selection.language,
+                reply.scores.map { RankingModelScore(it.candidateId, it.sumLogProbability, it.tokenCount) })
+        } ?: return false
         candidateSelection = selection.copy(
             order = ranking.candidateIds.map { it - 1 },
             selectedIndex = ranking.preferredId - 1,
@@ -239,15 +249,17 @@ class TypingSessionController internal constructor(
         pendingContextualRanking = null
         if (reply.code != ScoringCode.OK || reply.scores.size != pending.variants.size) return false
         contextualCompletedSelection = pending.selection
-        val averages = reply.scores.associate { it.candidateId to it.sumLogProbability / it.tokenCount }
-        val original = averages[0]?.takeIf(Double::isFinite) ?: return false
-        val winner = pending.variants.filter { it.id != 0 }.maxWithOrNull(
-            compareBy<ContextualPunctuationEngine.Variant> { averages[it.id] ?: Double.NEGATIVE_INFINITY }
-                .thenBy { -it.id }) ?: return false
-        val winnerScore = averages[winner.id]?.takeIf(Double::isFinite) ?: return false
-        if (winnerScore <= original) return false
-        contextualSelection = ContextualSelection(pending.token, pending.selection, winner)
-        return true
+        return trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
+            val averages = reply.scores.associate { it.candidateId to it.sumLogProbability / it.tokenCount }
+            val original = averages[0]?.takeIf(Double::isFinite) ?: return@section false
+            val winner = pending.variants.filter { it.id != 0 }.maxWithOrNull(
+                compareBy<ContextualPunctuationEngine.Variant> { averages[it.id] ?: Double.NEGATIVE_INFINITY }
+                    .thenBy { -it.id }) ?: return@section false
+            val winnerScore = averages[winner.id]?.takeIf(Double::isFinite) ?: return@section false
+            if (winnerScore <= original) return@section false
+            contextualSelection = ContextualSelection(pending.token, pending.selection, winner)
+            true
+        }
     }
 
     private fun contextualInput(language: KeyboardLanguage): Pair<String, List<ContextualPunctuationEngine.Variant>>? {
@@ -586,7 +598,9 @@ class TypingSessionController internal constructor(
         execute: (TypingEdit) -> Boolean,
     ): TypingTextResult {
         val owned = punctuationEvidence() ?: return TypingTextResult.BYPASS
-        val plan = MechanicalPunctuationPlanner.plan(owned, action, policy) as? MechanicalPunctuationPlan.Replace
+        val plan = trace.section(SmartTypingTraceSection.PUNCTUATION_RULE) {
+            MechanicalPunctuationPlanner.plan(owned, action, policy)
+        } as? MechanicalPunctuationPlan.Replace
             ?: return TypingTextResult.BYPASS
         var rendered = plan.replacementComposing
         plan.sentenceCapsForNewTextAt?.takeIf { keyboard.layer == KeyboardLayer.LETTERS }?.let { offset ->
@@ -673,9 +687,9 @@ class TypingSessionController internal constructor(
             owned.text.substring(tokenStart) != previous.typedWord) return TypingTextResult.BYPASS
         val virtual = OwnedPunctuationSuffix(owned.text.dropLast(previous.text.length) + corrected.text,
             corrected.text, owned.startsAtTokenBoundary, owned.sessionId, owned.revision)
-        val punctuation = if (closesComposition) null else
+        val punctuation = if (closesComposition) null else trace.section(SmartTypingTraceSection.PUNCTUATION_RULE) {
             MechanicalPunctuationPlanner.plan(virtual, PunctuationAction.Text(boundary), policy)
-                as? MechanicalPunctuationPlan.Replace
+        } as? MechanicalPunctuationPlan.Replace
         val rendered = punctuation?.replacementComposing ?: (corrected.text + boundary)
         if (!rendered.endsWith(boundary) || rendered.length > MAX_COMPOSING_UTF16 ||
             rendered.codePointCount(0, rendered.length) > 128) return TypingTextResult.BYPASS
@@ -692,14 +706,16 @@ class TypingSessionController internal constructor(
             listOf(TypingEdit.CommitText(rendered), TypingEdit.SetComposingRegion(boundaryStart, end))
         val expected = if (next == null) EditorSelection(end, end, -1, -1) else
             EditorSelection(end, end, boundaryStart, end)
-        return applyGuardedBatch(edits, expected, execute) {
-            check(context!!.replaceSuffix(previous.text, rendered)) { "Correction ownership mismatch" }
-            composingStart = if (next == null) -1 else boundaryStart
-            state = state.copy(composing = next, originalSelected = false,
-                lastAutoEdit = UndoableTextEdit(previous.text, rendered, state.sessionId, state.revision,
-                    previous, before, start, next,
-                    UndoCorrectionCandidates(selection.generation, selection.language, selection.requestId)))
-            publish()
+        return trace.section(SmartTypingTraceSection.CORRECTION_COMMIT) {
+            applyGuardedBatch(edits, expected, execute) {
+                check(context!!.replaceSuffix(previous.text, rendered)) { "Correction ownership mismatch" }
+                composingStart = if (next == null) -1 else boundaryStart
+                state = state.copy(composing = next, originalSelected = false,
+                    lastAutoEdit = UndoableTextEdit(previous.text, rendered, state.sessionId, state.revision,
+                        previous, before, start, next,
+                        UndoCorrectionCandidates(selection.generation, selection.language, selection.requestId)))
+                publish()
+            }
         }
     }
 
@@ -717,16 +733,18 @@ class TypingSessionController internal constructor(
         }
         val caret = start + edit.original.length
         remember(EditorSelection(selectionStart, selectionEnd, start, end.toInt()))
-        return applyGuardedBatch(listOf(TypingEdit.SetComposingRegion(start, end.toInt()),
-            TypingEdit.SetComposingText(edit.original)), EditorSelection(caret, caret, start, caret), execute) {
-            composingStart = start
-            context!!.restore(edit.contextBefore)
-            state = state.copy(composing = edit.restoreComposition, originalSelected = true)
-            edit.correction?.let { saved ->
-                candidateSelection = CandidateSelection(saved.generation, saved.language, saved.requestId,
-                    selectedIndex = -1, manual = true)
+        return trace.section(SmartTypingTraceSection.CORRECTION_UNDO) {
+            applyGuardedBatch(listOf(TypingEdit.SetComposingRegion(start, end.toInt()),
+                TypingEdit.SetComposingText(edit.original)), EditorSelection(caret, caret, start, caret), execute) {
+                composingStart = start
+                context!!.restore(edit.contextBefore)
+                state = state.copy(composing = edit.restoreComposition, originalSelected = true)
+                edit.correction?.let { saved ->
+                    candidateSelection = CandidateSelection(saved.generation, saved.language, saved.requestId,
+                        selectedIndex = -1, manual = true)
+                }
+                publish()
             }
-            publish()
         }
     }
 

@@ -2,6 +2,10 @@ package io.github.mesteriis.rune.keyboard.smarttyping.lexicon
 
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.ProtectedTokenPolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.NoopSmartTypingTracer
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceSection
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTracer
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.section
 import java.util.concurrent.Executor
 import java.util.concurrent.ThreadFactory
 import java.util.concurrent.atomic.AtomicBoolean
@@ -47,14 +51,16 @@ class LocalCandidateWorker internal constructor(
     private val ownerDispatcher: Executor,
     listener: (LocalCandidateReply) -> Unit,
     threadFactory: ThreadFactory,
+    private val trace: SmartTypingTracer = NoopSmartTypingTracer,
 ) : AutoCloseable {
     constructor(
         generator: CandidateGenerator,
         ownerDispatcher: Executor,
         listener: (LocalCandidateReply) -> Unit,
+        trace: SmartTypingTracer = NoopSmartTypingTracer,
     ) : this(generator, ownerDispatcher, listener, ThreadFactory { action ->
         Thread(action, "rune-local-candidates").apply { isDaemon = true }
-    })
+    }, trace)
 
     private class Work(request: LocalCandidateRequest) {
         val sessionId = request.sessionId
@@ -171,7 +177,9 @@ class LocalCandidateWorker internal constructor(
             work.payload.also { work.payload = null }
         }
         val result = request?.let {
-            generator.generate(it.token, it.activeLanguage, CandidateCancellation { work.cancelled.get() })
+            trace.section(SmartTypingTraceSection.CANDIDATE_GENERATE) {
+                generator.generate(it.token, it.activeLanguage, CandidateCancellation { work.cancelled.get() })
+            }
         }
         val post = synchronized(lock) {
             active = null

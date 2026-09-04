@@ -6,6 +6,10 @@ import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessSourc
 import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringCode
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.NoopSmartTypingTracer
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceSection
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTracer
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.section
 
 /** Owner-thread scheduling seam. A delayed task contains numeric identity only, never input text. */
 interface ModelPauseScheduler {
@@ -24,6 +28,7 @@ class ModelCandidateCoordinator(
     private val ownerState: () -> CandidateOwnerState,
     private val readiness: ModelReadinessSource,
     private val changed: () -> Unit,
+    private val trace: SmartTypingTracer = NoopSmartTypingTracer,
 ) : ModelScoringListener, AutoCloseable {
     private val ownerThread = Thread.currentThread()
     private val client = clientFactory(this)
@@ -65,7 +70,7 @@ class ModelCandidateCoordinator(
                 } ?: return
                 pendingOwner = owner
                 pendingKind = kind
-                client.score(input)
+                trace.section(SmartTypingTraceSection.MODEL_REQUEST) { client.score(input) }
             }
         }
         timer = task
@@ -95,20 +100,22 @@ class ModelCandidateCoordinator(
 
     override fun currentCompositionRevision(): Long { checkOwner(); return controller.state.revision }
     override fun onReply(reply: ScoringReply) {
-        checkOwner()
-        val kind = pendingKind ?: return
-        if (closed || !eligible() || pendingOwner != ownerState() || !isCurrent(kind, reply)) return
-        if (reply.code == ScoringCode.NO_MODEL || reply.code == ScoringCode.LOAD_FAILED) {
-            cancel(); client.attachSession(null, false); readiness.setActive(false)
-            return
+        trace.section(SmartTypingTraceSection.MODEL_RESULT) {
+            checkOwner()
+            val kind = pendingKind ?: return@section
+            if (closed || !eligible() || pendingOwner != ownerState() || !isCurrent(kind, reply)) return@section
+            if (reply.code == ScoringCode.NO_MODEL || reply.code == ScoringCode.LOAD_FAILED) {
+                cancel(); client.attachSession(null, false); readiness.setActive(false)
+                return@section
+            }
+            val accepted = when (kind) {
+                RequestKind.SPELLING -> controller.acceptModelRanking(reply)
+                RequestKind.CONTEXTUAL -> controller.acceptContextualRanking(reply)
+            }
+            pendingOwner = null
+            pendingKind = null
+            if (accepted) changed()
         }
-        val accepted = when (kind) {
-            RequestKind.SPELLING -> controller.acceptModelRanking(reply)
-            RequestKind.CONTEXTUAL -> controller.acceptContextualRanking(reply)
-        }
-        pendingOwner = null
-        pendingKind = null
-        if (accepted) changed()
     }
     override fun onAvailabilityChanged(available: Boolean) {
         checkOwner()

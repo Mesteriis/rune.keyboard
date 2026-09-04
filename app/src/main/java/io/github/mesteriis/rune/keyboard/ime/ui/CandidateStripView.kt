@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.ime.RuneTrace
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceSection
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
 
@@ -40,7 +41,7 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
     }
 
     fun render(state: SmartTypingViewState) {
-        RuneTrace.section("Rune#candidateRender") {
+        RuneTrace.section(SmartTypingTraceSection.CANDIDATE_RENDER) {
             cells.forEachIndexed { index, cell ->
                 val item = state.candidates.getOrNull(index)
                 cell.bind(item, item != null && item.id == state.selectedCandidateId)
