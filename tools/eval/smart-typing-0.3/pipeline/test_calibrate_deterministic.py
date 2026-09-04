@@ -19,3 +19,5 @@ class CalibrationBoundaryTest(unittest.TestCase):
             fit([dict(split="holdout")], [])
         with self.assertRaises(ValueError):
             annotations([dict(cohort="correct", noAuto=False)], [])
+        with self.assertRaisesRegex(ValueError, "PRECISION_PROFILE"):
+            fit([dict(split="calibration")], [], 94)

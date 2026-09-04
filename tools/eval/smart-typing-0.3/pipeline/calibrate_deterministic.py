@@ -81,7 +81,8 @@ def counts(proposals: list, labels: list, thresholds: Thresholds | None) -> tupl
     return replaced, correct, false_change
 
 
-def fit(rows: list[dict], generated: list[dict]) -> dict:
+def fit(rows: list[dict], generated: list[dict], minimum_precision_percent: int = 99) -> dict:
+    export.require(minimum_precision_percent in (95, 97, 99), "PRECISION_PROFILE")
     export.require(rows and all(r["split"] == "calibration" for r in rows), "CALIBRATION_ONLY")
     labels = annotations(rows, generated)
     negatives = sum(negative for _, negative in labels)
@@ -98,7 +99,7 @@ def fit(rows: list[dict], generated: list[dict]) -> dict:
             replaced, correct, changed = counts(proposals, labels, thresholds)
             trials += 1
             # Exact integer gates; Wilson intervals are reported descriptively, not thresholded.
-            if replaced and correct * 100 >= replaced * 99 and negatives and changed * 200 <= negatives:
+            if replaced and correct * 100 >= replaced * minimum_precision_percent and negatives and changed * 200 <= negatives:
                 # Maximize correct changes, then fewer errors, then stronger evidence margin.
                 key = (correct, -(replaced - correct), thresholds.minimum_margin,
                        thresholds.minimum_length, -thresholds.original_penalty)
@@ -132,12 +133,14 @@ def run(args) -> None:
                [Path(__file__), HERE / "deterministic_policy.py", HERE / "export_calibration.py", HERE.parent / "evaluate.py"]}
     rows, generated, receipt = load_verified(Path(args.compiled_export).resolve(strict=True),
                                              Path(getattr(args, "corpus", export.CORPUS)))
+    minimum_precision_percent = getattr(args, "minimum_precision_percent", 99)
+    export.require(minimum_precision_percent in (95, 97, 99), "PRECISION_PROFILE")
     output.mkdir(parents=True)
     fits, reports = {}, {}
     for language in ("en", "ru", "es"):
         pairs = [(r, g) for r, g in zip(rows, generated, strict=True) if r["language"] == language]
         subset, candidates = map(list, zip(*pairs))
-        fits[language] = fit(subset, candidates)
+        fits[language] = fit(subset, candidates, minimum_precision_percent)
         reports[language] = metrics(subset, candidates, fits[language])
     export.require(sources == {p: export.sha(export.REPO / p) for p in sources}, "SOURCE_DRIFT")
     ev = evaluator()
@@ -145,6 +148,8 @@ def run(args) -> None:
               "maximumAlternatives": receipt["maximumAlternatives"], "grid": GRID, "sources": sources,
               "generatorReceiptSha256": export.sha(Path(args.compiled_export) / "provenance.json"),
               "calibrationRowsSha256": receipt["calibrationRows"], "languages": fits}
+    if minimum_precision_percent != 99:
+        config["minimumPrecisionPercent"] = minimum_precision_percent
     export.write_json(output / "config.json", {**config, "configSha256": ev.digest(config)})
     export.write_json(output / "report.json", {"split": "calibration", "modelUsed": False,
         "holdoutExecuted": False, "autoReplaceEnabled": False, "languages": reports,
@@ -158,4 +163,5 @@ if __name__ == "__main__":
     parser.add_argument("--compiled-export", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--corpus", default=export.CORPUS)
+    parser.add_argument("--minimum-precision-percent", type=int, choices=(95, 97, 99), default=99)
     run(parser.parse_args())

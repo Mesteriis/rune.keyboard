@@ -35,7 +35,9 @@ def model_proposal(generation: dict, weights: Weights, model_weight: int, scores
     return Proposal(ranked[0][1], ranked[0][0], ranked[1][0] if len(ranked) > 1 else None, len(generation["original"]))
 
 
-def fit(rows: list[dict], generated: list[dict], scores: dict) -> dict:
+def fit(rows: list[dict], generated: list[dict], scores: dict,
+        minimum_precision_percent: int = 99) -> dict:
+    export.require(minimum_precision_percent in (95, 97, 99), "PRECISION_PROFILE")
     export.require(rows and all(r["split"] == "calibration" for r in rows), "CALIBRATION_ONLY")
     labels = base.annotations(rows, generated)
     negatives = sum(negative for _, negative in labels)
@@ -51,7 +53,7 @@ def fit(rows: list[dict], generated: list[dict], scores: dict) -> dict:
                 thresholds = Thresholds(*limits)
                 replaced, correct, changed = base.counts(proposals, labels, thresholds)
                 trials += 1
-                if replaced and correct * 100 >= replaced * 99 and negatives and changed * 200 <= negatives:
+                if replaced and correct * 100 >= replaced * minimum_precision_percent and negatives and changed * 200 <= negatives:
                     key = (correct, -(replaced - correct), thresholds.minimum_margin,
                            thresholds.minimum_length, -thresholds.original_penalty, -model_weight)
                     if best_key is None or key > best_key:
@@ -96,6 +98,8 @@ def run(args) -> None:
     export.require(output.is_relative_to(export.REPO / "build") and not output.exists(), "FRESH_BUILD_OUTPUT")
     rows, generated, receipt = base.load_verified(
         Path(args.compiled_export), Path(getattr(args, "corpus", export.CORPUS)))
+    minimum_precision_percent = getattr(args, "minimum_precision_percent", 99)
+    export.require(minimum_precision_percent in (95, 97, 99), "PRECISION_PROFILE")
     ev = base.evaluator()
     requests = requests_from(rows, generated)
     scoring = Path(args.scoring)
@@ -116,13 +120,15 @@ def run(args) -> None:
     fits, reports = {}, {}
     for language in ("en", "ru", "es"):
         subset, candidates = map(list, zip(*[(r, g) for r, g in zip(rows, generated, strict=True) if r["language"] == language]))
-        fits[language] = fit(subset, candidates, scores)
+        fits[language] = fit(subset, candidates, scores, minimum_precision_percent)
         reports[language] = metrics(subset, candidates, scores, fits[language], fallback["languages"][language])
     export.require(sources == {p: export.sha(export.REPO / p) for p in sources}, "SOURCE_DRIFT")
     config = {"schemaVersion": 1, "scope": "combined-calibration-only", "holdoutQualified": False,
               "maximumAlternatives": receipt["maximumAlternatives"], "grid": base.GRID, "modelWeights": MODEL_WEIGHTS,
               "sources": sources, "modelCacheSha256": complete["scoresSha256"],
               "modelIdentity": complete["identity"], "fallbackConfigSha256": fallback["configSha256"], "languages": fits}
+    if minimum_precision_percent != 99:
+        config["minimumPrecisionPercent"] = minimum_precision_percent
     export.write_json(output / "config.json", {**config, "configSha256": ev.digest(config)})
     export.write_json(output / "report.json", {"split": "calibration", "holdoutExecuted": False, "autoReplaceEnabled": False,
         "languages": reports, "availabilityAssumption": "Every valid model result is available; missing/error results use deterministic fallback.",
@@ -136,4 +142,5 @@ if __name__ == "__main__":
     for option in ("compiled-export", "scoring", "deterministic-config", "output"):
         parser.add_argument("--" + option, required=True)
     parser.add_argument("--corpus", default=export.CORPUS)
+    parser.add_argument("--minimum-precision-percent", type=int, choices=(95, 97, 99), default=99)
     run(parser.parse_args())

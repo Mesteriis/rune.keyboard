@@ -34,3 +34,5 @@ class CombinedPolicyTest(unittest.TestCase):
             model_proposal(generation([candidate(1, 1, 1.0)]), Weights(2, 1, 0, 0, 0), 1, scores([(-1.0, 1)]))
         with self.assertRaises(ValueError):
             fit([{"split": "holdout"}], [], {})
+        with self.assertRaisesRegex(ValueError, "PRECISION_PROFILE"):
+            fit([{"split": "calibration"}], [], {}, 94)

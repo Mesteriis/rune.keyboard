@@ -73,7 +73,8 @@ OOV penalty and the next returned alternative by a positive margin. Missing or
 incomplete retrieval abstains. The chosen minimum word length is also calibrated.
 
 The fixed grid has10800 parameter combinations per language and width. Selection
-requires >=99% calibration precision and <=0.5% false changes among all
+uses `--minimum-precision-percent 95|97|99` (historical default 99, Rune 0.3
+default 95) and requires <=0.5% false changes among all
 correct/protected rows. Among admissible combinations it maximizes correct
 replacements, then minimizes errors, then prefers larger margin/minimum length
 and smaller original penalty. Remaining ties keep the declared grid order.
@@ -120,7 +121,7 @@ These host measurements are not device latency or battery results.
 
 `calibrate_combined.py` fits deterministic features plus the difference between
 candidate and original average log probabilities. It searches 43200 combinations
-per language using the same precision and false-change constraints and adds
+per language using the same explicit precision profile and false-change constraint and adds
 model weights 1/2/4/8. The preselected deterministic policy handles absent or
 failed scoring. All rows remain in the report. Model-ready calibration assumes
 results are available at the boundary; it does not measure device availability.
