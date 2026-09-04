@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "baseModel": "Qwen/Qwen3-0.6B-Base",
+  "baseRevision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+  "objective": "reference-free-pairwise-average-log-probability",
+  "seed": 6042026,
+  "trainWordsPerLanguage": 9000,
+  "validationWordsPerLanguage": 1500,
+  "mutationsPerTrainWord": 3,
+  "mutationsPerValidationWord": 1,
+  "productCalibration": {
+    "maximumAlternatives": 3,
+    "trainingFamilyPercent": 80,
+    "trainingRepeat": 16
+  },
+  "wikipediaContext": {
+    "poolRowsPerLanguage": 20000,
+    "trainingRowsPerLanguage": 12000,
+    "validationRowsPerLanguage": 3000,
+    "minimumContextWords": 4,
+    "maximumPrefixUtf8Bytes": 256
+  },
+  "minimumWordCodePoints": 4,
+  "maximumWordCodePoints": 20,
+  "maximumSequenceTokens": 96,
+  "lora": {
+    "rank": 32,
+    "scale": 64.0,
+    "dropout": 0.0,
+    "numLayers": 24
+  },
+  "training": {
+    "iterations": 12000,
+    "batchSize": 2,
+    "gradientAccumulationSteps": 4,
+    "learningRate": 0.00001,
+    "marginTemperature": 0.15,
+    "chosenNllWeight": 0.05,
+    "validationBatches": 1200,
+    "reportEvery": 50,
+    "evaluateEvery": 500,
+    "saveEvery": 3000,
+    "clearCacheThresholdBytes": 1073741824
+  },
+  "output": {
+    "architecture": "qwen3",
+    "quantization": "Q4_K_M",
+    "runtimeAdapter": false
+  }
+}

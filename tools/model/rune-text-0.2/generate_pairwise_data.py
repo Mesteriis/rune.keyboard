@@ -14,6 +14,7 @@ import unicodedata
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
+EVALUATOR = REPO / "tools/eval/smart-typing-0.3/evaluate.py"
 LANGUAGES = ("en", "ru", "es")
 ALPHABETS = {
     "en": "abcdefghijklmnopqrstuvwxyz",
@@ -149,18 +150,28 @@ def product_pairs(corpus_rows: list[dict], generated: list[dict], seed: int,
         item = by_id[row["id"]]
         if item["original"] != row["typed"]:
             raise ValueError("product calibration original mismatch")
-        if row["cohort"] != "typo" or row["noAuto"]:
+        alternatives = item.get("alternatives", [])
+        if not alternatives:
             continue
         expected = row.get("expectedSpelling")
-        alternatives = item.get("alternatives", [])
-        chosen = [value for value in alternatives if value["text"] == expected]
-        if len(chosen) != 1:
-            continue
-        rejected = [item["original"], *(value["text"] for value in alternatives
-                                        if value["text"] != expected)]
-        if not rejected or any(value == expected for value in rejected):
+        if row["cohort"] == "typo":
+            if row["noAuto"]:
+                continue
+            matches = [value for value in alternatives if value["text"] == expected]
+            if len(matches) != 1:
+                continue
+            chosen = expected
+            rejected = [item["original"], *(value["text"] for value in alternatives
+                                             if value["text"] != expected)]
+            category = "product_candidate:" + row["category"]
+        else:
+            chosen = item["original"]
+            rejected = [value["text"] for value in alternatives]
+            category = "product_original:" + row["category"]
+        if not rejected or any(value == chosen for value in rejected):
             raise ValueError("invalid product calibration candidate set")
-        eligible[row["language"]].append({"row": row, "chosen": expected, "rejected": rejected})
+        eligible[row["language"]].append({
+            "row": row, "chosen": chosen, "rejected": rejected, "category": category})
     train_rows: list[dict] = []
     valid_rows: list[dict] = []
     for language, entries in eligible.items():
@@ -182,7 +193,7 @@ def product_pairs(corpus_rows: list[dict], generated: list[dict], seed: int,
                         "prefix": row["prefix"] + " ",
                         "chosen": entry["chosen"],
                         "rejected": rejected,
-                        "category": "product_candidate:" + row["category"],
+                        "category": entry["category"],
                         "source": "product_calibration",
                     }
                     (train_rows if split == "train" else valid_rows).append(target)
@@ -202,10 +213,10 @@ def load_product_calibration(export: Path, corpus: Path, maximum_alternatives: i
         raise ValueError("product calibration production source drift")
     generated = [json.loads(line) for line in
                  (export / "candidates.jsonl").read_text(encoding="utf-8").splitlines()]
-    spec = importlib.util.spec_from_file_location("rune_training_corpus", corpus / "evaluate.py")
+    spec = importlib.util.spec_from_file_location("rune_training_corpus", EVALUATOR)
     evaluator = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(evaluator)
-    all_rows = evaluator.load_corpus()
+    all_rows = evaluator.load_corpus(corpus)
     evaluator.validate(all_rows)
     rows = [row for row in all_rows if row["split"] == "calibration"
             and row["task"] == "spelling"]
@@ -360,6 +371,7 @@ def run(args: argparse.Namespace) -> None:
         },
         "sources": {
             **context_manifest["sources"],
+            str(EVALUATOR.relative_to(REPO)): sha(EVALUATOR),
             str(Path(__file__).resolve().relative_to(REPO)): sha(Path(__file__).resolve()),
         },
         "splits": split_receipt,

@@ -68,6 +68,19 @@ class PairwiseDataTest(unittest.TestCase):
                            previous["validationWordsPerLanguage"])
         self.assertLessEqual(candidate["maximumSequenceTokens"], 256)
 
+    def test_candidate_05_prioritizes_hard_negatives_without_expanding_runtime_model(self):
+        previous = json.loads((HERE / "training-config-candidate-04.json").read_text())
+        candidate = json.loads((HERE / "training-config-candidate-05.json").read_text())
+        self.assertEqual(candidate["baseModel"], previous["baseModel"])
+        self.assertEqual(candidate["baseRevision"], previous["baseRevision"])
+        self.assertEqual(candidate["objective"], previous["objective"])
+        self.assertEqual(candidate["output"], previous["output"])
+        self.assertGreater(candidate["productCalibration"]["trainingRepeat"],
+                           previous["productCalibration"]["trainingRepeat"])
+        self.assertGreater(candidate["training"]["iterations"],
+                           previous["training"]["iterations"])
+        self.assertLessEqual(candidate["maximumSequenceTokens"], 256)
+
     def test_fused_architecture_contract_is_complete(self):
         self.assertEqual(FUSE.ARCHITECTURE_KEYS, (
             "model_type", "hidden_size", "intermediate_size", "num_hidden_layers",
@@ -117,6 +130,32 @@ class PairwiseDataTest(unittest.TestCase):
         self.assertTrue(all(row["prefix"] == "Check the " and row["chosen"] == "word"
                             and row["rejected"] != "word" for row in pairs))
         self.assertTrue(all("holdout" not in row["id"] for row in pairs))
+
+    def test_product_pairs_teach_original_against_wrong_generated_alternatives(self):
+        rows = [
+            {"id": "en-calibration-correct-0", "language": "en", "split": "calibration",
+             "task": "spelling", "cohort": "correct", "noAuto": False,
+             "typed": "their", "family": "their", "prefix": "Check", "category": "correct_word"},
+            {"id": "en-calibration-protected-0", "language": "en", "split": "calibration",
+             "task": "spelling", "cohort": "protected", "noAuto": True,
+             "typed": "GitHub", "family": "github", "prefix": "Open", "category": "mixed_case"},
+        ]
+        generated = [
+            {"id": rows[0]["id"], "original": "their",
+             "alternatives": [{"id": 1, "text": "there"}, {"id": 2, "text": "thier"}]},
+            {"id": rows[1]["id"], "original": "GitHub", "alternatives": []},
+        ]
+        train, valid = DATA.product_pairs(rows, generated, 3, 80, 2)
+        pairs = train + valid
+        self.assertEqual({row["chosen"] for row in pairs}, {"their"})
+        self.assertEqual({row["rejected"] for row in pairs}, {"there", "thier"})
+        self.assertTrue(all(row["category"] == "product_original:correct_word" for row in pairs))
+
+    def test_product_calibration_uses_central_evaluator_for_nested_corpus(self):
+        self.assertEqual(DATA.EVALUATOR,
+                         HERE.parents[1] / "eval/smart-typing-0.3/evaluate.py")
+        source = (HERE / "generate_pairwise_data.py").read_text()
+        self.assertIn("evaluator.load_corpus(corpus)", source)
 
     def test_wikipedia_context_uses_real_prefix_and_safe_mutation(self):
         rows = CONTEXT.context_pairs(

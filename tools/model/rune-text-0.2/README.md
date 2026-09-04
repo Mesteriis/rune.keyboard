@@ -86,6 +86,13 @@ Q4_K_M runtime format while expanding only the offline data, LoRA capacity and v
 that file explicitly to context preparation, pair generation and training; the original
 `training-config.json` remains frozen for reproduction of the rejected candidate.
 
+Candidate 05 uses `training-config-candidate-05.json` after candidate 04 failed production-candidate
+calibration. Its product input is the revealed v3 **calibration** export; v3 holdout rows are never
+training pairs. Correct and protected calibration rows teach Original against generated hard
+negatives, while typo rows teach the independently authored expected spelling when it is present.
+The larger LoRA is fused offline, so the final Qwen3-0.6B/Q4_K_M runtime architecture and request
+bounds do not grow. Use a new independent corpus for every candidate-05 qualification attempt.
+
 The final local builder requires the clean pinned llama.cpp submodule. It
 records the F16 identity, removes that temporary file and the host build after
 successful Q4_K_M conversion, and leaves the candidate explicitly
