@@ -15,7 +15,7 @@ import mlx.core as mx
 import mlx.nn as nn
 import mlx.optimizers as optim
 import numpy as np
-from mlx.utils import tree_flatten
+from mlx.utils import tree_flatten, tree_unflatten
 import mlx_lm
 from mlx_lm import load
 from mlx_lm.tuner.trainer import TrainingArgs, train
@@ -250,20 +250,25 @@ def run(args: argparse.Namespace) -> None:
     lock = json.loads(lock_path.read_text())
     training = dict(config["training"])
     total_iterations = training["iterations"]
-    segment = plan_segment(total_iterations, args.completed_iterations,
-                           args.segment_iterations, training["gradientAccumulationSteps"])
     if args.smoke:
         training.update(iterations=2, validationBatches=2, reportEvery=1,
                         evaluateEvery=2, saveEvery=2, gradientAccumulationSteps=1)
         segment = plan_segment(total_iterations, args.completed_iterations, 2,
                                training["gradientAccumulationSteps"])
+    else:
+        segment = plan_segment(total_iterations, args.completed_iterations,
+                               args.segment_iterations, training["gradientAccumulationSteps"])
     if mlx_lm.__version__ != lock["trainingToolchain"]["mlx-lm"]["version"]:
         raise ValueError("mlx-lm version mismatch")
     base_hashes = verify_base(base, (HERE / lock["baseModel"]["sha256Manifest"]).resolve())
     data_manifest = verify_data(data, config_path, lock_path)
     resume = Path(args.resume_adapter).resolve(strict=True) if args.resume_adapter else None
+    resume_optimizer = (Path(args.resume_optimizer).resolve(strict=True)
+                        if args.resume_optimizer else None)
     if (resume is None) != (args.completed_iterations == 0):
         raise ValueError("resume adapter and positive completed iterations must be provided together")
+    if (resume is None) != (resume_optimizer is None):
+        raise ValueError("resume adapter and optimizer state must be provided together")
     output.mkdir(parents=True)
 
     random.seed(config["seed"])
@@ -285,6 +290,8 @@ def run(args: argparse.Namespace) -> None:
 
     adapter = output / "adapters.safetensors"
     optimizer = optim.AdamW(learning_rate=training["learningRate"])
+    if resume_optimizer is not None:
+        optimizer.state = tree_unflatten(mx.load(str(resume_optimizer)))
     train(model, optimizer, train_data, valid_data,
           args=TrainingArgs(batch_size=training["batchSize"], iters=segment["segmentIterations"],
               val_batches=training["validationBatches"], steps_per_report=training["reportEvery"],
@@ -297,6 +304,8 @@ def run(args: argparse.Namespace) -> None:
               **kwargs, seed=config["seed"],
               skip_batches=(segment["completedBefore"]
                             if kwargs["dataset"] is train_data else 0)))
+    optimizer_state = output / "optimizer.safetensors"
+    mx.save_safetensors(str(optimizer_state), dict(tree_flatten(optimizer.state)))
     final = evaluate_accuracy(model, valid_data, training["batchSize"],
                               config["maximumSequenceTokens"], training["validationBatches"])
     (output / "final.json").write_bytes(canonical(final) + b"\n")
@@ -323,17 +332,23 @@ def run(args: argparse.Namespace) -> None:
             **segment,
             "resumeAdapterSha256": sha(resume) if resume is not None else None,
             "resumeAdapterFile": resume.name if resume is not None else None,
+            "resumeOptimizerSha256": (
+                sha(resume_optimizer) if resume_optimizer is not None else None),
+            "resumeOptimizerFile": (
+                resume_optimizer.name if resume_optimizer is not None else None),
             "resumeProvenanceSha256": (
                 sha(resume.parent / "provenance.json")
                 if resume is not None and (resume.parent / "provenance.json").is_file() else None),
-            "optimizerResetAtResume": resume is not None,
+            "optimizerStateResumed": resume_optimizer is not None,
+            "optimizerResetAtResume": False,
         },
         "sources": {str(path.relative_to(HERE.parents[2])): sha(path) for path in
                     (Path(__file__).resolve(), HERE / "training_resume.py",
                      HERE / "validation_sampling.py")},
         "baseline": baseline, "final": final,
         "outputs": {"adapters.safetensors": sha(adapter),
-                    "adapter_config.json": sha(output / "adapter_config.json")},
+                    "adapter_config.json": sha(output / "adapter_config.json"),
+                    "optimizer.safetensors": sha(optimizer_state)},
     }
     (output / "provenance.json").write_bytes(canonical(provenance) + b"\n")
     print(json.dumps({"baseline": baseline, "final": final,
@@ -348,6 +363,7 @@ if __name__ == "__main__":
     parser.add_argument("--config", default=HERE / "training-config.json")
     parser.add_argument("--lock", default=HERE / "source-lock.json")
     parser.add_argument("--resume-adapter")
+    parser.add_argument("--resume-optimizer")
     parser.add_argument("--completed-iterations", type=int, default=0)
     parser.add_argument("--segment-iterations", type=int)
     parser.add_argument("--smoke", action="store_true")

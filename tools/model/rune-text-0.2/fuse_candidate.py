@@ -60,7 +60,10 @@ def run(args: argparse.Namespace) -> None:
             or provenance.get("sourceLockSha256") != sha(lock_path)
             or not completed_training(provenance, config)
             or sha(adapter / "adapters.safetensors") != provenance["outputs"]["adapters.safetensors"]
-            or sha(adapter / "adapter_config.json") != provenance["outputs"]["adapter_config.json"]):
+            or sha(adapter / "adapter_config.json") != provenance["outputs"]["adapter_config.json"]
+            or ("optimizer.safetensors" in provenance["outputs"]
+                and sha(adapter / "optimizer.safetensors")
+                != provenance["outputs"]["optimizer.safetensors"])):
         raise ValueError("adapter is not an exact completed candidate run")
     if any(sha(REPO / name) != digest for name, digest in provenance["sources"].items()):
         raise ValueError("training source drift")
