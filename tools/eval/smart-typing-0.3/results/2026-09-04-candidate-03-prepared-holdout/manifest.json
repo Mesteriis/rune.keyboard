@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-04",
+  "result": "FAIL",
+  "modelIncluded": false,
+  "responseCount": 13200,
+  "files": {
+    "README.md": "57fcf18fd45db34b4223efd7041f43aeecd465855252855572e23981b083b97f",
+    "frozen-config.json": "7e5869d11006749ac63dd1b95f4f1ce2b02c0c6e9a6551ebe4d35c1f8cdadefc",
+    "provenance.json": "5782ab272bb159fa167ad46ee7777781dcb10cad279734611b98b454f36b9ab7",
+    "report.json": "151659aafb100b2081789ae448935ffb828fe277d1f0e92cdbde8024ee7638e8",
+    "report.md": "6bf926bc0fd3e5be7206e811628d6c662dd4f147953e12e4e2d969733e58ebbd",
+    "scores.jsonl.gz": "17b86801b0bfb2e966e716d668811e2f274e1b60e1c75c1ebcb43fa4e712d562"
+  }
+}

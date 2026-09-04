@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-04",
+  "result": "FAIL",
+  "scope": "prepared-candidate synthetic stress suitability only",
+  "branch": "feature/smart-typing-03-pr06-lexicons",
+  "scoringSourceCommit": "9c6ffd1",
+  "corpusDirectory": "tools/eval/smart-typing-0.3/qualification-v2/corpus",
+  "corpusManifestSha256": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+  "evaluatorSha256": "ad76b78ba9f00f301465e0f47eb7e96781c44d8bc141a8e1176603bc7f12d5d7",
+  "model": {
+    "sha256": "7a61cd75e672533beba48480f972688baf281f3d0867e11ca63aee5a17228f65",
+    "bytes": 396704416,
+    "format": "GGUF v3",
+    "architecture": "qwen3",
+    "quantization": "Q4_K_M",
+    "included": false
+  },
+  "runnerSha256": "f2f8e9e21a028871da4b9ced6ce0492eb692f742c4de765467a2d44a18535973",
+  "cache": {
+    "jsonlRecords": 13201,
+    "responseRecords": 13200,
+    "uniqueResponseIds": 13200,
+    "sha256": "c734ba675f76e3050b750b9a328d58489a8ee4fddd3711898c536ab2b3c5451f"
+  },
+  "frozenConfigSha256": "149bda1bcba74360a387b0408f7959ec2c45e8bc1acf0983ff95308d6350c554",
+  "reportExitCode": 2,
+  "productModelDependentWorkAllowed": false,
+  "reason": "RU and ES holdout false-change exceed 0.5%; thresholds remain frozen and the product holdout was not started.",
+  "markdownTitleLimitation": "report.md is byte-for-byte evaluator output; its legacy Rune Text 0.1 heading is not model identity. report.json identity and this provenance file identify the candidate digest."
+}
