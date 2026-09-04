@@ -25,6 +25,9 @@ CONTEXT_SPEC = importlib.util.spec_from_file_location(
     "prepare_wikipedia_context", HERE / "prepare_wikipedia_context.py")
 CONTEXT = importlib.util.module_from_spec(CONTEXT_SPEC)
 CONTEXT_SPEC.loader.exec_module(CONTEXT)
+RESUME_SPEC = importlib.util.spec_from_file_location("training_resume", HERE / "training_resume.py")
+RESUME = importlib.util.module_from_spec(RESUME_SPEC)
+RESUME_SPEC.loader.exec_module(RESUME)
 
 
 class PairwiseDataTest(unittest.TestCase):
@@ -84,10 +87,31 @@ class PairwiseDataTest(unittest.TestCase):
             + candidate["wikipediaContext"]["validationRowsPerLanguage"], 13_500)
         self.assertLessEqual(candidate["maximumSequenceTokens"], 256)
 
+    def test_training_segments_are_bounded_and_gradient_aligned(self):
+        self.assertEqual(RESUME.plan(12_000, 3_000, 3_000, 4), {
+            "completedBefore": 3_000,
+            "segmentIterations": 3_000,
+            "completedAfter": 6_000,
+            "remainingAfter": 6_000,
+        })
+        self.assertEqual(RESUME.plan(12_000, 9_000, 5_000, 4)["segmentIterations"], 3_000)
+        for values in ((12_000, -1, 3_000, 4), (12_000, 3_001, 3_000, 4),
+                       (12_000, 3_000, 3_001, 4), (12_000, 12_000, 3_000, 4)):
+            with self.assertRaises(ValueError):
+                RESUME.plan(*values)
+
     def test_fused_architecture_contract_is_complete(self):
         self.assertEqual(FUSE.ARCHITECTURE_KEYS, (
             "model_type", "hidden_size", "intermediate_size", "num_hidden_layers",
             "num_attention_heads", "num_key_value_heads", "vocab_size", "head_dim"))
+
+    def test_fusion_rejects_an_incomplete_segmented_training_run(self):
+        config = {"training": {"iterations": 12_000}}
+        self.assertFalse(FUSE.completed_training({"trainingSegment": {
+            "completedAfter": 6_000, "remainingAfter": 6_000}}, config))
+        self.assertTrue(FUSE.completed_training({"trainingSegment": {
+            "completedAfter": 12_000, "remainingAfter": 0}}, config))
+        self.assertTrue(FUSE.completed_training({}, config))
 
     def test_every_artifact_stage_records_source_identity(self):
         for name in ("download_wikipedia_context.py", "prepare_wikipedia_context.py",

@@ -34,6 +34,13 @@ def files(directory: Path) -> dict[str, str]:
             if path.is_file() and ".cache" not in path.parts}
 
 
+def completed_training(provenance: dict, config: dict) -> bool:
+    segment = provenance.get("trainingSegment")
+    return (segment is None or (
+        segment.get("completedAfter") == config["training"]["iterations"]
+        and segment.get("remainingAfter") == 0))
+
+
 def run(args: argparse.Namespace) -> None:
     base = Path(args.base).resolve(strict=True)
     adapter = Path(args.adapter).resolve(strict=True)
@@ -51,6 +58,7 @@ def run(args: argparse.Namespace) -> None:
             or provenance.get("smokeOnly") is not False
             or provenance.get("configSha256") != sha(config_path)
             or provenance.get("sourceLockSha256") != sha(lock_path)
+            or not completed_training(provenance, config)
             or sha(adapter / "adapters.safetensors") != provenance["outputs"]["adapters.safetensors"]
             or sha(adapter / "adapter_config.json") != provenance["outputs"]["adapter_config.json"]):
         raise ValueError("adapter is not an exact completed candidate run")
