@@ -147,6 +147,15 @@ class PackedLexiconAssetsInstrumentedTest {
                 assertEquals("PACKED_REFERENCE_ID_" + reference.id, reference.expected,
                     reader.exact(identity.language, reference.key, CandidateSearchControl { false }))
             }
+            stage.set(languageStage + 35)
+            val caseReference = canonicalGenerationReferences[index]
+            val generation = CandidateGenerator(reader, canonicalCaseLexicon = canonical)
+                .generate(caseReference.input, identity.language)
+            assertEquals(CandidateCompletion.VALID_WORD, generation.completion)
+            assertTrue(generation.isValidWord)
+            assertEquals(caseReference.expected, generation.alternatives.single().text)
+            assertEquals(GeneratedCandidateKind.CANONICAL_CASE, generation.alternatives.single().kind)
+            assertTrue(generation.prohibitsAutoReplace)
             stage.set(languageStage + 40)
             val after = memory()
             assertTrue(openNanos >= 0 && loadNanos >= 0 && cpuNanos >= 0)
@@ -234,6 +243,8 @@ class PackedLexiconAssetsInstrumentedTest {
         override fun toString(): String = "Reference(id=$id)"
     }
 
+    private data class CanonicalGenerationReference(val input: String, val expected: String)
+
     companion object {
         // Fixed public reference IDs from benchmark/fixtures/exact/{en,es,ru}.tsv; no holdout inputs.
         private val references = listOf(
@@ -267,6 +278,11 @@ class PackedLexiconAssetsInstrumentedTest {
                 Reference(2258, "шума􏿿", ExactMembership.ABSENT),
                 Reference(2276, "", ExactMembership.UNAVAILABLE),
             ),
+        )
+        private val canonicalGenerationReferences = listOf(
+            CanonicalGenerationReference("london", "London"),
+            CanonicalGenerationReference("juan", "Juan"),
+            CanonicalGenerationReference("москва", "Москва"),
         )
     }
 }
