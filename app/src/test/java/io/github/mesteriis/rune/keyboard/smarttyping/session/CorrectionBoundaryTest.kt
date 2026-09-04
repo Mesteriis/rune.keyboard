@@ -136,6 +136,22 @@ class CorrectionBoundaryTest {
         }
     }
 
+    @Test fun `current 95 percent qualification admits only a ready model decision`() {
+        for (language in KeyboardLanguage.entries) {
+            assertFalse(SpellingQualification.CURRENT.allows(language, false))
+            assertTrue(SpellingQualification.CURRENT.allows(language, true))
+            val f = Fixture(qualified = null)
+            f.keyboard = KeyboardState(language)
+            f.raw("helllo"); f.publish("hello")
+            val input = f.controller.beginModelRanking(1)!!
+            assertTrue(f.controller.acceptModelRanking(ScoringReply(input.token, ScoringCode.OK, 0,
+                listOf(NumericScore(0, -20.0, 1), NumericScore(1, -1.0, 1)))))
+            f.type(" ")
+            assertEquals("hello ", f.document)
+            assertNotNull(f.controller.state.lastAutoEdit)
+        }
+    }
+
     @Test fun `original choice and manual alternative suppress boundary autocorrection`() {
         for (chooseOriginal in listOf(true, false)) {
             val f = Fixture(); f.raw("helllo"); f.publish("hello")

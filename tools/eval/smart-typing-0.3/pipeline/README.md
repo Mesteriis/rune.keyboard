@@ -191,8 +191,10 @@ python3 tools/eval/smart-typing-0.3/pipeline/evaluate_product_holdout.py \
 Scoring is resumable and stores only public corpus IDs plus numeric results.
 `evaluate_product_holdout.py` applies the frozen policies once and reports exact
 counts, candidate recall, coverage, abstention, precision and false-change with
-Wilson 95% row-descriptive intervals. A report may authorize production only if
-every language has at least 300 replacements, at least 99% precision, at most
+Wilson 95% row-descriptive intervals. `--minimum-precision-percent 95|97|99`
+records the selected release profile (historical default 99; Rune 0.3 default
+95). A report may authorize production only if every language has at least 300
+replacements, reaches the selected precision profile, has at most
 0.5% false changes among all correct/protected rows, and Original in every set.
 Host ideal availability does not qualify model latency, energy, physical-device
 availability or the real Binder boundary.

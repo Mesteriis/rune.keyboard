@@ -27,7 +27,8 @@ def decide(generation: dict, score: dict | None, combined: dict, fallback: dict)
 
 
 def metrics(rows: list[dict], generated: list[dict], decisions: list[int], ev,
-            used_model: list[bool] | None = None, scores: dict | None = None) -> dict:
+            used_model: list[bool] | None = None, scores: dict | None = None,
+            minimum_precision_percent: int = 99) -> dict:
     labels = deterministic_ranker.annotations(rows, generated)
     changed = [index for index, value in enumerate(decisions) if value]
     correct = sum(decisions[index] in labels[index][0] for index in changed)
@@ -51,10 +52,15 @@ def metrics(rows: list[dict], generated: list[dict], decisions: list[int], ev,
     }
     result["gate"] = {
         "minimum300": len(changed) >= 300,
+        "minimumPrecisionPercent": minimum_precision_percent,
+        "precisionAtLeastTarget": bool(changed and
+            correct * 100 >= len(changed) * minimum_precision_percent),
         "precisionAtLeast99Percent": bool(changed and correct * 100 >= len(changed) * 99),
         "falseChangeAtMost0_5Percent": bool(negatives and false_changes * 200 <= negatives),
     }
-    result["gate"]["pass"] = all(result["gate"].values()) and result["originalAlwaysAvailable"]
+    result["gate"]["pass"] = (result["gate"]["minimum300"] and
+        result["gate"]["precisionAtLeastTarget"] and
+        result["gate"]["falseChangeAtMost0_5Percent"] and result["originalAlwaysAvailable"])
     if used_model is not None:
         result["modelAvailableRows"] = sum(used_model)
         result["deterministicFallbackRows"] = len(rows) - sum(used_model)
@@ -88,6 +94,7 @@ def run(args) -> bool:
     calibration.require(len(scores) == len(requests), "INCOMPLETE_HOLDOUT_SCORES")
 
     report = {"split": "holdout", "holdoutExecuted": True, "thresholdsFittedOnHoldout": False,
+              "minimumPrecisionPercent": args.minimum_precision_percent,
               "autoReplaceEnabled": False, "languages": {}}
     for language in ("en", "ru", "es"):
         pairs = [(row, generation) for row, generation in zip(rows, generated, strict=True)
@@ -107,17 +114,20 @@ def run(args) -> bool:
             combined_decisions.append(decision)
             used_model.append(model_used)
         report["languages"][language] = {
-            "deterministic": metrics(language_rows, language_generated, deterministic_decisions, ev),
+            "deterministic": metrics(language_rows, language_generated, deterministic_decisions, ev,
+                                      minimum_precision_percent=args.minimum_precision_percent),
             "modelAssisted": metrics(language_rows, language_generated, combined_decisions, ev,
-                                      used_model, scores),
+                                      used_model, scores, args.minimum_precision_percent),
         }
     report["allLanguagesPass"] = all(value["modelAssisted"]["gate"]["pass"]
                                       for value in report["languages"].values())
+    report["autoReplaceEnabled"] = report["allLanguagesPass"]
     output.mkdir(parents=True)
     calibration.write_json(output / "report.json", report)
     calibration.write_json(output / "provenance.json", {
         "scope": "final-product-spelling-holdout", "holdoutExecuted": True,
         "thresholdsFittedOnHoldout": False,
+        "minimumPrecisionPercent": args.minimum_precision_percent,
         "combinedConfigSha256": combined["configSha256"],
         "deterministicConfigSha256": deterministic["configSha256"],
         "holdoutGeneratorReceiptSha256": calibration.sha(export_path / "provenance.json"),
@@ -139,4 +149,5 @@ if __name__ == "__main__":
                    "calibration-export", "output"):
         parser.add_argument("--" + option, required=True)
     parser.add_argument("--corpus", default=calibration.CORPUS)
+    parser.add_argument("--minimum-precision-percent", type=int, choices=(95, 97, 99), default=99)
     sys.exit(0 if run(parser.parse_args()) else 2)

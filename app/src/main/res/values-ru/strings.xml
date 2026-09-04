@@ -55,10 +55,10 @@
   <string name="settings_autocorrection">Автокоррекция</string>
   <string name="smart_typing_off">Выключено</string>
   <string name="smart_typing_suggestions">Подсказки</string>
-  <string name="smart_typing_high_confidence">Высокая уверенность</string>
+  <string name="smart_typing_high_confidence">Автозамена (95%)</string>
   <string name="settings_autocorrection_off_summary">Исправления слов выключены. Механическая пунктуация настраивается отдельно.</string>
   <string name="settings_autocorrection_suggestions_summary">Нажмите на подсказку, чтобы заменить слово. Готовая локальная модель может упорядочивать подсказки с учётом контекста.</string>
-  <string name="settings_autocorrection_high_confidence_summary">Доступны подсказки слов с учётом контекста при готовой локальной модели. Автоматическая замена в этой версии недоступна.</string>
+  <string name="settings_autocorrection_high_confidence_summary">Готовая локальная модель автоматически применяет исправления, прошедшие зафиксированный профиль точности 95%. Регистр имён собственных исправляется локально. Backspace сразу возвращает исходный вариант.</string>
   <string name="settings_suggestions_hidden">Подсказки скрыты, пока строка подсказок выключена.</string>
   <string name="settings_mechanical_punctuation">Механическая пунктуация</string>
   <string name="settings_mechanical_punctuation_summary">Корректирует пробелы у знаков пунктуации и заглавную букву предложения в тексте, набранном Rune.</string>

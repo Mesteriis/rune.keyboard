@@ -57,8 +57,17 @@ class ProductHoldoutTest(unittest.TestCase):
     def test_no_replacements_cannot_pass_precision_or_volume(self):
         result = metrics([row()], [generation()], [0], evaluator())
         self.assertFalse(result["gate"]["minimum300"])
-        self.assertFalse(result["gate"]["precisionAtLeast99Percent"])
+        self.assertFalse(result["gate"]["precisionAtLeastTarget"])
         self.assertFalse(result["gate"]["pass"])
+
+    def test_precision_target_is_explicit_and_bounded_to_supported_profiles(self):
+        rows = [row(f"en-holdout-{index}") for index in range(20)]
+        generated = [generation(item["id"]) for item in rows]
+        decisions = [1] * 19 + [2]
+        result = metrics(rows, generated, decisions, evaluator(), minimum_precision_percent=95)
+        self.assertEqual(95, result["gate"]["minimumPrecisionPercent"])
+        self.assertTrue(result["gate"]["precisionAtLeastTarget"])
+        self.assertFalse(result["gate"]["precisionAtLeast99Percent"])
 
     def test_holdout_transport_scores_limit_then_resumes_without_replay(self):
         with tempfile.TemporaryDirectory() as directory:

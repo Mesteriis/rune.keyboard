@@ -7,7 +7,11 @@ internal fun interface SpellingQualification {
     fun allows(language: KeyboardLanguage, modelAssisted: Boolean): Boolean
 
     companion object {
-        /** No final product holdout has passed yet. No setting or model Ready state overrides this. */
-        val CURRENT = SpellingQualification { _, _ -> false }
+        /**
+         * The frozen product holdout passes the user-selected 95% point-precision gate only for
+         * the model-assisted branch in every supported language. Deterministic ranking remains a
+         * suggestion fallback and cannot write automatically.
+         */
+        val CURRENT = SpellingQualification { _, modelAssisted -> modelAssisted }
     }
 }

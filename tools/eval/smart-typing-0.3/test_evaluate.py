@@ -253,7 +253,17 @@ class NumericTests(unittest.TestCase):
         conservative = ev.calibrate(sufficient, sufficient_scores, identity)
         self.assertEqual(2, conservative["version"])
         self.assertEqual("wilson95", conservative["selectionSafety"]["method"])
+        self.assertNotIn("minimumPrecisionPercent", conservative["selectionSafety"])
         self.assertNotEqual(1e9, conservative["languages"]["en"]["margin"])
+
+        profile_95 = ev.calibrate(sufficient, sufficient_scores, identity,
+                                  minimum_precision_percent=95)
+        self.assertEqual(95, profile_95["selectionSafety"]["minimumPrecisionPercent"])
+        self.assertEqual(.95, profile_95["selectionSafety"]["minimumPrecisionWilson95Lower"])
+
+        with self.assertRaisesRegex(ValueError, "unsupported minimum precision profile"):
+            ev.calibrate(sufficient, sufficient_scores, identity,
+                         minimum_precision_percent=94)
 
     def test_unknown_calibration_selection_safety_rejected(self) -> None:
         with self.assertRaisesRegex(ValueError, "unknown calibration selection safety"):

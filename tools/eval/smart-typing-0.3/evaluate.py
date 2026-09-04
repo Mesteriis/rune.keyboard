@@ -369,7 +369,8 @@ def rate(numerator: int, denominator: int) -> dict:
     return {"numerator": numerator, "denominator": denominator, "value": numerator / denominator if denominator else None, "wilson95RowDescriptive": wilson(numerator, denominator)}
 
 
-def language_metrics(rows: list[dict], scores: dict, config: dict) -> dict:
+def language_metrics(rows: list[dict], scores: dict, config: dict,
+                     minimum_precision_percent: int = 99) -> dict:
     spelling = [row for row in rows if row["task"] == "spelling"]
     usable = {row["id"]: features(row, scores.get(row["id"])) for row in rows}
     auto = [row for row in spelling if automatic(row, usable[row["id"]], config)]
@@ -404,14 +405,19 @@ def language_metrics(rows: list[dict], scores: dict, config: dict) -> dict:
         "contextTemplates": len({row["template"] for row in rows}),
         "automaticReplacementFamilies": len({row["family"] for row in auto}),
         "falsePositiveIds": [row["id"] for row in auto if usable[row["id"]]["best"] != row["expectedCandidate"]],
-        "passesRowGate": len(auto) >= 300 and good / len(auto) >= .99 and len(changed) / len(negative) <= .005 if auto and negative else False,
+        "passesRowGate": len(auto) >= 300 and
+            good * 100 >= len(auto) * minimum_precision_percent and
+            len(changed) / len(negative) <= .005 if auto and negative else False,
     }
 
 
 def calibrate(rows: list[dict], scores: dict, identity: dict,
-              selection_safety: str = "wilson95") -> dict:
+              selection_safety: str = "wilson95", minimum_precision_percent: int = 99) -> dict:
     if selection_safety not in ("legacy-point-estimate", "wilson95"):
         raise ValueError("unknown calibration selection safety")
+    if minimum_precision_percent not in (95, 97, 99):
+        raise ValueError("unsupported minimum precision profile")
+    minimum_precision = minimum_precision_percent / 100
     calibration = [row for row in rows if row["split"] == "calibration"]
     if any(row["id"] not in scores for row in calibration):
         raise ValueError("calibration scores incomplete")
@@ -430,11 +436,11 @@ def calibrate(rows: list[dict], scores: dict, identity: dict,
                 false_changes = sum(row["cohort"] != "typo" for row, _ in auto)
                 precision_interval = wilson(correct, len(auto))
                 false_change_interval = wilson(false_changes, negative_count)
-                legacy_pass = bool(auto and correct / len(auto) >= .99 and negative_count
+                legacy_pass = bool(auto and correct / len(auto) >= minimum_precision and negative_count
                                    and false_changes / negative_count <= .005)
                 conservative_pass = bool(
                     len(auto) >= 300 and precision_interval and false_change_interval
-                    and precision_interval[0] >= .99 and false_change_interval[1] <= .005)
+                    and precision_interval[0] >= minimum_precision and false_change_interval[1] <= .005)
                 selected = legacy_pass if selection_safety == "legacy-point-estimate" else conservative_pass
                 if selected:
                     candidates.append((len(auto), margin, confidence, config))
@@ -447,12 +453,16 @@ def calibrate(rows: list[dict], scores: dict, identity: dict,
               "calibrationScoresSha256": digest(calibration_scores), "languages": configs,
               "confidenceMeaning": "softmax of average log probabilities; not an empirical correctness probability"}
     if selection_safety != "legacy-point-estimate":
-        config["selectionSafety"] = {
+        selection = {
             "method": selection_safety,
             "minimumAutomaticReplacements": 300,
-            "minimumPrecisionWilson95Lower": .99,
+            "minimumPrecisionWilson95Lower": minimum_precision,
             "maximumFalseChangeWilson95Upper": .005,
         }
+        # Keep historical 99% frozen configs byte-compatible; only new profiles need a tag.
+        if minimum_precision_percent != 99:
+            selection["minimumPrecisionPercent"] = minimum_precision_percent
+        config["selectionSafety"] = selection
     return {**config, "frozenConfigSha256": digest(config)}
 
 
@@ -461,12 +471,15 @@ def report(rows: list[dict], scores: dict, identity: dict, frozen: dict) -> dict
     if frozen["frozenConfigSha256"] != digest(content):
         raise ValueError("frozen configuration modified")
     safety = "wilson95" if "selectionSafety" in frozen else "legacy-point-estimate"
-    expected = calibrate(rows, scores, identity, safety)
+    minimum_precision_percent = frozen.get("selectionSafety", {}).get("minimumPrecisionPercent", 99)
+    expected = calibrate(rows, scores, identity, safety, minimum_precision_percent)
     if frozen != expected:
         raise ValueError("frozen configuration does not match calibration-only evidence")
     result = {"version": 2, "scope": "prepared-candidate synthetic stress suitability only", "identity": identity, "frozenConfigSha256": frozen["frozenConfigSha256"], "limitations": ["Rows share lexical families and authored context templates; Wilson intervals describe row counts and are not independent-sample confidence guarantees.", "Synthetic typo and protected-token distributions do not represent real typing. Prepared candidates do not test production candidate generation.", "noAuto is an authored policy annotation. Production protection detection is not implemented or evaluated.", "Punctuation ambiguity is authored; ambiguous rows have no single correct suggestion and are excluded from suggestion accuracy.", "Runtime errors and zero-token scores abstain and remain in metric denominators.", "Abstention uses all spelling rows, including protected, error and missing-score rows. Prepared oracle candidate recall uses all typo rows; expected spellings are injected by construction, so 100% is not production candidate-generator evidence."], "splits": {}}
     for split in ("calibration", "holdout"):
-        result["splits"][split] = {lang: language_metrics([row for row in rows if row["split"] == split and row["language"] == lang], scores, frozen["languages"][lang]) for lang in LANGUAGES}
+        result["splits"][split] = {lang: language_metrics(
+            [row for row in rows if row["split"] == split and row["language"] == lang],
+            scores, frozen["languages"][lang], minimum_precision_percent) for lang in LANGUAGES}
     complete = all(row["id"] in scores for row in rows)
     result["allScoresPresent"] = complete
     result["preparedCandidateRowGatePass"] = complete and all(metrics["passesRowGate"] for metrics in result["splits"]["holdout"].values())
@@ -520,6 +533,7 @@ def main() -> int:
     freeze = commands.add_parser("calibrate")
     freeze.add_argument("--cache", type=Path, required=True)
     freeze.add_argument("--out", type=Path, required=True)
+    freeze.add_argument("--minimum-precision-percent", type=int, choices=(95, 97, 99), default=99)
     make_report = commands.add_parser("report")
     make_report.add_argument("--cache", type=Path, required=True)
     make_report.add_argument("--config", type=Path, required=True)
@@ -543,7 +557,8 @@ def main() -> int:
     if args.command == "calibrate":
         if any(row["split"] == "holdout" and row["id"] in scores for row in rows):
             raise ValueError("cannot freeze thresholds after holdout scoring started")
-        value = calibrate(rows, scores, identity)
+        value = calibrate(rows, scores, identity,
+                          minimum_precision_percent=args.minimum_precision_percent)
         args.out.parent.mkdir(parents=True, exist_ok=True)
         # A frozen file is immutable by this command; new experiments need new paths.
         with args.out.open("x", encoding="utf-8") as stream:
