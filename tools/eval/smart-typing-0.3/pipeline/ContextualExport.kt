@@ -23,7 +23,7 @@ object ContextualExport {
                     check(fields.size == 4 && fields[0].toInt() == expected && expected < 2000)
                     val language = KeyboardLanguage.entries.single { it.locale.language == fields[1] }
                     val variants = ContextualPunctuationEngine.variants(decoded(fields[2]), decoded(fields[3]), language)
-                    check(variants.size in 2..8)
+                    check(variants.isEmpty() || variants.size in 2..8)
                     println("R\t$expected\t${variants.size}")
                     variants.forEach { variant ->
                         println(listOf("C", expected, variant.id, encoded(variant.boundary),

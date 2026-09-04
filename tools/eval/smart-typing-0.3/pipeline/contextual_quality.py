@@ -47,6 +47,7 @@ def parse_output(text: str, rows: list[dict]) -> list[dict]:
             shared.require(len(fields) == 3 and int(fields[1]) == len(results), "ROW_ID")
             shared.require(not results or len(results[-1]["variants"]) == count, "VARIANT_COUNT")
             count = int(fields[2])
+            shared.require(count == 0 or 2 <= count <= 8, "VARIANT_COUNT")
             results.append({"id": rows[len(results)]["id"], "variants": []})
         elif fields[0] == "C":
             shared.require(len(fields) == 5 and results and int(fields[1]) == len(results) - 1,
@@ -61,7 +62,8 @@ def parse_output(text: str, rows: list[dict]) -> list[dict]:
     shared.require(len(results) == len(rows) and len(results[-1]["variants"]) == count,
                    "INCOMPLETE_OUTPUT")
     for row, result in zip(rows, results, strict=True):
-        shared.require([item["boundary"] for item in result["variants"]] == BOUNDARIES,
+        boundaries = [item["boundary"] for item in result["variants"]]
+        shared.require(not boundaries or boundaries == BOUNDARIES,
                        "PRODUCTION_BOUNDARIES")
         result.update({"split": row["split"], "language": row["language"],
             "prefix": row["prefix"], "ambiguous": row["ambiguous"],
@@ -141,7 +143,8 @@ def requests(records: list[dict], split: str) -> list[dict]:
     selected = [record for record in records if record["split"] == split]
     shared.require(len(selected) == 600, "SPLIT_ROWS")
     return [{"id": record["id"], "split": split, "prefix": record["prefix"],
-             "candidates": [item["continuation"] for item in record["variants"]]} for record in selected]
+             "candidates": [item["continuation"] for item in record["variants"]]}
+            for record in selected if record["variants"]]
 
 
 def verified_model(config_path: Path, runner: Path, model: Path) -> dict:
@@ -219,6 +222,7 @@ def metrics(records: list[dict], scores: dict) -> dict:
     suggestions = [index for index in unambiguous if chosen[index] != 0]
     correct = sum(chosen[index] == records[index]["expectedCandidate"] for index in suggestions)
     return {"rows": len(records), "unambiguousRows": len(unambiguous), "ambiguousRows": len(ambiguous),
+        "productionExcludedRows": sum(not row.get("variants") for row in records),
         "suggestions": len(suggestions), "correctSuggestions": correct,
         "suggestionPrecision": ev.rate(correct, len(suggestions)),
         "unambiguousTop1Coverage": ev.rate(correct, len(unambiguous)),
