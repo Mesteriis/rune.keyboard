@@ -2,10 +2,27 @@ package io.github.mesteriis.rune.keyboard.smarttyping.lexicon
 
 import java.io.ByteArrayOutputStream
 import java.io.DataOutputStream
+import java.nio.file.Files
+import java.nio.file.Path
 import org.junit.Assert.*
 import org.junit.Test
 
 class CanonicalCaseDataTest {
+    @Test
+    fun `packaged canonical case assets validate and contain public references`() {
+        val root = listOf(Path.of("src/main/assets"), Path.of("app/src/main/assets"))
+            .first { Files.isDirectory(it) }
+        for ((language, key, expected) in listOf(
+            Triple("en", "london", CanonicalCase("London", true)),
+            Triple("es", "juan", CanonicalCase("Juan", false)),
+            Triple("ru", "москва", CanonicalCase("Москва", true)),
+        )) {
+            val data = CanonicalCaseData.validate(Files.readAllBytes(
+                root.resolve("smarttyping/lexicon/case/$language.case")))
+            assertEquals(expected, data.lookup(key))
+        }
+    }
+
     @Test
     fun `validated index finds countries cities and names without retaining query identity`() {
         val data = CanonicalCaseData.validate(asset(listOf(

@@ -9,8 +9,8 @@ words such as English `may`.
 
 RNC1 assets are derived offline from the already pinned and licensed RU/EN/ES surface forms. A key is
 included only when its lowercase form has exactly one title-case source spelling; a separate bit
-records whether a lowercase source spelling also exists. The three assets contain 20,247 EN, 1,284 ES
-and 16,834 RU records and total 1,156,093 bytes before APK compression. Their manifest pins the frozen
+records whether a lowercase source spelling also exists. The three assets contain 20,221 EN, 1,283 ES
+and 16,834 RU records and total 1,155,850 bytes before APK compression. Their manifest pins the frozen
 surface hashes, builder hash, counts, sizes and output hashes. Runtime loading is lazy on the existing
 serial candidate worker. It performs no model binding, network access, editor readback or per-keystroke
 scan, and a malformed or mismatched asset fails to Original.

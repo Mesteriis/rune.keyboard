@@ -1,30 +1,30 @@
 {
   "schema": 1,
   "format": "RNC1",
-  "builderSha256": "3f952c118b95cff416b77ad5358cf2bdd0ff054edeaed694f91314dd9304433a",
+  "builderSha256": "61cd175538c82b3004760ad3844e425586731965a1a817bad81ea63445aa6970",
   "frozenManifestSha256": "ec26c80edd28f2b42008a844c8b0ce83c11759386ccc9de591cb038a7a4f3c48",
   "policy": "One unique NFC title-case surface per lowercase key; ambiguity flag is false when the lowercase surface also exists.",
   "languages": [
     {
       "language": "en",
       "sourceSurfaceSha256": "f0fe081e19e2dd01a78f1f8b21bb80ab4c3bceb858ebba9106c98f4e6ad8b557",
-      "records": 20247,
+      "records": 20221,
       "unambiguousRecords": 18046,
       "asset": {
         "path": "smarttyping/lexicon/case/en.case",
-        "bytes": 457335,
-        "sha256": "ad1bcca401600e247e060f2bbf4aed99acd9d49458f1d0227babe4ecfd2cc658"
+        "bytes": 457101,
+        "sha256": "2d5ba3c807ef8c66be5222b01c3cd0f98645a891c12b6356827ea58544725a34"
       }
     },
     {
       "language": "es",
       "sourceSurfaceSha256": "aecce00304f5c608f1dcc16f3f27aba16c2248231e8927c6374cd3fab0b3bf92",
-      "records": 1284,
-      "unambiguousRecords": 995,
+      "records": 1283,
+      "unambiguousRecords": 994,
       "asset": {
         "path": "smarttyping/lexicon/case/es.case",
-        "bytes": 26696,
-        "sha256": "02885e6cf10d85e75482d27bd38d0f7f3d66a3eb182aff86246ff392f47ea290"
+        "bytes": 26687,
+        "sha256": "52614678597416daf63763bb1f34015097d97ab974d9aa951b0221a67105a6fa"
       }
     },
     {

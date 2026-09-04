@@ -19,7 +19,12 @@ def sha256(path: Path) -> str:
 
 
 def is_title_surface(value: str) -> bool:
-    return bool(value and value[0].isupper() and value[1:] == value[1:].lower())
+    cased = [char for char in value if char.isupper() or char.islower() or char.istitle()]
+    return bool(
+        len(cased) > 1
+        and (cased[0].isupper() or cased[0].istitle())
+        and sum(char.isupper() or char.istitle() for char in cased) == 1
+    )
 
 
 def derive(path: Path) -> list[tuple[str, str, bool]]:

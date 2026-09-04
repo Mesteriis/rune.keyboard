@@ -70,10 +70,13 @@ internal class CanonicalCaseData private constructor(
                 val valueBytes = bytes.copyOfRange(record + 3 + keyLength, record + 3 + keyLength + valueLength)
                 val key = decode(keyBytes)
                 val value = decode(valueBytes)
-                require(TokenUnicode.bounded(key) && TokenUnicode.bounded(value) &&
-                    TokenUnicode.nfc(key) == key && TokenUnicode.folded(key) == key &&
-                    TokenUnicode.folded(value) == key && CasePattern.analyze(value) == CasePattern.TITLE &&
-                    (previousKey == null || compare(previousKey!!, keyBytes, 0, keyBytes.size) < 0)) { "CASE_CANONICAL" }
+                require(TokenUnicode.bounded(key) && TokenUnicode.bounded(value)) { "CASE_BOUNDS" }
+                require(TokenUnicode.nfc(key) == key) { "CASE_NFC" }
+                require(TokenUnicode.folded(key) == key && TokenUnicode.folded(value) == key) { "CASE_FOLD" }
+                require(CasePattern.analyze(value) == CasePattern.TITLE) { "CASE_TITLE" }
+                require(previousKey == null || compare(previousKey!!, keyBytes, 0, keyBytes.size) < 0) {
+                    "CASE_ORDER"
+                }
                 previousKey = keyBytes
                 previousOffset += 3 + keyLength + valueLength
             }

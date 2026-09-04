@@ -10,6 +10,7 @@ import android.os.SystemClock
 import android.system.Os
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import java.io.File
 import java.nio.ReadOnlyBufferException
 import java.security.MessageDigest
@@ -89,6 +90,28 @@ class PackedLexiconAssetsInstrumentedTest {
         stage.set(42)
         verifyFile(assets, "smarttyping/lexicon/provenance/packed-asset-manifest.json", null,
             "7ce207ab7d05b8800a1d8921f6e55fe81f429f8158bf8ebcebf581cbee7255f0")
+        stage.set(43)
+        verifyFile(assets, "smarttyping/lexicon/provenance/canonical-case-manifest.json", null,
+            "ad31b3f21a3ad8cecb33641bfb829adef287bb80b1afa0cd5096cc73cc9d85f8")
+        val canonical = AndroidCanonicalCaseLexicon(assets)
+        val canonicalReferences = listOf(
+            Triple(KeyboardLanguage.ENGLISH, "london", CanonicalCase("London", true)),
+            Triple(KeyboardLanguage.SPANISH, "juan", CanonicalCase("Juan", false)),
+            Triple(KeyboardLanguage.RUSSIAN, "москва", CanonicalCase("Москва", true)),
+        )
+        for ((index, reference) in canonicalReferences.withIndex()) {
+            stage.set(50 + index)
+            val cpuStart = Debug.threadCpuTimeNanos()
+            val start = SystemClock.elapsedRealtimeNanos()
+            assertEquals(reference.third, canonical.lookup(reference.first, reference.second))
+            val wallNanos = SystemClock.elapsedRealtimeNanos() - start
+            val cpuNanos = Debug.threadCpuTimeNanos() - cpuStart
+            assertNull(canonical.lookup(reference.first, "notpresent"))
+            instrumentation.sendStatus(0, Bundle().apply {
+                putString("canonical_case_contract",
+                    "v1 language=$index wall_ns=$wallNanos cpu_ns=$cpuNanos")
+            })
+        }
 
         for ((index, identity) in trusted.withIndex()) {
             val languageStage = 100 * (index + 1)
