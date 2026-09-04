@@ -79,6 +79,9 @@ class PairwiseDataTest(unittest.TestCase):
                            previous["productCalibration"]["trainingRepeat"])
         self.assertGreater(candidate["training"]["iterations"],
                            previous["training"]["iterations"])
+        self.assertLessEqual(
+            candidate["wikipediaContext"]["trainingRowsPerLanguage"]
+            + candidate["wikipediaContext"]["validationRowsPerLanguage"], 13_500)
         self.assertLessEqual(candidate["maximumSequenceTokens"], 256)
 
     def test_fused_architecture_contract_is_complete(self):

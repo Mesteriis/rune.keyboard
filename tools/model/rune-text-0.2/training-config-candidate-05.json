@@ -15,8 +15,8 @@
   },
   "wikipediaContext": {
     "poolRowsPerLanguage": 20000,
-    "trainingRowsPerLanguage": 12000,
-    "validationRowsPerLanguage": 3000,
+    "trainingRowsPerLanguage": 11000,
+    "validationRowsPerLanguage": 2500,
     "minimumContextWords": 4,
     "maximumPrefixUtf8Bytes": 256
   },
