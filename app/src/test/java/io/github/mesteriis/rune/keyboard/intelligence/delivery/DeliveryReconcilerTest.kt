@@ -1,9 +1,21 @@
 package io.github.mesteriis.rune.keyboard.intelligence.delivery
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class DeliveryReconcilerTest {
+    @Test
+    fun `active downloads reschedule but terminal and paused observations do not`() {
+        assertTrue(DeliveryReconciler.needsDownloadReschedule(DownloadObservation.PENDING))
+        assertTrue(DeliveryReconciler.needsDownloadReschedule(DownloadObservation.RUNNING))
+        assertFalse(DeliveryReconciler.needsDownloadReschedule(DownloadObservation.PAUSED))
+        assertFalse(DeliveryReconciler.needsDownloadReschedule(DownloadObservation.SUCCESSFUL))
+        assertFalse(DeliveryReconciler.needsDownloadReschedule(DownloadObservation.FAILED))
+        assertFalse(DeliveryReconciler.needsDownloadReschedule(DownloadObservation.MISSING))
+    }
+
     @Test
     fun downloadObservationsDriveRecoveryWithoutTrustingBroadcasts() {
         val queued = DeliveryJournal(operation = JournalOperation.QUEUED, downloadId = 41, allowMetered = false)

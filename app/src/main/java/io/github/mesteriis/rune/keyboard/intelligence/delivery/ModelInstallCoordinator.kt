@@ -35,10 +35,13 @@ class ModelInstallCoordinator(
             fail(journal, ModelFailureCode.DOWNLOAD_MISSING)
             return false
         }
-        return when (downloads.query(id)) {
+        val download = downloads.query(id)
+        return when (download) {
             DownloadObservation.PENDING, DownloadObservation.RUNNING -> {
                 store.write(journal.copy(operation = JournalOperation.DOWNLOADING))
-                false
+                // Keep a system-backed recovery path if ACTION_DOWNLOAD_COMPLETE is lost. The
+                // JobScheduler supplies backoff; paused and idle states never poll.
+                DeliveryReconciler.needsDownloadReschedule(download)
             }
             DownloadObservation.PAUSED -> {
                 store.write(journal.copy(operation = JournalOperation.WAITING_UNMETERED))
