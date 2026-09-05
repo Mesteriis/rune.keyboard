@@ -54,7 +54,8 @@ struct Runtime {
     std::atomic_bool cancelled{false};
     ModelPtr model;
     // Declared after the model so it is destroyed first. The scoring context is
-    // reused until unload instead of being rebuilt for every word.
+    // created on the first scoring request and then reused until unload. Keeping
+    // it lazy avoids holding two llama contexts during activation self-test.
     std::unique_ptr<rune::scoring::Scorer> scorer;
 };
 
@@ -236,12 +237,6 @@ jlongArray native_load(JNIEnv * env, jobject, jlong handle, jstring path) try {
         return result(env, ErrorCode::Cancelled);
     }
     if (!runtime->model) return result(env, ErrorCode::ModelLoadFailed);
-    try {
-        runtime->scorer = std::make_unique<rune::scoring::Scorer>(runtime->model.get(), runtime->cancelled);
-    } catch (...) {
-        runtime->model.reset();
-        return result(env, ErrorCode::InternalError);
-    }
     return result(env, ErrorCode::Ok, milliseconds_since(start));
 } catch (...) { return result(env, ErrorCode::InternalError); }
 
@@ -319,7 +314,11 @@ jlongArray native_score_candidates(JNIEnv * env, jobject, jlong handle, jbyteArr
     auto request = scoring_request(env, prefix, ids, continuations);
     if (runtime->cancelled.load(std::memory_order_relaxed))
         return scoring_result(env, rune::scoring::failure_wire(9));
-    if (!runtime->model || !runtime->scorer) return scoring_result(env, rune::scoring::failure_wire(3));
+    if (!runtime->model) return scoring_result(env, rune::scoring::failure_wire(3));
+    if (!runtime->scorer) {
+        runtime->scorer = std::make_unique<rune::scoring::Scorer>(
+            runtime->model.get(), runtime->cancelled);
+    }
     const auto start = std::chrono::steady_clock::now();
     const auto score = runtime->scorer->score(request);
     if (runtime->cancelled.load(std::memory_order_relaxed))

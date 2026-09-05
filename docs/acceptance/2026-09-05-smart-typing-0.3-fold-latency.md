@@ -32,3 +32,9 @@ whose measured p95 completes before the word boundary.
 Backspace ownership was corrected independently: deleting a pending Rune-owned space now reopens
 the complete preceding Rune-owned word and requests candidates for that word. A word whose left
 boundary predates the bounded session context is not claimed. This preserves the no-readback rule.
+
+Activation exposed a separate lifetime regression after the persistent-context change: allocating
+the scoring context during model load made active validation hold it alongside the self-test
+context. The runtime now loads only the model for validation and creates the persistent scoring
+context lazily on the first candidate request. Local native/JVM gates cover the change; another
+physical activation and timing run remains required because the Fold was disconnected.
