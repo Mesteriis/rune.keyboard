@@ -1,5 +1,12 @@
 # Rune Smart Typing 0.3 execution ledger
 
+- 2026-09-05 experimental model delivery: at the user's explicit direction, reproducible Rune Text
+  0.1 GGUF `7a97111c…dd9c4` was published to Hugging Face repository `alexm37/rune-text-v1` at immutable
+  commit `c057e37928624d3c3c4bd526d3515f7202395920`. Hub LFS metadata matches the local 396704416-byte
+  file and SHA-256. The embedded descriptor now uses the full commit URL. Existing frozen product
+  holdout meets the selected point-95 profile with EN304, RU359 and ES408 model-assisted changes;
+  the publication is experimental because the full exact-digest physical Fold matrix remains open.
+
 - 2026-09-04 Candidate-05 v4 prepared calibration at the user-selected point-95 profile: exact GGUF `26b6e8db…` scored all 6,600 calibration rows before any holdout request. The conservative Wilson-lower-bound profile qualified RU467/467 and EN679/679 but froze ES to abstention. The explicit point-estimate profile then froze margin1.0/confidence-feature0.8 for all languages: RU628/633 (99.21%,5/1000 false changes), EN706/707 (99.86%,1/1000), ES668/671 (99.55%,3/1000). All exceed >=300, >=95% and <=0.5%. Frozen file SHA `a2b737f8…`, internal config SHA `48802ac0…`; v4 holdout started only after this freeze.
 
 - 2026-09-04 user-selected 95% AutoReplace profile: the settings default `HIGH_CONFIDENCE` is now presented as `Auto-replace (95%)`. The frozen v2 product holdout's unchanged model-assisted decisions meet the revised point-precision gate in EN (293/304=96.38%), RU (342/359=95.26%) and ES (396/408=97.06%), with >=300 replacements and <=0.1% false changes per language. Runtime qualification opens only the model-assisted branch; deterministic spelling stays suggestions, while canonical proper-case corrections remain local. Evaluators now record an explicit 95/97/99 profile, retain 99 as the historical CLI default, and freeze the selected calibration target. A fresh Candidate-05 v4 calibration/holdout and physical model qualification remain required before publication.
