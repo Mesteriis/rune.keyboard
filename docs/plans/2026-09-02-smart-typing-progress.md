@@ -7,6 +7,9 @@
   the current exact model/backend pair, while deterministic candidates remain local and available.
   A smaller separately qualified candidate ranker is required; physical reactivation, cold/warm
   timing and the reopened-word Backspace flow remain open until the Fold reconnects.
+  A 1 MiB hashed linear prototype trained on 196,400 pinned public pairs failed coverage (one
+  calibration replacement per language), so it is excluded; a nonlinear byte/character ranker is
+  the next bounded model experiment.
 
 - 2026-09-05 physical Fold scoring: the original four-candidate path measured 13.621 s wall and
   51.795 CPU-seconds. Shared-prefix scoring reduced this to 4.869 s / 18.569 CPU-seconds with exact

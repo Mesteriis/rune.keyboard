@@ -52,3 +52,10 @@ known holdout. Its end-to-end budget includes the measured four-candidate local 
 51.968 ms. Qualification requires a fresh calibration/holdout and a physical Fold p95 that finishes
 before the word boundary; preloading may then remove first-request model load but cannot substitute
 for warm inference meeting that budget.
+
+A host-only 262,144-feature hashed linear ranker was also tested against 196,400 pinned public
+pairwise rows. It trained in 34.47 s and would require roughly 1 MiB of float weights, but the
+point-95 calibration admitted only one replacement per language. On the already seen holdout it
+admitted EN 4, RU 2 and ES 0 replacements. This fails coverage by orders of magnitude and is not a
+shipping candidate. The next prototype must model nonlinear byte/character context while retaining
+bounded candidate-only scoring; its data and thresholds still require a fresh unseen holdout.
