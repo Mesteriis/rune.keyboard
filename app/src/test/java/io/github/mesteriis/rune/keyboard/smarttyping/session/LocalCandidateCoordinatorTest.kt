@@ -395,6 +395,24 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
+    @Test fun `runtime-unqualified model never binds while local candidates remain available`() {
+        Harness(withModel = true, qualified = true).use { h ->
+            h.owner = h.owner.copy(
+                modelAutoReplaceQualified = true,
+                modelRuntimeQualified = false,
+                contextualPunctuationEnabled = true,
+                contextualModelReady = true,
+            )
+            h.type("helo")
+            h.deliver()
+
+            assertEquals(listOf("helo", "help", "hello"), h.labels())
+            assertTrue(h.model.attachments.none { it.second })
+            assertNull(h.pause.task)
+            assertTrue(h.model.requests.isEmpty())
+        }
+    }
+
     @Test fun `qualified deterministic correction and Undo work with hidden strip and zero model demand`() {
         Harness(withModel = true, qualified = true).use { h ->
             h.owner = h.owner.copy(deterministicAutoReplaceQualified = true)

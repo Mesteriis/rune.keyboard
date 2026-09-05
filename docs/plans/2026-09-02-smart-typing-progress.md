@@ -1,5 +1,13 @@
 # Rune Smart Typing 0.3 execution ledger
 
+- 2026-09-05 latency gate follow-up: model load now defers persistent scoring-context allocation
+  until the first score, so activation self-test does not hold two contexts. Candidate-lane batching
+  reached host p95 66/70 ms on archived calibration/known holdout, but changed scalar scores and
+  missed the point-95 diagnostic in EN/RU/ES; it was rejected. Production inference is closed for
+  the current exact model/backend pair, while deterministic candidates remain local and available.
+  A smaller separately qualified candidate ranker is required; physical reactivation, cold/warm
+  timing and the reopened-word Backspace flow remain open until the Fold reconnects.
+
 - 2026-09-05 physical Fold scoring: the original four-candidate path measured 13.621 s wall and
   51.795 CPU-seconds. Shared-prefix scoring reduced this to 4.869 s / 18.569 CPU-seconds with exact
   scalar-oracle equality; persistent context and cross-revision KV produced a 4.480 s warm result.

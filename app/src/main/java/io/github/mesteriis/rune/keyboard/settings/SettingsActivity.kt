@@ -12,6 +12,7 @@ import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsActivity
 import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
 import io.github.mesteriis.rune.keyboard.intelligence.readiness.DiskModelReadinessProbe
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.ModelRuntimeQualification
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -62,7 +63,7 @@ class SettingsActivity : ThemedActivity() {
                 .read { readinessGeneration.get() != generation }
             runOnUiThread {
                 if (readinessGeneration.get() == generation && !isFinishing && !isDestroyed) {
-                    val ready = hint == ModelReadinessHint.READY
+                    val ready = hint == ModelReadinessHint.READY && ModelRuntimeQualification.CURRENT
                     if (contextualModelReady != ready) {
                         contextualModelReady = ready
                         buildRows()

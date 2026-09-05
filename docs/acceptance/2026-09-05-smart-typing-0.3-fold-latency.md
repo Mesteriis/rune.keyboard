@@ -38,3 +38,17 @@ the scoring context during model load made active validation hold it alongside t
 context. The runtime now loads only the model for validation and creates the persistent scoring
 context lazily on the first candidate request. Local native/JVM gates cover the change; another
 physical activation and timing run remains required because the Fold was disconnected.
+
+An experimental candidate-lane batch reduced the same host request from 206 ms warm to 43 ms and
+completed the archived calibration/known-holdout diagnostics at p95 66/70 ms. It was rejected:
+the scalar oracle delta reached 0.544792, and a calibration-only point-95 fit scored the already
+seen holdout at EN 370/398 (92.96%), RU 509/547 (93.05%) and ES 501/534 (93.82%). These figures are
+diagnostic, not a new qualification; the holdout was previously revealed. Product inference is
+therefore closed for the current model/backend pair even though the exact scalar quality profile
+passes the selected point-95 gate. Local deterministic candidates remain available.
+
+The next model milestone is a smaller candidate ranker trained and frozen independently of this
+known holdout. Its end-to-end budget includes the measured four-candidate local generation p95 of
+51.968 ms. Qualification requires a fresh calibration/holdout and a physical Fold p95 that finishes
+before the word boundary; preloading may then remove first-request model load but cannot substitute
+for warm inference meeting that budget.

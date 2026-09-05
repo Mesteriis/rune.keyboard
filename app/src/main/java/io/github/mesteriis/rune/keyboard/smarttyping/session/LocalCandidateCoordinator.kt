@@ -29,6 +29,7 @@ data class CandidateOwnerState(
     val candidateStripEnabled: Boolean = true,
     val deterministicAutoReplaceQualified: Boolean = false,
     val modelAutoReplaceQualified: Boolean = false,
+    val modelRuntimeQualified: Boolean = true,
     val contextualPunctuationEnabled: Boolean = false,
     val contextualModelReady: Boolean = false,
 ) {
@@ -43,17 +44,20 @@ data class CandidateOwnerState(
     /** Retrieval serves visible suggestions and either qualified automatic branch. */
     val canRequestSpelling: Boolean
         get() = baseEligible && spellingEnabled && (candidateStripEnabled ||
-            automaticMode && (deterministicAutoReplaceQualified || modelAutoReplaceQualified))
+            automaticMode && (deterministicAutoReplaceQualified ||
+                modelAutoReplaceQualified && modelRuntimeQualified))
     /** A hidden strip and deterministic-only qualification must not bind the model process. */
     val canRequestModelSpelling: Boolean
-        get() = baseEligible && spellingEnabled &&
+        get() = modelRuntimeQualified && baseEligible && spellingEnabled &&
             (candidateStripEnabled || automaticMode && modelAutoReplaceQualified)
     val canRequestContextual: Boolean
-        get() = baseEligible && candidateStripEnabled && contextualPunctuationEnabled && contextualModelReady
+        get() = modelRuntimeQualified && baseEligible && candidateStripEnabled &&
+            contextualPunctuationEnabled && contextualModelReady
     val canRequestCandidateWork: Boolean
         get() = canRequestSpelling || canRequestContextual
     val canActivateAnyModelCandidate: Boolean
-        get() = canRequestModelSpelling || baseEligible && candidateStripEnabled && contextualPunctuationEnabled
+        get() = modelRuntimeQualified && (canRequestModelSpelling ||
+            baseEligible && candidateStripEnabled && contextualPunctuationEnabled)
 }
 
 /** Main owner only; readiness never calls back, renders never submit, and no request survives a boundary. */

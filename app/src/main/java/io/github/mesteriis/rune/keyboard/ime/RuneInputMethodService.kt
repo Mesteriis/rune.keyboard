@@ -45,6 +45,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.AndroidCanonicalCas
 import io.github.mesteriis.rune.keyboard.smarttyping.session.CandidateOwnerState
 import io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinator
 import io.github.mesteriis.rune.keyboard.smarttyping.android.AndroidModelCandidates
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.ModelRuntimeQualification
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionController
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingTextResult
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
@@ -482,6 +483,7 @@ class RuneInputMethodService : InputMethodService() {
         candidateStripEnabled = settings.candidateStrip,
         deterministicAutoReplaceQualified = typingSession.isSpellingQualified(state.language, false),
         modelAutoReplaceQualified = typingSession.isSpellingQualified(state.language, true),
+        modelRuntimeQualified = ModelRuntimeQualification.CURRENT,
         contextualPunctuationEnabled = settings.contextualPunctuationMode == ContextualPunctuationMode.SUGGESTIONS,
         contextualModelReady = candidates.modelReadinessHint == ModelReadinessHint.READY,
     )
