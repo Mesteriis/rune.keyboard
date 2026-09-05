@@ -26,8 +26,9 @@ class LatestReplyGuard {
         if (!eligible || session != token.sessionId || token.requestId <= lastRequest) return false
         lastRequest = token.requestId; latest = token; return true
     }
+    fun accepts(token: ScoringToken): Boolean = eligible && latest == token
     fun accepts(token: ScoringToken, currentCompositionRevision: Long): Boolean =
-        eligible && latest == token && token.revision == currentCompositionRevision
+        accepts(token) && token.revision == currentCompositionRevision
     fun invalidate() { latest = null }
     fun shouldBind() = eligible
 }

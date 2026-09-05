@@ -137,8 +137,21 @@ identity проверяется снова под lock. Это точка про
 Resolver не выполняет AtomicFile recovery, не создаёт storage и не зависит от
 delivery; mutable activation остаётся у install worker.
 
-Client принимает только актуальный session/revision/request/candidate набор и
-текущую revision composition. Каждый callback дополнительно привязан к generation
+Client принимает только последний session/revision/request/candidate набор,
+который typing owner подтверждает как актуальный. Обычно это текущая revision
+composition. Для обычного пробела в квалифицированном режиме AutoReplace owner
+может сохранить один уже запущенный spelling-запрос; ещё не сработавшая пауза
+отправляет его один раз без ожидания результата. Пробел коммитится сразу. В течение
+250 мс после него разрешена замена только прежнего полного Rune-owned слова и
+его пробела при неизменных caret, suffix, session, новой revision и настройках.
+Исходные IDs запроса не меняются. Следующее текстовое действие, Original, cursor,
+смена поля/настроек или истечение окна отменяют владение. Deadline проверяется и
+при получении callback, даже если main-thread timer задержался. Успешная замена
+использует guarded editor batch и единую Undo-транзакцию; нет нового editor
+readback, повторной отправки запроса или дополнительного CPU allowance. Это окно
+реакции интерфейса, а не квалификация скорости/энергии модели. Enter/SEND и
+пунктуация используют прежнее правило: только уже готовый результат на границе.
+Каждый callback дополнительно привязан к generation
 подключения. Повторный attach той же session/demand ничего не отменяет и не
 переподключает; OFF/ON и временный null detach сохраняют request watermark
 последней положительной session. Разные реальные сессии получают разные IDs.

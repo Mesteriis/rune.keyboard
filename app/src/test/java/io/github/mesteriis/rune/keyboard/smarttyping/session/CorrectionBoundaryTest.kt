@@ -14,6 +14,117 @@ import org.junit.Test
 
 /** Real owner/executor with an independent editor document. Synthetic quality admission only. */
 class CorrectionBoundaryTest {
+    @Test fun `post-space score corrects the exact committed suffix and first Backspace restores complete original`() {
+        for (synchronous in listOf(false, true)) {
+            val f = Fixture(modelOnly = true); f.synchronous = synchronous
+            f.raw("I"); f.raw(" "); f.raw("helllo"); f.publish("hello")
+            val input = f.controller.beginModelRanking(1)!!
+            assertEquals(TypingTextResult.HANDLED, f.controller.retainRankingAcrossSpace { f.type(" ") })
+            assertEquals("I helllo ", f.document)
+            assertTrue(f.controller.isCurrentSpaceCorrection(input.token))
+            f.calls.clear()
+            assertTrue(f.controller.acceptSpaceCorrection(winningReply(input), f.execute))
+            assertEquals("I hello ", f.document)
+            assertEquals(ComposingSegment(" "), f.controller.state.composing)
+            assertEquals(listOf("beginBatchEdit", "setComposingRegion", "commitText", "setComposingRegion", "endBatchEdit"), f.calls)
+            f.calls.clear(); f.undo()
+            assertEquals("I helllo", f.document)
+            assertEquals(ComposingSegment(" ", "helllo"), f.controller.state.composing)
+            assertEquals("I helllo", f.controller.state.contextText)
+            assertTrue(f.controller.state.originalSelected)
+            assertFalse(f.controller.acceptSpaceCorrection(winningReply(input), f.execute))
+        }
+    }
+
+    @Test fun `post-space request cannot survive any later edit or ownership invalidation`() {
+        for (action in listOf<(Fixture) -> Unit>(
+            { it.type("w") }, { it.undo() }, { it.type(" ") }, { it.type(",") }, { it.type("\n") },
+            { it.controller.clearCandidates() }, { it.controller.endSession() },
+            { it.controller.updateSelection(0, 0, -1, -1, it.execute) })) {
+            val f = Fixture(modelOnly = true); val input = f.pendingSpace()
+            action(f)
+            val before = f.document; f.calls.clear()
+            assertFalse(f.controller.acceptSpaceCorrection(winningReply(input), f.execute))
+            assertEquals(before, f.document); assertTrue(f.calls.isEmpty())
+        }
+    }
+
+    @Test fun `post-space token must match every original request identity and is single use`() {
+        val f = Fixture(modelOnly = true); val input = f.pendingSpace()
+        val original = input.token
+        for (token in listOf(ScoringToken(original.sessionId + 1, original.revision, original.requestId, original.candidateIds),
+            ScoringToken(original.sessionId, original.revision + 1, original.requestId, original.candidateIds),
+            ScoringToken(original.sessionId, original.revision, original.requestId + 1, original.candidateIds),
+            ScoringToken(original.sessionId, original.revision, original.requestId, listOf(0, 2)))) {
+            val reply = ScoringReply(token, ScoringCode.OK, 0, token.candidateIds.map { NumericScore(it, -1.0, 1) })
+            assertFalse(f.controller.acceptSpaceCorrection(reply, f.execute))
+        }
+        assertTrue(f.controller.acceptSpaceCorrection(winningReply(input), f.execute))
+        f.calls.clear()
+        assertFalse(f.controller.acceptSpaceCorrection(winningReply(input), f.execute))
+        assertTrue(f.calls.isEmpty())
+    }
+
+    @Test fun `post-space failure or Original winner never edits and clears ownership`() {
+        for (failure in listOf(true, false)) {
+            val f = Fixture(modelOnly = true); val input = f.pendingSpace(); f.calls.clear()
+            val reply = if (failure) ScoringReply(input.token, ScoringCode.CANCELLED, 0, emptyList()) else
+                ScoringReply(input.token, ScoringCode.OK, 0,
+                    listOf(NumericScore(0, -1.0, 1), NumericScore(1, -20.0, 1)))
+            assertFalse(f.controller.acceptSpaceCorrection(reply, f.execute))
+            assertFalse(f.controller.hasSpaceCorrection)
+            assertEquals("helllo ", f.document); assertTrue(f.calls.isEmpty())
+        }
+    }
+
+    @Test fun `late replacement stops between editor calls on refusal or reentrant ownership loss`() {
+        for (fail in listOf("setComposingRegion", "commitText")) {
+            val f = Fixture(modelOnly = true); val input = f.pendingSpace(); f.calls.clear(); f.fail = fail
+            assertFalse(f.controller.acceptSpaceCorrection(winningReply(input), f.execute))
+            assertEquals("helllo ", f.document); assertFalse(f.controller.state.enabled)
+            assertEquals(0, f.batchDepth)
+            if (fail == "setComposingRegion") assertFalse("commitText" in f.calls)
+        }
+        val f = Fixture(modelOnly = true); val input = f.pendingSpace(); f.calls.clear()
+        f.afterCall = { if (it == "setComposingRegion") f.controller.endSession() }
+        assertFalse(f.controller.acceptSpaceCorrection(winningReply(input), f.execute))
+        assertEquals("helllo ", f.document); assertFalse("commitText" in f.calls)
+        assertEquals(0, f.batchDepth)
+    }
+
+    @Test fun `post-space ownership requires a complete ordinary token and bounded region`() {
+        for (prefix in listOf("@", ".", "/", ":", "x=", " ".repeat(250))) {
+            val f = Fixture(modelOnly = true); prefix.forEach { f.raw(it.toString()) }
+            f.raw("helllo"); f.publish("hello")
+            f.controller.beginModelRanking(1)
+            f.controller.retainRankingAcrossSpace { f.type(" ") }
+            assertFalse(f.controller.hasSpaceCorrection)
+        }
+        val unknown = Fixture(modelOnly = true, initial = "outside")
+        unknown.pendingSpace()
+        assertFalse(unknown.controller.hasSpaceCorrection)
+    }
+
+    private fun winningReply(input: ScoringInput) = ScoringReply(input.token, ScoringCode.OK, 0,
+        listOf(NumericScore(0, -20.0, 1), NumericScore(1, -1.0, 1)))
+
+    @Test fun `post-space correction and Undo preserve exact Unicode source in every language`() {
+        for ((language, original, replacement) in listOf(
+            Triple(KeyboardLanguage.ENGLISH, "cafe\u0301ss", "cafés"),
+            Triple(KeyboardLanguage.RUSSIAN, "превет", "привет"),
+            Triple(KeyboardLanguage.SPANISH, "holaa", "hola"))) {
+            val f = Fixture(modelOnly = true); f.keyboard = KeyboardState(language)
+            f.raw(original); f.publish(replacement)
+            val input = f.controller.beginModelRanking(1)!!
+            f.controller.retainRankingAcrossSpace { f.type(" ") }
+            assertTrue(f.controller.acceptSpaceCorrection(winningReply(input), f.execute))
+            assertEquals("$replacement ", f.document)
+            f.undo(); assertEquals(original, f.document)
+            assertEquals(original, f.controller.state.contextText)
+            assertEquals(original, f.controller.state.composing?.typedWord)
+        }
+    }
+
     @Test fun `multiline Enter consumes ready correction commits newline and Undo restores original`() {
         val f = Fixture(); f.raw("helllo"); f.publish("hello"); f.calls.clear()
         assertEquals(TypingTextResult.HANDLED, f.type("\n"))
@@ -402,6 +513,12 @@ class CorrectionBoundaryTest {
             doubleSpaceGesture = doubleSpace, autocorrectionMode = mode, execute = execute)
         fun raw(text: String) = controller.typeText(text, execute)
         fun undo() = controller.deletePrevious(execute)
+        fun pendingSpace(): ScoringInput {
+            raw("helllo"); publish("hello")
+            val input = controller.beginModelRanking(1)!!
+            controller.retainRankingAcrossSpace { type(" ") }
+            return input
+        }
         fun publish(word: String, completion: CandidateCompletion = CandidateCompletion.COMPLETE) {
             val request = controller.beginCandidateRequest(++requestId, keyboard.language)!!
             val item = GeneratedCandidate(word, TokenUnicode.folded(word), TokenUnicode.folded(word), keyboard.language,

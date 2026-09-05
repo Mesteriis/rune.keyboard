@@ -6,6 +6,8 @@ import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessSourc
 import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringCode
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringToken
+import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.NoopSmartTypingTracer
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceSection
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTracer
@@ -15,6 +17,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.section
 interface ModelPauseScheduler {
     fun postDelayed(task: Runnable, millis: Long)
     fun remove(task: Runnable)
+    fun nowMillis(): Long = System.nanoTime() / 1_000_000
 }
 
 /**
@@ -38,6 +41,8 @@ class ModelCandidateCoordinator(
     private var closed = false
     private var pendingOwner: CandidateOwnerState? = null
     private var pendingKind: RequestKind? = null
+    private var spaceStartedAt = 0L
+    private var spaceExecutor: ((TypingEdit) -> Boolean)? = null
 
     /** Cached metadata only, independent of transport connectivity and quality qualification. */
     val modelReadinessHint: ModelReadinessHint
@@ -84,9 +89,39 @@ class ModelCandidateCoordinator(
         epoch++
         pendingOwner = null
         pendingKind = null
+        spaceExecutor = null
         timer?.let(scheduler::remove); timer = null
         controller.cancelModelRanking()
         client.cancel()
+    }
+
+    /** Space never waits. Flush its existing pause once and retain only this unchanged suffix. */
+    internal fun editSpace(execute: (TypingEdit) -> Boolean, action: () -> TypingTextResult): TypingTextResult {
+        checkOwner()
+        val owner = ownerState()
+        if (closed || !automaticSpaceEligible() || requestKind() != RequestKind.SPELLING) {
+            cancel()
+            return action()
+        }
+        timer?.let { task -> scheduler.remove(task); task.run() }
+        val editingEpoch = epoch
+        val result = controller.retainRankingAcrossSpace(action)
+        if (closed || epoch != editingEpoch || ownerState() != owner || pendingKind != RequestKind.SPELLING ||
+            result != TypingTextResult.HANDLED || !controller.hasSpaceCorrection || !automaticSpaceEligible()) {
+            cancel()
+            return result
+        }
+        spaceExecutor = execute
+        spaceStartedAt = scheduler.nowMillis()
+        val expiry = object : Runnable {
+            override fun run() {
+                checkOwner()
+                if (timer === this && epoch == editingEpoch) cancel()
+            }
+        }
+        timer = expiry
+        scheduler.postDelayed(expiry, SPACE_GRACE_MILLIS)
+        return result
     }
 
     /** Session/view/layer/language/settings/privacy invalidation, not an ordinary keystroke. */
@@ -99,21 +134,34 @@ class ModelCandidateCoordinator(
     }
 
     override fun currentCompositionRevision(): Long { checkOwner(); return controller.state.revision }
+    override fun isCurrentRequest(token: ScoringToken): Boolean {
+        checkOwner()
+        val kind = pendingKind ?: return false
+        return if (spaceExecutor != null) withinSpaceWindow() && controller.isCurrentSpaceCorrection(token)
+            else isCurrent(kind, token)
+    }
     override fun onReply(reply: ScoringReply) {
         trace.section(SmartTypingTraceSection.MODEL_RESULT) {
             checkOwner()
             val kind = pendingKind ?: return@section
-            if (closed || !eligible() || pendingOwner != ownerState() || !isCurrent(kind, reply)) return@section
+            val executeSpace = spaceExecutor
+            if (executeSpace != null && (!withinSpaceWindow() || !automaticSpaceEligible())) {
+                cancel(); return@section
+            }
+            if (closed || (executeSpace == null && !eligible()) || pendingOwner != ownerState() ||
+                !isCurrentRequest(reply.token)) return@section
             if (reply.code == ScoringCode.NO_MODEL || reply.code == ScoringCode.LOAD_FAILED) {
                 cancel(); client.attachSession(null, false); readiness.setActive(false)
                 return@section
             }
-            val accepted = when (kind) {
+            val accepted = if (executeSpace != null) controller.acceptSpaceCorrection(reply, executeSpace) else when (kind) {
                 RequestKind.SPELLING -> controller.acceptModelRanking(reply)
                 RequestKind.CONTEXTUAL -> controller.acceptContextualRanking(reply)
             }
             pendingOwner = null
             pendingKind = null
+            spaceExecutor = null
+            timer?.let(scheduler::remove); timer = null
             if (accepted) changed()
         }
     }
@@ -130,19 +178,26 @@ class ModelCandidateCoordinator(
     private fun featureEligible() = !closed && ownerState().canActivateAnyModelCandidate && controller.state.enabled
     private fun eligible() = featureEligible() && readiness.hint == ModelReadinessHint.READY &&
         controller.canRequestCandidates
+    private fun automaticSpaceEligible() = featureEligible() && readiness.hint == ModelReadinessHint.READY &&
+        client.available && ownerState().let { it.canRequestModelSpelling && it.modelAutoReplaceQualified &&
+            it.autocorrectionMode == AutocorrectionMode.HIGH_CONFIDENCE }
+    private fun withinSpaceWindow() = spaceExecutor != null &&
+        scheduler.nowMillis() - spaceStartedAt in 0 until SPACE_GRACE_MILLIS
     private fun requestKind(): RequestKind? = when {
         ownerState().canRequestModelSpelling && controller.canRequestModelRanking -> RequestKind.SPELLING
         ownerState().canRequestContextual && controller.canRequestContextualRanking -> RequestKind.CONTEXTUAL
         else -> null
     }
-    private fun isCurrent(kind: RequestKind, reply: ScoringReply) = when (kind) {
-        RequestKind.SPELLING -> controller.isCurrentModelRanking(reply.token)
-        RequestKind.CONTEXTUAL -> controller.isCurrentContextualRanking(reply.token)
+    private fun isCurrent(kind: RequestKind, token: ScoringToken) = when (kind) {
+        RequestKind.SPELLING -> controller.isCurrentModelRanking(token)
+        RequestKind.CONTEXTUAL -> controller.isCurrentContextualRanking(token)
     }
     private fun checkOwner() = check(Thread.currentThread() === ownerThread) { "Model candidate owner thread required" }
     private enum class RequestKind { SPELLING, CONTEXTUAL }
     companion object {
         /** Development pause, not a measured latency/energy budget; service CPU duty still applies. */
         const val PAUSE_MILLIS = 400L
+        /** UX limit on a late correction, not extra inference duty or a performance claim. */
+        const val SPACE_GRACE_MILLIS = 250L
     }
 }

@@ -1,5 +1,16 @@
 # Rune Smart Typing 0.3 execution ledger
 
+- 2026-09-05 Space completion: ordinary Space can retain one already-admitted
+  spelling request for 250 ms, or flush its existing pause once, while committing
+  immediately. Only the unchanged complete Rune-owned suffix may be corrected;
+  the next action, invalidation or deadline cancels ownership. Request IDs and
+  worker CPU limits are unchanged. Guarded replacement has complete-word immediate
+  Undo and no new editor readback. Targeted JVM86/86 and integration JVM680/680
+  PASS; API26/API37 each32/32
+  PASS through real Binder, factory and composing fixtures. The Fold and exact-model
+  duty gates remain open, and runtime qualification stays closed. Acceptance:
+  `docs/acceptance/2026-09-05-smart-typing-0.3-space-completion.md`.
+
 - 2026-09-05 build-mode audit supersedes the model-unsuitability conclusions in
   the two latency entries below: September 5 Fold samples used unoptimized Debug
   kernels. The archived September 2 release-native baseline already measured

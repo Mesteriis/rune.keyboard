@@ -45,6 +45,35 @@ import java.util.concurrent.atomic.AtomicInteger
 
 /** Real factory, metadata reader, Handler, client and remote Binder; synthetic engine and owned editor fixture. */
 class AndroidModelCandidatesInstrumentedTest {
+    @Test fun realBinderReplyAfterSpaceUsesOwnedSuffixAndImmediateUndo() = Fixture().use { f ->
+        onMain { f.owner = f.owner.copy(modelAutoReplaceQualified = true); f.ranking.invalidate() }
+        await { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
+        onMain { f.prepare("helo", "hello", 1); f.ranking.candidatesChanged() }
+        await { f.context.remote.get() > 0 }
+        onMain {
+            // Establish transport first; do not depend on a cold service binding within the pause.
+            f.ranking.cancel()
+            f.controller.typeText("s") { f.editorWrites.incrementAndGet(); true }
+            f.publish("hellos", 2); f.ranking.candidatesChanged()
+            val policy = MechanicalPunctuationPolicy(InputPolicy.NORMAL, EditorMode.TEXT, false, false, false)
+            assertEquals(TypingTextResult.HANDLED, f.ranking.editSpace({ f.editorWrites.incrementAndGet(); true }) {
+                f.controller.typeText(" ", policy, KeyboardState(KeyboardLanguage.ENGLISH),
+                    autocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE) { f.editorWrites.incrementAndGet(); true }
+            })
+            assertEquals("helos ", f.controller.state.contextText)
+            assertTrue(f.controller.hasSpaceCorrection)
+        }
+        await { onMain { f.controller.state.lastAutoEdit != null } }
+        onMain {
+            assertEquals("hellos ", f.controller.state.contextText)
+            assertNotNull(f.controller.state.lastAutoEdit)
+            assertEquals(TypingTextResult.HANDLED, f.controller.deletePrevious { f.editorWrites.incrementAndGet(); true })
+            assertEquals("helos", f.controller.state.contextText)
+            assertTrue(f.controller.state.originalSelected)
+        }
+        assertEquals(1, f.context.attempts.get()); assertEquals(0, f.context.mainReads.get())
+    }
+
     @Test fun current95ProfileAppliesRemoteModelCorrectionAndImmediateUndo() = Fixture().use { f ->
         onMain { f.ranking.invalidate() }
         await { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }

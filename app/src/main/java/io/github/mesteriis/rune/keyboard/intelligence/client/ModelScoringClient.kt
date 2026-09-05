@@ -2,6 +2,7 @@ package io.github.mesteriis.rune.keyboard.intelligence.client
 
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringInput
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringToken
 
 interface ModelScoringClient : AutoCloseable {
     /**
@@ -18,6 +19,8 @@ interface ModelScoringClient : AutoCloseable {
 }
 interface ModelScoringListener {
     fun currentCompositionRevision(): Long
+    /** Owner may certify one unchanged Rune-owned word after its space was committed. */
+    fun isCurrentRequest(token: ScoringToken): Boolean = token.revision == currentCompositionRevision()
     fun onReply(reply: ScoringReply)
     /** Transport transitions only; initial/unmodified false is not repeatedly published. */
     fun onAvailabilityChanged(available: Boolean)

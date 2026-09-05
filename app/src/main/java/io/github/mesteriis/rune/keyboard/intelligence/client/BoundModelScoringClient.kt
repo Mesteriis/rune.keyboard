@@ -74,7 +74,8 @@ class BoundModelScoringClient internal constructor(
                 val result = reply?.value ?: return
                 main.post {
                     if (generation != admittedGeneration || connection !== admittedConnection || !available) return@post
-                    if (guard.accepts(result.token, listener.currentCompositionRevision())) {
+                    val currentRequest = listener.isCurrentRequest(result.token)
+                    if (guard.accepts(result.token) && currentRequest) {
                         guard.invalidate(); latest = null; listener.onReply(result)
                     }
                 }

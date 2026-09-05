@@ -79,6 +79,7 @@ class TypingSessionController internal constructor(
     private var pendingCandidate: CandidateStamp? = null
     private var candidateSelection: CandidateSelection? = null
     private var pendingModelRanking: ModelRankingStamp? = null
+    private var pendingSpaceCorrection: SpaceCorrectionStamp? = null
     private var pendingContextualRanking: ContextualRankingStamp? = null
     private var contextualSelection: ContextualSelection? = null
     private var contextualCompletedSelection: CandidateSelection? = null
@@ -166,6 +167,7 @@ class TypingSessionController internal constructor(
         pendingCandidate = null
         candidateSelection = null
         pendingModelRanking = null
+        pendingSpaceCorrection = null
         pendingContextualRanking = null
         contextualSelection = null
         contextualCompletedSelection = null
@@ -194,7 +196,7 @@ class TypingSessionController internal constructor(
         return input
     }
 
-    /** Calibrated numeric suggestion ordering only; automatic replacement remains unqualified. */
+    /** Store a calibrated ranking; boundary mutation separately checks preference and qualification. */
     fun acceptModelRanking(reply: ScoringReply): Boolean {
         if (!isCurrentModelRanking(reply.token)) return false
         pendingModelRanking = null
@@ -224,7 +226,86 @@ class TypingSessionController internal constructor(
     /** Cancels ranking ownership without removing the current deterministic/manual strip. */
     fun cancelModelRanking() {
         pendingModelRanking = null
+        pendingSpaceCorrection = null
         pendingContextualRanking = null
+    }
+
+    /**
+     * The owner opts in only for an ordinary Space in qualified automatic mode. The word is
+     * committed immediately. Preserve exactly one already-admitted ranking if the resulting
+     * document still ends in that complete Rune-owned word plus one composing space.
+     */
+    internal fun retainRankingAcrossSpace(action: () -> TypingTextResult): TypingTextResult {
+        val ranking = pendingModelRanking?.takeIf { isCurrentModelRanking(it.token) }
+        val previous = state.composing
+        val owned = punctuationEvidence()
+        val tokenStart = owned?.text?.indexOfLast { it.isWhitespace() }?.plus(1)
+        val captured = if (ranking != null && previous != null && owned != null && tokenStart != null &&
+            previous.text.length < MAX_COMPOSING_UTF16 &&
+            (tokenStart > 0 || owned.startsAtTokenBoundary) && owned.text.substring(tokenStart) == previous.typedWord &&
+            !ranking.selection.generation.prohibitsAutoReplace &&
+            spellingQualification.allows(ranking.selection.language, true)) {
+            SpaceCorrectionStamp(ranking, previous, composingStart, context!!.text)
+        } else null
+        val result = action()
+        if (result == TypingTextResult.HANDLED && captured != null &&
+            state.sessionId == captured.ranking.token.sessionId && state.lastAutoEdit == null &&
+            ownsSpaceAfter(captured)) {
+            captured.revisionAfterSpace = state.revision
+            pendingSpaceCorrection = captured
+        }
+        return result
+    }
+
+    internal val hasSpaceCorrection: Boolean get() = pendingSpaceCorrection != null
+
+    internal fun isCurrentSpaceCorrection(token: ScoringToken): Boolean {
+        val pending = pendingSpaceCorrection ?: return false
+        return token == pending.ranking.token && state.sessionId == token.sessionId &&
+            state.revision == pending.revisionAfterSpace && ownsSpaceAfter(pending)
+    }
+
+    private fun ownsSpaceAfter(pending: SpaceCorrectionStamp): Boolean =
+        state.enabled && !awaitingEditorSelection && editorEditDepth == 0 &&
+            state.composing == ComposingSegment(leadingBoundary = " ") &&
+            selectionStart == selectionEnd && composingStart.toLong() == pending.start.toLong() + pending.previous.text.length &&
+            selectionStart.toLong() == composingStart.toLong() + 1 &&
+            context?.text?.endsWith(pending.previous.text + " ") == true
+
+    /** Uses only the certified suffix. The caller also enforces the deadline and live preferences. */
+    internal fun acceptSpaceCorrection(reply: ScoringReply, execute: (TypingEdit) -> Boolean): Boolean {
+        if (!isCurrentSpaceCorrection(reply.token)) return false
+        val pending = pendingSpaceCorrection ?: return false
+        pendingSpaceCorrection = null
+        val selection = pending.ranking.selection
+        if (reply.code != ScoringCode.OK) return false
+        val ranking = trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
+            CalibratedSpellingPolicy.rank(selection.generation, selection.language,
+                reply.scores.map { RankingModelScore(it.candidateId, it.sumLogProbability, it.tokenCount) })
+        } ?: return false
+        if (!ranking.usedModel || ranking.preferredId <= 0) return false
+        val word = selection.alternatives.getOrNull(ranking.preferredId - 1)?.text ?: return false
+        val rendered = pending.previous.copy(typedWord = word).text + " "
+        val end = pending.start.toLong() + rendered.length
+        if (rendered.length > MAX_COMPOSING_UTF16 || rendered.codePointCount(0, rendered.length) > 128 ||
+            end > Int.MAX_VALUE) return false
+        val caret = end.toInt()
+        remember(EditorSelection(selectionStart, selectionEnd, pending.start, selectionStart))
+        remember(EditorSelection(caret, caret, -1, -1))
+        val boundary = ComposingSegment(leadingBoundary = " ")
+        return trace.section(SmartTypingTraceSection.CORRECTION_COMMIT) {
+            applyGuardedBatch(listOf(TypingEdit.SetComposingRegion(pending.start, selectionStart),
+                TypingEdit.CommitText(rendered), TypingEdit.SetComposingRegion(caret - 1, caret)),
+                EditorSelection(caret, caret, caret - 1, caret), execute) {
+                check(context!!.replaceSuffix(pending.previous.text + " ", rendered)) { "Space correction ownership mismatch" }
+                composingStart = caret - 1
+                state = state.copy(composing = boundary, originalSelected = false,
+                    lastAutoEdit = UndoableTextEdit(pending.previous.text, rendered, state.sessionId, state.revision,
+                        pending.previous, pending.contextBefore, pending.start, boundary,
+                        UndoCorrectionCandidates(selection.generation, selection.language, selection.requestId)))
+                publish()
+            } == TypingTextResult.HANDLED
+        }
     }
 
     val canRequestContextualRanking: Boolean
@@ -283,7 +364,7 @@ class TypingSessionController internal constructor(
         return variants.takeIf { it.size in 2..8 }?.let { prefix to it }
     }
 
-    /** Diagnostic completion only: this controller never authorizes automatic replacement. */
+    /** Diagnostic completion; exhaustion still prohibits automatic replacement. */
     val candidateCompletion: CandidateCompletion?
         get() = candidateSelection?.completion
 
@@ -994,6 +1075,8 @@ class TypingSessionController internal constructor(
         val language: KeyboardLanguage)
 
     private class ModelRankingStamp(val token: ScoringToken, val selection: CandidateSelection)
+    private class SpaceCorrectionStamp(val ranking: ModelRankingStamp, val previous: ComposingSegment,
+        val start: Int, val contextBefore: String, var revisionAfterSpace: Long = -1)
     private class ContextualRankingStamp(val token: ScoringToken, val selection: CandidateSelection,
         val variants: List<ContextualPunctuationEngine.Variant>)
     private class ContextualSelection(val token: ScoringToken, val selection: CandidateSelection,

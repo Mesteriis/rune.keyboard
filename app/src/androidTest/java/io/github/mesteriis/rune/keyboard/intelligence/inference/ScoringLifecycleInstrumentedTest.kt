@@ -255,6 +255,22 @@ class ScoringLifecycleInstrumentedTest {
         }
     }
 
+    @Test fun ownerCanCertifyOnePostSpaceTokenWithoutAcceptingOtherOldRevisionReplies() = Fixture().use { f ->
+        ClientProbe(f.context).use { p ->
+            p.attach(10, true); p.awaitAvailable()
+            p.revision.set(2)
+            onMain { p.retainedSpaceToken = input(604, 10).token }
+            p.score(604)
+            assertEquals(604L, p.replies.poll(3, TimeUnit.SECONDS))
+            p.revisionReads.clear()
+            p.score(605)
+            f.await { it.lastId == 605L && it.active == 0 }
+            assertEquals(2L, p.revisionReads.poll(3, TimeUnit.SECONDS))
+            onMain { Unit }
+            assertTrue(p.replies.isEmpty())
+        }
+    }
+
     private class Fixture : AutoCloseable {
         val context = ApplicationProvider.getApplicationContext<Context>()
         val component = ComponentName(context, LifecycleModelInferenceService::class.java)
@@ -385,9 +401,12 @@ class ScoringLifecycleInstrumentedTest {
         val availability = LinkedBlockingQueue<Boolean>()
         val revision = AtomicLong(1)
         val revisionReads = LinkedBlockingQueue<Long>()
+        var retainedSpaceToken: ScoringToken? = null // Main owner only; no payload.
         private var session = 1L
         val client = onMain { BoundModelScoringClient(context, object : ModelScoringListener {
             override fun currentCompositionRevision(): Long = revision.get().also { revisionReads.add(it) }
+            override fun isCurrentRequest(token: ScoringToken): Boolean =
+                token.revision == currentCompositionRevision() || token == retainedSpaceToken
             override fun onReply(reply: ScoringReply) { replies.add(checkedId(reply)) }
             override fun onAvailabilityChanged(available: Boolean) { availability.add(available) }
         }) }

@@ -60,7 +60,7 @@ data class CandidateOwnerState(
             baseEligible && candidateStripEnabled && contextualPunctuationEnabled)
 }
 
-/** Main owner only; readiness never calls back, renders never submit, and no request survives a boundary. */
+/** Main owner only; readiness/renders never submit. A plain space may retain one owned model request. */
 class LocalCandidateCoordinator internal constructor(
     private val controller: TypingSessionController,
     private val lexicon: CandidateLexicon,
@@ -105,17 +105,19 @@ class LocalCandidateCoordinator internal constructor(
         }
 
     /** Wrap only actual typing commands. Their controller result decides whether admission is allowed. */
-    fun edit(action: () -> TypingTextResult): TypingTextResult {
+    fun edit(spaceCorrection: ((TypingEdit) -> Boolean)? = null, action: () -> TypingTextResult): TypingTextResult {
         checkOwner()
         if (closed) return action()
         // Retain the latest accepted decision until this action consumes its exact word.
-        // Cancel worker/callback ownership first, so late work cannot race a boundary commit.
+        // Cancel local work first. Only an explicitly marked Space may transfer one model
+        // request to a separately checked committed suffix after the edit succeeds.
         val owner = ownerState?.invoke()
-        cancelCandidates(clearAllowlist = owner?.canRequestCandidateWork != true)
+        val retainSpace = spaceCorrection != null && modelRanking != null
+        cancelCandidates(clearAllowlist = owner?.canRequestCandidateWork != true, cancelModel = !retainSpace)
         val editEpoch = epoch
         val session = controller.state.sessionId
         val revision = controller.state.revision
-        val result = action()
+        val result = if (retainSpace) modelRanking!!.editSpace(spaceCorrection!!, action) else action()
         if (!closed && epoch == editEpoch && controller.state.sessionId == session &&
             controller.state.revision != revision && result == TypingTextResult.HANDLED) {
             requestCurrentWord()
@@ -234,8 +236,8 @@ class LocalCandidateCoordinator internal constructor(
         }
     }
 
-    private fun cancelCandidates(clearAllowlist: Boolean) {
-        modelRanking?.cancel()
+    private fun cancelCandidates(clearAllowlist: Boolean, cancelModel: Boolean = true) {
+        if (cancelModel) modelRanking?.cancel()
         epoch++
         pending = null
         worker?.cancel()

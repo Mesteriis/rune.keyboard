@@ -69,9 +69,12 @@ class SmartTypingComposingInstrumentedTest : ImeTestBase() {
         driver.awaitFieldText(FIELD, "ab ")
         driver.tapDelete()
         driver.awaitFieldText(FIELD, "ab")
-        awaitStats { it["start"] == -1 && it["end"] == -1 }
+        // Deleting Rune's own space reopens the whole previous word without editor readback.
+        awaitStats { it["start"] == 0 && it["end"] == 2 }
         type("d")
         driver.awaitFieldText(FIELD, "abd")
+        awaitStats { it["start"] == 0 && it["end"] == 3 }
+        awaitOriginal("abd")
     }
 
     @Test

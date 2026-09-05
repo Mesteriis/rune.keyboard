@@ -304,7 +304,8 @@ class RuneInputMethodService : InputMethodService() {
         }
         val result = if (command is EditorCommand.CommitText || command == EditorCommand.DeletePreviousCodePoint ||
             command == EditorCommand.ConvertPrecedingSpaceToPeriod || command == EditorCommand.InsertNewline) {
-            candidates.edit {
+            candidates.edit(spaceCorrection = if (command is EditorCommand.CommitText && command.value == " ")
+                ::executeTypingEdit else null) {
                 when (command) {
                     is EditorCommand.CommitText -> typingSession.typeText(command.value, punctuation, beforeAction,
                         autocorrectionMode = settings.autocorrectionMode,

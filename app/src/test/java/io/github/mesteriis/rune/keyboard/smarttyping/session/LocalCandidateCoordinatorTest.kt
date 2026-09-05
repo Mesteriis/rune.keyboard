@@ -37,6 +37,92 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class LocalCandidateCoordinatorTest {
+    @Test fun `space flushes one pending pause and late model score corrects without another request`() {
+        Harness(withModel = true, modelOnly = true).use { h ->
+            h.owner = h.owner.copy(modelAutoReplaceQualified = true)
+            h.type("helos"); h.deliver()
+            assertTrue(h.model.requests.isEmpty())
+            h.space()
+            assertEquals("helos ", h.controller.state.contextText)
+            assertEquals(ModelCandidateCoordinator.SPACE_GRACE_MILLIS, h.pause.delay)
+            val input = h.model.requests.single()
+            assertTrue(h.model.listener.isCurrentRequest(input.token))
+            h.commands.clear(); h.model.reply(input, 1)
+            assertEquals("hellos ", h.controller.state.contextText)
+            assertNotNull(h.controller.state.lastAutoEdit)
+            assertEquals(1, h.commands.size); assertTrue(h.commands.single() is TypingEdit.Batch)
+            assertEquals(1, h.model.requests.size); assertNull(h.pause.task)
+            h.coordinator.edit { h.controller.deletePrevious(h.execute) }
+            assertEquals("helos", h.controller.state.contextText)
+            assertTrue(h.controller.state.originalSelected)
+        }
+    }
+
+    @Test fun `space preserves in-flight work and next key cancels its ownership`() {
+        Harness(withModel = true, modelOnly = true).use { h ->
+            h.owner = h.owner.copy(modelAutoReplaceQualified = true)
+            h.type("helos"); h.deliver(); h.pause.fire()
+            val input = h.model.requests.single(); val cancels = h.model.cancels
+            h.space()
+            assertEquals(cancels, h.model.cancels)
+            assertEquals(1, h.model.requests.size)
+            h.type("w"); h.commands.clear(); h.model.reply(input, 1)
+            assertEquals(cancels + 1, h.model.cancels)
+            assertEquals("helos w", h.controller.state.contextText)
+            assertTrue(h.commands.isEmpty()); assertFalse(h.model.listener.isCurrentRequest(input.token))
+        }
+    }
+
+    @Test fun `space deadline rejects callback even when its expiry timer has not run`() {
+        for (fireTimer in listOf(false, true)) Harness(withModel = true, modelOnly = true).use { h ->
+            h.owner = h.owner.copy(modelAutoReplaceQualified = true)
+            h.type("helos"); h.deliver(); h.space()
+            val input = h.model.requests.single()
+            h.pause.now += ModelCandidateCoordinator.SPACE_GRACE_MILLIS
+            if (fireTimer) h.pause.fire()
+            h.commands.clear(); h.model.reply(input, 1)
+            assertEquals("helos ", h.controller.state.contextText)
+            assertTrue(h.commands.isEmpty()); assertFalse(h.controller.hasSpaceCorrection)
+            assertNull(h.pause.task)
+        }
+    }
+
+    @Test fun `OFF suggestions unqualified runtime and Original never admit post-space corrections`() {
+        for (change in listOf<(CandidateOwnerState) -> CandidateOwnerState>(
+            { it.copy(autocorrectionMode = AutocorrectionMode.OFF) },
+            { it.copy(autocorrectionMode = AutocorrectionMode.SUGGESTIONS) },
+            { it.copy(modelAutoReplaceQualified = false) }, { it.copy(modelRuntimeQualified = false) })) {
+            Harness(withModel = true, modelOnly = true).use { h ->
+                h.owner = h.owner.copy(modelAutoReplaceQualified = true)
+                h.type("helos"); h.deliver(); h.owner = change(h.owner); h.space()
+                assertTrue(h.model.requests.isEmpty()); assertFalse(h.controller.hasSpaceCorrection)
+            }
+        }
+        Harness(withModel = true, modelOnly = true).use { h ->
+            h.owner = h.owner.copy(modelAutoReplaceQualified = true)
+            h.type("helos"); h.deliver()
+            h.coordinator.selectCandidate(h.controller.originalCandidateId!!, h.execute)
+            h.space(); assertTrue(h.model.requests.isEmpty())
+        }
+    }
+
+    @Test fun `post-space policy privacy lifecycle and process loss discard reply`() {
+        for (invalidate in listOf<(Harness) -> Unit>(
+            { it.configure(AutocorrectionMode.OFF, true) },
+            { it.owner = it.owner.copy(language = KeyboardLanguage.RUSSIAN) },
+            { it.owner = it.owner.copy(editorAllowsSmartTyping = false) },
+            { it.owner = it.owner.copy(inputViewActive = false) },
+            { it.coordinator.invalidate() },
+            { it.model.listener.onAvailabilityChanged(false) })) Harness(withModel = true, modelOnly = true).use { h ->
+            h.owner = h.owner.copy(modelAutoReplaceQualified = true)
+            h.type("helos"); h.deliver(); h.space()
+            val input = h.model.requests.single()
+            invalidate(h); h.commands.clear(); h.model.reply(input, 1)
+            assertEquals("helos ", h.controller.state.contextText)
+            assertTrue(h.commands.isEmpty())
+        }
+    }
+
     @Test fun `boundary action consumes accepted decision after cancelling pending work`() {
         Harness(qualified = true).use { h ->
             h.type("helos"); h.deliver()
@@ -808,6 +894,8 @@ class LocalCandidateCoordinatorTest {
     private class Pause : ModelPauseScheduler {
         var task: Runnable? = null
         var delay = 0L
+        var now = 0L
+        override fun nowMillis() = now
         override fun postDelayed(task: Runnable, millis: Long) { check(this.task == null); this.task = task; delay = millis }
         override fun remove(task: Runnable) { if (this.task === task) this.task = null }
         fun fire() { val next = task; task = null; next?.run() }
@@ -817,17 +905,19 @@ class LocalCandidateCoordinatorTest {
         val requests = mutableListOf<ScoringInput>()
         val attachments = mutableListOf<Pair<Long?, Boolean>>()
         var closed = false
+        var cancels = 0
         override var available = true
         override fun attachSession(sessionId: Long?, effectiveAvailability: Boolean) { attachments += sessionId to effectiveAvailability }
         override fun score(input: ScoringInput) { requests += input }
-        override fun cancel() = Unit
+        override fun cancel() { cancels++ }
         override fun close() { closed = true }
         fun reply(input: ScoringInput, winner: Int) = listener.onReply(ScoringReply(input.token, ScoringCode.OK, 0,
             input.token.candidateIds.map { NumericScore(it, if (it == winner) -1.0 else -10.0, 1) }))
     }
 
-    private class Harness(ready: Boolean = true, withModel: Boolean = false, qualified: Boolean = false) : AutoCloseable {
-        val controller = TypingSessionController(jvmGraphemes, SpellingQualification { _, _ -> qualified })
+    private class Harness(ready: Boolean = true, withModel: Boolean = false, qualified: Boolean = false,
+        modelOnly: Boolean = false) : AutoCloseable {
+        val controller = TypingSessionController(jvmGraphemes, SpellingQualification { _, model -> qualified || modelOnly && model })
         val lexicon = FixtureLexicon()
         var ready = ready
         var routeRequests = 0
@@ -860,6 +950,10 @@ class LocalCandidateCoordinatorTest {
             if (next != owner) { owner = next; coordinator.invalidate() }
         }
         fun type(value: String) = coordinator.edit { controller.typeText(value, execute) }
+        fun space() = coordinator.edit(spaceCorrection = execute) {
+            controller.typeText(" ", MechanicalPunctuationPolicy(InputPolicy.NORMAL, EditorMode.TEXT, false, false, false),
+                KeyboardState(owner.language), autocorrectionMode = owner.autocorrectionMode, execute = execute)
+        }
         fun labels() = coordinator.viewState.candidates.map { it.text }
         fun awaitQueued() = eventually { queue.isNotEmpty() }
         fun drain() { while (true) (queue.poll() ?: return).run() }
