@@ -342,7 +342,7 @@ class TypingSessionControllerTest {
     }
 
     @Test
-    fun `backspace preserves boundary until word is empty then deletes pending space`() {
+    fun `backspace preserves boundary until word is empty then reopens complete owned word`() {
         start()
         controller.typeText("first", execute)
         controller.typeText(" ", execute)
@@ -351,10 +351,36 @@ class TypingSessionControllerTest {
         assertEquals(ComposingSegment(" ", ""), controller.state.composing)
         assertEquals("first ", controller.state.contextText)
         controller.deletePrevious(execute)
+        assertEquals(ComposingSegment("", "first"), controller.state.composing)
+        assertEquals("first", controller.state.contextText)
+        assertEquals(TypingTextResult.HANDLED, controller.deletePrevious(execute))
+        assertEquals("firs", controller.state.contextText)
+    }
+
+    @Test
+    fun `pending space backspace reopens the whole previous word inside owned context`() {
+        start()
+        controller.typeText("hello", execute)
+        controller.typeText(" ", execute)
+        controller.typeText("first", execute)
+        controller.typeText(" ", execute)
+
+        assertEquals(TypingTextResult.HANDLED, controller.deletePrevious(execute))
+        assertEquals(ComposingSegment("", "first"), controller.state.composing)
+        assertEquals("hello first", controller.state.contextText)
+        val batch = edits.last() as TypingEdit.Batch
+        assertEquals(listOf(TypingEdit.SetComposingText(""), TypingEdit.SetComposingRegion(6, 11)), batch.edits)
+    }
+
+    @Test
+    fun `pending space does not claim a word whose left boundary predates Rune context`() {
+        start(100, 100)
+        controller.typeText("first", execute)
+        controller.typeText(" ", execute)
+
+        assertEquals(TypingTextResult.HANDLED, controller.deletePrevious(execute))
         assertNull(controller.state.composing)
         assertEquals("first", controller.state.contextText)
-        assertEquals(TypingTextResult.BYPASS, controller.deletePrevious(execute))
-        assertEquals("", controller.state.contextText)
     }
 
     @Test
@@ -473,7 +499,7 @@ class TypingSessionControllerTest {
     }
 
     @Test
-    fun `first backspace restores original boundary and second backspace deletes it`() {
+    fun `first backspace restores original boundary and second reopens its owned word`() {
         pendingSpace("word")
         controller.doubleSpace(execute)
         edits.clear()
@@ -487,8 +513,10 @@ class TypingSessionControllerTest {
 
         edits.clear()
         assertEquals(TypingTextResult.HANDLED, controller.deletePrevious(execute))
-        assertEquals(listOf(TypingEdit.SetComposingText(""), TypingEdit.FinishComposingText), edits)
+        val batch = edits.single() as TypingEdit.Batch
+        assertEquals(listOf(TypingEdit.SetComposingText(""), TypingEdit.SetComposingRegion(0, 4)), batch.edits)
         assertEquals("word", controller.state.contextText)
+        assertEquals(ComposingSegment("", "word"), controller.state.composing)
     }
 
     @Test

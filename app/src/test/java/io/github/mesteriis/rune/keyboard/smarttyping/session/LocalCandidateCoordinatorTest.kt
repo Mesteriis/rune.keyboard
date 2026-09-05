@@ -104,6 +104,25 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
+    @Test fun `backspace over pending space requests candidates for the complete reopened word`() {
+        Harness().use { h ->
+            h.type("hello"); h.deliver()
+            h.type(" ")
+            h.type("helo"); h.deliver()
+            h.type(" ")
+            val before = h.routeRequests
+
+            assertEquals(TypingTextResult.HANDLED,
+                h.coordinator.edit { h.controller.deletePrevious(h.execute) })
+            h.deliver()
+
+            assertEquals(ComposingSegment("", "helo"), h.controller.state.composing)
+            assertEquals("hello helo", h.controller.state.contextText)
+            assertEquals(before + 1, h.routeRequests)
+            assertEquals(listOf("helo", "help", "hello"), h.labels())
+        }
+    }
+
     @Test fun `failed bypass and empty edits cannot schedule candidates`() {
         Harness().use { h ->
             h.coordinator.edit { h.controller.typeText("helo") { false } }

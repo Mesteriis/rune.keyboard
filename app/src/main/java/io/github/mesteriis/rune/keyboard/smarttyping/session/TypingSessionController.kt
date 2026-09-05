@@ -470,6 +470,7 @@ class TypingSessionController internal constructor(
             awaitEditorSelection(execute)
             return TypingTextResult.BYPASS
         }
+        reopenPreviousOwnedWord(previous, execute)?.let { return it }
         val end = graphemes.boundaries(previous.text).dropLast(1).last()
         val shortened = previous.text.substring(0, end)
         val next = if (shortened.isEmpty()) null else ComposingSegment(
@@ -493,6 +494,44 @@ class TypingSessionController internal constructor(
         }
         if (result != TypingTextResult.HANDLED || next != null) return result
         return if (finishComposition(execute)) TypingTextResult.HANDLED else TypingTextResult.REJECTED
+    }
+
+    /**
+     * Deleting Rune's pending space can safely reopen the complete preceding Rune-owned word.
+     * This uses only the in-memory session suffix; it never reads or reconstructs editor text.
+     */
+    private fun reopenPreviousOwnedWord(
+        previous: ComposingSegment,
+        execute: (TypingEdit) -> Boolean,
+    ): TypingTextResult? {
+        if (previous.leadingBoundary != " " || previous.typedWord.isNotEmpty()) return null
+        val owned = context?.text ?: return null
+        if (!owned.endsWith(previous.text) || selectionStart != selectionEnd || composingStart < 0) return null
+        val withoutSpace = owned.dropLast(1)
+        var wordStart = withoutSpace.length
+        while (wordStart > 0) {
+            val codePoint = withoutSpace.codePointBefore(wordStart)
+            if (!isWordCodePoint(codePoint)) break
+            wordStart -= Character.charCount(codePoint)
+        }
+        if (wordStart == withoutSpace.length) return null
+        val absoluteEnd = selectionStart - 1
+        val absoluteStart = absoluteEnd - (withoutSpace.length - wordStart)
+        val hasOwnedBoundary = wordStart > 0 && withoutSpace[wordStart - 1].isWhitespace()
+        val startsDocument = wordStart == 0 && absoluteStart == 0
+        if (absoluteStart < 0 || (!hasOwnedBoundary && !startsDocument)) return null
+        val word = withoutSpace.substring(wordStart)
+        val expected = EditorSelection(absoluteEnd, absoluteEnd, absoluteStart, absoluteEnd)
+        return applyGuardedBatch(
+            listOf(TypingEdit.SetComposingText(""), TypingEdit.SetComposingRegion(absoluteStart, absoluteEnd)),
+            expected,
+            execute,
+        ) {
+            context!!.removeLastGrapheme()
+            composingStart = absoluteStart
+            state = state.copy(composing = ComposingSegment(typedWord = word), originalSelected = false)
+            publish()
+        }
     }
 
     /** Finishes only Rune's owned span; invalidates revisions even when already idle. */
