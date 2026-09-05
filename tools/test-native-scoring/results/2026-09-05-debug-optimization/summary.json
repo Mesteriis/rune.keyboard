@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "kind": "host_debug_compiler_diagnostic",
+  "model_sha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+  "script_sha256": "bd94189fa0629a1cc40f56f92d0bd78942132d8b956d8b3b745cf4e1f923cdd1",
+  "before": {
+    "binary_sha256": "2c18ecbf8916b50df357899a048972355aa1cb62ee86184f7ed1308942c3f412",
+    "commands_sha256": "0bbda9f500047bf588b467d97c4963fb9250157dccac5bdb84e191a4d63a0a84",
+    "translation_units": 218,
+    "optimization": "-O0",
+    "first_native_score_ms": 2076,
+    "warm_native_score_ms": [
+      1326,
+      1329,
+      1330
+    ],
+    "process_wall_ms": 8437.348,
+    "process_cpu_ms": 25276.601,
+    "scores": [
+      {
+        "id": 0,
+        "scoredTokenCount": 4,
+        "sumLogProbability": -24.27261239610561
+      },
+      {
+        "id": 1,
+        "scoredTokenCount": 2,
+        "sumLogProbability": -6.764318970839307
+      },
+      {
+        "id": 2,
+        "scoredTokenCount": 1,
+        "sumLogProbability": -9.729319756631742
+      },
+      {
+        "id": 3,
+        "scoredTokenCount": 2,
+        "sumLogProbability": -14.648820007853312
+      }
+    ]
+  },
+  "after": {
+    "binary_sha256": "52d659241fd9ed10ddd0e0ffebac9282d11d2b231f3b4d1be76f3659595ad409",
+    "commands_sha256": "3851cea2a5d195f443782ee5c2afc5f88a88dcb5514d135f8f0d7bff45824449",
+    "translation_units": 218,
+    "optimization": "-O2",
+    "first_native_score_ms": 115,
+    "warm_native_score_ms": [
+      58,
+      58,
+      58
+    ],
+    "process_wall_ms": 1344.01,
+    "process_cpu_ms": 1634.829,
+    "scores": [
+      {
+        "id": 0,
+        "scoredTokenCount": 4,
+        "sumLogProbability": -24.27261239610561
+      },
+      {
+        "id": 1,
+        "scoredTokenCount": 2,
+        "sumLogProbability": -6.764318970839307
+      },
+      {
+        "id": 2,
+        "scoredTokenCount": 1,
+        "sumLogProbability": -9.729319756631742
+      },
+      {
+        "id": 3,
+        "scoredTokenCount": 2,
+        "sumLogProbability": -14.648820007853312
+      }
+    ]
+  },
+  "maximum_sum_delta": 0.0,
+  "limitations": [
+    "Fixed order and one synthetic fixture; no percentile claim",
+    "Host CPU only; no Android, battery, or release acceptance",
+    "Native score excludes model/context construction; process totals include both",
+    "Digest verification warms filesystem before either run"
+  ]
+}

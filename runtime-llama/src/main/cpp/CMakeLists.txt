@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.31.6)
 project(rune_llama LANGUAGES C CXX)
 
+# The keyboard's debug APK is also used for real typing. Unoptimized ggml kernels
+# cost seconds and excessive CPU per word. Keep debug symbols/assertions, but
+# optimize the entire dependency tree, including C quantization kernels.
+add_compile_options("$<$<CONFIG:Debug>:-O2>"
+    "SHELL:-include \"${CMAKE_CURRENT_LIST_DIR}/RequireOptimization.h\"")
+
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 set(GGML_NATIVE OFF CACHE BOOL "" FORCE)
 set(GGML_OPENMP OFF CACHE BOOL "" FORCE)

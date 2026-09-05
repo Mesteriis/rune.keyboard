@@ -15,6 +15,13 @@ Both then run three separate admission/cancellation attempts and one recovery re
 
 `runeRuntimeTestBuildType` accepts only `debug` or `release` and defaults to `debug`. It selects the library's standard Android test build type; it does not change native flags. The benchmark reads its build variant from test manifest metadata populated by the same Gradle property, rather than trusting a runtime label argument. Debug native timing is diagnostic. Meaningful release baseline evidence requires a release test APK and byte-identical ARM64 native entries in the actual app release APK.
 
+Since the September 5 build-mode correction, Debug also uses `-O2` for all
+llama/ggml and JNI C/C++ files, with a forced compiler guard rejecting missing
+optimization or a trailing `-O0`. Debug retains assertions and symbols, so this
+does not replace release-native identity proof. Earlier Debug measurements used
+unoptimized kernels and cannot establish optimized product latency or energy.
+Host guard regression tests run in ordinary CI via `test_optimization_guard.py`.
+
 After review/integration, the release build command is:
 
 ```sh

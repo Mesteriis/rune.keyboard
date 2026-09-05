@@ -315,11 +315,11 @@ jlongArray native_score_candidates(JNIEnv * env, jobject, jlong handle, jbyteArr
     if (runtime->cancelled.load(std::memory_order_relaxed))
         return scoring_result(env, rune::scoring::failure_wire(9));
     if (!runtime->model) return scoring_result(env, rune::scoring::failure_wire(3));
+    const auto start = std::chrono::steady_clock::now();
     if (!runtime->scorer) {
         runtime->scorer = std::make_unique<rune::scoring::Scorer>(
             runtime->model.get(), runtime->cancelled);
     }
-    const auto start = std::chrono::steady_clock::now();
     const auto score = runtime->scorer->score(request);
     if (runtime->cancelled.load(std::memory_order_relaxed))
         return scoring_result(env, rune::scoring::failure_wire(9, milliseconds_since(start)));

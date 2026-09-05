@@ -1,0 +1,12 @@
+{
+  "base_commit": "254421f43d560ceef7b0fdda5f0ce557404f1759",
+  "upstream": "36b10154383b60eb15baac2c7a40d2a5f784faa7",
+  "files": {
+    "tools/eval/smart-typing-0.3/scoring.cpp": "f3e30db8fde25e9fd56ccc3743b70b9304d537b94b44b69e791acc969fc9ee09",
+    "tools/eval/smart-typing-0.3/scoring.h": "922cbb41d7293bb4b24e8a023f69e88250517ba19d5d783b328f150bcfb93d0b",
+    "tools/eval/smart-typing-0.3/score_main.cpp": "047fa457134d7051fa31ca9ccfd94eaf1cd3a3f575a724a9f48b97101de3eec1",
+    "tools/eval/smart-typing-0.3/CMakeLists.txt": "8e6b9ebc07f09c5c92aa0eb96ab1d0c5fdbf3a064a4f20b7f49e32e8d6b08f25",
+    "tools/test-native-scoring/compare_debug_optimization.py": "bd94189fa0629a1cc40f56f92d0bd78942132d8b956d8b3b745cf4e1f923cdd1"
+  },
+  "summary_sha256": "526edcf0ffe5347ff7a1cd4180b220c48b8037365ff6c131506d3b4df9c77daa"
+}

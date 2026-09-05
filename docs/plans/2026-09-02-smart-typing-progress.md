@@ -1,5 +1,17 @@
 # Rune Smart Typing 0.3 execution ledger
 
+- 2026-09-05 build-mode audit supersedes the model-unsuitability conclusions in
+  the two latency entries below: September 5 Fold samples used unoptimized Debug
+  kernels. The archived September 2 release-native baseline already measured
+  four-candidate p95 EN468/RU1076/ES767 ms on different fixtures. Debug now uses
+  guarded `-O2` throughout llama/ggml/JNI; native cold-score duration includes lazy
+  context construction, and instrumentation records public wall time/build mode.
+  Compilation inspected 215/215 optimized, guarded translation units in each of
+  Debug/RelWithDebInfo x arm64-v8a/x86_64. The activation stall's memory cause was
+  a hypothesis, and the batch/linear experiments do not isolate model architecture
+  suitability. Qualification stays closed pending current optimized physical
+  measurements; phone disconnected. See the corrected September 5 latency report.
+
 - 2026-09-05 latency gate follow-up: model load now defers persistent scoring-context allocation
   until the first score, so activation self-test does not hold two contexts. Candidate-lane batching
   reached host p95 66/70 ms on archived calibration/known holdout, but changed scalar scores and

@@ -1,5 +1,6 @@
 package io.github.mesteriis.rune.keyboard.intelligence.inference
 
+import android.content.pm.ApplicationInfo
 import android.os.Process
 import android.os.SystemClock
 import androidx.test.core.app.ApplicationProvider
@@ -29,7 +30,7 @@ class RealModelScoringInstrumentedTest {
         val explicitPath = InstrumentationRegistry.getArguments().getString("runeScoringModel")
         val model = if (explicitPath != null) {
             File(explicitPath).also {
-                assumeTrue(
+                assertTrue(
                     "Explicit Rune Text model is unavailable or has the wrong identity",
                     it.isFile && it.length() == MODEL_BYTES && it.sha256() == MODEL_SHA256,
                 )
@@ -61,23 +62,30 @@ class RealModelScoringInstrumentedTest {
                     ScoringCandidate(3, "тесть"),
                 ),
             )
+            val scoreWallStart = SystemClock.elapsedRealtime()
             val scoreCpuStart = Process.getElapsedCpuTime()
             val result = runtime.scoreCandidates(request)
             val scoreCpuMillis = Process.getElapsedCpuTime() - scoreCpuStart
+            val scoreWallMillis = SystemClock.elapsedRealtime() - scoreWallStart
             assertTrue("Candidate scoring failed: $result", result is CandidateScoringResult.Success)
             result as CandidateScoringResult.Success
             assertEquals(listOf(0, 1, 2, 3), result.scores.map { it.id })
+            val warmWallStart = SystemClock.elapsedRealtime()
             val warmCpuStart = Process.getElapsedCpuTime()
             val warm = runtime.scoreCandidates(request)
             val warmCpuMillis = Process.getElapsedCpuTime() - warmCpuStart
+            val warmWallMillis = SystemClock.elapsedRealtime() - warmWallStart
             assertTrue("Warm candidate scoring failed: $warm", warm is CandidateScoringResult.Success)
             warm as CandidateScoringResult.Success
             assertEquals(result.scores, warm.scores)
+            val debuggable = if (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0) 1 else 0
             println(
-                "RUNE_REAL_MODEL_METRICS loadNativeMillis=${(load as ModelLoadResult.Success).loadMillis} " +
+                "RUNE_REAL_MODEL_METRICS appDebuggable=$debuggable " +
+                    "loadNativeMillis=${(load as ModelLoadResult.Success).loadMillis} " +
                     "loadWallMillis=$loadWallMillis loadCpuMillis=$loadCpuMillis " +
-                    "scoreMillis=${result.durationMillis} scoreCpuMillis=$scoreCpuMillis " +
-                    "warmScoreMillis=${warm.durationMillis} warmScoreCpuMillis=$warmCpuMillis",
+                    "scoreMillis=${result.durationMillis} scoreWallMillis=$scoreWallMillis " +
+                    "scoreCpuMillis=$scoreCpuMillis warmScoreMillis=${warm.durationMillis} " +
+                    "warmScoreWallMillis=$warmWallMillis warmScoreCpuMillis=$warmCpuMillis",
             )
         } finally {
             runtime.close()
