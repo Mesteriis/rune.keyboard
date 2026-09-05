@@ -1,0 +1,13 @@
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.RealModelTypingInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: test=installedModelCorrectsOnSpaceWithoutTapAndBackspaceRestoresOriginal
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.RealModelTypingInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: test=installedModelCorrectsOnSpaceWithoutTapAndBackspaceRestoresOriginal
+INSTRUMENTATION_STATUS_CODE: 0
+Time: 28,805
+OK (1 test)
+INSTRUMENTATION_CODE: -1

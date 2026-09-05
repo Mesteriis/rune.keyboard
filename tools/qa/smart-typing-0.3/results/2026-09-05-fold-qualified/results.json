@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "base_commit": "10e894e8dc9e7bc05e2bce0c826059ec6e53b3c9",
+  "device": "Fold / API36 / cover screen",
+  "composing": {
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 106.063,
+    "tested_apks": {
+      "app/build/outputs/apk/debug/app-debug.apk": "ad667cdc2b1e2372c905b2631f68a7fcf2e7229af4d8837abdf2eb120568f4a8",
+      "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "bb4d9665817f3468225e1d773231eb4a47d4fd28b5963e6fe5dfd13a96ee7398"
+    }
+  },
+  "real_service": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 136.014,
+    "first_bind_reply_ms": 746,
+    "warm_reply_ms": 211,
+    "duty_requests": 120,
+    "duty_ok": 13,
+    "duty_denied": 107,
+    "duty_elapsed_ms": 60000,
+    "duty_cpu_ms": 7850,
+    "idle_elapsed_ms": 65005,
+    "idle_cpu_ms": 70,
+    "rss_before_idle_bytes": 585707520,
+    "rss_at_50s_bytes": 585707520,
+    "rss_at_65s_bytes": 158789632
+  },
+  "real_typing": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 28.805,
+    "fixture": "public a helllo -> a hello -> Undo a helllo",
+    "readback_counters": 0
+  },
+  "prior_probe": {
+    "failed": 1,
+    "reason": "UNAVAILABLE after pause; foreground owner was not established; suspension cause was not instrumented"
+  },
+  "artifacts": {
+    "fold-real-duty-provenance.json": "3665ae49f57e8088a66ca696eada2ca82303c6a92683a13101294ded41680128",
+    "qualified-api37-isolated-full.log": "eb7868d24675b2b1df466f4a0adc81b15210f96978f17b84951761ae948d2428",
+    "qualified-api37-isolated-live.log": "abe49be29630a3c71c686b48928d40be9730f06f6567ecc0b6ce9b731bf44055",
+    "fold-real-typing-provenance.json": "7d432591bbbb7b547d7f34339739dfe8c4645d5bd849386e1a6ec3161fabbbb1",
+    "fold-real-typing-status.log": "e930a84a28fbde17394c679fc228c0276c2eaa305c34d7b18443b0f65f2ede5d",
+    "fold-optimized-real-duty-foreground-status.log": "4fb14a9e0e335a530d9ad12f993e40cc1b896759d6d633821b837557480ec89c",
+    "README.md": "3004765ed7f3ea20150c00c98e9d2df4fa8606bf1ab52afc8e4f4729ecc2b5f7",
+    "fold-optimized-real-duty-background-fail.log": "9ad2b4c3a985b0e32065d48bcd84eb328625f5b1d00e65d9cb782a3c20951b5e",
+    "qualified-release-native-proof.json": "171f9283c0f25e0a6a1f8d2157bc5a0d2a6d6fc25fd7e7e562ba5d32c215a48e",
+    "qualified-api26.log": "364a5b14a6d4f5a1f57117eb7770ab19b09eb6c8f97a73069077bddd89d9f618",
+    "fold-optimized-composing-status.log": "6d337a1b779a8f9736d885e8988402326dcb99ea3b8bb061d4a7835cb993b8f8",
+    "fold-real-duty-background-provenance.json": "d9afa5032eb69d0a74ca33506e5ea27de26626bac927068fb466adadd791a734",
+    "qualified-api37.log": "a261e3f04ddbfc7223f893f98e2044180685e9fbb94d67da3d0b59254ef4be1a",
+    "api37-first-empty-render.png": "4dd077e184f3b616b35b9e3ad9193d1a79357eba94efcd7761cba35652d08337"
+  },
+  "android_emulators": {
+    "26": {
+      "started": 52,
+      "passed": 52,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_seconds": 207.509,
+      "log_sha256": "364a5b14a6d4f5a1f57117eb7770ab19b09eb6c8f97a73069077bddd89d9f618"
+    },
+    "37_first": {
+      "started": 52,
+      "passed": 50,
+      "failed": 2,
+      "skipped": 0,
+      "elapsed_seconds": 399.527,
+      "log_sha256": "a261e3f04ddbfc7223f893f98e2044180685e9fbb94d67da3d0b59254ef4be1a"
+    },
+    "37_isolated_live": {
+      "started": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_seconds": 57.358,
+      "log_sha256": "abe49be29630a3c71c686b48928d40be9730f06f6567ecc0b6ce9b731bf44055"
+    },
+    "37_isolated_full": {
+      "started": 52,
+      "passed": 52,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_seconds": 198.004,
+      "log_sha256": "eb7868d24675b2b1df466f4a0adc81b15210f96978f17b84951761ae948d2428"
+    }
+  },
+  "android_emulators_note": "Same final installed APKs. Initial concurrent-AVD API37 run failed two live fixtures with empty editor/no commands and a blank screenshot despite a populated accessibility tree. After restarting only the dedicated API37 emulator, isolated live4 and complete52 passed unchanged. Cause unproven; original failure retained.",
+  "system_ui_final": {
+    "rune_enabled": true,
+    "rune_selected": true,
+    "onboarding_status_active": true
+  },
+  "final_gate_typing_apks_match_tested": true,
+  "local_gates": "PASS"
+}

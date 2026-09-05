@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "source_commit": "10e894e8dc9e7bc05e2bce0c826059ec6e53b3c9",
+  "device": "Fold / SM-F966B / API36",
+  "phone_profile_verified": true,
+  "model_sha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+  "source_files": {
+    "tools/test-native-scoring/runtime-benchmark/run.py": "4b81a7ee18c54cf0f31d23cfe0dd78432f8e1a43f428808f78fdef1b1dbaa926",
+    "tools/test-native-scoring/runtime-benchmark/protocol.py": "48cd70b22669b030b1ee6d81731e5394a769fdfc23b404b00b7fb33e289b04b4",
+    "tools/test-native-scoring/runtime-benchmark/native_proof.py": "77a552e3227c5383326d5e6d7bd8798c59e2391953379b1238fc8e0add73e13a",
+    "runtime-llama/src/androidTest/java/io/github/mesteriis/rune/runtime/llama/LlamaRuntimeBenchmarkInstrumentedTest.kt": "9b6c85546e3bf262bd28ebec6b8de6bd510ead7e7d9f613b8ce5487177b6088d",
+    "runtime-llama/src/androidTest/java/io/github/mesteriis/rune/runtime/llama/RuntimeBenchmarkWorkload.kt": "bb2895a435862d34c1c34961ea20d82cccb23349953adcce61b3f185e6c4ae04",
+    "runtime-llama/src/main/cpp/CMakeLists.txt": "73bc5fae29ccf87a246308dd01ba793496c01fb23e03f7901539b08b634b7d85",
+    "runtime-llama/src/main/cpp/rune_llama_jni.cpp": "a407f02fbeb43ab482539a70fe99adffa13216c1831b1afbdce4924e85edb406",
+    "tools/eval/smart-typing-0.3/scoring.cpp": "f3e30db8fde25e9fd56ccc3743b70b9304d537b94b44b69e791acc969fc9ee09",
+    "tools/eval/smart-typing-0.3/scoring.h": "922cbb41d7293bb4b24e8a023f69e88250517ba19d5d783b328f150bcfb93d0b"
+  },
+  "artifacts": {
+    "fold-optimized-context-after.json": "4e62fea7a52b3e62a25f62f6f28344594e3a91ad6ab554f970254776afe08fad",
+    "fold-optimized-context-before.json": "fd408e205672da200d776ef55611d44615394a3dcae6776e3870a1edb17fa62d",
+    "fold-optimized-release-full-summary.json": "1216cca6a845d6e04d8d901ecb944c46d833c2f00699b2930863d8bc80f6c1f5",
+    "fold-optimized-release-full.csv": "1c36745e7915f38a9c824a09a6e0f5bf97158649aa3112808eaeaa1deebda596",
+    "fold-optimized-release-native-proof.json": "e78c2e03d40089f5904d62c99f42238b62f2e233da4a7713a1198e650d6fbd4b",
+    "fold-optimized-release-pilot-summary.json": "7c39ef954e657dbd234a28aa7cbb5dedd423bae90815c9c724496d9d0db3a43a",
+    "fold-optimized-release-pilot.csv": "f8592e648faa30a169e681347cc44bd949b79d20de5406e53ff6ce0f042e578a"
+  }
+}

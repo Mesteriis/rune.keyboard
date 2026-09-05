@@ -1,0 +1,6 @@
+{
+  "app/build/outputs/apk/debug/app-debug.apk": "ad667cdc2b1e2372c905b2631f68a7fcf2e7229af4d8837abdf2eb120568f4a8",
+  "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "8972eb117030a8a4c612f135778e2f3dea969d4088321c521d11ac7effe2967e",
+  "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/intelligence/inference/RealModelServiceInstrumentedTest.kt": "9d07b35594e89156f076d55df54d233a74acfa24b956b9e7265bba1b22f52ab9",
+  "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/intelligence/inference/RealModelScoringInstrumentedTest.kt": "4e374eaec4e415d9265b401ba615953dcdb0e8d3fbaff5c5231eacd5ec701b78"
+}

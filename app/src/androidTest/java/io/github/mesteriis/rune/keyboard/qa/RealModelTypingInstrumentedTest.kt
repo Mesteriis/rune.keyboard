@@ -1,0 +1,56 @@
+package io.github.mesteriis.rune.keyboard.qa
+
+import android.os.SystemClock
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.Until
+import io.github.mesteriis.rune.keyboard.R
+import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
+import io.github.mesteriis.rune.keyboard.settings.ContextualPunctuationMode
+import org.junit.Assert.*
+import org.junit.Assume.assumeTrue
+import org.junit.Test
+
+/** Optional installed-model flow; ordinary CI has no model and never enables this probe. */
+class RealModelTypingInstrumentedTest {
+    @Test fun installedModelCorrectsOnSpaceWithoutTapAndBackspaceRestoresOriginal() {
+        assumeTrue("Explicit installed-model typing probe only",
+            InstrumentationRegistry.getArguments().getString("runeRealTyping") == "true")
+        val driver = ImeTestDriver()
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        try {
+            driver.setUp()
+            driver.prepareLiveCorrection() // Establish the real lexicon using its existing public fixture.
+            driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+                mechanical = false, doubleSpace = false, contextual = ContextualPunctuationMode.OFF)
+            driver.launchComposingQa()
+            // The preceding preparation/settings transition spends real CPU. Let the existing
+            // budget refill without resetting it; this is a functional fixture, not a timing claim.
+            SystemClock.sleep(9_000)
+            driver.tapKey("a")
+            driver.tapKeyByDescription(context.getString(R.string.key_space))
+            for (key in listOf("h", "e", "l", "l", "l", "o")) driver.tapKey(key)
+            driver.awaitFieldText("qa_composing_text", "a helllo")
+            assertNotNull(driver.device.wait(Until.findObject(By.desc(
+                context.getString(R.string.candidate_correction, "hello"))), 5_000))
+            // Allow one normal typing pause to finish. Space itself must never wait for the model.
+            SystemClock.sleep(1_500)
+            driver.tapKeyByDescription(context.getString(R.string.key_space))
+            driver.awaitFieldText("qa_composing_text", "a hello ")
+            driver.tapDelete()
+            driver.awaitFieldText("qa_composing_text", "a helllo")
+            val original = driver.device.wait(Until.findObject(By.desc(
+                context.getString(R.string.candidate_original, "helllo"))), 5_000)
+            assertNotNull(original); assertTrue(original!!.isSelected)
+            val stats = driver.device.findObject(By.res(ImeTestDriver.PACKAGE_NAME, "qa_composing_stats"))
+                .text.orEmpty().split(' ').associate { field ->
+                    val (name, value) = field.split('='); name to value.toInt()
+                }
+            for (name in listOf("before", "after", "selected", "extracted", "surrounding", "snapshot")) {
+                assertEquals("Unexpected editor readback", 0, stats.getValue(name))
+            }
+        } finally {
+            driver.tearDown()
+        }
+    }
+}

@@ -1,5 +1,16 @@
 # Rune Smart Typing 0.3 execution ledger
 
+- 2026-09-05 phone reconnected: exact release-native full profile completed180
+  measured requests, with four-candidate p95 EN74.848/RU260.200/ES172.555 ms.
+  Production Binder/service completed13 of120 requests over60 s, denied107 and
+  used7.85 CPU-s; idle65 s used70 CPU-ms and released about407 MiB RSS. The
+  runtime gate reopens under unchanged CPU/cancellation limits. Real installed
+  IME/model/editor AutoReplace on Space and immediate Undo passed1/1; cover
+  composing passed15/15. Rune was enabled and selected through system UI after
+  restoring test preferences. Unplugged energy, inner-screen/rapid-typing/full
+  physical and external release gates remain open. Evidence:
+  `docs/acceptance/2026-09-05-smart-typing-0.3-fold-qualified.md`.
+
 - 2026-09-05 session-owned preparation: the first eligible Rune edit may start
   payload-free weight loading before lexicon readiness/scoring pause. Cancelling
   successive words no longer restarts that load. Session/model/memory/watchdog

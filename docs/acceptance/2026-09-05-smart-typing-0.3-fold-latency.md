@@ -32,10 +32,13 @@ compiler effect on the host, not a Fold speedup or percentile/battery acceptance
 Numeric results, source/binary identities and reproduction commands are retained
 in `tools/test-native-scoring/results/2026-09-05-debug-optimization/`.
 
-Latest physical activation, optimized cold/warm scores, CPU duty and full-word
-Backspace remain **UNRUN** while the phone is disconnected. Production runtime
-qualification remains closed pending those results. Neither changing the model
-nor retaining this model is justified by the faulty build comparison alone.
+Subsequent reconnection produced optimized physical cold/warm, service-duty and
+cover-screen Backspace/AutoReplace evidence. Runtime qualification now opens
+under the unchanged limits; see
+`docs/acceptance/2026-09-05-smart-typing-0.3-fold-qualified.md`. Full physical
+activation/release, inner-screen and unplugged energy acceptance remain separate.
+Neither changing the model nor retaining it was justified by the faulty
+unoptimized build comparison alone.
 
 ## Historical unoptimized Debug observations
 

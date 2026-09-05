@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.intelligence.inference
 
 import android.content.pm.ApplicationInfo
+import android.os.Bundle
 import android.os.Process
 import android.os.SystemClock
 import androidx.test.core.app.ApplicationProvider
@@ -31,8 +32,8 @@ class RealModelScoringInstrumentedTest {
         val model = if (explicitPath != null) {
             File(explicitPath).also {
                 assertTrue(
-                    "Explicit Rune Text model is unavailable or has the wrong identity",
-                    it.isFile && it.length() == MODEL_BYTES && it.sha256() == MODEL_SHA256,
+                    "Explicit Rune Text model is unavailable",
+                    it.isFile,
                 )
             }
         } else {
@@ -43,6 +44,9 @@ class RealModelScoringInstrumentedTest {
             assumeTrue("Exact Rune Text model is not installed", active?.descriptor?.sha256 == MODEL_SHA256)
             active!!.file
         }
+        // The active descriptor alone does not prove the bytes used by this device test.
+        assertEquals("Installed Rune Text size mismatch", MODEL_BYTES, model.length())
+        assertEquals("Installed Rune Text SHA-256 mismatch", MODEL_SHA256, model.sha256())
 
         val runtime = LlamaLocalModelRuntime()
         try {
@@ -79,6 +83,12 @@ class RealModelScoringInstrumentedTest {
             warm as CandidateScoringResult.Success
             assertEquals(result.scores, warm.scores)
             val debuggable = if (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0) 1 else 0
+            InstrumentationRegistry.getInstrumentation().sendStatus(0, Bundle().apply {
+                putInt("appDebuggable", debuggable)
+                putLong("loadWallMillis", loadWallMillis); putLong("loadCpuMillis", loadCpuMillis)
+                putLong("scoreWallMillis", scoreWallMillis); putLong("scoreCpuMillis", scoreCpuMillis)
+                putLong("warmScoreWallMillis", warmWallMillis); putLong("warmScoreCpuMillis", warmCpuMillis)
+            })
             println(
                 "RUNE_REAL_MODEL_METRICS appDebuggable=$debuggable " +
                     "loadNativeMillis=${(load as ModelLoadResult.Success).loadMillis} " +

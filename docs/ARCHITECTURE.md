@@ -129,6 +129,13 @@ Service. Единственная lease остаётся у worker до заве
 прогревом и score нет работы, watchdog timer не работает. Этот механизм не
 открывает `ModelRuntimeQualification` без физических измерений.
 
+После измерений 2026-09-05 qualified runtime для текущего Rune Text включён:
+release p95 четырёх вариантов EN75/RU260/ES173 ms; настоящий service из 120
+запросов за минуту выполнил 13 и отклонил 107, потратив 7,85 CPU-seconds.
+После idle unload освобождены страницы модели. Это квалификация runtime под
+существующим ограничителем, а не полная release/battery acceptance. Доказательства
+и оставшиеся границы: `docs/acceptance/2026-09-05-smart-typing-0.3-fold-qualified.md`.
+
 Critical/background/low-memory сначала блокируют новые admissions, затем
 отменяют работу и запрашивают выгрузку. Только последующий настоящий
 unbind/bind снимает блокировку, сохраняя долг; revision, submit и invalidation

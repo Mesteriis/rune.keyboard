@@ -1,0 +1,10 @@
+{
+  "level": 14,
+  "scale": 100,
+  "status": 2,
+  "temperature": 357,
+  "voltage": 3760,
+  "usb_powered": true,
+  "thermal_status": 1,
+  "rune_ime_selected": false
+}

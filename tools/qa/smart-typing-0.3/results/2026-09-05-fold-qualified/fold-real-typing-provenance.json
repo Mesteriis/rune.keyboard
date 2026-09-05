@@ -1,0 +1,6 @@
+{
+  "app/build/outputs/apk/debug/app-debug.apk": "f0e7bf73f396e3e750d38cc453417f902d5988a24188ef2c038f8ffa871254ab",
+  "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "fdb76fdfd40d53e87e0ae5870335e4d82e222d771447441f2c3211b4e425bd97",
+  "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt": "1ba91be06c6314f6d11a417dd1b72482a2ac1ae5bc3fe14beddaa86bbcd33c75",
+  "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/RealModelTypingInstrumentedTest.kt": "c38bec1a9c0ea2293c70693daa564cbe452dee3b2fc354fbdd4795b9e4a5bf3f"
+}
