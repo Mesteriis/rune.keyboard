@@ -24,8 +24,8 @@ struct Result { Error error = Error::None; std::vector<Score> scores; };
 
 Error validate_request(const Request & request) noexcept;
 
-// Non-owning model; its owner must outlive the scorer. Context and all request
-// tokens stay local to this object/call. Access must be serialized by the caller.
+// Non-owning model; its owner must outlive the scorer. A bounded common token
+// prefix and KV remain in this object between serialized calls; failures clear both.
 class Scorer {
 public:
     Scorer(llama_model * model, std::atomic_bool & cancelled);
@@ -38,6 +38,7 @@ private:
     const llama_vocab * vocab_;
     std::atomic_bool & cancelled_;
     std::unique_ptr<llama_context, ContextDeleter> context_;
+    std::vector<llama_token> cached_common_tokens_;
     std::vector<llama_token> tokenize(const std::string & text, size_t limit, bool bos);
 };
 

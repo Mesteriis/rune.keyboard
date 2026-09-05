@@ -87,9 +87,16 @@ struct Batch {
     Batch & operator=(const Batch &) = delete;
     Batch() = default;
 };
-struct ClearMemory {
+struct MemoryRetention {
     llama_context * context;
-    ~ClearMemory() { llama_memory_clear(llama_get_memory(context), true); }
+    std::vector<llama_token> & cached;
+    bool keep = false;
+    ~MemoryRetention() {
+        if (!keep) {
+            llama_memory_clear(llama_get_memory(context), true);
+            cached.clear();
+        }
+    }
 };
 }
 
@@ -101,8 +108,7 @@ Scorer::Scorer(llama_model * model, std::atomic_bool & cancelled)
     auto params = llama_context_default_params();
     params.n_ctx = 256;
     params.n_batch = 64;
-    // Reference evaluation uses one-token microbatches. On the pinned CPU
-    // backend, wider microbatches did not match the scalar logit oracle.
+    // Scalar microbatches preserve the calibrated token-at-a-time score contract.
     params.n_ubatch = 1;
     params.n_threads = params.n_threads_batch = 4;
     params.no_perf = true;
@@ -157,7 +163,7 @@ Result Scorer::score(const Request & request) {
     if (invalid != Error::None) return {invalid, {}};
     if (cancelled_) return {Error::Cancelled, {}};
     if (!context_) return {Error::ContextCreateFailed, {}};
-    ClearMemory clear{context_.get()};
+    MemoryRetention memory{context_.get(), cached_common_tokens_};
     try {
         tokenize(request.prefix, 192, false);
         std::vector<std::vector<llama_token>> alternatives;
@@ -182,43 +188,90 @@ Result Scorer::score(const Request & request) {
         Batch batch;
         if (!batch.value.token || !batch.value.pos || !batch.value.n_seq_id ||
             !batch.value.seq_id || !batch.value.logits) return {Error::ScoringFailed, {}};
+        // Reuse the common token prefix retained by the preceding successful
+        // request. Always replay its final token so current logits are available;
+        // extensions and Backspace rewinds only decode the changed suffix.
+        const auto & reference = alternatives.front();
+        size_t matched = 0;
+        while (matched < cached_common_tokens_.size() && matched < common &&
+            cached_common_tokens_[matched] == reference[matched]) ++matched;
+        size_t reusable = std::min(matched, common - 1);
+        if (reusable < cached_common_tokens_.size()) {
+            if (!llama_memory_seq_rm(llama_get_memory(context_.get()), 0,
+                    static_cast<llama_pos>(reusable), -1)) {
+                llama_memory_clear(llama_get_memory(context_.get()), true);
+                reusable = 0;
+            }
+            cached_common_tokens_.resize(reusable);
+        }
+
+        // Decode the remaining longest common token prefix once. The final common token's
+        // logits score each candidate's first divergent token; subsequent work
+        // starts at the divergent span and is removed before the next candidate.
+        const float * common_logits = nullptr;
+        for (size_t start = reusable; start < common; start += 64) {
+            const auto count = std::min<size_t>(64, common - start);
+            batch.value.n_tokens = static_cast<int32_t>(count);
+            for (size_t i = 0; i < count; ++i) {
+                const auto position = start + i;
+                batch.value.token[i] = reference[position];
+                batch.value.pos[i] = static_cast<llama_pos>(position);
+                batch.value.n_seq_id[i] = 1;
+                batch.value.seq_id[i][0] = 0;
+                batch.value.logits[i] = position + 1 == common;
+            }
+            if (cancelled_) return {Error::Cancelled, {}};
+            if (llama_decode(context_.get(), batch.value) != 0)
+                return {cancelled_ ? Error::Cancelled : Error::ScoringFailed, {}};
+            if (start + count == common) {
+                common_logits = llama_get_logits_ith(context_.get(), static_cast<int32_t>(count - 1));
+            }
+        }
+        if (!common_logits) return {Error::ScoringFailed, {}};
+        std::vector<double> first_log_probabilities;
+        first_log_probabilities.reserve(alternatives.size());
+        for (const auto & tokens : alternatives) {
+            first_log_probabilities.push_back(token_log_probability(
+                common_logits, vocabulary_size, static_cast<size_t>(tokens[common])));
+        }
+
         Result result;
         for (size_t candidate_index = 0; candidate_index < alternatives.size(); ++candidate_index) {
             if (cancelled_) return {Error::Cancelled, {}};
             const auto & tokens = alternatives[candidate_index];
-            Score score{request.candidates[candidate_index].id, 0, 0};
-            llama_memory_clear(llama_get_memory(context_.get()), true);
-            if (tokens.size() > common) {
-                // Each logit row at position p scores token p+1. Only divergent
-                // tokens contribute; prefix logits are neither read nor summed.
-                for (size_t start = 0; start + 1 < tokens.size(); start += 64) {
-                    const auto count = std::min<size_t>(64, tokens.size() - 1 - start);
-                    batch.value.n_tokens = static_cast<int32_t>(count);
-                    for (size_t i = 0; i < count; ++i) {
-                        const auto position = start + i;
-                        batch.value.token[i] = tokens[position];
-                        batch.value.pos[i] = static_cast<llama_pos>(position);
-                        batch.value.n_seq_id[i] = 1;
-                        batch.value.seq_id[i][0] = 0;
-                        batch.value.logits[i] = position + 1 >= common;
-                    }
+            Score score{request.candidates[candidate_index].id,
+                first_log_probabilities[candidate_index], 1};
+            // Each row at position p scores token p+1. Token `common` was scored
+            // from the shared row, so only positions common..size-2 remain.
+            for (size_t start = common; start + 1 < tokens.size(); start += 64) {
+                const auto count = std::min<size_t>(64, tokens.size() - 1 - start);
+                batch.value.n_tokens = static_cast<int32_t>(count);
+                for (size_t i = 0; i < count; ++i) {
+                    const auto position = start + i;
+                    batch.value.token[i] = tokens[position];
+                    batch.value.pos[i] = static_cast<llama_pos>(position);
+                    batch.value.n_seq_id[i] = 1;
+                    batch.value.seq_id[i][0] = 0;
+                    batch.value.logits[i] = true;
+                }
+                if (cancelled_) return {Error::Cancelled, {}};
+                if (llama_decode(context_.get(), batch.value) != 0)
+                    return {cancelled_ ? Error::Cancelled : Error::ScoringFailed, {}};
+                for (size_t i = 0; i < count; ++i) {
                     if (cancelled_) return {Error::Cancelled, {}};
-                    if (llama_decode(context_.get(), batch.value) != 0)
-                        return {cancelled_ ? Error::Cancelled : Error::ScoringFailed, {}};
-                    for (size_t i = 0; i < count; ++i) {
-                        if (cancelled_) return {Error::Cancelled, {}};
-                        if (!batch.value.logits[i]) continue;
-                        const auto next = tokens[start + i + 1];
-                        score.sum_log_probability += token_log_probability(
-                            llama_get_logits_ith(context_.get(), static_cast<int32_t>(i)),
-                            vocabulary_size, static_cast<size_t>(next));
-                        ++score.scored_token_count;
-                    }
+                    score.sum_log_probability += token_log_probability(
+                        llama_get_logits_ith(context_.get(), static_cast<int32_t>(i)), vocabulary_size,
+                        static_cast<size_t>(tokens[start + i + 1]));
+                    ++score.scored_token_count;
                 }
             }
             result.scores.push_back(score);
+            if (!llama_memory_seq_rm(llama_get_memory(context_.get()), 0,
+                    static_cast<llama_pos>(common), -1)) return {Error::ScoringFailed, {}};
         }
         if (cancelled_) return {Error::Cancelled, {}};
+        cached_common_tokens_.assign(reference.begin(), reference.begin() + static_cast<std::ptrdiff_t>(common));
+        memory.keep = true;
         return result;
     } catch (Error error) {
         return {error, {}};

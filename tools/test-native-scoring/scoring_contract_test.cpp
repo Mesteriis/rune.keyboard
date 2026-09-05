@@ -13,7 +13,7 @@ struct llama_vocab { bool bos = false; };
 struct llama_model { llama_vocab vocab; };
 struct llama_context { float logits[64][16]{}; };
 namespace {
-int tokenize_calls = 0, decode_calls = 0, clears = 0;
+int tokenize_calls = 0, decode_calls = 0, decoded_tokens = 0, clears = 0, suffix_removes = 0;
 int cancel_tokenize_call = 0, fail_decode_call = 0, cancel_decode_call = 0;
 bool nonfinite_logits = false;
 std::atomic_bool * cancellation = nullptr;
@@ -26,13 +26,19 @@ extern "C" {
 const llama_vocab * llama_model_get_vocab(const llama_model * model) { return &model->vocab; }
 llama_context_params llama_context_default_params() { return {}; }
 llama_context * llama_init_from_model(llama_model *, llama_context_params p) {
-    check(p.n_ctx == 256 && p.n_batch == 64 && p.n_ubatch == 1 && p.flash_attn_type == LLAMA_FLASH_ATTN_TYPE_DISABLED);
+    check(p.n_ctx == 256 && p.n_batch == 64 && p.n_ubatch == 1 &&
+        p.n_threads == 4 && p.n_threads_batch == 4 && p.flash_attn_type == LLAMA_FLASH_ATTN_TYPE_DISABLED);
     check(p.abort_callback && p.abort_callback_data && p.no_perf);
     return new llama_context;
 }
 void llama_free(llama_context * context) { delete context; }
 llama_memory_t llama_get_memory(const llama_context *) { return nullptr; }
 void llama_memory_clear(llama_memory_t, bool data) { check(data); ++clears; }
+bool llama_memory_seq_rm(llama_memory_t, llama_seq_id sequence, llama_pos start, llama_pos end) {
+    check(sequence == 0 && start >= 0 && start < 256 && end == -1);
+    ++suffix_removes;
+    return true;
+}
 bool llama_vocab_get_add_bos(const llama_vocab * vocab) { return vocab->bos; }
 llama_token llama_vocab_bos(const llama_vocab *) { return 15; }
 int32_t llama_vocab_n_tokens(const llama_vocab *) { return 16; }
@@ -64,6 +70,7 @@ void llama_batch_free(llama_batch b) {
 }
 int32_t llama_decode(llama_context * context, llama_batch b) {
     ++decode_calls;
+    decoded_tokens += b.n_tokens;
     if (decode_calls == fail_decode_call) return 1;
     if (decode_calls == cancel_decode_call) { cancellation->store(true); return 2; }
     for (int32_t row = 0; row < b.n_tokens; ++row) {
@@ -84,7 +91,7 @@ int main() try {
     Scorer scorer(&model, cancelled);
     Request valid{"ab", {{7, "cd"}, {9, "ef"}}};
     const auto first = scorer.score(valid);
-    check(first.error == Error::None && first.scores.size() == 2 && clears == 3);
+    check(first.error == Error::None && first.scores.size() == 2 && clears == 0 && suffix_removes == 2);
     for (size_t i = 0; i < first.scores.size(); ++i) {
         double oracle = 0;
         for (size_t pos = 2; pos < 4; ++pos) {
@@ -94,6 +101,10 @@ int main() try {
         }
         check(first.scores[i].scored_token_count == 2 && std::abs(first.scores[i].sum_log_probability - oracle) < 1e-12);
     }
+    const auto cold_decoded_tokens = decoded_tokens;
+    const auto warm = scorer.score(valid);
+    check(warm.error == Error::None && warm.scores[0].sum_log_probability == first.scores[0].sum_log_probability);
+    check(decoded_tokens - cold_decoded_tokens < cold_decoded_tokens);
     const auto wire = score_wire(first, valid, 3);
     check(wire.size() == 10 && wire[0] == 1 && wire[1] == 0 && wire[2] == 3 && wire[3] == 2);
     auto malformed = first; malformed.scores[1].scored_token_count = 0;
@@ -119,11 +130,11 @@ int main() try {
     check(scorer.score(valid).error == Error::None);
     // Abort during the second candidate after a complete first score. Discard
     // every score and clean the context before the same scorer is reused.
-    cancel_decode_call = decode_calls + 2;
+    cancel_decode_call = decode_calls + 3;
     const auto before_cancel_clears = clears;
     auto decode_stopped = scorer.score(valid);
     check(decode_stopped.error == Error::Cancelled && decode_stopped.scores.empty());
-    check(clears == before_cancel_clears + 3);
+    check(clears == before_cancel_clears + 1);
     cancelled = false; cancel_decode_call = 0;
     check(scorer.score(valid).error == Error::None);
     nonfinite_logits = true;

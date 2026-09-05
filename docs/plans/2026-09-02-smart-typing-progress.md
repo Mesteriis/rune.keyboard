@@ -1,5 +1,20 @@
 # Rune Smart Typing 0.3 execution ledger
 
+- 2026-09-05 physical Fold scoring: the original four-candidate path measured 13.621 s wall and
+  51.795 CPU-seconds. Shared-prefix scoring reduced this to 4.869 s / 18.569 CPU-seconds with exact
+  scalar-oracle equality; persistent context and cross-revision KV produced a 4.480 s warm result.
+  Eight threads regressed to 37.628 s and wide microbatching neither improved the warm result nor
+  preserved calibrated scores. The 3-second/8-CPU-second production duty stays closed: the current
+  0.6B GGUF is not an interactive AutoReplace runtime. Backspace over a pending Rune-owned space now
+  reopens and reranks the complete preceding owned word without editor readback.
+
+- 2026-09-05 Candidate-05 v4 product holdout: production width-three calibration scored
+  3,110/3,110 requests and froze the user-selected 95% configuration before holdout. Calibration
+  reached only EN129, RU253 and ES136 changes. The untouched product holdout scored 3,081/3,081:
+  EN117/127=92.13%, RU224/234=95.73%, ES133/141=94.33%, with 3/1/1 false changes per 1,000 and
+  original always available. Every language misses the required 300 replacements; EN and ES also
+  miss 95% precision. Overall **FAIL**; no holdout retuning, Candidate-05 publication or activation.
+
 - 2026-09-05 experimental model delivery: at the user's explicit direction, reproducible Rune Text
   0.1 GGUF `7a97111c…dd9c4` was published to Hugging Face repository `alexm37/rune-text-v1` at immutable
   commit `c057e37928624d3c3c4bd526d3515f7202395920`. Hub LFS metadata matches the local 396704416-byte

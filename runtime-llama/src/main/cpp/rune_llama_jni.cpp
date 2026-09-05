@@ -53,6 +53,9 @@ using SamplerPtr = std::unique_ptr<llama_sampler, SamplerDeleter>;
 struct Runtime {
     std::atomic_bool cancelled{false};
     ModelPtr model;
+    // Declared after the model so it is destroyed first. The scoring context is
+    // reused until unload instead of being rebuilt for every word.
+    std::unique_ptr<rune::scoring::Scorer> scorer;
 };
 
 std::once_flag backend_once;
@@ -214,6 +217,7 @@ jlongArray native_load(JNIEnv * env, jobject, jlong handle, jstring path) try {
     UtfChars raw_path{env, path, env->GetStringUTFChars(path, nullptr)};
     if (!raw_path.chars) return nullptr;
     std::string local_path(raw_path.chars);
+    runtime->scorer.reset();
     runtime->model.reset();
     if (runtime->cancelled.load(std::memory_order_relaxed)) return result(env, ErrorCode::Cancelled);
     llama_model_params params = llama_model_default_params();
@@ -232,6 +236,12 @@ jlongArray native_load(JNIEnv * env, jobject, jlong handle, jstring path) try {
         return result(env, ErrorCode::Cancelled);
     }
     if (!runtime->model) return result(env, ErrorCode::ModelLoadFailed);
+    try {
+        runtime->scorer = std::make_unique<rune::scoring::Scorer>(runtime->model.get(), runtime->cancelled);
+    } catch (...) {
+        runtime->model.reset();
+        return result(env, ErrorCode::InternalError);
+    }
     return result(env, ErrorCode::Ok, milliseconds_since(start));
 } catch (...) { return result(env, ErrorCode::InternalError); }
 
@@ -309,10 +319,9 @@ jlongArray native_score_candidates(JNIEnv * env, jobject, jlong handle, jbyteArr
     auto request = scoring_request(env, prefix, ids, continuations);
     if (runtime->cancelled.load(std::memory_order_relaxed))
         return scoring_result(env, rune::scoring::failure_wire(9));
-    if (!runtime->model) return scoring_result(env, rune::scoring::failure_wire(3));
+    if (!runtime->model || !runtime->scorer) return scoring_result(env, rune::scoring::failure_wire(3));
     const auto start = std::chrono::steady_clock::now();
-    rune::scoring::Scorer scorer(runtime->model.get(), runtime->cancelled);
-    const auto score = scorer.score(request);
+    const auto score = runtime->scorer->score(request);
     if (runtime->cancelled.load(std::memory_order_relaxed))
         return scoring_result(env, rune::scoring::failure_wire(9, milliseconds_since(start)));
     return scoring_result(env, rune::scoring::score_wire(score, request, milliseconds_since(start)));
@@ -333,6 +342,7 @@ void native_reset_cancellation(JNIEnv *, jobject, jlong handle) try {
 void native_unload(JNIEnv *, jobject, jlong handle) try {
     if (Runtime * runtime = from_handle(handle)) {
         runtime->cancelled.store(true, std::memory_order_relaxed);
+        runtime->scorer.reset();
         runtime->model.reset();
     }
 } catch (...) {  }
