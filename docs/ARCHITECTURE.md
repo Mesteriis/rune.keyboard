@@ -94,6 +94,16 @@ Binder не ставит cancel в очередь scoring. Idle unload прои�
 без работы; critical memory pressure, unbind и invalidation отменяют работу и
 запрашивают unload. Закрытие service не ждёт native teardown на main thread.
 
+Первый подходящий ввод Rune с cached Ready и qualified runtime подключает
+service ещё до готовности словаря/паузы scoring. Worker готовит только веса:
+`ScoringEngine.prepare` не получает текст, candidates или request. Отмена/замена
+слова освобождает pending payload, но не прерывает эту загрузку. Закрытие сессии,
+смена модели, memory pressure и watchdog отменяют подготовку и выгружают runtime.
+Успешная подготовка без scoring также выгружается после 60 секунд простоя;
+контекст llama по-прежнему создаётся лениво при первом score. Валидное слово не
+создаёт scoring demand и не разрывает уже подходящий binding. Render/Ready
+callbacks сами прогрев не запускают.
+
 `ProcessModelDuty` хранит числовой бюджет на время жизни процесса, отдельно от
 Service. Единственная lease остаётся у worker до завершения serial cleanup;
 новый Service не может параллельно войти в native runtime. Пересоздание Service
@@ -110,6 +120,14 @@ Service. Единственная lease остаётся у worker до заве
 бюджете. Это sampled cancellation policy: cooperative native cancellation
 может превысить бюджет, и этот расход остаётся долгом. Числа пока не являются
 измеренным батарейным бюджетом или release qualification.
+
+Подготовка весов и первый score делят один admission и исходный deadline
+3000 ms. Числовой reservation не содержит payload, не возвращает потраченный CPU
+и не продлевает deadline; после первого score либо истечения окна снова нужен
+обычный порог 7500 CPU-ms. Неудачная подготовка возвращает ожидающему запросу
+исходный числовой код и не перезапускает загрузку для того же слова. Пока между
+прогревом и score нет работы, watchdog timer не работает. Этот механизм не
+открывает `ModelRuntimeQualification` без физических измерений.
 
 Critical/background/low-memory сначала блокируют новые admissions, затем
 отменяют работу и запрашивают выгрузку. Только последующий настоящий
@@ -267,8 +285,9 @@ Typing-контроллер сохраняет Original и до семи пол�
 индекс кандидата и не меняет смысл при перестановке. Невидимый ID не допускается
 к выбору, даже если этот вариант остаётся в полном наборе.
 
-`ModelCandidateCoordinator` подключён к выходу local coordinator.
-Он использует cached eligibility/Ready, ждёт паузу 400 ms после принятого
+`ModelCandidateCoordinator` подключён к вводу и выходу local coordinator.
+Он использует cached eligibility/Ready для ранней подготовки весов без payload,
+ждёт паузу 400 ms после принятого
 словарного результата и отправляет полный набор только через `ModelScoringClient`.
 Таймер хранит числовую identity и policy, а не текст. Snapshot собирается в момент
 отправки из Rune-owned context; prefix исключает текущее typedWord, но включает

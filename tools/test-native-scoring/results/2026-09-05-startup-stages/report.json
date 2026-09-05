@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "base_commit": "09e904cd0ab9308e687f2323cc2898bb5bea9b81",
+  "model_sha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+  "model_bytes": 396704416,
+  "host": "macOS arm64",
+  "build_type": "Release",
+  "cxx_flags": "-O3 -DNDEBUG -std=gnu++17 -Wall -Wextra -Werror",
+  "cpu_threads": 4,
+  "metal": false,
+  "openmp": false,
+  "accelerate": true,
+  "blas": true,
+  "kleidiai": false,
+  "filesystem_cache": "warm after exact digest verification",
+  "exit_code": 0,
+  "stderr_bytes": 0,
+  "score_calls": 12,
+  "candidates_per_call": 4,
+  "maximum_score_sum_delta": 0,
+  "native_contracts": {
+    "passed": 7,
+    "failed": 0,
+    "elapsed_seconds": 11.52,
+    "log_sha256": "16aa61e79601305cf0bdbd5fab672852b93dfdfe260c18951f15862f3fb07d70"
+  },
+  "stages": {
+    "backend_init": {
+      "samples": 1,
+      "wall_us": [
+        1252
+      ],
+      "cpu_us": [
+        1257
+      ]
+    },
+    "model_load": {
+      "samples": 3,
+      "wall_us": [
+        582624,
+        572012,
+        592790
+      ],
+      "cpu_us": [
+        580381,
+        563213,
+        581216
+      ]
+    },
+    "scorer_create": {
+      "samples": 3,
+      "wall_us": [
+        3906,
+        3794,
+        4116
+      ],
+      "cpu_us": [
+        3906,
+        3795,
+        4064
+      ]
+    },
+    "first_score": {
+      "samples": 3,
+      "wall_us": [
+        88082,
+        85069,
+        86991
+      ],
+      "cpu_us": [
+        320897,
+        309257,
+        315007
+      ]
+    },
+    "warm_score_1": {
+      "samples": 3,
+      "wall_us": [
+        54124,
+        57501,
+        54080
+      ],
+      "cpu_us": [
+        193442,
+        203625,
+        193396
+      ]
+    },
+    "warm_score_2": {
+      "samples": 3,
+      "wall_us": [
+        54655,
+        56373,
+        56266
+      ],
+      "cpu_us": [
+        195818,
+        200933,
+        200298
+      ]
+    },
+    "warm_score_3": {
+      "samples": 3,
+      "wall_us": [
+        54348,
+        56231,
+        55129
+      ],
+      "cpu_us": [
+        194051,
+        200604,
+        197308
+      ]
+    },
+    "scorer_free": {
+      "samples": 3,
+      "wall_us": [
+        1499,
+        1113,
+        559
+      ],
+      "cpu_us": [
+        1494,
+        1091,
+        559
+      ]
+    },
+    "model_free": {
+      "samples": 3,
+      "wall_us": [
+        14042,
+        15739,
+        15027
+      ],
+      "cpu_us": [
+        14011,
+        15615,
+        14683
+      ]
+    },
+    "backend_free": {
+      "samples": 1,
+      "wall_us": [
+        26
+      ],
+      "cpu_us": [
+        26
+      ]
+    }
+  },
+  "files": {
+    "tools/test-native-scoring/startup_benchmark.cpp": "22938dd11b7b269c6e13e8d91ca12aec3e61ff989488612e477a6e651cbb306c",
+    "tools/test-native-scoring/CMakeLists.txt": "a669800413c747150fa5927acb11db522e77006eb97d5f1fc1efaf63fd4093a8",
+    "tools/test-native-scoring/RunModelTest.cmake": "dd354326e53a5379e810f5cb687f348c30662f86292e0273f51e828080a55738",
+    "tools/test-native-scoring/VerifyModel.cmake": "5136a17c7405101b9dcf3fd6637fca15251c83e52076efefeafc6cbe4164bfa0",
+    "tools/eval/smart-typing-0.3/scoring.cpp": "f3e30db8fde25e9fd56ccc3743b70b9304d537b94b44b69e791acc969fc9ee09",
+    "tools/eval/smart-typing-0.3/scoring.h": "922cbb41d7293bb4b24e8a023f69e88250517ba19d5d783b328f150bcfb93d0b",
+    "runtime-llama/src/main/cpp/patches/tokenizer-abort.patch": "0a043ce8a57b8534ef2f409443d2dd6ecf00042bd9c2b661b31d94618eb4dc95"
+  },
+  "binary_sha256": "443185da38a55338fe5e4631b3aad7f360bd7365cf4bcdab03fa5228ae9dea38",
+  "compile_commands_sha256": "0b30a9bbb4e8a17cb0f9c08a98ccd54f0367d2712645dbb61c2ecc0840dda420",
+  "stages_csv_sha256": "7291c55f86227678331cf3f617de903e02a4fbf929a2866e73eb8868ddcbd38f",
+  "native_provenance": {
+    "upstream": "36b10154383b60eb15baac2c7a40d2a5f784faa7",
+    "tokenizer_patch_sha256": "0a043ce8a57b8534ef2f409443d2dd6ecf00042bd9c2b661b31d94618eb4dc95"
+  }
+}

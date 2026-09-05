@@ -37,6 +37,33 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class LocalCandidateCoordinatorTest {
+    @Test fun `actual edit can prepare Ready model while the local lexicon is still loading`() {
+        Harness(ready = false, withModel = true).use { h ->
+            repeat(3) { h.coordinator.viewState }
+            assertTrue(h.model.attachments.isEmpty())
+            h.type("helo")
+            assertTrue(h.model.attachments.last().second)
+            assertTrue(h.model.requests.isEmpty()); assertNull(h.pause.task)
+            assertEquals(0, h.lexicon.exactCalls.get())
+            h.coordinator.invalidate()
+            assertFalse(h.model.attachments.last().second)
+        }
+    }
+
+    @Test fun `missing model readiness and inactive model functions never prepare on an edit`() {
+        for (case in 0..3) Harness(ready = false, withModel = true).use { h ->
+            when (case) {
+                0 -> h.modelReady = false
+                1 -> h.owner = h.owner.copy(modelRuntimeQualified = false)
+                2 -> h.owner = h.owner.copy(editorAllowsSmartTyping = false)
+                else -> h.owner = h.owner.copy(autocorrectionMode = AutocorrectionMode.OFF)
+            }
+            h.type("helo")
+            assertTrue(h.model.attachments.none { it.second })
+            assertTrue(h.model.requests.isEmpty())
+        }
+    }
+
     @Test fun `space flushes one pending pause and late model score corrects without another request`() {
         Harness(withModel = true, modelOnly = true).use { h ->
             h.owner = h.owner.copy(modelAutoReplaceQualified = true)
@@ -764,10 +791,11 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
-    @Test fun `valid word has no model demand and close retires delayed work`() {
+    @Test fun `valid word does not score or discard the prepared binding and close retires delayed work`() {
         Harness(withModel = true).use { valid ->
             valid.type("hello"); valid.deliver()
-            assertTrue(valid.model.attachments.none { it.second })
+            assertTrue(valid.model.attachments.last().second)
+            assertTrue(valid.model.requests.isEmpty()); assertNull(valid.pause.task)
         }
         val h = Harness(withModel = true)
         h.type("helo"); h.deliver()

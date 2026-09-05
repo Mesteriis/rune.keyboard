@@ -128,7 +128,7 @@ class ModelDutyWorkerTest {
     @Test fun unloadEntryPrecedesDutyTimerRetirement() {
         val clock = DutyClock(); Probe(ModelDutyOwner(clock::sample)).use { p ->
             p.submit(1).awaitDone(); assertEquals(ScoringCode.OK, p.replies.take().code)
-            assertNotNull(p.scheduler.stops.poll(3, TimeUnit.SECONDS))
+            repeat(2) { assertNotNull(p.scheduler.stops.poll(3, TimeUnit.SECONDS)) } // preparation, then score
             p.engine.unloadRelease = CountDownLatch(1)
             p.worker.invalidate()
             p.engine.unloaded.awaitDone()

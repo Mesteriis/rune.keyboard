@@ -1,5 +1,15 @@
 # Rune Smart Typing 0.3 execution ledger
 
+- 2026-09-05 session-owned preparation: the first eligible Rune edit may start
+  payload-free weight loading before lexicon readiness/scoring pause. Cancelling
+  successive words no longer restarts that load. Session/model/memory/watchdog
+  invalidation still cancels and unloads; failed preparation preserves numeric
+  errors without retry. Preparation and first score share their original admission
+  and 3-second deadline without refunding CPU. JVM691/691 and API26/API37 each33/33
+  PASS; prescribed local gates PASS. Runtime qualification remains closed pending
+  physical optimized measurements. Acceptance:
+  `docs/acceptance/2026-09-05-smart-typing-0.3-model-preparation.md`.
+
 - 2026-09-05 Space completion: ordinary Space can retain one already-admitted
   spelling request for 250 ms, or flush its existing pause once, while committing
   immediately. Only the unchanged complete Rune-owned suffix may be corrected;

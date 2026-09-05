@@ -1,0 +1,22 @@
+Test project build/test-native-scoring-model
+    Start 1: scoring-contracts
+1/7 Test #1: scoring-contracts ................   Passed    0.00 sec
+    Start 2: scoring-math
+2/7 Test #2: scoring-math .....................   Passed    0.01 sec
+    Start 3: tokenizer-fixture
+3/7 Test #3: tokenizer-fixture ................   Passed    0.01 sec
+    Start 4: tokenizer-abort
+4/7 Test #4: tokenizer-abort ..................   Passed    0.24 sec
+    Start 5: scoring-model-oracle
+5/7 Test #5: scoring-model-oracle .............   Passed    7.16 sec
+    Start 6: tokenizer-model-equivalence
+6/7 Test #6: tokenizer-model-equivalence ......   Passed    1.65 sec
+    Start 7: tokenizer-model-abort
+7/7 Test #7: tokenizer-model-abort ............   Passed    2.43 sec
+
+100% tests passed out of 7
+
+Label Time Summary:
+exact-model    =  11.25 sec*proc (3 tests)
+
+Total Test time (real) =  11.52 sec

@@ -231,25 +231,51 @@ class ActiveModelLifecycleInstrumentedTest {
         assertEquals(1, f.runtime.loadedId.get())
     }
 
-    @Test fun cancellationDuringPartialLoadUnloadsAndNextRequestLoadsAfresh() = ModelFixture().use { f ->
+    @Test fun cancelledWordDuringPreparationReleasesPayloadAndNextWordSharesTheLoad() = ModelFixture().use { f ->
         f.activate(1)
         val blocked = f.runtime.blockNextLoad()
         val completed = f.score(90)
         assertTrue(blocked.entered.await(3, TimeUnit.SECONDS))
         assertEquals(-1, f.runtime.loadedId.get()) // synthetic partially allocated native state
         f.cancel(90)
-        blocked.release.countDown()
         assertTrue(completed.await(3, TimeUnit.SECONDS))
-        assertEquals(ScoringCode.CANCELLED, f.adapterCode(90))
+        assertFalse(f.hasAdapterCode(90)) // Pending word never reached the runtime adapter.
         assertTrue(f.replies.isEmpty())
-        assertEquals(0, f.runtime.loadedId.get())
-        assertEquals(0, f.runtime.loads.get())
-        assertEquals(1, f.runtime.unloads.get())
+        assertEquals(1L, f.runtime.cancelled.count)
         assertEquals(0, f.runtime.scoreCalls.get())
-        assertTrue(f.score(91).await(3, TimeUnit.SECONDS))
+        val next = f.score(91)
+        blocked.release.countDown()
+        assertTrue(next.await(3, TimeUnit.SECONDS))
         assertEquals(ScoringCode.OK, f.reply(91).code)
+        assertEquals(1, f.runtime.loadCalls.get())
+        assertEquals(1, f.runtime.loads.get())
+        assertEquals(0, f.runtime.unloads.get())
+        assertEquals(1, f.runtime.scoreCalls.get())
+        assertEquals(1, f.runtime.loadedId.get())
+        assertEquals(0, f.runtime.orderViolations.get())
+    }
+
+    @Test fun sessionUnbindDuringPreparationCancelsPartialLoadAndRebindStartsFresh() = ModelFixture().use { f ->
+        f.activate(1)
+        val blocked = f.runtime.blockNextLoad()
+        f.bind()
+        assertTrue(blocked.entered.await(3, TimeUnit.SECONDS))
+        val completed = f.score(92)
+        f.unbind()
+        assertTrue(completed.await(3, TimeUnit.SECONDS))
+        assertEquals(0L, f.runtime.cancelled.count)
+        assertEquals(1L, blocked.release.count) // The control thread did not wait for load.
+        assertFalse(f.hasAdapterCode(92))
+        blocked.release.countDown()
+        assertTrue(f.runtime.firstUnload.await(3, TimeUnit.SECONDS))
+        f.bind()
+        assertTrue(f.score(93).await(3, TimeUnit.SECONDS))
+        assertEquals(ScoringCode.OK, f.reply(93).code)
         assertEquals(2, f.runtime.loadCalls.get())
         assertEquals(1, f.runtime.loads.get())
+        assertTrue(f.runtime.unloads.get() >= 1)
+        assertEquals(1, f.runtime.scoreCalls.get())
+        assertTrue(f.replies.isEmpty())
         assertEquals(0, f.runtime.orderViolations.get())
     }
 
@@ -368,7 +394,10 @@ class ActiveModelLifecycleInstrumentedTest {
             worker.submit(input(id), { replies.add(it) }, completed::countDown)
         }
         fun cancel(id: Long) = worker.cancel(1, id)
+        fun bind() = worker.onBind()
+        fun unbind() = worker.onUnbind()
         fun invalidate() = worker.invalidate()
+        fun hasAdapterCode(id: Long) = adapterCodes.containsKey(id)
         fun adapterCode(id: Long): Int = checkNotNull(adapterCodes[id]) { "adapter completion absent" }
         fun cancelledBeforeAdmission(id: Long) = engine.score(input(id), AtomicBoolean(true))
         fun reply(id: Long): ScoringReply {

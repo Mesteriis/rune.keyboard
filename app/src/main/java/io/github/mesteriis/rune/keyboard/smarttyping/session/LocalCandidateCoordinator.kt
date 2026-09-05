@@ -198,6 +198,7 @@ class LocalCandidateCoordinator internal constructor(
             invalidateLoads()
             return
         }
+        modelRanking?.prepareForEdit()
         val route = LanguageRouter.route(controller.state.composing!!.typedWord, owner.language)
         if (!requestRoute(route)) return
         // No worker is created until the complete route is ready; later Ready additions use its bridge.

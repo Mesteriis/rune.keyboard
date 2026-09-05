@@ -24,25 +24,39 @@ class ActiveModelScoringEngine(root: File, changed: () -> Unit,
     private val watch = ActiveModelWatch(root, changed)
     @Volatile private var runtime: LocalModelRuntime? = null
     private var loaded: ResolvedActiveModel? = null // serial worker only
+    /** Payload-free preparation belongs to the eligible binding, not an obsolete word revision. */
+    override fun prepare(cancelled: AtomicBoolean): ModelPreparation {
+        if (cancelled.get()) return ModelPreparation.Failure(ScoringCode.CANCELLED)
+        return try {
+            val ready = ensureLoaded(cancelled)
+            val code = if (cancelled.get()) ScoringCode.CANCELLED else ready
+            if (code == ScoringCode.OK) ModelPreparation.Ready
+            else { unload(); ModelPreparation.Failure(code) }
+        } catch (_: Exception) { unload(); ModelPreparation.Failure(ScoringCode.UNAVAILABLE) }
+        catch (_: LinkageError) { unload(); ModelPreparation.Failure(ScoringCode.UNAVAILABLE) }
+    }
+
+    private fun ensureLoaded(cancelled: AtomicBoolean): Int = gate.withReadLock {
+        val active = resolver.resolve() ?: return@withReadLock ScoringCode.NO_MODEL
+        if (loaded != active) {
+            unload()
+            if (!watch.start(active.directory)) return@withReadLock ScoringCode.UNAVAILABLE
+            if (cancelled.get()) return@withReadLock ScoringCode.CANCELLED
+            val native = runtime ?: createRuntime().also { runtime = it }
+            // Installation mutations cannot rename/remove the model during native load.
+            when (val result = native.load(active.file, cancelled::get)) {
+                is ModelLoadResult.Failure -> return@withReadLock result.code.stableCode
+                is ModelLoadResult.Success -> loaded = active
+            }
+        }
+        if (resolver.resolve() != loaded) ScoringCode.UNAVAILABLE else ScoringCode.OK
+    }
+
     override fun score(request: ScoringInput, cancelled: AtomicBoolean): ScoringReply {
         fun failure(code: Int) = ScoringReply(request.token, code, 0, emptyList())
         if (cancelled.get()) return failure(ScoringCode.CANCELLED)
         try {
-            val ready = gate.withReadLock {
-                val active = resolver.resolve() ?: return@withReadLock ScoringCode.NO_MODEL
-                if (loaded != active) {
-                    unload()
-                    if (!watch.start(active.directory)) return@withReadLock ScoringCode.UNAVAILABLE
-                    if (cancelled.get()) return@withReadLock ScoringCode.CANCELLED
-                    val native = runtime ?: createRuntime().also { runtime = it }
-                    // Installation mutations cannot rename/remove the model during native load.
-                    when (val result = native.load(active.file, cancelled::get)) {
-                        is ModelLoadResult.Failure -> return@withReadLock result.code.stableCode
-                        is ModelLoadResult.Success -> loaded = active
-                    }
-                }
-                if (resolver.resolve() != loaded) ScoringCode.UNAVAILABLE else ScoringCode.OK
-            }
+            val ready = ensureLoaded(cancelled)
             if (ready != ScoringCode.OK) { unload(); return failure(ready) }
             if (cancelled.get()) return failure(ScoringCode.CANCELLED)
             val result = runtime!!.scoreCandidates(CandidateScoringRequest(request.prefix,

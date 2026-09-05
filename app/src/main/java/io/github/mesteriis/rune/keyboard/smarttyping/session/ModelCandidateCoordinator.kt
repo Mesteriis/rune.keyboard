@@ -48,6 +48,14 @@ class ModelCandidateCoordinator(
     val modelReadinessHint: ModelReadinessHint
         get() { checkOwner(); return readiness.hint }
 
+    /** Actual eligible text edit only: overlap weight loading with typing/local lexicon loading. */
+    fun prepareForEdit() {
+        checkOwner()
+        if (closed) return
+        readiness.setActive(featureEligible())
+        client.attachSession(controller.state.sessionId, eligible())
+    }
+
     /** Called only after a newly accepted local candidate result, never by rendering/readiness. */
     fun candidatesChanged() {
         checkOwner()
@@ -56,8 +64,10 @@ class ModelCandidateCoordinator(
         val session = controller.state.sessionId
         val revision = controller.state.revision
         readiness.setActive(featureEligible())
-        val kind = requestKind() ?: run { client.attachSession(session, false); return }
         if (!eligible()) { client.attachSession(session, false); return }
+        // A valid word does not score, but must not abort payload-free weight loading for
+        // this still-eligible text session. Idle unload and session invalidation remain active.
+        val kind = requestKind() ?: return
         val owner = ownerState()
         client.attachSession(session, true)
         val scheduledEpoch = epoch

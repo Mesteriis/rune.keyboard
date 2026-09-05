@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "base_commit": "09e904cd0ab9308e687f2323cc2898bb5bea9b81",
+  "android": {
+    "26": {
+      "passed": 33,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_seconds": 9.945,
+      "source_log_sha256": "468b716f4364dcd388185d517435ee83f32391ad3ee48df7f631bcf2a3155300"
+    },
+    "37": {
+      "passed": 33,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_seconds": 10.186,
+      "source_log_sha256": "dd6f4ec57480133add0a0b770c90620a9ba1c332eb68cf0d9e395de271948597"
+    }
+  },
+  "tested_apks": {
+    "app/build/outputs/apk/debug/app-debug.apk": "ad667cdc2b1e2372c905b2631f68a7fcf2e7229af4d8837abdf2eb120568f4a8",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "bb4d9665817f3468225e1d773231eb4a47d4fd28b5963e6fe5dfd13a96ee7398"
+  },
+  "source_files": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ActiveModelLifecycleInstrumentedTest.kt": "7508085cb698a7dcd58196e576799b413dc8c63d77f3e74a65f5d5a652e4ce6b",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ActiveModelScoringEngine.kt": "cbff8c07e257528bcb061f335638444d6ccd95343ae81fd720da05bed96bed91",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/inference/LatestScoringWorker.kt": "cb9300674437bba8ef9612d593a9acd2863fc7dab9d077ecc280b7544a6be58e",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt": "1c13a0c8d533b43645cf317c0d9c77e018dc1c1f2eb4caf2982952dade4595cb",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelCandidateCoordinator.kt": "7dbe9dcffa893efbc15c74d5c36f9a02529ef4399fb16a0eefe0bb871bfcc9b6",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ModelDutyWorkerTest.kt": "bd31c7ee302819ae790c22d03e495678c185557dfbe347ac288358a79cbd66b3",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinatorTest.kt": "3164f401d4b2e4ae6dea9e7fcd375246eef552100de607af9a40d16f5f7e681c",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ModelPreparationWorkerTest.kt": "3fca5cefa50ff5e0fe483ef202c63ba43d1a3c8e31fa0831ec9c8474ab0c0dd6"
+  },
+  "integration_jvm": {
+    "tests": 691,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "prescribed_gradle_gates": "PASS"
+}
