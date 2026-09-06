@@ -1,0 +1,302 @@
+Reusing configuration cache.
+> Task :runtime-llama:generateReleaseAssets UP-TO-DATE
+> Task :runtime-llama:generateDebugAssets UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :runtime-llama:preBuild UP-TO-DATE
+> Task :app:generateReleaseAssets UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:generateProfileAssets UP-TO-DATE
+> Task :runtime-llama:preDebugBuild UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :runtime-llama:prepareLintJarForPublish UP-TO-DATE
+> Task :app:extractProguardFiles UP-TO-DATE
+> Task :app:forbiddenRuntimeDependencies
+> Task :runtime-llama:checkDebugAarMetadata UP-TO-DATE
+> Task :runtime-llama:generateDebugResources UP-TO-DATE
+> Task :runtime-llama:javaPreCompileDebug UP-TO-DATE
+> Task :runtime-llama:processDebugNavigationResources UP-TO-DATE
+> Task :runtime-llama:prepareDebugArtProfile UP-TO-DATE
+> Task :runtime-llama:writeDebugAarMetadata UP-TO-DATE
+> Task :runtime-llama:mergeDebugJniLibFolders UP-TO-DATE
+> Task :runtime-llama:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :runtime-llama:mergeDebugAssets UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:preDebugAndroidTestBuild SKIPPED
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :runtime-llama:writeDebugLintModelMetadata UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :runtime-llama:preDebugAndroidTestBuild UP-TO-DATE
+> Task :runtime-llama:preDebugUnitTestBuild UP-TO-DATE
+> Task :runtime-llama:extractProguardFiles UP-TO-DATE
+> Task :runtime-llama:packageDebugResources UP-TO-DATE
+> Task :runtime-llama:processDebugManifest UP-TO-DATE
+> Task :runtime-llama:mapDebugSourceSetPaths UP-TO-DATE
+> Task :runtime-llama:extractDeepLinksDebug UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:generateDebugGlobalSynthetics UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :runtime-llama:preReleaseBuild UP-TO-DATE
+> Task :runtime-llama:compileDebugLibraryResources UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :runtime-llama:parseDebugLocalResources UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:preReleaseBuild UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :runtime-llama:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :runtime-llama:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:checkReleaseDuplicateClasses UP-TO-DATE
+> Task :runtime-llama:javaPreCompileRelease UP-TO-DATE
+> Task :app:generateReleaseResources UP-TO-DATE
+> Task :runtime-llama:processReleaseNavigationResources UP-TO-DATE
+> Task :app:javaPreCompileRelease UP-TO-DATE
+> Task :runtime-llama:prepareReleaseArtProfile UP-TO-DATE
+> Task :runtime-llama:generateReleaseResources UP-TO-DATE
+> Task :runtime-llama:writeReleaseAarMetadata UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:processReleaseNavigationResources UP-TO-DATE
+> Task :app:mergeReleaseArtProfile UP-TO-DATE
+> Task :app:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :app:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :app:createReleaseCompatibleScreenManifests UP-TO-DATE
+> Task :app:packageReleaseResources UP-TO-DATE
+> Task :app:checkReleaseAarMetadata UP-TO-DATE
+> Task :runtime-llama:packageReleaseResources UP-TO-DATE
+> Task :app:extractDeepLinksRelease UP-TO-DATE
+> Task :runtime-llama:extractDeepLinksRelease UP-TO-DATE
+> Task :app:compileDebugAidl UP-TO-DATE
+> Task :runtime-llama:processReleaseManifest UP-TO-DATE
+> Task :app:compileReleaseAidl UP-TO-DATE
+> Task :app:parseReleaseLocalResources UP-TO-DATE
+> Task :app:compileReleaseNavigationResources UP-TO-DATE
+> Task :app:mergeReleaseStartupProfile UP-TO-DATE
+> Task :runtime-llama:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :runtime-llama:mergeReleaseAssets UP-TO-DATE
+> Task :app:mergeReleaseResources UP-TO-DATE
+> Task :runtime-llama:parseReleaseLocalResources UP-TO-DATE
+> Task :runtime-llama:compileReleaseLibraryResources UP-TO-DATE
+> Task :runtime-llama:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :runtime-llama:checkReleaseAarMetadata UP-TO-DATE
+> Task :app:processReleaseMainManifest UP-TO-DATE
+> Task :runtime-llama:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :app:writeReleaseAppMetadata UP-TO-DATE
+> Task :app:collectReleaseDependencies UP-TO-DATE
+> Task :app:generateReleaseRFile UP-TO-DATE
+> Task :app:writeReleaseSigningConfigVersions UP-TO-DATE
+> Task :app:preProfileBuild UP-TO-DATE
+> Task :app:processReleaseManifest UP-TO-DATE
+> Task :runtime-llama:generateReleaseRFile UP-TO-DATE
+> Task :app:sdkReleaseDependencyData UP-TO-DATE
+> Task :app:checkProfileDuplicateClasses UP-TO-DATE
+> Task :app:mergeReleaseAssets UP-TO-DATE
+> Task :app:mergeProfileJniLibFolders UP-TO-DATE
+> Task :app:processReleaseManifestForPackage UP-TO-DATE
+> Task :app:generateProfileResources UP-TO-DATE
+> Task :app:javaPreCompileProfile UP-TO-DATE
+> Task :app:processProfileNavigationResources UP-TO-DATE
+> Task :app:compileProfileAidl UP-TO-DATE
+> Task :app:extractReleaseVersionControlInfo
+> Task :runtime-llama:mergeReleaseResources UP-TO-DATE
+> Task :app:compressReleaseAssets UP-TO-DATE
+> Task :app:mergeProfileArtProfile UP-TO-DATE
+> Task :runtime-llama:configureCMakeDebug[x86_64]
+> Task :app:checkProfileAarMetadata UP-TO-DATE
+> Task :app:mapProfileSourceSetPaths UP-TO-DATE
+> Task :runtime-llama:compileDebugKotlin UP-TO-DATE
+> Task :app:packageProfileResources UP-TO-DATE
+> Task :app:extractDeepLinksProfile UP-TO-DATE
+> Task :runtime-llama:extractDebugAnnotations UP-TO-DATE
+> Task :app:mergeProfileResources UP-TO-DATE
+> Task :runtime-llama:verifyReleaseResources UP-TO-DATE
+> Task :app:processReleaseResources UP-TO-DATE
+> Task :app:createProfileCompatibleScreenManifests UP-TO-DATE
+> Task :app:compileProfileNavigationResources UP-TO-DATE
+> Task :app:mergeProfileStartupProfile UP-TO-DATE
+> Task :app:mergeProfileAssets UP-TO-DATE
+> Task :app:parseProfileLocalResources UP-TO-DATE
+> Task :runtime-llama:configureCMakeDebug[arm64-v8a]
+> Task :app:writeProfileAppMetadata UP-TO-DATE
+> Task :runtime-llama:compileDebugJavaWithJavac NO-SOURCE
+> Task :runtime-llama:processDebugJavaRes UP-TO-DATE
+> Task :app:validateSigningProfile UP-TO-DATE
+> Task :runtime-llama:extractReleaseAnnotations UP-TO-DATE
+> Task :app:processProfileMainManifest UP-TO-DATE
+> Task :app:compressProfileAssets UP-TO-DATE
+> Task :runtime-llama:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :runtime-llama:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :runtime-llama:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :app:extractProfileVersionControlInfo
+> Task :app:collectProfileDependencies UP-TO-DATE
+> Task :runtime-llama:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :runtime-llama:mergeDebugJavaResource UP-TO-DATE
+> Task :runtime-llama:configureCMakeRelWithDebInfo[x86_64]
+> Task :app:writeProfileSigningConfigVersions UP-TO-DATE
+> Task :runtime-llama:createFullJarDebug UP-TO-DATE
+> Task :app:processProfileManifest UP-TO-DATE
+> Task :runtime-llama:configureCMakeRelWithDebInfo[arm64-v8a]
+> Task :app:generateProfileRFile UP-TO-DATE
+> Task :runtime-llama:syncDebugLibJars UP-TO-DATE
+> Task :app:processProfileManifestForPackage UP-TO-DATE
+> Task :runtime-llama:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :app:sdkProfileDependencyData UP-TO-DATE
+> Task :runtime-llama:compileReleaseKotlin UP-TO-DATE
+> Task :runtime-llama:processReleaseJavaRes UP-TO-DATE
+> Task :app:processProfileResources UP-TO-DATE
+> Task :runtime-llama:compileReleaseJavaWithJavac NO-SOURCE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :runtime-llama:mergeReleaseJavaResource UP-TO-DATE
+> Task :runtime-llama:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :runtime-llama:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :runtime-llama:lintAnalyzeDebug UP-TO-DATE
+> Task :runtime-llama:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :runtime-llama:createFullJarRelease UP-TO-DATE
+> Task :runtime-llama:syncReleaseLibJars UP-TO-DATE
+> Task :runtime-llama:generateReleaseLintVitalModel UP-TO-DATE
+> Task :runtime-llama:generateReleaseLintModel UP-TO-DATE
+> Task :runtime-llama:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :runtime-llama:exportReleaseConsumerProguardFiles UP-TO-DATE
+> Task :runtime-llama:generateDebugLintModel
+> Task :runtime-llama:generateDebugLintReportModel
+> Task :runtime-llama:lintVitalAnalyzeRelease UP-TO-DATE
+> Task :runtime-llama:buildCMakeDebug[x86_64]
+> Task :app:compileDebugKotlin UP-TO-DATE
+> Task :app:compileReleaseKotlin UP-TO-DATE
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :app:processReleaseJavaRes UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:compileProfileKotlin UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:compileReleaseJavaWithJavac UP-TO-DATE
+> Task :app:mergeReleaseJavaResource UP-TO-DATE
+> Task :app:bundleDebugClassesToCompileJar UP-TO-DATE
+> Task :app:dexBuilderDebug UP-TO-DATE
+> Task :app:processProfileJavaRes UP-TO-DATE
+> Task :app:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :app:expandReleaseArtProfileWildcards UP-TO-DATE
+> Task :app:mergeProfileJavaResource UP-TO-DATE
+> Task :app:compileProfileJavaWithJavac UP-TO-DATE
+> Task :app:mergeProjectDexDebug UP-TO-DATE
+> Task :runtime-llama:buildCMakeRelWithDebInfo[arm64-v8a]
+> Task :app:generateReleaseLintVitalReportModel UP-TO-DATE
+> Task :app:expandProfileArtProfileWildcards UP-TO-DATE
+> Task :app:mergeProfileGeneratedProguardFiles UP-TO-DATE
+> Task :app:generateProfileLintVitalReportModel UP-TO-DATE
+> Task :app:minifyReleaseWithR8 UP-TO-DATE
+> Task :app:generateDebugLintReportModel
+> Task :app:convertShrunkResourcesToBinaryRelease UP-TO-DATE
+> Task :app:compileReleaseArtProfile UP-TO-DATE
+> Task :app:optimizeReleaseResources UP-TO-DATE
+> Task :app:minifyProfileWithR8 UP-TO-DATE
+> Task :app:convertShrunkResourcesToBinaryProfile UP-TO-DATE
+> Task :app:compileProfileArtProfile UP-TO-DATE
+> Task :app:optimizeProfileResources UP-TO-DATE
+> Task :runtime-llama:buildCMakeDebug[arm64-v8a]
+> Task :runtime-llama:mergeDebugNativeLibs UP-TO-DATE
+> Task :runtime-llama:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :runtime-llama:stripDebugDebugSymbols UP-TO-DATE
+> Task :runtime-llama:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :app:mergeDebugNativeLibs UP-TO-DATE
+> Task :runtime-llama:bundleDebugAar UP-TO-DATE
+> Task :runtime-llama:bundleDebugLocalLintAar UP-TO-DATE
+> Task :app:stripDebugDebugSymbols UP-TO-DATE
+> Task :runtime-llama:assembleDebug UP-TO-DATE
+> Task :app:packageDebug UP-TO-DATE
+> Task :app:assembleDebug UP-TO-DATE
+> Task :app:createDebugApkListingFileRedirect UP-TO-DATE
+> Task :app:generateDebugUnitTestLintModel UP-TO-DATE
+> Task :runtime-llama:buildCMakeRelWithDebInfo[x86_64]
+> Task :runtime-llama:mergeReleaseNativeLibs UP-TO-DATE
+> Task :runtime-llama:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :runtime-llama:stripReleaseDebugSymbols UP-TO-DATE
+> Task :runtime-llama:lintAnalyzeDebugUnitTest UP-TO-DATE
+> Task :runtime-llama:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :app:mergeReleaseNativeLibs UP-TO-DATE
+> Task :app:mergeProfileNativeLibs UP-TO-DATE
+> Task :app:lintAnalyzeDebugUnitTest UP-TO-DATE
+> Task :app:stripReleaseDebugSymbols UP-TO-DATE
+> Task :runtime-llama:bundleReleaseAar UP-TO-DATE
+> Task :runtime-llama:assembleRelease UP-TO-DATE
+> Task :runtime-llama:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :runtime-llama:generateDebugUnitTestLintModel
+> Task :app:stripProfileDebugSymbols UP-TO-DATE
+> Task :app:extractReleaseNativeSymbolTables UP-TO-DATE
+> Task :app:mergeReleaseNativeDebugMetadata NO-SOURCE
+> Task :app:extractProfileNativeSymbolTables UP-TO-DATE
+> Task :app:mergeProfileNativeDebugMetadata NO-SOURCE
+> Task :runtime-llama:lintAnalyzeDebugAndroidTest UP-TO-DATE
+> Task :app:lintVitalAnalyzeRelease UP-TO-DATE
+> Task :runtime-llama:generateDebugAndroidTestLintModel
+> Task :app:generateDebugAndroidTestLintModel
+> Task :app:lintVitalAnalyzeProfile UP-TO-DATE
+> Task :runtime-llama:lintReportDebug UP-TO-DATE
+> Task :app:lintVitalReportRelease SKIPPED
+> Task :app:lintVitalRelease SKIPPED
+> Task :app:lintVitalReportProfile SKIPPED
+> Task :app:lintVitalProfile SKIPPED
+> Task :runtime-llama:lintDebug
+> Task :runtime-llama:lint
+
+> Task :app:typingDiagnosticsBoundaryFixtures
+................................
+----------------------------------------------------------------------
+Ran 32 tests in 0.052s
+
+typing diagnostics packaging PASS: debug, 1 pre-R8 classes, 1 DEX classes
+OK
+typing diagnostics packaging PASS: release, 1 pre-R8 classes, 1 DEX classes
+typing diagnostics packaging PASS: profile, 1 pre-R8 classes, 1 DEX classes
+
+> Task :runtime-llama:nativeSymbolGate
+Native runtime gate passed for arm64-v8a and x86_64.
+
+> Task :app:packageRelease
+> Task :app:assembleRelease
+> Task :app:createReleaseApkListingFileRedirect UP-TO-DATE
+
+> Task :app:typingDiagnosticsPackagingDebug
+typing diagnostics packaging PASS: debug, 597 pre-R8 classes, 2727 DEX classes
+
+> Task :app:packageProfile
+> Task :app:assembleProfile
+> Task :app:createProfileApkListingFileRedirect UP-TO-DATE
+
+> Task :app:typingDiagnosticsPackagingRelease
+typing diagnostics packaging PASS: release, 548 pre-R8 classes, 482 DEX classes
+
+> Task :app:privacyGateRelease
+
+> Task :app:typingDiagnosticsPackagingProfile
+typing diagnostics packaging PASS: profile, 548 pre-R8 classes, 482 DEX classes
+
+> Task :app:privacyGateProfile
+
+> Task :app:imeIntelligenceBoundary
+boundary fixtures PASS: 17 negative, 6 positive
+scoring dependency boundary PASS: debug, release, profile
+
+> Task :app:lintAnalyzeDebugAndroidTest
+> Task :app:lintAnalyzeDebug
+> Task :app:lintReportDebug UP-TO-DATE
+> Task :app:lintDebug
+> Task :app:lint
+
+BUILD SUCCESSFUL in 7s
+240 actionable tasks: 31 executed, 209 up-to-date
+Configuration cache entry reused.

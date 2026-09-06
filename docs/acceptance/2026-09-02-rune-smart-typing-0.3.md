@@ -177,9 +177,9 @@ allows one still-owned spelling result for250ms after ordinary Space; a blanket
 | 16 | Email/URL/number/phone/date-time never corrected | Five explicit NonNormalEditor mode tests pass both full152 runs, with normal correction positive controls, exact prefixes and zero Smart Typing/read activity |
 | 17 | TYPE_NULL raw behavior | New raw fixture passes API26/API37: balanced down/up, exact Delete, no composing/strip/readback |
 | 18 | Model kill preserves text and fallback | Live fake real-Binder process death/reconnect test passes both full152 runs; unchanged text/keys, no replay, subsequent typing works |
-| 19 | Late results after Space |250ms owner-certified service/controller tests pass; held reply after actual Space plus allowed/expired/invalidated outcome on real editor Binder remains missing |
+| 19 | Late results after Space |250ms owner-certified service/controller tests pass; actual Space then expired held numeric reply PASS both APIs with exact Original/boundary and unchanged editor/strip. Allowed within-grace and next-text-invalidated combined cases remain missing |
 | 20 | Late result after editor change | Client generation/cancellation and live field invalidation pass separately; held remote reply across actual field change with both editor/strip assertions remains missing |
-| 21 | Late result after language change | Live language preservation and callback rejection pass separately; held remote reply across actual language swipe remains missing |
+| 21 | Late result after language change | Held exact remote numeric reply across actual Russian language swipe PASS both APIs: old English text/span preserved/finished, unchanged editor commands and strip after release, no stale accepted callback, fresh Russian typing works |
 | 22 | Candidate update preserves key instances | Live/settings touch tests; inner Fold PASS |
 | 23 | Rapid typing loses/duplicates no characters |75-character bounded touch burst and exact deletion pass API26/API37; physical frame/event/energy measurements remain |
 | 24 | Held Backspace inside/outside composition | Focused4/4 PASS on each API: positive repeated deletion on unowned seeded text with cancel/detach; exact owned prefix/span/caret and command counts with release/cancel; one hold consumes model Undo then deletes normally; no payload reads in owned paths. Bounded correctness, not physical performance |
@@ -194,6 +194,8 @@ ordinary-CI proofs do not substitute for physical Fold or arbitrary editor check
 
 Row24's subsequent four-test delta, exact sources/APK identities and complete logs
 are in `tools/qa/smart-typing-0.3/results/2026-09-06-held-delete/`.
+Rows19/21's live late-reply deltas, initial test-expectation failure and corrected
+focused runs are in `tools/qa/smart-typing-0.3/results/2026-09-06-live-late-replies/`.
 
 ## Physical and local receipts
 
