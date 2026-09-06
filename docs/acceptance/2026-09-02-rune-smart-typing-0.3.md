@@ -34,6 +34,8 @@ unclosed.
 | 9 Contextual punctuation | Fixed policy now has all1200 controller rows, exact source/cache/supplement bindings and179/179 explicit host selections; actual Kotlin parity79/79 | Source agreement is not semantic precision; physical strip tap remains separate |
 | 10 Settings/release | Schema3, independent preferences, content-free traces, local gates | Full matrices, current CI, complete reports, final version and main integration |
 
+The exact immutable model now has a fresh emulator public-runtime receipt: host native qualification passes7/7, and `LlamaRealModelInstrumentedTest` passes on API26 and API37 with the verified 396704416-byte digest. The receipt records numeric counters only and is intentionally limited to runtime correctness: [2026-09-06 emulator model runtime](2026-09-06-smart-typing-0.3-emulator-model-runtime.md).
+
 The user changed the spelling release target from99% to **95% point precision**.
 This is a corpus precision policy, not a per-word correctness probability. The
 historical September3 product model-assisted holdout records EN293/304=96.38%,
