@@ -1,0 +1,10 @@
+{
+  "tools/test-native-scoring/compare_debug_optimization.py": "bd94189fa0629a1cc40f56f92d0bd78942132d8b956d8b3b745cf4e1f923cdd1",
+  "tools/test-native-scoring/extract_model.py": "8dd8aa425d9fe4e0e1d290d8b6cdad39c285333a4c7b72a1bad1b650ef15b900",
+  "tools/test-native-scoring/runtime-benchmark/native_proof.py": "77a552e3227c5383326d5e6d7bd8798c59e2391953379b1238fc8e0add73e13a",
+  "tools/test-native-scoring/runtime-benchmark/protocol.py": "48cd70b22669b030b1ee6d81731e5394a769fdfc23b404b00b7fb33e289b04b4",
+  "tools/test-native-scoring/runtime-benchmark/run.py": "4b81a7ee18c54cf0f31d23cfe0dd78432f8e1a43f428808f78fdef1b1dbaa926",
+  "tools/test-native-scoring/runtime-benchmark/test_protocol.py": "a7187e70bab58fb2bb12b923098521bf3b4234650780c4207754fcf5f2e2ed9b",
+  "tools/test-native-scoring/test_extract_model.py": "5fe7c86b1c5d73f41431576c6a53fe4b9c5dd4c64eb9e8125c0f51b3be06f1db",
+  "tools/test-native-scoring/test_optimization_guard.py": "bbf71b32ee212e27ac84f50ae8d9236507e4b6e745acf425c085119ce10120e9"
+}

@@ -1,0 +1,29 @@
+{
+  "commit": "1a5826e12c6ecc036cc0e028c6c44cc927d8375e",
+  "sourceSha256": {
+    "runtime-llama/src/main/cpp/CMakeLists.txt": "73bc5fae29ccf87a246308dd01ba793496c01fb23e03f7901539b08b634b7d85",
+    "runtime-llama/src/main/cpp/PrepareLlamaSource.cmake": "ad080f49c8ed71437a9d552ef155945e9d6bbdbc1a9ef55298685e97ea71f7e9",
+    "runtime-llama/src/main/cpp/RequireOptimization.h": "322d2a7fd7b53771bcf098ff299b230235d8a0799f0500a11e9ad289b4cb1101",
+    "runtime-llama/src/main/cpp/candidate_score_wire.h": "5ad46ed98c4825969553b7abaa587ad37888b623b9af91d5ce49c02f813bbc32",
+    "runtime-llama/src/main/cpp/patches/tokenizer-abort.patch": "0a043ce8a57b8534ef2f409443d2dd6ecf00042bd9c2b661b31d94618eb4dc95",
+    "runtime-llama/src/main/cpp/rune_llama_jni.cpp": "a407f02fbeb43ab482539a70fe99adffa13216c1831b1afbdce4924e85edb406",
+    "tools/eval/smart-typing-0.3/CMakeLists.txt": "8e6b9ebc07f09c5c92aa0eb96ab1d0c5fdbf3a064a4f20b7f49e32e8d6b08f25",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-03-combined-calibration/zero-span-probe.cpp": "6d2f39c0ebdf4d8087cb9a5c3cc6ecdd4b6cd9f375c23b84e57d5d334396f48e",
+    "tools/eval/smart-typing-0.3/score_main.cpp": "047fa457134d7051fa31ca9ccfd94eaf1cd3a3f575a724a9f48b97101de3eec1",
+    "tools/eval/smart-typing-0.3/scoring.cpp": "f3e30db8fde25e9fd56ccc3743b70b9304d537b94b44b69e791acc969fc9ee09",
+    "tools/eval/smart-typing-0.3/scoring.h": "922cbb41d7293bb4b24e8a023f69e88250517ba19d5d783b328f150bcfb93d0b",
+    "tools/eval/smart-typing-0.3/scoring_math_test.cpp": "bc12b43d65d59c91e47693d5a55fd65750b73297d6092697063147135da40557",
+    "tools/eval/smart-typing-0.3/scoring_model_test.cpp": "e1058f25994a25211cce12ea94994d219ec08dc9194d896b5d860222abc61d1a",
+    "tools/test-native-scoring/CMakeLists.txt": "a669800413c747150fa5927acb11db522e77006eb97d5f1fc1efaf63fd4093a8",
+    "tools/test-native-scoring/RunModelTest.cmake": "dd354326e53a5379e810f5cb687f348c30662f86292e0273f51e828080a55738",
+    "tools/test-native-scoring/VerifyModel.cmake": "5136a17c7405101b9dcf3fd6637fca15251c83e52076efefeafc6cbe4164bfa0",
+    "tools/test-native-scoring/make_tokenizer_fixture.cpp": "6c26006920766021b5191a7c965edf90dc3c9cd773d1fd6fcdd2c35c2a09ed3c",
+    "tools/test-native-scoring/scoring_contract_test.cpp": "8bbdfe6d8c1c7767f43352e0ec06ba24233b7a0d8df6c1360164cb9d7d503a31",
+    "tools/test-native-scoring/startup_benchmark.cpp": "22938dd11b7b269c6e13e8d91ca12aec3e61ff989488612e477a6e651cbb306c",
+    "tools/test-native-scoring/token_dump.cpp": "635fe334cc74dbb1d1a004e3dc265c07951738b3f2e2d0800eaf87e713afdc32",
+    "tools/test-native-scoring/tokenizer_abort_test.cpp": "f8caf80c6e70495b3abf0781f68c428af32f940345c9663d0823cee3f0b9bb3e"
+  },
+  "upstream": "36b10154383b60eb15baac2c7a40d2a5f784faa7",
+  "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+  "scope": "Fresh Release native contracts, exact model scalar oracle, tokenizer equivalence and inside-loop abort; no typing quality or device performance claim"
+}

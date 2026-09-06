@@ -1,0 +1,10 @@
+{
+  "base": "1a5826e12c6ecc036cc0e028c6c44cc927d8375e",
+  "sha256": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveFakeModelBinderInstrumentedTest.kt": "638e1ba5728cdc42055058632d29eb1cdb0d93384fb0e6915742b122709f59ef",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveCandidatesInstrumentedTest.kt": "3653c91ce624171952e071508e8533cca6197faa6d42a291979f1f2fc3082e46",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "c163682c2b9182e8ea24d9a224f49e67370934e1f6e4e5e2d2f6bba7c2c59987",
+    "app/build/outputs/apk/debug/app-debug.apk": "6a7d0d179b5c0446d88991cb14359ca63f97ce570e1ec09e2692667399f721e1"
+  },
+  "scope": "Exact next Backspace after automatic spelling/canonical Undo on real editor Binder; no model-quality or physical-phone claim"
+}

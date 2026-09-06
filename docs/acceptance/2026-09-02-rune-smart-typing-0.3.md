@@ -15,7 +15,7 @@ copies and do not change the gitlink.
 | Plan slice | Current evidence | Remaining acceptance |
 | --- | --- | --- |
 | 1 Evaluation | Frozen prepared and product corpora; current controller reproduction completed5956 responses and24000 observations; state-based Original annotation reviewed | Contextual controller attribution; historical failures stay immutable |
-| 2 Native scoring | Bounded numeric API, tokenizer cancellation, exception guards, exact scalar-oracle checks | Final-head native/Android verification |
+| 2 Native scoring | Fresh current-source host7/7 PASS, including exact model oracle/equivalence/abort; ordinary Android JNI6/6 on each API with source/APK continuity | Physical runtime/energy acceptance is separate |
 | 3 Private process | Production Binder worker, preparation, cancellation, CPU duty and idle unload verified on Fold | Complete editor/process-death matrix and energy |
 | 4 Composition | Owned RAM context, invalidation, full-word Backspace reopening, no replay/readback | Physical folding transition and full editor matrix |
 | 5 Strip and Undo | Stable keys, explicit Original and single owned correction transaction | Complete final-head physical/accessibility matrix |
@@ -27,7 +27,7 @@ copies and do not change the gitlink.
 
 The user changed the spelling release target from99% to **95% point precision**.
 This is a corpus precision policy, not a per-word correctness probability. The
-unchanged frozen product model-assisted holdout records EN293/304=96.38%,
+historical September3 product model-assisted holdout records EN293/304=96.38%,
 RU342/359=95.26% and ES396/408=97.06%; false changes are0/1000,1/1000,0/1000.
 All candidate sets retained Original. Counts, coverage, candidate recall and
 Wilson95% intervals remain in the [original product report](2026-09-03-smart-typing-0.3-product-spelling-holdout.md)
@@ -57,15 +57,24 @@ have exact Undo. The ES canonical-case error and RU spelling false change remain
 visible. See `tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-command-dot-safety/`.
 This is still revealed-data development evidence; historical failures remain intact.
 
-The final fixed-policy reproduction must include all current controller payloads:
-the command-dot run refused33 differing fragment requests instead of borrowing
-incompatible scores. Diagnostics hooks also changed the bound controller source.
-A fresh model-free12000-row export is under protocol review; no final-replay model
-call has run. Complete ready/unavailable controller outcomes, unchanged coefficients,
-full denominators and integer point95/volume/false-change gates are required.
-This is explicitly reproduction on revealed rows, not unseen generalization. The
-user did not require a new corpus after every safety fix; changing model/coefficients
-or selecting another policy from revealed outcomes would require a new protocol.
+The final fixed-policy reproduction is now complete and committed in `1a5826e`.
+It includes the current controller payloads, including33 fragment requests that
+the older command-dot run correctly refused. All2983 calibration and2973 holdout
+requests have exact retained responses;9/14 native errors remain explicit, with
+zero retries, missing responses or payload refusals. All24000 observations across
+both splits and ready/unavailable modes are retained. The current holdout ordinary
+spelling counts are EN293/304=96.3816%, RU341/358=95.2514%, ES396/408=97.0588%.
+Integer point95, volume300, aggregate false changes0/1/0 per1000 and exact immediate
+restoration6000/6000 pass. All5703 owned candidate sets contain Original;297
+no-word states preserve text and have no stale candidates. The frozen stricter
+all-row Original statistic remains FAIL, alongside a separately reviewed
+state-based contract annotation that accounts for every row. Detailed counts,
+coverage, Wilson intervals, unchanged coefficients and exact source/cache hashes
+are in `tools/eval/smart-typing-0.3/results/2026-09-06-final-controller-replay/`.
+This is reproduction on revealed rows, not unseen generalization. No product rule,
+corpus or threshold was changed to resolve the empty-state reporting distinction.
+Changing model/coefficients or selecting another policy from revealed outcomes
+would require a new protocol.
 
 The exact historical prepared selector remains FAIL under the revised point95
 target: RU162/172, EN7/7, ES239/243, all below300; RU also misses precision.
@@ -153,31 +162,47 @@ allows one still-owned spelling result for250ms after ordinary Space; a blanket
 | 1 | Display current composing word | SmartTypingComposingInstrumentedTest; inner Fold PASS |
 | 2 | Boundary finishes word | Same; inner Fold PASS |
 | 3 | Tap replaces owned word | LiveCandidatesInstrumentedTest; inner Fold PASS |
-| 4 | High-confidence Space correction | Optional installed-model typing test; inner Fold PASS; ordinary-CI editor path still needed |
+| 4 | High-confidence Space correction | LiveFakeModelBinder original control and correction pass both full152 runs through actual model/editor Binder; exact-GGUF phone evidence is separate |
 | 5 | First Backspace restores Original | Installed-model and canonical-case editor tests; inner Fold PASS |
-| 6 | Second Backspace deletes grapheme | Composing/editor tests; include explicit correction-to-second-delete final receipt |
+| 6 | Second Backspace deletes grapheme | New spelling/canonical Undo→next Delete delta2/2 PASS on each API, exact spans/commands/no readback; mechanical two-Backspace and separate complex-grapheme editor tests also pass |
 | 7 | External cursor invalidation | Composing tests; inner Fold PASS |
 | 8 | Selection replacement | Composing tests; inner Fold PASS |
-| 9 | Multiline Enter | EditorActionInstrumentedTest; final full matrix pending |
-| 10 | SEND action | EditorActionInstrumentedTest; final full matrix pending |
+| 9 | Multiline Enter | EditorActionInstrumentedTest.multilineEnterCommitsANewlineInsteadOfSending passes both full152 runs with exact a/newline/b text |
+| 10 | SEND action | Standard/custom action test passes both full152 runs for SEND/SEARCH/GO/NEXT/DONE/custom IDs; repaired offscreen custom action also passes |
 | 11 | Language swipe preserves text | Composing tests; inner Fold PASS |
 | 12 | Cursor mode clears composition before movement | Composing stationary-hold test; inner Fold PASS |
 | 13 | Fold/config restart never replays | Restart/detach tests PASS on inner; actual folding transition still pending |
-| 14 | Password: no strip/composition/model/readback/content logs | Privacy/live fixtures; aggregate sensitive counters and final matrix pending |
-| 15 | NO_PERSONALIZED_LEARNING protections | Composing sensitive counters; inner Fold PASS; aggregate model-request proof pending |
-| 16 | Email/URL/number/phone/date-time never corrected | Layout tests exist; correction-specific editor assertions pending |
+| 14 | Password: no strip/composition/model/readback/content logs | Positive-controlled NonNormalEditor password test passes both full152 runs with inactive owners and unchanged binding/request/engine/reply activity; diagnostics files unchanged; popup/canary checks retain sampled/window limits |
+| 15 | NO_PERSONALIZED_LEARNING protections | Private-flag NonNormalEditor and composing tests pass both full152 runs with zero reads/composition/model activity; diagnostics streams unchanged |
+| 16 | Email/URL/number/phone/date-time never corrected | Five explicit NonNormalEditor mode tests pass both full152 runs, with normal correction positive controls, exact prefixes and zero Smart Typing/read activity |
 | 17 | TYPE_NULL raw behavior | New raw fixture passes API26/API37: balanced down/up, exact Delete, no composing/strip/readback |
-| 18 | Model kill preserves text and fallback | Live fake real-Binder matrix passes both APIs in complete139 runs |
-| 19 | Late results after Space |250ms owned grace plus invalidation unit/Binder-client tests; complete editor proof pending |
-| 20 | Late result after editor change | Client/controller tests; final editor matrix pending |
-| 21 | Late result after language change | Client/controller tests; final editor matrix pending |
+| 18 | Model kill preserves text and fallback | Live fake real-Binder process death/reconnect test passes both full152 runs; unchanged text/keys, no replay, subsequent typing works |
+| 19 | Late results after Space |250ms owner-certified service/controller tests pass; held reply after actual Space plus allowed/expired/invalidated outcome on real editor Binder remains missing |
+| 20 | Late result after editor change | Client generation/cancellation and live field invalidation pass separately; held remote reply across actual field change with both editor/strip assertions remains missing |
+| 21 | Late result after language change | Live language preservation and callback rejection pass separately; held remote reply across actual language swipe remains missing |
 | 22 | Candidate update preserves key instances | Live/settings touch tests; inner Fold PASS |
 | 23 | Rapid typing loses/duplicates no characters |75-character bounded touch burst and exact deletion pass API26/API37; physical frame/event/energy measurements remain |
-| 24 | Held Backspace inside/outside composition | Existing editor coverage; complete final receipt pending |
-| 25 | Mechanical URL/version/decimal exclusions | API26 decimal/version/hostname editor cases PASS; URL/email/time full editor cases still separate |
-| 26 | Contextual tap changes only allowed segment | API26 controller-to-editor Binder3/3 PASS; physical strip tap path still separate |
+| 24 | Held Backspace inside/outside composition | Cancel/detach stops later changes on unowned seeded text; positive repeat progress and held deletion inside owned composition/across Undo remain missing |
+| 25 | Mechanical URL/version/decimal exclusions | Numeric/version/hostname and URL/email/time public fixtures pass both full152 runs, with same-session cleanup/Undo controls; reviewed number-row navigation delta separately passes both APIs/Fold |
+| 26 | Contextual tap changes only allowed segment | Independent controller→real editor Binder3/3 passes both full152 runs; actual resident contextual strip tap path remains missing |
+
+Exact test names, terminal log anchors and source/APK deltas are in the
+`editor-matrix-audit.md` and `review.md` files under
+`tools/qa/smart-typing-0.3/results/2026-09-06-undo-second-delete/`.
+The audit's row6 cutoff precedes the separately verified two-test delta. These
+ordinary-CI proofs do not substitute for physical Fold or arbitrary editor checks.
 
 ## Physical and local receipts
+
+Current-source native correctness at `1a5826e`: fresh Release configure/build and
+all7 CTest cases PASS (8.24s), including the three exact-GGUF cases. Token output
+matches the independently frozen pristine tokenizer digest. All eight real abort
+stages, inside-loop checkpoints, recovery and per-call isolation pass. Native
+sources remain unchanged since `c0b0280`; the current app APK matches the complete
+API26/API37 matrices byte-for-byte. Source/compiler/patch/binary receipts are in
+`tools/test-native-scoring/results/2026-09-06-final-native/`. This establishes host
+correctness and continuity, not new Android exact-model or physical performance
+measurements.
 
 The [September5 Fold report](2026-09-05-smart-typing-0.3-fold-qualified.md) records
 release-native2/4/8-candidate timing, cancellation/recovery, load, RSS/PSS,
@@ -222,7 +247,7 @@ PixelCopy probes retained both failures and passes. The replacement test uses a
 no-alternate B key, frozen touch/crop geometry, a current-setting and actual-view
 assertion, and a full nominal1s sampled window for normal-enabled, normal-disabled
 and password-enabled modes. Isolated API37 passed2/2; the complete suite for this
-new test is still running. It verifies eventual sampled visual policy, not latency
+new test subsequently completed in the152-case matrices described above. It verifies eventual sampled visual policy, not latency
 or continuous absence. All earlier failure receipts remain unchanged.
 Evidence:
 `tools/qa/smart-typing-0.3/results/2026-09-06-binder-followup/`.
@@ -252,11 +277,11 @@ See [publication provenance](2026-09-05-rune-text-v1-hugging-face.md).
 
 | Release gate | Current status |
 | --- | --- |
-| Fresh JVM and prescribed local gates | Committed diagnostics/QA c0b0280: mandatory whole JVM743/743 PASS; Python32/32 and final prescribed gates240 tasks PASS. Source/packaging and both complete emulator matrices retained with exact receipts |
+| Fresh JVM and prescribed local gates | Current1a5826e: mandatory postcommit whole JVM743/743 PASS, zero failures/errors/skips; prescribed240-task gates PASS. Earlier diagnostics Python32/32 and complete emulator matrices retained with exact receipts |
 | API26 complete final matrix | Complete rerun152:149 PASS +3 assumptions, zero failures; all five diagnostic cases PASS. Ordinary JNI6/6 PASS. Initial preview and overbroad missing-model command failures retained |
 | API37 complete final matrix/stability | Full152:149 PASS +3 assumptions, zero failures; subsequent test-only preview case1/1 and JNI6/6 PASS; prior failures retained |
 | Fold inner named functional probes | PARTIAL PASS; initial settings fixture failure retained |
-| Fold transitions/real editors/rapid typing/energy | OPEN. Current cover13:6 PASS,5 diagnostics assumptions preserving logs,2 initial failures.75-touch exact text PASS. Exact-model Binder1/1 PASS (899ms first/166ms warm). Read-only admission observation shows model correction/Undo PASS; initial timing miss unresolved. Bounded summary scroll fixes observed settings fixture; affected case PASS on Fold/API26/API37 |
-| Current-source full quality qualification | OPEN: complete actual-payload fixed-policy spelling reproduction and full-controller contextual attribution remain. Model-free export review found six tooling issues, no new scores. v5 source agreement is reported with its semantic limits |
+| Fold transitions/real editors/rapid typing/energy | OPEN. Earlier cover13:6 PASS,5 diagnostic assumptions preserving logs,2 initial failures.75-touch exact text PASS. Exact-model Binder1/1 PASS (899ms first/166ms warm). Read-only admission observation shows model correction/Undo PASS; initial timing miss unresolved. Subsequent cover27:26 PASS + number-row navigation failure; unchanged isolated PASS and class reproduction FAIL retained. Reviewed quarter-height navigation27c3df2 passes mechanical5/5 on Fold and affected case1/1 on each API. Actual unfold is prepared with owned `тест` span0..4, awaiting physical user action |
+| Current-source full quality qualification | Spelling reproduction and state-based Original annotation PASS within the fixed revealed-data scope; exact observations and frozen all-row FAIL retained in1a5826e. Full-controller contextual attribution remains OPEN. v5 source agreement retains its semantic limits |
 | Current external CI | No PR-triggered runs returned for fd8872f by the GitHub connector; remote main remains b5400cb; not a full workflow inventory |
 | Model final release / version0.3.0 / main merge | BLOCKED by remaining gates |

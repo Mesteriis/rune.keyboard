@@ -1,0 +1,9 @@
+{
+  "scoring-contracts": "1eb0d599a6c2ace6c75ba1f0c109a67d6fa09c3aae0a8a80061fb7f5a7be5693",
+  "scoring-math-test": "35f038fb6cefcb8fe2bcf90b998a37145786c83269fd54b1252468afc7ca2299",
+  "make-tokenizer-fixture": "9bf21dcc7b2e867d7e2f0c409ff4957e1f1ebb03e0f4e415ab6c23dc36b0f18c",
+  "tokenizer-abort-test": "dcaaad4176ffb8e1c1a412eb9c1c0ffe7adb37bc4734432f695b855ca898728b",
+  "scoring-model-test": "16235d48e63274a992943ba5794704aecf5d3595818a12566f822d6185f29172",
+  "token-dump": "37e3b9cc6795aa6bc448fd878ab770a1c9a50a3a66d4de7f1c7921c769a84bd7",
+  "model.tokens": "d65c09fdad70f012a0ad17a01d9e0a7c1d891136a69c1977633b9152a7fdea00"
+}

@@ -1,0 +1,37 @@
+diff --git a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveCandidatesInstrumentedTest.kt b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveCandidatesInstrumentedTest.kt
+index d6a8147..13c3fc2 100644
+--- a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveCandidatesInstrumentedTest.kt
++++ b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveCandidatesInstrumentedTest.kt
+@@ -43,6 +43,18 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
+         driver.tapDelete()
+         driver.awaitFieldText(FIELD, "я москва")
+         assertTrue(awaitCandidate(R.string.candidate_original, "москва").isSelected)
++        val restored = stats()
++        driver.tapDelete()
++        driver.awaitFieldText(FIELD, "я москв")
++        awaitStats { it.getValue("compose") == restored.getValue("compose") + 1 }
++        val deleted = stats()
++        for (counter in listOf("commit", "region", "finish")) {
++            assertEquals(restored.getValue(counter), deleted.getValue(counter))
++        }
++        assertEquals(restored.getValue("start"), deleted.getValue("start"))
++        assertEquals(7, deleted.getValue("end"))
++        assertEquals(7, deleted.getValue("selectionStart"))
++        assertEquals(7, deleted.getValue("selectionEnd"))
+         noReadback()
+     }
+ 
+diff --git a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveFakeModelBinderInstrumentedTest.kt b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveFakeModelBinderInstrumentedTest.kt
+index 4edf779..9cf14a1 100644
+--- a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveFakeModelBinderInstrumentedTest.kt
++++ b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveFakeModelBinderInstrumentedTest.kt
+@@ -33,6 +33,9 @@ class LiveFakeModelBinderInstrumentedTest : ImeTestBase() {
+         val restored = f.editor("a helllo", 8, 1, 8)
+         f.assertCommandDelta(corrected, restored, mapOf("region" to 1, "compose" to 1))
+         f.assertOriginalSelected()
++        f.backspace()
++        val deleted = f.editor("a helll", 7, 1, 7)
++        f.assertCommandDelta(restored, deleted, mapOf("compose" to 1))
+     }
+ 
+     @Test fun blockedReplyAfterRealOriginalTapCannotReviveCorrection(): Unit = LiveFakeModelBinderFixture.install(driver).use { f ->

@@ -1,0 +1,13 @@
+test_missing_ambiguous_wrong_size_and_unsafe_names_fail (test_extract_model.ModelExtractionTest.test_missing_ambiguous_wrong_size_and_unsafe_names_fail) ... ok
+test_nested_verified_inner_file_only (test_extract_model.ModelExtractionTest.test_nested_verified_inner_file_only) ... ok
+test_oversized_archive_fails_before_zip_open (test_extract_model.ModelExtractionTest.test_oversized_archive_fails_before_zip_open) ... ok
+test_wrong_digest_preserves_existing_destination_and_cleans_temporary (test_extract_model.ModelExtractionTest.test_wrong_digest_preserves_existing_destination_and_cleans_temporary) ... ok
+test_debug_symbols_and_release_optimization_are_allowed (test_optimization_guard.OptimizationGuardTest.test_debug_symbols_and_release_optimization_are_allowed) ... ok
+test_explicit_unoptimized_build_is_rejected (test_optimization_guard.OptimizationGuardTest.test_explicit_unoptimized_build_is_rejected) ... ok
+test_later_override_cannot_silently_disable_optimization (test_optimization_guard.OptimizationGuardTest.test_later_override_cannot_silently_disable_optimization) ... ok
+test_missing_optimization_is_rejected (test_optimization_guard.OptimizationGuardTest.test_missing_optimization_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.180s
+
+OK

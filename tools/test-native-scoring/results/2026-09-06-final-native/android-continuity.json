@@ -1,0 +1,14 @@
+{
+  "comparedWith": "c0b0280abfc4f0093835a99245d7e42ccc9d47f8",
+  "scopes": [
+    "runtime-llama",
+    "runtime-api",
+    "tools/eval/smart-typing-0.3/scoring.cpp",
+    "tools/eval/smart-typing-0.3/scoring.h"
+  ],
+  "committedChanges": [],
+  "worktreeChanges": [],
+  "appApkSha256": "6a7d0d179b5c0446d88991cb14359ca63f97ce570e1ec09e2692667399f721e1",
+  "matchesFull152TestedApp": true,
+  "limit": "Source and app-byte continuity; prior ordinary JNI6/6 remains separate from optional exact-model Android qualification."
+}

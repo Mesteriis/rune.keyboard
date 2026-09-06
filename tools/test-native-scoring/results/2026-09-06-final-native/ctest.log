@@ -1,0 +1,120 @@
+UpdateCTestConfiguration  from :/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake/DartConfiguration.tcl
+Test project /Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: scoring-contracts
+
+1: Test command: /Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake/scoring-contracts
+1: Working Directory: /Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake
+1: Test timeout computed to be: 30
+1: Native scoring contracts passed (deterministic model double)
+1/7 Test #1: scoring-contracts ................   Passed    0.26 sec
+test 2
+    Start 2: scoring-math
+
+2: Test command: /Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake/scoring-math-test
+2: Working Directory: /Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake
+2: Test timeout computed to be: 30
+2: scoring math/UTF-8/limits checks passed
+2/7 Test #2: scoring-math .....................   Passed    0.37 sec
+test 3
+    Start 3: tokenizer-fixture
+
+3: Test command: /Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake/make-tokenizer-fixture "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake/synthetic-qwen2-vocab.gguf"
+3: Working Directory: /Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake
+3: Test timeout computed to be: 30
+3: Wrote synthetic QWEN2 vocabulary: 259 tokens, 1 merge, no weights
+3/7 Test #3: tokenizer-fixture ................   Passed    0.27 sec
+test 4
+    Start 4: tokenizer-abort
+
+4: Test command: /Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake/tokenizer-abort-test "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake/synthetic-qwen2-vocab.gguf" "--synthetic"
+4: Working Directory: /Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake
+4: Test timeout computed to be: 60
+4: metadata type=BPE preset=QWEN2 model=gpt2
+4: equivalence fixed=16 randomized=300 add_special=false/true callback=null/observer PASS
+4: buffer/argument/strict_utf8 contracts PASS
+4: cancel stage=0 visit=3 bytes=262144 PASS
+4: cancel stage=1 visit=1 bytes=262144 PASS
+4: cancel stage=2 visit=3 bytes=262144 PASS
+4: cancel stage=3 visit=3 bytes=262144 PASS
+4: cancel stage=4 visit=3 bytes=262144 PASS
+4: cancel stage=5 visit=3 bytes=262144 PASS
+4: cancel stage=6 visit=3 bytes=262144 PASS
+4: cancel stage=7 visit=3 bytes=262144 PASS
+4: cancel stage=3 visit=3 bytes=262144 PASS
+4: cancel stage=3 visit=3 bytes=262144 PASS
+4: cancel stage=3 visit=3 bytes=262144 PASS
+4: parallel per-call isolation threads=4 requests=80 PASS
+4: unsupported preset=gpt-2 PASS
+4: unsupported preset=qwen35 PASS
+4: ALL PASS
+4/7 Test #4: tokenizer-abort ..................   Passed    0.43 sec
+test 5
+    Start 5: scoring-model-oracle
+
+5: Test command: /opt/homebrew/bin/cmake "-DMODEL=/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/model/rune-text-v1-0.1.0-q4_k_m.gguf" "-DPROGRAM=/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake/scoring-model-test" "-P" "/Users/avm/projects/Personal/rune-keyboard/tools/test-native-scoring/RunModelTest.cmake"
+5: Working Directory: /Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake
+5: Test timeout computed to be: 300
+5: oracle_candidate=0 scored_tokens=1 sum_delta=0
+5: oracle_candidate=1 scored_tokens=1 sum_delta=0
+5: oracle_candidate=2 scored_tokens=1 sum_delta=0
+5: oracle_candidate=0 scored_tokens=2 sum_delta=0
+5: oracle_candidate=1 scored_tokens=3 sum_delta=0
+5: oracle_candidate=2 scored_tokens=2 sum_delta=0
+5: oracle_candidate=0 scored_tokens=1 sum_delta=0
+5: oracle_candidate=1 scored_tokens=2 sum_delta=0
+5: oracle_candidate=2 scored_tokens=1 sum_delta=0
+5: oracle_candidate=0 scored_tokens=2 sum_delta=0
+5: oracle_candidate=1 scored_tokens=3 sum_delta=0
+5: oracle_candidate=0 scored_tokens=2 sum_delta=0
+5: oracle_candidate=1 scored_tokens=2 sum_delta=0
+5: oracle_candidate=0 scored_tokens=2 sum_delta=0
+5: oracle_candidate=1 scored_tokens=2 sum_delta=0
+5: model scoring oracle passed; maximum_sum_delta=0
+5/7 Test #5: scoring-model-oracle .............   Passed    4.18 sec
+test 6
+    Start 6: tokenizer-model-equivalence
+
+6: Test command: /opt/homebrew/bin/cmake "-DMODEL=/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/model/rune-text-v1-0.1.0-q4_k_m.gguf" "-DPROGRAM=/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake/token-dump" "-DOUTPUT=/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake/model.tokens" "-P" "/Users/avm/projects/Personal/rune-keyboard/tools/test-native-scoring/RunModelTest.cmake"
+6: Working Directory: /Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake
+6: Test timeout computed to be: 300
+6: -- 632 exact pristine upstream token sequences verified
+6/7 Test #6: tokenizer-model-equivalence ......   Passed    1.26 sec
+test 7
+    Start 7: tokenizer-model-abort
+
+7: Test command: /opt/homebrew/bin/cmake "-DMODEL=/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/model/rune-text-v1-0.1.0-q4_k_m.gguf" "-DPROGRAM=/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake/tokenizer-abort-test" "-P" "/Users/avm/projects/Personal/rune-keyboard/tools/test-native-scoring/RunModelTest.cmake"
+7: Working Directory: /Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-final-20260906/cmake
+7: Test timeout computed to be: 300
+7: metadata type=BPE preset=QWEN2 model=gpt2
+7: equivalence fixed=16 randomized=300 add_special=false/true callback=null/observer PASS
+7: buffer/argument/strict_utf8 contracts PASS
+7: cancel stage=0 visit=3 bytes=262144 PASS
+7: cancel stage=1 visit=1 bytes=262144 PASS
+7: cancel stage=2 visit=3 bytes=262144 PASS
+7: cancel stage=3 visit=3 bytes=262144 PASS
+7: cancel stage=4 visit=3 bytes=262144 PASS
+7: cancel stage=5 visit=3 bytes=262144 PASS
+7: cancel stage=6 visit=3 bytes=262144 PASS
+7: cancel stage=7 visit=3 bytes=262144 PASS
+7: cancel stage=3 visit=3 bytes=262144 PASS
+7: cancel stage=3 visit=3 bytes=262144 PASS
+7: cancel stage=3 visit=3 bytes=262144 PASS
+7: parallel per-call isolation threads=4 requests=80 PASS
+7: unsupported preset=gpt-2 PASS
+7: unsupported preset=qwen35 PASS
+7: ALL PASS
+7/7 Test #7: tokenizer-model-abort ............   Passed    1.46 sec
+
+100% tests passed out of 7
+
+Label Time Summary:
+exact-model    =   6.90 sec*proc (3 tests)
+
+Total Test time (real) =   8.24 sec
