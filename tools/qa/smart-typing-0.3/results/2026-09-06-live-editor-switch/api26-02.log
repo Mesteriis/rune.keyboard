@@ -1,0 +1,53 @@
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest:
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=releasedReplyAfterEditorSwitchPreservesBothFields
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+Error in releasedReplyAfterEditorSwitchPreservesBothFields(io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest):
+java.lang.IllegalStateException: Required value was null.
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.snapshot(LiveFakeModelBinderFixture.kt:498)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.editor$lambda$56(LiveFakeModelBinderFixture.kt:465)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.await(LiveFakeModelBinderFixture.kt:781)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$await(LiveFakeModelBinderFixture.kt:743)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.editor(LiveFakeModelBinderFixture.kt:464)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.releasedReplyAfterEditorSwitchPreservesBothFields(LiveFakeModelBinderInstrumentedTest.kt:109)
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=releasedReplyAfterEditorSwitchPreservesBothFields
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Required value was null.
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.snapshot(LiveFakeModelBinderFixture.kt:498)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.editor$lambda$56(LiveFakeModelBinderFixture.kt:465)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.await(LiveFakeModelBinderFixture.kt:781)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$await(LiveFakeModelBinderFixture.kt:743)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.editor(LiveFakeModelBinderFixture.kt:464)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.releasedReplyAfterEditorSwitchPreservesBothFields(LiveFakeModelBinderInstrumentedTest.kt:109)
+
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 19.57
+There was 1 failure:
+1) releasedReplyAfterEditorSwitchPreservesBothFields(io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest)
+java.lang.IllegalStateException: Required value was null.
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.snapshot(LiveFakeModelBinderFixture.kt:498)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.editor$lambda$56(LiveFakeModelBinderFixture.kt:465)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.await(LiveFakeModelBinderFixture.kt:781)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$await(LiveFakeModelBinderFixture.kt:743)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.editor(LiveFakeModelBinderFixture.kt:464)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.releasedReplyAfterEditorSwitchPreservesBothFields(LiveFakeModelBinderInstrumentedTest.kt:109)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

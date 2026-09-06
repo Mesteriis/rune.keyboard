@@ -1,0 +1,9 @@
+{
+  "base": "634cd1e19b1bbdaabc11e738071a16ced5db1a7a",
+  "sha256": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveFakeModelBinderFixture.kt": "60c2d1322f3ad919336c17d0019d4439c3f32785546617050bde982749da348f",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveFakeModelBinderInstrumentedTest.kt": "6ae232ffd5e63d1d0d802597ec04fcbbda43ed19f10c7103db839670aba3674c",
+    "app/build/outputs/apk/debug/app-debug.apk": "6a7d0d179b5c0446d88991cb14359ca63f97ce570e1ec09e2692667399f721e1",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "77e563720bf9dc78306bdafc5f83a68a1c13810cb9fdc53f5123e56cc04c5c45"
+  }
+}
