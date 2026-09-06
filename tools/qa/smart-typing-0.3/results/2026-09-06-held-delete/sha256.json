@@ -1,0 +1,17 @@
+{
+  "ImeLifecycleInstrumentedTest.kt": "2ad9943b21450c2b7a971e53b82bc39c141bf91da3f09551f3489066d5c20430",
+  "ImeTestDriver.kt": "3e867f416efb9200a715244e99b33ca45d7eb0a3c696c3a3e325d4a1dec5f8e4",
+  "LiveFakeModelBinderFixture.kt": "d895947f65373bf84901e371a601043a33c07b00f3a49d5e8134cb08191da1b8",
+  "LiveFakeModelBinderInstrumentedTest.kt": "f6dc7c2f925f1c30958c7369375d58571b3496a06aad398038f839040c32e5c4",
+  "README.md": "3975df79a5cea87d64fc528d2a8ff04bc345061972ba5e17ae8e12cd2e40c20a",
+  "api26.log": "f33e7d0bfe4358dd8d48c5ceb872bda6d4764b01bc808a106652984ae29e7349",
+  "api37.log": "da34af03047c784afa9ed457d834e9c2119b58a8343d8fcf11debe58de786d63",
+  "brief.md": "e36d53863f9782ecef8ace015ea64f9034b65ee2e2f20d1a19d36fb3fe384db1",
+  "build.log": "7a4e2fc06ef89a7700cffde8a8c601fe98df16690272cdc96915afd5c6485c43",
+  "gates.log": "657186e7fe3dfd48b77eeff516e6b388db4fa405e4ed4fd79b3a42ccdd8cfa4a",
+  "inputs.json": "5de1b0d04317b9f9160d4f47971be3fc7592f0e86756fd212713c9c160eb8902",
+  "qa.patch.gz": "3d72dbeaf984a9945067d5c7d5907d36822ed83a8ea67cef30e6b4580f671f84",
+  "report.md": "b90df26f4ac8cabcfa6efb19fd3a4e5408252d46f27ed602aa0d91a5f5b6feaa",
+  "results.json": "46c36406c010a7d06373c5b8fcf3d2311f4dfb4ff7a3a3a5ffab00159add8786",
+  "review.md": "75398f357610561150f9a79ad29369c7b9a0c898a493bff3711bc2c972d55953"
+}

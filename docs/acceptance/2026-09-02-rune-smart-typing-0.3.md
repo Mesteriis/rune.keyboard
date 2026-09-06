@@ -182,7 +182,7 @@ allows one still-owned spelling result for250ms after ordinary Space; a blanket
 | 21 | Late result after language change | Live language preservation and callback rejection pass separately; held remote reply across actual language swipe remains missing |
 | 22 | Candidate update preserves key instances | Live/settings touch tests; inner Fold PASS |
 | 23 | Rapid typing loses/duplicates no characters |75-character bounded touch burst and exact deletion pass API26/API37; physical frame/event/energy measurements remain |
-| 24 | Held Backspace inside/outside composition | Cancel/detach stops later changes on unowned seeded text; positive repeat progress and held deletion inside owned composition/across Undo remain missing |
+| 24 | Held Backspace inside/outside composition | Focused4/4 PASS on each API: positive repeated deletion on unowned seeded text with cancel/detach; exact owned prefix/span/caret and command counts with release/cancel; one hold consumes model Undo then deletes normally; no payload reads in owned paths. Bounded correctness, not physical performance |
 | 25 | Mechanical URL/version/decimal exclusions | Numeric/version/hostname and URL/email/time public fixtures pass both full152 runs, with same-session cleanup/Undo controls; reviewed number-row navigation delta separately passes both APIs/Fold |
 | 26 | Contextual tap changes only allowed segment | Independent controller→real editor Binder3/3 passes both full152 runs; actual resident contextual strip tap path remains missing |
 
@@ -191,6 +191,9 @@ Exact test names, terminal log anchors and source/APK deltas are in the
 `tools/qa/smart-typing-0.3/results/2026-09-06-undo-second-delete/`.
 The audit's row6 cutoff precedes the separately verified two-test delta. These
 ordinary-CI proofs do not substitute for physical Fold or arbitrary editor checks.
+
+Row24's subsequent four-test delta, exact sources/APK identities and complete logs
+are in `tools/qa/smart-typing-0.3/results/2026-09-06-held-delete/`.
 
 ## Physical and local receipts
 

@@ -1,0 +1,12 @@
+{
+  "base": "ac693666b9595fa229bff15292ad4ae2829f896f",
+  "sha256": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt": "3e867f416efb9200a715244e99b33ca45d7eb0a3c696c3a3e325d4a1dec5f8e4",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeLifecycleInstrumentedTest.kt": "2ad9943b21450c2b7a971e53b82bc39c141bf91da3f09551f3489066d5c20430",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveFakeModelBinderFixture.kt": "d895947f65373bf84901e371a601043a33c07b00f3a49d5e8134cb08191da1b8",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveFakeModelBinderInstrumentedTest.kt": "f6dc7c2f925f1c30958c7369375d58571b3496a06aad398038f839040c32e5c4",
+    "app/build/outputs/apk/debug/app-debug.apk": "6a7d0d179b5c0446d88991cb14359ca63f97ce570e1ec09e2692667399f721e1",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "aa5f8fa6740a472206210751400b4e065a2237fc9c354495af46372a5c9ece9d"
+  },
+  "scope": "Actual held Delete cancel/detach, owned composition, automatic correction Undo then repeat on real editor Binder"
+}
