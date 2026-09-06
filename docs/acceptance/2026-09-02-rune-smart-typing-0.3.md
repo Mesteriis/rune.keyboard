@@ -49,6 +49,12 @@ The diagnostic does not evaluate held-out decisions or qualify this policy;
 a freeze and new unseen holdout remain required. See
 `tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-contextual-calibration-diagnostic/`.
 
+The current evaluator now follows that production policy. Its version 2 receipts
+bind source/rule/parameters and reject old receipts or orphan score caches.
+Actual Kotlin/Python parity passed 79 synthetic cases; all 51 Python pipeline
+tests and prescribed local gates passed. This tooling evidence is separate from
+fresh model quality: `tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-contextual-tooling/`.
+
 ## Required editor matrix
 
 The latest archived API26/API37 runs contain52 tests in five selected classes;

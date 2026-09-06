@@ -1,0 +1,62 @@
+{
+  "scope": "contextual-evaluator-v2-tooling",
+  "sourceBase": "27d07ea9f2753b5a464fd616eaf7d4b5177347a5",
+  "sources": {
+    "tools/eval/smart-typing-0.3/pipeline/contextual_quality.py": "90c811707ee834653f6ee895bd60b34e49eda5303617a60092b16513e5eefb4e",
+    "tools/eval/smart-typing-0.3/pipeline/test_contextual_quality.py": "4fe27d2b51c4bb9261ab65e5655bbe3fc4526253ea847610bb2fd9acc6e48370",
+    "tools/eval/smart-typing-0.3/pipeline/ContextualPolicyProbe.kt": "2896883ffd3a1eff882bb147489bba3b7293d98f9ba138dc601f98eb4632c576"
+  },
+  "pythonTests": 51,
+  "pythonFailures": 0,
+  "kotlinParityCases": 79,
+  "kotlinParityMismatches": 0,
+  "prescribedGates": "PASS",
+  "gateTasks": 236,
+  "realModelScored": false,
+  "holdoutScored": false,
+  "qualityQualified": false,
+  "files": {
+    "python-pipeline.log.gz": {
+      "sha256": "2de9f1cf0c98a4f0ebaa52dde9471db124f0feb967c1cf2cbf630e4f1c1f4260",
+      "decodedSha256": "eabded44d0e9e17b2d67483300f6b05e5453f70a8016115f0251bf27a3c90427"
+    },
+    "orphan-red.log.gz": {
+      "sha256": "37da2c9bcea98ab9c7a0ea03e0308d8ed933c1ed3bee32a198c5d9cbb05d40fa",
+      "decodedSha256": "0f1d703a5e47077a6f39268cd50f34046ba3431f26ca1cf911041077affbdebb"
+    },
+    "orphan-green.log.gz": {
+      "sha256": "1ee575508a44ad8a8ac85224ec0806aeec09d2c71ae142d26f8326cb406d4df8",
+      "decodedSha256": "3a7695e6ef58804c3754a44d9db9064df2542f22d3e0c177b3e7ff908608a1d0"
+    },
+    "gates.log.gz": {
+      "sha256": "08ed51d1f22eb6bd23119a46d07d3c1590cb5072a6ae087d825193634a4fe8f9",
+      "decodedSha256": "ca2348305ee06f14e2d60968c9367db6b5131bd4e5c2727ecc4af5df0debce1c"
+    },
+    "kotlin-parity.log.gz": {
+      "sha256": "3d736eb013586b5f5519fb7ce89a06fcd5ab4a49c5c918f80bb57758bbb3d021",
+      "decodedSha256": "cb816e244e2ea330f660783b140be8dedbabb4dabc64d91267dc7850b83f3482"
+    },
+    "parity-verification.json": {
+      "sha256": "05ada2248d6573a52281b944de877c13f18d737645ff73836c7442db8fc6b854"
+    },
+    "parity-inputs.tsv": {
+      "sha256": "9682cb21b86a7260a4925fa64fa384fb338d38cd95379451718273541c6b2b4c"
+    },
+    "parity-expected.tsv": {
+      "sha256": "36d7a5ad4dc0875980d8d321e1820868931d32947adcae46882a266f90a9d57c"
+    },
+    "parity-actual.tsv": {
+      "sha256": "36d7a5ad4dc0875980d8d321e1820868931d32947adcae46882a266f90a9d57c"
+    },
+    "parity-java-version.txt": {
+      "sha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39"
+    },
+    "parity-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "parity-run.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "parityOriginalDirectory": "build/contextual-policy-parity-2026-09-06-03"
+}
