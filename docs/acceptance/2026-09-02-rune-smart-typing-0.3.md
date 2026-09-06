@@ -10,6 +10,15 @@ not yet available. Pinned upstream llama.cpp remains
 `36b10154383b60eb15baac2c7a40d2a5f784faa7`; cancellation patches apply to build
 copies and do not change the gitlink.
 
+Current local `main` API matrix update (2026-09-06): commit `a76a5fe` makes the
+QA driver recreate its input view through an already enabled fallback IME after
+an API 26 hidden-window transition, then retries the same real editor focus once.
+It does not change production IME behavior. The complete `connectedDebugAndroidTest`
+matrix passed on API 26 (167 tests, 0 failures, 4 explicit real-model/Fold skips,
+22m58s) and API 37 (167 tests, 0 failures, the same 4 skips, 21m45s). These are
+local verification results; the real-model and physical release gates below remain
+unclosed.
+
 ## Implementation and quality
 
 | Plan slice | Current evidence | Remaining acceptance |
