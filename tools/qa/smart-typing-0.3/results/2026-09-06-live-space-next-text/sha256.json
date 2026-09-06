@@ -1,0 +1,13 @@
+{
+  "LiveFakeModelBinderFixture.kt": "ed64f2a2986318bdeabf73114ee25b8c660963b8e54ce7c101cd76782a3a870a",
+  "LiveFakeModelBinderInstrumentedTest.kt": "c439b3bf74b6ebc06dd1cbc1e076f0a5301f2c3d37625b093b1c24c36b29fdfe",
+  "README.md": "e8a3b4a0f9eb62e5aa51c25978a957198db8d32d4ea64ba3c3ede55bf29223db",
+  "api26.log": "b37edd3dadbced901d01a12d53c1b7aeb8c5b1941d68723086b8a9595537cf7e",
+  "api37.log": "254725e4669c62e050d6ba451b1fc09f5281d7253df32f929a6e2073d880ce37",
+  "build.log": "97f0fde67155b7aee2a6d59e28a7f42092de382bab448e1a1b8fabfabed7293a",
+  "gates.log": "667ab92e5a41d7d06bc23955bccfd63cf3d6163d772449a949a8e47935d49ed2",
+  "handoff.md": "07cd12a53bb42b7779137b4f97a650c43cbaa665bef55aa0af2ed00b50df1e3a",
+  "inputs.json": "161137133bb158d60a71cfc7c362bdc58d5e0d935892e34fdb2a964ba8125f69",
+  "qa.patch.gz": "9b3b1a0260198c2391f0ecd97caf291c7344cae67d21d134e8880034c524346d",
+  "review.md": "5603c66305900c1557ddfb3c1bf7f4bcfb48aac820e4c85c5103f80e87a60c7f"
+}

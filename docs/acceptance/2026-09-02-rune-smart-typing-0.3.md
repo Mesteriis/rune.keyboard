@@ -177,7 +177,7 @@ allows one still-owned spelling result for250ms after ordinary Space; a blanket
 | 16 | Email/URL/number/phone/date-time never corrected | Five explicit NonNormalEditor mode tests pass both full152 runs, with normal correction positive controls, exact prefixes and zero Smart Typing/read activity |
 | 17 | TYPE_NULL raw behavior | New raw fixture passes API26/API37: balanced down/up, exact Delete, no composing/strip/readback |
 | 18 | Model kill preserves text and fallback | Live fake real-Binder process death/reconnect test passes both full152 runs; unchanged text/keys, no replay, subsequent typing works |
-| 19 | Late results after Space | Actual expired reply refusal PASS both APIs. Allowed late reply also PASS both APIs: observed Original+Space before release, certified ownership and real callback elapsed<250ms, exact correction commands and immediate Undo. Next-text-invalidated combined case remains missing |
+| 19 | Late results after Space | Actual expired reply refusal PASS both APIs. Allowed late reply also PASS both APIs: observed Original+Space before release, certified ownership and real callback elapsed<250ms, exact correction commands and immediate Undo. Next-text invalidation also PASS both APIs: actual next key and exact old remote release before250ms, unchanged original word, current selected Original, no stale correction writes |
 | 20 | Late result after editor change | Live switch to another real QA editor/task/session PASS both APIs: exact old request released, new text/span/caret and candidate contents/IDs/selection unchanged, returning old text has no payload writes; no editor payload reads. Same-Activity field variant and already-dispatched callback are not claimed |
 | 21 | Late result after language change | Held exact remote numeric reply across actual Russian language swipe PASS both APIs: old English text/span preserved/finished, unchanged editor commands and strip after release, no stale accepted callback, fresh Russian typing works |
 | 22 | Candidate update preserves key instances | Live/settings touch tests; inner Fold PASS |
@@ -200,6 +200,8 @@ Row20's two-real-editor proof and preserved fixture failures are in
 `tools/qa/smart-typing-0.3/results/2026-09-06-live-editor-switch/`.
 Row19's within-grace positive and API26 observer diagnosis are in
 `tools/qa/smart-typing-0.3/results/2026-09-06-live-space-grace/`.
+Its subsequent positive-plus-next-text pair passes2/2 on each API; exact source/APK
+identities and logs are in `tools/qa/smart-typing-0.3/results/2026-09-06-live-space-next-text/`.
 
 ## Physical and local receipts
 

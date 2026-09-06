@@ -1,0 +1,7 @@
+# Next text invalidates a late reply inside the production Space grace
+
+Base `3504f31521ec531bb58734d8318b86e8af401220` plus the enclosed two-file QA delta. Both the existing accepted-late-reply/Undo case and the new next-text-invalidated case pass: API26 2/2 in 23.876s; API37 2/2 in 22.414s. The prescribed 240-task local gates pass. Source and exact APK identities are in inputs.json; full logs are retained. These times measure whole tests, not individual typing latency.
+
+The new case observes real owned Original+Space, injects the actual next `a` key, then releases the exact held remote score before the unchanged 250ms grace expires. It requires `a helllo a`, caret10, span8–10, finish+1 and compose+2 only, no correction commit/region or payload reads, and the current selected Original `a`. Old candidate IDs, the old token and an accepted old reply must be absent. A subsequent snapshot checks stability. The positive companion retains its actual callback-before250ms and immediate Undo assertions.
+
+Only the shared observer was extracted; no product deadline, clock, engine, editor result or policy changed. The fake numeric engine still runs across real service Binder with the resident IME and a real QA editor InputConnection. Worker cancellation may suppress delivery: this does not force an already-dispatched stale main-thread callback. No physical-device or real-model performance claim is made.
