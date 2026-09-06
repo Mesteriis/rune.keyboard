@@ -1,0 +1,22 @@
+{
+  "files": {
+    "README.md": "c35d6be6480cd5f80830372aabc2ed1894bedb3ded04b0663a642badc837fd50",
+    "api26-settings-cover-summary.log": "f839b6810ec74c42e6235ec7e1dc4a8f9570c3d4cd7d3ed624badf765c56ec54",
+    "api37-settings-cover-summary.log": "1f452fb8b4ef1b0c59ad00c709cc3bfab2485f9f24c49477992b6dde8a12e4e9",
+    "phone-admission-triage-build.log": "f9644522819902a4e303fb35a4332d8a1f837aa03111c322f51c26d72c62bc33",
+    "phone-admission-triage-snapshot/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImePrivacyInstrumentedTest.kt": "7a77563188f65ff08eace1b55de6e29ee326a436d0b354fbaa3f49d2880cfbf2",
+    "phone-admission-triage-snapshot/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/RealModelTypingInstrumentedTest.kt": "d569e63c2249325fa2a1bac0b3defc4deb1f3a3b2acb87b157ee9f98130bd271",
+    "phone-admission-triage-snapshot/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingSettingsInstrumentedTest.kt": "d0002334ccc0b4614f35a4c6a795a075a34411494fc21bb5d8761568e924a366",
+    "phone-admission-triage-snapshot/input-receipt.json": "c9d947b128ae225a35bf6f9864e10a9da6fac1e904169824c9c212c454627a06",
+    "phone-admission-triage-two-cases.log": "48387d70e0be052f54e92da44cd4e3352f652c4ee00f5a533bcc82c2337e0b1f",
+    "phone-cover-diagnostics-settings-typing-13.log": "93713ed2617e4881a523fc733319d44fcbf803d43b539f50b2bc878507269d23",
+    "phone-cover-diagnostics-settings-typing-13.log.results.json": "0664f160148fd88df8373447590c91e55bec68b17bc93171e700b0f187a3777c",
+    "phone-restored-model-service-triage.log": "b088b5664294b5279bcc6be25f3a172c21e608d32f76e4c6d7b27758b5210f3b",
+    "phone-settings-cover-summary.log": "62eaec1aa51e37ad3e7d0909e99c0b71010e44609a60757c787ebfc7c17d1db1",
+    "precommit-final-gates.log": "c495caeef94fd401bd7ac5176f83cddda3a09c5540de01f9be3be5112c00de79",
+    "review.md": "bf9d619676d928a194dfd689502202e9520950c8473110b9bdba2b45fb9a09ff",
+    "settings-cover-summary-build.log": "9b2315cafa339718e88127605c0bbdaf74f82ec0ee3b4633bda43d54b909fedb",
+    "settings-cover-summary-snapshot/SmartTypingSettingsInstrumentedTest.kt": "32859a76456375301feab72e9cb4bbbc8ea2a5247864460af475fe7524656649",
+    "settings-cover-summary-snapshot/input-receipt.json": "83918af920020e293fd791c2dfc839b5436e1ab39dd33fe40cf94a045e4524b6"
+  }
+}

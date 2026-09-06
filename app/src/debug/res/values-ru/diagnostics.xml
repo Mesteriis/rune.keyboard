@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_privacy_summary">Нет аналитики и автоматической отправки. Необязательные отладочные события и запись ввода Rune по умолчанию выключены; после включения журналы хранятся локально. Для записи ввода нужны два подтверждения; чувствительные и неподдерживаемые поля исключены. Экспорт выполняется вручную; выбранный поставщик документов может синхронизировать копии вне контроля Rune.</string>
+    <string name="diagnostics_title">Необязательные отладочные журналы</string>
+    <string name="diagnostics_metadata_title">Сбор диагностической информации</string>
+    <string name="diagnostics_metadata_summary">Локальные типы событий, решения и ограниченные счётчики. Без текста, значений клавиш, хешей текста и данных редактора. По умолчанию выключено; до 1 МиБ.</string>
+    <string name="diagnostics_text_title">Запись набираемого текста</string>
+    <string name="diagnostics_text_summary">Необязательная локальная запись текста, кандидатов и решений при допустимом вводе Rune. Независима от событий диагностики. Нужны два подтверждения; до 4 МиБ.</string>
+    <string name="diagnostics_manage">Управление отладочными журналами</string>
+    <string name="diagnostics_manage_summary">Экспортировать каждый журнал отдельно либо выключить обе опции и удалить локальные журналы.</string>
+    <string name="diagnostics_scope_title">Записывать ввод Rune?</string>
+    <string name="diagnostics_scope_message">Эта отладочная опция записывает введённый через Rune текст, принадлежащий Rune контекст, исходные слова, кандидатов и фактические решения. Запись начнётся только в следующем новом сеансе обычного текста. Пароли, приватные поля, email, URL, числа, телефоны, дата/время и редакторы сырых клавиш исключены. Rune не читает существующий текст редактора или буфер обмена. Перейти к подтверждению локального хранения?</string>
+    <string name="diagnostics_storage_title">Хранить этот текст локально?</string>
+    <string name="diagnostics_storage_message">Rune сохранит до 4 МиБ записанного ввода в закрытых локальных файлах, заменяя старые записи. Это явное исключение из обычного запрета хранения ввода. Запись можно остановить без подтверждения и удалить локальные журналы. Автоматической отправки нет. Включить запись?</string>
+    <string name="diagnostics_continue">Продолжить</string>
+    <string name="diagnostics_enable">Включить запись</string>
+    <string name="diagnostics_export_warning">Экспорт выполняется вручную. Выбранный поставщик документов может синхронизировать или отправить файл. Экспортированные копии находятся вне контроля Rune и не удаляются при удалении локальных журналов.</string>
+    <string name="diagnostics_export_metadata">Экспортировать события диагностики</string>
+    <string name="diagnostics_export_text">Экспортировать записанный ввод</string>
+    <string name="diagnostics_delete">Выключить обе опции и удалить локальные журналы</string>
+    <string name="diagnostics_status_format">События диагностики: %1$s\nЗапись ввода: %2$s\n%3$s</string>
+    <string name="diagnostics_on">Включено</string>
+    <string name="diagnostics_off">Выключено</string>
+    <string name="diagnostics_next_session">Включённая запись начинается в новом допустимом сеансе ввода. Очереди и файлы ограничены; часть событий может быть пропущена.</string>
+    <string name="diagnostics_working">Выполняется…</string>
+    <string name="diagnostics_stopping">Сбор останавливается; ожидается завершение локальной записи…</string>
+    <string name="diagnostics_deleting">Остановка и удаление локальных журналов…</string>
+    <string name="diagnostics_deleted">Обе опции выключены, локальные журналы удалены. Экспортированные копии остаются вне Rune.</string>
+    <string name="diagnostics_exported">Экспорт завершён.</string>
+    <string name="diagnostics_failed">Не удалось завершить операцию. Завершение не подтверждено. Проверьте переключатели и повторите попытку.</string>
+</resources>

@@ -1,0 +1,22 @@
+{
+  "emulator-5554": {
+    "io.github.mesteriis.rune.keyboard": {
+      "installedPath": "/data/app/io.github.mesteriis.rune.keyboard-75jXZYPkKtm3YtB8tZERQw==/base.apk",
+      "sha256": "6a7d0d179b5c0446d88991cb14359ca63f97ce570e1ec09e2692667399f721e1"
+    },
+    "io.github.mesteriis.rune.keyboard.test": {
+      "installedPath": "/data/app/io.github.mesteriis.rune.keyboard.test-l1NFJFSDG_8RUq8syppdeg==/base.apk",
+      "sha256": "8cac96cae9a02b20a90fc93f0912b0de291d261dbca1b0f5bffd2026f2914d0a"
+    }
+  },
+  "emulator-5556": {
+    "io.github.mesteriis.rune.keyboard": {
+      "installedPath": "/data/app/~~aKZwvxKJwdKH-7mGbHiHfw==/io.github.mesteriis.rune.keyboard-ZWfNrYTPf4UPbWMYc2VwXA==/base.apk",
+      "sha256": "6a7d0d179b5c0446d88991cb14359ca63f97ce570e1ec09e2692667399f721e1"
+    },
+    "io.github.mesteriis.rune.keyboard.test": {
+      "installedPath": "/data/app/~~MfJzlNOfjQPCBKReJ9icMw==/io.github.mesteriis.rune.keyboard.test-KgHDdApa4cZnSYJ-Osgs-w==/base.apk",
+      "sha256": "8cac96cae9a02b20a90fc93f0912b0de291d261dbca1b0f5bffd2026f2914d0a"
+    }
+  }
+}

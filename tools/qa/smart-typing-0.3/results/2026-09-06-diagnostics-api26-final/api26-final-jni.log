@@ -1,0 +1,156 @@
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.runtime.llama.LlamaRealModelInstrumentedTest:
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=verifiedModelScoresAndRecoversThroughThePublicAndroidRuntime
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRealModelInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+Error in verifiedModelScoresAndRecoversThroughThePublicAndroidRuntime(io.github.mesteriis.rune.runtime.llama.LlamaRealModelInstrumentedTest):
+java.lang.AssertionError: exact qualification model is missing
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at io.github.mesteriis.rune.runtime.llama.LlamaRealModelInstrumentedTest.verifiedModel(LlamaRealModelInstrumentedTest.kt:95)
+	at io.github.mesteriis.rune.runtime.llama.LlamaRealModelInstrumentedTest.verifiedModelScoresAndRecoversThroughThePublicAndroidRuntime(LlamaRealModelInstrumentedTest.kt:26)
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=verifiedModelScoresAndRecoversThroughThePublicAndroidRuntime
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRealModelInstrumentedTest
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: exact qualification model is missing
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at io.github.mesteriis.rune.runtime.llama.LlamaRealModelInstrumentedTest.verifiedModel(LlamaRealModelInstrumentedTest.kt:95)
+	at io.github.mesteriis.rune.runtime.llama.LlamaRealModelInstrumentedTest.verifiedModelScoresAndRecoversThroughThePublicAndroidRuntime(LlamaRealModelInstrumentedTest.kt:26)
+
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.runtime.llama.LlamaRuntimeBenchmarkInstrumentedTest:
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=fixedSyntheticCandidateScoringBaseline
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeBenchmarkInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: rune_bench=1,7,-1,0,-1,-1,1,0,0,0,0,-1,16746496,76476416,8006112,2456936,0,0
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+Error in fixedSyntheticCandidateScoringBaseline(io.github.mesteriis.rune.runtime.llama.LlamaRuntimeBenchmarkInstrumentedTest):
+java.lang.AssertionError: runtime_benchmark_error_1
+	at io.github.mesteriis.rune.runtime.llama.LlamaRuntimeBenchmarkInstrumentedTest.fixedSyntheticCandidateScoringBaseline(LlamaRuntimeBenchmarkInstrumentedTest.kt:78)
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=fixedSyntheticCandidateScoringBaseline
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeBenchmarkInstrumentedTest
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: runtime_benchmark_error_1
+	at io.github.mesteriis.rune.runtime.llama.LlamaRuntimeBenchmarkInstrumentedTest.fixedSyntheticCandidateScoringBaseline(LlamaRuntimeBenchmarkInstrumentedTest.kt:78)
+
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.runtime.llama.LlamaRuntimeInstrumentedTest:
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=nativeLibraryLoadsAndBadFileReturnsTypedFailure
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=nativeLibraryLoadsAndBadFileReturnsTypedFailure
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=nativeScoringIndependentlyValidatesByteArraysAndReturnsNoPartialWire
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=nativeScoringIndependentlyValidatesByteArraysAndReturnsNoPartialWire
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=scoringBeforeLoadAndAfterCancelOrUnloadReturnsTypedFailure
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=scoringBeforeLoadAndAfterCancelOrUnloadReturnsTypedFailure
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=concurrentCancelAndCloseNeverUseADestroyedHandle
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=concurrentCancelAndCloseNeverUseADestroyedHandle
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=scoringRacesWithCancelUnloadAndCloseWithoutHanging
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=scoringRacesWithCancelUnloadAndCloseWithoutHanging
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=publicScoringRejectsInvalidInputWithoutAModel
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=publicScoringRejectsInvalidInputWithoutAModel
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.runtime.llama.LlamaRuntimeInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.083
+There were 2 failures:
+1) verifiedModelScoresAndRecoversThroughThePublicAndroidRuntime(io.github.mesteriis.rune.runtime.llama.LlamaRealModelInstrumentedTest)
+java.lang.AssertionError: exact qualification model is missing
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at io.github.mesteriis.rune.runtime.llama.LlamaRealModelInstrumentedTest.verifiedModel(LlamaRealModelInstrumentedTest.kt:95)
+	at io.github.mesteriis.rune.runtime.llama.LlamaRealModelInstrumentedTest.verifiedModelScoresAndRecoversThroughThePublicAndroidRuntime(LlamaRealModelInstrumentedTest.kt:26)
+2) fixedSyntheticCandidateScoringBaseline(io.github.mesteriis.rune.runtime.llama.LlamaRuntimeBenchmarkInstrumentedTest)
+java.lang.AssertionError: runtime_benchmark_error_1
+	at io.github.mesteriis.rune.runtime.llama.LlamaRuntimeBenchmarkInstrumentedTest.fixedSyntheticCandidateScoringBaseline(LlamaRuntimeBenchmarkInstrumentedTest.kt:78)
+
+FAILURES!!!
+Tests run: 8,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

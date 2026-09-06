@@ -1,0 +1,20 @@
+{
+  "baseReceiptSha256": "eba989d69e7cc04916dc752e879cef5ca8463903a12f45cd534d54f50f67dbb7",
+  "testSourceDeltas": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImePrivacyInstrumentedTest.kt": {
+      "before": "18d73bc3bdd833f0e3a2bf71a710e7b9a23e06358ed74194ed28f40ab0c30d71",
+      "after": "7a77563188f65ff08eace1b55de6e29ee326a436d0b354fbaa3f49d2880cfbf2"
+    },
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/RealModelTypingInstrumentedTest.kt": {
+      "before": "c38bec1a9c0ea2293c70693daa564cbe452dee3b2fc354fbdd4795b9e4a5bf3f",
+      "after": "d569e63c2249325fa2a1bac0b3defc4deb1f3a3b2acb87b157ee9f98130bd271"
+    },
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingSettingsInstrumentedTest.kt": {
+      "before": "c1119cd44d7933430de4e4fad0bf7714fb0b9fe261869e4620b5eed6ed28645f",
+      "after": "d0002334ccc0b4614f35a4c6a795a075a34411494fc21bb5d8761568e924a366"
+    }
+  },
+  "appUnchanged": true,
+  "testApkSha256": "0c0656574c6fb9eaead6037ef752618f0befdf8cfef0d93df0cee604ec493aa9",
+  "scope": "Content-free read-only optional typing admission snapshot and settings failure context; assertions and delays unchanged"
+}

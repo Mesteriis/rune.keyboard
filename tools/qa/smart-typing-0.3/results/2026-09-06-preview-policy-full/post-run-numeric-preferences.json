@@ -1,0 +1,25 @@
+{
+  "scope": "after full suite, not failure-time snapshot",
+  "settings": {
+    "schema_version": {
+      "type": "int",
+      "value": "3"
+    },
+    "double_space_period": {
+      "type": "boolean",
+      "value": "false"
+    },
+    "candidate_strip": {
+      "type": "boolean",
+      "value": "true"
+    },
+    "autocorrection_mode": {
+      "type": "string",
+      "value": "OFF"
+    },
+    "mechanical_punctuation": {
+      "type": "boolean",
+      "value": "false"
+    }
+  }
+}

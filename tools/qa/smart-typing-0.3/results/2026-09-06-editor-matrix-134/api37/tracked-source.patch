@@ -1,0 +1,282 @@
+diff --git a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImePrivacyInstrumentedTest.kt b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImePrivacyInstrumentedTest.kt
+index 8668c74..e1f303f 100644
+--- a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImePrivacyInstrumentedTest.kt
++++ b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImePrivacyInstrumentedTest.kt
+@@ -1,7 +1,12 @@
+ package io.github.mesteriis.rune.keyboard.qa
+ 
++import android.graphics.Bitmap
++import android.graphics.Rect
++import android.os.Bundle
+ import android.os.SystemClock
+ import androidx.test.ext.junit.runners.AndroidJUnit4
++import androidx.test.platform.app.InstrumentationRegistry
++import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
+ import org.junit.Assert.assertTrue
+ import org.junit.Test
+ import org.junit.runner.RunWith
+@@ -10,31 +15,92 @@ import org.junit.runner.RunWith
+ class ImePrivacyInstrumentedTest : ImeTestBase() {
+     @Test
+     fun passwordFieldSuppressesPopupWithNormalFieldPositiveControl() {
+-        driver.ensureKeyPreviewEnabled()
++        driver.setKeyPreviewForTest(true)
+         driver.tapQaControl("qa_seed_cursor")
+-        val normalKey = driver.characterKey("a", "A")
+-        val normalBefore = driver.previewCropFor(normalKey)
+-        val normalTouch = driver.touchDown(normalKey)
+-        SystemClock.sleep(150)
+-        val normalDuringScreen = driver.captureScreen()
+-        val normalDuring = driver.previewCropFor(normalKey, normalDuringScreen)
+-        driver.cancelTouch(normalTouch)
+-        val normalChanged = driver.changedPixels(normalBefore, normalDuring)
+-        if (normalChanged <= 40) {
+-            driver.saveFailureBitmap("popup-normal-before.png", normalBefore)
+-            driver.saveFailureBitmap("popup-normal-during.png", normalDuring)
+-            driver.saveFailureBitmap("popup-normal-during-full.png", normalDuringScreen)
++        observePreview(phase = 0, enabled = true, policy = InputPolicy.NORMAL, expectedVisible = true)
++        driver.setKeyPreviewForTest(false)
++        driver.focusField("qa_plain_text")
++        observePreview(phase = 1, enabled = false, policy = InputPolicy.NORMAL, expectedVisible = false)
++        driver.setKeyPreviewForTest(true)
++        driver.focusField("qa_password")
++        observePreview(phase = 2, enabled = true, policy = InputPolicy.SENSITIVE, expectedVisible = false)
++    }
++
++    /** Eventual visual policy, not a frame-latency or continuous-absence measurement. */
++    private fun observePreview(phase: Int, enabled: Boolean, policy: InputPolicy, expectedVisible: Boolean) {
++        driver.device.waitForIdle()
++        val bounds = Rect(driver.characterKey("b", "B").visibleBounds)
++        assertPreviewFixture(bounds, enabled, policy)
++        val crop = Rect(bounds.left, (bounds.top - bounds.height() * 2).coerceAtLeast(0), bounds.right, bounds.top)
++        fun captureCrop(): Bitmap {
++            val screen = driver.captureScreen()
++            return try {
++                Bitmap.createBitmap(screen, crop.left, crop.top, crop.width(), crop.height())
++            } finally {
++                screen.recycle()
++            }
+         }
+-        assertTrue("Normal-field positive control changed only $normalChanged pixels", normalChanged > 40)
+ 
+-        driver.focusField("qa_password")
+-        val passwordKey = driver.characterKey("a", "A")
+-        val passwordBefore = driver.previewCropFor(passwordKey)
+-        val passwordTouch = driver.touchDown(passwordKey)
+-        SystemClock.sleep(150)
+-        val passwordDuring = driver.previewCropFor(passwordKey)
+-        driver.cancelTouch(passwordTouch)
+-        assertTrue("Password field changed the preview crop", driver.changedPixels(passwordBefore, passwordDuring) <= 40)
++        // Each mode gets its own settled baseline. Never query accessibility during the touch:
++        // doing so can wait past a key's alternate timer and alter the state being observed.
++        var baseline = captureCrop()
++        var stable = false
++        val settleDeadline = SystemClock.uptimeMillis() + 1_000
++        while (SystemClock.uptimeMillis() < settleDeadline) {
++            SystemClock.sleep(50)
++            val next = captureCrop()
++            stable = driver.changedPixels(baseline, next) <= 40
++            baseline.recycle()
++            baseline = next
++            if (stable) break
++        }
++        if (!stable) {
++            baseline.recycle()
++            error("Preview phase $phase did not reach a stable baseline")
++        }
++        var maxChanged = -1
++        var samples = 0
++        var firstVisibleMs = -1L
++        var peak: Bitmap? = null
++        try {
++            val touch = driver.touchDown(bounds)
++            try {
++                val deadline = touch.downTime + 1_000
++                // All three phases sample the complete bounded window, including negative controls.
++                do {
++                    val sample = captureCrop()
++                    val elapsed = SystemClock.uptimeMillis() - touch.downTime
++                    val changed = driver.changedPixels(baseline, sample)
++                    samples++
++                    if (changed > 40 && firstVisibleMs < 0) firstVisibleMs = elapsed
++                    if (changed > maxChanged) {
++                        peak?.recycle()
++                        peak = sample
++                        maxChanged = changed
++                    } else sample.recycle()
++                    val remaining = deadline - SystemClock.uptimeMillis()
++                    if (remaining > 0) SystemClock.sleep(minOf(50, remaining))
++                } while (SystemClock.uptimeMillis() < deadline)
++            } finally {
++                driver.cancelTouch(touch)
++                InstrumentationRegistry.getInstrumentation().sendStatus(0, Bundle().apply {
++                    putInt("preview_phase", phase)
++                    putInt("preview_samples", samples)
++                    putInt("preview_max_changed_pixels", maxChanged)
++                    putLong("preview_first_visible_sample_ms", firstVisibleMs)
++                    putLong("preview_observed_ms", SystemClock.uptimeMillis() - touch.downTime)
++                })
++            }
++            val matches = if (expectedVisible) maxChanged > 40 else maxChanged in 0..40
++            if (!matches) {
++                driver.saveFailureBitmap("popup-$phase-before.png", baseline)
++                peak?.let { driver.saveFailureBitmap("popup-$phase-peak.png", it) }
++            }
++            assertTrue("Preview phase $phase: $maxChanged changed pixels across $samples samples", matches)
++        } finally {
++            baseline.recycle()
++            peak?.recycle()
++        }
+     }
+ 
+     @Test
+diff --git a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt
+index e064084..dc21c5d 100644
+--- a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt
++++ b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt
+@@ -145,7 +145,7 @@ class ImeTestDriver {
+     }
+ 
+     fun launchComposingQa(mode: String = "accept") {
+-        require(mode in setOf("accept", "reject", "drop", "private"))
++        require(mode in setOf("accept", "reject", "drop", "private", "raw"))
+         shell("am start -W -f 0x10008000 -n $QA_ACTIVITY --es qa_composing_fixture $mode")
+         awaitQaActivity()
+         waitForKeyboard()
+@@ -275,8 +275,10 @@ class ImeTestDriver {
+         }
+     }
+ 
+-    fun touchDown(key: UiObject2): TouchHandle {
+-        val bounds = key.visibleBounds
++    fun touchDown(key: UiObject2): TouchHandle = touchDown(key.visibleBounds)
++
++    /** Fixed observation geometry; callers can avoid accessibility queries during a held touch. */
++    fun touchDown(bounds: Rect): TouchHandle {
+         val downTime = SystemClock.uptimeMillis()
+         inject(downTime, downTime, MotionEvent.ACTION_DOWN, bounds.exactCenterX(), bounds.exactCenterY())
+         return TouchHandle(downTime, bounds.exactCenterX(), bounds.exactCenterY())
+@@ -436,6 +438,13 @@ class ImeTestDriver {
+         focusField("qa_plain_text")
+     }
+ 
++    fun setKeyPreviewForTest(enabled: Boolean) {
++        val preferences = targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
++        check(preferences.edit().putBoolean(SettingsCodec.KEY_KEY_PREVIEW, enabled).commit())
++        instrumentation.waitForIdleSync()
++        check(SettingsCodec.decode(preferences.all).keyPreview == enabled)
++    }
++
+     fun keyByText(label: String): UiObject2 = findKeyByText(label) ?: error("Rune key '$label' not found")
+ 
+     private fun restorePreferences() {
+diff --git a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/MechanicalPunctuationInstrumentedTest.kt b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/MechanicalPunctuationInstrumentedTest.kt
+index 491d3b0..c7f5a84 100644
+--- a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/MechanicalPunctuationInstrumentedTest.kt
++++ b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/MechanicalPunctuationInstrumentedTest.kt
+@@ -115,6 +115,17 @@ class MechanicalPunctuationInstrumentedTest : ImeTestBase() {
+         }
+     }
+ 
++    @Test fun commandDotKeepsItsSeparatorAcrossBoundaryAndOrdinaryBackspace() {
++        prepare()
++        word("find"); space(); driver.tapKey(".")
++        driver.awaitFieldText(FIELD, "find .")
++        space(); driver.tapKey("w")
++        driver.awaitFieldText(FIELD, "find . w")
++        driver.tapDelete(); driver.awaitFieldText(FIELD, "find . ")
++        driver.tapDelete(); driver.awaitFieldText(FIELD, "find .")
++        noReadback()
++    }
++
+     private fun prepare(mechanical: Boolean = true) {
+         driver.configureMechanicalPunctuation(mechanical, doubleSpace = false)
+         driver.launchComposingQa()
+diff --git a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingComposingInstrumentedTest.kt b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingComposingInstrumentedTest.kt
+index 56b4d92..fd4273f 100644
+--- a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingComposingInstrumentedTest.kt
++++ b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingComposingInstrumentedTest.kt
+@@ -207,6 +207,7 @@ class SmartTypingComposingInstrumentedTest : ImeTestBase() {
+ 
+     @Test
+     fun doubleSpaceUndoSurvivesBinderSelectionAcknowledgement() {
++        driver.configureMechanicalPunctuation(mechanical = false, doubleSpace = true)
+         driver.launchComposingQa()
+         type("a")
+         doubleTapSpace()
+@@ -220,6 +221,7 @@ class SmartTypingComposingInstrumentedTest : ImeTestBase() {
+ 
+     @Test
+     fun doubleSpaceWithoutOwnedWordKeepsBothSpacesAndDoesNotReadEditor() {
++        driver.configureMechanicalPunctuation(mechanical = false, doubleSpace = true)
+         driver.launchComposingQa()
+         doubleTapSpace()
+         driver.awaitFieldText(FIELD, "  ")
+diff --git a/app/src/debug/java/io/github/mesteriis/rune/keyboard/qa/ComposingQaFixture.kt b/app/src/debug/java/io/github/mesteriis/rune/keyboard/qa/ComposingQaFixture.kt
+index 46f1f45..428612d 100644
+--- a/app/src/debug/java/io/github/mesteriis/rune/keyboard/qa/ComposingQaFixture.kt
++++ b/app/src/debug/java/io/github/mesteriis/rune/keyboard/qa/ComposingQaFixture.kt
+@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
+ import android.content.Context
+ import android.os.Build
+ import android.text.InputType
++import android.view.KeyEvent
+ import android.view.inputmethod.BaseInputConnection
+ import android.view.inputmethod.EditorInfo
+ import android.view.inputmethod.ExtractedText
+@@ -27,6 +28,7 @@ internal class ComposingQaFixture(context: Context, mode: String) {
+         "connections" to 0, "compose" to 0, "region" to 0, "finish" to 0, "commit" to 0,
+         "before" to 0, "after" to 0, "selected" to 0, "extracted" to 0, "caps" to 0,
+         "surrounding" to 0, "snapshot" to 0, "callbacks" to 0,
++        "keyDown" to 0, "keyUp" to 0, "deleteKeyDown" to 0,
+     )
+     private val status = TextView(context).apply {
+         id = R.id.qa_composing_stats
+@@ -120,6 +122,7 @@ internal class ComposingQaFixture(context: Context, mode: String) {
+ 
+         override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? {
+             val target = super.onCreateInputConnection(outAttrs) ?: return null
++            if (mode == "raw") outAttrs.inputType = InputType.TYPE_NULL
+             onCall?.invoke("connections")
+             val count: (String) -> Unit = { onCall?.invoke(it) }
+             return when {
+@@ -146,6 +149,17 @@ internal class ComposingQaFixture(context: Context, mode: String) {
+         private val mode: String,
+         protected val count: (String) -> Unit,
+     ) : InputConnectionWrapper(target, false) {
++        override fun sendKeyEvent(event: KeyEvent): Boolean {
++            when (event.action) {
++                KeyEvent.ACTION_DOWN -> {
++                    count("keyDown")
++                    if (event.keyCode == KeyEvent.KEYCODE_DEL) count("deleteKeyDown")
++                }
++                KeyEvent.ACTION_UP -> count("keyUp")
++            }
++            return super.sendKeyEvent(event)
++        }
++
+         override fun setComposingText(text: CharSequence?, newCursorPosition: Int): Boolean {
+             count("compose")
+             if (mode == "reject" || mode == "drop") {
+diff --git a/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt b/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt
+index ea7aaf8..ff92356 100644
+--- a/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt
++++ b/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt
+@@ -190,6 +190,10 @@ object MechanicalPunctuationPlanner {
+ 
+     private fun protectedLine(text: String): Boolean {
+         var offset = text.lastIndexOf('\n') + 1
++        // A standalone dot can be a command's current-directory argument or literal output.
++        // Keep its separator as soon as the dot is typed, including inside quoted-in-prose
++        // command fragments. Waiting for a later slash/flag would already have damaged it.
++        if (DOT_ARGUMENT.containsMatchIn(text.substring(offset))) return true
+         while (offset < text.length) {
+             val cp = text.codePointAt(offset)
+             if (!Character.isLetterOrDigit(cp) && !isMark(cp) && cp != ' '.code &&
+@@ -216,5 +220,6 @@ object MechanicalPunctuationPlanner {
+     private fun keep(reason: UnchangedPunctuationReason) = MechanicalPunctuationPlan.Unchanged(reason)
+     private val PUNCTUATION = setOf(',', '.', '?', '!', ':', ';')
+     private val SENTENCE_END = setOf('.', '?', '!')
++    private val DOT_ARGUMENT = Regex("(?:^|\\s)(?:cd|cp|mv|rm|ls|du|stat|find|chmod|chown|git|rg|grep|echo|printf) +\\.(?=$|[\\s.])")
+     private val MARK_TYPES = setOf(Character.NON_SPACING_MARK.toInt(), Character.COMBINING_SPACING_MARK.toInt(), Character.ENCLOSING_MARK.toInt())
+ }

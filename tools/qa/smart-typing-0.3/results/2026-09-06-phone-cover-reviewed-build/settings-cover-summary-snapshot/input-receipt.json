@@ -1,0 +1,11 @@
+{
+  "previousReceiptSha256": "c9d947b128ae225a35bf6f9864e10a9da6fac1e904169824c9c212c454627a06",
+  "onlyNewDelta": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingSettingsInstrumentedTest.kt": {
+      "before": "d0002334ccc0b4614f35a4c6a795a075a34411494fc21bb5d8761568e924a366",
+      "after": "32859a76456375301feab72e9cb4bbbc8ea2a5247864460af475fe7524656649"
+    }
+  },
+  "testApkSha256": "d81102e7c3a8525853b631e25e683b84cf90dae7c1fd4c78d5d87916a02d1d93",
+  "scope": "Bounded scrolling to actual contextual summary before unchanged exact readiness assertion; app unchanged"
+}

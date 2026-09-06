@@ -1,0 +1,27 @@
+{
+  "baseInputReceiptSha256": "eba989d69e7cc04916dc752e879cef5ca8463903a12f45cd534d54f50f67dbb7",
+  "onlySourceDelta": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImePrivacyInstrumentedTest.kt": {
+      "before": "18d73bc3bdd833f0e3a2bf71a710e7b9a23e06358ed74194ed28f40ab0c30d71",
+      "after": "7a77563188f65ff08eace1b55de6e29ee326a436d0b354fbaa3f49d2880cfbf2"
+    }
+  },
+  "apks": {
+    "app-debug.apk": {
+      "source": "app/build/outputs/apk/debug/app-debug.apk",
+      "sha256": "6a7d0d179b5c0446d88991cb14359ca63f97ce570e1ec09e2692667399f721e1",
+      "bytes": 237001005
+    },
+    "app-debug-androidTest.apk": {
+      "source": "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+      "sha256": "6f79d6284941893e5d32cf63db249212f2233691b60e2114e6fe5b4ed246def5",
+      "bytes": 1445484
+    },
+    "runtime-llama-debug-androidTest.apk": {
+      "source": "runtime-llama/build/outputs/apk/androidTest/debug/runtime-llama-debug-androidTest.apk",
+      "sha256": "d8833c941b8e1938fb04e7dc9d13777d73bf4cb371a05c7dd304d53f33de85d5",
+      "bytes": 12976860
+    }
+  },
+  "noProductSourceOrAppApkChange": true
+}

@@ -1,0 +1,47 @@
+{
+  "scope": "full-app-instrumentation-API26",
+  "sourceCommit": "27d07ea",
+  "seconds": 641.797,
+  "tests": 131,
+  "success": 128,
+  "assumptions": 3,
+  "failures": 0,
+  "errors": 0,
+  "ignoredNonTestStatusBundles": 1506,
+  "skippedTests": [
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.RealModelScoringInstrumentedTest",
+      "test": "installedRuneTextLoadsAndScoresBoundedCandidates"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.RealModelServiceInstrumentedTest",
+      "test": "exactInstalledModelPreparesAndScoresThroughPrivateBinder"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.RealModelTypingInstrumentedTest",
+      "test": "installedModelCorrectsOnSpaceWithoutTapAndBackspaceRestoresOriginal"
+    }
+  ],
+  "runtimeContracts": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 0.058
+  },
+  "artifacts": {
+    "app/build/outputs/apk/debug/app-debug.apk": "4817d10e922022ed4372c41374a8c696812354d4949c7b85536787d248a48c9f",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "ed47b7fb1dabed15c3c1986f2bd51071df0e71386732b6118bd4eb71454c2502",
+    "runtime-llama/build/outputs/apk/androidTest/debug/runtime-llama-debug-androidTest.apk": "d8833c941b8e1938fb04e7dc9d13777d73bf4cb371a05c7dd304d53f33de85d5"
+  },
+  "logs": {
+    "full-app-instrumentation.log": "aaa44cc23599b83af2ce7b1e933df835be96426a2c2a1dac4ec1bc788dca0144",
+    "runtime-contract.log": "70015bfe5151d534794c0c9decb7cb55a20207b09f7e2d0bcffa6409cc9c3368"
+  },
+  "installedApks": {
+    "io.github.mesteriis.rune.keyboard": "4817d10e922022ed4372c41374a8c696812354d4949c7b85536787d248a48c9f",
+    "io.github.mesteriis.rune.keyboard.test": "ed47b7fb1dabed15c3c1986f2bd51071df0e71386732b6118bd4eb71454c2502",
+    "io.github.mesteriis.rune.runtime.llama.test": "d8833c941b8e1938fb04e7dc9d13777d73bf4cb371a05c7dd304d53f33de85d5"
+  },
+  "installedHashesMatchBuildArtifacts": true
+}

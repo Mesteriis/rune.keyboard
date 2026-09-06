@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-09-06T11:56:09.443Z" hostname="Mac.dlink" time="0.148">
+  <properties/>
+  <testcase name="countCapacityAndRecordCapacityAreEnforcedIndependently" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.016"/>
+  <testcase name="textNeedsConsentAndFreshEligibleSessionAndWorksWithoutMetadata" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.0"/>
+  <testcase name="storedConsentLoadsAfterEarlySessionButCannotAdoptThatSessionsContext" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.001"/>
+  <testcase name="metadataNeverInvokesPayloadAndTextDisableClosesAdmissionImmediately" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.001"/>
+  <testcase name="deleteInvalidatesQueuedRecordsAndAcknowledgesOnlyAfterIo" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.051"/>
+  <testcase name="staleExportPickerTicketsNeverOpenDestination" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.0"/>
+  <testcase name="ineligibleTransitionDropsQueuedPermittedPayloadBeforeWriterAdmission" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.001"/>
+  <testcase name="failedDurableReconciliationNeverAcknowledgesStopAsSuccessfulAndCanBeRetried" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.001"/>
+  <testcase name="consentRequiresBothStepsAndRejectsCancellationReplayAndStaleGeneration" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.0"/>
+  <testcase name="blockedDocumentProviderCannotDelayManagedStopOrDelete" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.004"/>
+  <testcase name="supersededQueuedAndInflightEnableCannotLeaveDurableEnableAtFailureAcknowledgement" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.001"/>
+  <testcase name="observerAndStorageFailuresAreContained" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.0"/>
+  <testcase name="reconciledFailureIsNotRetriedAsADifferentSuccessfulPreferenceCommand" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.001"/>
+  <testcase name="confirmedPreferenceSaveSurvivesQueuedAndInflightSessionChangesWithoutAdoptingContext" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.002"/>
+  <testcase name="fullEventQueueCannotStarveStopAndStopAcknowledgesAfterInflightIo" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.067"/>
+  <testcase name="malformedValuesFailClosedIndependently" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

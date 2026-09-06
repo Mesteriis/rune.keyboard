@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsHooksTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-09-06T11:56:09.731Z" hostname="Mac.dlink" time="0.016">
+  <properties/>
+  <testcase name="deferredSpaceAbstentionAndErrorUseSavedWordCandidatesAndRequestRevision" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsHooksTest" time="0.007"/>
+  <testcase name="rejectionAndProtectedBoundaryReasonsComeFromExistingBranches" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsHooksTest" time="0.001"/>
+  <testcase name="contextualWinnerAndTapPairActualSevenVariantsWithTheirOriginAndResult" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsHooksTest" time="0.004"/>
+  <testcase name="recordsActualCandidateRankingBoundaryAndUndoBranches" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsHooksTest" time="0.002"/>
+  <testcase name="manualOriginalUsesActualChoiceWithoutASecondPolicyDecision" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsHooksTest" time="0.001"/>
+  <testcase name="invalidationClosesObserverBeforeEditorFinalization" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsHooksTest" time="0.0"/>
+  <testcase name="contextualAbstentionAndErrorPairActualPendingVariantsWithoutFabricatingDecision" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsHooksTest" time="0.0"/>
+  <testcase name="throwingObserverCannotChangeSuccessfulOrRejectedEditorBehavior" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsHooksTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

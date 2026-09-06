@@ -26,6 +26,8 @@ Rune Keyboard — компактная приватная Android-клавиат
 
 На Fold проверены реальные модельные автозамена и Undo, ограничение CPU и выгрузка при простое. Полная приёмка качества, Fold и выпуска ещё продолжается; [сводный отчёт](docs/acceptance/2026-09-02-rune-smart-typing-0.3.md) отделяет пройденные проверки от оставшихся. Версия приложения остаётся 0.2.0 до закрытия release gates.
 
+В debug-сборке добавлены [необязательные локальные журналы](docs/DEBUG_DIAGNOSTICS.md): технические события без текста и отдельная запись ввода с двумя подтверждениями. Оба переключателя по умолчанию выключены. Запись исключает защищённые и неподходящие поля, ограничена по размеру и выгружается только вручную. В release/profile этот сбор отсутствует.
+
 ## Требования
 
 - JDK 17;
@@ -48,7 +50,7 @@ git submodule update --init --recursive
   forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate
 ```
 
-`privacyGateRelease` проверяет ровно одно разрешение `INTERNET`, отключённые cleartext/backup и отсутствие логирования. `imeIntelligenceBoundary` разрешает IME только bounded client interface/value contracts и проверяет транзитивные границы client/IPC/storage/inference, запрещая сеть, delivery, JNI вне adapter и сохранение payload; native gate проверяет ABI, зависимости и отсутствие JNI/log/network symbols.
+`privacyGateRelease` проверяет ровно одно разрешение `INTERNET`, отключённые cleartext/backup и отсутствие Logcat-логирования. `imeIntelligenceBoundary` проверяет транзитивные границы client/IPC/storage/inference отдельно по вариантам, запрещая сеть, delivery, JNI вне adapter и сохранение payload в модельном пути. Отдельная точная граница разрешает opt-in debug-журналы и проверяет отсутствие recorder/UI в release/profile до R8 и в итоговом APK. Native gate проверяет ABI, зависимости и отсутствие JNI/log/network symbols.
 
 Подпись release-сборки описана в [docs/RELEASE.md](docs/RELEASE.md); без keystore release собирается неподписанным.
 

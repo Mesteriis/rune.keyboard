@@ -1,0 +1,86 @@
+{
+  "log": "phone-cover-diagnostics-settings-typing-13.log",
+  "counts": {
+    "-4": 5,
+    "0": 6,
+    "-2": 2
+  },
+  "cases": [
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "test": "recreationDuringSecondConfirmationLeavesTextOff",
+      "code": -4,
+      "stack": "org.junit.AssumptionViolatedException: Existing user diagnostics must be preserved"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "test": "consentStartsWithFreshRuneInputAndDisableStopsTextOnly",
+      "code": -4,
+      "stack": "org.junit.AssumptionViolatedException: Existing user diagnostics must be preserved"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "test": "managementDeleteDisablesBothAndRemovesManagedLogs",
+      "code": -4,
+      "stack": "org.junit.AssumptionViolatedException: Existing user diagnostics must be preserved"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "test": "actualCandidateDecisionUndoAndSensitiveExclusionsReachSeparateStreams",
+      "code": -4,
+      "stack": "org.junit.AssumptionViolatedException: Existing user diagnostics must be preserved"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "test": "twoConfirmationsCancelIndependentlyAndSwitchesRemainIndependent",
+      "code": -4,
+      "stack": "org.junit.AssumptionViolatedException: Existing user diagnostics must be preserved"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest",
+      "test": "spellingAndStripChangesPreserveMechanicalUndoAndIndependentDoubleSpace",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest",
+      "test": "stripToggleCancelAndPrivateTransitionCannotResurrectOldCandidateContent",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest",
+      "test": "disablingSpellingCancelsHeldCorrectionWithoutEditorMutation",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest",
+      "test": "liveOffDropsCorrectionsAndEnableWaitsForExplicitEdit",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest",
+      "test": "stripBothDirectionsAndRepeatedTogglesPreserveHeldKeyAndSingleRelease",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest",
+      "test": "controlsPersistIndependentlyAndExplainCurrentCapabilities",
+      "code": -2,
+      "stack": "java.lang.AssertionError: Contextual summary did not match current model availability"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.RealModelTypingInstrumentedTest",
+      "test": "installedModelCorrectsOnSpaceWithoutTapAndBackspaceRestoresOriginal",
+      "code": -2,
+      "stack": "java.lang.IllegalStateException: Field qa_composing_text expected <a hello >, actual <a helllo >"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.RapidTypingInstrumentedTest",
+      "test": "rapidTouchBurstKeepsEveryCharacterAcrossWordBoundaries",
+      "code": 0
+    }
+  ],
+  "time": [
+    "138,06"
+  ],
+  "completed": true
+}

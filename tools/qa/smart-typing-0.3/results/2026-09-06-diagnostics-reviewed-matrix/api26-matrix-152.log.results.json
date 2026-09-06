@@ -1,0 +1,778 @@
+{
+  "log": "api26-matrix-152.log",
+  "counts": {
+    "0": 148,
+    "-4": 3,
+    "-2": 1
+  },
+  "cases": [
+    {
+      "class": "io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest",
+      "test": "candidateUpdatesKeepKeysShiftLanguageAndContainerIdentity",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest",
+      "test": "updateDuringHeldKeyDoesNotCancelTouchOrFlushPendingRender",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest",
+      "test": "candidateRefreshBetweenDownAndUpDoesNotSelectReplacementCell",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest",
+      "test": "cancellationStillReachesNestedLetterAndSpaceKeys",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest",
+      "test": "originalAndCorrectionExposeSelectedStateLabelledActionAndIdCallbacks",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest",
+      "test": "candidateUpOutsideWithoutMoveDoesNotSelect",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest",
+      "test": "secondaryPointerIsIgnoredAndCannotTakeOverReleasedOwner",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest",
+      "test": "candidateUpdateKeepsAttachedAlternatePopupSelectionAlive",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest",
+      "test": "sameIdWithChangedTextOrTypeCancelsPendingCandidateTap",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.ime.ui.CandidateStripInstrumentedTest",
+      "test": "missingOwnerPointerCancelsCandidateTap",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.client.BoundModelScoringClientInstrumentedTest",
+      "test": "repeatedSecurityExceptionsReleaseEveryConnectionAndStopRetryWhenIneligible",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.client.BoundModelScoringClientInstrumentedTest",
+      "test": "repeatedFalseBindsReleaseEveryConnectionAndStopRetryWhenIneligible",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.client.ModelDemandClientInstrumentedTest",
+      "test": "falseBindsExhaustExactlyTwoRetriesWhileDemandRemainsTrue",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.client.ModelDemandClientInstrumentedTest",
+      "test": "nullBindingAndDeathDisconnectOnceAndConnectedNotificationsAreTransitions",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.client.ModelDemandClientInstrumentedTest",
+      "test": "disableAndTerminalCloseRemoveTimersAndRejectCapturedTasks",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.client.ModelDemandClientInstrumentedTest",
+      "test": "offOnPreservesWatermarkAndRetiredCallbackCannotDeliver",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.client.ModelDemandClientInstrumentedTest",
+      "test": "oldTimerCannotEraseNewPendingRetryAndOldConnectionCannotDisconnectIt",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.client.ModelDemandClientInstrumentedTest",
+      "test": "newSessionCancelsOldRequestAndGenerationRejectsRecycledTokenCallback",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.client.ModelDemandClientInstrumentedTest",
+      "test": "sameAttachPreservesReplyAndRequestSequence",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.client.ModelDemandClientInstrumentedTest",
+      "test": "normalizedNoDemandNeverBindsAndConsumerDomainsAreIndependent",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.client.ModelDemandClientInstrumentedTest",
+      "test": "remoteFailureClearsActiveTokenAndDoesNotReplayOnReconnect",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.client.ModelDemandClientInstrumentedTest",
+      "test": "successfulReconnectsDoNotReplenishCreditOrReplayRequests",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.client.ModelDemandClientInstrumentedTest",
+      "test": "securityFailuresExhaustExactlyTwoRetriesWhileDemandRemainsTrue",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryStateStoreInstrumentedTest",
+      "test": "atomicallyRoundTripsInDedicatedDirectory",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryStateStoreInstrumentedTest",
+      "test": "recoversCommittedBackupWhenBaseFileIsMissing",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryStateStoreInstrumentedTest",
+      "test": "concurrentInstancesSerializeWithinOneProcess",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.delivery.ModelDeliveryManifestInstrumentedTest",
+      "test": "declaresOnlyInternetAndPrivateWorkerComponents",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "retiredWatchCallbacksAfterRestartCannotPoisonCurrentRegistration",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "ordinaryCancellationSuppressesLateSuccessAndReusesValidatedModel",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "explicitInvalidationOfUnchangedIdentityStillUnloadsBeforeReload",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "retiredWatchCallbacksAfterCloseCannotInvalidate",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "failedWatchRestartRetiresCallbacksAndLaterCurrentEventStillInvalidates",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "committedBackupWinsWithoutReadSideRecovery",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "modelSizeAndSymlinkEscapeAreRejectedBeforeLoad",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "pointerRotationCancelsBlockedScoreAndReloadsNextIdentity",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "pointerDeletionCancelsBlockedScoreAndLeavesNoModel",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "cancelledWordDuringPreparationReleasesPayloadAndNextWordSharesTheLoad",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "sessionUnbindDuringPreparationCancelsPartialLoadAndRebindStartsFresh",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "missingWatchDirectoryFailsRegistrationAndRealWatchObservesVersionDeletion",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "cancellationBeforeAdapterAdmissionDoesNotLoadScoreOrDiscardWarmModel",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "closeStillReleasesAValidatedWarmModel",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "absentCorruptAndOversizedPointersFailClosedBeforeRuntimeLoad",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ActiveModelLifecycleInstrumentedTest",
+      "test": "nativeLoadKeepsSharedPhysicalLockUntilSourceIsConsumed",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.RealModelScoringInstrumentedTest",
+      "test": "installedRuneTextLoadsAndScoresBoundedCandidates",
+      "code": -4,
+      "stack": "org.junit.AssumptionViolatedException: Exact Rune Text model is not installed"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.RealModelServiceInstrumentedTest",
+      "test": "exactInstalledModelPreparesAndScoresThroughPrivateBinder",
+      "code": -4,
+      "stack": "org.junit.AssumptionViolatedException: Explicit installed-model service probe only"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringIpcInstrumentedTest",
+      "test": "privateManifestContract",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringIpcInstrumentedTest",
+      "test": "oversizedCountAndTextRejectBeforeAllocation",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringIpcInstrumentedTest",
+      "test": "observerConfirmsRegistrationThenInvalidatesOnPointerChange",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringIpcInstrumentedTest",
+      "test": "boundedRequestAndNumericReplyRoundTrip",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringLifecycleInstrumentedTest",
+      "test": "immediateCancelSuppressesCallbackAndDoesNotWaitForScore",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringLifecycleInstrumentedTest",
+      "test": "onewayTransportKeepsOneActiveAndOnlyLatestPending",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringLifecycleInstrumentedTest",
+      "test": "criticalBackgroundAndLowMemoryRemainSuspendedUntilActualUnbindBind",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringLifecycleInstrumentedTest",
+      "test": "obsoleteConnectionEventsCannotReviveAnEndedClient",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringLifecycleInstrumentedTest",
+      "test": "debugFixtureIsPrivateSameUidAndActuallyRemote",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringLifecycleInstrumentedTest",
+      "test": "aRealReplyEvaluatedAfterMainThreadCancellationIsIgnored",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringLifecycleInstrumentedTest",
+      "test": "ineligibleEndedAndClosedSessionsCancelDeathRetryAndReleaseRegistrations",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringLifecycleInstrumentedTest",
+      "test": "realClientRebindsAfterProcessDeathWithoutReplayingPayload",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringLifecycleInstrumentedTest",
+      "test": "criticalTrimAndInvalidationDropPendingCancelActiveAndUnload",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringLifecycleInstrumentedTest",
+      "test": "ownerCanCertifyOnePostSpaceTokenWithoutAcceptingOtherOldRevisionReplies",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringLifecycleInstrumentedTest",
+      "test": "idleWorkerUnloadsAfterCompletionWithoutMoreInput",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest",
+      "test": "endingSessionClearsReadyAndLaterSessionRechecksRemovedModel",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest",
+      "test": "contextualCandidatesUseOneBoundedRemoteRequestAndEqualScoresKeepOriginal",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest",
+      "test": "inactiveOrSensitiveFactoryNeverReadsMetadataOrBinds",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest",
+      "test": "readyDoesNotReplayAndNextEditUsesRealRemoteClientWithoutEditorWrite",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest",
+      "test": "current95ProfileAppliesRemoteModelCorrectionAndImmediateUndo",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.readiness.AndroidModelCandidatesInstrumentedTest",
+      "test": "realBinderReplyAfterSpaceUsesOwnedSuffixAndImmediateUndo",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "idleActiveModelDoesNotRequestRuntimeWork",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "failedPostCommitReloadPromotesPreviousActive",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "failedActiveAndRollbackClearPointerInsteadOfExposingBadModel",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "concurrentPointerStoreInstancesSerializeWithinOneProcess",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "resumesSelfTestingJournalFromMovedVersion",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "recoveryUsesPersistedActivationDirectoryAfterDescriptorChanges",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "pointerStoreRecoversCommittedBackupWhenBaseFileIsMissing",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "committedSelfTestingJournalDoesNotRotateRollbackAgain",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "legacySameVersionCandidateCannotMaskCorruptRetainedActive",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "legacyPhaseWithoutActivationDirectoryFailsClosed",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "sameVersionImportReturnsToReadyWithoutRotatingOrStalling",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "rollbackCommitFailureKeepsDurablePhaseForRetry",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "deletingPointerLeavesNoAtomicFileThatCanRestoreAnActiveModel",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "rollbackPhaseAfterPointerCommitCannotReactivateFailedVersion",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinatorInstrumentedTest",
+      "test": "clearPointerPhaseFinishesCleanupAfterPointerCommitCrash",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsActivityInstrumentedTest",
+      "test": "opensWithoutModelAndSurvivesRotation",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ContextualPunctuationEditorInstrumentedTest",
+      "test": "remoteCursorMovementInvalidatesPendingReplyAndHeldPunctuationSelection",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ContextualPunctuationEditorInstrumentedTest",
+      "test": "explicitSelectionChangesOnlyOwnedBoundaryAndOptionalFirstLetterAcrossBinder",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ContextualPunctuationEditorInstrumentedTest",
+      "test": "obsoleteReplyAndCandidateCannotReplaceNewWordOrConsumeItsCurrentRequest",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditorActionInstrumentedTest",
+      "test": "multilineEnterCommitsANewlineInsteadOfSending",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditorActionInstrumentedTest",
+      "test": "standardAndCustomEditorActionsReachTheRemoteEditor",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditorBoundaryInstrumentedTest",
+      "test": "cyrillicSurrogateAndComplexGraphemesAreAtomic",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditorBoundaryInstrumentedTest",
+      "test": "injectedDownAndUpCommitExactlyOneKey",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditorBoundaryInstrumentedTest",
+      "test": "commitReplaceDeleteAndCursorBoundariesCrossBinder",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditorBoundaryInstrumentedTest",
+      "test": "editorFieldTypesExposeTheirRequiredLayouts",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditorFocusNavigationInstrumentedTest",
+      "test": "alreadyFocusedEditorRestoresKeyboardAfterExplicitHide",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditorFocusNavigationInstrumentedTest",
+      "test": "offscreenCustomEditorReceivesOneFocusTapAndItsAction",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ImeLifecycleInstrumentedTest",
+      "test": "backspaceRepeatStopsAfterCancel",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ImeLifecycleInstrumentedTest",
+      "test": "settingsChangeAppliesToTheNextImeView",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ImeLifecycleInstrumentedTest",
+      "test": "focusLossCancelsAnArmedCharacterGesture",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ImeLifecycleInstrumentedTest",
+      "test": "backspaceRepeatStopsWhenImeViewDetaches",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ImePrivacyInstrumentedTest",
+      "test": "passwordFieldSuppressesPopupWithNormalFieldPositiveControl",
+      "code": -2,
+      "stack": "java.lang.IllegalStateException: Character key not found"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ImePrivacyInstrumentedTest",
+      "test": "syntheticCanaryIsAbsentFromRuneProcessLogcat",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest",
+      "test": "canonicalCaseAutoReplacesOnBoundaryAndBackspaceRestoresOriginal",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest",
+      "test": "boundaryKeepsTypedOriginalAndDropsPreviousSuggestions",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest",
+      "test": "correctionAndOriginalTapsReplaceOnlyOwnedWordWithNoReadback",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.LiveCandidatesInstrumentedTest",
+      "test": "sensitiveEditorTransitionClearsLoadedSuggestionsAndPreservesPlainTyping",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest",
+      "test": "originalControlThenModelCorrectionOnSpaceAndOwnedUndo",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest",
+      "test": "blockedReplyAfterRealOriginalTapCannotReviveCorrection",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest",
+      "test": "remoteProcessDeathPreservesEditorAndRetryDoesNotReplay",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.MechanicalProtectedFormsInstrumentedTest",
+      "test": "urlEmailAndTimeKeepPunctuationAndOrdinaryDeleteAcrossBinder",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest",
+      "test": "pairOfDotsWaitsForWhitespaceAndNewWordThenUndoesCapsTogether",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest",
+      "test": "decimalVersionAndHostnameKeepOwnedBoundariesWithoutLayerChanges",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest",
+      "test": "cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest",
+      "test": "commaPopupPunctuationCapsAndImmediateUndoNeverReplayOldWord",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest",
+      "test": "commandDotKeepsItsSeparatorAcrossBoundaryAndOrdinaryBackspace",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.NonNormalEditorInstrumentedTest",
+      "test": "urlKeepsOriginalWithoutSmartTypingOrReads",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.NonNormalEditorInstrumentedTest",
+      "test": "passwordKeepsOriginalWithoutSmartTypingOrReads",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.NonNormalEditorInstrumentedTest",
+      "test": "phoneKeepsOriginalWithoutSmartTypingOrReads",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.NonNormalEditorInstrumentedTest",
+      "test": "dateTimeKeepsOriginalWithoutSmartTypingOrReads",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.NonNormalEditorInstrumentedTest",
+      "test": "numberKeepsOriginalWithoutSmartTypingOrReads",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.NonNormalEditorInstrumentedTest",
+      "test": "emailKeepsOriginalWithoutSmartTypingOrReads",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.NonNormalEditorInstrumentedTest",
+      "test": "noPersonalizedLearningKeepsOriginalWithoutSmartTypingOrReads",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.OwnedBatchInstrumentedTest",
+      "test": "commitBoundaryAndRestoreOwnedRegionPreserveTextAndDoNotReadEditor",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.RapidTypingInstrumentedTest",
+      "test": "rapidTouchBurstKeepsEveryCharacterAcrossWordBoundaries",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.RawEditorInstrumentedTest",
+      "test": "typeNullUsesRawKeysWithoutCompositionCorrectionsStripOrReadback",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.RealModelTypingInstrumentedTest",
+      "test": "installedModelCorrectsOnSpaceWithoutTapAndBackspaceRestoresOriginal",
+      "code": -4,
+      "stack": "org.junit.AssumptionViolatedException: Explicit installed-model typing probe only"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "droppedSpanWithExplicitCallbackContinuesAsPlainText",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "rejectedSpanWithExplicitCallbackContinuesAsPlainText",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "changingToSensitiveEditorRemovesThePreviousOriginalFromTheStrip",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "noPersonalizedLearningNeverReadsEditorTextOrSetsComposition",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "droppedOwnedSpanWithCallbackDisablesCompositionForTheSession",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "cursorMovementAndSelectionFinishTheOldSpan",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "restartInputDoesNotReplaceOrDuplicateThePriorComposition",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "languageSwitchPreservesTextAndFinishesComposition",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "doubleSpaceWithoutOwnedWordKeepsBothSpacesAndDoesNotReadEditor",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "editorRewriteInvalidatesOwnedTextWithoutReplay",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "currentOriginalStripTapDoesNotWriteEditorAndUpdatesWithTheWord",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "inputViewDetachDoesNotReplayThePriorComposition",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "stationarySpaceHoldFinishesCompositionBeforeAnyCursorStep",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "doubleSpaceUndoSurvivesBinderSelectionAcknowledgement",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest",
+      "test": "wordAndLeadingBoundaryComposeAndDeleteWithoutReplayingCommittedText",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest",
+      "test": "spellingAndStripChangesPreserveMechanicalUndoAndIndependentDoubleSpace",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest",
+      "test": "stripToggleCancelAndPrivateTransitionCannotResurrectOldCandidateContent",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest",
+      "test": "disablingSpellingCancelsHeldCorrectionWithoutEditorMutation",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest",
+      "test": "liveOffDropsCorrectionsAndEnableWaitsForExplicitEdit",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest",
+      "test": "stripBothDirectionsAndRepeatedTogglesPreserveHeldKeyAndSingleRelease",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest",
+      "test": "controlsPersistIndependentlyAndExplainCurrentCapabilities",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "test": "recreationDuringSecondConfirmationLeavesTextOff",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "test": "consentStartsWithFreshRuneInputAndDisableStopsTextOnly",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "test": "managementDeleteDisablesBothAndRemovesManagedLogs",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "test": "actualCandidateDecisionUndoAndSensitiveExclusionsReachSeparateStreams",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "test": "twoConfirmationsCancelIndependentlyAndSwitchesRemainIndependent",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconAssetsInstrumentedTest",
+      "test": "packagedMappingsNoticesAndExactReferencesAreAvailableOffMainThread",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.smarttyping.lexicon.TopSevenInstrumentedTest",
+      "test": "requestedWidthsPreserveCertifiedPrefixes",
+      "code": 0
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.smarttyping.lexicon.TopSevenInstrumentedTest",
+      "test": "packedTopSevenAndExhaustiveComparison",
+      "code": 0
+    }
+  ],
+  "time": [
+    "1,196.409"
+  ],
+  "completed": true
+}

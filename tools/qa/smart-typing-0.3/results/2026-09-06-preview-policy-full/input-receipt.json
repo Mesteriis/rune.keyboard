@@ -1,0 +1,23 @@
+{
+  "sourceHead": "93b92f61fbf54da064634f83ad1ba255519db8e4",
+  "apkSha256": {
+    "app/build/outputs/apk/debug/app-debug.apk": "0d0a84c159060bb7626345634f5a0d779616bef9606ed88bae37b2f5adadf3d5",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "5be8151e445ebb968bd3eb92a33b821f44bb944db34ad3452136d1103cfaa15c"
+  },
+  "testSourceSha256": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImePrivacyInstrumentedTest.kt": "18d73bc3bdd833f0e3a2bf71a710e7b9a23e06358ed74194ed28f40ab0c30d71",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt": "76094226e9f857552cb4512606f11d9237c153f6f8f3a627683a78b4ff990020",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/PreviewPolicyAssertions.kt": "15a92664e5bdc87a623d8ed06929ee5302af1f4e5683e46fe66104860a97cb96"
+  },
+  "serial": "emulator-5556",
+  "installedApks": {
+    "io.github.mesteriis.rune.keyboard": {
+      "path": "/data/app/~~_h25yv-rScXovUo5wOiUOQ==/io.github.mesteriis.rune.keyboard-owB_Z4QmaR0vO0ne1HZvUw==/base.apk",
+      "sha256": "0d0a84c159060bb7626345634f5a0d779616bef9606ed88bae37b2f5adadf3d5"
+    },
+    "io.github.mesteriis.rune.keyboard.test": {
+      "path": "/data/app/~~nqj9CapQZleMut5NmsUBuQ==/io.github.mesteriis.rune.keyboard.test-4FKKSQGd9foyuZ4BEYUmqQ==/base.apk",
+      "sha256": "5be8151e445ebb968bd3eb92a33b821f44bb944db34ad3452136d1103cfaa15c"
+    }
+  }
+}

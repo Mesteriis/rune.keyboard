@@ -1,5 +1,92 @@
 # Rune Smart Typing 0.3 execution ledger
 
+- 2026-09-06 reviewed diagnostics checkpoint: recorder/hook/device reviews PASS;
+  focused JVM147/147, Python32/32 and the prescribed full local gates PASS
+  (300 Gradle tasks). All five strengthened diagnostic cases pass on both APIs.
+  Full152: API37 has149 PASS +3 optional-model assumptions; API26 has148 PASS,
+  3 assumptions and one preview-target readiness failure. The reviewed test-only
+  target wait passes the changed case on both APIs; complete API26 rerun then
+  passes149+3 assumptions in1171.451s. Ordinary JNI6/6 passes on both APIs;
+  an accidentally overbroad API26 command's two missing-model failures are retained.
+  Initial lint/recreation/popup/preview failures remain archived.
+  Evidence: `tools/qa/smart-typing-0.3/results/2026-09-06-diagnostics-reviewed-matrix/`.
+
+- 2026-09-06 authorized phone reinstall: the user explicitly allowed uninstall
+  and reinstall. Current app `6a7d0d17…` and test APK `6f79d628…` are installed;
+  all nine restored model/settings files match the verified local-only backup.
+  Exact GGUF and selected Rune IME are preserved. Both diagnostic toggles were
+  initially observed off, then enabled before instrumentation; existing logs were
+  preserved. Cover scope13: six PASS, five diagnostic assumptions, two failures
+  (contextual readiness summary and real-model Space correction). The75-touch
+  exact-text burst passes. Separate exact-model production Binder probe passes1/1:
+  first899ms/native286ms, warm166ms/native159ms; immediate duty refusal retained.
+  A content-free optional typing snapshot subsequently observes accepted real-model
+  ranking and correction/Undo PASS; initial timing failure remains unresolved.
+  Settings triage identifies an offscreen summary; bounded test-only scrolling
+  passes the affected case on Fold/API26/API37 with unchanged readiness assertions.
+  Phone evidence: `tools/qa/smart-typing-0.3/results/2026-09-06-phone-cover-reviewed-build/`.
+  This remains partial physical acceptance. Recording closes after route/session
+  invalidation until a fresh eligible session, an explicit current debug limitation.
+
+- 2026-09-06 final quality reconciliation: the historical prepared selector still
+  fails the user's point95 target with unchanged decisions (RU162/172, EN7/7,
+  ES239/243; all below300). The separate fixed-decision report preserves its
+  report/config/cache bytes and makes no model call or threshold fit. Current
+  combined-product reproduction needs complete actual payloads and final source
+  binding; a new corpus after every safety fix is not a user-imposed requirement.
+  The model-free12000-row export exists, but six tooling review findings must be
+  fixed before scoring. No final-replay model call has run. Full-controller
+  contextual attribution and actual installed named examples remain outstanding.
+
+- 2026-09-06 user extension: independently opt-in debug diagnostics and typed-text
+  recording with two explicit text confirmations. Design/implementation contract in
+  `2026-09-06-opt-in-typing-diagnostics.md`; defaults off, local bounded files,
+  next fresh eligible session, excluded fields never captured, manual export/delete.
+  Implementation and new privacy/device gates are in progress; this does not close
+  existing0.3 release gates. The later explicit reinstall authorization is recorded above.
+
+- 2026-09-06 contextual v5: `03b06b9` archives the reviewed1200-row source corpus,
+  strict replay/downgrade-resistant adapter, pre-score protocol freeze, complete
+  calibration then frozen holdout, numeric responses and all per-row decisions.
+  EN/RU/ES holdout suggestions38/37/27; source matches among suggestions37/36/26;
+ 0/50 insertions at source spaces each. No semantic precision/automatic-punctuation
+  gate claim. Corpus20/20, adapter35/35, Kotlin parity79/79 and gates236 PASS.
+  Mandatory postcommit JVM713/713 PASS.
+
+- 2026-09-06 editor hardening: full134 API26 passes131+3model assumptions;
+  API37 passes130+3assumptions with one custom-editor focus failure. Numeric
+  diagnostics locate ScrollView interception of the actual focus tap. Debug QA
+  disables fling/stretch; trace-free navigation/action4/4 PASS. Raw TYPE_NULL and
+ 75-character rapid text/normal deletion tests pass both APIs. New actual resident
+  IME→fake model Binder→editor Binder matrix passes3/3 on both APIs. Full139:
+  API26 and API37 each136 PASS +3 optional-model assumptions, no failures
+  (764.511s /720.627s). Exact receipts/source snapshots are archived under
+  `2026-09-06-editor-matrix-139`. Seven non-normal and one protected-form extension
+  are built and undergoing their initial device run, separately from this139 proof.
+
+- 2026-09-06 command-dot safety: `55195f2` protects standalone command dot arguments.
+  Current complete6000-row replay: EN293/304=96.38%, RU341/358=95.25%,
+  ES396/409=96.82%; all1071 automatic boundary Undo results exact. Only three
+  command-dot outputs change from the prior diagnostic; historical failures and
+  remaining false changes stay visible. This is revealed-data development evidence.
+  Mandatory postcommit JVM caught an unrelated notification-order fixture error;
+  held-unload regression fixed the test, then full713/713 PASS; worker unchanged.
+
+- 2026-09-06 current-controller safety: `93b92f6` gates PASS and mandatory postcommit JVM rerun PASS. New canonical eligibility requires independent unambiguous evidence and routed-dictionary agreement; all34 negative casing edits removed while Paris/London/Москва auto+Undo stay intact. Complete before/after6000-row diagnostics are archived under `2026-09-06-canonical-safety`, including then-failing RU341/359=94.9861% full text precision and remaining command-dot changes. Mechanical command-dot repair is in review/verification; no threshold retuning or unseen qualification claim. API37 replacement preview-policy test isolated2/2 PASS, full run in progress; historical original full-suite failure remains retained.
+
+- 2026-09-06 current evidence: evaluator v2 committed as c5f21b4 with source-bound
+  policy/parity/freeze receipts and orphan-cache rejection. Python51/51, actual
+  Kotlin parity79/79, prescribed gates236 tasks and post-commit JVM707/707 PASS.
+  Fresh ordinary generator calibration6000 and holdout6000 outputs match the old
+  archive; fresh native2940 responses have identical numbers/counts and the same
+  14 refusals, with max sum delta0. This is compatibility only: canonical-case and
+  current controller eligibility still need qualification. Full API26 at27d07ea:
+  128 PASS,3 optional-model assumptions,0 failures; JNI6/6 PASS. Full API37:
+  127 PASS,3 assumptions,1 popup positive-control failure; unchanged isolated
+  privacy2/2 and JNI6/6 subsequently PASS. Cause and full-suite stability remain
+  open. All installed APK identities and initial failures are preserved in
+  `tools/qa/smart-typing-0.3/results/2026-09-06-api26-full/` and `2026-09-06-api37-full/`.
+
 - 2026-09-06 resumption: fresh fd8872f JVM691/691 and prescribed local gates
   PASS. Physical OPENED Fold composing/mechanical18/18 and subsequent
   live/settings/installed-model10/11: the real model Space/Undo passed, while one

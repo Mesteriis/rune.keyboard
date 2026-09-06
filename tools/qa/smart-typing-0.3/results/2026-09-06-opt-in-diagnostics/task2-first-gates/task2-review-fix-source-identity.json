@@ -1,0 +1,7 @@
+{
+  "tools/verify-scoring-boundaries.py": "753b6b5269268b0875ed5f488b7103b6c350d0bc32909e7ec154e6d4b47b0cea",
+  "tools/typing_diagnostics_packaging.py": "e8b8a5b76720ea42f9c9d923cd2ded4b7e47ba1faf82a99449d63b68bf58e37e",
+  "tools/test_typing_diagnostics_boundary.py": "88e855057315603646703f1b176717593d0fe2628cd55ef1b109062b0190fe3b",
+  "tools/test_typing_diagnostics_packaging.py": "9b1c497676542b54a028c4605526785bcf6adb7d893cd5eea5bfcc9e56ec83fd",
+  "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/TypingDiagnosticsInstrumentedTest.kt": "3fe38be44e4298c101e3bdb62ce432082864c20fa9a397f00c7726a08fc1c1c6"
+}

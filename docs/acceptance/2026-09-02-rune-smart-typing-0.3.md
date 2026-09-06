@@ -22,7 +22,7 @@ copies and do not change the gitlink.
 | 6 Lexicons | Pinned/licensed RU/EN/ES assets, 3-format/API26 comparison, bounded exact top-N and reproduction receipts | Final product qualification; deterministic-only automatic spelling is unqualified |
 | 7 Model ranking | Frozen product point-95 evidence; actual Fold Space correction and immediate Undo | Current-source replay receipt, rapid-typing coverage |
 | 8 Mechanical punctuation | Pure exclusions/Undo plus real Binder positive scenarios; API26 numeric/version/hostname exclusions PASS | Full real-editor coverage |
-| 9 Contextual punctuation | Bounded explicit suggestions; total-score correction has JVM regressions and API26 controller-to-editor tests | New policy requires freeze and unseen holdout; physical strip tap remains separate |
+| 9 Contextual punctuation | Current fixed policy has source-bound v5 calibration/freeze/holdout and per-language reports; actual Kotlin parity79/79 | Source agreement is not semantic precision; physical strip tap remains separate |
 | 10 Settings/release | Schema3, independent preferences, content-free traces, local gates | Full matrices, current CI, complete reports, final version and main integration |
 
 The user changed the spelling release target from99% to **95% point precision**.
@@ -34,6 +34,46 @@ Wilson95% intervals remain in the [original product report](2026-09-03-smart-typ
 and [later point-95 policy acceptance](2026-09-04-smart-typing-0.3-autoreplace-95.md).
 Its old missing `corpusDirectory` receipt and changed source identities prevent
 replay by the current strict verifier; do not relabel that rejection as PASS.
+The September 6 compatibility diagnostic freshly reproduced all ordinary generator
+outputs (6000 rows per split) and all 2940 native responses: identical numeric
+scores/counts and the same 14 refusals, maximum sum delta 0. It leaves the strict
+verifier intact and does not qualify canonical-case or current controller
+eligibility. Evidence: `tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/`.
+
+Current actual-controller replay found additional casing and mechanical edits absent
+from that ordinary-score report. Commit `93b92f6` now requires unambiguous and
+consistent casing evidence across the routed dictionaries. It removed 34 incorrect
+canonical changes on correct/protected rows, while retaining automatic
+`Paris`, `London`, `Москва` and exact Undo. The then-current full final-text replay
+was EN293/305, RU341/359=94.9861%, ES396/410; RU remained below95%.
+All initial failures, row-level outputs and exact source/model-response bindings
+are preserved in `tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-canonical-safety/`.
+This is development evidence on already revealed data, not unseen qualification.
+Commit `55195f2` subsequently protects the standalone dot argument of bounded known
+commands. The new full-text replay is EN293/304=96.38%, RU341/358=95.25%,
+ES396/409=96.82%, with correct/protected false changes0/1000,1/1000,0/1000.
+Exactly the three command-dot outcomes changed; all1071 automatic boundary edits
+have exact Undo. The ES canonical-case error and RU spelling false change remain
+visible. See `tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-command-dot-safety/`.
+This is still revealed-data development evidence; historical failures remain intact.
+
+The final fixed-policy reproduction must include all current controller payloads:
+the command-dot run refused33 differing fragment requests instead of borrowing
+incompatible scores. Diagnostics hooks also changed the bound controller source.
+A fresh model-free12000-row export is under protocol review; no final-replay model
+call has run. Complete ready/unavailable controller outcomes, unchanged coefficients,
+full denominators and integer point95/volume/false-change gates are required.
+This is explicitly reproduction on revealed rows, not unseen generalization. The
+user did not require a new corpus after every safety fix; changing model/coefficients
+or selecting another policy from revealed outcomes would require a new protocol.
+
+The exact historical prepared selector remains FAIL under the revised point95
+target: RU162/172, EN7/7, ES239/243, all below300; RU also misses precision.
+The separate unchanged-decision comparison is in
+`tools/eval/smart-typing-0.3/results/2026-09-06-prepared-fixed-point95/`.
+It preserves original report/config/cache identities and performs no calibration
+or model call. The later authorized combined product branch has separate gates;
+neither its authorization nor this comparison establishes a prepared PASS.
 
 The deterministic branch does not qualify across all languages even at95%:
 EN254 and ES265 automatic decisions miss the300-volume gate; RU313/335=93.43%
@@ -45,8 +85,7 @@ is not accepted. A new calibration-only diagnostic compares total log probabilit
 with token averages and rival margins. The development patch now compares sums,
 requires an advantage over Original greater than0.5 and over the next punctuation
 candidate of at least4.0, and preserves explicit selection and ownership guards.
-The diagnostic does not evaluate held-out decisions or qualify this policy;
-a freeze and new unseen holdout remain required. See
+The diagnostic itself does not evaluate held-out decisions or qualify this policy. See
 `tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-contextual-calibration-diagnostic/`.
 
 The current evaluator now follows that production policy. Its version 2 receipts
@@ -55,11 +94,57 @@ Actual Kotlin/Python parity passed 79 synthetic cases; all 51 Python pipeline
 tests and prescribed local gates passed. This tooling evidence is separate from
 fresh model quality: `tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-contextual-tooling/`.
 
+The separately reviewed v5 source-observation corpus and adapter are committed in
+`03b06b9`. Before real scoring, a protocol receipt bound all corpus/source/backend
+and policy hashes. Complete calibration preceded configuration freeze; the fresh
+holdout followed it without parameter changes. Of600 holdout rows,517 were scored
+and83 production exclusions retained; errors and missing responses were zero.
+EN/RU/ES produced38/37/27 suggestions, with37/36/26 matching source punctuation,
+and0/50 insertions at observed spaces in each language. Full-source agreement is
+87/200,86/200,76/200; abstention is included. All per-boundary counts, Wilson95%
+row-descriptive intervals, decisions and attribution are in
+`tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-contextual-v5/`.
+These are source-boundary observations, not unique semantic labels or an automatic
+punctuation quality gate. Balanced Wikipedia strata do not establish chat precision;
+no source question/exclamation/semicolon strata or unknown-pretraining exclusion is
+claimed. Corpus20/20, current adapter35/35 and actual policy parity79/79 PASS.
+Those counts come from the actual contextual engine. Full-controller valid-word,
+spelling-precedence and canonical eligibility still need attribution over all1200
+rows before reporting displayed-suggestion coverage. No numeric semantic-precision
+floor was specified for suggestions; do not invent one or label source agreement
+as semantic accuracy.
+
 ## Required editor matrix
 
-The latest archived API26/API37 runs contain52 tests in five selected classes;
-they do **not** establish the complete application suite below. A test name is
-coverage evidence, not proof of a final-head run. The amended Space policy also
+The earlier134-test full run passed API26 with131 PASS, three optional-model
+assumptions and no failures. API37 had130 PASS, three assumptions and one focus
+failure before a custom editor action. Both new TYPE_NULL and75-character rapid
+input tests passed. The prior131-test failures remain archived separately.
+A dedicated reproduction showed ScrollView intercepting the following focus tap;
+the default debug QA surface now disables fling and overscroll stretch. Final
+trace-free API37 navigation/action scope passed4/4, including all six action IDs,
+offscreen focus and focused-editor restoration. The subsequent complete139-test runs
+finished with136 PASS, three optional-model assumptions and zero failures on each
+API (26:764.511s,37:720.627s); exact source/APK receipts and changed-source
+snapshots are in `2026-09-06-editor-matrix-139`.
+The ordinary-CI live fake model/editor Binder matrix passed3/3 on both APIs: numeric
+Original control, model Space correction/Undo, stale Original-tap reply rejection,
+and actual remote process death with unchanged editor state and no replay.
+This uses the resident controller, production coordinators and real bound client;
+fixed lexical input/readiness and numeric model responses are explicit test seams,
+not production factory, packaged lexicon, JNI or model quality qualification.
+
+The reviewed diagnostic build subsequently completes152 cases: API37 has149 PASS,
+three optional-model assumptions and no failures; API26 has148 PASS, three assumptions
+and one preview-target readiness failure. All five strengthened diagnostic cases
+pass on both APIs. A reviewed test-only wait for the actual b/B target passes the
+changed case on both; the full API26 rerun subsequently passes149+3 assumptions
+in1171.451s. API37's full152
+uses the preceding test APK, with the changed case verified separately. Exact
+receipts, original failures, final focused JVM147/147 and actual complete local
+gates are archived in `2026-09-06-diagnostics-reviewed-matrix`.
+
+The amended Space policy also
 allows one still-owned spelling result for250ms after ordinary Space; a blanket
 “all results after Space are ignored” assertion is superseded by that contract.
 
@@ -81,13 +166,13 @@ allows one still-owned spelling result for250ms after ordinary Space; a blanket
 | 14 | Password: no strip/composition/model/readback/content logs | Privacy/live fixtures; aggregate sensitive counters and final matrix pending |
 | 15 | NO_PERSONALIZED_LEARNING protections | Composing sensitive counters; inner Fold PASS; aggregate model-request proof pending |
 | 16 | Email/URL/number/phone/date-time never corrected | Layout tests exist; correction-specific editor assertions pending |
-| 17 | TYPE_NULL raw behavior | QA field exists; direct raw-event instrumentation pending |
-| 18 | Model kill preserves text and fallback | Client lifecycle tests exist; combined live-editor kill proof pending |
+| 17 | TYPE_NULL raw behavior | New raw fixture passes API26/API37: balanced down/up, exact Delete, no composing/strip/readback |
+| 18 | Model kill preserves text and fallback | Live fake real-Binder matrix passes both APIs in complete139 runs |
 | 19 | Late results after Space |250ms owned grace plus invalidation unit/Binder-client tests; complete editor proof pending |
 | 20 | Late result after editor change | Client/controller tests; final editor matrix pending |
 | 21 | Late result after language change | Client/controller tests; final editor matrix pending |
 | 22 | Candidate update preserves key instances | Live/settings touch tests; inner Fold PASS |
-| 23 | Rapid typing loses/duplicates no characters | Instrumented rapid-touch input and frame/event measurements pending |
+| 23 | Rapid typing loses/duplicates no characters |75-character bounded touch burst and exact deletion pass API26/API37; physical frame/event/energy measurements remain |
 | 24 | Held Backspace inside/outside composition | Existing editor coverage; complete final receipt pending |
 | 25 | Mechanical URL/version/decimal exclusions | API26 decimal/version/hostname editor cases PASS; URL/email/time full editor cases still separate |
 | 26 | Contextual tap changes only allowed segment | API26 controller-to-editor Binder3/3 PASS; physical strip tap path still separate |
@@ -120,17 +205,29 @@ settings fixture's unconditional “model unavailable” expectation on a Ready
 installation. Real-model Space correction/Undo passed. Test corrections and
 their subsequent receipts must retain this initial failure.
 
-The corrected settings test and three new contextual Binder editor tests compiled and passed source review. Phone installation of the new test APK failed with `INSTALL_FAILED_UPDATE_INCOMPATIBLE`; the current host debug key differs. No uninstall occurred. A local-only verified model/settings backup is prepared; user confirmation to reinstall/restore has been requested.
+The corrected settings test and three new contextual Binder editor tests compiled and passed source review. Phone installation initially failed with `INSTALL_FAILED_UPDATE_INCOMPATIBLE` because the host debug key differed. After the user's explicit permission to uninstall/reinstall, the reviewed app and test APK were installed and all nine model/settings files restored and hash-verified from a local-only backup. The initial signature failure remains historical evidence.
 
 API26 was installed locally. The first contextual/settings run passed6/9; its
 three setup failures were an invalid lifetime-zero expectation for the resident
 IME's existing NORMAL caps-mode lookup. A diagnostic named that counter, and
 the corrected tests retain zero payload reads and assert no new calls of any
 read API during no-edit scoring actions. Contextual3/settings6/mechanical4 then
-passed **13/13**. Full application instrumentation is running separately. The
-first API37 image download failed reading its ZIP; a controlled retry is in
-progress. Evidence:
+passed **13/13**. Full API26 instrumentation subsequently passed128 of131 with
+three optional-model assumptions and no failures; JNI6/6 passed. The first API37
+image download failed reading its ZIP; the controlled retry installed revision6.
+Its full suite passed127 of131 with three assumptions and one failed popup
+positive control; unchanged isolated privacy2/2 and JNI6/6 passed afterward.
+The original A-key/150ms rendering cause remains unproven. Later numeric and
+PixelCopy probes retained both failures and passes. The replacement test uses a
+no-alternate B key, frozen touch/crop geometry, a current-setting and actual-view
+assertion, and a full nominal1s sampled window for normal-enabled, normal-disabled
+and password-enabled modes. Isolated API37 passed2/2; the complete suite for this
+new test is still running. It verifies eventual sampled visual policy, not latency
+or continuous absence. All earlier failure receipts remain unchanged.
+Evidence:
 `tools/qa/smart-typing-0.3/results/2026-09-06-binder-followup/`.
+Full logs/APK attestations: `2026-09-06-api26-full/` and `2026-09-06-api37-full/`
+under the same results parent.
 
 Both installed APK hashes were checked against the tested local APKs before
 these runs. Evidence: `tools/qa/smart-typing-0.3/results/2026-09-06-fold-inner/`.
@@ -155,11 +252,11 @@ See [publication provenance](2026-09-05-rune-text-v1-hugging-face.md).
 
 | Release gate | Current status |
 | --- | --- |
-| Fresh JVM and prescribed local gates | PASS at resumption source |
-| API26 complete final matrix | OPEN; previous scoped52/52 PASS |
-| API37 complete final matrix/stability | OPEN; previous first50/52 FAIL and unchanged repeat52/52 PASS |
+| Fresh JVM and prescribed local gates | Committed03b06b9 JVM713/713 and gates PASS. Reviewed diagnostics: focused JVM147/147, Python32/32 and prescribed full gates300 tasks PASS; new commit/whole postcommit JVM still pending |
+| API26 complete final matrix | Complete rerun152:149 PASS +3 assumptions, zero failures; all five diagnostic cases PASS. Ordinary JNI6/6 PASS. Initial preview and overbroad missing-model command failures retained |
+| API37 complete final matrix/stability | Full152:149 PASS +3 assumptions, zero failures; subsequent test-only preview case1/1 and JNI6/6 PASS; prior failures retained |
 | Fold inner named functional probes | PARTIAL PASS; initial settings fixture failure retained |
-| Fold transitions/real editors/rapid typing/energy | OPEN |
-| Current-source full quality qualification | OPEN; contextual quality not accepted |
+| Fold transitions/real editors/rapid typing/energy | OPEN. Current cover13:6 PASS,5 diagnostics assumptions preserving logs,2 initial failures.75-touch exact text PASS. Exact-model Binder1/1 PASS (899ms first/166ms warm). Read-only admission observation shows model correction/Undo PASS; initial timing miss unresolved. Bounded summary scroll fixes observed settings fixture; affected case PASS on Fold/API26/API37 |
+| Current-source full quality qualification | OPEN: complete actual-payload fixed-policy spelling reproduction and full-controller contextual attribution remain. Model-free export review found six tooling issues, no new scores. v5 source agreement is reported with its semantic limits |
 | Current external CI | No PR-triggered runs returned for fd8872f by the GitHub connector; remote main remains b5400cb; not a full workflow inventory |
 | Model final release / version0.3.0 / main merge | BLOCKED by remaining gates |

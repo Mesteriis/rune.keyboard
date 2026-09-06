@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_privacy_summary">Sin analítica ni subidas automáticas. Los eventos de depuración y la grabación de entrada de Rune son opcionales, están desactivados por defecto y se guardan localmente solo tras activarlos. Grabar la entrada requiere dos confirmaciones y excluye campos sensibles o no compatibles. La exportación es manual; el proveedor elegido puede sincronizar copias fuera del control de Rune.</string>
+    <string name="diagnostics_title">Registros de depuración opcionales</string>
+    <string name="diagnostics_metadata_title">Eventos de diagnóstico</string>
+    <string name="diagnostics_metadata_summary">Tipos de eventos, decisiones y contadores limitados locales. Sin texto, valores de teclas, hashes de texto ni identidad del editor. Desactivado por defecto; hasta 1 MiB.</string>
+    <string name="diagnostics_text_title">Grabar la entrada de Rune</string>
+    <string name="diagnostics_text_summary">Registro local opcional del texto, candidatos y decisiones de la escritura permitida con Rune. Independiente de los eventos. Requiere dos confirmaciones; hasta 4 MiB.</string>
+    <string name="diagnostics_manage">Gestionar registros de depuración</string>
+    <string name="diagnostics_manage_summary">Exportar cada registro por separado o desactivar ambas opciones y eliminar los registros locales.</string>
+    <string name="diagnostics_scope_title">¿Grabar la entrada de Rune?</string>
+    <string name="diagnostics_scope_message">Esta opción de depuración graba el texto introducido con Rune, su contexto propio, palabras originales, candidatos y decisiones reales. La grabación comienza solo en la siguiente sesión nueva de texto normal. Se excluyen contraseñas, campos privados, correo, URL, números, teléfonos, fecha/hora y editores de teclas sin procesar. Rune no lee texto existente del editor ni el portapapeles. ¿Continuar a la confirmación del almacenamiento local?</string>
+    <string name="diagnostics_storage_title">¿Guardar este texto localmente?</string>
+    <string name="diagnostics_storage_message">Rune guardará hasta 4 MiB de entrada grabada en archivos locales privados, rotando los registros antiguos. Es una excepción explícita al comportamiento habitual de no almacenar la entrada. Puede detener la grabación sin confirmación y eliminar los registros locales. No se sube nada automáticamente. ¿Activar la grabación?</string>
+    <string name="diagnostics_continue">Continuar</string>
+    <string name="diagnostics_enable">Activar grabación</string>
+    <string name="diagnostics_export_warning">La exportación es manual. El proveedor de documentos elegido puede sincronizar o subir el archivo exportado. Las copias exportadas quedan fuera del control de Rune y no se borran al eliminar los registros locales.</string>
+    <string name="diagnostics_export_metadata">Exportar eventos de diagnóstico</string>
+    <string name="diagnostics_export_text">Exportar entrada grabada</string>
+    <string name="diagnostics_delete">Desactivar ambas opciones y borrar registros locales</string>
+    <string name="diagnostics_status_format">Eventos de diagnóstico: %1$s\nEntrada grabada: %2$s</string>
+    <string name="diagnostics_on">Activado</string>
+    <string name="diagnostics_off">Desactivado</string>
+    <string name="diagnostics_next_session">La grabación activada comienza en una nueva sesión de entrada permitida. Las colas y los archivos tienen límites; algunos eventos pueden descartarse.</string>
+    <string name="diagnostics_working">Procesando…</string>
+    <string name="diagnostics_stopping">Deteniendo la grabación; esperando a que terminen las escrituras locales…</string>
+    <string name="diagnostics_deleting">Deteniendo y eliminando registros locales…</string>
+    <string name="diagnostics_deleted">Ambas opciones están desactivadas y se han eliminado los registros locales. Las copias exportadas permanecen fuera de Rune.</string>
+    <string name="diagnostics_exported">Exportación completada.</string>
+    <string name="diagnostics_failed">No se pudo completar la operación. No se confirma su finalización. Revise los interruptores e inténtelo de nuevo.</string>
+</resources>

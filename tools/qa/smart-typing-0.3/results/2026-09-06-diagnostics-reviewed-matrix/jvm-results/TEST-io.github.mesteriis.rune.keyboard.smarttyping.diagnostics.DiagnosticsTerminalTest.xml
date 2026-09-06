@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsTerminalTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-09-06T11:56:09.631Z" hostname="Mac.dlink" time="0.099">
+  <properties/>
+  <testcase name="terminalAdmissionIsOneShotAndCannotOriginateFromIneligibleOrUnarmedSession" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsTerminalTest" time="0.002"/>
+  <testcase name="queuedTerminalOutcomeIsRevokedByOffAndDeleteBeforeAcknowledgement" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsTerminalTest" time="0.09"/>
+  <testcase name="refusedEditorRetainsOnlyOriginalContentFreeOutcomeAcrossSensitiveTransition" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsTerminalTest" time="0.006"/>
+  <testcase name="reentrantEditorSessionUsesOriginIdsAndDoesNotCaptureReplacementSession" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsTerminalTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

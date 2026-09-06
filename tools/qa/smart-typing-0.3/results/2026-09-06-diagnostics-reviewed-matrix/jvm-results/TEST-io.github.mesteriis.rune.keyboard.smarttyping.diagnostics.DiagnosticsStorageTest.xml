@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsStorageTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-09-06T11:56:09.592Z" hostname="Mac.dlink" time="0.038">
+  <properties/>
+  <testcase name="rejectsOversizeAppendAndNeverReadsAnOversizeManagedFile" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsStorageTest" time="0.004"/>
+  <testcase name="rotatesWithinEachStreamCapAndKeepsOtherFilesUntouched" classname="io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsStorageTest" time="0.033"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

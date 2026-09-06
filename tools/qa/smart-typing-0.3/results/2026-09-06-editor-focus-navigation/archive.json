@@ -1,0 +1,162 @@
+{
+  "parent-build.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/parent-build.log",
+    "sha256": "3d580ac0045c487864174c888cfb517ae4c5ce9ce7dafcb9da2547f53eb4f448",
+    "decodedSha256": "0c07750f86a1c119a1d86d361ab168ee6cc3d5e4183a16b0bd635524f964d605"
+  },
+  "no-fling-events.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/no-fling-events.log",
+    "sha256": "377e2d3fb980ad9de12a6955f6220b7d9f588f1a34f039db503f4520e5422459",
+    "decodedSha256": "8635525e398e5fbf779d528afdc004a000c0251afb3d9a923a67d6a58816821f"
+  },
+  "idle-build.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/idle-build.log",
+    "sha256": "196968decbca72f9646dff2ae641849aba45fa76c91f3154136ec025449fa843",
+    "decodedSha256": "254bd4991a9e6a05c026e63bb08b9d8197c1d3a60e52d0fb48bef0e29fc9d1b7"
+  },
+  "ImeQaActivity.no-animation-diagnostic.kt": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/ImeQaActivity.no-animation-diagnostic.kt",
+    "sha256": "24d2b6daee1e5800edd16178e2668769bf9c17392e32c084c05f0dda66d20626",
+    "decodedSha256": "24d2b6daee1e5800edd16178e2668769bf9c17392e32c084c05f0dda66d20626"
+  },
+  "parent-isolated.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/parent-isolated.log",
+    "sha256": "aed48299741eb920d3502bfedb83b050cf815514739af3ae512ccb62d0cb896e",
+    "decodedSha256": "3627012243fc9a9d0b243e00524d61b363e1d9dbeb290313da885473c0a2c518"
+  },
+  "stationary-build.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/stationary-build.log",
+    "sha256": "4313029d59bbcb06297ac8e1bdf786249838eff1cc82aade52ef99b913b270ce",
+    "decodedSha256": "64f22f2ad74ef729974f5e49719fcd2cc71ce38033ca3114065cb78474a5908c"
+  },
+  "no-fling-build.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/no-fling-build.log",
+    "sha256": "65a05360128780f150003a1c96ec21f7dcf5e1b74b56f4a1855bef350e3353b7",
+    "decodedSha256": "44d93d3729ae33c44e5e1b682830b999197b433ab580ce0a7bbf9dd8191d9f3b"
+  },
+  "idle-events.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/idle-events.log",
+    "sha256": "a62246133cc2ed01b86b1d472e8902b625677d42310f48b5c15060d8df3951db",
+    "decodedSha256": "747cfc9be50212b47fe295dd4aa0553aa2509caf75a25d17f7a7acd1ddd65268"
+  },
+  "no-animation-build-corrected.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/no-animation-build-corrected.log",
+    "sha256": "ed03014ebf9a231bcc0fed8be01b65ab8891d6f87e850fdbfb3ef3121704cefb",
+    "decodedSha256": "47f798663a2ae947354bd463a1436f1a8951becbf1c70d8f561be95cf05a60da"
+  },
+  "stationary-events.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/stationary-events.log",
+    "sha256": "f2848175cdfce07e28a57f3f7ccb6ff78847422ebcb5effcfc082920324c8c20",
+    "decodedSha256": "cec9c2a00f8fa94583018171b02fc19de6433b4711fa980e041a4385c4c1cd2c"
+  },
+  "stationary-isolated.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/stationary-isolated.log",
+    "sha256": "6f54967bcbbbd7b356a51072a205669033a3ef96fcd36c2181bcb0fdd63c30a2",
+    "decodedSha256": "88cfac1051bdb1fa5e4208396b15444e5a94b0be0d6d06391299d50fdb10d35c"
+  },
+  "ImeQaActivity.diagnostic.kt": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/ImeQaActivity.diagnostic.kt",
+    "sha256": "a34797fcf61bf1e493855b849d542549e08d24feace0bebea995fd3e257926e6",
+    "decodedSha256": "a34797fcf61bf1e493855b849d542549e08d24feace0bebea995fd3e257926e6"
+  },
+  "ImeTestDriver.before.kt": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/ImeTestDriver.before.kt",
+    "sha256": "15ff613c54ae51049f671d8c8fbfcccf31343433b9e7c5f0de4da8f840a906d4",
+    "decodedSha256": "15ff613c54ae51049f671d8c8fbfcccf31343433b9e7c5f0de4da8f840a906d4"
+  },
+  "parent-apk-sha256.txt": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/parent-apk-sha256.txt",
+    "sha256": "a51d09496f21ebec8fd9fdd00bb3c312de789506f75e4bbbe1d992fef4db836f",
+    "decodedSha256": "a51d09496f21ebec8fd9fdd00bb3c312de789506f75e4bbbe1d992fef4db836f"
+  },
+  "parent-events.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/parent-events.log",
+    "sha256": "365d838df8e941557eaa6725c4d6526a3469edd25dfa7f2e0411d7905fad4cb0",
+    "decodedSha256": "fb230543a2cdb016a5143148291f02d2ab9452e7f6102bb5cb464c762f19ac01"
+  },
+  "isolated.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/isolated.log",
+    "sha256": "b0df150bcdfbae5dc41a49e842f5ee3807bb5d06c20a7fb5de497b5bf6672b96",
+    "decodedSha256": "e7fd774e0eed3f2fdfd692922fafb852dd431e84ae32e3586543b03ff9b1e976"
+  },
+  "ImeTestDriver.idle-attempt.kt": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/ImeTestDriver.idle-attempt.kt",
+    "sha256": "3d402bdc3ec5f802d2c0cfdf879e526e9798de79cdd32324e656263a024ea493",
+    "decodedSha256": "3d402bdc3ec5f802d2c0cfdf879e526e9798de79cdd32324e656263a024ea493"
+  },
+  "EditorFocusNavigationInstrumentedTest.red.kt": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/EditorFocusNavigationInstrumentedTest.red.kt",
+    "sha256": "c6068d3563c9d4839212973cf6002b22468813f67c0fc885ad72571efa56c5a5",
+    "decodedSha256": "c6068d3563c9d4839212973cf6002b22468813f67c0fc885ad72571efa56c5a5"
+  },
+  "no-fling-isolated.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/no-fling-isolated.log",
+    "sha256": "34014aef4b5893e0d7da7b0960d07ec0a47baf5ad045c3805d34fa8ba2fafc1e",
+    "decodedSha256": "e7aab0d895b8aaeb1487ff54fcae1d2daff302e0d59fc4fc88e7368a9336a207"
+  },
+  "no-animation-isolated.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/no-animation-isolated.log",
+    "sha256": "ff1b53b15eef633bf262a2430d7350f63557e4053d57a6ca74c25744eeb4feed",
+    "decodedSha256": "04bcb4e0358a2866c9f18ede5f48ca2a3299d31092b2270866597d66d8c110eb"
+  },
+  "no-animation-events.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/no-animation-events.log",
+    "sha256": "1e9d34bab618f8a332ad904a22c894a322ef84cfd0a83428e9c4c6da22f375d8",
+    "decodedSha256": "5578c733e5501d0622dac3d9f01e48adeb41916ca8c412632601ae5a008f82d8"
+  },
+  "no-animation-build.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/no-animation-build.log",
+    "sha256": "14379b98732feff2ada2baf39f532f6a1d1d82470cf0d9f8a053caaa06425ca0",
+    "decodedSha256": "46ea4bceb2897f98eaff30261b5d051ba43a655e898490a85fb837255d60ca87"
+  },
+  "ImeTestDriver.stationary-attempt.kt": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/ImeTestDriver.stationary-attempt.kt",
+    "sha256": "f52d73e62e60ad511fdf5b0f34d1fad02c1e4d5c75d04c5340f925759d97aa90",
+    "decodedSha256": "f52d73e62e60ad511fdf5b0f34d1fad02c1e4d5c75d04c5340f925759d97aa90"
+  },
+  "events.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/events.log",
+    "sha256": "61602c04bf2b97f1905715a314bd590e3eb7a2b55b6ee21d584ee42cfef6d6b5",
+    "decodedSha256": "785f4562c7b1dd169abcbbf89abf68197bc37e33e867e1d675ef79a019bd13c0"
+  },
+  "ImeQaActivity.before.kt": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/ImeQaActivity.before.kt",
+    "sha256": "4f485874201e3820013c5e3aea2678e83f1def999def8de939c85b895c9c0a67",
+    "decodedSha256": "4f485874201e3820013c5e3aea2678e83f1def999def8de939c85b895c9c0a67"
+  },
+  "idle-isolated.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/idle-isolated.log",
+    "sha256": "64e872026f890f1c3d9ff2778411ca1c6312b2149dc03faaf423fe577f7f749c",
+    "decodedSha256": "748352a6c984458263f52fc77f8ed30dce87572eeba673ab08d4522004c36298"
+  },
+  "no-animation-apk-sha256.txt": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/no-animation-apk-sha256.txt",
+    "sha256": "68289e9679506b6aa6e16b1fa3b82030f7519374bba55399737b636e6b08ba54",
+    "decodedSha256": "68289e9679506b6aa6e16b1fa3b82030f7519374bba55399737b636e6b08ba54"
+  },
+  "build.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/focus-touch-diagnostic/build.log",
+    "sha256": "7ad03ef97414ecf87a04a57b3ea7163140b68bf1476dd614823f6ddf6542cf9c",
+    "decodedSha256": "93f3cfe02c18a50344ca1434835be1419f27952bac5afc0430ca42f5f7a1944f"
+  },
+  "editor-focus-diagnostic-isolated.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/editor-focus-diagnostic-isolated.log",
+    "sha256": "197526a5be3ea16a524f449ac518a98c56486eedc352d1a0ff91c8b7a205822b",
+    "decodedSha256": "946bf08df8db72b70bb4b299421eb3d4437a5a03b36a930ce05ccc385f27cced"
+  },
+  "editor-focus-diagnostic.xml": {
+    "source": "build/smart-typing-0.3/api37-20260906/editor-focus-diagnostic.xml",
+    "sha256": "f3b3ee72b50ed7e22b23c6ca5795a415714b706c8286e678557e9f72dd9bdef5",
+    "decodedSha256": "f3b3ee72b50ed7e22b23c6ca5795a415714b706c8286e678557e9f72dd9bdef5"
+  },
+  "editor-navigation-final-scope.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/editor-navigation-final-scope.log",
+    "sha256": "70e18632bdb547d5246941aa2f324d6701645c4c495ad0502fdaa8038077eb43",
+    "decodedSha256": "d0b6a0c017b48f27550471c2ba955af26e2a1d9415d53f36a4e37ddd7b235281"
+  },
+  "live-fake-focus-input.json": {
+    "source": "build/smart-typing-0.3/api37-20260906/live-fake-focus-input.json",
+    "sha256": "5f04eab38f2135f50c002dc4ca383376353d23a5e60ee0cd2c6130e25d7cb7f7",
+    "decodedSha256": "5f04eab38f2135f50c002dc4ca383376353d23a5e60ee0cd2c6130e25d7cb7f7"
+  }
+}

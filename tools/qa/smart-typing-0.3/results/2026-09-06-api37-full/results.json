@@ -1,0 +1,75 @@
+{
+  "scope": "full-app-instrumentation-API37",
+  "sourceCommit": "27d07ea9f2753b5a464fd616eaf7d4b5177347a5",
+  "seconds": 1071.729,
+  "tests": 131,
+  "success": 127,
+  "failures": 1,
+  "errors": 0,
+  "assumptions": 3,
+  "ignoredNonTestStatusBundles": 1506,
+  "nonPassingTests": [
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.RealModelScoringInstrumentedTest",
+      "test": "installedRuneTextLoadsAndScoresBoundedCandidates",
+      "code": -4
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.RealModelServiceInstrumentedTest",
+      "test": "exactInstalledModelPreparesAndScoresThroughPrivateBinder",
+      "code": -4
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ImePrivacyInstrumentedTest",
+      "test": "passwordFieldSuppressesPopupWithNormalFieldPositiveControl",
+      "code": -2
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.RealModelTypingInstrumentedTest",
+      "test": "installedModelCorrectsOnSpaceWithoutTapAndBackspaceRestoresOriginal",
+      "code": -4
+    }
+  ],
+  "logSha256": "b5c613e5fd1a6aaa6f972572ff3a86d7b70ac304211fbb9cedc461f7595dd66c",
+  "installedApks": {
+    "io.github.mesteriis.rune.keyboard": {
+      "localArtifact": "app/build/outputs/apk/debug/app-debug.apk",
+      "sha256": "4817d10e922022ed4372c41374a8c696812354d4949c7b85536787d248a48c9f"
+    },
+    "io.github.mesteriis.rune.keyboard.test": {
+      "localArtifact": "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+      "sha256": "ed47b7fb1dabed15c3c1986f2bd51071df0e71386732b6118bd4eb71454c2502"
+    },
+    "io.github.mesteriis.rune.runtime.llama.test": {
+      "localArtifact": "runtime-llama/build/outputs/apk/androidTest/debug/runtime-llama-debug-androidTest.apk",
+      "sha256": "d8833c941b8e1938fb04e7dc9d13777d73bf4cb371a05c7dd304d53f33de85d5"
+    }
+  },
+  "device": {
+    "api": 37,
+    "avd": "rune_api37_20260906",
+    "systemImage": "android-37.0;google_apis_ps16k;arm64-v8a",
+    "imageRevision": 6,
+    "display": "1080x2340"
+  },
+  "followups": {
+    "runtime-contract.log": {
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.16,
+      "sha256": "938ec8f9290fe41a5c9dcf651b4eb90e0988ce4849d982a0e689bc0406069a77"
+    },
+    "privacy-isolated-unchanged.log": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 27.663,
+      "sha256": "eef37b5de97d907d012a667627585e733b08da9bc04efaf72b6a392a53d75b29"
+    }
+  },
+  "fullSuiteStatus": "FAIL",
+  "failureRootCause": "not established; unchanged isolated privacy class passes"
+}

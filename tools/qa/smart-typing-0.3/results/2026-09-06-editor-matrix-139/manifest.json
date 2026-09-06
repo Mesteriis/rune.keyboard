@@ -1,0 +1,27 @@
+{
+  "files": {
+    "README.md": "94ad685273cecf01b024e315c5cf5ea2b699c18c6e52965c6586f681630b8959",
+    "api26-full.log": "38475c72dee543cf67fd9db116162087d33518aab9d4f4e65f366c2a72175b0e",
+    "api26-input-receipt.json": "5ed71c5f0254df1922d1bd04a1e38c7306314200bcb8604b091ba3ff5a8ce3d9",
+    "api37-full.log": "dcf9419fc82d928240dd5d7d790cd1340b781b5ba6113fcf4721f4a6b42e8594",
+    "api37-input-receipt.json": "5f04eab38f2135f50c002dc4ca383376353d23a5e60ee0cd2c6130e25d7cb7f7",
+    "results.json": "6cb861ed7256cfbfb719deff401d5cfda556ad4efb0afd5ccce3d4f2a41aa26c",
+    "sources/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/EditorFocusNavigationInstrumentedTest.kt": "de26b869fd7870dbf8d60c7fa00e650604c32655fe0d97dbc58548b2b5caa762",
+    "sources/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImePrivacyInstrumentedTest.kt": "18d73bc3bdd833f0e3a2bf71a710e7b9a23e06358ed74194ed28f40ab0c30d71",
+    "sources/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt": "15ff613c54ae51049f671d8c8fbfcccf31343433b9e7c5f0de4da8f840a906d4",
+    "sources/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveFakeModelBinderFixture.kt": "771fdc2c852a37a99cd71dd00f5dade389d1c337f9998963b0db24a949246527",
+    "sources/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveFakeModelBinderInstrumentedTest.kt": "bd3956e75ccbcdd3b12a298b84e0bc5c47f436cfc66c743cede1aadea97b3909",
+    "sources/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/PreviewPolicyAssertions.kt": "15a92664e5bdc87a623d8ed06929ee5302af1f4e5683e46fe66104860a97cb96",
+    "sources/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/RapidTypingInstrumentedTest.kt": "d1b5ed1b61689aca6ade1f68d624cfe9b814cff762449120532edd9daa3becf5",
+    "sources/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/RawEditorInstrumentedTest.kt": "c313d1bfc82c9c72e26c58a3983cde56fe0e936c42e7d4f4921f8443bce25113",
+    "sources/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingComposingInstrumentedTest.kt": "7e1ea2ffee5623f627aa9c63e8946d259248b83c30a947b5adf9d9107f4b458b",
+    "sources/app/src/debug/aidl/io/github/mesteriis/rune/keyboard/intelligence/inference/ILifecycleControl.aidl": "0f72327934f62a128190cab176563c16fcdbe61e81f6a1ac7bf3e4207353a5a3",
+    "sources/app/src/debug/aidl/io/github/mesteriis/rune/keyboard/intelligence/inference/ILifecyclePublicSnapshot.aidl": "3c384eee6753f800f7b9621bb6ac654839dfa1901bf54b530af94a2b7d1618df",
+    "sources/app/src/debug/java/io/github/mesteriis/rune/keyboard/intelligence/inference/LifecycleModelInferenceService.kt": "482815c2b87cf1054916b680f86273e33d42d3b2f75b1e21a4c25d5a28dd1409",
+    "sources/app/src/debug/java/io/github/mesteriis/rune/keyboard/qa/ComposingQaFixture.kt": "86d2d14c8c55922220761edb428d0798777fb0ddbd07e3449dc1c6edd627b7b0",
+    "sources/app/src/debug/java/io/github/mesteriis/rune/keyboard/qa/ImeQaActivity.kt": "a4d91cf48670ef3df905e43ed55bd5b3ed92d578d1d071073ecafaa1ad62ffbf",
+    "sources/app/src/test/java/io/github/mesteriis/rune/keyboard/intelligence/inference/ModelDutyWorkerTest.kt": "8698dcfd34308b62e7f37c4301f1d019035b86f33e5205f4cab3241506bc715e"
+  },
+  "source_base": "55195f20da162a10e690de98da481da18e7f77d8",
+  "changed_source_count": 15
+}

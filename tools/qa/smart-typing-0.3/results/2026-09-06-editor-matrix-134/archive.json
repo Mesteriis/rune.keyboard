@@ -1,0 +1,72 @@
+{
+  "api26/RapidTypingInstrumentedTest.kt": {
+    "source": "build/smart-typing-0.3/api26-20260906/final-editor-matrix-134/RapidTypingInstrumentedTest.kt",
+    "sha256": "d1b5ed1b61689aca6ade1f68d624cfe9b814cff762449120532edd9daa3becf5",
+    "decodedSha256": "d1b5ed1b61689aca6ade1f68d624cfe9b814cff762449120532edd9daa3becf5"
+  },
+  "api26/tracked-source.patch": {
+    "source": "build/smart-typing-0.3/api26-20260906/final-editor-matrix-134/tracked-source.patch",
+    "sha256": "e79e099f75d1c12d400eaf019956be9999d2c768270e48db9c7878fcf618639b",
+    "decodedSha256": "e79e099f75d1c12d400eaf019956be9999d2c768270e48db9c7878fcf618639b"
+  },
+  "api26/PreviewPolicyAssertions.kt": {
+    "source": "build/smart-typing-0.3/api26-20260906/final-editor-matrix-134/PreviewPolicyAssertions.kt",
+    "sha256": "15a92664e5bdc87a623d8ed06929ee5302af1f4e5683e46fe66104860a97cb96",
+    "decodedSha256": "15a92664e5bdc87a623d8ed06929ee5302af1f4e5683e46fe66104860a97cb96"
+  },
+  "api26/app-full.log.gz": {
+    "source": "build/smart-typing-0.3/api26-20260906/final-editor-matrix-134/app-full.log",
+    "sha256": "7c7ca153d94a23d2130062c5fd6a2f4112c7da458a3437ef888d19cfe0c754bc",
+    "decodedSha256": "1c7c8130fa9eb57808bb6b9ad3e951c1e2d8798ab1c813a5af2a4ff369164607"
+  },
+  "api26/RawEditorInstrumentedTest.kt": {
+    "source": "build/smart-typing-0.3/api26-20260906/final-editor-matrix-134/RawEditorInstrumentedTest.kt",
+    "sha256": "c313d1bfc82c9c72e26c58a3983cde56fe0e936c42e7d4f4921f8443bce25113",
+    "decodedSha256": "c313d1bfc82c9c72e26c58a3983cde56fe0e936c42e7d4f4921f8443bce25113"
+  },
+  "api26/input-receipt.json": {
+    "source": "build/smart-typing-0.3/api26-20260906/final-editor-matrix-134/input-receipt.json",
+    "sha256": "eaafb3d3aa9f2398252d80636ea798b4ad9aa8c06a4fc17b1b3f1a6f11adfddd",
+    "decodedSha256": "eaafb3d3aa9f2398252d80636ea798b4ad9aa8c06a4fc17b1b3f1a6f11adfddd"
+  },
+  "api37/RapidTypingInstrumentedTest.kt": {
+    "source": "build/smart-typing-0.3/api37-20260906/final-editor-matrix-134/RapidTypingInstrumentedTest.kt",
+    "sha256": "d1b5ed1b61689aca6ade1f68d624cfe9b814cff762449120532edd9daa3becf5",
+    "decodedSha256": "d1b5ed1b61689aca6ade1f68d624cfe9b814cff762449120532edd9daa3becf5"
+  },
+  "api37/tracked-source.patch": {
+    "source": "build/smart-typing-0.3/api37-20260906/final-editor-matrix-134/tracked-source.patch",
+    "sha256": "e79e099f75d1c12d400eaf019956be9999d2c768270e48db9c7878fcf618639b",
+    "decodedSha256": "e79e099f75d1c12d400eaf019956be9999d2c768270e48db9c7878fcf618639b"
+  },
+  "api37/PreviewPolicyAssertions.kt": {
+    "source": "build/smart-typing-0.3/api37-20260906/final-editor-matrix-134/PreviewPolicyAssertions.kt",
+    "sha256": "15a92664e5bdc87a623d8ed06929ee5302af1f4e5683e46fe66104860a97cb96",
+    "decodedSha256": "15a92664e5bdc87a623d8ed06929ee5302af1f4e5683e46fe66104860a97cb96"
+  },
+  "api37/app-full.log.gz": {
+    "source": "build/smart-typing-0.3/api37-20260906/final-editor-matrix-134/app-full.log",
+    "sha256": "78a55521c09c81c1e4df860150a98de9580e9922a344989cf9a7ef9632add613",
+    "decodedSha256": "bd9e38cdd7d94217029f891fe877d5de30747279ee687b79920dfacc7ba4c375"
+  },
+  "api37/RawEditorInstrumentedTest.kt": {
+    "source": "build/smart-typing-0.3/api37-20260906/final-editor-matrix-134/RawEditorInstrumentedTest.kt",
+    "sha256": "c313d1bfc82c9c72e26c58a3983cde56fe0e936c42e7d4f4921f8443bce25113",
+    "decodedSha256": "c313d1bfc82c9c72e26c58a3983cde56fe0e936c42e7d4f4921f8443bce25113"
+  },
+  "api37/input-receipt.json": {
+    "source": "build/smart-typing-0.3/api37-20260906/final-editor-matrix-134/input-receipt.json",
+    "sha256": "60562f4f8261a35c607a889b51723da3cf42153c48e618e13188de836b1e4396",
+    "decodedSha256": "60562f4f8261a35c607a889b51723da3cf42153c48e618e13188de836b1e4396"
+  },
+  "api37/failure/standardAndCustomEditorActionsReachTheRemoteEditor.png": {
+    "source": "build/smart-typing-0.3/api37-20260906/final-editor-matrix-134/failure/standardAndCustomEditorActionsReachTheRemoteEditor.png",
+    "sha256": "9d420197b035ca96383b81350d4fdcd3ea7eb3eec6b3442bc3242876b4205f5d",
+    "decodedSha256": "9d420197b035ca96383b81350d4fdcd3ea7eb3eec6b3442bc3242876b4205f5d"
+  },
+  "api37/failure/standardAndCustomEditorActionsReachTheRemoteEditor.xml": {
+    "source": "build/smart-typing-0.3/api37-20260906/final-editor-matrix-134/failure/standardAndCustomEditorActionsReachTheRemoteEditor.xml",
+    "sha256": "077941ffbad89a42538877a99c0654c786e77675611a6d955142a337413f6f4e",
+    "decodedSha256": "077941ffbad89a42538877a99c0654c786e77675611a6d955142a337413f6f4e"
+  }
+}

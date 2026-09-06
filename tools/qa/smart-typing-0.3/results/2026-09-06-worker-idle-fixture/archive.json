@@ -1,0 +1,32 @@
+{
+  "full-green-summary.json": {
+    "source": "build/smart-typing-0.3/worker-idle-postcommit-20260906/full-green-summary.json",
+    "sha256": "9c7eeddf4ad557b79f1fb1a80057e2c79e9315c44dfcaaaf464bbfb3ef65a773",
+    "decodedSha256": "9c7eeddf4ad557b79f1fb1a80057e2c79e9315c44dfcaaaf464bbfb3ef65a773"
+  },
+  "full-green.log.gz": {
+    "source": "build/smart-typing-0.3/worker-idle-postcommit-20260906/full-green.log",
+    "sha256": "71c441900bf83b7a38c71dd75c5f56ecf7f66af89e32ec3c7b57e71d0e2f7207",
+    "decodedSha256": "9566e8a6fe097da86897fdf024d8d2aa4dc233f00304abdae658441af2b68590"
+  },
+  "initial.xml": {
+    "source": "build/smart-typing-0.3/worker-idle-postcommit-20260906/initial.xml",
+    "sha256": "2fb19de289477cd5982c3c24d30a657da92bcc00bb57c44c0ba2ee26ace1a6ae",
+    "decodedSha256": "2fb19de289477cd5982c3c24d30a657da92bcc00bb57c44c0ba2ee26ace1a6ae"
+  },
+  "scoped-green.log.gz": {
+    "source": "build/smart-typing-0.3/worker-idle-postcommit-20260906/scoped-green.log",
+    "sha256": "3ce5073b3161962b47a886a1ef61fbad6006414942fe3a41ee2ff86af8256971",
+    "decodedSha256": "571cb832097b49269e091a1c8d0e83d5f5ad7c3cbed283133ca42d74268b0359"
+  },
+  "deterministic-red.log.gz": {
+    "source": "build/smart-typing-0.3/worker-idle-postcommit-20260906/deterministic-red.log",
+    "sha256": "968208e8550bc5ae25322c07d0fe14b8ffb09188b774dc8a973fe048b03b8c9c",
+    "decodedSha256": "072f17197265432aab8037ad965afe960cd4c2f9a4730553e518207cc8559e0a"
+  },
+  "resume-2026-09-06-command-dot-postcommit-jvm.log.gz": {
+    "source": "build/smart-typing-0.3/resume-2026-09-06-command-dot-postcommit-jvm.log",
+    "sha256": "2afe3967803599e1ca1b51bdfb05d450bafe56bff7889ecdfa12c1b23894a8bf",
+    "decodedSha256": "fd8b6488304c7d98319cf6a6ba726a3040732be2022081cccaf97ff2569a0e5e"
+  }
+}

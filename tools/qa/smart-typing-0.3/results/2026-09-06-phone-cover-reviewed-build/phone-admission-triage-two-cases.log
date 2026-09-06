@@ -1,0 +1,65 @@
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest:
+INSTRUMENTATION_STATUS: test=controlsPersistIndependentlyAndExplainCurrentCapabilities
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Required value was null.
+	at io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest.assertCurrentContextualSummary(SmartTypingSettingsInstrumentedTest.kt:183)
+	at io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest.controlsPersistIndependentlyAndExplainCurrentCapabilities(SmartTypingSettingsInstrumentedTest.kt:44)
+
+INSTRUMENTATION_STATUS: stream=
+Error in controlsPersistIndependentlyAndExplainCurrentCapabilities(io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest):
+java.lang.IllegalStateException: Required value was null.
+	at io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest.assertCurrentContextualSummary(SmartTypingSettingsInstrumentedTest.kt:183)
+	at io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest.controlsPersistIndependentlyAndExplainCurrentCapabilities(SmartTypingSettingsInstrumentedTest.kt:44)
+
+INSTRUMENTATION_STATUS: test=controlsPersistIndependentlyAndExplainCurrentCapabilities
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.RealModelTypingInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.RealModelTypingInstrumentedTest:
+INSTRUMENTATION_STATUS: test=installedModelCorrectsOnSpaceWithoutTapAndBackspaceRestoresOriginal
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: typingCanRequestCandidates=true
+INSTRUMENTATION_STATUS: typingCanRequestModelRanking=false
+INSTRUMENTATION_STATUS: typingClientAvailable=true
+INSTRUMENTATION_STATUS: typingModelRanked=true
+INSTRUMENTATION_STATUS: typingPausePending=false
+INSTRUMENTATION_STATUS: typingPendingRanking=false
+INSTRUMENTATION_STATUS: typingPreferredId=1
+INSTRUMENTATION_STATUS: typingRankingUsedModel=true
+INSTRUMENTATION_STATUS: typingReadinessOrdinal=4
+INSTRUMENTATION_STATUS: typingRequestCount=5
+INSTRUMENTATION_STATUS: typingSessionEnabled=true
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.RealModelTypingInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=installedModelCorrectsOnSpaceWithoutTapAndBackspaceRestoresOriginal
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 45,212
+There was 1 failure:
+1) controlsPersistIndependentlyAndExplainCurrentCapabilities(io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest)
+java.lang.IllegalStateException: Required value was null.
+	at io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest.assertCurrentContextualSummary(SmartTypingSettingsInstrumentedTest.kt:183)
+	at io.github.mesteriis.rune.keyboard.qa.SmartTypingSettingsInstrumentedTest.controlsPersistIndependentlyAndExplainCurrentCapabilities(SmartTypingSettingsInstrumentedTest.kt:44)
+
+FAILURES!!!
+Tests run: 2,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

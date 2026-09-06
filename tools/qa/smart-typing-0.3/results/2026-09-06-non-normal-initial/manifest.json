@@ -1,0 +1,11 @@
+{
+  "README.md": "9729160a50ac8f03cb2f98872051ababf539a023e8013c06fe471c1da140cae4",
+  "api26-initial.log": "85bb9e9a1aba5bac7645b6679d7d2e391cd7fd52cfb9e5f6c4e14aca3c1604d3",
+  "api37-initial.log": "686c88c08ef3c872c5abf74ad29805e38d7291f8db42db801e3cf5e08a892fc7",
+  "input-receipt.json": "2505f9c91035db727af5ed54055742175b22bb5a861cef6d7550b6adb3ab569c",
+  "installed-apks.json": "607c7bb0053c5af759279100f5cf3b8aec7306e1fea0eb399ae0e7da00041729",
+  "sources/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveFakeModelBinderFixture.kt": "9058e017339f7147c3c8b58df35a2e3e53359795f9bc5d93547f6b6471ff2978",
+  "sources/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/MechanicalProtectedFormsInstrumentedTest.kt": "3eaab2b3327c0f9e5b759a6006e98e8346ee370d214663e61862b350bcc3367f",
+  "sources/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/NonNormalEditorInstrumentedTest.kt": "573960138363bf2245b2b3ea7577fe9ce8ff0efe63094b9fda34c3975f11f85f",
+  "sources/app/src/debug/java/io/github/mesteriis/rune/keyboard/qa/ComposingQaFixture.kt": "f8ca71cb07fc4543111cb1ef5d0bd61e6b2b869b1c73570a8d389325082cf456"
+}

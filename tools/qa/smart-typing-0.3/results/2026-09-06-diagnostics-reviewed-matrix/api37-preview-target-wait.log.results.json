@@ -1,0 +1,17 @@
+{
+  "log": "api37-preview-target-wait.log",
+  "counts": {
+    "0": 1
+  },
+  "cases": [
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ImePrivacyInstrumentedTest",
+      "test": "passwordFieldSuppressesPopupWithNormalFieldPositiveControl",
+      "code": 0
+    }
+  ],
+  "time": [
+    "17.875"
+  ],
+  "completed": true
+}

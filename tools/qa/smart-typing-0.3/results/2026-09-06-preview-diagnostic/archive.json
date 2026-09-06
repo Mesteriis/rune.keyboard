@@ -1,0 +1,15 @@
+{
+  "scope": "API37-popup-diagnosis-not-qualification",
+  "full-app-with-preview-diagnostic.log": "Root intentionally force-stopped this incomplete diagnostic attempt before installing the reviewed exception-containment correction. Not a completed suite or product crash.",
+  "sourceSnapshot": "Final optional no-alternate PixelCopy diagnostic; earlier logs used earlier revisions described in the report.",
+  "files": {
+    "PreviewDiagnostic.kt": "559ae1dc3e497240dd41d71570ebedce9aa3a06c1575eb30795bd32371233392",
+    "privacy-isolated-unchanged.log.gz": "c3a9f295f16a5afcb4f922205d246dc5e0a0d5943c5e29a75684ce02203e0e7d",
+    "privacy-pixelcopy-isolated.log.gz": "3c732c84ffba673f591675bf991314f755b58b393b43b3652b973a23a0020693",
+    "privacy-pixelcopy-no-alt.log.gz": "d7150f852c55f237f047075e029c28880c743ae65471c592d3f17f7fd079bf81",
+    "privacy-diagnostic-isolated.log.gz": "6d3c2d47171945bdea1bb81a32155980604cea5949fb75fdc4ad24e5e73a1330",
+    "full-app-with-preview-diagnostic.log.gz": "acd2b2b88c816d487faa3dce2660d56541c3dab0d597f564ec1a11973fdd60e0",
+    "ImePrivacyInstrumentedTest.kt": "e7cbdc75022f77f969b8f1e8a98c3976216f49830694c091ad142c770218b04e",
+    "privacy-diagnostic-safe-isolated.log.gz": "11a414a3af4607f0cbfdcf386d33837a5b4c59d30de222627d2203a5756244c0"
+  }
+}
