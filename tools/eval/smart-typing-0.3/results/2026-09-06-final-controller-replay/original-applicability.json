@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "scope": "state-based-original-contract-annotation",
+  "releaseApproved": false,
+  "thresholdFittingPerformed": false,
+  "reportSha256": "deb9a0958d7ec8473f34c8910c933c6d1fb6f1dc78dd8d08a24763d5419b8303",
+  "rowsSha256": "6a19850ed122dd782ecde33aaba8087d76c77a34962fda44c055c94f717cfa75",
+  "toolSha256": "25cb79bd88c0e553133fc88588c3b22394d299370d3f9e8d32ad1507e0d86db9",
+  "frozenHoldoutGatesUnchanged": {
+    "en": {
+      "aggregateFalseChangePass": true,
+      "allPass": false,
+      "exactImmediateUndoPass": true,
+      "ordinarySpellingFalseChangePass": true,
+      "originalAlwaysAvailablePass": false,
+      "precisionPass": true,
+      "volumePass": true
+    },
+    "es": {
+      "aggregateFalseChangePass": true,
+      "allPass": false,
+      "exactImmediateUndoPass": true,
+      "ordinarySpellingFalseChangePass": true,
+      "originalAlwaysAvailablePass": false,
+      "precisionPass": true,
+      "volumePass": true
+    },
+    "ru": {
+      "aggregateFalseChangePass": true,
+      "allPass": false,
+      "exactImmediateUndoPass": true,
+      "ordinarySpellingFalseChangePass": true,
+      "originalAlwaysAvailablePass": false,
+      "precisionPass": true,
+      "volumePass": true
+    }
+  },
+  "groups": [
+    {
+      "split": "calibration",
+      "mode": "ready",
+      "language": "en",
+      "rows": 2000,
+      "ownedWord": 1902,
+      "noWord": 98,
+      "invalidState": 0,
+      "passed": 2000,
+      "failures": []
+    },
+    {
+      "split": "calibration",
+      "mode": "ready",
+      "language": "es",
+      "rows": 2000,
+      "ownedWord": 1902,
+      "noWord": 98,
+      "invalidState": 0,
+      "passed": 2000,
+      "failures": []
+    },
+    {
+      "split": "calibration",
+      "mode": "ready",
+      "language": "ru",
+      "rows": 2000,
+      "ownedWord": 1902,
+      "noWord": 98,
+      "invalidState": 0,
+      "passed": 2000,
+      "failures": []
+    },
+    {
+      "split": "calibration",
+      "mode": "unavailable",
+      "language": "en",
+      "rows": 2000,
+      "ownedWord": 1902,
+      "noWord": 98,
+      "invalidState": 0,
+      "passed": 2000,
+      "failures": []
+    },
+    {
+      "split": "calibration",
+      "mode": "unavailable",
+      "language": "es",
+      "rows": 2000,
+      "ownedWord": 1902,
+      "noWord": 98,
+      "invalidState": 0,
+      "passed": 2000,
+      "failures": []
+    },
+    {
+      "split": "calibration",
+      "mode": "unavailable",
+      "language": "ru",
+      "rows": 2000,
+      "ownedWord": 1902,
+      "noWord": 98,
+      "invalidState": 0,
+      "passed": 2000,
+      "failures": []
+    },
+    {
+      "split": "holdout",
+      "mode": "ready",
+      "language": "en",
+      "rows": 2000,
+      "ownedWord": 1901,
+      "noWord": 99,
+      "invalidState": 0,
+      "passed": 2000,
+      "failures": []
+    },
+    {
+      "split": "holdout",
+      "mode": "ready",
+      "language": "es",
+      "rows": 2000,
+      "ownedWord": 1901,
+      "noWord": 99,
+      "invalidState": 0,
+      "passed": 2000,
+      "failures": []
+    },
+    {
+      "split": "holdout",
+      "mode": "ready",
+      "language": "ru",
+      "rows": 2000,
+      "ownedWord": 1901,
+      "noWord": 99,
+      "invalidState": 0,
+      "passed": 2000,
+      "failures": []
+    },
+    {
+      "split": "holdout",
+      "mode": "unavailable",
+      "language": "en",
+      "rows": 2000,
+      "ownedWord": 1901,
+      "noWord": 99,
+      "invalidState": 0,
+      "passed": 2000,
+      "failures": []
+    },
+    {
+      "split": "holdout",
+      "mode": "unavailable",
+      "language": "es",
+      "rows": 2000,
+      "ownedWord": 1901,
+      "noWord": 99,
+      "invalidState": 0,
+      "passed": 2000,
+      "failures": []
+    },
+    {
+      "split": "holdout",
+      "mode": "unavailable",
+      "language": "ru",
+      "rows": 2000,
+      "ownedWord": 1901,
+      "noWord": 99,
+      "invalidState": 0,
+      "passed": 2000,
+      "failures": []
+    }
+  ],
+  "limits": [
+    "Separate contract annotation; frozen all-row FAIL remains unchanged.",
+    "Every row remains accounted for; no corpus category or model-request exemption.",
+    "Host candidate identities and exact text; Android tap behavior is separate."
+  ]
+}

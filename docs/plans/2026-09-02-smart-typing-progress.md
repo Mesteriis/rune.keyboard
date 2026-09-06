@@ -1,5 +1,26 @@
 # Rune Smart Typing 0.3 execution ledger
 
+- 2026-09-06 `27c3df2` fixes only number-row QA navigation with quarter-height
+  scrolls. Original suite/isolated failures and successes are preserved. Fold
+  mechanical5/5, affected API26/API37 cases1/1 each and prescribed240-task gates
+  PASS. Mandatory postcommit whole JVM743/743 PASS, zero failures/errors/skips.
+  A real cover-to-inner transition is prepared with Rune-typed `тест`, active
+  span0..4, and a saved content-limited receipt; awaiting the user's physical unfold.
+
+- 2026-09-06 final controller replay completed all5956 exact-model responses and
+  all24000 calibration/holdout × ready/unavailable observations. No retries or
+  missing/refused payloads;9 calibration and14 holdout native errors retained.
+  Holdout EN293/304, RU341/358, ES396/408 meet point95 and volume300; aggregate
+  false changes0/1/0 per1000 and exact immediate restoration6000/6000. The frozen
+  all-row Original gate remains FAIL; independent review identifies5703 owned
+  sets with Original and297 no-word states with exact preservation. A separate
+  state-based annotation passed independent review, with every row retained. Evidence is
+  archived in `tools/eval/smart-typing-0.3/results/2026-09-06-final-controller-replay/`.
+  This supersedes the model-free tooling checkpoint below, without changing the
+  old prepared-candidate failure or claiming unseen qualification/release approval.
+
+- 2026-09-06 local commit `c0b0280` contains reviewed opt-in diagnostics, editor QA and preserved evidence. Prescribed final gates240 tasks PASS; mandatory postcommit whole JVM743/743 PASS with zero failures/errors/skips. Current-source replay tooling remains separate and uncommitted pending protocol review; model calls0. Version0.2.0 and main integration remain unchanged.
+
 - 2026-09-06 reviewed diagnostics checkpoint: recorder/hook/device reviews PASS;
   focused JVM147/147, Python32/32 and the prescribed full local gates PASS
   (300 Gradle tasks). All five strengthened diagnostic cases pass on both APIs.

@@ -269,3 +269,63 @@ from unknown pretraining. V5 configs/reports explicitly record
 numeric contextual gate, semantic precision claim, spelling qualification or
 device-performance claim follows from this path. Root owns corpus review,
 protocol freeze and authorization of subsequent real scoring.
+
+## Final current-controller spelling replay
+
+`final_product_replay.py` is the sequential, fail-closed reproduction path for
+the unchanged original spelling calibration and holdout rows. It compiles
+`FinalProductSpellingReplay.kt` with the current production generator,
+controller, qualification, settings and all 12 packaged trie/length/rank/case
+assets. Expected spellings, cohorts and `noAuto` labels stay in the Python-only
+row archive and never enter Kotlin or native model requests. The export records
+every row, no-request outcome, live composing token (including fragments), and
+the exact session/revision/request identity, prefix, candidate IDs and ordered
+continuations for every request.
+
+Run the stages in order, using one fresh directory below `build/`:
+
+```sh
+ROOT=build/smart-typing-0.3/final-product-replay-YYYYMMDD
+python3 tools/eval/smart-typing-0.3/pipeline/final_product_replay.py export --root "$ROOT"
+python3 tools/eval/smart-typing-0.3/pipeline/final_product_replay.py score-calibration --root "$ROOT"
+python3 tools/eval/smart-typing-0.3/pipeline/final_product_replay.py freeze-policy --root "$ROOT"
+python3 tools/eval/smart-typing-0.3/pipeline/final_product_replay.py score-holdout --root "$ROOT"
+python3 tools/eval/smart-typing-0.3/pipeline/final_product_replay.py replay-report --root "$ROOT"
+```
+
+Review `export-receipt.json` before the first scoring command. Export binds the
+current production sources, harness and evaluator, complete original corpus,
+historical deterministic/combined fixed configs, compiler/JDK dependencies,
+all packaged assets, and the exact native runner/model bytes. Scoring always
+starts a fresh cache and retains its first response or error without retries.
+Policy freeze records the unchanged production policy; it performs no fitting.
+Every later stage rechecks the export bindings and exact preceding receipts.
+Missing, duplicate, foreign, reordered, non-finite or otherwise malformed
+responses fail closed.
+
+The report keeps model-ready and model-unavailable controller behavior separate
+and publishes spelling, canonical, mechanical and aggregate full-text counts,
+per-language/cohort coverage and abstention, model errors/no-requests,
+candidate recall, Original retention and exact immediate Undo. The >=95%
+precision, <=0.5% negative false-change and >=300 spelling-change requirements
+use exact integer comparisons. Wilson intervals are row-descriptive only. This
+is explicitly a revealed-data fixed-policy reproduction; it does not fit a new
+policy, establish unseen generalization, or replace phone/async evidence.
+
+The native success envelope is exactly `id`, `scores`, and nonnegative finite
+`durationMillis`; errors must use one of the frozen protocol error codes. Score
+admission independently derives the expected request/source/config/backend
+identity at every consumer and checks the complete receipt plus score bytes.
+Ready replay is split-scoped and carries language, prefix, candidate IDs and
+ordered continuations into Kotlin for comparison with the live request before
+reply delivery. Missing, duplicate, foreign or payload-drifted deliveries abort
+the harness. Candidate observations identify the Original by its explicit UI
+role, including when the owned token is a fragment of the corpus token. Product
+false-change gates use aggregate final text; ordinary spelling precision and
+spelling-only volume remain separate. Successful scores must also be directly
+deliverable through production `NumericScore`, so
+`scoredTokenCount` is restricted to 1–255; zero/256 are rejected instead of
+being converted into fabricated successful abstentions. Replay launches the Java
+executable frozen by export and revalidates the exact bounded JDK-local inventory:
+`bin/java`, `release`, `lib/modules`, `lib/libjli.dylib`, and
+`lib/server/libjvm.dylib`.

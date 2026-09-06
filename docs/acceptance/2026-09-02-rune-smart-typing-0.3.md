@@ -14,13 +14,13 @@ copies and do not change the gitlink.
 
 | Plan slice | Current evidence | Remaining acceptance |
 | --- | --- | --- |
-| 1 Evaluation | Frozen prepared and product corpora, scorers, numeric caches and per-language reports exist | Historical failures stay immutable; final current-source reproduction remains open |
+| 1 Evaluation | Frozen prepared and product corpora; current controller reproduction completed5956 responses and24000 observations; state-based Original annotation reviewed | Contextual controller attribution; historical failures stay immutable |
 | 2 Native scoring | Bounded numeric API, tokenizer cancellation, exception guards, exact scalar-oracle checks | Final-head native/Android verification |
 | 3 Private process | Production Binder worker, preparation, cancellation, CPU duty and idle unload verified on Fold | Complete editor/process-death matrix and energy |
 | 4 Composition | Owned RAM context, invalidation, full-word Backspace reopening, no replay/readback | Physical folding transition and full editor matrix |
 | 5 Strip and Undo | Stable keys, explicit Original and single owned correction transaction | Complete final-head physical/accessibility matrix |
 | 6 Lexicons | Pinned/licensed RU/EN/ES assets, 3-format/API26 comparison, bounded exact top-N and reproduction receipts | Final product qualification; deterministic-only automatic spelling is unqualified |
-| 7 Model ranking | Frozen product point-95 evidence; actual Fold Space correction and immediate Undo | Current-source replay receipt, rapid-typing coverage |
+| 7 Model ranking | Current controller holdout EN293/304, RU341/358, ES396/408; reviewed Original annotation; actual Fold Space correction and immediate Undo | Physical rapid-typing coverage |
 | 8 Mechanical punctuation | Pure exclusions/Undo plus real Binder positive scenarios; API26 numeric/version/hostname exclusions PASS | Full real-editor coverage |
 | 9 Contextual punctuation | Current fixed policy has source-bound v5 calibration/freeze/holdout and per-language reports; actual Kotlin parity79/79 | Source agreement is not semantic precision; physical strip tap remains separate |
 | 10 Settings/release | Schema3, independent preferences, content-free traces, local gates | Full matrices, current CI, complete reports, final version and main integration |
@@ -252,7 +252,7 @@ See [publication provenance](2026-09-05-rune-text-v1-hugging-face.md).
 
 | Release gate | Current status |
 | --- | --- |
-| Fresh JVM and prescribed local gates | Committed03b06b9 JVM713/713 and gates PASS. Reviewed diagnostics: focused JVM147/147, Python32/32 and prescribed full gates300 tasks PASS; new commit/whole postcommit JVM still pending |
+| Fresh JVM and prescribed local gates | Committed diagnostics/QA c0b0280: mandatory whole JVM743/743 PASS; Python32/32 and final prescribed gates240 tasks PASS. Source/packaging and both complete emulator matrices retained with exact receipts |
 | API26 complete final matrix | Complete rerun152:149 PASS +3 assumptions, zero failures; all five diagnostic cases PASS. Ordinary JNI6/6 PASS. Initial preview and overbroad missing-model command failures retained |
 | API37 complete final matrix/stability | Full152:149 PASS +3 assumptions, zero failures; subsequent test-only preview case1/1 and JNI6/6 PASS; prior failures retained |
 | Fold inner named functional probes | PARTIAL PASS; initial settings fixture failure retained |

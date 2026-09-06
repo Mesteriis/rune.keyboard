@@ -1,0 +1,23 @@
+{
+  "complete": true,
+  "errors": 9,
+  "experiment": "revealed-data-fixed-policy-reproduction",
+  "exportReceiptSha256": "62748ec036e8ce8eb42f1902a49a8abd7fed00305b62913171219eff688be932",
+  "identity": {
+    "configSha256": "ab7d50c19d4401fdca2c20e3ef2fa3e9b9e5a06368d62c7352b8b90042e46858",
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "payloadSha256": "a77bad7ab8f5c5d06497c0152b38419c4ad35d498683c138a16a62f4f49ec863",
+    "protocol": "rune-score-jsonl-v1",
+    "requestsSha256": "9cd213bc1cf83b5f605e705fbd66d2f92f6df8ae4b177d7c0c97a962ad93ef68",
+    "runnerSha256": "bc3f78bdf3ac41009a7603ca5dd6b6c4d5e8d6c2bdcaf3a692cfd95a3b3d2553",
+    "sourceSha256": "fe2bc43d6f7f180367f26348d669f53ee923b451cb1b298f6bd5a4645806d64e"
+  },
+  "policyFreezeSha256": null,
+  "requests": 2983,
+  "responses": 2983,
+  "retries": 0,
+  "schemaVersion": 1,
+  "scoresSha256": "ce550e89ac17ab71dc949afacb0631f68b718aa0b80d301e947621995561182c",
+  "split": "calibration",
+  "thresholdFittingPerformed": false
+}

@@ -1,0 +1,19 @@
+{
+  "calibrationCompleteSha256": "576f206622fe50e35bf4630310f68d8245396b51bb6f019763810d35c5c0714d",
+  "calibrationScoresSha256": "ce550e89ac17ab71dc949afacb0631f68b718aa0b80d301e947621995561182c",
+  "combinedConfigSha256": "ab7d50c19d4401fdca2c20e3ef2fa3e9b9e5a06368d62c7352b8b90042e46858",
+  "complete": true,
+  "deterministicConfigSha256": "920e2a592337475d33b2d13085e8c2751fe09b940deeb20f85e54c0798e8636a",
+  "experiment": "revealed-data-fixed-policy-reproduction",
+  "exportReceiptSha256": "62748ec036e8ce8eb42f1902a49a8abd7fed00305b62913171219eff688be932",
+  "holdoutObservedForSelection": false,
+  "policyChanged": false,
+  "productionPolicy": {
+    "maximumAlternatives": 3,
+    "qualification": "SpellingQualification.CURRENT",
+    "settings": "KeyboardSettings.DEFAULT"
+  },
+  "schemaVersion": 1,
+  "stage": "unchanged-policy-freeze",
+  "thresholdFittingPerformed": false
+}

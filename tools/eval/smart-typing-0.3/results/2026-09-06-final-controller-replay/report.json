@@ -1,0 +1,4481 @@
+{
+  "calibrationModelReady": {
+    "languages": {
+      "en": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1653,
+          "value": 0.8265,
+          "wilson95RowDescriptive": [
+            0.8092821571843397,
+            0.8424660109410022
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 347,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 952,
+          "value": 0.952,
+          "wilson95RowDescriptive": [
+            0.936933911349866,
+            0.963606698979192
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 700,
+              "numerator": 700,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9945421532469393,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "rows": 700,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 300,
+              "numerator": 300,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9873570287754538,
+                0.9999999999999998
+              ]
+            },
+            "coverage": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            },
+            "rows": 300,
+            "spellingAutomaticChanges": 0
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 1000,
+              "numerator": 653,
+              "value": 0.653,
+              "wilson95RowDescriptive": [
+                0.6229619706570872,
+                0.681867041246333
+              ]
+            },
+            "coverage": {
+              "denominator": 1000,
+              "numerator": 347,
+              "value": 0.347,
+              "wilson95RowDescriptive": [
+                0.3181329587536671,
+                0.37703802934291275
+              ]
+            },
+            "rows": 1000,
+            "spellingAutomaticChanges": 347
+          }
+        },
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 347,
+          "value": 0.1735,
+          "wilson95RowDescriptive": [
+            0.15753398905899782,
+            0.19071784281566026
+          ]
+        },
+        "exactUndo": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 0,
+          "noRequests": 992,
+          "refusals": 0,
+          "requests": 1008
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 347,
+          "correctChanges": 344,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 347,
+            "numerator": 344,
+            "value": 0.9913544668587896,
+            "wilson95RowDescriptive": [
+              0.9748935174146227,
+              0.9970554681648613
+            ]
+          }
+        },
+        "originalRetention": {
+          "denominator": 2000,
+          "numerator": 1902,
+          "value": 0.951,
+          "wilson95RowDescriptive": [
+            0.9406443633026171,
+            0.9596264600496927
+          ]
+        },
+        "rows": 2000
+      },
+      "es": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1566,
+          "value": 0.783,
+          "wilson95RowDescriptive": [
+            0.7644014031420224,
+            0.8005135480967883
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 435,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 925,
+          "value": 0.925,
+          "wilson95RowDescriptive": [
+            0.9069990602607456,
+            0.9397481950265327
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 1,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 700,
+              "numerator": 700,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9945421532469393,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "rows": 700,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 300,
+              "numerator": 300,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9873570287754538,
+                0.9999999999999998
+              ]
+            },
+            "coverage": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            },
+            "rows": 300,
+            "spellingAutomaticChanges": 0
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 1000,
+              "numerator": 566,
+              "value": 0.566,
+              "wilson95RowDescriptive": [
+                0.5350866438157509,
+                0.5964082240641557
+              ]
+            },
+            "coverage": {
+              "denominator": 1000,
+              "numerator": 434,
+              "value": 0.434,
+              "wilson95RowDescriptive": [
+                0.40359177593584417,
+                0.4649133561842491
+              ]
+            },
+            "rows": 1000,
+            "spellingAutomaticChanges": 434
+          }
+        },
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 434,
+          "value": 0.217,
+          "wilson95RowDescriptive": [
+            0.19948645190321157,
+            0.23559859685797752
+          ]
+        },
+        "exactUndo": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 2,
+          "noRequests": 1018,
+          "refusals": 0,
+          "requests": 982
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 434,
+          "correctChanges": 430,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 434,
+            "numerator": 430,
+            "value": 0.9907834101382489,
+            "wilson95RowDescriptive": [
+              0.9765447402083653,
+              0.9964101762753581
+            ]
+          }
+        },
+        "originalRetention": {
+          "denominator": 2000,
+          "numerator": 1902,
+          "value": 0.951,
+          "wilson95RowDescriptive": [
+            0.9406443633026171,
+            0.9596264600496927
+          ]
+        },
+        "rows": 2000
+      },
+      "ru": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1643,
+          "value": 0.8215,
+          "wilson95RowDescriptive": [
+            0.8041059649418224,
+            0.837661373656332
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 359,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 925,
+          "value": 0.925,
+          "wilson95RowDescriptive": [
+            0.9069990602607456,
+            0.9397481950265327
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 2,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 700,
+              "numerator": 700,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9945421532469393,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "rows": 700,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 300,
+              "numerator": 300,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9873570287754538,
+                0.9999999999999998
+              ]
+            },
+            "coverage": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            },
+            "rows": 300,
+            "spellingAutomaticChanges": 0
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 1000,
+              "numerator": 643,
+              "value": 0.643,
+              "wilson95RowDescriptive": [
+                0.6128092971223535,
+                0.6720962499507777
+              ]
+            },
+            "coverage": {
+              "denominator": 1000,
+              "numerator": 357,
+              "value": 0.357,
+              "wilson95RowDescriptive": [
+                0.3279037500492223,
+                0.3871907028776464
+              ]
+            },
+            "rows": 1000,
+            "spellingAutomaticChanges": 357
+          }
+        },
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 357,
+          "value": 0.1785,
+          "wilson95RowDescriptive": [
+            0.16233862634366797,
+            0.1958940350581776
+          ]
+        },
+        "exactUndo": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 7,
+          "noRequests": 1007,
+          "refusals": 0,
+          "requests": 993
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 357,
+          "correctChanges": 354,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 357,
+            "numerator": 354,
+            "value": 0.9915966386554622,
+            "wilson95RowDescriptive": [
+              0.9755882987267157,
+              0.9971380646660661
+            ]
+          }
+        },
+        "originalRetention": {
+          "denominator": 2000,
+          "numerator": 1902,
+          "value": 0.951,
+          "wilson95RowDescriptive": [
+            0.9406443633026171,
+            0.9596264600496927
+          ]
+        },
+        "rows": 2000
+      }
+    },
+    "overall": {
+      "abstention": {
+        "denominator": 6000,
+        "numerator": 4862,
+        "value": 0.8103333333333333,
+        "wilson95RowDescriptive": [
+          0.8002162285778728,
+          0.8200533147707098
+        ]
+      },
+      "aggregateFinalText": {
+        "changedRows": 1141,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        }
+      },
+      "candidateRecall": {
+        "denominator": 3000,
+        "numerator": 2802,
+        "value": 0.934,
+        "wilson95RowDescriptive": [
+          0.9245488345099825,
+          0.9423411247964347
+        ]
+      },
+      "canonical": {
+        "automaticChanges": 3,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        }
+      },
+      "cohorts": {
+        "correct": {
+          "abstention": {
+            "denominator": 2100,
+            "numerator": 2100,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9981740739994507,
+              1.0
+            ]
+          },
+          "coverage": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "rows": 2100,
+          "spellingAutomaticChanges": 0
+        },
+        "protected": {
+          "abstention": {
+            "denominator": 900,
+            "numerator": 900,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9957498532699458,
+              1.0
+            ]
+          },
+          "coverage": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          },
+          "rows": 900,
+          "spellingAutomaticChanges": 0
+        },
+        "typo": {
+          "abstention": {
+            "denominator": 3000,
+            "numerator": 1862,
+            "value": 0.6206666666666667,
+            "wilson95RowDescriptive": [
+              0.603159675559665,
+              0.6378650289479565
+            ]
+          },
+          "coverage": {
+            "denominator": 3000,
+            "numerator": 1138,
+            "value": 0.37933333333333336,
+            "wilson95RowDescriptive": [
+              0.3621349710520436,
+              0.3968403244403351
+            ]
+          },
+          "rows": 3000,
+          "spellingAutomaticChanges": 1138
+        }
+      },
+      "coverage": {
+        "denominator": 6000,
+        "numerator": 1138,
+        "value": 0.18966666666666668,
+        "wilson95RowDescriptive": [
+          0.17994668522929014,
+          0.19978377142212722
+        ]
+      },
+      "exactUndo": {
+        "denominator": 6000,
+        "numerator": 6000,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9993601665122168,
+          0.9999999999999999
+        ]
+      },
+      "mechanical": {
+        "changedRows": 0,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        }
+      },
+      "model": {
+        "errors": 9,
+        "noRequests": 3017,
+        "refusals": 0,
+        "requests": 2983
+      },
+      "ordinarySpelling": {
+        "automaticChanges": 1138,
+        "correctChanges": 1128,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        },
+        "precision": {
+          "denominator": 1138,
+          "numerator": 1128,
+          "value": 0.9912126537785588,
+          "wilson95RowDescriptive": [
+            0.9839002088678774,
+            0.9952199582652044
+          ]
+        }
+      },
+      "originalRetention": {
+        "denominator": 6000,
+        "numerator": 5706,
+        "value": 0.951,
+        "wilson95RowDescriptive": [
+          0.945243449142342,
+          0.9561794210516774
+        ]
+      },
+      "rows": 6000
+    }
+  },
+  "calibrationModelUnavailable": {
+    "languages": {
+      "en": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 952,
+          "value": 0.952,
+          "wilson95RowDescriptive": [
+            0.936933911349866,
+            0.963606698979192
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 700,
+              "numerator": 700,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9945421532469393,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "rows": 700,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 300,
+              "numerator": 300,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9873570287754538,
+                0.9999999999999998
+              ]
+            },
+            "coverage": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            },
+            "rows": 300,
+            "spellingAutomaticChanges": 0
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 1000,
+              "numerator": 1000,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.996173241514445,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "rows": 1000,
+            "spellingAutomaticChanges": 0
+          }
+        },
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            1.0842021724855044e-19,
+            0.001917047281252934
+          ]
+        },
+        "exactUndo": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 0,
+          "noRequests": 992,
+          "refusals": 0,
+          "requests": 1008
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 0,
+          "correctChanges": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          }
+        },
+        "originalRetention": {
+          "denominator": 2000,
+          "numerator": 1902,
+          "value": 0.951,
+          "wilson95RowDescriptive": [
+            0.9406443633026171,
+            0.9596264600496927
+          ]
+        },
+        "rows": 2000
+      },
+      "es": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 1,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 925,
+          "value": 0.925,
+          "wilson95RowDescriptive": [
+            0.9069990602607456,
+            0.9397481950265327
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 1,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 700,
+              "numerator": 700,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9945421532469393,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "rows": 700,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 300,
+              "numerator": 300,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9873570287754538,
+                0.9999999999999998
+              ]
+            },
+            "coverage": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            },
+            "rows": 300,
+            "spellingAutomaticChanges": 0
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 1000,
+              "numerator": 1000,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.996173241514445,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "rows": 1000,
+            "spellingAutomaticChanges": 0
+          }
+        },
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            1.0842021724855044e-19,
+            0.001917047281252934
+          ]
+        },
+        "exactUndo": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 0,
+          "noRequests": 1018,
+          "refusals": 0,
+          "requests": 982
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 0,
+          "correctChanges": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          }
+        },
+        "originalRetention": {
+          "denominator": 2000,
+          "numerator": 1902,
+          "value": 0.951,
+          "wilson95RowDescriptive": [
+            0.9406443633026171,
+            0.9596264600496927
+          ]
+        },
+        "rows": 2000
+      },
+      "ru": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 2,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 925,
+          "value": 0.925,
+          "wilson95RowDescriptive": [
+            0.9069990602607456,
+            0.9397481950265327
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 2,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 700,
+              "numerator": 700,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9945421532469393,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "rows": 700,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 300,
+              "numerator": 300,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9873570287754538,
+                0.9999999999999998
+              ]
+            },
+            "coverage": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            },
+            "rows": 300,
+            "spellingAutomaticChanges": 0
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 1000,
+              "numerator": 1000,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.996173241514445,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "rows": 1000,
+            "spellingAutomaticChanges": 0
+          }
+        },
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            1.0842021724855044e-19,
+            0.001917047281252934
+          ]
+        },
+        "exactUndo": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 0,
+          "noRequests": 1007,
+          "refusals": 0,
+          "requests": 993
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 0,
+          "correctChanges": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          }
+        },
+        "originalRetention": {
+          "denominator": 2000,
+          "numerator": 1902,
+          "value": 0.951,
+          "wilson95RowDescriptive": [
+            0.9406443633026171,
+            0.9596264600496927
+          ]
+        },
+        "rows": 2000
+      }
+    },
+    "overall": {
+      "abstention": {
+        "denominator": 6000,
+        "numerator": 6000,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9993601665122168,
+          0.9999999999999999
+        ]
+      },
+      "aggregateFinalText": {
+        "changedRows": 3,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        }
+      },
+      "candidateRecall": {
+        "denominator": 3000,
+        "numerator": 2802,
+        "value": 0.934,
+        "wilson95RowDescriptive": [
+          0.9245488345099825,
+          0.9423411247964347
+        ]
+      },
+      "canonical": {
+        "automaticChanges": 3,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        }
+      },
+      "cohorts": {
+        "correct": {
+          "abstention": {
+            "denominator": 2100,
+            "numerator": 2100,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9981740739994507,
+              1.0
+            ]
+          },
+          "coverage": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "rows": 2100,
+          "spellingAutomaticChanges": 0
+        },
+        "protected": {
+          "abstention": {
+            "denominator": 900,
+            "numerator": 900,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9957498532699458,
+              1.0
+            ]
+          },
+          "coverage": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          },
+          "rows": 900,
+          "spellingAutomaticChanges": 0
+        },
+        "typo": {
+          "abstention": {
+            "denominator": 3000,
+            "numerator": 3000,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9987211512746742,
+              1.0
+            ]
+          },
+          "coverage": {
+            "denominator": 3000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0012788487253259629
+            ]
+          },
+          "rows": 3000,
+          "spellingAutomaticChanges": 0
+        }
+      },
+      "coverage": {
+        "denominator": 6000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          0.0,
+          0.0006398334877831174
+        ]
+      },
+      "exactUndo": {
+        "denominator": 6000,
+        "numerator": 6000,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9993601665122168,
+          0.9999999999999999
+        ]
+      },
+      "mechanical": {
+        "changedRows": 0,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        }
+      },
+      "model": {
+        "errors": 0,
+        "noRequests": 3017,
+        "refusals": 0,
+        "requests": 2983
+      },
+      "ordinarySpelling": {
+        "automaticChanges": 0,
+        "correctChanges": 0,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        },
+        "precision": {
+          "denominator": 0,
+          "numerator": 0,
+          "value": null,
+          "wilson95RowDescriptive": null
+        }
+      },
+      "originalRetention": {
+        "denominator": 6000,
+        "numerator": 5706,
+        "value": 0.951,
+        "wilson95RowDescriptive": [
+          0.945243449142342,
+          0.9561794210516774
+        ]
+      },
+      "rows": 6000
+    }
+  },
+  "commandDotComparison": {
+    "changedRows": [
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "The reference lists fixture_holdout_0.jsonl ",
+        "id": "en-holdout-protected-file_name-00",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "The reference lists fixture_holdout_0.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "The reference lists fixture_holdout_1.jsonl ",
+        "id": "en-holdout-protected-file_name-01",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "The reference lists fixture_holdout_1.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "The reference lists fixture_holdout_2.jsonl ",
+        "id": "en-holdout-protected-file_name-02",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "The reference lists fixture_holdout_2.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "The reference lists fixture_holdout_3.jsonl ",
+        "id": "en-holdout-protected-file_name-03",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "The reference lists fixture_holdout_3.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "The reference lists fixture_holdout_4.jsonl ",
+        "id": "en-holdout-protected-file_name-04",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "The reference lists fixture_holdout_4.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "The reference lists fixture_holdout_5.jsonl ",
+        "id": "en-holdout-protected-file_name-05",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "The reference lists fixture_holdout_5.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "The reference lists fixture_holdout_6.jsonl ",
+        "id": "en-holdout-protected-file_name-06",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "The reference lists fixture_holdout_6.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "The reference lists fixture_holdout_7.jsonl ",
+        "id": "en-holdout-protected-file_name-07",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "The reference lists fixture_holdout_7.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "The reference lists fixture_holdout_8.jsonl ",
+        "id": "en-holdout-protected-file_name-08",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "The reference lists fixture_holdout_8.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "The reference lists fixture_holdout_9.jsonl ",
+        "id": "en-holdout-protected-file_name-09",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "The reference lists fixture_holdout_9.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "The reference lists mean_logp ",
+        "id": "en-holdout-protected-snake_case-01",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "The reference lists mean_logp "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "La referencia indica fixture_holdout_0.jsonl ",
+        "id": "es-holdout-protected-file_name-00",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "La referencia indica fixture_holdout_0.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "La referencia indica fixture_holdout_1.jsonl ",
+        "id": "es-holdout-protected-file_name-01",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "La referencia indica fixture_holdout_1.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "La referencia indica fixture_holdout_2.jsonl ",
+        "id": "es-holdout-protected-file_name-02",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "La referencia indica fixture_holdout_2.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "La referencia indica fixture_holdout_3.jsonl ",
+        "id": "es-holdout-protected-file_name-03",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "La referencia indica fixture_holdout_3.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "La referencia indica fixture_holdout_4.jsonl ",
+        "id": "es-holdout-protected-file_name-04",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "La referencia indica fixture_holdout_4.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "La referencia indica fixture_holdout_5.jsonl ",
+        "id": "es-holdout-protected-file_name-05",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "La referencia indica fixture_holdout_5.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "La referencia indica fixture_holdout_6.jsonl ",
+        "id": "es-holdout-protected-file_name-06",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "La referencia indica fixture_holdout_6.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "La referencia indica fixture_holdout_7.jsonl ",
+        "id": "es-holdout-protected-file_name-07",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "La referencia indica fixture_holdout_7.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "La referencia indica fixture_holdout_8.jsonl ",
+        "id": "es-holdout-protected-file_name-08",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "La referencia indica fixture_holdout_8.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "La referencia indica fixture_holdout_9.jsonl ",
+        "id": "es-holdout-protected-file_name-09",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "La referencia indica fixture_holdout_9.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "La referencia indica mean_logp ",
+        "id": "es-holdout-protected-snake_case-01",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "La referencia indica mean_logp "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "В справочнике найдено fixture_holdout_0.jsonl ",
+        "id": "ru-holdout-protected-file_name-00",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "В справочнике найдено fixture_holdout_0.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "В справочнике найдено fixture_holdout_1.jsonl ",
+        "id": "ru-holdout-protected-file_name-01",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "В справочнике найдено fixture_holdout_1.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "В справочнике найдено fixture_holdout_2.jsonl ",
+        "id": "ru-holdout-protected-file_name-02",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "В справочнике найдено fixture_holdout_2.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "В справочнике найдено fixture_holdout_3.jsonl ",
+        "id": "ru-holdout-protected-file_name-03",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "В справочнике найдено fixture_holdout_3.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "В справочнике найдено fixture_holdout_4.jsonl ",
+        "id": "ru-holdout-protected-file_name-04",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "В справочнике найдено fixture_holdout_4.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "В справочнике найдено fixture_holdout_5.jsonl ",
+        "id": "ru-holdout-protected-file_name-05",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "В справочнике найдено fixture_holdout_5.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "В справочнике найдено fixture_holdout_6.jsonl ",
+        "id": "ru-holdout-protected-file_name-06",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "В справочнике найдено fixture_holdout_6.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "В справочнике найдено fixture_holdout_7.jsonl ",
+        "id": "ru-holdout-protected-file_name-07",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "В справочнике найдено fixture_holdout_7.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "В справочнике найдено fixture_holdout_8.jsonl ",
+        "id": "ru-holdout-protected-file_name-08",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "В справочнике найдено fixture_holdout_8.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "В справочнике найдено fixture_holdout_9.jsonl ",
+        "id": "ru-holdout-protected-file_name-09",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "В справочнике найдено fixture_holdout_9.jsonl "
+      },
+      {
+        "currentAdmission": "MATCHED_NUMERIC_REPLY",
+        "currentFinalText": "В справочнике найдено mean_logp ",
+        "id": "ru-holdout-protected-snake_case-01",
+        "priorAdmission": "REFUSED_NO_SCORED_REQUEST",
+        "priorFinalText": "В справочнике найдено mean_logp "
+      }
+    ],
+    "remainingPriorRefusalOrErrorRows": 14,
+    "reportSha256": "1a7a62b3f2b9d784709d1948a6fb2a45ca108a1f1f9a037a401116c21a3c0e80",
+    "summarySha256": "e833bee405cc0622d53b0d75634b48eadd233a1caf0f6a51d1bd8b676bca782d"
+  },
+  "commands": {
+    "calibration-ready": [
+      "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/bin/java",
+      "-XX:ActiveProcessorCount=2",
+      "-Xmx768m",
+      "-cp",
+      "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/final-product-replay-20260906-review-second-fix-v2/final-product-spelling-replay.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.2.10/30de6faa127a4a012db8e71bf1b9c0a99b1402b2/kotlin-stdlib-2.2.10.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar:/opt/homebrew/share/android-commandlinetools/platforms/android-37.0/android.jar",
+      "io.github.mesteriis.rune.keyboard.smarttyping.session.FinalProductSpellingReplay",
+      "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/final-product-replay-20260906-review-second-fix-v2/inputs.tsv",
+      "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets",
+      "ready",
+      "calibration",
+      "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/final-product-replay-20260906-review-second-fix-v2/deliveries-calibration.tsv"
+    ],
+    "calibration-unavailable": [
+      "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/bin/java",
+      "-XX:ActiveProcessorCount=2",
+      "-Xmx768m",
+      "-cp",
+      "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/final-product-replay-20260906-review-second-fix-v2/final-product-spelling-replay.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.2.10/30de6faa127a4a012db8e71bf1b9c0a99b1402b2/kotlin-stdlib-2.2.10.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar:/opt/homebrew/share/android-commandlinetools/platforms/android-37.0/android.jar",
+      "io.github.mesteriis.rune.keyboard.smarttyping.session.FinalProductSpellingReplay",
+      "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/final-product-replay-20260906-review-second-fix-v2/inputs.tsv",
+      "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets",
+      "unavailable",
+      "calibration"
+    ],
+    "holdout-ready": [
+      "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/bin/java",
+      "-XX:ActiveProcessorCount=2",
+      "-Xmx768m",
+      "-cp",
+      "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/final-product-replay-20260906-review-second-fix-v2/final-product-spelling-replay.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.2.10/30de6faa127a4a012db8e71bf1b9c0a99b1402b2/kotlin-stdlib-2.2.10.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar:/opt/homebrew/share/android-commandlinetools/platforms/android-37.0/android.jar",
+      "io.github.mesteriis.rune.keyboard.smarttyping.session.FinalProductSpellingReplay",
+      "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/final-product-replay-20260906-review-second-fix-v2/inputs.tsv",
+      "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets",
+      "ready",
+      "holdout",
+      "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/final-product-replay-20260906-review-second-fix-v2/deliveries-holdout.tsv"
+    ],
+    "holdout-unavailable": [
+      "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/bin/java",
+      "-XX:ActiveProcessorCount=2",
+      "-Xmx768m",
+      "-cp",
+      "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/final-product-replay-20260906-review-second-fix-v2/final-product-spelling-replay.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.2.10/30de6faa127a4a012db8e71bf1b9c0a99b1402b2/kotlin-stdlib-2.2.10.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar:/opt/homebrew/share/android-commandlinetools/platforms/android-37.0/android.jar",
+      "io.github.mesteriis.rune.keyboard.smarttyping.session.FinalProductSpellingReplay",
+      "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/final-product-replay-20260906-review-second-fix-v2/inputs.tsv",
+      "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets",
+      "unavailable",
+      "holdout"
+    ]
+  },
+  "experiment": "revealed-data-fixed-policy-reproduction",
+  "holdoutModelReady": {
+    "languages": {
+      "en": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1696,
+          "value": 0.848,
+          "wilson95RowDescriptive": [
+            0.8315993113023692,
+            0.8630664237898786
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 304,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 925,
+          "value": 0.925,
+          "wilson95RowDescriptive": [
+            0.9069990602607456,
+            0.9397481950265327
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 700,
+              "numerator": 700,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9945421532469393,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "rows": 700,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 300,
+              "numerator": 300,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9873570287754538,
+                0.9999999999999998
+              ]
+            },
+            "coverage": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            },
+            "rows": 300,
+            "spellingAutomaticChanges": 0
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 1000,
+              "numerator": 696,
+              "value": 0.696,
+              "wilson95RowDescriptive": [
+                0.6667851800100445,
+                0.7237147306636179
+              ]
+            },
+            "coverage": {
+              "denominator": 1000,
+              "numerator": 304,
+              "value": 0.304,
+              "wilson95RowDescriptive": [
+                0.27628526933638214,
+                0.33321481998995545
+              ]
+            },
+            "rows": 1000,
+            "spellingAutomaticChanges": 304
+          }
+        },
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 304,
+          "value": 0.152,
+          "wilson95RowDescriptive": [
+            0.1369335762101213,
+            0.1684006886976307
+          ]
+        },
+        "exactUndo": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "fixedPointPolicyGates": {
+          "aggregateFalseChangePass": true,
+          "allPass": false,
+          "exactImmediateUndoPass": true,
+          "ordinarySpellingFalseChangePass": true,
+          "originalAlwaysAvailablePass": false,
+          "precisionPass": true,
+          "volumePass": true
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 2,
+          "noRequests": 985,
+          "refusals": 0,
+          "requests": 1015
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 304,
+          "correctChanges": 293,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 304,
+            "numerator": 293,
+            "value": 0.9638157894736842,
+            "wilson95RowDescriptive": [
+              0.9363786768920008,
+              0.9796772730775392
+            ]
+          }
+        },
+        "originalRetention": {
+          "denominator": 2000,
+          "numerator": 1901,
+          "value": 0.9505,
+          "wilson95RowDescriptive": [
+            0.9400999950103993,
+            0.9591727453891917
+          ]
+        },
+        "rows": 2000
+      },
+      "es": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1592,
+          "value": 0.796,
+          "wilson95RowDescriptive": [
+            0.7777797978268458,
+            0.8130853101826524
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 409,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 892,
+          "value": 0.892,
+          "wilson95RowDescriptive": [
+            0.8712410199098767,
+            0.9097588014374481
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 1,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 700,
+              "numerator": 700,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9945421532469393,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "rows": 700,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 300,
+              "numerator": 300,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9873570287754538,
+                0.9999999999999998
+              ]
+            },
+            "coverage": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            },
+            "rows": 300,
+            "spellingAutomaticChanges": 0
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 1000,
+              "numerator": 592,
+              "value": 0.592,
+              "wilson95RowDescriptive": [
+                0.5612435983142355,
+                0.6220522781244223
+              ]
+            },
+            "coverage": {
+              "denominator": 1000,
+              "numerator": 408,
+              "value": 0.408,
+              "wilson95RowDescriptive": [
+                0.3779477218755777,
+                0.43875640168576435
+              ]
+            },
+            "rows": 1000,
+            "spellingAutomaticChanges": 408
+          }
+        },
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 408,
+          "value": 0.204,
+          "wilson95RowDescriptive": [
+            0.18691468981734755,
+            0.22222020217315414
+          ]
+        },
+        "exactUndo": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "fixedPointPolicyGates": {
+          "aggregateFalseChangePass": true,
+          "allPass": false,
+          "exactImmediateUndoPass": true,
+          "ordinarySpellingFalseChangePass": true,
+          "originalAlwaysAvailablePass": false,
+          "precisionPass": true,
+          "volumePass": true
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 2,
+          "noRequests": 1036,
+          "refusals": 0,
+          "requests": 964
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 408,
+          "correctChanges": 396,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 408,
+            "numerator": 396,
+            "value": 0.9705882352941176,
+            "wilson95RowDescriptive": [
+              0.9493009746302344,
+              0.9830966550294457
+            ]
+          }
+        },
+        "originalRetention": {
+          "denominator": 2000,
+          "numerator": 1901,
+          "value": 0.9505,
+          "wilson95RowDescriptive": [
+            0.9400999950103993,
+            0.9591727453891917
+          ]
+        },
+        "rows": 2000
+      },
+      "ru": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1642,
+          "value": 0.821,
+          "wilson95RowDescriptive": [
+            0.8035886153696912,
+            0.8371806402757442
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 358,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 1,
+            "value": 0.001,
+            "wilson95RowDescriptive": [
+              0.00017654637062607809,
+              0.0056425585979579355
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 1,
+              "value": 0.0033333333333333335,
+              "wilson95RowDescriptive": [
+                0.0005886577218511581,
+                0.018636693694531237
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 917,
+          "value": 0.917,
+          "wilson95RowDescriptive": [
+            0.8982635048659464,
+            0.9325449785571007
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 700,
+              "numerator": 700,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9945421532469393,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "rows": 700,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 300,
+              "numerator": 299,
+              "value": 0.9966666666666667,
+              "wilson95RowDescriptive": [
+                0.9813633063054688,
+                0.9994113422781488
+              ]
+            },
+            "coverage": {
+              "denominator": 300,
+              "numerator": 1,
+              "value": 0.0033333333333333335,
+              "wilson95RowDescriptive": [
+                0.0005886577218511581,
+                0.018636693694531237
+              ]
+            },
+            "rows": 300,
+            "spellingAutomaticChanges": 1
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 1000,
+              "numerator": 643,
+              "value": 0.643,
+              "wilson95RowDescriptive": [
+                0.6128092971223535,
+                0.6720962499507777
+              ]
+            },
+            "coverage": {
+              "denominator": 1000,
+              "numerator": 357,
+              "value": 0.357,
+              "wilson95RowDescriptive": [
+                0.3279037500492223,
+                0.3871907028776464
+              ]
+            },
+            "rows": 1000,
+            "spellingAutomaticChanges": 357
+          }
+        },
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 358,
+          "value": 0.179,
+          "wilson95RowDescriptive": [
+            0.1628193597242556,
+            0.19641138463030872
+          ]
+        },
+        "exactUndo": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "fixedPointPolicyGates": {
+          "aggregateFalseChangePass": true,
+          "allPass": false,
+          "exactImmediateUndoPass": true,
+          "ordinarySpellingFalseChangePass": true,
+          "originalAlwaysAvailablePass": false,
+          "precisionPass": true,
+          "volumePass": true
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 10,
+          "noRequests": 1006,
+          "refusals": 0,
+          "requests": 994
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 358,
+          "correctChanges": 341,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 1,
+            "value": 0.001,
+            "wilson95RowDescriptive": [
+              0.00017654637062607809,
+              0.0056425585979579355
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 1,
+              "value": 0.0033333333333333335,
+              "wilson95RowDescriptive": [
+                0.0005886577218511581,
+                0.018636693694531237
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 358,
+            "numerator": 341,
+            "value": 0.952513966480447,
+            "wilson95RowDescriptive": [
+              0.9252761807224279,
+              0.9701436007917574
+            ]
+          }
+        },
+        "originalRetention": {
+          "denominator": 2000,
+          "numerator": 1901,
+          "value": 0.9505,
+          "wilson95RowDescriptive": [
+            0.9400999950103993,
+            0.9591727453891917
+          ]
+        },
+        "rows": 2000
+      }
+    },
+    "overall": {
+      "abstention": {
+        "denominator": 6000,
+        "numerator": 4930,
+        "value": 0.8216666666666667,
+        "wilson95RowDescriptive": [
+          0.8117759418188171,
+          0.8311457653040424
+        ]
+      },
+      "aggregateFinalText": {
+        "changedRows": 1071,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 1,
+          "value": 0.0003333333333333333,
+          "wilson95RowDescriptive": [
+            5.8843941871566355e-05,
+            0.0018858188843041794
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 1,
+            "value": 0.0011111111111111111,
+            "wilson95RowDescriptive": [
+              0.00019616532807583548,
+              0.0062667588536892815
+            ]
+          }
+        }
+      },
+      "candidateRecall": {
+        "denominator": 3000,
+        "numerator": 2734,
+        "value": 0.9113333333333333,
+        "wilson95RowDescriptive": [
+          0.9006282069450771,
+          0.9209863935035547
+        ]
+      },
+      "canonical": {
+        "automaticChanges": 1,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        }
+      },
+      "cohorts": {
+        "correct": {
+          "abstention": {
+            "denominator": 2100,
+            "numerator": 2100,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9981740739994507,
+              1.0
+            ]
+          },
+          "coverage": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "rows": 2100,
+          "spellingAutomaticChanges": 0
+        },
+        "protected": {
+          "abstention": {
+            "denominator": 900,
+            "numerator": 899,
+            "value": 0.9988888888888889,
+            "wilson95RowDescriptive": [
+              0.9937332411463108,
+              0.9998038346719241
+            ]
+          },
+          "coverage": {
+            "denominator": 900,
+            "numerator": 1,
+            "value": 0.0011111111111111111,
+            "wilson95RowDescriptive": [
+              0.00019616532807583548,
+              0.0062667588536892815
+            ]
+          },
+          "rows": 900,
+          "spellingAutomaticChanges": 1
+        },
+        "typo": {
+          "abstention": {
+            "denominator": 3000,
+            "numerator": 1931,
+            "value": 0.6436666666666667,
+            "wilson95RowDescriptive": [
+              0.6263554649701933,
+              0.6606104124960631
+            ]
+          },
+          "coverage": {
+            "denominator": 3000,
+            "numerator": 1069,
+            "value": 0.35633333333333334,
+            "wilson95RowDescriptive": [
+              0.33938958750393694,
+              0.3736445350298067
+            ]
+          },
+          "rows": 3000,
+          "spellingAutomaticChanges": 1069
+        }
+      },
+      "coverage": {
+        "denominator": 6000,
+        "numerator": 1070,
+        "value": 0.17833333333333334,
+        "wilson95RowDescriptive": [
+          0.1688542346959576,
+          0.18822405818118285
+        ]
+      },
+      "exactUndo": {
+        "denominator": 6000,
+        "numerator": 6000,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9993601665122168,
+          0.9999999999999999
+        ]
+      },
+      "mechanical": {
+        "changedRows": 0,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        }
+      },
+      "model": {
+        "errors": 14,
+        "noRequests": 3027,
+        "refusals": 0,
+        "requests": 2973
+      },
+      "ordinarySpelling": {
+        "automaticChanges": 1070,
+        "correctChanges": 1030,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 1,
+          "value": 0.0003333333333333333,
+          "wilson95RowDescriptive": [
+            5.8843941871566355e-05,
+            0.0018858188843041794
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 1,
+            "value": 0.0011111111111111111,
+            "wilson95RowDescriptive": [
+              0.00019616532807583548,
+              0.0062667588536892815
+            ]
+          }
+        },
+        "precision": {
+          "denominator": 1070,
+          "numerator": 1030,
+          "value": 0.9626168224299065,
+          "wilson95RowDescriptive": [
+            0.9494958414642681,
+            0.9724279601062452
+          ]
+        }
+      },
+      "originalRetention": {
+        "denominator": 6000,
+        "numerator": 5703,
+        "value": 0.9505,
+        "wilson95RowDescriptive": [
+          0.9447174770071435,
+          0.9557060330203638
+        ]
+      },
+      "rows": 6000
+    }
+  },
+  "holdoutModelUnavailable": {
+    "languages": {
+      "en": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 925,
+          "value": 0.925,
+          "wilson95RowDescriptive": [
+            0.9069990602607456,
+            0.9397481950265327
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 700,
+              "numerator": 700,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9945421532469393,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "rows": 700,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 300,
+              "numerator": 300,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9873570287754538,
+                0.9999999999999998
+              ]
+            },
+            "coverage": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            },
+            "rows": 300,
+            "spellingAutomaticChanges": 0
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 1000,
+              "numerator": 1000,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.996173241514445,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "rows": 1000,
+            "spellingAutomaticChanges": 0
+          }
+        },
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            1.0842021724855044e-19,
+            0.001917047281252934
+          ]
+        },
+        "exactUndo": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 0,
+          "noRequests": 985,
+          "refusals": 0,
+          "requests": 1015
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 0,
+          "correctChanges": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          }
+        },
+        "originalRetention": {
+          "denominator": 2000,
+          "numerator": 1901,
+          "value": 0.9505,
+          "wilson95RowDescriptive": [
+            0.9400999950103993,
+            0.9591727453891917
+          ]
+        },
+        "rows": 2000
+      },
+      "es": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 1,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 892,
+          "value": 0.892,
+          "wilson95RowDescriptive": [
+            0.8712410199098767,
+            0.9097588014374481
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 1,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 700,
+              "numerator": 700,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9945421532469393,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "rows": 700,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 300,
+              "numerator": 300,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9873570287754538,
+                0.9999999999999998
+              ]
+            },
+            "coverage": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            },
+            "rows": 300,
+            "spellingAutomaticChanges": 0
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 1000,
+              "numerator": 1000,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.996173241514445,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "rows": 1000,
+            "spellingAutomaticChanges": 0
+          }
+        },
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            1.0842021724855044e-19,
+            0.001917047281252934
+          ]
+        },
+        "exactUndo": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 0,
+          "noRequests": 1036,
+          "refusals": 0,
+          "requests": 964
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 0,
+          "correctChanges": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          }
+        },
+        "originalRetention": {
+          "denominator": 2000,
+          "numerator": 1901,
+          "value": 0.9505,
+          "wilson95RowDescriptive": [
+            0.9400999950103993,
+            0.9591727453891917
+          ]
+        },
+        "rows": 2000
+      },
+      "ru": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 1000,
+          "numerator": 917,
+          "value": 0.917,
+          "wilson95RowDescriptive": [
+            0.8982635048659464,
+            0.9325449785571007
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 700,
+              "numerator": 700,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9945421532469393,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "rows": 700,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 300,
+              "numerator": 300,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9873570287754538,
+                0.9999999999999998
+              ]
+            },
+            "coverage": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            },
+            "rows": 300,
+            "spellingAutomaticChanges": 0
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 1000,
+              "numerator": 1000,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.996173241514445,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "rows": 1000,
+            "spellingAutomaticChanges": 0
+          }
+        },
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            1.0842021724855044e-19,
+            0.001917047281252934
+          ]
+        },
+        "exactUndo": {
+          "denominator": 2000,
+          "numerator": 2000,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9980829527187469,
+            0.9999999999999998
+          ]
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 0,
+          "noRequests": 1006,
+          "refusals": 0,
+          "requests": 994
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 0,
+          "correctChanges": 0,
+          "falseChanges": {
+            "denominator": 1000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              2.168404344971009e-19,
+              0.0038267584855551234
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 700,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.005457846753060833
+              ]
+            },
+            "protected": {
+              "denominator": 300,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                8.673617379884035e-19,
+                0.012642971224546034
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          }
+        },
+        "originalRetention": {
+          "denominator": 2000,
+          "numerator": 1901,
+          "value": 0.9505,
+          "wilson95RowDescriptive": [
+            0.9400999950103993,
+            0.9591727453891917
+          ]
+        },
+        "rows": 2000
+      }
+    },
+    "overall": {
+      "abstention": {
+        "denominator": 6000,
+        "numerator": 6000,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9993601665122168,
+          0.9999999999999999
+        ]
+      },
+      "aggregateFinalText": {
+        "changedRows": 1,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        }
+      },
+      "candidateRecall": {
+        "denominator": 3000,
+        "numerator": 2734,
+        "value": 0.9113333333333333,
+        "wilson95RowDescriptive": [
+          0.9006282069450771,
+          0.9209863935035547
+        ]
+      },
+      "canonical": {
+        "automaticChanges": 1,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        }
+      },
+      "cohorts": {
+        "correct": {
+          "abstention": {
+            "denominator": 2100,
+            "numerator": 2100,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9981740739994507,
+              1.0
+            ]
+          },
+          "coverage": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "rows": 2100,
+          "spellingAutomaticChanges": 0
+        },
+        "protected": {
+          "abstention": {
+            "denominator": 900,
+            "numerator": 900,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9957498532699458,
+              1.0
+            ]
+          },
+          "coverage": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          },
+          "rows": 900,
+          "spellingAutomaticChanges": 0
+        },
+        "typo": {
+          "abstention": {
+            "denominator": 3000,
+            "numerator": 3000,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9987211512746742,
+              1.0
+            ]
+          },
+          "coverage": {
+            "denominator": 3000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0012788487253259629
+            ]
+          },
+          "rows": 3000,
+          "spellingAutomaticChanges": 0
+        }
+      },
+      "coverage": {
+        "denominator": 6000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          0.0,
+          0.0006398334877831174
+        ]
+      },
+      "exactUndo": {
+        "denominator": 6000,
+        "numerator": 6000,
+        "value": 1.0,
+        "wilson95RowDescriptive": [
+          0.9993601665122168,
+          0.9999999999999999
+        ]
+      },
+      "mechanical": {
+        "changedRows": 0,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        }
+      },
+      "model": {
+        "errors": 0,
+        "noRequests": 3027,
+        "refusals": 0,
+        "requests": 2973
+      },
+      "ordinarySpelling": {
+        "automaticChanges": 0,
+        "correctChanges": 0,
+        "falseChanges": {
+          "denominator": 3000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.0012788487253259629
+          ]
+        },
+        "falseChangesByCohort": {
+          "correct": {
+            "denominator": 2100,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0018259260005492287
+            ]
+          },
+          "protected": {
+            "denominator": 900,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              4.336808689942018e-19,
+              0.004250146730054126
+            ]
+          }
+        },
+        "precision": {
+          "denominator": 0,
+          "numerator": 0,
+          "value": null,
+          "wilson95RowDescriptive": null
+        }
+      },
+      "originalRetention": {
+        "denominator": 6000,
+        "numerator": 5703,
+        "value": 0.9505,
+        "wilson95RowDescriptive": [
+          0.9447174770071435,
+          0.9557060330203638
+        ]
+      },
+      "rows": 6000
+    }
+  },
+  "limits": [
+    "Revealed-data fixed-policy reproduction after safety fixes.",
+    "Host JVM BreakIterator and independent editor; phone timing and asynchronous availability are separate.",
+    "Wilson intervals are descriptive row intervals; point integer ratios decide gates."
+  ],
+  "modelResponsesMissing": 0,
+  "releaseApproved": false,
+  "schemaVersion": 1,
+  "thresholdFittingPerformed": false
+}

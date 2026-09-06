@@ -39,4 +39,6 @@
 - [x] Extend source resolution by variant; retain exact existing allowed model dependencies. Add an exact debug recorder storage allowance and fail release/profile if recorder/UI/text serializer becomes reachable or packaged. Add negative fixtures for transitive writes/network and wrong-variant implementations.
 - [x] Actual settings tests cancel at each dialog, confirm both, recreate, disable and delete; actual Binder tests show permitted text/candidate/decision records and absent sensitive canaries in both streams with unchanged editor-read counters.
 - [x] Run focused API 26/API 37 cases then required final variant/lint/privacy/dependency/native gates. Archive initial failures and final receipts separately.
-- [ ] Commit reviewed slices; after every commit run `./gradlew testDebugUnitTest --rerun-tasks` with JDK 17. Phone signature incompatibility is resolved under explicit authorization; retain initial and current physical results separately.
+- [x] Commit reviewed slices; after every commit run `./gradlew testDebugUnitTest --rerun-tasks` with JDK 17. Phone signature incompatibility is resolved under explicit authorization; retain initial and current physical results separately.
+
+Completed local implementation/QA commit: `c0b0280abfc4f0093835a99245d7e42ccc9d47f8`. Mandatory postcommit full JVM rerun passes743/743 without failures/errors/skips. Phone partial results and remaining overall0.3 gates stay in the consolidated acceptance report.
