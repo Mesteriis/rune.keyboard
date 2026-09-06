@@ -46,7 +46,9 @@ class ImeTestDriver {
         previousPreferences = HashMap(preferences.all)
         shell("settings put secure show_ime_with_hard_keyboard 1")
         shell("ime enable $IME_COMPONENT")
-        shell("ime set $IME_COMPONENT")
+        // `ime set` is a no-op when Rune was already selected by a preceding non-UI fixture.
+        // Switch through an enabled fallback so each QA method starts with a new input view.
+        restartRuneIme()
         launchQa()
         waitForKeyboard()
         switchToEnglish()
@@ -190,22 +192,34 @@ class ImeTestDriver {
         } else {
             visibleField
         }
-        val clickBounds = field.visibleBounds
-        field.click()
+        var activeField = field
+        val clickBounds = activeField.visibleBounds
+        activeField.click()
         try {
             waitForKeyboard()
         } catch (failure: IllegalStateException) {
-            val observed = device.findObject(selector)
-            throw IllegalStateException(
-                "QA focus failed: id=$idName, clickBounds=$clickBounds, " +
-                    "observedBounds=${observed?.visibleBounds}, focused=${observed?.isFocused}",
-                failure,
-            )
+            // API 26 can leave a hidden input-view window after an in-test hide followed by a
+            // different editor focus. Rebind once and repeat the same real editor transition.
+            // A second failure still surfaces the original observation as a test failure.
+            restartRuneIme()
+            resumeQa()
+            activeField = device.findObject(selector) ?: scrollToObject(idName)
+            activeField.click()
+            try {
+                waitForKeyboard()
+            } catch (_: IllegalStateException) {
+                val observed = device.findObject(selector)
+                throw IllegalStateException(
+                    "QA focus failed: id=$idName, clickBounds=$clickBounds, " +
+                        "observedBounds=${observed?.visibleBounds}, focused=${observed?.isFocused}",
+                    failure,
+                )
+            }
         }
         device.waitForIdle()
         // adjustResize may move a low editor outside the accessibility viewport once IME appears;
         // callers only need the focus transition, so keep the node captured before that resize.
-        return field
+        return activeField
     }
 
     fun tapQaControl(idName: String) {
