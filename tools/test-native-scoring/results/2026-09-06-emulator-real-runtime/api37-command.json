@@ -1,0 +1,14 @@
+[
+  "/opt/homebrew/share/android-commandlinetools/platform-tools/adb",
+  "-s",
+  "emulator-5556",
+  "shell",
+  "am",
+  "instrument",
+  "-w",
+  "-r",
+  "-e",
+  "class",
+  "io.github.mesteriis.rune.runtime.llama.LlamaRealModelInstrumentedTest",
+  "io.github.mesteriis.rune.runtime.llama.test/androidx.test.runner.AndroidJUnitRunner"
+]

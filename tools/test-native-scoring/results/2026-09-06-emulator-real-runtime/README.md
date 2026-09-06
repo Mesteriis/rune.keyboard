@@ -1,0 +1,9 @@
+# Exact-model Android JNI correctness on API26 and API37
+
+Current runtime sources at07e29da, freshly assembled debug Android test APK. The existing `LlamaRealModelInstrumentedTest` ran explicitly on emulator-5554/API26 and emulator-5556/API37. Both passed1/1, with zero skips or failures. The exact396704416-byte GGUF was verified on the host before copying into the test app private directory, then independently size/digest-checked inside the test before constructing the runtime. Digest:7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4.
+
+Each execution reports9 successful requests/27 scored candidates, two pre-cancelled requests, and cancellation of the admitted race (zero race successes). Covered: EN/RU/ES finite numeric scores and exact repeated results; zero-divergence refusal; malformed UTF-16/UTF-8 boundary handling, byte/token bounds, duplicate IDs and candidate limit; cancelled load and score; recovery after active cancellation; unload/NOT_LOADED and reload. The active cancellation test deliberately makes no claim about the precise tokenizer/decode stage; separate host checkpoint tests prove internal tokenizer stages.
+
+Whole-test durations were0.663s/API26 and0.766s/API37; internal qualificationDurationMillis660/759. These are emulator correctness-run totals, not per-word production latency, cold-storage measurements or Fold qualification. The test uses the public Android runtime/JNI, not the IME/model-service Binder or product spelling policy. Those have separate evidence. The exact model remains only in local test storage; no APK/model binary is committed.
+
+Complete setup/runner logs, exact commands, APK/model/fixture/source/native-library identities and emulator fingerprints are retained. The three optional-model assumptions in earlier ordinary full app runs remain historical; this separate explicit runtime run does not relabel them.

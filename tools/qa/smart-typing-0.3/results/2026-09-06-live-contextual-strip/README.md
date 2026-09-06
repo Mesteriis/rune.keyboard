@@ -1,0 +1,11 @@
+# Actual resident contextual strip selection on API26/API37
+
+Base07e29da plus the enclosed three-file QA/debug-fixture delta. The corrected contextual pair passes2/2 on each API (26:23.304s,37:22.993s). The existing spelling Original-control/correction/Undo method passes on both initial runs. Prescribed240-task local gates pass7s. These are whole-run durations, not typing latency.
+
+Both contextual tests type actual keys with spelling OFF and contextual SUGGESTIONS enabled. The resident IME/coordinators/client and real private service/editor Binder remain in the path. The debug engine admits only exact public prefix `a`, seven ordered IDs0..6 and continuations for ` hello`, comma, colon, semicolon, period, question and exclamation boundaries; admitted token/mode and unchanged invalid-request count are checked. Synthetic scores choose comma or period; no full model or semantic quality is implied.
+
+Before tapping, the exact current Original remains selected, the punctuation cell is visible and unselected, and editor text/span/caret/command counters remain unchanged after the actual callback and rendering. Actual cell DOWN/UP changes `a hello` to `a, hello` or `a. Hello`, via exactly one composing write. There are no other command deltas or payload reads, and all key instances remain identical. The period changes only the first letter's case. Manual selection creates no automatic Undo; the next actual Backspace deletes the final letter normally with one composing write and still-stable keys.
+
+Initial01 results are retained: the existing spelling control passed, both contextual cases failed before release because the test expected COMPLETE for exact known `hello`. Production returns VALID_WORD and permits contextual ranking for this state. The only correction was an exact VALID_WORD assertion; no production rules, deadlines, scores or editor results were changed. Sources/APKs and both patches are bound by inputs-01/02.json. The synthetic service additions are debug-only; no AIDL or production source changed.
+
+This closes the bounded resident-strip path missing from the previous independent-controller-to-Binder tests. It does not qualify physical Fold, real-model availability, arbitrary editors, all possible punctuation semantics or an already-dispatched stale callback.

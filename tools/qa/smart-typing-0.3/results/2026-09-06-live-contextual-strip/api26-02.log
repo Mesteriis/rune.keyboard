@@ -1,0 +1,37 @@
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest:
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=contextualPeriodStripTapAlsoCapitalizesOnlyFirstLetter
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=contextualPeriodStripTapAlsoCapitalizesOnlyFirstLetter
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=contextualCommaStripTapChangesOnlyOwnedBoundary
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=contextualCommaStripTapChangesOnlyOwnedBoundary
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 23.304
+
+OK (2 tests)
+
+
+INSTRUMENTATION_CODE: -1

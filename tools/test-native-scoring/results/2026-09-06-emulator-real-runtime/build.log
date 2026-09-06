@@ -1,0 +1,67 @@
+Calculating task graph as configuration cache cannot be reused because file 'app/build.gradle.kts' has changed.
+> Task :runtime-llama:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :runtime-llama:generateDebugAssets UP-TO-DATE
+> Task :runtime-llama:preBuild UP-TO-DATE
+> Task :runtime-llama:preDebugBuild UP-TO-DATE
+> Task :runtime-llama:preDebugAndroidTestBuild UP-TO-DATE
+> Task :runtime-llama:generateDebugResources UP-TO-DATE
+> Task :runtime-llama:mapDebugSourceSetPaths UP-TO-DATE
+> Task :runtime-llama:writeDebugAarMetadata UP-TO-DATE
+> Task :runtime-llama:javaPreCompileDebug UP-TO-DATE
+> Task :runtime-llama:mergeDebugJniLibFolders UP-TO-DATE
+> Task :runtime-llama:extractDeepLinksDebug UP-TO-DATE
+> Task :runtime-llama:processDebugManifest UP-TO-DATE
+> Task :runtime-llama:processDebugNavigationResources UP-TO-DATE
+> Task :runtime-llama:packageDebugResources UP-TO-DATE
+> Task :runtime-llama:processDebugAndroidTestNavigationResources UP-TO-DATE
+> Task :runtime-llama:generateDebugAndroidTestResources UP-TO-DATE
+> Task :runtime-llama:mergeDebugAssets UP-TO-DATE
+> Task :runtime-llama:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :runtime-llama:compileDebugLibraryResources UP-TO-DATE
+> Task :runtime-llama:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :runtime-llama:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :runtime-llama:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :runtime-llama:generateDebugAndroidTestGlobalSynthetics UP-TO-DATE
+> Task :runtime-llama:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :runtime-llama:parseDebugLocalResources UP-TO-DATE
+> Task :runtime-llama:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :runtime-llama:packageDebugAndroidTestResources UP-TO-DATE
+> Task :runtime-llama:generateDebugRFile UP-TO-DATE
+> Task :runtime-llama:parseDebugAndroidTestLocalResources UP-TO-DATE
+> Task :runtime-llama:compileDebugAndroidTestNavigationResources UP-TO-DATE
+> Task :runtime-llama:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :runtime-llama:generateDebugAndroidTestRFile UP-TO-DATE
+> Task :runtime-llama:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :runtime-llama:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :runtime-llama:processDebugAndroidTestManifest UP-TO-DATE
+> Task :runtime-llama:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :runtime-llama:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :runtime-llama:compileDebugKotlin UP-TO-DATE
+> Task :runtime-llama:mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :runtime-llama:compileDebugJavaWithJavac NO-SOURCE
+> Task :runtime-llama:processDebugJavaRes UP-TO-DATE
+> Task :runtime-llama:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :runtime-llama:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :runtime-llama:configureCMakeDebug[arm64-v8a]
+> Task :runtime-llama:configureCMakeDebug[x86_64]
+> Task :runtime-llama:processDebugAndroidTestResources UP-TO-DATE
+> Task :runtime-llama:mergeLibDexDebugAndroidTest UP-TO-DATE
+> Task :runtime-llama:compileDebugAndroidTestKotlin UP-TO-DATE
+> Task :runtime-llama:compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :runtime-llama:processDebugAndroidTestJavaRes UP-TO-DATE
+> Task :runtime-llama:dexBuilderDebugAndroidTest UP-TO-DATE
+> Task :runtime-llama:mergeDebugAndroidTestJavaResource UP-TO-DATE
+> Task :runtime-llama:mergeProjectDexDebugAndroidTest UP-TO-DATE
+> Task :runtime-llama:buildCMakeDebug[x86_64]
+> Task :runtime-llama:buildCMakeDebug[arm64-v8a]
+> Task :runtime-llama:mergeDebugNativeLibs UP-TO-DATE
+> Task :runtime-llama:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :runtime-llama:mergeDebugAndroidTestNativeLibs UP-TO-DATE
+> Task :runtime-llama:stripDebugAndroidTestDebugSymbols UP-TO-DATE
+> Task :runtime-llama:packageDebugAndroidTest UP-TO-DATE
+> Task :runtime-llama:assembleDebugAndroidTest UP-TO-DATE
+> Task :runtime-llama:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
+
+BUILD SUCCESSFUL in 423ms
+54 actionable tasks: 4 executed, 50 up-to-date
+Configuration cache entry stored.

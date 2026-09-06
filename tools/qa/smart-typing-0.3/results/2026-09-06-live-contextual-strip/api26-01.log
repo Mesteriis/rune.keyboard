@@ -1,0 +1,259 @@
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest:
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=contextualPeriodStripTapAlsoCapitalizesOnlyFirstLetter
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+Error in contextualPeriodStripTapAlsoCapitalizesOnlyFirstLetter(io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest):
+java.util.concurrent.ExecutionException: java.lang.AssertionError: expected:<COMPLETE> but was:<VALID_WORD>
+	at java.util.concurrent.FutureTask.report(FutureTask.java:123)
+	at java.util.concurrent.FutureTask.get(FutureTask.java:207)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.onMain(LiveFakeModelBinderFixture.kt:1059)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$onMain(LiveFakeModelBinderFixture.kt:1026)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord$lambda$24(LiveFakeModelBinderFixture.kt:237)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda2.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.await(LiveFakeModelBinderFixture.kt:1064)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$await(LiveFakeModelBinderFixture.kt:1026)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord(LiveFakeModelBinderFixture.kt:235)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.verifyContextualStripTap(LiveFakeModelBinderInstrumentedTest.kt:21)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.contextualPeriodStripTapAlsoCapitalizesOnlyFirstLetter(LiveFakeModelBinderInstrumentedTest.kt:16)
+	... 34 trimmed
+Caused by: java.lang.AssertionError: expected:<COMPLETE> but was:<VALID_WORD>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord$lambda$24$lambda$23(LiveFakeModelBinderFixture.kt:248)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda39.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.onMain$lambda$6(LiveFakeModelBinderFixture.kt:1057)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion$$ExternalSyntheticLambda0.call(D8$$SyntheticClass:0)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:457)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2092)
+	at android.os.Handler.handleCallback(Handler.java:789)
+	at android.os.Handler.dispatchMessage(Handler.java:98)
+	at android.os.Looper.loop(Looper.java:164)
+	at android.app.ActivityThread.main(ActivityThread.java:6541)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:767)
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=contextualPeriodStripTapAlsoCapitalizesOnlyFirstLetter
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest
+INSTRUMENTATION_STATUS: stack=java.util.concurrent.ExecutionException: java.lang.AssertionError: expected:<COMPLETE> but was:<VALID_WORD>
+	at java.util.concurrent.FutureTask.report(FutureTask.java:123)
+	at java.util.concurrent.FutureTask.get(FutureTask.java:207)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.onMain(LiveFakeModelBinderFixture.kt:1059)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$onMain(LiveFakeModelBinderFixture.kt:1026)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord$lambda$24(LiveFakeModelBinderFixture.kt:237)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda2.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.await(LiveFakeModelBinderFixture.kt:1064)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$await(LiveFakeModelBinderFixture.kt:1026)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord(LiveFakeModelBinderFixture.kt:235)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.verifyContextualStripTap(LiveFakeModelBinderInstrumentedTest.kt:21)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.contextualPeriodStripTapAlsoCapitalizesOnlyFirstLetter(LiveFakeModelBinderInstrumentedTest.kt:16)
+	... 34 trimmed
+Caused by: java.lang.AssertionError: expected:<COMPLETE> but was:<VALID_WORD>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord$lambda$24$lambda$23(LiveFakeModelBinderFixture.kt:248)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda39.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.onMain$lambda$6(LiveFakeModelBinderFixture.kt:1057)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion$$ExternalSyntheticLambda0.call(D8$$SyntheticClass:0)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:457)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2092)
+	at android.os.Handler.handleCallback(Handler.java:789)
+	at android.os.Handler.dispatchMessage(Handler.java:98)
+	at android.os.Looper.loop(Looper.java:164)
+	at android.app.ActivityThread.main(ActivityThread.java:6541)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:767)
+
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=originalControlThenModelCorrectionOnSpaceAndOwnedUndo
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=originalControlThenModelCorrectionOnSpaceAndOwnedUndo
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=contextualCommaStripTapChangesOnlyOwnedBoundary
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+Error in contextualCommaStripTapChangesOnlyOwnedBoundary(io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest):
+java.util.concurrent.ExecutionException: java.lang.AssertionError: expected:<COMPLETE> but was:<VALID_WORD>
+	at java.util.concurrent.FutureTask.report(FutureTask.java:123)
+	at java.util.concurrent.FutureTask.get(FutureTask.java:207)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.onMain(LiveFakeModelBinderFixture.kt:1059)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$onMain(LiveFakeModelBinderFixture.kt:1026)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord$lambda$24(LiveFakeModelBinderFixture.kt:237)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda2.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.await(LiveFakeModelBinderFixture.kt:1064)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$await(LiveFakeModelBinderFixture.kt:1026)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord(LiveFakeModelBinderFixture.kt:235)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.verifyContextualStripTap(LiveFakeModelBinderInstrumentedTest.kt:21)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.contextualCommaStripTapChangesOnlyOwnedBoundary(LiveFakeModelBinderInstrumentedTest.kt:13)
+	... 34 trimmed
+Caused by: java.lang.AssertionError: expected:<COMPLETE> but was:<VALID_WORD>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord$lambda$24$lambda$23(LiveFakeModelBinderFixture.kt:248)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda39.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.onMain$lambda$6(LiveFakeModelBinderFixture.kt:1057)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion$$ExternalSyntheticLambda0.call(D8$$SyntheticClass:0)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:457)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2092)
+	at android.os.Handler.handleCallback(Handler.java:789)
+	at android.os.Handler.dispatchMessage(Handler.java:98)
+	at android.os.Looper.loop(Looper.java:164)
+	at android.app.ActivityThread.main(ActivityThread.java:6541)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:767)
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: test=contextualCommaStripTapChangesOnlyOwnedBoundary
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest
+INSTRUMENTATION_STATUS: stack=java.util.concurrent.ExecutionException: java.lang.AssertionError: expected:<COMPLETE> but was:<VALID_WORD>
+	at java.util.concurrent.FutureTask.report(FutureTask.java:123)
+	at java.util.concurrent.FutureTask.get(FutureTask.java:207)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.onMain(LiveFakeModelBinderFixture.kt:1059)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$onMain(LiveFakeModelBinderFixture.kt:1026)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord$lambda$24(LiveFakeModelBinderFixture.kt:237)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda2.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.await(LiveFakeModelBinderFixture.kt:1064)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$await(LiveFakeModelBinderFixture.kt:1026)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord(LiveFakeModelBinderFixture.kt:235)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.verifyContextualStripTap(LiveFakeModelBinderInstrumentedTest.kt:21)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.contextualCommaStripTapChangesOnlyOwnedBoundary(LiveFakeModelBinderInstrumentedTest.kt:13)
+	... 34 trimmed
+Caused by: java.lang.AssertionError: expected:<COMPLETE> but was:<VALID_WORD>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord$lambda$24$lambda$23(LiveFakeModelBinderFixture.kt:248)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda39.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.onMain$lambda$6(LiveFakeModelBinderFixture.kt:1057)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion$$ExternalSyntheticLambda0.call(D8$$SyntheticClass:0)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:457)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2092)
+	at android.os.Handler.handleCallback(Handler.java:789)
+	at android.os.Handler.dispatchMessage(Handler.java:98)
+	at android.os.Looper.loop(Looper.java:164)
+	at android.app.ActivityThread.main(ActivityThread.java:6541)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:767)
+
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 42.179
+There were 2 failures:
+1) contextualPeriodStripTapAlsoCapitalizesOnlyFirstLetter(io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest)
+java.util.concurrent.ExecutionException: java.lang.AssertionError: expected:<COMPLETE> but was:<VALID_WORD>
+	at java.util.concurrent.FutureTask.report(FutureTask.java:123)
+	at java.util.concurrent.FutureTask.get(FutureTask.java:207)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.onMain(LiveFakeModelBinderFixture.kt:1059)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$onMain(LiveFakeModelBinderFixture.kt:1026)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord$lambda$24(LiveFakeModelBinderFixture.kt:237)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda2.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.await(LiveFakeModelBinderFixture.kt:1064)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$await(LiveFakeModelBinderFixture.kt:1026)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord(LiveFakeModelBinderFixture.kt:235)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.verifyContextualStripTap(LiveFakeModelBinderInstrumentedTest.kt:21)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.contextualPeriodStripTapAlsoCapitalizesOnlyFirstLetter(LiveFakeModelBinderInstrumentedTest.kt:16)
+	... 34 trimmed
+Caused by: java.lang.AssertionError: expected:<COMPLETE> but was:<VALID_WORD>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord$lambda$24$lambda$23(LiveFakeModelBinderFixture.kt:248)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda39.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.onMain$lambda$6(LiveFakeModelBinderFixture.kt:1057)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion$$ExternalSyntheticLambda0.call(D8$$SyntheticClass:0)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:457)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2092)
+	at android.os.Handler.handleCallback(Handler.java:789)
+	at android.os.Handler.dispatchMessage(Handler.java:98)
+	at android.os.Looper.loop(Looper.java:164)
+	at android.app.ActivityThread.main(ActivityThread.java:6541)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:767)
+2) contextualCommaStripTapChangesOnlyOwnedBoundary(io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest)
+java.util.concurrent.ExecutionException: java.lang.AssertionError: expected:<COMPLETE> but was:<VALID_WORD>
+	at java.util.concurrent.FutureTask.report(FutureTask.java:123)
+	at java.util.concurrent.FutureTask.get(FutureTask.java:207)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.onMain(LiveFakeModelBinderFixture.kt:1059)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$onMain(LiveFakeModelBinderFixture.kt:1026)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord$lambda$24(LiveFakeModelBinderFixture.kt:237)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda2.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.await(LiveFakeModelBinderFixture.kt:1064)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.access$await(LiveFakeModelBinderFixture.kt:1026)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord(LiveFakeModelBinderFixture.kt:235)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.verifyContextualStripTap(LiveFakeModelBinderInstrumentedTest.kt:21)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderInstrumentedTest.contextualCommaStripTapChangesOnlyOwnedBoundary(LiveFakeModelBinderInstrumentedTest.kt:13)
+	... 34 trimmed
+Caused by: java.lang.AssertionError: expected:<COMPLETE> but was:<VALID_WORD>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture.blockedContextualWord$lambda$24$lambda$23(LiveFakeModelBinderFixture.kt:248)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$$ExternalSyntheticLambda39.invoke(D8$$SyntheticClass:0)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion.onMain$lambda$6(LiveFakeModelBinderFixture.kt:1057)
+	at io.github.mesteriis.rune.keyboard.qa.LiveFakeModelBinderFixture$Companion$$ExternalSyntheticLambda0.call(D8$$SyntheticClass:0)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:457)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2092)
+	at android.os.Handler.handleCallback(Handler.java:789)
+	at android.os.Handler.dispatchMessage(Handler.java:98)
+	at android.os.Looper.loop(Looper.java:164)
+	at android.app.ActivityThread.main(ActivityThread.java:6541)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:767)
+
+FAILURES!!!
+Tests run: 3,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

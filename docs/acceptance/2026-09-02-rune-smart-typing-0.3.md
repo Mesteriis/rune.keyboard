@@ -137,8 +137,8 @@ attempts and preserved development failures are archived in
 `tools/eval/smart-typing-0.3/results/2026-09-06-contextual-controller/`.
 These are conditional current-controller source observations, not semantic accuracy,
 unseen generalization, Android strip rendering or physical model availability.
-No parameters changed after scoring. Actual resident strip tap remains a separate
-editor-matrix obligation.
+No parameters changed after scoring. Actual resident strip comma/period tap now also passes on both APIs, with
+separate fake-numeric-engine/editor Binder evidence in the editor matrix.
 
 ## Required editor matrix
 
@@ -201,7 +201,7 @@ allows one still-owned spelling result for250ms after ordinary Space; a blanket
 | 23 | Rapid typing loses/duplicates no characters |75-character bounded touch burst and exact deletion pass API26/API37; physical frame/event/energy measurements remain |
 | 24 | Held Backspace inside/outside composition | Focused4/4 PASS on each API: positive repeated deletion on unowned seeded text with cancel/detach; exact owned prefix/span/caret and command counts with release/cancel; one hold consumes model Undo then deletes normally; no payload reads in owned paths. Bounded correctness, not physical performance |
 | 25 | Mechanical URL/version/decimal exclusions | Numeric/version/hostname and URL/email/time public fixtures pass both full152 runs, with same-session cleanup/Undo controls; reviewed number-row navigation delta separately passes both APIs/Fold |
-| 26 | Contextual tap changes only allowed segment | Independent controller→real editor Binder3/3 passes both full152 runs; actual resident contextual strip tap path remains missing |
+| 26 | Contextual tap changes only allowed segment | Independent controller→real editor Binder3/3 passes both full152 runs. Actual resident strip comma/period tap2/2 PASS each API: no edit on reply, exact owned boundary and optional first-letter case, compose-only change, no automatic Undo, ordinary next Delete, stable keys and zero payload reads |
 
 Exact test names, terminal log anchors and source/APK deltas are in the
 `editor-matrix-audit.md` and `review.md` files under
@@ -219,6 +219,9 @@ Row19's within-grace positive and API26 observer diagnosis are in
 `tools/qa/smart-typing-0.3/results/2026-09-06-live-space-grace/`.
 Its subsequent positive-plus-next-text pair passes2/2 on each API; exact source/APK
 identities and logs are in `tools/qa/smart-typing-0.3/results/2026-09-06-live-space-next-text/`.
+
+Row26's actual resident contextual strip pair and preserved initial completion-status
+fixture failure are in `tools/qa/smart-typing-0.3/results/2026-09-06-live-contextual-strip/`.
 
 ## Physical and local receipts
 
@@ -294,6 +297,15 @@ these runs. Evidence: `tools/qa/smart-typing-0.3/results/2026-09-06-fold-inner/`
 These are functional probes, not rapid typing, real third-party editors, a
 physical fold transition, cold-storage measurements or unplugged energy.
 
+Separate exact-model Android JNI verification now passes on both API26 and API37
+at07e29da runtime sources. Each explicit test verifies the396704416-byte GGUF digest
+before constructing the runtime and records9 successful requests/27 candidates,
+two pre-cancelled operations, cancellation of an admitted request and successful
+recovery/reload. EN/RU/ES repeatability, malformed inputs and all bounds pass.
+Evidence: `tools/test-native-scoring/results/2026-09-06-emulator-real-runtime/`.
+This public-runtime test does not exercise the IME Binder or qualify physical
+latency. The earlier ordinary-run optional-model assumptions remain unchanged.
+
 ## Named acceptance examples and release decision
 
 Final installed-build examples still require a consolidated per-case record:
@@ -312,11 +324,11 @@ See [publication provenance](2026-09-05-rune-text-v1-hugging-face.md).
 
 | Release gate | Current status |
 | --- | --- |
-| Fresh JVM and prescribed local gates | Current1a5826e: mandatory postcommit whole JVM743/743 PASS, zero failures/errors/skips; prescribed240-task gates PASS. Earlier diagnostics Python32/32 and complete emulator matrices retained with exact receipts |
+| Fresh JVM and prescribed local gates | Current07e29da: mandatory postcommit whole JVM743/743 PASS, zero failures/errors/skips; prescribed240-task gates PASS. Earlier diagnostics Python32/32 and complete emulator matrices retained with exact receipts |
 | API26 complete final matrix | Complete rerun152:149 PASS +3 assumptions, zero failures; all five diagnostic cases PASS. Ordinary JNI6/6 PASS. Initial preview and overbroad missing-model command failures retained |
 | API37 complete final matrix/stability | Full152:149 PASS +3 assumptions, zero failures; subsequent test-only preview case1/1 and JNI6/6 PASS; prior failures retained |
 | Fold inner named functional probes | PARTIAL PASS; initial settings fixture failure retained |
-| Fold transitions/real editors/rapid typing/energy | OPEN. Earlier cover13:6 PASS,5 diagnostic assumptions preserving logs,2 initial failures.75-touch exact text PASS. Exact-model Binder1/1 PASS (899ms first/166ms warm). Read-only admission observation shows model correction/Undo PASS; initial timing miss unresolved. Subsequent cover27:26 PASS + number-row navigation failure; unchanged isolated PASS and class reproduction FAIL retained. Reviewed quarter-height navigation27c3df2 passes mechanical5/5 on Fold and affected case1/1 on each API. Actual unfold is prepared with owned `тест` span0..4, awaiting physical user action |
-| Current-source full quality qualification | Spelling reproduction and state-based Original annotation PASS within the fixed revealed-data scope; exact observations and frozen all-row FAIL retained in1a5826e. Full-controller contextual attribution remains OPEN. v5 source agreement retains its semantic limits |
+| Fold transitions/real editors/rapid typing/energy | BLOCKED: user took phone and requested emulator-only work. Earlier cover13:6 PASS,5 diagnostic assumptions preserving logs,2 initial failures.75-touch exact text PASS. Exact-model Binder1/1 PASS (899ms first/166ms warm). Read-only admission observation shows model correction/Undo PASS; initial timing miss unresolved. Subsequent cover27:26 PASS + number-row navigation failure; unchanged isolated PASS and class reproduction FAIL retained. Reviewed quarter-height navigation27c3df2 passes mechanical5/5 on Fold and affected case1/1 on each API. Prepared owned `тест` span0..4 was historical setup only; actual unfold was not verified and requires a fresh baseline when the device becomes available |
+| Current-source full quality qualification | Spelling reproduction and state-based Original annotation PASS within the fixed revealed-data scope; exact observations and frozen all-row FAIL retained in1a5826e. Full-controller contextual attribution complete in07e29da:1200 rows,179/179 explicit host selections, zero unresolved/harness/forbidden/automatic edits; independent review and fresh replay verification PASS. Source agreement retains its semantic limits |
 | Current external CI | No PR-triggered runs returned for fd8872f by the GitHub connector; remote main remains b5400cb; not a full workflow inventory |
 | Model final release / version0.3.0 / main merge | BLOCKED by remaining gates |
