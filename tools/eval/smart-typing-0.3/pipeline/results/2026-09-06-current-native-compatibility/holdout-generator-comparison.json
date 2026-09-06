@@ -1,0 +1,32 @@
+{
+  "scope": "ordinary-generator-compatibility-diagnostic",
+  "sourceHead": "27d07ea9f2753b5a464fd616eaf7d4b5177347a5",
+  "historicalReceiptSha256": "a523ac829ac7b25c4b19774e2f9963c0b6b93ba9080f9d730b4b8ee79a848c25",
+  "currentCalibrationReceiptSha256": "18efac222d6d4658e00dc9944e46e113c166c54f428c7736d4593eb80894958e",
+  "currentBinarySha256": "a287066323120448ba4efa882403395240c573f4be0fc1426dc7231b6b2a57f4",
+  "rows": 6000,
+  "maximumAlternatives": 3,
+  "checks": {
+    "inputs.tsv": true,
+    "actual.tsv": true,
+    "candidates.jsonl": true,
+    "actualArchiveBytes": true,
+    "candidateArchiveBytes": true
+  },
+  "releaseQualified": false,
+  "canonicalCaseProvider": "EMPTY",
+  "modelRequestsExecuted": 0,
+  "thresholdFittingPerformed": false,
+  "command": [
+    "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/bin/java",
+    "-XX:ActiveProcessorCount=2",
+    "-Xmx768m",
+    "-cp",
+    "build/smart-typing-0.3/current-source-replay-20260906/calibration/generator.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.2.10/30de6faa127a4a012db8e71bf1b9c0a99b1402b2/kotlin-stdlib-2.2.10.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar",
+    "io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateExport",
+    "build/smart-typing-0.3/current-source-replay-20260906/holdout/inputs.tsv",
+    "app/src/main/assets/smarttyping/lexicon",
+    "app/src/main/assets/smarttyping/lexicon/frequency",
+    "3"
+  ]
+}

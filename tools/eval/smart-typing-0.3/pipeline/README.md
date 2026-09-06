@@ -199,3 +199,73 @@ replacements, reaches the selected precision profile, has at most
 0.5% false changes among all correct/protected rows, and Original in every set.
 Host ideal availability does not qualify model latency, energy, physical-device
 availability or the real Binder boundary.
+
+## Explicit contextual v5 source-boundary evaluation
+
+`contextual_quality.py` keeps its default `legacy-full` corpus loader and the
+schema-2 production-policy receipt checks. The punctuation-only v5 path requires
+`export --corpus-format contextual-v5 --corpus <directory>`. It calls
+`qualification-v5-contextual/corpus_contract.load_corpus` for complete admission:
+pinned inputs, all 40 exclusions, toolchain/implementation identity, exact schema,
+quotas and deterministic selector replay. Every current schema-2 export must
+retain its repository-relative `corpusDirectory`, exact `corpusManifest` digest
+and `holdoutScored:false`. `load_export` repeats the selected full legacy/v5
+corpus admission and compares corpus rows, Kotlin input bytes and parsed Kotlin
+output with the export receipt. Removing v5 markers cannot bypass corpus
+validation through a legacy path with missing provenance. The historical a/b corpus manifests retain their earlier
+loader identity and are rejected by the hardened loader. Current c/d use manifest
+`dbce48cfc68d36a52a1f7c60d96d612dc568012d409dd1015e5685c386461660`.
+
+Use the corpus's recorded Python 3.11.14 interpreter and pyarrow environment
+described in the v5 README. A source-corpus directory contains all 1,200 rows;
+export includes both splits without executing a model. Actual Kotlin
+`ContextualPunctuationEngine` supplies its seven variants and sentence casing.
+Rows excluded by that engine remain in the export with no variants, receive no
+model request and remain in every applicable report denominator. Synthetic
+protocol checks do not replace the strict corpus loader.
+
+Before model execution, run the existing `verify-policy` command with an absolute
+JDK17 path and the pinned Kotlin compiler cache, and review the resulting
+synthetic Kotlin/Python parity receipt. The calibration → freeze → holdout flow
+uses the existing exact total-log-probability policy: Original advantage strictly
+greater than 0.5 and rival advantage at least 4.0. These constants are not fitted
+by this tool. `freeze --policy-verification <directory>` requires the current
+parity receipt and complete calibration responses; holdout scoring requires its
+frozen config. Editing this consumer's source invalidates earlier schema-2 policy
+receipts, which must remain as historical evidence. No compatibility exception
+admits a receipt from the former average-log-probability evaluator.
+
+Every v5 export, score-input/completion receipt, frozen config and holdout report
+binds `corpusFormat: contextual-v5`, `corpusVersion: 5`,
+`labelSemantics: observed_wikipedia_boundary` and the hashes of the v5 loader,
+generator and both locks. Existing export/config links bind the exact corpus
+manifest, actual requests, backend and score bytes through the pipeline. Missing,
+changed or mixed v5/legacy semantics are rejected. V5 does not fabricate spelling
+rows, `ambiguous`, `unambiguous` or `expectedCandidate` labels.
+
+V5 reports source-boundary agreement of the final suggested decision, suggestion
+coverage/abstention, insertion rate at observed spaces, production exclusions,
+runtime errors and missing responses. Each language includes all 200 split rows
+and four reference-boundary strata of 50. Rates carry their numerators,
+denominators and Wilson 95% row-descriptive intervals; empty applicable strata
+have null rates/intervals. `decisionCounts` also exposes semicolon, question and
+exclamation suggestions, although those boundaries have no source strata.
+
+Original/abstention counts as a source-space agreement, including when caused by
+production exclusion or runtime error. Those causes remain explicit counts and
+rates with complete denominators; an error never becomes a suggestion. Coverage,
+abstention, exclusion and error rates use all rows in the language/stratum.
+Insertion at observed spaces uses all observed-space rows, including exclusions
+and errors. Missing responses appear in standalone diagnostics; a final report
+requires a complete validated score cache for every submitted row. Automatic
+replacements remain zero.
+
+These are stratified observed-source diagnostics. Source punctuation is not a
+unique semantic answer from a bounded prefix and one following word, and a source
+space is not an ambiguity label. Equal quotas do not estimate chat prevalence;
+article/observation exclusions do not establish semantic independence or absence
+from unknown pretraining. V5 configs/reports explicitly record
+`qualityGateEstablished: false` and `semanticCorrectnessEvaluated: false`. No
+numeric contextual gate, semantic precision claim, spelling qualification or
+device-performance claim follows from this path. Root owns corpus review,
+protocol freeze and authorization of subsequent real scoring.

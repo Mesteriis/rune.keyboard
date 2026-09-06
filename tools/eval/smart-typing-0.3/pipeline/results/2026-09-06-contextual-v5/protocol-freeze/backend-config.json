@@ -1,0 +1,38 @@
+{
+  "configSha256": "23d5925d165d04436a43f7ec1d3f97c380f823ea279a84086efb23b4bbe31dd5",
+  "evidence": {
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/README.md": "8fcde40018999e8829a03a89967af8ec705cbe6c7933fecb030deff4f374a910",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/archive.json": "8fa92ce5757f5101d08cb212fe41f2ac353d1e12ebefca174964477b5e812864",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/candidate-provenance.json": "18efac222d6d4658e00dc9944e46e113c166c54f428c7736d4593eb80894958e",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/candidate-summary.json": "df9154fdb89a59d63830a0ecb0ae9b5d4bd05aff21e1a52a2354b6b540e81b55",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/compile_commands.json.gz": "09806f3feec555b2b9bd89daa9079fe646259e025c4b463404d5436ad2c6fe31",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/complete.json": "b554bd50984f4b63d995d1408b5129d7337eed45ae697ac5f20c7efb60109ab3",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/holdout-generator-comparison.json": "9c7380d0a0ed11a060632ea23c2e8ed08f4c9eb23a6af7e9321142d4f422919e",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/native-build.log.gz": "dab35078d0a16830d3fd7b9beb08c86bb16e821f6313f08433b329f79f131fb5",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/native-configure.log.gz": "555a4dfed8405b13eb184742049dfa02a6afb3fbbcf36c358a998e3f809a3eb9",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/native-ctest.log.gz": "e5792ac30f93450bd7b2b26048657c9b0c514e0f87c7ec5dc1fc4fa8c3d8155e",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/native-model-oracle.log.gz": "59b0336d727e946f6c80afc7357d073cdb2581e1898623a2f2548ea10679e813",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/native-replay.log.gz": "ce41dda0b2e386676a89059b429442fd57b04232e592666b39a8a11e544590ab",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/run-input.json": "9f2c496998d1a8fe2e129f43822c2ee6eb4b09f6c635b5e2cd8183b25af94eae",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/run_native_replay.py": "906dc8e0b63e6bfe1ace899da617716864a6f1b2e5ff2fc2dc7d88525c7e206f",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-current-native-compatibility/scores.jsonl.gz": "84ab09574d46201817eeb63c05fb85322f6c80f670da5b689c77afb65ed70bcb"
+  },
+  "model": "build/smart-typing-0.3/model/rune-text-v1-0.1.0-q4_k_m.gguf",
+  "modelBytes": 396704416,
+  "modelIdentity": {
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "bc3f78bdf3ac41009a7603ca5dd6b6c4d5e8d6c2bdcaf3a692cfd95a3b3d2553"
+  },
+  "qualification": {
+    "compatibilityIsNewQualityQualification": false,
+    "historicalSpellingResponseCompatibility": 2940,
+    "nativeMathCases": 1,
+    "scalarOracleMaxSumDelta": 0
+  },
+  "runner": "build/smart-typing-0.3/native-current-20260906/rune-score",
+  "schemaVersion": 1,
+  "scope": "contextual-v5-backend-only",
+  "thresholdsIncluded": false,
+  "upstreamLlamaSha": "36b10154383b60eb15baac2c7a40d2a5f784faa7"
+}

@@ -1,0 +1,43 @@
+{
+  "actual": "1281c6097c77de871e095ea469909ffacc8122836b77f03cb9e3b7910f487c9c",
+  "binary": "585fe4dff45dcf19546da21eb93d4dfe52b5606ffaff0d37eb908eb9dc562192",
+  "corpusDirectory": "build/smart-typing-0.3/contextual-v5-20260906/run-c",
+  "corpusFormat": "contextual-v5",
+  "corpusLoaderSources": {
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/corpus_contract.py": "100bafb1fa324aa4be500c38bd49f7c54c2ca211ca0149be5bd6f30d52e1371e",
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/exclusion-lock.json": "7054bae1871a1bf23e6f3875c6f31714cfd65c8066a0ae338f9a0182b5bb8043",
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/generate_corpus.py": "b1a0b9fff0115aa081e78beb67587431ad0dd8e673b4431db50e6302823b2bb1",
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/source-lock.json": "b70c04203de82dd1f315f2e66b5c780484352809833adb6068d741c2b2bd1f7c"
+  },
+  "corpusManifest": "dbce48cfc68d36a52a1f7c60d96d612dc568012d409dd1015e5685c386461660",
+  "corpusVersion": 5,
+  "exporter": "ab02e8457abe3cfdf711f67b52b13be33fde7f7693270bf4dc4203f5ba49c713",
+  "holdoutScored": false,
+  "inputs": "bc733bf4ac08b7ee91ba7c78c54f6e894bed57ac915c14cfe144f7505953cb38",
+  "labelSemantics": "observed_wikipedia_boundary",
+  "policy": {
+    "originalAdvantage": 0.5,
+    "originalComparison": ">",
+    "rivalAdvantage": 4.0,
+    "rivalComparison": ">=",
+    "rule": "total-log-probability-margins",
+    "tieOrder": "ascending-candidate-id",
+    "tokenCountRange": [
+      1,
+      255
+    ],
+    "version": 2
+  },
+  "policySourceSha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+  "qualitySourceSha256": "ab02e8457abe3cfdf711f67b52b13be33fde7f7693270bf4dc4203f5ba49c713",
+  "records": "62d353dd80c4541290bd4a21308053a973761ec7928580fa1ee364469c074d65",
+  "rows": "aca6ced03a876ee1e8ba28435d969b7f2d1b3428dd8c816d43de75faeca2696b",
+  "schemaVersion": 2,
+  "scope": "production-contextual-export",
+  "sources": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+    "tools/eval/smart-typing-0.3/pipeline/ContextualExport.kt": "3497cff867a133aef185d3cdf366df789b32e21bbc59f03d1289e8a418c90151"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "byteIdentical": true,
+  "files": {
+    "attribution.jsonl": {
+      "bytes": 1856743,
+      "sha256": "49c01b5c158105a89fabb3f6d455169a1cf4e837d9bed1dcf029629dc313f0c2"
+    },
+    "manifest.json": {
+      "bytes": 24066,
+      "sha256": "59b6e1df6b2eef7beb5e3ed2039bb5b23d2b4eb8816c486fff239b017aa66e53"
+    },
+    "punctuation-en.jsonl": {
+      "bytes": 770868,
+      "sha256": "fc4fd99a0aab3920a956f8b2d04f3a981650727d1b950cc2e3596997f4f04af7"
+    },
+    "punctuation-es.jsonl": {
+      "bytes": 770831,
+      "sha256": "1362c444cead00051727bd59436c5a88be9254aa2cebcacbb870112abb716a70"
+    },
+    "punctuation-ru.jsonl": {
+      "bytes": 937715,
+      "sha256": "4e4be0e38e61c57d85fdd662778d3a809eff5d515af93b6bbe55c96880821148"
+    }
+  },
+  "frozen": false,
+  "modelScoringPerformed": false,
+  "qualityQualified": false,
+  "scope": "two-independent-v5-generations"
+}

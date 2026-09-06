@@ -1,0 +1,11 @@
+{
+  "execSession": 6233,
+  "exitCode": 1,
+  "failureCode": "PREFIX_OR_BOUNDARY",
+  "outputDirectoryCreated": false,
+  "scope": "failed-before-output-generation-attempt",
+  "sources": {
+    "corpus_contract.py": "658f67f6e39f89a32498135f6293e61cedbdc26996316247ceae177b63dc0917",
+    "generate_corpus.py": "b1a0b9fff0115aa081e78beb67587431ad0dd8e673b4431db50e6302823b2bb1"
+  }
+}

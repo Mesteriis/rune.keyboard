@@ -1,0 +1,13 @@
+{
+  "frozen": false,
+  "modelScoringPerformed": false,
+  "oldPolicyReceiptAdmission": {
+    "accepted": false,
+    "reason": "VERIFICATION_POLICY"
+  },
+  "policyCases": 79,
+  "policyReceiptSha256": "713dae9657f42bdc001b7cc3760cad35b98676acfa87194004699f6cdaa6d178",
+  "qualitySourceSha256": "ab02e8457abe3cfdf711f67b52b13be33fde7f7693270bf4dc4203f5ba49c713",
+  "scope": "contextual-v5-downgrade-fix-parity-admission",
+  "syntheticOnly": true
+}

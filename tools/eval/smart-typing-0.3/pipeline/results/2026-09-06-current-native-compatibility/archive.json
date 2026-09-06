@@ -1,0 +1,52 @@
+{
+  "scope": "numeric-compatibility-diagnostic",
+  "releaseQualified": false,
+  "files": {
+    "run_native_replay.py": {
+      "sha256": "906dc8e0b63e6bfe1ace899da617716864a6f1b2e5ff2fc2dc7d88525c7e206f"
+    },
+    "run-input.json": {
+      "sha256": "9f2c496998d1a8fe2e129f43822c2ee6eb4b09f6c635b5e2cd8183b25af94eae"
+    },
+    "complete.json": {
+      "sha256": "b554bd50984f4b63d995d1408b5129d7337eed45ae697ac5f20c7efb60109ab3"
+    },
+    "candidate-provenance.json": {
+      "sha256": "18efac222d6d4658e00dc9944e46e113c166c54f428c7736d4593eb80894958e"
+    },
+    "candidate-summary.json": {
+      "sha256": "df9154fdb89a59d63830a0ecb0ae9b5d4bd05aff21e1a52a2354b6b540e81b55"
+    },
+    "holdout-generator-comparison.json": {
+      "sha256": "9c7380d0a0ed11a060632ea23c2e8ed08f4c9eb23a6af7e9321142d4f422919e"
+    },
+    "scores.jsonl.gz": {
+      "sha256": "84ab09574d46201817eeb63c05fb85322f6c80f670da5b689c77afb65ed70bcb",
+      "decodedSha256": "c0b93073e00f074cbb88949163bfcc35c10fc408f167b0971739590761377af7"
+    },
+    "native-replay.log.gz": {
+      "sha256": "ce41dda0b2e386676a89059b429442fd57b04232e592666b39a8a11e544590ab",
+      "decodedSha256": "82eb2b883f6a2327a7f8c90a18b6654a6d6edeff0921912a56d22e69f6d76ed1"
+    },
+    "native-ctest.log.gz": {
+      "sha256": "e5792ac30f93450bd7b2b26048657c9b0c514e0f87c7ec5dc1fc4fa8c3d8155e",
+      "decodedSha256": "72655584ce122b5a7c67f4666b48cdf30316e622c2edbd1aa0ddde1f7af376be"
+    },
+    "native-model-oracle.log.gz": {
+      "sha256": "59b0336d727e946f6c80afc7357d073cdb2581e1898623a2f2548ea10679e813",
+      "decodedSha256": "99d535525c599ab52724e4460fc8b72e7cd33fb8a659b1ab4b7594164c1a2ad5"
+    },
+    "native-build.log.gz": {
+      "sha256": "dab35078d0a16830d3fd7b9beb08c86bb16e821f6313f08433b329f79f131fb5",
+      "decodedSha256": "6a1c0c54750fb99928b9d7f080d9ebd7c5eaa0475dc732df459508765e1711ad"
+    },
+    "native-configure.log.gz": {
+      "sha256": "555a4dfed8405b13eb184742049dfa02a6afb3fbbcf36c358a998e3f809a3eb9",
+      "decodedSha256": "ac6662eb8eabdbd9ab46de1e6afc8421fda2042b79e40c8bd4b5b7b3137a2dbd"
+    },
+    "compile_commands.json.gz": {
+      "sha256": "09806f3feec555b2b9bd89daa9079fe646259e025c4b463404d5436ad2c6fe31",
+      "decodedSha256": "997876810628e9e78636437c51ac803f61150d584fdf65f5d5bed4296e8adac0"
+    }
+  }
+}

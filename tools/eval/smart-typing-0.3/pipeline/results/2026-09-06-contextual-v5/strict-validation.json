@@ -1,0 +1,39 @@
+{
+  "frozen": false,
+  "manifestSha256": "59b6e1df6b2eef7beb5e3ed2039bb5b23d2b4eb8816c486fff239b017aa66e53",
+  "modelScoringPerformed": false,
+  "qualityQualified": false,
+  "scope": "full-v5-source-input-exclusion-and-toolchain-validation",
+  "validated": true,
+  "validation": {
+    "counts": {
+      "en/calibration/colon": 50,
+      "en/calibration/comma": 50,
+      "en/calibration/period": 50,
+      "en/calibration/space": 50,
+      "en/holdout/colon": 50,
+      "en/holdout/comma": 50,
+      "en/holdout/period": 50,
+      "en/holdout/space": 50,
+      "es/calibration/colon": 50,
+      "es/calibration/comma": 50,
+      "es/calibration/period": 50,
+      "es/calibration/space": 50,
+      "es/holdout/colon": 50,
+      "es/holdout/comma": 50,
+      "es/holdout/period": 50,
+      "es/holdout/space": 50,
+      "ru/calibration/colon": 50,
+      "ru/calibration/comma": 50,
+      "ru/calibration/period": 50,
+      "ru/calibration/space": 50,
+      "ru/holdout/colon": 50,
+      "ru/holdout/comma": 50,
+      "ru/holdout/period": 50,
+      "ru/holdout/space": 50
+    },
+    "rows": 1200,
+    "uniqueArticles": 1200,
+    "uniqueObservations": 1200
+  }
+}

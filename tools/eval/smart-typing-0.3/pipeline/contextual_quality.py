@@ -26,6 +26,40 @@ TOOLCHAIN_MANIFEST = shared.LEXICON / "weighted-qualification/manifests/reproduc
 BOUNDARIES = [" ", ", ", ": ", "; ", ". ", "? ", "! "]
 ORIGINAL_ADVANTAGE = 0.5
 RIVAL_ADVANTAGE = 4.0
+V5_DIRECTORY = HERE.parent / "qualification-v5-contextual"
+V5_FORMAT = "contextual-v5"
+V5_LABEL = "observed_wikipedia_boundary"
+V5_BOUNDARIES = (" ", ", ", ": ", ". ")
+CORPUS_BINDING_KEYS = ("corpusFormat", "corpusVersion", "labelSemantics", "corpusLoaderSources")
+
+
+def v5_loader():
+    spec = importlib.util.spec_from_file_location("contextual_v5_corpus_contract", V5_DIRECTORY / "corpus_contract.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def v5_binding() -> dict:
+    return {"corpusFormat": V5_FORMAT, "corpusVersion": 5, "labelSemantics": V5_LABEL,
+        "corpusLoaderSources": {str((V5_DIRECTORY / name).relative_to(shared.REPO)): shared.sha(V5_DIRECTORY / name)
+            for name in ("corpus_contract.py", "generate_corpus.py", "source-lock.json", "exclusion-lock.json")}}
+
+
+def require_corpus_binding(receipt: dict, expected: dict) -> None:
+    actual = {key: receipt[key] for key in CORPUS_BINDING_KEYS if key in receipt}
+    shared.require(evaluator().digest(actual) == evaluator().digest(expected), "CORPUS_BINDING")
+    shared.require(not expected or evaluator().digest(expected) == evaluator().digest(v5_binding()), "CORPUS_BINDING")
+
+
+def records_binding(records: list[dict]) -> dict:
+    marked = [any(key in row for key in ("corpusVersion", "labelSemantics", "observedBoundary")) for row in records]
+    if not any(marked): return {}
+    shared.require(all(marked) and all(type(row.get("corpusVersion")) is int and row["corpusVersion"] == 5
+        and row.get("labelSemantics") == V5_LABEL and row.get("observedBoundary") in V5_BOUNDARIES
+        and not any(key in row for key in ("ambiguous", "expectedCandidate", "expectedBoundary"))
+        for row in records), "MIXED_CORPUS_RECORDS")
+    return v5_binding()
 
 
 def policy_binding() -> dict:
@@ -218,16 +252,24 @@ def evaluator():
     return module
 
 
-def corpus_rows(corpus_directory: Path = shared.CORPUS) -> list[dict]:
-    ev = evaluator()
-    corpus = ev.load_corpus(Path(corpus_directory).resolve(strict=True))
-    ev.validate(corpus)
-    rows = [row for row in corpus if row["task"] == "punctuation"]
+def corpus_rows(corpus_directory: Path = shared.CORPUS, corpus_format: str = "legacy-full") -> list[dict]:
+    shared.require(corpus_format in ("legacy-full", V5_FORMAT), "CORPUS_FORMAT")
+    directory = Path(corpus_directory).resolve(strict=True)
+    if corpus_format == V5_FORMAT:
+        rows, manifest = v5_loader().load_corpus(directory)
+        shared.require(type(manifest.get("corpusVersion")) is int and manifest["corpusVersion"] == 5
+            and manifest.get("labelSemantics") == V5_LABEL, "V5_CORPUS_MANIFEST")
+    else:
+        ev = evaluator()
+        corpus = ev.load_corpus(directory)
+        ev.validate(corpus)
+        rows = [row for row in corpus if row["task"] == "punctuation"]
     shared.require(len(rows) == 1200, "CONTEXTUAL_ROWS")
     return rows
 
 
-def parse_output(text: str, rows: list[dict]) -> list[dict]:
+def parse_output(text: str, rows: list[dict], corpus_format: str = "legacy-full") -> list[dict]:
+    shared.require(corpus_format in ("legacy-full", V5_FORMAT), "CORPUS_FORMAT")
     results, count = [], 0
     for line in text.splitlines():
         fields = line.split("\t")
@@ -253,10 +295,30 @@ def parse_output(text: str, rows: list[dict]) -> list[dict]:
         boundaries = [item["boundary"] for item in result["variants"]]
         shared.require(not boundaries or boundaries == BOUNDARIES,
                        "PRODUCTION_BOUNDARIES")
-        result.update({"split": row["split"], "language": row["language"],
-            "prefix": row["prefix"], "ambiguous": row["ambiguous"],
-            "expectedCandidate": BOUNDARIES.index(row["expectedBoundary"])})
+        result.update({"split": row["split"], "language": row["language"], "prefix": row["prefix"]})
+        if corpus_format == V5_FORMAT:
+            shared.require(type(row.get("corpusVersion")) is int and row["corpusVersion"] == 5
+                and row.get("labelSemantics") == V5_LABEL and row.get("observedBoundary") in V5_BOUNDARIES
+                and not any(key in row for key in ("ambiguous", "expectedCandidate", "expectedBoundary")),
+                "V5_ROW_SEMANTICS")
+            word = row["currentWord"]
+            shared.require(not boundaries or [item["continuation"] for item in result["variants"]] ==
+                [boundary + (word[:1].upper() + word[1:] if index >= 4 else word)
+                 for index, boundary in enumerate(BOUNDARIES)], "V5_CONTINUATIONS")
+            result.update({"corpusVersion": 5, "labelSemantics": V5_LABEL, "observedBoundary": row["observedBoundary"]})
+        else:
+            shared.require(not any(key in row for key in ("observedBoundary", "labelSemantics"))
+                and row.get("corpusVersion") != 5, "MIXED_CORPUS_RECORDS")
+            result.update({"ambiguous": row["ambiguous"], "expectedCandidate": BOUNDARIES.index(row["expectedBoundary"])})
     return results
+
+
+def export_inputs(rows: list[dict]) -> str:
+    lines = []
+    for index, row in enumerate(rows):
+        values = [base64.b64encode(row[key].encode()).decode("ascii") for key in ("prefix", "currentWord")]
+        lines.append(f'{index}\t{row["language"]}\t{values[0]}\t{values[1]}\n')
+    return "".join(lines)
 
 
 def toolchain(gradle_cache: Path) -> list[Path]:
@@ -274,7 +336,10 @@ def export_run(args) -> None:
     shared.require(output.is_relative_to(shared.REPO / "build") and not output.exists(), "FRESH_OUTPUT")
     corpus_directory = Path(getattr(args, "corpus", shared.CORPUS)).resolve(strict=True)
     shared.require(corpus_directory.is_relative_to(shared.REPO), "CORPUS_SCOPE")
-    rows = corpus_rows(corpus_directory)
+    corpus_format = getattr(args, "corpus_format", "legacy-full")
+    corpus_manifest = shared.sha(corpus_directory / "manifest.json")
+    rows = corpus_rows(corpus_directory, corpus_format)
+    corpus_binding = v5_binding() if corpus_format == V5_FORMAT else {}
     sources = [LANGUAGE, ENGINE, HARNESS, POLICY]
     binding = policy_binding()
     source_hashes = {str(path.relative_to(shared.REPO)): shared.sha(path) for path in sources}
@@ -284,9 +349,7 @@ def export_run(args) -> None:
     output.mkdir(parents=True)
     inputs = output / "inputs.tsv"
     with inputs.open("x", encoding="ascii") as stream:
-        for index, row in enumerate(rows):
-            values = [base64.b64encode(row[key].encode()).decode("ascii") for key in ("prefix", "currentWord")]
-            stream.write(f'{index}\t{row["language"]}\t{values[0]}\t{values[1]}\n')
+        stream.write(export_inputs(rows))
     binary = output / "contextual-export.jar"
     command = [args.java, "-XX:ActiveProcessorCount=2", "-Xmx512m", "-cp", os.pathsep.join(map(str, jars)),
         "org.jetbrains.kotlin.cli.jvm.K2JVMCompiler", "-no-stdlib", "-no-reflect", "-jvm-target", "17",
@@ -298,15 +361,17 @@ def export_run(args) -> None:
         "io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualExport", str(inputs)]
     with (output / "actual.tsv").open("xb") as data, (output / "run.log").open("xb") as log:
         subprocess.run(command, stdout=data, stderr=log, check=True, timeout=120)
-    results = parse_output((output / "actual.tsv").read_text(), rows)
+    results = parse_output((output / "actual.tsv").read_text(), rows, corpus_format)
     with (output / "rows.jsonl").open("x", encoding="utf-8") as stream:
         for result in results:
             stream.write(json.dumps(result, ensure_ascii=False, sort_keys=True) + "\n")
     shared.require(source_hashes == {str(path.relative_to(shared.REPO)): shared.sha(path) for path in sources},
                    "SOURCE_DRIFT")
     shared.require(binding == policy_binding(), "POLICY_DRIFT")
-    shared.write_json(output / "provenance.json", {**binding, "scope": "production-contextual-export",
-        "corpusManifest": shared.sha(corpus_directory / "manifest.json"),
+    require_corpus_binding(corpus_binding, records_binding(results))
+    shared.require(corpus_manifest == shared.sha(corpus_directory / "manifest.json"), "CORPUS_MANIFEST_DRIFT")
+    shared.write_json(output / "provenance.json", {**binding, **corpus_binding, "scope": "production-contextual-export",
+        "corpusManifest": corpus_manifest,
         "corpusDirectory": str(corpus_directory.relative_to(shared.REPO)),
         "rows": evaluator().digest(rows),
         "sources": source_hashes, "inputs": shared.sha(inputs), "actual": shared.sha(output / "actual.tsv"),
@@ -329,6 +394,23 @@ def load_export(directory: Path) -> list[dict]:
         "EXPORT_IDENTITY")
     records = [json.loads(line) for line in (directory / "rows.jsonl").read_text().splitlines()]
     shared.require(len(records) == 1200, "EXPORT_ROWS")
+    corpus_binding = records_binding(records)
+    require_corpus_binding(receipt, corpus_binding)
+    # Every current schema-2 exporter writes these links. Their absence must not
+    # convert a stripped v5 receipt into an unchecked legacy export.
+    location = receipt.get("corpusDirectory")
+    shared.require(isinstance(location, str) and bool(location) and not Path(location).is_absolute()
+        and ".." not in Path(location).parts, "EXPORT_CORPUS_LOCATION")
+    corpus_directory = (shared.REPO / location).resolve(strict=True)
+    shared.require(corpus_directory.is_relative_to(shared.REPO), "CORPUS_SCOPE")
+    shared.require(receipt.get("holdoutScored") is False
+        and shared.sha(corpus_directory / "manifest.json") == receipt.get("corpusManifest"), "EXPORT_CORPUS_MANIFEST")
+    corpus_format = V5_FORMAT if corpus_binding else "legacy-full"
+    rows = corpus_rows(corpus_directory, corpus_format)
+    shared.require(evaluator().digest(rows) == receipt.get("rows")
+        and (directory / "inputs.tsv").read_text(encoding="ascii") == export_inputs(rows)
+        and records == parse_output((directory / "actual.tsv").read_text(), rows, corpus_format), "EXPORT_CORPUS_REPLAY")
+    require_corpus_binding(receipt, records_binding(records))
     return records
 
 
@@ -354,6 +436,7 @@ def verified_model(config_path: Path, runner: Path, model: Path) -> dict:
 def score_run(args) -> None:
     export_dir = Path(args.export).resolve(strict=True)
     records = load_export(export_dir)
+    corpus_binding = records_binding(records)
     selected = requests(records, args.split)
     output = Path(args.output).resolve()
     shared.require(output.is_relative_to(shared.REPO / "build"), "BUILD_OUTPUT")
@@ -368,10 +451,10 @@ def score_run(args) -> None:
     frozen = None
     if args.split == "holdout":
         shared.require(args.frozen_config is not None, "FROZEN_CONTEXTUAL_CONFIG_REQUIRED")
-        frozen = load_frozen(Path(args.frozen_config), export_receipt)
+        frozen = load_frozen(Path(args.frozen_config), export_receipt, corpus_binding)
         require_backend(frozen["modelIdentity"], identity)
     output.mkdir(parents=True, exist_ok=True)
-    run_input = {**policy_binding(), "scope": f"contextual-{args.split}-scores", "split": args.split,
+    run_input = {**policy_binding(), **corpus_binding, "scope": f"contextual-{args.split}-scores", "split": args.split,
         "requests": len(selected), "identity": identity, "exportReceiptSha256": export_receipt,
         "frozenConfigSha256": frozen and frozen["configSha256"]}
     info = output / "run-input.json"
@@ -383,6 +466,7 @@ def score_run(args) -> None:
     score_requests(selected, runner, model, output / "scores.jsonl", ev, args.limit,
                    model_identity["modelSha256"], expected_bytes)
     require_binding(run_input, "SCORING_SOURCE_DRIFT")
+    require_corpus_binding(run_input, records_binding(records))
     _, scores = ev.load_cache(output / "scores.jsonl", selected, identity)
     if len(scores) == len(selected) and not (output / "complete.json").exists():
         shared.write_json(output / "complete.json", {**run_input, "scores": len(scores),
@@ -425,9 +509,51 @@ def metrics(records: list[dict], scores: dict) -> dict:
         "automaticReplacements": 0}
 
 
-def load_scores(directory: Path, selected: list[dict]) -> tuple[dict, dict]:
+def source_metrics(records: list[dict], scores: dict) -> dict:
+    """Stratified observed-source agreement, never semantic precision or a gate."""
+    shared.require(bool(records_binding(records)), "V5_METRIC_RECORDS")
+    ev = evaluator()
+    chosen = decisions(records, scores)
+    names = ("original", "comma", "colon", "semicolon", "period", "question", "exclamation")
+    def group(indices):
+        count = len(indices)
+        suggestions = sum(chosen[index] != 0 for index in indices)
+        matches = sum(BOUNDARIES[chosen[index]] == records[index]["observedBoundary"] for index in indices)
+        spaces = [index for index in indices if records[index]["observedBoundary"] == " "]
+        excluded = sum(not records[index]["variants"] for index in indices)
+        errors = sum("error" in scores.get(records[index]["id"], {}) for index in indices)
+        missing = sum(bool(records[index]["variants"]) and records[index]["id"] not in scores for index in indices)
+        return {"rows": count, "sourceBoundaryMatches": matches, "suggestions": suggestions,
+            "abstentions": count - suggestions, "observedSpaceRows": len(spaces),
+            "productionExcludedRows": excluded, "runtimeErrors": errors, "missingResponses": missing,
+            "sourceBoundaryAgreement": ev.rate(matches, count), "suggestionCoverage": ev.rate(suggestions, count),
+            "abstention": ev.rate(count - suggestions, count),
+            "insertionAtObservedSpaces": ev.rate(sum(chosen[index] != 0 for index in spaces), len(spaces)),
+            "productionExclusionRate": ev.rate(excluded, count), "runtimeErrorRate": ev.rate(errors, count),
+            "missingResponseRate": ev.rate(missing, count),
+            "decisionCounts": {name: sum(chosen[index] == candidate for index in indices)
+                               for candidate, name in enumerate(names)}, "automaticReplacements": 0}
+    return {**group(range(len(records))), "byObservedBoundary": {
+        ("space" if boundary == " " else names[BOUNDARIES.index(boundary)]):
+            group([index for index, row in enumerate(records) if row["observedBoundary"] == boundary])
+        for boundary in V5_BOUNDARIES}}
+
+
+def metric_report(records: list[dict], scores: dict, corpus_binding: dict) -> dict:
+    measure = source_metrics if corpus_binding else metrics
+    return {language: measure([row for row in records if row["language"] == language], scores)
+            for language in ("en", "ru", "es")}
+
+
+def metric_semantics(corpus_binding: dict) -> dict:
+    return {"metricSemantics": "observed-source-boundary-diagnostic", "qualityGateEstablished": False,
+            "semanticCorrectnessEvaluated": False} if corpus_binding else {}
+
+
+def load_scores(directory: Path, selected: list[dict], corpus_binding: dict | None = None) -> tuple[dict, dict]:
     complete = json.loads((directory / "complete.json").read_text())
     require_binding(complete, "SCORES_POLICY")
+    require_corpus_binding(complete, corpus_binding or {})
     shared.require(complete.get("split") in ("calibration", "holdout")
         and complete.get("scope") == f'contextual-{complete["split"]}-scores', "SCORES_SCOPE")
     shared.require(json.loads((directory / "run-input.json").read_text()) ==
@@ -437,6 +563,9 @@ def load_scores(directory: Path, selected: list[dict]) -> tuple[dict, dict]:
                    and complete["scoresSha256"] == shared.sha(directory / "scores.jsonl"), "COMPLETE_SCORES")
     _, scores = evaluator().load_cache(directory / "scores.jsonl", selected, complete["identity"])
     shared.require(len(scores) == len(selected), "SCORE_COUNT")
+    if corpus_binding:
+        shared.require(type(complete.get("runtimeErrors")) is int and complete["runtimeErrors"] ==
+            sum("error" in score for score in scores.values()), "V5_RUNTIME_ERROR_COUNT")
     return complete, scores
 
 
@@ -445,11 +574,16 @@ def require_backend(calibration: dict, holdout: dict) -> None:
                        for key in ("protocol", "runnerSha256", "modelSha256")), "FROZEN_MODEL_IDENTITY")
 
 
-def load_frozen(path: Path, export_receipt: str) -> dict:
+def load_frozen(path: Path, export_receipt: str, corpus_binding: dict | None = None) -> dict:
     config = json.loads(path.read_text())
     content = {key: value for key, value in config.items() if key != "configSha256"}
     shared.require(evaluator().digest(content) == config.get("configSha256"), "FROZEN_CONFIG_DIGEST")
     require_binding(config, "FROZEN_POLICY")
+    require_corpus_binding(config, corpus_binding or {})
+    if corpus_binding:
+        semantics = metric_semantics(corpus_binding)
+        shared.require(evaluator().digest({key: config.get(key) for key in semantics}) == evaluator().digest(semantics),
+                       "V5_METRIC_SEMANTICS")
     shared.require(config.get("scope") == "contextual-calibrated-total-rule"
         and config.get("thresholdSearchPerformed") is False
         and config.get("exportReceiptSha256") == export_receipt
@@ -466,18 +600,20 @@ def freeze_run(args) -> None:
     load_verification(verification_dir)
     export_dir = Path(args.export).resolve(strict=True)
     all_records = load_export(export_dir)
+    corpus_binding = records_binding(all_records)
     records = [row for row in all_records if row["split"] == "calibration"]
     selected = requests(all_records, "calibration")
-    complete, scores = load_scores(Path(args.scoring).resolve(strict=True), selected)
+    complete, scores = load_scores(Path(args.scoring).resolve(strict=True), selected, corpus_binding)
     export_receipt = shared.sha(export_dir / "provenance.json")
     require_binding(complete, "CALIBRATION_POLICY")
+    require_corpus_binding(complete, corpus_binding)
     shared.require(complete.get("split") == "calibration" and complete.get("frozenConfigSha256") is None
         and complete.get("exportReceiptSha256") == export_receipt, "CALIBRATION_IDENTITY")
     output = Path(args.output).resolve()
     shared.require(output.is_relative_to(shared.REPO / "build") and not output.exists(), "FRESH_OUTPUT")
-    report = {language: metrics([row for row in records if row["language"] == language], scores)
-              for language in ("en", "ru", "es")}
-    config = {**policy_binding(), "scope": "contextual-calibrated-total-rule",
+    report = metric_report(records, scores, corpus_binding)
+    config = {**policy_binding(), **corpus_binding, **metric_semantics(corpus_binding),
+        "scope": "contextual-calibrated-total-rule",
         "thresholdSearchPerformed": False,
         "policyVerificationDirectory": str(verification_dir.relative_to(shared.REPO)),
         "policyVerificationSha256": shared.sha(verification_dir / "verification.json"),
@@ -489,28 +625,30 @@ def freeze_run(args) -> None:
     output.mkdir(parents=True)
     ev = evaluator()
     shared.write_json(output / "config.json", {**config, "configSha256": ev.digest(config)})
-    print("Frozen verified production contextual totals and calibration-selected margins; no threshold search.")
+    print("Frozen verified production contextual policy and calibration report; no threshold search.")
 
 
 def report_run(args) -> None:
     export_dir = Path(args.export).resolve(strict=True)
     all_records = load_export(export_dir)
+    corpus_binding = records_binding(all_records)
     records = [row for row in all_records if row["split"] == "holdout"]
     selected = requests(all_records, "holdout")
-    complete, scores = load_scores(Path(args.scoring).resolve(strict=True), selected)
+    complete, scores = load_scores(Path(args.scoring).resolve(strict=True), selected, corpus_binding)
     export_receipt = shared.sha(export_dir / "provenance.json")
-    config = load_frozen(Path(args.frozen_config), export_receipt)
+    config = load_frozen(Path(args.frozen_config), export_receipt, corpus_binding)
     shared.require(complete.get("split") == "holdout" and complete["frozenConfigSha256"] == config["configSha256"]
                    and complete.get("exportReceiptSha256") == export_receipt, "FROZEN_CONFIG")
     require_backend(config["modelIdentity"], complete["identity"])
-    report = {**policy_binding(), "split": "holdout", "automaticReplacements": 0, "thresholdsFittedOnHoldout": False,
-        "languages": {language: metrics([row for row in records if row["language"] == language], scores)
-                      for language in ("en", "ru", "es")}}
+    report = {**policy_binding(), **corpus_binding, **metric_semantics(corpus_binding),
+        "split": "holdout", "automaticReplacements": 0, "thresholdsFittedOnHoldout": False,
+        "languages": metric_report(records, scores, corpus_binding)}
     output = Path(args.output).resolve()
     shared.require(output.is_relative_to(shared.REPO / "build") and not output.exists(), "FRESH_OUTPUT")
     output.mkdir(parents=True)
     shared.write_json(output / "report.json", report)
-    shared.write_json(output / "provenance.json", {**policy_binding(), "scope": "contextual-suggestion-holdout",
+    shared.write_json(output / "provenance.json", {**policy_binding(), **corpus_binding,
+        **metric_semantics(corpus_binding), "scope": "contextual-suggestion-holdout",
         "configSha256": config["configSha256"], "scoresSha256": complete["scoresSha256"],
         "policyVerificationSha256": config["policyVerificationSha256"],
         "exportReceiptSha256": export_receipt,
@@ -527,6 +665,7 @@ def main() -> None:
     export_parser = commands.add_parser("export")
     for option in ("output", "java", "gradle-cache"): export_parser.add_argument("--" + option, required=True)
     export_parser.add_argument("--corpus", default=shared.CORPUS)
+    export_parser.add_argument("--corpus-format", choices=("legacy-full", V5_FORMAT), default="legacy-full")
     score_parser = commands.add_parser("score")
     for option in ("export", "output", "model-config", "runner", "model"):
         score_parser.add_argument("--" + option, required=True)

@@ -1,0 +1,38 @@
+{
+  "corpusFormat": "contextual-v5",
+  "corpusLoaderSources": {
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/corpus_contract.py": "100bafb1fa324aa4be500c38bd49f7c54c2ca211ca0149be5bd6f30d52e1371e",
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/exclusion-lock.json": "7054bae1871a1bf23e6f3875c6f31714cfd65c8066a0ae338f9a0182b5bb8043",
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/generate_corpus.py": "b1a0b9fff0115aa081e78beb67587431ad0dd8e673b4431db50e6302823b2bb1",
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/source-lock.json": "b70c04203de82dd1f315f2e66b5c780484352809833adb6068d741c2b2bd1f7c"
+  },
+  "corpusVersion": 5,
+  "exportReceiptSha256": "0e151de5f3c280fbedca0c2d00c32eddf5e07305b65410c4368d46b5008e7bb3",
+  "frozenConfigSha256": null,
+  "identity": {
+    "corpusSha256": "b553f672e6f495f403c5a80feb7da61540d9e610d06a5b7de4ac10792f158893",
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "bc3f78bdf3ac41009a7603ca5dd6b6c4d5e8d6c2bdcaf3a692cfd95a3b3d2553"
+  },
+  "labelSemantics": "observed_wikipedia_boundary",
+  "policy": {
+    "originalAdvantage": 0.5,
+    "originalComparison": ">",
+    "rivalAdvantage": 4.0,
+    "rivalComparison": ">=",
+    "rule": "total-log-probability-margins",
+    "tieOrder": "ascending-candidate-id",
+    "tokenCountRange": [
+      1,
+      255
+    ],
+    "version": 2
+  },
+  "policySourceSha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+  "qualitySourceSha256": "ab02e8457abe3cfdf711f67b52b13be33fde7f7693270bf4dc4203f5ba49c713",
+  "requests": 500,
+  "schemaVersion": 2,
+  "scope": "contextual-calibration-scores",
+  "split": "calibration"
+}

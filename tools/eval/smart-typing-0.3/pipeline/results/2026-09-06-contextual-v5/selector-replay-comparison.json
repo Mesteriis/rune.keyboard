@@ -1,0 +1,47 @@
+{
+  "dataUnchangedAcrossAllRuns": true,
+  "frozen": false,
+  "manifestChanges": [
+    {
+      "after": "100bafb1fa324aa4be500c38bd49f7c54c2ca211ca0149be5bd6f30d52e1371e",
+      "before": "b564011b2e68e410618b1d111df2893fc09f330cc885140c11f783468a6e45e4",
+      "path": [
+        "identity",
+        "implementation",
+        "corpus_contract.py"
+      ]
+    }
+  ],
+  "modelScoringPerformed": false,
+  "newRunsByteIdentical": true,
+  "runs": {
+    "run-a": {
+      "attribution.jsonl": "49c01b5c158105a89fabb3f6d455169a1cf4e837d9bed1dcf029629dc313f0c2",
+      "manifest.json": "59b6e1df6b2eef7beb5e3ed2039bb5b23d2b4eb8816c486fff239b017aa66e53",
+      "punctuation-en.jsonl": "fc4fd99a0aab3920a956f8b2d04f3a981650727d1b950cc2e3596997f4f04af7",
+      "punctuation-es.jsonl": "1362c444cead00051727bd59436c5a88be9254aa2cebcacbb870112abb716a70",
+      "punctuation-ru.jsonl": "4e4be0e38e61c57d85fdd662778d3a809eff5d515af93b6bbe55c96880821148"
+    },
+    "run-b": {
+      "attribution.jsonl": "49c01b5c158105a89fabb3f6d455169a1cf4e837d9bed1dcf029629dc313f0c2",
+      "manifest.json": "59b6e1df6b2eef7beb5e3ed2039bb5b23d2b4eb8816c486fff239b017aa66e53",
+      "punctuation-en.jsonl": "fc4fd99a0aab3920a956f8b2d04f3a981650727d1b950cc2e3596997f4f04af7",
+      "punctuation-es.jsonl": "1362c444cead00051727bd59436c5a88be9254aa2cebcacbb870112abb716a70",
+      "punctuation-ru.jsonl": "4e4be0e38e61c57d85fdd662778d3a809eff5d515af93b6bbe55c96880821148"
+    },
+    "run-c": {
+      "attribution.jsonl": "49c01b5c158105a89fabb3f6d455169a1cf4e837d9bed1dcf029629dc313f0c2",
+      "manifest.json": "dbce48cfc68d36a52a1f7c60d96d612dc568012d409dd1015e5685c386461660",
+      "punctuation-en.jsonl": "fc4fd99a0aab3920a956f8b2d04f3a981650727d1b950cc2e3596997f4f04af7",
+      "punctuation-es.jsonl": "1362c444cead00051727bd59436c5a88be9254aa2cebcacbb870112abb716a70",
+      "punctuation-ru.jsonl": "4e4be0e38e61c57d85fdd662778d3a809eff5d515af93b6bbe55c96880821148"
+    },
+    "run-d": {
+      "attribution.jsonl": "49c01b5c158105a89fabb3f6d455169a1cf4e837d9bed1dcf029629dc313f0c2",
+      "manifest.json": "dbce48cfc68d36a52a1f7c60d96d612dc568012d409dd1015e5685c386461660",
+      "punctuation-en.jsonl": "fc4fd99a0aab3920a956f8b2d04f3a981650727d1b950cc2e3596997f4f04af7",
+      "punctuation-es.jsonl": "1362c444cead00051727bd59436c5a88be9254aa2cebcacbb870112abb716a70",
+      "punctuation-ru.jsonl": "4e4be0e38e61c57d85fdd662778d3a809eff5d515af93b6bbe55c96880821148"
+    }
+  }
+}

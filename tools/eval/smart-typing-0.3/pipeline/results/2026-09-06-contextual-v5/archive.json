@@ -1,0 +1,646 @@
+{
+  "files": {
+    "adapter-downgrade-green.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-downgrade-green.log",
+      "sha256": "f6ca7ea826bdf198912f9684566ddbdd784682b3fef43fd3651a52c36108e609",
+      "decodedSha256": "75d26f03a04664c02ecbc947b2bec1f5408894aa29f0c03708acfa8ab26e05cc",
+      "decodedBytes": 134
+    },
+    "adapter-downgrade-parity-admission.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-downgrade-parity-admission.json",
+      "sha256": "d49f375311e2e80891d454f5afdcce532accf64c0d075463cac7e7854ddc7f60",
+      "decodedSha256": "d49f375311e2e80891d454f5afdcce532accf64c0d075463cac7e7854ddc7f60",
+      "decodedBytes": 444
+    },
+    "adapter-downgrade-red.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-downgrade-red.log",
+      "sha256": "62f299749f45df0506220da3207ec867e7f18893d771e44973d382c8b4f585a4",
+      "decodedSha256": "2455ecb92d83db46811ef11bba851feb9b6a5e5fe5378b0f1673ac84587271b6",
+      "decodedBytes": 3874
+    },
+    "adapter-green-attempt-01.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-green-attempt-01.log",
+      "sha256": "f4c005ae18f93d0ab3338b438e2920e11df86012f9a671a7984b3805cc42a3c2",
+      "decodedSha256": "0a12f9f503899f887defe593c9bd880ef2aa13af9a1184e77abe7cbc596a3b2e",
+      "decodedBytes": 130
+    },
+    "adapter-green.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-green.log",
+      "sha256": "8b63c198584383cfd3ea6dd413ef27ecdad87ce2048350bd00c529989f8f28de",
+      "decodedSha256": "f2d742a7072da173772fa5a74e78fe57be494bec1cd9508e013b89478ab996d4",
+      "decodedBytes": 132
+    },
+    "adapter-parity-admission.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-parity-admission.json",
+      "sha256": "d4ba91172566416b114be136a397947326a13ed0b70ce1dbbb00d666fdc73dbd",
+      "decodedSha256": "d4ba91172566416b114be136a397947326a13ed0b70ce1dbbb00d666fdc73dbd",
+      "decodedBytes": 490
+    },
+    "adapter-policy-parity/actual.tsv.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity/actual.tsv",
+      "sha256": "5b5821142a9387b08ae2abde51516eddf7d9094d229b476d3b0cec8f30c2df76",
+      "decodedSha256": "36d7a5ad4dc0875980d8d321e1820868931d32947adcae46882a266f90a9d57c",
+      "decodedBytes": 385
+    },
+    "adapter-policy-parity/compile.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity/compile.log",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "decodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "decodedBytes": 0
+    },
+    "adapter-policy-parity/expected.tsv.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity/expected.tsv",
+      "sha256": "5b5821142a9387b08ae2abde51516eddf7d9094d229b476d3b0cec8f30c2df76",
+      "decodedSha256": "36d7a5ad4dc0875980d8d321e1820868931d32947adcae46882a266f90a9d57c",
+      "decodedBytes": 385
+    },
+    "adapter-policy-parity/inputs.tsv.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity/inputs.tsv",
+      "sha256": "9b28b9b6ffd7dd308d4d54ce876e10068700d8aebbf9db22bc9b02b77c930694",
+      "decodedSha256": "9682cb21b86a7260a4925fa64fa384fb338d38cd95379451718273541c6b2b4c",
+      "decodedBytes": 3218
+    },
+    "adapter-policy-parity/java-version.txt": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity/java-version.txt",
+      "sha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39",
+      "decodedSha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39",
+      "decodedBytes": 171
+    },
+    "adapter-policy-parity/run.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity/run.log",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "decodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "decodedBytes": 0
+    },
+    "adapter-policy-parity/verification.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity/verification.json",
+      "sha256": "1c4a0d7a0f7198e0be3fe9cc37f54c6685f3a46e357646fbcc599cef1fa0ab37",
+      "decodedSha256": "1c4a0d7a0f7198e0be3fe9cc37f54c6685f3a46e357646fbcc599cef1fa0ab37",
+      "decodedBytes": 5662
+    },
+    "adapter-policy-parity-downgrade-fix/actual.tsv.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity-downgrade-fix/actual.tsv",
+      "sha256": "5b5821142a9387b08ae2abde51516eddf7d9094d229b476d3b0cec8f30c2df76",
+      "decodedSha256": "36d7a5ad4dc0875980d8d321e1820868931d32947adcae46882a266f90a9d57c",
+      "decodedBytes": 385
+    },
+    "adapter-policy-parity-downgrade-fix/compile.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity-downgrade-fix/compile.log",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "decodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "decodedBytes": 0
+    },
+    "adapter-policy-parity-downgrade-fix/expected.tsv.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity-downgrade-fix/expected.tsv",
+      "sha256": "5b5821142a9387b08ae2abde51516eddf7d9094d229b476d3b0cec8f30c2df76",
+      "decodedSha256": "36d7a5ad4dc0875980d8d321e1820868931d32947adcae46882a266f90a9d57c",
+      "decodedBytes": 385
+    },
+    "adapter-policy-parity-downgrade-fix/inputs.tsv.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity-downgrade-fix/inputs.tsv",
+      "sha256": "9b28b9b6ffd7dd308d4d54ce876e10068700d8aebbf9db22bc9b02b77c930694",
+      "decodedSha256": "9682cb21b86a7260a4925fa64fa384fb338d38cd95379451718273541c6b2b4c",
+      "decodedBytes": 3218
+    },
+    "adapter-policy-parity-downgrade-fix/java-version.txt": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity-downgrade-fix/java-version.txt",
+      "sha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39",
+      "decodedSha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39",
+      "decodedBytes": 171
+    },
+    "adapter-policy-parity-downgrade-fix/run.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity-downgrade-fix/run.log",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "decodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "decodedBytes": 0
+    },
+    "adapter-policy-parity-downgrade-fix/verification.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity-downgrade-fix/verification.json",
+      "sha256": "713dae9657f42bdc001b7cc3760cad35b98676acfa87194004699f6cdaa6d178",
+      "decodedSha256": "713dae9657f42bdc001b7cc3760cad35b98676acfa87194004699f6cdaa6d178",
+      "decodedBytes": 5704
+    },
+    "adapter-policy-parity-downgrade-fix.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity-downgrade-fix.log",
+      "sha256": "3d736eb013586b5f5519fb7ce89a06fcd5ab4a49c5c918f80bb57758bbb3d021",
+      "decodedSha256": "cb816e244e2ea330f660783b140be8dedbabb4dabc64d91267dc7850b83f3482",
+      "decodedBytes": 96
+    },
+    "adapter-policy-parity.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity.log",
+      "sha256": "3d736eb013586b5f5519fb7ce89a06fcd5ab4a49c5c918f80bb57758bbb3d021",
+      "decodedSha256": "cb816e244e2ea330f660783b140be8dedbabb4dabc64d91267dc7850b83f3482",
+      "decodedBytes": 96
+    },
+    "adapter-red.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-red.log",
+      "sha256": "26e5c257fde2e49d1c32ecfb16c5586faec9e51a08f3c07a29d902e8309063b3",
+      "decodedSha256": "e9ccc8a015a8dba7de7b75523ccdcc8089118ae105a1d213073376e0c1623868",
+      "decodedBytes": 7318
+    },
+    "adapter-score-receipt-red.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-score-receipt-red.log",
+      "sha256": "e264eaeb38a729671f3928fcfc615319e9ceae38aca51038ae66a7b6ffcc1632",
+      "decodedSha256": "29a6fdb1b3852db5f17df2059409ba08210609fb7d5dc73ac8656e1275d768f6",
+      "decodedBytes": 788
+    },
+    "adapter-semantics-red.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-semantics-red.log",
+      "sha256": "38089d89445ca40b2d872608386d7fdea22cf05b1cab3aaafb812c39433cbaf3",
+      "decodedSha256": "3c116a03c13a52798a3be18d3703c9e5939346bcbfec83e5e586a6e26af7bd6b",
+      "decodedBytes": 1482
+    },
+    "adapter-variant-parity/actual.tsv.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-variant-parity/actual.tsv",
+      "sha256": "aa4c4b063aa37b89eea0825830fbf68804a63561922b498c27962bfc7ad7b4d7",
+      "decodedSha256": "b693a0e44e675f28f9c3b376fa11797cc6974917215c0e78cb6e8486cda9d924",
+      "decodedBytes": 1089
+    },
+    "adapter-variant-parity/compile.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-variant-parity/compile.log",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "decodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "decodedBytes": 0
+    },
+    "adapter-variant-parity/inputs.tsv.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-variant-parity/inputs.tsv",
+      "sha256": "bcad4740d66dc3381fc1b0c0313925c92790875aaf3fa30ae6428fd784115aa1",
+      "decodedSha256": "046913194b919d7e49eda0a02029a379c0da183dfc7b5d91ca3bd6efaa164db0",
+      "decodedBytes": 598
+    },
+    "adapter-variant-parity/java-version.txt": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-variant-parity/java-version.txt",
+      "sha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39",
+      "decodedSha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39",
+      "decodedBytes": 171
+    },
+    "adapter-variant-parity/parsed-synthetic.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-variant-parity/parsed-synthetic.json",
+      "sha256": "caa26b1ce36ddbac3c7acd2ba85bb2d191fd9904f37ac924cde4929967cba910",
+      "decodedSha256": "caa26b1ce36ddbac3c7acd2ba85bb2d191fd9904f37ac924cde4929967cba910",
+      "decodedBytes": 4946
+    },
+    "adapter-variant-parity/run.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-variant-parity/run.log",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "decodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "decodedBytes": 0
+    },
+    "adapter-variant-parity/verification.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-variant-parity/verification.json",
+      "sha256": "952b4dd5190344f509377cf63ad88ea1b4ae04e21966200689d2dd97c42a0cc7",
+      "decodedSha256": "952b4dd5190344f509377cf63ad88ea1b4ae04e21966200689d2dd97c42a0cc7",
+      "decodedBytes": 7396
+    },
+    "adapter-variant-parity-driver.py": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-variant-parity-driver.py",
+      "sha256": "8d4b8db433e4ecd29b61c2720a83931c41396d788f5726cf3e37d39ec13f705d",
+      "decodedSha256": "8d4b8db433e4ecd29b61c2720a83931c41396d788f5726cf3e37d39ec13f705d",
+      "decodedBytes": 4228
+    },
+    "adapter-variant-parity.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/adapter-variant-parity.log",
+      "sha256": "000548f890de61060f3023f63a55592494366590d363845c3369f3fcaae0205f",
+      "decodedSha256": "5013bc58089cfc27b152baa911c66109cc025167cc54a1022501a58fba1ee39e",
+      "decodedBytes": 201
+    },
+    "archive-decisions.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/archive-decisions.log",
+      "sha256": "ed163fc9262362657a14991139267900e8c85abfc02f3e3a651f350dac6e6989",
+      "decodedSha256": "f475cf8653a0f0e02b1d5b9948754ada0bec9542a82ade7c6bfe2f4e51461f20",
+      "decodedBytes": 129
+    },
+    "archive_decisions.py": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/archive_decisions.py",
+      "sha256": "41d651a7d750634bf46cf94aefe6a00621aa754c00dc839b2e0b1f6d9201c686",
+      "decodedSha256": "41d651a7d750634bf46cf94aefe6a00621aa754c00dc839b2e0b1f6d9201c686",
+      "decodedBytes": 1655
+    },
+    "attempt-01-failure.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/attempt-01-failure.json",
+      "sha256": "9bd11773e26a8e5b0a8d385e9cea42412e51d9427da460e639551ef51ed9c737",
+      "decodedSha256": "9bd11773e26a8e5b0a8d385e9cea42412e51d9427da460e639551ef51ed9c737",
+      "decodedBytes": 378
+    },
+    "attempt-01-failure.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/attempt-01-failure.log",
+      "sha256": "8bf97237f19e601ef155a901f9ee7c03ffcce96cce49cf6a324a949b2b52a5fd",
+      "decodedSha256": "4b6253aa13cdcdeefd0428433eb320df9af39fdc5ce2ca8dbe4e54c30cf15639",
+      "decodedBytes": 1259
+    },
+    "calibration/complete.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/calibration/complete.json",
+      "sha256": "793da2a25f019386551582182a8d307b5577a769e54a1b56442e0968fe7dc7f7",
+      "decodedSha256": "793da2a25f019386551582182a8d307b5577a769e54a1b56442e0968fe7dc7f7",
+      "decodedBytes": 1898
+    },
+    "calibration/run-input.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/calibration/run-input.json",
+      "sha256": "ca20b46956892eb2e421175333c9834e6ca441f3de48c7aadc6c5fd3e52a5b40",
+      "decodedSha256": "ca20b46956892eb2e421175333c9834e6ca441f3de48c7aadc6c5fd3e52a5b40",
+      "decodedBytes": 1773
+    },
+    "calibration/scores.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/calibration/scores.jsonl",
+      "sha256": "dcea009603ed5930dccb0d222e565b4b540bbcce21641cdab572675ebb7c1cd5",
+      "decodedSha256": "7820440ccaf1ec9be1f7e07253454119d891eea1bfbfd6b5aaff986e3d63c554",
+      "decodedBytes": 305646
+    },
+    "calibration.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/calibration.log",
+      "sha256": "7107f8c98d4082f88856fe0c01be629de6f831dd0c210cd330615f56c5bcef26",
+      "decodedSha256": "f75e74cb132129b8eb228088d8856a9b58dc116516cd21ad89881ae7e63380cc",
+      "decodedBytes": 127
+    },
+    "comparison.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/comparison.json",
+      "sha256": "e7d6bf9ac94b227c6cf468a3b21f79136b4e91d72eb2f589778940b0209836e0",
+      "decodedSha256": "e7d6bf9ac94b227c6cf468a3b21f79136b4e91d72eb2f589778940b0209836e0",
+      "decodedBytes": 877
+    },
+    "config-freeze.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/config-freeze.log",
+      "sha256": "b3895a529451d20e9377c4074e15d1233f06006a718dcbc5e8586100216f7485",
+      "decodedSha256": "d3074b2aa6c9f14cf2d85f980733119bb338b9d6ea4daca022785d7f3f07bb6c",
+      "decodedBytes": 90
+    },
+    "freeze_protocol.py": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/freeze_protocol.py",
+      "sha256": "eefa5d7a5edc639925211dc0df3bc68e3b919411ff87f391a281df26f8c54cb6",
+      "decodedSha256": "eefa5d7a5edc639925211dc0df3bc68e3b919411ff87f391a281df26f8c54cb6",
+      "decodedBytes": 4487
+    },
+    "frozen-config/config.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/frozen-config/config.json",
+      "sha256": "8a7b3692b5a186dcd834e92c12ab1803dc2b6ff179b650357b1fa715d4999ed4",
+      "decodedSha256": "8a7b3692b5a186dcd834e92c12ab1803dc2b6ff179b650357b1fa715d4999ed4",
+      "decodedBytes": 36084
+    },
+    "full-admission-replay-red.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/full-admission-replay-red.log",
+      "sha256": "2abc43c211a12a069d25fd6b706e0eb7a5b4c973ddc58552b6d9dc039e2b4b0e",
+      "decodedSha256": "d3c936800275fc75c4924a309af4b2250388647fe8ba000b280a98d9d2c5861b",
+      "decodedBytes": 1404
+    },
+    "holdout/complete.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/holdout/complete.json",
+      "sha256": "953e16fd77e18474a0427ff00fecb94dead83557e00c0d066f95590b3384ca6e",
+      "decodedSha256": "953e16fd77e18474a0427ff00fecb94dead83557e00c0d066f95590b3384ca6e",
+      "decodedBytes": 1952
+    },
+    "holdout/run-input.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/holdout/run-input.json",
+      "sha256": "a5c294636b7024fb796a77ed7a16d1f4b8ffa81c115767e91cbdb4b6276b8e81",
+      "decodedSha256": "a5c294636b7024fb796a77ed7a16d1f4b8ffa81c115767e91cbdb4b6276b8e81",
+      "decodedBytes": 1827
+    },
+    "holdout/scores.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/holdout/scores.jsonl",
+      "sha256": "d77ebf61af367fb4a5721674678bd55a7d32b5430c5c18786814ce847c3a0a0b",
+      "decodedSha256": "63ae6e1eea4be0657f0b29100157c9ed1e1ed7c6cfc94dc9721b9ca422294bad",
+      "decodedBytes": 314005
+    },
+    "holdout.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/holdout.log",
+      "sha256": "e54ea6b102453617985edeb60415d4f85d268125d116ce8c50b9371de2906d46",
+      "decodedSha256": "9f16f68b6433380fe1186f6b4bd052cf89db0378e8f767194aac1b575280d159",
+      "decodedBytes": 123
+    },
+    "production-export/actual.tsv.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/production-export/actual.tsv",
+      "sha256": "a8b8fe5dc7ecbd6f3d3cadc5a33eb38a9d629b515ce6bffc4abe05c4422d7f9e",
+      "decodedSha256": "1281c6097c77de871e095ea469909ffacc8122836b77f03cb9e3b7910f487c9c",
+      "decodedBytes": 223528
+    },
+    "production-export/compile.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/production-export/compile.log",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "decodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "decodedBytes": 0
+    },
+    "production-export/inputs.tsv.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/production-export/inputs.tsv",
+      "sha256": "50e09c35906b7404a898588cd8d218e33c1adc0e9b89471c559416421dba8760",
+      "decodedSha256": "bc733bf4ac08b7ee91ba7c78c54f6e894bed57ac915c14cfe144f7505953cb38",
+      "decodedBytes": 373262
+    },
+    "production-export/provenance.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/production-export/provenance.json",
+      "sha256": "0e151de5f3c280fbedca0c2d00c32eddf5e07305b65410c4368d46b5008e7bb3",
+      "decodedSha256": "0e151de5f3c280fbedca0c2d00c32eddf5e07305b65410c4368d46b5008e7bb3",
+      "decodedBytes": 2622
+    },
+    "production-export/rows.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/production-export/rows.jsonl",
+      "sha256": "94122e506b5d7f2293f6f5660c33e227d6ca563dc6e2339d35de87668885aa21",
+      "decodedSha256": "62d353dd80c4541290bd4a21308053a973761ec7928580fa1ee364469c074d65",
+      "decodedBytes": 991973
+    },
+    "production-export/run.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/production-export/run.log",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "decodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "decodedBytes": 0
+    },
+    "production-export.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/production-export.log",
+      "sha256": "fea7ba0f909d37060a2b16a35b40255a99bfb7909e16a8ac4a07f67a4f5a0502",
+      "decodedSha256": "ba66d43dfdf0f4df3aefac92fba4f135e6acf2d48be8e932c951f106b77c71c4",
+      "decodedBytes": 66
+    },
+    "protocol-freeze/backend-config.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/protocol-freeze/backend-config.json",
+      "sha256": "ab54898317549304d67ffa4381ca7c02992e5e10fe316ac535be098653bdb195",
+      "decodedSha256": "ab54898317549304d67ffa4381ca7c02992e5e10fe316ac535be098653bdb195",
+      "decodedBytes": 3582
+    },
+    "protocol-freeze/protocol.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/protocol-freeze/protocol.json",
+      "sha256": "3213bb0f091652064bcce0ddfc299286610401237c4cb80f8f8647331cfe32e5",
+      "decodedSha256": "3213bb0f091652064bcce0ddfc299286610401237c4cb80f8f8647331cfe32e5",
+      "decodedBytes": 5297
+    },
+    "protocol-freeze.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/protocol-freeze.log",
+      "sha256": "a0de7f5e57c93508ad45c51f6f95abada8463fdcceed7b7c4d5d37f13a2178f4",
+      "decodedSha256": "8bfae6a2882850a4ca181df5b578bd83d6f917577ed2ecb34e2481816bb0264c",
+      "decodedBytes": 270
+    },
+    "report/provenance.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/report/provenance.json",
+      "sha256": "0b28f953b299f22d60866da4b48cd6d3673aa5996ea21111703d72c0789d0c04",
+      "decodedSha256": "0b28f953b299f22d60866da4b48cd6d3673aa5996ea21111703d72c0789d0c04",
+      "decodedBytes": 1895
+    },
+    "report/report.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/report/report.json",
+      "sha256": "bfafd4404454b4579d7e5ded15695a9d0bdce2a6ef1526335c1886e6518d383c",
+      "decodedSha256": "bfafd4404454b4579d7e5ded15695a9d0bdce2a6ef1526335c1886e6518d383c",
+      "decodedBytes": 35068
+    },
+    "report.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/report.log",
+      "sha256": "c5d3048d92bb8cfabf55364937e30b4569f103bd95c9ebfafabe870640208025",
+      "decodedSha256": "1fbd28d70a8438685c618f5e7108bc746453ecf3f0efefa272c5aa1d03027dc8",
+      "decodedBytes": 76
+    },
+    "root-adapter-tests.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/root-adapter-tests.log",
+      "sha256": "0deb582f0a9f62aa9c8b40cb69e2eadc3bd7a5329ed045ac18c053813cfc807b",
+      "decodedSha256": "aaaa2029c97e5f79c94e8c56cf1f3b48aa056844f131e28fd51295ad144b508d",
+      "decodedBytes": 134
+    },
+    "row-decisions.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/row-decisions.jsonl",
+      "sha256": "6db0b2d5933f193e939120d9a6666166356dfd3b3569d0487223636f510ae3c8",
+      "decodedSha256": "bc47e2c006de3f65adc273c36e07fffbf513f6ceb5aafcfcf482c3a48c613b7a",
+      "decodedBytes": 478469
+    },
+    "run-a/attribution.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-a/attribution.jsonl",
+      "sha256": "ed1b72a75381f65fd46deea1c978fd8eb0019c9df7b2dc26216786429a6d200f",
+      "decodedSha256": "49c01b5c158105a89fabb3f6d455169a1cf4e837d9bed1dcf029629dc313f0c2",
+      "decodedBytes": 1856743
+    },
+    "run-a/manifest.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-a/manifest.json",
+      "sha256": "59b6e1df6b2eef7beb5e3ed2039bb5b23d2b4eb8816c486fff239b017aa66e53",
+      "decodedSha256": "59b6e1df6b2eef7beb5e3ed2039bb5b23d2b4eb8816c486fff239b017aa66e53",
+      "decodedBytes": 24066
+    },
+    "run-a/punctuation-en.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-a/punctuation-en.jsonl",
+      "sha256": "4ab69607cbe5de4ccdb870a6f0806f3108f7f9de16188dcba11de580cb44a856",
+      "decodedSha256": "fc4fd99a0aab3920a956f8b2d04f3a981650727d1b950cc2e3596997f4f04af7",
+      "decodedBytes": 770868
+    },
+    "run-a/punctuation-es.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-a/punctuation-es.jsonl",
+      "sha256": "6de86f728e2f89e04e85efd29fc638d7ea276279c2be97163c6d59baf81d1c12",
+      "decodedSha256": "1362c444cead00051727bd59436c5a88be9254aa2cebcacbb870112abb716a70",
+      "decodedBytes": 770831
+    },
+    "run-a/punctuation-ru.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-a/punctuation-ru.jsonl",
+      "sha256": "961bcfc9e77cfe3d0ba9883a64ff2222ebed24880e890ecddc7944a772390111",
+      "decodedSha256": "4e4be0e38e61c57d85fdd662778d3a809eff5d515af93b6bbe55c96880821148",
+      "decodedBytes": 937715
+    },
+    "run-a.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-a.log",
+      "sha256": "3ac106f0b475a0344079dffc5fd2155b06c18b54f016d426726c256c25b06cf7",
+      "decodedSha256": "a1b4a87feeee3899c01d6b076f627c4c438a9d2ad56c18eed336f4c7af52bb49",
+      "decodedBytes": 780
+    },
+    "run-b/attribution.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-b/attribution.jsonl",
+      "sha256": "ed1b72a75381f65fd46deea1c978fd8eb0019c9df7b2dc26216786429a6d200f",
+      "decodedSha256": "49c01b5c158105a89fabb3f6d455169a1cf4e837d9bed1dcf029629dc313f0c2",
+      "decodedBytes": 1856743
+    },
+    "run-b/manifest.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-b/manifest.json",
+      "sha256": "59b6e1df6b2eef7beb5e3ed2039bb5b23d2b4eb8816c486fff239b017aa66e53",
+      "decodedSha256": "59b6e1df6b2eef7beb5e3ed2039bb5b23d2b4eb8816c486fff239b017aa66e53",
+      "decodedBytes": 24066
+    },
+    "run-b/punctuation-en.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-b/punctuation-en.jsonl",
+      "sha256": "4ab69607cbe5de4ccdb870a6f0806f3108f7f9de16188dcba11de580cb44a856",
+      "decodedSha256": "fc4fd99a0aab3920a956f8b2d04f3a981650727d1b950cc2e3596997f4f04af7",
+      "decodedBytes": 770868
+    },
+    "run-b/punctuation-es.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-b/punctuation-es.jsonl",
+      "sha256": "6de86f728e2f89e04e85efd29fc638d7ea276279c2be97163c6d59baf81d1c12",
+      "decodedSha256": "1362c444cead00051727bd59436c5a88be9254aa2cebcacbb870112abb716a70",
+      "decodedBytes": 770831
+    },
+    "run-b/punctuation-ru.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-b/punctuation-ru.jsonl",
+      "sha256": "961bcfc9e77cfe3d0ba9883a64ff2222ebed24880e890ecddc7944a772390111",
+      "decodedSha256": "4e4be0e38e61c57d85fdd662778d3a809eff5d515af93b6bbe55c96880821148",
+      "decodedBytes": 937715
+    },
+    "run-b.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-b.log",
+      "sha256": "3ac106f0b475a0344079dffc5fd2155b06c18b54f016d426726c256c25b06cf7",
+      "decodedSha256": "a1b4a87feeee3899c01d6b076f627c4c438a9d2ad56c18eed336f4c7af52bb49",
+      "decodedBytes": 780
+    },
+    "run-c/attribution.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-c/attribution.jsonl",
+      "sha256": "ed1b72a75381f65fd46deea1c978fd8eb0019c9df7b2dc26216786429a6d200f",
+      "decodedSha256": "49c01b5c158105a89fabb3f6d455169a1cf4e837d9bed1dcf029629dc313f0c2",
+      "decodedBytes": 1856743
+    },
+    "run-c/manifest.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-c/manifest.json",
+      "sha256": "dbce48cfc68d36a52a1f7c60d96d612dc568012d409dd1015e5685c386461660",
+      "decodedSha256": "dbce48cfc68d36a52a1f7c60d96d612dc568012d409dd1015e5685c386461660",
+      "decodedBytes": 24066
+    },
+    "run-c/punctuation-en.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-c/punctuation-en.jsonl",
+      "sha256": "4ab69607cbe5de4ccdb870a6f0806f3108f7f9de16188dcba11de580cb44a856",
+      "decodedSha256": "fc4fd99a0aab3920a956f8b2d04f3a981650727d1b950cc2e3596997f4f04af7",
+      "decodedBytes": 770868
+    },
+    "run-c/punctuation-es.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-c/punctuation-es.jsonl",
+      "sha256": "6de86f728e2f89e04e85efd29fc638d7ea276279c2be97163c6d59baf81d1c12",
+      "decodedSha256": "1362c444cead00051727bd59436c5a88be9254aa2cebcacbb870112abb716a70",
+      "decodedBytes": 770831
+    },
+    "run-c/punctuation-ru.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-c/punctuation-ru.jsonl",
+      "sha256": "961bcfc9e77cfe3d0ba9883a64ff2222ebed24880e890ecddc7944a772390111",
+      "decodedSha256": "4e4be0e38e61c57d85fdd662778d3a809eff5d515af93b6bbe55c96880821148",
+      "decodedBytes": 937715
+    },
+    "run-c.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-c.log",
+      "sha256": "3ae18a35122d781a9f10e75bcc48bf4135a75f9e132f9233e0869463c315879b",
+      "decodedSha256": "48040cbcf9a94cf9511be14be13396218dd8b6dbc19667455c7919c9ddf0f213",
+      "decodedBytes": 780
+    },
+    "run-d/attribution.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-d/attribution.jsonl",
+      "sha256": "ed1b72a75381f65fd46deea1c978fd8eb0019c9df7b2dc26216786429a6d200f",
+      "decodedSha256": "49c01b5c158105a89fabb3f6d455169a1cf4e837d9bed1dcf029629dc313f0c2",
+      "decodedBytes": 1856743
+    },
+    "run-d/manifest.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-d/manifest.json",
+      "sha256": "dbce48cfc68d36a52a1f7c60d96d612dc568012d409dd1015e5685c386461660",
+      "decodedSha256": "dbce48cfc68d36a52a1f7c60d96d612dc568012d409dd1015e5685c386461660",
+      "decodedBytes": 24066
+    },
+    "run-d/punctuation-en.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-d/punctuation-en.jsonl",
+      "sha256": "4ab69607cbe5de4ccdb870a6f0806f3108f7f9de16188dcba11de580cb44a856",
+      "decodedSha256": "fc4fd99a0aab3920a956f8b2d04f3a981650727d1b950cc2e3596997f4f04af7",
+      "decodedBytes": 770868
+    },
+    "run-d/punctuation-es.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-d/punctuation-es.jsonl",
+      "sha256": "6de86f728e2f89e04e85efd29fc638d7ea276279c2be97163c6d59baf81d1c12",
+      "decodedSha256": "1362c444cead00051727bd59436c5a88be9254aa2cebcacbb870112abb716a70",
+      "decodedBytes": 770831
+    },
+    "run-d/punctuation-ru.jsonl.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-d/punctuation-ru.jsonl",
+      "sha256": "961bcfc9e77cfe3d0ba9883a64ff2222ebed24880e890ecddc7944a772390111",
+      "decodedSha256": "4e4be0e38e61c57d85fdd662778d3a809eff5d515af93b6bbe55c96880821148",
+      "decodedBytes": 937715
+    },
+    "run-d.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/run-d.log",
+      "sha256": "3ae18a35122d781a9f10e75bcc48bf4135a75f9e132f9233e0869463c315879b",
+      "decodedSha256": "48040cbcf9a94cf9511be14be13396218dd8b6dbc19667455c7919c9ddf0f213",
+      "decodedBytes": 780
+    },
+    "selector-replay-comparison.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/selector-replay-comparison.json",
+      "sha256": "78bcbf86d9f4eccc134330fa9ef0ab2f2b8db237e67a770d1b1e38849c2b4e4c",
+      "decodedSha256": "78bcbf86d9f4eccc134330fa9ef0ab2f2b8db237e67a770d1b1e38849c2b4e4c",
+      "decodedBytes": 2452
+    },
+    "selector-replay-green.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/selector-replay-green.log",
+      "sha256": "c8a536e9fefab2ef6d09d72c5f34a2671241853f0241af2e7c4d50383babcb64",
+      "decodedSha256": "8bb930e0aaddac2c87d28de60e18fc6729d9000a099807ba3979a3565844ddf8",
+      "decodedBytes": 120
+    },
+    "selector-replay-red.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/selector-replay-red.log",
+      "sha256": "1fb6c542e432260759acbaef15f0a704c5300a7d12e16a7fb9ab73553a1a6562",
+      "decodedSha256": "0dd45598eab3c0b6aaf28779f5ffd9edb81b82d363347de70087c0edb228ce05",
+      "decodedBytes": 1567
+    },
+    "selector-replay-validation.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/selector-replay-validation.json",
+      "sha256": "dadc7277c77d2c08809f48514ffafddb429b560ba054208a4b28c3a1560bb84a",
+      "decodedSha256": "dadc7277c77d2c08809f48514ffafddb429b560ba054208a4b28c3a1560bb84a",
+      "decodedBytes": 23806
+    },
+    "selector-replay-validation.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/selector-replay-validation.log",
+      "sha256": "4acc37d8b1fc14d525d2b193115ca396650b82ec44b6b913ad1897d2dc44b316",
+      "decodedSha256": "9b9d860095e9f72881349c1ab9d371fde62c69584d06f51b72a679b607161140",
+      "decodedBytes": 330
+    },
+    "strict-validation.json": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/strict-validation.json",
+      "sha256": "560e8e0143411ba61579fb4a28921dc944a2173c0e1b38bccc3dca89d9605bd4",
+      "decodedSha256": "560e8e0143411ba61579fb4a28921dc944a2173c0e1b38bccc3dca89d9605bd4",
+      "decodedBytes": 1160
+    },
+    "strict-validation.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/strict-validation.log",
+      "sha256": "122a22516053e288e162452b3e7dce1f6002e4c9883faba2c4fbf83e52546944",
+      "decodedSha256": "3bcc1cb8619509decbf4968393c38a2f90e529a41d37b0907917aeffaaf6ca4f",
+      "decodedBytes": 974
+    },
+    "tests-green.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/tests-green.log",
+      "sha256": "90c4f21bbd89a38a7a9b7822abb4a494a12a31cbc00e4cdcb57e92fccb8d65ca",
+      "decodedSha256": "322c781ed576b1396ebc2014dbf195b0c62cbf4233a7392349b29182052a3fb3",
+      "decodedBytes": 116
+    },
+    "truncation-regression-red.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/truncation-regression-red.log",
+      "sha256": "d1b5742aeba25b192ce2abf1cecad98b365a99559c2df20b3e43e6bcc26ef606",
+      "decodedSha256": "cacd6c4fb541d8e55460376c6a75d1750536fea49a7bced0c1b45706a2cfe0df",
+      "decodedBytes": 2029
+    },
+    "reviews/corpus.md": {
+      "source": ".superpowers/sdd/2026-09-02-smart-typing-progress/task-contextual-v5-review.md",
+      "sha256": "91b210731d9acf213fc08d6466fff1ea8f786070b80baba4721d7fe82238d139",
+      "decodedSha256": "91b210731d9acf213fc08d6466fff1ea8f786070b80baba4721d7fe82238d139",
+      "decodedBytes": 13288
+    },
+    "reviews/adapter.md": {
+      "source": ".superpowers/sdd/2026-09-02-smart-typing-progress/task-contextual-v5-adapter-review.md",
+      "sha256": "6680d41f056a49cd74a1dc9ea67d477045dd345db070f2ea951f3c6aa08c0078",
+      "decodedSha256": "6680d41f056a49cd74a1dc9ea67d477045dd345db070f2ea951f3c6aa08c0078",
+      "decodedBytes": 15223
+    },
+    "reviews/run.md": {
+      "source": ".superpowers/sdd/2026-09-02-smart-typing-progress/task-contextual-v5-run-review.md",
+      "sha256": "1fea01e837ca1a18828aff52f7f604c2a9b4d3b3d3cb9c51c17e09964bb3b227",
+      "decodedSha256": "1fea01e837ca1a18828aff52f7f604c2a9b4d3b3d3cb9c51c17e09964bb3b227",
+      "decodedBytes": 10280
+    },
+    "root-corpus-tests.log.gz": {
+      "source": "build/smart-typing-0.3/contextual-v5-20260906/root-corpus-tests.log",
+      "sha256": "12c45e47c6a2d6df4225f87495781efd6033722beaa3dcaed87f06011035cd49",
+      "decodedSha256": "7cf2e9767f55fcbb7db75ee3ee41bca5bf2ae11a1c8c188bc16362768e3090c1",
+      "decodedBytes": 119
+    },
+    "local-gates.log.gz": {
+      "source": "build/smart-typing-0.3/resume-2026-09-06-v5-and-editor-gates.log",
+      "sha256": "6b1a034437afe3464d3326fb24f72589c20259a91b2277c2b5e4837d99903c91",
+      "decodedSha256": "6d755384775338adeaf187e7ef08402859be7e34e926b2ff4e4aec257551dcb1",
+      "decodedBytes": 13703
+    }
+  },
+  "omitted": {
+    "adapter-policy-parity/contextual-policy-probe.jar": {
+      "sha256": "68962bafbcc2f500d220f7921cee9dd7de8ad36f38b04dc3eb00504350cffbf9",
+      "reason": "rebuildable compiler output; exact original receipt preserved"
+    },
+    "adapter-policy-parity-downgrade-fix/contextual-policy-probe.jar": {
+      "sha256": "68962bafbcc2f500d220f7921cee9dd7de8ad36f38b04dc3eb00504350cffbf9",
+      "reason": "rebuildable compiler output; exact original receipt preserved"
+    },
+    "adapter-variant-parity/contextual-export.jar": {
+      "sha256": "585fe4dff45dcf19546da21eb93d4dfe52b5606ffaff0d37eb908eb9dc562192",
+      "reason": "rebuildable compiler output; exact original receipt preserved"
+    },
+    "production-export/contextual-export.jar": {
+      "sha256": "585fe4dff45dcf19546da21eb93d4dfe52b5606ffaff0d37eb908eb9dc562192",
+      "reason": "rebuildable compiler output; exact original receipt preserved"
+    }
+  }
+}

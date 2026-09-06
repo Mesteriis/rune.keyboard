@@ -1,0 +1,105 @@
+{
+  "backendConfigSha256": "ab54898317549304d67ffa4381ca7c02992e5e10fe316ac535be098653bdb195",
+  "backendIdentity": {
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "bc3f78bdf3ac41009a7603ca5dd6b6c4d5e8d6c2bdcaf3a692cfd95a3b3d2553"
+  },
+  "baselineHead": "b5400cbadadd29e8ee915a0fb33fb11ec5bebc79",
+  "corpusDirectory": "build/smart-typing-0.3/contextual-v5-20260906/run-c",
+  "corpusFiles": {
+    "attribution.jsonl": "49c01b5c158105a89fabb3f6d455169a1cf4e837d9bed1dcf029629dc313f0c2",
+    "manifest.json": "dbce48cfc68d36a52a1f7c60d96d612dc568012d409dd1015e5685c386461660",
+    "punctuation-en.jsonl": "fc4fd99a0aab3920a956f8b2d04f3a981650727d1b950cc2e3596997f4f04af7",
+    "punctuation-es.jsonl": "1362c444cead00051727bd59436c5a88be9254aa2cebcacbb870112abb716a70",
+    "punctuation-ru.jsonl": "4e4be0e38e61c57d85fdd662778d3a809eff5d515af93b6bbe55c96880821148"
+  },
+  "corpusFormat": "contextual-v5",
+  "corpusLoaderSources": {
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/corpus_contract.py": "100bafb1fa324aa4be500c38bd49f7c54c2ca211ca0149be5bd6f30d52e1371e",
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/exclusion-lock.json": "7054bae1871a1bf23e6f3875c6f31714cfd65c8066a0ae338f9a0182b5bb8043",
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/generate_corpus.py": "b1a0b9fff0115aa081e78beb67587431ad0dd8e673b4431db50e6302823b2bb1",
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/source-lock.json": "b70c04203de82dd1f315f2e66b5c780484352809833adb6068d741c2b2bd1f7c"
+  },
+  "corpusVersion": 5,
+  "counts": {
+    "calibrationPerLanguage": 200,
+    "holdoutPerLanguage": 200,
+    "languages": [
+      "en",
+      "ru",
+      "es"
+    ],
+    "observedBoundaryQuotaPerSplitLanguage": 50
+  },
+  "createdAtUtc": "2026-09-06T10:02:19.145935+00:00",
+  "freezeScriptSha256": "eefa5d7a5edc639925211dc0df3bc68e3b919411ff87f391a281df26f8c54cb6",
+  "freezeSha256": "b4867e194a1c360a3348c6a62c3c63aa795fbe21f15deac65428534dc9e7c586",
+  "head": "55195f20da162a10e690de98da481da18e7f77d8",
+  "labelSemantics": "observed_wikipedia_boundary",
+  "modelScoringPerformedBeforeFreeze": false,
+  "policy": {
+    "originalAdvantage": 0.5,
+    "originalComparison": ">",
+    "rivalAdvantage": 4.0,
+    "rivalComparison": ">=",
+    "rule": "total-log-probability-margins",
+    "tieOrder": "ascending-candidate-id",
+    "tokenCountRange": [
+      1,
+      255
+    ],
+    "version": 2
+  },
+  "policySourceSha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+  "policyVerificationSha256": "713dae9657f42bdc001b7cc3760cad35b98676acfa87194004699f6cdaa6d178",
+  "protocol": {
+    "automaticPunctuationApplication": false,
+    "changeThresholdsAfterHoldout": false,
+    "errorPolicy": "retain every eligible request error and every excluded corpus row; no retry to select successful results",
+    "excludeRowsAfterScoring": false,
+    "grouping": "each language and each observed boundary",
+    "intervals": "Wilson 95 percent row-descriptive",
+    "limitations": [
+      "source punctuation is not a unique semantic label",
+      "balanced quotas are not chat prevalence",
+      "no question, exclamation or semicolon source strata",
+      "unknown base-model pretraining overlap",
+      "related articles may share information",
+      "does not qualify spelling"
+    ],
+    "metrics": [
+      "observed-source-boundary-agreement",
+      "suggestion-coverage",
+      "abstention",
+      "insertion-at-source-spaces",
+      "production-exclusions",
+      "runtime-errors",
+      "missing-responses",
+      "candidate-decision-counts"
+    ],
+    "order": [
+      "exact-Kotlin-export",
+      "all-calibration-scores",
+      "config-freeze",
+      "all-holdout-scores",
+      "report"
+    ],
+    "qualityGateEstablished": false,
+    "semanticCorrectnessEvaluated": false,
+    "thresholdSearch": false
+  },
+  "qualitySourceSha256": "ab02e8457abe3cfdf711f67b52b13be33fde7f7693270bf4dc4203f5ba49c713",
+  "schemaVersion": 2,
+  "scope": "pre-score-contextual-v5-protocol-freeze",
+  "sources": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+    "tools/eval/smart-typing-0.3/evaluate.py": "6ad46a46e70366268860538ba688eeba48de909b8796f6f5e398142594920188",
+    "tools/eval/smart-typing-0.3/pipeline/ContextualExport.kt": "3497cff867a133aef185d3cdf366df789b32e21bbc59f03d1289e8a418c90151",
+    "tools/eval/smart-typing-0.3/pipeline/ContextualPolicyProbe.kt": "2896883ffd3a1eff882bb147489bba3b7293d98f9ba138dc601f98eb4632c576",
+    "tools/eval/smart-typing-0.3/pipeline/contextual_quality.py": "ab02e8457abe3cfdf711f67b52b13be33fde7f7693270bf4dc4203f5ba49c713",
+    "tools/eval/smart-typing-0.3/pipeline/export_calibration.py": "40d4e77a0738449791a5772709c55ed830f0f1683672553bc50c13362833b518",
+    "tools/eval/smart-typing-0.3/pipeline/score_product_holdout.py": "15dc31d033e2741a3087680a5cb6d8e06ddd35706b5544f57207c4fe50d0bdce"
+  }
+}

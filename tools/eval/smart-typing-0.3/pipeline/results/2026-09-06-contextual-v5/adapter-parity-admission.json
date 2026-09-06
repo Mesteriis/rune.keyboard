@@ -1,0 +1,13 @@
+{
+  "frozen": false,
+  "modelScoringPerformed": false,
+  "policyCases": 79,
+  "policyReceiptSha256": "1c4a0d7a0f7198e0be3fe9cc37f54c6685f3a46e357646fbcc599cef1fa0ab37",
+  "qualitySourceSha256": "4dd02feb7b313f66c27d80767967070ff1702c99764dba8091e2f0b5449bef6f",
+  "sourceCorpusLoaded": false,
+  "syntheticOnly": true,
+  "variantEligibleRows": 6,
+  "variantExcludedRows": 6,
+  "variantReceiptSha256": "952b4dd5190344f509377cf63ad88ea1b4ae04e21966200689d2dd97c42a0cc7",
+  "variantRows": 12
+}

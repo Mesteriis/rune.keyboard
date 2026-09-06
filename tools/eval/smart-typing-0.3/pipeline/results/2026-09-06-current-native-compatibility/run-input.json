@@ -1,0 +1,33 @@
+{
+  "canonicalCaseProvider": "EMPTY",
+  "historicalIdentity": {
+    "corpusSha256": "75fedb01d250b525a260b4cc7ae1202197fcc98f098cf6c83d956029a39b6401",
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "f2f8e9e21a028871da4b9ced6ce0492eb692f742c4de765467a2d44a18535973"
+  },
+  "identity": {
+    "corpusSha256": "75fedb01d250b525a260b4cc7ae1202197fcc98f098cf6c83d956029a39b6401",
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "bc3f78bdf3ac41009a7603ca5dd6b6c4d5e8d6c2bdcaf3a692cfd95a3b3d2553"
+  },
+  "inputs": {
+    "build/smart-typing-0.3/current-source-replay-20260906/calibration/provenance.json": "18efac222d6d4658e00dc9944e46e113c166c54f428c7736d4593eb80894958e",
+    "build/smart-typing-0.3/current-source-replay-20260906/holdout/comparison.json": "9c7380d0a0ed11a060632ea23c2e8ed08f4c9eb23a6af7e9321142d4f422919e",
+    "build/smart-typing-0.3/current-source-replay-20260906/run_native_replay.py": "906dc8e0b63e6bfe1ace899da617716864a6f1b2e5ff2fc2dc7d88525c7e206f",
+    "build/smart-typing-0.3/native-current-20260906/compile_commands.json": "997876810628e9e78636437c51ac803f61150d584fdf65f5d5bed4296e8adac0",
+    "tools/eval/smart-typing-0.3/evaluate.py": "6ad46a46e70366268860538ba688eeba48de909b8796f6f5e398142594920188",
+    "tools/eval/smart-typing-0.3/pipeline/export_calibration.py": "40d4e77a0738449791a5772709c55ed830f0f1683672553bc50c13362833b518",
+    "tools/eval/smart-typing-0.3/pipeline/export_product_holdout.py": "2a09173b64ebc9c277af6b00041119683bf881a3a73f8650c8ffef80a0d35e02",
+    "tools/eval/smart-typing-0.3/pipeline/results/2026-09-03-combined-calibration/config.json": "ab7d50c19d4401fdca2c20e3ef2fa3e9b9e5a06368d62c7352b8b90042e46858",
+    "tools/eval/smart-typing-0.3/pipeline/score_product_holdout.py": "15dc31d033e2741a3087680a5cb6d8e06ddd35706b5544f57207c4fe50d0bdce",
+    "tools/eval/smart-typing-0.3/score_main.cpp": "047fa457134d7051fa31ca9ccfd94eaf1cd3a3f575a724a9f48b97101de3eec1",
+    "tools/eval/smart-typing-0.3/scoring.cpp": "f3e30db8fde25e9fd56ccc3743b70b9304d537b94b44b69e791acc969fc9ee09"
+  },
+  "policyConfigSha256": "a4375144211a719aec3fd3e131174e78403fa36de4e234787936bde27aca4bbc",
+  "releaseQualified": false,
+  "requests": 2940,
+  "scope": "current-native-numeric-compatibility-replay",
+  "thresholdFittingPerformed": false
+}

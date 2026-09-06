@@ -1,0 +1,71 @@
+{
+  "cases": 79,
+  "compileCommand": [
+    "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/bin/java",
+    "-XX:ActiveProcessorCount=2",
+    "-Xmx512m",
+    "-cp",
+    "/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/2.2.10/6882d39ef03b18879c1a5d2a83c2212361bed5fe/kotlin-compiler-embeddable-2.2.10.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.2.10/30de6faa127a4a012db8e71bf1b9c0a99b1402b2/kotlin-stdlib-2.2.10.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/2.2.10/98d0ca9819d98cb3aa5c0a25793830b6659feee2/kotlin-reflect-2.2.10.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm/1.8.0/ac1dc37a30a93150b704022f8d895ee1bd3a36b3/kotlinx-coroutines-core-jvm-1.8.0.jar",
+    "org.jetbrains.kotlin.cli.jvm.K2JVMCompiler",
+    "-no-stdlib",
+    "-no-reflect",
+    "-jvm-target",
+    "17",
+    "-classpath",
+    "/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.2.10/30de6faa127a4a012db8e71bf1b9c0a99b1402b2/kotlin-stdlib-2.2.10.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar",
+    "-d",
+    "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity/contextual-policy-probe.jar",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt",
+    "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/ContextualPolicyProbe.kt"
+  ],
+  "files": {
+    "actual.tsv": "36d7a5ad4dc0875980d8d321e1820868931d32947adcae46882a266f90a9d57c",
+    "compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "contextual-policy-probe.jar": "68962bafbcc2f500d220f7921cee9dd7de8ad36f38b04dc3eb00504350cffbf9",
+    "expected.tsv": "36d7a5ad4dc0875980d8d321e1820868931d32947adcae46882a266f90a9d57c",
+    "inputs.tsv": "9682cb21b86a7260a4925fa64fa384fb338d38cd95379451718273541c6b2b4c",
+    "java-version.txt": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39",
+    "run.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gradleCache": "/Users/avm/.gradle/caches/modules-2/files-2.1",
+  "holdoutScored": false,
+  "jars": {
+    "/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/2.2.10/6882d39ef03b18879c1a5d2a83c2212361bed5fe/kotlin-compiler-embeddable-2.2.10.jar": "79628fd5d64b4692a62f98962baab00e9076a37e2cffd6ace33cd0b7be7d1cdf",
+    "/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/2.2.10/98d0ca9819d98cb3aa5c0a25793830b6659feee2/kotlin-reflect-2.2.10.jar": "c48db4f8cd1bfd67f72d59255065fb41bfda43ca2942dac4d9deb897aa126ba4",
+    "/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.2.10/30de6faa127a4a012db8e71bf1b9c0a99b1402b2/kotlin-stdlib-2.2.10.jar": "9c67cc79efd6b9215b49d2a4308f5f3433537376c7c88e89bdd6729bd096e61a",
+    "/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm/1.8.0/ac1dc37a30a93150b704022f8d895ee1bd3a36b3/kotlinx-coroutines-core-jvm-1.8.0.jar": "9860906a1937490bf5f3b06d2f0e10ef451e65b95b269f22daf68a3d1f5065c5",
+    "/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478"
+  },
+  "java": "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/bin/java",
+  "javaSha256": "4ac51957da9d64cc468d4ce67fc2f53644edc5585f8c4c92ce08ea30ee71db8a",
+  "policy": {
+    "originalAdvantage": 0.5,
+    "originalComparison": ">",
+    "rivalAdvantage": 4.0,
+    "rivalComparison": ">=",
+    "rule": "total-log-probability-margins",
+    "tieOrder": "ascending-candidate-id",
+    "tokenCountRange": [
+      1,
+      255
+    ],
+    "version": 2
+  },
+  "policySourceSha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+  "probeSha256": "2896883ffd3a1eff882bb147489bba3b7293d98f9ba138dc601f98eb4632c576",
+  "qualitySourceSha256": "4dd02feb7b313f66c27d80767967070ff1702c99764dba8091e2f0b5449bef6f",
+  "receiptSha256": "ddec7f6673ee4846c724c7b1876549c31518279f7926a05275116f6c1f53eede",
+  "runCommand": [
+    "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/bin/java",
+    "-XX:ActiveProcessorCount=2",
+    "-Xmx512m",
+    "-cp",
+    "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity/contextual-policy-probe.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.2.10/30de6faa127a4a012db8e71bf1b9c0a99b1402b2/kotlin-stdlib-2.2.10.jar:/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar",
+    "io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPolicyProbe",
+    "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-v5-20260906/adapter-policy-parity/inputs.tsv"
+  ],
+  "schemaVersion": 2,
+  "scope": "contextual-production-policy-parity",
+  "syntheticOnly": true,
+  "toolchainManifestSha256": "d67311d36b24fd1cf028b447888c47e393df3b4cab9b9a09b38db43ec9c57006"
+}

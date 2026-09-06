@@ -1,0 +1,1259 @@
+{
+  "automaticReplacements": 0,
+  "corpusFormat": "contextual-v5",
+  "corpusLoaderSources": {
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/corpus_contract.py": "100bafb1fa324aa4be500c38bd49f7c54c2ca211ca0149be5bd6f30d52e1371e",
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/exclusion-lock.json": "7054bae1871a1bf23e6f3875c6f31714cfd65c8066a0ae338f9a0182b5bb8043",
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/generate_corpus.py": "b1a0b9fff0115aa081e78beb67587431ad0dd8e673b4431db50e6302823b2bb1",
+    "tools/eval/smart-typing-0.3/qualification-v5-contextual/source-lock.json": "b70c04203de82dd1f315f2e66b5c780484352809833adb6068d741c2b2bd1f7c"
+  },
+  "corpusVersion": 5,
+  "labelSemantics": "observed_wikipedia_boundary",
+  "languages": {
+    "en": {
+      "abstention": {
+        "denominator": 200,
+        "numerator": 162,
+        "value": 0.81,
+        "wilson95RowDescriptive": [
+          0.7499876129240015,
+          0.8583282847220932
+        ]
+      },
+      "abstentions": 162,
+      "automaticReplacements": 0,
+      "byObservedBoundary": {
+        "colon": {
+          "abstention": {
+            "denominator": 50,
+            "numerator": 46,
+            "value": 0.92,
+            "wilson95RowDescriptive": [
+              0.8116175308165717,
+              0.968450485911407
+            ]
+          },
+          "abstentions": 46,
+          "automaticReplacements": 0,
+          "decisionCounts": {
+            "colon": 3,
+            "comma": 1,
+            "exclamation": 0,
+            "original": 46,
+            "period": 0,
+            "question": 0,
+            "semicolon": 0
+          },
+          "insertionAtObservedSpaces": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          },
+          "missingResponseRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponses": 0,
+          "observedSpaceRows": 0,
+          "productionExcludedRows": 7,
+          "productionExclusionRate": {
+            "denominator": 50,
+            "numerator": 7,
+            "value": 0.14,
+            "wilson95RowDescriptive": [
+              0.06950833427016294,
+              0.2618619371058554
+            ]
+          },
+          "rows": 50,
+          "runtimeErrorRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "runtimeErrors": 0,
+          "sourceBoundaryAgreement": {
+            "denominator": 50,
+            "numerator": 3,
+            "value": 0.06,
+            "wilson95RowDescriptive": [
+              0.02061497034897397,
+              0.16217091688838173
+            ]
+          },
+          "sourceBoundaryMatches": 3,
+          "suggestionCoverage": {
+            "denominator": 50,
+            "numerator": 4,
+            "value": 0.08,
+            "wilson95RowDescriptive": [
+              0.03154951408859298,
+              0.18838246918342838
+            ]
+          },
+          "suggestions": 4
+        },
+        "comma": {
+          "abstention": {
+            "denominator": 50,
+            "numerator": 33,
+            "value": 0.66,
+            "wilson95RowDescriptive": [
+              0.521538260502326,
+              0.7756305077749992
+            ]
+          },
+          "abstentions": 33,
+          "automaticReplacements": 0,
+          "decisionCounts": {
+            "colon": 0,
+            "comma": 17,
+            "exclamation": 0,
+            "original": 33,
+            "period": 0,
+            "question": 0,
+            "semicolon": 0
+          },
+          "insertionAtObservedSpaces": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          },
+          "missingResponseRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponses": 0,
+          "observedSpaceRows": 0,
+          "productionExcludedRows": 8,
+          "productionExclusionRate": {
+            "denominator": 50,
+            "numerator": 8,
+            "value": 0.16,
+            "wilson95RowDescriptive": [
+              0.08337420678033404,
+              0.2851421606303499
+            ]
+          },
+          "rows": 50,
+          "runtimeErrorRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "runtimeErrors": 0,
+          "sourceBoundaryAgreement": {
+            "denominator": 50,
+            "numerator": 17,
+            "value": 0.34,
+            "wilson95RowDescriptive": [
+              0.2243694922250009,
+              0.478461739497674
+            ]
+          },
+          "sourceBoundaryMatches": 17,
+          "suggestionCoverage": {
+            "denominator": 50,
+            "numerator": 17,
+            "value": 0.34,
+            "wilson95RowDescriptive": [
+              0.2243694922250009,
+              0.478461739497674
+            ]
+          },
+          "suggestions": 17
+        },
+        "period": {
+          "abstention": {
+            "denominator": 50,
+            "numerator": 33,
+            "value": 0.66,
+            "wilson95RowDescriptive": [
+              0.521538260502326,
+              0.7756305077749992
+            ]
+          },
+          "abstentions": 33,
+          "automaticReplacements": 0,
+          "decisionCounts": {
+            "colon": 0,
+            "comma": 0,
+            "exclamation": 0,
+            "original": 33,
+            "period": 17,
+            "question": 0,
+            "semicolon": 0
+          },
+          "insertionAtObservedSpaces": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          },
+          "missingResponseRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponses": 0,
+          "observedSpaceRows": 0,
+          "productionExcludedRows": 7,
+          "productionExclusionRate": {
+            "denominator": 50,
+            "numerator": 7,
+            "value": 0.14,
+            "wilson95RowDescriptive": [
+              0.06950833427016294,
+              0.2618619371058554
+            ]
+          },
+          "rows": 50,
+          "runtimeErrorRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "runtimeErrors": 0,
+          "sourceBoundaryAgreement": {
+            "denominator": 50,
+            "numerator": 17,
+            "value": 0.34,
+            "wilson95RowDescriptive": [
+              0.2243694922250009,
+              0.478461739497674
+            ]
+          },
+          "sourceBoundaryMatches": 17,
+          "suggestionCoverage": {
+            "denominator": 50,
+            "numerator": 17,
+            "value": 0.34,
+            "wilson95RowDescriptive": [
+              0.2243694922250009,
+              0.478461739497674
+            ]
+          },
+          "suggestions": 17
+        },
+        "space": {
+          "abstention": {
+            "denominator": 50,
+            "numerator": 50,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9286524008666414,
+              1.0
+            ]
+          },
+          "abstentions": 50,
+          "automaticReplacements": 0,
+          "decisionCounts": {
+            "colon": 0,
+            "comma": 0,
+            "exclamation": 0,
+            "original": 50,
+            "period": 0,
+            "question": 0,
+            "semicolon": 0
+          },
+          "insertionAtObservedSpaces": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponseRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponses": 0,
+          "observedSpaceRows": 50,
+          "productionExcludedRows": 6,
+          "productionExclusionRate": {
+            "denominator": 50,
+            "numerator": 6,
+            "value": 0.12,
+            "wilson95RowDescriptive": [
+              0.05617600150932274,
+              0.23804817383202992
+            ]
+          },
+          "rows": 50,
+          "runtimeErrorRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "runtimeErrors": 0,
+          "sourceBoundaryAgreement": {
+            "denominator": 50,
+            "numerator": 50,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9286524008666414,
+              1.0
+            ]
+          },
+          "sourceBoundaryMatches": 50,
+          "suggestionCoverage": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "suggestions": 0
+        }
+      },
+      "decisionCounts": {
+        "colon": 3,
+        "comma": 18,
+        "exclamation": 0,
+        "original": 162,
+        "period": 17,
+        "question": 0,
+        "semicolon": 0
+      },
+      "insertionAtObservedSpaces": {
+        "denominator": 50,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          6.938893903907228e-18,
+          0.07134759913335872
+        ]
+      },
+      "missingResponseRate": {
+        "denominator": 200,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          1.734723475976807e-18,
+          0.018845326377266575
+        ]
+      },
+      "missingResponses": 0,
+      "observedSpaceRows": 50,
+      "productionExcludedRows": 28,
+      "productionExclusionRate": {
+        "denominator": 200,
+        "numerator": 28,
+        "value": 0.14,
+        "wilson95RowDescriptive": [
+          0.09866982633455634,
+          0.1948988086570756
+        ]
+      },
+      "rows": 200,
+      "runtimeErrorRate": {
+        "denominator": 200,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          1.734723475976807e-18,
+          0.018845326377266575
+        ]
+      },
+      "runtimeErrors": 0,
+      "sourceBoundaryAgreement": {
+        "denominator": 200,
+        "numerator": 87,
+        "value": 0.435,
+        "wilson95RowDescriptive": [
+          0.36815725502699076,
+          0.504292637402054
+        ]
+      },
+      "sourceBoundaryMatches": 87,
+      "suggestionCoverage": {
+        "denominator": 200,
+        "numerator": 38,
+        "value": 0.19,
+        "wilson95RowDescriptive": [
+          0.14167171527790676,
+          0.25001238707599854
+        ]
+      },
+      "suggestions": 38
+    },
+    "es": {
+      "abstention": {
+        "denominator": 200,
+        "numerator": 173,
+        "value": 0.865,
+        "wilson95RowDescriptive": [
+          0.8107086162924745,
+          0.9055342954521209
+        ]
+      },
+      "abstentions": 173,
+      "automaticReplacements": 0,
+      "byObservedBoundary": {
+        "colon": {
+          "abstention": {
+            "denominator": 50,
+            "numerator": 42,
+            "value": 0.84,
+            "wilson95RowDescriptive": [
+              0.7148578393696501,
+              0.916625793219666
+            ]
+          },
+          "abstentions": 42,
+          "automaticReplacements": 0,
+          "decisionCounts": {
+            "colon": 7,
+            "comma": 1,
+            "exclamation": 0,
+            "original": 42,
+            "period": 0,
+            "question": 0,
+            "semicolon": 0
+          },
+          "insertionAtObservedSpaces": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          },
+          "missingResponseRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponses": 0,
+          "observedSpaceRows": 0,
+          "productionExcludedRows": 5,
+          "productionExclusionRate": {
+            "denominator": 50,
+            "numerator": 5,
+            "value": 0.1,
+            "wilson95RowDescriptive": [
+              0.04347576493189041,
+              0.21360231437479654
+            ]
+          },
+          "rows": 50,
+          "runtimeErrorRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "runtimeErrors": 0,
+          "sourceBoundaryAgreement": {
+            "denominator": 50,
+            "numerator": 7,
+            "value": 0.14,
+            "wilson95RowDescriptive": [
+              0.06950833427016294,
+              0.2618619371058554
+            ]
+          },
+          "sourceBoundaryMatches": 7,
+          "suggestionCoverage": {
+            "denominator": 50,
+            "numerator": 8,
+            "value": 0.16,
+            "wilson95RowDescriptive": [
+              0.08337420678033404,
+              0.2851421606303499
+            ]
+          },
+          "suggestions": 8
+        },
+        "comma": {
+          "abstention": {
+            "denominator": 50,
+            "numerator": 36,
+            "value": 0.72,
+            "wilson95RowDescriptive": [
+              0.5833487630404344,
+              0.8252582933408878
+            ]
+          },
+          "abstentions": 36,
+          "automaticReplacements": 0,
+          "decisionCounts": {
+            "colon": 0,
+            "comma": 14,
+            "exclamation": 0,
+            "original": 36,
+            "period": 0,
+            "question": 0,
+            "semicolon": 0
+          },
+          "insertionAtObservedSpaces": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          },
+          "missingResponseRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponses": 0,
+          "observedSpaceRows": 0,
+          "productionExcludedRows": 11,
+          "productionExclusionRate": {
+            "denominator": 50,
+            "numerator": 11,
+            "value": 0.22,
+            "wilson95RowDescriptive": [
+              0.1275391597021442,
+              0.3524154958125367
+            ]
+          },
+          "rows": 50,
+          "runtimeErrorRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "runtimeErrors": 0,
+          "sourceBoundaryAgreement": {
+            "denominator": 50,
+            "numerator": 14,
+            "value": 0.28,
+            "wilson95RowDescriptive": [
+              0.17474170665911232,
+              0.4166512369595657
+            ]
+          },
+          "sourceBoundaryMatches": 14,
+          "suggestionCoverage": {
+            "denominator": 50,
+            "numerator": 14,
+            "value": 0.28,
+            "wilson95RowDescriptive": [
+              0.17474170665911232,
+              0.4166512369595657
+            ]
+          },
+          "suggestions": 14
+        },
+        "period": {
+          "abstention": {
+            "denominator": 50,
+            "numerator": 45,
+            "value": 0.9,
+            "wilson95RowDescriptive": [
+              0.7863976856252035,
+              0.9565242350681096
+            ]
+          },
+          "abstentions": 45,
+          "automaticReplacements": 0,
+          "decisionCounts": {
+            "colon": 0,
+            "comma": 0,
+            "exclamation": 0,
+            "original": 45,
+            "period": 5,
+            "question": 0,
+            "semicolon": 0
+          },
+          "insertionAtObservedSpaces": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          },
+          "missingResponseRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponses": 0,
+          "observedSpaceRows": 0,
+          "productionExcludedRows": 6,
+          "productionExclusionRate": {
+            "denominator": 50,
+            "numerator": 6,
+            "value": 0.12,
+            "wilson95RowDescriptive": [
+              0.05617600150932274,
+              0.23804817383202992
+            ]
+          },
+          "rows": 50,
+          "runtimeErrorRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "runtimeErrors": 0,
+          "sourceBoundaryAgreement": {
+            "denominator": 50,
+            "numerator": 5,
+            "value": 0.1,
+            "wilson95RowDescriptive": [
+              0.04347576493189041,
+              0.21360231437479654
+            ]
+          },
+          "sourceBoundaryMatches": 5,
+          "suggestionCoverage": {
+            "denominator": 50,
+            "numerator": 5,
+            "value": 0.1,
+            "wilson95RowDescriptive": [
+              0.04347576493189041,
+              0.21360231437479654
+            ]
+          },
+          "suggestions": 5
+        },
+        "space": {
+          "abstention": {
+            "denominator": 50,
+            "numerator": 50,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9286524008666414,
+              1.0
+            ]
+          },
+          "abstentions": 50,
+          "automaticReplacements": 0,
+          "decisionCounts": {
+            "colon": 0,
+            "comma": 0,
+            "exclamation": 0,
+            "original": 50,
+            "period": 0,
+            "question": 0,
+            "semicolon": 0
+          },
+          "insertionAtObservedSpaces": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponseRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponses": 0,
+          "observedSpaceRows": 50,
+          "productionExcludedRows": 1,
+          "productionExclusionRate": {
+            "denominator": 50,
+            "numerator": 1,
+            "value": 0.02,
+            "wilson95RowDescriptive": [
+              0.003539259271646236,
+              0.10495443589637815
+            ]
+          },
+          "rows": 50,
+          "runtimeErrorRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "runtimeErrors": 0,
+          "sourceBoundaryAgreement": {
+            "denominator": 50,
+            "numerator": 50,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9286524008666414,
+              1.0
+            ]
+          },
+          "sourceBoundaryMatches": 50,
+          "suggestionCoverage": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "suggestions": 0
+        }
+      },
+      "decisionCounts": {
+        "colon": 7,
+        "comma": 15,
+        "exclamation": 0,
+        "original": 173,
+        "period": 5,
+        "question": 0,
+        "semicolon": 0
+      },
+      "insertionAtObservedSpaces": {
+        "denominator": 50,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          6.938893903907228e-18,
+          0.07134759913335872
+        ]
+      },
+      "missingResponseRate": {
+        "denominator": 200,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          1.734723475976807e-18,
+          0.018845326377266575
+        ]
+      },
+      "missingResponses": 0,
+      "observedSpaceRows": 50,
+      "productionExcludedRows": 23,
+      "productionExclusionRate": {
+        "denominator": 200,
+        "numerator": 23,
+        "value": 0.115,
+        "wilson95RowDescriptive": [
+          0.07786373232561955,
+          0.16664716898487572
+        ]
+      },
+      "rows": 200,
+      "runtimeErrorRate": {
+        "denominator": 200,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          1.734723475976807e-18,
+          0.018845326377266575
+        ]
+      },
+      "runtimeErrors": 0,
+      "sourceBoundaryAgreement": {
+        "denominator": 200,
+        "numerator": 76,
+        "value": 0.38,
+        "wilson95RowDescriptive": [
+          0.31559005848673627,
+          0.44893281984380773
+        ]
+      },
+      "sourceBoundaryMatches": 76,
+      "suggestionCoverage": {
+        "denominator": 200,
+        "numerator": 27,
+        "value": 0.135,
+        "wilson95RowDescriptive": [
+          0.09446570454787906,
+          0.18929138370752552
+        ]
+      },
+      "suggestions": 27
+    },
+    "ru": {
+      "abstention": {
+        "denominator": 200,
+        "numerator": 163,
+        "value": 0.815,
+        "wilson95RowDescriptive": [
+          0.7554293723884824,
+          0.8626980719938395
+        ]
+      },
+      "abstentions": 163,
+      "automaticReplacements": 0,
+      "byObservedBoundary": {
+        "colon": {
+          "abstention": {
+            "denominator": 50,
+            "numerator": 47,
+            "value": 0.94,
+            "wilson95RowDescriptive": [
+              0.8378290831116182,
+              0.979385029651026
+            ]
+          },
+          "abstentions": 47,
+          "automaticReplacements": 0,
+          "decisionCounts": {
+            "colon": 3,
+            "comma": 0,
+            "exclamation": 0,
+            "original": 47,
+            "period": 0,
+            "question": 0,
+            "semicolon": 0
+          },
+          "insertionAtObservedSpaces": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          },
+          "missingResponseRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponses": 0,
+          "observedSpaceRows": 0,
+          "productionExcludedRows": 5,
+          "productionExclusionRate": {
+            "denominator": 50,
+            "numerator": 5,
+            "value": 0.1,
+            "wilson95RowDescriptive": [
+              0.04347576493189041,
+              0.21360231437479654
+            ]
+          },
+          "rows": 50,
+          "runtimeErrorRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "runtimeErrors": 0,
+          "sourceBoundaryAgreement": {
+            "denominator": 50,
+            "numerator": 3,
+            "value": 0.06,
+            "wilson95RowDescriptive": [
+              0.02061497034897397,
+              0.16217091688838173
+            ]
+          },
+          "sourceBoundaryMatches": 3,
+          "suggestionCoverage": {
+            "denominator": 50,
+            "numerator": 3,
+            "value": 0.06,
+            "wilson95RowDescriptive": [
+              0.02061497034897397,
+              0.16217091688838173
+            ]
+          },
+          "suggestions": 3
+        },
+        "comma": {
+          "abstention": {
+            "denominator": 50,
+            "numerator": 24,
+            "value": 0.48,
+            "wilson95RowDescriptive": [
+              0.34797135286578046,
+              0.6148825510995539
+            ]
+          },
+          "abstentions": 24,
+          "automaticReplacements": 0,
+          "decisionCounts": {
+            "colon": 0,
+            "comma": 26,
+            "exclamation": 0,
+            "original": 24,
+            "period": 0,
+            "question": 0,
+            "semicolon": 0
+          },
+          "insertionAtObservedSpaces": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          },
+          "missingResponseRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponses": 0,
+          "observedSpaceRows": 0,
+          "productionExcludedRows": 6,
+          "productionExclusionRate": {
+            "denominator": 50,
+            "numerator": 6,
+            "value": 0.12,
+            "wilson95RowDescriptive": [
+              0.05617600150932274,
+              0.23804817383202992
+            ]
+          },
+          "rows": 50,
+          "runtimeErrorRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "runtimeErrors": 0,
+          "sourceBoundaryAgreement": {
+            "denominator": 50,
+            "numerator": 26,
+            "value": 0.52,
+            "wilson95RowDescriptive": [
+              0.38511744890044614,
+              0.6520286471342196
+            ]
+          },
+          "sourceBoundaryMatches": 26,
+          "suggestionCoverage": {
+            "denominator": 50,
+            "numerator": 26,
+            "value": 0.52,
+            "wilson95RowDescriptive": [
+              0.38511744890044614,
+              0.6520286471342196
+            ]
+          },
+          "suggestions": 26
+        },
+        "period": {
+          "abstention": {
+            "denominator": 50,
+            "numerator": 42,
+            "value": 0.84,
+            "wilson95RowDescriptive": [
+              0.7148578393696501,
+              0.916625793219666
+            ]
+          },
+          "abstentions": 42,
+          "automaticReplacements": 0,
+          "decisionCounts": {
+            "colon": 0,
+            "comma": 1,
+            "exclamation": 0,
+            "original": 42,
+            "period": 7,
+            "question": 0,
+            "semicolon": 0
+          },
+          "insertionAtObservedSpaces": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          },
+          "missingResponseRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponses": 0,
+          "observedSpaceRows": 0,
+          "productionExcludedRows": 10,
+          "productionExclusionRate": {
+            "denominator": 50,
+            "numerator": 10,
+            "value": 0.2,
+            "wilson95RowDescriptive": [
+              0.1124375001577611,
+              0.3303710593222542
+            ]
+          },
+          "rows": 50,
+          "runtimeErrorRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "runtimeErrors": 0,
+          "sourceBoundaryAgreement": {
+            "denominator": 50,
+            "numerator": 7,
+            "value": 0.14,
+            "wilson95RowDescriptive": [
+              0.06950833427016294,
+              0.2618619371058554
+            ]
+          },
+          "sourceBoundaryMatches": 7,
+          "suggestionCoverage": {
+            "denominator": 50,
+            "numerator": 8,
+            "value": 0.16,
+            "wilson95RowDescriptive": [
+              0.08337420678033404,
+              0.2851421606303499
+            ]
+          },
+          "suggestions": 8
+        },
+        "space": {
+          "abstention": {
+            "denominator": 50,
+            "numerator": 50,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9286524008666414,
+              1.0
+            ]
+          },
+          "abstentions": 50,
+          "automaticReplacements": 0,
+          "decisionCounts": {
+            "colon": 0,
+            "comma": 0,
+            "exclamation": 0,
+            "original": 50,
+            "period": 0,
+            "question": 0,
+            "semicolon": 0
+          },
+          "insertionAtObservedSpaces": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponseRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "missingResponses": 0,
+          "observedSpaceRows": 50,
+          "productionExcludedRows": 11,
+          "productionExclusionRate": {
+            "denominator": 50,
+            "numerator": 11,
+            "value": 0.22,
+            "wilson95RowDescriptive": [
+              0.1275391597021442,
+              0.3524154958125367
+            ]
+          },
+          "rows": 50,
+          "runtimeErrorRate": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "runtimeErrors": 0,
+          "sourceBoundaryAgreement": {
+            "denominator": 50,
+            "numerator": 50,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9286524008666414,
+              1.0
+            ]
+          },
+          "sourceBoundaryMatches": 50,
+          "suggestionCoverage": {
+            "denominator": 50,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "suggestions": 0
+        }
+      },
+      "decisionCounts": {
+        "colon": 3,
+        "comma": 27,
+        "exclamation": 0,
+        "original": 163,
+        "period": 7,
+        "question": 0,
+        "semicolon": 0
+      },
+      "insertionAtObservedSpaces": {
+        "denominator": 50,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          6.938893903907228e-18,
+          0.07134759913335872
+        ]
+      },
+      "missingResponseRate": {
+        "denominator": 200,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          1.734723475976807e-18,
+          0.018845326377266575
+        ]
+      },
+      "missingResponses": 0,
+      "observedSpaceRows": 50,
+      "productionExcludedRows": 32,
+      "productionExclusionRate": {
+        "denominator": 200,
+        "numerator": 32,
+        "value": 0.16,
+        "wilson95RowDescriptive": [
+          0.1156741203158702,
+          0.21714070162067106
+        ]
+      },
+      "rows": 200,
+      "runtimeErrorRate": {
+        "denominator": 200,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          1.734723475976807e-18,
+          0.018845326377266575
+        ]
+      },
+      "runtimeErrors": 0,
+      "sourceBoundaryAgreement": {
+        "denominator": 200,
+        "numerator": 86,
+        "value": 0.43,
+        "wilson95RowDescriptive": [
+          0.36334322333434416,
+          0.4992951223584731
+        ]
+      },
+      "sourceBoundaryMatches": 86,
+      "suggestionCoverage": {
+        "denominator": 200,
+        "numerator": 37,
+        "value": 0.185,
+        "wilson95RowDescriptive": [
+          0.13730192800616042,
+          0.2445706276115175
+        ]
+      },
+      "suggestions": 37
+    }
+  },
+  "metricSemantics": "observed-source-boundary-diagnostic",
+  "policy": {
+    "originalAdvantage": 0.5,
+    "originalComparison": ">",
+    "rivalAdvantage": 4.0,
+    "rivalComparison": ">=",
+    "rule": "total-log-probability-margins",
+    "tieOrder": "ascending-candidate-id",
+    "tokenCountRange": [
+      1,
+      255
+    ],
+    "version": 2
+  },
+  "policySourceSha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+  "qualityGateEstablished": false,
+  "qualitySourceSha256": "ab02e8457abe3cfdf711f67b52b13be33fde7f7693270bf4dc4203f5ba49c713",
+  "schemaVersion": 2,
+  "semanticCorrectnessEvaluated": false,
+  "split": "holdout",
+  "thresholdsFittedOnHoldout": false
+}
