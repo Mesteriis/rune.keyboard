@@ -177,7 +177,7 @@ allows one still-owned spelling result for250ms after ordinary Space; a blanket
 | 16 | Email/URL/number/phone/date-time never corrected | Five explicit NonNormalEditor mode tests pass both full152 runs, with normal correction positive controls, exact prefixes and zero Smart Typing/read activity |
 | 17 | TYPE_NULL raw behavior | New raw fixture passes API26/API37: balanced down/up, exact Delete, no composing/strip/readback |
 | 18 | Model kill preserves text and fallback | Live fake real-Binder process death/reconnect test passes both full152 runs; unchanged text/keys, no replay, subsequent typing works |
-| 19 | Late results after Space |250ms owner-certified service/controller tests pass; actual Space then expired held numeric reply PASS both APIs with exact Original/boundary and unchanged editor/strip. Allowed within-grace and next-text-invalidated combined cases remain missing |
+| 19 | Late results after Space | Actual expired reply refusal PASS both APIs. Allowed late reply also PASS both APIs: observed Original+Space before release, certified ownership and real callback elapsed<250ms, exact correction commands and immediate Undo. Next-text-invalidated combined case remains missing |
 | 20 | Late result after editor change | Live switch to another real QA editor/task/session PASS both APIs: exact old request released, new text/span/caret and candidate contents/IDs/selection unchanged, returning old text has no payload writes; no editor payload reads. Same-Activity field variant and already-dispatched callback are not claimed |
 | 21 | Late result after language change | Held exact remote numeric reply across actual Russian language swipe PASS both APIs: old English text/span preserved/finished, unchanged editor commands and strip after release, no stale accepted callback, fresh Russian typing works |
 | 22 | Candidate update preserves key instances | Live/settings touch tests; inner Fold PASS |
@@ -198,8 +198,17 @@ Rows19/21's live late-reply deltas, initial test-expectation failure and correct
 focused runs are in `tools/qa/smart-typing-0.3/results/2026-09-06-live-late-replies/`.
 Row20's two-real-editor proof and preserved fixture failures are in
 `tools/qa/smart-typing-0.3/results/2026-09-06-live-editor-switch/`.
+Row19's within-grace positive and API26 observer diagnosis are in
+`tools/qa/smart-typing-0.3/results/2026-09-06-live-space-grace/`.
 
 ## Physical and local receipts
+
+2026-09-06 update: the user took the phone and explicitly requested continued
+emulator work. Remaining physical Fold transition, current real-editor/rapid-input
+and performance checks are BLOCKED on device availability. The prepared cover
+composition is historical setup only and must not be reused as a valid transition
+baseline after the user's intervening phone use. API26/API37 work continues; no
+physical completion or release qualification is inferred from those emulator runs.
 
 Current-source native correctness at `1a5826e`: fresh Release configure/build and
 all7 CTest cases PASS (8.24s), including the three exact-GGUF cases. Token output
