@@ -190,6 +190,10 @@ object MechanicalPunctuationPlanner {
 
     private fun protectedLine(text: String): Boolean {
         var offset = text.lastIndexOf('\n') + 1
+        // A standalone dot can be a command's current-directory argument or literal output.
+        // Keep its separator as soon as the dot is typed, including inside quoted-in-prose
+        // command fragments. Waiting for a later slash/flag would already have damaged it.
+        if (DOT_ARGUMENT.containsMatchIn(text.substring(offset))) return true
         while (offset < text.length) {
             val cp = text.codePointAt(offset)
             if (!Character.isLetterOrDigit(cp) && !isMark(cp) && cp != ' '.code &&
@@ -216,5 +220,6 @@ object MechanicalPunctuationPlanner {
     private fun keep(reason: UnchangedPunctuationReason) = MechanicalPunctuationPlan.Unchanged(reason)
     private val PUNCTUATION = setOf(',', '.', '?', '!', ':', ';')
     private val SENTENCE_END = setOf('.', '?', '!')
+    private val DOT_ARGUMENT = Regex("(?:^|\\s)(?:cd|cp|mv|rm|ls|du|stat|find|chmod|chown|git|rg|grep|echo|printf) +\\.(?=$|[\\s.])")
     private val MARK_TYPES = setOf(Character.NON_SPACING_MARK.toInt(), Character.COMBINING_SPACING_MARK.toInt(), Character.ENCLOSING_MARK.toInt())
 }

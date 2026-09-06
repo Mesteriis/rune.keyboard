@@ -1,0 +1,12 @@
+{
+  "currentCanonicalReceiptSha256": "5bb64d4baa1bbd4f0569f647769fd68b4760e67e634727cf400e6175fcae6239",
+  "historicalExportProvenanceSha256": "18efac222d6d4658e00dc9944e46e113c166c54f428c7736d4593eb80894958e",
+  "historicalVerifierNotModifiedOrBypassedAsQualification": true,
+  "newLivePayloadsMustMatchScoredRequestsExactly": true,
+  "sourceChanges": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": {
+      "currentCompiledSourceSha256": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370",
+      "scoredExportSourceSha256": "bb031b134b1fdf8dc6e24762595defe5f732157fe8143c3f0caa52dc57f4c580"
+    }
+  }
+}

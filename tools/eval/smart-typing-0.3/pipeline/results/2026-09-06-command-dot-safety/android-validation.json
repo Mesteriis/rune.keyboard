@@ -1,0 +1,11 @@
+{
+  "api": 26,
+  "status": "PASS",
+  "tests": 7,
+  "seconds": 147.04,
+  "newCommandDotBinderTest": "PASS",
+  "logSha256": "3cdbbd2cc4b36beba32c0bb4fddff1705abd169c9fa9312b69c63358e886bdfb",
+  "inputReceiptSha256": "be869507e871e9fc7af07c265fa6ba06d8204431167f60b967c3d1506aa33819",
+  "scope": "ImePrivacy2 and MechanicalPunctuation5, including new command-dot test; before later raw/rapid fixture additions",
+  "api37": "Full current-source run pending; previous full run used earlier production APK"
+}

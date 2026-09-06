@@ -1,0 +1,21 @@
+{
+  "head": "93b92f61fbf54da064634f83ad1ba255519db8e4",
+  "uncommittedProduction": [
+    "MechanicalPunctuationPlanner.kt"
+  ],
+  "apkSha256": {
+    "app/build/outputs/apk/debug/app-debug.apk": "b9c67d58c3e9af1ebae435b9b77ff878e6190147a0c537f6ef59a68d342a8eb0",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "68848ff2b09a7778a5b82cc1bce10e2d40c0ce95f087ffdbdf4784394eab3d49"
+  },
+  "installedApks": {
+    "io.github.mesteriis.rune.keyboard": "b9c67d58c3e9af1ebae435b9b77ff878e6190147a0c537f6ef59a68d342a8eb0",
+    "io.github.mesteriis.rune.keyboard.test": "68848ff2b09a7778a5b82cc1bce10e2d40c0ce95f087ffdbdf4784394eab3d49"
+  },
+  "sourceSha256": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt": "5cd4a0d631796da0827a720653d92a21cac701eef2c375b546ce8409b9d528ea",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/MechanicalPunctuationInstrumentedTest.kt": "0de3261d1b3ee2f8efd59b0f22b532e8eb8c70c245315b2f4d9da19d43c31479",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImePrivacyInstrumentedTest.kt": "18d73bc3bdd833f0e3a2bf71a710e7b9a23e06358ed74194ed28f40ab0c30d71",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/PreviewPolicyAssertions.kt": "15a92664e5bdc87a623d8ed06929ee5302af1f4e5683e46fe66104860a97cb96",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt": "76094226e9f857552cb4512606f11d9237c153f6f8f3a627683a78b4ff990020"
+  }
+}

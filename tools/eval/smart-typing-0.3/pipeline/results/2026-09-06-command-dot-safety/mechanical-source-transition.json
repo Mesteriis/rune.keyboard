@@ -1,0 +1,10 @@
+{
+  "authorizedOnlyProductionDelta": {
+    "beforeSha256": "46b8bd16696a6f1e46acb5678abbf41c463fd7c344a7ad22b6d9dec5d7f8e68a",
+    "currentSha256": "5cd4a0d631796da0827a720653d92a21cac701eef2c375b546ce8409b9d528ea",
+    "path": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt"
+  },
+  "historicalVerifierNotModifiedOrUsedAsCurrentQualification": true,
+  "priorCanonicalReceiptSha256": "5bb64d4baa1bbd4f0569f647769fd68b4760e67e634727cf400e6175fcae6239",
+  "sameLabelsAndExactFreshScoreAdmissionRequired": true
+}

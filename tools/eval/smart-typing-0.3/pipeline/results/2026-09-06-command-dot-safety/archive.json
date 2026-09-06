@@ -1,0 +1,122 @@
+{
+  "files": {
+    "ProductControllerDiagnostic.kt": {
+      "archiveSha256": "630bd1e0378b712c125452b2a156032f2071186ab66c6662ea859842917c88f0",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/ProductControllerDiagnostic.kt",
+      "originalSha256": "630bd1e0378b712c125452b2a156032f2071186ab66c6662ea859842917c88f0"
+    },
+    "actual.jsonl.gz": {
+      "archiveSha256": "ef33dfd4e3d608338e9d7d5e97888c94b6873604186fe0e7d1e3d71a140a7afa",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/actual.jsonl",
+      "originalSha256": "7fc56b7f1a3f5d68d60ecc178fd84c0996a780e281d5582fb4a3de9afede7f92"
+    },
+    "command-dot-jvm-summary.json.gz": {
+      "archiveSha256": "895172b7509bfe113e704edd5291e9d633a889f1a641cb2525fbf89805a416d4",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/command-dot-jvm-summary.json",
+      "originalSha256": "9c7eeddf4ad557b79f1fb1a80057e2c79e9315c44dfcaaaf464bbfb3ef65a773"
+    },
+    "commands.json": {
+      "archiveSha256": "4a5aeaf3ecd6b30e176f234d55c7e5a77fc67a749cdb4c4238076d42ee4b9f0b",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/commands.json",
+      "originalSha256": "4a5aeaf3ecd6b30e176f234d55c7e5a77fc67a749cdb4c4238076d42ee4b9f0b"
+    },
+    "compile.log.gz": {
+      "archiveSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/compile.log",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "dotfix-comparison.json": {
+      "archiveSha256": "5ad6682459cb401dd5147ee6de51c3581d1ed52db59b5b07ede9e0b05c5a3c83",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/dotfix-comparison.json",
+      "originalSha256": "5ad6682459cb401dd5147ee6de51c3581d1ed52db59b5b07ede9e0b05c5a3c83"
+    },
+    "execution-receipt.json": {
+      "archiveSha256": "31c044e7c66224a7dcc08e0000225920654fc1ef41a22781b809be33a5fcb439",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/execution-receipt.json",
+      "originalSha256": "31c044e7c66224a7dcc08e0000225920654fc1ef41a22781b809be33a5fcb439"
+    },
+    "fresh-responses.jsonl.gz": {
+      "archiveSha256": "5123618341a324c9bc4fea5ee601a3f6d32dcef8295c7d49481bb6f7c1f69cf0",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/fresh-responses.jsonl",
+      "originalSha256": "f20ce14404ee7c4f4549092daf2ee3d77fd827ad100b05b4410b0991c6e61579"
+    },
+    "frozen-inputs.jsonl.gz": {
+      "archiveSha256": "98cfb91a3154aa674b530addfad384b3f20656f9344b451ddb242001bbfb5c1d",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/frozen-inputs.jsonl",
+      "originalSha256": "4c5783158e3d58c70df76f811d01679a8b7c2333501f8a6862e172d0b57b2e00"
+    },
+    "input-binding.json": {
+      "archiveSha256": "de2184ce59a0504e00f537b8e1b5fbfe274a6ffac430367e2928f2e756dc7f7b",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/input-binding.json",
+      "originalSha256": "de2184ce59a0504e00f537b8e1b5fbfe274a6ffac430367e2928f2e756dc7f7b"
+    },
+    "inputs.tsv.gz": {
+      "archiveSha256": "400f4436fe2b04db937a9abc755b3db902a3f0d545d33268976b7fdaa9242df2",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/inputs.tsv",
+      "originalSha256": "7ba63be08ebb58ff12d816f8a37c347c31a8029719c8fcfc7b071e2505613dc9"
+    },
+    "mechanical-command-dot-green.log.gz": {
+      "archiveSha256": "f0ef8ac44f655a4d192e995ab11956d137236cd71b4834d50216e5691b2226af",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/mechanical-command-dot-green.log",
+      "originalSha256": "d99994bfa6bd377160b4b77771d7ed50ce087fc51806bd7f5d97acb4f1c3fe5e"
+    },
+    "mechanical-command-dot-red.log.gz": {
+      "archiveSha256": "be2c0c6dfab26be9d0f148359207655923331e23919c674497795580d1447d5c",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/mechanical-command-dot-red.log",
+      "originalSha256": "dcf3f3d87bd1d54567731c16a0fc8041a873283a6d40e8a75f024e5efc7adedb"
+    },
+    "mechanical-source-transition.json": {
+      "archiveSha256": "50c9f15682ae2a4b1fbaed50efc8fba1c0f27414c8163c872d77074ee73ca5c9",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/mechanical-source-transition.json",
+      "originalSha256": "50c9f15682ae2a4b1fbaed50efc8fba1c0f27414c8163c872d77074ee73ca5c9"
+    },
+    "resume-2026-09-06-command-dot-gates.log.gz": {
+      "archiveSha256": "0aefa41e6e0aa942d88ef937102563ccff5efcfa93734465b4026227884ba950",
+      "originalPath": "build/smart-typing-0.3/resume-2026-09-06-command-dot-gates.log",
+      "originalSha256": "206dbb3df55cb4ac8cc91786cddadb6b7458cb2946e5c26d5eba5e4bfe53791d"
+    },
+    "resume-2026-09-06-command-dot-precommit-jvm.log.gz": {
+      "archiveSha256": "a6cee42be2d7fa2925a9d78e3305373ab331b7010970905468cf24b82414d4f5",
+      "originalPath": "build/smart-typing-0.3/resume-2026-09-06-command-dot-precommit-jvm.log",
+      "originalSha256": "64ca12a5c6a4e2cd7c1afd4ed21eb0f8873442e6b1a459f3a242c2152e899a7d"
+    },
+    "row-evidence.jsonl.gz": {
+      "archiveSha256": "b3340f8a076e9753bb8fb11af521a16a153076111c0d1d116e2e7a86ef18b591",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/row-evidence.jsonl",
+      "originalSha256": "812c6adf72c38b92142ce5828e230c0fb893667fedee62114bfd77877684bbcd"
+    },
+    "run.log.gz": {
+      "archiveSha256": "1429229e16be61964a61fbd46e6a3d267220021985a90c52fc1cfda427dd3f9f",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/run.log",
+      "originalSha256": "b26bdef94db2277541690bc82a50310bef9536d7fea4d6b23ec81775ef6b6f7c"
+    },
+    "run_product_diagnostic.py": {
+      "archiveSha256": "91b01825e8b903b8a1ce5aa70e8ddf07901baec5c401bc2aefb59d13c3a78e59",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/run_product_diagnostic.py",
+      "originalSha256": "91b01825e8b903b8a1ce5aa70e8ddf07901baec5c401bc2aefb59d13c3a78e59"
+    },
+    "score-binding.json": {
+      "archiveSha256": "677ce8feae1834e2cee882deb3d46aad98cc91781ed31b8354ba4ac2406145e0",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/score-binding.json",
+      "originalSha256": "677ce8feae1834e2cee882deb3d46aad98cc91781ed31b8354ba4ac2406145e0"
+    },
+    "scored-export-source-transition.json": {
+      "archiveSha256": "cb25369c65a5714d0bc52b83d0b65532b33bd757440dd8c67430ad389425c378",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/scored-export-source-transition.json",
+      "originalSha256": "cb25369c65a5714d0bc52b83d0b65532b33bd757440dd8c67430ad389425c378"
+    },
+    "summary.json": {
+      "archiveSha256": "e833bee405cc0622d53b0d75634b48eadd233a1caf0f6a51d1bd8b676bca782d",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/summary.json",
+      "originalSha256": "e833bee405cc0622d53b0d75634b48eadd233a1caf0f6a51d1bd8b676bca782d"
+    },
+    "verified-scored-requests.jsonl.gz": {
+      "archiveSha256": "aa00892e230bd5960d619118f57ee435c72b02885421980be0763cbe40c52e1d",
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-dotfix/verified-scored-requests.jsonl",
+      "originalSha256": "70ac0f0da06f4212351868d269735f52ee7685dd20cd1d66c549e45428836186"
+    }
+  },
+  "schemaVersion": 1,
+  "scope": "current-controller-command-dot-development-diagnostic",
+  "unseenQualification": false
+}

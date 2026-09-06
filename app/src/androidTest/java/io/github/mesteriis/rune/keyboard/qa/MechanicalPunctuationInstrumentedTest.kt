@@ -115,6 +115,17 @@ class MechanicalPunctuationInstrumentedTest : ImeTestBase() {
         }
     }
 
+    @Test fun commandDotKeepsItsSeparatorAcrossBoundaryAndOrdinaryBackspace() {
+        prepare()
+        word("find"); space(); driver.tapKey(".")
+        driver.awaitFieldText(FIELD, "find .")
+        space(); driver.tapKey("w")
+        driver.awaitFieldText(FIELD, "find . w")
+        driver.tapDelete(); driver.awaitFieldText(FIELD, "find . ")
+        driver.tapDelete(); driver.awaitFieldText(FIELD, "find .")
+        noReadback()
+    }
+
     private fun prepare(mechanical: Boolean = true) {
         driver.configureMechanicalPunctuation(mechanical, doubleSpace = false)
         driver.launchComposingQa()

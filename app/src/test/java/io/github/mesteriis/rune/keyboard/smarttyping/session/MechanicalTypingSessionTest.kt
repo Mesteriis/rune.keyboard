@@ -112,6 +112,18 @@ class MechanicalTypingSessionTest {
         }
     }
 
+    @Test fun `command dot keeps the owned separator through typing and ordinary backspace`() {
+        for (text in listOf("find . ", "reference find . ", "справка cd . ", "nota ls . item")) {
+            val f = Fixture()
+            text.forEach { f.type(it.toString()) }
+            assertEquals(text, f.document)
+            assertNull(f.controller.state.lastAutoEdit)
+            f.undo()
+            assertEquals(text.dropLast(1), f.document)
+            assertEquals(0, f.reads)
+        }
+    }
+
     @Test fun `settings are independent and decoded changes affect very next action`() {
         val f = Fixture(); f.policy = enabled.copy(enabled = false, doubleSpaceEnabled = true)
         f.type("hello"); f.type(" "); f.type(" ", gesture = true)

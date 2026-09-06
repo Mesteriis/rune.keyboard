@@ -122,6 +122,21 @@ class MechanicalPunctuationPlannerTest {
         assertEquals(2, edit.sentenceCapsForNewTextAt)
     }
 
+    @Test fun `standalone command dot arguments keep their whitespace across later input`() {
+        for (prefix in listOf("", "The reference lists ", "В справочнике найдено ", "La referencia indica ")) {
+            for (command in listOf("find", "cd", "ls", "du", "stat", "cp", "mv", "rm", "chmod", "chown", "git", "rg", "grep", "echo", "printf")) {
+                val before = "$prefix$command "
+                assertEquals(UnchangedPunctuationReason.PROTECTED_TOKEN, reason(plan(before, ".", " ")))
+                assertTrue(plan("$before.", " ", " .") is MechanicalPunctuationPlan.Unchanged)
+                assertTrue(plan("$before. ", "w", " . ") is MechanicalPunctuationPlan.Unchanged)
+            }
+        }
+        // A different word and a non-dot boundary retain ordinary punctuation behavior.
+        assertEquals(MechanicalEditKind.SPACE_BEFORE, replacement(plan("hello ", ".", " ")).kind)
+        assertEquals(MechanicalEditKind.SPACE_BEFORE, replacement(plan("find ", ",", " ")).kind)
+        assertEquals(MechanicalEditKind.SPACE_BEFORE, replacement(plan("find .\nhello ", ".", " ")).kind)
+    }
+
     @Test fun `ellipsis expressive punctuation quotes brackets and emoji are preserved`() {
         for ((before, next) in listOf("word." to ".", "word.." to ".", "word..." to "next",
             "word?!" to "next", "word!?" to "next", "word!" to "!", "word?" to "?",

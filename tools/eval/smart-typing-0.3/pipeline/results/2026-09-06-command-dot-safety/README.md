@@ -1,0 +1,9 @@
+# Command-dot safety — 2026-09-06
+
+A bounded current-line exclusion preserves known command plus standalone dot fragments before mechanical punctuation can delete the operand separator. Ordinary `hello .` cleanup remains enabled. This is a conservative fragment rule, not a shell parser.
+
+Actual current Kotlin controller replay retained all6,000 frozen rows, labels,12 assets and exactly bound native response admissions. The only three final-output changes are preserved `find .` examples. Final-text correct/changed: EN293/304, RU341/358, ES396/409, negative false changes0/1/0 per1,000. All1,071 boundary automatic edits have exact Undo. The unrelated `Magdalene` error and all ordinary spelling errors remain included. See REPORT.md for precise metrics, intervals, source identities and limitations.
+
+This is development/regression evidence on already revealed data, not new unseen qualification. Historical failing outputs remain in the preceding canonical-safety archive. The host harness uses an independent in-memory editor, not Android Binder or physical timing. Archive entries preserve decompressed hashes; compiled JARs remain in build with hashes/commands in original execution receipts. Reproduction scripts retain their original build-relative assumptions and must run at recorded paths with matching source, inputs and toolchain. No weights or phone data are included.
+
+The retained JVM regression fails before the fix, passes after it, and the full source suite passes713/713 with no failures/errors/skips; prescribed lint/build/privacy/dependency/native gates pass. API26 actual Binder follow-up passes7/7 (privacy2/mechanical5), including the new command-dot test;147.04 seconds. Exact installed/source hashes and full log are retained. API37 current-source execution remains separate.

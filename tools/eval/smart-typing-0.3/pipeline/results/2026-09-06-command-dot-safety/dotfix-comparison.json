@@ -1,0 +1,168 @@
+{
+  "all12AssetsUnchanged": {
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/case/en.case": "2d5ba3c807ef8c66be5222b01c3cd0f98645a891c12b6356827ea58544725a34",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/case/es.case": "52614678597416daf63763bb1f34015097d97ab974d9aa951b0221a67105a6fa",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/case/ru.case": "845144afb06ae7881f0db2f577f340694b8c7dfa5fee9685563ec4852939c81b",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/en.trie": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/en.trie.lengths": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/es.trie": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/es.trie.lengths": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/frequency/en.ranks": "a8786c4d9fa1d7522e8c9d068679e3c61e32ee49dc3ca34898ccbd0fd19f4c6f",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/frequency/es.ranks": "5fb3e5cca1493e1aebb64f2960ac823fe50ee189c222a9df952b622ebd3cf613",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/frequency/ru.ranks": "09cb1675723b66703e76f871b621068df6c0677b4c17b71e6a68fe2c8d3f328b",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/ru.trie": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/ru.trie.lengths": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c"
+  },
+  "all6000LabelsUnchanged": true,
+  "all6000ModelPayloadsAndAdmissionsUnchanged": true,
+  "allCurrentInputsAndArtifactsVerified": true,
+  "allPreviousRecordedArtifactsUnchanged": true,
+  "changedFinalTextRows": [
+    {
+      "afterFinalText": "The reference lists find . ",
+      "beforeFinalText": "The reference lists find. ",
+      "exactUndo": true,
+      "id": "en-holdout-protected-command-01",
+      "input": {
+        "ambiguous": false,
+        "candidates": [
+          " find .",
+          " find ",
+          " find .s"
+        ],
+        "category": "command",
+        "cohort": "protected",
+        "corpusVersion": 2,
+        "expectedCandidate": 0,
+        "family": "protected:find .",
+        "id": "en-holdout-protected-command-01",
+        "language": "en",
+        "noAuto": true,
+        "position": "end",
+        "prefix": "The reference lists",
+        "source": "authored-rune-2026-09-02",
+        "split": "holdout",
+        "task": "spelling",
+        "template": "protected-context-holdout",
+        "typed": "find .",
+        "wordLength": 6
+      },
+      "newAfterBackspace": {
+        "caret": 26,
+        "composingEnd": 26,
+        "composingStart": 24,
+        "text": "The reference lists find ."
+      },
+      "newAutoEdit": null,
+      "newBeforeBoundary": {
+        "caret": 26,
+        "composingEnd": 26,
+        "composingStart": 24,
+        "text": "The reference lists find ."
+      },
+      "newMechanicalTypingChange": false,
+      "oldMechanicalTypingChange": true
+    },
+    {
+      "afterFinalText": "La referencia indica find . ",
+      "beforeFinalText": "La referencia indica find. ",
+      "exactUndo": true,
+      "id": "es-holdout-protected-command-01",
+      "input": {
+        "ambiguous": false,
+        "candidates": [
+          " find .",
+          " find ",
+          " find .s"
+        ],
+        "category": "command",
+        "cohort": "protected",
+        "corpusVersion": 2,
+        "expectedCandidate": 0,
+        "family": "protected:find .",
+        "id": "es-holdout-protected-command-01",
+        "language": "es",
+        "noAuto": true,
+        "position": "end",
+        "prefix": "La referencia indica",
+        "source": "authored-rune-2026-09-02",
+        "split": "holdout",
+        "task": "spelling",
+        "template": "protected-context-holdout",
+        "typed": "find .",
+        "wordLength": 6
+      },
+      "newAfterBackspace": {
+        "caret": 27,
+        "composingEnd": 27,
+        "composingStart": 25,
+        "text": "La referencia indica find ."
+      },
+      "newAutoEdit": null,
+      "newBeforeBoundary": {
+        "caret": 27,
+        "composingEnd": 27,
+        "composingStart": 25,
+        "text": "La referencia indica find ."
+      },
+      "newMechanicalTypingChange": false,
+      "oldMechanicalTypingChange": true
+    },
+    {
+      "afterFinalText": "В справочнике найдено find . ",
+      "beforeFinalText": "В справочнике найдено find. ",
+      "exactUndo": true,
+      "id": "ru-holdout-protected-command-01",
+      "input": {
+        "ambiguous": false,
+        "candidates": [
+          " find .",
+          " find ",
+          " find .s"
+        ],
+        "category": "command",
+        "cohort": "protected",
+        "corpusVersion": 2,
+        "expectedCandidate": 0,
+        "family": "protected:find .",
+        "id": "ru-holdout-protected-command-01",
+        "language": "ru",
+        "noAuto": true,
+        "position": "end",
+        "prefix": "В справочнике найдено",
+        "source": "authored-rune-2026-09-02",
+        "split": "holdout",
+        "task": "spelling",
+        "template": "protected-context-holdout",
+        "typed": "find .",
+        "wordLength": 6
+      },
+      "newAfterBackspace": {
+        "caret": 28,
+        "composingEnd": 28,
+        "composingStart": 26,
+        "text": "В справочнике найдено find ."
+      },
+      "newAutoEdit": null,
+      "newBeforeBoundary": {
+        "caret": 28,
+        "composingEnd": 28,
+        "composingStart": 26,
+        "text": "В справочнике найдено find ."
+      },
+      "newMechanicalTypingChange": false,
+      "oldMechanicalTypingChange": true
+    }
+  ],
+  "newReceiptSha256": "31c044e7c66224a7dcc08e0000225920654fc1ef41a22781b809be33a5fcb439",
+  "oldReceiptSha256": "452ee093c8f5c16dd39c15b310a8851cf337e1d50480b6a332ccfc5911bea439",
+  "onlyProductionSourceDelta": {
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt": {
+      "after": "5cd4a0d631796da0827a720653d92a21cac701eef2c375b546ce8409b9d528ea",
+      "before": "46b8bd16696a6f1e46acb5678abbf41c463fd7c344a7ad22b6d9dec5d7f8e68a"
+    }
+  },
+  "releaseQualified": false,
+  "scope": "actual-current-dot-fix-vs-canonical-postfix-revealed-holdout",
+  "thresholdFittingPerformed": false
+}
