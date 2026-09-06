@@ -1,0 +1,5 @@
+Exception in thread "main" java.lang.IllegalStateException: SUPPLEMENT_DELIVERY
+	at io.github.mesteriis.rune.keyboard.smarttyping.session.HostTypingEditExecutorKt.hostSyntheticTests$lambda$40(HostTypingEditExecutor.kt:214)
+	at io.github.mesteriis.rune.keyboard.smarttyping.session.HostTypingEditExecutorKt.hostSyntheticTests$test(HostTypingEditExecutor.kt:75)
+	at io.github.mesteriis.rune.keyboard.smarttyping.session.HostTypingEditExecutorKt.hostSyntheticTests(HostTypingEditExecutor.kt:204)
+	at io.github.mesteriis.rune.keyboard.smarttyping.session.ContextualControllerAttribution.main(ContextualControllerAttribution.kt:422)

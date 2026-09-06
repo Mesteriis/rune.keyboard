@@ -1,0 +1,29 @@
+{
+  "backendIdentity": {
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "bc3f78bdf3ac41009a7603ca5dd6b6c4d5e8d6c2bdcaf3a692cfd95a3b3d2553"
+  },
+  "corpusRevealed": true,
+  "nativeCalls": 0,
+  "policy": {
+    "originalAdvantage": 0.5,
+    "originalComparison": ">",
+    "rivalAdvantage": 4.0,
+    "rivalComparison": ">=",
+    "rule": "total-log-probability-margins",
+    "tieOrder": "ascending-candidate-id",
+    "tokenCountRange": [
+      1,
+      255
+    ],
+    "version": 2
+  },
+  "preparedProtocolSha256": "646446bf1a192f370134fc8cdddc4d4ff83a3e0d76f9c7ef13418e3083408562",
+  "receiptSha256": "87b6c5ba403e703c9d9310f3eb689f3f007e5bad657a7512982219dc8c5ae0bc",
+  "requestCount": 46,
+  "requestsSha256": "a06a8571b61f20c4db56f22261ab8c35086b380dd360e56ddb9aacf3927bc9a6",
+  "schemaVersion": 1,
+  "scope": "contextual-controller-unscored-requests",
+  "thresholdSearch": false
+}

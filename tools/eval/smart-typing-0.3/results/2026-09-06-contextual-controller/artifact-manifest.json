@@ -1,0 +1,2060 @@
+[
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/admission-triage-01.log",
+    "bytes": 223,
+    "sha256": "27f6e5dc32fbeeadaf8e3dac7eb7c3c5cc8123e80565fa840c5652c9a2929010",
+    "archive": "admission-triage-01.log",
+    "encoding": "identity",
+    "archiveSha256": "27f6e5dc32fbeeadaf8e3dac7eb7c3c5cc8123e80565fa840c5652c9a2929010"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/final-model-free-comparison.json",
+    "bytes": 957,
+    "sha256": "ad6867786f32f20238fc66174bad61043f2845b5a2b0064a3d10fccb17fdd9ed",
+    "archive": "final-model-free-comparison.json",
+    "encoding": "identity",
+    "archiveSha256": "ad6867786f32f20238fc66174bad61043f2845b5a2b0064a3d10fccb17fdd9ed"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/freeze-triage-01.log",
+    "bytes": 674,
+    "sha256": "cc83e303c48a40f4a5021f972f49c745db6bd87c04305619c4f1ff59390ad0e0",
+    "archive": "freeze-triage-01.log",
+    "encoding": "identity",
+    "archiveSha256": "cc83e303c48a40f4a5021f972f49c745db6bd87c04305619c4f1ff59390ad0e0"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/host-02-command.log",
+    "bytes": 49,
+    "sha256": "186a4f112434f5724022d8e292ef6ae110440a5e874aea4871cf7ee532cc1365",
+    "archive": "host-02-command.log",
+    "encoding": "identity",
+    "archiveSha256": "186a4f112434f5724022d8e292ef6ae110440a5e874aea4871cf7ee532cc1365"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/host-final-06-command.log",
+    "bytes": 49,
+    "sha256": "eb382f182941a2ee38ab0918c946368c901b0cd768c9671589660c1246d8ec58",
+    "archive": "host-final-06-command.log",
+    "encoding": "identity",
+    "archiveSha256": "eb382f182941a2ee38ab0918c946368c901b0cd768c9671589660c1246d8ec58"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/host-final-07-command.log",
+    "bytes": 49,
+    "sha256": "eb382f182941a2ee38ab0918c946368c901b0cd768c9671589660c1246d8ec58",
+    "archive": "host-final-07-command.log",
+    "encoding": "identity",
+    "archiveSha256": "eb382f182941a2ee38ab0918c946368c901b0cd768c9671589660c1246d8ec58"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/host-final-08-command.log",
+    "bytes": 49,
+    "sha256": "eb382f182941a2ee38ab0918c946368c901b0cd768c9671589660c1246d8ec58",
+    "archive": "host-final-08-command.log",
+    "encoding": "identity",
+    "archiveSha256": "eb382f182941a2ee38ab0918c946368c901b0cd768c9671589660c1246d8ec58"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/host-green-04-command.log",
+    "bytes": 49,
+    "sha256": "a15c549c7f58c182512eb5fe54c0e68c33d1f699c8ca464ab7002d50699368a7",
+    "archive": "host-green-04-command.log",
+    "encoding": "identity",
+    "archiveSha256": "a15c549c7f58c182512eb5fe54c0e68c33d1f699c8ca464ab7002d50699368a7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/host-green-05-command.log",
+    "bytes": 49,
+    "sha256": "eb382f182941a2ee38ab0918c946368c901b0cd768c9671589660c1246d8ec58",
+    "archive": "host-green-05-command.log",
+    "encoding": "identity",
+    "archiveSha256": "eb382f182941a2ee38ab0918c946368c901b0cd768c9671589660c1246d8ec58"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/host-red-03-command.log",
+    "bytes": 49,
+    "sha256": "a15c549c7f58c182512eb5fe54c0e68c33d1f699c8ca464ab7002d50699368a7",
+    "archive": "host-red-03-command.log",
+    "encoding": "identity",
+    "archiveSha256": "a15c549c7f58c182512eb5fe54c0e68c33d1f699c8ca464ab7002d50699368a7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/prepare-01-command.log",
+    "bytes": 41,
+    "sha256": "528bda120bb48d3f115abe453cc82d1cff2642ddc8eaf28b7fc8b8a562b6f781",
+    "archive": "prepare-01-command.log",
+    "encoding": "identity",
+    "archiveSha256": "528bda120bb48d3f115abe453cc82d1cff2642ddc8eaf28b7fc8b8a562b6f781"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/prepare-02-command.log",
+    "bytes": 61,
+    "sha256": "e98d7a822a0d9fd66d28a1461543ad6af676b935489c83a722696311587de022",
+    "archive": "prepare-02-command.log",
+    "encoding": "identity",
+    "archiveSha256": "e98d7a822a0d9fd66d28a1461543ad6af676b935489c83a722696311587de022"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/prepare-03-command.log",
+    "bytes": 249,
+    "sha256": "7fd18f459219112f5c56dea0e71ce32d4e7047c26f001bf1a8f7420434c26c0d",
+    "archive": "prepare-03-command.log",
+    "encoding": "identity",
+    "archiveSha256": "7fd18f459219112f5c56dea0e71ce32d4e7047c26f001bf1a8f7420434c26c0d"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/prepare-04-command.log",
+    "bytes": 249,
+    "sha256": "7fd18f459219112f5c56dea0e71ce32d4e7047c26f001bf1a8f7420434c26c0d",
+    "archive": "prepare-04-command.log",
+    "encoding": "identity",
+    "archiveSha256": "7fd18f459219112f5c56dea0e71ce32d4e7047c26f001bf1a8f7420434c26c0d"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/prepare-verification-command.log",
+    "bytes": 34,
+    "sha256": "73ca63637c94d120a723468f9d39d8a60ab73f1eeb44b2e45947662dd8d7323e",
+    "archive": "prepare-verification-command.log",
+    "encoding": "identity",
+    "archiveSha256": "73ca63637c94d120a723468f9d39d8a60ab73f1eeb44b2e45947662dd8d7323e"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/python-final-02.log",
+    "bytes": 125,
+    "sha256": "982a557b6b2582c4921ae10c203db878787a570de5b1c6822fdf622c4fbe344c",
+    "archive": "python-final-02.log",
+    "encoding": "identity",
+    "archiveSha256": "982a557b6b2582c4921ae10c203db878787a570de5b1c6822fdf622c4fbe344c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/python-final-03.log",
+    "bytes": 126,
+    "sha256": "fad58bc9700829bd72229d937ce27bc153962be7620966eac439614b2ed6e4e1",
+    "archive": "python-final-03.log",
+    "encoding": "identity",
+    "archiveSha256": "fad58bc9700829bd72229d937ce27bc153962be7620966eac439614b2ed6e4e1"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/python-final.log",
+    "bytes": 124,
+    "sha256": "317d2e7b3acd1d7ba819164eccd1e181ea41b77bb793c765e145b0466cab14e2",
+    "archive": "python-final.log",
+    "encoding": "identity",
+    "archiveSha256": "317d2e7b3acd1d7ba819164eccd1e181ea41b77bb793c765e145b0466cab14e2"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/python-green-01.log",
+    "bytes": 115,
+    "sha256": "b0a08a295b0eb95350538bdd949c7b42d30e4d0416988b205e6ac6c20a4a26b5",
+    "archive": "python-green-01.log",
+    "encoding": "identity",
+    "archiveSha256": "b0a08a295b0eb95350538bdd949c7b42d30e4d0416988b205e6ac6c20a4a26b5"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/python-green-02.log",
+    "bytes": 121,
+    "sha256": "5b3fdebe69999b1d9586abaa1cfc60098cfcf7f3795548b10711ad14e30d78b6",
+    "archive": "python-green-02.log",
+    "encoding": "identity",
+    "archiveSha256": "5b3fdebe69999b1d9586abaa1cfc60098cfcf7f3795548b10711ad14e30d78b6"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/python-green-03.log",
+    "bytes": 124,
+    "sha256": "92cd6f9e491f82eebb1173ffacb902a43be31b24b25dc6719a210906371fb795",
+    "archive": "python-green-03.log",
+    "encoding": "identity",
+    "archiveSha256": "92cd6f9e491f82eebb1173ffacb902a43be31b24b25dc6719a210906371fb795"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/python-red-01.log",
+    "bytes": 14883,
+    "sha256": "4219dda0a46ccc3b72eb30a64c96068e57d368d6487bcb5e89eba07d8cf084e2",
+    "archive": "python-red-01.log",
+    "encoding": "identity",
+    "archiveSha256": "4219dda0a46ccc3b72eb30a64c96068e57d368d6487bcb5e89eba07d8cf084e2"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/python-red-02.log",
+    "bytes": 4616,
+    "sha256": "f88e65ec2cd0a5c074a25d2cf36eae7ab6b7512f2bb8f7701cfef546a5fd9b91",
+    "archive": "python-red-02.log",
+    "encoding": "identity",
+    "archiveSha256": "f88e65ec2cd0a5c074a25d2cf36eae7ab6b7512f2bb8f7701cfef546a5fd9b91"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/python-red-03-verifier.log",
+    "bytes": 976,
+    "sha256": "16d82058037f6313ce6242fabc5db3a7890e40f6621a1bbde0bee210a54d4883",
+    "archive": "python-red-03-verifier.log",
+    "encoding": "identity",
+    "archiveSha256": "16d82058037f6313ce6242fabc5db3a7890e40f6621a1bbde0bee210a54d4883"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/review-metrics-green.log",
+    "bytes": 4969,
+    "sha256": "5abb1f88e51572c706b914a4c6b58ff1630a0d28daa87709f75fb9cd8d4b34e3",
+    "archive": "review-metrics-green.log",
+    "encoding": "identity",
+    "archiveSha256": "5abb1f88e51572c706b914a4c6b58ff1630a0d28daa87709f75fb9cd8d4b34e3"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/review-metrics-red.log",
+    "bytes": 10780,
+    "sha256": "9859b2a40b788a7060ce3a32046ec40eacbc1723c7e5442c1370458ad12ba6f6",
+    "archive": "review-metrics-red.log",
+    "encoding": "identity",
+    "archiveSha256": "9859b2a40b788a7060ce3a32046ec40eacbc1723c7e5442c1370458ad12ba6f6"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/review-source-closure-comparison.json",
+    "bytes": 278,
+    "sha256": "9d802ad83277c6bbbfac0b6ce63130c6c24a793f3d1d9e58894b1b4fb413edcb",
+    "archive": "review-source-closure-comparison.json",
+    "encoding": "identity",
+    "archiveSha256": "9d802ad83277c6bbbfac0b6ce63130c6c24a793f3d1d9e58894b1b4fb413edcb"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/review-source-closure-green.log",
+    "bytes": 5151,
+    "sha256": "70ef8403d3d822976a7a679272eaf45bcc6a98e79a4e5c3c9165a88badf8cd9c",
+    "archive": "review-source-closure-green.log",
+    "encoding": "identity",
+    "archiveSha256": "70ef8403d3d822976a7a679272eaf45bcc6a98e79a4e5c3c9165a88badf8cd9c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/review-source-closure-red.log",
+    "bytes": 6664,
+    "sha256": "eb37f45167c8a5a6b3416bb7863fc2f995f039979b4b09e9de6bea932b865bae",
+    "archive": "review-source-closure-red.log",
+    "encoding": "identity",
+    "archiveSha256": "eb37f45167c8a5a6b3416bb7863fc2f995f039979b4b09e9de6bea932b865bae"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/root-complete-calibration.log",
+    "bytes": 236,
+    "sha256": "4bd0ec93436654171bf7b0ee8958824a649722171a8a82779ccd1c356b186441",
+    "archive": "root-complete-calibration.log",
+    "encoding": "identity",
+    "archiveSha256": "4bd0ec93436654171bf7b0ee8958824a649722171a8a82779ccd1c356b186441"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/root-complete-holdout.log",
+    "bytes": 232,
+    "sha256": "954a21304d9476c822462df16601cb95b4741f46315e0ca0631922148b9cc5ca",
+    "archive": "root-complete-holdout.log",
+    "encoding": "identity",
+    "archiveSha256": "954a21304d9476c822462df16601cb95b4741f46315e0ca0631922148b9cc5ca"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/root-replay.log",
+    "bytes": 62,
+    "sha256": "9b18b612e22a1b380e0abce9a95c3b16ce47e262f0d816a3cd1c4e57c4ca9560",
+    "archive": "root-replay.log",
+    "encoding": "identity",
+    "archiveSha256": "9b18b612e22a1b380e0abce9a95c3b16ce47e262f0d816a3cd1c4e57c4ca9560"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/root-score-calibration-01.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "root-score-calibration-01.log",
+    "encoding": "identity",
+    "archiveSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/root-score-calibration.log",
+    "bytes": 761,
+    "sha256": "04557997ec7385e536e71648bd041d076f211e02f8adb6497ec37a9ad67a0ff8",
+    "archive": "root-score-calibration.log",
+    "encoding": "identity",
+    "archiveSha256": "04557997ec7385e536e71648bd041d076f211e02f8adb6497ec37a9ad67a0ff8"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/root-score-holdout-01.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "root-score-holdout-01.log",
+    "encoding": "identity",
+    "archiveSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/root-stage-calibration.log",
+    "bytes": 214,
+    "sha256": "6327d60f0ea92bd0b17fd9dd6dad727bb3037c87e1c163d3f1da939cb38cad5b",
+    "archive": "root-stage-calibration.log",
+    "encoding": "identity",
+    "archiveSha256": "6327d60f0ea92bd0b17fd9dd6dad727bb3037c87e1c163d3f1da939cb38cad5b"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/root-stage-holdout.log",
+    "bytes": 206,
+    "sha256": "4befa1127b79c894839e9c62a266427fdeafa6630e267a5b21dc2dc033a605e8",
+    "archive": "root-stage-holdout.log",
+    "encoding": "identity",
+    "archiveSha256": "4befa1127b79c894839e9c62a266427fdeafa6630e267a5b21dc2dc033a605e8"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/root-verify.log",
+    "bytes": 86,
+    "sha256": "73bb56fe3b025abe3f60f8b1e05f11503bbebcbe87f0e2b68984ac4897007373",
+    "archive": "root-verify.log",
+    "encoding": "identity",
+    "archiveSha256": "73bb56fe3b025abe3f60f8b1e05f11503bbebcbe87f0e2b68984ac4897007373"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/route-review-comparison.json",
+    "bytes": 2985,
+    "sha256": "25718ef8af32cc55428567eafbdfe7600d6350b4538aa6fcbd8fda293bf068bd",
+    "archive": "route-review-comparison.json",
+    "encoding": "identity",
+    "archiveSha256": "25718ef8af32cc55428567eafbdfe7600d6350b4538aa6fcbd8fda293bf068bd"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/route-review-host-02-command.log",
+    "bytes": 49,
+    "sha256": "a15c549c7f58c182512eb5fe54c0e68c33d1f699c8ca464ab7002d50699368a7",
+    "archive": "route-review-host-02-command.log",
+    "encoding": "identity",
+    "archiveSha256": "a15c549c7f58c182512eb5fe54c0e68c33d1f699c8ca464ab7002d50699368a7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/route-review-host-03-command.log",
+    "bytes": 49,
+    "sha256": "45f3575cf9fdf2f117e34c9fdd2e3181bdcd8ccf5d4ab6489ac3420f44bdb262",
+    "archive": "route-review-host-03-command.log",
+    "encoding": "identity",
+    "archiveSha256": "45f3575cf9fdf2f117e34c9fdd2e3181bdcd8ccf5d4ab6489ac3420f44bdb262"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/route-review-prepare-01-command.log",
+    "bytes": 264,
+    "sha256": "1647cea12d1f4c09a93b8bbe8f5a9fdecc752839fd83a789014e83c87cde437f",
+    "archive": "route-review-prepare-01-command.log",
+    "encoding": "identity",
+    "archiveSha256": "1647cea12d1f4c09a93b8bbe8f5a9fdecc752839fd83a789014e83c87cde437f"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/route-review-python-01.log",
+    "bytes": 129,
+    "sha256": "1ed1572e46eb9ac101dfb9e1f5beeb557f34d5c6c80354d0c7b6937b19f017c4",
+    "archive": "route-review-python-01.log",
+    "encoding": "identity",
+    "archiveSha256": "1ed1572e46eb9ac101dfb9e1f5beeb557f34d5c6c80354d0c7b6937b19f017c4"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/route-review-red-01-command.log",
+    "bytes": 49,
+    "sha256": "a15c549c7f58c182512eb5fe54c0e68c33d1f699c8ca464ab7002d50699368a7",
+    "archive": "route-review-red-01-command.log",
+    "encoding": "identity",
+    "archiveSha256": "a15c549c7f58c182512eb5fe54c0e68c33d1f699c8ca464ab7002d50699368a7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/run-supplement-native.py",
+    "bytes": 1770,
+    "sha256": "67d0c6136d657c208cc7a4a15e556a4b396aa09b52724c0966949b42f3f3e28e",
+    "archive": "run-supplement-native.py",
+    "encoding": "identity",
+    "archiveSha256": "67d0c6136d657c208cc7a4a15e556a4b396aa09b52724c0966949b42f3f3e28e"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/calibration/command.json",
+    "bytes": 804,
+    "sha256": "c0bb5f1248ced47d3099d1d3a92348cbfe44380c0b3ff504809233b09e3cc6a0",
+    "archive": "supplement-freeze-01/calibration/command.json",
+    "encoding": "identity",
+    "archiveSha256": "c0bb5f1248ced47d3099d1d3a92348cbfe44380c0b3ff504809233b09e3cc6a0"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/calibration/complete.json",
+    "bytes": 945,
+    "sha256": "8cab1f2444c67069c95fab652ba2846f69d25f2dfaa45f586cfd71a36a855cd4",
+    "archive": "supplement-freeze-01/calibration/complete.json",
+    "encoding": "identity",
+    "archiveSha256": "8cab1f2444c67069c95fab652ba2846f69d25f2dfaa45f586cfd71a36a855cd4"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/calibration/execution.json",
+    "bytes": 497,
+    "sha256": "8afbd96ea811666d6b0827fc14714d90ab2c90a15f294204d1d04c2c71085b5c",
+    "archive": "supplement-freeze-01/calibration/execution.json",
+    "encoding": "identity",
+    "archiveSha256": "8afbd96ea811666d6b0827fc14714d90ab2c90a15f294204d1d04c2c71085b5c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/calibration/identity.json",
+    "bytes": 504,
+    "sha256": "346ea83b1ca35089e3559f954e75768fc8ca8d9961daee66edf1a10e170369b7",
+    "archive": "supplement-freeze-01/calibration/identity.json",
+    "encoding": "identity",
+    "archiveSha256": "346ea83b1ca35089e3559f954e75768fc8ca8d9961daee66edf1a10e170369b7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/calibration/requests.jsonl",
+    "bytes": 7905,
+    "sha256": "287759a8c61b0f4a96105e4c45b407b47073b10c2e29f6d30c259519fabf11c6",
+    "archive": "supplement-freeze-01/calibration/requests.jsonl",
+    "encoding": "identity",
+    "archiveSha256": "287759a8c61b0f4a96105e4c45b407b47073b10c2e29f6d30c259519fabf11c6"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/calibration/responses.jsonl",
+    "bytes": 10995,
+    "sha256": "6f03154743575eee15d73ff06312bd740800668eec40dba57870b4da6d8dbd41",
+    "archive": "supplement-freeze-01/calibration/responses.jsonl",
+    "encoding": "identity",
+    "archiveSha256": "6f03154743575eee15d73ff06312bd740800668eec40dba57870b4da6d8dbd41"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/calibration/run-input.json",
+    "bytes": 1513,
+    "sha256": "43b40e52e3ad7841790f9349a22dd3ba0ada77cacae57746ddf8f17040e113ef",
+    "archive": "supplement-freeze-01/calibration/run-input.json",
+    "encoding": "identity",
+    "archiveSha256": "43b40e52e3ad7841790f9349a22dd3ba0ada77cacae57746ddf8f17040e113ef"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/calibration/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "supplement-freeze-01/calibration/stderr.log",
+    "encoding": "identity",
+    "archiveSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/freeze.json",
+    "bytes": 35179,
+    "sha256": "e60e059d5afe6bce51aa7005139f3597791214971fe1efff00549f7586778b9c",
+    "archive": "supplement-freeze-01/freeze.json",
+    "encoding": "identity",
+    "archiveSha256": "e60e059d5afe6bce51aa7005139f3597791214971fe1efff00549f7586778b9c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/holdout/command.json",
+    "bytes": 792,
+    "sha256": "b6f22bceecffaf2ca0262ce67125e6abc22e2c24b6e082730f751e783e60e8f8",
+    "archive": "supplement-freeze-01/holdout/command.json",
+    "encoding": "identity",
+    "archiveSha256": "b6f22bceecffaf2ca0262ce67125e6abc22e2c24b6e082730f751e783e60e8f8"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/holdout/complete.json",
+    "bytes": 1003,
+    "sha256": "63f50f6e2606814c07127bdb7287803016dc03f40ceeac3d3d71d3225764733e",
+    "archive": "supplement-freeze-01/holdout/complete.json",
+    "encoding": "identity",
+    "archiveSha256": "63f50f6e2606814c07127bdb7287803016dc03f40ceeac3d3d71d3225764733e"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/holdout/execution.json",
+    "bytes": 497,
+    "sha256": "359e261f7d3cc75f18600f371f985d3ece0b797c50d5ede21b418da3da41ed9d",
+    "archive": "supplement-freeze-01/holdout/execution.json",
+    "encoding": "identity",
+    "archiveSha256": "359e261f7d3cc75f18600f371f985d3ece0b797c50d5ede21b418da3da41ed9d"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/holdout/identity.json",
+    "bytes": 504,
+    "sha256": "346ea83b1ca35089e3559f954e75768fc8ca8d9961daee66edf1a10e170369b7",
+    "archive": "supplement-freeze-01/holdout/identity.json",
+    "encoding": "identity",
+    "archiveSha256": "346ea83b1ca35089e3559f954e75768fc8ca8d9961daee66edf1a10e170369b7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/holdout/requests.jsonl",
+    "bytes": 11818,
+    "sha256": "3721f9d83e2fc93c4618a0d61302343b9c233ef0025fabd07fa6a41aebe485a4",
+    "archive": "supplement-freeze-01/holdout/requests.jsonl",
+    "encoding": "identity",
+    "archiveSha256": "3721f9d83e2fc93c4618a0d61302343b9c233ef0025fabd07fa6a41aebe485a4"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/holdout/responses.jsonl",
+    "bytes": 17001,
+    "sha256": "b6f85a754db9fc416fd0ee01e4639379150712a928d1ecb20a2d1ea573aadc06",
+    "archive": "supplement-freeze-01/holdout/responses.jsonl",
+    "encoding": "identity",
+    "archiveSha256": "b6f85a754db9fc416fd0ee01e4639379150712a928d1ecb20a2d1ea573aadc06"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/holdout/run-input.json",
+    "bytes": 1710,
+    "sha256": "54e0f8b16de8950b12b862e0aba83b093239ae416f6b4bc7d04a4cf55c736f88",
+    "archive": "supplement-freeze-01/holdout/run-input.json",
+    "encoding": "identity",
+    "archiveSha256": "54e0f8b16de8950b12b862e0aba83b093239ae416f6b4bc7d04a4cf55c736f88"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/holdout/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "supplement-freeze-01/holdout/stderr.log",
+    "encoding": "identity",
+    "archiveSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01-command.log",
+    "bytes": 221,
+    "sha256": "6cf9e0e8ad3bbdff712225292e1637b43c5055f4ea8c0fe3c41d6c1e2ce35f2e",
+    "archive": "supplement-freeze-01-command.log",
+    "encoding": "identity",
+    "archiveSha256": "6cf9e0e8ad3bbdff712225292e1637b43c5055f4ea8c0fe3c41d6c1e2ce35f2e"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/commands.json",
+    "bytes": 9557,
+    "sha256": "093d5eaf529084bf14d670e6e2f9752545a32f6e9e7527549fbf388d7e45c5a6",
+    "archive": "supplement-host-01/commands.json",
+    "encoding": "identity",
+    "archiveSha256": "093d5eaf529084bf14d670e6e2f9752545a32f6e9e7527549fbf388d7e45c5a6"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/compile.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "supplement-host-01/compile.log",
+    "encoding": "identity",
+    "archiveSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/complete.json",
+    "bytes": 216,
+    "sha256": "9448995946369dac18db7d38698c203b7cf8719001473440d3c4b4c568bcf48b",
+    "archive": "supplement-host-01/complete.json",
+    "encoding": "identity",
+    "archiveSha256": "9448995946369dac18db7d38698c203b7cf8719001473440d3c4b4c568bcf48b"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/contextual-controller.jar",
+    "bytes": 525159,
+    "sha256": "3f6454920d65c0f59d1f8a7ba8ea760ab98710686e59d16fbb2a530edd358e4c",
+    "omitted": "Rebuildable binary; identity retained, no binary committed"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/input-receipt.json",
+    "bytes": 16931,
+    "sha256": "80ae603c6c4311d2cc10578601f219ccef51933db2e861abfbaf0318ee206627",
+    "archive": "supplement-host-01/input-receipt.json",
+    "encoding": "identity",
+    "archiveSha256": "80ae603c6c4311d2cc10578601f219ccef51933db2e861abfbaf0318ee206627"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/java-version.txt",
+    "bytes": 171,
+    "sha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39",
+    "archive": "supplement-host-01/java-version.txt",
+    "encoding": "identity",
+    "archiveSha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt",
+    "bytes": 837,
+    "sha256": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt",
+    "encoding": "identity",
+    "archiveSha256": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt",
+    "bytes": 4129,
+    "sha256": "cd25f685fcb51206c7b4038e39bb917536a2cfda501f36182b624e4191dd6070",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt",
+    "encoding": "identity",
+    "archiveSha256": "cd25f685fcb51206c7b4038e39bb917536a2cfda501f36182b624e4191dd6070"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt",
+    "bytes": 6157,
+    "sha256": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt",
+    "encoding": "identity",
+    "archiveSha256": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelDemand.kt",
+    "bytes": 1700,
+    "sha256": "6ffd35a90e9e364f9471c5c2a6b017a1251b8136b6d23bb7da2ab6c29ab0a7e5",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelDemand.kt",
+    "encoding": "identity",
+    "archiveSha256": "6ffd35a90e9e364f9471c5c2a6b017a1251b8136b6d23bb7da2ab6c29ab0a7e5"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelReadinessSource.kt",
+    "bytes": 386,
+    "sha256": "865ff97c18937864653589c5628b622db5593b71c5b765686bc98143af0c650c",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelReadinessSource.kt",
+    "encoding": "identity",
+    "archiveSha256": "865ff97c18937864653589c5628b622db5593b71c5b765686bc98143af0c650c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelScoringClient.kt",
+    "bytes": 1439,
+    "sha256": "052d5c0150402dd35b599d2fd05fc0da9e77bbe4e6d2ab4db2f83799b2a7ceea",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelScoringClient.kt",
+    "encoding": "identity",
+    "archiveSha256": "052d5c0150402dd35b599d2fd05fc0da9e77bbe4e6d2ab4db2f83799b2a7ceea"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt",
+    "bytes": 2819,
+    "sha256": "a01685928af1c59a44a2085de6b0233b07479024c0528f50c310f02a3ed85d30",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt",
+    "encoding": "identity",
+    "archiveSha256": "a01685928af1c59a44a2085de6b0233b07479024c0528f50c310f02a3ed85d30"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt",
+    "bytes": 3413,
+    "sha256": "362332f03b43150c39b8f5243461926c33922d6822a81a4ee61f3fd66831f879",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt",
+    "encoding": "identity",
+    "archiveSha256": "362332f03b43150c39b8f5243461926c33922d6822a81a4ee61f3fd66831f879"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt",
+    "bytes": 2794,
+    "sha256": "2a4c6a945425eb6a7c49f671e1b12ed410a53357bfee698ec45f0b4ea88a14c7",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt",
+    "encoding": "identity",
+    "archiveSha256": "2a4c6a945425eb6a7c49f671e1b12ed410a53357bfee698ec45f0b4ea88a14c7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt",
+    "bytes": 5604,
+    "sha256": "de5bf01aea98eedc42852d99185e1c1c2a136ae2f3795e98a5945ec55bc86333",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt",
+    "encoding": "identity",
+    "archiveSha256": "de5bf01aea98eedc42852d99185e1c1c2a136ae2f3795e98a5945ec55bc86333"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt",
+    "bytes": 2476,
+    "sha256": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt",
+    "encoding": "identity",
+    "archiveSha256": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt",
+    "bytes": 1577,
+    "sha256": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt",
+    "encoding": "identity",
+    "archiveSha256": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt",
+    "bytes": 480,
+    "sha256": "1ba91be06c6314f6d11a417dd1b72482a2ac1ae5bc3fe14beddaa86bbcd33c75",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt",
+    "encoding": "identity",
+    "archiveSha256": "1ba91be06c6314f6d11a417dd1b72482a2ac1ae5bc3fe14beddaa86bbcd33c75"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt",
+    "bytes": 3448,
+    "sha256": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt",
+    "encoding": "identity",
+    "archiveSha256": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt",
+    "bytes": 760,
+    "sha256": "c2ea03daa7c366b7b1aeda77785b2dc5c12c41053a46e64e1d7f4c14a6733763",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt",
+    "encoding": "identity",
+    "archiveSha256": "c2ea03daa7c366b7b1aeda77785b2dc5c12c41053a46e64e1d7f4c14a6733763"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt",
+    "bytes": 1602,
+    "sha256": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt",
+    "encoding": "identity",
+    "archiveSha256": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt",
+    "bytes": 4925,
+    "sha256": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt",
+    "encoding": "identity",
+    "archiveSha256": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt",
+    "bytes": 1726,
+    "sha256": "245b90f0ff7eb4a7ea97144dcd993f9816af32f44e571f6f6c006805f1ab2daa",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt",
+    "encoding": "identity",
+    "archiveSha256": "245b90f0ff7eb4a7ea97144dcd993f9816af32f44e571f6f6c006805f1ab2daa"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt",
+    "bytes": 15161,
+    "sha256": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt",
+    "encoding": "identity",
+    "archiveSha256": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt",
+    "bytes": 4300,
+    "sha256": "e64190f43dfc40e1b4bd19dbc331709883907b2b7a500bce7947dc3fc5ae24db",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt",
+    "encoding": "identity",
+    "archiveSha256": "e64190f43dfc40e1b4bd19dbc331709883907b2b7a500bce7947dc3fc5ae24db"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt",
+    "bytes": 4985,
+    "sha256": "5d020b58e8e14e6482e59200acafa549cf5da6b2b00b770ba921748ff40f5020",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt",
+    "encoding": "identity",
+    "archiveSha256": "5d020b58e8e14e6482e59200acafa549cf5da6b2b00b770ba921748ff40f5020"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt",
+    "bytes": 541,
+    "sha256": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt",
+    "encoding": "identity",
+    "archiveSha256": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt",
+    "bytes": 1084,
+    "sha256": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt",
+    "encoding": "identity",
+    "archiveSha256": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt",
+    "bytes": 9515,
+    "sha256": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt",
+    "encoding": "identity",
+    "archiveSha256": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt",
+    "bytes": 2071,
+    "sha256": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt",
+    "encoding": "identity",
+    "archiveSha256": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LazyPackedLexicons.kt",
+    "bytes": 10321,
+    "sha256": "587d52b3062559e00a255817f831dbba2b9fe4189a8c38d06e065fc889888d64",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LazyPackedLexicons.kt",
+    "encoding": "identity",
+    "archiveSha256": "587d52b3062559e00a255817f831dbba2b9fe4189a8c38d06e065fc889888d64"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt",
+    "bytes": 8867,
+    "sha256": "a52134981da578373fde991d1a11bc6a41e61922c474ab0acf733a9a868a2ae7",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt",
+    "encoding": "identity",
+    "archiveSha256": "a52134981da578373fde991d1a11bc6a41e61922c474ab0acf733a9a868a2ae7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt",
+    "bytes": 8332,
+    "sha256": "fe942a648ef5bdbd5a7e5407c70e099c69cebd741f91ab2250d91d4fa66a7bdf",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt",
+    "encoding": "identity",
+    "archiveSha256": "fe942a648ef5bdbd5a7e5407c70e099c69cebd741f91ab2250d91d4fa66a7bdf"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt",
+    "bytes": 9469,
+    "sha256": "d0dae2e1d58eb44894cbdface3f4a91f8f5c1022400ec68f9e7e219cc14adc3c",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt",
+    "encoding": "identity",
+    "archiveSha256": "d0dae2e1d58eb44894cbdface3f4a91f8f5c1022400ec68f9e7e219cc14adc3c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt",
+    "bytes": 3223,
+    "sha256": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt",
+    "encoding": "identity",
+    "archiveSha256": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt",
+    "bytes": 14675,
+    "sha256": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt",
+    "encoding": "identity",
+    "archiveSha256": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt",
+    "bytes": 5216,
+    "sha256": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt",
+    "encoding": "identity",
+    "archiveSha256": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt",
+    "bytes": 995,
+    "sha256": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt",
+    "encoding": "identity",
+    "archiveSha256": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt",
+    "bytes": 3111,
+    "sha256": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt",
+    "encoding": "identity",
+    "archiveSha256": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt",
+    "bytes": 1707,
+    "sha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt",
+    "encoding": "identity",
+    "archiveSha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt",
+    "bytes": 3190,
+    "sha256": "0cef9c7a1e72e77d1c3f5e58c5a7b344900b60bff5a1096449d6e0534dd9ad26",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt",
+    "encoding": "identity",
+    "archiveSha256": "0cef9c7a1e72e77d1c3f5e58c5a7b344900b60bff5a1096449d6e0534dd9ad26"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt",
+    "bytes": 13440,
+    "sha256": "5cd4a0d631796da0827a720653d92a21cac701eef2c375b546ce8409b9d528ea",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt",
+    "encoding": "identity",
+    "archiveSha256": "5cd4a0d631796da0827a720653d92a21cac701eef2c375b546ce8409b9d528ea"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt",
+    "bytes": 388,
+    "sha256": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt",
+    "encoding": "identity",
+    "archiveSha256": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt",
+    "bytes": 13043,
+    "sha256": "1c13a0c8d533b43645cf317c0d9c77e018dc1c1f2eb4caf2982952dade4595cb",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt",
+    "encoding": "identity",
+    "archiveSha256": "1c13a0c8d533b43645cf317c0d9c77e018dc1c1f2eb4caf2982952dade4595cb"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelCandidateCoordinator.kt",
+    "bytes": 10240,
+    "sha256": "7dbe9dcffa893efbc15c74d5c36f9a02529ef4399fb16a0eefe0bb871bfcc9b6",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelCandidateCoordinator.kt",
+    "encoding": "identity",
+    "archiveSha256": "7dbe9dcffa893efbc15c74d5c36f9a02529ef4399fb16a0eefe0bb871bfcc9b6"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt",
+    "bytes": 2514,
+    "sha256": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt",
+    "encoding": "identity",
+    "archiveSha256": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt",
+    "bytes": 68333,
+    "sha256": "3beba836c936e628aaaec4a1d61381083d2aa37b6a216c079467802b6eccd620",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt",
+    "encoding": "identity",
+    "archiveSha256": "3beba836c936e628aaaec4a1d61381083d2aa37b6a216c079467802b6eccd620"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt",
+    "bytes": 1754,
+    "sha256": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt",
+    "encoding": "identity",
+    "archiveSha256": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt",
+    "bytes": 1137,
+    "sha256": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt",
+    "encoding": "identity",
+    "archiveSha256": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt",
+    "bytes": 1170,
+    "sha256": "bca5697c00c39eba55be74b7accb25b9c573c49dbd065a1a38e5b03f8e78218c",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt",
+    "encoding": "identity",
+    "archiveSha256": "bca5697c00c39eba55be74b7accb25b9c573c49dbd065a1a38e5b03f8e78218c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt",
+    "bytes": 1320,
+    "sha256": "34a365472549af3fa850491aa5df1e3e432045fa869c5235bf77e8e327f72e3e",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt",
+    "encoding": "identity",
+    "archiveSha256": "34a365472549af3fa850491aa5df1e3e432045fa869c5235bf77e8e327f72e3e"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt",
+    "bytes": 1620,
+    "sha256": "378a925f524682c377d0825204d3c23253db459323b32eb9da6706d003297e58",
+    "archive": "supplement-host-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt",
+    "encoding": "identity",
+    "archiveSha256": "378a925f524682c377d0825204d3c23253db459323b32eb9da6706d003297e58"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/tools/eval/smart-typing-0.3/pipeline/contextual-controller/ContextualControllerAttribution.kt",
+    "bytes": 33052,
+    "sha256": "b5ceb68e6c1501f44ddbf6a77e7d9d7987ae0c04fb81607f4cd406116c47e52b",
+    "archive": "supplement-host-01/sources/tools/eval/smart-typing-0.3/pipeline/contextual-controller/ContextualControllerAttribution.kt",
+    "encoding": "identity",
+    "archiveSha256": "b5ceb68e6c1501f44ddbf6a77e7d9d7987ae0c04fb81607f4cd406116c47e52b"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/sources/tools/eval/smart-typing-0.3/pipeline/contextual-controller/HostTypingEditExecutor.kt",
+    "bytes": 19641,
+    "sha256": "8fb57ca0f3e406b9cd05f347906e3c34201e432f3eb16288dabd704f88d863c6",
+    "archive": "supplement-host-01/sources/tools/eval/smart-typing-0.3/pipeline/contextual-controller/HostTypingEditExecutor.kt",
+    "encoding": "identity",
+    "archiveSha256": "8fb57ca0f3e406b9cd05f347906e3c34201e432f3eb16288dabd704f88d863c6"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/synthetic.jsonl",
+    "bytes": 1115,
+    "sha256": "ed496615d9a8d334c2a1fd634c643f9e5f9f275e6f5ccbe1fc5822f0b358bd57",
+    "archive": "supplement-host-01/synthetic.jsonl",
+    "encoding": "identity",
+    "archiveSha256": "ed496615d9a8d334c2a1fd634c643f9e5f9f275e6f5ccbe1fc5822f0b358bd57"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01/synthetic.jsonl.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "supplement-host-01/synthetic.jsonl.log",
+    "encoding": "identity",
+    "archiveSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-01-command.log",
+    "bytes": 49,
+    "sha256": "45f3575cf9fdf2f117e34c9fdd2e3181bdcd8ccf5d4ab6489ac3420f44bdb262",
+    "archive": "supplement-host-01-command.log",
+    "encoding": "identity",
+    "archiveSha256": "45f3575cf9fdf2f117e34c9fdd2e3181bdcd8ccf5d4ab6489ac3420f44bdb262"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/commands.json",
+    "bytes": 9565,
+    "sha256": "7086e50d6732eeddc21735a3dfa284a13d1bcb888dd719335ac17d01f1741ead",
+    "archive": "supplement-host-red-01/commands.json",
+    "encoding": "identity",
+    "archiveSha256": "7086e50d6732eeddc21735a3dfa284a13d1bcb888dd719335ac17d01f1741ead"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/compile.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "supplement-host-red-01/compile.log",
+    "encoding": "identity",
+    "archiveSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/contextual-controller.jar",
+    "bytes": 525053,
+    "sha256": "1790269372318c71eaba6e2a265ea5acdfa8c507577a96920f34f2bf7e4daf0c",
+    "omitted": "Rebuildable binary; identity retained, no binary committed"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/input-receipt.json",
+    "bytes": 16931,
+    "sha256": "5c5f8ada074d621b5961a3a5b28606698795b656fdc372b33768a686121ad150",
+    "archive": "supplement-host-red-01/input-receipt.json",
+    "encoding": "identity",
+    "archiveSha256": "5c5f8ada074d621b5961a3a5b28606698795b656fdc372b33768a686121ad150"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/java-version.txt",
+    "bytes": 171,
+    "sha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39",
+    "archive": "supplement-host-red-01/java-version.txt",
+    "encoding": "identity",
+    "archiveSha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt",
+    "bytes": 837,
+    "sha256": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt",
+    "encoding": "identity",
+    "archiveSha256": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt",
+    "bytes": 4129,
+    "sha256": "cd25f685fcb51206c7b4038e39bb917536a2cfda501f36182b624e4191dd6070",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt",
+    "encoding": "identity",
+    "archiveSha256": "cd25f685fcb51206c7b4038e39bb917536a2cfda501f36182b624e4191dd6070"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt",
+    "bytes": 6157,
+    "sha256": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt",
+    "encoding": "identity",
+    "archiveSha256": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelDemand.kt",
+    "bytes": 1700,
+    "sha256": "6ffd35a90e9e364f9471c5c2a6b017a1251b8136b6d23bb7da2ab6c29ab0a7e5",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelDemand.kt",
+    "encoding": "identity",
+    "archiveSha256": "6ffd35a90e9e364f9471c5c2a6b017a1251b8136b6d23bb7da2ab6c29ab0a7e5"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelReadinessSource.kt",
+    "bytes": 386,
+    "sha256": "865ff97c18937864653589c5628b622db5593b71c5b765686bc98143af0c650c",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelReadinessSource.kt",
+    "encoding": "identity",
+    "archiveSha256": "865ff97c18937864653589c5628b622db5593b71c5b765686bc98143af0c650c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelScoringClient.kt",
+    "bytes": 1439,
+    "sha256": "052d5c0150402dd35b599d2fd05fc0da9e77bbe4e6d2ab4db2f83799b2a7ceea",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelScoringClient.kt",
+    "encoding": "identity",
+    "archiveSha256": "052d5c0150402dd35b599d2fd05fc0da9e77bbe4e6d2ab4db2f83799b2a7ceea"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt",
+    "bytes": 2819,
+    "sha256": "a01685928af1c59a44a2085de6b0233b07479024c0528f50c310f02a3ed85d30",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt",
+    "encoding": "identity",
+    "archiveSha256": "a01685928af1c59a44a2085de6b0233b07479024c0528f50c310f02a3ed85d30"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt",
+    "bytes": 3413,
+    "sha256": "362332f03b43150c39b8f5243461926c33922d6822a81a4ee61f3fd66831f879",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt",
+    "encoding": "identity",
+    "archiveSha256": "362332f03b43150c39b8f5243461926c33922d6822a81a4ee61f3fd66831f879"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt",
+    "bytes": 2794,
+    "sha256": "2a4c6a945425eb6a7c49f671e1b12ed410a53357bfee698ec45f0b4ea88a14c7",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt",
+    "encoding": "identity",
+    "archiveSha256": "2a4c6a945425eb6a7c49f671e1b12ed410a53357bfee698ec45f0b4ea88a14c7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt",
+    "bytes": 5604,
+    "sha256": "de5bf01aea98eedc42852d99185e1c1c2a136ae2f3795e98a5945ec55bc86333",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt",
+    "encoding": "identity",
+    "archiveSha256": "de5bf01aea98eedc42852d99185e1c1c2a136ae2f3795e98a5945ec55bc86333"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt",
+    "bytes": 2476,
+    "sha256": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt",
+    "encoding": "identity",
+    "archiveSha256": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt",
+    "bytes": 1577,
+    "sha256": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt",
+    "encoding": "identity",
+    "archiveSha256": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt",
+    "bytes": 480,
+    "sha256": "1ba91be06c6314f6d11a417dd1b72482a2ac1ae5bc3fe14beddaa86bbcd33c75",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt",
+    "encoding": "identity",
+    "archiveSha256": "1ba91be06c6314f6d11a417dd1b72482a2ac1ae5bc3fe14beddaa86bbcd33c75"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt",
+    "bytes": 3448,
+    "sha256": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt",
+    "encoding": "identity",
+    "archiveSha256": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt",
+    "bytes": 760,
+    "sha256": "c2ea03daa7c366b7b1aeda77785b2dc5c12c41053a46e64e1d7f4c14a6733763",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt",
+    "encoding": "identity",
+    "archiveSha256": "c2ea03daa7c366b7b1aeda77785b2dc5c12c41053a46e64e1d7f4c14a6733763"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt",
+    "bytes": 1602,
+    "sha256": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt",
+    "encoding": "identity",
+    "archiveSha256": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt",
+    "bytes": 4925,
+    "sha256": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt",
+    "encoding": "identity",
+    "archiveSha256": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt",
+    "bytes": 1726,
+    "sha256": "245b90f0ff7eb4a7ea97144dcd993f9816af32f44e571f6f6c006805f1ab2daa",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt",
+    "encoding": "identity",
+    "archiveSha256": "245b90f0ff7eb4a7ea97144dcd993f9816af32f44e571f6f6c006805f1ab2daa"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt",
+    "bytes": 15161,
+    "sha256": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt",
+    "encoding": "identity",
+    "archiveSha256": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt",
+    "bytes": 4300,
+    "sha256": "e64190f43dfc40e1b4bd19dbc331709883907b2b7a500bce7947dc3fc5ae24db",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt",
+    "encoding": "identity",
+    "archiveSha256": "e64190f43dfc40e1b4bd19dbc331709883907b2b7a500bce7947dc3fc5ae24db"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt",
+    "bytes": 4985,
+    "sha256": "5d020b58e8e14e6482e59200acafa549cf5da6b2b00b770ba921748ff40f5020",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt",
+    "encoding": "identity",
+    "archiveSha256": "5d020b58e8e14e6482e59200acafa549cf5da6b2b00b770ba921748ff40f5020"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt",
+    "bytes": 541,
+    "sha256": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt",
+    "encoding": "identity",
+    "archiveSha256": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt",
+    "bytes": 1084,
+    "sha256": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt",
+    "encoding": "identity",
+    "archiveSha256": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt",
+    "bytes": 9515,
+    "sha256": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt",
+    "encoding": "identity",
+    "archiveSha256": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt",
+    "bytes": 2071,
+    "sha256": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt",
+    "encoding": "identity",
+    "archiveSha256": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LazyPackedLexicons.kt",
+    "bytes": 10321,
+    "sha256": "587d52b3062559e00a255817f831dbba2b9fe4189a8c38d06e065fc889888d64",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LazyPackedLexicons.kt",
+    "encoding": "identity",
+    "archiveSha256": "587d52b3062559e00a255817f831dbba2b9fe4189a8c38d06e065fc889888d64"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt",
+    "bytes": 8867,
+    "sha256": "a52134981da578373fde991d1a11bc6a41e61922c474ab0acf733a9a868a2ae7",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt",
+    "encoding": "identity",
+    "archiveSha256": "a52134981da578373fde991d1a11bc6a41e61922c474ab0acf733a9a868a2ae7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt",
+    "bytes": 8332,
+    "sha256": "fe942a648ef5bdbd5a7e5407c70e099c69cebd741f91ab2250d91d4fa66a7bdf",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt",
+    "encoding": "identity",
+    "archiveSha256": "fe942a648ef5bdbd5a7e5407c70e099c69cebd741f91ab2250d91d4fa66a7bdf"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt",
+    "bytes": 9469,
+    "sha256": "d0dae2e1d58eb44894cbdface3f4a91f8f5c1022400ec68f9e7e219cc14adc3c",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt",
+    "encoding": "identity",
+    "archiveSha256": "d0dae2e1d58eb44894cbdface3f4a91f8f5c1022400ec68f9e7e219cc14adc3c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt",
+    "bytes": 3223,
+    "sha256": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt",
+    "encoding": "identity",
+    "archiveSha256": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt",
+    "bytes": 14675,
+    "sha256": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt",
+    "encoding": "identity",
+    "archiveSha256": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt",
+    "bytes": 5216,
+    "sha256": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt",
+    "encoding": "identity",
+    "archiveSha256": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt",
+    "bytes": 995,
+    "sha256": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt",
+    "encoding": "identity",
+    "archiveSha256": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt",
+    "bytes": 3111,
+    "sha256": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt",
+    "encoding": "identity",
+    "archiveSha256": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt",
+    "bytes": 1707,
+    "sha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt",
+    "encoding": "identity",
+    "archiveSha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt",
+    "bytes": 3190,
+    "sha256": "0cef9c7a1e72e77d1c3f5e58c5a7b344900b60bff5a1096449d6e0534dd9ad26",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt",
+    "encoding": "identity",
+    "archiveSha256": "0cef9c7a1e72e77d1c3f5e58c5a7b344900b60bff5a1096449d6e0534dd9ad26"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt",
+    "bytes": 13440,
+    "sha256": "5cd4a0d631796da0827a720653d92a21cac701eef2c375b546ce8409b9d528ea",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt",
+    "encoding": "identity",
+    "archiveSha256": "5cd4a0d631796da0827a720653d92a21cac701eef2c375b546ce8409b9d528ea"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt",
+    "bytes": 388,
+    "sha256": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt",
+    "encoding": "identity",
+    "archiveSha256": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt",
+    "bytes": 13043,
+    "sha256": "1c13a0c8d533b43645cf317c0d9c77e018dc1c1f2eb4caf2982952dade4595cb",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt",
+    "encoding": "identity",
+    "archiveSha256": "1c13a0c8d533b43645cf317c0d9c77e018dc1c1f2eb4caf2982952dade4595cb"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelCandidateCoordinator.kt",
+    "bytes": 10240,
+    "sha256": "7dbe9dcffa893efbc15c74d5c36f9a02529ef4399fb16a0eefe0bb871bfcc9b6",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelCandidateCoordinator.kt",
+    "encoding": "identity",
+    "archiveSha256": "7dbe9dcffa893efbc15c74d5c36f9a02529ef4399fb16a0eefe0bb871bfcc9b6"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt",
+    "bytes": 2514,
+    "sha256": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt",
+    "encoding": "identity",
+    "archiveSha256": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt",
+    "bytes": 68333,
+    "sha256": "3beba836c936e628aaaec4a1d61381083d2aa37b6a216c079467802b6eccd620",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt",
+    "encoding": "identity",
+    "archiveSha256": "3beba836c936e628aaaec4a1d61381083d2aa37b6a216c079467802b6eccd620"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt",
+    "bytes": 1754,
+    "sha256": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt",
+    "encoding": "identity",
+    "archiveSha256": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt",
+    "bytes": 1137,
+    "sha256": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt",
+    "encoding": "identity",
+    "archiveSha256": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt",
+    "bytes": 1170,
+    "sha256": "bca5697c00c39eba55be74b7accb25b9c573c49dbd065a1a38e5b03f8e78218c",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt",
+    "encoding": "identity",
+    "archiveSha256": "bca5697c00c39eba55be74b7accb25b9c573c49dbd065a1a38e5b03f8e78218c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt",
+    "bytes": 1320,
+    "sha256": "34a365472549af3fa850491aa5df1e3e432045fa869c5235bf77e8e327f72e3e",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt",
+    "encoding": "identity",
+    "archiveSha256": "34a365472549af3fa850491aa5df1e3e432045fa869c5235bf77e8e327f72e3e"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt",
+    "bytes": 1620,
+    "sha256": "378a925f524682c377d0825204d3c23253db459323b32eb9da6706d003297e58",
+    "archive": "supplement-host-red-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt",
+    "encoding": "identity",
+    "archiveSha256": "378a925f524682c377d0825204d3c23253db459323b32eb9da6706d003297e58"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/tools/eval/smart-typing-0.3/pipeline/contextual-controller/ContextualControllerAttribution.kt",
+    "bytes": 32873,
+    "sha256": "7a9a89bab7b28d5a92cceebc86d1acfd5cf747e07ab4f81bdf515103aed012ba",
+    "archive": "supplement-host-red-01/sources/tools/eval/smart-typing-0.3/pipeline/contextual-controller/ContextualControllerAttribution.kt",
+    "encoding": "identity",
+    "archiveSha256": "7a9a89bab7b28d5a92cceebc86d1acfd5cf747e07ab4f81bdf515103aed012ba"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/sources/tools/eval/smart-typing-0.3/pipeline/contextual-controller/HostTypingEditExecutor.kt",
+    "bytes": 19641,
+    "sha256": "8fb57ca0f3e406b9cd05f347906e3c34201e432f3eb16288dabd704f88d863c6",
+    "archive": "supplement-host-red-01/sources/tools/eval/smart-typing-0.3/pipeline/contextual-controller/HostTypingEditExecutor.kt",
+    "encoding": "identity",
+    "archiveSha256": "8fb57ca0f3e406b9cd05f347906e3c34201e432f3eb16288dabd704f88d863c6"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/synthetic.jsonl",
+    "bytes": 854,
+    "sha256": "07878708e5afb22835919924c367bcb85e8f24bc3c4e55033cb14daba46019b3",
+    "archive": "supplement-host-red-01/synthetic.jsonl",
+    "encoding": "identity",
+    "archiveSha256": "07878708e5afb22835919924c367bcb85e8f24bc3c4e55033cb14daba46019b3"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01/synthetic.jsonl.log",
+    "bytes": 628,
+    "sha256": "2e0c8ce555cd97e94f89dbf284deac941a1fabf72f64bd8877a6a338693c54d3",
+    "archive": "supplement-host-red-01/synthetic.jsonl.log",
+    "encoding": "identity",
+    "archiveSha256": "2e0c8ce555cd97e94f89dbf284deac941a1fabf72f64bd8877a6a338693c54d3"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-host-red-01-command.log",
+    "bytes": 49,
+    "sha256": "a15c549c7f58c182512eb5fe54c0e68c33d1f699c8ca464ab7002d50699368a7",
+    "archive": "supplement-host-red-01-command.log",
+    "encoding": "identity",
+    "archiveSha256": "a15c549c7f58c182512eb5fe54c0e68c33d1f699c8ca464ab7002d50699368a7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/actual-requests.jsonl",
+    "bytes": 79075524,
+    "sha256": "8940aea906ba4c3cf3ec9cec83b811d58e9df55703cae010d2c747d61dc4610e",
+    "archive": "supplement-prepare-01/actual-requests.jsonl.gz",
+    "encoding": "gzip",
+    "archiveSha256": "74add5bfff2d71260c2652b31f26080f31b15f6a22344647e9ffa3c36c70e1fc"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/actual-requests.jsonl.log",
+    "bytes": 33,
+    "sha256": "e2c58612be6bf3d1a1d8d8a796ab8731604aa3638b36feb60a5acb3d7a940043",
+    "archive": "supplement-prepare-01/actual-requests.jsonl.log",
+    "encoding": "identity",
+    "archiveSha256": "e2c58612be6bf3d1a1d8d8a796ab8731604aa3638b36feb60a5acb3d7a940043"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/admitted-inputs.json",
+    "bytes": 4382873,
+    "sha256": "70dd75fa17ce701b05698631f30730fc459eda9a504db8380588913d6978c541",
+    "archive": "supplement-prepare-01/admitted-inputs.json.gz",
+    "encoding": "gzip",
+    "archiveSha256": "9937309267c8a3b335bc1536a9ef9adb8e7f90759991271404f774bcfaddf164"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/commands.json",
+    "bytes": 9563,
+    "sha256": "1ed9885a836cbec438da7823425abbf882f200b1018bdfe163da8712bee0fc55",
+    "archive": "supplement-prepare-01/commands.json",
+    "encoding": "identity",
+    "archiveSha256": "1ed9885a836cbec438da7823425abbf882f200b1018bdfe163da8712bee0fc55"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/compile.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "supplement-prepare-01/compile.log",
+    "encoding": "identity",
+    "archiveSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/contextual-controller.jar",
+    "bytes": 525159,
+    "sha256": "3f6454920d65c0f59d1f8a7ba8ea760ab98710686e59d16fbb2a530edd358e4c",
+    "omitted": "Rebuildable binary; identity retained, no binary committed"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/inputs.tsv",
+    "bytes": 504062,
+    "sha256": "9ef8011d44d3650751a821574559dfecf9d54e001e209ba2aed58d452632280e",
+    "archive": "supplement-prepare-01/inputs.tsv.gz",
+    "encoding": "gzip",
+    "archiveSha256": "d50072adea0454813287646f01069bdf149fd0419a20917f6c2d36a87eac73a8"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/java-version.txt",
+    "bytes": 171,
+    "sha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39",
+    "archive": "supplement-prepare-01/java-version.txt",
+    "encoding": "identity",
+    "archiveSha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/payload-bindings.jsonl",
+    "bytes": 633443,
+    "sha256": "1f5f7f67b13f690b5bc32836f2bfdb220cabd7abcb309217fd536e3621ae235a",
+    "archive": "supplement-prepare-01/payload-bindings.jsonl.gz",
+    "encoding": "gzip",
+    "archiveSha256": "180b1c5178e1e23b4301a32d8c6b61691cb5824db62ffcb7a72028a8e0c0c316"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/prepare-complete.json",
+    "bytes": 1733,
+    "sha256": "abac0b8285a449174b2749f4a2c1ddc7ed0875dc1ddb3edbce8a877c962fb2b0",
+    "archive": "supplement-prepare-01/prepare-complete.json",
+    "encoding": "identity",
+    "archiveSha256": "abac0b8285a449174b2749f4a2c1ddc7ed0875dc1ddb3edbce8a877c962fb2b0"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/protocol.json",
+    "bytes": 66290,
+    "sha256": "3d0a3e625f9e555d42b2c9380804fdfd19cd5fd3c5e16b0e6378cf58ac338d05",
+    "archive": "supplement-prepare-01/protocol.json",
+    "encoding": "identity",
+    "archiveSha256": "3d0a3e625f9e555d42b2c9380804fdfd19cd5fd3c5e16b0e6378cf58ac338d05"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt",
+    "bytes": 837,
+    "sha256": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt",
+    "encoding": "identity",
+    "archiveSha256": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt",
+    "bytes": 4129,
+    "sha256": "cd25f685fcb51206c7b4038e39bb917536a2cfda501f36182b624e4191dd6070",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt",
+    "encoding": "identity",
+    "archiveSha256": "cd25f685fcb51206c7b4038e39bb917536a2cfda501f36182b624e4191dd6070"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt",
+    "bytes": 6157,
+    "sha256": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt",
+    "encoding": "identity",
+    "archiveSha256": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelDemand.kt",
+    "bytes": 1700,
+    "sha256": "6ffd35a90e9e364f9471c5c2a6b017a1251b8136b6d23bb7da2ab6c29ab0a7e5",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelDemand.kt",
+    "encoding": "identity",
+    "archiveSha256": "6ffd35a90e9e364f9471c5c2a6b017a1251b8136b6d23bb7da2ab6c29ab0a7e5"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelReadinessSource.kt",
+    "bytes": 386,
+    "sha256": "865ff97c18937864653589c5628b622db5593b71c5b765686bc98143af0c650c",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelReadinessSource.kt",
+    "encoding": "identity",
+    "archiveSha256": "865ff97c18937864653589c5628b622db5593b71c5b765686bc98143af0c650c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelScoringClient.kt",
+    "bytes": 1439,
+    "sha256": "052d5c0150402dd35b599d2fd05fc0da9e77bbe4e6d2ab4db2f83799b2a7ceea",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/client/ModelScoringClient.kt",
+    "encoding": "identity",
+    "archiveSha256": "052d5c0150402dd35b599d2fd05fc0da9e77bbe4e6d2ab4db2f83799b2a7ceea"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt",
+    "bytes": 2819,
+    "sha256": "a01685928af1c59a44a2085de6b0233b07479024c0528f50c310f02a3ed85d30",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt",
+    "encoding": "identity",
+    "archiveSha256": "a01685928af1c59a44a2085de6b0233b07479024c0528f50c310f02a3ed85d30"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt",
+    "bytes": 3413,
+    "sha256": "362332f03b43150c39b8f5243461926c33922d6822a81a4ee61f3fd66831f879",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt",
+    "encoding": "identity",
+    "archiveSha256": "362332f03b43150c39b8f5243461926c33922d6822a81a4ee61f3fd66831f879"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt",
+    "bytes": 2794,
+    "sha256": "2a4c6a945425eb6a7c49f671e1b12ed410a53357bfee698ec45f0b4ea88a14c7",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt",
+    "encoding": "identity",
+    "archiveSha256": "2a4c6a945425eb6a7c49f671e1b12ed410a53357bfee698ec45f0b4ea88a14c7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt",
+    "bytes": 5604,
+    "sha256": "de5bf01aea98eedc42852d99185e1c1c2a136ae2f3795e98a5945ec55bc86333",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt",
+    "encoding": "identity",
+    "archiveSha256": "de5bf01aea98eedc42852d99185e1c1c2a136ae2f3795e98a5945ec55bc86333"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt",
+    "bytes": 2476,
+    "sha256": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt",
+    "encoding": "identity",
+    "archiveSha256": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt",
+    "bytes": 1577,
+    "sha256": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt",
+    "encoding": "identity",
+    "archiveSha256": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt",
+    "bytes": 480,
+    "sha256": "1ba91be06c6314f6d11a417dd1b72482a2ac1ae5bc3fe14beddaa86bbcd33c75",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt",
+    "encoding": "identity",
+    "archiveSha256": "1ba91be06c6314f6d11a417dd1b72482a2ac1ae5bc3fe14beddaa86bbcd33c75"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt",
+    "bytes": 3448,
+    "sha256": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt",
+    "encoding": "identity",
+    "archiveSha256": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt",
+    "bytes": 760,
+    "sha256": "c2ea03daa7c366b7b1aeda77785b2dc5c12c41053a46e64e1d7f4c14a6733763",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt",
+    "encoding": "identity",
+    "archiveSha256": "c2ea03daa7c366b7b1aeda77785b2dc5c12c41053a46e64e1d7f4c14a6733763"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt",
+    "bytes": 1602,
+    "sha256": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt",
+    "encoding": "identity",
+    "archiveSha256": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt",
+    "bytes": 4925,
+    "sha256": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt",
+    "encoding": "identity",
+    "archiveSha256": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt",
+    "bytes": 1726,
+    "sha256": "245b90f0ff7eb4a7ea97144dcd993f9816af32f44e571f6f6c006805f1ab2daa",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt",
+    "encoding": "identity",
+    "archiveSha256": "245b90f0ff7eb4a7ea97144dcd993f9816af32f44e571f6f6c006805f1ab2daa"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt",
+    "bytes": 15161,
+    "sha256": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt",
+    "encoding": "identity",
+    "archiveSha256": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt",
+    "bytes": 4300,
+    "sha256": "e64190f43dfc40e1b4bd19dbc331709883907b2b7a500bce7947dc3fc5ae24db",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt",
+    "encoding": "identity",
+    "archiveSha256": "e64190f43dfc40e1b4bd19dbc331709883907b2b7a500bce7947dc3fc5ae24db"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt",
+    "bytes": 4985,
+    "sha256": "5d020b58e8e14e6482e59200acafa549cf5da6b2b00b770ba921748ff40f5020",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt",
+    "encoding": "identity",
+    "archiveSha256": "5d020b58e8e14e6482e59200acafa549cf5da6b2b00b770ba921748ff40f5020"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt",
+    "bytes": 541,
+    "sha256": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt",
+    "encoding": "identity",
+    "archiveSha256": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt",
+    "bytes": 1084,
+    "sha256": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt",
+    "encoding": "identity",
+    "archiveSha256": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt",
+    "bytes": 9515,
+    "sha256": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt",
+    "encoding": "identity",
+    "archiveSha256": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt",
+    "bytes": 2071,
+    "sha256": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt",
+    "encoding": "identity",
+    "archiveSha256": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LazyPackedLexicons.kt",
+    "bytes": 10321,
+    "sha256": "587d52b3062559e00a255817f831dbba2b9fe4189a8c38d06e065fc889888d64",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LazyPackedLexicons.kt",
+    "encoding": "identity",
+    "archiveSha256": "587d52b3062559e00a255817f831dbba2b9fe4189a8c38d06e065fc889888d64"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt",
+    "bytes": 8867,
+    "sha256": "a52134981da578373fde991d1a11bc6a41e61922c474ab0acf733a9a868a2ae7",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt",
+    "encoding": "identity",
+    "archiveSha256": "a52134981da578373fde991d1a11bc6a41e61922c474ab0acf733a9a868a2ae7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt",
+    "bytes": 8332,
+    "sha256": "fe942a648ef5bdbd5a7e5407c70e099c69cebd741f91ab2250d91d4fa66a7bdf",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt",
+    "encoding": "identity",
+    "archiveSha256": "fe942a648ef5bdbd5a7e5407c70e099c69cebd741f91ab2250d91d4fa66a7bdf"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt",
+    "bytes": 9469,
+    "sha256": "d0dae2e1d58eb44894cbdface3f4a91f8f5c1022400ec68f9e7e219cc14adc3c",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt",
+    "encoding": "identity",
+    "archiveSha256": "d0dae2e1d58eb44894cbdface3f4a91f8f5c1022400ec68f9e7e219cc14adc3c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt",
+    "bytes": 3223,
+    "sha256": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt",
+    "encoding": "identity",
+    "archiveSha256": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt",
+    "bytes": 14675,
+    "sha256": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt",
+    "encoding": "identity",
+    "archiveSha256": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt",
+    "bytes": 5216,
+    "sha256": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt",
+    "encoding": "identity",
+    "archiveSha256": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt",
+    "bytes": 995,
+    "sha256": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt",
+    "encoding": "identity",
+    "archiveSha256": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt",
+    "bytes": 3111,
+    "sha256": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt",
+    "encoding": "identity",
+    "archiveSha256": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt",
+    "bytes": 1707,
+    "sha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt",
+    "encoding": "identity",
+    "archiveSha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt",
+    "bytes": 3190,
+    "sha256": "0cef9c7a1e72e77d1c3f5e58c5a7b344900b60bff5a1096449d6e0534dd9ad26",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt",
+    "encoding": "identity",
+    "archiveSha256": "0cef9c7a1e72e77d1c3f5e58c5a7b344900b60bff5a1096449d6e0534dd9ad26"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt",
+    "bytes": 13440,
+    "sha256": "5cd4a0d631796da0827a720653d92a21cac701eef2c375b546ce8409b9d528ea",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt",
+    "encoding": "identity",
+    "archiveSha256": "5cd4a0d631796da0827a720653d92a21cac701eef2c375b546ce8409b9d528ea"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt",
+    "bytes": 388,
+    "sha256": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt",
+    "encoding": "identity",
+    "archiveSha256": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt",
+    "bytes": 13043,
+    "sha256": "1c13a0c8d533b43645cf317c0d9c77e018dc1c1f2eb4caf2982952dade4595cb",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt",
+    "encoding": "identity",
+    "archiveSha256": "1c13a0c8d533b43645cf317c0d9c77e018dc1c1f2eb4caf2982952dade4595cb"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelCandidateCoordinator.kt",
+    "bytes": 10240,
+    "sha256": "7dbe9dcffa893efbc15c74d5c36f9a02529ef4399fb16a0eefe0bb871bfcc9b6",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelCandidateCoordinator.kt",
+    "encoding": "identity",
+    "archiveSha256": "7dbe9dcffa893efbc15c74d5c36f9a02529ef4399fb16a0eefe0bb871bfcc9b6"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt",
+    "bytes": 2514,
+    "sha256": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt",
+    "encoding": "identity",
+    "archiveSha256": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt",
+    "bytes": 68333,
+    "sha256": "3beba836c936e628aaaec4a1d61381083d2aa37b6a216c079467802b6eccd620",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt",
+    "encoding": "identity",
+    "archiveSha256": "3beba836c936e628aaaec4a1d61381083d2aa37b6a216c079467802b6eccd620"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt",
+    "bytes": 1754,
+    "sha256": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt",
+    "encoding": "identity",
+    "archiveSha256": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt",
+    "bytes": 1137,
+    "sha256": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt",
+    "encoding": "identity",
+    "archiveSha256": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt",
+    "bytes": 1170,
+    "sha256": "bca5697c00c39eba55be74b7accb25b9c573c49dbd065a1a38e5b03f8e78218c",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt",
+    "encoding": "identity",
+    "archiveSha256": "bca5697c00c39eba55be74b7accb25b9c573c49dbd065a1a38e5b03f8e78218c"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt",
+    "bytes": 1320,
+    "sha256": "34a365472549af3fa850491aa5df1e3e432045fa869c5235bf77e8e327f72e3e",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt",
+    "encoding": "identity",
+    "archiveSha256": "34a365472549af3fa850491aa5df1e3e432045fa869c5235bf77e8e327f72e3e"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt",
+    "bytes": 1620,
+    "sha256": "378a925f524682c377d0825204d3c23253db459323b32eb9da6706d003297e58",
+    "archive": "supplement-prepare-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt",
+    "encoding": "identity",
+    "archiveSha256": "378a925f524682c377d0825204d3c23253db459323b32eb9da6706d003297e58"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/tools/eval/smart-typing-0.3/pipeline/contextual-controller/ContextualControllerAttribution.kt",
+    "bytes": 33052,
+    "sha256": "b5ceb68e6c1501f44ddbf6a77e7d9d7987ae0c04fb81607f4cd406116c47e52b",
+    "archive": "supplement-prepare-01/sources/tools/eval/smart-typing-0.3/pipeline/contextual-controller/ContextualControllerAttribution.kt",
+    "encoding": "identity",
+    "archiveSha256": "b5ceb68e6c1501f44ddbf6a77e7d9d7987ae0c04fb81607f4cd406116c47e52b"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/sources/tools/eval/smart-typing-0.3/pipeline/contextual-controller/HostTypingEditExecutor.kt",
+    "bytes": 19641,
+    "sha256": "8fb57ca0f3e406b9cd05f347906e3c34201e432f3eb16288dabd704f88d863c6",
+    "archive": "supplement-prepare-01/sources/tools/eval/smart-typing-0.3/pipeline/contextual-controller/HostTypingEditExecutor.kt",
+    "encoding": "identity",
+    "archiveSha256": "8fb57ca0f3e406b9cd05f347906e3c34201e432f3eb16288dabd704f88d863c6"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/unscored-request-receipt.json",
+    "bytes": 978,
+    "sha256": "5eeed40200eb31d043c85976c9fc53ff9684cbd53844cb8412653e1c77aab0eb",
+    "archive": "supplement-prepare-01/unscored-request-receipt.json",
+    "encoding": "identity",
+    "archiveSha256": "5eeed40200eb31d043c85976c9fc53ff9684cbd53844cb8412653e1c77aab0eb"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/unscored-requests.jsonl",
+    "bytes": 54819,
+    "sha256": "a06a8571b61f20c4db56f22261ab8c35086b380dd360e56ddb9aacf3927bc9a6",
+    "archive": "supplement-prepare-01/unscored-requests.jsonl",
+    "encoding": "identity",
+    "archiveSha256": "a06a8571b61f20c4db56f22261ab8c35086b380dd360e56ddb9aacf3927bc9a6"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01-command.log",
+    "bytes": 264,
+    "sha256": "1647cea12d1f4c09a93b8bbe8f5a9fdecc752839fd83a789014e83c87cde437f",
+    "archive": "supplement-prepare-01-command.log",
+    "encoding": "identity",
+    "archiveSha256": "1647cea12d1f4c09a93b8bbe8f5a9fdecc752839fd83a789014e83c87cde437f"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-comparison.json",
+    "bytes": 3201,
+    "sha256": "401e26f1ff5be7d0b0a115dc360f6280fcab7da413eefa9efc2406f07cc90460",
+    "archive": "supplement-prepare-comparison.json",
+    "encoding": "identity",
+    "archiveSha256": "401e26f1ff5be7d0b0a115dc360f6280fcab7da413eefa9efc2406f07cc90460"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-python-01.log",
+    "bytes": 1821,
+    "sha256": "0a22f4a0cb5ec5dc66ba8a2b297ddcf4489b5dd784f0a4ea1049643fd9638c28",
+    "archive": "supplement-python-01.log",
+    "encoding": "identity",
+    "archiveSha256": "0a22f4a0cb5ec5dc66ba8a2b297ddcf4489b5dd784f0a4ea1049643fd9638c28"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-python-02.log",
+    "bytes": 1870,
+    "sha256": "05c12cb3beeab1378a3481a1d1ca18995b76fdff05e02d2b1f305d9820e494e2",
+    "archive": "supplement-python-02.log",
+    "encoding": "identity",
+    "archiveSha256": "05c12cb3beeab1378a3481a1d1ca18995b76fdff05e02d2b1f305d9820e494e2"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-python-03.log",
+    "bytes": 1870,
+    "sha256": "d2117d9d9e7348226e34d7af781d1f63b7e0be136af016ce4378c08e5a4d65d4",
+    "archive": "supplement-python-03.log",
+    "encoding": "identity",
+    "archiveSha256": "d2117d9d9e7348226e34d7af781d1f63b7e0be136af016ce4378c08e5a4d65d4"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-red-01.log",
+    "bytes": 948,
+    "sha256": "d5841539b3b999e0c00f588d4b0ed8b629b6979afa588156bcf289d1c207edee",
+    "archive": "supplement-red-01.log",
+    "encoding": "identity",
+    "archiveSha256": "d5841539b3b999e0c00f588d4b0ed8b629b6979afa588156bcf289d1c207edee"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-red-02.log",
+    "bytes": 4686,
+    "sha256": "810544f96004326adc82c3726dac9ab8b31ea555480b854dd2823aa688db8cd7",
+    "archive": "supplement-red-02.log",
+    "encoding": "identity",
+    "archiveSha256": "810544f96004326adc82c3726dac9ab8b31ea555480b854dd2823aa688db8cd7"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-replay-01/actual.jsonl",
+    "bytes": 81020105,
+    "sha256": "fd7814c2c0ebbf1ffdaa2147d765162f99fa8ea57d5cf3b5bfb583afae356c5a",
+    "archive": "supplement-replay-01/actual.jsonl.gz",
+    "encoding": "gzip",
+    "archiveSha256": "dab5f1e2fe2a06f1e13ff124fa99d01b2b82d4230b287108399edeac7d5efd9b"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-replay-01/actual.jsonl.log",
+    "bytes": 33,
+    "sha256": "e2c58612be6bf3d1a1d8d8a796ab8731604aa3638b36feb60a5acb3d7a940043",
+    "archive": "supplement-replay-01/actual.jsonl.log",
+    "encoding": "identity",
+    "archiveSha256": "e2c58612be6bf3d1a1d8d8a796ab8731604aa3638b36feb60a5acb3d7a940043"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-replay-01/complete.json",
+    "bytes": 124,
+    "sha256": "65bb57bc265293362c8867e73008885cf32470f8d70dd20e5127196709e49950",
+    "archive": "supplement-replay-01/complete.json",
+    "encoding": "identity",
+    "archiveSha256": "65bb57bc265293362c8867e73008885cf32470f8d70dd20e5127196709e49950"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-replay-01/provenance.json",
+    "bytes": 1523,
+    "sha256": "be908acf98a2c733a4330e1851475c32b0b08b993c3a75642ab2c335595596cc",
+    "archive": "supplement-replay-01/provenance.json",
+    "encoding": "identity",
+    "archiveSha256": "be908acf98a2c733a4330e1851475c32b0b08b993c3a75642ab2c335595596cc"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-replay-01/report.json",
+    "bytes": 163611,
+    "sha256": "f9e41d00a7cc2949744b449b5cf5bb7f802da8a0187e1fdd0ffde27504b8852b",
+    "archive": "supplement-replay-01/report.json",
+    "encoding": "identity",
+    "archiveSha256": "f9e41d00a7cc2949744b449b5cf5bb7f802da8a0187e1fdd0ffde27504b8852b"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-replay-01/response-bindings.jsonl",
+    "bytes": 1261280,
+    "sha256": "165a1d0ba2ce416869fcfe9177a2a441f4cfcd630867e40d976b8912849e1187",
+    "archive": "supplement-replay-01/response-bindings.jsonl.gz",
+    "encoding": "gzip",
+    "archiveSha256": "4d70e88b99a3556c2bdaa743b805bedafcfafae3c4161dafc969b494b713f2f8"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-replay-01/responses.tsv",
+    "bytes": 700439,
+    "sha256": "d57ac6ff8a30d591c90ac9640f3cdcd61a63fbf4a890f1d3bedf4381068f4e07",
+    "archive": "supplement-replay-01/responses.tsv.gz",
+    "encoding": "gzip",
+    "archiveSha256": "86839327df0acf4f5620b37dcf0276f76fd3fef6f6727d25125a941307c3ec0d"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-replay-01/row-evidence.jsonl",
+    "bytes": 84193880,
+    "sha256": "c3e1c4e5b56739dafded6d8b1b87c231c61ba33233b5e992ee54bc3ec6e2298c",
+    "archive": "supplement-replay-01/row-evidence.jsonl.gz",
+    "encoding": "gzip",
+    "archiveSha256": "34347552d71fa5f6c8b46f2e587991b7dab57a7feb33e1375d867bfda80235f4"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-replay-01/unscored-requests.jsonl",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "supplement-replay-01/unscored-requests.jsonl",
+    "encoding": "identity",
+    "archiveSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-slot-red-01.log",
+    "bytes": 2722,
+    "sha256": "138fbdcd7d6829d4a9c3a8b77b92bead553aa17993fda61ae53c9c1988e2893b",
+    "archive": "supplement-slot-red-01.log",
+    "encoding": "identity",
+    "archiveSha256": "138fbdcd7d6829d4a9c3a8b77b92bead553aa17993fda61ae53c9c1988e2893b"
+  },
+  {
+    "source": "build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-type-red-01.log",
+    "bytes": 7070,
+    "sha256": "74c53c5f4f59f2c91fa5384ceb809be6f197005ca8f1e3b419f784d07b9e1210",
+    "archive": "supplement-type-red-01.log",
+    "encoding": "identity",
+    "archiveSha256": "74c53c5f4f59f2c91fa5384ceb809be6f197005ca8f1e3b419f784d07b9e1210"
+  }
+]

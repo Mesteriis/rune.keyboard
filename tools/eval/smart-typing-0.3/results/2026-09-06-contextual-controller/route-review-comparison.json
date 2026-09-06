@@ -1,0 +1,44 @@
+{
+  "changedRows": {
+    "beforeCandidates": [],
+    "candidatesAccepted": [],
+    "fullGeneration": [],
+    "inputSteps": [],
+    "modelRequest": [],
+    "requestCount": [],
+    "requestGeneration": []
+  },
+  "comparison": "prepare-04 to route-review-prepare-01",
+  "fileSha256": {
+    "tools/eval/smart-typing-0.3/pipeline/contextual-controller/ContextualControllerAttribution.kt": "7a9a89bab7b28d5a92cceebc86d1acfd5cf747e07ab4f81bdf515103aed012ba",
+    "tools/eval/smart-typing-0.3/pipeline/contextual-controller/HostTypingEditExecutor.kt": "483972c83262de03cf615c40d434b707a2863f99cc61fdb0cf0ed343c3e28b6d",
+    "tools/eval/smart-typing-0.3/pipeline/contextual-controller/README.md": "3dcf525004f7674423c3a9ef77b64b64ef7ff0f761cb9e51212696582299a58f",
+    "tools/eval/smart-typing-0.3/pipeline/contextual-controller/contextual_controller_attribution.py": "be7209be14001dfdf843bb3645a31af9f6eb41a6872b85e7c02c732a69a04753",
+    "tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py": "ca31df0a22a36e3c55b5bfa1d96f34d64e35fa606aac788a3a84aa4052040772"
+  },
+  "payloadBindingsBytesUnchanged": true,
+  "productionAssetBindingChanges": {},
+  "protocolSha256": "97fbe8e788c48e333ef317865908095556c954437e444ccecff14b4ee537cce9",
+  "receiptSha256": {
+    "build/smart-typing-0.3/contextual-controller-attribution-20260906/route-review-prepare-01/actual-requests.jsonl": "8940aea906ba4c3cf3ec9cec83b811d58e9df55703cae010d2c747d61dc4610e",
+    "build/smart-typing-0.3/contextual-controller-attribution-20260906/route-review-prepare-01/commands.json": "a020c61a36cfbae5c6db6a84292b558812f2225abdb961cfb3b480288060a942",
+    "build/smart-typing-0.3/contextual-controller-attribution-20260906/route-review-prepare-01/contextual-controller.jar": "09156fadada1b6fa8a0b9b7b5ec1252986cfdccb4c5f44ad304286caa249ca75",
+    "build/smart-typing-0.3/contextual-controller-attribution-20260906/route-review-prepare-01/prepare-complete.json": "438796e396e3a24b41edc6c0fe4f3425663376b6183cf85b56463bdf7b5caf0e",
+    "build/smart-typing-0.3/contextual-controller-attribution-20260906/route-review-prepare-01/protocol.json": "a6938f4e19ad9781aae2075aed526d9f49cfdf113b5ccca4936d4baea920c3fd",
+    "build/smart-typing-0.3/contextual-controller-attribution-20260906/route-review-prepare-01/unscored-request-receipt.json": "55e8b497c95a790dda1dbf8963c452f26a1836243a401bae21db5f2040a23c2f",
+    "build/smart-typing-0.3/contextual-controller-attribution-20260906/route-review-prepare-01/unscored-requests.jsonl": "a06a8571b61f20c4db56f22261ab8c35086b380dd360e56ddb9aacf3927bc9a6"
+  },
+  "rows": 1200,
+  "secondaryReasons": {
+    "CANONICAL_CASE_PRECEDENCE": 42,
+    "ENGINE_EXCLUDED": 180,
+    "INCOMPLETE_GENERATION": 53,
+    "NO_OWNED_SPACE": 3,
+    "UNKNOWN_NO_ALTERNATIVES": 26
+  },
+  "terminalTransitions": {
+    "CONTEXTUAL_INELIGIBLE -> ENGINE_EXCLUDED": 157,
+    "CONTEXTUAL_INELIGIBLE -> NO_OWNED_SPACE": 3
+  },
+  "unscoredRequestBytesUnchanged": true
+}

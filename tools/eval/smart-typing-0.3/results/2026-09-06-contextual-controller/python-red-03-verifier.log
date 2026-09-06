@@ -1,0 +1,14 @@
+.......E...................
+======================================================================
+ERROR: test_verify_recompiles_sources_and_refuses_rehashed_false_observations (test_contextual_controller_attribution.AdditionalGuardTest.test_verify_recompiles_sources_and_refuses_rehashed_false_observations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 171, in test_verify_recompiles_sources_and_refuses_rehashed_false_observations
+    self.tool.verify_current_host(directory,protocol,directory,prior,actual)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'contextual_controller_attribution' has no attribute 'verify_current_host'
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.090s
+
+FAILED (errors=1)

@@ -1,0 +1,16 @@
+....................................
+----------------------------------------------------------------------
+Ran 36 tests in 0.139s
+
+OK
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmpzcpfx42v/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmpzcpfx42v/calibration", "split": "calibration", "requests": 1, "nativeCalls": 0}
+{"admitted": "/Users/avm/projects/Personal/rune-keyboard/build/tmpzcpfx42v/calibration", "responses": 1, "errors": 0, "unrepresentable": 0, "numericDelivery": false}
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmpung0p8hu/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmpung0p8hu/calibration", "split": "calibration", "requests": 1, "nativeCalls": 0}
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmptr9i10nd/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmp4jaxus_k/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmp4jaxus_k/calibration", "split": "calibration", "requests": 1, "nativeCalls": 0}
+{"admitted": "/Users/avm/projects/Personal/rune-keyboard/build/tmp4jaxus_k/calibration", "responses": 1, "errors": 1, "unrepresentable": 0, "numericDelivery": false}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmp4jaxus_k/holdout", "split": "holdout", "requests": 1, "nativeCalls": 0}
+{"admitted": "/Users/avm/projects/Personal/rune-keyboard/build/tmp4jaxus_k/holdout", "responses": 1, "errors": 0, "unrepresentable": 0, "numericDelivery": false}

@@ -1,0 +1,9 @@
+# Root contextual supplemental execution notes
+
+Independent supplemental review passed (task-contextual-supplement-review.md). Root uses the frozen supplement-prepare-01 and supplement-freeze-01. No historical cache or source change.
+
+Calibration staging was started through exec session50431. A premature invocation of the external operator script occurred while staging was still running; its strict run-directory resolution failed before reading command.json, creating outputs or spawning the native runner. The traceback is preserved as root-score-calibration.log in the contextual build root. This was a root orchestration/preflight error, not a native scoring attempt or a model outcome. Staging was subsequently awaited to its successful exit and its exact18-request command inspected.
+
+The first actual native calibration invocation uses the reviewed README procedure saved verbatim as run-supplement-native.py and logs root-score-calibration-01.log. Its own exclusive response/stderr/execution files record the native attempt count and outcome; do not rerun that native slot. Root owns all later admission, holdout staging/scoring and replay. Do not treat an exec observation timeout as process termination.
+
+Both actual native runs and strict admission are complete: calibration18/18 and holdout28/28, each one native attempt with exit0, zero error responses and zero IPC-unrepresentable responses. Calibration was admitted before holdout staging, which binds its completion. Response file SHAs: calibration6f03154743575eee15d73ff06312bd740800668eec40dba57870b4da6d8dbd41; holdoutb6f85a754db9fc416fd0ee01e4639379150712a928d1ecb20a2d1ea573aadc06. All model/runner/policy hashes remain frozen. No parameters were fitted. Root launched supplement-replay-01 over all1200 examples; root-replay.log records that process. Final verification and result audit remain required after replay completion.

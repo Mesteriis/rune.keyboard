@@ -1,0 +1,20 @@
+{
+  "calibrationCompleteSha256": "8cab1f2444c67069c95fab652ba2846f69d25f2dfaa45f586cfd71a36a855cd4",
+  "errorIds": [],
+  "files": {
+    "command.json": "b6f22bceecffaf2ca0262ce67125e6abc22e2c24b6e082730f751e783e60e8f8",
+    "execution.json": "359e261f7d3cc75f18600f371f985d3ece0b797c50d5ede21b418da3da41ed9d",
+    "identity.json": "346ea83b1ca35089e3559f954e75768fc8ca8d9961daee66edf1a10e170369b7",
+    "requests.jsonl": "3721f9d83e2fc93c4618a0d61302343b9c233ef0025fabd07fa6a41aebe485a4",
+    "responses.jsonl": "b6f85a754db9fc416fd0ee01e4639379150712a928d1ecb20a2d1ea573aadc06",
+    "run-input.json": "54e0f8b16de8950b12b862e0aba83b093239ae416f6b4bc7d04a4cf55c736f88",
+    "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "freezeSha256": "0f067e87fdf1982102f797e6c86b39a858f75bd73b09009d6e7e549ca434d21c",
+  "requests": 28,
+  "responses": 28,
+  "schemaVersion": 1,
+  "scope": "contextual-controller-supplement",
+  "split": "holdout",
+  "unrepresentableIds": []
+}

@@ -1,0 +1,71 @@
+..............................FFFFFE.....
+======================================================================
+ERROR: test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output (test_contextual_controller_attribution.SupplementalAdmissionTest.test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 452, in test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output
+    self.complete(f,run)
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 390, in complete
+    self.tool.complete_supplement(SimpleNamespace(freeze=f.freeze,run=run))
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/contextual_controller_attribution.py", line 610, in complete_supplement
+    require(not (run/'complete.json').exists(),'SUPPLEMENT_ALREADY_COMPLETE')
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/contextual_controller_attribution.py", line 99, in require
+    if not condition: raise ValueError(code)
+                      ^^^^^^^^^^^^^^^^^^^^^^
+ValueError: SUPPLEMENT_ALREADY_COMPLETE
+
+======================================================================
+FAIL: test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output (test_contextual_controller_attribution.SupplementalAdmissionTest.test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output) (name='execution.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 443, in test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output
+    with self.assertRaises(ValueError):self.complete(f,run)
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output (test_contextual_controller_attribution.SupplementalAdmissionTest.test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output) (name='run-input.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 444, in test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output
+    self.assertFalse((run/'complete.json').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output (test_contextual_controller_attribution.SupplementalAdmissionTest.test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output) (name='identity.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 444, in test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output
+    self.assertFalse((run/'complete.json').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output (test_contextual_controller_attribution.SupplementalAdmissionTest.test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output) (name='command.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 444, in test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output
+    self.assertFalse((run/'complete.json').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output (test_contextual_controller_attribution.SupplementalAdmissionTest.test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output) (name='execution.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 444, in test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output
+    self.assertFalse((run/'complete.json').exists())
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 36 tests in 0.138s
+
+FAILED (failures=5, errors=1)
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmpqvohw_7y/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmpqvohw_7y/freeze/calibration", "split": "calibration", "requests": 1, "nativeCalls": 0}
+{"admitted": "/Users/avm/projects/Personal/rune-keyboard/build/tmpqvohw_7y/freeze/calibration", "responses": 1, "errors": 0, "unrepresentable": 0, "numericDelivery": false}
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmp1y66vch4/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmp1y66vch4/freeze/calibration", "split": "calibration", "requests": 1, "nativeCalls": 0}
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmp9m8m0mbj/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmpig8tpq1n/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmpig8tpq1n/freeze/calibration", "split": "calibration", "requests": 1, "nativeCalls": 0}
+{"admitted": "/Users/avm/projects/Personal/rune-keyboard/build/tmpig8tpq1n/freeze/calibration", "responses": 1, "errors": 1, "unrepresentable": 0, "numericDelivery": false}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmpig8tpq1n/freeze/holdout", "split": "holdout", "requests": 1, "nativeCalls": 0}
+{"admitted": "/Users/avm/projects/Personal/rune-keyboard/build/tmpig8tpq1n/freeze/holdout", "responses": 1, "errors": 0, "unrepresentable": 0, "numericDelivery": false}

@@ -1,0 +1,10 @@
+{
+  "attempts": 1,
+  "commandSha256": "c0bb5f1248ced47d3099d1d3a92348cbfe44380c0b3ff504809233b09e3cc6a0",
+  "exitCode": 0,
+  "requestsSha256": "287759a8c61b0f4a96105e4c45b407b47073b10c2e29f6d30c259519fabf11c6",
+  "responsesSha256": "6f03154743575eee15d73ff06312bd740800668eec40dba57870b4da6d8dbd41",
+  "runInputSha256": "43b40e52e3ad7841790f9349a22dd3ba0ada77cacae57746ddf8f17040e113ef",
+  "schemaVersion": 1,
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

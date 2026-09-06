@@ -1,0 +1,16 @@
+....................................
+----------------------------------------------------------------------
+Ran 36 tests in 0.156s
+
+OK
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmpn6evnf1x/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmpn6evnf1x/freeze/calibration", "split": "calibration", "requests": 1, "nativeCalls": 0}
+{"admitted": "/Users/avm/projects/Personal/rune-keyboard/build/tmpn6evnf1x/freeze/calibration", "responses": 1, "errors": 0, "unrepresentable": 0, "numericDelivery": false}
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmpeanb1nyv/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmpeanb1nyv/freeze/calibration", "split": "calibration", "requests": 1, "nativeCalls": 0}
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmpfd3n2_0j/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmp83c5vd6a/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmp83c5vd6a/freeze/calibration", "split": "calibration", "requests": 1, "nativeCalls": 0}
+{"admitted": "/Users/avm/projects/Personal/rune-keyboard/build/tmp83c5vd6a/freeze/calibration", "responses": 1, "errors": 1, "unrepresentable": 0, "numericDelivery": false}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmp83c5vd6a/freeze/holdout", "split": "holdout", "requests": 1, "nativeCalls": 0}
+{"admitted": "/Users/avm/projects/Personal/rune-keyboard/build/tmp83c5vd6a/freeze/holdout", "responses": 1, "errors": 0, "unrepresentable": 0, "numericDelivery": false}

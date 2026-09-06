@@ -1,0 +1,1155 @@
+{
+  "backendIdentity": {
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "bc3f78bdf3ac41009a7603ca5dd6b6c4d5e8d6c2bdcaf3a692cfd95a3b3d2553"
+  },
+  "configSha256": "57fcb49a576de30d6447a48906f81986f25a9a0e527d09a5b091ed64fc47b037",
+  "corpusRevealed": true,
+  "files": {
+    "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/prepare-complete.json": "abac0b8285a449174b2749f4a2c1ddc7ed0875dc1ddb3edbce8a877c962fb2b0",
+    "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/protocol.json": "3d0a3e625f9e555d42b2c9380804fdfd19cd5fd3c5e16b0e6378cf58ac338d05",
+    "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01/unscored-request-receipt.json": "5eeed40200eb31d043c85976c9fc53ff9684cbd53844cb8412653e1c77aab0eb",
+    "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-v5-20260906/frozen-config/config.json": "8a7b3692b5a186dcd834e92c12ab1803dc2b6ff179b650357b1fa715d4999ed4",
+    "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-v5-20260906/protocol-freeze/backend-config.json": "ab54898317549304d67ffa4381ca7c02992e5e10fe316ac535be098653bdb195",
+    "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/model/rune-text-v1-0.1.0-q4_k_m.gguf": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-current-20260906/rune-score": "bc3f78bdf3ac41009a7603ca5dd6b6c4d5e8d6c2bdcaf3a692cfd95a3b3d2553"
+  },
+  "freezeDirectory": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01",
+  "freezeSha256": "0f067e87fdf1982102f797e6c86b39a858f75bd73b09009d6e7e549ca434d21c",
+  "model": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/model/rune-text-v1-0.1.0-q4_k_m.gguf",
+  "modelBytes": 396704416,
+  "nativeCallsAtFreeze": 0,
+  "order": "calibration-complete-before-holdout-stage",
+  "policy": {
+    "originalAdvantage": 0.5,
+    "originalComparison": ">",
+    "rivalAdvantage": 4.0,
+    "rivalComparison": ">=",
+    "rule": "total-log-probability-margins",
+    "tieOrder": "ascending-candidate-id",
+    "tokenCountRange": [
+      1,
+      255
+    ],
+    "version": 2
+  },
+  "prepared": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01",
+  "preparedCompleteSha256": "abac0b8285a449174b2749f4a2c1ddc7ed0875dc1ddb3edbce8a877c962fb2b0",
+  "preparedProtocolSha256": "646446bf1a192f370134fc8cdddc4d4ff83a3e0d76f9c7ef13418e3083408562",
+  "requests": [
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " wars",
+        ", wars",
+        ": wars",
+        "; wars",
+        ". Wars",
+        "? Wars",
+        "! Wars"
+      ],
+      "id": "en-calibration-v5-0014062d6a8092d859af067dd0310f0c603794cff7b1fa779c9935f5756b42d2",
+      "language": "en",
+      "prefix": "secured the B tube. There was a shortened version of the gun called the 76/30 Model 1915, which was used on a few classes of destroyers, submarines, tugs and minesweepers.  The 76/30 Model 1915 were also used as truck mounted artillery during both world",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " fiddle",
+        ", fiddle",
+        ": fiddle",
+        "; fiddle",
+        ". Fiddle",
+        "? Fiddle",
+        "! Fiddle"
+      ],
+      "id": "en-calibration-v5-0bbf7fe3c00f89c9c7ccc790a31329e4802855c7e74dcfce383070acb29e0c12",
+      "language": "en",
+      "prefix": "were performed by Rick Richards. Other guest musicians from Austin on the album were Derek O'Brien Jeff Plankenhorn, Bucca Allen, and Idgy Vaughn, plus Lincoln Durham's wife, Alissa.\n\nTrack list\n\nPersonnel\n\nMusicians\n Lincoln Durham – vocals, guitars",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " the",
+        ", the",
+        ": the",
+        "; the",
+        ". The",
+        "? The",
+        "! The"
+      ],
+      "id": "en-calibration-v5-0cd59bbd023b96134dc7faaced88586d65c15b3669c0bba1f92dba3ffcdaf31d",
+      "language": "en",
+      "prefix": "in China. It is the largest species in the family, reaching up to in length and in weight. Formerly common, the numbers of this vulnerable species have declined because of overfishing, dams (limiting its breeding migration), habitat loss and pollution",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " being",
+        ", being",
+        ": being",
+        "; being",
+        ". Being",
+        "? Being",
+        "! Being"
+      ],
+      "id": "en-calibration-v5-2b49b75c03cf12125284f6295669a69acdb624543a885e4c14e8b5605204941c",
+      "language": "en",
+      "prefix": "Nottinghamshire. He was born in Nottingham; died in Hampstead. He was also a novelist, writing as J. C. Snaith, and played in the Authors Cricket Club alongside fellow authors A. A. Milne and P. G. Wodehouse among others.\n\nWorks\nMistress Dorothy Marvin",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " references",
+        ", references",
+        ": references",
+        "; references",
+        ". References",
+        "? References",
+        "! References"
+      ],
+      "id": "en-calibration-v5-54b8931e1990784e685af9ca4730ab22e948ad9be6d1bd48fa3aa2ed853c7bab",
+      "language": "en",
+      "prefix": "of the Hungarian Academy of Sciences and the Kisfaludy Society.\n\nGyörgy Zádor went to schools in Pápa, Kőszeg, Győr and to the University in Pest, where he met Mihály Vörösmarty and he started publishing using Fenyéri Gyula as his nom de plume",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " who",
+        ", who",
+        ": who",
+        "; who",
+        ". Who",
+        "? Who",
+        "! Who"
+      ],
+      "id": "en-calibration-v5-6ecec6607540ca6ed1d297f987d7ce01f80676e523dc931bbe497874503eb6e4",
+      "language": "en",
+      "prefix": "of Robert, Count of Clermont and his wife, Beatrice of Burgundy, Lady of Bourbon. In 1309c., John married Joanna of Dargies and Catheux (daughter of Renaud II of Dargies and Catheux and his spouse, Agnes). \n\nJohn and his wife had;\nBeatrice of Charolais",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " the",
+        ", the",
+        ": the",
+        "; the",
+        ". The",
+        "? The",
+        "! The"
+      ],
+      "id": "en-calibration-v5-85c0d6c3b908d985d8dd4d2d2e842fd142ee0d922b647812b9790013b32532aa",
+      "language": "en",
+      "prefix": "was built in 1930 to a design by New York City architect Alfredo S.G. Taylor. Taylor spent many summers in Norfolk, and is credited with more than thirty commissions in the community. A number of them share the medieval features used in this building",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " references",
+        ", references",
+        ": references",
+        "; references",
+        ". References",
+        "? References",
+        "! References"
+      ],
+      "id": "en-calibration-v5-cc2ad07c697655ac163326ec0370533e1027d2e059a3e12e404272be8c8efcee",
+      "language": "en",
+      "prefix": "Cyclobacterium jeungdonense is a horseshoe-shaped bacterium from the genus of Cyclobacterium which has been in Korea",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " she",
+        ", she",
+        ": she",
+        "; she",
+        ". She",
+        "? She",
+        "! She"
+      ],
+      "id": "en-calibration-v5-fe946b3506012aadb6ebbd34acc20fc9f236bc73708254662363fce73a720f5f",
+      "language": "en",
+      "prefix": "Lessing Academy in Berlin. She combined this with work as a war reporter, travelling to the Eastern Front and filing reports for various newspapers. It was also around this time that she started writing for Die Woche, the weekly news magazine",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " the",
+        ", the",
+        ": the",
+        "; the",
+        ". The",
+        "? The",
+        "! The"
+      ],
+      "id": "en-holdout-v5-00736b8e15a846c870db7ddc97d8137d2959c1d8b8792d3f1a569db66d93edbc",
+      "language": "en",
+      "prefix": "Renaissance hôtel particulier (palace) of the 16th century.\n\nHistory\nIt was built from 1540 for N. De La Mamye and redesigned throughout the 16th century for its descendants, the councilor to the Parliament Guillaume de La Mamye, then Pierre de La Mamye",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " from",
+        ", from",
+        ": from",
+        "; from",
+        ". From",
+        "? From",
+        "! From"
+      ],
+      "id": "en-holdout-v5-00ddadf032fdabc234293a5aba086e608dd7cb2f4e5e600cd8549ee9fa63cadc",
+      "language": "en",
+      "prefix": "Cyclobacterium qasimii is a horseshoe-shaped, psychrotolerant and non-motile bacterium from the genus of Cyclobacterium which has been isolated from marine sediments",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " area",
+        ", area",
+        ": area",
+        "; area",
+        ". Area",
+        "? Area",
+        "! Area"
+      ],
+      "id": "en-holdout-v5-01a94c6f3401bda8ae23c51a68a57fe6cd473eea8766630c8a39880c424ca49a",
+      "language": "en",
+      "prefix": "Carsick Hall is a stone built Victorian Lodge located in the affluent Ranmoor area of Sheffield, South Yorkshire, England, which lies 3 miles west of Sheffield City Centre.\n\nCarsick Hall is notable in the",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " the",
+        ", the",
+        ": the",
+        "; the",
+        ". The",
+        "? The",
+        "! The"
+      ],
+      "id": "en-holdout-v5-064fe1ef0064ba5633e2be57ca19409d9b4054e3022c954f3ce2aadaecd20330",
+      "language": "en",
+      "prefix": "it marks the east end of the South Channel, the southernmost navigational channel of the Straits of Mackinac. The point has been subdivided into real estate for cabins and summer residences. U.S. Highway 23 serves the point and its small settlement",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " dynamics",
+        ", dynamics",
+        ": dynamics",
+        "; dynamics",
+        ". Dynamics",
+        "? Dynamics",
+        "! Dynamics"
+      ],
+      "id": "en-holdout-v5-07890c20c9d51a947df676c891e987561bb09971fd52d66028bfc412aa3e0fae",
+      "language": "en",
+      "prefix": "Zed Books.\n Fairhead, J. And M. Leach, 1996, Misreading the African landscape: society and ecology in a forest-Savanna mosaic.  Cambridge and New York:  Cambridge University Press.\n Leach, M., Mearns, R. And Scoones, I., 1999. Environmental entitlements",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " spanning",
+        ", spanning",
+        ": spanning",
+        "; spanning",
+        ". Spanning",
+        "? Spanning",
+        "! Spanning"
+      ],
+      "id": "en-holdout-v5-3545e6f3dde6b8c0f41b23e65c206db9fd2ca2fc4f7e0e47259944c9032d16da",
+      "language": "en",
+      "prefix": "It was constituted under the National Parks and Wildlife Act 1972 on 27 July 1978. As of July 2016, the conservation park covered an area of.\n\nIn 1980, it was described as follows:Roonka Conservation Park contains a most important archaeological site",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " references",
+        ", references",
+        ": references",
+        "; references",
+        ". References",
+        "? References",
+        "! References"
+      ],
+      "id": "en-holdout-v5-9b461b1847c1a190aecd0e602606ae0d8629c77dd58faf3dcb38e79e9ced057e",
+      "language": "en",
+      "prefix": "Erioptera lutea is a species of fly in the family Limoniidae. It is found in the Palearctic",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " the",
+        ", the",
+        ": the",
+        "; the",
+        ". The",
+        "? The",
+        "! The"
+      ],
+      "id": "en-holdout-v5-c7979fc28fab24311c4d60f0b86fa62d624c932928cfcd0fd5270f5e6cf08561",
+      "language": "en",
+      "prefix": "The Sunshine Coast Solar Farm is a photovoltaic power station operating on a site in Valdora in the Sunshine Coast near Yandina, in Queensland, Australia",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " runway",
+        ", runway",
+        ": runway",
+        "; runway",
+        ". Runway",
+        "? Runway",
+        "! Runway"
+      ],
+      "id": "en-holdout-v5-d2f8b2f62960276da724d7141eebf335a043da2939bda459a72296526ab5e9e2",
+      "language": "en",
+      "prefix": "Centralia Municipal Airport is a U.S. general aviation airport located two nautical miles southeast of Centralia, Illinois.\n\nFacilities and Aircraft\nThe airport has two asphalt runways",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " математический",
+        ", математический",
+        ": математический",
+        "; математический",
+        ". Математический",
+        "? Математический",
+        "! Математический"
+      ],
+      "id": "ru-calibration-v5-ef5ce45618f7720e3ea2deb1f729de591307008f7164100bceb4d8040a550e2a",
+      "language": "ru",
+      "prefix": "Александру Иоана Кузы.\n\nОбучение ведётся на румынском и английском языках, всего обучается около 30 тыс. Студентов. Действует 18 факультетов",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " района",
+        ", района",
+        ": района",
+        "; района",
+        ". Района",
+        "? Района",
+        "! Района"
+      ],
+      "id": "ru-holdout-v5-035cb4219906a416faf1f574f2c9b868dfd9645321ad2624314b523d70552acc",
+      "language": "ru",
+      "prefix": "поселения.\n\nГеография\n\nУлицы\n\nНаселение\n\nПримечания \n\n пер. Осиновый,\n ул. Красная,\n ул. Степная.\n\nСсылки \n \n\nНаселённые пункты Новопокровского",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " ставший",
+        ", ставший",
+        ": ставший",
+        "; ставший",
+        ". Ставший",
+        "? Ставший",
+        "! Ставший"
+      ],
+      "id": "ru-holdout-v5-043251d5c54e8cc786cf64db068a90e459b68cd83d0740485bac403e9f95173f",
+      "language": "ru",
+      "prefix": "истории, доцент и научный руководитель кафедры.\n\nВ 1996 году во Фрайбургском университете и Генрих Швендеман основали исторический портал",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " продолжает",
+        ", продолжает",
+        ": продолжает",
+        "; продолжает",
+        ". Продолжает",
+        "? Продолжает",
+        "! Продолжает"
+      ],
+      "id": "ru-holdout-v5-0631391facada4a45ceb632ae7d3db562e933e20f4b7c9648ba6fba842539478",
+      "language": "ru",
+      "prefix": ", являющемся ныне синонимом (в интернете также встречается ошибочное написание «Bombus paradoxu» без последней буквы). Численность низкая и",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " факты",
+        ", факты",
+        ": факты",
+        "; факты",
+        ". Факты",
+        "? Факты",
+        "! Факты"
+      ],
+      "id": "ru-holdout-v5-1d592925870902eefed70437d9359036315b2f0f3b4ffd79d79bf3e369a3515b",
+      "language": "ru",
+      "prefix": "1917.\n Война после мира: (По поводу Париж. экон. конф. союзников). Санкт-Петербург : Жизнь и знание, 1917.\n Международные экономические проблемы",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " ведущая",
+        ", ведущая",
+        ": ведущая",
+        "; ведущая",
+        ". Ведущая",
+        "? Ведущая",
+        "! Ведущая"
+      ],
+      "id": "ru-holdout-v5-857abd5b9773eda1c20c2620b2a5556d539d236ea3549c1350398d425ccfb445",
+      "language": "ru",
+      "prefix": "платформа (разъезд) Кара-Джалга.\n\nТранспорт \nАвтомобильный и железнодорожный транспорт. В 150 м от разъезда просёлочная дорога",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " штат",
+        ", штат",
+        ": штат",
+        "; штат",
+        ". Штат",
+        "? Штат",
+        "! Штат"
+      ],
+      "id": "ru-holdout-v5-b48b671247f22aa14cb1fb39213fd3eea04ad2484aa83a579dd55adc5ebaf7f5",
+      "language": "ru",
+      "prefix": " супермодель и; победительница конкурса красоты «Мисс США 2004».\n\nБиография \nШанди Финнесси родилась 9 июня 1978 года в городе Флориссент",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " tropical",
+        ", tropical",
+        ": tropical",
+        "; tropical",
+        ". Tropical",
+        "? Tropical",
+        "! Tropical"
+      ],
+      "id": "es-calibration-v5-020ec347afe9f62527a84898f838bc7806e5aee98190c90381b3aa56715ecce1",
+      "language": "es",
+      "prefix": "Witica es un género de arañas araneomorfas de la familia Araneidae. Se encuentra en Sudamérica",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " web",
+        ", web",
+        ": web",
+        "; web",
+        ". Web",
+        "? Web",
+        "! Web"
+      ],
+      "id": "es-calibration-v5-04550ba00144532eaeb035203948b136a69c3d8162c0cad5ec849a1a448897f8",
+      "language": "es",
+      "prefix": "extraídos de Google Earth y el mapa de Rusia de Yandex.ru, accesible desde este enlace.\nEste artículo es una traducción de su correspondiente en la edición en ruso de Wikipedia, Кеслерово.\nMapa topográfico en maps.vlasenko.net.\nSitio",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " equipos",
+        ", equipos",
+        ": equipos",
+        "; equipos",
+        ". Equipos",
+        "? Equipos",
+        "! Equipos"
+      ],
+      "id": "es-calibration-v5-048a0b8cd1ed1b4227cb7d22412474398035a98f48a1614fe4aaec27a736b98f",
+      "language": "es",
+      "prefix": "con final en Versalles. Fue seguido en el podio por su compañero de equipo Ramiro Rincón y por Edson Calderón.\n\nEquipos participantes \n32 equipos tomaron parte de la carrera, la mayoría de ellos amateur y algunos con solo 2 o 3 corredores. Entre los",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " por",
+        ", por",
+        ": por",
+        "; por",
+        ". Por",
+        "? Por",
+        "! Por"
+      ],
+      "id": "es-calibration-v5-12e9879c957b28269c70ed32683e730869d65a57276d39ff8a9bee8927c30a8a",
+      "language": "es",
+      "prefix": "por y medido en grados. La mitad de su valor se denomina semi-arco diurno. Conociendo previamente la latitud como , así como la declinación solar . Se tiene entonces que el arco diurno se puede calcular como:\n\nEste valor cambia cada día del año",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " extrema",
+        ", extrema",
+        ": extrema",
+        "; extrema",
+        ". Extrema",
+        "? Extrema",
+        "! Extrema"
+      ],
+      "id": "es-calibration-v5-2c46a8efd98cd1805d7b9b4c4ea550096fe65530b2c591b72a0b4d819da12a7d",
+      "language": "es",
+      "prefix": "Se encuentra en la puna jujeña, a una altura de 4340\n\nPoblación \nCuenta con, lo que representa un incremento del 8% frente a los  del censo anterior.\n\nClima \nEl clima de Pairique Chico se caracteriza por los severos inviernos, como consecuencia de la",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " después",
+        ", después",
+        ": después",
+        "; después",
+        ". Después",
+        "? Después",
+        "! Después"
+      ],
+      "id": "es-calibration-v5-5afd7916ab33887f61c16d450e72fd7003db8571ae5287fcf5c217bd4c0651ce",
+      "language": "es",
+      "prefix": "necesidad de ser salvados y al contrario, los réprobos, el ser condenados por sus actos impulsados por su libre albedrío no regenerado. \n\nEsta enseñanza fue esparcida entre unos y condenado después por muchos Concilios fue sostenido por Lucido en el",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " lugares",
+        ", lugares",
+        ": lugares",
+        "; lugares",
+        ". Lugares",
+        "? Lugares",
+        "! Lugares"
+      ],
+      "id": "es-calibration-v5-5ee542dd50f3b6871267428dfe78022dd3f2b92ed2fc67a066fce31209049b2b",
+      "language": "es",
+      "prefix": "Primera Edición. Galería St. Johann, Saarbrücken, 2003, ISBN 3-928596-78-0.\nOliver Herwig Diseño de la Palabra: Eugen Gomringer and the visual arts. Iudicium, Múnich 2001, ISBN 3-89129-726-2.\nOhmer, Anja: Eugen Gomringer y la Poesía Concreta. En",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " epíteto",
+        ", epíteto",
+        ": epíteto",
+        "; epíteto",
+        ". Epíteto",
+        "? Epíteto",
+        "! Epíteto"
+      ],
+      "id": "es-calibration-v5-9349b6b8a633b2222e593358e5594afe5a558548a48f79a06c258cdb53fb9b4c",
+      "language": "es",
+      "prefix": "el centro de la flor tiene muchos estambres amarillos.\n\nTaxonomía \nAquilegia chrysantha, fue descrita por Asa Gray y publicado en Proceedings of the American Academy of Arts and Sciences 8: 621, en el año 1873.\n\nEtimología\nVer: Aquilegia\n\nchrysantha",
+      "split": "calibration"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " palabra",
+        ", palabra",
+        ": palabra",
+        "; palabra",
+        ". Palabra",
+        "? Palabra",
+        "! Palabra"
+      ],
+      "id": "es-holdout-v5-0036d5e6bd7f086e07eb92b477e30264c0ee43ad5be3642dd829713bf781f021",
+      "language": "es",
+      "prefix": "parte del Eje Neovolcánico. La altitud de la montaña es 3,240 metros sobre el nivel del mar, es la segunda montaña más alta del estado, sólo superada por el Cerro la Peñuela. Se cree que es un volcán inactivo, mas no se sabe con exactitud. La",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " del",
+        ", del",
+        ": del",
+        "; del",
+        ". Del",
+        "? Del",
+        "! Del"
+      ],
+      "id": "es-holdout-v5-01a14862d14c71af8d2e16487c6a21955971c2c4fa6274d121295568359c86f2",
+      "language": "es",
+      "prefix": "Autónoma de Yucatán Con acceso el 13 de marzo de 2012.\n Los gobernadores de Yucatán\n Prolegómenos del federalismo mexicano. Biblioteca Jurídica.org (consultado el 10 de marzo de 2012)\n\nNacidos en San Francisco de Campeche\nGobernadores de Yucatán",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " para",
+        ", para",
+        ": para",
+        "; para",
+        ". Para",
+        "? Para",
+        "! Para"
+      ],
+      "id": "es-holdout-v5-03ec4c20011f5447c54bef2faa4a47efe4e231a013460416aba4670f7b425003",
+      "language": "es",
+      "prefix": "para cubrir las ausencias provocadas por el amistoso entre y. Sus buenas actuaciones llevaron a Ernie Merrick a contratarlo por dos años. En 2015 dejó el club, firmando luego con el South Melbourne australiano. En 2016 pasó al Melbourne Knights",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " corre",
+        ", corre",
+        ": corre",
+        "; corre",
+        ". Corre",
+        "? Corre",
+        "! Corre"
+      ],
+      "id": "es-holdout-v5-058fc20d74d2c68992c8c5fb6ecf5d80e57c94f060308cb1a15ca087aeb0f344",
+      "language": "es",
+      "prefix": "El río Derwent es un río inglés que",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " especies",
+        ", especies",
+        ": especies",
+        "; especies",
+        ". Especies",
+        "? Especies",
+        "! Especies"
+      ],
+      "id": "es-holdout-v5-08a474811b8ffad0eb0460640eb04169407353068fffa6910b7d1c675c2bfc00",
+      "language": "es",
+      "prefix": "Chaetacis es un género de arañas araneomorfas de la familia Araneidae. Se encuentra en América.\n\nLista de",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " por",
+        ", por",
+        ": por",
+        "; por",
+        ". Por",
+        "? Por",
+        "! Por"
+      ],
+      "id": "es-holdout-v5-0fcd63b906fe11a66ae48eddec3dbd8b4f373b708c3b8fc0ed9d720d13f90f85",
+      "language": "es",
+      "prefix": "la cuadragésima posición del Draft de la NBA de 1972 por Seattle SuperSonics, y también por los Dallas Chaparrals en el Draft de la ABA, fichando por estos últimos, aunque no llegó a jugar ni un minuto.\n\nNo fue hasta cuando fichó como agente libre",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " antes",
+        ", antes",
+        ": antes",
+        "; antes",
+        ". Antes",
+        "? Antes",
+        "! Antes"
+      ],
+      "id": "es-holdout-v5-2ae5578fec96f891b048e7eb929ba0a02a39f30836df6015c8b585b99e65d836",
+      "language": "es",
+      "prefix": "El MV Greenpeace, anteriormente conocido como el Elba, fue un barco de Greenpeace construido en 1959 como un remolcador/buque de salvamento. Fue comprado por Greenpeace en 1977 y fue equipado con modernos equipos",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " usamos",
+        ", usamos",
+        ": usamos",
+        "; usamos",
+        ". Usamos",
+        "? Usamos",
+        "! Usamos"
+      ],
+      "id": "es-holdout-v5-5c6e6f81d7733a99b0269411b38a5fc56646f7d0752164db0f499909d5049465",
+      "language": "es",
+      "prefix": "espacio de caminos permite calcular la cohomología del espacio de lazos de ciertos espacios topológicos. Nótese que la fibración satisface para abiertos contráctiles dado que tiene el tipo de homotopía de por la sección anterior.\n\nCálculo de",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " sobre",
+        ", sobre",
+        ": sobre",
+        "; sobre",
+        ". Sobre",
+        "? Sobre",
+        "! Sobre"
+      ],
+      "id": "es-holdout-v5-7570685510357d3603ed659732e6911393055da2da1697b9f206b2b4f7681e05",
+      "language": "es",
+      "prefix": "vitral debió ser demandado para la construcción de la catedral y que acudió con sus propios vidrios.\n\nLa técnica de la fabricación de vitrales ha sido minuciosamente descrita por el monje Teófilo a inicios del en su tratado Schedula diversum artium",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " artículo",
+        ", artículo",
+        ": artículo",
+        "; artículo",
+        ". Artículo",
+        "? Artículo",
+        "! Artículo"
+      ],
+      "id": "es-holdout-v5-a3ef6b2d065e15959b2ee754399e53c1fa542db2e2897b18b55c3bfa03a3066a",
+      "language": "es",
+      "prefix": "utilizar formas geométricas, sus obras estaban imbuidas por el erotismo y el humor. \n\nSus méritos artísticos fueron reconocidos más tarde.\n\nFalleció el en Copenhague.\n\nNotas y referencias \n\nNotas\n\n Enlaces externos \n Weilbach, Dansk Kunstnerleksikon",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " significa",
+        ", significa",
+        ": significa",
+        "; significa",
+        ". Significa",
+        "? Significa",
+        "! Significa"
+      ],
+      "id": "es-holdout-v5-de2f93c6401a8ae29372bff988ea6142e3b2ea828d03eef08a2efa1dbd5322ee",
+      "language": "es",
+      "prefix": "de nuevos programas y proyectos.\n\nEventos de este tipo enseñan conocimientos y experiencias de modo que facilita la asimilación y la puesta en práctica de todos aquellos que participan. En este sentido la feria del conocimiento no es sólo compartir",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " junior",
+        ", junior",
+        ": junior",
+        "; junior",
+        ". Junior",
+        "? Junior",
+        "! Junior"
+      ],
+      "id": "es-holdout-v5-e3201e72be5c89b0cfb0f2b96280c59636a02d77b3670284f6ac88904e381a7e",
+      "language": "es",
+      "prefix": "2010 Ausencio Cruz se presentó en el programa de Israel Jaitovich Desmadruga2 en Televisa.\n\nPersonajes \nSus personajes más conocidos son:\n Valente Campillo: Charro de rancho.\n Margarito Pérez: humilde personaje abusado por los demás.\n Erreconerrechea",
+      "split": "holdout"
+    },
+    {
+      "candidateIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "candidates": [
+        " epíteto",
+        ", epíteto",
+        ": epíteto",
+        "; epíteto",
+        ". Epíteto",
+        "? Epíteto",
+        "! Epíteto"
+      ],
+      "id": "es-holdout-v5-f317ab990a7a70b39a81d92610d48e0183447a440101857def92efead7c28618",
+      "language": "es",
+      "prefix": "hacia arriba, las flores son polinizadas por el colibrí Selasphorus platycercus.\n\nTaxonomía \nAquilegia elegantula, fue descrita por Edward Lee Greene y publicado en Pittonia 4(20B): 14–15, en el año 1899.\nEtimología\nVer: Aquilegia\n\nelegantula",
+      "split": "holdout"
+    }
+  ],
+  "requestsSha256": "cfef3f5f2e84612b0b75b26d63d747d5cadde4bef7e90c58108d7d9a74bc09cc",
+  "runner": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-current-20260906/rune-score",
+  "schemaVersion": 1,
+  "scope": "contextual-controller-supplement",
+  "splitCounts": {
+    "calibration": 18,
+    "holdout": 28
+  },
+  "thresholdSearch": false
+}

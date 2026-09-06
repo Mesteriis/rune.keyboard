@@ -1,0 +1,181 @@
+FFFFFFFFFFFFFFFF
+======================================================================
+FAIL: test_bound_file_drift_is_rejected (test_contextual_controller_attribution.AttributionTest.test_bound_file_drift_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_complete_denominators_and_manual_action_counts (test_contextual_controller_attribution.AttributionTest.test_complete_denominators_and_manual_action_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_duplicate_missing_and_unknown_host_rows_fail (test_contextual_controller_attribution.AttributionTest.test_duplicate_missing_and_unknown_host_rows_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_engine_exclusion_cannot_adopt_an_unrelated_score (test_contextual_controller_attribution.AttributionTest.test_engine_exclusion_cannot_adopt_an_unrelated_score)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_error_and_missing_payload_remain_explicit (test_contextual_controller_attribution.AttributionTest.test_error_and_missing_payload_remain_explicit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_exact_numeric_scores_are_preserved (test_contextual_controller_attribution.AttributionTest.test_exact_numeric_scores_are_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_exact_payload_positive_and_no_query_are_distinct (test_contextual_controller_attribution.AttributionTest.test_exact_payload_positive_and_no_query_are_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_fresh_output_refuses_orphan_artifacts (test_contextual_controller_attribution.AttributionTest.test_fresh_output_refuses_orphan_artifacts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_malformed_response_never_becomes_abstention (test_contextual_controller_attribution.AttributionTest.test_malformed_response_never_becomes_abstention)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_metric_row_duplicates_and_invalid_boundary_fail (test_contextual_controller_attribution.AttributionTest.test_metric_row_duplicates_and_invalid_boundary_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_payload_mismatch_is_refused_before_numeric_adoption (test_contextual_controller_attribution.AttributionTest.test_payload_mismatch_is_refused_before_numeric_adoption)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_strict_export_admission_failure_cannot_fall_back (test_contextual_controller_attribution.AttributionTest.test_strict_export_admission_failure_cannot_fall_back)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_unknown_payload_is_not_measured_original (test_contextual_controller_attribution.AttributionTest.test_unknown_payload_is_not_measured_original)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_whitespace_case_and_candidate_order_are_not_normalized (test_contextual_controller_attribution.AttributionTest.test_whitespace_case_and_candidate_order_are_not_normalized)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_zero_256_and_reordered_reply_are_not_coerced (test_contextual_controller_attribution.AttributionTest.test_zero_256_and_reordered_reply_are_not_coerced)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+======================================================================
+FAIL: test_zero_taps_return_null_rate (test_contextual_controller_attribution.AttributionTest.test_zero_taps_return_null_rate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 39, in setUp
+    self.assertTrue(Path(__file__).with_name('contextual_controller_attribution.py').is_file(),
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    'bounded contextual adapter is not implemented')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded contextual adapter is not implemented
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.002s
+
+FAILED (failures=16)

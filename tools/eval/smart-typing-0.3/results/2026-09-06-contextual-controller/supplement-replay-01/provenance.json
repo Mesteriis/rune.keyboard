@@ -1,0 +1,22 @@
+{
+  "attributionComplete": true,
+  "files": {
+    "actual.jsonl": "fd7814c2c0ebbf1ffdaa2147d765162f99fa8ea57d5cf3b5bfb583afae356c5a",
+    "actual.jsonl.log": "e2c58612be6bf3d1a1d8d8a796ab8731604aa3638b36feb60a5acb3d7a940043",
+    "report.json": "f9e41d00a7cc2949744b449b5cf5bb7f802da8a0187e1fdd0ffde27504b8852b",
+    "response-bindings.jsonl": "165a1d0ba2ce416869fcfe9177a2a441f4cfcd630867e40d976b8912849e1187",
+    "responses.tsv": "d57ac6ff8a30d591c90ac9640f3cdcd61a63fbf4a890f1d3bedf4381068f4e07",
+    "row-evidence.jsonl": "c3e1c4e5b56739dafded6d8b1b87c231c61ba33233b5e992ee54bc3ec6e2298c",
+    "unscored-requests.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "phase": "replay",
+  "prepared": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-prepare-01",
+  "preparedCompleteSha256": "abac0b8285a449174b2749f4a2c1ddc7ed0875dc1ddb3edbce8a877c962fb2b0",
+  "schemaVersion": 1,
+  "scope": "contextual-controller-attribution",
+  "supplement": {
+    "calibration": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/calibration",
+    "freeze": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01",
+    "holdout": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/holdout"
+  }
+}

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<stdin>", line 14, in <module>
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/contextual_controller_attribution.py", line 259, in bind_runtime
+    require(all(runtime_codes.get(name)==value for name,value in ERROR_MAP.items()),'RUNTIME_ERROR_CODES')
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/contextual_controller_attribution.py", line 49, in require
+    if not condition: raise ValueError(code)
+                      ^^^^^^^^^^^^^^^^^^^^^^
+ValueError: RUNTIME_ERROR_CODES
+INPUT_FILES 239
+SOURCES 49

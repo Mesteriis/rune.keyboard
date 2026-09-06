@@ -14,7 +14,7 @@ copies and do not change the gitlink.
 
 | Plan slice | Current evidence | Remaining acceptance |
 | --- | --- | --- |
-| 1 Evaluation | Frozen prepared and product corpora; current controller reproduction completed5956 responses and24000 observations; state-based Original annotation reviewed | Contextual controller attribution; historical failures stay immutable |
+| 1 Evaluation | Frozen prepared and product corpora; current controller reproduction completed5956 responses and24000 observations; state-based Original annotation reviewed | Contextual controller attribution now complete; historical failures stay immutable |
 | 2 Native scoring | Fresh current-source host7/7 PASS, including exact model oracle/equivalence/abort; ordinary Android JNI6/6 on each API with source/APK continuity | Physical runtime/energy acceptance is separate |
 | 3 Private process | Production Binder worker, preparation, cancellation, CPU duty and idle unload verified on Fold | Complete editor/process-death matrix and energy |
 | 4 Composition | Owned RAM context, invalidation, full-word Backspace reopening, no replay/readback | Physical folding transition and full editor matrix |
@@ -22,7 +22,7 @@ copies and do not change the gitlink.
 | 6 Lexicons | Pinned/licensed RU/EN/ES assets, 3-format/API26 comparison, bounded exact top-N and reproduction receipts | Final product qualification; deterministic-only automatic spelling is unqualified |
 | 7 Model ranking | Current controller holdout EN293/304, RU341/358, ES396/408; reviewed Original annotation; actual Fold Space correction and immediate Undo | Physical rapid-typing coverage |
 | 8 Mechanical punctuation | Pure exclusions/Undo plus real Binder positive scenarios; API26 numeric/version/hostname exclusions PASS | Full real-editor coverage |
-| 9 Contextual punctuation | Current fixed policy has source-bound v5 calibration/freeze/holdout and per-language reports; actual Kotlin parity79/79 | Source agreement is not semantic precision; physical strip tap remains separate |
+| 9 Contextual punctuation | Fixed policy now has all1200 controller rows, exact source/cache/supplement bindings and179/179 explicit host selections; actual Kotlin parity79/79 | Source agreement is not semantic precision; physical strip tap remains separate |
 | 10 Settings/release | Schema3, independent preferences, content-free traces, local gates | Full matrices, current CI, complete reports, final version and main integration |
 
 The user changed the spelling release target from99% to **95% point precision**.
@@ -117,11 +117,28 @@ These are source-boundary observations, not unique semantic labels or an automat
 punctuation quality gate. Balanced Wikipedia strata do not establish chat precision;
 no source question/exclamation/semicolon strata or unknown-pretraining exclusion is
 claimed. Corpus20/20, current adapter35/35 and actual policy parity79/79 PASS.
-Those counts come from the actual contextual engine. Full-controller valid-word,
-spelling-precedence and canonical eligibility still need attribution over all1200
-rows before reporting displayed-suggestion coverage. No numeric semantic-precision
+Those historical counts come from the actual contextual engine; the subsequent
+full-controller attribution below includes valid-word, spelling-precedence and
+canonical eligibility over all1200 rows. No numeric semantic-precision
 floor was specified for suggestions; do not invent one or label source agreement
 as semantic accuracy.
+
+The full-controller attribution is now complete and freshly verified over all1200
+unchanged rows. It reuses863 exact numeric cache entries and separately frozen
+46 supplemental contextual payloads (18 calibration,28 holdout), each split scored
+once with the exact verified digest. All291 no-query rows remain in denominators.
+Holdout offers are EN31/200, RU34/200, ES20/200; source agreement among offers is
+31/31,33/34,19/20 respectively. All179 offers across both splits apply through one
+explicit host candidate selection, with zero automatic contextual edits, forbidden
+segment changes, harness errors, missing scores or unresolved rows. Fresh source
+compilation and replay reproduced every observation; independent evidence review
+PASS. Counts, exclusions, Wilson intervals, source closure, complete supplemental
+attempts and preserved development failures are archived in
+`tools/eval/smart-typing-0.3/results/2026-09-06-contextual-controller/`.
+These are conditional current-controller source observations, not semantic accuracy,
+unseen generalization, Android strip rendering or physical model availability.
+No parameters changed after scoring. Actual resident strip tap remains a separate
+editor-matrix obligation.
 
 ## Required editor matrix
 

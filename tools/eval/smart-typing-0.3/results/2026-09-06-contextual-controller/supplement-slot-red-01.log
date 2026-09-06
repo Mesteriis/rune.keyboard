@@ -1,0 +1,25 @@
+...............................F....
+======================================================================
+FAIL: test_holdout_needs_completed_calibration_and_orphan_run_is_refused (test_contextual_controller_attribution.SupplementalAdmissionTest.test_holdout_needs_completed_calibration_and_orphan_run_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 422, in test_holdout_needs_completed_calibration_and_orphan_run_is_refused
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 36 tests in 0.142s
+
+FAILED (failures=1)
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmprz242iox/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmprz242iox/freeze/calibration", "split": "calibration", "requests": 1, "nativeCalls": 0}
+{"admitted": "/Users/avm/projects/Personal/rune-keyboard/build/tmprz242iox/freeze/calibration", "responses": 1, "errors": 0, "unrepresentable": 0, "numericDelivery": false}
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmpeiwyjwdq/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmpeiwyjwdq/freeze/calibration", "split": "calibration", "requests": 1, "nativeCalls": 0}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmpeiwyjwdq/retry", "split": "calibration", "requests": 1, "nativeCalls": 0}
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmpexv2grts/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"supplementFreeze": "/Users/avm/projects/Personal/rune-keyboard/build/tmpk4hh1byh/freeze", "requests": 2, "splitCounts": {"calibration": 1, "holdout": 1}}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmpk4hh1byh/freeze/calibration", "split": "calibration", "requests": 1, "nativeCalls": 0}
+{"admitted": "/Users/avm/projects/Personal/rune-keyboard/build/tmpk4hh1byh/freeze/calibration", "responses": 1, "errors": 1, "unrepresentable": 0, "numericDelivery": false}
+{"staged": "/Users/avm/projects/Personal/rune-keyboard/build/tmpk4hh1byh/freeze/holdout", "split": "holdout", "requests": 1, "nativeCalls": 0}
+{"admitted": "/Users/avm/projects/Personal/rune-keyboard/build/tmpk4hh1byh/freeze/holdout", "responses": 1, "errors": 0, "unrepresentable": 0, "numericDelivery": false}

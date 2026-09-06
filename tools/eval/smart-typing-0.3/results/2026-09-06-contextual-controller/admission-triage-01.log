@@ -1,0 +1,13 @@
+START load_export
+START corpus_rows
+DONE corpus_rows
+DONE load_export
+START corpus_rows
+DONE corpus_rows
+START load_frozen
+DONE load_frozen
+START load_scores
+DONE load_scores
+START load_scores
+DONE load_scores
+ADMISSION_OK

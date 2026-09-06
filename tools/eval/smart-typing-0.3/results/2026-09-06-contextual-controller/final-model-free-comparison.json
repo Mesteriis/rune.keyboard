@@ -1,0 +1,19 @@
+{
+  "boundFiles": 316,
+  "changedSourceFiles": [
+    "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/README.md",
+    "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/contextual_controller_attribution.py",
+    "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py"
+  ],
+  "currentPreparedCompleteSha256": "b346534be7ecf78f8c242e0d186148dad3ddd943ceba815dcf793483464af286",
+  "harnessErrors": 0,
+  "identicalObservations": true,
+  "identicalRequestUniverse": true,
+  "nativeCalls": 0,
+  "numericResponsesDelivered": 0,
+  "priorPreparedCompleteSha256": "c232ef8fc18ed649e2aacd60c9b80d70c47831f5a88cfaedae1a88972359a1d9",
+  "productionDrift": false,
+  "rows": 1200,
+  "scope": "contextual-controller-final-source-prepare-comparison",
+  "unscoredPayloads": 46
+}

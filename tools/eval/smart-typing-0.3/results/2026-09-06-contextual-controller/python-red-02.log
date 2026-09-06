@@ -1,0 +1,57 @@
+FEFE.E................
+======================================================================
+ERROR: test_engine_comparison_uses_complete_rows_and_keeps_id_deltas (test_contextual_controller_attribution.AdditionalGuardTest.test_engine_comparison_uses_complete_rows_and_keeps_id_deltas)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 160, in test_engine_comparison_uses_complete_rows_and_keeps_id_deltas
+    self.assertEqual(1,result['engineOffers'])
+                       ~~~~~~^^^^^^^^^^^^^^^^
+KeyError: 'engineOffers'
+
+======================================================================
+ERROR: test_host_coverage_requires_every_named_case_exactly_once (test_contextual_controller_attribution.AdditionalGuardTest.test_host_coverage_requires_every_named_case_exactly_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 169, in test_host_coverage_requires_every_named_case_exactly_once
+    [{'case':n,'passed':True} for n in self.tool.HOST_CASES]+[{'case':self.tool.HOST_CASES[0],'passed':True}]]:
+                                       ^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'contextual_controller_attribution' has no attribute 'HOST_CASES'
+
+======================================================================
+ERROR: test_unrepresentable_is_not_a_measured_abstention (test_contextual_controller_attribution.AdditionalGuardTest.test_unrepresentable_is_not_a_measured_abstention)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 141, in test_unrepresentable_is_not_a_measured_abstention
+    actual=self.tool.build_metrics([row])
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/contextual_controller_attribution.py", line 127, in build_metrics
+    require(all((r['decisionId'] is None)==(r['bindingStatus'] in UNRESOLVED or r['harnessError'] is not None)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                for r in rows),'UNRESOLVED_DECISION')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/contextual_controller_attribution.py", line 40, in require
+    if not condition: raise ValueError(code)
+                      ^^^^^^^^^^^^^^^^^^^^^^
+ValueError: UNRESOLVED_DECISION
+
+======================================================================
+FAIL: test_all_offers_require_an_attempt_and_success_for_clean_completion (test_contextual_controller_attribution.AdditionalGuardTest.test_all_offers_require_an_attempt_and_success_for_clean_completion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 152, in test_all_offers_require_an_attempt_and_success_for_clean_completion
+    with self.assertRaises(ValueError):self.tool.build_metrics([row])
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_failure_and_unresolved_are_not_double_subtracted (test_contextual_controller_attribution.AdditionalGuardTest.test_failure_and_unresolved_are_not_double_subtracted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 148, in test_failure_and_unresolved_are_not_double_subtracted
+    self.assertEqual(0,self.tool.build_metrics([row])['abstentions'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != -1
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.008s
+
+FAILED (failures=2, errors=3)

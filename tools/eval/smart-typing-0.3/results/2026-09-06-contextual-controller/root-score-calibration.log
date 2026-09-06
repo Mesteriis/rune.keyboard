@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-controller-attribution-20260906/run-supplement-native.py", line 2, in <module>
+    run = pathlib.Path(sys.argv[1]).resolve(strict=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/avm/.pyenv/versions/3.11.14/lib/python3.11/pathlib.py", line 993, in resolve
+    s = os.path.realpath(self, strict=strict)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen posixpath>", line 416, in realpath
+  File "<frozen posixpath>", line 460, in _joinrealpath
+FileNotFoundError: [Errno 2] No such file or directory: 'build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/calibration'

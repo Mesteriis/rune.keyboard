@@ -1,0 +1,10 @@
+{
+  "backendIdentity": {
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "bc3f78bdf3ac41009a7603ca5dd6b6c4d5e8d6c2bdcaf3a692cfd95a3b3d2553"
+  },
+  "model": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/model/rune-text-v1-0.1.0-q4_k_m.gguf",
+  "modelBytes": 396704416,
+  "runner": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-current-20260906/rune-score"
+}

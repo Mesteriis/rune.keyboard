@@ -1,0 +1,4945 @@
+{
+  "all": {
+    "abstentions": 1021,
+    "attributionComplete": true,
+    "automaticContextualEdits": 0,
+    "bindingCounts": {
+      "EXACT_CACHE_OK": 863,
+      "NO_CONTEXTUAL_REQUEST": 291,
+      "SUPPLEMENT_OK": 46
+    },
+    "changedDecisionIds": [
+      "en-calibration-v5-1456e00071a9189a8108dbc513eed67a87397e574890f38ba72aca490e066133",
+      "en-calibration-v5-15d39d5b93511c3bf7d4ee23aa5dbb9887c3890176b87cc8c45e79909efc2964",
+      "en-calibration-v5-1712c342654bc18379ae295abab6d672209d88a5eaece7952dcbcadc1f5c4606",
+      "en-calibration-v5-2130a4c0eea527666869cc549b1d138cb05e9614f90ddbf5bd3964714083494d",
+      "en-calibration-v5-347a9fe0908fc82b2a5796fdf7594a6624f081e1032ed13226824b3dcc57363b",
+      "en-calibration-v5-47e1f6990ac0a5d1afbc5b9387cffe1009076629705d9fdd6105a455acd6d00f",
+      "en-calibration-v5-5070d999784efe503b522f61342621caff473b43bb9a6fbf2a429dd595c0d698",
+      "en-calibration-v5-54b8931e1990784e685af9ca4730ab22e948ad9be6d1bd48fa3aa2ed853c7bab",
+      "en-calibration-v5-5795eaa2a9c8f7b077d146dfbdaae0454db1177a2213cec7ee0afe6780cc51f7",
+      "en-calibration-v5-fe946b3506012aadb6ebbd34acc20fc9f236bc73708254662363fce73a720f5f",
+      "en-holdout-v5-022835e1d8b6a7a1f7528fa5c1815d107f6ba320993bc23aa9959b47af446bde",
+      "en-holdout-v5-02ad7048c4c17eb1219b03cb14650a9a64fec2603dad5e1ae443d514f0bb6ab1",
+      "en-holdout-v5-08a80ae7b4c2e0a06bc7a8d57e4be77ee96bdc6e2c1ac9cd7f52bbb952e4edbd",
+      "en-holdout-v5-119f894e813c6eca8fb3c167d79b21c9d1c9552cd88729b44eaf1bf29471b122",
+      "en-holdout-v5-14ff6512d15ffcebc7113ab5c2a6556b78acf35d9c5f1a3d607c13a4898fbd9a",
+      "en-holdout-v5-183db65972bc0b2a0927a4f4bb90510ad9fcbb78ee41e8b27dd8f38340b67888",
+      "en-holdout-v5-1cf2e7be792667e72a96742664f5692083284343162b9695d8902118de636a01",
+      "en-holdout-v5-5b514fd800798b64531082a8d26d34f76e01598e3e3b9fab4c684b1fc68ea17a",
+      "en-holdout-v5-9b461b1847c1a190aecd0e602606ae0d8629c77dd58faf3dcb38e79e9ced057e",
+      "ru-calibration-v5-159f2ac48a35c7d162b2ac0a647fdf3a61398ef084a04eec8a4b86c91eefc66a",
+      "ru-calibration-v5-22039a61e43eacd66f9c23d266b3634c96e25e2aefcf71b0b6a8e06a04cde36e",
+      "ru-calibration-v5-32ec005db2b144d01b302404a303b38735b875c79bbf04ef63dcac9812d4b84f",
+      "ru-calibration-v5-41a7edfb354d63939771e8f8bf206d20d586e8a73aa21e285a439a78697569bf",
+      "ru-holdout-v5-0a53969e1b42bd465b0f12191d87f6186cf042aa4ab49513bbcfa833bb7fc362",
+      "ru-holdout-v5-0b36c25f58b5c5057e0e357f84243785ac488e42dbb1ef40c42f0bf94218a6ee",
+      "ru-holdout-v5-0fbeafa5bca3b91362305499a4e3f6350e55f8c97e3b22266de106e88f6be1cd",
+      "es-calibration-v5-230fa3a56d8f0aa41b0e9bdccdaaffa093012e211b07d8c181eea8c92186a81d",
+      "es-calibration-v5-2880441e41310123b588ea3b96846c88ad8f69780d06ef13adc3bca6136dcf6a",
+      "es-calibration-v5-2cff52c60d2f642af126a3a743f57f2c1c668560732dde411cb97bf25e5972f2",
+      "es-calibration-v5-5c26aa93d4be2f099ae18166109ac960b862d0ff279a6f1ee6a55b4e30ce3d21",
+      "es-calibration-v5-5edb11cbd430639995a2b0754ade9caec4f4fe0dcf343eaa1679ca11ca5dcffc",
+      "es-calibration-v5-7333f1e9b519fb87c2283009ddad1ce9a91b18e762c311f96f9b35d9ca11dd3b",
+      "es-holdout-v5-03cb1655bd0d40b26ae3140273f1f5162515546dfca942fdf69ad2950268462e",
+      "es-holdout-v5-061ec5a93bc7ad20667bed23d2dde2f33a36099bdac3d7fb7bfb2ac552d0b2ff",
+      "es-holdout-v5-0b971ec8ef8636366cee04b139c787a8385d95360cace0470fcb1d89cc41823e",
+      "es-holdout-v5-126aa2b84c0de40003ce699ba0a0ed982acff0e4695fc1309dd1a7d6c18a4daa",
+      "es-holdout-v5-1376002f14f2be3d2c20b8b29204289c39c8d700bed9c4682922836d3fa69a66",
+      "es-holdout-v5-49110113612d3ade6554c5eefd9a677d5eb3ebbb603554ac0a782a5773fac81c",
+      "es-holdout-v5-ff5bb9cc08b342d9256f8ec173a0b058a1849eeb6201f171058de49c0398497b"
+    ],
+    "decisionCounts": {
+      "0": 1021,
+      "1": 120,
+      "2": 25,
+      "3": 0,
+      "4": 34,
+      "5": 0,
+      "6": 0
+    },
+    "deliveredInsertionsAtObservedSpaces": {
+      "denominator": 300,
+      "numerator": 0,
+      "value": 0.0,
+      "wilson95RowDescriptive": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ]
+    },
+    "deliveredSourceAgreement": {
+      "denominator": 1200,
+      "numerator": 471,
+      "value": 0.3925,
+      "wilson95RowDescriptive": [
+        0.3652569523555855,
+        0.42042911277400247
+      ]
+    },
+    "engineDecisionCounts": {
+      "0": 988,
+      "1": 127,
+      "2": 28,
+      "3": 0,
+      "4": 57,
+      "5": 0,
+      "6": 0
+    },
+    "engineErrorRows": 0,
+    "engineExcludedRows": 183,
+    "engineOffers": 212,
+    "engineSourceAgreement": {
+      "denominator": 1200,
+      "numerator": 502,
+      "value": 0.41833333333333333,
+      "wilson95RowDescriptive": [
+        0.3907275386777052,
+        0.44646032475407477
+      ]
+    },
+    "engineSuggestionCoverage": {
+      "denominator": 1200,
+      "numerator": 212,
+      "value": 0.17666666666666667,
+      "wilson95RowDescriptive": [
+        0.15612961995290825,
+        0.199267227103527
+      ]
+    },
+    "forbiddenEdits": 0,
+    "harnessErrors": 0,
+    "inputChangedIds": [
+      "en-calibration-v5-0014062d6a8092d859af067dd0310f0c603794cff7b1fa779c9935f5756b42d2",
+      "en-calibration-v5-0bbf7fe3c00f89c9c7ccc790a31329e4802855c7e74dcfce383070acb29e0c12",
+      "en-calibration-v5-0c66a402f5443739a33160eef98199d89e93672f91ab9626dfa2d902581a493d",
+      "en-calibration-v5-0cd59bbd023b96134dc7faaced88586d65c15b3669c0bba1f92dba3ffcdaf31d",
+      "en-calibration-v5-105b266bf883be1a302e0a152cbf22d960e98ec6d93c85feb29ba4a112071718",
+      "en-calibration-v5-1994a8ff5e5716f4e39b80c92860ae66695431175e929b7de3dea10c8220b7ee",
+      "en-calibration-v5-2b49b75c03cf12125284f6295669a69acdb624543a885e4c14e8b5605204941c",
+      "en-calibration-v5-54b8931e1990784e685af9ca4730ab22e948ad9be6d1bd48fa3aa2ed853c7bab",
+      "en-calibration-v5-6ecec6607540ca6ed1d297f987d7ce01f80676e523dc931bbe497874503eb6e4",
+      "en-calibration-v5-7247f7c2087619694e05b91bcb3854526a1da155b1b0045a44924ac6b8877151",
+      "en-calibration-v5-85c0d6c3b908d985d8dd4d2d2e842fd142ee0d922b647812b9790013b32532aa",
+      "en-calibration-v5-cc2ad07c697655ac163326ec0370533e1027d2e059a3e12e404272be8c8efcee",
+      "en-calibration-v5-fe946b3506012aadb6ebbd34acc20fc9f236bc73708254662363fce73a720f5f",
+      "en-holdout-v5-00736b8e15a846c870db7ddc97d8137d2959c1d8b8792d3f1a569db66d93edbc",
+      "en-holdout-v5-00ddadf032fdabc234293a5aba086e608dd7cb2f4e5e600cd8549ee9fa63cadc",
+      "en-holdout-v5-01a94c6f3401bda8ae23c51a68a57fe6cd473eea8766630c8a39880c424ca49a",
+      "en-holdout-v5-01acfd34279de3deb52955a4e04254d445fc0c5a0075be78e27f7f7f4a70f20a",
+      "en-holdout-v5-064fe1ef0064ba5633e2be57ca19409d9b4054e3022c954f3ce2aadaecd20330",
+      "en-holdout-v5-07890c20c9d51a947df676c891e987561bb09971fd52d66028bfc412aa3e0fae",
+      "en-holdout-v5-152a02b8aee1b07acb6f6321d0b814c0bbe9d71c8c25d0af2566a7a3e70ae03b",
+      "en-holdout-v5-3545e6f3dde6b8c0f41b23e65c206db9fd2ca2fc4f7e0e47259944c9032d16da",
+      "en-holdout-v5-3bcdc968f0efc0f463734bc4ae537aab5c87a447e62b6a30fcf4912b55a11dee",
+      "en-holdout-v5-9b461b1847c1a190aecd0e602606ae0d8629c77dd58faf3dcb38e79e9ced057e",
+      "en-holdout-v5-c7979fc28fab24311c4d60f0b86fa62d624c932928cfcd0fd5270f5e6cf08561",
+      "en-holdout-v5-d2f8b2f62960276da724d7141eebf335a043da2939bda459a72296526ab5e9e2",
+      "ru-calibration-v5-00259d677fe4e3186568952f59846d95fe8ae409670c654045b13e1f0468bde0",
+      "ru-calibration-v5-00e0ccc37a64009d23d90414b27464f153a23defa4f37dd7f4c0937ea5453412",
+      "ru-calibration-v5-ef5ce45618f7720e3ea2deb1f729de591307008f7164100bceb4d8040a550e2a",
+      "ru-holdout-v5-035cb4219906a416faf1f574f2c9b868dfd9645321ad2624314b523d70552acc",
+      "ru-holdout-v5-043251d5c54e8cc786cf64db068a90e459b68cd83d0740485bac403e9f95173f",
+      "ru-holdout-v5-0631391facada4a45ceb632ae7d3db562e933e20f4b7c9648ba6fba842539478",
+      "ru-holdout-v5-1d592925870902eefed70437d9359036315b2f0f3b4ffd79d79bf3e369a3515b",
+      "ru-holdout-v5-857abd5b9773eda1c20c2620b2a5556d539d236ea3549c1350398d425ccfb445",
+      "ru-holdout-v5-90e33a76aca2f321a93778c1a03b0579e54eda54529aad63f17d00c863993150",
+      "ru-holdout-v5-b48b671247f22aa14cb1fb39213fd3eea04ad2484aa83a579dd55adc5ebaf7f5",
+      "es-calibration-v5-0058e1e75792732be5d6ecfb910af4c92aad0800eeacabb35089bc63056651be",
+      "es-calibration-v5-020ec347afe9f62527a84898f838bc7806e5aee98190c90381b3aa56715ecce1",
+      "es-calibration-v5-04550ba00144532eaeb035203948b136a69c3d8162c0cad5ec849a1a448897f8",
+      "es-calibration-v5-048a0b8cd1ed1b4227cb7d22412474398035a98f48a1614fe4aaec27a736b98f",
+      "es-calibration-v5-08910749a78696d57c6da0a62edb14eb85cefc2ab69bb6cb982952d452fad2e7",
+      "es-calibration-v5-12e9879c957b28269c70ed32683e730869d65a57276d39ff8a9bee8927c30a8a",
+      "es-calibration-v5-2c46a8efd98cd1805d7b9b4c4ea550096fe65530b2c591b72a0b4d819da12a7d",
+      "es-calibration-v5-4c4e57092a15ef0b9b96c4316341ec7c3ecdf308069dfcbcd51ea1c6597e9b6d",
+      "es-calibration-v5-5afd7916ab33887f61c16d450e72fd7003db8571ae5287fcf5c217bd4c0651ce",
+      "es-calibration-v5-5ee542dd50f3b6871267428dfe78022dd3f2b92ed2fc67a066fce31209049b2b",
+      "es-calibration-v5-9349b6b8a633b2222e593358e5594afe5a558548a48f79a06c258cdb53fb9b4c",
+      "es-holdout-v5-0036d5e6bd7f086e07eb92b477e30264c0ee43ad5be3642dd829713bf781f021",
+      "es-holdout-v5-01a14862d14c71af8d2e16487c6a21955971c2c4fa6274d121295568359c86f2",
+      "es-holdout-v5-03ec4c20011f5447c54bef2faa4a47efe4e231a013460416aba4670f7b425003",
+      "es-holdout-v5-058fc20d74d2c68992c8c5fb6ecf5d80e57c94f060308cb1a15ca087aeb0f344",
+      "es-holdout-v5-07224a629c024d1b502cb15edfc3fae9a68693ccc00d88a6df294aeac9dc1f1f",
+      "es-holdout-v5-08a474811b8ffad0eb0460640eb04169407353068fffa6910b7d1c675c2bfc00",
+      "es-holdout-v5-0fcd63b906fe11a66ae48eddec3dbd8b4f373b708c3b8fc0ed9d720d13f90f85",
+      "es-holdout-v5-2ae5578fec96f891b048e7eb929ba0a02a39f30836df6015c8b585b99e65d836",
+      "es-holdout-v5-5c6e6f81d7733a99b0269411b38a5fc56646f7d0752164db0f499909d5049465",
+      "es-holdout-v5-7570685510357d3603ed659732e6911393055da2da1697b9f206b2b4f7681e05",
+      "es-holdout-v5-7e9cf1b1305076bebfbb41d8bb954efa9bdd6da36ca7ea447dcd5eced5dd0c0d",
+      "es-holdout-v5-a3ef6b2d065e15959b2ee754399e53c1fa542db2e2897b18b55c3bfa03a3066a",
+      "es-holdout-v5-de2f93c6401a8ae29372bff988ea6142e3b2ea828d03eef08a2efa1dbd5322ee",
+      "es-holdout-v5-e3201e72be5c89b0cfb0f2b96280c59636a02d77b3670284f6ac88904e381a7e",
+      "es-holdout-v5-f317ab990a7a70b39a81d92610d48e0183447a440101857def92efead7c28618"
+    ],
+    "inputChangedRows": 61,
+    "inputMechanicalEditSteps": 74,
+    "insertionAtObservedSpaces": {
+      "denominator": 300,
+      "numerator": 0,
+      "value": 0.0,
+      "wilson95RowDescriptive": [
+        8.673617379884035e-19,
+        0.012642971224546034
+      ]
+    },
+    "knownSourceMatchesPerAllRows": {
+      "denominator": 1200,
+      "numerator": 471,
+      "value": 0.3925,
+      "wilson95RowDescriptive": [
+        0.3652569523555855,
+        0.42042911277400247
+      ]
+    },
+    "measuredAbstentionRate": {
+      "denominator": 1200,
+      "numerator": 1021,
+      "value": 0.8508333333333333,
+      "wilson95RowDescriptive": [
+        0.8295583719606348,
+        0.8698692759497795
+      ]
+    },
+    "offers": 179,
+    "routingCounts": {
+      "CANONICAL_CASE_PRECEDENCE": 42,
+      "CONTEXTUAL_REQUEST": 909,
+      "ENGINE_EXCLUDED": 157,
+      "INCOMPLETE_GENERATION": 25,
+      "NO_OWNED_SPACE": 3,
+      "SPELLING_REQUEST": 63,
+      "UNKNOWN_NO_ALTERNATIVES": 1
+    },
+    "rows": 1200,
+    "sourceBoundaryAgreement": {
+      "denominator": 1200,
+      "numerator": 471,
+      "value": 0.3925,
+      "wilson95RowDescriptive": [
+        0.3652569523555855,
+        0.42042911277400247
+      ]
+    },
+    "suggestedSourceAgreement": {
+      "denominator": 179,
+      "numerator": 171,
+      "value": 0.9553072625698324,
+      "wilson95RowDescriptive": [
+        0.9143005344134072,
+        0.9771821799082285
+      ]
+    },
+    "suggestionCoverage": {
+      "denominator": 1200,
+      "numerator": 179,
+      "value": 0.14916666666666667,
+      "wilson95RowDescriptive": [
+        0.13013072405022044,
+        0.17044162803936522
+      ]
+    },
+    "tapAttempts": 179,
+    "tapRefusals": 0,
+    "tapSuccessRate": {
+      "denominator": 179,
+      "numerator": 179,
+      "value": 1.0,
+      "wilson95RowDescriptive": [
+        0.978990220021919,
+        0.9999999999999999
+      ]
+    },
+    "tapSuccesses": 179,
+    "unrepresentableReplies": 0,
+    "unresolvedDecisionIds": [],
+    "unresolvedRows": 0,
+    "unscoredPayloads": 0,
+    "unusedEngineResponseRows": 108
+  },
+  "nativeCalls": 0,
+  "physicalAvailabilityMeasured": false,
+  "qualityGateEstablished": false,
+  "realInputConnection": false,
+  "schemaVersion": 1,
+  "scope": "contextual-controller-attribution",
+  "semanticCorrectnessEvaluated": false,
+  "splits": {
+    "calibration": {
+      "en": {
+        "abstentions": 171,
+        "attributionComplete": true,
+        "automaticContextualEdits": 0,
+        "bindingCounts": {
+          "EXACT_CACHE_OK": 143,
+          "NO_CONTEXTUAL_REQUEST": 48,
+          "SUPPLEMENT_OK": 9
+        },
+        "byObservedBoundary": {
+          "colon": {
+            "abstentions": 49,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 33,
+              "NO_CONTEXTUAL_REQUEST": 14,
+              "SUPPLEMENT_OK": 3
+            },
+            "changedDecisionIds": [
+              "en-calibration-v5-5795eaa2a9c8f7b077d146dfbdaae0454db1177a2213cec7ee0afe6780cc51f7",
+              "en-calibration-v5-fe946b3506012aadb6ebbd34acc20fc9f236bc73708254662363fce73a720f5f"
+            ],
+            "decisionCounts": {
+              "0": 49,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 1,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 49,
+              "1": 1,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 11,
+            "engineOffers": 1,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 1,
+              "value": 0.02,
+              "wilson95RowDescriptive": [
+                0.003539259271646236,
+                0.10495443589637815
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "en-calibration-v5-105b266bf883be1a302e0a152cbf22d960e98ec6d93c85feb29ba4a112071718",
+              "en-calibration-v5-2b49b75c03cf12125284f6295669a69acdb624543a885e4c14e8b5605204941c",
+              "en-calibration-v5-85c0d6c3b908d985d8dd4d2d2e842fd142ee0d922b647812b9790013b32532aa",
+              "en-calibration-v5-fe946b3506012aadb6ebbd34acc20fc9f236bc73708254662363fce73a720f5f"
+            ],
+            "inputChangedRows": 4,
+            "inputMechanicalEditSteps": 6,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 49,
+              "value": 0.98,
+              "wilson95RowDescriptive": [
+                0.8950455641036219,
+                0.9964607407283539
+              ]
+            },
+            "offers": 1,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 1,
+              "CONTEXTUAL_REQUEST": 36,
+              "ENGINE_EXCLUDED": 11,
+              "INCOMPLETE_GENERATION": 1,
+              "SPELLING_REQUEST": 1
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 1,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.7934506856227626
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 1,
+              "value": 0.02,
+              "wilson95RowDescriptive": [
+                0.003539259271646236,
+                0.10495443589637815
+              ]
+            },
+            "tapAttempts": 1,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 1,
+              "numerator": 1,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.20654931437723745,
+                1.0
+              ]
+            },
+            "tapSuccesses": 1,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 3
+          },
+          "comma": {
+            "abstentions": 34,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 38,
+              "NO_CONTEXTUAL_REQUEST": 10,
+              "SUPPLEMENT_OK": 2
+            },
+            "changedDecisionIds": [
+              "en-calibration-v5-1712c342654bc18379ae295abab6d672209d88a5eaece7952dcbcadc1f5c4606",
+              "en-calibration-v5-47e1f6990ac0a5d1afbc5b9387cffe1009076629705d9fdd6105a455acd6d00f"
+            ],
+            "decisionCounts": {
+              "0": 34,
+              "1": 16,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 16,
+              "value": 0.32,
+              "wilson95RowDescriptive": [
+                0.20758216260656845,
+                0.45810297308144077
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 32,
+              "1": 18,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 8,
+            "engineOffers": 18,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 18,
+              "value": 0.36,
+              "wilson95RowDescriptive": [
+                0.24138749651846741,
+                0.49858983123887307
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 18,
+              "value": 0.36,
+              "wilson95RowDescriptive": [
+                0.24138749651846741,
+                0.49858983123887307
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "en-calibration-v5-0bbf7fe3c00f89c9c7ccc790a31329e4802855c7e74dcfce383070acb29e0c12",
+              "en-calibration-v5-6ecec6607540ca6ed1d297f987d7ce01f80676e523dc931bbe497874503eb6e4"
+            ],
+            "inputChangedRows": 2,
+            "inputMechanicalEditSteps": 2,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 16,
+              "value": 0.32,
+              "wilson95RowDescriptive": [
+                0.20758216260656845,
+                0.45810297308144077
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 34,
+              "value": 0.68,
+              "wilson95RowDescriptive": [
+                0.5418970269185592,
+                0.7924178373934316
+              ]
+            },
+            "offers": 16,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 1,
+              "CONTEXTUAL_REQUEST": 40,
+              "ENGINE_EXCLUDED": 8,
+              "SPELLING_REQUEST": 1
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 16,
+              "value": 0.32,
+              "wilson95RowDescriptive": [
+                0.20758216260656845,
+                0.45810297308144077
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 16,
+              "numerator": 16,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.8063923194655637,
+                1.0
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 16,
+              "value": 0.32,
+              "wilson95RowDescriptive": [
+                0.20758216260656845,
+                0.45810297308144077
+              ]
+            },
+            "tapAttempts": 16,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 16,
+              "numerator": 16,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.8063923194655637,
+                1.0
+              ]
+            },
+            "tapSuccesses": 16,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 2
+          },
+          "period": {
+            "abstentions": 38,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 29,
+              "NO_CONTEXTUAL_REQUEST": 18,
+              "SUPPLEMENT_OK": 3
+            },
+            "changedDecisionIds": [
+              "en-calibration-v5-1456e00071a9189a8108dbc513eed67a87397e574890f38ba72aca490e066133",
+              "en-calibration-v5-15d39d5b93511c3bf7d4ee23aa5dbb9887c3890176b87cc8c45e79909efc2964",
+              "en-calibration-v5-2130a4c0eea527666869cc549b1d138cb05e9614f90ddbf5bd3964714083494d",
+              "en-calibration-v5-347a9fe0908fc82b2a5796fdf7594a6624f081e1032ed13226824b3dcc57363b",
+              "en-calibration-v5-5070d999784efe503b522f61342621caff473b43bb9a6fbf2a429dd595c0d698",
+              "en-calibration-v5-54b8931e1990784e685af9ca4730ab22e948ad9be6d1bd48fa3aa2ed853c7bab"
+            ],
+            "decisionCounts": {
+              "0": 38,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 12,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 12,
+              "value": 0.24,
+              "wilson95RowDescriptive": [
+                0.1429739139699173,
+                0.3741268375794292
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 34,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 16,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 11,
+            "engineOffers": 16,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 16,
+              "value": 0.32,
+              "wilson95RowDescriptive": [
+                0.20758216260656845,
+                0.45810297308144077
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 16,
+              "value": 0.32,
+              "wilson95RowDescriptive": [
+                0.20758216260656845,
+                0.45810297308144077
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "en-calibration-v5-0c66a402f5443739a33160eef98199d89e93672f91ab9626dfa2d902581a493d",
+              "en-calibration-v5-0cd59bbd023b96134dc7faaced88586d65c15b3669c0bba1f92dba3ffcdaf31d",
+              "en-calibration-v5-54b8931e1990784e685af9ca4730ab22e948ad9be6d1bd48fa3aa2ed853c7bab",
+              "en-calibration-v5-7247f7c2087619694e05b91bcb3854526a1da155b1b0045a44924ac6b8877151",
+              "en-calibration-v5-cc2ad07c697655ac163326ec0370533e1027d2e059a3e12e404272be8c8efcee"
+            ],
+            "inputChangedRows": 5,
+            "inputMechanicalEditSteps": 6,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 12,
+              "value": 0.24,
+              "wilson95RowDescriptive": [
+                0.1429739139699173,
+                0.3741268375794292
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 38,
+              "value": 0.76,
+              "wilson95RowDescriptive": [
+                0.6258731624205708,
+                0.8570260860300828
+              ]
+            },
+            "offers": 12,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 2,
+              "CONTEXTUAL_REQUEST": 32,
+              "ENGINE_EXCLUDED": 8,
+              "INCOMPLETE_GENERATION": 2,
+              "SPELLING_REQUEST": 6
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 12,
+              "value": 0.24,
+              "wilson95RowDescriptive": [
+                0.1429739139699173,
+                0.3741268375794292
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 12,
+              "numerator": 12,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.7575059933447592,
+                1.0
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 12,
+              "value": 0.24,
+              "wilson95RowDescriptive": [
+                0.1429739139699173,
+                0.3741268375794292
+              ]
+            },
+            "tapAttempts": 12,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 12,
+              "numerator": 12,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.7575059933447592,
+                1.0
+              ]
+            },
+            "tapSuccesses": 12,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 7
+          },
+          "space": {
+            "abstentions": 50,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 43,
+              "NO_CONTEXTUAL_REQUEST": 6,
+              "SUPPLEMENT_OK": 1
+            },
+            "changedDecisionIds": [],
+            "decisionCounts": {
+              "0": 50,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 50,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 5,
+            "engineOffers": 0,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "en-calibration-v5-0014062d6a8092d859af067dd0310f0c603794cff7b1fa779c9935f5756b42d2",
+              "en-calibration-v5-1994a8ff5e5716f4e39b80c92860ae66695431175e929b7de3dea10c8220b7ee"
+            ],
+            "inputChangedRows": 2,
+            "inputMechanicalEditSteps": 2,
+            "insertionAtObservedSpaces": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "offers": 0,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 2,
+              "CONTEXTUAL_REQUEST": 44,
+              "ENGINE_EXCLUDED": 2,
+              "INCOMPLETE_GENERATION": 2
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "tapAttempts": 0,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "tapSuccesses": 0,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 1
+          }
+        },
+        "changedDecisionIds": [
+          "en-calibration-v5-1456e00071a9189a8108dbc513eed67a87397e574890f38ba72aca490e066133",
+          "en-calibration-v5-15d39d5b93511c3bf7d4ee23aa5dbb9887c3890176b87cc8c45e79909efc2964",
+          "en-calibration-v5-1712c342654bc18379ae295abab6d672209d88a5eaece7952dcbcadc1f5c4606",
+          "en-calibration-v5-2130a4c0eea527666869cc549b1d138cb05e9614f90ddbf5bd3964714083494d",
+          "en-calibration-v5-347a9fe0908fc82b2a5796fdf7594a6624f081e1032ed13226824b3dcc57363b",
+          "en-calibration-v5-47e1f6990ac0a5d1afbc5b9387cffe1009076629705d9fdd6105a455acd6d00f",
+          "en-calibration-v5-5070d999784efe503b522f61342621caff473b43bb9a6fbf2a429dd595c0d698",
+          "en-calibration-v5-54b8931e1990784e685af9ca4730ab22e948ad9be6d1bd48fa3aa2ed853c7bab",
+          "en-calibration-v5-5795eaa2a9c8f7b077d146dfbdaae0454db1177a2213cec7ee0afe6780cc51f7",
+          "en-calibration-v5-fe946b3506012aadb6ebbd34acc20fc9f236bc73708254662363fce73a720f5f"
+        ],
+        "decisionCounts": {
+          "0": 171,
+          "1": 16,
+          "2": 0,
+          "3": 0,
+          "4": 13,
+          "5": 0,
+          "6": 0
+        },
+        "deliveredInsertionsAtObservedSpaces": {
+          "denominator": 50,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            6.938893903907228e-18,
+            0.07134759913335872
+          ]
+        },
+        "deliveredSourceAgreement": {
+          "denominator": 200,
+          "numerator": 78,
+          "value": 0.39,
+          "wilson95RowDescriptive": [
+            0.3250834313746962,
+            0.4590625404283025
+          ]
+        },
+        "engineDecisionCounts": {
+          "0": 165,
+          "1": 19,
+          "2": 0,
+          "3": 0,
+          "4": 16,
+          "5": 0,
+          "6": 0
+        },
+        "engineErrorRows": 0,
+        "engineExcludedRows": 35,
+        "engineOffers": 35,
+        "engineSourceAgreement": {
+          "denominator": 200,
+          "numerator": 84,
+          "value": 0.42,
+          "wilson95RowDescriptive": [
+            0.35373599161616726,
+            0.4892792606041954
+          ]
+        },
+        "engineSuggestionCoverage": {
+          "denominator": 200,
+          "numerator": 35,
+          "value": 0.175,
+          "wilson95RowDescriptive": [
+            0.12860515066273331,
+            0.23364431148248993
+          ]
+        },
+        "forbiddenEdits": 0,
+        "harnessErrors": 0,
+        "inputChangedIds": [
+          "en-calibration-v5-0014062d6a8092d859af067dd0310f0c603794cff7b1fa779c9935f5756b42d2",
+          "en-calibration-v5-0bbf7fe3c00f89c9c7ccc790a31329e4802855c7e74dcfce383070acb29e0c12",
+          "en-calibration-v5-0c66a402f5443739a33160eef98199d89e93672f91ab9626dfa2d902581a493d",
+          "en-calibration-v5-0cd59bbd023b96134dc7faaced88586d65c15b3669c0bba1f92dba3ffcdaf31d",
+          "en-calibration-v5-105b266bf883be1a302e0a152cbf22d960e98ec6d93c85feb29ba4a112071718",
+          "en-calibration-v5-1994a8ff5e5716f4e39b80c92860ae66695431175e929b7de3dea10c8220b7ee",
+          "en-calibration-v5-2b49b75c03cf12125284f6295669a69acdb624543a885e4c14e8b5605204941c",
+          "en-calibration-v5-54b8931e1990784e685af9ca4730ab22e948ad9be6d1bd48fa3aa2ed853c7bab",
+          "en-calibration-v5-6ecec6607540ca6ed1d297f987d7ce01f80676e523dc931bbe497874503eb6e4",
+          "en-calibration-v5-7247f7c2087619694e05b91bcb3854526a1da155b1b0045a44924ac6b8877151",
+          "en-calibration-v5-85c0d6c3b908d985d8dd4d2d2e842fd142ee0d922b647812b9790013b32532aa",
+          "en-calibration-v5-cc2ad07c697655ac163326ec0370533e1027d2e059a3e12e404272be8c8efcee",
+          "en-calibration-v5-fe946b3506012aadb6ebbd34acc20fc9f236bc73708254662363fce73a720f5f"
+        ],
+        "inputChangedRows": 13,
+        "inputMechanicalEditSteps": 16,
+        "insertionAtObservedSpaces": {
+          "denominator": 50,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            6.938893903907228e-18,
+            0.07134759913335872
+          ]
+        },
+        "knownSourceMatchesPerAllRows": {
+          "denominator": 200,
+          "numerator": 78,
+          "value": 0.39,
+          "wilson95RowDescriptive": [
+            0.3250834313746962,
+            0.4590625404283025
+          ]
+        },
+        "measuredAbstentionRate": {
+          "denominator": 200,
+          "numerator": 171,
+          "value": 0.855,
+          "wilson95RowDescriptive": [
+            0.7995133246921847,
+            0.8971064935799559
+          ]
+        },
+        "offers": 29,
+        "routingCounts": {
+          "CANONICAL_CASE_PRECEDENCE": 6,
+          "CONTEXTUAL_REQUEST": 152,
+          "ENGINE_EXCLUDED": 29,
+          "INCOMPLETE_GENERATION": 5,
+          "SPELLING_REQUEST": 8
+        },
+        "rows": 200,
+        "sourceBoundaryAgreement": {
+          "denominator": 200,
+          "numerator": 78,
+          "value": 0.39,
+          "wilson95RowDescriptive": [
+            0.3250834313746962,
+            0.4590625404283025
+          ]
+        },
+        "suggestedSourceAgreement": {
+          "denominator": 29,
+          "numerator": 28,
+          "value": 0.9655172413793104,
+          "wilson95RowDescriptive": [
+            0.8282447812067973,
+            0.9938867857072374
+          ]
+        },
+        "suggestionCoverage": {
+          "denominator": 200,
+          "numerator": 29,
+          "value": 0.145,
+          "wilson95RowDescriptive": [
+            0.10289350642004402,
+            0.20048667530781522
+          ]
+        },
+        "tapAttempts": 29,
+        "tapRefusals": 0,
+        "tapSuccessRate": {
+          "denominator": 29,
+          "numerator": 29,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.8830302015002593,
+            1.0
+          ]
+        },
+        "tapSuccesses": 29,
+        "unrepresentableReplies": 0,
+        "unresolvedDecisionIds": [],
+        "unresolvedRows": 0,
+        "unscoredPayloads": 0,
+        "unusedEngineResponseRows": 13
+      },
+      "es": {
+        "abstentions": 173,
+        "attributionComplete": true,
+        "automaticContextualEdits": 0,
+        "bindingCounts": {
+          "EXACT_CACHE_OK": 139,
+          "NO_CONTEXTUAL_REQUEST": 53,
+          "SUPPLEMENT_OK": 8
+        },
+        "byObservedBoundary": {
+          "colon": {
+            "abstentions": 43,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 38,
+              "NO_CONTEXTUAL_REQUEST": 8,
+              "SUPPLEMENT_OK": 4
+            },
+            "changedDecisionIds": [
+              "es-calibration-v5-2880441e41310123b588ea3b96846c88ad8f69780d06ef13adc3bca6136dcf6a",
+              "es-calibration-v5-5c26aa93d4be2f099ae18166109ac960b862d0ff279a6f1ee6a55b4e30ce3d21",
+              "es-calibration-v5-5edb11cbd430639995a2b0754ade9caec4f4fe0dcf343eaa1679ca11ca5dcffc"
+            ],
+            "decisionCounts": {
+              "0": 43,
+              "1": 0,
+              "2": 6,
+              "3": 0,
+              "4": 1,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 6,
+              "value": 0.12,
+              "wilson95RowDescriptive": [
+                0.05617600150932274,
+                0.23804817383202992
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 40,
+              "1": 1,
+              "2": 8,
+              "3": 0,
+              "4": 1,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 3,
+            "engineOffers": 10,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 8,
+              "value": 0.16,
+              "wilson95RowDescriptive": [
+                0.08337420678033404,
+                0.2851421606303499
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 10,
+              "value": 0.2,
+              "wilson95RowDescriptive": [
+                0.1124375001577611,
+                0.3303710593222542
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "es-calibration-v5-2c46a8efd98cd1805d7b9b4c4ea550096fe65530b2c591b72a0b4d819da12a7d",
+              "es-calibration-v5-5afd7916ab33887f61c16d450e72fd7003db8571ae5287fcf5c217bd4c0651ce",
+              "es-calibration-v5-5ee542dd50f3b6871267428dfe78022dd3f2b92ed2fc67a066fce31209049b2b",
+              "es-calibration-v5-9349b6b8a633b2222e593358e5594afe5a558548a48f79a06c258cdb53fb9b4c"
+            ],
+            "inputChangedRows": 4,
+            "inputMechanicalEditSteps": 5,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 6,
+              "value": 0.12,
+              "wilson95RowDescriptive": [
+                0.05617600150932274,
+                0.23804817383202992
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 43,
+              "value": 0.86,
+              "wilson95RowDescriptive": [
+                0.7381380628941446,
+                0.9304916657298371
+              ]
+            },
+            "offers": 7,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 2,
+              "CONTEXTUAL_REQUEST": 42,
+              "ENGINE_EXCLUDED": 3,
+              "SPELLING_REQUEST": 3
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 6,
+              "value": 0.12,
+              "wilson95RowDescriptive": [
+                0.05617600150932274,
+                0.23804817383202992
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 7,
+              "numerator": 6,
+              "value": 0.8571428571428571,
+              "wilson95RowDescriptive": [
+                0.4868721707256811,
+                0.9743203756552565
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 7,
+              "value": 0.14,
+              "wilson95RowDescriptive": [
+                0.06950833427016294,
+                0.2618619371058554
+              ]
+            },
+            "tapAttempts": 7,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 7,
+              "numerator": 7,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.6456695649333126,
+                1.0
+              ]
+            },
+            "tapSuccesses": 7,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 5
+          },
+          "comma": {
+            "abstentions": 31,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 40,
+              "NO_CONTEXTUAL_REQUEST": 9,
+              "SUPPLEMENT_OK": 1
+            },
+            "changedDecisionIds": [],
+            "decisionCounts": {
+              "0": 31,
+              "1": 19,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 19,
+              "value": 0.38,
+              "wilson95RowDescriptive": [
+                0.25862789310193596,
+                0.5184955306900703
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 31,
+              "1": 19,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 9,
+            "engineOffers": 19,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 19,
+              "value": 0.38,
+              "wilson95RowDescriptive": [
+                0.25862789310193596,
+                0.5184955306900703
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 19,
+              "value": 0.38,
+              "wilson95RowDescriptive": [
+                0.25862789310193596,
+                0.5184955306900703
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "es-calibration-v5-0058e1e75792732be5d6ecfb910af4c92aad0800eeacabb35089bc63056651be",
+              "es-calibration-v5-12e9879c957b28269c70ed32683e730869d65a57276d39ff8a9bee8927c30a8a"
+            ],
+            "inputChangedRows": 2,
+            "inputMechanicalEditSteps": 2,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 19,
+              "value": 0.38,
+              "wilson95RowDescriptive": [
+                0.25862789310193596,
+                0.5184955306900703
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 31,
+              "value": 0.62,
+              "wilson95RowDescriptive": [
+                0.4815044693099298,
+                0.7413721068980641
+              ]
+            },
+            "offers": 19,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 1,
+              "CONTEXTUAL_REQUEST": 41,
+              "ENGINE_EXCLUDED": 8
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 19,
+              "value": 0.38,
+              "wilson95RowDescriptive": [
+                0.25862789310193596,
+                0.5184955306900703
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 19,
+              "numerator": 19,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.8318207759473837,
+                1.0
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 19,
+              "value": 0.38,
+              "wilson95RowDescriptive": [
+                0.25862789310193596,
+                0.5184955306900703
+              ]
+            },
+            "tapAttempts": 19,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 19,
+              "numerator": 19,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.8318207759473837,
+                1.0
+              ]
+            },
+            "tapSuccesses": 19,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 0
+          },
+          "period": {
+            "abstentions": 49,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 36,
+              "NO_CONTEXTUAL_REQUEST": 14
+            },
+            "changedDecisionIds": [
+              "es-calibration-v5-230fa3a56d8f0aa41b0e9bdccdaaffa093012e211b07d8c181eea8c92186a81d",
+              "es-calibration-v5-2cff52c60d2f642af126a3a743f57f2c1c668560732dde411cb97bf25e5972f2",
+              "es-calibration-v5-7333f1e9b519fb87c2283009ddad1ce9a91b18e762c311f96f9b35d9ca11dd3b"
+            ],
+            "decisionCounts": {
+              "0": 49,
+              "1": 1,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 46,
+              "1": 1,
+              "2": 0,
+              "3": 0,
+              "4": 3,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 10,
+            "engineOffers": 4,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 3,
+              "value": 0.06,
+              "wilson95RowDescriptive": [
+                0.02061497034897397,
+                0.16217091688838173
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 4,
+              "value": 0.08,
+              "wilson95RowDescriptive": [
+                0.03154951408859298,
+                0.18838246918342838
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "es-calibration-v5-08910749a78696d57c6da0a62edb14eb85cefc2ab69bb6cb982952d452fad2e7"
+            ],
+            "inputChangedRows": 1,
+            "inputMechanicalEditSteps": 1,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 49,
+              "value": 0.98,
+              "wilson95RowDescriptive": [
+                0.8950455641036219,
+                0.9964607407283539
+              ]
+            },
+            "offers": 1,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 2,
+              "CONTEXTUAL_REQUEST": 36,
+              "ENGINE_EXCLUDED": 5,
+              "SPELLING_REQUEST": 7
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 1,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.7934506856227626
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 1,
+              "value": 0.02,
+              "wilson95RowDescriptive": [
+                0.003539259271646236,
+                0.10495443589637815
+              ]
+            },
+            "tapAttempts": 1,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 1,
+              "numerator": 1,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.20654931437723745,
+                1.0
+              ]
+            },
+            "tapSuccesses": 1,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 4
+          },
+          "space": {
+            "abstentions": 50,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 25,
+              "NO_CONTEXTUAL_REQUEST": 22,
+              "SUPPLEMENT_OK": 3
+            },
+            "changedDecisionIds": [],
+            "decisionCounts": {
+              "0": 50,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 50,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 1,
+            "engineOffers": 0,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "es-calibration-v5-020ec347afe9f62527a84898f838bc7806e5aee98190c90381b3aa56715ecce1",
+              "es-calibration-v5-04550ba00144532eaeb035203948b136a69c3d8162c0cad5ec849a1a448897f8",
+              "es-calibration-v5-048a0b8cd1ed1b4227cb7d22412474398035a98f48a1614fe4aaec27a736b98f",
+              "es-calibration-v5-4c4e57092a15ef0b9b96c4316341ec7c3ecdf308069dfcbcd51ea1c6597e9b6d"
+            ],
+            "inputChangedRows": 4,
+            "inputMechanicalEditSteps": 4,
+            "insertionAtObservedSpaces": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "offers": 0,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 1,
+              "CONTEXTUAL_REQUEST": 28,
+              "ENGINE_EXCLUDED": 1,
+              "INCOMPLETE_GENERATION": 7,
+              "SPELLING_REQUEST": 12,
+              "UNKNOWN_NO_ALTERNATIVES": 1
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "tapAttempts": 0,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "tapSuccesses": 0,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 21
+          }
+        },
+        "changedDecisionIds": [
+          "es-calibration-v5-230fa3a56d8f0aa41b0e9bdccdaaffa093012e211b07d8c181eea8c92186a81d",
+          "es-calibration-v5-2880441e41310123b588ea3b96846c88ad8f69780d06ef13adc3bca6136dcf6a",
+          "es-calibration-v5-2cff52c60d2f642af126a3a743f57f2c1c668560732dde411cb97bf25e5972f2",
+          "es-calibration-v5-5c26aa93d4be2f099ae18166109ac960b862d0ff279a6f1ee6a55b4e30ce3d21",
+          "es-calibration-v5-5edb11cbd430639995a2b0754ade9caec4f4fe0dcf343eaa1679ca11ca5dcffc",
+          "es-calibration-v5-7333f1e9b519fb87c2283009ddad1ce9a91b18e762c311f96f9b35d9ca11dd3b"
+        ],
+        "decisionCounts": {
+          "0": 173,
+          "1": 20,
+          "2": 6,
+          "3": 0,
+          "4": 1,
+          "5": 0,
+          "6": 0
+        },
+        "deliveredInsertionsAtObservedSpaces": {
+          "denominator": 50,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            6.938893903907228e-18,
+            0.07134759913335872
+          ]
+        },
+        "deliveredSourceAgreement": {
+          "denominator": 200,
+          "numerator": 75,
+          "value": 0.375,
+          "wilson95RowDescriptive": [
+            0.31085436858409826,
+            0.44385696301021843
+          ]
+        },
+        "engineDecisionCounts": {
+          "0": 167,
+          "1": 21,
+          "2": 8,
+          "3": 0,
+          "4": 4,
+          "5": 0,
+          "6": 0
+        },
+        "engineErrorRows": 0,
+        "engineExcludedRows": 23,
+        "engineOffers": 33,
+        "engineSourceAgreement": {
+          "denominator": 200,
+          "numerator": 80,
+          "value": 0.4,
+          "wilson95RowDescriptive": [
+            0.33460578566807336,
+            0.46916327960737997
+          ]
+        },
+        "engineSuggestionCoverage": {
+          "denominator": 200,
+          "numerator": 33,
+          "value": 0.165,
+          "wilson95RowDescriptive": [
+            0.11996855328217307,
+            0.2226578153905955
+          ]
+        },
+        "forbiddenEdits": 0,
+        "harnessErrors": 0,
+        "inputChangedIds": [
+          "es-calibration-v5-0058e1e75792732be5d6ecfb910af4c92aad0800eeacabb35089bc63056651be",
+          "es-calibration-v5-020ec347afe9f62527a84898f838bc7806e5aee98190c90381b3aa56715ecce1",
+          "es-calibration-v5-04550ba00144532eaeb035203948b136a69c3d8162c0cad5ec849a1a448897f8",
+          "es-calibration-v5-048a0b8cd1ed1b4227cb7d22412474398035a98f48a1614fe4aaec27a736b98f",
+          "es-calibration-v5-08910749a78696d57c6da0a62edb14eb85cefc2ab69bb6cb982952d452fad2e7",
+          "es-calibration-v5-12e9879c957b28269c70ed32683e730869d65a57276d39ff8a9bee8927c30a8a",
+          "es-calibration-v5-2c46a8efd98cd1805d7b9b4c4ea550096fe65530b2c591b72a0b4d819da12a7d",
+          "es-calibration-v5-4c4e57092a15ef0b9b96c4316341ec7c3ecdf308069dfcbcd51ea1c6597e9b6d",
+          "es-calibration-v5-5afd7916ab33887f61c16d450e72fd7003db8571ae5287fcf5c217bd4c0651ce",
+          "es-calibration-v5-5ee542dd50f3b6871267428dfe78022dd3f2b92ed2fc67a066fce31209049b2b",
+          "es-calibration-v5-9349b6b8a633b2222e593358e5594afe5a558548a48f79a06c258cdb53fb9b4c"
+        ],
+        "inputChangedRows": 11,
+        "inputMechanicalEditSteps": 12,
+        "insertionAtObservedSpaces": {
+          "denominator": 50,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            6.938893903907228e-18,
+            0.07134759913335872
+          ]
+        },
+        "knownSourceMatchesPerAllRows": {
+          "denominator": 200,
+          "numerator": 75,
+          "value": 0.375,
+          "wilson95RowDescriptive": [
+            0.31085436858409826,
+            0.44385696301021843
+          ]
+        },
+        "measuredAbstentionRate": {
+          "denominator": 200,
+          "numerator": 173,
+          "value": 0.865,
+          "wilson95RowDescriptive": [
+            0.8107086162924745,
+            0.9055342954521209
+          ]
+        },
+        "offers": 27,
+        "routingCounts": {
+          "CANONICAL_CASE_PRECEDENCE": 6,
+          "CONTEXTUAL_REQUEST": 147,
+          "ENGINE_EXCLUDED": 17,
+          "INCOMPLETE_GENERATION": 7,
+          "SPELLING_REQUEST": 22,
+          "UNKNOWN_NO_ALTERNATIVES": 1
+        },
+        "rows": 200,
+        "sourceBoundaryAgreement": {
+          "denominator": 200,
+          "numerator": 75,
+          "value": 0.375,
+          "wilson95RowDescriptive": [
+            0.31085436858409826,
+            0.44385696301021843
+          ]
+        },
+        "suggestedSourceAgreement": {
+          "denominator": 27,
+          "numerator": 25,
+          "value": 0.9259259259259259,
+          "wilson95RowDescriptive": [
+            0.7663040731697686,
+            0.9794453459390113
+          ]
+        },
+        "suggestionCoverage": {
+          "denominator": 200,
+          "numerator": 27,
+          "value": 0.135,
+          "wilson95RowDescriptive": [
+            0.09446570454787906,
+            0.18929138370752552
+          ]
+        },
+        "tapAttempts": 27,
+        "tapRefusals": 0,
+        "tapSuccessRate": {
+          "denominator": 27,
+          "numerator": 27,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.8754449702581328,
+            0.9999999999999998
+          ]
+        },
+        "tapSuccesses": 27,
+        "unrepresentableReplies": 0,
+        "unresolvedDecisionIds": [],
+        "unresolvedRows": 0,
+        "unscoredPayloads": 0,
+        "unusedEngineResponseRows": 30
+      },
+      "ru": {
+        "abstentions": 162,
+        "attributionComplete": true,
+        "automaticContextualEdits": 0,
+        "bindingCounts": {
+          "EXACT_CACHE_OK": 149,
+          "NO_CONTEXTUAL_REQUEST": 50,
+          "SUPPLEMENT_OK": 1
+        },
+        "byObservedBoundary": {
+          "colon": {
+            "abstentions": 41,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 43,
+              "NO_CONTEXTUAL_REQUEST": 6,
+              "SUPPLEMENT_OK": 1
+            },
+            "changedDecisionIds": [],
+            "decisionCounts": {
+              "0": 41,
+              "1": 1,
+              "2": 7,
+              "3": 0,
+              "4": 1,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 7,
+              "value": 0.14,
+              "wilson95RowDescriptive": [
+                0.06950833427016294,
+                0.2618619371058554
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 41,
+              "1": 1,
+              "2": 7,
+              "3": 0,
+              "4": 1,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 4,
+            "engineOffers": 9,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 7,
+              "value": 0.14,
+              "wilson95RowDescriptive": [
+                0.06950833427016294,
+                0.2618619371058554
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 9,
+              "value": 0.18,
+              "wilson95RowDescriptive": [
+                0.09770192670234178,
+                0.30796053674300783
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "ru-calibration-v5-ef5ce45618f7720e3ea2deb1f729de591307008f7164100bceb4d8040a550e2a"
+            ],
+            "inputChangedRows": 1,
+            "inputMechanicalEditSteps": 1,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 7,
+              "value": 0.14,
+              "wilson95RowDescriptive": [
+                0.06950833427016294,
+                0.2618619371058554
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 41,
+              "value": 0.82,
+              "wilson95RowDescriptive": [
+                0.6920394632569922,
+                0.9022980732976582
+              ]
+            },
+            "offers": 9,
+            "routingCounts": {
+              "CONTEXTUAL_REQUEST": 44,
+              "ENGINE_EXCLUDED": 3,
+              "SPELLING_REQUEST": 3
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 7,
+              "value": 0.14,
+              "wilson95RowDescriptive": [
+                0.06950833427016294,
+                0.2618619371058554
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 9,
+              "numerator": 7,
+              "value": 0.7777777777777778,
+              "wilson95RowDescriptive": [
+                0.45258896910698887,
+                0.9367748928821533
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 9,
+              "value": 0.18,
+              "wilson95RowDescriptive": [
+                0.09770192670234178,
+                0.30796053674300783
+              ]
+            },
+            "tapAttempts": 9,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 9,
+              "numerator": 9,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.7008549515804559,
+                1.0
+              ]
+            },
+            "tapSuccesses": 9,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 2
+          },
+          "comma": {
+            "abstentions": 25,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 45,
+              "NO_CONTEXTUAL_REQUEST": 5
+            },
+            "changedDecisionIds": [],
+            "decisionCounts": {
+              "0": 25,
+              "1": 25,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 25,
+              "value": 0.5,
+              "wilson95RowDescriptive": [
+                0.3664451431682858,
+                0.6335548568317142
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 25,
+              "1": 25,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 5,
+            "engineOffers": 25,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 25,
+              "value": 0.5,
+              "wilson95RowDescriptive": [
+                0.3664451431682858,
+                0.6335548568317142
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 25,
+              "value": 0.5,
+              "wilson95RowDescriptive": [
+                0.3664451431682858,
+                0.6335548568317142
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [],
+            "inputChangedRows": 0,
+            "inputMechanicalEditSteps": 0,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 25,
+              "value": 0.5,
+              "wilson95RowDescriptive": [
+                0.3664451431682858,
+                0.6335548568317142
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 25,
+              "value": 0.5,
+              "wilson95RowDescriptive": [
+                0.3664451431682858,
+                0.6335548568317142
+              ]
+            },
+            "offers": 25,
+            "routingCounts": {
+              "CONTEXTUAL_REQUEST": 45,
+              "ENGINE_EXCLUDED": 4,
+              "SPELLING_REQUEST": 1
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 25,
+              "value": 0.5,
+              "wilson95RowDescriptive": [
+                0.3664451431682858,
+                0.6335548568317142
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 25,
+              "numerator": 25,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.8668077490609515,
+                0.9999999999999999
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 25,
+              "value": 0.5,
+              "wilson95RowDescriptive": [
+                0.3664451431682858,
+                0.6335548568317142
+              ]
+            },
+            "tapAttempts": 25,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 25,
+              "numerator": 25,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.8668077490609515,
+                0.9999999999999999
+              ]
+            },
+            "tapSuccesses": 25,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 0
+          },
+          "period": {
+            "abstentions": 46,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 25,
+              "NO_CONTEXTUAL_REQUEST": 25
+            },
+            "changedDecisionIds": [
+              "ru-calibration-v5-159f2ac48a35c7d162b2ac0a647fdf3a61398ef084a04eec8a4b86c91eefc66a",
+              "ru-calibration-v5-22039a61e43eacd66f9c23d266b3634c96e25e2aefcf71b0b6a8e06a04cde36e",
+              "ru-calibration-v5-32ec005db2b144d01b302404a303b38735b875c79bbf04ef63dcac9812d4b84f",
+              "ru-calibration-v5-41a7edfb354d63939771e8f8bf206d20d586e8a73aa21e285a439a78697569bf"
+            ],
+            "decisionCounts": {
+              "0": 46,
+              "1": 1,
+              "2": 0,
+              "3": 0,
+              "4": 3,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 3,
+              "value": 0.06,
+              "wilson95RowDescriptive": [
+                0.02061497034897397,
+                0.16217091688838173
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 42,
+              "1": 1,
+              "2": 0,
+              "3": 0,
+              "4": 7,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 20,
+            "engineOffers": 8,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 7,
+              "value": 0.14,
+              "wilson95RowDescriptive": [
+                0.06950833427016294,
+                0.2618619371058554
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 8,
+              "value": 0.16,
+              "wilson95RowDescriptive": [
+                0.08337420678033404,
+                0.2851421606303499
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "ru-calibration-v5-00259d677fe4e3186568952f59846d95fe8ae409670c654045b13e1f0468bde0"
+            ],
+            "inputChangedRows": 1,
+            "inputMechanicalEditSteps": 1,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 3,
+              "value": 0.06,
+              "wilson95RowDescriptive": [
+                0.02061497034897397,
+                0.16217091688838173
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 46,
+              "value": 0.92,
+              "wilson95RowDescriptive": [
+                0.8116175308165717,
+                0.968450485911407
+              ]
+            },
+            "offers": 4,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 3,
+              "CONTEXTUAL_REQUEST": 25,
+              "ENGINE_EXCLUDED": 20,
+              "INCOMPLETE_GENERATION": 1,
+              "SPELLING_REQUEST": 1
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 3,
+              "value": 0.06,
+              "wilson95RowDescriptive": [
+                0.02061497034897397,
+                0.16217091688838173
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 4,
+              "numerator": 3,
+              "value": 0.75,
+              "wilson95RowDescriptive": [
+                0.30064184258240184,
+                0.9544127391902995
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 4,
+              "value": 0.08,
+              "wilson95RowDescriptive": [
+                0.03154951408859298,
+                0.18838246918342838
+              ]
+            },
+            "tapAttempts": 4,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 4,
+              "numerator": 4,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.5101091635454027,
+                1.0
+              ]
+            },
+            "tapSuccesses": 4,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 5
+          },
+          "space": {
+            "abstentions": 50,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 36,
+              "NO_CONTEXTUAL_REQUEST": 14
+            },
+            "changedDecisionIds": [],
+            "decisionCounts": {
+              "0": 50,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 50,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 13,
+            "engineOffers": 0,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "ru-calibration-v5-00e0ccc37a64009d23d90414b27464f153a23defa4f37dd7f4c0937ea5453412"
+            ],
+            "inputChangedRows": 1,
+            "inputMechanicalEditSteps": 1,
+            "insertionAtObservedSpaces": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "offers": 0,
+            "routingCounts": {
+              "CONTEXTUAL_REQUEST": 36,
+              "ENGINE_EXCLUDED": 13,
+              "INCOMPLETE_GENERATION": 1
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "tapAttempts": 0,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "tapSuccesses": 0,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 1
+          }
+        },
+        "changedDecisionIds": [
+          "ru-calibration-v5-159f2ac48a35c7d162b2ac0a647fdf3a61398ef084a04eec8a4b86c91eefc66a",
+          "ru-calibration-v5-22039a61e43eacd66f9c23d266b3634c96e25e2aefcf71b0b6a8e06a04cde36e",
+          "ru-calibration-v5-32ec005db2b144d01b302404a303b38735b875c79bbf04ef63dcac9812d4b84f",
+          "ru-calibration-v5-41a7edfb354d63939771e8f8bf206d20d586e8a73aa21e285a439a78697569bf"
+        ],
+        "decisionCounts": {
+          "0": 162,
+          "1": 27,
+          "2": 7,
+          "3": 0,
+          "4": 4,
+          "5": 0,
+          "6": 0
+        },
+        "deliveredInsertionsAtObservedSpaces": {
+          "denominator": 50,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            6.938893903907228e-18,
+            0.07134759913335872
+          ]
+        },
+        "deliveredSourceAgreement": {
+          "denominator": 200,
+          "numerator": 85,
+          "value": 0.425,
+          "wilson95RowDescriptive": [
+            0.3585361254351385,
+            0.49429067352145145
+          ]
+        },
+        "engineDecisionCounts": {
+          "0": 158,
+          "1": 27,
+          "2": 7,
+          "3": 0,
+          "4": 8,
+          "5": 0,
+          "6": 0
+        },
+        "engineErrorRows": 0,
+        "engineExcludedRows": 42,
+        "engineOffers": 42,
+        "engineSourceAgreement": {
+          "denominator": 200,
+          "numerator": 89,
+          "value": 0.445,
+          "wilson95RowDescriptive": [
+            0.3778060100295335,
+            0.5142669758719658
+          ]
+        },
+        "engineSuggestionCoverage": {
+          "denominator": 200,
+          "numerator": 42,
+          "value": 0.21,
+          "wilson95RowDescriptive": [
+            0.15928412069979,
+            0.2716461685990246
+          ]
+        },
+        "forbiddenEdits": 0,
+        "harnessErrors": 0,
+        "inputChangedIds": [
+          "ru-calibration-v5-00259d677fe4e3186568952f59846d95fe8ae409670c654045b13e1f0468bde0",
+          "ru-calibration-v5-00e0ccc37a64009d23d90414b27464f153a23defa4f37dd7f4c0937ea5453412",
+          "ru-calibration-v5-ef5ce45618f7720e3ea2deb1f729de591307008f7164100bceb4d8040a550e2a"
+        ],
+        "inputChangedRows": 3,
+        "inputMechanicalEditSteps": 3,
+        "insertionAtObservedSpaces": {
+          "denominator": 50,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            6.938893903907228e-18,
+            0.07134759913335872
+          ]
+        },
+        "knownSourceMatchesPerAllRows": {
+          "denominator": 200,
+          "numerator": 85,
+          "value": 0.425,
+          "wilson95RowDescriptive": [
+            0.3585361254351385,
+            0.49429067352145145
+          ]
+        },
+        "measuredAbstentionRate": {
+          "denominator": 200,
+          "numerator": 162,
+          "value": 0.81,
+          "wilson95RowDescriptive": [
+            0.7499876129240015,
+            0.8583282847220932
+          ]
+        },
+        "offers": 38,
+        "routingCounts": {
+          "CANONICAL_CASE_PRECEDENCE": 3,
+          "CONTEXTUAL_REQUEST": 150,
+          "ENGINE_EXCLUDED": 40,
+          "INCOMPLETE_GENERATION": 2,
+          "SPELLING_REQUEST": 5
+        },
+        "rows": 200,
+        "sourceBoundaryAgreement": {
+          "denominator": 200,
+          "numerator": 85,
+          "value": 0.425,
+          "wilson95RowDescriptive": [
+            0.3585361254351385,
+            0.49429067352145145
+          ]
+        },
+        "suggestedSourceAgreement": {
+          "denominator": 38,
+          "numerator": 35,
+          "value": 0.9210526315789473,
+          "wilson95RowDescriptive": [
+            0.7920062854222853,
+            0.9727854044930122
+          ]
+        },
+        "suggestionCoverage": {
+          "denominator": 200,
+          "numerator": 38,
+          "value": 0.19,
+          "wilson95RowDescriptive": [
+            0.14167171527790676,
+            0.25001238707599854
+          ]
+        },
+        "tapAttempts": 38,
+        "tapRefusals": 0,
+        "tapSuccessRate": {
+          "denominator": 38,
+          "numerator": 38,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.908190131774416,
+            0.9999999999999999
+          ]
+        },
+        "tapSuccesses": 38,
+        "unrepresentableReplies": 0,
+        "unresolvedDecisionIds": [],
+        "unresolvedRows": 0,
+        "unscoredPayloads": 0,
+        "unusedEngineResponseRows": 8
+      }
+    },
+    "holdout": {
+      "en": {
+        "abstentions": 169,
+        "attributionComplete": true,
+        "automaticContextualEdits": 0,
+        "bindingCounts": {
+          "EXACT_CACHE_OK": 143,
+          "NO_CONTEXTUAL_REQUEST": 48,
+          "SUPPLEMENT_OK": 9
+        },
+        "byObservedBoundary": {
+          "colon": {
+            "abstentions": 47,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 33,
+              "NO_CONTEXTUAL_REQUEST": 15,
+              "SUPPLEMENT_OK": 2
+            },
+            "changedDecisionIds": [
+              "en-holdout-v5-119f894e813c6eca8fb3c167d79b21c9d1c9552cd88729b44eaf1bf29471b122"
+            ],
+            "decisionCounts": {
+              "0": 47,
+              "1": 0,
+              "2": 3,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 3,
+              "value": 0.06,
+              "wilson95RowDescriptive": [
+                0.02061497034897397,
+                0.16217091688838173
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 46,
+              "1": 1,
+              "2": 3,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 7,
+            "engineOffers": 4,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 3,
+              "value": 0.06,
+              "wilson95RowDescriptive": [
+                0.02061497034897397,
+                0.16217091688838173
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 4,
+              "value": 0.08,
+              "wilson95RowDescriptive": [
+                0.03154951408859298,
+                0.18838246918342838
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "en-holdout-v5-07890c20c9d51a947df676c891e987561bb09971fd52d66028bfc412aa3e0fae",
+              "en-holdout-v5-152a02b8aee1b07acb6f6321d0b814c0bbe9d71c8c25d0af2566a7a3e70ae03b",
+              "en-holdout-v5-d2f8b2f62960276da724d7141eebf335a043da2939bda459a72296526ab5e9e2"
+            ],
+            "inputChangedRows": 3,
+            "inputMechanicalEditSteps": 5,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 3,
+              "value": 0.06,
+              "wilson95RowDescriptive": [
+                0.02061497034897397,
+                0.16217091688838173
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 47,
+              "value": 0.94,
+              "wilson95RowDescriptive": [
+                0.8378290831116182,
+                0.979385029651026
+              ]
+            },
+            "offers": 3,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 4,
+              "CONTEXTUAL_REQUEST": 35,
+              "ENGINE_EXCLUDED": 7,
+              "SPELLING_REQUEST": 4
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 3,
+              "value": 0.06,
+              "wilson95RowDescriptive": [
+                0.02061497034897397,
+                0.16217091688838173
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 3,
+              "numerator": 3,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.4385029682449546,
+                1.0
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 3,
+              "value": 0.06,
+              "wilson95RowDescriptive": [
+                0.02061497034897397,
+                0.16217091688838173
+              ]
+            },
+            "tapAttempts": 3,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 3,
+              "numerator": 3,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.4385029682449546,
+                1.0
+              ]
+            },
+            "tapSuccesses": 3,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 8
+          },
+          "comma": {
+            "abstentions": 33,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 40,
+              "NO_CONTEXTUAL_REQUEST": 9,
+              "SUPPLEMENT_OK": 1
+            },
+            "changedDecisionIds": [],
+            "decisionCounts": {
+              "0": 33,
+              "1": 17,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 17,
+              "value": 0.34,
+              "wilson95RowDescriptive": [
+                0.2243694922250009,
+                0.478461739497674
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 33,
+              "1": 17,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 8,
+            "engineOffers": 17,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 17,
+              "value": 0.34,
+              "wilson95RowDescriptive": [
+                0.2243694922250009,
+                0.478461739497674
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 17,
+              "value": 0.34,
+              "wilson95RowDescriptive": [
+                0.2243694922250009,
+                0.478461739497674
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "en-holdout-v5-3545e6f3dde6b8c0f41b23e65c206db9fd2ca2fc4f7e0e47259944c9032d16da"
+            ],
+            "inputChangedRows": 1,
+            "inputMechanicalEditSteps": 1,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 17,
+              "value": 0.34,
+              "wilson95RowDescriptive": [
+                0.2243694922250009,
+                0.478461739497674
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 33,
+              "value": 0.66,
+              "wilson95RowDescriptive": [
+                0.521538260502326,
+                0.7756305077749992
+              ]
+            },
+            "offers": 17,
+            "routingCounts": {
+              "CONTEXTUAL_REQUEST": 41,
+              "ENGINE_EXCLUDED": 8,
+              "SPELLING_REQUEST": 1
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 17,
+              "value": 0.34,
+              "wilson95RowDescriptive": [
+                0.2243694922250009,
+                0.478461739497674
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 17,
+              "numerator": 17,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.8156818649911483,
+                1.0
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 17,
+              "value": 0.34,
+              "wilson95RowDescriptive": [
+                0.2243694922250009,
+                0.478461739497674
+              ]
+            },
+            "tapAttempts": 17,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 17,
+              "numerator": 17,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.8156818649911483,
+                1.0
+              ]
+            },
+            "tapSuccesses": 17,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 1
+          },
+          "period": {
+            "abstentions": 39,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 31,
+              "NO_CONTEXTUAL_REQUEST": 15,
+              "SUPPLEMENT_OK": 4
+            },
+            "changedDecisionIds": [
+              "en-holdout-v5-022835e1d8b6a7a1f7528fa5c1815d107f6ba320993bc23aa9959b47af446bde",
+              "en-holdout-v5-02ad7048c4c17eb1219b03cb14650a9a64fec2603dad5e1ae443d514f0bb6ab1",
+              "en-holdout-v5-08a80ae7b4c2e0a06bc7a8d57e4be77ee96bdc6e2c1ac9cd7f52bbb952e4edbd",
+              "en-holdout-v5-14ff6512d15ffcebc7113ab5c2a6556b78acf35d9c5f1a3d607c13a4898fbd9a",
+              "en-holdout-v5-183db65972bc0b2a0927a4f4bb90510ad9fcbb78ee41e8b27dd8f38340b67888",
+              "en-holdout-v5-1cf2e7be792667e72a96742664f5692083284343162b9695d8902118de636a01",
+              "en-holdout-v5-5b514fd800798b64531082a8d26d34f76e01598e3e3b9fab4c684b1fc68ea17a",
+              "en-holdout-v5-9b461b1847c1a190aecd0e602606ae0d8629c77dd58faf3dcb38e79e9ced057e"
+            ],
+            "decisionCounts": {
+              "0": 39,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 11,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 11,
+              "value": 0.22,
+              "wilson95RowDescriptive": [
+                0.1275391597021442,
+                0.3524154958125367
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 33,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 17,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 7,
+            "engineOffers": 17,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 17,
+              "value": 0.34,
+              "wilson95RowDescriptive": [
+                0.2243694922250009,
+                0.478461739497674
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 17,
+              "value": 0.34,
+              "wilson95RowDescriptive": [
+                0.2243694922250009,
+                0.478461739497674
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "en-holdout-v5-00736b8e15a846c870db7ddc97d8137d2959c1d8b8792d3f1a569db66d93edbc",
+              "en-holdout-v5-064fe1ef0064ba5633e2be57ca19409d9b4054e3022c954f3ce2aadaecd20330",
+              "en-holdout-v5-3bcdc968f0efc0f463734bc4ae537aab5c87a447e62b6a30fcf4912b55a11dee",
+              "en-holdout-v5-9b461b1847c1a190aecd0e602606ae0d8629c77dd58faf3dcb38e79e9ced057e",
+              "en-holdout-v5-c7979fc28fab24311c4d60f0b86fa62d624c932928cfcd0fd5270f5e6cf08561"
+            ],
+            "inputChangedRows": 5,
+            "inputMechanicalEditSteps": 6,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 11,
+              "value": 0.22,
+              "wilson95RowDescriptive": [
+                0.1275391597021442,
+                0.3524154958125367
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 39,
+              "value": 0.78,
+              "wilson95RowDescriptive": [
+                0.6475845041874634,
+                0.8724608402978559
+              ]
+            },
+            "offers": 11,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 5,
+              "CONTEXTUAL_REQUEST": 35,
+              "ENGINE_EXCLUDED": 6,
+              "SPELLING_REQUEST": 4
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 11,
+              "value": 0.22,
+              "wilson95RowDescriptive": [
+                0.1275391597021442,
+                0.3524154958125367
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 11,
+              "numerator": 11,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.7411670330319684,
+                1.0
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 11,
+              "value": 0.22,
+              "wilson95RowDescriptive": [
+                0.1275391597021442,
+                0.3524154958125367
+              ]
+            },
+            "tapAttempts": 11,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 11,
+              "numerator": 11,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.7411670330319684,
+                1.0
+              ]
+            },
+            "tapSuccesses": 11,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 8
+          },
+          "space": {
+            "abstentions": 50,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 39,
+              "NO_CONTEXTUAL_REQUEST": 9,
+              "SUPPLEMENT_OK": 2
+            },
+            "changedDecisionIds": [],
+            "decisionCounts": {
+              "0": 50,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 50,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 6,
+            "engineOffers": 0,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "en-holdout-v5-00ddadf032fdabc234293a5aba086e608dd7cb2f4e5e600cd8549ee9fa63cadc",
+              "en-holdout-v5-01a94c6f3401bda8ae23c51a68a57fe6cd473eea8766630c8a39880c424ca49a",
+              "en-holdout-v5-01acfd34279de3deb52955a4e04254d445fc0c5a0075be78e27f7f7f4a70f20a"
+            ],
+            "inputChangedRows": 3,
+            "inputMechanicalEditSteps": 5,
+            "insertionAtObservedSpaces": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "offers": 0,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 3,
+              "CONTEXTUAL_REQUEST": 41,
+              "ENGINE_EXCLUDED": 6
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "tapAttempts": 0,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "tapSuccesses": 0,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 3
+          }
+        },
+        "changedDecisionIds": [
+          "en-holdout-v5-022835e1d8b6a7a1f7528fa5c1815d107f6ba320993bc23aa9959b47af446bde",
+          "en-holdout-v5-02ad7048c4c17eb1219b03cb14650a9a64fec2603dad5e1ae443d514f0bb6ab1",
+          "en-holdout-v5-08a80ae7b4c2e0a06bc7a8d57e4be77ee96bdc6e2c1ac9cd7f52bbb952e4edbd",
+          "en-holdout-v5-119f894e813c6eca8fb3c167d79b21c9d1c9552cd88729b44eaf1bf29471b122",
+          "en-holdout-v5-14ff6512d15ffcebc7113ab5c2a6556b78acf35d9c5f1a3d607c13a4898fbd9a",
+          "en-holdout-v5-183db65972bc0b2a0927a4f4bb90510ad9fcbb78ee41e8b27dd8f38340b67888",
+          "en-holdout-v5-1cf2e7be792667e72a96742664f5692083284343162b9695d8902118de636a01",
+          "en-holdout-v5-5b514fd800798b64531082a8d26d34f76e01598e3e3b9fab4c684b1fc68ea17a",
+          "en-holdout-v5-9b461b1847c1a190aecd0e602606ae0d8629c77dd58faf3dcb38e79e9ced057e"
+        ],
+        "decisionCounts": {
+          "0": 169,
+          "1": 17,
+          "2": 3,
+          "3": 0,
+          "4": 11,
+          "5": 0,
+          "6": 0
+        },
+        "deliveredInsertionsAtObservedSpaces": {
+          "denominator": 50,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            6.938893903907228e-18,
+            0.07134759913335872
+          ]
+        },
+        "deliveredSourceAgreement": {
+          "denominator": 200,
+          "numerator": 81,
+          "value": 0.405,
+          "wilson95RowDescriptive": [
+            0.3393777128250677,
+            0.47420289918661307
+          ]
+        },
+        "engineDecisionCounts": {
+          "0": 162,
+          "1": 18,
+          "2": 3,
+          "3": 0,
+          "4": 17,
+          "5": 0,
+          "6": 0
+        },
+        "engineErrorRows": 0,
+        "engineExcludedRows": 28,
+        "engineOffers": 38,
+        "engineSourceAgreement": {
+          "denominator": 200,
+          "numerator": 87,
+          "value": 0.435,
+          "wilson95RowDescriptive": [
+            0.36815725502699076,
+            0.504292637402054
+          ]
+        },
+        "engineSuggestionCoverage": {
+          "denominator": 200,
+          "numerator": 38,
+          "value": 0.19,
+          "wilson95RowDescriptive": [
+            0.14167171527790676,
+            0.25001238707599854
+          ]
+        },
+        "forbiddenEdits": 0,
+        "harnessErrors": 0,
+        "inputChangedIds": [
+          "en-holdout-v5-00736b8e15a846c870db7ddc97d8137d2959c1d8b8792d3f1a569db66d93edbc",
+          "en-holdout-v5-00ddadf032fdabc234293a5aba086e608dd7cb2f4e5e600cd8549ee9fa63cadc",
+          "en-holdout-v5-01a94c6f3401bda8ae23c51a68a57fe6cd473eea8766630c8a39880c424ca49a",
+          "en-holdout-v5-01acfd34279de3deb52955a4e04254d445fc0c5a0075be78e27f7f7f4a70f20a",
+          "en-holdout-v5-064fe1ef0064ba5633e2be57ca19409d9b4054e3022c954f3ce2aadaecd20330",
+          "en-holdout-v5-07890c20c9d51a947df676c891e987561bb09971fd52d66028bfc412aa3e0fae",
+          "en-holdout-v5-152a02b8aee1b07acb6f6321d0b814c0bbe9d71c8c25d0af2566a7a3e70ae03b",
+          "en-holdout-v5-3545e6f3dde6b8c0f41b23e65c206db9fd2ca2fc4f7e0e47259944c9032d16da",
+          "en-holdout-v5-3bcdc968f0efc0f463734bc4ae537aab5c87a447e62b6a30fcf4912b55a11dee",
+          "en-holdout-v5-9b461b1847c1a190aecd0e602606ae0d8629c77dd58faf3dcb38e79e9ced057e",
+          "en-holdout-v5-c7979fc28fab24311c4d60f0b86fa62d624c932928cfcd0fd5270f5e6cf08561",
+          "en-holdout-v5-d2f8b2f62960276da724d7141eebf335a043da2939bda459a72296526ab5e9e2"
+        ],
+        "inputChangedRows": 12,
+        "inputMechanicalEditSteps": 17,
+        "insertionAtObservedSpaces": {
+          "denominator": 50,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            6.938893903907228e-18,
+            0.07134759913335872
+          ]
+        },
+        "knownSourceMatchesPerAllRows": {
+          "denominator": 200,
+          "numerator": 81,
+          "value": 0.405,
+          "wilson95RowDescriptive": [
+            0.3393777128250677,
+            0.47420289918661307
+          ]
+        },
+        "measuredAbstentionRate": {
+          "denominator": 200,
+          "numerator": 169,
+          "value": 0.845,
+          "wilson95RowDescriptive": [
+            0.7883930940765792,
+            0.8886036307231068
+          ]
+        },
+        "offers": 31,
+        "routingCounts": {
+          "CANONICAL_CASE_PRECEDENCE": 12,
+          "CONTEXTUAL_REQUEST": 152,
+          "ENGINE_EXCLUDED": 27,
+          "SPELLING_REQUEST": 9
+        },
+        "rows": 200,
+        "sourceBoundaryAgreement": {
+          "denominator": 200,
+          "numerator": 81,
+          "value": 0.405,
+          "wilson95RowDescriptive": [
+            0.3393777128250677,
+            0.47420289918661307
+          ]
+        },
+        "suggestedSourceAgreement": {
+          "denominator": 31,
+          "numerator": 31,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.889744604539564,
+            1.0
+          ]
+        },
+        "suggestionCoverage": {
+          "denominator": 200,
+          "numerator": 31,
+          "value": 0.155,
+          "wilson95RowDescriptive": [
+            0.11139636927689314,
+            0.21160690592342077
+          ]
+        },
+        "tapAttempts": 31,
+        "tapRefusals": 0,
+        "tapSuccessRate": {
+          "denominator": 31,
+          "numerator": 31,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.889744604539564,
+            1.0
+          ]
+        },
+        "tapSuccesses": 31,
+        "unrepresentableReplies": 0,
+        "unresolvedDecisionIds": [],
+        "unresolvedRows": 0,
+        "unscoredPayloads": 0,
+        "unusedEngineResponseRows": 20
+      },
+      "es": {
+        "abstentions": 180,
+        "attributionComplete": true,
+        "automaticContextualEdits": 0,
+        "bindingCounts": {
+          "EXACT_CACHE_OK": 134,
+          "NO_CONTEXTUAL_REQUEST": 53,
+          "SUPPLEMENT_OK": 13
+        },
+        "byObservedBoundary": {
+          "colon": {
+            "abstentions": 42,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 32,
+              "NO_CONTEXTUAL_REQUEST": 12,
+              "SUPPLEMENT_OK": 6
+            },
+            "changedDecisionIds": [],
+            "decisionCounts": {
+              "0": 42,
+              "1": 1,
+              "2": 7,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 7,
+              "value": 0.14,
+              "wilson95RowDescriptive": [
+                0.06950833427016294,
+                0.2618619371058554
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 42,
+              "1": 1,
+              "2": 7,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 5,
+            "engineOffers": 8,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 7,
+              "value": 0.14,
+              "wilson95RowDescriptive": [
+                0.06950833427016294,
+                0.2618619371058554
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 8,
+              "value": 0.16,
+              "wilson95RowDescriptive": [
+                0.08337420678033404,
+                0.2851421606303499
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "es-holdout-v5-5c6e6f81d7733a99b0269411b38a5fc56646f7d0752164db0f499909d5049465",
+              "es-holdout-v5-7570685510357d3603ed659732e6911393055da2da1697b9f206b2b4f7681e05",
+              "es-holdout-v5-a3ef6b2d065e15959b2ee754399e53c1fa542db2e2897b18b55c3bfa03a3066a",
+              "es-holdout-v5-de2f93c6401a8ae29372bff988ea6142e3b2ea828d03eef08a2efa1dbd5322ee",
+              "es-holdout-v5-e3201e72be5c89b0cfb0f2b96280c59636a02d77b3670284f6ac88904e381a7e",
+              "es-holdout-v5-f317ab990a7a70b39a81d92610d48e0183447a440101857def92efead7c28618"
+            ],
+            "inputChangedRows": 6,
+            "inputMechanicalEditSteps": 9,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 7,
+              "value": 0.14,
+              "wilson95RowDescriptive": [
+                0.06950833427016294,
+                0.2618619371058554
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 42,
+              "value": 0.84,
+              "wilson95RowDescriptive": [
+                0.7148578393696501,
+                0.916625793219666
+              ]
+            },
+            "offers": 8,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 6,
+              "CONTEXTUAL_REQUEST": 38,
+              "ENGINE_EXCLUDED": 3,
+              "INCOMPLETE_GENERATION": 1,
+              "SPELLING_REQUEST": 2
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 7,
+              "value": 0.14,
+              "wilson95RowDescriptive": [
+                0.06950833427016294,
+                0.2618619371058554
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 8,
+              "numerator": 7,
+              "value": 0.875,
+              "wilson95RowDescriptive": [
+                0.5291118177871464,
+                0.9775825085499433
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 8,
+              "value": 0.16,
+              "wilson95RowDescriptive": [
+                0.08337420678033404,
+                0.2851421606303499
+              ]
+            },
+            "tapAttempts": 8,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 8,
+              "numerator": 8,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.6755924351161198,
+                1.0
+              ]
+            },
+            "tapSuccesses": 8,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 7
+          },
+          "comma": {
+            "abstentions": 38,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 34,
+              "NO_CONTEXTUAL_REQUEST": 14,
+              "SUPPLEMENT_OK": 2
+            },
+            "changedDecisionIds": [
+              "es-holdout-v5-0b971ec8ef8636366cee04b139c787a8385d95360cace0470fcb1d89cc41823e",
+              "es-holdout-v5-ff5bb9cc08b342d9256f8ec173a0b058a1849eeb6201f171058de49c0398497b"
+            ],
+            "decisionCounts": {
+              "0": 38,
+              "1": 12,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 12,
+              "value": 0.24,
+              "wilson95RowDescriptive": [
+                0.1429739139699173,
+                0.3741268375794292
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 36,
+              "1": 14,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 11,
+            "engineOffers": 14,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 14,
+              "value": 0.28,
+              "wilson95RowDescriptive": [
+                0.17474170665911232,
+                0.4166512369595657
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 14,
+              "value": 0.28,
+              "wilson95RowDescriptive": [
+                0.17474170665911232,
+                0.4166512369595657
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "es-holdout-v5-03ec4c20011f5447c54bef2faa4a47efe4e231a013460416aba4670f7b425003",
+              "es-holdout-v5-2ae5578fec96f891b048e7eb929ba0a02a39f30836df6015c8b585b99e65d836",
+              "es-holdout-v5-7e9cf1b1305076bebfbb41d8bb954efa9bdd6da36ca7ea447dcd5eced5dd0c0d"
+            ],
+            "inputChangedRows": 3,
+            "inputMechanicalEditSteps": 4,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 12,
+              "value": 0.24,
+              "wilson95RowDescriptive": [
+                0.1429739139699173,
+                0.3741268375794292
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 38,
+              "value": 0.76,
+              "wilson95RowDescriptive": [
+                0.6258731624205708,
+                0.8570260860300828
+              ]
+            },
+            "offers": 12,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 2,
+              "CONTEXTUAL_REQUEST": 36,
+              "ENGINE_EXCLUDED": 10,
+              "INCOMPLETE_GENERATION": 1,
+              "SPELLING_REQUEST": 1
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 12,
+              "value": 0.24,
+              "wilson95RowDescriptive": [
+                0.1429739139699173,
+                0.3741268375794292
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 12,
+              "numerator": 12,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.7575059933447592,
+                1.0
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 12,
+              "value": 0.24,
+              "wilson95RowDescriptive": [
+                0.1429739139699173,
+                0.3741268375794292
+              ]
+            },
+            "tapAttempts": 12,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 12,
+              "numerator": 12,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.7575059933447592,
+                1.0
+              ]
+            },
+            "tapSuccesses": 12,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 3
+          },
+          "period": {
+            "abstentions": 50,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 37,
+              "NO_CONTEXTUAL_REQUEST": 13
+            },
+            "changedDecisionIds": [
+              "es-holdout-v5-03cb1655bd0d40b26ae3140273f1f5162515546dfca942fdf69ad2950268462e",
+              "es-holdout-v5-061ec5a93bc7ad20667bed23d2dde2f33a36099bdac3d7fb7bfb2ac552d0b2ff",
+              "es-holdout-v5-126aa2b84c0de40003ce699ba0a0ed982acff0e4695fc1309dd1a7d6c18a4daa",
+              "es-holdout-v5-1376002f14f2be3d2c20b8b29204289c39c8d700bed9c4682922836d3fa69a66",
+              "es-holdout-v5-49110113612d3ade6554c5eefd9a677d5eb3ebbb603554ac0a782a5773fac81c"
+            ],
+            "decisionCounts": {
+              "0": 50,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 45,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 5,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 6,
+            "engineOffers": 5,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 5,
+              "value": 0.1,
+              "wilson95RowDescriptive": [
+                0.04347576493189041,
+                0.21360231437479654
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 5,
+              "value": 0.1,
+              "wilson95RowDescriptive": [
+                0.04347576493189041,
+                0.21360231437479654
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [],
+            "inputChangedRows": 0,
+            "inputMechanicalEditSteps": 0,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "offers": 0,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 3,
+              "CONTEXTUAL_REQUEST": 37,
+              "ENGINE_EXCLUDED": 3,
+              "INCOMPLETE_GENERATION": 1,
+              "SPELLING_REQUEST": 6
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "tapAttempts": 0,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "tapSuccesses": 0,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 7
+          },
+          "space": {
+            "abstentions": 50,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 31,
+              "NO_CONTEXTUAL_REQUEST": 14,
+              "SUPPLEMENT_OK": 5
+            },
+            "changedDecisionIds": [],
+            "decisionCounts": {
+              "0": 50,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 50,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 1,
+            "engineOffers": 0,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "es-holdout-v5-0036d5e6bd7f086e07eb92b477e30264c0ee43ad5be3642dd829713bf781f021",
+              "es-holdout-v5-01a14862d14c71af8d2e16487c6a21955971c2c4fa6274d121295568359c86f2",
+              "es-holdout-v5-058fc20d74d2c68992c8c5fb6ecf5d80e57c94f060308cb1a15ca087aeb0f344",
+              "es-holdout-v5-07224a629c024d1b502cb15edfc3fae9a68693ccc00d88a6df294aeac9dc1f1f",
+              "es-holdout-v5-08a474811b8ffad0eb0460640eb04169407353068fffa6910b7d1c675c2bfc00",
+              "es-holdout-v5-0fcd63b906fe11a66ae48eddec3dbd8b4f373b708c3b8fc0ed9d720d13f90f85"
+            ],
+            "inputChangedRows": 6,
+            "inputMechanicalEditSteps": 6,
+            "insertionAtObservedSpaces": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "offers": 0,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 3,
+              "CONTEXTUAL_REQUEST": 36,
+              "ENGINE_EXCLUDED": 1,
+              "INCOMPLETE_GENERATION": 4,
+              "SPELLING_REQUEST": 6
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "tapAttempts": 0,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "tapSuccesses": 0,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 13
+          }
+        },
+        "changedDecisionIds": [
+          "es-holdout-v5-03cb1655bd0d40b26ae3140273f1f5162515546dfca942fdf69ad2950268462e",
+          "es-holdout-v5-061ec5a93bc7ad20667bed23d2dde2f33a36099bdac3d7fb7bfb2ac552d0b2ff",
+          "es-holdout-v5-0b971ec8ef8636366cee04b139c787a8385d95360cace0470fcb1d89cc41823e",
+          "es-holdout-v5-126aa2b84c0de40003ce699ba0a0ed982acff0e4695fc1309dd1a7d6c18a4daa",
+          "es-holdout-v5-1376002f14f2be3d2c20b8b29204289c39c8d700bed9c4682922836d3fa69a66",
+          "es-holdout-v5-49110113612d3ade6554c5eefd9a677d5eb3ebbb603554ac0a782a5773fac81c",
+          "es-holdout-v5-ff5bb9cc08b342d9256f8ec173a0b058a1849eeb6201f171058de49c0398497b"
+        ],
+        "decisionCounts": {
+          "0": 180,
+          "1": 13,
+          "2": 7,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0
+        },
+        "deliveredInsertionsAtObservedSpaces": {
+          "denominator": 50,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            6.938893903907228e-18,
+            0.07134759913335872
+          ]
+        },
+        "deliveredSourceAgreement": {
+          "denominator": 200,
+          "numerator": 69,
+          "value": 0.345,
+          "wilson95RowDescriptive": [
+            0.2825979437674894,
+            0.4132441074094632
+          ]
+        },
+        "engineDecisionCounts": {
+          "0": 173,
+          "1": 15,
+          "2": 7,
+          "3": 0,
+          "4": 5,
+          "5": 0,
+          "6": 0
+        },
+        "engineErrorRows": 0,
+        "engineExcludedRows": 23,
+        "engineOffers": 27,
+        "engineSourceAgreement": {
+          "denominator": 200,
+          "numerator": 76,
+          "value": 0.38,
+          "wilson95RowDescriptive": [
+            0.31559005848673627,
+            0.44893281984380773
+          ]
+        },
+        "engineSuggestionCoverage": {
+          "denominator": 200,
+          "numerator": 27,
+          "value": 0.135,
+          "wilson95RowDescriptive": [
+            0.09446570454787906,
+            0.18929138370752552
+          ]
+        },
+        "forbiddenEdits": 0,
+        "harnessErrors": 0,
+        "inputChangedIds": [
+          "es-holdout-v5-0036d5e6bd7f086e07eb92b477e30264c0ee43ad5be3642dd829713bf781f021",
+          "es-holdout-v5-01a14862d14c71af8d2e16487c6a21955971c2c4fa6274d121295568359c86f2",
+          "es-holdout-v5-03ec4c20011f5447c54bef2faa4a47efe4e231a013460416aba4670f7b425003",
+          "es-holdout-v5-058fc20d74d2c68992c8c5fb6ecf5d80e57c94f060308cb1a15ca087aeb0f344",
+          "es-holdout-v5-07224a629c024d1b502cb15edfc3fae9a68693ccc00d88a6df294aeac9dc1f1f",
+          "es-holdout-v5-08a474811b8ffad0eb0460640eb04169407353068fffa6910b7d1c675c2bfc00",
+          "es-holdout-v5-0fcd63b906fe11a66ae48eddec3dbd8b4f373b708c3b8fc0ed9d720d13f90f85",
+          "es-holdout-v5-2ae5578fec96f891b048e7eb929ba0a02a39f30836df6015c8b585b99e65d836",
+          "es-holdout-v5-5c6e6f81d7733a99b0269411b38a5fc56646f7d0752164db0f499909d5049465",
+          "es-holdout-v5-7570685510357d3603ed659732e6911393055da2da1697b9f206b2b4f7681e05",
+          "es-holdout-v5-7e9cf1b1305076bebfbb41d8bb954efa9bdd6da36ca7ea447dcd5eced5dd0c0d",
+          "es-holdout-v5-a3ef6b2d065e15959b2ee754399e53c1fa542db2e2897b18b55c3bfa03a3066a",
+          "es-holdout-v5-de2f93c6401a8ae29372bff988ea6142e3b2ea828d03eef08a2efa1dbd5322ee",
+          "es-holdout-v5-e3201e72be5c89b0cfb0f2b96280c59636a02d77b3670284f6ac88904e381a7e",
+          "es-holdout-v5-f317ab990a7a70b39a81d92610d48e0183447a440101857def92efead7c28618"
+        ],
+        "inputChangedRows": 15,
+        "inputMechanicalEditSteps": 19,
+        "insertionAtObservedSpaces": {
+          "denominator": 50,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            6.938893903907228e-18,
+            0.07134759913335872
+          ]
+        },
+        "knownSourceMatchesPerAllRows": {
+          "denominator": 200,
+          "numerator": 69,
+          "value": 0.345,
+          "wilson95RowDescriptive": [
+            0.2825979437674894,
+            0.4132441074094632
+          ]
+        },
+        "measuredAbstentionRate": {
+          "denominator": 200,
+          "numerator": 180,
+          "value": 0.9,
+          "wilson95RowDescriptive": [
+            0.8505941875672826,
+            0.9343295513309041
+          ]
+        },
+        "offers": 20,
+        "routingCounts": {
+          "CANONICAL_CASE_PRECEDENCE": 14,
+          "CONTEXTUAL_REQUEST": 147,
+          "ENGINE_EXCLUDED": 17,
+          "INCOMPLETE_GENERATION": 7,
+          "SPELLING_REQUEST": 15
+        },
+        "rows": 200,
+        "sourceBoundaryAgreement": {
+          "denominator": 200,
+          "numerator": 69,
+          "value": 0.345,
+          "wilson95RowDescriptive": [
+            0.2825979437674894,
+            0.4132441074094632
+          ]
+        },
+        "suggestedSourceAgreement": {
+          "denominator": 20,
+          "numerator": 19,
+          "value": 0.95,
+          "wilson95RowDescriptive": [
+            0.763868806553258,
+            0.9911185511992047
+          ]
+        },
+        "suggestionCoverage": {
+          "denominator": 200,
+          "numerator": 20,
+          "value": 0.1,
+          "wilson95RowDescriptive": [
+            0.06567044866909588,
+            0.1494058124327174
+          ]
+        },
+        "tapAttempts": 20,
+        "tapRefusals": 0,
+        "tapSuccessRate": {
+          "denominator": 20,
+          "numerator": 20,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.8388748419471806,
+            1.0
+          ]
+        },
+        "tapSuccesses": 20,
+        "unrepresentableReplies": 0,
+        "unresolvedDecisionIds": [],
+        "unresolvedRows": 0,
+        "unscoredPayloads": 0,
+        "unusedEngineResponseRows": 30
+      },
+      "ru": {
+        "abstentions": 166,
+        "attributionComplete": true,
+        "automaticContextualEdits": 0,
+        "bindingCounts": {
+          "EXACT_CACHE_OK": 155,
+          "NO_CONTEXTUAL_REQUEST": 39,
+          "SUPPLEMENT_OK": 6
+        },
+        "byObservedBoundary": {
+          "colon": {
+            "abstentions": 48,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 41,
+              "NO_CONTEXTUAL_REQUEST": 8,
+              "SUPPLEMENT_OK": 1
+            },
+            "changedDecisionIds": [
+              "ru-holdout-v5-0b36c25f58b5c5057e0e357f84243785ac488e42dbb1ef40c42f0bf94218a6ee"
+            ],
+            "decisionCounts": {
+              "0": 48,
+              "1": 0,
+              "2": 2,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 2,
+              "value": 0.04,
+              "wilson95RowDescriptive": [
+                0.011038884327619805,
+                0.1346009068750702
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 47,
+              "1": 0,
+              "2": 3,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 5,
+            "engineOffers": 3,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 3,
+              "value": 0.06,
+              "wilson95RowDescriptive": [
+                0.02061497034897397,
+                0.16217091688838173
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 3,
+              "value": 0.06,
+              "wilson95RowDescriptive": [
+                0.02061497034897397,
+                0.16217091688838173
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "ru-holdout-v5-1d592925870902eefed70437d9359036315b2f0f3b4ffd79d79bf3e369a3515b",
+              "ru-holdout-v5-90e33a76aca2f321a93778c1a03b0579e54eda54529aad63f17d00c863993150"
+            ],
+            "inputChangedRows": 2,
+            "inputMechanicalEditSteps": 2,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 2,
+              "value": 0.04,
+              "wilson95RowDescriptive": [
+                0.011038884327619805,
+                0.1346009068750702
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 48,
+              "value": 0.96,
+              "wilson95RowDescriptive": [
+                0.8653990931249297,
+                0.9889611156723802
+              ]
+            },
+            "offers": 2,
+            "routingCounts": {
+              "CONTEXTUAL_REQUEST": 42,
+              "ENGINE_EXCLUDED": 3,
+              "INCOMPLETE_GENERATION": 2,
+              "NO_OWNED_SPACE": 2,
+              "SPELLING_REQUEST": 1
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 2,
+              "value": 0.04,
+              "wilson95RowDescriptive": [
+                0.011038884327619805,
+                0.1346009068750702
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 2,
+              "numerator": 2,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.34238022750665303,
+                1.0
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 2,
+              "value": 0.04,
+              "wilson95RowDescriptive": [
+                0.011038884327619805,
+                0.1346009068750702
+              ]
+            },
+            "tapAttempts": 2,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 2,
+              "numerator": 2,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.34238022750665303,
+                1.0
+              ]
+            },
+            "tapSuccesses": 2,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 3
+          },
+          "comma": {
+            "abstentions": 24,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 41,
+              "NO_CONTEXTUAL_REQUEST": 6,
+              "SUPPLEMENT_OK": 3
+            },
+            "changedDecisionIds": [],
+            "decisionCounts": {
+              "0": 24,
+              "1": 26,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 26,
+              "value": 0.52,
+              "wilson95RowDescriptive": [
+                0.38511744890044614,
+                0.6520286471342196
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 24,
+              "1": 26,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 6,
+            "engineOffers": 26,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 26,
+              "value": 0.52,
+              "wilson95RowDescriptive": [
+                0.38511744890044614,
+                0.6520286471342196
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 26,
+              "value": 0.52,
+              "wilson95RowDescriptive": [
+                0.38511744890044614,
+                0.6520286471342196
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "ru-holdout-v5-043251d5c54e8cc786cf64db068a90e459b68cd83d0740485bac403e9f95173f",
+              "ru-holdout-v5-857abd5b9773eda1c20c2620b2a5556d539d236ea3549c1350398d425ccfb445",
+              "ru-holdout-v5-b48b671247f22aa14cb1fb39213fd3eea04ad2484aa83a579dd55adc5ebaf7f5"
+            ],
+            "inputChangedRows": 3,
+            "inputMechanicalEditSteps": 3,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 26,
+              "value": 0.52,
+              "wilson95RowDescriptive": [
+                0.38511744890044614,
+                0.6520286471342196
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 24,
+              "value": 0.48,
+              "wilson95RowDescriptive": [
+                0.34797135286578046,
+                0.6148825510995539
+              ]
+            },
+            "offers": 26,
+            "routingCounts": {
+              "CONTEXTUAL_REQUEST": 44,
+              "ENGINE_EXCLUDED": 5,
+              "NO_OWNED_SPACE": 1
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 26,
+              "value": 0.52,
+              "wilson95RowDescriptive": [
+                0.38511744890044614,
+                0.6520286471342196
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 26,
+              "numerator": 26,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.8712710781407846,
+                1.0
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 26,
+              "value": 0.52,
+              "wilson95RowDescriptive": [
+                0.38511744890044614,
+                0.6520286471342196
+              ]
+            },
+            "tapAttempts": 26,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 26,
+              "numerator": 26,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.8712710781407846,
+                1.0
+              ]
+            },
+            "tapSuccesses": 26,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 0
+          },
+          "period": {
+            "abstentions": 44,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 36,
+              "NO_CONTEXTUAL_REQUEST": 14
+            },
+            "changedDecisionIds": [
+              "ru-holdout-v5-0a53969e1b42bd465b0f12191d87f6186cf042aa4ab49513bbcfa833bb7fc362",
+              "ru-holdout-v5-0fbeafa5bca3b91362305499a4e3f6350e55f8c97e3b22266de106e88f6be1cd"
+            ],
+            "decisionCounts": {
+              "0": 44,
+              "1": 1,
+              "2": 0,
+              "3": 0,
+              "4": 5,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 5,
+              "value": 0.1,
+              "wilson95RowDescriptive": [
+                0.04347576493189041,
+                0.21360231437479654
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 42,
+              "1": 1,
+              "2": 0,
+              "3": 0,
+              "4": 7,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 10,
+            "engineOffers": 8,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 7,
+              "value": 0.14,
+              "wilson95RowDescriptive": [
+                0.06950833427016294,
+                0.2618619371058554
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 8,
+              "value": 0.16,
+              "wilson95RowDescriptive": [
+                0.08337420678033404,
+                0.2851421606303499
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [],
+            "inputChangedRows": 0,
+            "inputMechanicalEditSteps": 0,
+            "insertionAtObservedSpaces": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 5,
+              "value": 0.1,
+              "wilson95RowDescriptive": [
+                0.04347576493189041,
+                0.21360231437479654
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 44,
+              "value": 0.88,
+              "wilson95RowDescriptive": [
+                0.7619518261679701,
+                0.9438239984906773
+              ]
+            },
+            "offers": 6,
+            "routingCounts": {
+              "CANONICAL_CASE_PRECEDENCE": 1,
+              "CONTEXTUAL_REQUEST": 36,
+              "ENGINE_EXCLUDED": 9,
+              "INCOMPLETE_GENERATION": 1,
+              "SPELLING_REQUEST": 3
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 5,
+              "value": 0.1,
+              "wilson95RowDescriptive": [
+                0.04347576493189041,
+                0.21360231437479654
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 6,
+              "numerator": 5,
+              "value": 0.8333333333333334,
+              "wilson95RowDescriptive": [
+                0.43649717781352987,
+                0.9699466302516935
+              ]
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 6,
+              "value": 0.12,
+              "wilson95RowDescriptive": [
+                0.05617600150932274,
+                0.23804817383202992
+              ]
+            },
+            "tapAttempts": 6,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 6,
+              "numerator": 6,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.6096657120978346,
+                1.0
+              ]
+            },
+            "tapSuccesses": 6,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 4
+          },
+          "space": {
+            "abstentions": 50,
+            "attributionComplete": true,
+            "automaticContextualEdits": 0,
+            "bindingCounts": {
+              "EXACT_CACHE_OK": 37,
+              "NO_CONTEXTUAL_REQUEST": 11,
+              "SUPPLEMENT_OK": 2
+            },
+            "changedDecisionIds": [],
+            "decisionCounts": {
+              "0": 50,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "deliveredInsertionsAtObservedSpaces": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "deliveredSourceAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "engineDecisionCounts": {
+              "0": 50,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0
+            },
+            "engineErrorRows": 0,
+            "engineExcludedRows": 11,
+            "engineOffers": 0,
+            "engineSourceAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "engineSuggestionCoverage": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "forbiddenEdits": 0,
+            "harnessErrors": 0,
+            "inputChangedIds": [
+              "ru-holdout-v5-035cb4219906a416faf1f574f2c9b868dfd9645321ad2624314b523d70552acc",
+              "ru-holdout-v5-0631391facada4a45ceb632ae7d3db562e933e20f4b7c9648ba6fba842539478"
+            ],
+            "inputChangedRows": 2,
+            "inputMechanicalEditSteps": 2,
+            "insertionAtObservedSpaces": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "knownSourceMatchesPerAllRows": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "measuredAbstentionRate": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "offers": 0,
+            "routingCounts": {
+              "CONTEXTUAL_REQUEST": 39,
+              "ENGINE_EXCLUDED": 10,
+              "INCOMPLETE_GENERATION": 1
+            },
+            "rows": 50,
+            "sourceBoundaryAgreement": {
+              "denominator": 50,
+              "numerator": 50,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9286524008666414,
+                1.0
+              ]
+            },
+            "suggestedSourceAgreement": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "suggestionCoverage": {
+              "denominator": 50,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                6.938893903907228e-18,
+                0.07134759913335872
+              ]
+            },
+            "tapAttempts": 0,
+            "tapRefusals": 0,
+            "tapSuccessRate": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            },
+            "tapSuccesses": 0,
+            "unrepresentableReplies": 0,
+            "unresolvedDecisionIds": [],
+            "unresolvedRows": 0,
+            "unscoredPayloads": 0,
+            "unusedEngineResponseRows": 0
+          }
+        },
+        "changedDecisionIds": [
+          "ru-holdout-v5-0a53969e1b42bd465b0f12191d87f6186cf042aa4ab49513bbcfa833bb7fc362",
+          "ru-holdout-v5-0b36c25f58b5c5057e0e357f84243785ac488e42dbb1ef40c42f0bf94218a6ee",
+          "ru-holdout-v5-0fbeafa5bca3b91362305499a4e3f6350e55f8c97e3b22266de106e88f6be1cd"
+        ],
+        "decisionCounts": {
+          "0": 166,
+          "1": 27,
+          "2": 2,
+          "3": 0,
+          "4": 5,
+          "5": 0,
+          "6": 0
+        },
+        "deliveredInsertionsAtObservedSpaces": {
+          "denominator": 50,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            6.938893903907228e-18,
+            0.07134759913335872
+          ]
+        },
+        "deliveredSourceAgreement": {
+          "denominator": 200,
+          "numerator": 83,
+          "value": 0.415,
+          "wilson95RowDescriptive": [
+            0.34894285449757567,
+            0.4842608509865596
+          ]
+        },
+        "engineDecisionCounts": {
+          "0": 163,
+          "1": 27,
+          "2": 3,
+          "3": 0,
+          "4": 7,
+          "5": 0,
+          "6": 0
+        },
+        "engineErrorRows": 0,
+        "engineExcludedRows": 32,
+        "engineOffers": 37,
+        "engineSourceAgreement": {
+          "denominator": 200,
+          "numerator": 86,
+          "value": 0.43,
+          "wilson95RowDescriptive": [
+            0.36334322333434416,
+            0.4992951223584731
+          ]
+        },
+        "engineSuggestionCoverage": {
+          "denominator": 200,
+          "numerator": 37,
+          "value": 0.185,
+          "wilson95RowDescriptive": [
+            0.13730192800616042,
+            0.2445706276115175
+          ]
+        },
+        "forbiddenEdits": 0,
+        "harnessErrors": 0,
+        "inputChangedIds": [
+          "ru-holdout-v5-035cb4219906a416faf1f574f2c9b868dfd9645321ad2624314b523d70552acc",
+          "ru-holdout-v5-043251d5c54e8cc786cf64db068a90e459b68cd83d0740485bac403e9f95173f",
+          "ru-holdout-v5-0631391facada4a45ceb632ae7d3db562e933e20f4b7c9648ba6fba842539478",
+          "ru-holdout-v5-1d592925870902eefed70437d9359036315b2f0f3b4ffd79d79bf3e369a3515b",
+          "ru-holdout-v5-857abd5b9773eda1c20c2620b2a5556d539d236ea3549c1350398d425ccfb445",
+          "ru-holdout-v5-90e33a76aca2f321a93778c1a03b0579e54eda54529aad63f17d00c863993150",
+          "ru-holdout-v5-b48b671247f22aa14cb1fb39213fd3eea04ad2484aa83a579dd55adc5ebaf7f5"
+        ],
+        "inputChangedRows": 7,
+        "inputMechanicalEditSteps": 7,
+        "insertionAtObservedSpaces": {
+          "denominator": 50,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            6.938893903907228e-18,
+            0.07134759913335872
+          ]
+        },
+        "knownSourceMatchesPerAllRows": {
+          "denominator": 200,
+          "numerator": 83,
+          "value": 0.415,
+          "wilson95RowDescriptive": [
+            0.34894285449757567,
+            0.4842608509865596
+          ]
+        },
+        "measuredAbstentionRate": {
+          "denominator": 200,
+          "numerator": 166,
+          "value": 0.83,
+          "wilson95RowDescriptive": [
+            0.7718411637168737,
+            0.8757209208741302
+          ]
+        },
+        "offers": 34,
+        "routingCounts": {
+          "CANONICAL_CASE_PRECEDENCE": 1,
+          "CONTEXTUAL_REQUEST": 161,
+          "ENGINE_EXCLUDED": 27,
+          "INCOMPLETE_GENERATION": 4,
+          "NO_OWNED_SPACE": 3,
+          "SPELLING_REQUEST": 4
+        },
+        "rows": 200,
+        "sourceBoundaryAgreement": {
+          "denominator": 200,
+          "numerator": 83,
+          "value": 0.415,
+          "wilson95RowDescriptive": [
+            0.34894285449757567,
+            0.4842608509865596
+          ]
+        },
+        "suggestedSourceAgreement": {
+          "denominator": 34,
+          "numerator": 33,
+          "value": 0.9705882352941176,
+          "wilson95RowDescriptive": [
+            0.8508442670731406,
+            0.9947890937237309
+          ]
+        },
+        "suggestionCoverage": {
+          "denominator": 200,
+          "numerator": 34,
+          "value": 0.17,
+          "wilson95RowDescriptive": [
+            0.12427907912586969,
+            0.22815883628312625
+          ]
+        },
+        "tapAttempts": 34,
+        "tapRefusals": 0,
+        "tapSuccessRate": {
+          "denominator": 34,
+          "numerator": 34,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.8984854458466761,
+            0.9999999999999999
+          ]
+        },
+        "tapSuccesses": 34,
+        "unrepresentableReplies": 0,
+        "unresolvedDecisionIds": [],
+        "unresolvedRows": 0,
+        "unscoredPayloads": 0,
+        "unusedEngineResponseRows": 7
+      }
+    }
+  },
+  "thresholdsFittedOnHoldout": false,
+  "unseenGeneralization": false
+}

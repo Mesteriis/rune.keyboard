@@ -1,0 +1,20 @@
+{
+  "calibrationCompleteSha256": null,
+  "errorIds": [],
+  "files": {
+    "command.json": "c0bb5f1248ced47d3099d1d3a92348cbfe44380c0b3ff504809233b09e3cc6a0",
+    "execution.json": "8afbd96ea811666d6b0827fc14714d90ab2c90a15f294204d1d04c2c71085b5c",
+    "identity.json": "346ea83b1ca35089e3559f954e75768fc8ca8d9961daee66edf1a10e170369b7",
+    "requests.jsonl": "287759a8c61b0f4a96105e4c45b407b47073b10c2e29f6d30c259519fabf11c6",
+    "responses.jsonl": "6f03154743575eee15d73ff06312bd740800668eec40dba57870b4da6d8dbd41",
+    "run-input.json": "43b40e52e3ad7841790f9349a22dd3ba0ada77cacae57746ddf8f17040e113ef",
+    "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "freezeSha256": "0f067e87fdf1982102f797e6c86b39a858f75bd73b09009d6e7e549ca434d21c",
+  "requests": 18,
+  "responses": 18,
+  "schemaVersion": 1,
+  "scope": "contextual-controller-supplement",
+  "split": "calibration",
+  "unrepresentableIds": []
+}

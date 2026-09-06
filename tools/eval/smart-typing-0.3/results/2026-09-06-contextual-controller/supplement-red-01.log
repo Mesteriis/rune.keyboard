@@ -1,0 +1,13 @@
+..............................F
+======================================================================
+FAIL: test_supplement_admits_exact_ordered_errors_without_relabeling_old_cache (test_contextual_controller_attribution.SupplementalAdmissionTest.test_supplement_admits_exact_ordered_errors_without_relabeling_old_cache)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 312, in test_supplement_admits_exact_ordered_errors_without_relabeling_old_cache
+    self.assertTrue(callable(getattr(self.tool,'validate_supplement_responses',None)),
+AssertionError: False is not true : supplemental response boundary is absent
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.112s
+
+FAILED (failures=1)

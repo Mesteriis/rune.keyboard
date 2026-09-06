@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/native-current-20260906/rune-score",
+    "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/model/rune-text-v1-0.1.0-q4_k_m.gguf"
+  ],
+  "cwd": "/Users/avm/projects/Personal/rune-keyboard",
+  "stderr": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/calibration/stderr.log",
+  "stdin": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/calibration/requests.jsonl",
+  "stdout": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/contextual-controller-attribution-20260906/supplement-freeze-01/calibration/responses.jsonl"
+}

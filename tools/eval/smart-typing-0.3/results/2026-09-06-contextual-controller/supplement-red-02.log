@@ -1,0 +1,53 @@
+..............................FFFFFF
+======================================================================
+FAIL: test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output (test_contextual_controller_attribution.SupplementalAdmissionTest.test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 426, in test_admission_rejects_artifact_drift_nonzero_exit_and_partial_output
+    self.assertTrue(callable(getattr(self.tool,'freeze_supplement',None)))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_holdout_needs_completed_calibration_and_orphan_run_is_refused (test_contextual_controller_attribution.SupplementalAdmissionTest.test_holdout_needs_completed_calibration_and_orphan_run_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 417, in test_holdout_needs_completed_calibration_and_orphan_run_is_refused
+    self.assertTrue(callable(getattr(self.tool,'freeze_supplement',None)))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_missing_duplicate_unexpected_order_and_bad_numeric_responses_fail (test_contextual_controller_attribution.SupplementalAdmissionTest.test_missing_duplicate_unexpected_order_and_bad_numeric_responses_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 323, in test_missing_duplicate_unexpected_order_and_bad_numeric_responses_fail
+    self.assertTrue(callable(getattr(self.tool,'validate_supplement_responses',None)))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_rehashed_freeze_cannot_change_policy_backend_universe_or_preparation (test_contextual_controller_attribution.SupplementalAdmissionTest.test_rehashed_freeze_cannot_change_policy_backend_universe_or_preparation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 450, in test_rehashed_freeze_cannot_change_policy_backend_universe_or_preparation
+    self.assertTrue(callable(getattr(self.tool,'freeze_supplement',None)))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_split_chain_retains_error_and_only_overrides_unmatched_contextual_requests (test_contextual_controller_attribution.SupplementalAdmissionTest.test_split_chain_retains_error_and_only_overrides_unmatched_contextual_requests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 392, in test_split_chain_retains_error_and_only_overrides_unmatched_contextual_requests
+    self.assertTrue(callable(getattr(self.tool,'freeze_supplement',None)))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_supplement_admits_exact_ordered_errors_without_relabeling_old_cache (test_contextual_controller_attribution.SupplementalAdmissionTest.test_supplement_admits_exact_ordered_errors_without_relabeling_old_cache)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/contextual-controller/test_contextual_controller_attribution.py", line 311, in test_supplement_admits_exact_ordered_errors_without_relabeling_old_cache
+    self.assertTrue(callable(getattr(self.tool,'validate_supplement_responses',None)),
+AssertionError: False is not true : supplemental response boundary is absent
+
+----------------------------------------------------------------------
+Ran 36 tests in 0.093s
+
+FAILED (failures=6)
