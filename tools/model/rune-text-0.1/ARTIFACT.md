@@ -13,6 +13,9 @@ An independent download of the compared candidate produced:
 - tensor count: `310`
 - metadata entries: `28`
 
-This is reproducible-build evidence, not release qualification. The immutable GitHub Release must
-not be created until this exact digest passes the physical Fold load/generation/lifecycle/thermal
-matrix in `docs/ACCEPTANCE.md`.
+This is reproducible-build evidence. At the user's direction, the exact artifact was published as
+an experimental Hugging Face model on 2026-09-05 at commit
+`c057e37928624d3c3c4bd526d3515f7202395920`. Hub file metadata reports the same byte size and
+SHA-256. The full physical Fold load/scoring/lifecycle/thermal matrix in `docs/ACCEPTANCE.md`
+remains a release gate; the publication is model delivery evidence, not final Rune Keyboard
+release qualification.

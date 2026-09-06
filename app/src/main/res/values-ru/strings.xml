@@ -27,7 +27,7 @@
   <string name="setup_settings_button">Открыть настройки Rune</string>
   <string name="setup_privacy_title">Приватность по умолчанию</string>
   <string name="setup_privacy_description">Сеть используется только после явного скачивания необязательной локальной модели. Введённый текст не отправляется. В Rune нет телеметрии, рекламы, истории ввода и доступа к буферу обмена.</string>
-  <string name="setup_mvp_note">Rune 0.2 добавляет доставку и самопроверку одной необязательной локальной модели. Модель не подключена к вводу. Свайп-ввод, подсказки, пунктуация и автокоррекция намеренно не входят в эту версию.</string>
+  <string name="setup_mvp_note">Rune предлагает подсказки слов и механическую пунктуацию. Готовая локальная модель может ранжировать орфографические подсказки и предлагать контекстную пунктуацию с учётом текста, набранного Rune. Автозамена остаётся под контролем проверки качества.</string>
 
   <string name="key_shift">Shift</string>
   <string name="key_shift_on">Shift включён</string>
@@ -51,6 +51,22 @@
 
   <string name="settings_title">Настройки Rune</string>
   <string name="settings_section_languages">Языки</string>
+  <string name="settings_section_smart_typing">Умный ввод</string>
+  <string name="settings_autocorrection">Автокоррекция</string>
+  <string name="smart_typing_off">Выключено</string>
+  <string name="smart_typing_suggestions">Подсказки</string>
+  <string name="smart_typing_high_confidence">Автозамена (95%)</string>
+  <string name="settings_autocorrection_off_summary">Исправления слов выключены. Механическая пунктуация настраивается отдельно.</string>
+  <string name="settings_autocorrection_suggestions_summary">Нажмите на подсказку, чтобы заменить слово. Готовая локальная модель может упорядочивать подсказки с учётом контекста.</string>
+  <string name="settings_autocorrection_high_confidence_summary">Готовая локальная модель автоматически применяет исправления, прошедшие зафиксированный профиль точности 95%. Регистр имён собственных исправляется локально. Backspace сразу возвращает исходный вариант.</string>
+  <string name="settings_suggestions_hidden">Подсказки скрыты, пока строка подсказок выключена.</string>
+  <string name="settings_mechanical_punctuation">Механическая пунктуация</string>
+  <string name="settings_mechanical_punctuation_summary">Корректирует пробелы у знаков пунктуации и заглавную букву предложения в тексте, набранном Rune.</string>
+  <string name="settings_contextual_punctuation">Контекстная пунктуация</string>
+  <string name="settings_contextual_unavailable">Доступно, когда локальная модель готова. Выбор сохранён.</string>
+  <string name="settings_contextual_ready">Готово. Пунктуация предлагается после паузы и применяется только по нажатию.</string>
+  <string name="settings_candidate_strip">Строка подсказок</string>
+  <string name="settings_candidate_strip_summary">Показывает исходное слово и доступные подсказки. Скрытие строки не выключает механическую пунктуацию.</string>
   <string name="settings_section_typing">Ввод</string>
   <string name="settings_section_layout">Раскладка</string>
   <string name="settings_section_appearance">Оформление</string>

@@ -69,6 +69,22 @@ class KeyboardPreferences internal constructor(private val preferences: SharedPr
         edit { putBoolean(SettingsCodec.KEY_DOUBLE_SPACE_PERIOD, enabled) }
     }
 
+    fun writeAutocorrectionMode(mode: AutocorrectionMode) {
+        edit { putString(SettingsCodec.KEY_AUTOCORRECTION_MODE, mode.name) }
+    }
+
+    fun writeMechanicalPunctuation(enabled: Boolean) {
+        edit { putBoolean(SettingsCodec.KEY_MECHANICAL_PUNCTUATION, enabled) }
+    }
+
+    fun writeContextualPunctuationMode(mode: ContextualPunctuationMode) {
+        edit { putString(SettingsCodec.KEY_CONTEXTUAL_PUNCTUATION_MODE, mode.name) }
+    }
+
+    fun writeCandidateStrip(enabled: Boolean) {
+        edit { putBoolean(SettingsCodec.KEY_CANDIDATE_STRIP, enabled) }
+    }
+
     /**
      * Callers must hold a strong reference to [listener] for as long as they want updates —
      * SharedPreferences keeps registered listeners weakly.
@@ -81,11 +97,24 @@ class KeyboardPreferences internal constructor(private val preferences: SharedPr
         preferences.unregisterOnSharedPreferenceChangeListener(listener)
     }
 
-    private fun edit(block: SharedPreferences.Editor.() -> Unit) {
-        preferences.edit()
-            .apply(block)
-            .putInt(SettingsCodec.KEY_SCHEMA_VERSION, SettingsCodec.SCHEMA_VERSION)
-            .apply()
+    /** Serialize snapshot + migration across facades sharing the same preferences instance. */
+    private fun edit(block: SharedPreferences.Editor.() -> Unit) = synchronized(preferences) {
+        val raw = preferences.all
+        val editor = preferences.edit()
+        if (!SettingsCodec.isFutureSchema(raw)) {
+            // Normalize known values before stamping 3 in the same transaction. In particular,
+            // an unrelated writer must not turn a malformed/absent schema-3 value into a default.
+            val settings = SettingsCodec.decode(raw)
+            editor.putString(SettingsCodec.KEY_AUTOCORRECTION_MODE, settings.autocorrectionMode.name)
+                .putBoolean(SettingsCodec.KEY_MECHANICAL_PUNCTUATION, settings.mechanicalPunctuation)
+                .putString(SettingsCodec.KEY_CONTEXTUAL_PUNCTUATION_MODE, settings.contextualPunctuationMode.name)
+                .putBoolean(SettingsCodec.KEY_CANDIDATE_STRIP, settings.candidateStrip)
+                .putBoolean(SettingsCodec.KEY_DOUBLE_SPACE_PERIOD, settings.doubleSpacePeriod)
+                .putInt(SettingsCodec.KEY_SCHEMA_VERSION, SettingsCodec.SCHEMA_VERSION)
+        }
+        // Explicit choice wins over migration. For a future schema, persist just this key while
+        // retaining its version/unknown data; effective Smart Typing stays off until supported.
+        editor.apply(block).apply()
     }
 
     private companion object {

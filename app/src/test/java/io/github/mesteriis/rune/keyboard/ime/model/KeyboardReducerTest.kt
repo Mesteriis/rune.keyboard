@@ -8,6 +8,32 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class KeyboardReducerTest {
+    @Test
+    fun `sensitive session routes deletion through the ordinary editor command`() {
+        val context = EditorContext.from(
+            InputType.TYPE_CLASS_TEXT,
+            EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING,
+        )
+        val state = KeyboardState(KeyboardLanguage.ENGLISH)
+
+        val transition = KeyboardReducer.reduce(state, KeyboardAction.Delete, context, 0)
+
+        assertEquals(EditorCommand.DeletePreviousCodePoint, transition.command)
+
+    }
+
+    @Test
+    fun `no personalized learning double tap stays a plain space`() {
+        val context = EditorContext.from(
+            InputType.TYPE_CLASS_TEXT,
+            EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING,
+        )
+        val transition = reduceDoubleSpace(KeyboardState(KeyboardLanguage.ENGLISH), context)
+
+        assertEquals(EditorCommand.CommitText(" "), transition.command)
+
+    }
+
     private val textEditor = EditorContext.from(
         inputType = InputType.TYPE_CLASS_TEXT,
         imeOptions = EditorInfo.IME_ACTION_NONE,
@@ -157,11 +183,11 @@ class KeyboardReducerTest {
     }
 
     @Test
-    fun `double space converts the preceding space in plain text`() {
+    fun `double space requests typing owned handling in plain text`() {
         val transition = reduceDoubleSpace(KeyboardState(KeyboardLanguage.ENGLISH), textEditor)
 
         assertEquals(EditorCommand.ConvertPrecedingSpaceToPeriod, transition.command)
-        assertTrue(transition.state.pendingDoubleSpaceUndo)
+
     }
 
     @Test
@@ -181,7 +207,7 @@ class KeyboardReducerTest {
             val transition = reduceDoubleSpace(KeyboardState(KeyboardLanguage.ENGLISH), context)
 
             assertEquals(EditorCommand.CommitText(" "), transition.command)
-            assertFalse(transition.state.pendingDoubleSpaceUndo)
+
         }
     }
 
@@ -192,11 +218,11 @@ class KeyboardReducerTest {
         val transition = reduceDoubleSpace(state, textEditor)
 
         assertEquals(EditorCommand.CommitText(" "), transition.command)
-        assertFalse(transition.state.pendingDoubleSpaceUndo)
+
     }
 
     @Test
-    fun `backspace right after a double space reverts it`() {
+    fun `backspace after double space still delegates undo choice to typing`() {
         val converted = reduceDoubleSpace(KeyboardState(KeyboardLanguage.ENGLISH), textEditor).state
 
         val transition = KeyboardReducer.reduce(
@@ -206,12 +232,12 @@ class KeyboardReducerTest {
             nowMillis = 1,
         )
 
-        assertEquals(EditorCommand.RevertDoubleSpacePeriod, transition.command)
-        assertFalse(transition.state.pendingDoubleSpaceUndo)
+        assertEquals(EditorCommand.DeletePreviousCodePoint, transition.command)
+
     }
 
     @Test
-    fun `any other action clears the pending double space undo`() {
+    fun `text actions do not introduce reducer owned undo state`() {
         val converted = reduceDoubleSpace(KeyboardState(KeyboardLanguage.ENGLISH), textEditor).state
 
         val transition = KeyboardReducer.reduce(
@@ -221,7 +247,6 @@ class KeyboardReducerTest {
             nowMillis = 1,
         )
 
-        assertFalse(transition.state.pendingDoubleSpaceUndo)
 
         val afterDelete = KeyboardReducer.reduce(
             state = transition.state,

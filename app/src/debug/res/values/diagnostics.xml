@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_privacy_summary">No analytics or automatic uploads. Optional debug diagnostic events and recorded Rune input are off by default and stored locally only after you enable them. Input recording requires two confirmations and excludes sensitive and unsupported fields. Exports are manual; your chosen document provider may sync exported copies outside Rune’s control.</string>
+    <item type="id" name="diagnostics_metadata_toggle" />
+    <item type="id" name="diagnostics_text_toggle" />
+    <item type="id" name="diagnostics_manage" />
+    <item type="id" name="diagnostics_status" />
+    <item type="id" name="diagnostics_export_metadata" />
+    <item type="id" name="diagnostics_export_text" />
+    <item type="id" name="diagnostics_delete" />
+    <string name="diagnostics_title">Optional debug logs</string>
+    <string name="diagnostics_metadata_title">Diagnostic events</string>
+    <string name="diagnostics_metadata_summary">Local event types, decisions and bounded counters. No input text, key values, text hashes or editor identity. Off by default; up to 1 MiB.</string>
+    <string name="diagnostics_text_title">Record Rune input</string>
+    <string name="diagnostics_text_summary">Optional local text, candidates and decisions from eligible Rune typing. Independent of diagnostic events. Requires two confirmations; up to 4 MiB.</string>
+    <string name="diagnostics_manage">Manage debug logs</string>
+    <string name="diagnostics_manage_summary">Export each log separately or disable both options and delete local logs.</string>
+    <string name="diagnostics_scope_title">Record Rune input?</string>
+    <string name="diagnostics_scope_message">This debug option records text entered with Rune, its owned context, original words, candidates and actual decisions. Collection starts only in the next fresh normal text session. Passwords, private fields, email, URL, number, phone, date/time and raw editors are excluded. Rune does not read existing editor text or the clipboard. Continue to the local-storage confirmation?</string>
+    <string name="diagnostics_storage_title">Store this text locally?</string>
+    <string name="diagnostics_storage_message">Rune will keep up to 4 MiB of recorded input in private local files, rotating older records. This is an explicit exception to the normal no-input-storage behavior. You can stop recording without confirmation and delete local logs. Nothing is uploaded automatically. Enable recording?</string>
+    <string name="diagnostics_continue">Continue</string>
+    <string name="diagnostics_enable">Enable recording</string>
+    <string name="diagnostics_export_warning">Exports are manual. Your chosen document provider may sync or upload the exported file. Exported copies are outside Rune’s control and are not removed when local logs are deleted.</string>
+    <string name="diagnostics_export_metadata">Export diagnostic events</string>
+    <string name="diagnostics_export_text">Export recorded input</string>
+    <string name="diagnostics_delete">Disable both and delete local logs</string>
+    <string name="diagnostics_status_format">Diagnostic events: %1$s\nRecorded input: %2$s\n%3$s</string>
+    <string name="diagnostics_on">On</string>
+    <string name="diagnostics_off">Off</string>
+    <string name="diagnostics_next_session">Enabled collection starts at a fresh eligible input session. Queues and files are bounded; some events may be dropped.</string>
+    <string name="diagnostics_working">Working…</string>
+    <string name="diagnostics_stopping">Stopping collection; waiting for local writes to finish…</string>
+    <string name="diagnostics_deleting">Stopping and deleting local logs…</string>
+    <string name="diagnostics_deleted">Both options are off and managed local logs have been deleted. Exported copies remain outside Rune.</string>
+    <string name="diagnostics_exported">Export completed.</string>
+    <string name="diagnostics_failed">The operation could not be completed. No completion is claimed. Check the current switches and try again.</string>
+</resources>

@@ -4,5 +4,9 @@
   <issue id="ObsoleteSdkInt">
     <ignore path="src/main/res/mipmap-anydpi-v26" />
   </issue>
+  <!-- Debug diagnostics are translated into Spanish; the rest of the app intentionally
+       uses its default English resources. Keep diagnostics and every other locale checked. -->
+  <issue id="MissingTranslation">
+    <ignore regexp="^&quot;(?!diagnostics_)[^&quot;]+&quot; is not translated in &quot;es&quot; \(Spanish\)$" />
+  </issue>
 </lint>
-

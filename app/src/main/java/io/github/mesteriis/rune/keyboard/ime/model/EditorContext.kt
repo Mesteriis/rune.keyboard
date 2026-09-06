@@ -39,14 +39,17 @@ data class EditorContext(
         get() = if (isPassword || noPersonalizedLearning) InputPolicy.SENSITIVE else InputPolicy.NORMAL
 
     val supportsAutomaticCapitalization: Boolean
-        get() = mode == EditorMode.TEXT && !isPassword
+        get() = supportsSmartTyping
+
+    val supportsSmartTyping: Boolean
+        get() = mode == EditorMode.TEXT && inputPolicy == InputPolicy.NORMAL && !requiresRawKeyEvents
 
     /**
-     * Double space converts to ". " only where a sentence separator makes sense and where the
-     * bounded two-character guard read is acceptable: plain text, never passwords, never TYPE_NULL.
+     * Double space may transform a Rune-owned suffix only in NORMAL plain text, never
+     * sensitive/raw input. The typing controller additionally verifies ownership without reads.
      */
     val supportsDoubleSpacePeriod: Boolean
-        get() = mode == EditorMode.TEXT && !isPassword && !requiresRawKeyEvents
+        get() = supportsSmartTyping
 
     companion object {
         fun from(editorInfo: EditorInfo): EditorContext = from(

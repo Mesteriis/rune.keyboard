@@ -1,5 +1,7 @@
 # IME acceptance checklist
 
+Текущий сводный статус Smart Typing 0.3 и обязательная матрица находятся в [датированном отчёте](acceptance/2026-09-02-rune-smart-typing-0.3.md). Этот checklist не является свидетельством прохождения: каждый пункт требует соответствующего receipt.
+
 Green Gradle build не подтверждает реальное поведение клавиатуры. Перед релизом пройти этот список на эмуляторе и хотя бы одном физическом устройстве.
 
 ## Rune Intelligence Foundation 0.2
@@ -24,6 +26,23 @@ adb shell am start -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
 ```
 
 На нём доступны plain, multiline, email, URL, phone, signed-decimal numeric, password, `TYPE_NULL`, `SEND/SEARCH/GO/NEXT/DONE`, custom-action с ID `0`, selection/cursor presets и локальные Cyrillic/surrogate/ZWJ заготовки без clipboard. Activity работает в `:qa_editor`, чтобы IME и редактор были разделены Binder-границей.
+
+## Smart Typing composing foundation
+
+Компактный debug-fixture запускается с `--es qa_composing_fixture accept`; режимы `reject`, `drop` и `private` проверяют редакторы без composing spans и `NO_PERSONALIZED_LEARNING`. Счётчики отражают только число операций, длину и числовые границы, без текста.
+
+- первая буква создаёт composing span, последующие изменяют только этот span;
+- Space оставляет одну видимую pending boundary; следующая буква не дублирует пробел;
+- Backspace удаляет целый собственный grapheme и завершает пустую composition;
+- неподвижное удержание Space завершает span до первого движения cursor mode;
+- Enter, язык, слой, внешняя selection и lifecycle не воспроизводят старый буфер;
+- внешняя замена в той же InputConnection и потеря span уничтожают контекст; последующий plain ввод не возвращает старое слово;
+- restartInput сохраняет отображённый текст и начинает новую typing-сессию;
+- callback собственного double-space не сбрасывает immediate Undo;
+- sensitive/NPL editor не получает composing, getTextBefore/AfterCursor, getSelectedText, getExtractedText, getCursorCapsMode, getSurroundingText или takeSnapshot;
+- отказ без достоверного результата не приводит к повторной отправке того же текста. Редактор, молча отбрасывающий span без callback, не получает универсальной гарантии composition.
+
+Эти сценарии покрываются `SmartTypingComposingInstrumentedTest` через настоящий Binder. JVM-тесты дополнительно проверяют задержанные/объединённые callback, reentrancy, Unicode-границы, лимиты RAM и session-only отказ. Они не заменяют API 26/37 и physical Fold gates.
 
 ## Установка и lifecycle
 

@@ -7,6 +7,7 @@ import android.graphics.Rect
 import android.os.SystemClock
 import android.view.InputDevice
 import android.view.MotionEvent
+import android.view.ViewConfiguration
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
@@ -15,8 +16,14 @@ import androidx.test.uiautomator.UiScrollable
 import androidx.test.uiautomator.UiSelector
 import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
+import io.github.mesteriis.rune.keyboard.settings.SettingsCodec
+import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
+import io.github.mesteriis.rune.keyboard.settings.ContextualPunctuationMode
 import java.io.File
 import java.io.FileOutputStream
+import java.util.concurrent.atomic.AtomicInteger
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
@@ -62,9 +69,104 @@ class ImeTestDriver {
         shell("settings put secure show_ime_with_hard_keyboard $hardKeyboardSetting")
     }
 
+    /** Deterministic temporary QA settings; tearDown restores the full pre-test raw map. */
+    fun configureMechanicalPunctuation(mechanical: Boolean, doubleSpace: Boolean) =
+        configureSmartTyping(AutocorrectionMode.OFF, true, mechanical, doubleSpace)
+
+    /** Configure before testing fresh editor boundaries; never switch language after the boundary. */
+    fun configureEnglishStartingLanguage() {
+        val preferences = targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+        check(preferences.edit()
+            .putString(SettingsCodec.KEY_LANGUAGES_ENABLED,
+                SettingsCodec.encodeLanguages(listOf(KeyboardLanguage.ENGLISH)))
+            .putString(SettingsCodec.KEY_LANGUAGE_STARTING, KeyboardLanguage.ENGLISH.name)
+            .commit()) { "QA starting-language settings write failed" }
+        // The standard driver teardown restores the original complete raw map, including absent
+        // keys. No saved values are logged and no language action can mask a fresh-editor reset.
+        instrumentation.waitForIdleSync()
+    }
+
+    fun configureSmartTyping(
+        autocorrection: AutocorrectionMode,
+        strip: Boolean,
+        mechanical: Boolean = true,
+        doubleSpace: Boolean = true,
+        contextual: ContextualPunctuationMode = ContextualPunctuationMode.SUGGESTIONS,
+    ) {
+        val preferences = targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+        synchronized(preferences) {
+            // A schema-3 marker requires all five Smart Typing keys, not a partial test map.
+            check(preferences.edit()
+                .putInt(SettingsCodec.KEY_SCHEMA_VERSION, SettingsCodec.SCHEMA_VERSION)
+                .putString(SettingsCodec.KEY_AUTOCORRECTION_MODE, autocorrection.name)
+                .putBoolean(SettingsCodec.KEY_MECHANICAL_PUNCTUATION, mechanical)
+                .putString(SettingsCodec.KEY_CONTEXTUAL_PUNCTUATION_MODE, contextual.name)
+                .putBoolean(SettingsCodec.KEY_CANDIDATE_STRIP, strip)
+                .putBoolean(SettingsCodec.KEY_DOUBLE_SPACE_PERIOD, doubleSpace)
+                .commit()) { "QA settings write failed" }
+        }
+        instrumentation.waitForIdleSync()
+    }
+
+    /** Shared live fixture: explicit settings, then bounded edits while dictionary handles load. */
+    fun prepareLiveCorrection(): UiObject2 {
+        configureSmartTyping(AutocorrectionMode.SUGGESTIONS, true, mechanical = false, doubleSpace = false)
+        launchComposingQa()
+        tapKey("a"); tapKeyByDescription(targetContext.getString(R.string.key_space))
+        for (key in listOf("h", "e", "l", "l", "l")) tapKey(key)
+        val deadline = SystemClock.uptimeMillis() + 120_000L
+        do {
+            tapKey("o"); awaitFieldText("qa_composing_text", "a helllo")
+            val correction = device.wait(Until.findObject(By.desc(
+                targetContext.getString(R.string.candidate_correction, "hello"))), INPUT_CONNECTION_SETTLE_MILLIS)
+            if (correction != null) return correction
+            tapDelete(); awaitFieldText("qa_composing_text", "a helll")
+        } while (SystemClock.uptimeMillis() < deadline)
+        throw AssertionError("Fixed public spelling candidate unavailable after bounded loading/edits")
+    }
+
+    fun launchSettings() {
+        shell("am start -W -n $PACKAGE_NAME/.settings.SettingsActivity")
+        check(device.wait(Until.hasObject(By.res(PACKAGE_NAME, "settings_scroll")), WAIT_MILLIS)) {
+            "Settings screen unavailable"
+        }
+    }
+
+    fun settingsRow(titleRes: Int): UiObject2 {
+        val label = targetContext.getString(titleRes)
+        var title = device.findObject(By.text(label))
+        if (title == null) {
+            @Suppress("DEPRECATION")
+            UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/settings_scroll")).apply {
+                setAsVerticalList(); scrollIntoView(UiSelector().text(label))
+            }
+            title = device.findObject(By.text(label))
+        }
+        var row: UiObject2? = checkNotNull(title) { "Settings row unavailable" }
+        while (row != null && !row.isClickable) row = row.parent
+        return checkNotNull(row) { "Settings control unavailable" }
+    }
+
+    fun chooseSetting(titleRes: Int, choiceRes: Int) {
+        settingsRow(titleRes).click()
+        checkNotNull(device.wait(Until.findObject(By.text(targetContext.getString(choiceRes))), WAIT_MILLIS)) {
+            "Settings option unavailable"
+        }.click()
+        instrumentation.waitForIdleSync(); device.waitForIdle()
+    }
+
     fun launchQa() {
         shell("am start -W -f 0x10008000 -n $QA_ACTIVITY")
         awaitQaActivity()
+    }
+
+    fun launchComposingQa(mode: String = "accept") {
+        require(mode in setOf("accept", "reject", "drop", "private", "raw", "password", "email", "url",
+            "number", "phone", "date_time"))
+        shell("am start -W -f 0x10008000 -n $QA_ACTIVITY --es qa_composing_fixture $mode")
+        awaitQaActivity()
+        waitForKeyboard()
+        switchToEnglish()
     }
 
     private fun resumeQa() {
@@ -88,8 +190,18 @@ class ImeTestDriver {
         } else {
             visibleField
         }
+        val clickBounds = field.visibleBounds
         field.click()
-        waitForKeyboard()
+        try {
+            waitForKeyboard()
+        } catch (failure: IllegalStateException) {
+            val observed = device.findObject(selector)
+            throw IllegalStateException(
+                "QA focus failed: id=$idName, clickBounds=$clickBounds, " +
+                    "observedBounds=${observed?.visibleBounds}, focused=${observed?.isFocused}",
+                failure,
+            )
+        }
         device.waitForIdle()
         // adjustResize may move a low editor outside the accessibility viewport once IME appears;
         // callers only need the focus transition, so keep the node captured before that resize.
@@ -190,11 +302,76 @@ class ImeTestDriver {
         }
     }
 
-    fun touchDown(key: UiObject2): TouchHandle {
-        val bounds = key.visibleBounds
+    fun touchDown(key: UiObject2): TouchHandle = touchDown(key.visibleBounds)
+
+    /** Fixed observation geometry; callers can avoid accessibility queries during a held touch. */
+    fun touchDown(bounds: Rect): TouchHandle {
         val downTime = SystemClock.uptimeMillis()
         inject(downTime, downTime, MotionEvent.ACTION_DOWN, bounds.exactCenterX(), bounds.exactCenterY())
         return TouchHandle(downTime, bounds.exactCenterX(), bounds.exactCenterY())
+    }
+
+    /** Count actual Delete dispatches while forwarding to the resident listener unchanged. */
+    internal fun holdDeleteForActions(finish: (TouchHandle) -> Unit): Int {
+        // Resolve accessibility geometry before DOWN: an idle wait during repeat could erase
+        // the entire fixture. The observer counts deliveries, never supplies editor success.
+        val bounds = Rect(deleteKey().visibleBounds)
+        val keyboard = keyboardSnapshot()
+        val key = onMain {
+            keyboard.keys.single { it.contentDescription == targetContext.getString(R.string.key_delete) }
+        }
+        val listener = key.javaClass.getDeclaredField("actionListener").apply { isAccessible = true }
+        @Suppress("UNCHECKED_CAST")
+        val original = onMain { listener.get(key) as (KeyboardAction) -> Unit }
+        val delivered = AtomicInteger()
+        val observer: (KeyboardAction) -> Unit = { action ->
+            if (action == KeyboardAction.Delete) delivered.incrementAndGet()
+            original(action)
+        }
+        var touch: TouchHandle? = null
+        var finished = false
+        onMain { listener.set(key, observer) }
+        try {
+            val held = touchDown(bounds).also { touch = it }
+            val deadline = held.downTime + ViewConfiguration.getLongPressTimeout() + 1_000L
+            while (delivered.get() < 3 && SystemClock.uptimeMillis() < deadline) SystemClock.sleep(5)
+            check(delivered.get() >= 3) { "Held Delete did not dispatch an initial action and two repeats" }
+            finish(held) // Caller must inject UP/CANCEL, or detach and then inject CANCEL.
+            finished = true
+            onMain { Unit }
+            return delivered.get()
+        } finally {
+            try {
+                if (!finished) touch?.let(::cancelTouch)
+            } finally {
+                // A detached/reconfigured key may already have a new listener; preserve it.
+                onMain { if (listener.get(key) === observer) listener.set(key, original) }
+            }
+        }
+    }
+
+    private fun <T> onMain(block: () -> T): T {
+        var result: Result<T>? = null
+        instrumentation.runOnMainSync { result = runCatching(block) }
+        return checkNotNull(result).getOrThrow()
+    }
+
+    /** The real popup preselects its first alternate; release without an accessibility-cell lookup. */
+    fun selectFirstAlternate(keyLabel: String, beforeRelease: () -> Unit) {
+        val touch = touchDown(keyByText(keyLabel))
+        var released = false
+        try {
+            // Match KeyboardKeyView's platform timer, then allow a bounded UI/Binder settle.
+            // The caller verifies no fallback committed early; its final text assertion proves
+            // the alternate was delivered by this release, not that a timeout merely elapsed.
+            SystemClock.sleep(ViewConfiguration.getLongPressTimeout().toLong() + INPUT_CONNECTION_SETTLE_MILLIS)
+            beforeRelease()
+            releaseTouch(touch)
+            released = true
+        } finally {
+            if (!released) cancelTouch(touch)
+        }
+        device.waitForIdle()
     }
 
     fun cancelTouch(handle: TouchHandle) {
@@ -203,6 +380,30 @@ class ImeTestDriver {
 
     fun releaseTouch(handle: TouchHandle) {
         inject(handle.downTime, SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, handle.x, handle.y)
+    }
+
+    fun moveTouch(handle: TouchHandle, x: Float, y: Float): TouchHandle {
+        inject(handle.downTime, SystemClock.uptimeMillis(), MotionEvent.ACTION_MOVE, x, y)
+        return handle.copy(x = x, y = y)
+    }
+
+    /** Reads the target once, then returns the real interval between the two injected releases. */
+    fun doubleTap(key: UiObject2): Long {
+        // UiObject2.visibleBounds refreshes its node after waiting for accessibility idle.
+        // Resolve it before the gesture; no UI-tree queries may separate the four events.
+        val bounds = key.visibleBounds
+        check(!bounds.isEmpty) { "Double-tap target has no visible bounds" }
+        val x = bounds.exactCenterX()
+        val y = bounds.exactCenterY()
+        val firstDownTime = SystemClock.uptimeMillis()
+        inject(firstDownTime, firstDownTime, MotionEvent.ACTION_DOWN, x, y)
+        val firstUpTime = SystemClock.uptimeMillis()
+        inject(firstDownTime, firstUpTime, MotionEvent.ACTION_UP, x, y)
+        val secondDownTime = SystemClock.uptimeMillis()
+        inject(secondDownTime, secondDownTime, MotionEvent.ACTION_DOWN, x, y)
+        val secondUpTime = SystemClock.uptimeMillis()
+        inject(secondDownTime, secondUpTime, MotionEvent.ACTION_UP, x, y)
+        return secondUpTime - firstUpTime
     }
 
     fun deleteKey(): UiObject2 = keyByDescription(targetContext.getString(R.string.key_delete))
@@ -254,6 +455,7 @@ class ImeTestDriver {
             @Suppress("DEPRECATION")
             UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/settings_scroll")).apply {
                 setAsVerticalList()
+                setSwipeDeadZonePercentage(0.375)
                 scrollIntoView(UiSelector().text(label))
             }
             row = device.findObject(By.text(label))
@@ -312,6 +514,13 @@ class ImeTestDriver {
         device.pressBack()
         resumeQa()
         focusField("qa_plain_text")
+    }
+
+    fun setKeyPreviewForTest(enabled: Boolean) {
+        val preferences = targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+        check(preferences.edit().putBoolean(SettingsCodec.KEY_KEY_PREVIEW, enabled).commit())
+        instrumentation.waitForIdleSync()
+        check(SettingsCodec.decode(preferences.all).keyPreview == enabled)
     }
 
     fun keyByText(label: String): UiObject2 = findKeyByText(label) ?: error("Rune key '$label' not found")
@@ -491,6 +700,8 @@ class ImeTestDriver {
 
 class ImeFailureArtifacts(private val driver: ImeTestDriver) : TestWatcher() {
     override fun failed(error: Throwable?, description: Description) {
+        // Physical-device runs can suppress captures without skipping assertions or teardown.
+        if (InstrumentationRegistry.getArguments().getString("runeFailureArtifacts") == "false") return
         val root = InstrumentationRegistry.getInstrumentation().targetContext
             .getExternalFilesDir("instrumentation-failures") ?: return
         val safeName = description.methodName.replace(Regex("[^A-Za-z0-9_.-]"), "_")

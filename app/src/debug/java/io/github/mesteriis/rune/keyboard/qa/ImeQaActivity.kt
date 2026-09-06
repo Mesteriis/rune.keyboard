@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
+import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.inputmethod.EditorInfo
@@ -25,6 +26,20 @@ class ImeQaActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        intent.getStringExtra("qa_composing_fixture")?.let { mode ->
+            val fixture = ComposingQaFixture(this, mode)
+            val scrollView = ScrollView(this).apply {
+                id = R.id.qa_scroll
+                // Fixed public QA editors must not summon a user's password-manager overlay.
+                importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
+                addView(fixture.content)
+            }
+            setContentView(scrollView)
+            applySystemBarInsets(scrollView)
+            fixture.editor.requestFocus()
+            fixture.editor.post { showKeyboard(fixture.editor) }
+            return
+        }
         val content = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             val padding = dp(24)
@@ -136,8 +151,15 @@ class ImeQaActivity : Activity() {
         )
         content.addView(actionStatus)
 
-        val scrollView = ScrollView(this).apply {
+        // Keep QA navigation free of residual fling/stretch interception. The following real
+        // editor-focus tap belongs to the Binder test, not to stopping a ScrollView animation.
+        val scrollView = object : ScrollView(this) {
+            override fun fling(velocityY: Int) = Unit
+        }.apply {
+            overScrollMode = android.view.View.OVER_SCROLL_NEVER
             id = R.id.qa_scroll
+            // Exclude this debug-only hierarchy; never alter the device's autofill settings.
+            importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
             addView(content)
         }
         setContentView(scrollView)
@@ -170,6 +192,8 @@ class ImeQaActivity : Activity() {
         this.hint = hint
         this.inputType = inputType
         this.imeOptions = imeOptions
+        this.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
+        this.setAutofillHints(*emptyArray())
         // API 26 may keep a field focused while hiding the IME after a sibling Activity closes.
         // Make a deliberate tap restore the keyboard even when focus itself does not change.
         setOnClickListener { showKeyboard(this) }

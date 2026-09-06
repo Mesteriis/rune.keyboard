@@ -1,0 +1,23 @@
+include("${CMAKE_CURRENT_LIST_DIR}/VerifyModel.cmake")
+verify_scoring_model("${MODEL}")
+if(DEFINED OUTPUT)
+    execute_process(COMMAND "${PROGRAM}" "${MODEL}" OUTPUT_FILE "${OUTPUT}"
+        RESULT_VARIABLE result)
+    if(NOT result EQUAL 0)
+        message(FATAL_ERROR "Token fixture dump failed")
+    endif()
+    file(STRINGS "${OUTPUT}" lines)
+    list(LENGTH lines count)
+    file(SHA256 "${OUTPUT}" sha)
+    # Approved pristine upstream old-API output: all IDs, order and counts from
+    # 16 fixed + 300 seeded Unicode cases, both add_special settings (632 lines).
+    if(NOT count EQUAL 632 OR NOT sha STREQUAL "d65c09fdad70f012a0ad17a01d9e0a7c1d891136a69c1977633b9152a7fdea00")
+        message(FATAL_ERROR "632 token sequences differ from the pristine upstream reference")
+    endif()
+    message(STATUS "632 exact pristine upstream token sequences verified")
+else()
+    execute_process(COMMAND "${PROGRAM}" "${MODEL}" RESULT_VARIABLE result)
+    if(NOT result EQUAL 0)
+        message(FATAL_ERROR "Exact-model contract failed")
+    endif()
+endif()

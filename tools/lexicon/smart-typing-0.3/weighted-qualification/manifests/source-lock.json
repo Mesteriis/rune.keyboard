@@ -1,0 +1,133 @@
+[
+  {
+    "path": "sources/libreoffice/ru_RU/ru_RU.aff",
+    "repository": "LibreOffice/dictionaries",
+    "revision": "32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4",
+    "url": "https://raw.githubusercontent.com/LibreOffice/dictionaries/32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4/ru_RU/ru_RU.aff",
+    "sha256": "38ce7d4af78e211e9bafe4bf7e3d6a2c420591136cb738ec6648f8fdf6524cd7",
+    "bytes": 71236
+  },
+  {
+    "path": "sources/libreoffice/ru_RU/ru_RU.dic",
+    "repository": "LibreOffice/dictionaries",
+    "revision": "32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4",
+    "url": "https://raw.githubusercontent.com/LibreOffice/dictionaries/32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4/ru_RU/ru_RU.dic",
+    "sha256": "f6047416a0204adbecf3a451b874ec8a97ee37e2cbc714466ef04d8dbcc0d6fc",
+    "bytes": 3473191
+  },
+  {
+    "path": "sources/libreoffice/ru_RU/README_ru_RU.txt",
+    "repository": "LibreOffice/dictionaries",
+    "revision": "32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4",
+    "url": "https://raw.githubusercontent.com/LibreOffice/dictionaries/32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4/ru_RU/README_ru_RU.txt",
+    "sha256": "262af2f6ad70a61e5ee1332ff44fa8ee50edca819cf33207d8ad6ba6a0c9be52",
+    "bytes": 1886
+  },
+  {
+    "path": "sources/libreoffice/es/es_ES.aff",
+    "repository": "LibreOffice/dictionaries",
+    "revision": "32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4",
+    "url": "https://raw.githubusercontent.com/LibreOffice/dictionaries/32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4/es/es_ES.aff",
+    "sha256": "e73a9bf8e1383f4986a5dc9e2fbed49371c0c61f511c626d15586bd433c1cad9",
+    "bytes": 169202
+  },
+  {
+    "path": "sources/libreoffice/es/es_ES.dic",
+    "repository": "LibreOffice/dictionaries",
+    "revision": "32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4",
+    "url": "https://raw.githubusercontent.com/LibreOffice/dictionaries/32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4/es/es_ES.dic",
+    "sha256": "6975dddec3d5d2c676069537bc67b4b5f786c65c5d4cf6703a82acf779ac9ec1",
+    "bytes": 715989
+  },
+  {
+    "path": "sources/libreoffice/es/LICENSE.md",
+    "repository": "LibreOffice/dictionaries",
+    "revision": "32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4",
+    "url": "https://raw.githubusercontent.com/LibreOffice/dictionaries/32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4/es/LICENSE.md",
+    "sha256": "2b70fd5cb8d3b34cc6ae322c969557a2270b99017594addb2531ef5ffd9e1b17",
+    "bytes": 991
+  },
+  {
+    "path": "sources/libreoffice/es/README_hunspell_es.txt",
+    "repository": "LibreOffice/dictionaries",
+    "revision": "32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4",
+    "url": "https://raw.githubusercontent.com/LibreOffice/dictionaries/32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4/es/README_hunspell_es.txt",
+    "sha256": "0b5c39a863ecb61f5c5631ec1cd977667ef9bda6da6f90e80e9fc0edcbfadd97",
+    "bytes": 2615
+  },
+  {
+    "path": "sources/libreoffice/es/MPL-1.1.txt",
+    "repository": "LibreOffice/dictionaries",
+    "revision": "32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4",
+    "url": "https://raw.githubusercontent.com/LibreOffice/dictionaries/32b006a2c22a4ac7e8ed3f03346f7b3d85a970a4/es/MPL-1.1.txt",
+    "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f",
+    "bytes": 25755
+  },
+  {
+    "path": "sources/frequency/LICENSE",
+    "repository": "hermitdave/FrequencyWords",
+    "revision": "525f9b560de45753a5ea01069454e72e9aa541c6",
+    "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/LICENSE",
+    "sha256": "e08d916cc953f85f7dfa0df530f6d7931f14ce804d053602662d8649b5fac829",
+    "bytes": 1068
+  },
+  {
+    "path": "sources/frequency/README.md",
+    "repository": "hermitdave/FrequencyWords",
+    "revision": "525f9b560de45753a5ea01069454e72e9aa541c6",
+    "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/README.md",
+    "sha256": "a92fcc50e27f7b2d5860ec1c1ce794dc4c892d945bfa4c8c3136cdfd213ee710",
+    "bytes": 913
+  },
+  {
+    "path": "sources/frequency/ru_50k.txt",
+    "repository": "hermitdave/FrequencyWords",
+    "revision": "525f9b560de45753a5ea01069454e72e9aa541c6",
+    "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/content/2018/ru/ru_50k.txt",
+    "sha256": "6095f507cc167488ec66ada5a85ac50433503a08ad24a07c6eabdf54352c4e7f",
+    "reuse": "../corpus-inputs/ru_50k.txt",
+    "bytes": 998861
+  },
+  {
+    "path": "sources/frequency/en_50k.txt",
+    "repository": "hermitdave/FrequencyWords",
+    "revision": "525f9b560de45753a5ea01069454e72e9aa541c6",
+    "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/content/2018/en/en_50k.txt",
+    "sha256": "5351ff405b1126ef555791dd4d9798a48e3e9a501a9fc481a9da957752cfb458",
+    "reuse": "../corpus-inputs/en_50k.txt",
+    "bytes": 622749
+  },
+  {
+    "path": "sources/frequency/es_50k.txt",
+    "repository": "hermitdave/FrequencyWords",
+    "revision": "525f9b560de45753a5ea01069454e72e9aa541c6",
+    "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/content/2018/es/es_50k.txt",
+    "sha256": "dcff3ad4316192f4dc4ff7d26e637c6ff314ef1ca0f3f720c5649018a71056c0",
+    "reuse": "../corpus-inputs/es_50k.txt",
+    "bytes": 658626
+  },
+  {
+    "path": "downloads/hunspell-e184e22c51fe213f4490e9b36998f0ad3e5e606b.tar.gz",
+    "repository": "hunspell/hunspell",
+    "revision": "e184e22c51fe213f4490e9b36998f0ad3e5e606b",
+    "url": "https://codeload.github.com/hunspell/hunspell/tar.gz/e184e22c51fe213f4490e9b36998f0ad3e5e606b",
+    "sha256": "1dca095a3e4dcebb55bda6f92aa38ef4cc0fe4234908bfbe8f8b8989874a46a1",
+    "bytes": 574281
+  },
+  {
+    "path": "downloads/scowl-5ef55f9c42730ebe4394a78b77855468a6f15dd2.tar.gz",
+    "repository": "en-wl/wordlist",
+    "revision": "5ef55f9c42730ebe4394a78b77855468a6f15dd2",
+    "url": "https://codeload.github.com/en-wl/wordlist/tar.gz/5ef55f9c42730ebe4394a78b77855468a6f15dd2",
+    "sha256": "933cd8edab9297fc8cb6358d7cb3d05a50371107d1431af61de09eaa875043ac",
+    "bytes": 10275788
+  },
+  {
+    "path": "notices/CC-BY-SA-4.0.txt",
+    "url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt",
+    "revision": "CC-BY-SA-4.0",
+    "repository": "Creative Commons official license text",
+    "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5",
+    "bytes": 20138
+  }
+]

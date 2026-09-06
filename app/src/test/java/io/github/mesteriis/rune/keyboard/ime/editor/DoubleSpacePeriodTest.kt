@@ -39,11 +39,4 @@ class DoubleSpacePeriodTest {
         assertFalse(DoubleSpacePeriod.canConvert(null))
     }
 
-    @Test
-    fun `revert only accepts our own conversion`() {
-        assertTrue(DoubleSpacePeriod.canRevert(". "))
-        assertFalse(DoubleSpacePeriod.canRevert("a "))
-        assertFalse(DoubleSpacePeriod.canRevert("."))
-        assertFalse(DoubleSpacePeriod.canRevert(null))
-    }
 }

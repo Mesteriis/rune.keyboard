@@ -1,12 +1,14 @@
 package io.github.mesteriis.rune.keyboard.intelligence.runtime
 
+import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelPointer
+import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelPointerReader
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 
-interface ModelPointerStore {
-    fun read(): ActiveModelPointer
+interface ModelPointerStore : ActiveModelPointerReader {
+    override fun read(): ActiveModelPointer
     fun write(pointer: ActiveModelPointer)
 }
 

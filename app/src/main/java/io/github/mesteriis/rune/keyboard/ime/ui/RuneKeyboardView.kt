@@ -20,6 +20,7 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLayer
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
 import io.github.mesteriis.rune.keyboard.ime.model.ShiftMode
 import io.github.mesteriis.rune.keyboard.settings.KeyboardViewMetrics
+import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
 
 internal class RuneKeyboardView(
     context: Context,
@@ -32,6 +33,12 @@ internal class RuneKeyboardView(
     private var inputPolicy = InputPolicy.NORMAL
     private var popupController: KeyPopupController? = null
     private val keyboardPadding = resources.getDimensionPixelSize(R.dimen.keyboard_padding)
+    private val candidateStrip = CandidateStripView(context)
+    private val keysContainer = LinearLayout(context).apply {
+        orientation = VERTICAL
+        layoutDirection = LAYOUT_DIRECTION_LTR
+        gravity = Gravity.CENTER_HORIZONTAL
+    }
 
     init {
         orientation = VERTICAL
@@ -58,10 +65,27 @@ internal class RuneKeyboardView(
             insets
         }
         setBackgroundColor(context.getColor(R.color.keyboard_background))
+        addView(
+            candidateStrip,
+            LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                resources.getDimensionPixelSize(R.dimen.candidate_strip_height),
+            ),
+        )
+        addView(keysContainer, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
     }
 
     fun setOnActionListener(listener: (KeyboardAction) -> Unit) {
         actionListener = listener
+    }
+
+    fun setOnCandidateSelectedListener(listener: (String) -> Unit) {
+        candidateStrip.setOnCandidateSelectedListener(listener)
+    }
+
+    /** Updates only the permanent strip. Key gestures and any pending key render stay untouched. */
+    fun updateCandidates(state: SmartTypingViewState) {
+        candidateStrip.render(state)
     }
 
     fun setPopupPolicy(previewEnabled: Boolean, inputPolicy: InputPolicy) {
@@ -81,8 +105,8 @@ internal class RuneKeyboardView(
         RuneTrace.section("Rune#rebuildKeys") {
             // Key views are about to be discarded; a popup anchored to one of them must go first.
             popupController?.dismissAll()
-            removeAllViews()
-            layout.rows.forEach { rowSpecs -> addView(createRow(rowSpecs, state)) }
+            keysContainer.removeAllViews()
+            layout.rows.forEach { rowSpecs -> keysContainer.addView(createRow(rowSpecs, state)) }
         }
     }
 
@@ -230,8 +254,8 @@ internal class RuneKeyboardView(
     }
 
     private inline fun forEachKey(action: (CancelableKey) -> Unit) {
-        for (rowIndex in 0 until childCount) {
-            val row = getChildAt(rowIndex) as? LinearLayout ?: continue
+        for (rowIndex in 0 until keysContainer.childCount) {
+            val row = keysContainer.getChildAt(rowIndex) as? LinearLayout ?: continue
             for (keyIndex in 0 until row.childCount) {
                 (row.getChildAt(keyIndex) as? CancelableKey)?.let(action)
             }
@@ -279,6 +303,7 @@ internal class RuneKeyboardView(
             KeyboardAction.NextInputMethod -> context.getString(R.string.key_next_keyboard)
             is KeyboardAction.SwitchLanguage -> context.getString(R.string.key_language)
             KeyboardAction.DoubleSpaceTap,
+            KeyboardAction.CursorModeStarted,
             is KeyboardAction.MoveCursor,
             null,
             -> null

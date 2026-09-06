@@ -1,5 +1,7 @@
 package io.github.mesteriis.rune.keyboard.intelligence.runtime
 
+import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelPointerCodec
+import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelPointer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.mesteriis.rune.keyboard.intelligence.delivery.ActivationPhase
@@ -11,6 +13,8 @@ import io.github.mesteriis.rune.keyboard.intelligence.delivery.ModelFailureCode
 import io.github.mesteriis.rune.keyboard.intelligence.model.ModelDescriptor
 import io.github.mesteriis.rune.keyboard.intelligence.model.ModelManifestParser
 import io.github.mesteriis.rune.runtime.llama.LocalModelRuntime
+import io.github.mesteriis.rune.runtime.llama.CandidateScoringRequest
+import io.github.mesteriis.rune.runtime.llama.CandidateScoringResult
 import io.github.mesteriis.rune.runtime.llama.ModelLoadResult
 import io.github.mesteriis.rune.runtime.llama.ModelSelfTestResult
 import io.github.mesteriis.rune.runtime.llama.RuntimeErrorCode
@@ -421,12 +425,18 @@ class ModelActivationCoordinatorInstrumentedTest {
     ) : LocalModelRuntime {
         val loadedFiles = mutableListOf<File>()
 
-        override fun load(modelFile: File): ModelLoadResult {
+        override fun load(modelFile: File, isCancelled: () -> Boolean): ModelLoadResult {
+            if (isCancelled()) return ModelLoadResult.Failure(RuntimeErrorCode.CANCELLED)
             loadedFiles += modelFile
             return loadResult(modelFile)
         }
 
         override fun selfTest() = ModelSelfTestResult.Success(promptMillis = 1, firstTokenMillis = 2)
+        override fun scoreCandidates(
+            request: CandidateScoringRequest,
+            isCancelled: () -> Boolean,
+        ): CandidateScoringResult =
+            error("Activation must not score typing candidates")
         override fun cancelCurrentOperation() = Unit
         override fun unload() = Unit
     }

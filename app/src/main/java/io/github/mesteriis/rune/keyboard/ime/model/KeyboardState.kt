@@ -39,15 +39,17 @@ data class KeyboardState(
     val layer: KeyboardLayer = KeyboardLayer.LETTERS,
     val shiftMode: ShiftMode = ShiftMode.OFF,
     val doubleSpacePeriodEnabled: Boolean = true,
-    val pendingDoubleSpaceUndo: Boolean = false,
     private val lastShiftTapAtMillis: Long? = null,
+    // Explicit manual OFF survives automatic refresh until the next text action or real boundary.
+    private val automaticCapitalizationSuppressed: Boolean = false,
 ) {
     init {
         require(enabledLanguages.isNotEmpty()) { "At least one language must stay enabled" }
     }
 
     fun onShiftPressed(nowMillis: Long): KeyboardState = when (shiftMode) {
-        ShiftMode.AUTO -> copy(shiftMode = ShiftMode.OFF, lastShiftTapAtMillis = nowMillis)
+        ShiftMode.AUTO -> copy(shiftMode = ShiftMode.OFF, lastShiftTapAtMillis = nowMillis,
+            automaticCapitalizationSuppressed = true)
         ShiftMode.OFF -> {
             val followsAutomaticShiftTap = lastShiftTapAtMillis?.let { previousTap ->
                 nowMillis - previousTap in 0..DOUBLE_TAP_WINDOW_MILLIS
@@ -55,6 +57,7 @@ data class KeyboardState(
             copy(
                 shiftMode = if (followsAutomaticShiftTap) ShiftMode.LOCKED else ShiftMode.ONCE,
                 lastShiftTapAtMillis = if (followsAutomaticShiftTap) null else nowMillis,
+                automaticCapitalizationSuppressed = false,
             )
         }
         ShiftMode.ONCE -> {
@@ -64,26 +67,25 @@ data class KeyboardState(
             copy(
                 shiftMode = if (isDoubleTap) ShiftMode.LOCKED else ShiftMode.OFF,
                 lastShiftTapAtMillis = null,
+                automaticCapitalizationSuppressed = !isDoubleTap,
             )
         }
-        ShiftMode.LOCKED -> copy(shiftMode = ShiftMode.OFF, lastShiftTapAtMillis = null)
+        ShiftMode.LOCKED -> copy(shiftMode = ShiftMode.OFF, lastShiftTapAtMillis = null,
+            automaticCapitalizationSuppressed = true)
     }
 
-    fun afterTextCommitted(): KeyboardState = when (shiftMode) {
-        ShiftMode.AUTO,
-        ShiftMode.ONCE,
-        -> copy(shiftMode = ShiftMode.OFF, lastShiftTapAtMillis = null)
-        ShiftMode.OFF,
-        ShiftMode.LOCKED,
-        -> this
-    }
+    fun afterTextCommitted(): KeyboardState = copy(
+        shiftMode = if (shiftMode == ShiftMode.AUTO || shiftMode == ShiftMode.ONCE) ShiftMode.OFF else shiftMode,
+        lastShiftTapAtMillis = null,
+        automaticCapitalizationSuppressed = false,
+    )
 
     fun withAutomaticCapitalization(enabled: Boolean): KeyboardState = when (shiftMode) {
         ShiftMode.OFF,
         ShiftMode.AUTO,
         -> copy(
-            shiftMode = if (enabled) ShiftMode.AUTO else ShiftMode.OFF,
-            lastShiftTapAtMillis = null,
+            shiftMode = if (enabled && !automaticCapitalizationSuppressed) ShiftMode.AUTO else ShiftMode.OFF,
+            lastShiftTapAtMillis = if (automaticCapitalizationSuppressed) lastShiftTapAtMillis else null,
         )
         ShiftMode.ONCE,
         ShiftMode.LOCKED,
@@ -94,11 +96,12 @@ data class KeyboardState(
         layer = if (layer == KeyboardLayer.LETTERS) KeyboardLayer.SYMBOLS else KeyboardLayer.LETTERS,
         shiftMode = ShiftMode.OFF,
         lastShiftTapAtMillis = null,
+        automaticCapitalizationSuppressed = false,
     )
 
     fun toggleSymbolsPage(): KeyboardState = when (layer) {
-        KeyboardLayer.SYMBOLS -> copy(layer = KeyboardLayer.SYMBOLS_ALT)
-        KeyboardLayer.SYMBOLS_ALT -> copy(layer = KeyboardLayer.SYMBOLS)
+        KeyboardLayer.SYMBOLS -> copy(layer = KeyboardLayer.SYMBOLS_ALT, automaticCapitalizationSuppressed = false)
+        KeyboardLayer.SYMBOLS_ALT -> copy(layer = KeyboardLayer.SYMBOLS, automaticCapitalizationSuppressed = false)
         KeyboardLayer.LETTERS -> this
     }
 
@@ -119,6 +122,7 @@ data class KeyboardState(
         layer = KeyboardLayer.LETTERS,
         shiftMode = ShiftMode.OFF,
         lastShiftTapAtMillis = null,
+        automaticCapitalizationSuppressed = false,
     )
 
     fun withEnabledLanguages(languages: List<KeyboardLanguage>): KeyboardState {
@@ -128,11 +132,9 @@ data class KeyboardState(
             language = coercedLanguage,
             enabledLanguages = languages,
             layer = if (coercedLanguage == language) layer else KeyboardLayer.LETTERS,
+            automaticCapitalizationSuppressed = coercedLanguage == language && automaticCapitalizationSuppressed,
         )
     }
-
-    fun clearDoubleSpaceUndo(): KeyboardState =
-        if (pendingDoubleSpaceUndo) copy(pendingDoubleSpaceUndo = false) else this
 
     companion object {
         const val DOUBLE_TAP_WINDOW_MILLIS = 400L

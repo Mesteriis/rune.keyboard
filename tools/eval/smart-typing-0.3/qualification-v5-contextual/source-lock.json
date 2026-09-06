@@ -1,0 +1,67 @@
+{
+  "articleSelection": {
+    "modulus": 4,
+    "residue": 3,
+    "seed": 7042026
+  },
+  "corpusSeed": 5062026,
+  "datasetCardRevision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+  "files": {
+    "en-0027.parquet": {
+      "bytes": 213980716,
+      "repositoryPath": "20231101.en/train/0027.parquet",
+      "sha256": "1f0c7bcaf2aeb9765a981c8911b95ab3a9e50456bbad64e50e722a53b8608ccc"
+    },
+    "es-0006.parquet": {
+      "bytes": 215694480,
+      "repositoryPath": "20231101.es/train/0006.parquet",
+      "sha256": "2e3543788d1cf3c3cadfd800cbea1c0f6d76a2bb639455825e368f25fb47de9d"
+    },
+    "ru-0008.parquet": {
+      "bytes": 207500950,
+      "repositoryPath": "20231101.ru/train/0008.parquet",
+      "sha256": "9df744fb888585b0db5cacf605f8a8ba8562828a0c240106c70d716738e41e87"
+    }
+  },
+  "languageFiles": {
+    "en": "en-0027.parquet",
+    "es": "es-0006.parquet",
+    "ru": "ru-0008.parquet"
+  },
+  "licenses": [
+    "CC-BY-SA-3.0",
+    "GFDL-1.3"
+  ],
+  "parquetRevision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+  "priorSourceLock": {
+    "path": "tools/eval/smart-typing-0.3/qualification-v4/source-lock.json",
+    "sha256": "3f86e8b384c094e7c54241359a6b6703c35ba04cdee9bc9d1558fdab3c313ae8"
+  },
+  "recipe": {
+    "articleModulus": 4,
+    "articleResidue": 3,
+    "articleSeed": 7042026,
+    "boundaryPriority": [
+      ": ",
+      ". ",
+      ", ",
+      " "
+    ],
+    "observationExclusion": "last up to 12 Unicode alphabetic tokens",
+    "observationSeed": 5062026,
+    "oneRowPerArticle": true,
+    "prefixExclusion": "NFC casefold whitespace collapse",
+    "previousArticleResidue": 2,
+    "quotaPerBoundarySplitLanguage": 50,
+    "selectionOrder": "stored parquet row order; smallest observation hash per article/boundary",
+    "splitRule": "SHA256 first byte modulo 2; 0 calibration, 1 holdout",
+    "splitSeed": "contextual-v5-split"
+  },
+  "referenceGenerator": {
+    "path": "tools/eval/smart-typing-0.3/qualification-v4/generate_corpus.py",
+    "sha256": "9615bc8033760257bc384ece09d67f6b92e0b7541e144ea6ec746a2f4cc06de4"
+  },
+  "repository": "wikimedia/wikipedia",
+  "schemaVersion": 1,
+  "snapshot": "20231101"
+}

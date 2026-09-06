@@ -3,6 +3,9 @@ package io.github.mesteriis.rune.keyboard.ime.editor
 import android.view.KeyEvent
 import android.view.inputmethod.InputConnection
 import io.github.mesteriis.rune.keyboard.ime.model.EditorCommand
+import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
+import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
+import android.view.inputmethod.EditorInfo
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Proxy
 import org.junit.Assert.assertEquals
@@ -11,6 +14,73 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class EditorCommandExecutorTest {
+    @Test fun `exact editor action reports refusal or exception without inserting fallback text`() {
+        for ((result, throws, expected) in listOf(
+            Triple(true, false, EditorCommandExecutor.EditorActionResult.ACCEPTED),
+            Triple(false, false, EditorCommandExecutor.EditorActionResult.REFUSED),
+            Triple(false, true, EditorCommandExecutor.EditorActionResult.UNKNOWN))) {
+            val calls = mutableListOf<String>()
+            val connection = Proxy.newProxyInstance(InputConnection::class.java.classLoader,
+                arrayOf(InputConnection::class.java)) { _, method, _ ->
+                calls += method.name
+                if (throws) throw IllegalStateException("synthetic")
+                result
+            } as InputConnection
+            assertEquals(expected, EditorCommandExecutor.performEditorActionOnly(connection, 4))
+            assertEquals(listOf("performEditorAction"), calls)
+        }
+    }
+
+    @Test fun `owned batch checks guard between writes and ends on the original connection`() {
+        for (loseOwnership in listOf(false, true)) {
+            val calls = mutableListOf<String>()
+            var current = true
+            val connection = Proxy.newProxyInstance(InputConnection::class.java.classLoader,
+                arrayOf(InputConnection::class.java)) { _, method, _ ->
+                calls.add(method.name)
+                if (method.name == "commitText" && loseOwnership) current = false
+                method.name != "endBatchEdit"
+            } as InputConnection
+            val command = EditorCommand.Batch(listOf(EditorCommand.CommitText("word "),
+                EditorCommand.SetComposingRegion(4, 5))) { current }
+            val result = EditorCommandExecutor.execute(command, connection, false, false)
+            assertEquals(!loseOwnership, result.handled)
+            assertEquals(if (loseOwnership) listOf("beginBatchEdit", "commitText", "endBatchEdit") else
+                listOf("beginBatchEdit", "commitText", "setComposingRegion", "endBatchEdit"), calls)
+        }
+    }
+
+    @Test fun `batch privacy raw selection and stale guard reject before touching connection`() {
+        val connection = Proxy.newProxyInstance(InputConnection::class.java.classLoader,
+            arrayOf(InputConnection::class.java)) { _, _, _ -> throw AssertionError("Forbidden connection operation") } as InputConnection
+        for (case in 0..4) {
+            val command = EditorCommand.Batch(listOf(EditorCommand.SetComposingText("word"))) { case != 4 }
+            val policy = when (case) {
+                0 -> InputPolicy.SENSITIVE
+                1 -> EditorContext.from(1, EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING).inputPolicy
+                else -> InputPolicy.NORMAL
+            }
+            assertFalse(EditorCommandExecutor.execute(command, connection, case == 2, case == 3, policy).handled)
+        }
+    }
+
+    @Test fun `batch editor exception stops remaining writes and attempts cleanup`() {
+        for (failure in listOf("beginBatchEdit", "commitText", "setComposingRegion", "endBatchEdit")) {
+            val calls = mutableListOf<String>()
+            val connection = Proxy.newProxyInstance(InputConnection::class.java.classLoader,
+                arrayOf(InputConnection::class.java)) { _, method, _ ->
+                calls.add(method.name)
+                if (method.name == failure) throw IllegalStateException("Synthetic editor failure")
+                true
+            } as InputConnection
+            val command = EditorCommand.Batch(listOf(EditorCommand.CommitText("word "), EditorCommand.SetComposingRegion(4, 5))) { true }
+            assertFalse(EditorCommandExecutor.execute(command, connection, false, false).handled)
+            if (failure == "beginBatchEdit") assertEquals(listOf("beginBatchEdit"), calls)
+            else assertEquals("endBatchEdit", calls.last())
+            if (failure == "commitText") assertFalse("setComposingRegion" in calls)
+        }
+    }
+
     @Test
     fun `insert newline clears selection after successful commit`() {
         val connection = RecordingInputConnection(commitTextResult = true)
@@ -64,107 +134,19 @@ class EditorCommandExecutorTest {
     }
 
     @Test
-    fun `double space replaces the preceding space with a period`() {
-        val connection = RecordingInputConnection(
-            commitTextResult = true,
-            textBeforeCursor = "d ",
-            deleteSurroundingTextResult = true,
-        )
-
+    fun `double space fallback cannot transform unowned editor text or read it`() {
+        val connection = RecordingInputConnection(commitTextResult = true, textBeforeCursor = "d ")
         val result = EditorCommandExecutor.execute(
             command = EditorCommand.ConvertPrecedingSpaceToPeriod,
             inputConnection = connection.proxy,
             hasSelection = false,
             requiresRawKeyEvents = false,
         )
-
         assertTrue(result.handled)
-        assertEquals(listOf(1 to 0), connection.deletedSurroundingText)
-        assertEquals(listOf(". "), connection.committedText)
-        assertEquals(1, connection.batchEdits)
-    }
-
-    @Test
-    fun `double space degrades to a plain space when the text is not eligible`() {
-        val connection = RecordingInputConnection(commitTextResult = true, textBeforeCursor = " b")
-
-        EditorCommandExecutor.execute(
-            command = EditorCommand.ConvertPrecedingSpaceToPeriod,
-            inputConnection = connection.proxy,
-            hasSelection = false,
-            requiresRawKeyEvents = false,
-        )
-
         assertEquals(listOf(" "), connection.committedText)
         assertTrue(connection.deletedSurroundingText.isEmpty())
-    }
-
-    @Test
-    fun `double space degrades to a plain space when the text is unavailable`() {
-        val connection = RecordingInputConnection(commitTextResult = true, textBeforeCursor = null)
-
-        EditorCommandExecutor.execute(
-            command = EditorCommand.ConvertPrecedingSpaceToPeriod,
-            inputConnection = connection.proxy,
-            hasSelection = false,
-            requiresRawKeyEvents = false,
-        )
-
-        assertEquals(listOf(" "), connection.committedText)
-    }
-
-    @Test
-    fun `revert restores the plain space`() {
-        val connection = RecordingInputConnection(
-            commitTextResult = true,
-            textBeforeCursor = ". ",
-            deleteSurroundingTextResult = true,
-        )
-
-        EditorCommandExecutor.execute(
-            command = EditorCommand.RevertDoubleSpacePeriod,
-            inputConnection = connection.proxy,
-            hasSelection = false,
-            requiresRawKeyEvents = false,
-        )
-
-        assertEquals(listOf(2 to 0), connection.deletedSurroundingText)
-        assertEquals(listOf(" "), connection.committedText)
-        assertEquals(1, connection.batchEdits)
-    }
-
-    @Test
-    fun `revert falls back to a normal delete when the text moved on`() {
-        val connection = RecordingInputConnection(
-            textBeforeCursor = "ab",
-            deleteSurroundingTextInCodePointsResult = true,
-        )
-
-        EditorCommandExecutor.execute(
-            command = EditorCommand.RevertDoubleSpacePeriod,
-            inputConnection = connection.proxy,
-            hasSelection = false,
-            requiresRawKeyEvents = false,
-        )
-
-        assertEquals(listOf(1 to 0), connection.deletedCodePoints)
-        assertTrue(connection.committedText.isEmpty())
-    }
-
-    @Test
-    fun `revert with a selection deletes the selection`() {
-        val connection = RecordingInputConnection(commitTextResult = true, textBeforeCursor = ". ")
-
-        val result = EditorCommandExecutor.execute(
-            command = EditorCommand.RevertDoubleSpacePeriod,
-            inputConnection = connection.proxy,
-            hasSelection = true,
-            requiresRawKeyEvents = false,
-        )
-
-        assertTrue(result.clearsSelection)
-        assertEquals(listOf(""), connection.committedText)
-        assertTrue(connection.deletedSurroundingText.isEmpty())
+        assertEquals(0, connection.batchEdits)
+        assertEquals(0, connection.textReads)
     }
 
     @Test
@@ -189,6 +171,8 @@ class EditorCommandExecutorTest {
         val editorActions = mutableListOf<Int>()
         val deletedSurroundingText = mutableListOf<Pair<Int, Int>>()
         val deletedCodePoints = mutableListOf<Pair<Int, Int>>()
+        var textReads = 0
+            private set
         var batchEdits = 0
             private set
 
@@ -208,7 +192,7 @@ class EditorCommandExecutorTest {
                     editorActions += args?.get(0) as Int
                     performEditorActionResult
                 }
-                "getTextBeforeCursor" -> textBeforeCursor
+                "getTextBeforeCursor" -> { textReads++; textBeforeCursor }
                 "deleteSurroundingText" -> {
                     deletedSurroundingText += (args?.get(0) as Int) to (args[1] as Int)
                     deleteSurroundingTextResult

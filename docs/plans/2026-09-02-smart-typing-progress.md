@@ -1,0 +1,632 @@
+# Rune Smart Typing 0.3 execution ledger
+
+- 2026-09-06 current checkpoint `6f7c35e`: full161 app matrix on both API26/API37,
+  each158 PASS +3 explicit optional-model assumptions, zero failures. Actual
+  resident contextual comma/period selection and late-next-text rejection pass;
+  exact-model Android JNI separately passes1/1 on each API. Mandatory postcommit
+  JVM743/743 and prescribed240-task gates PASS. Final integration review finds
+  no demonstrated blocking code defect. Complete1200-row contextual attribution
+  committed07e29da. Named calibration replay audit exposes missing targets for
+  автокрекция, teh and correcion; three other named typos remain suggestions only.
+  A deeper-frontier search experiment has one retrieval loss and is not adopted.
+  User took phone: no further phone commands; the earlier prepared unfolding
+  state below is historical and cannot serve as a current transition baseline.
+  Physical/external CI/formal release/main integration remain open. Current
+  source/evidence details are in the consolidated September2 acceptance report.
+
+- 2026-09-06 `27c3df2` fixes only number-row QA navigation with quarter-height
+  scrolls. Original suite/isolated failures and successes are preserved. Fold
+  mechanical5/5, affected API26/API37 cases1/1 each and prescribed240-task gates
+  PASS. Mandatory postcommit whole JVM743/743 PASS, zero failures/errors/skips.
+  A real cover-to-inner transition is prepared with Rune-typed `тест`, active
+  span0..4, and a saved content-limited receipt; awaiting the user's physical unfold.
+
+- 2026-09-06 final controller replay completed all5956 exact-model responses and
+  all24000 calibration/holdout × ready/unavailable observations. No retries or
+  missing/refused payloads;9 calibration and14 holdout native errors retained.
+  Holdout EN293/304, RU341/358, ES396/408 meet point95 and volume300; aggregate
+  false changes0/1/0 per1000 and exact immediate restoration6000/6000. The frozen
+  all-row Original gate remains FAIL; independent review identifies5703 owned
+  sets with Original and297 no-word states with exact preservation. A separate
+  state-based annotation passed independent review, with every row retained. Evidence is
+  archived in `tools/eval/smart-typing-0.3/results/2026-09-06-final-controller-replay/`.
+  This supersedes the model-free tooling checkpoint below, without changing the
+  old prepared-candidate failure or claiming unseen qualification/release approval.
+
+- 2026-09-06 local commit `c0b0280` contains reviewed opt-in diagnostics, editor QA and preserved evidence. Prescribed final gates240 tasks PASS; mandatory postcommit whole JVM743/743 PASS with zero failures/errors/skips. Current-source replay tooling remains separate and uncommitted pending protocol review; model calls0. Version0.2.0 and main integration remain unchanged.
+
+- 2026-09-06 reviewed diagnostics checkpoint: recorder/hook/device reviews PASS;
+  focused JVM147/147, Python32/32 and the prescribed full local gates PASS
+  (300 Gradle tasks). All five strengthened diagnostic cases pass on both APIs.
+  Full152: API37 has149 PASS +3 optional-model assumptions; API26 has148 PASS,
+  3 assumptions and one preview-target readiness failure. The reviewed test-only
+  target wait passes the changed case on both APIs; complete API26 rerun then
+  passes149+3 assumptions in1171.451s. Ordinary JNI6/6 passes on both APIs;
+  an accidentally overbroad API26 command's two missing-model failures are retained.
+  Initial lint/recreation/popup/preview failures remain archived.
+  Evidence: `tools/qa/smart-typing-0.3/results/2026-09-06-diagnostics-reviewed-matrix/`.
+
+- 2026-09-06 authorized phone reinstall: the user explicitly allowed uninstall
+  and reinstall. Current app `6a7d0d17…` and test APK `6f79d628…` are installed;
+  all nine restored model/settings files match the verified local-only backup.
+  Exact GGUF and selected Rune IME are preserved. Both diagnostic toggles were
+  initially observed off, then enabled before instrumentation; existing logs were
+  preserved. Cover scope13: six PASS, five diagnostic assumptions, two failures
+  (contextual readiness summary and real-model Space correction). The75-touch
+  exact-text burst passes. Separate exact-model production Binder probe passes1/1:
+  first899ms/native286ms, warm166ms/native159ms; immediate duty refusal retained.
+  A content-free optional typing snapshot subsequently observes accepted real-model
+  ranking and correction/Undo PASS; initial timing failure remains unresolved.
+  Settings triage identifies an offscreen summary; bounded test-only scrolling
+  passes the affected case on Fold/API26/API37 with unchanged readiness assertions.
+  Phone evidence: `tools/qa/smart-typing-0.3/results/2026-09-06-phone-cover-reviewed-build/`.
+  This remains partial physical acceptance. Recording closes after route/session
+  invalidation until a fresh eligible session, an explicit current debug limitation.
+
+- 2026-09-06 final quality reconciliation: the historical prepared selector still
+  fails the user's point95 target with unchanged decisions (RU162/172, EN7/7,
+  ES239/243; all below300). The separate fixed-decision report preserves its
+  report/config/cache bytes and makes no model call or threshold fit. Current
+  combined-product reproduction needs complete actual payloads and final source
+  binding; a new corpus after every safety fix is not a user-imposed requirement.
+  The model-free12000-row export exists, but six tooling review findings must be
+  fixed before scoring. No final-replay model call has run. Full-controller
+  contextual attribution and actual installed named examples remain outstanding.
+
+- 2026-09-06 user extension: independently opt-in debug diagnostics and typed-text
+  recording with two explicit text confirmations. Design/implementation contract in
+  `2026-09-06-opt-in-typing-diagnostics.md`; defaults off, local bounded files,
+  next fresh eligible session, excluded fields never captured, manual export/delete.
+  Implementation and new privacy/device gates are in progress; this does not close
+  existing0.3 release gates. The later explicit reinstall authorization is recorded above.
+
+- 2026-09-06 contextual v5: `03b06b9` archives the reviewed1200-row source corpus,
+  strict replay/downgrade-resistant adapter, pre-score protocol freeze, complete
+  calibration then frozen holdout, numeric responses and all per-row decisions.
+  EN/RU/ES holdout suggestions38/37/27; source matches among suggestions37/36/26;
+ 0/50 insertions at source spaces each. No semantic precision/automatic-punctuation
+  gate claim. Corpus20/20, adapter35/35, Kotlin parity79/79 and gates236 PASS.
+  Mandatory postcommit JVM713/713 PASS.
+
+- 2026-09-06 editor hardening: full134 API26 passes131+3model assumptions;
+  API37 passes130+3assumptions with one custom-editor focus failure. Numeric
+  diagnostics locate ScrollView interception of the actual focus tap. Debug QA
+  disables fling/stretch; trace-free navigation/action4/4 PASS. Raw TYPE_NULL and
+ 75-character rapid text/normal deletion tests pass both APIs. New actual resident
+  IME→fake model Binder→editor Binder matrix passes3/3 on both APIs. Full139:
+  API26 and API37 each136 PASS +3 optional-model assumptions, no failures
+  (764.511s /720.627s). Exact receipts/source snapshots are archived under
+  `2026-09-06-editor-matrix-139`. Seven non-normal and one protected-form extension
+  are built and undergoing their initial device run, separately from this139 proof.
+
+- 2026-09-06 command-dot safety: `55195f2` protects standalone command dot arguments.
+  Current complete6000-row replay: EN293/304=96.38%, RU341/358=95.25%,
+  ES396/409=96.82%; all1071 automatic boundary Undo results exact. Only three
+  command-dot outputs change from the prior diagnostic; historical failures and
+  remaining false changes stay visible. This is revealed-data development evidence.
+  Mandatory postcommit JVM caught an unrelated notification-order fixture error;
+  held-unload regression fixed the test, then full713/713 PASS; worker unchanged.
+
+- 2026-09-06 current-controller safety: `93b92f6` gates PASS and mandatory postcommit JVM rerun PASS. New canonical eligibility requires independent unambiguous evidence and routed-dictionary agreement; all34 negative casing edits removed while Paris/London/Москва auto+Undo stay intact. Complete before/after6000-row diagnostics are archived under `2026-09-06-canonical-safety`, including then-failing RU341/359=94.9861% full text precision and remaining command-dot changes. Mechanical command-dot repair is in review/verification; no threshold retuning or unseen qualification claim. API37 replacement preview-policy test isolated2/2 PASS, full run in progress; historical original full-suite failure remains retained.
+
+- 2026-09-06 current evidence: evaluator v2 committed as c5f21b4 with source-bound
+  policy/parity/freeze receipts and orphan-cache rejection. Python51/51, actual
+  Kotlin parity79/79, prescribed gates236 tasks and post-commit JVM707/707 PASS.
+  Fresh ordinary generator calibration6000 and holdout6000 outputs match the old
+  archive; fresh native2940 responses have identical numbers/counts and the same
+  14 refusals, with max sum delta0. This is compatibility only: canonical-case and
+  current controller eligibility still need qualification. Full API26 at27d07ea:
+  128 PASS,3 optional-model assumptions,0 failures; JNI6/6 PASS. Full API37:
+  127 PASS,3 assumptions,1 popup positive-control failure; unchanged isolated
+  privacy2/2 and JNI6/6 subsequently PASS. Cause and full-suite stability remain
+  open. All installed APK identities and initial failures are preserved in
+  `tools/qa/smart-typing-0.3/results/2026-09-06-api26-full/` and `2026-09-06-api37-full/`.
+
+- 2026-09-06 resumption: fresh fd8872f JVM691/691 and prescribed local gates
+  PASS. Physical OPENED Fold composing/mechanical18/18 and subsequent
+  live/settings/installed-model10/11: the real model Space/Undo passed, while one
+  settings test incorrectly expected unavailable on a Ready installation. The
+  source fixture is corrected and three contextual controller-to-editor Binder
+  tests are added, but a changed host debug key initially blocked installing
+  them; a verified local-only model/settings backup is preserved pending user
+  confirmation. Current-source contextual arithmetic correction e718072 removes
+  token-average length bias and adds calibration-selected Original/rival margins.
+  Pre- and post-commit full JVM707/707, gates and test APK build PASS. It requires
+  freeze and a fresh unseen holdout before qualification. API26 emulator is now
+  installed; contextual/settings/mechanical13/13 PASS after an initial3-failure
+  legacy caps-counter fixture diagnosis. All payload counters remain zero;
+  score-only operations add no reads. Full application instrumentation and
+  API37 image download retry are in progress.
+  Full acceptance remains open; see
+  `docs/acceptance/2026-09-02-rune-smart-typing-0.3.md`.
+
+- 2026-09-05 phone reconnected: exact release-native full profile completed180
+  measured requests, with four-candidate p95 EN74.848/RU260.200/ES172.555 ms.
+  Production Binder/service completed13 of120 requests over60 s, denied107 and
+  used7.85 CPU-s; idle65 s used70 CPU-ms and released about407 MiB RSS. The
+  runtime gate reopens under unchanged CPU/cancellation limits. Real installed
+  IME/model/editor AutoReplace on Space and immediate Undo passed1/1; cover
+  composing passed15/15. Rune was enabled and selected through system UI after
+  restoring test preferences. Unplugged energy, inner-screen/rapid-typing/full
+  physical and external release gates remain open. Evidence:
+  `docs/acceptance/2026-09-05-smart-typing-0.3-fold-qualified.md`.
+
+- 2026-09-05 session-owned preparation: the first eligible Rune edit may start
+  payload-free weight loading before lexicon readiness/scoring pause. Cancelling
+  successive words no longer restarts that load. Session/model/memory/watchdog
+  invalidation still cancels and unloads; failed preparation preserves numeric
+  errors without retry. Preparation and first score share their original admission
+  and 3-second deadline without refunding CPU. JVM691/691 and API26/API37 each33/33
+  PASS; prescribed local gates PASS. Runtime qualification remains closed pending
+  physical optimized measurements. Acceptance:
+  `docs/acceptance/2026-09-05-smart-typing-0.3-model-preparation.md`.
+
+- 2026-09-05 Space completion: ordinary Space can retain one already-admitted
+  spelling request for 250 ms, or flush its existing pause once, while committing
+  immediately. Only the unchanged complete Rune-owned suffix may be corrected;
+  the next action, invalidation or deadline cancels ownership. Request IDs and
+  worker CPU limits are unchanged. Guarded replacement has complete-word immediate
+  Undo and no new editor readback. Targeted JVM86/86 and integration JVM680/680
+  PASS; API26/API37 each32/32
+  PASS through real Binder, factory and composing fixtures. The Fold and exact-model
+  duty gates remain open, and runtime qualification stays closed. Acceptance:
+  `docs/acceptance/2026-09-05-smart-typing-0.3-space-completion.md`.
+
+- 2026-09-05 build-mode audit supersedes the model-unsuitability conclusions in
+  the two latency entries below: September 5 Fold samples used unoptimized Debug
+  kernels. The archived September 2 release-native baseline already measured
+  four-candidate p95 EN468/RU1076/ES767 ms on different fixtures. Debug now uses
+  guarded `-O2` throughout llama/ggml/JNI; native cold-score duration includes lazy
+  context construction, and instrumentation records public wall time/build mode.
+  Compilation inspected 215/215 optimized, guarded translation units in each of
+  Debug/RelWithDebInfo x arm64-v8a/x86_64. The activation stall's memory cause was
+  a hypothesis, and the batch/linear experiments do not isolate model architecture
+  suitability. Qualification stays closed pending current optimized physical
+  measurements; phone disconnected. See the corrected September 5 latency report.
+
+- 2026-09-05 latency gate follow-up: model load now defers persistent scoring-context allocation
+  until the first score, so activation self-test does not hold two contexts. Candidate-lane batching
+  reached host p95 66/70 ms on archived calibration/known holdout, but changed scalar scores and
+  missed the point-95 diagnostic in EN/RU/ES; it was rejected. Production inference is closed for
+  the current exact model/backend pair, while deterministic candidates remain local and available.
+  A smaller separately qualified candidate ranker is required; physical reactivation, cold/warm
+  timing and the reopened-word Backspace flow remain open until the Fold reconnects.
+  A 1 MiB hashed linear prototype trained on 196,400 pinned public pairs failed coverage (one
+  calibration replacement per language), so it is excluded; a nonlinear byte/character ranker is
+  the next bounded model experiment.
+
+- 2026-09-05 physical Fold scoring: the original four-candidate path measured 13.621 s wall and
+  51.795 CPU-seconds. Shared-prefix scoring reduced this to 4.869 s / 18.569 CPU-seconds with exact
+  scalar-oracle equality; persistent context and cross-revision KV produced a 4.480 s warm result.
+  Eight threads regressed to 37.628 s and wide microbatching neither improved the warm result nor
+  preserved calibrated scores. The 3-second/8-CPU-second production duty stays closed: the current
+  0.6B GGUF is not an interactive AutoReplace runtime. Backspace over a pending Rune-owned space now
+  reopens and reranks the complete preceding owned word without editor readback.
+
+- 2026-09-05 Candidate-05 v4 product holdout: production width-three calibration scored
+  3,110/3,110 requests and froze the user-selected 95% configuration before holdout. Calibration
+  reached only EN129, RU253 and ES136 changes. The untouched product holdout scored 3,081/3,081:
+  EN117/127=92.13%, RU224/234=95.73%, ES133/141=94.33%, with 3/1/1 false changes per 1,000 and
+  original always available. Every language misses the required 300 replacements; EN and ES also
+  miss 95% precision. Overall **FAIL**; no holdout retuning, Candidate-05 publication or activation.
+
+- 2026-09-05 experimental model delivery: at the user's explicit direction, reproducible Rune Text
+  0.1 GGUF `7a97111c…dd9c4` was published to Hugging Face repository `alexm37/rune-text-v1` at immutable
+  commit `c057e37928624d3c3c4bd526d3515f7202395920`. Hub LFS metadata matches the local 396704416-byte
+  file and SHA-256. The embedded descriptor now uses the full commit URL. Existing frozen product
+  holdout meets the selected point-95 profile with EN304, RU359 and ES408 model-assisted changes;
+  the publication is experimental because the full exact-digest physical Fold matrix remains open.
+
+- 2026-09-04 Candidate-05 v4 prepared calibration at the user-selected point-95 profile: exact GGUF `26b6e8db…` scored all 6,600 calibration rows before any holdout request. The conservative Wilson-lower-bound profile qualified RU467/467 and EN679/679 but froze ES to abstention. The explicit point-estimate profile then froze margin1.0/confidence-feature0.8 for all languages: RU628/633 (99.21%,5/1000 false changes), EN706/707 (99.86%,1/1000), ES668/671 (99.55%,3/1000). All exceed >=300, >=95% and <=0.5%. Frozen file SHA `a2b737f8…`, internal config SHA `48802ac0…`; v4 holdout started only after this freeze.
+
+- 2026-09-04 user-selected 95% AutoReplace profile: the settings default `HIGH_CONFIDENCE` is now presented as `Auto-replace (95%)`. The frozen v2 product holdout's unchanged model-assisted decisions meet the revised point-precision gate in EN (293/304=96.38%), RU (342/359=95.26%) and ES (396/408=97.06%), with >=300 replacements and <=0.1% false changes per language. Runtime qualification opens only the model-assisted branch; deterministic spelling stays suggestions, while canonical proper-case corrections remain local. Evaluators now record an explicit 95/97/99 profile, retain 99 as the historical CLI default, and freeze the selected calibration target. A fresh Candidate-05 v4 calibration/holdout and physical model qualification remain required before publication.
+
+- 2026-09-04 physical 95% model path: Fold/API 36 production readiness resolver, Binder client and separate model process used a synthetic numeric engine to drive the real candidate controller. `helos` automatically committed as `hellos `; immediate Backspace restored `helos` and Original selection. The isolated instrumentation passed 1/1 in0.467s with zero main-thread metadata reads. This proves IPC/AutoReplace/Undo wiring, not real-GGUF quality, latency or energy.
+
+- 2026-09-04 candidate-04 production calibration: actual Kotlin generator on v3 produced recall EN602/RU725/ES683 at four total candidates, but the combined model policy safely replaced only36/65/69 rows; the two-candidate battery-favorable calibration retained recall419/518/476 but replaced only11/10/4. Both exact-model runs completed3027/3027 responses and all observed replacements were correct with0 false changes. The mandatory >=300 volume is impossible, so result **FAIL before product holdout**; zero product-holdout requests were made. Candidate-04 is barred from publication/activation. Evidence: `tools/eval/smart-typing-0.3/pipeline/results/2026-09-04-candidate-04-v3-product-calibration-fail/`; acceptance: `docs/acceptance/2026-09-04-smart-typing-0.3-candidate-04-product-calibration.md`.
+
+- 2026-09-04 candidate-04 prepared-candidate qualification: exact GGUF SHA-256 `bff8899a…` completed 6,600 calibration rows, froze Wilson config `b7e07c54…` before the first holdout request, then completed all 6,600 holdout rows. RU 484/484 with0 false changes; EN867/868 with1/1,000 false change; ES635/635 with0 false changes. Every language meets the >=300, >=99% precision and <=0.5% false-change row gates; report exits0. Result **PASS** for prepared-candidate suitability only. Production generator calibration/holdout, contextual quality, Android/Fold energy and publication remain open. Evidence: `tools/eval/smart-typing-0.3/results/2026-09-04-candidate-04-prepared-holdout/`; acceptance: `docs/acceptance/2026-09-04-smart-typing-0.3-candidate-04-prepared-holdout.md`.
+
+- 2026-09-04 candidate-03 qualification-v3 calibration: exact model SHA-256 `7a61cd75…` completed all 6,600 calibration rows and froze Wilson-95 config `d416855d…`. RU qualifies 795 replacements at 100% observed precision and 0/1,000 false changes; ES qualifies 756 at 100% and 0/1,000. EN has no bucket satisfying the precommitted confidence bounds and freezes to full abstention, so the three-language minimum-volume gate is impossible. Overall **FAIL before holdout**; zero v3 holdout requests were made, and model-dependent product work stops for this digest. Evidence: `tools/eval/smart-typing-0.3/results/2026-09-04-candidate-03-v3-calibration-fail/`; acceptance: `docs/acceptance/2026-09-04-smart-typing-0.3-candidate-03-v3-calibration.md`.
+
+- 2026-09-04 qualification-v3 corpus freeze: 13,200 rows were generated from three new pinned Wikipedia shards after excluding train/validation, the original evaluation corpus and all revealed v2 families. The corpus manifest is `56a5b994…`; EN/RU/ES each have 1,000 typo, 1,000 negative and 200 punctuation rows in both family-disjoint splits. Common evaluator28/28 and v3 generator/lock5/5 PASS. No v3 score was requested before the freeze. Acceptance: `docs/acceptance/2026-09-04-smart-typing-0.3-qualification-v3-freeze.md`.
+
+- 2026-09-04 canonical-case slice: the frozen original-case RU/EN/ES surfaces now produce three compact RNC1 exact indexes (38,338 records, 1,155,850 raw bytes). A lowercase valid name or geographic name can expose its single source title spelling for explicit tap; Original stays selected and all case-only candidates remain barred from automatic replacement pending a dedicated quality corpus. Lookup is lazy on the existing candidate worker and adds no model request, network access, editor readback or whole-lexicon scan. Acceptance: `docs/acceptance/2026-09-04-smart-typing-0.3-canonical-case.md`.
+
+- 2026-09-04 candidate-03 prepared-candidate holdout: exact model SHA-256 `7a61cd75…` completed all 13,200 identity-bound responses against the frozen v2 corpus and calibration config `149bda1b…`. EN passes (928 AutoReplace, 99.68% precision, 0.30% false-change). RU and ES fail the <=0.5% false-change gate at 0.80% and 0.70% respectively, despite 99.13%/99.23% precision and 923/906 replacements. Overall **FAIL**; evaluator exits2, configs are unchanged, and product/contextual model-dependent scoring is stopped for this candidate. Evidence: `tools/eval/smart-typing-0.3/results/2026-09-04-candidate-03-prepared-holdout/`; acceptance: `docs/acceptance/2026-09-04-smart-typing-0.3-candidate-03-prepared-holdout.md`. A new model and new untouched corpus are required before another qualification attempt.
+
+- `542f68f` adds the complete fixed nine-name content-free Perfetto vocabulary and injects Android tracing at generation, ranking, model request/result, rendering, correction commit/Undo and punctuation planning. Host state machines retain a no-op sink. Targeted trace/lifecycle tests PASS; mandatory post-commit JVM653/653 PASS. No physical timing or energy result is claimed.
+
+- 2026-09-03 contextual quality after `825305f`: exact production Kotlin engine exported1200 seven-variant rows. Exact model/scorer completed600 calibration scores, then the existing strict-positive rule was frozen with config `38eb7d5a…`; only afterward600/600 holdout scores completed. Clear-context holdout: EN100/100, RU58/98 suggested (58/100 coverage), ES49/100. Non-space suggestions on ambiguous rows:97/96/100 of100. Automatic application remains0, but RU/ES and broad ambiguity quality are not accepted for final release; no threshold is fitted on holdout. Python27/27 PASS. Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-contextual-quality.md`. Replacement/fine-tuned model requires new calibration and unseen holdout.
+
+- 2026-09-03 first final product spelling holdout from `7ab2f45`: added a one-way holdout-only exporter/scorer/evaluator that requires frozen config, calibration receipt, production source, asset, corpus, runner and GGUF identities and contains no fitting path. Production Kotlin generation over6000 unseen spelling rows kept Original everywhere; recall EN925, RU917, ES892/1000. Exact model scoring completed2940/2940 with14 explicit zero-span failures routed to deterministic fallback. Model-assisted results: EN293/304=96.38%, RU342/359=95.26%, ES396/408=97.06%; false changes0/1/0 per1000. Volume and false-change gates pass, precision>=99% fails in all languages, so overall **FAIL**, evaluator exits2, and `SpellingQualification.CURRENT` remains closed. Thresholds will not be retuned on this holdout; model/data development requires a new calibration and unseen holdout. Python24/24 PASS. Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-product-spelling-holdout.md`. Contextual quality, automatic Binder, Fold/energy/release/publication gates remain open.
+
+- 2026-09-03 contextual punctuation slice from `c887e49`: exact valid words can use the existing private scorer after the 400 ms pause for one of seven bounded leading-boundary variants. A typo prioritizes spelling, so Rune performs at most one model request per word. Only a strictly better non-space result is shown and it applies solely by explicit tap to the owned composition; sentence marks may capitalize the first code point. Technical/mixed/all-caps inputs abstain, Spanish inverted marks remain manual, stale identities cannot render or mutate, and missing-model readiness performs no lexicon/inference work. Settings now show descriptor Ready off main. Fresh final-source JVM651/651 and all277 prescribed gates PASS; API26/API37 production Binder synthetic-engine and settings matrices10/10 each PASS (124.366s/151.640s). The initial concurrent duplicate gate race is retained and excluded. Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-contextual-punctuation.md`. Real-model contextual holdout, full automatic Binder/Fold/energy/release gates and publication remain open; this is implementation progress, not goal completion.
+
+Baseline: b5400cbadadd29e8ee915a0fb33fb11ec5bebc79. Binding requirements: `2026-09-02-smart-typing-spec.txt` and the user-approved implementation plan in this task.
+
+## Accepted refinements
+
+- Holdout requires at least 300 automatic replacements per language as well as precision >=99% and correct/protected false-change <=0.5%; report coverage and Wilson intervals.
+- Explicit sentence-boundary suggestions may capitalize only the initial letter of the current word.
+- No new editor reads to diagnose unsupported composing; never blindly replay unacknowledged text.
+- Implement cancellation inside the pinned tokenizer using a reproducible patch, not only before/after tokenization.
+- Preserve upstream gitlink; record upstream and patch digests independently.
+
+## Execution
+
+### Resumed full implementation
+
+The user explicitly resumed the full objective after PR1 and authorized changing
+the model when needed, with on-device latency, memory and battery constraints.
+The earlier stop applies to qualifying Rune Text 0.1, not to abandoning the
+remaining product implementation. Historical PR1 evidence remains immutable.
+
+Ruling: build the independent PR4 composing/privacy foundation first, then
+candidate strip/Undo, deterministic lexicons and mechanical punctuation while
+qualifying a resource-bounded model path. Preserve all quality/privacy gates;
+do not treat switching models as permission to weaken them. Model execution
+must be demand-driven, cancellable, and absent in sensitive/ineligible sessions.
+
+Current slice: `feature/smart-typing-03-pr06-lexicons`, following bounded client
+commit `b4d76cdbd53780ed83f77ef5e15f3e3022fbe4dc`. PR2/3 runtime and private
+inference foundations, PR4 composing and PR5 strip/owned-boundary Undo are
+integrated. IME suggestion-only model inference is connected in the current Android
+consumer slice; automatic spelling replacement remains off.
+PR6 has scoped live-suggestion evidence on API26/37 and Fold. PR7 duty and
+bound-worker CPU control has JVM/API26/API37 functional evidence. Nine
+virtual-clock worker traces pass; real CPU/device trace qualification remains
+unrun. PR7 optional suggestion consumer now retains/ranks the full candidate set
+with fake-client integration coverage. Production Ready/factory wiring now has
+scoped Android coverage; calibrated combined ranking and AutoReplace remain open, along with PR9 contextual,
+and full autocorrection Undo plus final device/performance matrices are required.
+PR8 mechanical punctuation and schema3 persistence have local integration
+evidence, while settings consumers/UI have scoped API26/API37 integration
+evidence. No push, remote PR or publication is authorized.
+
+### Enter and editor actions — 2026-09-03
+
+- `f060da1` mandatory fresh JVM635/635 PASS. Multiline Enter and SEND/editor actions now consume the last ready decision without waiting. Newline closes composition; exact actions add no punctuation. Explicit action refusal gets an owned newline fallback whose correction Undo restores the full suffix; unknown outcomes are never replayed. Six new JVM tests, fresh641/641, all277 final-source gates, and real API26/API37 editor-action suites2/2 each PASS. Production quality remains closed, so final automatic Binder/Fold evidence remains open. Contextual punctuation, final holdout, energy and release gates remain required.
+
+### Independent spelling availability — 2026-09-03
+
+- `0958a8e` mandatory fresh JVM630/630 PASS. Presentation, local retrieval and model demand now have independent eligibility: hidden HIGH_CONFIDENCE uses qualified automatic branches; deterministic-only eligibility never attaches the model. Actual service reads immutable branch qualification from its controller; production gates remain closed. Five new coordinator tests cover 48 settings/qualification combinations, hidden correction/Undo, numeric model consumption, cancellation and privacy. Fresh JVM635/635 and all277 local gates/test APK assembly PASS. No new Binder or Fold behavior/energy qualification is claimed. Enter/editor actions, contextual suggestions, final product holdout and release matrices remain open.
+
+### Qualified boundary correction and Undo — 2026-09-03
+
+- `c1a2bc7` mandatory fresh JVM607/607 PASS with a clean tree. New Space/comma/question/exclamation/semicolon transaction consumes the last ready calibrated decision and uses one guarded editor batch, composing only the boundary after commit. Immediate Backspace restores original composition and candidates from the single typing-owned Undo. Missing/partial/unqualified/explicit-original decisions abstain. Whole-token/unknown-prefix and first-dot/colon ambiguity vetoes protect technical forms without readback. `SpellingQualification.CURRENT` remains closed pending final holdout; no preference/debug bypass exists. JVM630/630 and full local gates PASS; functional-interface parser correction preserves dependency allowlists and adds positive/negative proof (17/5). API26/API37 initial22/22 each PASS for composing/live/mechanical and real-Binder executor protocol; final-APK executor protocol1/1 each PASS (9.171s/12.556s) after the additional conservative guards. Enter/editor actions, hidden-strip automatic availability, contextual, final holdout and release/device/energy qualification remain required. This is concrete implementation and validation progress; no goal completion is claimed. Phone reconnected: final APK `617e97a9d250c9bcbc409b20a7b3c66275351a398a399570c4418865dfdbf4a7` installed and launched; setup status remains `Не включена`. Physical typing/energy qualification remains open.
+
+### Calibrated live suggestions — 2026-09-03
+
+- `d1959bb` committed the numeric kernel/calibration evidence; mandatory fresh JVM602/602 PASS with zero failures/errors/skips. The next slice connects calibrated deterministic/model ranking to the actual controller and fixes the live search width at three alternatives before enumeration. The full generation snapshot and request language remain session-owned; exact callback identity, original availability, partial-search veto and explicit-tap-only editor mutation remain intact. Fresh JVM607/607 and full local gates/test APK PASS. Scoped API26 Binder/live-candidate/settings validation12/12 PASS223.156s. API37 initial11PASS/1 callback-timeoutFAIL268.482s; unchanged isolated retry1/1 PASS0.478s and unchanged full retry12/12 PASS151.343s. Initial cause remains unestablished; no timeout/assertion relaxation. All runs are archived. No automatic spelling replacement, final holdout or energy qualification is implied.
+- Phone later reconnected: approved debug APK SHA256 `9675067496e9509af9350969b7e5fa87aa2c974006b2477a388c89ea297a7157` installed successfully through the named phone profile. Launch and fresh setup UI confirmed; keyboard status is `Не включена`. Installation/app launch PASS, physical keyboard typing remains unqualified. No app data clearing, uninstall or screenshot/hierarchy persistence.
+
+### Combined calibration and Kotlin calculation — 2026-09-03
+
+- Baseline `10064a8` required fresh JVM598/598 PASS. Full actual-candidate cache now verified complete: 2953 responses, 2944 successful, nine contract-required zero-divergent-span refusals. All nine failures and three positive controls independently probed. Four-candidate combined calibration yields EN344/347, RU354/357, ES430/434 correct/replacements with zero false changes among1000 correct/protected rows per language. This is calibration with ideal model availability, not holdout qualification. The pure Kotlin kernel agrees with Python on all6000 numeric controls; Python19/19, JVM602/602 and full local gates PASS. Production controller integration, AutoReplace/Undo, contextual and release work remain open. Requested phone installation currently blocked: fresh ADB inventory has only two emulators. This turn verified scoring evidence and implemented the ranking calculation; it is progress, not a goal completion.
+
+### Deterministic calibration and actual model candidates — 2026-09-03
+
+- `0117d29` required fresh JVM598/598 PASS with clean tree. Next slice fits a declared integer policy grid on verified calibration exports, with no runtime label/noAuto leakage. Best correct-change counts within the2/4/8 grid occur at4 total candidates: EN316/318, RU323/326, ES255/257; all false-change counts0/1000. These are calibration-only, not holdout qualification; ES volume remains insufficient. Four-candidate config/report reproduced byte-for-byte. Python16/16, JVM598/598 and full local gates PASS. Generated-model bridge received3/3 valid real numeric responses from the exact digest and started2953-set scoring under `build/smart-typing-0.3/generated-model-calibration-4-01`; completion requires live cache/process verification. APK behavior remains unchanged. This goal turn is concrete calibration/scoring progress; calibrated Kotlin ranking, AutoReplace/Undo, contextual and release work remain open.
+
+### Production requested-width contract — 2026-09-03
+
+- `7816103` fixes the two fixture races; mandatory post-commit JVM596/596 PASS. Next slice integrates immutable1–7 alternatives and width-bound certificates into actual packed/generic generation. Default remains7 until calibration. JVM598/598 and full gates/test APK PASS; all3 calibration/oracle exports reproduce frozen experiment outputs exactly. Requested-width API26/API37 tests1/1 each PASS with900 numeric observations each. Physical SM-F966B/API36 was present and user approved app/test APK installation; both succeeded. Requested-width test1/1 PASS with900 numeric observations; four total candidates used38.6% less aggregate CPU than eight in this debug search run. This is scoped physical evidence, not energy or full Fold qualification. Combined ranking/AutoReplace, complete correction Undo, PR9 and release work remain open.
+
+### Duty trace idle snapshot synchronization — 2026-09-03
+
+- Final JVM596/596 and full prescribed gates PASS. Combined validation also exposed a lexicon test release/interrupt observation race; the fixture now acknowledges interruption before release. Production behavior and all assertions remain unchanged. Initial failures, final logs/XML and nine numerically unchanged trace rows are preserved in `2026-09-03-duty-trace-idle-transition`. Post-commit verification remains required.
+
+- Candidate-width experiments committed as `03cea4523079d57b3efc9066157f09cbe807ee4e`. Mandatory post-commit JVM:596 tests/1 failure in the ES-8 trace's idle timer assertion; failure saved.
+- The fixture's non-atomic90-second virtual-clock jump let the worker start legitimate idle-unload CPU accounting between assertions. Wrapped the existing advance/account/assertion snapshot in the synchronized owner's monitor; no assertion, profile, request or production code changed.
+- Targeted27 trace/worker tests PASS; all nine numeric rows exactly match the frozen trace report. Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-duty-trace-idle.md`. This is fixture synchronization, not physical energy qualification.
+
+### Exact candidate-width feasibility — 2026-09-03
+
+- Baseline `ab8029b729c1cc12d15c2b487b401ca0b08c19ca`. The user requires at most7 alternatives; always requesting7 was an implementation choice. Compared predeclared exact widths2/4/8 including original, with unchanged8192/64 caps, protection, ranking and corpus.
+- Complete-correct calibration counts for width4: EN475/RU583/ES537, versus184/366/314 for width8. Width2 gives852/791/802 but lower overall candidate recall. This is retrieval feasibility, not precision or an AutoReplace gate. No model, threshold fit or holdout ran.
+- Each width passes the773-request full-neighborhood oracle with zero violations; completions683/393/238 for widths2/4/8. Width8 records match prior production bytes. Explicit width/experiment metadata prevents silently truncating an exhausted wider result. Every exhausted request retains its veto.
+- Actual radix search prototype passes its oracle but loses24 previously complete calibration rows and gains22; it does not solve EN and is not adopted. Original packed reader remains in product.
+- Exporter/comparison/converter Python tests9/9/4 PASS; prescribed product gates PASS. Next: explicit production width contract and boundary/cancellation coverage, then calibrated ranking and device cost comparison. All quality/device/model/release gates remain open.
+- Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-candidate-widths.md`.
+
+### Lossless radix format preparation — 2026-09-03
+
+- Baseline `bff8110a54c05984a34f8aac4b963e5b3c8e4d02`. Diagnostic calibration grouping found EN state exhaustion concentrated at lengths 7–12. Static source analysis found 130818/558058/509338 collapsible nonterminal one-child nodes in EN/RU/ES respectively.
+- Added an offline RDX1 converter and independent compressed-edge validator. All 2226075 original terminals retain their ordinal and exact canonical-word stream digest. Frequency assets and production code are unchanged; no corpus labels or holdout feed conversion.
+- Two full derivations produced byte-identical files. Combined trie/length bytes change EN4902962→3103867, ES22517654→16148361, RU40605620→38467914. Four parser/structure/Unicode/determinism tests PASS. Reports and artifact hashes: `tools/lexicon/smart-typing-0.3/radix/results/2026-09-03/`.
+- Experimental format only: no bounded search, candidate-quality, Android, CPU or energy result is claimed. Next work is a radix reader and exact selector with shared8192/64 budgets, full oracle/calibration comparison, then measured Android qualification before adoption. Production remains on the previously qualified reader and prefix-reuse implementation.
+
+### Prefix DP reuse — 2026-09-03
+
+- Baseline `3459033462f90eb6fb4048e9e96f92bbcf501a52`. Removed a measured subtree-rank experiment: exact and slightly better retrieval, but 7.6 MB extra metadata with no observed API26 CPU benefit. Patch and evidence preserved, not adopted.
+- Reuse recurrence rows only for the same query/language/common scalar prefix; retain full unrestricted last-occurrence history and clear on completion/cancellation. Added fixed scratch4352 bytes; assets, frontier ordering and caps unchanged.
+- All6000 calibration raw/candidate records byte-identical; full oracle773 PASS with238 complete/498 incomplete/37 policy. JVM596/596 PASS and all prescribed product gates PASS. Python6/6 PASS.
+- Sequential baseline/current Android runs: API26 and API37 each2/2 reader/search tests PASS in both variants, all600 numeric records per run and identical work counters. Top-seven total CPU reduced5.5%/16.9%; p95 CPU14.401→13.321 ms /39.205→31.586 ms. API26 median slightly increased. These are emulator measurements, not physical battery qualification.
+- Current USB inventory has only the two emulators; Fold unavailable. EN retrieval coverage, calibrated automatic replacement/Undo, contextual punctuation, validation load CPU and final model/device/energy/release gates remain open.
+- Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-prefix-reuse.md`; evidence: `tools/lexicon/smart-typing-0.3/top-seven/results/2026-09-03-prefix-reuse/`.
+
+### Duty fixture retirement synchronization — 2026-09-03
+
+- Exact top-seven integration committed as `17d539c0b1f938d31a92d389689411b0b1a14691`. Its mandatory fresh JVM rerun reported593 tests/1 failure in `ModelDutyWorkerTest.deniedRequestsNeverEnterEngineOrExtendExistingIdleUnload`; the initial failure is preserved.
+- Confirmed fixture race: its engine-unloaded latch signals inside `engine.unload`, before worker finally retires the CPU-check timer. The timer correctly remains active during cleanup. Test now waits for an observed scheduler stop; a blocked-unload regression demonstrates both phases deterministically. A no-op completed-request control roundtrip also finishes idleAt accounting before advancing virtual time.
+- Production worker, runtime and policies are unchanged. Targeted18 duty tests PASS; final full JVM594/594 PASS, zero failures/errors/skips. Prescribed product gates PASS238/27. No new device/runtime performance claim follows from this test-only repair.
+- Evidence: `tools/qa/smart-typing-0.3/results/2026-09-03-duty-retirement-fixture/`; acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-duty-retirement-fixture.md`.
+
+### Exact top-seven production integration — 2026-09-03
+
+- Baseline `991d7c56aa503fec023ce6b434ddd9737940d0ed`; its required post-commit JVM run passed 586/586.
+- Packed selection now uses a global covering frontier and a separate exact top-seven certificate after shared preflight/membership. Exhaustive scan stays unchanged. Both routes share 8192 states/64 verifications, with strict dedup-before-quota and the incomplete-search veto. Temporary arrays and mapping references clear on all exits; no new editor reads, models or index sidecars.
+- Independent 3209 graph pairs/8218 prefix cuts, 94 full-policy cases, expanded finite oracle comparisons and every cancellation checkpoint PASS. New current-source full-neighborhood comparison773/773 PASS (238 complete/498 incomplete/37 policy); explicit cancellation and unpaired-surrogate controls remain separately tested in JVM. Initial exclusion-reason metadata corrected; raw results unchanged.
+- Calibration recall EN894→972, RU666→962, ES824→947 /1000 typos. Complete recalled typos EN22→184, RU126→366, ES90→314. All279 old complete searches preserve exact alternatives;626 new complete. Fourteen individual recall losses remain incomplete/vetoed and are listed. No holdout/model/AutoReplace quality claim.
+- Final JVM593/593 PASS, full gates267/42 PASS, four tooling tests PASS. API26 30/30 PASS213.899s; API37 30/30 PASS238.677s. Android installed inputs differ from final sources only by two archived comment clarifications; final source compilation/JVM and calibration/oracle identity are verified separately.
+- On fixed60 development requests (300 observations/strategy/API), CPU p95 rises6.191→14.566ms on API26 and7.855→39.394ms on API37. Complete coverage18→38/60. Additional fixed primitive scratch282524bytes; not measured RSS. This is a coverage improvement with higher compute cost, not an energy pass.
+- Next: reduce equal-cost unresolved-region work while preserving the proof and caps (candidate approach: separately validated/licensed subtree frequency lower bound), then finish calibration, automatic replacement/Undo, contextual punctuation and physical qualification. EN coverage still insufficient on calibration; model swapping alone does not repair it.
+- Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-top-seven.md`; proof/tooling/evidence: `tools/lexicon/smart-typing-0.3/top-seven/`.
+
+### Production calibration retrieval baseline — 2026-09-03
+
+- Android model consumer committed as `5ff78a8`; mandatory fresh post-commit JVM rerun PASS 586/586. Source tree was clean before this tooling slice.
+- New host-only export compiles the actual current Kotlin generator/packed reader and validates the frozen assets. Only numeric ID, language and typed token reach generation; prepared expected words/labels/context do not. All 6,000 public calibration spelling rows exported, original retained, no holdout or model run.
+- Candidate recall: EN894/1000, RU666/1000, ES824/1000. Correct candidate present with complete retrieval: EN22, RU126, ES90. All rows with alternatives and no retrieval veto: EN41, RU137, ES98. Search exhaustion dominates; even perfect ranking cannot undo this calibration coverage ceiling without improving retrieval or violating its veto.
+- Ruling: improve exact candidate retrieval within the unchanged 8192-state/64-verification limits before selecting full-pipeline confidence thresholds. Earlier top-seven prototype remains unadopted; incomplete cases must retain their veto and successful certificates must match the full offline oracle. No model switch or relaxed precision threshold addresses this measured prerequisite.
+- Corpus row weighting is preserved, with 1500/1500/1499 unique EN/RU/ES tokens explicitly reported. Prepared candidate-set repeats are not independent typing observations. This is a calibration feasibility report, not a final quality/holdout result.
+- Eight parser regressions PASS; archived source/decompressed hashes, every label-free input, original preservation and exact report regeneration PASS. Full prescribed local gates PASS238/25. Tooling is outside the APK.
+- Evidence: `tools/eval/smart-typing-0.3/pipeline/results/2026-09-03/`; reproduction instructions in its parent pipeline README. Physical ADB inventory at this checkpoint contains only API26/API37 emulators; no Fold measurement inferred.
+
+### Android model consumer integration — 2026-09-03
+
+- Baseline `f65c079cf7df488366a58e60b42406c5761dbad9`; its mandatory post-commit JVM rerun passed 574/574.
+- Production IME now creates the optional suggestion ranker through the exact Android factory. Metadata readiness runs off main with one worker/replacing epoch and a nonblocking shared operation lock. It receives no editor payload and never opens GGUF or creates the model store.
+- Ready does not trigger replay/binding; the next accepted local candidate action may request scoring. Current missing/load failures reset demand, stale failures cannot detach newer work. Automatic replacement and combined confidence remain unavailable.
+- New source-boundary fixtures: 16 negative/4 positive PASS, including helper and pure-contract bypasses. Transitive client/readiness/storage dependencies are checked.
+- Fresh JVM 586/586 PASS, zero failures/errors/skips. Required full local gates and Android test assembly PASS (267 tasks, 48 executed, 1 from cache).
+- API26 54/54 PASS (211.299 s); API37 54/54 PASS (256.049 s), single completed runs. New factory coverage uses real Binder with a synthetic engine/owned editor callback; existing real IME InputConnection regressions are separate cases in the same run. No actual GGUF typing or battery claim.
+- Initial malformed pointer fixture failure retained; fixture corrected to the existing pointer codec. No assertions or product parsing weakened.
+- Acceptance: `docs/acceptance/2026-09-03-smart-typing-0.3-android-model-consumer.md`. Evidence: `tools/qa/smart-typing-0.3/results/2026-09-03-android-model-consumer/`.
+- Remaining: calibrated full pipeline, automatic word replacement with immediate Undo, contextual suggestions, real-device/model/energy qualification, final release matrix and publication. Original failed holdout remains immutable.
+
+### PR4 local evidence
+
+- Separate typing controller, leading-boundary composition, bounded RAM-only context,
+  ownership invalidation and explicit cursor-mode-start are integrated through the existing executor.
+- NPL/password/raw paths prohibit composing; NPL Caps/double-space read bug fixed.
+- Independent review caught a legacy double-space callback clearing Undo. A known numeric +1 acknowledgement bridge preserves it until PR5 migration; fix re-reviewed and Binder-tested.
+- Fresh JVM: 272/272 PASS (266 app + 6 runtime), no failures/errors/skips. Required post-commit rerun after `ffe8e3932449da9a7d2c2a8cf6f5554535c3e511` also PASS (44 tasks executed).
+- Full prescribed lint/build/privacy/dependency/native command PASS, including Android test APK assembly.
+- API36: full 43-test app run PASS; extra stationary Space hold regression PASS separately, 44 unique tests. This does not close API26/37 or Fold.
+- Same-session rewrite fixture now mutates Editable and asserts no new InputConnection; earlier failed setText-based fixture is not treated as product root-cause proof.
+- Official API26 ARM64 and API37 16KiB ARM64 images are downloading for later local checks. No physical device connected at initial inventory; no wireless ADB used.
+- Acceptance: `docs/acceptance/2026-09-02-smart-typing-0.3-pr04.md`.
+- Ruling: API36 is diagnostic evidence only; retain separate API26/API37/remote CI/Fold/energy status and app version 0.2.0.
+
+### PR5 in progress
+
+- First commit migrates double-space and Undo from KeyboardState into the typing owner. Only Rune-owned pending boundary/context may be transformed; unowned/unsupported text gets plain Space. The executor's legacy surrounding-text conversion/revert path is removed.
+- Ruling: preserve the existing double-space gesture's priority, but remove its ability to edit unowned editor text. This matches the 0.3 ownership/privacy contract; no additional editor reads are introduced.
+- Candidate strip is integrated after the migration commit: permanent three cells and keys container, current-word Original consumer, session/revision IDs and explicit Original choice without editor writes. Corrections/punctuation remain later consumers.
+- PR2 tokenizer patch prototype passed host stage cancellation, 632 exact original/new token-sequence comparisons, and independent review. At this PR5 checkpoint it remained unapplied; PR2 below integrates it.
+- Undo migration verification: fresh JVM 281/281 (275 app + 6 runtime), no failures/errors/skips; full required gates PASS (292 tasks, 51 executed); all 13 composing Binder scenarios PASS on API36 in 119.440 s, including the ineligible double-space fallback and zero surrounding reads for conversion/Undo. Independent review approved with no P1/P2; stale privacy comment corrected.
+- This migration is committed separately before strip integration. Autocorrection and mechanical-punctuation consumers are later slices; no placeholder edit subclasses or Undo stack are introduced.
+- Migration commit: `e22fdbd4fed9687baa00ee99996ff1e3194f584b`; fresh post-commit JVM 281/281 PASS.
+- Strip verification: fresh JVM 292/292 (286 app + 6 runtime); full prescribed gates PASS. API36 full suite initially 56/57 PASS in 492.582 s, with one unattached accessibility fixture failure. The fixture now attaches through ActivityScenario, preserving every assertion; all 10 component tests PASS in 6.881 s. Together 57 unique scenarios passed, including Original tap and sensitive editor transition through Binder. Independent integration and scoped fixture reviews approved.
+- Ruling: retain the failed initial log and distinguish combined unique-test coverage from a fresh complete rerun. API36 remains diagnostic and does not close API26/API37/Fold.
+- Official API37 ARM64 16 KiB image installed and a dedicated AVD created; API26 download continues. New local device evidence will be recorded separately.
+- Acceptance checkpoint: `docs/acceptance/2026-09-02-smart-typing-0.3-pr05.md`. Full-word autocorrection Undo still needs its later consumer and end-to-end test; only current owned-boundary Undo is qualified here.
+- Strip commit: `1e100db8e9dce81d3b0c5acc8a636298c8ebef41`; mandatory post-commit fresh JVM rerun PASS, 292/292, zero failures/errors/skips (44 tasks executed). Working tree was clean before starting PR2.
+
+### PR2 local integration checkpoint
+
+- The independently reviewed bounded scoring API/JNI proposal is applied. It shares the evaluator C++ core; serial teacher forcing/KV clearing, strict byte-array UTF-8, LCP divergent scoring and whole-set zero-span refusal are preserved. Four error codes append to the existing stable values.
+- CMake prepares a private archive copy of the clean pinned source and applies tokenizer patch SHA `0a043ce8a57b8534ef2f409443d2dd6ecf00042bd9c2b661b31d94618eb4dc95`. Upstream gitlink remains `36b10154383b60eb15baac2c7a40d2a5f784faa7`.
+- Host prototype checks (15 JVM contracts, one deterministic core harness, NDK syntax and copied-source preparation) passed before integration. Android linking, real-model numerical tests, ordinary-CI synthetic tokenizer cancellation and JNI instrumentation are still being qualified.
+- Ruling: qualify reusable scoring infrastructure under the resumed user instruction without changing the frozen PR1 failed model-quality result or enabling model ranking in the IME. The caller must still enforce stale request/session guards; no hard cancellation deadline or battery claim follows from host tests.
+
+- Integrated fresh JVM run: 305/305 PASS (286 app + 19 runtime), zero failures/errors/skips. Required full build/lint/privacy/dependency/native gates PASS; final instrumentation-only additions also compile and lint successfully.
+- Promoted host harness: ordinary synthetic 4/4 PASS; exact-model 7/7 PASS, including 15 scalar comparisons with zero sum delta and 632 complete legacy/patched token sequences. ZIP extraction regressions 4/4 PASS; the actual nested GGUF passed exact size/digest extraction.
+- Runtime cancellation admission now accepts a per-request predicate checked after native cancellation reset under the same admission monitor. Independent review and a reset-order mutant regression establish the pre-admission race fix; callers set their request token before runtime.cancel().
+- API26 final app run 57/57 PASS (390.754 s), ordinary runtime 6/6 PASS (0.162 s), exact-model runtime 1/1 PASS (54.806 s). The last figure includes hashing, loads and nine successful requests/27 candidates; it is not a keyboard latency measurement. Both pre-cancelled admissions and the concurrent cancellation returned CANCELLED; a subsequent request succeeded.
+- Preserve earlier fixture failures: API26 double-tap now resolves the key bounds once and asserts a real <=400 ms injected interval; API37 Original accessibility lookup waits for observed editor text and then the exact node. Assertions and product timeouts were not weakened. Both fixture fixes independently reviewed. Final API37 app run 57/57 PASS (476.425 s); ordinary runtime 6/6 PASS (0.126 s); exact-model runtime 1/1 PASS (36.626 s), nine requests/27 candidates, two pre-cancelled admissions and one concurrent CANCELLED, followed by success.
+- Ruling: a mathematically proven exact top-seven stop is permitted by the original-plus-seven contract; full distance-neighborhood enumeration is not required. Any index using that stop must match the full offline oracle's ranked seven with unchanged state/verification limits. This is a feasibility experiment, not a chosen production index or quality pass.
+
+- Final full prescribed gates PASS after all PR2 test additions (292 tasks, 19 executed); `git diff --check` PASS. Local API26/API37 results cover this slice, not unimplemented PR3/6/7/8/9/10 or the final release matrix. Remote CI and physical Fold remain unrun.
+- Acceptance: `docs/acceptance/2026-09-02-smart-typing-0.3-pr02.md`.
+
+- Local PR2 commit: `585f380691baabb7bec25ae5bd25067880d54158`; required post-commit JVM rerun PASS, 305/305, no failures/errors/skips (44 tasks executed). The tree was clean before PR3.
+
+### PR3 integration in progress
+
+- Applied independently reviewed private service/client/read-only model resolver proposal (patch SHA `44cb5d9e7606d0939c7adf032cee063c75d61fb1412af766687116f8608d25f4`). The transport is not yet wired to the IME; no model runs simply because this infrastructure exists.
+- Prototype host checks passed 23 JVM contracts, AIDL/Kotlin compilation and boundary fixtures. Actual Binder service lifecycle and FileObserver tests are being added and have not yet run on Android. Prototype results alone do not close PR3.
+
+- Integrated base PR3 JVM tests PASS, 313/313 (ordinary incremental run); Android test APK and debug build PASS. Initial release/profile/lint/privacy/dependency/native gates PASS (216 tasks, 60 executed). API37 first six IPC/observer/bind-cleanup cases PASS in 7.079 s.
+- Lifecycle extension review found one P2: a callback test could pass via server-side suppression rather than the client guard. Fixed test requires observed post-dispatch idle completion, mandatory main-thread evaluation of request 601, and no delivery before request 602. Host positive/missing-callback/broken-cancel controls confirm sensitivity; scoped re-review and actual Android execution follow.
+- Ruling: the runtime pool rejected a new independent agent after reaching its thread limit. Reuse an available agent for the unrelated source-pipeline task and another for the narrow lifecycle re-review, with explicit scoped briefs; do not repeat completed index work or weaken independent review.
+
+- Lifecycle P2 scoped re-review approved. Applied extension SHA `25e29bbfa63784c075762dd75e5d01722f388c5a167d1177f72e1b15118ce139`; all 22 PR3 IPC/client/lifecycle/active-model Android cases PASS on API37 in 15.219 s. The full API37 app run then passed 79/79 in 486.037 s.
+- Final integrated fresh JVM PASS 313/313, zero failures/errors/skips. All requested build/lint/privacy/dependency/native gates PASS (248 tasks executed). Release/profile merged manifests preserve the exact private service contract; APK Analyzer with R8 mappings confirms no defined LifecycleModelInferenceService, ILifecycleControl or ILifecycleSnapshot in either DEX.
+- PR6 source and index work remains ignored/prototyped: frozen dictionary sources are verified; exact top-seven DFS matches all 720 offline references but capped completion is EN113/240, ES99/240, RU48/240. Global best-first improves only to116/106/56 while increasing warm p95 and scratch65.4%; it is not adopted. Full-data three-format selection, weighted ranking and API26 remain open. Cap exhaustion never authorizes AutoReplace.
+
+- API26 first complete PR3 app run: 76/79 passed in 380.082 s. All three failures are NoSuchMethodError at direct test-injected ServiceConnection.onNullBinding calls in the two binding/lifecycle test files; that platform method is unavailable on API26. Preserve this failed log. The scoped fix will gate only the unavailable injected callback, retaining all supported callback and cleanup assertions; no product change or whole-test skip is warranted.
+- PR6 orthography-policy prototype independently approved: 19 JVM cases including 6,400 independent shortest-edit-path comparisons. Source-pipeline promotion review found two P2s (leaf write-path symlink escapes and unverified frozen-manifest digest); fixes required before promotion/cold reproduction.
+
+- API26 callback compatibility fix independently approved and applied (patch SHA `66364e328540956860816f9dcedb7d698fc314029c0ce6f43c17a545e10c2fcc`). All three affected tests PASS in 8.384 s, then full final API26 app suite PASS 79/79 in 382.370 s. Only direct test-injected onNullBinding calls are guarded at API28; no product change or whole-test skip. Final post-fix full requested gates PASS, 238 tasks / 17 executed. API37 79/79 above predates this true-branch-preserving test guard.
+- Investigated potential idle-worker payload retention using the actual compiled class: default JVM and interpreted success/cancel weak-reference probes collected request/prefix/continuations while worker remained waiting; retained-reference positive control behaved as expected. No reproduced defect, no production patch; host GC evidence is not an ART secure-erasure claim.
+- PR6 source-pipeline two P2 fixes independently approved (proposal SHA `22e03fb6aca56c807ce0e6d871e6d996f98bcc6c3ea5f2dad59559c6c5c93063`). Parent full cold reproduction exited 0: two fresh expansions/builds and final 24 frozen output/notice/lock identities PASS. RU/ES/EN counts and hashes unchanged; known legacy unmunch rejection is an expected comparison result, not a failed finite-expansion run. Actual API26 three-format smoke benchmark started; selection remains open.
+
+### PR3 committed; PR6 source/policy integration
+
+- PR3 local commit `6c6b4dd43e8cbeb3f22ba44fb20a78ef8b7ae8cb`; required fresh post-commit JVM PASS 313/313, zero failures/errors/skips, 46 tasks executed. Working tree was clean before creating `feature/smart-typing-03-pr06-lexicons`.
+- Promoted the independently reviewed 38-file source pipeline and eight-file orthography policy/test proposal. All promoted source-pipeline bytes match the fully reproduced overlay. Root CLI regression suite PASS 23/23; root CLI verifies the reproduced outputs and all 24 frozen identities. Integrated fresh JVM PASS 332/332, including the 19 policy tests and 6,400 weighted-DL oracle comparisons. Offline source-contract tests are wired into ordinary CI; no remote execution is claimed.
+- Original upstream notices retain their exact bytes, including upstream trailing whitespace. Whitespace validation excludes only these immutable notice files; they are separately verified by SHA-256. No license normalization is permitted.
+- Actual API26 index smoke: nine processes PASS, all three formats/languages, exact DEX and fixture preflight verified. The first full 720-query run is correctness/integration evidence. Ruling: because parent Gradle and possible prototype host checks overlapped with the emulator, do not select a format from that run's timings. Record this before reading the timings, then repeat the unchanged full profile once after host builds/tests finish; preserve all queries and algorithms. This costs one full measurement run and avoids selecting from confounded emulator latency.
+
+- PR6 source/policy checkpoint committed locally as `84e47273b02e3b1726601f2e76b8023dda8a8218`; required fresh post-commit JVM PASS 332/332, zero failures/errors/skips, 46 tasks executed. Integration glue independently approved; full source notices remain byte-identical. The tree was clean after the commit before these progress notes.
+- PR6 integration design identifies a correctness constraint: earlier exact unit-DL top-seven pruning cannot be reused as a prefilter for the approved weighted ranker. First weighted implementation must retain sound unit-radius/length bounds and report incomplete on unchanged shared caps. The three-format benchmark also needs separate exact-lookup measurements; an isolated harness is being prepared without changing the active run's artifacts.
+- PR8 pure mechanical planner proposal independently reviewed and approved in ignored scratch, 15 host JVM tests at author handoff; no controller promotion or Android claim. Ruling: the latest approved plan's explicit ambiguous hostname/code exclusion takes priority over a broad missing-dot-space example when the owned characters also form a possible IDN. Such input remains unchanged without reliable disambiguating context. Cost: lower mechanical coverage; the example is not counted as implemented, and contextual explicit-tap handling is still future work. Original-span ownership, generic Undo application and caps integration remain required gates.
+
+- First full API26 three-format development run completed: 9/9 processes PASS, 6,480 measured complete-reference comparisons (720 queries × 3 formats × 3 repeats), plus separately reported bounded attempts. Pulled/aggregated as `device-api26-development-diagnostic`; the aggregator verifies content completeness but does not know host-load conditions. Its readiness flag must not override the predeclared diagnostic designation in `api26-measurement-context.md`. No format is selected from these times.
+
+### PR6 generator integration and first physical runtime evidence
+
+- Approved generator proposal `94bab7a89c47a3da7ddc4946457bdaeb3080515f30012fc00695a4ad892a3b95` integrated unchanged: shared 8,192 inspected states / 64 verified terminals, original plus at most seven alternatives, protected/valid-word veto, weighted features after complete unit-radius retrieval, deterministic case/dedup/fallback quota. Both review P2s (display-collision tie and checked reader failures) fixed and independently approved. Exhaustion preserves only verified suggestions with an unconditional AutoReplace veto; cancellation returns no text. No production index or worker binding is claimed.
+- Integrated fresh JVM PASS 359/359, zero failures/errors/skips; 27 generator tests include 236 independent finite weighted/routing oracle comparisons. Full prescribed lint/build/privacy/dependency/native gates PASS, 238 tasks / 43 executed. Evidence: `build/smart-typing-0.3/pr06-generator-{jvm-integrated,gates}.log`. Generator checkpoint has a separate dated acceptance report; PR6 as a whole remains open.
+- User connected physical USB SM-F966B (API36). Separate runtime QA package: ordinary JNI contracts PASS 6/6 in 0.079 s; exact verified model qualification PASS 1/1 in 76.599 s (9 successful scoring requests, 27 candidate scores, cancellation and recovery/load/unload checks). User Rune installation/data were not replaced. This DEBUG native build has no optimization flags and total qualification time includes verification/load/reload; it is not a per-request product latency or battery result. A release-native benchmark is being prepared. Full Fold typing/lifecycle/performance gate remains open.
+- API26 quiet three-format comparison and fresh-process cold profile completed. The first confounded run remains diagnostic. All original Android allocation-volume distributions are unsupported because the ART live-plus-freed counter is not a coherent monotonic interval sample; wall/CPU/correctness and separate memory observations retain their own meaning. The exact harness now explicitly reports allocation unavailable, with independent review approval, and a fresh short API26 run completed all nine processes. Formal aggregation/format decision is recorded separately; no missing data are dropped or clamped.
+
+- Generator committed locally as `5cbf609afb9213d6e74df842483c8c7a5e775c5b`; required fresh post-commit JVM PASS 359/359, zero failures/errors/skips, 46 tasks executed, `pr06-generator-jvm-postcommit-5cbf609.log`. Tree clean after commit before these notes.
+- Corrected exact API26 run `api26-exact-02` and strict aggregation PASS: nine processes, 12,465 measured comparisons, unchanged manifest `88da5e175e0ea5f2c10e9ebf05b7a60c0a909cd8f43d03924c484aa82f953cd6`, corrected DEX `89449fc9e5f4bdb5decde1741a7e5d17528ad2277cad11195a829c10329ef11b`. Every Android allocation value is unavailable and aggregate allocation p95 is null; original failed metric run retained.
+- Ruling: select packed trie for production integration. Quiet full complete-reference p95 is EN 4.018 ms, ES 5.093 ms, RU 8.121 ms; all paired 95% intervals favor trie over both competitors. The separate exact development p95 is EN 8.875 us, ES 10.583 us, RU 13.125 us, also favoring trie. No size tie-break is required. Fresh-process cold/open and actual APK size are recorded separately; page cache was not controlled. This chooses storage for the measured unit-distance contract, not a claim of weighted production quality or phone energy. Cost if incorrect: repeat format qualification for a materially different final contract; never silently widen caps or use incomplete retrieval for AutoReplace. Reproducible benchmark source/report promotion and validated production reader are separate active tasks.
+
+- Optional Fold benchmark proposal independently reviewed; one P2 fixed before integration: explicit `adb -d` in both execution and timeout cleanup for simultaneous USB Fold + emulator. Scoped re-review approved proposal `34ffbd2be776ff1c44ecd0a1685daeee66485694a1e8af283809a9120adf22e9`. Root 15 host protocol contracts PASS. Actual AGP `-PruneRuntimeTestBuildType=release :runtime-llama:assembleReleaseAndroidTest :app:assembleRelease` PASS (122 tasks, 40 executed, 6 from cache); merged test manifest has release metadata and both ARM64 native entries match the actual app release APK. Fold release ordinary contracts PASS 6/6 in 0.030 s; unchanged qualification filter PASS 1/1 in 3.465 s. Pilot started only after all author host-compilation pauses were confirmed; no product or energy conclusion drawn from qualification duration.
+
+- Physical release pilot PASS: 27 measured requests, nine warmups, three CANCELLED outcomes and successful recovery. Per-cell three-sample p50 for eight candidates: EN 512.926 ms, RU 993.263 ms, ES 717.951 ms; observed maximum RU 1,565.291 ms. Total 19.440 s wall / 61.893 s process CPU. No inference from the pilot to population p95 or energy. Initial USB-powered thermal status 1 / battery 36.0 C; post observation delayed 109.290 s is explicitly labeled. Ruling: run one fixed full profile (20/config), retaining the unchanged workload/settings, with immediate numeric before/after context. Scoring every key is not an acceptable scheduling assumption at this observed cost; actual scheduler budgets and final quality remain open.
+
+- Fixed full Fold release-native baseline PASS: 180 measured requests, nine warmups, three CANCELLED admission races and successful recovery. Eight-candidate p95 EN 1,003.985 ms / RU 2,062.163 ms / ES 1,431.023 ms; total 160.063 s wall / 546.950 s process CPU, maximum measured PSS 438.910 MiB. USB-powered battery temperature 36.2 -> 37.7 C, thermal status 1 -> 2; after context captured 0.419 s after summary. This is not an energy measurement. Ruling: no further unchanged baseline repetitions; frequent model scoring remains unqualified and must have explicit scheduling/CPU-duty admission constraints before battery acceptance. Preserve both pilot/full observations, no quality holdout changes. Numeric evidence archived under `tools/test-native-scoring/runtime-benchmark/results/2026-09-02-fold/`.
+- Post-benchmark integration full prescribed gates plus runtime debug test assembly PASS, 269 tasks / 40 executed / 5 from cache. Actual release test task/manifest/native identity, six ordinary tests and one qualification filter were checked on Fold separately. Debug remains the default build selection. Source runtime/IME behavior did not change in this optional test slice.
+
+- Optional physical benchmark/evidence committed locally as `c29aed0fd279caa610a4eb07ef8c721689c94986`; required fresh post-commit JVM PASS 359/359, zero failures/errors/skips, 46 tasks executed, `fold-benchmark-jvm-postcommit-c29aed0.log`. An earlier commit attempt stopped at a trailing blank line; the test run started before the successful commit is retained as `fold-benchmark-jvm-before-successful-commit.log` and is not counted as post-commit evidence. Independent numeric/provenance review matched 198 distributions; the 15 host protocol tests are now included in ordinary CI (remote execution unrun).
+- Reproducible three-format benchmark package independently approved and promoted unchanged (55 files, proposal `036461131c69cf12460fd3681ec2894ae5c3acdb94c1fc9822a9455da9c506b8`). Integrated 23 host contracts PASS. It preserves measured sources, 68 numeric transcripts and the precise trie decision/limitations; fresh portable compiler/APK/device reconstruction remains separately labeled unrun.
+- Packed reader two P2 integration fixes approved: standard JVM temp handling without private harness property, and direct RNK1 derivation from pinned canonical/frequency data without unpromoted FRB1 dependency. Proposal `28b8b24d27f62e12d4883b16c880d4c40acaf49b35cfe9bb858af9bdd9e48476` promoted. All three RNK1/registry identities unchanged; integrated four rank-builder regressions PASS. Packaging, Android mmap/runtime and full weighted/cross-language qualification remain open.
+
+- Reader integration fresh JVM PASS 374/374, zero failures/errors/skips; full prescribed gates PASS 238 tasks / 48 executed. Root benchmark prepare/cached-index validation/portable Kotlin+D8 compile PASS from promoted paths, without repeating device measurements. Small rank-builder/benchmark contracts added to ordinary CI; remote execution unrun. Checkpoint acceptance recorded in `docs/acceptance/2026-09-02-smart-typing-0.3-pr06-index-reader.md`. Actual asset packaging, weighted development qualification and latest-candidate worker are active separate tasks.
+
+- Reader/format checkpoint committed locally as `773fb15c531859ced3ec7843c946c4b0a3a67c97`; required post-commit fresh JVM PASS 374/374, zero failures/errors/skips, 46 tasks executed (`pr06-packed-reader-jvm-postcommit-773fb15.log`). Independent integration review approved the acceptance report and small CI commands. Tree was clean before local-worker promotion.
+- Local candidate worker independently approved and promoted (proposal `a1bc7446b737b8f4210b0209f05e230e598eb97ea06f6487d9c67852cf888078`). It uses one serial thread, one replacing pending slot, direct cancellation, a payload-free coalesced owner action and completion/delivery freshness guards. Actual JVM reachability tests include positive controls; this is not ART secure-erasure evidence. Integrated fresh JVM PASS 391/391, zero failures/errors/skips. Live composing integration/index loading remain separate.
+- Read-only backup of the currently installed Fold Rune APK completed (one APK) for possible reversible QA updates. User Rune/data were not changed. Separate runtime qualification GGUF remains in the dedicated test package for ongoing device work.
+
+### PR6 worker commit and packaged-asset compatibility
+
+- Local worker committed separately as `00fd271a5a3c642a6b64b89113e34f214699431b`; required post-commit fresh JVM PASS 391/391, zero failures/errors/skips, 46 tasks executed (`pr06-worker-jvm-postcommit-00fd271.log`).
+- Packaging contains 28 exact reviewed assets (9 binary components, 14 original notices, 5 provenance files), 77,106,788 raw bytes. All 9 mapped components are ZIP STORE in debug/release/profile; all 28 entry hashes match staged inputs. No dictionary generation or download occurs in Gradle.
+- Root staging tests initially failed because macOS temp aliases differed from the canonical project path. The independently reviewed fixture-only fix resolves its temporary project root; production scope/symlink checks remain unchanged. Final 5/5 PASS.
+- Actual initial API26 packaged test passed; API37 and physical Fold failed. Numeric Fold diagnostics proved ASSET_RANGE: asset offset 19,591,892 and length/channel-size 4,358,176 within an APK FD of 97,172,842 bytes. The asset-bounded channel was incorrectly used with absolute APK offsets.
+- Independently reviewed adapter fix uses an owned duplicated raw descriptor and a whole-file channel. Exact range checks, read-only maps and full hashes remain unchanged. The Android regression checks a positive-offset region, all five rejected ranges, descriptor closure on success/failure and map readability after closure. No extraction or mutable fallback.
+- Fixed full prescribed gates PASS (298 tasks / 48 executed). Fixed Fold and API37 packaged contract each PASS (one test). Final API26 packaged contract also PASS (one test, same final APK pair); these are packaged-reader functional checks, not full IME/lifecycle/energy acceptance. The Fold app was updated with `install -r`, preserving data; its previous APK backup remains available.
+- Weighted development qualification independently approved: 775/775 contracts, but only 72/716 retrieval requests complete; 602 state and 42 verification exhaustions keep their veto. This is development correctness/feasibility evidence, not a quality holdout pass. Separate exact weighted top-seven design must preserve the earlier proof-before-adoption ruling and original caps.
+
+### PR6 live candidate foundation
+
+- Packaged assets and the whole-FD Android compatibility fix committed as `c45f43ae6f84ac27d84e68eb8c10fea40a385dbe`; required fresh post-commit JVM PASS 391/391, zero failures/errors/skips, 46 tasks executed (`pr06-packaging-jvm-postcommit-c45f43a.log`). The tree was clean before consumer-foundation integration.
+- Independently reviewed controller candidate selection and callback-free lazy loader applied (proposals `321b0162b1a00461798fddf925aa83d27e29ab916b7f283a96ad040170e80ba1` and `01b26847868d0ec42f160274831a7e8486a21184394e0ae4b0a5563e1b5dac0d`). Controller P2 fixed: valid case-preserved uppercase output from an eligible one-letter original must not be rejected by the source-only ALL_CAPS policy; other protection guards remain. One serial enum-only loader publishes validated immutable readers, never queues a token or resubmits on readiness.
+- Integrated fresh JVM PASS 435/435, zero failures/errors/skips. This adds 30 controller and 14 loader cases. Actual service/coordinator consumer is under separate independent review; no device execution of that consumer is claimed yet.
+
+### PR6 live IME integration evidence
+
+- Service/coordinator proposal `f64631b40e81b36992c9794801888783355cca7102a39f92dc389041c10a32d6` independently approved and applied. It submits only after accepted composing edits, polls callback-free readiness, cancels old work at owner/lifecycle boundaries and renders only through the permanent strip. Model inference and AutoReplace are not enabled.
+- Fresh integrated JVM PASS 453/453, zero failures/errors/skips. Full prescribed gates initially PASS (298 tasks / 53 executed); final test-only physical-capture opt-out also built with the full command PASS (298 / 21 executed). `-e runeFailureArtifacts false` prevents screenshot/XML capture without skipping assertions or teardown.
+- Actual Binder LiveCandidates scenarios PASS: API26 3/3 in 50.620 s, API37 3/3 in 54.061 s, physical USB Fold API36 3/3 in 31.838 s. They verify correction/Original tap transactions, plain boundary behavior and sensitive-field cleanup with no editor readback. Existing Original regression additionally PASS on API26 (7.447 s) and API37 (11.255 s). These are scoped functional checks, not the complete release/device/performance matrix.
+- Fold was temporarily absent before its first UI attempt; no wake/install/test occurred during that failed connection check. The user reconnected it, USB readiness was confirmed, current app/test APKs installed with -r and the three UI tests passed. Data were not cleared; no failure screenshots/XML were captured.
+- Weighted qualification package independently approved and promoted (proposal `c990deb304196462d0794318c39ce0915d7ef84572d5d3046830395254fa2811`). Root historical verification PASS (41 archived texts / 775 requests / FRESH_EXECUTION 0), root documented contract invocation PASS 19/19. An initial generic unittest invocation omitted its required RUNE_QUAL_TEST_DIR and ran zero tests; that failed setup log is retained, then the documented invocation passed. No new production retrieval or holdout run is inferred.
+- Live candidate integration committed as `e135305`; mandatory fresh post-commit JVM PASS 453/453, zero failures/errors/skips, 46 tasks executed (`pr06-live-candidates-jvm-postcommit-e135305.log`).
+
+### Continued integration after live candidates
+
+- Weighted evidence and its offline CI contracts committed as `2a22d0139dfac3af0957a628acc297d63faf2a96`; mandatory fresh post-commit JVM PASS 453/453, zero failures/errors/skips, 46 tasks executed (`pr06-weighted-jvm-postcommit-2a22d01.log`). The working tree was clean at this checkpoint.
+- Independent exact weighted top-seven proof reviewed against the actual unrestricted recurrence; all12 referenced source identities verified. Strict global next-representation certification preserves comparator ordering, case/display admission and dedup-before-fallback-quota. A concrete EN/ES shadow example disproves irreversible pruning against a provisional seventh. One bounded ignored prototype is approved; no algorithm, coverage or performance result is claimed yet.
+- Ruling: the earlier exact top-seven authorization remains in force. Full oracle equality is required for every successful certificate, while incomplete cases retain the veto. The later research proposal's demand that all716 development retrievals complete is not a user release requirement; report actual coverage/regressions and retain the real holdout quality gates instead.
+- Ruling: advance the schema3 persistence prerequisite before mechanical-punctuation consumer wiring so its independent controls exist before activation. UI, model availability and release hardening remain separate PR10 work. Fresh/legacy absent fields receive approved defaults; malformed individual values fail closed independently. A future numeric schema marker and unrelated raw values must survive writes by this older schema3 implementation; unsupported effective Smart Typing stays disabled until a compatible reader is used.
+- Schema3 persistence proposal `7e5b784a5aab6462df83107ba1cb743b055b6d9dfba7c93998c8c615e560717a` independently reviewed and integrated. Author29 focused tests PASS, with a synchronization-removal control failing exactly the stale writer regression. Fresh root JVM PASS468/468, no failures/errors/skips; full prescribed gates PASS238 tasks/45 executed. Actual Android persistence, settings UI and new consumers remain pending.
+- Schema3 committed as `225d0a8cfea2d86f46e63b69572f76212a0ef9c3`; required fresh post-commit JVM PASS468/468, zero failures/errors/skips,46 tasks executed (`settings-v3-jvm-postcommit-225d0a8.log`). Tree clean before the next consumer task.
+- Mechanical consumer is in implementation. Ruling: retain explicit manual lowercase suppression in KeyboardState, consumed by the next text action, so mechanical caps cannot override AUTO-to-OFF intent after the reducer consumes its visual shift state. No service-owned Shift state is added. Add comma long-press access to `? ! : ;` so these rules are reachable without weakening required layer-change invalidation; ordinary comma/layout stays intact.
+- Independent model-duty audit and parent source inspection confirmed that ordinary post-score revision cancellation currently unloads an unchanged loaded model. This can force a later reload; it is not yet a measured battery defect. A focused adapter regression/warm-reuse correction is required before enabling frequent model requests. Demand-only binding, process-CPU accounting, bounded retry and memory-pressure suspension remain unimplemented. Proposed numerical duty constants are not selected or claimed measured.
+- PR8 mechanical consumer independently approved and integrated (proposal `bc8661f7b94264a0594e30f26e021a39a6c8b6dfc44523b8b34e02ba1c7d3f50`, review `648d625a969ec4ec0474167eb5159814959bdec686c85f650f1784892e447fa0`). Fresh root JVM517/517 PASS, zero failures/errors/skips,46 executed. Full prescribed gates plus Android test APK PASS267 tasks/54 executed. No release claim.
+- First mechanical API37 Binder run: 3 tests,2 PASS,1 FAIL (`mechanical-api37.log`,45.839 s). The popup test could not find an alternate accessibility node; duplicate-dot/Undo and cached-toggle scenarios passed. Root production popup is nonfocusable/non-touchable; failure is not yet proof of absent rendering. Ruling: test real hold/release of the default first alternate, with an assertion that no symbol is committed before release, rather than depend on popup accessibility-window enumeration. Cost: this test no longer proves sliding to a non-first alternate. Author fix/review and fresh Android run required. No screenshot/hierarchy captured; Fold currently unavailable over USB.
+- Mechanical fix1 reviewed/integrated (`b7dd2967b2d7068a060a6f6a08a2c8e6a0d84e49da4c0e87eedbc0ab191d2624`, review `64ba303e0f8af0c114a51f764e8bf0a5d7d514a88ab20cd1c6249126acdc0e6e`). Final local gates plus Android test build PASS267/21. Fresh combined Binder matrix: API26 18/18 PASS146.564 s; API37 18/18 PASS197.944 s. Each includes three mechanical tests and 15 established composing/ownership/Undo/lifecycle cases. Initial failure preserved, no screenshot/hierarchy capture. Fold remains BLOCKED (USB no device); no physical update in this slice. Evidence: `tools/qa/smart-typing-0.3/results/2026-09-02-mechanical/`; acceptance report documents excluded ambiguous forms and unqualified gates.
+- Mechanical slice committed `bc16e9d1dae774bbf378229bcd97d4273e4c5223`. Mandatory post-commit fresh JVM517/517 PASS, zero failures/errors/skips,46 executed (`mechanical-jvm-postcommit-bc16e9d.log`); tree clean before the model-adapter slice.
+- Warm-reuse adapter proposal independently reviewed/integrated; root JVM517 PASS and full gates267/48 PASS. Initial real-adapter synthetic Android fixture API37 12/12 PASS0.213 s; API26 12 run,2 FAIL4.211 s (extra partial-load unload and suppressed follow-up after same-identity invalidation). Do not close this slice yet. Source inspection and Android8 FileObserver documentation identify missing retirement of stopped-watch callbacks; actual failed-run event code was not captured. Ruling: fix per-registration callback retirement and add a deterministic late-old-observer regression, preserving current-generation unknown-event invalidation and existing exact unload assertions. This is required lifecycle correctness, not permission to relax cancellation/cleanup or claim energy savings.
+- Watch fix independently reviewed (`8a39b4e82e8440cf324bb560d988c7c7833bb80642f4767487e12849515e610d`, review `a033f68c4151ac1fee64eec5a3ada1aa3dcf06a207934640a3d0faef4cd8402b`). Parent first applied only new tests: old watcher on API26 failed the deterministic closed-registration callback control exactly (expected0 invalidations, observed1;0.022 s). Then production retirement fix applied; final API26 15/15 PASS0.193 s and API37 15/15 PASS0.266 s, preserving all original strict12 assertions. Final full gates plus test APK PASS267/42. Evidence archived under `tools/qa/smart-typing-0.3/results/2026-09-02-model-warm-reuse/`; no real-model, energy, remote CI or Fold claim. The historical API26 kernel event mask remains unobserved.
+
+- Adapter/watch slice committed `83837fd3e4a6b6fc8da5d5bc5eeae63b09de1ab7`; mandatory fresh post-commit JVM517/517 PASS, zero failures/errors/skips,46 executed (`model-warm-reuse-jvm-postcommit-83837fd.log`).
+- Settings consumer design exposed a remaining key-rebuild defect: nonvisual settings used `renderKeyboard`, which defers replacement during an active key touch. Ruling: fix the actual service dispatch before broader settings consumers; preserve view recreation for visual fields and key rendering for language-list changes, using strip-only rendering otherwise. The earlier mechanical toggle test did not assert identity; avoiding recreation was insufficient evidence. Cost: changed nonvisual dispatch requires an actual held-key regression.
+- Independently reviewed settings-render correction (`696ac86b08315bb1efb03112ee54e16db7703dee010af9e8ba3422e055a84e4a`, review `4c632a7577086e6857962f14c59b71f5047191fe8e7942fbcbe363d6cdeac6c9`). Parent tests-only old-service control on API37 failed after UP with changed key index0 (1 failure,12.887 s). Fixed complete mechanical class PASS API26 3/3,34.884 s and API37 3/3,39.874 s. Full gates plus test APK PASS267/46. Evidence preserved under `tools/qa/smart-typing-0.3/results/2026-09-02-settings-render/`. API27/28 and remote CI unrun; Fold blocked because USB device remains absent.
+- Broader settings consumer/UI design independently approved (`settings-consumer-design/DESIGN-REVIEW.md`). Reuse the corrected renderer branch. A strip visibility change must additionally prove held-key geometry safety; if deferring height, keep only latest visibility, clear items immediately and drain/reset on UP/CANCEL/lifecycle. No implementation or availability claim follows from design approval.
+
+- Settings-render slice committed `e4a43059143c79773424a96ff57ad0e8770fb141`; mandatory fresh post-commit JVM517/517 PASS, zero failures/errors/skips,46 executed (`settings-render-jvm-postcommit.log`). Previous goal turn made concrete progress through this production fix, its executed old-source negative control and API26/API37 tests; it was not a no-progress wait.
+- One ignored exact weighted-top-seven prototype completed its source/control review. Eight finite control groups PASS (3209 independent distance pairs,8218 prefix cuts,94 full-policy cases). Core algorithm had no material review finding. P2 in standalone comparison was fixed before qualification: reference/fixture/baseline provenance must validate before execution/consumption, with exactly775 ordered IDs/results. Sixteen analyzer-only tests PASS; their positive synthetic records are not a generator execution. Scoped fix review `3ec907a8df0cd41e575edc16ecdc2686551caf6531e25b5a98fecbe896c80318` approved the correction, retaining old snapshot/failure rationale.
+- Parent executed the sole unchanged775-request prototype run and corrected analyzer, both exit0:775 contracts, zero violations. Development retrieval certificates226/716 (EN63/239,RU77/240,ES86/237), compared with72/716;154 gains and zero complete-result losses. States exhaustion460 and verification exhaustion30 retain the AutoReplace veto. The55 controls remain separate. Raw numeric output SHA `19ef0e029d6cbd914fab8a09f6b8a029259c8ef22a74108df308d33287e92993`. Independent final evidence review `af098ef2c42b71995656ec9a832e44565819a053c95f8477af2e05e528f9159e` approved all775 contracts through separate numeric reconciliation; no production replacement, holdout, latency or energy qualification follows from this run. No second strategy or repeated775 run is authorized through this prototype result. Source-word recall improves overall563→616/716, but includes106 gains/53 losses and an ES regression209→206;181 requests retain fewer oracle top-seven identities. Primitive scratch capacity292,020 bytes is not measured RSS. These tradeoffs remain open before production adoption.
+
+- Settings consumer/UI slice independently reviewed; fix round1 corrected only the new double-space Undo expectation to one pending space. Final proposal SHA `d44b26ab070e0ed9122aa77403805d95d70be219b0e1d11bd292896cdd483de8`, scoped review `420ea65d2e769b87312fd214b7b6c505c9b5f36883cb4faad5d30a41a659c879`. Parent verified eleven before/after identities and integrated the patch. Fresh root JVM525/525 PASS, zero failures/errors/skips; full prescribed gates plus test APK PASS277/277 executed (`settings-consumer-gates.log`). API26/API37 runtime checks remain in progress.
+- Following the user's new phone-connected message, fresh USB/ADB checks still found no physical Android device: one emulator only, no matching Samsung/Android/Fold USB node. No phone installation was attempted. Asked the user to check direct data-capable cable/port and USB-debugging confirmation; independent implementation continues.
+
+- Initial settings API26 matrix:12 run,11 PASS/1 FAIL,166.162 s (`settings-consumer-api26.log`). New private-transition test queried empty Editable through accessibility, which returned the configured hint. Existing debug fixture already exposes actual numeric editor length; investigate and fix the assertion without accepting hint text as empty globally. All three held-key visibility sequences passed. Earlier intermediate commentary incorrectly called all six new tests passed before reading the final failure; corrected immediately from terminal evidence.
+
+- Settings fix round2 independently reviewed (`ac20e2ee5b88ceebee87db464404d83eed4c72e262c06e218377792cf1a163f4`, review `be3b66a24d4ad38c3f504339459a61c01ac24edb6b373a1c1a636fecaafd6c6a`): use existing actual numeric Editable length rather than accessibility hint text. Final gates PASS267/21. Full API37 matrix12/12 PASS182.880 s; corrected API26 targeted1/1 PASS11.980 s, with unchanged11 initial passes retained. No full final API26 rerun. Scoped evidence and acceptance committed with the settings consumer slice; Fold/quality/model integration remain open.
+
+- Settings consumer slice committed `cb0f3d7a10b7d30fe553ac3ad823ab53fb4fa950`; required fresh post-commit JVM525/525 PASS, zero failures/errors/skips,46 executed (`settings-consumer-jvm-postcommit-cb0f3d7.log`). Previous goal turn is progress: production settings wiring, reviewed test fixes and actual API26/API37 evidence, not an idle wait.
+- Next PR7 prerequisite is the client demand/lifecycle seam. Actual client reattaches identical sessions and retries failed binds indefinitely every1000ms. Ruling: idempotent same-demand attachment and at most initial+two retries (1s,2s), with no credit reset on success or revision; true lifecycle demand edges may create a new bounded recovery epoch. This bounds connection attempts, not CPU or battery. Explicit cached demand requires Ready plus active eligible session and an implemented enabled model consumer. No IME model feature is enabled by this slice.
+
+- Service CPU-duty proposal independently reviewed and amended before implementation (`model-duty-implementation/AMENDED-REVIEW.md`, SHA `ffce311bdcef9aeb2239f289fb2889d9338324f5a04de7422dde6bee0edc76a4`). Ruling: duty/debt and a native lifetime/cleanup lease must survive Service recreation in the same process; a bound-only Service can be replaced before async old close completes. Pressure latches before cancellation, and only later bind-after-unbind can rearm without forgiving debt. Proposed development profile is8000CPU-ms capacity/refill per60000elapsed-ms,7500minimum admission,3000ms active/queue age,50ms active checks. The explicit7500 threshold replaces the original full-credit condition after review showed long-idle CPU debit could starve it; it is not measured overhead or battery qualification. Conservative refill-cap-debit preserves fractional carry; invalid clocks fault closed until process restart. No duty implementation or trace run is claimed.
+
+- Bounded client proposal independently approved (`b477e8f1ddb076141abc2ad989aa35a88f965f8392104eb53785a652496cd0d1`, review `acc643de380d8e8050af0b428637afc4174b1540cff049c2b6e9aefcf470a12e`) and integrated. Root JVM530/530 PASS; prescribed full gates plus test APK PASS277/53. Actual client/main Handler + remote Binder lifecycle matrix22/22 PASS on API26(17.089s) and API37(17.423s), including process death/no replay and real late-callback cancellation barrier. No model consumer or energy qualification follows. Scoped acceptance/evidence accompanies the client commit. Service CPU-duty implementation is independently in progress in ignored overlay; no root service mutation or trace claim.
+
+- Bounded client committed `b4d76cdbd53780ed83f77ef5e15f3e3022fbe4dc`; mandatory fresh post-commit JVM530/530 PASS, zero failures/errors/skips,46 executed (`model-demand-client-jvm-postcommit.log`). Previous goal turn is progress through committed production lifecycle behavior and actual API26/API37 tests. Current duty author is live, with controlled-clock actual-worker tests progressing in ignored overlay; not treated as a stopped task or restarted.
+
+- Duty proposal integrated; fresh parent tests found and fixed two defects. Lint rejected fixed-rate catch-up scheduling; changed to fixed delay without suppression. Both Android matrices initially failed the two same-Service rebind recovery cases (40/42 PASS each). The earlier `onUnbind=false` decision was incorrect for a retained Service/Binder: production now returns true and rearms through actual `onRebind`; debug latches acknowledge lifecycle completion. No pressure/debt assertion was relaxed. Final root JVM555/555 PASS, full prescribed gates plus test APK PASS267/45, final complete API26 42/42 PASS17.446s and API37 42/42 PASS17.850s. Evidence, initial failures, source/APK identities and dated acceptance archived under `2026-09-02-model-duty`. The saved independent review covers the initial proposal, not the parent corrections. Trace experiment/energy remain UNRUN, physical USB Fold absent; no consumer or release qualification. This goal turn made concrete progress through production corrections and fresh integration evidence.
+
+- Duty implementation committed `6fb5880efa7815189cfb559675eaecc5775d2b57`; mandatory fresh post-commit JVM555/555 PASS, zero failures/errors/skips,46 tasks executed. Working tree clean at that checkpoint.
+- 2026-09-03: added nine virtual-clock traces of the actual worker, RU/EN/ES ×2/4/8. Each exercises11 submissions with6 engine admissions,4 denials including1 expiry,3 cancelled operations,2 OK replies,1 failed load and1 replaced pending. First warm result fits a simulated1000ms boundary in5/9 configurations. Initial NO_MODEL fixture was corrected to LOAD_FAILED with first XML retained; no profile/input/timing change. Report negative tests exposed and fixed XML empty-element truthiness and incorrect capped-refill debt arithmetic. Final JVM564/564 PASS, Python7/7 PASS, full gates238/27 PASS. CI now extracts and archives the simulation report without a model. Numeric report/source identities and first/final XML are under `2026-09-03-model-duty-trace`; actual device trace/energy, model consumers and quality remain open. This turn is concrete test/CI progress, not physical qualification.
+
+- Virtual trace slice committed `99c0c06fc3eda0c918b6aad7ca9585b371209ff8`; required post-commit JVM564/564 PASS, zero failures/errors/skips,46 executed. Working tree clean at checkpoint.
+- 2026-09-03: optional model suggestion consumer integrated into local coordinator. Full7 alternatives/features retained, Original+2 projected, stable source-index IDs, owner-only prefix and exact token/selection guards. Numeric average scoring reorders suggestions without editor changes. Development400ms pause, immediate action cancellation and no Ready/render/reconnect replay. Production IME does not instantiate the consumer yet; neutral Ready/Android factory remain required. Fresh JVM574/574 PASS; full gates+test APK267/46 PASS. API26 candidate/composing/view regression28/28 PASS199.180s. API37 initial27PASS/1 setupFAIL231.908s (QA activity not visible), unchanged targeted boundary retry1/1 PASS16.591s; no clean full final API37 run claimed. Both logs/source/APK identities retained under `2026-09-03-ranking-consumer`. Boundary gate exact pure-demand allowance adds filesystem-negative fixture:11 negative/3 positive PASS. No quality/real-model/energy or independent-review claim. This goal turn is implementation and executed integration progress.
+
+### Historical PR1 result
+
+- PR 1 implementation and full evaluation complete: suitability **FAIL**. This ledger and the dated acceptance/evidence files are included in the closing evidence commit; the required post-commit JVM result is reported with its exact SHA in the task's final response.
+- Ordered sequence stops before model-dependent PR 2 runtime API/tokenizer patch. PR 3 service, PR 4 composing, PR 5 strip/Undo, PR 6 lexicons, PR 7 model ranker, PR 8 mechanical punctuation, PR 9 contextual punctuation and PR 10 release hardening are not implemented. Independent deterministic work is not claimed complete by this evaluation slice.
+- Local branch `feature/smart-typing-03-pr01`; no push or remote PR creation authorized.
+- Baseline verified: 222 JVM tests, lint/build/privacy/dependency/native gates PASS; baseline API 26/37 CI PASS. New-feature device/quality results unmeasured.
+- Immutable model release missing. Actions candidate artifact 9800688354 was downloaded and its inner GGUF verified before evaluation.
+
+## Pre-flight decisions
+
+| Boundary | Decision |
+| --- | --- |
+| PR1 CLI -> PR2 JNI | Share numerical C++ core; JSONL exists only in developer CLI, never product runtime. |
+| PR1 suitability -> PR7 product quality | Prepared-candidate evidence is not end-to-end candidate-generation evidence; report separately. |
+| PR2 cancellation -> evaluation | PR1 evaluates unmodified pinned runtime; tokenizer patch must subsequently prove token/score equivalence. |
+| PR4 composition -> PR5 Undo -> PR8 punctuation | One owner and one transaction; no reducer-owned parallel undo state. |
+| PR6 lexicons -> PR7 thresholds | Frequency and edit features cannot be claimed implemented by the initial prepared-candidate runner. |
+| PR9 punctuation -> existing Caps | Initial-case exception is explicit and user-approved; other word content immutable. |
+| PR10 release -> external gates | No version bump or release claim with failing/unrun quality, device, or CI gates. |
+
+Ruling: use the clean dedicated checkout on a new feature branch to preserve the verified submodule/build environment; main remains unchanged. No unrelated files existed at start.
+Ruling: if PR1 fails suitability, finish its reproducible report and stop model-dependent work as requested, without inventing model performance or continuing to a 0.3 release claim.
+
+## PR1 measured progress
+
+- Exact Actions GGUF downloaded and independently hashed: expected 396704416 bytes / 7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4; GGUF v3, qwen3, file_type15 confirmed.
+- Native scorer built against unchanged pinned llama.cpp; math/UTF-8/bounds CTest PASS.
+- Independent token-at-time oracle exposed host CPU microbatch dependence: n_ubatch64 sum deltas up to 0.5247 on fixed synthetic requests. Fresh-context and flash-attention checks did not remove it.
+- Ruling: PR1 reference uses n_ubatch1 and flash attention disabled, with n_ctx256/n_batch64/CPU4 unchanged. All tested RU/EN/ES sums/counts then matched the independent oracle exactly. No performance claim for Android or permission to widen tolerance.
+- Six actual CLI protocol probes passed with empty stderr: three normal language requests, empty list, too many candidates, token overflow. Outputs contain IDs/numbers/error codes only.
+- Corpus source collision filter: pinned FrequencyWords 50k lists for each language, hashes recorded by generator. Full lists stay in build; they are a conservative veto, not an authoritative dictionary.
+- Ruling: hard distractors must still satisfy planned Damerau edit bounds. Unrelated semantic alternatives discovered in corpus review are removed before any scoring/freeze; the model must not fail because the candidate set was inadmissible.
+- Native slice committed as `a2110629989fd66c335072c677c8235b6b235d15`; fresh post-commit JVM tests: 222/222 PASS, zero failures/errors/skips.
+- Native task review: both P2 findings addressed (dirty upstream source rejection, cross-batch/masked-logit/token-limit oracle cases); 15 scalar comparisons have exact zero sum delta.
+- Python/corpus task review identified two P2 gaps before holdout: absent accent/yo ambiguity counterparts and missing explicit abstention/candidate-recall metrics. Partial calibration was stopped and preserved under ignored `build/smart-typing-0.3/superseded-corpus-v1/`; no holdout was scored, no threshold was frozen, and no model scores were used to choose the correction.
+- Ruling: issue corpus version 2 and a new empty score cache after the label-independent coverage repair. Discard the entire partial version-1 calibration from qualification, including unchanged requests, to keep provenance straightforward.
+- Corpus version 2 reviewed and committed as `d59d14fa3e608b675bb1c34e8ba13d8a0f5e4979`; SHA-256 `2b3874adabbb60370360087f208d6e9cf2ef308e4955af57114ef2a687c7fd96`. Both corpus/evaluator P2 findings addressed. Independent 24 Python tests and full validator PASS. Repeated generation produces identical seven JSONL files and manifest. Fresh post-commit JVM tests: 222/222 PASS.
+- Ordinary CI now validates the corpus, fake-scorer Python tests and native math/UTF-8 tests without downloading a model (`33c12e1`). The CI native commands were checked locally with the SDK CMake 3.31.6, build PASS and CTest 1/1 PASS; this is not a GitHub/Linux execution claim.
+- Post-CI-commit fresh JVM tests: 222/222 PASS, zero failures/errors/skips.
+- All 6,600 calibration scores completed; config `cc5cf738022b02cf6843f10677e7a2f2d0634abd42427756a23ad2a90bd5928c` frozen before any holdout request. All 6,600 holdout scores then completed. Both scoring processes exited 0; report exited 2 (documented quality FAIL), no runtime errors/missing responses.
+- Holdout: RU 162/172 correct automatic replacements (94.19%), EN 7/7 (100%), ES 239/243 (98.35%). False change: 5/1000, 0/1000, 3/1000. All languages fail the minimum 300 automatic replacements; RU and ES additionally fail 99% precision. No tuning after holdout.
+- Full score-only cache/config/reports/provenance archived in `tools/eval/smart-typing-0.3/results/2026-09-02/`. Independent evidence review confirmed all hashes, response order/counts, calibration-only freeze, exact JSON/Markdown regeneration and separate raw-score arithmetic. No new findings.
+- Ruling: honor the failed PR1 stop gate and preserve the ordered PR sequence rather than begin conditional PR2 or claim release 0.3. A separate fine-tuning milestone is documented; no training, generation API, push, remote PR, version bump or model publication was performed.
+
+## Binding quality and release decision
+
+Each language/split contains exactly 1,000 typo, 1,000 correct/protected and 200 punctuation probes. The report must include counts, precision, false-change, coverage, abstention, candidate recall, punctuation suggestion metrics and Wilson 95% intervals. Freeze corpus and calibration configuration before holdout. Prepared-candidate recall is by construction and does not qualify production generation.
+
+The holdout row gate requires at least 300 automatic replacements per language, precision >=99% and correct/protected false-change <=0.5%. Thresholds may not be retuned after seeing holdout. A failed suitability gate stops model-dependent implementation; fine-tuning is a separate milestone. Independent deterministic features do not establish model-assisted quality.
+
+After each local commit run `./gradlew testDebugUnitTest --rerun-tasks`. Before closing a PR slice run lint, debug/release/profile assembly, release/profile privacy gates, `imeIntelligenceBoundary`, `forbiddenRuntimeDependencies`, and `:runtime-llama:nativeSymbolGate`. New API26, API37, physical Fold, performance and model publication are separate gates. No version bump, push, remote PR, or model publication is implied by local test success.
+# Canonical-case AutoReplace — 2026-09-04
+
+- Lowercase valid names and geographic forms with one packaged canonical candidate now AutoReplace
+  on a supported boundary under `HIGH_CONFIDENCE`, independent of model/spelling qualification, and
+  immediate Backspace restores the exact Original composition. Sensitive/raw/non-text/layer and
+  settings vetoes remain. Fresh JVM 662/662 PASS. Physical Fold/API36 manual fixtures exposed
+  `Москва`, `Россия`, and `Иван`; the new real Binder boundary/Undo test passed 1/1 after one recorded
+  fixture-capitalization correction. Candidate-05 calibration remains separate; no publication or
+  version bump. Evidence: `docs/acceptance/2026-09-04-smart-typing-0.3-canonical-autoreplace.md`.

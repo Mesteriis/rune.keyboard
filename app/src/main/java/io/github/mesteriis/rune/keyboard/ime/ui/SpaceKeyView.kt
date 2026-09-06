@@ -147,6 +147,7 @@ internal class SpaceKeyView(
                 actionListener?.invoke(KeyboardAction.SwitchLanguage(direction))
             }
             SpaceGestureDetector.GestureEvent.CursorModeStarted -> {
+                actionListener?.invoke(KeyboardAction.CursorModeStarted)
                 text = CURSOR_MODE_LABEL
                 isPressed = true
                 performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)

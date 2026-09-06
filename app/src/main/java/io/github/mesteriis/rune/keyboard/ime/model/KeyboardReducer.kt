@@ -9,8 +9,7 @@ object KeyboardReducer {
         editorContext: EditorContext,
         nowMillis: Long,
     ): KeyboardTransition {
-        // Only Backspace consumes the double-space undo; every other action invalidates it.
-        val base = if (action == KeyboardAction.Delete) state else state.clearDoubleSpaceUndo()
+        val base = state
         return when (action) {
             is KeyboardAction.CommitLetter -> KeyboardTransition(
                 state = base.afterTextCommitted(),
@@ -31,22 +30,16 @@ object KeyboardReducer {
                 command = EditorCommand.CommitText(" "),
             )
             KeyboardAction.DoubleSpaceTap -> reduceDoubleSpaceTap(base, editorContext)
-            KeyboardAction.Delete -> if (base.pendingDoubleSpaceUndo) {
-                KeyboardTransition(
-                    state = base.clearDoubleSpaceUndo(),
-                    command = EditorCommand.RevertDoubleSpacePeriod,
-                )
-            } else {
-                KeyboardTransition(
-                    state = base,
-                    command = EditorCommand.DeletePreviousCodePoint,
-                )
-            }
+            KeyboardAction.Delete -> KeyboardTransition(
+                state = base,
+                command = EditorCommand.DeletePreviousCodePoint,
+            )
             KeyboardAction.Enter -> KeyboardTransition(
                 state = base,
                 command = resolveEnterCommand(editorContext),
             )
             KeyboardAction.Shift -> KeyboardTransition(base.onShiftPressed(nowMillis))
+            KeyboardAction.CursorModeStarted -> KeyboardTransition(base)
             KeyboardAction.ToggleSymbols -> KeyboardTransition(base.toggleSymbols())
             KeyboardAction.ToggleSymbolsPage -> KeyboardTransition(base.toggleSymbolsPage())
             is KeyboardAction.SwitchLanguage -> KeyboardTransition(base.switchLanguage(action.direction))
@@ -72,7 +65,7 @@ object KeyboardReducer {
         val eligible = state.doubleSpacePeriodEnabled && editorContext.supportsDoubleSpacePeriod
         return if (eligible) {
             KeyboardTransition(
-                state = state.afterTextCommitted().copy(pendingDoubleSpaceUndo = true),
+                state = state.afterTextCommitted(),
                 command = EditorCommand.ConvertPrecedingSpaceToPeriod,
             )
         } else {

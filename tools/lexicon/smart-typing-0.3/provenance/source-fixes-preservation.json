@@ -1,0 +1,18 @@
+{
+  "source_lock_unchanged": true,
+  "source_lock_sha256": "28750e183ef99ea33da58b20036e2f0dcb3f7e1f76e8528c21074ac7d6615b70",
+  "frozen_data_files_unchanged": 9,
+  "frozen_notices_unchanged": 14,
+  "manifest_changed_fields": [
+    "transformation_sources"
+  ],
+  "updated_scripts": [
+    "scripts/fetch_sources.py",
+    "scripts/finalize_inputs.py",
+    "scripts/verify_outputs.py"
+  ],
+  "added_scripts": [
+    "scripts/test_source_pipeline.py"
+  ],
+  "output_manifest_sha256": "ec26c80edd28f2b42008a844c8b0ce83c11759386ccc9de591cb038a7a4f3c48"
+}

@@ -17,10 +17,28 @@ class LocalModelRuntimeContractTest {
         assertEquals(1, fake.unloads)
     }
 
+    @Test
+    fun loadAndScoringWithoutPredicateDelegateToUncancelledOverloads() {
+        val fake = FakeRuntime()
+        val request = CandidateScoringRequest("prefix", listOf(ScoringCandidate(1, " continuation")))
+
+        assertEquals(CandidateScoringResult.Failure(RuntimeErrorCode.NOT_LOADED), fake.scoreCandidates(request))
+        assertEquals(CandidateScoringResult.Failure(RuntimeErrorCode.CANCELLED), fake.scoreCandidates(request) { true })
+        assertEquals(ModelLoadResult.Failure(RuntimeErrorCode.MODEL_NOT_FOUND), fake.load(File("missing.gguf")))
+        assertEquals(ModelLoadResult.Failure(RuntimeErrorCode.CANCELLED), fake.load(File("missing.gguf")) { true })
+    }
+
     private class FakeRuntime : LocalModelRuntime {
         var unloads = 0
-        override fun load(modelFile: File): ModelLoadResult = ModelLoadResult.Failure(RuntimeErrorCode.MODEL_NOT_FOUND)
+        override fun load(modelFile: File, isCancelled: () -> Boolean): ModelLoadResult =
+            ModelLoadResult.Failure(if (isCancelled()) RuntimeErrorCode.CANCELLED else RuntimeErrorCode.MODEL_NOT_FOUND)
         override fun selfTest(): ModelSelfTestResult = ModelSelfTestResult.Failure(RuntimeErrorCode.NOT_LOADED)
+        override fun scoreCandidates(
+            request: CandidateScoringRequest,
+            isCancelled: () -> Boolean,
+        ): CandidateScoringResult = CandidateScoringResult.Failure(
+            if (isCancelled()) RuntimeErrorCode.CANCELLED else RuntimeErrorCode.NOT_LOADED,
+        )
         override fun cancelCurrentOperation() = Unit
         override fun unload() { unloads++ }
     }

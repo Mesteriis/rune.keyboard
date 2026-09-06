@@ -12,6 +12,8 @@ object ModelManifestParser {
     private val identifier = Regex("[a-z0-9][a-z0-9._-]{0,62}")
     private val version = Regex("[0-9]+\\.[0-9]+\\.[0-9]+(?:-[a-z0-9.-]+)?")
     private val sha256 = Regex("[0-9a-f]{64}")
+    private val gitCommit = Regex("[0-9a-f]{40}")
+    private val hubIdentifier = Regex("[A-Za-z0-9][A-Za-z0-9._-]{0,95}")
     private val fileName = Regex("[a-z0-9][a-z0-9._-]{0,126}\\.gguf")
 
     fun parse(json: String): ModelDescriptor {
@@ -79,14 +81,20 @@ object ModelManifestParser {
 
     private fun validateUrl(value: String, artifactName: String) {
         val uri = try { URI(value) } catch (_: Exception) { invalid("invalid url") }
-        if (uri.scheme != "https" || uri.host != "github.com" || uri.port != -1 || uri.userInfo != null ||
+        if (uri.scheme != "https" || uri.port != -1 || uri.userInfo != null ||
             uri.query != null || uri.fragment != null
-        ) invalid("url must be an HTTPS GitHub Release URL")
+        ) invalid("url must be an immutable HTTPS model URL")
         val parts = uri.path.split('/').filter(String::isNotEmpty)
-        if (parts.size != 6 || parts[0] != "Mesteriis" || parts[1] != "rune.keyboard" ||
-            parts[2] != "releases" || parts[3] != "download" || parts[5] != artifactName ||
-            !identifier.matches(parts[4])
-        ) invalid("url must target the immutable Rune model release asset")
+        val githubRelease = uri.host == "github.com" && parts.size == 6 &&
+            parts[0] == "Mesteriis" && parts[1] == "rune.keyboard" &&
+            parts[2] == "releases" && parts[3] == "download" &&
+            identifier.matches(parts[4]) && parts[5] == artifactName
+        val huggingFaceCommit = uri.host == "huggingface.co" && parts.size == 5 &&
+            hubIdentifier.matches(parts[0]) && hubIdentifier.matches(parts[1]) &&
+            parts[2] == "resolve" && gitCommit.matches(parts[3]) && parts[4] == artifactName
+        if (!githubRelease && !huggingFaceCommit) {
+            invalid("url must target an immutable Rune model asset")
+        }
     }
 
     private fun String.checked(pattern: Regex, field: String): String =

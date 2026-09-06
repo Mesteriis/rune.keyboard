@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="candidate_original">Исходное слово: %1$s</string>
+  <string name="candidate_correction">Исправление: %1$s</string>
+  <string name="candidate_punctuation">Пунктуация: %1$s</string>
+  <string name="candidate_keep_original">Не исправлять это слово</string>
+  <string name="candidate_apply_correction">Применить исправление</string>
+  <string name="candidate_apply_punctuation">Применить пунктуацию</string>
+</resources>

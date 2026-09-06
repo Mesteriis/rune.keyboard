@@ -1,5 +1,6 @@
 package io.github.mesteriis.rune.keyboard.intelligence.delivery
 
+import io.github.mesteriis.rune.keyboard.intelligence.storage.ModelOperationGate
 import android.content.Context
 import android.net.Uri
 import io.github.mesteriis.rune.keyboard.intelligence.model.ModelDescriptor

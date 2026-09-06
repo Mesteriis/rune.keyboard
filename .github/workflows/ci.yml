@@ -23,6 +23,37 @@ jobs:
           yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" "ndk;29.0.14206865" "cmake;3.31.6" >/dev/null
       - name: Run fresh JVM tests
         run: ./gradlew testDebugUnitTest --rerun-tasks
+      - name: Synthetic CPU duty trace contracts and report
+        run: |
+          python3 -m unittest discover -s tools/qa/smart-typing-0.3/duty-traces -p test_report.py
+          python3 tools/qa/smart-typing-0.3/duty-traces/report.py --xml app/build/test-results/testDebugUnitTest/TEST-io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest.xml --output-dir build/model-duty-trace-ci
+      - name: Verify offline lexicon source and benchmark contracts
+        run: |
+          python3 tools/lexicon/smart-typing-0.3/pipeline.py --build-dir build/lexicon-regression test
+          python3 -m unittest discover -s tools/lexicon/smart-typing-0.3 -p test_build_packed_assets.py
+          python3 -m unittest discover -s tools/lexicon/smart-typing-0.3 -p test_stage_packed_assets.py
+          python3 -m unittest discover -s tools/lexicon/smart-typing-0.3/benchmark -p test_contracts.py
+          RUNE_QUAL_TEST_DIR="$PWD/build/smart-typing-0.3/weighted-contracts" \
+            python3 tools/lexicon/smart-typing-0.3/weighted-qualification/test_contracts.py
+      - name: Verify offline scoring harness without a model
+        run: |
+          python3 tools/eval/smart-typing-0.3/evaluate.py validate
+          python3 -m unittest discover -s tools/eval/smart-typing-0.3 -p 'test_*.py' -v
+          python3 -m unittest discover -s tools/eval/smart-typing-0.3/pipeline -p 'test_*.py' -v
+          sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          cmake_bin="$sdk_root/cmake/3.31.6/bin/cmake"
+          "$cmake_bin" -S tools/eval/smart-typing-0.3 -B build/scoring-eval-ci -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM="$sdk_root/cmake/3.31.6/bin/ninja"
+          "$cmake_bin" --build build/scoring-eval-ci --target rune-score scoring-math-test -j 2
+          "$sdk_root/cmake/3.31.6/bin/ctest" --test-dir build/scoring-eval-ci --output-on-failure
+      - name: Verify native scoring and in-tokenizer cancellation without a model
+        run: |
+          python3 -m unittest discover -s tools/test-native-scoring -p 'test_*.py' -v
+          python3 -m unittest discover -s tools/test-native-scoring/runtime-benchmark -p test_protocol.py -v
+          sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
+          cmake_bin="$sdk_root/cmake/3.31.6/bin/cmake"
+          "$cmake_bin" -S tools/test-native-scoring -B build/native-scoring-ci -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM="$sdk_root/cmake/3.31.6/bin/ninja"
+          "$cmake_bin" --build build/native-scoring-ci --parallel 2
+          "$sdk_root/cmake/3.31.6/bin/ctest" --test-dir build/native-scoring-ci --output-on-failure -V
       - name: Upload unit-test results
         if: always()
         uses: actions/upload-artifact@v4
@@ -32,6 +63,7 @@ jobs:
           path: |
             app/build/test-results/testDebugUnitTest/**
             app/build/reports/tests/testDebugUnitTest/**
+            build/model-duty-trace-ci/**
 
   build:
     runs-on: ubuntu-latest

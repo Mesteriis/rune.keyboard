@@ -1,5 +1,9 @@
 import com.android.build.api.artifact.SingleArtifact
+import com.android.build.api.artifact.ScopedArtifact
+import com.android.build.api.variant.ScopedArtifacts
 import java.util.Properties
+import javax.inject.Inject
+import org.gradle.process.ExecOperations
 
 plugins {
     alias(libs.plugins.android.application)
@@ -15,6 +19,12 @@ val keystoreProperties = Properties().apply {
 android {
     namespace = "io.github.mesteriis.rune.keyboard"
     compileSdk = 37
+    buildFeatures { aidl = true }
+
+    androidResources {
+        // Packed lexicon components are read-only APK mappings opened through AssetManager.openFd.
+        noCompress += listOf("trie", "lengths", "ranks")
+    }
 
     defaultConfig {
         applicationId = "io.github.mesteriis.rune.keyboard"
@@ -129,29 +139,6 @@ abstract class PrivacyGateTask : DefaultTask() {
     }
 }
 
-abstract class ImeIntelligenceBoundaryTask : DefaultTask() {
-    @get:InputDirectory
-    abstract val imeSourceDirectory: DirectoryProperty
-
-    @TaskAction
-    fun verify() {
-        val forbidden = Regex(
-            """DownloadManager|java\.net\.|android\.net\.|\b(?:Socket|ServerSocket|URL)\s*\(|intelligence|runtime[-_.]llama""",
-        )
-        val offenders = imeSourceDirectory.asFileTree
-            .matching { include("**/*.kt", "**/*.java") }
-            .filter { forbidden.containsMatchIn(it.readText()) }
-            .map { it.path }
-            .sorted()
-        if (offenders.isNotEmpty()) {
-            throw GradleException(
-                "IME sources must not depend on model delivery, runtime, or network APIs:\n" +
-                    offenders.joinToString("\n"),
-            )
-        }
-    }
-}
-
 abstract class ForbiddenRuntimeDependencyTask : DefaultTask() {
     @get:Input
     abstract val componentNames: ListProperty<String>
@@ -168,10 +155,52 @@ abstract class ForbiddenRuntimeDependencyTask : DefaultTask() {
     }
 }
 
-val imeIntelligenceBoundary = tasks.register<ImeIntelligenceBoundaryTask>("imeIntelligenceBoundary") {
+/** Uses AGP's pre-R8 classes and the final APK/mapping, so obfuscation cannot hide the recorder. */
+abstract class TypingDiagnosticsPackagingTask : DefaultTask() {
+    @get:Input abstract val variantName: Property<String>
+    @get:InputFile abstract val verifier: RegularFileProperty
+    @get:InputFile abstract val mergedManifest: RegularFileProperty
+    @get:InputDirectory abstract val apkDirectory: DirectoryProperty
+    @get:Optional @get:InputFile abstract val mappingFile: RegularFileProperty
+    @get:Classpath abstract val classJars: ListProperty<RegularFile>
+    @get:Classpath abstract val classDirectories: ListProperty<Directory>
+    @get:Inject abstract val execOperations: ExecOperations
+
+    @TaskAction fun verify() {
+        val arguments = mutableListOf("python3", verifier.get().asFile.absolutePath,
+            "--variant", variantName.get(), "--manifest", mergedManifest.get().asFile.absolutePath,
+            "--apk-dir", apkDirectory.get().asFile.absolutePath)
+        mappingFile.orNull?.let { arguments.addAll(listOf("--mapping", it.asFile.absolutePath)) }
+        (classJars.get().map { it.asFile } + classDirectories.get().map { it.asFile }).forEach {
+            arguments.addAll(listOf("--classes", it.absolutePath))
+        }
+        execOperations.exec { commandLine(arguments) }.assertNormalExitValue()
+    }
+}
+
+val typingDiagnosticsBoundaryFixtures = tasks.register<Exec>("typingDiagnosticsBoundaryFixtures") {
     group = "verification"
-    description = "Keeps model delivery, runtime, and network APIs out of ime/**."
-    imeSourceDirectory.set(layout.projectDirectory.dir("src/main/java/io/github/mesteriis/rune/keyboard/ime"))
+    inputs.files(rootProject.file("tools/test_typing_diagnostics_boundary.py"),
+        rootProject.file("tools/verify-scoring-boundaries.py"),
+        rootProject.file("tools/test_typing_diagnostics_packaging.py"),
+        rootProject.file("tools/typing_diagnostics_packaging.py"))
+    workingDir(rootProject.projectDir)
+    environment("PYTHONDONTWRITEBYTECODE", "1")
+    commandLine("python3", "-m", "unittest", "discover", "-s", "tools", "-p", "test_typing_diagnostics_*.py")
+}
+
+val imeIntelligenceBoundary = tasks.register<Exec>("imeIntelligenceBoundary") {
+    group = "verification"
+    description = "Checks exact IME/client, service, and neutral storage dependency boundaries."
+    for (sourceSet in listOf("main", "debug", "release", "profile")) {
+        inputs.dir(layout.projectDirectory.dir("src/$sourceSet/java"))
+        inputs.files(fileTree("src/$sourceSet/aidl") { include("**/*.aidl") })
+    }
+    inputs.dir(project(":runtime-llama").layout.projectDirectory.dir("src/main/java"))
+    inputs.file(rootProject.file("tools/verify-scoring-boundaries.py"))
+    commandLine("python3", rootProject.file("tools/verify-scoring-boundaries.py"),
+        "--root", rootProject.projectDir, "--self-test")
+    dependsOn(typingDiagnosticsBoundaryFixtures)
 }
 
 val forbiddenRuntimeDependencies = tasks.register<ForbiddenRuntimeDependencyTask>("forbiddenRuntimeDependencies") {
@@ -186,6 +215,21 @@ val forbiddenRuntimeDependencies = tasks.register<ForbiddenRuntimeDependencyTask
 }
 
 androidComponents {
+    onVariants(selector().all()) { variant ->
+        val name = variant.name.replaceFirstChar(Char::uppercaseChar)
+        val diagnostics = tasks.register<TypingDiagnosticsPackagingTask>("typingDiagnosticsPackaging$name") {
+            group = "verification"
+            variantName.set(variant.name)
+            verifier.set(rootProject.file("tools/typing_diagnostics_packaging.py"))
+            mergedManifest.set(variant.artifacts.get(SingleArtifact.MERGED_MANIFEST))
+            apkDirectory.set(variant.artifacts.get(SingleArtifact.APK))
+            if (variant.name != "debug") mappingFile.set(variant.artifacts.get(SingleArtifact.OBFUSCATION_MAPPING_FILE))
+            dependsOn(typingDiagnosticsBoundaryFixtures)
+        }
+        variant.artifacts.forScope(ScopedArtifacts.Scope.PROJECT).use(diagnostics)
+            .toGet(ScopedArtifact.CLASSES, TypingDiagnosticsPackagingTask::classJars,
+                TypingDiagnosticsPackagingTask::classDirectories)
+    }
     onVariants(selector().withBuildType("release")) { variant ->
         registerPrivacyGate(variant)
     }
@@ -209,6 +253,7 @@ fun com.android.build.api.variant.ApplicationAndroidComponentsExtension.register
                 layout.projectDirectory.dir("src/release/java"),
                 project(":runtime-llama").layout.projectDirectory.dir("src/main/java"),
             )
+            dependsOn("typingDiagnosticsPackaging$variantName", "typingDiagnosticsPackagingDebug")
         }
         tasks.named("check").configure {
             dependsOn(

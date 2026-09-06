@@ -1,0 +1,1912 @@
+Ты работаешь с Android-проектом Rune Keyboard.
+
+Repository:
+git@github.com:Mesteriis/rune.keyboard.git
+
+Baseline архива и текущего main:
+b5400cbadadd29e8ee915a0fb33fb11ec5bebc79
+
+Текущий release:
+Rune Keyboard 0.2.0
+
+Следующий milestone:
+Rune Smart Typing 0.3
+
+ЦЕЛЬ
+
+Реализовать полностью локальную автокоррекцию для русского, английского
+и испанского языков, включая:
+
+1. composing-ввод;
+2. орфографические кандидаты;
+3. high-confidence автозамену;
+4. панель исправлений;
+5. мгновенный Undo через Backspace;
+6. механическую пунктуацию;
+7. контекстные пунктуационные предложения через Rune Text 0.1;
+8. безопасное асинхронное подключение локальной модели.
+
+Нельзя превращать этот этап в свободную генерацию текста.
+
+Модель должна только оценивать заранее сформированные допустимые варианты.
+Общий unrestricted `generate(prompt)` в Rune 0.3 запрещён.
+
+==================================================
+0. СНАЧАЛА ПРОВЕРЬ ФАКТИЧЕСКИЙ BASELINE
+==================================================
+
+Перед изменениями:
+
+1. Прочитай полностью:
+
+- README.md;
+- docs/ARCHITECTURE.md;
+- docs/ACCEPTANCE.md;
+- docs/RELEASE.md;
+- tools/model/rune-text-0.1/README.md;
+- tools/model/rune-text-0.1/ARTIFACT.md;
+- app/build.gradle.kts;
+- runtime-llama/build.gradle.kts;
+- app/src/main/java/.../ime/RuneInputMethodService.kt;
+- app/src/main/java/.../ime/model/KeyboardReducer.kt;
+- app/src/main/java/.../ime/model/KeyboardState.kt;
+- app/src/main/java/.../ime/editor/EditorCommandExecutor.kt;
+- app/src/main/java/.../ime/ui/RuneKeyboardView.kt;
+- runtime-llama/src/main/java/.../LocalModelRuntime.kt;
+- runtime-llama/src/main/java/.../LlamaLocalModelRuntime.kt;
+- runtime-llama/src/main/cpp/rune_llama_jni.cpp.
+
+2. Выполни:
+
+git status --short --branch
+git log --oneline --decorate -10
+git submodule status
+git rev-parse HEAD
+
+3. Инициализируй pinned submodule:
+
+git submodule update --init --recursive
+
+4. Запусти baseline:
+
+./gradlew testDebugUnitTest --rerun-tasks
+
+./gradlew lint assembleDebug assembleRelease assembleProfile \
+  privacyGateRelease privacyGateProfile \
+  imeIntelligenceBoundary forbiddenRuntimeDependencies \
+  :runtime-llama:nativeSymbolGate
+
+5. Зафиксируй:
+
+- точный SHA;
+- число JVM-тестов;
+- состояние CI;
+- существующие instrumentation tests;
+- существующие privacy и dependency gates;
+- точный runtime commit;
+- точный model digest.
+
+6. Проверь наличие immutable GitHub Release:
+
+model-rune-text-v0.1.0
+
+и asset:
+
+rune-text-v1-0.1.0-q4_k_m.gguf
+
+Ожидаемые свойства:
+
+- size: 396704416 bytes;
+- SHA-256:
+  7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4;
+- GGUF v3;
+- qwen3;
+- Q4_K_M.
+
+Если публичный release отсутствует, прямо зафиксируй release blocker.
+Для локальной разработки разрешено использовать SAF import того же точного
+digest. Не публикуй и не подменяй модель без прохождения существующего
+physical Fold qualification gate.
+
+==================================================
+1. ЖЁСТКИЕ NON-GOALS
+==================================================
+
+В Rune Smart Typing 0.3 НЕ входят:
+
+- next-word prediction;
+- phrase completion;
+- свободная генерация текста;
+- rewrite;
+- изменение стиля;
+- перевод;
+- чат с моделью;
+- пользовательские prompts;
+- обучение или дообучение модели;
+- LoRA;
+- автоматическое обучение стилю пользователя;
+- долговременная история ввода;
+- Rune Recall;
+- AccessibilityService;
+- чтение других приложений;
+- screen capture;
+- OCR;
+- vision;
+- clipboard;
+- snippets;
+- AIGate;
+- cloud inference;
+- отправка текста в сеть;
+- glide typing;
+- autocorrect по скользящей траектории;
+- исправление текста далеко позади курсора;
+- полноценная проверка грамматики;
+- автоматическое переписывание предложения.
+
+Не добавляй:
+
+- Compose;
+- Hilt/Koin;
+- coroutines;
+- WorkManager;
+- Room;
+- HTTP-клиент;
+- analytics;
+- crash SDK;
+- новое permission;
+- новый сетевой endpoint;
+- базу данных;
+- общий plugin framework.
+
+Сохрани текущие продуктовые инварианты:
+
+- ровно одно permission: android.permission.INTERNET;
+- INTERNET используется только для явной доставки модели;
+- IME не выполняет сетевых запросов;
+- текст не логируется;
+- cleartext и Android backup выключены;
+- typing hot path не выполняет disk I/O;
+- password и NO_PERSONALIZED_LEARNING не читаются;
+- скользящего ввода нет;
+- Rune работает и без установленной модели.
+
+==================================================
+2. ГЛАВНОЕ АРХИТЕКТУРНОЕ РЕШЕНИЕ
+==================================================
+
+Не использовать prompt-based correction:
+
+prompt:
+"Исправь этот текст..."
+
+Такой подход запрещён, потому что модель может:
+
+- менять слова;
+- менять смысл;
+- добавлять текст;
+- удалять текст;
+- менять стиль;
+- возвращать невалидный формат;
+- создавать непредсказуемую задержку.
+
+Вместо этого реализовать bounded candidate scoring.
+
+Rune формирует конечный список допустимых вариантов, а model runtime
+возвращает только числовые scores.
+
+Пример:
+
+prefix:
+"Я хочу добавить"
+
+candidates:
+[
+  " автокоррекцию",
+  " автокорекцию",
+  " автокоррекция"
+]
+
+result:
+[
+  { id: 0, sumLogProbability: ..., tokenCount: ... },
+  { id: 1, sumLogProbability: ..., tokenCount: ... },
+  { id: 2, sumLogProbability: ..., tokenCount: ... }
+]
+
+Runtime не должен возвращать generated text.
+
+Для пунктуации:
+
+prefix:
+"Я думаю"
+
+candidates:
+[
+  " это",
+  ", это",
+  ": это",
+  ". Это"
+]
+
+Модель только оценивает варианты.
+
+==================================================
+3. ОБЯЗАТЕЛЬНЫЙ QUALITY SPIKE ДО PRODUCT-КОДА
+==================================================
+
+Перед подключением модели к IME создай воспроизводимый evaluation harness:
+
+tools/eval/smart-typing-0.3/
+
+Минимальные файлы:
+
+- README.md;
+- schema.json;
+- spelling-ru.jsonl;
+- spelling-en.jsonl;
+- spelling-es.jsonl;
+- punctuation-ru.jsonl;
+- punctuation-en.jsonl;
+- punctuation-es.jsonl;
+- protected-tokens.jsonl;
+- evaluate.py или небольшой native/CLI runner;
+- expected-report-schema.json.
+
+Орфографический sample:
+
+{
+  "id": "ru-spelling-001",
+  "language": "ru",
+  "prefix": "Нужно добавить",
+  "typed": "автокрекцию",
+  "candidates": [
+    " автокоррекцию",
+    " автокорекцию",
+    " автокоррекция"
+  ],
+  "expectedCandidate": 0,
+  "category": "missing_letter"
+}
+
+Пунктуационный sample:
+
+{
+  "id": "ru-punctuation-001",
+  "language": "ru",
+  "prefix": "Я думаю",
+  "currentWord": "это",
+  "boundaries": [
+    " ",
+    ", ",
+    ": ",
+    ". "
+  ],
+  "expectedBoundary": ", ",
+  "ambiguous": false
+}
+
+Обязательные категории spelling:
+
+- соседняя клавиша;
+- пропущенная буква;
+- лишняя буква;
+- транспозиция;
+- повтор буквы;
+- неправильная гласная;
+- неправильная согласная;
+- диакритика EN/ES;
+- русская ё/е;
+- разные длины слова;
+- начало предложения;
+- середина предложения;
+- конец предложения.
+
+Обязательные no-change/protected cases:
+
+- корректные слова;
+- имена;
+- фамилии;
+- бренды;
+- Rune;
+- AIGate;
+- HomeAssistant;
+- ESPHome;
+- kubectl;
+- PostgreSQL;
+- camelCase;
+- snake_case;
+- kebab-case;
+- IPv4;
+- IPv6;
+- URL;
+- email;
+- semantic version;
+- UUID;
+- путь к файлу;
+- shell command;
+- Python/C++/Kotlin identifiers;
+- смешанные RU/EN/ES предложения;
+- ALL_CAPS;
+- слова с цифрами.
+
+Corpus не должен содержать реальные личные сообщения пользователя.
+
+Раздели corpus на:
+
+- calibration;
+- holdout.
+
+Нельзя подбирать thresholds на holdout.
+
+До включения автоматической замены добейся на holdout:
+
+- precision high-confidence autocorrection не ниже 99% для каждого языка;
+- false-change rate защищённых и правильных токенов не выше 0.5%;
+- исходное слово всегда присутствует в candidate set;
+- contextual punctuation пока оценивается как suggestion, а не auto-apply.
+
+Это продуктовые release gates.
+
+Если текущая Rune Text 0.1 не может надёжно ранжировать даже заранее
+подготовленные варианты:
+
+- не переходи к unrestricted generation;
+- не скрывай результат;
+- не подбирай примеры только под удачные случаи;
+- зафиксируй metrics;
+- останови model-dependent часть;
+- предложи отдельный fine-tuning milestone.
+
+Composing, deterministic spelling и mechanical punctuation могут быть
+реализованы независимо, но нельзя заявлять model-assisted correction
+готовой без evaluation evidence.
+
+==================================================
+4. РАСШИРЕНИЕ RUNTIME: ТОЛЬКО SCORING
+==================================================
+
+Текущий LocalModelRuntime имеет:
+
+- load;
+- selfTest;
+- cancelCurrentOperation;
+- unload.
+
+Добавь bounded scoring API.
+
+Предлагаемый контракт:
+
+data class CandidateScoringRequest(
+    val prefix: String,
+    val candidates: List<ScoringCandidate>,
+)
+
+data class ScoringCandidate(
+    val id: Int,
+    val continuation: String,
+)
+
+data class CandidateScore(
+    val id: Int,
+    val sumLogProbability: Double,
+    val scoredTokenCount: Int,
+)
+
+sealed interface CandidateScoringResult {
+    data class Success(
+        val scores: List<CandidateScore>,
+        val durationMillis: Long,
+    ) : CandidateScoringResult
+
+    data class Failure(
+        val code: RuntimeErrorCode,
+    ) : CandidateScoringResult
+}
+
+interface LocalModelRuntime {
+    fun load(modelFile: File): ModelLoadResult
+    fun selfTest(): ModelSelfTestResult
+    fun scoreCandidates(
+        request: CandidateScoringRequest,
+    ): CandidateScoringResult
+    fun cancelCurrentOperation()
+    fun unload()
+}
+
+Ограничения native contract:
+
+- максимум 8 candidates;
+- candidate id уникален;
+- пустой candidate list запрещён;
+- prefix и continuations имеют жёсткий byte/token limit;
+- общий контекст не превышает runtime context;
+- никакой generated string не возвращается;
+- только числовые scores;
+- UTF-8 обязательно проверяется;
+- cancellation работает во время tokenize/decode/scoring;
+- любой invalid request возвращает стабильный error code;
+- JNI exceptions не покидают native boundary;
+- model/context lifetime остаётся RAII;
+- глобальные model/context pointers запрещены;
+- logger llama.cpp остаётся отключённым.
+
+Добавь error codes:
+
+- INVALID_REQUEST;
+- CONTEXT_TOO_LONG;
+- TOO_MANY_CANDIDATES;
+- SCORING_FAILED.
+
+Scoring:
+
+1. Токенизируй полные варианты `prefix + continuation`.
+2. Не предполагай, что `tokenize(prefix) + tokenize(continuation)` совпадает
+   с tokenization полной строки.
+3. Найди общий token prefix полных вариантов.
+4. Оцени log probability только divergent continuation span.
+5. Используй numerically stable log-softmax.
+6. Возвращай:
+   - сумму log probabilities;
+   - количество реально оценённых токенов.
+7. Length normalization выполняется в Kotlin ranker, а не прячется внутри JNI.
+8. Не добавляй BOS повторно для каждого continuation.
+9. Не включай EOS в score, если это явно не обосновано evaluation.
+
+Сначала сделай корректную реализацию.
+
+Оптимизация shared-prefix через sequence IDs и KV copy допускается только
+после теста эквивалентности с простой реализацией. Оптимизированный и простой
+пути должны давать scores с документированным числовым tolerance.
+
+Native tests должны проверять:
+
+- identical candidates дают одинаковый score;
+- ожидаемый token получает более высокий score на synthetic logits;
+- length normalization не выполняется в native;
+- Unicode RU/ES проходит без повреждения;
+- invalid UTF-8 блокируется;
+- cancellation;
+- context overflow;
+- candidate count limit;
+- repeated score/load/unload lifecycle;
+- отсутствие output text.
+
+Не добавляй unrestricted `generate()`.
+
+==================================================
+5. PRIVATE MODEL INFERENCE SERVICE
+==================================================
+
+Не загружай 396 MB model непосредственно в RuneInputMethodService process.
+
+Создай отдельный private bound service:
+
+ModelInferenceService
+
+Manifest:
+
+- android:exported="false";
+- android:process=":model_runtime";
+- без intent-filter;
+- без foreground service;
+- без отдельного permission;
+- доступен только тому же приложению.
+
+Не переиспользуй JobService как interactive inference API.
+
+ModelInstallJobService сохраняет ответственность только за:
+
+- verify;
+- install;
+- self-test;
+- activate.
+
+ModelInferenceService отвечает только за:
+
+- разрешение active model pointer;
+- lazy load active model;
+- candidate scoring;
+- request cancellation;
+- unload;
+- binder death;
+- memory pressure.
+
+Создай узкий AIDL contract.
+
+Пример:
+
+interface IModelScoringService {
+    void scoreCandidates(
+        long sessionId,
+        long requestId,
+        String prefix,
+        in List<String> candidates,
+        IModelScoringCallback callback
+    );
+
+    void cancel(long sessionId, long requestId);
+}
+
+oneway interface IModelScoringCallback {
+    void onSuccess(
+        long sessionId,
+        long requestId,
+        in double[] sumLogProbabilities,
+        in int[] tokenCounts
+    );
+
+    void onFailure(
+        long sessionId,
+        long requestId,
+        int errorCode
+    );
+}
+
+Фактический AIDL можно скорректировать, но он должен:
+
+- быть bounded;
+- иметь request/session IDs;
+- не возвращать generated text;
+- поддерживать cancel;
+- не содержать Bundle с произвольными полями;
+- не логировать payload;
+- не сохранять payload;
+- не передавать model path наружу.
+
+Service lifecycle:
+
+- загружать active model лениво;
+- не блокировать main thread;
+- иметь один serial inference worker;
+- держать максимум один активный запрос на IME session;
+- отменять предыдущий запрос при появлении нового;
+- выгружать модель при завершении idle timeout;
+- выгружать при критическом memory pressure;
+- корректно переживать process kill;
+- при binder death возвращать client в unavailable state;
+- автоматически перепривязываться только при активной обычной text session;
+- не привязываться в sensitive field;
+- не привязываться в TYPE_NULL;
+- не привязываться, если Smart Typing выключен.
+
+IME никогда не ждёт Binder synchronously.
+
+Любая модельная операция асинхронна.
+
+Если service:
+
+- загружается;
+- умер;
+- занят;
+- не имеет модели;
+- вернул ошибку;
+
+Rune продолжает печатать без задержки через deterministic fallback.
+
+==================================================
+6. ОБНОВИ ARCHITECTURE GATE, НЕ УНИЧТОЖИВ ЕГО
+==================================================
+
+Текущий imeIntelligenceBoundary запрещает любые ссылки на intelligence
+в `ime/**`.
+
+Теперь IME нужен только узкий scoring client, но по-прежнему не нужны:
+
+- delivery;
+- activation;
+- DownloadManager;
+- model paths;
+- JNI runtime;
+- runtime-llama;
+- network APIs.
+
+Замени слишком общий запрет на точный allowlist/boundary:
+
+IME может зависеть только от:
+
+- smart typing contracts;
+- bounded model scoring client interface.
+
+IME не может зависеть от:
+
+- intelligence.delivery;
+- intelligence.runtime activation classes;
+- ModelDeliveryManager;
+- ModelInstallCoordinator;
+- DownloadManager;
+- io.github.mesteriis.rune.runtime.llama;
+- JNI;
+- java.net;
+- android.net;
+- Socket;
+- URL;
+- model file storage.
+
+Добавь отдельный gate для `:model_runtime` process code:
+
+- никаких network API;
+- никаких delivery API;
+- никаких логов;
+- никаких persistent input payload;
+- никаких analytics.
+
+Не убирай gate только ради того, чтобы сборка стала зелёной.
+
+==================================================
+7. TYPING SESSION И COMPOSING
+==================================================
+
+Не помещай composing, candidate ranking и model callbacks в KeyboardReducer.
+
+KeyboardReducer должен продолжать отвечать за:
+
+- Shift;
+- Caps Lock;
+- language;
+- keyboard layer;
+- visual keyboard state;
+- Enter mapping;
+- управляющие действия.
+
+Создай отдельную подсистему:
+
+app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/
+
+Рекомендуемая структура:
+
+smarttyping/
+├── session/
+│   ├── TypingSessionController.kt
+│   ├── TypingSessionState.kt
+│   ├── ComposingSegment.kt
+│   ├── SessionTextContext.kt
+│   ├── SessionInvalidation.kt
+│   └── UndoableTextEdit.kt
+├── correction/
+│   ├── CorrectionCandidate.kt
+│   ├── CandidateGenerator.kt
+│   ├── CandidateRanker.kt
+│   ├── CorrectionDecision.kt
+│   ├── CorrectionPolicy.kt
+│   ├── KeyboardDistance.kt
+│   ├── WeightedDamerauLevenshtein.kt
+│   └── WordShape.kt
+├── punctuation/
+│   ├── BoundaryCandidate.kt
+│   ├── MechanicalPunctuationEngine.kt
+│   ├── ContextualPunctuationEngine.kt
+│   └── PunctuationPolicy.kt
+├── lexicon/
+│   ├── Lexicon.kt
+│   ├── LexiconReader.kt
+│   ├── LexiconIndex.kt
+│   └── LanguageRouter.kt
+├── model/
+│   ├── ModelScoringClient.kt
+│   ├── ModelScoringRequest.kt
+│   ├── ModelScore.kt
+│   └── NullModelScoringClient.kt
+└── ui/
+    ├── SmartTypingViewState.kt
+    └── CandidateUiItem.kt
+
+Не создавай пустые abstractions без реального потребителя.
+Названия можно скорректировать после изучения кода.
+
+TypingSessionState не должен находиться внутри KeyboardState.
+
+Минимальное состояние:
+
+data class TypingSessionState(
+    val sessionId: Long,
+    val revision: Long,
+    val composing: ComposingSegment?,
+    val candidates: List<CorrectionCandidate>,
+    val selectedCandidateId: String?,
+    val lastAutoEdit: UndoableTextEdit?,
+    val modelRequestId: Long?,
+    val modelState: ModelAvailability,
+)
+
+==================================================
+8. COMPOSING SEGMENT С УПРАВЛЯЕМОЙ ГРАНИЦЕЙ
+==================================================
+
+Для поддержки пунктуации не держи только слово.
+
+Используй composition из:
+
+- leading boundary;
+- текущего слова.
+
+Пример:
+
+ComposingSegment(
+    leadingBoundary = " ",
+    typedWord = "это",
+)
+
+В editor composing region находится:
+
+" это"
+
+Если contextual punctuation предлагает запятую:
+
+leadingBoundary:
+" " → ", "
+
+composing text:
+" это" → ", это"
+
+Это позволяет исправить:
+
+"Я думаю это"
+
+в:
+
+"Я думаю, это"
+
+не удаляя и не перечитывая уже committed текст.
+
+Обязательные состояния:
+
+- Idle;
+- PendingBoundary;
+- ComposingWord;
+- CandidateSelected;
+- AutoCorrectionCommitted;
+- Cancelled/Invalidated.
+
+Поведение:
+
+1. Первая буква начинает composing word.
+2. Следующие буквы обновляют `setComposingText`.
+3. Space:
+   - выбирает correction decision;
+   - завершает слово;
+   - начинает pending leading boundary `" "`.
+4. Следующая буква превращает pending boundary в `" <word>"`.
+5. Пунктуационный scorer может изменить только leading boundary текущего
+   composing segment.
+6. Enter/language switch/cursor move/symbol layer:
+   - безопасно завершает composition;
+   - отменяет scoring request;
+   - очищает candidates.
+7. Selection:
+   - завершает или отменяет composition согласно текущему editor state;
+   - новый ввод заменяет выделение.
+8. TYPE_NULL:
+   - composing полностью отключён;
+   - сохраняется текущий raw key event путь.
+9. SENSITIVE:
+   - composing, context, candidates и model client отключены;
+   - сохраняется plain commit.
+10. Если `setComposingText` возвращает false:
+    - не падать;
+    - отключить Smart Typing только для текущей editor session;
+    - перейти на существующий plain commit;
+    - не повторять попытку на каждой клавише.
+
+Не делай composing region длиной во всё предложение.
+
+==================================================
+9. SESSION CONTEXT И PRIVACY
+==================================================
+
+Для model ranking хранить только эфемерный контекст текущей Rune session.
+
+SessionTextContext:
+
+- только RAM;
+- не SharedPreferences;
+- не файл;
+- не database;
+- не backup;
+- не analytics;
+- не exception message;
+- не Logcat;
+- не diagnostics;
+- не trace name;
+- не delivery subsystem.
+
+Источник context:
+
+- только текст, введённый через Rune после начала текущей editor session;
+- не читать весь editor;
+- не читать экран;
+- не использовать Accessibility;
+- не запрашивать абзац через getTextBeforeCursor после каждой буквы.
+
+Ограничение:
+
+- bounded по UTF-16/code points;
+- bounded по model tokens;
+- старый контекст удаляется с начала;
+- граница не должна разрезать grapheme cluster;
+- при внешнем перемещении курсора context invalidated;
+- при выделении context invalidated;
+- при неизвестном editor mutation context invalidated;
+- при завершении input context уничтожается;
+- при sensitive field context вообще не создаётся.
+
+Model process получает context только для текущего bounded request и не хранит
+его после результата/cancel.
+
+Обнови privacy documentation честно:
+
+- текст теперь передаётся через Binder в приватный процесс того же приложения;
+- текст не передаётся в сеть;
+- текст не сохраняется;
+- модель работает локально;
+- sensitive fields не вызывают Binder scoring.
+
+==================================================
+10. EXTERNAL SELECTION И STALE STATE
+==================================================
+
+Используй `onUpdateSelection` для проверки ownership composing region.
+
+Различай:
+
+- ожидаемое обновление после собственного setComposingText;
+- внешнее движение курсора;
+- внешнюю замену текста;
+- смену selection;
+- потерю composing region;
+- restart того же editor;
+- новый editor.
+
+Каждый async model request содержит:
+
+- sessionId;
+- revision;
+- requestId;
+- exact candidate IDs.
+
+Result применяется только если:
+
+- sessionId совпадает;
+- revision совпадает;
+- requestId всё ещё активен;
+- composing text не изменился;
+- editor session не завершена;
+- inputPolicy всё ещё NORMAL.
+
+Любой stale result просто уничтожается.
+
+Запрещено применять correction после того, как пользователь уже нажал Space,
+Enter, сменил язык или отредактировал слово.
+
+Никаких retroactive corrections с визуальным прыжком текста.
+
+==================================================
+11. CANDIDATE STRIP
+==================================================
+
+Текущий RuneKeyboardView вызывает `removeAllViews()` при перестроении клавиш.
+
+Перед candidate strip раздели:
+
+RuneKeyboardView
+├── CandidateStripView
+└── KeysContainer
+    └── keyboard rows
+
+`applyRender()` должен перестраивать только KeysContainer.
+
+Изменение candidates не должно:
+
+- пересоздавать клавиши;
+- закрывать popup;
+- сбрасывать активный touch;
+- менять Shift;
+- менять язык;
+- запускать полный layout rebuild.
+
+Candidate strip:
+
+- максимум 3 основных видимых кандидата на cover screen;
+- горизонтальная прокрутка только если реально нужна;
+- исходное слово всегда доступно;
+- лучший candidate выделен;
+- tap применяет candidate;
+- tap на исходное слово запрещает auto-replace для текущего слова;
+- long press допускается только для явного `Не исправлять`, если это
+  реализуется без personalization subsystem;
+- никаких next-word candidates;
+- никаких phrase suggestions;
+- никаких AI sparkle/icons;
+- никаких network states внутри клавиатуры;
+- loading модели не должен показывать spinner на каждый символ.
+
+Candidate types:
+
+sealed interface CandidateUiItem {
+    data class Original(...)
+    data class Correction(...)
+    data class Punctuation(...)
+}
+
+Candidate strip полностью скрывается:
+
+- в password;
+- при NO_PERSONALIZED_LEARNING;
+- в TYPE_NULL;
+- email;
+- URI;
+- phone;
+- number;
+- date/time;
+- при выключенном Smart Typing.
+
+Добавь accessibility:
+
+- content description;
+- selected state;
+- TalkBack action;
+- корректный focus order;
+- touch target не меньше platform minimum, насколько позволяет IME layout.
+
+==================================================
+12. ОРФОГРАФИЧЕСКИЕ LEXICONS
+==================================================
+
+Qwen не должен сам придумывать candidate set.
+
+Создай воспроизводимый lexicon pipeline:
+
+tools/lexicon/rune-lexicon-0.1/
+
+Для каждого языка нужны:
+
+- source repository;
+- immutable revision;
+- original license;
+- SHA-256 входных файлов;
+- transformation script;
+- normalization rules;
+- output manifest;
+- word count;
+- asset size;
+- reproducibility check;
+- THIRD_PARTY_NOTICES.
+
+Нельзя использовать corpus/word list с неясной лицензией.
+
+Если license или право на redistribution нельзя подтвердить, не включай
+источник в проект.
+
+Lexicons должны содержать word forms, а не только lemmas.
+
+Языки:
+
+- ru-RU;
+- en-US;
+- es-ES.
+
+Normalization:
+
+- Unicode NFC;
+- locale-aware lowercase;
+- сохранить информацию о частотном rank;
+- не смешивать языки в один неразмеченный список;
+- не удалять ñ;
+- не удалять испанские accents;
+- не заменять ё на е без отдельной политики.
+
+Перед выбором runtime format сравни минимум:
+
+1. sorted/front-coded list;
+2. compact trie;
+3. delete index/SymSpell-like index.
+
+Для каждого измерь:
+
+- output size;
+- cold open;
+- resident memory;
+- exact lookup;
+- candidate generation;
+- top-N generation;
+- API 26 compatibility.
+
+Не добавляй тяжёлую runtime dependency ради словаря.
+
+Предпочтение:
+
+- offline-built compact assets;
+- runtime reader под контролем Rune;
+- deterministic output;
+- отсутствие allocation storm на каждую букву.
+
+Если assets хранятся uncompressed для mmap/openFd, обоснуй APK size.
+Если compressed, обоснуй load/decompression policy.
+
+==================================================
+13. CANDIDATE GENERATION
+==================================================
+
+Candidate generation выполняется без модели.
+
+Используй:
+
+- exact lexicon lookup;
+- weighted Damerau-Levenshtein;
+- insertion;
+- deletion;
+- substitution;
+- transposition;
+- repeated character;
+- static keyboard adjacency;
+- word frequency rank;
+- active language prior;
+- script detection;
+- case pattern.
+
+Не используй фактическую touch trajectory.
+Glide typing отсутствует и не должен появиться.
+
+Language routing:
+
+- Cyrillic → RU;
+- `ñ`, испанские accents → ES;
+- обычная Latin строка → active EN/ES с ограниченным fallback;
+- активная раскладка является сильным prior, но не абсолютной границей;
+- mixed-script token не auto-correct;
+- mixed-language предложение допустимо.
+
+Protected token policy:
+
+Не auto-correct, если token:
+
+- содержит `/`, `\`, `@`, `_`;
+- похож на URL/email/path;
+- содержит цифры и буквы;
+- camelCase;
+- snake_case;
+- kebab-case technical token;
+- ALL_CAPS длиной больше одной буквы;
+- содержит unusual symbols;
+- UUID;
+- IP;
+- semantic version;
+- code identifier;
+- shell fragment;
+- слишком длинный;
+- смешивает scripts.
+
+Case preservation:
+
+- lowercase → lowercase;
+- Title Case → Title Case;
+- UPPERCASE → UPPERCASE;
+- mixed case → suggestion only либо no correction.
+
+Valid dictionary word по умолчанию не заменяется другим valid word.
+
+Например:
+
+- `все` не превращать молча в `всё`;
+- `esta` не превращать молча в `está`;
+- `form` не превращать в `from`.
+
+Такие случаи допускаются только как contextual suggestions после отдельной
+калибровки, но не как auto-correct в 0.3.
+
+Candidate set:
+
+- original;
+- максимум 7 generated alternatives;
+- deterministic order до model ranking;
+- никакого unbounded search;
+- никакого полного прохода по lexicon на каждую букву.
+
+==================================================
+14. RANKING И CONFIDENCE
+==================================================
+
+CandidateRanker объединяет:
+
+- edit cost;
+- keyboard adjacency cost;
+- transposition bonus;
+- frequency rank;
+- language prior;
+- case compatibility;
+- word length;
+- model average log probability;
+- model margin;
+- protected-token policy.
+
+Native runtime возвращает raw:
+
+- sumLogProbability;
+- tokenCount.
+
+Kotlin ranker вычисляет normalized model score.
+
+Не превращай model score в единственный критерий.
+
+CorrectionDecision:
+
+sealed interface CorrectionDecision {
+    data class AutoReplace(val candidate: CorrectionCandidate) : CorrectionDecision
+    data class Suggest(val candidates: List<CorrectionCandidate>) : CorrectionDecision
+    data object KeepOriginal : CorrectionDecision
+}
+
+AutoReplace разрешён только если:
+
+- input policy NORMAL;
+- mode TEXT;
+- original отсутствует в lexicon либо имеет доказанную typo policy;
+- edit distance в допустимой границе;
+- top candidate существенно лучше второго;
+- top candidate существенно лучше original;
+- confidence bucket прошёл holdout gate;
+- результат относится к текущей revision;
+- user не выбрал original;
+- candidate доступен до word boundary.
+
+Не задерживать Space ради модели.
+
+При Space/punctuation/Enter:
+
+- использовать последний актуальный result;
+- если result не готов, использовать deterministic decision;
+- если deterministic decision недостаточно уверен, сохранить original;
+- поздний model result игнорировать.
+
+==================================================
+15. AUTOCORRECTION TRANSACTION И UNDO
+==================================================
+
+Любая автоматическая замена должна быть транзакцией:
+
+data class AutoCorrectionEdit(
+    val original: String,
+    val replacement: String,
+    val committedBoundary: String,
+    val sessionId: Long,
+    val revision: Long,
+)
+
+Пример:
+
+typed:
+"автокрекция"
+
+Space:
+
+"автокоррекция "
+
+Первый Backspace сразу после auto-correction:
+
+1. удалить replacement и boundary одним batch edit;
+2. восстановить original как composing text;
+3. показать candidates;
+4. не сохранять rejection пока personalization отсутствует;
+5. не выполнить одновременно обычный Backspace.
+
+После любого другого text action Undo transaction закрывается.
+
+Объедини существующий double-space undo и autocorrection undo в одну
+typing-owned концепцию:
+
+sealed interface UndoableTextEdit {
+    data class DoubleSpacePeriod(...)
+    data class AutoCorrection(...)
+    data class MechanicalPunctuation(...)
+}
+
+`pendingDoubleSpaceUndo` не должен продолжать жить отдельным независимым
+механизмом в KeyboardState после миграции.
+
+Миграция должна быть отдельным тестируемым commit.
+
+==================================================
+16. MECHANICAL PUNCTUATION
+==================================================
+
+MechanicalPunctuationEngine работает детерминированно и без модели.
+
+Автоматически исправлять:
+
+- пробел перед `, . ? ! : ;`;
+- отсутствие пробела после `, : ;`, если далее начинается обычное слово;
+- отсутствие пробела после `. ? !`, если далее начинается новое предложение;
+- повтор обычных пробелов;
+- случайный одиночный duplicate punctuation;
+- капитализацию после sentence boundary через существующий caps mechanism.
+
+Примеры:
+
+"Привет ,как дела"
+→ "Привет, как дела"
+
+"Хорошо.завтра отправлю"
+→ "Хорошо. Завтра отправлю"
+
+"текст  текст"
+→ "текст текст"
+
+Обязательные exclusions:
+
+- `3.14`;
+- locale decimal `1,5`;
+- `12:30`;
+- `1.2.3`;
+- `example.com`;
+- email;
+- URL;
+- IPv4;
+- IPv6;
+- path;
+- code;
+- `...`;
+- `?!`;
+- `!?`;
+- emoji sequences;
+- closing quotes/brackets;
+- opening quotes/brackets;
+- EMAIL/URI/NUMBER/PHONE/DATE_TIME;
+- TYPE_NULL;
+- SENSITIVE.
+
+Не удаляй многоточие.
+Не запрещай пользователю намеренно ввести `?!`.
+Не нормализуй кавычки без отдельной команды.
+Не вставляй финальную точку перед SEND молча.
+
+Mechanical edit также должен иметь immediate Undo.
+
+==================================================
+17. CONTEXTUAL PUNCTUATION
+==================================================
+
+Contextual punctuation использует тот же bounded candidate scorer.
+
+В 0.3 модель может менять только `leadingBoundary` текущего composing segment.
+
+Допустимые варианты по умолчанию:
+
+- `" "`;
+- `", "`;
+- `": "`;
+- `"; "`;
+- `". "`;
+- `"? "`;
+- `"! "`.
+
+Набор вариантов дополнительно ограничивается rule engine и языком.
+
+Пример:
+
+Committed context:
+"Я думаю"
+
+Current composing word:
+"это"
+
+Candidates:
+- `" это"`;
+- `", это"`;
+- `": это"`;
+- `". Это"`.
+
+В 0.3 contextual punctuation:
+
+- показывается как suggestion;
+- не применяется автоматически по умолчанию;
+- не изменяет слова;
+- не изменяет текст позади committed boundary;
+- не переставляет слова;
+- не переписывает предложение;
+- не вставляет несколько знаков за один result;
+- не применяется после stale result;
+- не работает в sensitive и non-text modes.
+
+Не пытайся исправлять все запятые во всём предложении.
+
+Каждая boundary рассматривается тогда, когда следующий word ещё находится
+в composing segment. Это даёт достаточно прав для изменения текущей границы
+без retroactive text rewrite.
+
+Испанские открывающие `¿` и `¡` нельзя надёжно вставить задним числом этим
+механизмом. В Rune 0.3 они остаются manual long-press symbols.
+Не создавай опасный whole-sentence rewrite ради них.
+
+==================================================
+18. SETTINGS
+==================================================
+
+Добавь раздел:
+
+Умный ввод
+
+Настройки:
+
+AutocorrectionMode:
+- OFF;
+- SUGGESTIONS;
+- HIGH_CONFIDENCE.
+
+Default:
+HIGH_CONFIDENCE.
+
+Mechanical punctuation:
+- Boolean;
+- default true.
+
+Contextual punctuation:
+- OFF;
+- SUGGESTIONS.
+
+Default:
+SUGGESTIONS только если модель Ready;
+иначе фактически unavailable с понятным summary.
+
+Candidate strip:
+- Boolean;
+- default true.
+
+Не показывай пользователю:
+
+- threshold;
+- temperature;
+- token limit;
+- n_ctx;
+- n_batch;
+- thread count;
+- debounce milliseconds;
+- model score;
+- edit distance;
+- log probability.
+
+Обнови:
+
+- KeyboardSettings;
+- SettingsCodec;
+- KeyboardPreferences;
+- SettingsActivity;
+- English strings;
+- Russian strings;
+- schema migration.
+
+Повреждённое или неизвестное значение должно падать в безопасный default.
+
+Изменение Smart Typing settings применяется к следующему действию без
+перезапуска процесса.
+
+==================================================
+19. MODEL AVAILABILITY UX
+==================================================
+
+Если модель:
+
+- не установлена;
+- загружается;
+- сломана;
+- несовместима;
+- service process умер;
+
+Rune:
+
+- продолжает deterministic spelling;
+- продолжает mechanical punctuation;
+- не задерживает клавиши;
+- не показывает ошибку поверх каждой клавиши;
+- не открывает Model Settings автоматически.
+
+Candidate strip может один раз показать нейтральное состояние:
+
+"Контекстные исправления недоступны"
+
+но не повторять его на каждом слове.
+
+Переход в Model Settings выполняется только по явному tap пользователя.
+
+==================================================
+20. PERFORMANCE CONTRACT
+==================================================
+
+На keypress path запрещены:
+
+- model load;
+- disk read;
+- lexicon parsing;
+- file mapping initialization;
+- SharedPreferences read;
+- Binder synchronous wait;
+- JSON;
+- network;
+- full keyboard rebuild;
+- unbounded candidate generation;
+- scanning whole lexicon;
+- allocation больших collections;
+- generated text.
+
+До начала typing session:
+
+- settings snapshot уже в памяти;
+- lexicons открыты или готовы к lazy non-blocking fallback;
+- scoring client binding инициирован асинхронно;
+- model availability известна либо имеет `Loading/Unknown` state.
+
+На одну session:
+
+- максимум один active model request;
+- новый revision отменяет старый;
+- stale callbacks отбрасываются;
+- model load не происходит на main thread;
+- service serializes native access.
+
+Добавь content-free trace sections:
+
+- Rune#composeUpdate;
+- Rune#candidateGenerate;
+- Rune#candidateRank;
+- Rune#modelRequest;
+- Rune#modelResult;
+- Rune#candidateRender;
+- Rune#correctionCommit;
+- Rune#correctionUndo;
+- Rune#punctuationRule.
+
+Trace names не содержат:
+
+- word;
+- candidate;
+- prefix;
+- punctuation text;
+- language content;
+- editor package;
+- model path.
+
+Не назначай вымышленные millisecond budgets до physical Fold baseline.
+
+Зафиксируй:
+
+- p50;
+- p95;
+- max;
+- request cancellation rate;
+- stale result rate;
+- model load time;
+- scoring time по 2/4/8 candidates;
+- memory RSS/PSS model process;
+- missed frames;
+- dropped/doubled input events.
+
+==================================================
+21. UNIT TESTS
+==================================================
+
+Добавь JVM-тесты минимум для:
+
+TypingSessionController:
+
+- начало composition;
+- продолжение word;
+- Space finalization;
+- pending boundary;
+- punctuation key;
+- Backspace внутри word;
+- Backspace pending boundary;
+- selection invalidation;
+- language switch;
+- cursor movement;
+- symbol toggle;
+- Enter;
+- session restart;
+- sensitive mode;
+- TYPE_NULL fallback;
+- unsupported composition fallback;
+- stale revision;
+- stale request;
+- process failure fallback.
+
+Word boundaries:
+
+- RU;
+- EN;
+- ES;
+- apostrophes;
+- hyphens;
+- combining accents;
+- emoji adjacency;
+- punctuation;
+- newline.
+
+Weighted edit distance:
+
+- insertion;
+- deletion;
+- substitution;
+- adjacent substitution;
+- transposition;
+- repetition;
+- Unicode;
+- casing.
+
+Language routing:
+
+- Cyrillic;
+- Latin EN;
+- Latin ES;
+- ñ;
+- accents;
+- mixed script;
+- technical token.
+
+Candidate generation:
+
+- original always present;
+- max candidate count;
+- deterministic order;
+- protected tokens;
+- valid word no-change;
+- no full lexicon scan.
+
+Ranking:
+
+- deterministic-only;
+- model-assisted;
+- length normalization;
+- top candidate margin;
+- per-language calibration;
+- no valid-word auto replacement;
+- stale model result.
+
+Undo:
+
+- autocorrection;
+- double-space;
+- mechanical punctuation;
+- second Backspace;
+- invalidation by next action.
+
+Mechanical punctuation:
+
+- all positive examples;
+- all exclusion examples;
+- URL/email/number/version/time;
+- quotes/brackets;
+- ellipsis;
+- `?!` and `!?`;
+- locale decimal.
+
+Contextual punctuation:
+
+- boundary candidate generation;
+- candidate allowlist;
+- suggestion only;
+- no word changes;
+- current composition only;
+- no retroactive edit.
+
+Settings:
+
+- schema migration;
+- malformed values;
+- defaults;
+- runtime update.
+
+==================================================
+22. INSTRUMENTATION TESTS
+==================================================
+
+Расширь существующий ImeQaActivity и ImeTestDriver.
+
+Обязательная матрица API 26 и API 37:
+
+1. setComposingText отображает current word.
+2. Word boundary завершает composition.
+3. Candidate tap заменяет composing word.
+4. High-confidence Space correction.
+5. Backspace возвращает original.
+6. Второй Backspace удаляет обычный grapheme.
+7. External cursor movement invalidates candidates.
+8. Selection заменяется корректно.
+9. Multiline Enter завершает composition и вставляет newline.
+10. SEND завершает composition и вызывает action.
+11. Language swipe завершает composition без потери текста.
+12. Cursor mode не оставляет phantom composing region.
+13. Fold/config restart не дублирует composition.
+14. Password:
+    - нет candidate strip;
+    - нет setComposingText;
+    - нет Binder model request;
+    - нет surrounding text read;
+    - нет user text в logcat.
+15. NO_PERSONALIZED_LEARNING имеет ту же защиту.
+16. Email/URL/number/phone/date-time не исправляются.
+17. TYPE_NULL сохраняет raw event behavior.
+18. Model service process kill:
+    - Rune не падает;
+    - typed text не теряется;
+    - fallback работает.
+19. Model result после Space игнорируется.
+20. Model result после смены editor игнорируется.
+21. Model result после смены языка игнорируется.
+22. Candidate updates не перестраивают keyboard keys.
+23. Rapid typing не пропускает и не дублирует символы.
+24. Hold Backspace корректно работает внутри и вне composition.
+25. Mechanical punctuation не ломает URL/version/decimal.
+26. Пунктуационная suggestion меняет только current leading boundary.
+
+Tests должны проверять настоящую Binder InputConnection границу, а не только
+повторять reducer unit tests.
+
+==================================================
+23. MODEL SERVICE TESTS
+==================================================
+
+Добавь tests:
+
+- service exported=false;
+- service находится в `:model_runtime`;
+- load active model;
+- no active model;
+- corrupt active pointer;
+- model update;
+- binder death;
+- client rebind;
+- cancel;
+- request replacement;
+- idle unload;
+- memory trim unload;
+- invalid request;
+- oversized context;
+- too many candidates;
+- runtime failure;
+- process restart;
+- no logs;
+- no network APIs;
+- no text persistence;
+- callback carries only IDs and numerical scores.
+
+Не клади 396 MB model в обычный CI repository checkout.
+
+Real-model tests выполняются:
+
+- через manual workflow;
+- либо на physical Fold;
+- с exact immutable digest.
+
+Обычный CI использует:
+
+- fake scorer;
+- native scoring math tests;
+- JNI contract tests без полного model artifact;
+- imported fixture только если её лицензия, размер и provenance полностью
+  документированы.
+
+==================================================
+24. ACCEPTANCE CORPUS
+==================================================
+
+Добавь датированный отчёт:
+
+docs/acceptance/2026-09-02-rune-smart-typing-0.3.md
+
+Минимальные примеры:
+
+RU:
+
+- автокрекция → автокоррекция;
+- арфография → орфография;
+- сообшение → сообщение;
+- поддержка корректного `причём`;
+- не менять `kubectl`;
+- не менять `AIGate`;
+- mixed RU/EN;
+- valid-word no-change;
+- punctuation boundary.
+
+EN:
+
+- teh → the;
+- recieve → receive;
+- adress → address;
+- не менять hostname;
+- не менять camelCase;
+- punctuation boundary.
+
+ES:
+
+- mensage → mensaje;
+- correcion → corrección как suggestion/auto только по calibration;
+- ambiguous accent cases не auto-correct;
+- ñ и accents;
+- mixed EN/ES;
+- punctuation boundary.
+
+Отдельно зафиксируй false positives.
+
+Нельзя ограничить demo несколькими красивыми примерами.
+Нужна полная holdout-метрика.
+
+==================================================
+25. ПОСЛЕДОВАТЕЛЬНОСТЬ PR И COMMIT
+==================================================
+
+Не делай всё одним commit.
+
+PR 1:
+Model task-suitability evaluation harness.
+
+Пример commits:
+
+test(model): add multilingual correction scoring corpus
+test(model): add punctuation boundary evaluation
+docs(model): record Rune Text 0.1 suitability baseline
+
+Если model scoring принципиально не работает, остановиться здесь и вернуть
+evidence.
+
+PR 2:
+Bounded native scoring API.
+
+Пример commits:
+
+feat(runtime): add bounded candidate scoring contract
+feat(runtime): score candidate continuations with llama logits
+test(runtime): cover scoring lifecycle and cancellation
+
+PR 3:
+Private inference process.
+
+Пример commits:
+
+feat(intelligence): add private model scoring service
+feat(intelligence): add cancellable scoring client
+test(intelligence): cover binder death and fallback
+build: enforce inference process privacy boundary
+
+PR 4:
+Composing foundation.
+
+Пример commits:
+
+feat(typing): add isolated typing session state
+feat(editor): add composing editor commands
+feat(typing): support word and boundary composition
+test(typing): cover composition lifecycle
+
+PR 5:
+Candidate strip и unified Undo.
+
+Пример commits:
+
+refactor(ui): separate candidate strip from key container
+feat(ui): render correction candidates
+refactor(typing): unify automatic edit undo
+test(ime): cover correction selection and undo
+
+PR 6:
+Lexicons и deterministic orthography.
+
+Пример commits:
+
+build(lexicon): add reproducible multilingual lexicon pipeline
+feat(correction): add bounded multilingual candidate generation
+feat(correction): add deterministic ranker
+test(correction): add protected-token regression suite
+
+PR 7:
+Model-assisted ranking.
+
+Пример commits:
+
+feat(correction): rerank candidates with local model scores
+feat(correction): add calibrated high-confidence policy
+test(correction): reject stale and late model results
+
+PR 8:
+Mechanical punctuation.
+
+Пример commits:
+
+feat(punctuation): add deterministic spacing rules
+feat(punctuation): preserve code urls and numeric forms
+test(punctuation): add multilingual punctuation regressions
+
+PR 9:
+Contextual punctuation suggestions.
+
+Пример commits:
+
+feat(punctuation): score current boundary alternatives
+feat(ui): expose contextual punctuation suggestions
+test(punctuation): prevent word and retroactive mutations
+
+PR 10:
+Release hardening.
+
+Пример commits:
+
+feat(settings): add smart typing controls
+test(ime): extend API 26 and API 37 smart typing matrix
+docs: document Rune Smart Typing 0.3
+build: bump Rune version to 0.3.0
+
+После каждого commit:
+
+./gradlew testDebugUnitTest --rerun-tasks
+
+Перед каждым PR completion:
+
+./gradlew lint assembleDebug assembleRelease assembleProfile \
+  privacyGateRelease privacyGateProfile \
+  imeIntelligenceBoundary forbiddenRuntimeDependencies \
+  :runtime-llama:nativeSymbolGate
+
+Instrumentation matrix должна пройти на API 26 и API 37.
+
+Не push без отдельного разрешения, если текущий workflow проекта не требует
+автоматического push.
+
+==================================================
+26. DEFINITION OF DONE
+==================================================
+
+Rune Smart Typing 0.3 готова только если:
+
+- текущее слово использует composing;
+- обычный ввод не ждёт модель;
+- RU/EN/ES candidate generation работает локально;
+- original всегда доступен;
+- high-confidence spelling correction проходит holdout precision gate;
+- ambiguous corrections только предлагаются;
+- Backspace мгновенно возвращает original;
+- double-space undo не конфликтует с autocorrection undo;
+- mechanical punctuation работает автоматически;
+- contextual punctuation предлагается через bounded scoring;
+- contextual punctuation не меняет слова;
+- unrestricted generate отсутствует;
+- late results никогда не меняют committed text;
+- model process crash не роняет IME;
+- Rune работает без модели;
+- sensitive fields не используют composing/scoring/context;
+- пользовательский текст не логируется и не сохраняется;
+- IME не выполняет network или native runtime calls напрямую;
+- model service private и non-exported;
+- candidate update не перестраивает клавиши;
+- API 26 instrumentation зелёный;
+- API 37 instrumentation зелёный;
+- physical Fold acceptance пройден;
+- performance report содержит реальные measurements;
+- model quality report содержит полный holdout result;
+- README и ARCHITECTURE соответствуют коду;
+- версия обновлена до 0.3.0;
+- CI полностью зелёный.
+
+==================================================
+27. ФИНАЛЬНЫЙ ОТЧЁТ
+==================================================
+
+В финале выведи:
+
+1. Baseline SHA.
+2. Итоговый SHA.
+3. Все commits.
+4. Какие компоненты созданы.
+5. Как устроен composing lifecycle.
+6. Как формируются spelling candidates.
+7. Как модель оценивает candidates.
+8. Почему unrestricted generation отсутствует.
+9. Реальные quality metrics отдельно для RU/EN/ES.
+10. False-positive metrics.
+11. Mechanical punctuation coverage.
+12. Contextual punctuation metrics.
+13. API 26 result.
+14. API 37 result.
+15. Physical Fold result.
+16. Model scoring latency и memory.
+17. Что работает без установленной модели.
+18. Что отключается в sensitive fields.
+19. Все известные ограничения.
+20. Release blocker, если immutable model release всё ещё отсутствует.
+
+Не заявляй успех без фактических test outputs и measurements.

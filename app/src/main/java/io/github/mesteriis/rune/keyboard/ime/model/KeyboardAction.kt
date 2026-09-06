@@ -25,6 +25,7 @@ sealed interface KeyboardAction {
     data object Delete : KeyboardAction
     data object Space : KeyboardAction
     data object DoubleSpaceTap : KeyboardAction
+    data object CursorModeStarted : KeyboardAction
     data object Enter : KeyboardAction
     data object ToggleSymbols : KeyboardAction
     data object ToggleSymbolsPage : KeyboardAction

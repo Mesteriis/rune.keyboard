@@ -1,5 +1,7 @@
 package io.github.mesteriis.rune.keyboard.intelligence.runtime
 
+import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelPointerCodec
+import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelPointer
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test

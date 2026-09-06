@@ -11,3 +11,21 @@ keystore.properties
 *.keystore
 captures/
 .DS_Store
+
+# Generated Smart Typing evidence lives outside the source tree. The dated acceptance reports
+# summarize the verified final outcomes without committing intermediate raw logs or build copies.
+/tools/qa/smart-typing-0.3/results/
+/tools/eval/smart-typing-0.3/results/
+/tools/eval/smart-typing-0.3/pipeline/results/
+/tools/eval/smart-typing-0.3/qualification-v3/
+/tools/eval/smart-typing-0.3/qualification-v4/
+/tools/test-native-scoring/results/
+/tools/test-native-scoring/runtime-benchmark/results/
+/tools/model/rune-text-0.2/results/
+/tools/lexicon/smart-typing-0.3/benchmark/evidence/
+/tools/lexicon/smart-typing-0.3/benchmark/manifests/
+/tools/lexicon/smart-typing-0.3/results/
+/tools/lexicon/smart-typing-0.3/weighted-qualification/evidence/
+/tools/lexicon/smart-typing-0.3/top-seven/results/
+/tools/lexicon/smart-typing-0.3/radix/results/
+/tools/lexicon/smart-typing-0.3/provenance/archive-members.json

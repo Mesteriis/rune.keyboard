@@ -32,7 +32,10 @@ internal class NativeHandleLifecycle(
     private var cancellationPending = false
 
     fun <T> beginOperation(block: (Long) -> T): NativeCallResult<T> =
-        call(CallKind.BEGIN_OPERATION, block)
+        beginOperation(isCancelled = { false }, block)
+
+    fun <T> beginOperation(isCancelled: () -> Boolean, block: (Long) -> T): NativeCallResult<T> =
+        call(CallKind.BEGIN_OPERATION, block, isCancelled)
 
     fun <T> continueOperation(block: (Long) -> T): NativeCallResult<T> =
         call(CallKind.CONTINUE_OPERATION, block)
@@ -40,7 +43,11 @@ internal class NativeHandleLifecycle(
     fun <T> cleanup(block: (Long) -> T): NativeCallResult<T> =
         call(CallKind.CLEANUP, block)
 
-    private fun <T> call(kind: CallKind, block: (Long) -> T): NativeCallResult<T> {
+    private fun <T> call(
+        kind: CallKind,
+        block: (Long) -> T,
+        isCancelled: () -> Boolean = { false },
+    ): NativeCallResult<T> {
         val task = synchronized(monitor) {
             if (closed || handle == 0L) return NativeCallResult.Unavailable
             val admittedHandle = handle
@@ -62,7 +69,11 @@ internal class NativeHandleLifecycle(
                                         resetCancellationNative(admittedHandle)
                                         cancellationPending = false
                                     }
-                                    null
+                                    // A request may have been cancelled before it was queued,
+                                    // or while reset cleared the shared native cancellation flag.
+                                    // Read its independent token only after that reset, under the
+                                    // same monitor used by cancel; later cancel cannot be reset away.
+                                    if (isCancelled()) NativeCallResult.Cancelled else null
                                 }
                             }
                         }

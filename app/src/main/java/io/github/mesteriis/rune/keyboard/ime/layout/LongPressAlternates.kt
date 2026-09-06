@@ -34,6 +34,7 @@ object LongPressAlternates {
     )
 
     private val SYMBOLS_SHARED = mapOf(
+        "," to listOf("?", "!", ":", ";"),
         "'" to listOf("‘", "’", "‚"),
         "-" to listOf("–", "—", "·"),
         "!" to listOf("¡"),

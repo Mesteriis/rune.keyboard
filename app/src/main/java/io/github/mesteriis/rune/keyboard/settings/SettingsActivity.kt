@@ -10,6 +10,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsActivity
+import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
+import io.github.mesteriis.rune.keyboard.intelligence.readiness.DiskModelReadinessProbe
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.ModelRuntimeQualification
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsSettingsProvider
+import java.io.File
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * Rune's configuration screen, built from plain framework views to keep the app dependency-free.
@@ -22,6 +28,9 @@ class SettingsActivity : ThemedActivity() {
     private lateinit var inflater: LayoutInflater
     private var settings = KeyboardSettings.DEFAULT
     private var appliedTheme = ThemePreference.SYSTEM
+    private var contextualModelReady = false
+    private val readinessGeneration = AtomicInteger()
+    private var diagnosticsContribution: AutoCloseable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +50,30 @@ class SettingsActivity : ThemedActivity() {
             return
         }
         reload()
+        refreshModelReadiness()
+    }
+
+    override fun onPause() {
+        diagnosticsContribution?.close(); diagnosticsContribution = null
+        readinessGeneration.incrementAndGet()
+        super.onPause()
+    }
+
+    private fun refreshModelReadiness() {
+        val generation = readinessGeneration.incrementAndGet()
+        Thread({
+            val hint = DiskModelReadinessProbe { File(noBackupFilesDir, "model-delivery") }
+                .read { readinessGeneration.get() != generation }
+            runOnUiThread {
+                if (readinessGeneration.get() == generation && !isFinishing && !isDestroyed) {
+                    val ready = hint == ModelReadinessHint.READY && ModelRuntimeQualification.CURRENT
+                    if (contextualModelReady != ready) {
+                        contextualModelReady = ready
+                        buildRows()
+                    }
+                }
+            }
+        }, "Rune-settings-readiness").apply { isDaemon = true }.start()
     }
 
     private fun reload() {
@@ -49,6 +82,7 @@ class SettingsActivity : ThemedActivity() {
     }
 
     private fun buildRows() {
+        diagnosticsContribution?.close()
         container.removeAllViews()
 
         addSection(R.string.settings_section_languages)
@@ -59,7 +93,32 @@ class SettingsActivity : ThemedActivity() {
             startActivity(Intent(this, LanguageSettingsActivity::class.java))
         }
 
-        addSection(R.string.settings_section_typing)
+        addSection(R.string.settings_section_smart_typing)
+        addChoiceRow(
+            titleRes = R.string.settings_autocorrection,
+            values = AutocorrectionMode.entries,
+            labels = AutocorrectionMode.entries.map { getString(autocorrectionLabel(it)) },
+            selected = settings.autocorrectionMode,
+            summary = autocorrectionSummary(),
+        ) { preferences.writeAutocorrectionMode(it) }
+        addToggleRow(
+            titleRes = R.string.settings_mechanical_punctuation,
+            summaryRes = R.string.settings_mechanical_punctuation_summary,
+            checked = settings.mechanicalPunctuation,
+        ) { preferences.writeMechanicalPunctuation(it) }
+        addChoiceRow(
+            titleRes = R.string.settings_contextual_punctuation,
+            values = ContextualPunctuationMode.entries,
+            labels = ContextualPunctuationMode.entries.map { getString(contextualLabel(it)) },
+            selected = settings.contextualPunctuationMode,
+            summary = ContextualAvailability.summaryResource(settings.contextualPunctuationMode, contextualModelReady)
+                ?.let(::getString),
+        ) { preferences.writeContextualPunctuationMode(it) }
+        addToggleRow(
+            titleRes = R.string.settings_candidate_strip,
+            summaryRes = R.string.settings_candidate_strip_summary,
+            checked = settings.candidateStrip,
+        ) { preferences.writeCandidateStrip(it) }
         addToggleRow(
             titleRes = R.string.settings_double_space,
             summaryRes = R.string.settings_double_space_summary,
@@ -67,6 +126,7 @@ class SettingsActivity : ThemedActivity() {
         ) { enabled ->
             preferences.writeDoubleSpacePeriod(enabled)
         }
+        addSection(R.string.settings_section_typing)
         addToggleRow(
             titleRes = R.string.settings_key_preview,
             summaryRes = R.string.settings_key_preview_summary,
@@ -143,6 +203,7 @@ class SettingsActivity : ThemedActivity() {
             summary = getString(R.string.settings_privacy_summary),
         )
 
+        diagnosticsContribution = DiagnosticsSettingsProvider.contribute(this, container)
         addSection(R.string.settings_section_about)
         addInfoRow(title = getString(R.string.settings_version), summary = versionName())
         addNavigationRow(titleRes = R.string.settings_setup_guide, summary = null) {
@@ -193,10 +254,11 @@ class SettingsActivity : ThemedActivity() {
         values: List<T>,
         labels: List<String>,
         selected: T,
+        summary: String? = null,
         onSelected: (T) -> Unit,
     ) {
         val selectedIndex = values.indexOf(selected).coerceAtLeast(0)
-        val row = newRow(getString(titleRes), labels[selectedIndex])
+        val row = newRow(getString(titleRes), listOfNotNull(labels[selectedIndex], summary).joinToString("\n"))
         row.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle(titleRes)
@@ -251,6 +313,27 @@ class SettingsActivity : ThemedActivity() {
     private fun versionName(): String = runCatching {
         packageManager.getPackageInfo(packageName, 0).versionName
     }.getOrNull().orEmpty()
+
+    private fun autocorrectionLabel(mode: AutocorrectionMode): Int = when (mode) {
+        AutocorrectionMode.OFF -> R.string.smart_typing_off
+        AutocorrectionMode.SUGGESTIONS -> R.string.smart_typing_suggestions
+        AutocorrectionMode.HIGH_CONFIDENCE -> R.string.smart_typing_high_confidence
+    }
+
+    private fun contextualLabel(mode: ContextualPunctuationMode): Int = when (mode) {
+        ContextualPunctuationMode.OFF -> R.string.smart_typing_off
+        ContextualPunctuationMode.SUGGESTIONS -> R.string.smart_typing_suggestions
+    }
+
+    private fun autocorrectionSummary(): String {
+        val summary = getString(when (settings.autocorrectionMode) {
+            AutocorrectionMode.OFF -> R.string.settings_autocorrection_off_summary
+            AutocorrectionMode.SUGGESTIONS -> R.string.settings_autocorrection_suggestions_summary
+            AutocorrectionMode.HIGH_CONFIDENCE -> R.string.settings_autocorrection_high_confidence_summary
+        })
+        return if (settings.candidateStrip) summary
+        else summary + "\n" + getString(R.string.settings_suggestions_hidden)
+    }
 
     private fun heightLabel(preset: HeightPreset): Int = when (preset) {
         HeightPreset.COMPACT -> R.string.height_compact

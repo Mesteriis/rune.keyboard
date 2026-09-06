@@ -1,9 +1,6 @@
 package io.github.mesteriis.rune.keyboard.intelligence.runtime
 
-data class ActiveModelPointer(
-    val activeDirectory: String?,
-    val rollbackDirectory: String?,
-)
+import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelPointer
 
 data class ActivationPlan(
     val pointerAfterCommit: ActiveModelPointer,

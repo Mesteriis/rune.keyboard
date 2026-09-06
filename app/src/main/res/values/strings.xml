@@ -27,7 +27,7 @@
   <string name="setup_settings_button">Open Rune settings</string>
   <string name="setup_privacy_title">Private by default</string>
   <string name="setup_privacy_description">Network access is used only after you explicitly download the optional local model. Typed text is never sent. Rune has no telemetry, ads, input history, or clipboard access.</string>
-  <string name="setup_mvp_note">Rune 0.2 adds delivery and a self-test for one optional local model. The model is not connected to typing. Swipe typing, suggestions, punctuation and autocorrect are intentionally out of scope.</string>
+  <string name="setup_mvp_note">Rune offers word suggestions and mechanical punctuation. A ready optional local model can order spelling and contextual punctuation suggestions using text typed with Rune. Automatic replacement stays quality-gated.</string>
 
   <string name="key_shift">Shift</string>
   <string name="key_shift_on">Shift on</string>
@@ -51,6 +51,22 @@
 
   <string name="settings_title">Rune settings</string>
   <string name="settings_section_languages">Languages</string>
+  <string name="settings_section_smart_typing">Smart Typing</string>
+  <string name="settings_autocorrection">Autocorrection</string>
+  <string name="smart_typing_off">Off</string>
+  <string name="smart_typing_suggestions">Suggestions</string>
+  <string name="smart_typing_high_confidence">Auto-replace (95%)</string>
+  <string name="settings_autocorrection_off_summary">Spelling corrections are off. Mechanical punctuation is controlled separately.</string>
+  <string name="settings_autocorrection_suggestions_summary">Tap a suggestion to replace the word. A ready local model can order suggestions using context.</string>
+  <string name="settings_autocorrection_high_confidence_summary">A ready local model automatically applies spelling corrections that passed the frozen 95% precision profile. Proper-name capitalization is applied locally. Backspace immediately restores the original.</string>
+  <string name="settings_suggestions_hidden">Suggestions are hidden while the candidate strip is off.</string>
+  <string name="settings_mechanical_punctuation">Mechanical punctuation</string>
+  <string name="settings_mechanical_punctuation_summary">Adjust punctuation spacing and sentence capitalization in text typed with Rune.</string>
+  <string name="settings_contextual_punctuation">Contextual punctuation</string>
+  <string name="settings_contextual_unavailable">Available when the local model is Ready. The choice is saved.</string>
+  <string name="settings_contextual_ready">Ready. Punctuation is suggested after a typing pause and applies only when tapped.</string>
+  <string name="settings_candidate_strip">Candidate strip</string>
+  <string name="settings_candidate_strip_summary">Show the original word and available suggestions. Hiding this strip does not disable mechanical punctuation.</string>
   <string name="settings_section_typing">Typing</string>
   <string name="settings_section_layout">Layout</string>
   <string name="settings_section_appearance">Appearance</string>

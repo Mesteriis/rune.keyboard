@@ -85,6 +85,13 @@ data class MeteredRequeue(
 )
 
 object DeliveryReconciler {
+    /**
+     * Completion broadcasts are a fast path, not the only path. A bounded JobScheduler retry
+     * keeps an explicitly requested download recoverable when Android drops that broadcast.
+     */
+    fun needsDownloadReschedule(download: DownloadObservation): Boolean =
+        download == DownloadObservation.PENDING || download == DownloadObservation.RUNNING
+
     fun reconcile(
         journal: DeliveryJournal,
         download: DownloadObservation,

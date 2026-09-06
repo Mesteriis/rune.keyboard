@@ -3,6 +3,15 @@
 
   <application>
     <activity
+        android:name=".smarttyping.diagnostics.DiagnosticsActivity"
+        android:exported="false"
+        android:label="@string/diagnostics_manage"
+        android:theme="@style/Theme.RuneKeyboard.Setup" />
+    <service
+        android:name=".intelligence.inference.LifecycleModelInferenceService"
+        android:exported="false"
+        android:process=":model_runtime" />
+    <activity
         android:name=".qa.ImeQaActivity"
         android:excludeFromRecents="true"
         android:exported="true"
