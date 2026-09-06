@@ -1,5 +1,23 @@
 # Rune Smart Typing 0.3 execution ledger
 
+- 2026-09-06 resumption: fresh fd8872f JVM691/691 and prescribed local gates
+  PASS. Physical OPENED Fold composing/mechanical18/18 and subsequent
+  live/settings/installed-model10/11: the real model Space/Undo passed, while one
+  settings test incorrectly expected unavailable on a Ready installation. The
+  source fixture is corrected and three contextual controller-to-editor Binder
+  tests are added, but a changed host debug key initially blocked installing
+  them; a verified local-only model/settings backup is preserved pending user
+  confirmation. Current-source contextual arithmetic correction e718072 removes
+  token-average length bias and adds calibration-selected Original/rival margins.
+  Pre- and post-commit full JVM707/707, gates and test APK build PASS. It requires
+  freeze and a fresh unseen holdout before qualification. API26 emulator is now
+  installed; contextual/settings/mechanical13/13 PASS after an initial3-failure
+  legacy caps-counter fixture diagnosis. All payload counters remain zero;
+  score-only operations add no reads. Full application instrumentation and
+  API37 image download retry are in progress.
+  Full acceptance remains open; see
+  `docs/acceptance/2026-09-02-rune-smart-typing-0.3.md`.
+
 - 2026-09-05 phone reconnected: exact release-native full profile completed180
   measured requests, with four-candidate p95 EN74.848/RU260.200/ES172.555 ms.
   Production Binder/service completed13 of120 requests over60 s, denied107 and

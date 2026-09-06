@@ -70,6 +70,51 @@ class MechanicalPunctuationInstrumentedTest : ImeTestBase() {
         noReadback()
     }
 
+    @Test fun decimalVersionAndHostnameKeepOwnedBoundariesWithoutLayerChanges() {
+        // Set this before the tested sessions: switching to symbols mid-token would discard
+        // Rune's context and could make a broken protected-token rule appear to pass.
+        driver.setNumberRowThroughSettings(enabled = true)
+        for (token in listOf("3.14", "1.2.3", "example.com")) {
+            prepare()
+            driver.assertKeyVisible("1")
+            driver.assertKeyVisible("w")
+            awaitStats { it.getValue("connections") > 0 }
+            val connections = stats().getValue("connections")
+            val keys = keyboardSnapshot()
+            val typed = StringBuilder()
+            for (character in token) {
+                driver.tapKey(character.toString())
+                typed.append(character)
+                driver.awaitFieldText(FIELD, typed.toString())
+            }
+
+            // A real punctuation/letter boundary must still exclude a numeric or dotted left
+            // token. The live comma span proves this is an owned composing path in a text field.
+            driver.tapKey(",")
+            driver.awaitFieldText(FIELD, "$token,")
+            awaitStats { it.getValue("start") == token.length && it.getValue("end") == token.length + 1 }
+            val beforeLetter = stats()
+            driver.tapKey("w")
+            driver.awaitFieldText(FIELD, "$token,w")
+            awaitStats { it.getValue("compose") == beforeLetter.getValue("compose") + 1 }
+            assertEquals(beforeLetter.getValue("commit"), stats().getValue("commit"))
+            assertEquals(token.length, stats().getValue("start"))
+            assertEquals(token.length + 2, stats().getValue("end"))
+            driver.tapDelete(); driver.awaitFieldText(FIELD, "$token,")
+            driver.tapDelete(); driver.awaitFieldText(FIELD, token)
+
+            // Positive control in the same session: mechanical cleanup remains active and the
+            // next ordinary word receives one space, with immediate Undo restoring raw input.
+            space(); word("hello"); driver.tapKey(",")
+            driver.awaitFieldText(FIELD, "$token hello,")
+            driver.tapKey("w"); driver.awaitFieldText(FIELD, "$token hello, w")
+            driver.tapDelete(); driver.awaitFieldText(FIELD, "$token hello,w")
+            assertEquals(connections, stats().getValue("connections"))
+            assertSameKeys(keys, keyboardSnapshot())
+            noReadback()
+        }
+    }
+
     private fun prepare(mechanical: Boolean = true) {
         driver.configureMechanicalPunctuation(mechanical, doubleSpace = false)
         driver.launchComposingQa()

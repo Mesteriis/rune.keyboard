@@ -1,0 +1,12 @@
+{
+  "sourceBase": "e718072a68093b19ea72d78614052f4d8f0664fd",
+  "scope": "corrected-contextual3-settings6-mechanical4",
+  "uncommittedTestSources": true,
+  "files": {
+    "app/build/outputs/apk/debug/app-debug.apk": "4817d10e922022ed4372c41374a8c696812354d4949c7b85536787d248a48c9f",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "ed47b7fb1dabed15c3c1986f2bd51071df0e71386732b6118bd4eb71454c2502",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ContextualPunctuationEditorInstrumentedTest.kt": "518fc217f86d7045893c9beebe29d3e7f3ff2e79333120bffc1be7ceab57da2a",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingSettingsInstrumentedTest.kt": "c1119cd44d7933430de4e4fad0bf7714fb0b9fe261869e4620b5eed6ed28645f",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/MechanicalPunctuationInstrumentedTest.kt": "71db446b91cec3845989fb3a85d30d18bd754e030e4384182ce8de6527e1008b"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "attempt": "adb install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+  "exitCode": 1,
+  "error": "INSTALL_FAILED_UPDATE_INCOMPATIBLE",
+  "package": "io.github.mesteriis.rune.keyboard.test",
+  "newTestApkSha256": "6e6d10deefe75a66f184a80406538c9961370e41c4b38a95f4a0cfc57e1d92b1",
+  "previouslyInstalledTestApkSha256": "fdb76fdfd40d53e87e0ae5870335e4d82e222d771447441f2c3211b4e425bd97",
+  "uninstallPerformed": false,
+  "modelOrPreferencesRemoved": false,
+  "newTestsExecutedOnPhone": false
+}

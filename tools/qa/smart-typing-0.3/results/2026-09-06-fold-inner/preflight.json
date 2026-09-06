@@ -1,0 +1,22 @@
+{
+  "sourceHead": "fd8872f63c0b232ad871f27804b6355840b66bb1",
+  "display": "Physical size: 1968x2184",
+  "deviceState": [
+    "  mCommittedState=Optional[DeviceState{identifier=3, name='OPENED', app_accessible=true, cancel_when_requester_not_on_top=false}]",
+    "  mPendingState=Optional.empty",
+    "  mBaseState=Optional[DeviceState{identifier=3, name='OPENED', app_accessible=true, cancel_when_requester_not_on_top=false}]",
+    "  mOverrideState=Optional.empty"
+  ],
+  "apks": {
+    "io.github.mesteriis.rune.keyboard": {
+      "localSha256": "f0e7bf73f396e3e750d38cc453417f902d5988a24188ef2c038f8ffa871254ab",
+      "installedSha256": "f0e7bf73f396e3e750d38cc453417f902d5988a24188ef2c038f8ffa871254ab",
+      "match": true
+    },
+    "io.github.mesteriis.rune.keyboard.test": {
+      "localSha256": "fdb76fdfd40d53e87e0ae5870335e4d82e222d771447441f2c3211b4e425bd97",
+      "installedSha256": "fdb76fdfd40d53e87e0ae5870335e4d82e222d771447441f2c3211b4e425bd97",
+      "match": true
+    }
+  }
+}

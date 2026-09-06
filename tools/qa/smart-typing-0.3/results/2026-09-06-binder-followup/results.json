@@ -1,0 +1,51 @@
+{
+  "scope": "API26-scoped-Binder-tests-not-full-matrix",
+  "sourceBase": "e718072",
+  "initial": {
+    "tests": 9,
+    "failures": 3,
+    "seconds": 91.055
+  },
+  "capsDiagnostic": {
+    "tests": 1,
+    "failures": 1,
+    "counter": "caps",
+    "count": 5
+  },
+  "corrected": {
+    "tests": 13,
+    "failures": 0,
+    "seconds": 191.748
+  },
+  "currentFullAppSuite": "RUNNING",
+  "physicalNewApk": "BLOCKED_INSTALL_SIGNATURE",
+  "gates": "PASS",
+  "postPolicyCommitJvm": {
+    "tests": 707,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "logs": {
+    "initial-contextual-settings.log": {
+      "sha256": "340a17df7070427c12d0d162336792d79c29d349b556a473986db23cd7f14664",
+      "bytes": 14861
+    },
+    "caps-diagnostic.log": {
+      "sha256": "11214c319963b95760fcecde5bf1b65cb273a75cdf0d36485d202020f2477b1d",
+      "bytes": 3584
+    },
+    "corrected-contextual-settings-mechanical.log": {
+      "sha256": "6d7ec644d78c585ca7a013fa15dfdb41eb8256afdb99b9a84654cbc0f64b59f8",
+      "bytes": 10194
+    },
+    "local-gates.log": {
+      "sha256": "f41ba7d5d4b3016b9c5469739b0ae14679e374562424e0bceba6effb2be9f66a",
+      "bytes": 13736
+    },
+    "contextual-postcommit-jvm.log": {
+      "sha256": "5caf52d37b1ccba21b9d2d3ec613134a056fc19b8b3f67dbeabb0d926fc13484",
+      "bytes": 2434
+    }
+  }
+}

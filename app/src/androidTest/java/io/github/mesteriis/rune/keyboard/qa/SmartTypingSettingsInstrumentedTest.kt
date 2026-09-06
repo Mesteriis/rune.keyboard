@@ -1,14 +1,19 @@
 package io.github.mesteriis.rune.keyboard.qa
 
 import android.content.res.Configuration
+import android.os.Looper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
+import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
+import io.github.mesteriis.rune.keyboard.intelligence.readiness.DiskModelReadinessProbe
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.settings.ContextualPunctuationMode
 import io.github.mesteriis.rune.keyboard.settings.KeyboardPreferences
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.ModelRuntimeQualification
+import java.io.File
 import java.util.Locale
 import org.junit.Assert.*
 import org.junit.Test
@@ -21,7 +26,7 @@ class SmartTypingSettingsInstrumentedTest : ImeTestBase() {
     private val context get() = instrumentation.targetContext
     private val preferences get() = KeyboardPreferences(context)
 
-    @Test fun controlsPersistIndependentlyAndExplainUnavailableCapabilities() {
+    @Test fun controlsPersistIndependentlyAndExplainCurrentCapabilities() {
         driver.configureSmartTyping(AutocorrectionMode.SUGGESTIONS, true)
         driver.launchSettings()
         for ((mode, label) in listOf(AutocorrectionMode.OFF to R.string.smart_typing_off,
@@ -36,7 +41,7 @@ class SmartTypingSettingsInstrumentedTest : ImeTestBase() {
         driver.chooseSetting(R.string.settings_contextual_punctuation, R.string.smart_typing_off)
         assertEquals(ContextualPunctuationMode.OFF, preferences.readSettings().contextualPunctuationMode)
         driver.chooseSetting(R.string.settings_contextual_punctuation, R.string.smart_typing_suggestions)
-        assertSummary(R.string.settings_contextual_punctuation, R.string.settings_contextual_unavailable)
+        assertCurrentContextualSummary()
         driver.settingsRow(R.string.settings_candidate_strip).click(); settle()
         assertFalse(preferences.readSettings().candidateStrip)
         assertSummary(R.string.settings_autocorrection, R.string.settings_suggestions_hidden)
@@ -49,7 +54,7 @@ class SmartTypingSettingsInstrumentedTest : ImeTestBase() {
         assertEquals(ContextualPunctuationMode.SUGGESTIONS, preferences.readSettings().contextualPunctuationMode)
         driver.device.pressBack(); driver.launchSettings()
         assertSummary(R.string.settings_autocorrection, R.string.settings_autocorrection_high_confidence_summary)
-        assertSummary(R.string.settings_contextual_punctuation, R.string.settings_contextual_unavailable)
+        assertCurrentContextualSummary()
         assertFalse(preferences.readSettings().candidateStrip)
         for ((language, automatic, unavailable) in listOf(
             Triple("en", "ready local model automatically applies spelling corrections", "Available when the local model is Ready."),
@@ -164,6 +169,19 @@ class SmartTypingSettingsInstrumentedTest : ImeTestBase() {
     private fun assertSummary(title: Int, summary: Int) {
         val actual = checkNotNull(driver.settingsRow(title).findObject(By.res(ImeTestDriver.PACKAGE_NAME, "row_summary"))).text
         assertTrue("Effective settings summary missing", actual.contains(context.getString(summary)))
+    }
+    private fun assertCurrentContextualSummary() {
+        assertTrue("Model metadata probe must stay off main", Looper.myLooper() != Looper.getMainLooper())
+        val hint = DiskModelReadinessProbe { File(context.noBackupFilesDir, "model-delivery") }.read { false }
+        val ready = hint == ModelReadinessHint.READY && ModelRuntimeQualification.CURRENT
+        val summary = if (ready) R.string.settings_contextual_ready else R.string.settings_contextual_unavailable
+        val expected = context.getString(R.string.smart_typing_suggestions) + "\n" + context.getString(summary)
+        driver.settingsRow(R.string.settings_contextual_punctuation)
+        assertTrue("Contextual summary did not match current model availability", driver.device.wait(
+            Until.hasObject(By.res(ImeTestDriver.PACKAGE_NAME, "row_summary").text(expected)), ImeTestDriver.WAIT_MILLIS))
+        val actual = checkNotNull(driver.settingsRow(R.string.settings_contextual_punctuation)
+            .findObject(By.res(ImeTestDriver.PACKAGE_NAME, "row_summary"))).text
+        assertEquals("Contextual summary must use the observed readiness state", expected, actual)
     }
     private fun awaitCandidate(kind: Int, text: String) = checkNotNull(driver.device.wait(
         Until.findObject(By.desc(context.getString(kind, text))), ImeTestDriver.WAIT_MILLIS)) {

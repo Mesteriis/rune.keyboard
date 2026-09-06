@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "e718072a68093b19ea72d78614052f4d8f0664fd",
+  "api": 26,
+  "target": "emulator-5554",
+  "scope": "contextual-three-and-settings-six",
+  "apks": {
+    "app/build/outputs/apk/debug/app-debug.apk": "4817d10e922022ed4372c41374a8c696812354d4949c7b85536787d248a48c9f",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "6e6d10deefe75a66f184a80406538c9961370e41c4b38a95f4a0cfc57e1d92b1"
+  },
+  "uncommittedTestPatchSha256": "e8d139788c92507659e8d3489b8a850949ff057a8ad7180415ed1fc653cb78f1",
+  "uncommittedTestSources": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ContextualPunctuationEditorInstrumentedTest.kt": "99a93a8fb065e408285e97792beabcf8d81f4e4fcadca6c2f6a8b37639c1a8ed",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingSettingsInstrumentedTest.kt": "c1119cd44d7933430de4e4fad0bf7714fb0b9fe261869e4620b5eed6ed28645f"
+  }
+}
