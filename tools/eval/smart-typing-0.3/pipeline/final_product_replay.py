@@ -27,16 +27,15 @@ REPO = HERE.parents[3]
 CORPUS = REPO / "tools/eval/smart-typing-0.3"
 ASSETS = REPO / "app/src/main/assets"
 HARNESS = HERE / "FinalProductSpellingReplay.kt"
-ARCHIVE_COMMANDS = HERE / "results/2026-09-06-command-dot-safety/commands.json"
+SOURCE_MANIFEST = HERE / "final_product_replay_sources.json"
 TOOLCHAIN = REPO / "tools/lexicon/smart-typing-0.3/weighted-qualification/manifests/reproduction-toolchain.json"
-DETERMINISTIC_CONFIG = HERE / "results/2026-09-03-deterministic-calibration/width-4-config.json"
-COMBINED_CONFIG = HERE / "results/2026-09-03-combined-calibration/config.json"
+DETERMINISTIC_CONFIG = HERE / "qualification-config/deterministic-width-4.json"
+COMBINED_CONFIG = HERE / "qualification-config/combined.json"
 RUNNER = REPO / "build/smart-typing-0.3/native-current-20260906/rune-score"
 MODEL = REPO / "build/smart-typing-0.3/model/rune-text-v1-0.1.0-q4_k_m.gguf"
 RUNNER_SHA256 = "bc3f78bdf3ac41009a7603ca5dd6b6c4d5e8d6c2bdcaf3a692cfd95a3b3d2553"
 MODEL_SHA256 = "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4"
 MODEL_BYTES = 396704416
-COMMAND_DOT = HERE / "results/2026-09-06-command-dot-safety"
 SCHEMA = 1
 EXPERIMENT = "revealed-data-fixed-policy-reproduction"
 LANGUAGES = ("en", "ru", "es")
@@ -146,10 +145,19 @@ def asset_paths() -> list[Path]:
     return paths
 
 
+def final_product_sources() -> list[Path]:
+    manifest = json.loads(SOURCE_MANIFEST.read_text())
+    require(manifest.get("schemaVersion") == 1 and isinstance(manifest.get("sources"), list),
+            "SOURCE_MANIFEST")
+    paths = [(REPO / value).resolve(strict=True) for value in manifest["sources"]]
+    require(len(paths) > 20 and len(set(paths)) == len(paths) and all(path.is_relative_to(REPO) for path in paths),
+            "SOURCE_MANIFEST_PATHS")
+    require(all("/results/" not in str(path) for path in paths), "SOURCE_MANIFEST_ARCHIVE")
+    return paths
+
+
 def compile_inputs(java: Path) -> tuple[list[Path], list[Path], Path]:
-    commands = json.loads(ARCHIVE_COMMANDS.read_text())
-    old = [Path(value) for value in commands["compile"] if value.endswith(".kt")]
-    source_paths = [path for path in old if path.name != "ProductControllerDiagnostic.kt"]
+    source_paths = final_product_sources()
     diagnostics = REPO / "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt"
     if diagnostics not in source_paths:
         source_paths.append(diagnostics)
@@ -164,9 +172,9 @@ def compile_inputs(java: Path) -> tuple[list[Path], list[Path], Path]:
         jars.append(found[0])
     version = subprocess.run([str(java), "-version"], capture_output=True, timeout=15, check=True)
     require(b'version "17.' in version.stderr, "JAVA_17_REQUIRED")
-    compile_classpath = commands["compile"][commands["compile"].index("-classpath") + 1]
-    android = Path(next(value for value in compile_classpath.split(os.pathsep)
-                        if value.endswith("android.jar")))
+    android_home = os.environ.get("ANDROID_HOME") or os.environ.get("ANDROID_SDK_ROOT")
+    require(android_home is not None, "ANDROID_HOME_MISSING")
+    android = Path(android_home) / "platforms/android-37.0/android.jar"
     require(android.is_file(), "ANDROID_COMPILE_STUB_MISSING")
     return source_paths, jars, android
 
@@ -178,10 +186,8 @@ def immutable_bindings(java: Path, sources: list[Path], jars: list[Path], androi
     java_home = Path(java_runtime["home"])
     java_runtime_files = [java_home / relative for relative in JDK_RUNTIME_INVENTORY]
     fixed = [CORPUS / "manifest.json", *(CORPUS / name for name in corpus_manifest["files"]),
-             CORPUS / "evaluate.py", Path(__file__), ARCHIVE_COMMANDS, TOOLCHAIN,
+             CORPUS / "evaluate.py", Path(__file__), SOURCE_MANIFEST, TOOLCHAIN,
              DETERMINISTIC_CONFIG, COMBINED_CONFIG, RUNNER, MODEL, *java_runtime_files, android,
-             REPO / "build/smart-typing-0.3/final-product-replay-20260906-preparation/model-runner-reverification.json",
-             COMMAND_DOT / "summary.json", COMMAND_DOT / "REPORT.md", COMMAND_DOT / "row-evidence.jsonl.gz",
              *asset_paths(), *jars, *sources]
     files = {path_key(path): sha256(path) for path in fixed}
     require(files[path_key(RUNNER)] == RUNNER_SHA256, "RUNNER_IDENTITY")
@@ -388,13 +394,14 @@ def admit_policy_freeze(root: Path, export_receipt: dict) -> dict:
 def fixed_policy_gates(correct: int, changed: int, false_changes: int, negative: int,
                        spelling_changes: int, mechanical_changes: int = 0,
                        original_retained: int | None = None, total_rows: int | None = None,
-                       undo_exact: int | None = None) -> dict:
+                       undo_exact: int | None = None, undo_total: int | None = None) -> dict:
     del mechanical_changes
     precision = changed > 0 and correct * 100 >= changed * 95
     false_change = negative > 0 and false_changes * 200 <= negative
     volume = spelling_changes >= 300
     original = total_rows is None or original_retained == total_rows
-    undo = total_rows is None or undo_exact == total_rows
+    undo = (undo_total if undo_total is not None else total_rows) is None or undo_exact == (
+        undo_total if undo_total is not None else total_rows)
     return {"precisionPass": precision, "falseChangePass": false_change,
         "volumePass": volume, "originalAlwaysAvailablePass": original,
         "exactImmediateUndoPass": undo,
@@ -408,7 +415,8 @@ def product_policy_gates(metrics: dict) -> dict:
     gates = fixed_policy_gates(ordinary["correctChanges"], ordinary["automaticChanges"],
         aggregate["numerator"], aggregate["denominator"], ordinary["automaticChanges"],
         metrics["mechanical"]["changedRows"], metrics["originalRetention"]["numerator"],
-        metrics["rows"], metrics["exactUndo"]["numerator"])
+        metrics["originalRetention"]["denominator"], metrics["exactUndo"]["numerator"],
+        metrics["exactUndo"]["denominator"])
     ordinary_pass = (ordinary_false["denominator"] > 0 and
         ordinary_false["numerator"] * 200 <= ordinary_false["denominator"])
     gates["ordinarySpellingFalseChangePass"] = ordinary_pass
@@ -417,13 +425,20 @@ def product_policy_gates(metrics: dict) -> dict:
     return gates
 
 
+def holdout_release_approved(languages: dict) -> bool:
+    return set(languages) == set(LANGUAGES) and all(
+        values.get("fixedPointPolicyGates", {}).get("allPass") is True
+        for values in languages.values())
+
+
 def original_retention(observation: dict, corpus_token: str) -> dict:
     actual = observation.get("actualOriginal")
     originals = [item for item in observation.get("candidateView", {}).get("candidates", [])
                  if item.get("role") == "ORIGINAL"]
-    retained = (type(actual) is str and len(originals) == 1 and
-                originals[0].get("text") == actual and bool(originals[0].get("id")))
-    return {"retained": retained, "actualOriginal": actual,
+    applicable = type(actual) is str and bool(actual)
+    retained = (len(originals) == 1 and originals[0].get("text") == actual and
+                bool(originals[0].get("id"))) if applicable else None
+    return {"applicable": applicable, "retained": retained, "actualOriginal": actual,
             "corpusTokenMatchesActualOriginal": corpus_token == actual}
 
 
@@ -463,6 +478,7 @@ def summarize_rows(rows: list[dict]) -> dict:
             cohorts[cohort] = {"rows": len(cohort_items), "spellingAutomaticChanges": cohort_changes,
                 "coverage": rate(cohort_changes, len(cohort_items)),
                 "abstention": rate(len(cohort_items)-cohort_changes, len(cohort_items))}
+        automatic = [ev for ev in evs if ev["spellingAutoEdit"] or ev["canonicalAutoEdit"] or ev["mechanicalChange"]]
         return {"rows": len(items),
             "cohorts": cohorts,
             "ordinarySpelling": {"automaticChanges": len(spelling),
@@ -478,8 +494,10 @@ def summarize_rows(rows: list[dict]) -> dict:
             "aggregateFinalText": change_metrics("fullFinalTextChanged", "changedRows"),
             "candidateRecall": rate(sum(ev["candidateRecall"] is True for ev in evs),
                                     sum(ev["candidateRecall"] is not None for ev in evs)),
-            "originalRetention": rate(sum(ev["originalRetained"] for ev in evs), len(items)),
-            "exactUndo": rate(sum(ev["undoExact"] for ev in evs), len(items)),
+            "originalRetention": rate(sum(ev["originalRetained"] is True for ev in evs
+                                         if ev.get("originalApplicable", True)),
+                                     sum(ev.get("originalApplicable", True) for ev in evs)),
+            "exactUndo": rate(sum(ev["undoExact"] for ev in automatic), len(automatic)),
             "coverage": rate(len(spelling), len(items)), "abstention": rate(len(items)-len(spelling), len(items)),
             "model": {"requests": sum(ev["modelRequested"] for ev in evs),
                 "errors": sum(ev["modelError"] for ev in evs),
@@ -647,7 +665,6 @@ def replay_report(args) -> None:
     java = select_bound_java(export)
     _, jars, android = compile_inputs(java)
     all_evidence = []
-    commands = {}
     for split in ("calibration", "holdout"):
         requests = read_jsonl(root / f"requests-{split}.jsonl")
         _, scores = admit_score_stage(root, split, export,
@@ -661,7 +678,7 @@ def replay_report(args) -> None:
                 stream.write(delivery_tsv_line(item) + "\n")
         for mode in ("ready", "unavailable"):
             out = root / f"replay-{split}-{mode}.jsonl"
-            commands[f"{split}-{mode}"] = run_harness(root, java, jars, android,
+            run_harness(root, java, jars, android,
                 root / "final-product-spelling-replay.jar", root / "inputs.tsv", out, mode,
                 tsv if mode == "ready" else None, split)
     verify_bound_files(export)
@@ -688,6 +705,7 @@ def replay_report(args) -> None:
                     "evaluation": {"modelRequested": observation.get("actualModelRequest") is not None,
                         "modelError": observation.get("modelAdmission") == "MATCHED_SCORING_ERROR",
                         "modelRefused": str(observation.get("modelAdmission", "")).startswith("REFUSED"),
+                        "originalApplicable": original["applicable"],
                         "originalRetained": original["retained"],
                         "actualOriginal": original["actualOriginal"],
                         "corpusTokenMatchesActualOriginal": original["corpusTokenMatchesActualOriginal"],
@@ -710,31 +728,14 @@ def replay_report(args) -> None:
     require(all(item["model"]["refusals"] == 0 for item in summary["languages"].values()), "MODEL_REFUSALS")
     require(all(item["ordinarySpelling"]["automaticChanges"] == 0
                 for item in unavailable_summary["languages"].values()), "UNQUALIFIED_DETERMINISTIC_AUTO_REPLACE")
-    with gzip.open(COMMAND_DOT / "row-evidence.jsonl.gz", "rt", encoding="utf-8") as stream:
-        old = {item["input"]["id"]: item for item in map(json.loads, stream)}
-    changed_from_command_dot = []
-    for item in ready_holdout:
-        prior = old[item["input"]["id"]]
-        current_text = item["observation"]["afterBoundary"]["text"]
-        prior_text = prior["observation"].get("afterBoundary", {}).get("text")
-        current_admission = item["observation"].get("modelAdmission")
-        prior_admission = prior["observation"].get("modelAdmission")
-        if (current_text, current_admission) != (prior_text, prior_admission):
-            changed_from_command_dot.append({"id": item["input"]["id"],
-                "priorFinalText": prior_text, "currentFinalText": current_text,
-                "priorAdmission": prior_admission, "currentAdmission": current_admission})
     write_jsonl(root / "row-evidence.jsonl", all_evidence)
     write_json(root / "report.json", {"schemaVersion": SCHEMA, "experiment": EXPERIMENT,
-        "releaseApproved": False, "thresholdFittingPerformed": False, "modelResponsesMissing": 0,
+        "releaseApproved": holdout_release_approved(summary["languages"]),
+        "thresholdFittingPerformed": False, "modelResponsesMissing": 0,
         "calibrationModelReady": summarize_rows(ready_calibration),
         "calibrationModelUnavailable": summarize_rows(unavailable_calibration),
         "holdoutModelReady": summary, "holdoutModelUnavailable": unavailable_summary,
-        "commandDotComparison": {"summarySha256": sha256(COMMAND_DOT / "summary.json"),
-            "reportSha256": sha256(COMMAND_DOT / "REPORT.md"),
-            "remainingPriorRefusalOrErrorRows": sum(str(item["observation"].get("modelAdmission", "")).startswith(
-                ("REFUSED", "MATCHED_SCORING_ERROR")) for item in ready_holdout),
-            "changedRows": changed_from_command_dot}, "commands": commands,
-        "limits": ["Revealed-data fixed-policy reproduction after safety fixes.",
+        "limits": ["Source-bound fixed-policy reproduction from a clean checkout.",
             "Host JVM BreakIterator and independent editor; phone timing and asynchronous availability are separate.",
             "Wilson intervals are descriptive row intervals; point integer ratios decide gates."]})
 
