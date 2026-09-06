@@ -60,4 +60,3 @@ internal fun assertSameKeys(expected: KeyboardSnapshot, actual: KeyboardSnapshot
 }
 
 internal class KeyboardSnapshot(val keyboard: RuneKeyboardView, val keys: List<View>)
-
