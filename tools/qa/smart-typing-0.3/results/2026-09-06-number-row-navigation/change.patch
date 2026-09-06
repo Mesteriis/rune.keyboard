@@ -1,0 +1,12 @@
+diff --git a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt
+index 96ae96e..b293bce 100644
+--- a/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt
++++ b/app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt
+@@ -394,6 +394,7 @@ class ImeTestDriver {
+             @Suppress("DEPRECATION")
+             UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/settings_scroll")).apply {
+                 setAsVerticalList()
++                setSwipeDeadZonePercentage(0.375)
+                 scrollIntoView(UiSelector().text(label))
+             }
+             row = device.findObject(By.text(label))

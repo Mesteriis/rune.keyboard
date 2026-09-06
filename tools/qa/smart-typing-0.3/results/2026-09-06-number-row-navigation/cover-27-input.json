@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-09-06T13:04:19.579097+00:00",
+  "head": "c0b0280abfc4f0093835a99245d7e42ccc9d47f8",
+  "api": "36",
+  "state": "Committed state: DeviceState{identifier=0, name='CLOSED', app_accessible=true, cancel_when_requester_not_on_top=false}",
+  "apks": {
+    "io.github.mesteriis.rune.keyboard": "6a7d0d179b5c0446d88991cb14359ca63f97ce570e1ec09e2692667399f721e1",
+    "io.github.mesteriis.rune.keyboard.test": "d81102e7c3a8525853b631e25e683b84cf90dae7c1fd4c78d5d87916a02d1d93"
+  }
+}

@@ -1,0 +1,94 @@
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest:
+INSTRUMENTATION_STATUS: test=pairOfDotsWaitsForWhitespaceAndNewWordThenUndoesCapsTogether
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=pairOfDotsWaitsForWhitespaceAndNewWordThenUndoesCapsTogether
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=decimalVersionAndHostnameKeepOwnedBoundariesWithoutLayerChanges
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Number-row setting was not found
+	at io.github.mesteriis.rune.keyboard.qa.ImeTestDriver.setNumberRowThroughSettings(ImeTestDriver.kt:401)
+	at io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest.decimalVersionAndHostnameKeepOwnedBoundariesWithoutLayerChanges(MechanicalPunctuationInstrumentedTest.kt:76)
+
+INSTRUMENTATION_STATUS: stream=
+Error in decimalVersionAndHostnameKeepOwnedBoundariesWithoutLayerChanges(io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest):
+java.lang.IllegalStateException: Number-row setting was not found
+	at io.github.mesteriis.rune.keyboard.qa.ImeTestDriver.setNumberRowThroughSettings(ImeTestDriver.kt:401)
+	at io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest.decimalVersionAndHostnameKeepOwnedBoundariesWithoutLayerChanges(MechanicalPunctuationInstrumentedTest.kt:76)
+
+INSTRUMENTATION_STATUS: test=decimalVersionAndHostnameKeepOwnedBoundariesWithoutLayerChanges
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=commaPopupPunctuationCapsAndImmediateUndoNeverReplayOldWord
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=commaPopupPunctuationCapsAndImmediateUndoNeverReplayOldWord
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=commandDotKeepsItsSeparatorAcrossBoundaryAndOrdinaryBackspace
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=commandDotKeepsItsSeparatorAcrossBoundaryAndOrdinaryBackspace
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 54,675
+There was 1 failure:
+1) decimalVersionAndHostnameKeepOwnedBoundariesWithoutLayerChanges(io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest)
+java.lang.IllegalStateException: Number-row setting was not found
+	at io.github.mesteriis.rune.keyboard.qa.ImeTestDriver.setNumberRowThroughSettings(ImeTestDriver.kt:401)
+	at io.github.mesteriis.rune.keyboard.qa.MechanicalPunctuationInstrumentedTest.decimalVersionAndHostnameKeepOwnedBoundariesWithoutLayerChanges(MechanicalPunctuationInstrumentedTest.kt:76)
+
+FAILURES!!!
+Tests run: 5,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
