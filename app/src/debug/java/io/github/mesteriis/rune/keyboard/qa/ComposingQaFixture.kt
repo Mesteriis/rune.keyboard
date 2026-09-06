@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.view.inputmethod.SurroundingText
 import android.view.inputmethod.TextAttribute
 import android.view.inputmethod.TextSnapshot
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -50,6 +51,8 @@ internal class ComposingQaFixture(context: Context, mode: String) {
         imeOptions = EditorInfo.IME_ACTION_DONE or
             if (mode == "private") EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING else 0
         isSingleLine = true
+        importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
+        setAutofillHints(*emptyArray())
     }
     val content = LinearLayout(context).apply {
         orientation = LinearLayout.VERTICAL

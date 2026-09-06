@@ -27,6 +27,10 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLayer
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducer
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardSessionPolicy
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
+import io.github.mesteriis.rune.keyboard.ime.model.ConfigurationSize
+import io.github.mesteriis.rune.keyboard.ime.model.ConfigurationVisualContinuity
+import io.github.mesteriis.rune.keyboard.ime.model.ConfigurationVisualContinuityStore
+import io.github.mesteriis.rune.keyboard.ime.model.VisualEditorIdentity
 import io.github.mesteriis.rune.keyboard.ime.ui.RuneKeyboardView
 import io.github.mesteriis.rune.keyboard.settings.GapPreset
 import io.github.mesteriis.rune.keyboard.settings.KeyboardMetrics
@@ -66,6 +70,7 @@ class RuneInputMethodService : InputMethodService() {
     private val typingSession = TypingSessionController(RuneTrace)
     private lateinit var candidates: LocalCandidateCoordinator
     private var inputViewActive = false
+    private lateinit var visualContinuity: ConfigurationVisualContinuity
 
     // Held in a field on purpose: SharedPreferences keeps registered listeners weakly.
     private val preferencesListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
@@ -78,6 +83,7 @@ class RuneInputMethodService : InputMethodService() {
 
     override fun onCreate() {
         super.onCreate()
+        visualContinuity = visualContinuityStore.attach(configurationSize(resources.configuration))
         try { typingSession.setDiagnostics(TypingDiagnosticsProvider.create(this)) } catch (_: Throwable) { }
         feedbackController = FeedbackController(this)
         keyboardPreferences = KeyboardPreferences(this)
@@ -108,6 +114,7 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     override fun onDestroy() {
+        visualContinuityStore.detach(visualContinuity)
         typingSession.closeDiagnosticsAdmission()
         inputViewActive = false
         candidates.close()
@@ -141,14 +148,20 @@ class RuneInputMethodService : InputMethodService() {
         hasSelection = editorInfo.initialSelStart >= 0 &&
             editorInfo.initialSelEnd >= 0 &&
             editorInfo.initialSelStart != editorInfo.initialSelEnd
-        // Restart preserves displayed editor text and visual state, never an old composing buffer.
+        // Every callback starts fresh typing ownership. Visual-only continuation must not change
+        // the framework restart flag used by typing or diagnostics admission.
         typingSession.startSession(editorContext, editorInfo.initialSelStart, editorInfo.initialSelEnd,
             diagnosticsFresh = !restarting)
-        state = KeyboardSessionPolicy.onStartInput(
+        state = visualContinuity.onStartInput(
             previous = state,
             restarting = restarting,
             settings = settings,
             lastUsedLanguage = selectedLanguage,
+            editor = attribute?.let {
+                VisualEditorIdentity(it.packageName.orEmpty(), it.fieldId, it.inputType, it.imeOptions)
+            },
+            configuration = configurationSize(resources.configuration),
+            nowMillis = SystemClock.uptimeMillis(),
         )
         selectedLanguage = state.language
         renderCandidates()
@@ -200,10 +213,9 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     /**
-     * State is deliberately not reset here. A fold, unfold or rotation can interleave
-     * onFinishInput with a restarting onStartInput for the same editor; making
-     * `onStartInput(restarting = false)` the only reset point is what preserves shift, caps lock
-     * and the active layer across those transitions (FOLD-003).
+     * Do not reset visual state or discard its configuration handoff here: Android can finish
+     * input while recreating the same editor. onStartInput decides whether its visual state can
+     * continue, independently of the old typing session which always ends here.
      */
     override fun onFinishInput() {
         typingSession.closeDiagnosticsAdmission()
@@ -220,12 +232,15 @@ class RuneInputMethodService : InputMethodService() {
     override fun onEvaluateFullscreenMode(): Boolean = false
 
     override fun onConfigurationChanged(newConfig: Configuration) {
+        // Capture before super can synchronously redeliver input callbacks/rebuild the view.
+        visualContinuity.onConfigurationChanged(configurationSize(newConfig), state, SystemClock.uptimeMillis())
         candidates.invalidate()
         typingSession.invalidate(::executeTypingEdit)
         super.onConfigurationChanged(newConfig)
     }
 
     private fun handleAction(action: KeyboardAction) {
+        visualContinuity.invalidate()
         RuneTrace.section("Rune#touchUpDispatch") {
             val previousState = state
             val transition = KeyboardReducer.reduce(
@@ -406,6 +421,7 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     private fun onSettingsChanged() {
+        visualContinuity.invalidate()
         RuneTrace.section("Rune#applySettings") {
             val previous = settings
             settings = keyboardPreferences.readSettings()
@@ -446,6 +462,17 @@ class RuneInputMethodService : InputMethodService() {
             keyboardView?.cancelActiveTouches()
             setInputView(onCreateInputView())
         }
+    }
+
+    private fun configurationSize(configuration: Configuration) = ConfigurationSize(
+        configuration.screenWidthDp,
+        configuration.screenHeightDp,
+        configuration.smallestScreenWidthDp,
+    )
+
+    private companion object {
+        /** Process-local only; it survives the old/new service overlap of a configuration change. */
+        val visualContinuityStore = ConfigurationVisualContinuityStore()
     }
 
     private fun refreshAutomaticCapitalization() {

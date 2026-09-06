@@ -17,6 +17,7 @@ import androidx.test.uiautomator.UiSelector
 import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.settings.SettingsCodec
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.settings.ContextualPunctuationMode
@@ -71,6 +72,19 @@ class ImeTestDriver {
     /** Deterministic temporary QA settings; tearDown restores the full pre-test raw map. */
     fun configureMechanicalPunctuation(mechanical: Boolean, doubleSpace: Boolean) =
         configureSmartTyping(AutocorrectionMode.OFF, true, mechanical, doubleSpace)
+
+    /** Configure before testing fresh editor boundaries; never switch language after the boundary. */
+    fun configureEnglishStartingLanguage() {
+        val preferences = targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+        check(preferences.edit()
+            .putString(SettingsCodec.KEY_LANGUAGES_ENABLED,
+                SettingsCodec.encodeLanguages(listOf(KeyboardLanguage.ENGLISH)))
+            .putString(SettingsCodec.KEY_LANGUAGE_STARTING, KeyboardLanguage.ENGLISH.name)
+            .commit()) { "QA starting-language settings write failed" }
+        // The standard driver teardown restores the original complete raw map, including absent
+        // keys. No saved values are logged and no language action can mask a fresh-editor reset.
+        instrumentation.waitForIdleSync()
+    }
 
     fun configureSmartTyping(
         autocorrection: AutocorrectionMode,

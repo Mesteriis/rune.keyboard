@@ -6,9 +6,9 @@ import io.github.mesteriis.rune.keyboard.settings.StartingLanguage
 /**
  * Decides what survives an editor session boundary and preserves the existing caps lookup policy.
  *
- * A configuration change — most importantly folding or unfolding the device — re-delivers
- * `onStartInput(restarting = true)` for the same editor. Keeping the previous state there is what
- * preserves shift, caps lock, the active layer and the language across a fold (FOLD-003).
+ * Framework restarts preserve visual state. Configuration-driven Activity recreation can also
+ * deliver a fresh start; ConfigurationVisualContinuity handles that bounded visual-only case
+ * before this default fresh-editor policy. Neither policy restores typing ownership.
  */
 object KeyboardSessionPolicy {
     fun onStartInput(
