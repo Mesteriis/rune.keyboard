@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "/Users/avm/.pyenv/versions/3.14.6/bin/python3",
+    "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/hold-review-01/review.py"
+  ],
+  "candidatePolicy": {
+    "acceptanceScope": "revealed-data candidate-policy acceptance",
+    "coefficientsChanged": false,
+    "experiment": "revealed-data-short-frequency-candidate-policy-acceptance-v1",
+    "files": {
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370",
+      "build/smart-typing-0.3/retrieval-probe-20260906/short-frequency-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "8799e9068983c5796518be0335bf5333e07930975aa13442e19ed28b6ce378a2",
+      "build/smart-typing-0.3/retrieval-probe-20260906/short-frequency-01/variant.patch": "f1d97cbbf169a2a3ebcefda85b4f5d811b8c0715ba17175598bf51aac9b9920f",
+      "tools/eval/smart-typing-0.3/pipeline/final_product_replay.py": "88d72471eb76384ce7cd063e311b49d1394ea7588cace3381f58d3cc9beea745",
+      "tools/eval/smart-typing-0.3/pipeline/short_policy_evaluation.py": "e0dddb9b67e76beba3aa203202d74c8baf8cfb940621d342862dc9ff475cdd36"
+    },
+    "maximumAlternatives": 3,
+    "maximumStates": 8192,
+    "maximumVerifiedTerminals": 64,
+    "policyChanged": true,
+    "productionPromotionApproved": false,
+    "qualification": "hypothetical CURRENT admission for experiment only",
+    "thresholdFittingPerformed": false
+  },
+  "modelCalls": 0,
+  "policyChanged": true
+}

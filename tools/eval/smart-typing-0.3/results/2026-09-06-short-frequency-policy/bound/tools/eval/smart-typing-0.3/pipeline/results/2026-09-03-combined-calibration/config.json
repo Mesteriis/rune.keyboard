@@ -1,0 +1,131 @@
+{
+  "configSha256": "a4375144211a719aec3fd3e131174e78403fa36de4e234787936bde27aca4bbc",
+  "fallbackConfigSha256": "c901c510a9b2392ad71b73a8cc48c89f07bc92f6f47330a05d5e435a6ed8f1c1",
+  "grid": {
+    "edit": [
+      2,
+      4,
+      8
+    ],
+    "fallback": [
+      0,
+      4
+    ],
+    "frequency": [
+      0,
+      1,
+      2
+    ],
+    "length": [
+      0,
+      1
+    ],
+    "minimum_length": [
+      1,
+      5,
+      9
+    ],
+    "minimum_margin": [
+      1,
+      2,
+      4,
+      8,
+      12
+    ],
+    "original_penalty": [
+      8,
+      12,
+      16,
+      20,
+      24,
+      28,
+      32,
+      40,
+      48,
+      64
+    ],
+    "repetition": [
+      0,
+      2
+    ]
+  },
+  "holdoutQualified": false,
+  "languages": {
+    "en": {
+      "policy": {
+        "modelWeight": 1,
+        "thresholds": {
+          "minimum_length": 1,
+          "minimum_margin": 8,
+          "original_penalty": 40
+        },
+        "weights": {
+          "edit": 4,
+          "fallback": 4,
+          "frequency": 1,
+          "length": 0,
+          "repetition": 2
+        }
+      },
+      "trials": 43200
+    },
+    "es": {
+      "policy": {
+        "modelWeight": 1,
+        "thresholds": {
+          "minimum_length": 5,
+          "minimum_margin": 2,
+          "original_penalty": 20
+        },
+        "weights": {
+          "edit": 2,
+          "fallback": 0,
+          "frequency": 1,
+          "length": 0,
+          "repetition": 2
+        }
+      },
+      "trials": 43200
+    },
+    "ru": {
+      "policy": {
+        "modelWeight": 1,
+        "thresholds": {
+          "minimum_length": 5,
+          "minimum_margin": 8,
+          "original_penalty": 40
+        },
+        "weights": {
+          "edit": 4,
+          "fallback": 0,
+          "frequency": 1,
+          "length": 0,
+          "repetition": 2
+        }
+      },
+      "trials": 43200
+    }
+  },
+  "maximumAlternatives": 3,
+  "modelCacheSha256": "60ba66ee74823937a7486cb0b4b1b0b175c25a4887d13b6c43b65a7216b68aad",
+  "modelIdentity": {
+    "corpusSha256": "14e067ac964326167c36bbc7379854e68af1195aaf32a968cfb5e6b48c2b3768",
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "protocol": "rune-score-jsonl-v1",
+    "runnerSha256": "f2f8e9e21a028871da4b9ced6ce0492eb692f742c4de765467a2d44a18535973"
+  },
+  "modelWeights": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "schemaVersion": 1,
+  "scope": "combined-calibration-only",
+  "sources": {
+    "tools/eval/smart-typing-0.3/evaluate.py": "ca9a03240b899b7c525e3ac99ed6bd6a01d8bd6738a4bca19628762ee219373b",
+    "tools/eval/smart-typing-0.3/pipeline/calibrate_combined.py": "84fc44299c6c976e49b842470313da4e9007e3323bad138247ac7295290a8e59",
+    "tools/eval/smart-typing-0.3/pipeline/calibrate_deterministic.py": "408f67b08f9e170f60bd716a0fb78e1c843e35b001c4e9600d34d492854fc8d9",
+    "tools/eval/smart-typing-0.3/pipeline/deterministic_policy.py": "cd162cc85286410fee77f255116304bb94ceacdaf6111cc515e5390d63308ef9"
+  }
+}

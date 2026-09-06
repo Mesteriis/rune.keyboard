@@ -1,0 +1,43 @@
+{
+  "candidatePolicy": {
+    "acceptanceScope": "revealed-data candidate-policy acceptance",
+    "coefficientsChanged": false,
+    "experiment": "revealed-data-short-frequency-candidate-policy-acceptance-v1",
+    "files": {
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370",
+      "build/smart-typing-0.3/retrieval-probe-20260906/short-frequency-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "8799e9068983c5796518be0335bf5333e07930975aa13442e19ed28b6ce378a2",
+      "build/smart-typing-0.3/retrieval-probe-20260906/short-frequency-01/variant.patch": "f1d97cbbf169a2a3ebcefda85b4f5d811b8c0715ba17175598bf51aac9b9920f",
+      "tools/eval/smart-typing-0.3/pipeline/final_product_replay.py": "88d72471eb76384ce7cd063e311b49d1394ea7588cace3381f58d3cc9beea745",
+      "tools/eval/smart-typing-0.3/pipeline/short_policy_evaluation.py": "e0dddb9b67e76beba3aa203202d74c8baf8cfb940621d342862dc9ff475cdd36"
+    },
+    "maximumAlternatives": 3,
+    "maximumStates": 8192,
+    "maximumVerifiedTerminals": 64,
+    "policyChanged": true,
+    "productionPromotionApproved": false,
+    "qualification": "hypothetical CURRENT admission for experiment only",
+    "thresholdFittingPerformed": false
+  },
+  "complete": true,
+  "errors": 15,
+  "experiment": "revealed-data-short-frequency-candidate-policy-acceptance-v1",
+  "exportReceiptSha256": "bc00910e3b779dae3bbdec0d3ec75d44858e908a3ef62faa6e76ba56e30f6bc6",
+  "identity": {
+    "configSha256": "ab7d50c19d4401fdca2c20e3ef2fa3e9b9e5a06368d62c7352b8b90042e46858",
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "payloadSha256": "4c2108350e8b768256fc6ec9e003fcad4a1d4401dd0e374e80e1b544ba23fb72",
+    "protocol": "rune-score-jsonl-v1",
+    "requestsSha256": "49cda5bb421ca622239a16f593b81835630498bd9932dcc90aac09bce23c5a87",
+    "runnerSha256": "bc3f78bdf3ac41009a7603ca5dd6b6c4d5e8d6c2bdcaf3a692cfd95a3b3d2553",
+    "sourceSha256": "aa17ff21c4d28a25aac6b929962b38debbbe91650f0a957afd3cb05bedd60b00"
+  },
+  "policyChanged": true,
+  "policyFreezeSha256": "6042413ee2814beaeec68880209352c0c62525710f78dc9d19727a8e9f35820c",
+  "requests": 2973,
+  "responses": 2973,
+  "retries": 0,
+  "schemaVersion": 1,
+  "scoresSha256": "3896968817591ee4a4c0dbce29248827e237d16da0c68fb103270254bb013a5c",
+  "split": "holdout",
+  "thresholdFittingPerformed": false
+}

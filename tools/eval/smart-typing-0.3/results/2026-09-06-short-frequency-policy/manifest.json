@@ -1,0 +1,1260 @@
+{
+  "coefficientsChanged": false,
+  "compiledSourceCount": 41,
+  "compiledSources": [
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt",
+    "build/smart-typing-0.3/retrieval-probe-20260906/short-frequency-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt",
+    "tools/eval/smart-typing-0.3/pipeline/FinalProductSpellingReplay.kt"
+  ],
+  "entries": {
+    "README.md": {
+      "archivedBytes": 5078,
+      "archivedSha256": "4636d3b6ef9c014c6504f243eb00ec68d23204fe8d2e2290b14ab971e263e5ff",
+      "decodedBytes": 5078,
+      "decodedSha256": "4636d3b6ef9c014c6504f243eb00ec68d23204fe8d2e2290b14ab971e263e5ff",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-archive-preparation-20260906/README.md",
+      "sourceSha256": "4636d3b6ef9c014c6504f243eb00ec68d23204fe8d2e2290b14ab971e263e5ff"
+    },
+    "archive.py": {
+      "archivedBytes": 6423,
+      "archivedSha256": "29ba3e0b2d7ac66b7e850369c6f090c8a355eb027945b5a6f7d1270d46e4d65c",
+      "decodedBytes": 6423,
+      "decodedSha256": "29ba3e0b2d7ac66b7e850369c6f090c8a355eb027945b5a6f7d1270d46e4d65c",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-archive-preparation-20260906/archive.py",
+      "sourceSha256": "29ba3e0b2d7ac66b7e850369c6f090c8a355eb027945b5a6f7d1270d46e4d65c"
+    },
+    "baseline/row-evidence.jsonl.gz": {
+      "archivedBytes": 5543695,
+      "archivedSha256": "15d2c33659b3f48c83cc110b5b0a0537ebf8257abb6f96c0ecc0eba8adb63cb3",
+      "decodedBytes": 180648928,
+      "decodedSha256": "6a19850ed122dd782ecde33aaba8087d76c77a34962fda44c055c94f717cfa75",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/final-product-replay-20260906-review-second-fix-v2/row-evidence.jsonl",
+      "sourceSha256": "6a19850ed122dd782ecde33aaba8087d76c77a34962fda44c055c94f717cfa75"
+    },
+    "bound/app/src/main/assets/smarttyping/lexicon/case/en.case": {
+      "archivedBytes": 457101,
+      "archivedSha256": "2d5ba3c807ef8c66be5222b01c3cd0f98645a891c12b6356827ea58544725a34",
+      "decodedBytes": 457101,
+      "decodedSha256": "2d5ba3c807ef8c66be5222b01c3cd0f98645a891c12b6356827ea58544725a34",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/case/en.case",
+      "sourceSha256": "2d5ba3c807ef8c66be5222b01c3cd0f98645a891c12b6356827ea58544725a34"
+    },
+    "bound/app/src/main/assets/smarttyping/lexicon/case/es.case": {
+      "archivedBytes": 26687,
+      "archivedSha256": "52614678597416daf63763bb1f34015097d97ab974d9aa951b0221a67105a6fa",
+      "decodedBytes": 26687,
+      "decodedSha256": "52614678597416daf63763bb1f34015097d97ab974d9aa951b0221a67105a6fa",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/case/es.case",
+      "sourceSha256": "52614678597416daf63763bb1f34015097d97ab974d9aa951b0221a67105a6fa"
+    },
+    "bound/app/src/main/assets/smarttyping/lexicon/case/ru.case": {
+      "archivedBytes": 672062,
+      "archivedSha256": "845144afb06ae7881f0db2f577f340694b8c7dfa5fee9685563ec4852939c81b",
+      "decodedBytes": 672062,
+      "decodedSha256": "845144afb06ae7881f0db2f577f340694b8c7dfa5fee9685563ec4852939c81b",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/case/ru.case",
+      "sourceSha256": "845144afb06ae7881f0db2f577f340694b8c7dfa5fee9685563ec4852939c81b"
+    },
+    "bound/app/src/main/assets/smarttyping/lexicon/en.trie": {
+      "archivedBytes": 4358176,
+      "archivedSha256": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc",
+      "decodedBytes": 4358176,
+      "decodedSha256": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/en.trie",
+      "sourceSha256": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc"
+    },
+    "bound/app/src/main/assets/smarttyping/lexicon/en.trie.lengths": {
+      "archivedBytes": 544786,
+      "archivedSha256": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4",
+      "decodedBytes": 544786,
+      "decodedSha256": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/en.trie.lengths",
+      "sourceSha256": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4"
+    },
+    "bound/app/src/main/assets/smarttyping/lexicon/es.trie": {
+      "archivedBytes": 20015680,
+      "archivedSha256": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681",
+      "decodedBytes": 20015680,
+      "decodedSha256": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/es.trie",
+      "sourceSha256": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681"
+    },
+    "bound/app/src/main/assets/smarttyping/lexicon/es.trie.lengths": {
+      "archivedBytes": 2501974,
+      "archivedSha256": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78",
+      "decodedBytes": 2501974,
+      "decodedSha256": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/es.trie.lengths",
+      "sourceSha256": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78"
+    },
+    "bound/app/src/main/assets/smarttyping/lexicon/frequency/en.ranks": {
+      "archivedBytes": 485040,
+      "archivedSha256": "a8786c4d9fa1d7522e8c9d068679e3c61e32ee49dc3ca34898ccbd0fd19f4c6f",
+      "decodedBytes": 485040,
+      "decodedSha256": "a8786c4d9fa1d7522e8c9d068679e3c61e32ee49dc3ca34898ccbd0fd19f4c6f",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/frequency/en.ranks",
+      "sourceSha256": "a8786c4d9fa1d7522e8c9d068679e3c61e32ee49dc3ca34898ccbd0fd19f4c6f"
+    },
+    "bound/app/src/main/assets/smarttyping/lexicon/frequency/es.ranks": {
+      "archivedBytes": 2673088,
+      "archivedSha256": "5fb3e5cca1493e1aebb64f2960ac823fe50ee189c222a9df952b622ebd3cf613",
+      "decodedBytes": 2673088,
+      "decodedSha256": "5fb3e5cca1493e1aebb64f2960ac823fe50ee189c222a9df952b622ebd3cf613",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/frequency/es.ranks",
+      "sourceSha256": "5fb3e5cca1493e1aebb64f2960ac823fe50ee189c222a9df952b622ebd3cf613"
+    },
+    "bound/app/src/main/assets/smarttyping/lexicon/frequency/ru.ranks": {
+      "archivedBytes": 5746232,
+      "archivedSha256": "09cb1675723b66703e76f871b621068df6c0677b4c17b71e6a68fe2c8d3f328b",
+      "decodedBytes": 5746232,
+      "decodedSha256": "09cb1675723b66703e76f871b621068df6c0677b4c17b71e6a68fe2c8d3f328b",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/frequency/ru.ranks",
+      "sourceSha256": "09cb1675723b66703e76f871b621068df6c0677b4c17b71e6a68fe2c8d3f328b"
+    },
+    "bound/app/src/main/assets/smarttyping/lexicon/ru.trie": {
+      "archivedBytes": 36093872,
+      "archivedSha256": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b",
+      "decodedBytes": 36093872,
+      "decodedSha256": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/ru.trie",
+      "sourceSha256": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b"
+    },
+    "bound/app/src/main/assets/smarttyping/lexicon/ru.trie.lengths": {
+      "archivedBytes": 4511748,
+      "archivedSha256": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c",
+      "decodedBytes": 4511748,
+      "decodedSha256": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/ru.trie.lengths",
+      "sourceSha256": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt": {
+      "archivedBytes": 837,
+      "archivedSha256": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242",
+      "decodedBytes": 837,
+      "decodedSha256": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt",
+      "sourceSha256": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt": {
+      "archivedBytes": 4129,
+      "archivedSha256": "cd25f685fcb51206c7b4038e39bb917536a2cfda501f36182b624e4191dd6070",
+      "decodedBytes": 4129,
+      "decodedSha256": "cd25f685fcb51206c7b4038e39bb917536a2cfda501f36182b624e4191dd6070",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt",
+      "sourceSha256": "cd25f685fcb51206c7b4038e39bb917536a2cfda501f36182b624e4191dd6070"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt": {
+      "archivedBytes": 6157,
+      "archivedSha256": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182",
+      "decodedBytes": 6157,
+      "decodedSha256": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt",
+      "sourceSha256": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt": {
+      "archivedBytes": 2819,
+      "archivedSha256": "a01685928af1c59a44a2085de6b0233b07479024c0528f50c310f02a3ed85d30",
+      "decodedBytes": 2819,
+      "decodedSha256": "a01685928af1c59a44a2085de6b0233b07479024c0528f50c310f02a3ed85d30",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt",
+      "sourceSha256": "a01685928af1c59a44a2085de6b0233b07479024c0528f50c310f02a3ed85d30"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt": {
+      "archivedBytes": 3413,
+      "archivedSha256": "362332f03b43150c39b8f5243461926c33922d6822a81a4ee61f3fd66831f879",
+      "decodedBytes": 3413,
+      "decodedSha256": "362332f03b43150c39b8f5243461926c33922d6822a81a4ee61f3fd66831f879",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt",
+      "sourceSha256": "362332f03b43150c39b8f5243461926c33922d6822a81a4ee61f3fd66831f879"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt": {
+      "archivedBytes": 2794,
+      "archivedSha256": "2a4c6a945425eb6a7c49f671e1b12ed410a53357bfee698ec45f0b4ea88a14c7",
+      "decodedBytes": 2794,
+      "decodedSha256": "2a4c6a945425eb6a7c49f671e1b12ed410a53357bfee698ec45f0b4ea88a14c7",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt",
+      "sourceSha256": "2a4c6a945425eb6a7c49f671e1b12ed410a53357bfee698ec45f0b4ea88a14c7"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt": {
+      "archivedBytes": 5604,
+      "archivedSha256": "de5bf01aea98eedc42852d99185e1c1c2a136ae2f3795e98a5945ec55bc86333",
+      "decodedBytes": 5604,
+      "decodedSha256": "de5bf01aea98eedc42852d99185e1c1c2a136ae2f3795e98a5945ec55bc86333",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt",
+      "sourceSha256": "de5bf01aea98eedc42852d99185e1c1c2a136ae2f3795e98a5945ec55bc86333"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt": {
+      "archivedBytes": 2476,
+      "archivedSha256": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3",
+      "decodedBytes": 2476,
+      "decodedSha256": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt",
+      "sourceSha256": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt": {
+      "archivedBytes": 1577,
+      "archivedSha256": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b",
+      "decodedBytes": 1577,
+      "decodedSha256": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt",
+      "sourceSha256": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt": {
+      "archivedBytes": 3448,
+      "archivedSha256": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b",
+      "decodedBytes": 3448,
+      "decodedSha256": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt",
+      "sourceSha256": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt": {
+      "archivedBytes": 760,
+      "archivedSha256": "c2ea03daa7c366b7b1aeda77785b2dc5c12c41053a46e64e1d7f4c14a6733763",
+      "decodedBytes": 760,
+      "decodedSha256": "c2ea03daa7c366b7b1aeda77785b2dc5c12c41053a46e64e1d7f4c14a6733763",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt",
+      "sourceSha256": "c2ea03daa7c366b7b1aeda77785b2dc5c12c41053a46e64e1d7f4c14a6733763"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt": {
+      "archivedBytes": 1602,
+      "archivedSha256": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815",
+      "decodedBytes": 1602,
+      "decodedSha256": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt",
+      "sourceSha256": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt": {
+      "archivedBytes": 4925,
+      "archivedSha256": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98",
+      "decodedBytes": 4925,
+      "decodedSha256": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt",
+      "sourceSha256": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt": {
+      "archivedBytes": 1726,
+      "archivedSha256": "245b90f0ff7eb4a7ea97144dcd993f9816af32f44e571f6f6c006805f1ab2daa",
+      "decodedBytes": 1726,
+      "decodedSha256": "245b90f0ff7eb4a7ea97144dcd993f9816af32f44e571f6f6c006805f1ab2daa",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt",
+      "sourceSha256": "245b90f0ff7eb4a7ea97144dcd993f9816af32f44e571f6f6c006805f1ab2daa"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": {
+      "archivedBytes": 15161,
+      "archivedSha256": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370",
+      "decodedBytes": 15161,
+      "decodedSha256": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt",
+      "sourceSha256": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt": {
+      "archivedBytes": 4300,
+      "archivedSha256": "e64190f43dfc40e1b4bd19dbc331709883907b2b7a500bce7947dc3fc5ae24db",
+      "decodedBytes": 4300,
+      "decodedSha256": "e64190f43dfc40e1b4bd19dbc331709883907b2b7a500bce7947dc3fc5ae24db",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt",
+      "sourceSha256": "e64190f43dfc40e1b4bd19dbc331709883907b2b7a500bce7947dc3fc5ae24db"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt": {
+      "archivedBytes": 4985,
+      "archivedSha256": "5d020b58e8e14e6482e59200acafa549cf5da6b2b00b770ba921748ff40f5020",
+      "decodedBytes": 4985,
+      "decodedSha256": "5d020b58e8e14e6482e59200acafa549cf5da6b2b00b770ba921748ff40f5020",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt",
+      "sourceSha256": "5d020b58e8e14e6482e59200acafa549cf5da6b2b00b770ba921748ff40f5020"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt": {
+      "archivedBytes": 541,
+      "archivedSha256": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7",
+      "decodedBytes": 541,
+      "decodedSha256": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt",
+      "sourceSha256": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt": {
+      "archivedBytes": 1084,
+      "archivedSha256": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9",
+      "decodedBytes": 1084,
+      "decodedSha256": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt",
+      "sourceSha256": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt": {
+      "archivedBytes": 9515,
+      "archivedSha256": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa",
+      "decodedBytes": 9515,
+      "decodedSha256": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt",
+      "sourceSha256": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt": {
+      "archivedBytes": 2071,
+      "archivedSha256": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127",
+      "decodedBytes": 2071,
+      "decodedSha256": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt",
+      "sourceSha256": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt": {
+      "archivedBytes": 8867,
+      "archivedSha256": "a52134981da578373fde991d1a11bc6a41e61922c474ab0acf733a9a868a2ae7",
+      "decodedBytes": 8867,
+      "decodedSha256": "a52134981da578373fde991d1a11bc6a41e61922c474ab0acf733a9a868a2ae7",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt",
+      "sourceSha256": "a52134981da578373fde991d1a11bc6a41e61922c474ab0acf733a9a868a2ae7"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt": {
+      "archivedBytes": 8332,
+      "archivedSha256": "fe942a648ef5bdbd5a7e5407c70e099c69cebd741f91ab2250d91d4fa66a7bdf",
+      "decodedBytes": 8332,
+      "decodedSha256": "fe942a648ef5bdbd5a7e5407c70e099c69cebd741f91ab2250d91d4fa66a7bdf",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt",
+      "sourceSha256": "fe942a648ef5bdbd5a7e5407c70e099c69cebd741f91ab2250d91d4fa66a7bdf"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt": {
+      "archivedBytes": 9469,
+      "archivedSha256": "d0dae2e1d58eb44894cbdface3f4a91f8f5c1022400ec68f9e7e219cc14adc3c",
+      "decodedBytes": 9469,
+      "decodedSha256": "d0dae2e1d58eb44894cbdface3f4a91f8f5c1022400ec68f9e7e219cc14adc3c",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt",
+      "sourceSha256": "d0dae2e1d58eb44894cbdface3f4a91f8f5c1022400ec68f9e7e219cc14adc3c"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt": {
+      "archivedBytes": 3223,
+      "archivedSha256": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2",
+      "decodedBytes": 3223,
+      "decodedSha256": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt",
+      "sourceSha256": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt": {
+      "archivedBytes": 14675,
+      "archivedSha256": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828",
+      "decodedBytes": 14675,
+      "decodedSha256": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt",
+      "sourceSha256": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt": {
+      "archivedBytes": 5216,
+      "archivedSha256": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d",
+      "decodedBytes": 5216,
+      "decodedSha256": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt",
+      "sourceSha256": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt": {
+      "archivedBytes": 995,
+      "archivedSha256": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d",
+      "decodedBytes": 995,
+      "decodedSha256": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt",
+      "sourceSha256": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt": {
+      "archivedBytes": 3111,
+      "archivedSha256": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+      "decodedBytes": 3111,
+      "decodedSha256": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt",
+      "sourceSha256": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt": {
+      "archivedBytes": 1707,
+      "archivedSha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+      "decodedBytes": 1707,
+      "decodedSha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt",
+      "sourceSha256": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt": {
+      "archivedBytes": 3190,
+      "archivedSha256": "0cef9c7a1e72e77d1c3f5e58c5a7b344900b60bff5a1096449d6e0534dd9ad26",
+      "decodedBytes": 3190,
+      "decodedSha256": "0cef9c7a1e72e77d1c3f5e58c5a7b344900b60bff5a1096449d6e0534dd9ad26",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt",
+      "sourceSha256": "0cef9c7a1e72e77d1c3f5e58c5a7b344900b60bff5a1096449d6e0534dd9ad26"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt": {
+      "archivedBytes": 13440,
+      "archivedSha256": "5cd4a0d631796da0827a720653d92a21cac701eef2c375b546ce8409b9d528ea",
+      "decodedBytes": 13440,
+      "decodedSha256": "5cd4a0d631796da0827a720653d92a21cac701eef2c375b546ce8409b9d528ea",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt",
+      "sourceSha256": "5cd4a0d631796da0827a720653d92a21cac701eef2c375b546ce8409b9d528ea"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt": {
+      "archivedBytes": 388,
+      "archivedSha256": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75",
+      "decodedBytes": 388,
+      "decodedSha256": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt",
+      "sourceSha256": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt": {
+      "archivedBytes": 2514,
+      "archivedSha256": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643",
+      "decodedBytes": 2514,
+      "decodedSha256": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt",
+      "sourceSha256": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": {
+      "archivedBytes": 68333,
+      "archivedSha256": "3beba836c936e628aaaec4a1d61381083d2aa37b6a216c079467802b6eccd620",
+      "decodedBytes": 68333,
+      "decodedSha256": "3beba836c936e628aaaec4a1d61381083d2aa37b6a216c079467802b6eccd620",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt",
+      "sourceSha256": "3beba836c936e628aaaec4a1d61381083d2aa37b6a216c079467802b6eccd620"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt": {
+      "archivedBytes": 1754,
+      "archivedSha256": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8",
+      "decodedBytes": 1754,
+      "decodedSha256": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt",
+      "sourceSha256": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt": {
+      "archivedBytes": 1137,
+      "archivedSha256": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0",
+      "decodedBytes": 1137,
+      "decodedSha256": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt",
+      "sourceSha256": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt": {
+      "archivedBytes": 1170,
+      "archivedSha256": "bca5697c00c39eba55be74b7accb25b9c573c49dbd065a1a38e5b03f8e78218c",
+      "decodedBytes": 1170,
+      "decodedSha256": "bca5697c00c39eba55be74b7accb25b9c573c49dbd065a1a38e5b03f8e78218c",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt",
+      "sourceSha256": "bca5697c00c39eba55be74b7accb25b9c573c49dbd065a1a38e5b03f8e78218c"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt": {
+      "archivedBytes": 1320,
+      "archivedSha256": "34a365472549af3fa850491aa5df1e3e432045fa869c5235bf77e8e327f72e3e",
+      "decodedBytes": 1320,
+      "decodedSha256": "34a365472549af3fa850491aa5df1e3e432045fa869c5235bf77e8e327f72e3e",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt",
+      "sourceSha256": "34a365472549af3fa850491aa5df1e3e432045fa869c5235bf77e8e327f72e3e"
+    },
+    "bound/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt": {
+      "archivedBytes": 1620,
+      "archivedSha256": "378a925f524682c377d0825204d3c23253db459323b32eb9da6706d003297e58",
+      "decodedBytes": 1620,
+      "decodedSha256": "378a925f524682c377d0825204d3c23253db459323b32eb9da6706d003297e58",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt",
+      "sourceSha256": "378a925f524682c377d0825204d3c23253db459323b32eb9da6706d003297e58"
+    },
+    "bound/build/smart-typing-0.3/final-product-replay-20260906-preparation/model-runner-reverification.json": {
+      "archivedBytes": 396,
+      "archivedSha256": "df97b97c414c0df66a0f0f4b3a8bbd9807c9df2edd0e658e7a516b47dbf7cbbc",
+      "decodedBytes": 396,
+      "decodedSha256": "df97b97c414c0df66a0f0f4b3a8bbd9807c9df2edd0e658e7a516b47dbf7cbbc",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/final-product-replay-20260906-preparation/model-runner-reverification.json",
+      "sourceSha256": "df97b97c414c0df66a0f0f4b3a8bbd9807c9df2edd0e658e7a516b47dbf7cbbc"
+    },
+    "bound/build/smart-typing-0.3/retrieval-probe-20260906/short-frequency-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": {
+      "archivedBytes": 15314,
+      "archivedSha256": "8799e9068983c5796518be0335bf5333e07930975aa13442e19ed28b6ce378a2",
+      "decodedBytes": 15314,
+      "decodedSha256": "8799e9068983c5796518be0335bf5333e07930975aa13442e19ed28b6ce378a2",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/retrieval-probe-20260906/short-frequency-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt",
+      "sourceSha256": "8799e9068983c5796518be0335bf5333e07930975aa13442e19ed28b6ce378a2"
+    },
+    "bound/build/smart-typing-0.3/retrieval-probe-20260906/short-frequency-01/variant.patch": {
+      "archivedBytes": 1458,
+      "archivedSha256": "f1d97cbbf169a2a3ebcefda85b4f5d811b8c0715ba17175598bf51aac9b9920f",
+      "decodedBytes": 1458,
+      "decodedSha256": "f1d97cbbf169a2a3ebcefda85b4f5d811b8c0715ba17175598bf51aac9b9920f",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/retrieval-probe-20260906/short-frequency-01/variant.patch",
+      "sourceSha256": "f1d97cbbf169a2a3ebcefda85b4f5d811b8c0715ba17175598bf51aac9b9920f"
+    },
+    "bound/tools/eval/smart-typing-0.3/evaluate.py": {
+      "archivedBytes": 36319,
+      "archivedSha256": "6ad46a46e70366268860538ba688eeba48de909b8796f6f5e398142594920188",
+      "decodedBytes": 36319,
+      "decodedSha256": "6ad46a46e70366268860538ba688eeba48de909b8796f6f5e398142594920188",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/evaluate.py",
+      "sourceSha256": "6ad46a46e70366268860538ba688eeba48de909b8796f6f5e398142594920188"
+    },
+    "bound/tools/eval/smart-typing-0.3/manifest.json": {
+      "archivedBytes": 3377,
+      "archivedSha256": "b70f82f8cb4b1cf6fc811fa1446a7866ba8117828d29a702189da5cd43e42bda",
+      "decodedBytes": 3377,
+      "decodedSha256": "b70f82f8cb4b1cf6fc811fa1446a7866ba8117828d29a702189da5cd43e42bda",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/manifest.json",
+      "sourceSha256": "b70f82f8cb4b1cf6fc811fa1446a7866ba8117828d29a702189da5cd43e42bda"
+    },
+    "bound/tools/eval/smart-typing-0.3/pipeline/FinalProductSpellingReplay.kt": {
+      "archivedBytes": 19882,
+      "archivedSha256": "14401121fe12ec71948f8c61541dee201598b3b5794f3577a768f7e2d5d2f487",
+      "decodedBytes": 19882,
+      "decodedSha256": "14401121fe12ec71948f8c61541dee201598b3b5794f3577a768f7e2d5d2f487",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/FinalProductSpellingReplay.kt",
+      "sourceSha256": "14401121fe12ec71948f8c61541dee201598b3b5794f3577a768f7e2d5d2f487"
+    },
+    "bound/tools/eval/smart-typing-0.3/pipeline/final_product_replay.py": {
+      "archivedBytes": 43365,
+      "archivedSha256": "88d72471eb76384ce7cd063e311b49d1394ea7588cace3381f58d3cc9beea745",
+      "decodedBytes": 43365,
+      "decodedSha256": "88d72471eb76384ce7cd063e311b49d1394ea7588cace3381f58d3cc9beea745",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/final_product_replay.py",
+      "sourceSha256": "88d72471eb76384ce7cd063e311b49d1394ea7588cace3381f58d3cc9beea745"
+    },
+    "bound/tools/eval/smart-typing-0.3/pipeline/results/2026-09-03-combined-calibration/config.json": {
+      "archivedBytes": 2968,
+      "archivedSha256": "ab7d50c19d4401fdca2c20e3ef2fa3e9b9e5a06368d62c7352b8b90042e46858",
+      "decodedBytes": 2968,
+      "decodedSha256": "ab7d50c19d4401fdca2c20e3ef2fa3e9b9e5a06368d62c7352b8b90042e46858",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/results/2026-09-03-combined-calibration/config.json",
+      "sourceSha256": "ab7d50c19d4401fdca2c20e3ef2fa3e9b9e5a06368d62c7352b8b90042e46858"
+    },
+    "bound/tools/eval/smart-typing-0.3/pipeline/results/2026-09-03-deterministic-calibration/width-4-config.json": {
+      "archivedBytes": 2523,
+      "archivedSha256": "920e2a592337475d33b2d13085e8c2751fe09b940deeb20f85e54c0798e8636a",
+      "decodedBytes": 2523,
+      "decodedSha256": "920e2a592337475d33b2d13085e8c2751fe09b940deeb20f85e54c0798e8636a",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/results/2026-09-03-deterministic-calibration/width-4-config.json",
+      "sourceSha256": "920e2a592337475d33b2d13085e8c2751fe09b940deeb20f85e54c0798e8636a"
+    },
+    "bound/tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-command-dot-safety/REPORT.md": {
+      "archivedBytes": 9588,
+      "archivedSha256": "1a7a62b3f2b9d784709d1948a6fb2a45ca108a1f1f9a037a401116c21a3c0e80",
+      "decodedBytes": 9588,
+      "decodedSha256": "1a7a62b3f2b9d784709d1948a6fb2a45ca108a1f1f9a037a401116c21a3c0e80",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-command-dot-safety/REPORT.md",
+      "sourceSha256": "1a7a62b3f2b9d784709d1948a6fb2a45ca108a1f1f9a037a401116c21a3c0e80"
+    },
+    "bound/tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-command-dot-safety/commands.json": {
+      "archivedBytes": 9004,
+      "archivedSha256": "4a5aeaf3ecd6b30e176f234d55c7e5a77fc67a749cdb4c4238076d42ee4b9f0b",
+      "decodedBytes": 9004,
+      "decodedSha256": "4a5aeaf3ecd6b30e176f234d55c7e5a77fc67a749cdb4c4238076d42ee4b9f0b",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-command-dot-safety/commands.json",
+      "sourceSha256": "4a5aeaf3ecd6b30e176f234d55c7e5a77fc67a749cdb4c4238076d42ee4b9f0b"
+    },
+    "bound/tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-command-dot-safety/row-evidence.jsonl.gz": {
+      "archivedBytes": 1446825,
+      "archivedSha256": "b3340f8a076e9753bb8fb11af521a16a153076111c0d1d116e2e7a86ef18b591",
+      "decodedBytes": 1446825,
+      "decodedSha256": "b3340f8a076e9753bb8fb11af521a16a153076111c0d1d116e2e7a86ef18b591",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-command-dot-safety/row-evidence.jsonl.gz",
+      "sourceSha256": "b3340f8a076e9753bb8fb11af521a16a153076111c0d1d116e2e7a86ef18b591"
+    },
+    "bound/tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-command-dot-safety/summary.json.gz": {
+      "archivedBytes": 5454,
+      "archivedSha256": "b5117b8573d62811c42c1e42d88a01d179b142385abe6a397178d066760160c8",
+      "decodedBytes": 51493,
+      "decodedSha256": "e833bee405cc0622d53b0d75634b48eadd233a1caf0f6a51d1bd8b676bca782d",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/results/2026-09-06-command-dot-safety/summary.json",
+      "sourceSha256": "e833bee405cc0622d53b0d75634b48eadd233a1caf0f6a51d1bd8b676bca782d"
+    },
+    "bound/tools/eval/smart-typing-0.3/pipeline/short_policy_evaluation.py": {
+      "archivedBytes": 14152,
+      "archivedSha256": "e0dddb9b67e76beba3aa203202d74c8baf8cfb940621d342862dc9ff475cdd36",
+      "decodedBytes": 14152,
+      "decodedSha256": "e0dddb9b67e76beba3aa203202d74c8baf8cfb940621d342862dc9ff475cdd36",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/short_policy_evaluation.py",
+      "sourceSha256": "e0dddb9b67e76beba3aa203202d74c8baf8cfb940621d342862dc9ff475cdd36"
+    },
+    "bound/tools/eval/smart-typing-0.3/protected-tokens.jsonl.gz": {
+      "archivedBytes": 52562,
+      "archivedSha256": "b4610ce9739f118d89ef72df5174248b9be223a861dd4cbd6a1f4ed5525b822f",
+      "decodedBytes": 933771,
+      "decodedSha256": "5a17511f29c7f7c6b763f7d8b48c12819a38357d95654595016406f873e39d84",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/protected-tokens.jsonl",
+      "sourceSha256": "5a17511f29c7f7c6b763f7d8b48c12819a38357d95654595016406f873e39d84"
+    },
+    "bound/tools/eval/smart-typing-0.3/punctuation-en.jsonl.gz": {
+      "archivedBytes": 5439,
+      "archivedSha256": "dc0fb1de0bd5da93f01ac51c819c640e3cc9d2df6336e18cf16f42f30b92a055",
+      "decodedBytes": 206740,
+      "decodedSha256": "6fbcf0bab9cdd607d3dd9899fdc3186bee936e2565330c2dc14f4776ca77de7c",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/punctuation-en.jsonl",
+      "sourceSha256": "6fbcf0bab9cdd607d3dd9899fdc3186bee936e2565330c2dc14f4776ca77de7c"
+    },
+    "bound/tools/eval/smart-typing-0.3/punctuation-es.jsonl.gz": {
+      "archivedBytes": 5442,
+      "archivedSha256": "e09dead89772d9375d0d97d85789be9c34fbcf592add2290d86c9c5a89c1180f",
+      "decodedBytes": 208060,
+      "decodedSha256": "cf0e61edc0658ad757448507f0bca45409b4806542301de79fc4e62243b03dd7",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/punctuation-es.jsonl",
+      "sourceSha256": "cf0e61edc0658ad757448507f0bca45409b4806542301de79fc4e62243b03dd7"
+    },
+    "bound/tools/eval/smart-typing-0.3/punctuation-ru.jsonl.gz": {
+      "archivedBytes": 6082,
+      "archivedSha256": "3d85f8340d325619e3e82cd56ef625beb187136ce1e260174419ceab0771979a",
+      "decodedBytes": 219045,
+      "decodedSha256": "ba355adb7f8553f8976891e448ccb16030ba350916b020595b2c9808e3bc4fdf",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/punctuation-ru.jsonl",
+      "sourceSha256": "ba355adb7f8553f8976891e448ccb16030ba350916b020595b2c9808e3bc4fdf"
+    },
+    "bound/tools/eval/smart-typing-0.3/spelling-en.jsonl.gz": {
+      "archivedBytes": 65940,
+      "archivedSha256": "c5fbb0c9a8297e5476b9d08b7905b84d2d037bd0abcd943765c97161538f42a7",
+      "decodedBytes": 1610230,
+      "decodedSha256": "7808484045e5f9e082e2f68d7b8c2fc7e74b5e7875d041236f6efa6d2ce7929c",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/spelling-en.jsonl",
+      "sourceSha256": "7808484045e5f9e082e2f68d7b8c2fc7e74b5e7875d041236f6efa6d2ce7929c"
+    },
+    "bound/tools/eval/smart-typing-0.3/spelling-es.jsonl.gz": {
+      "archivedBytes": 65517,
+      "archivedSha256": "e59c8b3687d75375aabc52e8437720d1c301c6b901c47a32a28f1a926dbfdd62",
+      "decodedBytes": 1600508,
+      "decodedSha256": "15d8262790b80846fa9758861f12adb863e79db64dc601b64ffb996a508d249f",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/spelling-es.jsonl",
+      "sourceSha256": "15d8262790b80846fa9758861f12adb863e79db64dc601b64ffb996a508d249f"
+    },
+    "bound/tools/eval/smart-typing-0.3/spelling-ru.jsonl.gz": {
+      "archivedBytes": 74570,
+      "archivedSha256": "f8f34c28302cba92c50d5f1be49d107316c51e138451d0954716f4d6ef09309c",
+      "decodedBytes": 1776050,
+      "decodedSha256": "a0e44bcd7a5df74c07caa2c181c8354746082737cbd728266d1afd6b10250b69",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/spelling-ru.jsonl",
+      "sourceSha256": "a0e44bcd7a5df74c07caa2c181c8354746082737cbd728266d1afd6b10250b69"
+    },
+    "bound/tools/lexicon/smart-typing-0.3/weighted-qualification/manifests/reproduction-toolchain.json": {
+      "archivedBytes": 1421,
+      "archivedSha256": "d67311d36b24fd1cf028b447888c47e393df3b4cab9b9a09b38db43ec9c57006",
+      "decodedBytes": 1421,
+      "decodedSha256": "d67311d36b24fd1cf028b447888c47e393df3b4cab9b9a09b38db43ec9c57006",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/lexicon/smart-typing-0.3/weighted-qualification/manifests/reproduction-toolchain.json",
+      "sourceSha256": "d67311d36b24fd1cf028b447888c47e393df3b4cab9b9a09b38db43ec9c57006"
+    },
+    "reviews/task-short-frequency-policy-review.md": {
+      "archivedBytes": 6764,
+      "archivedSha256": "3931bff5288080eb5277c3629e8e7dbdbe92904c8baeddfb1ea4a7ec345e0a43",
+      "decodedBytes": 6764,
+      "decodedSha256": "3931bff5288080eb5277c3629e8e7dbdbe92904c8baeddfb1ea4a7ec345e0a43",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/.superpowers/sdd/2026-09-02-smart-typing-progress/task-short-frequency-policy-review.md",
+      "sourceSha256": "3931bff5288080eb5277c3629e8e7dbdbe92904c8baeddfb1ea4a7ec345e0a43"
+    },
+    "reviews/task-short-frequency-probe-report.md": {
+      "archivedBytes": 5625,
+      "archivedSha256": "21bc71b5a7c5a3e5f68026eb7c71a5e17349630290bf9f2124a5bb3364fcf101",
+      "decodedBytes": 5625,
+      "decodedSha256": "21bc71b5a7c5a3e5f68026eb7c71a5e17349630290bf9f2124a5bb3364fcf101",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/.superpowers/sdd/2026-09-02-smart-typing-progress/task-short-frequency-probe-report.md",
+      "sourceSha256": "21bc71b5a7c5a3e5f68026eb7c71a5e17349630290bf9f2124a5bb3364fcf101"
+    },
+    "reviews/task-short-policy-calibration-review.md": {
+      "archivedBytes": 7636,
+      "archivedSha256": "638c2281b7fc58a995975acef3be71062e63fc186a6025095c015b4942426f51",
+      "decodedBytes": 7636,
+      "decodedSha256": "638c2281b7fc58a995975acef3be71062e63fc186a6025095c015b4942426f51",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/.superpowers/sdd/2026-09-02-smart-typing-progress/task-short-policy-calibration-review.md",
+      "sourceSha256": "638c2281b7fc58a995975acef3be71062e63fc186a6025095c015b4942426f51"
+    },
+    "reviews/task-short-policy-evaluation-report.md": {
+      "archivedBytes": 7665,
+      "archivedSha256": "d948557424e8f1a9253e1107f4bd7bfb88c9b1644b0ed836194445b99709eed3",
+      "decodedBytes": 7665,
+      "decodedSha256": "d948557424e8f1a9253e1107f4bd7bfb88c9b1644b0ed836194445b99709eed3",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/.superpowers/sdd/2026-09-02-smart-typing-progress/task-short-policy-evaluation-report.md",
+      "sourceSha256": "d948557424e8f1a9253e1107f4bd7bfb88c9b1644b0ed836194445b99709eed3"
+    },
+    "reviews/task-short-policy-holdout-review.md": {
+      "archivedBytes": 7872,
+      "archivedSha256": "a279eceadcde8e29ee89d5949809bea4303d697d94b2c2fc9c21b9655f5345a5",
+      "decodedBytes": 7872,
+      "decodedSha256": "a279eceadcde8e29ee89d5949809bea4303d697d94b2c2fc9c21b9655f5345a5",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/.superpowers/sdd/2026-09-02-smart-typing-progress/task-short-policy-holdout-review.md",
+      "sourceSha256": "a279eceadcde8e29ee89d5949809bea4303d697d94b2c2fc9c21b9655f5345a5"
+    },
+    "run/cal-review-01/commands.json": {
+      "archivedBytes": 1609,
+      "archivedSha256": "7f273b938d6951fe4bd22da2d0b8dff6d43656529d911f80263bcee631fb936e",
+      "decodedBytes": 1609,
+      "decodedSha256": "7f273b938d6951fe4bd22da2d0b8dff6d43656529d911f80263bcee631fb936e",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/cal-review-01/commands.json",
+      "sourceSha256": "7f273b938d6951fe4bd22da2d0b8dff6d43656529d911f80263bcee631fb936e"
+    },
+    "run/cal-review-01/comparison.jsonl.gz": {
+      "archivedBytes": 672389,
+      "archivedSha256": "fa4f1c64f3cc3c291683310c3ebdf583bff702bb98af34a37f1eb72e3ca95a33",
+      "decodedBytes": 32177286,
+      "decodedSha256": "426d5ac726297246e6799f89fe4ca6b239f47f0ac39d5b56d8e21f3d1e96f9dc",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/cal-review-01/comparison.jsonl",
+      "sourceSha256": "426d5ac726297246e6799f89fe4ca6b239f47f0ac39d5b56d8e21f3d1e96f9dc"
+    },
+    "run/cal-review-01/review.py": {
+      "archivedBytes": 6811,
+      "archivedSha256": "09414e73e5ddadf885343d896648d2ff37b518012d11f7fe6fe2cbcd51d8120c",
+      "decodedBytes": 6811,
+      "decodedSha256": "09414e73e5ddadf885343d896648d2ff37b518012d11f7fe6fe2cbcd51d8120c",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/cal-review-01/review.py",
+      "sourceSha256": "09414e73e5ddadf885343d896648d2ff37b518012d11f7fe6fe2cbcd51d8120c"
+    },
+    "run/cal-review-01/summary.json.gz": {
+      "archivedBytes": 10999,
+      "archivedSha256": "6fe594983f40a303b9e0f452ee0672b368db2db29b3757f05cfac1ba9388a883",
+      "decodedBytes": 236367,
+      "decodedSha256": "a6b61964383a8c127faf63dbd7a4e9f25405f3c6e1c338966a0ef2f2b7b604fb",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/cal-review-01/summary.json",
+      "sourceSha256": "a6b61964383a8c127faf63dbd7a4e9f25405f3c6e1c338966a0ef2f2b7b604fb"
+    },
+    "run/calibration-report.json.gz": {
+      "archivedBytes": 4603,
+      "archivedSha256": "6ed5526feb3158ad8e29a425f4ec4ca8feca67b887d65803a87ec5e0c674044f",
+      "decodedBytes": 65667,
+      "decodedSha256": "437da6113e31858098e64f5ca53197e85d56bde6765671baf2b5bef3ec7c80f4",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/calibration-report.json",
+      "sourceSha256": "437da6113e31858098e64f5ca53197e85d56bde6765671baf2b5bef3ec7c80f4"
+    },
+    "run/calibration-scores/complete.json": {
+      "archivedBytes": 2448,
+      "archivedSha256": "1fe5930588b2a2cd1aa1cb6a3622732f0c224397695871e24d96dc6bbe3e5233",
+      "decodedBytes": 2448,
+      "decodedSha256": "1fe5930588b2a2cd1aa1cb6a3622732f0c224397695871e24d96dc6bbe3e5233",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/calibration-scores/complete.json",
+      "sourceSha256": "1fe5930588b2a2cd1aa1cb6a3622732f0c224397695871e24d96dc6bbe3e5233"
+    },
+    "run/calibration-scores/scores.jsonl.gz": {
+      "archivedBytes": 108092,
+      "archivedSha256": "bd73ba51572f05748520dd1b8933b4ae450b8b33a38bf4676bd909b68de28401",
+      "decodedBytes": 1000483,
+      "decodedSha256": "92d95131eee4f7d1e1456ab5137ca6091dcacee7980d1ed5e4c4236c77113aa4",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/calibration-scores/scores.jsonl",
+      "sourceSha256": "92d95131eee4f7d1e1456ab5137ca6091dcacee7980d1ed5e4c4236c77113aa4"
+    },
+    "run/compile.log": {
+      "archivedBytes": 0,
+      "archivedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "decodedBytes": 0,
+      "decodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/compile.log",
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "run/deliveries-calibration.jsonl.gz": {
+      "archivedBytes": 162614,
+      "archivedSha256": "b4e5d244eac39b5acfd99bfe02d13763cdc215afd240ced112ae28a713c57b67",
+      "decodedBytes": 1659460,
+      "decodedSha256": "f220214e47d9294e27d89655007f23919c743e9debc52e34331b1bf6b97d665f",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/deliveries-calibration.jsonl",
+      "sourceSha256": "f220214e47d9294e27d89655007f23919c743e9debc52e34331b1bf6b97d665f"
+    },
+    "run/deliveries-calibration.tsv.gz": {
+      "archivedBytes": 154642,
+      "archivedSha256": "fbe5c174a4319c0160a477e6e02a772f240bf3927781806b4e387fd5406ad1ee",
+      "decodedBytes": 758700,
+      "decodedSha256": "23e49ff9d7cdcce461a926350ae632bd617c2e14fbfbd7fbd45621f645cb9800",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/deliveries-calibration.tsv",
+      "sourceSha256": "23e49ff9d7cdcce461a926350ae632bd617c2e14fbfbd7fbd45621f645cb9800"
+    },
+    "run/deliveries-holdout.jsonl.gz": {
+      "archivedBytes": 165653,
+      "archivedSha256": "0f50b0f3330405fd71b6e9723bce8d5468620ea6469ed302ee64ff9670e4c9bb",
+      "decodedBytes": 1617595,
+      "decodedSha256": "797cbfc6b1e90c07b5cfc07d3a28a44d899903e99c6d291d19057e6efa3e73a8",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/deliveries-holdout.jsonl",
+      "sourceSha256": "797cbfc6b1e90c07b5cfc07d3a28a44d899903e99c6d291d19057e6efa3e73a8"
+    },
+    "run/deliveries-holdout.tsv.gz": {
+      "archivedBytes": 156970,
+      "archivedSha256": "58bdb566181a0e809cdeb4cfa9f0a5df16b96c65596be53b9d08569d451ab396",
+      "decodedBytes": 734404,
+      "decodedSha256": "a4d94f0cb509c4b556a8ba14b5fea564dd88878236c981eaf6c3b46bdd14293a",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/deliveries-holdout.tsv",
+      "sourceSha256": "a4d94f0cb509c4b556a8ba14b5fea564dd88878236c981eaf6c3b46bdd14293a"
+    },
+    "run/export-receipt.json": {
+      "archivedBytes": 30989,
+      "archivedSha256": "bc00910e3b779dae3bbdec0d3ec75d44858e908a3ef62faa6e76ba56e30f6bc6",
+      "decodedBytes": 30989,
+      "decodedSha256": "bc00910e3b779dae3bbdec0d3ec75d44858e908a3ef62faa6e76ba56e30f6bc6",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/export-receipt.json",
+      "sourceSha256": "bc00910e3b779dae3bbdec0d3ec75d44858e908a3ef62faa6e76ba56e30f6bc6"
+    },
+    "run/hold-review-01/commands.json": {
+      "archivedBytes": 1610,
+      "archivedSha256": "2785a969ad9d1934a71f06d538571782816de7805778eed4066a1b914d773885",
+      "decodedBytes": 1610,
+      "decodedSha256": "2785a969ad9d1934a71f06d538571782816de7805778eed4066a1b914d773885",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/hold-review-01/commands.json",
+      "sourceSha256": "2785a969ad9d1934a71f06d538571782816de7805778eed4066a1b914d773885"
+    },
+    "run/hold-review-01/comparison.jsonl.gz": {
+      "archivedBytes": 672011,
+      "archivedSha256": "2cc15ca8047e3b0aabd01462f4c9da869bc1687d3c826fe2e478d46ac7cc4282",
+      "decodedBytes": 31611615,
+      "decodedSha256": "1aee65e233ea65a49d3afe8afef36c10bc2ed31d49123ecab830f4618f8075f7",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/hold-review-01/comparison.jsonl",
+      "sourceSha256": "1aee65e233ea65a49d3afe8afef36c10bc2ed31d49123ecab830f4618f8075f7"
+    },
+    "run/hold-review-01/review.py": {
+      "archivedBytes": 8559,
+      "archivedSha256": "dc50cbcfb3fb943faa8eea4e44b617e3d395b54db8347c4b5c9c0ddaa71ea717",
+      "decodedBytes": 8559,
+      "decodedSha256": "dc50cbcfb3fb943faa8eea4e44b617e3d395b54db8347c4b5c9c0ddaa71ea717",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/hold-review-01/review.py",
+      "sourceSha256": "dc50cbcfb3fb943faa8eea4e44b617e3d395b54db8347c4b5c9c0ddaa71ea717"
+    },
+    "run/hold-review-01/summary.json.gz": {
+      "archivedBytes": 12983,
+      "archivedSha256": "1d71d177a9e40a17eb02edfc6dd5af51313ed8d4152a6a870200045bf4bdf092",
+      "decodedBytes": 245154,
+      "decodedSha256": "f5c9493cd336a1adc31d6e767b1a727d3c62a08db8d302dfcd7a36a2f10e6f4e",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/hold-review-01/summary.json",
+      "sourceSha256": "f5c9493cd336a1adc31d6e767b1a727d3c62a08db8d302dfcd7a36a2f10e6f4e"
+    },
+    "run/holdout-report.json.gz": {
+      "archivedBytes": 4828,
+      "archivedSha256": "66e8404841d4d65a82a91ca6caf7c35f1a9be92aa059f1d20c6002ead921762d",
+      "decodedBytes": 65902,
+      "decodedSha256": "a022e01f43081806ebe4ccca446d492a00ce15b48a4e9cbccada41c682a61149",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/holdout-report.json",
+      "sourceSha256": "a022e01f43081806ebe4ccca446d492a00ce15b48a4e9cbccada41c682a61149"
+    },
+    "run/holdout-scores/complete.json": {
+      "archivedBytes": 2506,
+      "archivedSha256": "9f752a3c5a8081e644c3df9550cb543de2fd9687abd85717016f2a2bebfb0416",
+      "decodedBytes": 2506,
+      "decodedSha256": "9f752a3c5a8081e644c3df9550cb543de2fd9687abd85717016f2a2bebfb0416",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/holdout-scores/complete.json",
+      "sourceSha256": "9f752a3c5a8081e644c3df9550cb543de2fd9687abd85717016f2a2bebfb0416"
+    },
+    "run/holdout-scores/scores.jsonl.gz": {
+      "archivedBytes": 110136,
+      "archivedSha256": "d504410fc2a9c693e3722cb201f88cf7334660aaae0372d7cd4b40778fe8e377",
+      "decodedBytes": 967365,
+      "decodedSha256": "3896968817591ee4a4c0dbce29248827e237d16da0c68fb103270254bb013a5c",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/holdout-scores/scores.jsonl",
+      "sourceSha256": "3896968817591ee4a4c0dbce29248827e237d16da0c68fb103270254bb013a5c"
+    },
+    "run/inputs.tsv.gz": {
+      "archivedBytes": 125191,
+      "archivedSha256": "b1dba84e6d6fc1a9595628bde1490604aa033021a24d7e21351c47a15b8d49af",
+      "decodedBytes": 1278778,
+      "decodedSha256": "b828dc8c5f57e5996a0a88442297c004b4939dadd74f15d9b101dadc8618e415",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/inputs.tsv",
+      "sourceSha256": "b828dc8c5f57e5996a0a88442297c004b4939dadd74f15d9b101dadc8618e415"
+    },
+    "run/no-requests-calibration.jsonl.gz": {
+      "archivedBytes": 8665,
+      "archivedSha256": "774abaaa4e829daa0cb84397da88e2ed20e5ac070860bb751fd09ab4ea168e23",
+      "decodedBytes": 190928,
+      "decodedSha256": "fbc9c2cf0800f95fb803c7de59bf332a56b7d70b675b30f3e2ff9a69e96ff01b",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/no-requests-calibration.jsonl",
+      "sourceSha256": "fbc9c2cf0800f95fb803c7de59bf332a56b7d70b675b30f3e2ff9a69e96ff01b"
+    },
+    "run/no-requests-holdout.jsonl.gz": {
+      "archivedBytes": 8607,
+      "archivedSha256": "3caedf1db4e280698754aaa2223ef1fa3642d21d33c4ef692adb5329ad11326e",
+      "decodedBytes": 167166,
+      "decodedSha256": "1a3bbd2ed6c8a8bb640726fc1933846f1eff15822ff32eef3cdad4ebb893b1bb",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/no-requests-holdout.jsonl",
+      "sourceSha256": "1a3bbd2ed6c8a8bb640726fc1933846f1eff15822ff32eef3cdad4ebb893b1bb"
+    },
+    "run/observations.jsonl.gz": {
+      "archivedBytes": 1503154,
+      "archivedSha256": "541adef8cd24a6c7dca446e799209193665fd1928bcc8b5ca3be6c9714a87567",
+      "decodedBytes": 56647714,
+      "decodedSha256": "78d5d9c954205f48c2fe4dd0154b37a69c05f6c665bfae8dd9d8758a2ce50db0",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/observations.jsonl",
+      "sourceSha256": "78d5d9c954205f48c2fe4dd0154b37a69c05f6c665bfae8dd9d8758a2ce50db0"
+    },
+    "run/observations.log": {
+      "archivedBytes": 574,
+      "archivedSha256": "a19077c9f8ac9808b5e4445610c97837bfa32cb35835f6c1bfb61670212ad7e1",
+      "decodedBytes": 574,
+      "decodedSha256": "a19077c9f8ac9808b5e4445610c97837bfa32cb35835f6c1bfb61670212ad7e1",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/observations.log",
+      "sourceSha256": "a19077c9f8ac9808b5e4445610c97837bfa32cb35835f6c1bfb61670212ad7e1"
+    },
+    "run/policy-freeze.json": {
+      "archivedBytes": 2248,
+      "archivedSha256": "6042413ee2814beaeec68880209352c0c62525710f78dc9d19727a8e9f35820c",
+      "decodedBytes": 2248,
+      "decodedSha256": "6042413ee2814beaeec68880209352c0c62525710f78dc9d19727a8e9f35820c",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/policy-freeze.json",
+      "sourceSha256": "6042413ee2814beaeec68880209352c0c62525710f78dc9d19727a8e9f35820c"
+    },
+    "run/replay-calibration-ready.jsonl.gz": {
+      "archivedBytes": 1165980,
+      "archivedSha256": "d05f71105b10964f135f548b9e7c01a06931146cae46e6ffa78a9121afa87f17",
+      "decodedBytes": 40032498,
+      "decodedSha256": "1a7244d743a7d7458f3f09675e4aa5e426ae6fe0c958108ef5692a6333f26092",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/replay-calibration-ready.jsonl",
+      "sourceSha256": "1a7244d743a7d7458f3f09675e4aa5e426ae6fe0c958108ef5692a6333f26092"
+    },
+    "run/replay-calibration-ready.log": {
+      "archivedBytes": 351,
+      "archivedSha256": "ad84e9369d5f5b8c740c784f0d25b080549f8d352c95b59ab6cfd4505f38b44d",
+      "decodedBytes": 351,
+      "decodedSha256": "ad84e9369d5f5b8c740c784f0d25b080549f8d352c95b59ab6cfd4505f38b44d",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/replay-calibration-ready.log",
+      "sourceSha256": "ad84e9369d5f5b8c740c784f0d25b080549f8d352c95b59ab6cfd4505f38b44d"
+    },
+    "run/replay-calibration-unavailable.jsonl.gz": {
+      "archivedBytes": 1102672,
+      "archivedSha256": "c9c2eafd18265dc25c472d6d77fea06efd4fd91600336b9d3ffa6bffb835d935",
+      "decodedBytes": 38309169,
+      "decodedSha256": "63526a7a88084dd78430087269c694ea87ef8dae02ea3b8370564e8109eaf87c",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/replay-calibration-unavailable.jsonl",
+      "sourceSha256": "63526a7a88084dd78430087269c694ea87ef8dae02ea3b8370564e8109eaf87c"
+    },
+    "run/replay-calibration-unavailable.log": {
+      "archivedBytes": 351,
+      "archivedSha256": "ad84e9369d5f5b8c740c784f0d25b080549f8d352c95b59ab6cfd4505f38b44d",
+      "decodedBytes": 351,
+      "decodedSha256": "ad84e9369d5f5b8c740c784f0d25b080549f8d352c95b59ab6cfd4505f38b44d",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/replay-calibration-unavailable.log",
+      "sourceSha256": "ad84e9369d5f5b8c740c784f0d25b080549f8d352c95b59ab6cfd4505f38b44d"
+    },
+    "run/replay-holdout-ready.jsonl.gz": {
+      "archivedBytes": 1177088,
+      "archivedSha256": "f03c70da21a9b945f3ffc08a0cc0fff333ece6d94268d0581ad0d70fad57bc51",
+      "decodedBytes": 41134815,
+      "decodedSha256": "bec55e0c642b844fe4f60d750152987a6183b1bff11ff5b1bf7a6ce5aedb7dd6",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/replay-holdout-ready.jsonl",
+      "sourceSha256": "bec55e0c642b844fe4f60d750152987a6183b1bff11ff5b1bf7a6ce5aedb7dd6"
+    },
+    "run/replay-holdout-ready.log": {
+      "archivedBytes": 313,
+      "archivedSha256": "bc6df913eebaa6bcc3a138f8bd5a3623e08a17a95273ee4f85953254e0ea8973",
+      "decodedBytes": 313,
+      "decodedSha256": "bc6df913eebaa6bcc3a138f8bd5a3623e08a17a95273ee4f85953254e0ea8973",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/replay-holdout-ready.log",
+      "sourceSha256": "bc6df913eebaa6bcc3a138f8bd5a3623e08a17a95273ee4f85953254e0ea8973"
+    },
+    "run/replay-holdout-unavailable.jsonl.gz": {
+      "archivedBytes": 1116486,
+      "archivedSha256": "3f9502d7e61016ba9b185f6c29c75013846e9ae37d1e7e50f4e8e7a0802aa36d",
+      "decodedBytes": 39508319,
+      "decodedSha256": "d8b621f3f1b22eebc805fd339fe6acdc8187069c8f8a11b6a42dec22a79d5213",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/replay-holdout-unavailable.jsonl",
+      "sourceSha256": "d8b621f3f1b22eebc805fd339fe6acdc8187069c8f8a11b6a42dec22a79d5213"
+    },
+    "run/replay-holdout-unavailable.log": {
+      "archivedBytes": 313,
+      "archivedSha256": "bc6df913eebaa6bcc3a138f8bd5a3623e08a17a95273ee4f85953254e0ea8973",
+      "decodedBytes": 313,
+      "decodedSha256": "bc6df913eebaa6bcc3a138f8bd5a3623e08a17a95273ee4f85953254e0ea8973",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/replay-holdout-unavailable.log",
+      "sourceSha256": "bc6df913eebaa6bcc3a138f8bd5a3623e08a17a95273ee4f85953254e0ea8973"
+    },
+    "run/requests-calibration.jsonl.gz": {
+      "archivedBytes": 53084,
+      "archivedSha256": "459d58934fc7793e1a8d581eb5e380bb5f83300a13ef981aa93c4b3ace27e3ad",
+      "decodedBytes": 731404,
+      "decodedSha256": "ad2d4cf668555a90ea16f28138447048007df041f6c59a93987eb876bf39cc8d",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/requests-calibration.jsonl",
+      "sourceSha256": "ad2d4cf668555a90ea16f28138447048007df041f6c59a93987eb876bf39cc8d"
+    },
+    "run/requests-holdout.jsonl.gz": {
+      "archivedBytes": 53159,
+      "archivedSha256": "a1f7cfe4bc4102b78336c28817333db7b1ad0d609ee1deef25227372848ef5d2",
+      "decodedBytes": 710546,
+      "decodedSha256": "bff929c467884a998d952b032e0814d9816d5ca4e6393404172db402987c2c2c",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/requests-holdout.jsonl",
+      "sourceSha256": "bff929c467884a998d952b032e0814d9816d5ca4e6393404172db402987c2c2c"
+    },
+    "run/row-evidence-calibration.jsonl.gz": {
+      "archivedBytes": 2765666,
+      "archivedSha256": "dff8076bc00a9e113c8735fda0ceb04bfdc20631ac991010cda10e13200e5f7c",
+      "decodedBytes": 89258292,
+      "decodedSha256": "5d718ccdaf183be50464b6d5d2c697fcae1d387e157ab889264b218eace9214c",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/row-evidence-calibration.jsonl",
+      "sourceSha256": "5d718ccdaf183be50464b6d5d2c697fcae1d387e157ab889264b218eace9214c"
+    },
+    "run/row-evidence-holdout.jsonl.gz": {
+      "archivedBytes": 2776384,
+      "archivedSha256": "43a7502c1e6666fa808b70b1b64bb73f20b2c9c494d37ee67e4022f8d5229d9c",
+      "decodedBytes": 91390176,
+      "decodedSha256": "3d972d8350ac6594e1a6b51a2a6d247424fdf7b1a4309a30a8eba0bff311daf6",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/row-evidence-holdout.jsonl",
+      "sourceSha256": "3d972d8350ac6594e1a6b51a2a6d247424fdf7b1a4309a30a8eba0bff311daf6"
+    },
+    "run/rows.jsonl.gz": {
+      "archivedBytes": 259079,
+      "archivedSha256": "fcec678a47d2a976fa0f59c20fdd2332d845083298794cdfbe12e559a0162115",
+      "decodedBytes": 5920559,
+      "decodedSha256": "d6a346911a5fb4476ee16e45ca5672f0ed75076cdb799c6fbad0ba042867b081",
+      "encoding": "gzip-mtime-zero",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/rows.jsonl",
+      "sourceSha256": "d6a346911a5fb4476ee16e45ca5672f0ed75076cdb799c6fbad0ba042867b081"
+    },
+    "run/source-freeze.json": {
+      "archivedBytes": 24092,
+      "archivedSha256": "aa17ff21c4d28a25aac6b929962b38debbbe91650f0a957afd3cb05bedd60b00",
+      "decodedBytes": 24092,
+      "decodedSha256": "aa17ff21c4d28a25aac6b929962b38debbbe91650f0a957afd3cb05bedd60b00",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/build/smart-typing-0.3/short-policy-evaluation-20260906/source-freeze.json",
+      "sourceSha256": "aa17ff21c4d28a25aac6b929962b38debbbe91650f0a957afd3cb05bedd60b00"
+    },
+    "tools/original_applicability.py": {
+      "archivedBytes": 4691,
+      "archivedSha256": "25cb79bd88c0e553133fc88588c3b22394d299370d3f9e8d32ad1507e0d86db9",
+      "decodedBytes": 4691,
+      "decodedSha256": "25cb79bd88c0e553133fc88588c3b22394d299370d3f9e8d32ad1507e0d86db9",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/original_applicability.py",
+      "sourceSha256": "25cb79bd88c0e553133fc88588c3b22394d299370d3f9e8d32ad1507e0d86db9"
+    },
+    "tools/test_final_product_replay.py": {
+      "archivedBytes": 16193,
+      "archivedSha256": "52ee32573e8e3316f0c40292a3900a0fc4665191dd002aed23f205510eadfaed",
+      "decodedBytes": 16193,
+      "decodedSha256": "52ee32573e8e3316f0c40292a3900a0fc4665191dd002aed23f205510eadfaed",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/test_final_product_replay.py",
+      "sourceSha256": "52ee32573e8e3316f0c40292a3900a0fc4665191dd002aed23f205510eadfaed"
+    },
+    "tools/test_original_applicability.py": {
+      "archivedBytes": 2772,
+      "archivedSha256": "2016d356743bbb62a67e781e52bead34967a26a5820ac0f72ce34569ac6a9db3",
+      "decodedBytes": 2772,
+      "decodedSha256": "2016d356743bbb62a67e781e52bead34967a26a5820ac0f72ce34569ac6a9db3",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/test_original_applicability.py",
+      "sourceSha256": "2016d356743bbb62a67e781e52bead34967a26a5820ac0f72ce34569ac6a9db3"
+    },
+    "tools/test_short_policy_evaluation.py": {
+      "archivedBytes": 10140,
+      "archivedSha256": "1a675630ed9f4548e4f2de1840b7de992d825596e96aaa39b25cee2fec071be0",
+      "decodedBytes": 10140,
+      "decodedSha256": "1a675630ed9f4548e4f2de1840b7de992d825596e96aaa39b25cee2fec071be0",
+      "encoding": "identity",
+      "sourcePath": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/test_short_policy_evaluation.py",
+      "sourceSha256": "1a675630ed9f4548e4f2de1840b7de992d825596e96aaa39b25cee2fec071be0"
+    }
+  },
+  "excludedBoundArtifacts": {
+    "/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/2.2.10/6882d39ef03b18879c1a5d2a83c2212361bed5fe/kotlin-compiler-embeddable-2.2.10.jar": {
+      "bytes": 56259401,
+      "reason": "external runtime/toolchain or excluded model/executable",
+      "sha256": "79628fd5d64b4692a62f98962baab00e9076a37e2cffd6ace33cd0b7be7d1cdf"
+    },
+    "/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/2.2.10/98d0ca9819d98cb3aa5c0a25793830b6659feee2/kotlin-reflect-2.2.10.jar": {
+      "bytes": 3298629,
+      "reason": "external runtime/toolchain or excluded model/executable",
+      "sha256": "c48db4f8cd1bfd67f72d59255065fb41bfda43ca2942dac4d9deb897aa126ba4"
+    },
+    "/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.2.10/30de6faa127a4a012db8e71bf1b9c0a99b1402b2/kotlin-stdlib-2.2.10.jar": {
+      "bytes": 1750374,
+      "reason": "external runtime/toolchain or excluded model/executable",
+      "sha256": "9c67cc79efd6b9215b49d2a4308f5f3433537376c7c88e89bdd6729bd096e61a"
+    },
+    "/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm/1.8.0/ac1dc37a30a93150b704022f8d895ee1bd3a36b3/kotlinx-coroutines-core-jvm-1.8.0.jar": {
+      "bytes": 1548360,
+      "reason": "external runtime/toolchain or excluded model/executable",
+      "sha256": "9860906a1937490bf5f3b06d2f0e10ef451e65b95b269f22daf68a3d1f5065c5"
+    },
+    "/Users/avm/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar": {
+      "bytes": 17536,
+      "reason": "external runtime/toolchain or excluded model/executable",
+      "sha256": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478"
+    },
+    "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/bin/java": {
+      "bytes": 69600,
+      "reason": "external runtime/toolchain or excluded model/executable",
+      "sha256": "4ac51957da9d64cc468d4ce67fc2f53644edc5585f8c4c92ce08ea30ee71db8a"
+    },
+    "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/lib/libjli.dylib": {
+      "bytes": 113008,
+      "reason": "external runtime/toolchain or excluded model/executable",
+      "sha256": "ef88536cc4a8c38c1708c4ddce298be6a7f5e6908c7b13dbd3478be77ae373ee"
+    },
+    "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/lib/modules": {
+      "bytes": 128752412,
+      "reason": "external runtime/toolchain or excluded model/executable",
+      "sha256": "2aaae6c309bdb746e48a185146fcc2b6a6ecbbe8e9809c6ad841931170c3b3c3"
+    },
+    "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/lib/server/libjvm.dylib": {
+      "bytes": 14352592,
+      "reason": "external runtime/toolchain or excluded model/executable",
+      "sha256": "0b1db6754ccc748ef2f8b9bbc70774f43e810c9f69bca55f0d4505b38de7c731"
+    },
+    "/opt/homebrew/Cellar/openjdk@17/17.0.20.1/libexec/openjdk.jdk/Contents/Home/release": {
+      "bytes": 1256,
+      "reason": "external runtime/toolchain or excluded model/executable",
+      "sha256": "8fcb6a758ae6c9b2e5bb5fee9687c14dd41e5b8bbd415cc220bfa9a4dcbf46f8"
+    },
+    "/opt/homebrew/share/android-commandlinetools/platforms/android-37.0/android.jar": {
+      "bytes": 43044472,
+      "reason": "external runtime/toolchain or excluded model/executable",
+      "sha256": "bf1b4387cc7ca94fc6ef684f040d9d16fbf16248e181819f020736ea2053f177"
+    },
+    "build/smart-typing-0.3/model/rune-text-v1-0.1.0-q4_k_m.gguf": {
+      "bytes": 396704416,
+      "reason": "external runtime/toolchain or excluded model/executable",
+      "sha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4"
+    },
+    "build/smart-typing-0.3/native-current-20260906/rune-score": {
+      "bytes": 4694968,
+      "reason": "external runtime/toolchain or excluded model/executable",
+      "sha256": "bc3f78bdf3ac41009a7603ca5dd6b6c4d5e8d6c2bdcaf3a692cfd95a3b3d2553"
+    },
+    "build/smart-typing-0.3/short-policy-evaluation-20260906/final-product-spelling-replay.jar": {
+      "bytes": 397406,
+      "reason": "excluded executable/model artifact",
+      "sha256": "aecc98ac28d80519cbf765415edddb03c32ca975f235c2442992936f7e8c5507"
+    }
+  },
+  "policyFreezeSha256": "6042413ee2814beaeec68880209352c0c62525710f78dc9d19727a8e9f35820c",
+  "productionPromotionApproved": false,
+  "schemaVersion": 1,
+  "scope": "immutable revealed-data changed-policy evidence archive",
+  "sourceFreezeSha256": "aa17ff21c4d28a25aac6b929962b38debbbe91650f0a957afd3cb05bedd60b00"
+}

@@ -1,0 +1,35 @@
+{
+  "calibrationCompleteSha256": "1fe5930588b2a2cd1aa1cb6a3622732f0c224397695871e24d96dc6bbe3e5233",
+  "calibrationReportSha256": "437da6113e31858098e64f5ca53197e85d56bde6765671baf2b5bef3ec7c80f4",
+  "calibrationScoresSha256": "92d95131eee4f7d1e1456ab5137ca6091dcacee7980d1ed5e4c4236c77113aa4",
+  "candidatePolicy": {
+    "acceptanceScope": "revealed-data candidate-policy acceptance",
+    "coefficientsChanged": false,
+    "experiment": "revealed-data-short-frequency-candidate-policy-acceptance-v1",
+    "files": {
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370",
+      "build/smart-typing-0.3/retrieval-probe-20260906/short-frequency-01/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "8799e9068983c5796518be0335bf5333e07930975aa13442e19ed28b6ce378a2",
+      "build/smart-typing-0.3/retrieval-probe-20260906/short-frequency-01/variant.patch": "f1d97cbbf169a2a3ebcefda85b4f5d811b8c0715ba17175598bf51aac9b9920f",
+      "tools/eval/smart-typing-0.3/pipeline/final_product_replay.py": "88d72471eb76384ce7cd063e311b49d1394ea7588cace3381f58d3cc9beea745",
+      "tools/eval/smart-typing-0.3/pipeline/short_policy_evaluation.py": "e0dddb9b67e76beba3aa203202d74c8baf8cfb940621d342862dc9ff475cdd36"
+    },
+    "maximumAlternatives": 3,
+    "maximumStates": 8192,
+    "maximumVerifiedTerminals": 64,
+    "policyChanged": true,
+    "productionPromotionApproved": false,
+    "qualification": "hypothetical CURRENT admission for experiment only",
+    "thresholdFittingPerformed": false
+  },
+  "coefficientsChanged": false,
+  "combinedConfigSha256": "ab7d50c19d4401fdca2c20e3ef2fa3e9b9e5a06368d62c7352b8b90042e46858",
+  "complete": true,
+  "deterministicConfigSha256": "920e2a592337475d33b2d13085e8c2751fe09b940deeb20f85e54c0798e8636a",
+  "experiment": "revealed-data-short-frequency-candidate-policy-acceptance-v1",
+  "exportReceiptSha256": "bc00910e3b779dae3bbdec0d3ec75d44858e908a3ef62faa6e76ba56e30f6bc6",
+  "holdoutObservedForSelection": false,
+  "policyChanged": true,
+  "schemaVersion": 1,
+  "stage": "changed-candidate-policy-freeze",
+  "thresholdFittingPerformed": false
+}
