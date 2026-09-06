@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:53.969Z" hostname="Mac.dlink" time="0.006">
+  <properties/>
+  <testcase name="future schema preserves marker data and explicit stored choices while effective smart typing stays off" classname="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" time="0.001"/>
+  <testcase name="every existing writer migrates legacy smart values atomically without losing unknown data" classname="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" time="0.004"/>
+  <testcase name="concurrent facades cannot overwrite an independent update from a stale migration snapshot" classname="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" time="0.0"/>
+  <testcase name="every write stamps the schema version" classname="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" time="0.0"/>
+  <testcase name="reading fresh legacy malformed and future preferences never persists" classname="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" time="0.0"/>
+  <testcase name="missing schema three fields remain off after unrelated writers" classname="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" time="0.0"/>
+  <testcase name="listeners are notified about written keys and stop after unregistering" classname="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" time="0.001"/>
+  <testcase name="a fresh store reads the defaults" classname="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" time="0.0"/>
+  <testcase name="all new writers round trip every mode and boolean while preserving independent preferences" classname="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" time="0.0"/>
+  <testcase name="unrelated migration never re enables individually malformed smart preferences" classname="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" time="0.0"/>
+  <testcase name="writes round-trip through the snapshot" classname="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" time="0.0"/>
+  <testcase name="malformed schema repairs to three safely and an explicit choice wins over normalization" classname="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" time="0.0"/>
+  <testcase name="an empty language list is refused" classname="io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

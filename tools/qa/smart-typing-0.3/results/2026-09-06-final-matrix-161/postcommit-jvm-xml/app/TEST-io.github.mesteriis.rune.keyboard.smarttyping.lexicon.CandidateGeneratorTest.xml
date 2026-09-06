@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" tests="28" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:54.529Z" hostname="Mac.dlink" time="0.021">
+  <properties/>
+  <testcase name="canonical auto eligibility requires agreement from every present routed language" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="unrepresentable title expansion cannot consume one of seven alternatives" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="unit admission is independent of weighted cost and changes radius at five scalars" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="checked exact and scan exceptions become safe results and allow clean followup" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.002"/>
+  <testcase name="unknown cancelled or exhausted competing membership never enables canonical auto" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.001"/>
+  <testcase name="dedup and fallback quota apply after full ranking and keep filling seven unique slots" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="reader contract violations fail closed and clear references" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="valid primary or fallback words are original only even when another valid word is nearby" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="cheaper fallback wins before prior but only two fallback representations survive" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="cancellation before during and after scan returns no payload and cleans reusable scratch" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.001"/>
+  <testcase name="case expansion display collisions deduplicate before final selection" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="checked reader exception after exhaustion discards partials and respects cancellation" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.007"/>
+  <testcase name="payload-bearing diagnostics redact original display and canonical key sentinels" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.001"/>
+  <testcase name="fatal error propagates while finally releases owned candidate scratch" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="unavailable exact or scan cannot publish a supposedly complete result" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="both exhausted statuses preserve dedup quota and best verified seven with no automatic eligibility" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.002"/>
+  <testcase name="lowercase valid proper noun exposes canonical title case without automatic eligibility" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.001"/>
+  <testcase name="script and Spanish accents route before layout and preserve canonical accents and title case" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="verified cap is shared and charges losers and duplicates before topN" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.001"/>
+  <testcase name="late weighted winner is evaluated even after seven unit neighbors" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.001"/>
+  <testcase name="states are shared by both exact lookups and both scans with exact limit completion" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="unit and repetition features are retained without negative cost discounts" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="exact lookup exhaustion cannot be mistaken for an absent original" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="interrupted reader work preserves thread interrupt and returns cancelled without payload" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.001"/>
+  <testcase name="reader exception after accepted candidate cleans scratch without retaining its message" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="protected input never calls a lexicon and keeps the exact original" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.0"/>
+  <testcase name="late cancellation during partial selection discards verified alternatives after either cap" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.001"/>
+  <testcase name="equal ranked display collisions retain identical full feature snapshots in either order" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

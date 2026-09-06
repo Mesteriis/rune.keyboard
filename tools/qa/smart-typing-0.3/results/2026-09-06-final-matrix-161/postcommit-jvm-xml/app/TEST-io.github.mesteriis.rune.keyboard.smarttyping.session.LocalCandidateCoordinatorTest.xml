@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" tests="58" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:54.797Z" hostname="Mac.dlink" time="0.782">
+  <properties/>
+  <testcase name="missing model readiness and inactive model functions never prepare on an edit" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.002"/>
+  <testcase name="manual correction then Original restores exact segment without a second generation" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.006"/>
+  <testcase name="callback checks current language even if an external caller omitted invalidation" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.001"/>
+  <testcase name="privacy selection and view ownership veto even fully qualified hidden automation" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.0"/>
+  <testcase name="queued callback after close cannot retain presentation or recreate worker" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.007"/>
+  <testcase name="contextual close punctuation rivals stay Original" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.016"/>
+  <testcase name="disable policy cancels blocked search preserves composition and rejects stale correction" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.029"/>
+  <testcase name="space deadline rejects callback even when its expiry timer has not run" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.016"/>
+  <testcase name="hidden model branch accepts ready result without rendering or scheduling at boundary" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.009"/>
+  <testcase name="typing retires pause and stale model callbacks cannot cross word boundary" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.015"/>
+  <testcase name="model readiness connection and render never replay old composition" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.015"/>
+  <testcase name="valid word does not score or discard the prepared binding and close retires delayed work" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.016"/>
+  <testcase name="stale tap does not cancel the latest active request" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.015"/>
+  <testcase name="hiding strip retires suggestion model even when deterministic automation remains eligible" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.013"/>
+  <testcase name="post-space policy privacy lifecycle and process loss discard reply" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.043"/>
+  <testcase name="spelling settings preserve mechanical transaction and its immediate raw Undo" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.001"/>
+  <testcase name="queued callback after owner invalidation cannot publish" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.008"/>
+  <testcase name="OFF Original after manual correction keeps the currently displayed composing word" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.007"/>
+  <testcase name="contextual result is suggestion only and stale reply cannot mutate or render" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.015"/>
+  <testcase name="actual edit can prepare Ready model while the local lexicon is still loading" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.0"/>
+  <testcase name="valid word contextual request is bounded and explicit tap changes only owned boundary" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.012"/>
+  <testcase name="qualified deterministic correction and Undo work with hidden strip and zero model demand" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.007"/>
+  <testcase name="reader failure then next valid edit succeeds without replacing worker" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.014"/>
+  <testcase name="reentrant lifecycle boundary after command does not submit into the next session" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.0"/>
+  <testcase name="space preserves in-flight work and next key cancels its ownership" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.008"/>
+  <testcase name="unqualified mode and strip combinations admit only the visible manual consumer" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.015"/>
+  <testcase name="hidden automatic branches request only their qualified local or model work" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.081"/>
+  <testcase name="sentence contextual tap capitalizes first code point only" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.011"/>
+  <testcase name="queued reply checks disabled mode and strip even without caller invalidation" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.015"/>
+  <testcase name="boundary action consumes accepted decision after cancelling pending work" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.008"/>
+  <testcase name="contextual Original decision completes the revision without a duplicate request" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.015"/>
+  <testcase name="each accepted composing edit requests once and render never resubmits" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.014"/>
+  <testcase name="contextual longer punctuation with worse total probability stays Original" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.016"/>
+  <testcase name="local generation renders before model pause then numeric reply reorders without editor work" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.007"/>
+  <testcase name="pending boundary does not query and late load never infers an old word" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.006"/>
+  <testcase name="base ownership guard wins across every mode and strip combination" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.0"/>
+  <testcase name="unfiltered controller allowlist cannot bypass current spelling or strip policy" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.015"/>
+  <testcase name="protected overlong sources and absent input view never start loads" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.0"/>
+  <testcase name="production coordinator requests four total candidates before search and model submission" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.006"/>
+  <testcase name="enable and Ready and rendering wait for the next accepted composing edit" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.015"/>
+  <testcase name="stale missing model error cannot detach a newer request" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.012"/>
+  <testcase name="OFF suggestions unqualified runtime and Original never admit post-space corrections" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.036"/>
+  <testcase name="runtime-unqualified model never binds while local candidates remain available" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.008"/>
+  <testcase name="contextual improvement at Original margin stays Original" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.015"/>
+  <testcase name="loading requests only enum route and readiness or render cannot submit saved text" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.007"/>
+  <testcase name="original tap policy change and language change reject pending model results" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.029"/>
+  <testcase name="original tap cancels active work without clearing current original allowlist" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.008"/>
+  <testcase name="contextual error or no divergent score cannot render or edit" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.043"/>
+  <testcase name="backspace over pending space requests candidates for the complete reopened word" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.015"/>
+  <testcase name="space flushes one pending pause and late model score corrects without another request" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.008"/>
+  <testcase name="typo spelling gets one model request even while contextual suggestions are enabled" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.005"/>
+  <testcase name="missing contextual model activates metadata but performs no lexicon or inference work" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.0"/>
+  <testcase name="real editor policy rejects password NPL raw and nontext admissions" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.0"/>
+  <testcase name="replacement cancels active and serially delivers only the latest edit" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.016"/>
+  <testcase name="own selection acknowledgment during edit does not invalidate or starve the result" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.008"/>
+  <testcase name="controller revision composition session and original veto are rechecked on delivery" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.038"/>
+  <testcase name="failed bypass and empty edits cannot schedule candidates" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.0"/>
+  <testcase name="callback checks view layer selection privacy and ready route again" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest" time="0.032"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

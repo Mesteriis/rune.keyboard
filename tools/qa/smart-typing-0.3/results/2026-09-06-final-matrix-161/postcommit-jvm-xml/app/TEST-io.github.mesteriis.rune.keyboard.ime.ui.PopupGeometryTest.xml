@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.ime.ui.PopupGeometryTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.679Z" hostname="Mac.dlink" time="0.001">
+  <properties/>
+  <testcase name="the selected cell follows the finger and clamps at both ends" classname="io.github.mesteriis.rune.keyboard.ime.ui.PopupGeometryTest" time="0.0"/>
+  <testcase name="a single alternate is always the selected one" classname="io.github.mesteriis.rune.keyboard.ime.ui.PopupGeometryTest" time="0.0"/>
+  <testcase name="preview is clamped at both container edges" classname="io.github.mesteriis.rune.keyboard.ime.ui.PopupGeometryTest" time="0.0"/>
+  <testcase name="preview is limited to character keys in non-sensitive fields" classname="io.github.mesteriis.rune.keyboard.ime.ui.PopupGeometryTest" time="0.0"/>
+  <testcase name="preview is centred above the key" classname="io.github.mesteriis.rune.keyboard.ime.ui.PopupGeometryTest" time="0.0"/>
+  <testcase name="dragging a key height below the key cancels the selection" classname="io.github.mesteriis.rune.keyboard.ime.ui.PopupGeometryTest" time="0.0"/>
+  <testcase name="a popup with no room above clamps to the IME top edge" classname="io.github.mesteriis.rune.keyboard.ime.ui.PopupGeometryTest" time="0.0"/>
+  <testcase name="alternates start over the key and grow to the right" classname="io.github.mesteriis.rune.keyboard.ime.ui.PopupGeometryTest" time="0.0"/>
+  <testcase name="a row wider than the container starts at its left edge" classname="io.github.mesteriis.rune.keyboard.ime.ui.PopupGeometryTest" time="0.0"/>
+  <testcase name="alternates shift left when the row would overflow" classname="io.github.mesteriis.rune.keyboard.ime.ui.PopupGeometryTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

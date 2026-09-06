@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedCandidateLexiconTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:54.663Z" hostname="Mac.dlink" time="0.011">
+  <properties/>
+  <testcase name="unrestricted transposition and supplementary codepoints survive radius pruning" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedCandidateLexiconTest" time="0.001"/>
+  <testcase name="exact and scan share states and the last allowed inspected edge can complete" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedCandidateLexiconTest" time="0.001"/>
+  <testcase name="sixty four terminals can finish but required sixty fifth verification is incomplete" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedCandidateLexiconTest" time="0.001"/>
+  <testcase name="cancellation and visitor failures stop immediately and scrub scratch before reuse" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedCandidateLexiconTest" time="0.0"/>
+  <testcase name="actual generator retains partial suggestions when the shared verification budget ends" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedCandidateLexiconTest" time="0.001"/>
+  <testcase name="full radius enumeration matches independent unrestricted edit graph" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedCandidateLexiconTest" time="0.007"/>
+  <testcase name="exact uses Unicode scalar siblings and reports absent prefixes and unavailable languages" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedCandidateLexiconTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

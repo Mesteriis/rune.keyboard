@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:54.768Z" hostname="Mac.dlink" time="0.006">
+  <properties/>
+  <testcase name="read only owned context is never replayed or silently adopted as composition" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.0"/>
+  <testcase name="SEND and all policy exclusions decline before touching malformed payload" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.0"/>
+  <testcase name="space before punctuation edits only pending span and consumes punctuation once" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.001"/>
+  <testcase name="ambiguous dots never become sentence boundaries from unsupported inference" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.0"/>
+  <testcase name="disabled double space falls through to mechanical space cleanup" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.0"/>
+  <testcase name="proposal adapts to existing single UndoableTextEdit without parallel storage" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.002"/>
+  <testcase name="ordinary repeated spaces collapse without inventing gesture timing" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.0"/>
+  <testcase name="compound comma cleanup produces one suffix transaction without replaying previous word" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.0"/>
+  <testcase name="double space gesture has priority even when mechanical cleanup is disabled" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.0"/>
+  <testcase name="standalone command dot arguments keep their whitespace across later input" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.001"/>
+  <testcase name="question and exclamation request existing caps only for new action text" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.001"/>
+  <testcase name="decimal time version URL email host IP path and code stay unchanged" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.0"/>
+  <testcase name="comma semicolon and Cyrillic colon insert missing space for ordinary next word" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.0"/>
+  <testcase name="ellipsis expressive punctuation quotes brackets and emoji are preserved" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.0"/>
+  <testcase name="single comma or semicolon duplication is one immediately reversible edit" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.0"/>
+  <testcase name="bounded truncated and malformed contexts fail closed without normalization" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

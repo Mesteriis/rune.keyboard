@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.677Z" hostname="Mac.dlink" time="0.001">
+  <properties/>
+  <testcase name="language switch resets layer and shift" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="double tap from automatic shift enables caps lock" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="narrowing the enabled languages coerces the active language" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="letters key returns from the second symbol page" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="cycling from a language outside the enabled list falls back to the first" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="automatic shift is consumed after text" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="symbol page toggle does nothing on the letters layer" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="symbol pages toggle back and forth" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="language cycles backward through the enabled order" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="keeping the active language keeps the current layer" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="double shift tap enables caps lock" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="language cycles forward through the enabled order" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="cursor capitalization does not override manual shift" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="an empty language list is rejected" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="disabled languages never appear in the cycle" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <testcase name="a swipe with a single enabled language changes nothing at all" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.001"/>
+  <testcase name="slow second shift tap disables one-shot shift" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

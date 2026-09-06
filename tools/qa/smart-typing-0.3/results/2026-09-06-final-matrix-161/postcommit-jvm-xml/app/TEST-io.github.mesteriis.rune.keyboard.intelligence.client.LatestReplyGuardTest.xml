@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.intelligence.client.LatestReplyGuardTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.680Z" hostname="Mac.dlink" time="0.001">
+  <properties/>
+  <testcase name="sessionReplacementAllowsItsOwnSequenceAndRejectsOldReply" classname="io.github.mesteriis.rune.keyboard.intelligence.client.LatestReplyGuardTest" time="0.001"/>
+  <testcase name="sameNormalizedAttachmentPreservesActiveReplyAndWatermark" classname="io.github.mesteriis.rune.keyboard.intelligence.client.LatestReplyGuardTest" time="0.0"/>
+  <testcase name="demandOffOnAndNullDetachDoNotRecycleSameSessionRequestIds" classname="io.github.mesteriis.rune.keyboard.intelligence.client.LatestReplyGuardTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelPreparationWorkerTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.865Z" hostname="Mac.dlink" time="1.013">
+  <properties/>
+  <testcase name="cancelledAndReplacedWordsReleaseTheirPayloadWhileOnePreparationContinues" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelPreparationWorkerTest" time="0.001"/>
+  <testcase name="firstScoreDoesNotRestartTheThreeSecondPreparationDeadline" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelPreparationWorkerTest" time="0.001"/>
+  <testcase name="declinedPreparationNeverGrantsAResidualCreditAdmission" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelPreparationWorkerTest" time="0.0"/>
+  <testcase name="failedPreparationPreservesTheErrorAndDoesNotRetryTheQueuedWord" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelPreparationWorkerTest" time="0.0"/>
+  <testcase name="unbindAndCloseCancelPreparationWithoutWaitingForItsReturn" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelPreparationWorkerTest" time="0.0"/>
+  <testcase name="pressureClockFaultCpuDebtAndWallLimitAlsoStopPayloadFreePreparation" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelPreparationWorkerTest" time="0.002"/>
+  <testcase name="bindingPreparesOnceAndOnlyFirstScoreSharesItsChargedAdmission" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelPreparationWorkerTest" time="0.0"/>
+  <testcase name="expiredPreparationAdmissionCannotBypassTheNormalCreditThreshold" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelPreparationWorkerTest" time="0.001"/>
+  <testcase name="preparedWeightsStillUnloadAfterIdleWithoutAWordRequest" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelPreparationWorkerTest" time="1.008"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

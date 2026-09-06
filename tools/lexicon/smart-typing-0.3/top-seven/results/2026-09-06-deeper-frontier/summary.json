@@ -1,0 +1,57 @@
+{
+  "rows": 6000,
+  "baseline_completions": {
+    "VALID_WORD": 2251,
+    "STATES_EXHAUSTED": 1136,
+    "COMPLETE": 1714,
+    "VERIFIED_EXHAUSTED": 119,
+    "PROTECTED": 780
+  },
+  "deeper_completions": {
+    "VALID_WORD": 2251,
+    "STATES_EXHAUSTED": 1136,
+    "COMPLETE": 1714,
+    "VERIFIED_EXHAUSTED": 119,
+    "PROTECTED": 780
+  },
+  "previous_complete": 1714,
+  "previous_complete_output_differences": [],
+  "newly_complete": [],
+  "newly_incomplete": [],
+  "candidate_changed": 237,
+  "target_recall": {
+    "expected_nonoriginal": {
+      "rows": 3000,
+      "before": 2802,
+      "after": 2811,
+      "gained": [
+        "ru-calibration-typo-00-0-0",
+        "ru-calibration-typo-04-1-8",
+        "ru-calibration-typo-07-2-1",
+        "ru-calibration-typo-11-0-1",
+        "ru-calibration-typo-17-2-1",
+        "en-calibration-typo-09-3-6",
+        "es-calibration-typo-05-3-4",
+        "es-calibration-typo-11-2-1",
+        "es-calibration-typo-11-3-5",
+        "es-calibration-typo-15-0-8"
+      ],
+      "lost": [
+        "ru-calibration-typo-05-2-5"
+      ]
+    }
+  },
+  "limits_preserved": true,
+  "baseline_counts": {
+    "states_sum": 16340636,
+    "terminals_sum": 43010,
+    "states_max": 8192,
+    "terminals_max": 64
+  },
+  "deeper_counts": {
+    "states_sum": 16244453,
+    "terminals_sum": 43956,
+    "states_max": 8192,
+    "terminals_max": 64
+  }
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.ime.feedback.FeedbackPolicyTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.649Z" hostname="Mac.dlink" time="0.002">
+  <properties/>
+  <testcase name="state changes and delivered commands are confirmed" classname="io.github.mesteriis.rune.keyboard.ime.feedback.FeedbackPolicyTest" time="0.001"/>
+  <testcase name="intensities map to increasingly strong platform effects" classname="io.github.mesteriis.rune.keyboard.ime.feedback.FeedbackPolicyTest" time="0.0"/>
+  <testcase name="a press that changed nothing stays silent" classname="io.github.mesteriis.rune.keyboard.ime.feedback.FeedbackPolicyTest" time="0.0"/>
+  <testcase name="sound modes map to fixed volumes" classname="io.github.mesteriis.rune.keyboard.ime.feedback.FeedbackPolicyTest" time="0.0"/>
+  <testcase name="haptics can be turned off" classname="io.github.mesteriis.rune.keyboard.ime.feedback.FeedbackPolicyTest" time="0.0"/>
+  <testcase name="the system mode uses the platform keyboard tap" classname="io.github.mesteriis.rune.keyboard.ime.feedback.FeedbackPolicyTest" time="0.0"/>
+  <testcase name="every explicit intensity is a distinct effect" classname="io.github.mesteriis.rune.keyboard.ime.feedback.FeedbackPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

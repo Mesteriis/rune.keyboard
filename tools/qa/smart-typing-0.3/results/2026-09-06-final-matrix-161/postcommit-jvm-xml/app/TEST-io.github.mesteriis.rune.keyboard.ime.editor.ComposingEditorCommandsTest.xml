@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.ime.editor.ComposingEditorCommandsTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.628Z" hostname="Mac.dlink" time="0.01">
+  <properties/>
+  <testcase name="finish removes composing span without committing text or clearing selection" classname="io.github.mesteriis.rune.keyboard.ime.editor.ComposingEditorCommandsTest" time="0.005"/>
+  <testcase name="composing passes exact leading boundary and word once without reads" classname="io.github.mesteriis.rune.keyboard.ime.editor.ComposingEditorCommandsTest" time="0.0"/>
+  <testcase name="sensitive policy blocks composing and legacy automatic edit reads" classname="io.github.mesteriis.rune.keyboard.ime.editor.ComposingEditorCommandsTest" time="0.004"/>
+  <testcase name="raw editor cannot receive a composing call" classname="io.github.mesteriis.rune.keyboard.ime.editor.ComposingEditorCommandsTest" time="0.0"/>
+  <testcase name="rejected composing is not replayed as commit" classname="io.github.mesteriis.rune.keyboard.ime.editor.ComposingEditorCommandsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

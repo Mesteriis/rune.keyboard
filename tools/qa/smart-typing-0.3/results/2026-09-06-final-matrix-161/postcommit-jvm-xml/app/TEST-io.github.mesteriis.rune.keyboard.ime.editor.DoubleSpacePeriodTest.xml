@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.ime.editor.DoubleSpacePeriodTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.639Z" hostname="Mac.dlink" time="0.003">
+  <properties/>
+  <testcase name="whitespace before our space does not convert" classname="io.github.mesteriis.rune.keyboard.ime.editor.DoubleSpacePeriodTest" time="0.003"/>
+  <testcase name="too little context does not convert" classname="io.github.mesteriis.rune.keyboard.ime.editor.DoubleSpacePeriodTest" time="0.0"/>
+  <testcase name="a missing trailing space does not convert" classname="io.github.mesteriis.rune.keyboard.ime.editor.DoubleSpacePeriodTest" time="0.0"/>
+  <testcase name="sentence punctuation is never doubled" classname="io.github.mesteriis.rune.keyboard.ime.editor.DoubleSpacePeriodTest" time="0.0"/>
+  <testcase name="a word followed by our space converts" classname="io.github.mesteriis.rune.keyboard.ime.editor.DoubleSpacePeriodTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

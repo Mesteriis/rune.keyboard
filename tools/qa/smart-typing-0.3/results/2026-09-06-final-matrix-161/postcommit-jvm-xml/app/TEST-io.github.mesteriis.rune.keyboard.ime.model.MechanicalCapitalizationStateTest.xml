@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.ime.model.MechanicalCapitalizationStateTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.678Z" hostname="Mac.dlink" time="0.001">
+  <properties/>
+  <testcase name="actual language or layer transition clears suppression but same language swipe preserves it" classname="io.github.mesteriis.rune.keyboard.ime.model.MechanicalCapitalizationStateTest" time="0.0"/>
+  <testcase name="gesture consumes old lowercase suppression before priming next action" classname="io.github.mesteriis.rune.keyboard.ime.model.MechanicalCapitalizationStateTest" time="0.0"/>
+  <testcase name="owned gesture composing word and guarded modes never add a caps lookup" classname="io.github.mesteriis.rune.keyboard.ime.model.MechanicalCapitalizationStateTest" time="0.001"/>
+  <testcase name="explicit off from once or locked suppresses while explicit uppercase clears it" classname="io.github.mesteriis.rune.keyboard.ime.model.MechanicalCapitalizationStateTest" time="0.0"/>
+  <testcase name="manual lowercase survives automatic hint until next text action" classname="io.github.mesteriis.rune.keyboard.ime.model.MechanicalCapitalizationStateTest" time="0.0"/>
+  <testcase name="automatic off double tap preserves lock timing and manual lock persists across text" classname="io.github.mesteriis.rune.keyboard.ime.model.MechanicalCapitalizationStateTest" time="0.0"/>
+  <testcase name="legacy sentence and word caps lookup stays available with mechanical punctuation disabled" classname="io.github.mesteriis.rune.keyboard.ime.model.MechanicalCapitalizationStateTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

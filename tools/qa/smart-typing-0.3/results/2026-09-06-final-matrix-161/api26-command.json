@@ -1,0 +1,11 @@
+[
+  "/opt/homebrew/share/android-commandlinetools/platform-tools/adb",
+  "-s",
+  "emulator-5554",
+  "shell",
+  "am",
+  "instrument",
+  "-w",
+  "-r",
+  "io.github.mesteriis.rune.keyboard.test/androidx.test.runner.AndroidJUnitRunner"
+]

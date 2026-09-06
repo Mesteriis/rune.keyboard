@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.ime.layout.LongPressAlternatesTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.667Z" hostname="Mac.dlink" time="0.001">
+  <properties/>
+  <testcase name="unknown letters have no alternates" classname="io.github.mesteriis.rune.keyboard.ime.layout.LongPressAlternatesTest" time="0.0"/>
+  <testcase name="currency base follows the language and the rest stay reachable" classname="io.github.mesteriis.rune.keyboard.ime.layout.LongPressAlternatesTest" time="0.0"/>
+  <testcase name="latin accents are not offered on the russian layout" classname="io.github.mesteriis.rune.keyboard.ime.layout.LongPressAlternatesTest" time="0.0"/>
+  <testcase name="the period key carries the fast-access punctuation set" classname="io.github.mesteriis.rune.keyboard.ime.layout.LongPressAlternatesTest" time="0.0"/>
+  <testcase name="spanish vowels expose their accents" classname="io.github.mesteriis.rune.keyboard.ime.layout.LongPressAlternatesTest" time="0.0"/>
+  <testcase name="russian exposes yo and hard sign" classname="io.github.mesteriis.rune.keyboard.ime.layout.LongPressAlternatesTest" time="0.0"/>
+  <testcase name="russian quotes lead with guillemets" classname="io.github.mesteriis.rune.keyboard.ime.layout.LongPressAlternatesTest" time="0.0"/>
+  <testcase name="spanish does not need n-tilde on the n key" classname="io.github.mesteriis.rune.keyboard.ime.layout.LongPressAlternatesTest" time="0.0"/>
+  <testcase name="english exposes n-tilde and c-cedilla" classname="io.github.mesteriis.rune.keyboard.ime.layout.LongPressAlternatesTest" time="0.0"/>
+  <testcase name="dashes and inverted punctuation are reachable" classname="io.github.mesteriis.rune.keyboard.ime.layout.LongPressAlternatesTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

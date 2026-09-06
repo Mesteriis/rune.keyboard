@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewStateTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:55.653Z" hostname="Mac.dlink" time="0.0">
+  <properties/>
+  <testcase name="visibleSetIncludesOriginalAndSelectsById" classname="io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewStateTest" time="0.0"/>
+  <testcase name="diagnosticsRedactTextAndOpaqueIds" classname="io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewStateTest" time="0.0"/>
+  <testcase name="candidatePayloadsAndIdsAreBounded" classname="io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewStateTest" time="0.0"/>
+  <testcase name="makesImmutableSnapshotOfCallerList" classname="io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewStateTest" time="0.0"/>
+  <testcase name="hiddenAndEmptyAreDistinctAndRetainNoText" classname="io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewStateTest" time="0.0"/>
+  <testcase name="rejectsMissingOrDanglingSelection" classname="io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewStateTest" time="0.0"/>
+  <testcase name="rejectsMoreThanThreeOrMissingOriginalOrDuplicateIds" classname="io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewStateTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

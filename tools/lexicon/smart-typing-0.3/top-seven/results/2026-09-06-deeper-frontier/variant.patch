@@ -1,0 +1,11 @@
+--- baseline/PackedTopSeven.kt
++++ deeper/PackedTopSeven.kt
+@@ -164,7 +164,7 @@
+         if (weightedLower[a] != weightedLower[b]) return weightedLower[a] < weightedLower[b]
+         if (prior(a, primary) != prior(b, primary)) return prior(a, primary) > prior(b, primary)
+         if (language[a] != language[b]) return language[a] < language[b]
+-        return a < b // queue scheduling only, never a certificate tie-break
++        return if (depth[a] != depth[b]) depth[a] > depth[b] else a < b // queue scheduling only, never a certificate tie-break
+     }
+     private fun pushFrontier(id: Int, primary: Int) {
+         check(frontierSize < CAPACITY) { "FRONTIER_EXHAUSTED" }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.correction.OrthographyPoliciesTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:54.026Z" hostname="Mac.dlink" time="0.009">
+  <properties/>
+  <testcase name="default locale never changes normalization casing or routing" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.OrthographyPoliciesTest" time="0.004"/>
+  <testcase name="plain Latin has strong active EN ES prior and bounded opposite fallback" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.OrthographyPoliciesTest" time="0.0"/>
+  <testcase name="technical and non-word forms are protected without context" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.OrthographyPoliciesTest" time="0.002"/>
+  <testcase name="technical mixed and oversized tokens have no language search route" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.OrthographyPoliciesTest" time="0.0"/>
+  <testcase name="protection uses code points and rejects malformed Unicode and expansion overflow" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.OrthographyPoliciesTest" time="0.0"/>
+  <testcase name="ordinary words title case and internal apostrophes remain eligible" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.OrthographyPoliciesTest" time="0.001"/>
+  <testcase name="Cyrillic and Spanish markers override active layout" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.OrthographyPoliciesTest" time="0.0"/>
+  <testcase name="mixed scripts and unsupported scripts fail closed" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.OrthographyPoliciesTest" time="0.0"/>
+  <testcase name="case restoration preserves accents handles titlecase and declines mixed" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.OrthographyPoliciesTest" time="0.001"/>
+  <testcase name="case patterns distinguish title caps mixed and uncased" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.OrthographyPoliciesTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

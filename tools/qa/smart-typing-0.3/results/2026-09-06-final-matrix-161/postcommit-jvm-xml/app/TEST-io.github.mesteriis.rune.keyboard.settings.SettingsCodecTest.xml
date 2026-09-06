@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:53.976Z" hostname="Mac.dlink" time="0.001">
+  <properties/>
+  <testcase name="unknown enum values fall back to the defaults" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="the last used language is read separately and tolerates junk" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="every value round-trips" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="a garbled language list falls back to every language" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="known languages survive alongside unknown ones and duplicates" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="malformed present booleans fail false including existing double space" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="autocorrection and punctuation preferences are independent and never availability derived" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="old constructor callers retain new preference defaults" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="keyboard view relevant changes are detected" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="schema one two and absent legacy maps preserve existing settings and default new fields" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="unsupported or malformed schema cannot enable smart typing but preserves ordinary settings" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="a starting language outside the enabled list reverts to last used" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="malformed present enum values including null fail closed without changing valid neighbors" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="an empty store decodes to the defaults" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="schema three missing fields fail closed individually" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <testcase name="languages encode as a stable ordered list" classname="io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

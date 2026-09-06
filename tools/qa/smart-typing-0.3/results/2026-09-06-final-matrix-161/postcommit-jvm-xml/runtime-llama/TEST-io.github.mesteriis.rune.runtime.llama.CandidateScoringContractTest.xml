@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.runtime.llama.CandidateScoringContractTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:49.230Z" hostname="Mac.dlink" time="0.02">
+  <properties/>
+  <testcase name="byteBoundsApplyAfterStrictEncoding" classname="io.github.mesteriis.rune.runtime.llama.CandidateScoringContractTest" time="0.006"/>
+  <testcase name="utf8PreservesNulSupplementaryAndMultilingualCharacters" classname="io.github.mesteriis.rune.runtime.llama.CandidateScoringContractTest" time="0.004"/>
+  <testcase name="publishedStableCodesRemainUnchangedAndOnlyFourCodesAreAppended" classname="io.github.mesteriis.rune.runtime.llama.CandidateScoringContractTest" time="0.0"/>
+  <testcase name="cancellationDoesNotWaitForScoringWorkerAndNextAdmissionResetsIt" classname="io.github.mesteriis.rune.runtime.llama.CandidateScoringContractTest" time="0.004"/>
+  <testcase name="failureProtocolRejectsAttachedScores" classname="io.github.mesteriis.rune.runtime.llama.CandidateScoringContractTest" time="0.001"/>
+  <testcase name="malformedOrPartialSuccessIsRejectedAsAWhole" classname="io.github.mesteriis.rune.runtime.llama.CandidateScoringContractTest" time="0.0"/>
+  <testcase name="wireRoundTripPreservesNumericBitsAndCandidateOrder" classname="io.github.mesteriis.rune.runtime.llama.CandidateScoringContractTest" time="0.002"/>
+  <testcase name="unpairedSurrogatesAreReportedWithoutReplacement" classname="io.github.mesteriis.rune.runtime.llama.CandidateScoringContractTest" time="0.0"/>
+  <testcase name="candidateAdmissionRejectsEmptyDuplicateNegativeAndOversizedSets" classname="io.github.mesteriis.rune.runtime.llama.CandidateScoringContractTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

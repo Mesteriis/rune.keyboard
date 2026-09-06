@@ -1,5 +1,19 @@
 # Rune Smart Typing 0.3 execution ledger
 
+- 2026-09-06 current checkpoint `6f7c35e`: full161 app matrix on both API26/API37,
+  each158 PASS +3 explicit optional-model assumptions, zero failures. Actual
+  resident contextual comma/period selection and late-next-text rejection pass;
+  exact-model Android JNI separately passes1/1 on each API. Mandatory postcommit
+  JVM743/743 and prescribed240-task gates PASS. Final integration review finds
+  no demonstrated blocking code defect. Complete1200-row contextual attribution
+  committed07e29da. Named calibration replay audit exposes missing targets for
+  автокрекция, teh and correcion; three other named typos remain suggestions only.
+  A deeper-frontier search experiment has one retrieval loss and is not adopted.
+  User took phone: no further phone commands; the earlier prepared unfolding
+  state below is historical and cannot serve as a current transition baseline.
+  Physical/external CI/formal release/main integration remain open. Current
+  source/evidence details are in the consolidated September2 acceptance report.
+
 - 2026-09-06 `27c3df2` fixes only number-row QA navigation with quarter-height
   scrolls. Original suite/isolated failures and successes are preserved. Fold
   mechanical5/5, affected API26/API37 cases1/1 each and prescribed240-task gates

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:54.764Z" hostname="Mac.dlink" time="0.003">
+  <properties/>
+  <testcase name="equal punctuation totals abstain regardless of ID and input order" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest" time="0.0"/>
+  <testcase name="finite zero total and positive token counts are accepted when both margins pass" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest" time="0.0"/>
+  <testcase name="missing duplicate or unexpected score IDs reject the entire reply" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest" time="0.0"/>
+  <testcase name="longer punctuation cannot win by averaging a worse total" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest" time="0.0"/>
+  <testcase name="best total wins even when a longer rival has a better average" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest" time="0.0"/>
+  <testcase name="zero negative or out of contract token counts reject the entire reply" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest" time="0.001"/>
+  <testcase name="no divergent probability evidence abstains" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest" time="0.0"/>
+  <testcase name="punctuation must beat the closest rival by at least four log units" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest" time="0.001"/>
+  <testcase name="punctuation must improve Original by strictly more than half a log unit" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest" time="0.0"/>
+  <testcase name="nonfinite or positive sums in any candidate reject the entire reply" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest" time="0.001"/>
+  <testcase name="malformed expected candidate sets cannot authorize a suggestion" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest" time="0.0"/>
+  <testcase name="score and expected ID order do not change the selected candidate" classname="io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

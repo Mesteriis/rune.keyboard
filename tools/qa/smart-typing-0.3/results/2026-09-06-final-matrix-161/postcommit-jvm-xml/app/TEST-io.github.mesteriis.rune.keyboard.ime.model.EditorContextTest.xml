@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.ime.model.EditorContextTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.671Z" hostname="Mac.dlink" time="0.001">
+  <properties/>
+  <testcase name="double space period is limited to plain text editors" classname="io.github.mesteriis.rune.keyboard.ime.model.EditorContextTest" time="0.0"/>
+  <testcase name="email variation selects email mode" classname="io.github.mesteriis.rune.keyboard.ime.model.EditorContextTest" time="0.0"/>
+  <testcase name="password disables automatic capitalization" classname="io.github.mesteriis.rune.keyboard.ime.model.EditorContextTest" time="0.0"/>
+  <testcase name="no personalized learning forbids capitalization and double space reads" classname="io.github.mesteriis.rune.keyboard.ime.model.EditorContextTest" time="0.0"/>
+  <testcase name="sensitive input policy covers passwords and no-personalized-learning" classname="io.github.mesteriis.rune.keyboard.ime.model.EditorContextTest" time="0.0"/>
+  <testcase name="custom action label retains zero action id" classname="io.github.mesteriis.rune.keyboard.ime.model.EditorContextTest" time="0.0"/>
+  <testcase name="number flags are retained" classname="io.github.mesteriis.rune.keyboard.ime.model.EditorContextTest" time="0.0"/>
+  <testcase name="raw editors never request capitalization context" classname="io.github.mesteriis.rune.keyboard.ime.model.EditorContextTest" time="0.0"/>
+  <testcase name="multi-line flag is detected only for text editors" classname="io.github.mesteriis.rune.keyboard.ime.model.EditorContextTest" time="0.0"/>
+  <testcase name="null input type requires raw key events" classname="io.github.mesteriis.rune.keyboard.ime.model.EditorContextTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

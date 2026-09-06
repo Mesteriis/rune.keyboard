@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.644Z" hostname="Mac.dlink" time="0.004">
+  <properties/>
+  <testcase name="owned batch checks guard between writes and ends on the original connection" classname="io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest" time="0.002"/>
+  <testcase name="exact editor action reports refusal or exception without inserting fallback text" classname="io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest" time="0.0"/>
+  <testcase name="editor action fallback clears selection after successful newline" classname="io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest" time="0.001"/>
+  <testcase name="insert newline clears selection after successful commit" classname="io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest" time="0.0"/>
+  <testcase name="batch editor exception stops remaining writes and attempts cleanup" classname="io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest" time="0.0"/>
+  <testcase name="double space fallback cannot transform unowned editor text or read it" classname="io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest" time="0.0"/>
+  <testcase name="batch privacy raw selection and stale guard reject before touching connection" classname="io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest" time="0.0"/>
+  <testcase name="handled editor action preserves selection" classname="io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest" time="0.0"/>
+  <testcase name="cursor plan maps direction and step count to arrow keys" classname="io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.intelligence.delivery.VerifiedStreamCopierTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.826Z" hostname="Mac.dlink" time="0.003">
+  <properties/>
+  <testcase name="stopsBeforeReadingWhenWorkerIsInterrupted" classname="io.github.mesteriis.rune.keyboard.intelligence.delivery.VerifiedStreamCopierTest" time="0.0"/>
+  <testcase name="copiesExactlyExpectedBytesAndComputesDigestInOnePass" classname="io.github.mesteriis.rune.keyboard.intelligence.delivery.VerifiedStreamCopierTest" time="0.001"/>
+  <testcase name="rejectsShortAndOversizedStreams" classname="io.github.mesteriis.rune.keyboard.intelligence.delivery.VerifiedStreamCopierTest" time="0.001"/>
+  <testcase name="stopsBetweenChunksWhenWorkerIsInterrupted" classname="io.github.mesteriis.rune.keyboard.intelligence.delivery.VerifiedStreamCopierTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

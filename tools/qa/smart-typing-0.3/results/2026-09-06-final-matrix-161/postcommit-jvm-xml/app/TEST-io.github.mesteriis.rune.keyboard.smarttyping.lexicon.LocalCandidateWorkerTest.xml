@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:54.604Z" hostname="Mac.dlink" time="0.058">
+  <properties/>
+  <testcase name="one queued owner action coalesces completed replacements and reused numeric IDs safely" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.016"/>
+  <testcase name="idle actual worker retains neither last input nor delivered result with positive control" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.005"/>
+  <testcase name="valid word stays original only with veto" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.001"/>
+  <testcase name="generator retains verified partial alternatives and original with exhaustion veto" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.0"/>
+  <testcase name="owner callback can submit next request reentrantly without deadlock" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.001"/>
+  <testcase name="ineligible protected malformed and overlong input invalidate old result without computation" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.0"/>
+  <testcase name="cancelled and replaced pending payloads release while active call is still held" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.011"/>
+  <testcase name="latest pending replaces intermediate without queueing cancellation behind active computation" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.001"/>
+  <testcase name="owner thread contract prevents cross-thread admission and diagnostics redact snapshots" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.001"/>
+  <testcase name="closed active reader sees flag immediately and pending request never starts" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.001"/>
+  <testcase name="cancel removes both active publication and pending computation" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.009"/>
+  <testcase name="burst while active never drops final eligible request" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.0"/>
+  <testcase name="dispatch rejection and callback failure do not poison next request or expose exceptions" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.006"/>
+  <testcase name="cancel clears completed payload even while queued action is retained" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.005"/>
+  <testcase name="unexpected fatal reader failure stops worker without a text-bearing uncaught diagnostic" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.0"/>
+  <testcase name="already queued callback is guarded again after cancel and close" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.001"/>
+  <testcase name="reader failure is redacted and next request succeeds" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" tests="23" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.660Z" hostname="Mac.dlink" time="0.006">
+  <properties/>
+  <testcase name="the space bar carries the compact language label" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.002"/>
+  <testcase name="spanish accents are reachable through long press" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.001"/>
+  <testcase name="english layout includes all alphabet letters" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="search editor exposes search action key" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="the phone layout stays free of keyboard chrome" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.001"/>
+  <testcase name="spanish layout includes the alphabet and a dedicated n-tilde key" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="integer layout omits signed and decimal actions" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="email layout exposes at key" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="shifted spanish shows uppercase labels on keys and alternates" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="russian guillemets and dashes are reachable" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="the number row appears only when enabled" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="the currency key follows the language and keeps the rest reachable" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="russian shifted layout includes uppercase letters and yo long press" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="bottom rows omit redundant keyboard chrome" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="no-enter-action exposes newline even with custom label" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="the number row never reaches the symbol pages" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.001"/>
+  <testcase name="every visible key has a valid action and positive weight" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="multi-line editor labels the enter key as newline" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="symbols layout exposes a single letters key" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="both symbol pages together cover the required inventory" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="each symbol page offers a way to the other page and back to letters" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="symbol page rows share the latin weight grid" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <testcase name="letter rows share one weight grid per language" classname="io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

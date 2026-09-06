@@ -142,6 +142,15 @@ separate fake-numeric-engine/editor Binder evidence in the editor matrix.
 
 ## Required editor matrix
 
+Latest complete matrix at `6f7c35e`: both API26 and API37 finish the same161
+cases,158 PASS plus3 explicit optional-model assumptions and zero failures.
+Durations are1329.455s and1267.787s. This includes every subsequent QA delta below,
+including actual contextual strip taps and next-text rejection within Space grace.
+All bound source/APK hashes match after completion. Full logs, case dispositions
+and the final integration review are in
+`tools/qa/smart-typing-0.3/results/2026-09-06-final-matrix-161/`.
+The older matrices below are historical checkpoints, not additional current runs.
+
 The earlier134-test full run passed API26 with131 PASS, three optional-model
 assumptions and no failures. API37 had130 PASS, three assumptions and one focus
 failure before a custom editor action. Both new TYPE_NULL and75-character rapid
@@ -308,6 +317,23 @@ latency. The earlier ordinary-run optional-model assumptions remain unchanged.
 
 ## Named acceptance examples and release decision
 
+The named frozen-controller examples are now explicitly projected in
+`tools/eval/smart-typing-0.3/results/2026-09-06-named-acceptance/`.
+This is17 calibration examples in both ready/unavailable modes, with exact source
+and per-row bindings, not new scoring or installed-editor observations. Ready mode
+automatically corrects `сообшение` and `mensage`; `арфография`, `recieve` and `adress`
+have the correct suggestion but abstain automatically. `автокрекция` and `correcion`
+exhaust8192 search states without returning the requested target; `teh` excludes
+`the` under the cost-first top-three policy. The nine language copies of `причём`,
+`kubectl` and `AIGate` are preserved. These missing named demonstrations are an
+additional product acceptance gap; aggregate point95 precision does not close it.
+No confidence threshold or retrieval policy was changed to force these examples.
+A model-free deeper-frontier tie-order trial retained all1714 COMPLETE outputs,
+but changed237 partial sets: calibration target recall2802→2811 with ten gains
+and one loss. No completion status improved; only the Russian missing target
+was retrieved as an incomplete suggestion. The trial was not adopted. Evidence:
+`tools/lexicon/smart-typing-0.3/top-seven/results/2026-09-06-deeper-frontier/`.
+
 Final installed-build examples still require a consolidated per-case record:
 RU `автокрекция`, `арфография`, `сообшение`, correct `причём`, `kubectl`, `AIGate`,
 mixed RU/EN, valid-word preservation and punctuation; EN `teh`, `recieve`,
@@ -324,11 +350,12 @@ See [publication provenance](2026-09-05-rune-text-v1-hugging-face.md).
 
 | Release gate | Current status |
 | --- | --- |
-| Fresh JVM and prescribed local gates | Current07e29da: mandatory postcommit whole JVM743/743 PASS, zero failures/errors/skips; prescribed240-task gates PASS. Earlier diagnostics Python32/32 and complete emulator matrices retained with exact receipts |
-| API26 complete final matrix | Complete rerun152:149 PASS +3 assumptions, zero failures; all five diagnostic cases PASS. Ordinary JNI6/6 PASS. Initial preview and overbroad missing-model command failures retained |
-| API37 complete final matrix/stability | Full152:149 PASS +3 assumptions, zero failures; subsequent test-only preview case1/1 and JNI6/6 PASS; prior failures retained |
+| Fresh JVM and prescribed local gates | Current6f7c35e: mandatory postcommit whole JVM743/743 PASS, zero failures/errors/skips; prescribed240-task gates PASS. Earlier diagnostics Python32/32 and complete emulator matrices retained with exact receipts |
+| API26 complete final matrix | PASS current6f7c35e full161:158 PASS +3 explicit optional-model assumptions, zero failures; all five diagnostic cases PASS. Separate exact-model JNI1/1 PASS; ordinary JNI6/6 previous source-continuity proof retained. Historical failures preserved |
+| API37 complete final matrix/stability | PASS current6f7c35e full161:158 PASS +3 explicit optional-model assumptions, zero failures; exact same case set as API26. Separate exact-model JNI1/1 PASS; historical JNI6/6 and fixture failures retained |
 | Fold inner named functional probes | PARTIAL PASS; initial settings fixture failure retained |
 | Fold transitions/real editors/rapid typing/energy | BLOCKED: user took phone and requested emulator-only work. Earlier cover13:6 PASS,5 diagnostic assumptions preserving logs,2 initial failures.75-touch exact text PASS. Exact-model Binder1/1 PASS (899ms first/166ms warm). Read-only admission observation shows model correction/Undo PASS; initial timing miss unresolved. Subsequent cover27:26 PASS + number-row navigation failure; unchanged isolated PASS and class reproduction FAIL retained. Reviewed quarter-height navigation27c3df2 passes mechanical5/5 on Fold and affected case1/1 on each API. Prepared owned `тест` span0..4 was historical setup only; actual unfold was not verified and requires a fresh baseline when the device becomes available |
 | Current-source full quality qualification | Spelling reproduction and state-based Original annotation PASS within the fixed revealed-data scope; exact observations and frozen all-row FAIL retained in1a5826e. Full-controller contextual attribution complete in07e29da:1200 rows,179/179 explicit host selections, zero unresolved/harness/forbidden/automatic edits; independent review and fresh replay verification PASS. Source agreement retains its semantic limits |
+| Named target retrieval/demonstration | INCOMPLETE: автокрекция→автокоррекция, teh→the and correcion→corrección absent from current returned/displayed candidates in their frozen contexts; three other requested typos are suggestions only. Full named host records retained; bounded model-free search investigation separate |
 | Current external CI | No PR-triggered runs returned for fd8872f by the GitHub connector; remote main remains b5400cb; not a full workflow inventory |
 | Model final release / version0.3.0 / main merge | BLOCKED by remaining gates |

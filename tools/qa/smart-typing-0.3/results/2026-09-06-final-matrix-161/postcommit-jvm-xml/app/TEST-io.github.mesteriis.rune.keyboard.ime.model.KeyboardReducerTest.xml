@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.673Z" hostname="Mac.dlink" time="0.001">
+  <properties/>
+  <testcase name="delete maps to Unicode-aware delete command" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="multi-line editor keeps the enter key on newline" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="sensitive session routes deletion through the ordinary editor command" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="explicit editor action is performed" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="overlapping letters resolve case from latest state" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="multi-line editor outranks a custom editor action" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="hide keyboard emits the hide command" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.001"/>
+  <testcase name="double space commits a plain space in ineligible editors" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="custom editor action has priority" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="spanish accent commits uppercase through the locale" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="double space commits a plain space when the setting is off" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="no personalized learning double tap stays a plain space" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="backspace after double space still delegates undo choice to typing" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="character commits exact rendered text and consumes one-shot shift" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="text actions do not introduce reducer owned undo state" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="language swipe cycles in the requested direction" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="double space requests typing owned handling in plain text" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="single-line editor still performs its action" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="no-enter-action flag suppresses custom editor action" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="no-enter-action flag inserts newline" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <testcase name="cursor movement passes through without touching state" classname="io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

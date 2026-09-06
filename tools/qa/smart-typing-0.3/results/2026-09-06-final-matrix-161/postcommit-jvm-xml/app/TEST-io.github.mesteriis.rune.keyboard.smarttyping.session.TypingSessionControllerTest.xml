@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" tests="54" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:55.648Z" hostname="Mac.dlink" time="0.003">
+  <properties/>
+  <testcase name="unknown plain deletion suspends composing until changed selection arrives" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="pending space backspace reopens the whole previous word inside owned context" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="editor rewrite to an acknowledged older span invalidates instead of matching history" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="last grapheme deletion also accepts editor removing empty span immediately" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="external replacement composing span is never finished or overwritten" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="next word retains the converted boundary and closes undo" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="session switch during conversion or undo cannot publish into new session" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="rejected composition disables only current session and never replays accepted buffer" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="double space bypasses when only editor could know preceding character" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="legacy mutation wait clears context and ignores stale own acknowledgements" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="pending space does not claim a word whose left boundary predates Rune context" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="composing overflow acknowledges plain word suffix until next boundary" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="emoji and punctuation finish composing then commit without reading editor" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="backspace preserves boundary until word is empty then reopens complete owned word" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.001"/>
+  <testcase name="selecting original protects the same word until its next boundary" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="cursor move finishes a still owned span and clears context" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="cursor move clears undo and never restores suffix at new caret" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="last grapheme deletion acknowledges intermediate empty composing span then finishes" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="known initial selection can be replaced and subsequent ownership starts at minimum bound" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="rapid typing and delayed acknowledgement across words retain ownership" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="unknown initial selection bypasses without retaining input" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="sensitive raw email URI and numeric editors bypass with no retained content" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="rejected finish stops a following boundary from being inserted" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="editor invalidation rejects a pending original tap" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="synchronous external callback cannot resurrect the in flight buffer" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="editor switch during word finish prevents pending boundary in new sensitive session" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="coalesced acknowledgement retires skipped historical snapshots" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="backspace removes a decomposed grapheme including its base" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="delayed coalesced and duplicate own callbacks preserve newest composing word" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="a later automatic edit replaces the undo slot without retaining history" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="deleting the entire selected original does not protect a later word" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="external callback during conversion or undo cannot resurrect old context" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="double space bypasses disabled unknown and noncollapsed initial selections without writes" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="space creates visible pending boundary and next word replaces it without duplication" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="acknowledged older span cannot revive stale undo after external replacement" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="synchronous own callback is acknowledged before command result" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.001"/>
+  <testcase name="double space and undo accept synchronous callbacks and delayed following typing" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="double space replaces only owned pending boundary and records one transaction" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="every other text action closes the immediate undo slot" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="rejected conversion or undo clears transaction and never replays text" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="delayed own callbacks preserve undo until its latest span is acknowledged" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="undo restores bounded context prefix evicted by conversion without breaking Unicode" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.001"/>
+  <testcase name="finish boundaries invalidate revision and context can be explicitly cleared" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="restart and end destroy buffers and session IDs increase" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="finish invalidate settings discard and session lifecycle close undo" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="original candidate selection is scoped to current session and revision without editor writes" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="double space requires a complete ordinary word in owned context" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="double space bypass followed by plain space preserves both visible spaces" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="repeated spaces retain one pending boundary without duplicating it" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="first backspace restores original boundary and second reopens its owned word" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="double space bypasses finished or uncertain ownership without editor reads or writes" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="double space bypasses caret overflow" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="first letter composes and following letters replace only that span" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <testcase name="loss of composing region abandons buffer without writing it back" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" tests="39" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:55.624Z" hostname="Mac.dlink" time="0.023">
+  <properties/>
+  <testcase name="manual alternative after original veto does not clear veto" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.001"/>
+  <testcase name="wrong original is consumed without publishing or editor changes" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="reentrant owner clear without session change cannot republish a manual allowlist" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="ended session releases manual source and result payload while controller stays alive" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.018"/>
+  <testcase name="partial generation may reorder suggestions but cannot select a calibrated winner" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="new request or explicit invalidation rejects an old original ID without editing" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="boundary uses chosen text once and clears candidates" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="external selection or composing loss cannot replace unknown span" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.001"/>
+  <testcase name="failure and valid word replies cannot inject suggestions" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="model snapshot includes full candidate set and only owned prefix" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="no-edit original API remains a veto and keeps display original" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="duplicate malformed or oversized candidate sets fail closed" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="in flight replacement does not authorize reentrant admission or selection" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="manual length changing tap and original restoration each replace whole owned segment once" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="ranking rejects every changed token identity and then accepts current reply once" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="shorter Title Case alternative preserves boundary and original spelling" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="multi character pending boundary is preserved and previous auto Undo is retired" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.001"/>
+  <testcase name="reentrant external callback during replacement wins without replay" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="reply after text boundary end or new session is discarded" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="current owned acknowledgments retain selection but external caret changes reject taps" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="uppercase output exception does not admit protected uppercase original" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="protected overlong and inactive words never enter request snapshot" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="payload diagnostics and IDs contain no source or replacement text" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="failed replacement disables session with finish cleanup but never replay" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="projection keeps source original and calibrated alternatives without editing" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="ranking cancellation text edits original taps and errors preserve deterministic fallback" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="request language fixes coefficients without inferring language from candidate output" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.001"/>
+  <testcase name="case preserved Unicode source restores exact original bytes including decomposed marks" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="actual generator uppercase expansion from eligible single letter is selectable and restorable" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="model uses averages but original remains preferred below calibrated margin" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="combined ordering can reject the raw model favorite using generated features" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="lowercase proper noun is a preferred canonical case correction" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="model ordering keeps original and stable identities without editing" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="only latest registered reply for exact composition can publish" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="next text edit retires manual source and permits a new request" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="reentrant sensitive session cannot acquire old candidate or context" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.001"/>
+  <testcase name="manual choice does not create auto Undo and Backspace edits replacement normally" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="partial verified suggestions preserve completion without any automatic transaction" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <testcase name="uppercase output exception still rejects paths identifiers lengths malformed and duplicates" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

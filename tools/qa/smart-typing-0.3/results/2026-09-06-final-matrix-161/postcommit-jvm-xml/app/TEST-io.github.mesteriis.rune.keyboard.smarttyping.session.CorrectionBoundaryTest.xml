@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" tests="36" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:54.776Z" hostname="Mac.dlink" time="0.018">
+  <properties/>
+  <testcase name="failed editor action preparation never executes fallback over uncertain text" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="original choice and manual alternative suppress boundary autocorrection" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="disabled autocorrection keeps canonical case as a suggestion" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="editor action without ready correction closes original and fallback newline has no synthetic Undo" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="reentrant lifecycle after commit stops region creation and keeps new session empty" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="rejected commit region or Undo disables session without replay or further batch mutation" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="ready model result and qualification are consulted for the actual scoring branch" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="post-space failure or Original winner never edits and clears ownership" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="reentrant candidate policy invalidation stops batch and never publishes its Undo" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="unknown editor prefix abstains until Rune supplies an explicit word boundary" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="calibration without qualification and OFF or suggestions never auto replace" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="current 95 percent qualification admits only a ready model decision" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="context eviction Undo restores the original bounded RAM snapshot" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="post-space correction and Undo preserve exact Unicode source in every language" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="owned email URL code and ambiguous hostname fragments retain original" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="post-space ownership requires a complete ordinary token and bounded region" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.003"/>
+  <testcase name="late replacement stops between editor calls on refusal or reentrant ownership loss" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="dead connection and throwing cleanup disable session without replay or uncaught exception" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="post-space score corrects the exact committed suffix and first Backspace restores complete original" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="missing model uses ready deterministic decision and late callback cannot rewrite boundary" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="partial retrieval settings layer language and sensitive policy veto automatic write" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="editor action adds no punctuation and rejected action newline remains in correction Undo" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="ownership loss between Undo region and replacement prevents restoring old buffer" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="first Backspace restores original composition and candidates without a Delete" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="all languages restore exact source including decomposed marks and length change" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="multiline Enter consumes ready correction commits newline and Undo restores original" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="space and punctuation commit corrected word but compose only the boundary" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="routed lowercase conflict blocks canonical auto even with ordinary qualification" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="synchronous intermediate acknowledgements keep ownership through commit and Undo" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="next text closes correction Undo and a later automatic gesture owns the only transaction" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="first dot or colon cannot change a future hostname or scheme" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="canonical case auto replaces on boundary and Undo restores lowercase original" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="post-space request cannot survive any later edit or ownership invalidation" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.001"/>
+  <testcase name="multiline Enter without an admitted correction finishes span and commits exact newline" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="ordinary spelling qualification cannot auto capitalize a known lowercase word" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <testcase name="post-space token must match every original request identity and is single use" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

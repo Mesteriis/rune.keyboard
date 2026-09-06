@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryReconcilerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.697Z" hostname="Mac.dlink" time="0.001">
+  <properties/>
+  <testcase name="downloadObservationsDriveRecoveryWithoutTrustingBroadcasts" classname="io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryReconcilerTest" time="0.001"/>
+  <testcase name="active downloads reschedule but terminal and paused observations do not" classname="io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryReconcilerTest" time="0.0"/>
+  <testcase name="privateCandidateWinsOverStaleJournalAcrossCrashWindows" classname="io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryReconcilerTest" time="0.0"/>
+  <testcase name="meteredOverrideReplacesOnlyTheRecordedRequestAndKeepsRoamingForbidden" classname="io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryReconcilerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

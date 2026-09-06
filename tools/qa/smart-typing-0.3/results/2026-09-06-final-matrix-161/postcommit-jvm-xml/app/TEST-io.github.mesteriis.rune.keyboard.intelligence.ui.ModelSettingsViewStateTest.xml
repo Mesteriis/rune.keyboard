@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsViewStateTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:53.966Z" hostname="Mac.dlink" time="0.0">
+  <properties/>
+  <testcase name="interruptedDeleteKeepsDeleteActionWithoutVisibleModelFiles" classname="io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsViewStateTest" time="0.0"/>
+  <testcase name="candidateSelfTestIsBusyAndNotReady" classname="io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsViewStateTest" time="0.0"/>
+  <testcase name="currentActiveVersionRejectsRedundantImport" classname="io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsViewStateTest" time="0.0"/>
+  <testcase name="notInstalledOffersDownloadAndImport" classname="io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsViewStateTest" time="0.0"/>
+  <testcase name="failedUpdateKeepsReadyActionsAndFailure" classname="io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsViewStateTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

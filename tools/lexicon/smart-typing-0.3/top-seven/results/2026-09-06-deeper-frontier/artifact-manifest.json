@@ -1,0 +1,455 @@
+[
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/artifact-hashes.json",
+    "bytes": 9098,
+    "sha256": "639a0a7fcee747f1245b3ccd6d37e063277cfb31305359a141966ce2c5d8da5d",
+    "archive": "artifact-hashes.json",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/generator.jar",
+    "bytes": 139222,
+    "sha256": "a5a81531186ad43e423888064700e919ded338d62cb24f0e149e3b4d9f9d5a58",
+    "omitted": "Rebuildable host binary"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt",
+    "bytes": 6157,
+    "sha256": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt",
+    "bytes": 2476,
+    "sha256": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt",
+    "bytes": 1577,
+    "sha256": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt",
+    "bytes": 3448,
+    "sha256": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt",
+    "bytes": 1602,
+    "sha256": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt",
+    "bytes": 4925,
+    "sha256": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt",
+    "bytes": 15161,
+    "sha256": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt",
+    "bytes": 4300,
+    "sha256": "e64190f43dfc40e1b4bd19dbc331709883907b2b7a500bce7947dc3fc5ae24db",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt",
+    "bytes": 541,
+    "sha256": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt",
+    "bytes": 9515,
+    "sha256": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt",
+    "bytes": 2071,
+    "sha256": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt",
+    "bytes": 8332,
+    "sha256": "fe942a648ef5bdbd5a7e5407c70e099c69cebd741f91ab2250d91d4fa66a7bdf",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt",
+    "bytes": 9469,
+    "sha256": "d0dae2e1d58eb44894cbdface3f4a91f8f5c1022400ec68f9e7e219cc14adc3c",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt",
+    "bytes": 3223,
+    "sha256": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt",
+    "bytes": 14675,
+    "sha256": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt",
+    "bytes": 5216,
+    "sha256": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt",
+    "bytes": 995,
+    "sha256": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d",
+    "archive": "baseline/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline/sources/tools/eval/smart-typing-0.3/pipeline/CandidateExport.kt",
+    "bytes": 3584,
+    "sha256": "bc7e73757e52fc449f4f6cd42f9f090001279feb3095bd7230621e4f45f6e6a5",
+    "archive": "baseline/sources/tools/eval/smart-typing-0.3/pipeline/CandidateExport.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline-calibration.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "baseline-calibration.stderr",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline-calibration.stdout",
+    "bytes": 1051281,
+    "sha256": "f3e6e3d59bc1afd0ce2f37ba4e7ca9e0b91d68bac6e352779b2edcc4aec3a406",
+    "archive": "baseline-calibration.stdout.gz",
+    "encoding": "gzip"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline-compile.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "baseline-compile.stderr",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline-compile.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "baseline-compile.stdout",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline-named.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "baseline-named.stderr",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline-named.stdout",
+    "bytes": 556,
+    "sha256": "8376706ed5ca7790c69e2934078b191e3bf1e0f7a876f3b07f2b11e72b764513",
+    "archive": "baseline-named.stdout",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/baseline-sources.json",
+    "bytes": 4909,
+    "sha256": "789f7535950f3ae8bb58d1ef01f49f62d44b7db3b7df5a38682e7c849f15f10b",
+    "archive": "baseline-sources.json",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/calibration.jsonl",
+    "bytes": 3227273,
+    "sha256": "b73729ac383bb9c345188ffa41efac881786ae08348b0299534b528167a7ce3c",
+    "archive": "calibration.jsonl.gz",
+    "encoding": "gzip"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/calibration.tsv",
+    "bytes": 146422,
+    "sha256": "e95893de81c21e46fbcb4fd572108b236797865aa9961cb7a29a7e3361756c0d",
+    "archive": "calibration.tsv",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/commands.json",
+    "bytes": 14118,
+    "sha256": "11b06ab4e417f50236fc720edf1507d2b180087543a14952b3f1a3528b192e44",
+    "archive": "commands.json",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/comparison.jsonl",
+    "bytes": 4272495,
+    "sha256": "dc844125fa91616c084022e838dd063a52a7e951d32b30de6d2d68c14119d445",
+    "archive": "comparison.jsonl.gz",
+    "encoding": "gzip"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/generator.jar",
+    "bytes": 139238,
+    "sha256": "aebd0476b51d997dbd5c153a3874ff9e82f4e3d79bd6959c9b98f37d65a7847d",
+    "omitted": "Rebuildable host binary"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt",
+    "bytes": 6157,
+    "sha256": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt",
+    "bytes": 2476,
+    "sha256": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt",
+    "bytes": 1577,
+    "sha256": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt",
+    "bytes": 3448,
+    "sha256": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt",
+    "bytes": 1602,
+    "sha256": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt",
+    "bytes": 4925,
+    "sha256": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt",
+    "bytes": 15161,
+    "sha256": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt",
+    "bytes": 4300,
+    "sha256": "e64190f43dfc40e1b4bd19dbc331709883907b2b7a500bce7947dc3fc5ae24db",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt",
+    "bytes": 541,
+    "sha256": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt",
+    "bytes": 9515,
+    "sha256": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt",
+    "bytes": 2071,
+    "sha256": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt",
+    "bytes": 8332,
+    "sha256": "fe942a648ef5bdbd5a7e5407c70e099c69cebd741f91ab2250d91d4fa66a7bdf",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt",
+    "bytes": 9469,
+    "sha256": "d0dae2e1d58eb44894cbdface3f4a91f8f5c1022400ec68f9e7e219cc14adc3c",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt",
+    "bytes": 3223,
+    "sha256": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt",
+    "bytes": 14726,
+    "sha256": "496d7a39691c35d855113f887aa0fab1360e788a9393e8e24b70f1fef5f27946",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt",
+    "bytes": 5216,
+    "sha256": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt",
+    "bytes": 995,
+    "sha256": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d",
+    "archive": "deeper/sources/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper/sources/tools/eval/smart-typing-0.3/pipeline/CandidateExport.kt",
+    "bytes": 3584,
+    "sha256": "bc7e73757e52fc449f4f6cd42f9f090001279feb3095bd7230621e4f45f6e6a5",
+    "archive": "deeper/sources/tools/eval/smart-typing-0.3/pipeline/CandidateExport.kt",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper-calibration.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "deeper-calibration.stderr",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper-calibration.stdout",
+    "bytes": 1057287,
+    "sha256": "7b149e232b84c71341ab4d7d1346c391f77e75b41e7479f281af8b1bfdaa9ebd",
+    "archive": "deeper-calibration.stdout.gz",
+    "encoding": "gzip"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper-compile.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "deeper-compile.stderr",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper-compile.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "deeper-compile.stdout",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper-named.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "deeper-named.stderr",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper-named.stdout",
+    "bytes": 715,
+    "sha256": "e055619b0f33f624f20eec7678249c74be785323710f464793185461d546e3da",
+    "archive": "deeper-named.stdout",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/deeper-sources.json",
+    "bytes": 4873,
+    "sha256": "6b243b210465a49f50b193111700f6380b29e6fd44770f55683e0ba3e8900e15",
+    "archive": "deeper-sources.json",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/inputs-manifest.json",
+    "bytes": 7025,
+    "sha256": "11800d0c1dcf9aa9e625392307af0615e7e91bca81a00623c2c78ca26614ce0b",
+    "archive": "inputs-manifest.json",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/java-version.stderr",
+    "bytes": 171,
+    "sha256": "2fe83b0053132e4e834defa82250462f4c62733d29bf76b19ee1bb3c14b06b39",
+    "archive": "java-version.stderr",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/java-version.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archive": "java-version.stdout",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/named.tsv",
+    "bytes": 66,
+    "sha256": "079c0b4454cde617b279a29775f2be5a3534d67e7cfb848747d16389a76f0132",
+    "archive": "named.tsv",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/probe.py",
+    "bytes": 4370,
+    "sha256": "85566ad058d0be6960a5f78eaa363b286538d6d7214c6e5cbb360011b54413a5",
+    "archive": "probe.py",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/summary.json",
+    "bytes": 1374,
+    "sha256": "3c913408dfd039cad7605c5b4ffa3d460e2a1f95f181f1e4dee4865555af74f1",
+    "archive": "summary.json",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/variant.patch",
+    "bytes": 680,
+    "sha256": "ede01795dc7abe8db22dbefcf97977a1d9c4961f08bcca19ce51c55671099ebc",
+    "archive": "variant.patch",
+    "encoding": "identity"
+  },
+  {
+    "source": "build/smart-typing-0.3/retrieval-probe-20260906/wider.py",
+    "bytes": 3243,
+    "sha256": "8ca096b86a1a46cc410d099e032b0f049215610efb0d49cdad603de546cef906",
+    "archive": "wider.py",
+    "encoding": "identity"
+  }
+]

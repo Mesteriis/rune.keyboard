@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshteinTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:54.036Z" hostname="Mac.dlink" time="0.08">
+  <properties/>
+  <testcase name="keyboard neighbourhood is static symmetric and language specific" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshteinTest" time="0.0"/>
+  <testcase name="initial costs cover insertion deletion ordinary and adjacent substitution" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshteinTest" time="0.0"/>
+  <testcase name="DP matches independent shortest edit path oracle on two small alphabets" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshteinTest" time="0.078"/>
+  <testcase name="unit profile includes unrestricted transpositions rather than OSA" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshteinTest" time="0.0"/>
+  <testcase name="supplementary Unicode counts as one scalar and transposes as one unit" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshteinTest" time="0.0"/>
+  <testcase name="NFC and case equivalence preserve Russian and Spanish distinctions" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshteinTest" time="0.0"/>
+  <testcase name="repetition is an explicit separate feature with no negative edit costs" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshteinTest" time="0.001"/>
+  <testcase name="scratch is reusable and clears token scalars on success and failure" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshteinTest" time="0.0"/>
+  <testcase name="strict input bounds reject malformed long and normalization expansion inputs" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshteinTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

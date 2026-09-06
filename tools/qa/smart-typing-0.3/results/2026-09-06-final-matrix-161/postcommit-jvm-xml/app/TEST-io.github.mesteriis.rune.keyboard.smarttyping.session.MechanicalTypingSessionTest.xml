@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" tests="27" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:55.581Z" hostname="Mac.dlink" time="0.008">
+  <properties/>
+  <testcase name="unknown prefix sliced word and long word cannot claim a complete owned token" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.001"/>
+  <testcase name="space before comma and missing after use one replacement each" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="third dot pause no whitespace numeric and technical continuations remain raw" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="explicit sentence space recases only first new letter and records undo only if changed" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.001"/>
+  <testcase name="enter layer cursor and language owner boundaries finish without adding final period" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="symbols layer never receives sentence capitalization" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="first dot outside live span cannot be adopted by deferred rule" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="declined gesture inserts one ordinary space without old conversion bypass" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="bounded raw undo captures different eviction prefix than shorter applied value" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.001"/>
+  <testcase name="manual lowercase suppression never lowercases explicitly supplied uppercase text" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="original veto stays with same word and does not leak through punctuation boundary" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="boundary span overflow is raw bounded and later edits never readopt old prefix" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="payload diagnostics remain redacted" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.002"/>
+  <testcase name="locale expansion preserves remainder and respects rendered composing bound" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="synchronous delayed and coalesced boundary callbacks preserve raw and undo" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="disabled mechanics preserves legacy caps request after sentence and ordinary word spaces" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.001"/>
+  <testcase name="compound spaces caps and raw incoming text are one immediate undo" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="manual lowercase once locked and auto use pre reducer keyboard state" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="command dot keeps the owned separator through typing and ordinary backspace" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="ellipsis mixed expressive punctuation symbols technical and numeric forms stay raw" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.001"/>
+  <testcase name="delayed pair of dots remains visible until ordinary next word after explicit spaces" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="next input settings selection and lifecycle close mechanical undo and candidate ids" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="nontext sensitive and raw editors never enter mechanical composition" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="reentrant session switch and external selection abort compound edit" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.001"/>
+  <testcase name="settings are independent and decoded changes affect very next action" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="punctuation retains only boundary after committing old word" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <testcase name="rejected mechanical replacement freezes span without replay or publishing undo" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

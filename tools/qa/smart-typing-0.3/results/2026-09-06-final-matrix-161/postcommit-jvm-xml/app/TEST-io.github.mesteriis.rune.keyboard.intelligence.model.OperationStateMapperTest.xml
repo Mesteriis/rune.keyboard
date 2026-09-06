@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.intelligence.model.OperationStateMapperTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:53.944Z" hostname="Mac.dlink" time="0.001">
+  <properties/>
+  <testcase name="liveDownloadStateOverridesStaleBusyJournal" classname="io.github.mesteriis.rune.keyboard.intelligence.model.OperationStateMapperTest" time="0.001"/>
+  <testcase name="mapsAllDurableOperationsAndStableFailures" classname="io.github.mesteriis.rune.keyboard.intelligence.model.OperationStateMapperTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

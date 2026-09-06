@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.correction.CandidateRankerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:53.979Z" hostname="Mac.dlink" time="0.046">
+  <properties/>
+  <testcase name="independent calibration oracle matches every deterministic and combined decision" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.CandidateRankerTest" time="0.046"/>
+  <testcase name="malformed model evidence overflow and veto fail closed with immediate reuse" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.CandidateRankerTest" time="0.0"/>
+  <testcase name="averages combine with edit frequency and both rival margins" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.CandidateRankerTest" time="0.0"/>
+  <testcase name="ties keep original and word length counts code points" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.CandidateRankerTest" time="0.0"/>
+  <testcase name="unusable model falls back and oversized returned sets do not inherit confidence" classname="io.github.mesteriis.rune.keyboard.smarttyping.correction.CandidateRankerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

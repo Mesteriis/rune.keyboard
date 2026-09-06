@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" tests="22" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.654Z" hostname="Mac.dlink" time="0.004">
+  <properties/>
+  <testcase name="cancelling cursor mode reports the end of the mode" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.002"/>
+  <testcase name="a double tap candidate can still swipe" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="cancelling an undecided press resets the visuals" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="swiping right switches to the next language exactly once" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="sliding off the space bar cancels the gesture" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="cursor mode never switches the language" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.001"/>
+  <testcase name="jitter below one step emits nothing" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="holding after a first tap also enters cursor mode" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="a third quick press does not chain into another double tap" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="releasing cursor mode ends it without committing a space" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="cursor movement reverses direction" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="cancelling clears the double tap history" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="holding enters cursor mode" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="swiping left switches to the previous language" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="cursor movement accumulates into discrete steps" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="sloppy drift still commits a space" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.001"/>
+  <testcase name="a single event cannot emit more than the step cap" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="a slow second press is another tap" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="hold timeouts are ignored outside an undecided press" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="cancelling while idle emits nothing" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="a press and release is a tap" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <testcase name="a second press inside the window is a double tap" classname="io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

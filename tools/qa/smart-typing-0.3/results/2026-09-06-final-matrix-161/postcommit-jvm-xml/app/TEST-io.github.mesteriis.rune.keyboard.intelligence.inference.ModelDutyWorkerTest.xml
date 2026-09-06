@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:52.853Z" hostname="Mac.dlink" time="0.012">
+  <properties/>
+  <testcase name="admissionPreservesCompleteInputAndEightCandidates" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.002"/>
+  <testcase name="warmIdleOwnershipAndExceptionalCloseStillReleaseExactlyOnce" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.002"/>
+  <testcase name="activeWallDeadlineIsIndependentOfCpuAndHasExactBoundary" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.0"/>
+  <testcase name="pendingReplacementDoesNotExtendAgeOfSameRequest" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.0"/>
+  <testcase name="closeFinishesBothActiveAndPendingExactlyOnceWithoutJoining" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.001"/>
+  <testcase name="pressureLatchesBeforeNewSubmissionAndOnlyRealUnbindBindRearms" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.0"/>
+  <testcase name="resolverFailureAndCancelledColdWorkChargeWholeProcessCpu" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.001"/>
+  <testcase name="throwingClockCancelsButCleanupStillRunsAndAccountsWithoutRearming" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.001"/>
+  <testcase name="finalSampleSuppressesFastOvershootWithoutWaitingForTimer" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.001"/>
+  <testcase name="deniedRequestsNeverEnterEngineOrExtendExistingIdleUnload" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.0"/>
+  <testcase name="throwingEngineDeliveryAndFinishedCallbacksDoNotLeakActiveOrPendingWork" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.001"/>
+  <testcase name="latestDifferentPendingReplacesPreviousAndGetsItsOwnReceiptTime" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.0"/>
+  <testcase name="unloadEntryPrecedesDutyTimerRetirement" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.001"/>
+  <testcase name="pressureIsAlreadyLatchedWhileWaitingForWorkerMonitor" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.0"/>
+  <testcase name="retiringCloseHoldsLeaseAndChargesDebtBeforeSuccessorCanEnter" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.001"/>
+  <testcase name="processCpuExhaustionSetsFlagBeforeCancelAndRetiresActiveTimer" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.0"/>
+  <testcase name="deniedNewRevisionStillCancelsOldActiveAndDropsOldPending" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.0"/>
+  <testcase name="ordinaryCancellationPreservesWarmEngineAndStaleTimerCannotCancelNextRequest" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.session.SessionTextContextTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:55.590Z" hostname="Mac.dlink" time="0.033">
+  <properties/>
+  <testcase name="single oversized grapheme is evicted completely" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.SessionTextContextTest" time="0.0"/>
+  <testcase name="regional indicators retain whole flag pairing when trimming" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.SessionTextContextTest" time="0.0"/>
+  <testcase name="backspace removes whole final cluster and clear destroys retained text" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.SessionTextContextTest" time="0.0"/>
+  <testcase name="default limits bound a long session" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.SessionTextContextTest" time="0.033"/>
+  <testcase name="diagnostic representations contain no typed content" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.SessionTextContextTest" time="0.0"/>
+  <testcase name="suffix replacement and snapshot restoration retain bounds and whole graphemes" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.SessionTextContextTest" time="0.0"/>
+  <testcase name="code point budget can be tighter than UTF16 budget" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.SessionTextContextTest" time="0.0"/>
+  <testcase name="suffix replacement rejects mismatches without mutating owned context" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.SessionTextContextTest" time="0.0"/>
+  <testcase name="bounded prefix eviction never cuts supported grapheme families" classname="io.github.mesteriis.rune.keyboard.smarttyping.session.SessionTextContextTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CanonicalCaseDataTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:54.550Z" hostname="Mac.dlink" time="0.028">
+  <properties/>
+  <testcase name="malformed ordering utf8 and canonical case fail closed" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CanonicalCaseDataTest" time="0.001"/>
+  <testcase name="packaged canonical case assets validate and contain public references" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CanonicalCaseDataTest" time="0.027"/>
+  <testcase name="validated index finds countries cities and names without retaining query identity" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CanonicalCaseDataTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

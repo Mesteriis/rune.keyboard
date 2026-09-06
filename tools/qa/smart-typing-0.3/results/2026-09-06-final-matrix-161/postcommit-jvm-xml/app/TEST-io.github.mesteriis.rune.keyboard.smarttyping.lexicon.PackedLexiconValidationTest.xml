@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconValidationTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:54.675Z" hostname="Mac.dlink" time="0.003">
+  <properties/>
+  <testcase name="mapping uses exact embedded region without overflow and survives descriptor closure" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconValidationTest" time="0.001"/>
+  <testcase name="length sidecar must equal actual descendant bounds and depth stays within thirty two" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconValidationTest" time="0.001"/>
+  <testcase name="rank bounds canonical normalization and lexical word digest are enforced" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconValidationTest" time="0.0"/>
+  <testcase name="headers sizes positions mutability and overflow are rejected before node access" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconValidationTest" time="0.0"/>
+  <testcase name="load interruption produces a content free failure without clearing the signal" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconValidationTest" time="0.001"/>
+  <testcase name="trusted identity is checked before accepting self consistent swapped assets" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconValidationTest" time="0.0"/>
+  <testcase name="cycles shared unreachable children sibling order and terminal ordinals fail closed" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconValidationTest" time="0.0"/>
+  <testcase name="scalar root and index invariants are validated independently of asset hashes" classname="io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconValidationTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

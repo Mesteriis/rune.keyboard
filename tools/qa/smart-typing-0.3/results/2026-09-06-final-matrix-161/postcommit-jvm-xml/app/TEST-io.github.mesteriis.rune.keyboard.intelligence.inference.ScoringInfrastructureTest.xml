@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringInfrastructureTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-09-06T15:25:53.884Z" hostname="Mac.dlink" time="0.054">
+  <properties/>
+  <testcase name="boundedContracts" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringInfrastructureTest" time="0.004"/>
+  <testcase name="replacingPending" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringInfrastructureTest" time="0.004"/>
+  <testcase name="runtimeFailure" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringInfrastructureTest" time="0.001"/>
+  <testcase name="readOnlyResolver" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringInfrastructureTest" time="0.006"/>
+  <testcase name="memoryAndModelInvalidation" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringInfrastructureTest" time="0.001"/>
+  <testcase name="idleUnload" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringInfrastructureTest" time="0.037"/>
+  <testcase name="staleReplyGuard" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringInfrastructureTest" time="0.0"/>
+  <testcase name="callbackDeathCancellation" classname="io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringInfrastructureTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

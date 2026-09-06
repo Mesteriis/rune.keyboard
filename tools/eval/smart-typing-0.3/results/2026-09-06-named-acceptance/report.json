@@ -1,0 +1,23 @@
+{
+  "source": "build/smart-typing-0.3/final-product-replay-20260906-review-second-fix-v2/row-evidence.jsonl",
+  "sourceSha256": "6a19850ed122dd782ecde33aaba8087d76c77a34962fda44c055c94f717cfa75",
+  "selection": "Every row whose exact typed token is one of the eleven specification names; all languages and both model modes retained.",
+  "rows": 34,
+  "uniqueExamples": 17,
+  "allExamplesAreCalibration": true,
+  "newScoringCalls": 0,
+  "newTypingReplayCalls": 0,
+  "byMode": {
+    "ready": {
+      "preserved_target": 9,
+      "suggestion_only": 3,
+      "target_not_displayed": 3,
+      "automatic_target": 2
+    },
+    "unavailable": {
+      "preserved_target": 9,
+      "suggestion_only": 5,
+      "target_not_displayed": 3
+    }
+  }
+}
