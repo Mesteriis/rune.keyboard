@@ -1,0 +1,36 @@
+{
+  "sourceBase": "fd8872f63c0b232ad871f27804b6355840b66bb1",
+  "reviewedPatchSha256": "0ccaf283d1016ab1e25d3a205fbfd46f0eb24d7b382bb934b9a562fc5047478a",
+  "scope": "source-development-not-release-qualification",
+  "jvm": {
+    "tests": 707,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "prescribedGates": "PASS",
+  "androidTestApkBuild": "PASS",
+  "newPolicyPhoneExecution": "NOT_RUN",
+  "logs": {
+    "regression-red.log": {
+      "bytes": 3581,
+      "sha256": "537b2554e7c2fe85d6c146f779971fa10aeddd879a0c545d4cf4ce044fff603e"
+    },
+    "kernel-red.log": {
+      "bytes": 5248,
+      "sha256": "d31305c59879ce19dfce2a2d58e537acbecd289d6fffc5319190d9dad56622a3"
+    },
+    "scoped-green.log": {
+      "bytes": 2514,
+      "sha256": "812a30d0539c5d361c243055854b24d33ce862c3147a16e88030c589fba75327"
+    },
+    "full-jvm.log": {
+      "bytes": 2434,
+      "sha256": "a798788c60d67f22cb333af98cedc7410321877ef34d3452fd2347aa8064df60"
+    },
+    "gates.log": {
+      "bytes": 15756,
+      "sha256": "03ddf79c6a53f51382c787bd79e4db017c5d93e418130bd5247936e82787ea76"
+    }
+  }
+}

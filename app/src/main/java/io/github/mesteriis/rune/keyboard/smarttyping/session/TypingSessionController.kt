@@ -13,6 +13,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalEditK
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.OwnedPunctuationSuffix
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.PunctuationAction
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationEngine
+import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CalibratedSpellingPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.RankingModelScore
@@ -343,13 +344,10 @@ class TypingSessionController internal constructor(
         if (reply.code != ScoringCode.OK || reply.scores.size != pending.variants.size) return false
         contextualCompletedSelection = pending.selection
         return trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
-            val averages = reply.scores.associate { it.candidateId to it.sumLogProbability / it.tokenCount }
-            val original = averages[0]?.takeIf(Double::isFinite) ?: return@section false
-            val winner = pending.variants.filter { it.id != 0 }.maxWithOrNull(
-                compareBy<ContextualPunctuationEngine.Variant> { averages[it.id] ?: Double.NEGATIVE_INFINITY }
-                    .thenBy { -it.id }) ?: return@section false
-            val winnerScore = averages[winner.id]?.takeIf(Double::isFinite) ?: return@section false
-            if (winnerScore <= original) return@section false
+            val winnerId = ContextualPunctuationPolicy.choose(pending.variants.map { it.id },
+                reply.scores.map { ContextualPunctuationPolicy.Score(it.candidateId, it.sumLogProbability, it.tokenCount) })
+                ?: return@section false
+            val winner = pending.variants.singleOrNull { it.id == winnerId } ?: return@section false
             contextualSelection = ContextualSelection(pending.token, pending.selection, winner)
             true
         }

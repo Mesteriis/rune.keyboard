@@ -818,8 +818,12 @@ class LocalCandidateCoordinatorTest {
             assertEquals(listOf(" world", ", world", ": world", "; world", ". World", "? World", "! World"),
                 request.continuations)
             assertEquals((0..6).toList(), request.token.candidateIds)
+            h.commands.clear()
             h.model.reply(request, 1)
             assertEquals(listOf("world", ","), h.labels())
+            assertEquals("hello world", h.controller.state.contextText)
+            assertTrue(h.commands.isEmpty())
+            assertNull(h.controller.state.lastAutoEdit)
             val punctuation = h.coordinator.viewState.candidates.single { it is CandidateUiItem.Punctuation }
             h.commands.clear()
             assertEquals(TypingTextResult.HANDLED, h.coordinator.selectCandidate(punctuation.id, h.execute))
@@ -898,6 +902,65 @@ class LocalCandidateCoordinatorTest {
             h.model.listener.onAvailabilityChanged(true)
             repeat(3) { h.coordinator.viewState }
             assertEquals(1, h.model.requests.size); assertNull(h.pause.task)
+        }
+    }
+
+    @Test fun `contextual longer punctuation with worse total probability stays Original`() {
+        Harness(withModel = true).use { h ->
+            val request = h.contextualRequest()
+            h.model.listener.onReply(ScoringReply(request.token, ScoringCode.OK, 0,
+                request.token.candidateIds.map {
+                    when (it) {
+                        0 -> NumericScore(it, -2.0, 1)
+                        1 -> NumericScore(it, -3.0, 2)
+                        else -> NumericScore(it, -10.0, 1)
+                    }
+                }))
+            assertEquals(listOf("world"), h.labels())
+            assertEquals("hello world", h.controller.state.contextText)
+            assertTrue(h.commands.isEmpty())
+        }
+    }
+
+    @Test fun `contextual improvement at Original margin stays Original`() {
+        Harness(withModel = true).use { h ->
+            val request = h.contextualRequest()
+            h.model.listener.onReply(ScoringReply(request.token, ScoringCode.OK, 0,
+                request.token.candidateIds.map {
+                    NumericScore(it, when (it) { 0 -> -2.0; 1 -> -1.5; else -> -10.0 }, 1)
+                }))
+            assertEquals(listOf("world"), h.labels())
+            assertEquals("hello world", h.controller.state.contextText)
+            assertTrue(h.commands.isEmpty())
+            assertFalse(h.controller.canRequestContextualRanking)
+        }
+    }
+
+    @Test fun `contextual close punctuation rivals stay Original`() {
+        Harness(withModel = true).use { h ->
+            val request = h.contextualRequest()
+            h.model.listener.onReply(ScoringReply(request.token, ScoringCode.OK, 0,
+                request.token.candidateIds.map {
+                    NumericScore(it, when (it) { 1 -> -1.0; 4 -> -4.75; else -> -10.0 }, 1)
+                }))
+            assertEquals(listOf("world"), h.labels())
+            assertEquals("hello world", h.controller.state.contextText)
+            assertTrue(h.commands.isEmpty())
+        }
+    }
+
+    @Test fun `contextual error or no divergent score cannot render or edit`() {
+        for (code in listOf(ScoringCode.OK, ScoringCode.INVALID, ScoringCode.INTERNAL)) {
+            Harness(withModel = true).use { h ->
+                val request = h.contextualRequest()
+                h.model.listener.onReply(ScoringReply(request.token, code, 0,
+                    if (code == ScoringCode.OK) request.token.candidateIds.map { NumericScore(it, 0.0, 1) }
+                    else emptyList()))
+                assertEquals(listOf("world"), h.labels())
+                assertEquals("hello world", h.controller.state.contextText)
+                assertTrue(h.commands.isEmpty())
+                assertNull(h.controller.state.lastAutoEdit)
+            }
         }
     }
 
@@ -983,6 +1046,14 @@ class LocalCandidateCoordinatorTest {
                 KeyboardState(owner.language), autocorrectionMode = owner.autocorrectionMode, execute = execute)
         }
         fun labels() = coordinator.viewState.candidates.map { it.text }
+        fun contextualRequest(): ScoringInput {
+            owner = owner.copy(autocorrectionMode = AutocorrectionMode.OFF,
+                contextualPunctuationEnabled = true, contextualModelReady = true)
+            lexicon.validWords += listOf("hello", "world")
+            type("hello"); deliver(); type(" "); type("world"); deliver(); pause.fire()
+            commands.clear()
+            return model.requests.single()
+        }
         fun awaitQueued() = eventually { queue.isNotEmpty() }
         fun drain() { while (true) (queue.poll() ?: return).run() }
         fun deliver() {

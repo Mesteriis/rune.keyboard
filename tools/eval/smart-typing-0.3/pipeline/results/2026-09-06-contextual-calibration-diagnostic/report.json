@@ -1,0 +1,107 @@
+{
+  "holdoutDecisions": 0,
+  "independentObservations": false,
+  "inputs": {
+    "calibration-complete.json": "13cc02d6613290979ebe81a61e7878add4115e898906be505b33df9d61088722",
+    "calibration-scores.jsonl.gz": "149082bb78597b69869e50e0aed49a3c578463ba75cab4d57df555b886c597fa",
+    "rows.jsonl.gz": "a7fd0d36e302d66d2e5066b7f281fa9321cad856b44602541c16fc877c1d8592"
+  },
+  "note": "Repeated authored contexts; calibration comparisons cannot establish unseen quality.",
+  "policies": {
+    "current_average": {
+      "languages": {
+        "en": {
+          "ambiguousNonSpaceSuggestions": 88,
+          "ambiguousRows": 100,
+          "clearRows": 100,
+          "clearSuggestions": 100,
+          "correctClearSuggestions": 100
+        },
+        "es": {
+          "ambiguousNonSpaceSuggestions": 100,
+          "ambiguousRows": 100,
+          "clearRows": 100,
+          "clearSuggestions": 100,
+          "correctClearSuggestions": 73
+        },
+        "ru": {
+          "ambiguousNonSpaceSuggestions": 100,
+          "ambiguousRows": 100,
+          "clearRows": 100,
+          "clearSuggestions": 100,
+          "correctClearSuggestions": 91
+        }
+      },
+      "parameters": {
+        "average": true,
+        "original_margin": 0.0,
+        "rival_margin": 0.0
+      }
+    },
+    "total_only": {
+      "languages": {
+        "en": {
+          "ambiguousNonSpaceSuggestions": 61,
+          "ambiguousRows": 100,
+          "clearRows": 100,
+          "clearSuggestions": 98,
+          "correctClearSuggestions": 98
+        },
+        "es": {
+          "ambiguousNonSpaceSuggestions": 69,
+          "ambiguousRows": 100,
+          "clearRows": 100,
+          "clearSuggestions": 97,
+          "correctClearSuggestions": 97
+        },
+        "ru": {
+          "ambiguousNonSpaceSuggestions": 79,
+          "ambiguousRows": 100,
+          "clearRows": 100,
+          "clearSuggestions": 91,
+          "correctClearSuggestions": 86
+        }
+      },
+      "parameters": {
+        "average": false,
+        "original_margin": 0.0,
+        "rival_margin": 0.0
+      }
+    },
+    "total_with_two_margins": {
+      "languages": {
+        "en": {
+          "ambiguousNonSpaceSuggestions": 4,
+          "ambiguousRows": 100,
+          "clearRows": 100,
+          "clearSuggestions": 91,
+          "correctClearSuggestions": 91
+        },
+        "es": {
+          "ambiguousNonSpaceSuggestions": 5,
+          "ambiguousRows": 100,
+          "clearRows": 100,
+          "clearSuggestions": 79,
+          "correctClearSuggestions": 79
+        },
+        "ru": {
+          "ambiguousNonSpaceSuggestions": 5,
+          "ambiguousRows": 100,
+          "clearRows": 100,
+          "clearSuggestions": 54,
+          "correctClearSuggestions": 54
+        }
+      },
+      "parameters": {
+        "average": false,
+        "original_margin": 0.5,
+        "rival_margin": 4.0
+      }
+    }
+  },
+  "productionChanged": false,
+  "releaseQualified": false,
+  "rows": 600,
+  "scope": "contextual-calibration-development-diagnostic",
+  "scriptSha256": "409e5b7d223d06d8371f9ee7c67e0804e9945e0068ecb2212103705011bdf433"
+}
