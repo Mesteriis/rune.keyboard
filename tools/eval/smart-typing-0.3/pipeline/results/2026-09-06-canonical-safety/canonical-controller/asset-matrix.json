@@ -1,0 +1,652 @@
+{
+  "changedPolicyExecuted": false,
+  "modelCacheReads": 0,
+  "modelCalls": 0,
+  "rows": [
+    {
+      "assetLookups": [
+        {
+          "canonicalText": "Clay",
+          "canonicalUnambiguous": false,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 31,
+          "language": "en"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 1,
+          "language": "ru"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 21,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "en",
+          "primary": "es",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "clay"
+    },
+    {
+      "assetLookups": [
+        {
+          "canonicalText": "Resistance",
+          "canonicalUnambiguous": false,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 60,
+          "language": "en"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 1,
+          "language": "ru"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 58,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "en",
+          "primary": "es",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "resistance"
+    },
+    {
+      "assetLookups": [
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 36,
+          "language": "en"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 1,
+          "language": "ru"
+        },
+        {
+          "canonicalText": "Campo",
+          "canonicalUnambiguous": false,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 25,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "en",
+          "primary": "es",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "campo"
+    },
+    {
+      "assetLookups": [
+        {
+          "canonicalText": "Puerto",
+          "canonicalUnambiguous": true,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 48,
+          "language": "en"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 1,
+          "language": "ru"
+        },
+        {
+          "canonicalText": "Puerto",
+          "canonicalUnambiguous": false,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 50,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "en",
+          "primary": "es",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "puerto"
+    },
+    {
+      "assetLookups": [
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 40,
+          "language": "en"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 1,
+          "language": "ru"
+        },
+        {
+          "canonicalText": "Arrecife",
+          "canonicalUnambiguous": false,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 47,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "en",
+          "primary": "es",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "arrecife"
+    },
+    {
+      "assetLookups": [
+        {
+          "canonicalText": "Que",
+          "canonicalUnambiguous": true,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 29,
+          "language": "en"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 1,
+          "language": "ru"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 19,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "en",
+          "primary": "es",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "que"
+    },
+    {
+      "assetLookups": [
+        {
+          "canonicalText": "Si",
+          "canonicalUnambiguous": true,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 29,
+          "language": "en"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 1,
+          "language": "ru"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 25,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "en",
+          "primary": "es",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "si"
+    },
+    {
+      "assetLookups": [
+        {
+          "canonicalText": "Will",
+          "canonicalUnambiguous": false,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 46,
+          "language": "en"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 1,
+          "language": "ru"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 30,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "en",
+          "primary": "es",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "will"
+    },
+    {
+      "assetLookups": [
+        {
+          "canonicalText": "May",
+          "canonicalUnambiguous": false,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 40,
+          "language": "en"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 1,
+          "language": "ru"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 36,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "en",
+          "primary": "es",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "may"
+    },
+    {
+      "assetLookups": [
+        {
+          "canonicalText": "Brown",
+          "canonicalUnambiguous": false,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 42,
+          "language": "en"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 1,
+          "language": "ru"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 21,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "en",
+          "primary": "es",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "brown"
+    },
+    {
+      "assetLookups": [
+        {
+          "canonicalText": "Paris",
+          "canonicalUnambiguous": true,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 48,
+          "language": "en"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 1,
+          "language": "ru"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 48,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "en",
+          "primary": "es",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "paris"
+    },
+    {
+      "assetLookups": [
+        {
+          "canonicalText": "London",
+          "canonicalUnambiguous": true,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 42,
+          "language": "en"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 1,
+          "language": "ru"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 35,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "en",
+          "primary": "es",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "london"
+    },
+    {
+      "assetLookups": [
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 28,
+          "language": "en"
+        },
+        {
+          "canonicalText": "Москва",
+          "canonicalUnambiguous": true,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 48,
+          "language": "ru"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 32,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "NONE",
+          "primary": "ru",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "NONE",
+          "primary": "ru",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "NONE",
+          "primary": "ru",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "москва"
+    },
+    {
+      "assetLookups": [
+        {
+          "canonicalText": "Juan",
+          "canonicalUnambiguous": true,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 24,
+          "language": "en"
+        },
+        {
+          "canonicalText": null,
+          "canonicalUnambiguous": null,
+          "exactMembership": "ABSENT",
+          "inspectedStates": 1,
+          "language": "ru"
+        },
+        {
+          "canonicalText": "Juan",
+          "canonicalUnambiguous": false,
+          "exactMembership": "PRESENT",
+          "inspectedStates": 18,
+          "language": "es"
+        }
+      ],
+      "routes": [
+        {
+          "activeLanguage": "en",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "ru",
+          "fallback": "es",
+          "primary": "en",
+          "protectedReason": "NONE"
+        },
+        {
+          "activeLanguage": "es",
+          "fallback": "en",
+          "primary": "es",
+          "protectedReason": "NONE"
+        }
+      ],
+      "token": "juan"
+    }
+  ],
+  "scope": "actual-current-kotlin-route-and-exact-case-assets-public-fixtures"
+}

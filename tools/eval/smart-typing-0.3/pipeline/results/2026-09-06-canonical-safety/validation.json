@@ -1,0 +1,20 @@
+{
+  "scope": "canonical-safety-source-precommit",
+  "jvm": {
+    "tests": 711,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "prescribedGates": "PASS",
+  "logs": {
+    "precommit-jvm": {
+      "file": "resume-2026-09-06-canonical-precommit-jvm.log.gz",
+      "uncompressedSha256": "6dbd6db683b75ba4320f7043467aef262fcb30ce04b99cf1a4979c56d2449fea"
+    },
+    "gates": {
+      "file": "resume-2026-09-06-canonical-gates.log.gz",
+      "uncompressedSha256": "52244e6dfc43e9738b32d6d347e7c85063b053575e6661f51a66e1f29ba75a5e"
+    }
+  }
+}

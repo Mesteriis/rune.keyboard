@@ -33,6 +33,8 @@ data class GeneratedCandidate(
     val kind: GeneratedCandidateKind = GeneratedCandidateKind.SPELLING,
     /** Source ambiguity metadata retained for quality reports and future policy changes. */
     val canonicalCaseUnambiguous: Boolean = false,
+    /** Own case evidence agrees with every present routed lexicon; absent evidence cannot grant it. */
+    val canonicalCaseAutoEligible: Boolean = false,
 ) {
     override fun toString(): String = "GeneratedCandidate(redacted)"
 }
@@ -114,6 +116,20 @@ class CandidateGenerator(
                         val canonical = if (pattern == CasePattern.LOWER)
                             canonicalCaseLexicon.lookup(language, key) else null
                         if (!control.cancellationCheckpoint()) return result(CandidateCompletion.CANCELLED)
+                        val caseAutoEligible = canonical?.let { own ->
+                            own.unambiguous && languages.filter { it != language }.all { other ->
+                                val membership = lexicon.exact(other, key, control)
+                                if (!control.checkpoint()) false else when (membership) {
+                                    ExactMembership.ABSENT -> true
+                                    ExactMembership.UNAVAILABLE -> false
+                                    ExactMembership.PRESENT -> {
+                                        val competing = canonicalCaseLexicon.lookup(other, key)
+                                        control.checkpoint() && competing?.unambiguous == true && competing.text == own.text
+                                    }
+                                }
+                            }
+                        } ?: false
+                        if (!control.checkpoint()) return result(control.stop!!)
                         val alternative = canonical?.takeIf { it.text != token }?.let {
                             GeneratedCandidate(
                                 text = it.text,
@@ -129,6 +145,7 @@ class CandidateGenerator(
                                 casePattern = CasePattern.TITLE,
                                 kind = GeneratedCandidateKind.CANONICAL_CASE,
                                 canonicalCaseUnambiguous = it.unambiguous,
+                                canonicalCaseAutoEligible = caseAutoEligible,
                             )
                         }
                         return result(CandidateCompletion.VALID_WORD, listOfNotNull(alternative))

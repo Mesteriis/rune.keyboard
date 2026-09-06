@@ -802,9 +802,13 @@ class TypingSessionController internal constructor(
         val selection = candidateSelection ?: return TypingTextResult.BYPASS
         val ranking = selection.ranking ?: return TypingTextResult.BYPASS
         val canonicalCase = selection.generation.isCanonicalCaseCorrection()
+        val automaticEligible = if (canonicalCase) {
+            val candidate = selection.generation.alternatives.single()
+            candidate.canonicalCaseUnambiguous && candidate.canonicalCaseAutoEligible
+        } else !selection.generation.prohibitsAutoReplace &&
+            spellingQualification.allows(selection.language, ranking.usedModel)
         if (selection.language != keyboard.language || ranking.preferredId <= 0 ||
-            (!canonicalCase && (selection.generation.prohibitsAutoReplace ||
-                !spellingQualification.allows(selection.language, ranking.usedModel)))) {
+            !automaticEligible) {
             return TypingTextResult.BYPASS
         }
         val previous = state.composing ?: return TypingTextResult.BYPASS

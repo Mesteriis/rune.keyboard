@@ -1,0 +1,1829 @@
+{
+  "harnessErrors": [],
+  "labelsChanged": false,
+  "languages": {
+    "en": {
+      "allBoundaryAutoEdits": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1682,
+          "value": 0.841,
+          "wilson95RowDescriptive": [
+            0.8243221492638255,
+            0.8563704244903598
+          ]
+        },
+        "automaticReplacements": 318,
+        "correctReplacements": 293,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 318,
+          "value": 0.159,
+          "wilson95RowDescriptive": [
+            0.14362957550964012,
+            0.17567785073617437
+          ]
+        },
+        "exactBoundaryUndoAmongChanged": 318,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 14,
+          "value": 0.014,
+          "wilson95RowDescriptive": [
+            0.00835757513042392,
+            0.02336203411753566
+          ]
+        },
+        "incorrectReplacements": 25,
+        "negativeRows": 1000,
+        "precision": {
+          "denominator": 318,
+          "numerator": 293,
+          "value": 0.9213836477987422,
+          "wilson95RowDescriptive": [
+            0.8865231849486377,
+            0.9461849471298633
+          ]
+        },
+        "rows": 2000
+      },
+      "allFinalTextChanges": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1681,
+          "value": 0.8405,
+          "wilson95RowDescriptive": [
+            0.8238027769511458,
+            0.855891713850321
+          ]
+        },
+        "automaticReplacements": 319,
+        "correctReplacements": 293,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 319,
+          "value": 0.1595,
+          "wilson95RowDescriptive": [
+            0.144108286149679,
+            0.17619722304885418
+          ]
+        },
+        "exactBoundaryUndoAmongChanged": 319,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 15,
+          "value": 0.015,
+          "wilson95RowDescriptive": [
+            0.009110978804081668,
+            0.024600976926906798
+          ]
+        },
+        "incorrectReplacements": 26,
+        "negativeRows": 1000,
+        "precision": {
+          "denominator": 319,
+          "numerator": 293,
+          "value": 0.9184952978056427,
+          "wilson95RowDescriptive": [
+            0.8832572990904008,
+            0.9437740276026545
+          ]
+        },
+        "rows": 2000
+      },
+      "allRowsExactBeforeBoundaryRestore": 2000,
+      "canonicalBoundaryAutoEdits": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1986,
+          "value": 0.993,
+          "wilson95RowDescriptive": [
+            0.9882841374366056,
+            0.9958256539440788
+          ]
+        },
+        "automaticReplacements": 14,
+        "correctReplacements": 0,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 14,
+          "value": 0.007,
+          "wilson95RowDescriptive": [
+            0.0041743460559210965,
+            0.011715862563394297
+          ]
+        },
+        "exactBoundaryUndoAmongChanged": 14,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 14,
+          "value": 0.014,
+          "wilson95RowDescriptive": [
+            0.00835757513042392,
+            0.02336203411753566
+          ]
+        },
+        "incorrectReplacements": 14,
+        "negativeRows": 1000,
+        "precision": {
+          "denominator": 14,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
+        },
+        "rows": 2000
+      },
+      "mechanicalBoundaryAutoEdits": 0,
+      "mechanicalTypingChanges": 1,
+      "modelAdmissionCounts": {
+        "MATCHED_NUMERIC_REPLY": 1002,
+        "MATCHED_SCORING_ERROR": 2,
+        "NO_CURRENT_MODEL_REQUEST": 985,
+        "REFUSED_NO_SCORED_REQUEST": 11
+      },
+      "ordinarySpellingBoundaryAutoEdits": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1696,
+          "value": 0.848,
+          "wilson95RowDescriptive": [
+            0.8315993113023692,
+            0.8630664237898786
+          ]
+        },
+        "automaticReplacements": 304,
+        "correctReplacements": 293,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 304,
+          "value": 0.152,
+          "wilson95RowDescriptive": [
+            0.1369335762101213,
+            0.1684006886976307
+          ]
+        },
+        "exactBoundaryUndoAmongChanged": 304,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "incorrectReplacements": 11,
+        "negativeRows": 1000,
+        "precision": {
+          "denominator": 304,
+          "numerator": 293,
+          "value": 0.9638157894736842,
+          "wilson95RowDescriptive": [
+            0.9363786768920008,
+            0.9796772730775392
+          ]
+        },
+        "rows": 2000
+      },
+      "rows": 2000,
+      "statusCounts": {
+        "COMPLETE": 2000
+      }
+    },
+    "es": {
+      "allBoundaryAutoEdits": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1573,
+          "value": 0.7865,
+          "wilson95RowDescriptive": [
+            0.768000614864056,
+            0.803900917043786
+          ]
+        },
+        "automaticReplacements": 427,
+        "correctReplacements": 396,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 427,
+          "value": 0.2135,
+          "wilson95RowDescriptive": [
+            0.19609908295621392,
+            0.23199938513594393
+          ]
+        },
+        "exactBoundaryUndoAmongChanged": 427,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 18,
+          "value": 0.018,
+          "wilson95RowDescriptive": [
+            0.011415740009567788,
+            0.028273255170507345
+          ]
+        },
+        "incorrectReplacements": 31,
+        "negativeRows": 1000,
+        "precision": {
+          "denominator": 427,
+          "numerator": 396,
+          "value": 0.927400468384075,
+          "wilson95RowDescriptive": [
+            0.8987937649591923,
+            0.9483856151289815
+          ]
+        },
+        "rows": 2000
+      },
+      "allFinalTextChanges": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1572,
+          "value": 0.786,
+          "wilson95RowDescriptive": [
+            0.7674863236486246,
+            0.8034171253064987
+          ]
+        },
+        "automaticReplacements": 428,
+        "correctReplacements": 396,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 428,
+          "value": 0.214,
+          "wilson95RowDescriptive": [
+            0.19658287469350122,
+            0.23251367635137538
+          ]
+        },
+        "exactBoundaryUndoAmongChanged": 428,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 19,
+          "value": 0.019,
+          "wilson95RowDescriptive": [
+            0.012196885750790904,
+            0.02948445591231312
+          ]
+        },
+        "incorrectReplacements": 32,
+        "negativeRows": 1000,
+        "precision": {
+          "denominator": 428,
+          "numerator": 396,
+          "value": 0.9252336448598131,
+          "wilson95RowDescriptive": [
+            0.8963577606242026,
+            0.946544171473839
+          ]
+        },
+        "rows": 2000
+      },
+      "allRowsExactBeforeBoundaryRestore": 2000,
+      "canonicalBoundaryAutoEdits": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1981,
+          "value": 0.9905,
+          "wilson95RowDescriptive": [
+            0.9852096168457007,
+            0.9939097597713902
+          ]
+        },
+        "automaticReplacements": 19,
+        "correctReplacements": 0,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 19,
+          "value": 0.0095,
+          "wilson95RowDescriptive": [
+            0.006090240228609851,
+            0.014790383154299275
+          ]
+        },
+        "exactBoundaryUndoAmongChanged": 19,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 18,
+          "value": 0.018,
+          "wilson95RowDescriptive": [
+            0.011415740009567788,
+            0.028273255170507345
+          ]
+        },
+        "incorrectReplacements": 19,
+        "negativeRows": 1000,
+        "precision": {
+          "denominator": 19,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.16817922405261626
+          ]
+        },
+        "rows": 2000
+      },
+      "mechanicalBoundaryAutoEdits": 0,
+      "mechanicalTypingChanges": 1,
+      "modelAdmissionCounts": {
+        "MATCHED_NUMERIC_REPLY": 951,
+        "MATCHED_SCORING_ERROR": 2,
+        "NO_CURRENT_MODEL_REQUEST": 1036,
+        "REFUSED_NO_SCORED_REQUEST": 11
+      },
+      "ordinarySpellingBoundaryAutoEdits": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1592,
+          "value": 0.796,
+          "wilson95RowDescriptive": [
+            0.7777797978268458,
+            0.8130853101826524
+          ]
+        },
+        "automaticReplacements": 408,
+        "correctReplacements": 396,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 408,
+          "value": 0.204,
+          "wilson95RowDescriptive": [
+            0.18691468981734755,
+            0.22222020217315414
+          ]
+        },
+        "exactBoundaryUndoAmongChanged": 408,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            2.168404344971009e-19,
+            0.0038267584855551234
+          ]
+        },
+        "incorrectReplacements": 12,
+        "negativeRows": 1000,
+        "precision": {
+          "denominator": 408,
+          "numerator": 396,
+          "value": 0.9705882352941176,
+          "wilson95RowDescriptive": [
+            0.9493009746302344,
+            0.9830966550294457
+          ]
+        },
+        "rows": 2000
+      },
+      "rows": 2000,
+      "statusCounts": {
+        "COMPLETE": 2000
+      }
+    },
+    "ru": {
+      "allBoundaryAutoEdits": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1640,
+          "value": 0.82,
+          "wilson95RowDescriptive": [
+            0.802554061217565,
+            0.8362190285224329
+          ]
+        },
+        "automaticReplacements": 360,
+        "correctReplacements": 341,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 360,
+          "value": 0.18,
+          "wilson95RowDescriptive": [
+            0.16378097147756693,
+            0.19744593878243488
+          ]
+        },
+        "exactBoundaryUndoAmongChanged": 360,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 3,
+          "value": 0.003,
+          "wilson95RowDescriptive": [
+            0.0010207838811386186,
+            0.008783014053503173
+          ]
+        },
+        "incorrectReplacements": 19,
+        "negativeRows": 1000,
+        "precision": {
+          "denominator": 360,
+          "numerator": 341,
+          "value": 0.9472222222222222,
+          "wilson95RowDescriptive": [
+            0.9190458567486823,
+            0.9659549923675417
+          ]
+        },
+        "rows": 2000
+      },
+      "allFinalTextChanges": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1639,
+          "value": 0.8195,
+          "wilson95RowDescriptive": [
+            0.802036856323752,
+            0.8357381504635274
+          ]
+        },
+        "automaticReplacements": 361,
+        "correctReplacements": 341,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 361,
+          "value": 0.1805,
+          "wilson95RowDescriptive": [
+            0.16426184953647252,
+            0.19796314367624804
+          ]
+        },
+        "exactBoundaryUndoAmongChanged": 361,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 4,
+          "value": 0.004,
+          "wilson95RowDescriptive": [
+            0.0015565881404084308,
+            0.010239556277262253
+          ]
+        },
+        "incorrectReplacements": 20,
+        "negativeRows": 1000,
+        "precision": {
+          "denominator": 361,
+          "numerator": 341,
+          "value": 0.9445983379501385,
+          "wilson95RowDescriptive": [
+            0.9159812147881972,
+            0.9638530042657274
+          ]
+        },
+        "rows": 2000
+      },
+      "allRowsExactBeforeBoundaryRestore": 2000,
+      "canonicalBoundaryAutoEdits": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1998,
+          "value": 0.999,
+          "wilson95RowDescriptive": [
+            0.9963610657309615,
+            0.9997257210823479
+          ]
+        },
+        "automaticReplacements": 2,
+        "correctReplacements": 0,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 2,
+          "value": 0.001,
+          "wilson95RowDescriptive": [
+            0.0002742789176520342,
+            0.003638934269038394
+          ]
+        },
+        "exactBoundaryUndoAmongChanged": 2,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 2,
+          "value": 0.002,
+          "wilson95RowDescriptive": [
+            0.000548643588120728,
+            0.007262807863492177
+          ]
+        },
+        "incorrectReplacements": 2,
+        "negativeRows": 1000,
+        "precision": {
+          "denominator": 2,
+          "numerator": 0,
+          "value": 0.0,
+          "wilson95RowDescriptive": [
+            0.0,
+            0.6576197724933469
+          ]
+        },
+        "rows": 2000
+      },
+      "mechanicalBoundaryAutoEdits": 0,
+      "mechanicalTypingChanges": 1,
+      "modelAdmissionCounts": {
+        "MATCHED_NUMERIC_REPLY": 973,
+        "MATCHED_SCORING_ERROR": 10,
+        "NO_CURRENT_MODEL_REQUEST": 1006,
+        "REFUSED_NO_SCORED_REQUEST": 11
+      },
+      "ordinarySpellingBoundaryAutoEdits": {
+        "abstention": {
+          "denominator": 2000,
+          "numerator": 1642,
+          "value": 0.821,
+          "wilson95RowDescriptive": [
+            0.8035886153696912,
+            0.8371806402757442
+          ]
+        },
+        "automaticReplacements": 358,
+        "correctReplacements": 341,
+        "coverage": {
+          "denominator": 2000,
+          "numerator": 358,
+          "value": 0.179,
+          "wilson95RowDescriptive": [
+            0.1628193597242556,
+            0.19641138463030872
+          ]
+        },
+        "exactBoundaryUndoAmongChanged": 358,
+        "falseChange": {
+          "denominator": 1000,
+          "numerator": 1,
+          "value": 0.001,
+          "wilson95RowDescriptive": [
+            0.00017654637062607809,
+            0.0056425585979579355
+          ]
+        },
+        "incorrectReplacements": 17,
+        "negativeRows": 1000,
+        "precision": {
+          "denominator": 358,
+          "numerator": 341,
+          "value": 0.952513966480447,
+          "wilson95RowDescriptive": [
+            0.9252761807224279,
+            0.9701436007917574
+          ]
+        },
+        "rows": 2000
+      },
+      "rows": 2000,
+      "statusCounts": {
+        "COMPLETE": 2000
+      }
+    }
+  },
+  "legacyFrozenModelAssisted": {
+    "en": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1696,
+        "value": 0.848,
+        "wilson95RowDescriptive": [
+          0.8315993113023692,
+          0.8630664237898786
+        ]
+      },
+      "automaticReplacements": 304,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 925,
+        "value": 0.925,
+        "wilson95RowDescriptive": [
+          0.9069990602607456,
+          0.9397481950265327
+        ]
+      },
+      "correctReplacements": 293,
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 304,
+        "value": 0.152,
+        "wilson95RowDescriptive": [
+          0.1369335762101213,
+          0.1684006886976307
+        ]
+      },
+      "deterministicFallbackRows": 1557,
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "gate": {
+        "falseChangeAtMost0_5Percent": true,
+        "minimum300": true,
+        "pass": false,
+        "precisionAtLeast99Percent": false
+      },
+      "incorrectReplacements": 11,
+      "modelAvailableRows": 443,
+      "modelErrors": 2,
+      "negativeRows": 1000,
+      "originalAlwaysAvailable": true,
+      "precision": {
+        "denominator": 304,
+        "numerator": 293,
+        "value": 0.9638157894736842,
+        "wilson95RowDescriptive": [
+          0.9363786768920008,
+          0.9796772730775392
+        ]
+      },
+      "rows": 2000,
+      "typoRows": 1000
+    },
+    "es": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1592,
+        "value": 0.796,
+        "wilson95RowDescriptive": [
+          0.7777797978268458,
+          0.8130853101826524
+        ]
+      },
+      "automaticReplacements": 408,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 892,
+        "value": 0.892,
+        "wilson95RowDescriptive": [
+          0.8712410199098767,
+          0.9097588014374481
+        ]
+      },
+      "correctReplacements": 396,
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 408,
+        "value": 0.204,
+        "wilson95RowDescriptive": [
+          0.18691468981734755,
+          0.22222020217315414
+        ]
+      },
+      "deterministicFallbackRows": 1384,
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          2.168404344971009e-19,
+          0.0038267584855551234
+        ]
+      },
+      "gate": {
+        "falseChangeAtMost0_5Percent": true,
+        "minimum300": true,
+        "pass": false,
+        "precisionAtLeast99Percent": false
+      },
+      "incorrectReplacements": 12,
+      "modelAvailableRows": 616,
+      "modelErrors": 2,
+      "negativeRows": 1000,
+      "originalAlwaysAvailable": true,
+      "precision": {
+        "denominator": 408,
+        "numerator": 396,
+        "value": 0.9705882352941176,
+        "wilson95RowDescriptive": [
+          0.9493009746302344,
+          0.9830966550294457
+        ]
+      },
+      "rows": 2000,
+      "typoRows": 1000
+    },
+    "ru": {
+      "abstention": {
+        "denominator": 2000,
+        "numerator": 1641,
+        "value": 0.8205,
+        "wilson95RowDescriptive": [
+          0.8030713141807578,
+          0.836699858511959
+        ]
+      },
+      "automaticReplacements": 359,
+      "candidateRecall": {
+        "denominator": 1000,
+        "numerator": 917,
+        "value": 0.917,
+        "wilson95RowDescriptive": [
+          0.8982635048659464,
+          0.9325449785571007
+        ]
+      },
+      "correctReplacements": 342,
+      "coverage": {
+        "denominator": 2000,
+        "numerator": 359,
+        "value": 0.1795,
+        "wilson95RowDescriptive": [
+          0.16330014148804087,
+          0.1969286858192422
+        ]
+      },
+      "deterministicFallbackRows": 1332,
+      "falseChange": {
+        "denominator": 1000,
+        "numerator": 1,
+        "value": 0.001,
+        "wilson95RowDescriptive": [
+          0.00017654637062607809,
+          0.0056425585979579355
+        ]
+      },
+      "gate": {
+        "falseChangeAtMost0_5Percent": true,
+        "minimum300": true,
+        "pass": false,
+        "precisionAtLeast99Percent": false
+      },
+      "incorrectReplacements": 17,
+      "modelAvailableRows": 668,
+      "modelErrors": 10,
+      "negativeRows": 1000,
+      "originalAlwaysAvailable": true,
+      "precision": {
+        "denominator": 359,
+        "numerator": 342,
+        "value": 0.9526462395543176,
+        "wilson95RowDescriptive": [
+          0.9254806550649473,
+          0.9702273521079756
+        ]
+      },
+      "rows": 2000,
+      "typoRows": 1000
+    }
+  },
+  "legacyReportBinding": {
+    "path": "/Users/avm/projects/Personal/rune-keyboard/tools/eval/smart-typing-0.3/pipeline/results/2026-09-03-product-holdout/report.json",
+    "sha256": "7fb01eef02bba149b7503a9d36f0b3f58b1970e5e8c23d7f1027199f09baf153"
+  },
+  "limits": [
+    "Current source diagnostic of already revealed holdout; no new qualification or threshold fitting.",
+    "Independent in-memory TypingEdit executor, JVM BreakIterator, no real Android InputConnection or device execution.",
+    "Letters-layer Shift OFF text actions; no keyboard-view/symbol-layer transitions or asynchronous availability timing.",
+    "Fresh scores admitted only on exact live prefix, continuation order, and candidate-ID equality.",
+    "Native SCORING_FAILED is delivered as UNAVAILABLE with empty scores; preserves failure and prohibits a numeric ranking.",
+    "95% Wilson intervals are descriptive row intervals; frozen candidate-set repetitions are not independent user samples.",
+    "Full final-text metrics include mechanical changes before the boundary; Undo metric restores pre-boundary state, not earlier mechanical changes."
+  ],
+  "modelCalls": 0,
+  "oldScoreCacheReads": 0,
+  "ordinaryPreferredWithoutModelVetoed": [
+    {
+      "evaluation": {
+        "boundaryAutoEdit": false,
+        "boundaryChanged": false,
+        "boundaryUndoExact": true,
+        "canonicalAutoEdit": false,
+        "correctFinalReplacement": false,
+        "expectedFinalText": "Медсестра принесла пластырь ",
+        "fullFinalTextChanged": false,
+        "mechanicalBoundaryAutoEdit": false,
+        "mechanicalTypingChange": false,
+        "negative": false,
+        "spellingAutoEdit": false
+      },
+      "input": {
+        "ambiguous": false,
+        "candidates": [
+          " пластыр",
+          " пластыри",
+          " пластырь",
+          " платтырь"
+        ],
+        "category": "missing_letter",
+        "cohort": "typo",
+        "corpusVersion": 2,
+        "expectedCandidate": 2,
+        "expectedSpelling": "пластырь",
+        "family": "пластырь",
+        "id": "ru-holdout-typo-10-4-1",
+        "language": "ru",
+        "noAuto": false,
+        "position": "middle",
+        "prefix": "Медсестра принесла",
+        "source": "authored-rune-2026-09-02",
+        "split": "holdout",
+        "task": "spelling",
+        "template": "holdout-spelling-10",
+        "typed": "пластыр",
+        "wordLength": 8
+      },
+      "observation": {
+        "actualModelRequest": {
+          "candidateIds": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "continuations": [
+            "пластыр",
+            "пластырь",
+            "пласты",
+            "пластыре"
+          ],
+          "prefix": "Медсестра принесла "
+        },
+        "actualRequestGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "пластырь",
+              "casePattern": "LOWER",
+              "editCost": 1.0,
+              "frequencyRank": 20008,
+              "isFallback": false,
+              "kind": "SPELLING",
+              "language": "ru",
+              "languagePrior": 4,
+              "lengthDifference": 1,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "пластырь",
+              "text": "пластырь",
+              "unitDistance": 1
+            },
+            {
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "пласты",
+              "casePattern": "LOWER",
+              "editCost": 1.0,
+              "frequencyRank": 2147483647,
+              "isFallback": false,
+              "kind": "SPELLING",
+              "language": "ru",
+              "languagePrior": 4,
+              "lengthDifference": 1,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "пласты",
+              "text": "пласты",
+              "unitDistance": 1
+            },
+            {
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "пластыре",
+              "casePattern": "LOWER",
+              "editCost": 1.0,
+              "frequencyRank": 2147483647,
+              "isFallback": false,
+              "kind": "SPELLING",
+              "language": "ru",
+              "languagePrior": 4,
+              "lengthDifference": 1,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "пластыре",
+              "text": "пластыре",
+              "unitDistance": 1
+            }
+          ],
+          "completion": "COMPLETE",
+          "inspectedStates": 1744,
+          "isValidWord": false,
+          "original": "пластыр",
+          "prohibitsAutoReplace": false,
+          "protectedReason": null,
+          "verifiedTerminals": 30
+        },
+        "afterBackspace": {
+          "caret": 26,
+          "composingEnd": 26,
+          "composingStart": 19,
+          "text": "Медсестра принесла пластыр"
+        },
+        "afterBoundary": {
+          "caret": 27,
+          "composingEnd": 27,
+          "composingStart": 26,
+          "text": "Медсестра принесла пластыр "
+        },
+        "autoEdit": null,
+        "autocorrectionMode": "HIGH_CONFIDENCE",
+        "backspaceCommands": [
+          {
+            "count": 2,
+            "type": "Batch"
+          },
+          {
+            "replacedEnd": 27,
+            "replacedStart": 26,
+            "type": "SetComposingText",
+            "value": ""
+          },
+          {
+            "end": 26,
+            "start": 19,
+            "type": "SetComposingRegion"
+          }
+        ],
+        "backspaceResult": "HANDLED",
+        "beforeBoundary": {
+          "caret": 26,
+          "composingEnd": 26,
+          "composingStart": 18,
+          "text": "Медсестра принесла пластыр"
+        },
+        "boundaryChangedBeyondInsertedSpace": false,
+        "boundaryCommands": [
+          {
+            "type": "FinishComposingText"
+          },
+          {
+            "replacedEnd": 26,
+            "replacedStart": 26,
+            "type": "SetComposingText",
+            "value": " "
+          }
+        ],
+        "boundaryResult": "HANDLED",
+        "candidateView": {
+          "candidates": [
+            {
+              "id": "original:1:32:32",
+              "text": "пластыр"
+            },
+            {
+              "id": "correction:1:32:1241:0",
+              "text": "пластырь"
+            },
+            {
+              "id": "correction:1:32:1241:1",
+              "text": "пласты"
+            }
+          ],
+          "enabled": true,
+          "selectedCandidateId": "correction:1:32:1241:0"
+        },
+        "candidatesAccepted": true,
+        "currentQualificationWithModel": true,
+        "currentQualificationWithoutModel": false,
+        "freshCacheError": "SCORING_FAILED",
+        "freshCacheStatus": "ERROR",
+        "fullTokenGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "пластырь",
+              "casePattern": "LOWER",
+              "editCost": 1.0,
+              "frequencyRank": 20008,
+              "isFallback": false,
+              "kind": "SPELLING",
+              "language": "ru",
+              "languagePrior": 4,
+              "lengthDifference": 1,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "пластырь",
+              "text": "пластырь",
+              "unitDistance": 1
+            },
+            {
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "пласты",
+              "casePattern": "LOWER",
+              "editCost": 1.0,
+              "frequencyRank": 2147483647,
+              "isFallback": false,
+              "kind": "SPELLING",
+              "language": "ru",
+              "languagePrior": 4,
+              "lengthDifference": 1,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "пласты",
+              "text": "пласты",
+              "unitDistance": 1
+            },
+            {
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "пластыре",
+              "casePattern": "LOWER",
+              "editCost": 1.0,
+              "frequencyRank": 2147483647,
+              "isFallback": false,
+              "kind": "SPELLING",
+              "language": "ru",
+              "languagePrior": 4,
+              "lengthDifference": 1,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "пластыре",
+              "text": "пластыре",
+              "unitDistance": 1
+            }
+          ],
+          "completion": "COMPLETE",
+          "inspectedStates": 1744,
+          "isValidWord": false,
+          "original": "пластыр",
+          "prohibitsAutoReplace": false,
+          "protectedReason": null,
+          "verifiedTerminals": 30
+        },
+        "id": "ru-holdout-typo-10-4-1",
+        "index": 1241,
+        "inputChangedByTyping": false,
+        "inputExpected": "Медсестра принесла пластыр",
+        "language": "ru",
+        "maximumAlternatives": 3,
+        "modelAdmission": "MATCHED_SCORING_ERROR",
+        "modelReplyAccepted": false,
+        "ordinaryRankingAfterModel": {
+          "candidateIds": [
+            1,
+            2,
+            3
+          ],
+          "preferredId": 1,
+          "usedModel": false
+        },
+        "ordinaryRankingBeforeModel": {
+          "candidateIds": [
+            1,
+            2,
+            3
+          ],
+          "preferredId": 1,
+          "usedModel": false
+        },
+        "payloadMismatches": [],
+        "prefix": "Медсестра принесла",
+        "requestToken": "пластыр",
+        "restoredBeforeBoundaryExactly": true,
+        "scoredRequest": {
+          "candidateIds": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "continuations": [
+            "пластыр",
+            "пластырь",
+            "пласты",
+            "пластыре"
+          ],
+          "prefix": "Медсестра принесла "
+        },
+        "stateAfterBackspace": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": "пластыр",
+          "contextText": "Медсестра принесла пластыр",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": false,
+          "revision": 36,
+          "sessionId": 1,
+          "typedWord": "пластыр"
+        },
+        "stateAfterBoundary": {
+          "canRequestCandidates": false,
+          "canRequestModelRanking": false,
+          "composingText": " ",
+          "contextText": "Медсестра принесла пластыр ",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 35,
+          "sessionId": 1,
+          "typedWord": ""
+        },
+        "stateBeforeBoundary": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": true,
+          "composingText": " пластыр",
+          "contextText": "Медсестра принесла пластыр",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 32,
+          "sessionId": 1,
+          "typedWord": "пластыр"
+        },
+        "stateBeforeCandidates": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": " пластыр",
+          "contextText": "Медсестра принесла пластыр",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 32,
+          "sessionId": 1,
+          "typedWord": "пластыр"
+        },
+        "status": "COMPLETE",
+        "typed": "пластыр",
+        "typingCommands": [
+          {
+            "replacedEnd": 0,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "М"
+          },
+          {
+            "replacedEnd": 1,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "Ме"
+          },
+          {
+            "replacedEnd": 2,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "Мед"
+          },
+          {
+            "replacedEnd": 3,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "Медс"
+          },
+          {
+            "replacedEnd": 4,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "Медсе"
+          },
+          {
+            "replacedEnd": 5,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "Медсес"
+          },
+          {
+            "replacedEnd": 6,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "Медсест"
+          },
+          {
+            "replacedEnd": 7,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "Медсестр"
+          },
+          {
+            "replacedEnd": 8,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "Медсестра"
+          },
+          {
+            "type": "FinishComposingText"
+          },
+          {
+            "replacedEnd": 9,
+            "replacedStart": 9,
+            "type": "SetComposingText",
+            "value": " "
+          },
+          {
+            "replacedEnd": 10,
+            "replacedStart": 9,
+            "type": "SetComposingText",
+            "value": " п"
+          },
+          {
+            "replacedEnd": 11,
+            "replacedStart": 9,
+            "type": "SetComposingText",
+            "value": " пр"
+          },
+          {
+            "replacedEnd": 12,
+            "replacedStart": 9,
+            "type": "SetComposingText",
+            "value": " при"
+          },
+          {
+            "replacedEnd": 13,
+            "replacedStart": 9,
+            "type": "SetComposingText",
+            "value": " прин"
+          },
+          {
+            "replacedEnd": 14,
+            "replacedStart": 9,
+            "type": "SetComposingText",
+            "value": " прине"
+          },
+          {
+            "replacedEnd": 15,
+            "replacedStart": 9,
+            "type": "SetComposingText",
+            "value": " принес"
+          },
+          {
+            "replacedEnd": 16,
+            "replacedStart": 9,
+            "type": "SetComposingText",
+            "value": " принесл"
+          },
+          {
+            "replacedEnd": 17,
+            "replacedStart": 9,
+            "type": "SetComposingText",
+            "value": " принесла"
+          },
+          {
+            "type": "FinishComposingText"
+          },
+          {
+            "replacedEnd": 18,
+            "replacedStart": 18,
+            "type": "SetComposingText",
+            "value": " "
+          },
+          {
+            "replacedEnd": 19,
+            "replacedStart": 18,
+            "type": "SetComposingText",
+            "value": " п"
+          },
+          {
+            "replacedEnd": 20,
+            "replacedStart": 18,
+            "type": "SetComposingText",
+            "value": " пл"
+          },
+          {
+            "replacedEnd": 21,
+            "replacedStart": 18,
+            "type": "SetComposingText",
+            "value": " пла"
+          },
+          {
+            "replacedEnd": 22,
+            "replacedStart": 18,
+            "type": "SetComposingText",
+            "value": " плас"
+          },
+          {
+            "replacedEnd": 23,
+            "replacedStart": 18,
+            "type": "SetComposingText",
+            "value": " пласт"
+          },
+          {
+            "replacedEnd": 24,
+            "replacedStart": 18,
+            "type": "SetComposingText",
+            "value": " пласты"
+          },
+          {
+            "replacedEnd": 25,
+            "replacedStart": 18,
+            "type": "SetComposingText",
+            "value": " пластыр"
+          }
+        ]
+      }
+    }
+  ],
+  "overall": {
+    "allBoundaryAutoEdits": {
+      "abstention": {
+        "denominator": 6000,
+        "numerator": 4895,
+        "value": 0.8158333333333333,
+        "wilson95RowDescriptive": [
+          0.8058243481938483,
+          0.8254381569863685
+        ]
+      },
+      "automaticReplacements": 1105,
+      "correctReplacements": 1030,
+      "coverage": {
+        "denominator": 6000,
+        "numerator": 1105,
+        "value": 0.18416666666666667,
+        "wilson95RowDescriptive": [
+          0.17456184301363142,
+          0.19417565180615154
+        ]
+      },
+      "exactBoundaryUndoAmongChanged": 1105,
+      "falseChange": {
+        "denominator": 3000,
+        "numerator": 35,
+        "value": 0.011666666666666667,
+        "wilson95RowDescriptive": [
+          0.008400690168042686,
+          0.016181652087025673
+        ]
+      },
+      "incorrectReplacements": 75,
+      "negativeRows": 3000,
+      "precision": {
+        "denominator": 1105,
+        "numerator": 1030,
+        "value": 0.9321266968325792,
+        "wilson95RowDescriptive": [
+          0.9157494184428975,
+          0.945509864751373
+        ]
+      },
+      "rows": 6000
+    },
+    "allFinalTextChanges": {
+      "abstention": {
+        "denominator": 6000,
+        "numerator": 4892,
+        "value": 0.8153333333333334,
+        "wilson95RowDescriptive": [
+          0.8053143852606726,
+          0.8249487597530323
+        ]
+      },
+      "automaticReplacements": 1108,
+      "correctReplacements": 1030,
+      "coverage": {
+        "denominator": 6000,
+        "numerator": 1108,
+        "value": 0.18466666666666667,
+        "wilson95RowDescriptive": [
+          0.17505124024696767,
+          0.1946856147393275
+        ]
+      },
+      "exactBoundaryUndoAmongChanged": 1108,
+      "falseChange": {
+        "denominator": 3000,
+        "numerator": 38,
+        "value": 0.012666666666666666,
+        "wilson95RowDescriptive": [
+          0.00924242683594685,
+          0.01733735772167086
+        ]
+      },
+      "incorrectReplacements": 78,
+      "negativeRows": 3000,
+      "precision": {
+        "denominator": 1108,
+        "numerator": 1030,
+        "value": 0.9296028880866426,
+        "wilson95RowDescriptive": [
+          0.9130088015759873,
+          0.9432283826442932
+        ]
+      },
+      "rows": 6000
+    },
+    "allRowsExactBeforeBoundaryRestore": 6000,
+    "canonicalBoundaryAutoEdits": {
+      "abstention": {
+        "denominator": 6000,
+        "numerator": 5965,
+        "value": 0.9941666666666666,
+        "wilson95RowDescriptive": [
+          0.9918984160810749,
+          0.9958025484884994
+        ]
+      },
+      "automaticReplacements": 35,
+      "correctReplacements": 0,
+      "coverage": {
+        "denominator": 6000,
+        "numerator": 35,
+        "value": 0.005833333333333334,
+        "wilson95RowDescriptive": [
+          0.004197451511500553,
+          0.008101583918925095
+        ]
+      },
+      "exactBoundaryUndoAmongChanged": 35,
+      "falseChange": {
+        "denominator": 3000,
+        "numerator": 34,
+        "value": 0.011333333333333334,
+        "wilson95RowDescriptive": [
+          0.008121612371847138,
+          0.015794915782371438
+        ]
+      },
+      "incorrectReplacements": 35,
+      "negativeRows": 3000,
+      "precision": {
+        "denominator": 35,
+        "numerator": 0,
+        "value": 0.0,
+        "wilson95RowDescriptive": [
+          6.938893903907228e-18,
+          0.09890099232440402
+        ]
+      },
+      "rows": 6000
+    },
+    "mechanicalBoundaryAutoEdits": 0,
+    "mechanicalTypingChanges": 3,
+    "modelAdmissionCounts": {
+      "MATCHED_NUMERIC_REPLY": 2926,
+      "MATCHED_SCORING_ERROR": 14,
+      "NO_CURRENT_MODEL_REQUEST": 3027,
+      "REFUSED_NO_SCORED_REQUEST": 33
+    },
+    "ordinarySpellingBoundaryAutoEdits": {
+      "abstention": {
+        "denominator": 6000,
+        "numerator": 4930,
+        "value": 0.8216666666666667,
+        "wilson95RowDescriptive": [
+          0.8117759418188171,
+          0.8311457653040424
+        ]
+      },
+      "automaticReplacements": 1070,
+      "correctReplacements": 1030,
+      "coverage": {
+        "denominator": 6000,
+        "numerator": 1070,
+        "value": 0.17833333333333334,
+        "wilson95RowDescriptive": [
+          0.1688542346959576,
+          0.18822405818118285
+        ]
+      },
+      "exactBoundaryUndoAmongChanged": 1070,
+      "falseChange": {
+        "denominator": 3000,
+        "numerator": 1,
+        "value": 0.0003333333333333333,
+        "wilson95RowDescriptive": [
+          5.8843941871566355e-05,
+          0.0018858188843041794
+        ]
+      },
+      "incorrectReplacements": 40,
+      "negativeRows": 3000,
+      "precision": {
+        "denominator": 1070,
+        "numerator": 1030,
+        "value": 0.9626168224299065,
+        "wilson95RowDescriptive": [
+          0.9494958414642681,
+          0.9724279601062452
+        ]
+      },
+      "rows": 6000
+    },
+    "rows": 6000,
+    "statusCounts": {
+      "COMPLETE": 6000
+    }
+  },
+  "qualificationOverride": false,
+  "refusedOrFailedModelAdmissions": [
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "ru-holdout-typo-00-1-2",
+      "mismatches": []
+    },
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "ru-holdout-typo-02-1-7",
+      "mismatches": []
+    },
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "ru-holdout-typo-02-1-8",
+      "mismatches": []
+    },
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "ru-holdout-typo-05-0-8",
+      "mismatches": []
+    },
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "ru-holdout-typo-10-4-1",
+      "mismatches": []
+    },
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "ru-holdout-typo-11-1-0",
+      "mismatches": []
+    },
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "ru-holdout-typo-11-1-2",
+      "mismatches": []
+    },
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "ru-holdout-typo-11-3-2",
+      "mismatches": []
+    },
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "ru-holdout-typo-13-0-2",
+      "mismatches": []
+    },
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "ru-holdout-typo-18-4-8",
+      "mismatches": []
+    },
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "en-holdout-typo-12-3-9",
+      "mismatches": []
+    },
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "en-holdout-typo-19-1-2",
+      "mismatches": []
+    },
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "es-holdout-typo-03-4-3",
+      "mismatches": []
+    },
+    {
+      "admission": "MATCHED_SCORING_ERROR",
+      "error": "SCORING_FAILED",
+      "freshCacheStatus": "ERROR",
+      "id": "es-holdout-typo-11-0-2",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "en-holdout-protected-file_name-00",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "en-holdout-protected-file_name-01",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "en-holdout-protected-file_name-02",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "en-holdout-protected-file_name-03",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "en-holdout-protected-file_name-04",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "en-holdout-protected-file_name-05",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "en-holdout-protected-file_name-06",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "en-holdout-protected-file_name-07",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "en-holdout-protected-file_name-08",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "en-holdout-protected-file_name-09",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "en-holdout-protected-snake_case-01",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "es-holdout-protected-file_name-00",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "es-holdout-protected-file_name-01",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "es-holdout-protected-file_name-02",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "es-holdout-protected-file_name-03",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "es-holdout-protected-file_name-04",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "es-holdout-protected-file_name-05",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "es-holdout-protected-file_name-06",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "es-holdout-protected-file_name-07",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "es-holdout-protected-file_name-08",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "es-holdout-protected-file_name-09",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "es-holdout-protected-snake_case-01",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "ru-holdout-protected-file_name-00",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "ru-holdout-protected-file_name-01",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "ru-holdout-protected-file_name-02",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "ru-holdout-protected-file_name-03",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "ru-holdout-protected-file_name-04",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "ru-holdout-protected-file_name-05",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "ru-holdout-protected-file_name-06",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "ru-holdout-protected-file_name-07",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "ru-holdout-protected-file_name-08",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "ru-holdout-protected-file_name-09",
+      "mismatches": []
+    },
+    {
+      "admission": "REFUSED_NO_SCORED_REQUEST",
+      "error": null,
+      "freshCacheStatus": "NONE",
+      "id": "ru-holdout-protected-snake_case-01",
+      "mismatches": []
+    }
+  ],
+  "releaseQualified": false,
+  "scope": "actual-current-full-product-controller-diagnostic-on-revealed-frozen-holdout",
+  "sourceSettings": "CURRENT / KeyboardSettings.DEFAULT / HIGH_CONFIDENCE / fixed default95",
+  "thresholdFittingPerformed": false
+}

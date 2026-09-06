@@ -1,0 +1,1805 @@
+{
+  "defaultAutocorrectionMode": "HIGH_CONFIDENCE",
+  "errors": [],
+  "frozenAutoEdits": [],
+  "frozenNegativeCounts": {
+    "actualCanonicalCandidateRows": 57,
+    "autoEditRestoredRows": 0,
+    "autoEditRows": 0,
+    "beforeBoundaryRestoredRows": 3000,
+    "boundaryChangedRows": 0,
+    "canonicalAutoEditRows": 0,
+    "inputChangedByTypingRows": 3,
+    "noRequestRows": 423,
+    "rows": 3000,
+    "statuses": {
+      "COMPLETE": 3000
+    }
+  },
+  "frozenNegativeLabelsUnchanged": true,
+  "groups": {
+    "en/correct": {
+      "actualCanonicalCandidateRows": 12,
+      "autoEditRestoredRows": 0,
+      "autoEditRows": 0,
+      "beforeBoundaryRestoredRows": 700,
+      "boundaryChangedRows": 0,
+      "canonicalAutoEditRows": 0,
+      "inputChangedByTypingRows": 0,
+      "noRequestRows": 0,
+      "rows": 700,
+      "statuses": {
+        "COMPLETE": 700
+      }
+    },
+    "en/protected": {
+      "actualCanonicalCandidateRows": 13,
+      "autoEditRestoredRows": 0,
+      "autoEditRows": 0,
+      "beforeBoundaryRestoredRows": 300,
+      "boundaryChangedRows": 0,
+      "canonicalAutoEditRows": 0,
+      "inputChangedByTypingRows": 1,
+      "noRequestRows": 141,
+      "rows": 300,
+      "statuses": {
+        "COMPLETE": 300
+      }
+    },
+    "es/correct": {
+      "actualCanonicalCandidateRows": 18,
+      "autoEditRestoredRows": 0,
+      "autoEditRows": 0,
+      "beforeBoundaryRestoredRows": 700,
+      "boundaryChangedRows": 0,
+      "canonicalAutoEditRows": 0,
+      "inputChangedByTypingRows": 0,
+      "noRequestRows": 0,
+      "rows": 700,
+      "statuses": {
+        "COMPLETE": 700
+      }
+    },
+    "es/protected": {
+      "actualCanonicalCandidateRows": 1,
+      "autoEditRestoredRows": 0,
+      "autoEditRows": 0,
+      "beforeBoundaryRestoredRows": 300,
+      "boundaryChangedRows": 0,
+      "canonicalAutoEditRows": 0,
+      "inputChangedByTypingRows": 1,
+      "noRequestRows": 141,
+      "rows": 300,
+      "statuses": {
+        "COMPLETE": 300
+      }
+    },
+    "ru/correct": {
+      "actualCanonicalCandidateRows": 0,
+      "autoEditRestoredRows": 0,
+      "autoEditRows": 0,
+      "beforeBoundaryRestoredRows": 700,
+      "boundaryChangedRows": 0,
+      "canonicalAutoEditRows": 0,
+      "inputChangedByTypingRows": 0,
+      "noRequestRows": 0,
+      "rows": 700,
+      "statuses": {
+        "COMPLETE": 700
+      }
+    },
+    "ru/protected": {
+      "actualCanonicalCandidateRows": 13,
+      "autoEditRestoredRows": 0,
+      "autoEditRows": 0,
+      "beforeBoundaryRestoredRows": 300,
+      "boundaryChangedRows": 0,
+      "canonicalAutoEditRows": 0,
+      "inputChangedByTypingRows": 1,
+      "noRequestRows": 141,
+      "rows": 300,
+      "statuses": {
+        "COMPLETE": 300
+      }
+    }
+  },
+  "limitations": [
+    "Host JVM BreakIterator, not Android ICU; no real InputConnection or Android runtime execution.",
+    "Independent in-memory editor only; coalesced successful command acknowledgements, no editor IPC failure or reentrancy simulation.",
+    "Characters supplied through controller text entry on letters layer with Shift OFF; no key-view or symbol-layer event dispatch.",
+    "A ready synchronous latest local generation is accepted immediately before the space boundary; no asynchronous scheduling/latency claim.",
+    "No model ranking. Ordinary spelling candidates retain the current qualification veto. This is narrow canonical evidence, not release quality qualification.",
+    "Frozen repeated candidate-set-sensitivity rows are retained; row counts are not independent word or user samples."
+  ],
+  "mechanicalPunctuation": true,
+  "modelCacheReads": 0,
+  "modelCalls": 0,
+  "policyTuning": false,
+  "publicControls": [
+    {
+      "input": {
+        "diagnosticClass": "public-control-no-frozen-label",
+        "id": "public-control-en-will",
+        "language": "en",
+        "prefix": "we",
+        "typed": "will"
+      },
+      "observation": {
+        "actualRequestGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": false,
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "Will",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "en",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "will",
+              "text": "Will",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 46,
+          "isValidWord": true,
+          "original": "will",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "afterBackspace": {
+          "caret": 7,
+          "composingEnd": 7,
+          "composingStart": 3,
+          "text": "we will"
+        },
+        "afterBoundary": {
+          "caret": 8,
+          "composingEnd": 8,
+          "composingStart": 7,
+          "text": "we will "
+        },
+        "autoEdit": null,
+        "autocorrectionMode": "HIGH_CONFIDENCE",
+        "backspaceCommands": [
+          {
+            "count": 2,
+            "type": "Batch"
+          },
+          {
+            "replacedEnd": 8,
+            "replacedStart": 7,
+            "type": "SetComposingText",
+            "value": ""
+          },
+          {
+            "end": 7,
+            "start": 3,
+            "type": "SetComposingRegion"
+          }
+        ],
+        "backspaceResult": "HANDLED",
+        "beforeBoundary": {
+          "caret": 7,
+          "composingEnd": 7,
+          "composingStart": 2,
+          "text": "we will"
+        },
+        "boundaryChangedBeyondInsertedSpace": false,
+        "boundaryCommands": [
+          {
+            "type": "FinishComposingText"
+          },
+          {
+            "replacedEnd": 7,
+            "replacedStart": 7,
+            "type": "SetComposingText",
+            "value": " "
+          }
+        ],
+        "boundaryResult": "HANDLED",
+        "candidateView": {
+          "candidates": [
+            {
+              "id": "original:1:11:11",
+              "text": "will"
+            },
+            {
+              "id": "correction:1:11:3000:0",
+              "text": "Will"
+            }
+          ],
+          "enabled": true,
+          "selectedCandidateId": "correction:1:11:3000:0"
+        },
+        "candidatesAccepted": true,
+        "currentQualificationWithModel": true,
+        "currentQualificationWithoutModel": false,
+        "fullTokenGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": false,
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "Will",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "en",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "will",
+              "text": "Will",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 46,
+          "isValidWord": true,
+          "original": "will",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "id": "public-control-en-will",
+        "index": 3000,
+        "inputChangedByTyping": false,
+        "inputExpected": "we will",
+        "language": "en",
+        "maximumAlternatives": 3,
+        "prefix": "we",
+        "requestToken": "will",
+        "restoredBeforeBoundaryExactly": true,
+        "stateAfterBackspace": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": "will",
+          "contextText": "we will",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": false,
+          "revision": 15,
+          "sessionId": 1,
+          "typedWord": "will"
+        },
+        "stateAfterBoundary": {
+          "canRequestCandidates": false,
+          "canRequestModelRanking": false,
+          "composingText": " ",
+          "contextText": "we will ",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 14,
+          "sessionId": 1,
+          "typedWord": ""
+        },
+        "stateBeforeBoundary": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": " will",
+          "contextText": "we will",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 11,
+          "sessionId": 1,
+          "typedWord": "will"
+        },
+        "stateBeforeCandidates": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": " will",
+          "contextText": "we will",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 11,
+          "sessionId": 1,
+          "typedWord": "will"
+        },
+        "status": "COMPLETE",
+        "typed": "will",
+        "typingCommands": [
+          {
+            "replacedEnd": 0,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "w"
+          },
+          {
+            "replacedEnd": 1,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "we"
+          },
+          {
+            "type": "FinishComposingText"
+          },
+          {
+            "replacedEnd": 2,
+            "replacedStart": 2,
+            "type": "SetComposingText",
+            "value": " "
+          },
+          {
+            "replacedEnd": 3,
+            "replacedStart": 2,
+            "type": "SetComposingText",
+            "value": " w"
+          },
+          {
+            "replacedEnd": 4,
+            "replacedStart": 2,
+            "type": "SetComposingText",
+            "value": " wi"
+          },
+          {
+            "replacedEnd": 5,
+            "replacedStart": 2,
+            "type": "SetComposingText",
+            "value": " wil"
+          },
+          {
+            "replacedEnd": 6,
+            "replacedStart": 2,
+            "type": "SetComposingText",
+            "value": " will"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "diagnosticClass": "public-control-no-frozen-label",
+        "id": "public-control-en-may",
+        "language": "en",
+        "prefix": "we",
+        "typed": "may"
+      },
+      "observation": {
+        "actualRequestGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": false,
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "May",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "en",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "may",
+              "text": "May",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 40,
+          "isValidWord": true,
+          "original": "may",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "afterBackspace": {
+          "caret": 6,
+          "composingEnd": 6,
+          "composingStart": 3,
+          "text": "we may"
+        },
+        "afterBoundary": {
+          "caret": 7,
+          "composingEnd": 7,
+          "composingStart": 6,
+          "text": "we may "
+        },
+        "autoEdit": null,
+        "autocorrectionMode": "HIGH_CONFIDENCE",
+        "backspaceCommands": [
+          {
+            "count": 2,
+            "type": "Batch"
+          },
+          {
+            "replacedEnd": 7,
+            "replacedStart": 6,
+            "type": "SetComposingText",
+            "value": ""
+          },
+          {
+            "end": 6,
+            "start": 3,
+            "type": "SetComposingRegion"
+          }
+        ],
+        "backspaceResult": "HANDLED",
+        "beforeBoundary": {
+          "caret": 6,
+          "composingEnd": 6,
+          "composingStart": 2,
+          "text": "we may"
+        },
+        "boundaryChangedBeyondInsertedSpace": false,
+        "boundaryCommands": [
+          {
+            "type": "FinishComposingText"
+          },
+          {
+            "replacedEnd": 6,
+            "replacedStart": 6,
+            "type": "SetComposingText",
+            "value": " "
+          }
+        ],
+        "boundaryResult": "HANDLED",
+        "candidateView": {
+          "candidates": [
+            {
+              "id": "original:1:10:10",
+              "text": "may"
+            },
+            {
+              "id": "correction:1:10:3001:0",
+              "text": "May"
+            }
+          ],
+          "enabled": true,
+          "selectedCandidateId": "correction:1:10:3001:0"
+        },
+        "candidatesAccepted": true,
+        "currentQualificationWithModel": true,
+        "currentQualificationWithoutModel": false,
+        "fullTokenGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": false,
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "May",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "en",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "may",
+              "text": "May",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 40,
+          "isValidWord": true,
+          "original": "may",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "id": "public-control-en-may",
+        "index": 3001,
+        "inputChangedByTyping": false,
+        "inputExpected": "we may",
+        "language": "en",
+        "maximumAlternatives": 3,
+        "prefix": "we",
+        "requestToken": "may",
+        "restoredBeforeBoundaryExactly": true,
+        "stateAfterBackspace": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": "may",
+          "contextText": "we may",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": false,
+          "revision": 14,
+          "sessionId": 1,
+          "typedWord": "may"
+        },
+        "stateAfterBoundary": {
+          "canRequestCandidates": false,
+          "canRequestModelRanking": false,
+          "composingText": " ",
+          "contextText": "we may ",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 13,
+          "sessionId": 1,
+          "typedWord": ""
+        },
+        "stateBeforeBoundary": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": " may",
+          "contextText": "we may",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 10,
+          "sessionId": 1,
+          "typedWord": "may"
+        },
+        "stateBeforeCandidates": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": " may",
+          "contextText": "we may",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 10,
+          "sessionId": 1,
+          "typedWord": "may"
+        },
+        "status": "COMPLETE",
+        "typed": "may",
+        "typingCommands": [
+          {
+            "replacedEnd": 0,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "w"
+          },
+          {
+            "replacedEnd": 1,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "we"
+          },
+          {
+            "type": "FinishComposingText"
+          },
+          {
+            "replacedEnd": 2,
+            "replacedStart": 2,
+            "type": "SetComposingText",
+            "value": " "
+          },
+          {
+            "replacedEnd": 3,
+            "replacedStart": 2,
+            "type": "SetComposingText",
+            "value": " m"
+          },
+          {
+            "replacedEnd": 4,
+            "replacedStart": 2,
+            "type": "SetComposingText",
+            "value": " ma"
+          },
+          {
+            "replacedEnd": 5,
+            "replacedStart": 2,
+            "type": "SetComposingText",
+            "value": " may"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "diagnosticClass": "public-control-no-frozen-label",
+        "id": "public-control-en-brown",
+        "language": "en",
+        "prefix": "a",
+        "typed": "brown"
+      },
+      "observation": {
+        "actualRequestGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": false,
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "Brown",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "en",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "brown",
+              "text": "Brown",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 42,
+          "isValidWord": true,
+          "original": "brown",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "afterBackspace": {
+          "caret": 7,
+          "composingEnd": 7,
+          "composingStart": 2,
+          "text": "a brown"
+        },
+        "afterBoundary": {
+          "caret": 8,
+          "composingEnd": 8,
+          "composingStart": 7,
+          "text": "a brown "
+        },
+        "autoEdit": null,
+        "autocorrectionMode": "HIGH_CONFIDENCE",
+        "backspaceCommands": [
+          {
+            "count": 2,
+            "type": "Batch"
+          },
+          {
+            "replacedEnd": 8,
+            "replacedStart": 7,
+            "type": "SetComposingText",
+            "value": ""
+          },
+          {
+            "end": 7,
+            "start": 2,
+            "type": "SetComposingRegion"
+          }
+        ],
+        "backspaceResult": "HANDLED",
+        "beforeBoundary": {
+          "caret": 7,
+          "composingEnd": 7,
+          "composingStart": 1,
+          "text": "a brown"
+        },
+        "boundaryChangedBeyondInsertedSpace": false,
+        "boundaryCommands": [
+          {
+            "type": "FinishComposingText"
+          },
+          {
+            "replacedEnd": 7,
+            "replacedStart": 7,
+            "type": "SetComposingText",
+            "value": " "
+          }
+        ],
+        "boundaryResult": "HANDLED",
+        "candidateView": {
+          "candidates": [
+            {
+              "id": "original:1:11:11",
+              "text": "brown"
+            },
+            {
+              "id": "correction:1:11:3002:0",
+              "text": "Brown"
+            }
+          ],
+          "enabled": true,
+          "selectedCandidateId": "correction:1:11:3002:0"
+        },
+        "candidatesAccepted": true,
+        "currentQualificationWithModel": true,
+        "currentQualificationWithoutModel": false,
+        "fullTokenGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": false,
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "Brown",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "en",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "brown",
+              "text": "Brown",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 42,
+          "isValidWord": true,
+          "original": "brown",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "id": "public-control-en-brown",
+        "index": 3002,
+        "inputChangedByTyping": false,
+        "inputExpected": "a brown",
+        "language": "en",
+        "maximumAlternatives": 3,
+        "prefix": "a",
+        "requestToken": "brown",
+        "restoredBeforeBoundaryExactly": true,
+        "stateAfterBackspace": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": "brown",
+          "contextText": "a brown",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": false,
+          "revision": 15,
+          "sessionId": 1,
+          "typedWord": "brown"
+        },
+        "stateAfterBoundary": {
+          "canRequestCandidates": false,
+          "canRequestModelRanking": false,
+          "composingText": " ",
+          "contextText": "a brown ",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 14,
+          "sessionId": 1,
+          "typedWord": ""
+        },
+        "stateBeforeBoundary": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": " brown",
+          "contextText": "a brown",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 11,
+          "sessionId": 1,
+          "typedWord": "brown"
+        },
+        "stateBeforeCandidates": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": " brown",
+          "contextText": "a brown",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 11,
+          "sessionId": 1,
+          "typedWord": "brown"
+        },
+        "status": "COMPLETE",
+        "typed": "brown",
+        "typingCommands": [
+          {
+            "replacedEnd": 0,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "a"
+          },
+          {
+            "type": "FinishComposingText"
+          },
+          {
+            "replacedEnd": 1,
+            "replacedStart": 1,
+            "type": "SetComposingText",
+            "value": " "
+          },
+          {
+            "replacedEnd": 2,
+            "replacedStart": 1,
+            "type": "SetComposingText",
+            "value": " b"
+          },
+          {
+            "replacedEnd": 3,
+            "replacedStart": 1,
+            "type": "SetComposingText",
+            "value": " br"
+          },
+          {
+            "replacedEnd": 4,
+            "replacedStart": 1,
+            "type": "SetComposingText",
+            "value": " bro"
+          },
+          {
+            "replacedEnd": 5,
+            "replacedStart": 1,
+            "type": "SetComposingText",
+            "value": " brow"
+          },
+          {
+            "replacedEnd": 6,
+            "replacedStart": 1,
+            "type": "SetComposingText",
+            "value": " brown"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "diagnosticClass": "public-control-no-frozen-label",
+        "id": "public-control-en-paris",
+        "language": "en",
+        "prefix": "",
+        "typed": "paris"
+      },
+      "observation": {
+        "actualRequestGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": true,
+              "canonicalCaseUnambiguous": true,
+              "canonicalKey": "Paris",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "en",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "paris",
+              "text": "Paris",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 96,
+          "isValidWord": true,
+          "original": "paris",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "afterBackspace": {
+          "caret": 5,
+          "composingEnd": 5,
+          "composingStart": 0,
+          "text": "paris"
+        },
+        "afterBoundary": {
+          "caret": 6,
+          "composingEnd": 6,
+          "composingStart": 5,
+          "text": "Paris "
+        },
+        "autoEdit": {
+          "applied": "Paris ",
+          "committedStart": 0,
+          "contextBefore": "paris",
+          "hasCorrectionCandidates": true,
+          "original": "paris",
+          "restoreComposition": "paris"
+        },
+        "autocorrectionMode": "HIGH_CONFIDENCE",
+        "backspaceCommands": [
+          {
+            "count": 2,
+            "type": "Batch"
+          },
+          {
+            "end": 6,
+            "start": 0,
+            "type": "SetComposingRegion"
+          },
+          {
+            "replacedEnd": 6,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "paris"
+          }
+        ],
+        "backspaceResult": "HANDLED",
+        "beforeBoundary": {
+          "caret": 5,
+          "composingEnd": 5,
+          "composingStart": 0,
+          "text": "paris"
+        },
+        "boundaryChangedBeyondInsertedSpace": true,
+        "boundaryCommands": [
+          {
+            "count": 2,
+            "type": "Batch"
+          },
+          {
+            "replacedEnd": 5,
+            "replacedStart": 0,
+            "type": "CommitText",
+            "value": "Paris "
+          },
+          {
+            "end": 6,
+            "start": 5,
+            "type": "SetComposingRegion"
+          }
+        ],
+        "boundaryResult": "HANDLED",
+        "candidateView": {
+          "candidates": [
+            {
+              "id": "original:1:7:7",
+              "text": "paris"
+            },
+            {
+              "id": "correction:1:7:3003:0",
+              "text": "Paris"
+            }
+          ],
+          "enabled": true,
+          "selectedCandidateId": "correction:1:7:3003:0"
+        },
+        "candidatesAccepted": true,
+        "currentQualificationWithModel": true,
+        "currentQualificationWithoutModel": false,
+        "fullTokenGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": true,
+              "canonicalCaseUnambiguous": true,
+              "canonicalKey": "Paris",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "en",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "paris",
+              "text": "Paris",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 96,
+          "isValidWord": true,
+          "original": "paris",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "id": "public-control-en-paris",
+        "index": 3003,
+        "inputChangedByTyping": false,
+        "inputExpected": "paris",
+        "language": "en",
+        "maximumAlternatives": 3,
+        "prefix": "",
+        "requestToken": "paris",
+        "restoredBeforeBoundaryExactly": true,
+        "stateAfterBackspace": {
+          "canRequestCandidates": false,
+          "canRequestModelRanking": false,
+          "composingText": "paris",
+          "contextText": "paris",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": true,
+          "revision": 9,
+          "sessionId": 1,
+          "typedWord": "paris"
+        },
+        "stateAfterBoundary": {
+          "canRequestCandidates": false,
+          "canRequestModelRanking": false,
+          "composingText": " ",
+          "contextText": "Paris ",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 8,
+          "sessionId": 1,
+          "typedWord": ""
+        },
+        "stateBeforeBoundary": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": "paris",
+          "contextText": "paris",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": false,
+          "revision": 7,
+          "sessionId": 1,
+          "typedWord": "paris"
+        },
+        "stateBeforeCandidates": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": "paris",
+          "contextText": "paris",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": false,
+          "revision": 7,
+          "sessionId": 1,
+          "typedWord": "paris"
+        },
+        "status": "COMPLETE",
+        "typed": "paris",
+        "typingCommands": [
+          {
+            "replacedEnd": 0,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "p"
+          },
+          {
+            "replacedEnd": 1,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "pa"
+          },
+          {
+            "replacedEnd": 2,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "par"
+          },
+          {
+            "replacedEnd": 3,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "pari"
+          },
+          {
+            "replacedEnd": 4,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "paris"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "diagnosticClass": "public-control-no-frozen-label",
+        "id": "public-control-en-london",
+        "language": "en",
+        "prefix": "",
+        "typed": "london"
+      },
+      "observation": {
+        "actualRequestGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": true,
+              "canonicalCaseUnambiguous": true,
+              "canonicalKey": "London",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "en",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "london",
+              "text": "London",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 77,
+          "isValidWord": true,
+          "original": "london",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "afterBackspace": {
+          "caret": 6,
+          "composingEnd": 6,
+          "composingStart": 0,
+          "text": "london"
+        },
+        "afterBoundary": {
+          "caret": 7,
+          "composingEnd": 7,
+          "composingStart": 6,
+          "text": "London "
+        },
+        "autoEdit": {
+          "applied": "London ",
+          "committedStart": 0,
+          "contextBefore": "london",
+          "hasCorrectionCandidates": true,
+          "original": "london",
+          "restoreComposition": "london"
+        },
+        "autocorrectionMode": "HIGH_CONFIDENCE",
+        "backspaceCommands": [
+          {
+            "count": 2,
+            "type": "Batch"
+          },
+          {
+            "end": 7,
+            "start": 0,
+            "type": "SetComposingRegion"
+          },
+          {
+            "replacedEnd": 7,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "london"
+          }
+        ],
+        "backspaceResult": "HANDLED",
+        "beforeBoundary": {
+          "caret": 6,
+          "composingEnd": 6,
+          "composingStart": 0,
+          "text": "london"
+        },
+        "boundaryChangedBeyondInsertedSpace": true,
+        "boundaryCommands": [
+          {
+            "count": 2,
+            "type": "Batch"
+          },
+          {
+            "replacedEnd": 6,
+            "replacedStart": 0,
+            "type": "CommitText",
+            "value": "London "
+          },
+          {
+            "end": 7,
+            "start": 6,
+            "type": "SetComposingRegion"
+          }
+        ],
+        "boundaryResult": "HANDLED",
+        "candidateView": {
+          "candidates": [
+            {
+              "id": "original:1:8:8",
+              "text": "london"
+            },
+            {
+              "id": "correction:1:8:3004:0",
+              "text": "London"
+            }
+          ],
+          "enabled": true,
+          "selectedCandidateId": "correction:1:8:3004:0"
+        },
+        "candidatesAccepted": true,
+        "currentQualificationWithModel": true,
+        "currentQualificationWithoutModel": false,
+        "fullTokenGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": true,
+              "canonicalCaseUnambiguous": true,
+              "canonicalKey": "London",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "en",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "london",
+              "text": "London",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 77,
+          "isValidWord": true,
+          "original": "london",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "id": "public-control-en-london",
+        "index": 3004,
+        "inputChangedByTyping": false,
+        "inputExpected": "london",
+        "language": "en",
+        "maximumAlternatives": 3,
+        "prefix": "",
+        "requestToken": "london",
+        "restoredBeforeBoundaryExactly": true,
+        "stateAfterBackspace": {
+          "canRequestCandidates": false,
+          "canRequestModelRanking": false,
+          "composingText": "london",
+          "contextText": "london",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": true,
+          "revision": 10,
+          "sessionId": 1,
+          "typedWord": "london"
+        },
+        "stateAfterBoundary": {
+          "canRequestCandidates": false,
+          "canRequestModelRanking": false,
+          "composingText": " ",
+          "contextText": "London ",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 9,
+          "sessionId": 1,
+          "typedWord": ""
+        },
+        "stateBeforeBoundary": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": "london",
+          "contextText": "london",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": false,
+          "revision": 8,
+          "sessionId": 1,
+          "typedWord": "london"
+        },
+        "stateBeforeCandidates": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": "london",
+          "contextText": "london",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": false,
+          "revision": 8,
+          "sessionId": 1,
+          "typedWord": "london"
+        },
+        "status": "COMPLETE",
+        "typed": "london",
+        "typingCommands": [
+          {
+            "replacedEnd": 0,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "l"
+          },
+          {
+            "replacedEnd": 1,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "lo"
+          },
+          {
+            "replacedEnd": 2,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "lon"
+          },
+          {
+            "replacedEnd": 3,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "lond"
+          },
+          {
+            "replacedEnd": 4,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "londo"
+          },
+          {
+            "replacedEnd": 5,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "london"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "diagnosticClass": "public-control-no-frozen-label",
+        "id": "public-control-ru-москва",
+        "language": "ru",
+        "prefix": "",
+        "typed": "москва"
+      },
+      "observation": {
+        "actualRequestGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": true,
+              "canonicalCaseUnambiguous": true,
+              "canonicalKey": "Москва",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "ru",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "москва",
+              "text": "Москва",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 48,
+          "isValidWord": true,
+          "original": "москва",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "afterBackspace": {
+          "caret": 6,
+          "composingEnd": 6,
+          "composingStart": 0,
+          "text": "москва"
+        },
+        "afterBoundary": {
+          "caret": 7,
+          "composingEnd": 7,
+          "composingStart": 6,
+          "text": "Москва "
+        },
+        "autoEdit": {
+          "applied": "Москва ",
+          "committedStart": 0,
+          "contextBefore": "москва",
+          "hasCorrectionCandidates": true,
+          "original": "москва",
+          "restoreComposition": "москва"
+        },
+        "autocorrectionMode": "HIGH_CONFIDENCE",
+        "backspaceCommands": [
+          {
+            "count": 2,
+            "type": "Batch"
+          },
+          {
+            "end": 7,
+            "start": 0,
+            "type": "SetComposingRegion"
+          },
+          {
+            "replacedEnd": 7,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "москва"
+          }
+        ],
+        "backspaceResult": "HANDLED",
+        "beforeBoundary": {
+          "caret": 6,
+          "composingEnd": 6,
+          "composingStart": 0,
+          "text": "москва"
+        },
+        "boundaryChangedBeyondInsertedSpace": true,
+        "boundaryCommands": [
+          {
+            "count": 2,
+            "type": "Batch"
+          },
+          {
+            "replacedEnd": 6,
+            "replacedStart": 0,
+            "type": "CommitText",
+            "value": "Москва "
+          },
+          {
+            "end": 7,
+            "start": 6,
+            "type": "SetComposingRegion"
+          }
+        ],
+        "boundaryResult": "HANDLED",
+        "candidateView": {
+          "candidates": [
+            {
+              "id": "original:1:8:8",
+              "text": "москва"
+            },
+            {
+              "id": "correction:1:8:3005:0",
+              "text": "Москва"
+            }
+          ],
+          "enabled": true,
+          "selectedCandidateId": "correction:1:8:3005:0"
+        },
+        "candidatesAccepted": true,
+        "currentQualificationWithModel": true,
+        "currentQualificationWithoutModel": false,
+        "fullTokenGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": true,
+              "canonicalCaseUnambiguous": true,
+              "canonicalKey": "Москва",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "ru",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "москва",
+              "text": "Москва",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 48,
+          "isValidWord": true,
+          "original": "москва",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "id": "public-control-ru-москва",
+        "index": 3005,
+        "inputChangedByTyping": false,
+        "inputExpected": "москва",
+        "language": "ru",
+        "maximumAlternatives": 3,
+        "prefix": "",
+        "requestToken": "москва",
+        "restoredBeforeBoundaryExactly": true,
+        "stateAfterBackspace": {
+          "canRequestCandidates": false,
+          "canRequestModelRanking": false,
+          "composingText": "москва",
+          "contextText": "москва",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": true,
+          "revision": 10,
+          "sessionId": 1,
+          "typedWord": "москва"
+        },
+        "stateAfterBoundary": {
+          "canRequestCandidates": false,
+          "canRequestModelRanking": false,
+          "composingText": " ",
+          "contextText": "Москва ",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 9,
+          "sessionId": 1,
+          "typedWord": ""
+        },
+        "stateBeforeBoundary": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": "москва",
+          "contextText": "москва",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": false,
+          "revision": 8,
+          "sessionId": 1,
+          "typedWord": "москва"
+        },
+        "stateBeforeCandidates": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": "москва",
+          "contextText": "москва",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": false,
+          "revision": 8,
+          "sessionId": 1,
+          "typedWord": "москва"
+        },
+        "status": "COMPLETE",
+        "typed": "москва",
+        "typingCommands": [
+          {
+            "replacedEnd": 0,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "м"
+          },
+          {
+            "replacedEnd": 1,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "мо"
+          },
+          {
+            "replacedEnd": 2,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "мос"
+          },
+          {
+            "replacedEnd": 3,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "моск"
+          },
+          {
+            "replacedEnd": 4,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "москв"
+          },
+          {
+            "replacedEnd": 5,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "москва"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "diagnosticClass": "public-control-no-frozen-label",
+        "id": "public-control-es-juan",
+        "language": "es",
+        "prefix": "",
+        "typed": "juan"
+      },
+      "observation": {
+        "actualRequestGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": false,
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "Juan",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "es",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "juan",
+              "text": "Juan",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 18,
+          "isValidWord": true,
+          "original": "juan",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "afterBackspace": {
+          "caret": 4,
+          "composingEnd": 4,
+          "composingStart": 0,
+          "text": "juan"
+        },
+        "afterBoundary": {
+          "caret": 5,
+          "composingEnd": 5,
+          "composingStart": 4,
+          "text": "juan "
+        },
+        "autoEdit": null,
+        "autocorrectionMode": "HIGH_CONFIDENCE",
+        "backspaceCommands": [
+          {
+            "count": 2,
+            "type": "Batch"
+          },
+          {
+            "replacedEnd": 5,
+            "replacedStart": 4,
+            "type": "SetComposingText",
+            "value": ""
+          },
+          {
+            "end": 4,
+            "start": 0,
+            "type": "SetComposingRegion"
+          }
+        ],
+        "backspaceResult": "HANDLED",
+        "beforeBoundary": {
+          "caret": 4,
+          "composingEnd": 4,
+          "composingStart": 0,
+          "text": "juan"
+        },
+        "boundaryChangedBeyondInsertedSpace": false,
+        "boundaryCommands": [
+          {
+            "type": "FinishComposingText"
+          },
+          {
+            "replacedEnd": 4,
+            "replacedStart": 4,
+            "type": "SetComposingText",
+            "value": " "
+          }
+        ],
+        "boundaryResult": "HANDLED",
+        "candidateView": {
+          "candidates": [
+            {
+              "id": "original:1:6:6",
+              "text": "juan"
+            },
+            {
+              "id": "correction:1:6:3006:0",
+              "text": "Juan"
+            }
+          ],
+          "enabled": true,
+          "selectedCandidateId": "correction:1:6:3006:0"
+        },
+        "candidatesAccepted": true,
+        "currentQualificationWithModel": true,
+        "currentQualificationWithoutModel": false,
+        "fullTokenGeneration": {
+          "alternatives": [
+            {
+              "canonicalCaseAutoEligible": false,
+              "canonicalCaseUnambiguous": false,
+              "canonicalKey": "Juan",
+              "casePattern": "TITLE",
+              "editCost": 0.0,
+              "frequencyRank": 1,
+              "isFallback": false,
+              "kind": "CANONICAL_CASE",
+              "language": "es",
+              "languagePrior": 4,
+              "lengthDifference": 0,
+              "repeatedCharacterEdits": 0,
+              "repetitionBonus": 0.0,
+              "terminalKey": "juan",
+              "text": "Juan",
+              "unitDistance": 0
+            }
+          ],
+          "completion": "VALID_WORD",
+          "inspectedStates": 18,
+          "isValidWord": true,
+          "original": "juan",
+          "prohibitsAutoReplace": true,
+          "protectedReason": null,
+          "verifiedTerminals": 0
+        },
+        "id": "public-control-es-juan",
+        "index": 3006,
+        "inputChangedByTyping": false,
+        "inputExpected": "juan",
+        "language": "es",
+        "maximumAlternatives": 3,
+        "prefix": "",
+        "requestToken": "juan",
+        "restoredBeforeBoundaryExactly": true,
+        "stateAfterBackspace": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": "juan",
+          "contextText": "juan",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": false,
+          "revision": 10,
+          "sessionId": 1,
+          "typedWord": "juan"
+        },
+        "stateAfterBoundary": {
+          "canRequestCandidates": false,
+          "canRequestModelRanking": false,
+          "composingText": " ",
+          "contextText": "juan ",
+          "enabled": true,
+          "leadingBoundary": " ",
+          "originalSelected": false,
+          "revision": 9,
+          "sessionId": 1,
+          "typedWord": ""
+        },
+        "stateBeforeBoundary": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": "juan",
+          "contextText": "juan",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": false,
+          "revision": 6,
+          "sessionId": 1,
+          "typedWord": "juan"
+        },
+        "stateBeforeCandidates": {
+          "canRequestCandidates": true,
+          "canRequestModelRanking": false,
+          "composingText": "juan",
+          "contextText": "juan",
+          "enabled": true,
+          "leadingBoundary": "",
+          "originalSelected": false,
+          "revision": 6,
+          "sessionId": 1,
+          "typedWord": "juan"
+        },
+        "status": "COMPLETE",
+        "typed": "juan",
+        "typingCommands": [
+          {
+            "replacedEnd": 0,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "j"
+          },
+          {
+            "replacedEnd": 1,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "ju"
+          },
+          {
+            "replacedEnd": 2,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "jua"
+          },
+          {
+            "replacedEnd": 3,
+            "replacedStart": 0,
+            "type": "SetComposingText",
+            "value": "juan"
+          }
+        ]
+      }
+    }
+  ],
+  "qualificationOverride": false,
+  "realInputConnection": false,
+  "scope": "actual-current-kotlin-generator-controller-canonical-diagnostic",
+  "spellingConfidencePolicy": "current-source-fixed-default95",
+  "timedDoubleSpaceGesture": false
+}

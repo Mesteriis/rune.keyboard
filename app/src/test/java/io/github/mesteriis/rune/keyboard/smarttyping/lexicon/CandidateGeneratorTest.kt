@@ -72,9 +72,53 @@ class CandidateGeneratorTest {
             assertEquals(listOf(expected), result.alternatives.map { it.text })
             assertEquals(GeneratedCandidateKind.CANONICAL_CASE, result.alternatives.single().kind)
             assertEquals(token != "juan", result.alternatives.single().canonicalCaseUnambiguous)
+            assertEquals(token != "juan", result.alternatives.single().canonicalCaseAutoEligible)
         }
         assertTrue(CandidateGenerator(lexicon, canonicalCaseLexicon = canonical)
             .generate("London", en).alternatives.isEmpty())
+    }
+
+    @Test
+    fun `canonical auto eligibility requires agreement from every present routed language`() {
+        val lexicon = ScriptedLexicon(mapOf(en to listOf(Entry("si")), es to listOf(Entry("si"))))
+        for (competing in listOf(null, CanonicalCase("Si", false), CanonicalCase("Sí", true), CanonicalCase("Si", true))) {
+            val cases = CanonicalCaseLexicon { language, _ -> if (language == en) CanonicalCase("Si", true) else competing }
+            val result = CandidateGenerator(lexicon, canonicalCaseLexicon = cases).generate("si", en)
+            val candidate = result.alternatives.single()
+            assertEquals(CandidateCompletion.VALID_WORD, result.completion)
+            assertEquals("Si", candidate.text)
+            assertTrue(candidate.canonicalCaseUnambiguous)
+            assertEquals(competing == CanonicalCase("Si", true), candidate.canonicalCaseAutoEligible)
+        }
+    }
+
+    @Test
+    fun `unknown cancelled or exhausted competing membership never enables canonical auto`() {
+        for (mode in 0..3) {
+            var cancelled = false
+            val lexicon = object : CandidateLexicon {
+                override fun exact(language: KeyboardLanguage, key: String, control: CandidateSearchControl): ExactMembership {
+                    if (language == en) return ExactMembership.PRESENT
+                    when (mode) {
+                        1 -> cancelled = true
+                        2 -> repeat(CandidateSearchControl.MAX_STATES + 1) { control.inspectState() }
+                        3 -> throw IOException("synthetic reader failure")
+                    }
+                    return ExactMembership.UNAVAILABLE
+                }
+                override fun scan(language: KeyboardLanguage, key: String, unitRadius: Int,
+                    control: CandidateSearchControl, visitor: CandidateVisitor): LexiconScanStatus =
+                    error("Exact canonical path must not scan")
+            }
+            val cases = CanonicalCaseLexicon { _, _ -> CanonicalCase("London", true) }
+            val result = CandidateGenerator(lexicon, canonicalCaseLexicon = cases)
+                .generate("london", en, CandidateCancellation { cancelled })
+            assertFalse(result.alternatives.any { it.canonicalCaseAutoEligible })
+            assertEquals(listOf(CandidateCompletion.VALID_WORD, CandidateCompletion.CANCELLED,
+                CandidateCompletion.STATES_EXHAUSTED, CandidateCompletion.READER_FAILURE)[mode], result.completion)
+            if (mode == 1) assertNull(result.original)
+            assertTrue(result.inspectedStates <= CandidateSearchControl.MAX_STATES)
+        }
     }
 
     @Test

@@ -374,21 +374,40 @@ class CorrectionBoundaryTest {
         }
     }
 
-    @Test fun `canonical case auto replaces on boundary and Undo restores lowercase original`() {
-        for (unambiguous in listOf(true, false)) {
-            val f = Fixture(qualified = false)
-            f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
-            f.raw("москва")
-            f.publishCanonical("Москва", unambiguous)
-
+    @Test fun `ordinary spelling qualification cannot auto capitalize a known lowercase word`() {
+        for ((prefix, original, canonical) in listOf(
+            Triple("we", "will", "Will"), Triple("we", "may", "May"), Triple("a", "brown", "Brown"))) {
+            val f = Fixture(qualified = true)
+            f.raw(prefix); f.raw(" "); f.raw(original)
+            f.publishCanonical(canonical, unambiguous = false)
             assertEquals(TypingTextResult.HANDLED, f.type(" "))
-            assertEquals("Москва ", f.document)
-            assertNotNull(f.controller.state.lastAutoEdit)
-            assertEquals(TypingTextResult.HANDLED, f.undo())
-            assertEquals("москва", f.document)
-            assertEquals("москва", f.controller.state.composing?.typedWord)
-            assertTrue(f.controller.state.originalSelected)
+            assertEquals("$prefix $original ", f.document)
+            assertNull(f.controller.state.lastAutoEdit)
         }
+    }
+
+    @Test fun `canonical case auto replaces on boundary and Undo restores lowercase original`() {
+        val f = Fixture(qualified = false)
+        f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+        f.raw("москва")
+        f.publishCanonical("Москва", unambiguous = true)
+
+        assertEquals(TypingTextResult.HANDLED, f.type(" "))
+        assertEquals("Москва ", f.document)
+        assertNotNull(f.controller.state.lastAutoEdit)
+        assertEquals(TypingTextResult.HANDLED, f.undo())
+        assertEquals("москва", f.document)
+        assertEquals("москва", f.controller.state.composing?.typedWord)
+        assertTrue(f.controller.state.originalSelected)
+    }
+
+    @Test fun `routed lowercase conflict blocks canonical auto even with ordinary qualification`() {
+        val f = Fixture(qualified = true)
+        f.raw("si")
+        f.publishCanonical("Si", unambiguous = true, eligible = false)
+        assertEquals(TypingTextResult.HANDLED, f.type(" "))
+        assertEquals("si ", f.document)
+        assertNull(f.controller.state.lastAutoEdit)
     }
 
     @Test fun `disabled autocorrection keeps canonical case as a suggestion`() {
@@ -527,11 +546,12 @@ class CorrectionBoundaryTest {
             assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
                 CandidateGeneration(request.token, listOf(item), completion, false, null, 1, 1))))
         }
-        fun publishCanonical(word: String, unambiguous: Boolean) {
+        fun publishCanonical(word: String, unambiguous: Boolean, eligible: Boolean = unambiguous) {
             val request = controller.beginCandidateRequest(++requestId, keyboard.language)!!
             val item = GeneratedCandidate(word, word, TokenUnicode.folded(word), keyboard.language,
                 false, 4, 1, 0, EditFeatures(0.0, 0, 0.0), 0, CasePattern.TITLE,
-                GeneratedCandidateKind.CANONICAL_CASE, canonicalCaseUnambiguous = unambiguous)
+                GeneratedCandidateKind.CANONICAL_CASE, canonicalCaseUnambiguous = unambiguous,
+                canonicalCaseAutoEligible = eligible)
             assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision,
                 request.requestId, CandidateGeneration(request.token, listOf(item),
                     CandidateCompletion.VALID_WORD, true, null, 1, 0))))

@@ -1,0 +1,7 @@
+# Canonical safety diagnostic — 2026-09-06
+
+Actual production Kotlin replay before and after the bounded canonical eligibility fix. All 6,000 already revealed spelling rows, exact fresh model response admissions, labels and packaged assets are preserved. The 34 incorrect canonical changes on negatives disappear; Paris/London/Москва still auto-apply with exact Undo. RU full final-text precision remains 341/359 = 94.9861%, below 95%. This is not unseen qualification.
+
+See REPORT.md for per-language counts, all residual errors and limitations. Four raw execution directories are archived with deterministic gzip compression; archive.json maps decompressed bytes back to their original hashes. Each original execution receipt is preserved. Compiled JARs stay in build; the archived harness, commands and input/source/toolchain hashes reproduce their execution at the original recorded paths. These scratch scripts resolve directory-relative paths from their original build locations; copying them here does not make this archive a standalone invocation path. Historical production versions require their matching source state. No model weights, phone data or personal messages are included.
+
+The regression log retains the failed pre-fix test and the scoped passing test. The source fix changes only canonical automatic eligibility, with no numeric threshold fitting; manual suggestions remain available. Host replay uses an independent in-memory editor and JVM graphemes, not Android InputConnection or physical-device timing.

@@ -1,0 +1,1421 @@
+{
+  "all12AssetsUnchanged": {
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/case/en.case": "2d5ba3c807ef8c66be5222b01c3cd0f98645a891c12b6356827ea58544725a34",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/case/es.case": "52614678597416daf63763bb1f34015097d97ab974d9aa951b0221a67105a6fa",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/case/ru.case": "845144afb06ae7881f0db2f577f340694b8c7dfa5fee9685563ec4852939c81b",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/en.trie": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/en.trie.lengths": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/es.trie": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/es.trie.lengths": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/frequency/en.ranks": "a8786c4d9fa1d7522e8c9d068679e3c61e32ee49dc3ca34898ccbd0fd19f4c6f",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/frequency/es.ranks": "5fb3e5cca1493e1aebb64f2960ac823fe50ee189c222a9df952b622ebd3cf613",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/frequency/ru.ranks": "09cb1675723b66703e76f871b621068df6c0677b4c17b71e6a68fe2c8d3f328b",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/ru.trie": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b",
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/assets/smarttyping/lexicon/ru.trie.lengths": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c"
+  },
+  "all6000ModelPayloadsAndAdmissionsUnchanged": true,
+  "all6000OriginalLabelsUnchanged": true,
+  "changedFinalTextRows": [
+    {
+      "afterText": "The artist mixed the clay ",
+      "beforeText": "The artist mixed the Clay ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Clay",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "clay",
+            "text": "Clay",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 31,
+        "isValidWord": true,
+        "original": "clay",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-correct-07-3-0",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "The artist mixed the clay ",
+      "beforeText": "The artist mixed the Clay ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Clay",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "clay",
+            "text": "Clay",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 31,
+        "isValidWord": true,
+        "original": "clay",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-correct-07-3-1",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "The artist mixed the clay ",
+      "beforeText": "The artist mixed the Clay ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Clay",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "clay",
+            "text": "Clay",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 31,
+        "isValidWord": true,
+        "original": "clay",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-correct-07-3-2",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "The artist mixed the clay ",
+      "beforeText": "The artist mixed the Clay ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Clay",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "clay",
+            "text": "Clay",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 31,
+        "isValidWord": true,
+        "original": "clay",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-correct-07-3-3",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "The artist mixed the clay ",
+      "beforeText": "The artist mixed the Clay ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Clay",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "clay",
+            "text": "Clay",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 31,
+        "isValidWord": true,
+        "original": "clay",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-correct-07-3-4",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "The artist mixed the clay ",
+      "beforeText": "The artist mixed the Clay ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Clay",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "clay",
+            "text": "Clay",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 31,
+        "isValidWord": true,
+        "original": "clay",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-correct-07-3-5",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "An engineer measured the resistance ",
+      "beforeText": "An engineer measured the Resistance ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Resistance",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "resistance",
+            "text": "Resistance",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 60,
+        "isValidWord": true,
+        "original": "resistance",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-correct-12-1-0",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "An engineer measured the resistance ",
+      "beforeText": "An engineer measured the Resistance ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Resistance",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "resistance",
+            "text": "Resistance",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 60,
+        "isValidWord": true,
+        "original": "resistance",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-correct-12-1-1",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "An engineer measured the resistance ",
+      "beforeText": "An engineer measured the Resistance ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Resistance",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "resistance",
+            "text": "Resistance",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 60,
+        "isValidWord": true,
+        "original": "resistance",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-correct-12-1-2",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "An engineer measured the resistance ",
+      "beforeText": "An engineer measured the Resistance ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Resistance",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "resistance",
+            "text": "Resistance",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 60,
+        "isValidWord": true,
+        "original": "resistance",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-correct-12-1-3",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "An engineer measured the resistance ",
+      "beforeText": "An engineer measured the Resistance ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Resistance",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "resistance",
+            "text": "Resistance",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 60,
+        "isValidWord": true,
+        "original": "resistance",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-correct-12-1-4",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "An engineer measured the resistance ",
+      "beforeText": "An engineer measured the Resistance ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Resistance",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "resistance",
+            "text": "Resistance",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 60,
+        "isValidWord": true,
+        "original": "resistance",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-correct-12-1-5",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El agricultor observa el campo ",
+      "beforeText": "El agricultor observa el Campo ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Campo",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "campo",
+            "text": "Campo",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 25,
+        "isValidWord": true,
+        "original": "campo",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-01-1-0",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El agricultor observa el campo ",
+      "beforeText": "El agricultor observa el Campo ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Campo",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "campo",
+            "text": "Campo",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 25,
+        "isValidWord": true,
+        "original": "campo",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-01-1-1",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El agricultor observa el campo ",
+      "beforeText": "El agricultor observa el Campo ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Campo",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "campo",
+            "text": "Campo",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 25,
+        "isValidWord": true,
+        "original": "campo",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-01-1-2",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El agricultor observa el campo ",
+      "beforeText": "El agricultor observa el Campo ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Campo",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "campo",
+            "text": "Campo",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 25,
+        "isValidWord": true,
+        "original": "campo",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-01-1-3",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El agricultor observa el campo ",
+      "beforeText": "El agricultor observa el Campo ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Campo",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "campo",
+            "text": "Campo",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 25,
+        "isValidWord": true,
+        "original": "campo",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-01-1-4",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El agricultor observa el campo ",
+      "beforeText": "El agricultor observa el Campo ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Campo",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "campo",
+            "text": "Campo",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 25,
+        "isValidWord": true,
+        "original": "campo",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-01-1-5",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El marinero distingue un puerto ",
+      "beforeText": "El marinero distingue un Puerto ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Puerto",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "puerto",
+            "text": "Puerto",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 50,
+        "isValidWord": true,
+        "original": "puerto",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-11-1-0",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El marinero distingue un puerto ",
+      "beforeText": "El marinero distingue un Puerto ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Puerto",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "puerto",
+            "text": "Puerto",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 50,
+        "isValidWord": true,
+        "original": "puerto",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-11-1-1",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El marinero distingue un puerto ",
+      "beforeText": "El marinero distingue un Puerto ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Puerto",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "puerto",
+            "text": "Puerto",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 50,
+        "isValidWord": true,
+        "original": "puerto",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-11-1-2",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El marinero distingue un puerto ",
+      "beforeText": "El marinero distingue un Puerto ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Puerto",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "puerto",
+            "text": "Puerto",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 50,
+        "isValidWord": true,
+        "original": "puerto",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-11-1-3",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El marinero distingue un puerto ",
+      "beforeText": "El marinero distingue un Puerto ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Puerto",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "puerto",
+            "text": "Puerto",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 50,
+        "isValidWord": true,
+        "original": "puerto",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-11-1-4",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El marinero distingue un puerto ",
+      "beforeText": "El marinero distingue un Puerto ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Puerto",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "puerto",
+            "text": "Puerto",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 50,
+        "isValidWord": true,
+        "original": "puerto",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-11-1-5",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El marinero distingue un arrecife ",
+      "beforeText": "El marinero distingue un Arrecife ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Arrecife",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "arrecife",
+            "text": "Arrecife",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 47,
+        "isValidWord": true,
+        "original": "arrecife",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-11-3-0",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El marinero distingue un arrecife ",
+      "beforeText": "El marinero distingue un Arrecife ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Arrecife",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "arrecife",
+            "text": "Arrecife",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 47,
+        "isValidWord": true,
+        "original": "arrecife",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-11-3-1",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El marinero distingue un arrecife ",
+      "beforeText": "El marinero distingue un Arrecife ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Arrecife",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "arrecife",
+            "text": "Arrecife",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 47,
+        "isValidWord": true,
+        "original": "arrecife",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-11-3-2",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El marinero distingue un arrecife ",
+      "beforeText": "El marinero distingue un Arrecife ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Arrecife",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "arrecife",
+            "text": "Arrecife",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 47,
+        "isValidWord": true,
+        "original": "arrecife",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-11-3-3",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El marinero distingue un arrecife ",
+      "beforeText": "El marinero distingue un Arrecife ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Arrecife",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "arrecife",
+            "text": "Arrecife",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 47,
+        "isValidWord": true,
+        "original": "arrecife",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-11-3-4",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "El marinero distingue un arrecife ",
+      "beforeText": "El marinero distingue un Arrecife ",
+      "cohort": "correct",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": false,
+            "canonicalKey": "Arrecife",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "es",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "arrecife",
+            "text": "Arrecife",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 47,
+        "isValidWord": true,
+        "original": "arrecife",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "es-holdout-correct-11-3-5",
+      "language": "es",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "The reference lists que ",
+      "beforeText": "The reference lists Que ",
+      "cohort": "protected",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": true,
+            "canonicalKey": "Que",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "que",
+            "text": "Que",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 48,
+        "isValidWord": true,
+        "original": "que",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-protected-ambiguous_accent-04",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "The reference lists si ",
+      "beforeText": "The reference lists Si ",
+      "cohort": "protected",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": true,
+            "canonicalKey": "Si",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "si",
+            "text": "Si",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 54,
+        "isValidWord": true,
+        "original": "si",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "en-holdout-protected-ambiguous_accent-05",
+      "language": "en",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "В справочнике найдено que ",
+      "beforeText": "В справочнике найдено Que ",
+      "cohort": "protected",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": true,
+            "canonicalKey": "Que",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "que",
+            "text": "Que",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 48,
+        "isValidWord": true,
+        "original": "que",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "ru-holdout-protected-ambiguous_accent-04",
+      "language": "ru",
+      "priorCanonicalAutoEdit": true
+    },
+    {
+      "afterText": "В справочнике найдено si ",
+      "beforeText": "В справочнике найдено Si ",
+      "cohort": "protected",
+      "currentAutoEdit": false,
+      "currentGeneration": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": false,
+            "canonicalCaseUnambiguous": true,
+            "canonicalKey": "Si",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": false,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 4,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "si",
+            "text": "Si",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 54,
+        "isValidWord": true,
+        "original": "si",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "exactBackspaceRestore": true,
+      "id": "ru-holdout-protected-ambiguous_accent-05",
+      "language": "ru",
+      "priorCanonicalAutoEdit": true
+    }
+  ],
+  "productionSourceChanges": {
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": {
+      "after": "61eb889e1d327f9933e4c189227c93baf2f89b4f08bad41db538d9bfdf354370",
+      "before": "bb031b134b1fdf8dc6e24762595defe5f732157fe8143c3f0caa52dc57f4c580"
+    },
+    "/Users/avm/projects/Personal/rune-keyboard/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": {
+      "after": "e0546af4f012c95ab46cbe2d42837450ddd287b2c267ca560a21f8925afb9ee3",
+      "before": "255468e74e439b5013dc6b463afce796f2f49975fdec23224ecf527d8ff20825"
+    }
+  },
+  "receipts": {
+    "canonical-controller-postfix/execution-receipt.json": {
+      "allCurrentInputsUnchanged": true,
+      "allRecordedArtifactsUnchanged": true,
+      "sha256": "5bb64d4baa1bbd4f0569f647769fd68b4760e67e634727cf400e6175fcae6239"
+    },
+    "canonical-controller/asset-matrix-receipt.json": {
+      "allRecordedArtifactsUnchanged": true,
+      "sha256": "c9f90a8315b80b644ba324b5424bf0bf64c41d31fc07cdef249125b6f39119a2"
+    },
+    "canonical-controller/execution-receipt.json": {
+      "allRecordedArtifactsUnchanged": true,
+      "sha256": "3ae7abdaffb818a97a7e7c66d705e61f5d8606e58d0fd9c029140e4d4546d72a"
+    },
+    "product-controller-current/execution-receipt.json": {
+      "allRecordedArtifactsUnchanged": true,
+      "sha256": "5a13c77843f47022fe656c6214c9d611e0bcad0f8b509b7f43e4799a2e0c9e0e"
+    },
+    "product-controller-postfix/execution-receipt.json": {
+      "allCurrentInputsUnchanged": true,
+      "allRecordedArtifactsUnchanged": true,
+      "sha256": "452ee093c8f5c16dd39c15b310a8851cf337e1d50480b6a332ccfc5911bea439"
+    }
+  },
+  "releaseQualified": false,
+  "remainingCanonicalRows": [
+    {
+      "cohort": "typo",
+      "expected": "magdalena",
+      "finalText": "El panadero prepara una Magdalene ",
+      "generation": {
+        "alternatives": [
+          {
+            "canonicalCaseAutoEligible": true,
+            "canonicalCaseUnambiguous": true,
+            "canonicalKey": "Magdalene",
+            "casePattern": "TITLE",
+            "editCost": 0.0,
+            "frequencyRank": 1,
+            "isFallback": true,
+            "kind": "CANONICAL_CASE",
+            "language": "en",
+            "languagePrior": 1,
+            "lengthDifference": 0,
+            "repeatedCharacterEdits": 0,
+            "repetitionBonus": 0.0,
+            "terminalKey": "magdalene",
+            "text": "Magdalene",
+            "unitDistance": 0
+          }
+        ],
+        "completion": "VALID_WORD",
+        "inspectedStates": 86,
+        "isValidWord": true,
+        "original": "magdalene",
+        "prohibitsAutoReplace": true,
+        "protectedReason": null,
+        "verifiedTerminals": 0
+      },
+      "id": "es-holdout-typo-00-3-5",
+      "language": "es"
+    }
+  ],
+  "scope": "post-fix-diagnostic-source-and-outcome-comparison",
+  "thresholdFittingPerformed": false
+}

@@ -1,0 +1,422 @@
+{
+  "files": {
+    "canonical-case-scoped-green.log.gz": {
+      "archiveSha256": "1cc0f566abc211182be2beb76533205baad25aec6c4baa338c421e105ba5980c",
+      "originalBytes": 2071,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-case-scoped-green.log",
+      "originalSha256": "a6fafa9b76cea123a8bc061c254224d2678bd295d09ed2f07fda0e0507a1ea3f"
+    },
+    "canonical-controller-boundary-red.log.gz": {
+      "archiveSha256": "5b8a4406d3362b221e75ac192cacae689ccb157d1d62736b3dfdbceb058edee5",
+      "originalBytes": 2735,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-boundary-red.log",
+      "originalSha256": "c4fc128619dbdbfcdc9e64412ebd128c59f497059a3f3eb7e294887aa08350c1"
+    },
+    "canonical-controller-postfix/CanonicalControllerDiagnostic.kt": {
+      "archiveSha256": "d7f5079617eabf6828b8e290500dbad3cd8b3e8d30e5815ef81c54d8079c5711",
+      "originalBytes": 14377,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-postfix/CanonicalControllerDiagnostic.kt",
+      "originalSha256": "d7f5079617eabf6828b8e290500dbad3cd8b3e8d30e5815ef81c54d8079c5711"
+    },
+    "canonical-controller-postfix/actual.jsonl.gz": {
+      "archiveSha256": "39fe69f433e780a02acc3f3ddba2760383a9cc0b181d4df58344011c20592720",
+      "originalBytes": 16286135,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-postfix/actual.jsonl",
+      "originalSha256": "9ab4a8f4440a2f9efa19255921bcbc637be77c8292d896e7d0850254373dbffb"
+    },
+    "canonical-controller-postfix/commands.json": {
+      "archiveSha256": "eca3cf4ea4d717b5f307c1f5a812465f0fa69a19e970825ded5c174852ac27c5",
+      "originalBytes": 9029,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-postfix/commands.json",
+      "originalSha256": "eca3cf4ea4d717b5f307c1f5a812465f0fa69a19e970825ded5c174852ac27c5"
+    },
+    "canonical-controller-postfix/compile.log.gz": {
+      "archiveSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "originalBytes": 0,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-postfix/compile.log",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "canonical-controller-postfix/execution-receipt.json": {
+      "archiveSha256": "5bb64d4baa1bbd4f0569f647769fd68b4760e67e634727cf400e6175fcae6239",
+      "originalBytes": 16772,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-postfix/execution-receipt.json",
+      "originalSha256": "5bb64d4baa1bbd4f0569f647769fd68b4760e67e634727cf400e6175fcae6239"
+    },
+    "canonical-controller-postfix/frozen-negative-inputs.jsonl.gz": {
+      "archiveSha256": "fce2c8030096aa49f2a2d7fdbfae27999c9519fa78264d4a6117d79de4b52a05",
+      "originalBytes": 1609288,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-postfix/frozen-negative-inputs.jsonl",
+      "originalSha256": "d5feb6861c8b3d476636a6af2f9f94f2dadf61ea26a070a937dcea14afe36571"
+    },
+    "canonical-controller-postfix/input-binding.json": {
+      "archiveSha256": "0f8bd99f4a23db02ba288f5f9dc61ecb0983f3171b5235e592ba0c77e12995b5",
+      "originalBytes": 13669,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-postfix/input-binding.json",
+      "originalSha256": "0f8bd99f4a23db02ba288f5f9dc61ecb0983f3171b5235e592ba0c77e12995b5"
+    },
+    "canonical-controller-postfix/inputs.tsv.gz": {
+      "archiveSha256": "910f6a6c8b9c5fb9e6656dcb2953fe4238e6841e3928e810e0f8fdd615d9537d",
+      "originalBytes": 304495,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-postfix/inputs.tsv",
+      "originalSha256": "97ea9df390b7b586c3314ee7174cb0567202e04367dacedb51551f2ead8d7331"
+    },
+    "canonical-controller-postfix/public-controls.jsonl.gz": {
+      "archiveSha256": "0725d799c65a17d268fff2e36532652f18d7cdcb776a171a2ff384d9dd2d0136",
+      "originalBytes": 972,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-postfix/public-controls.jsonl",
+      "originalSha256": "9a21f63de0a924aef07266cdbce6ea7d4e789a1d2c9d7bff2375b365696f6045"
+    },
+    "canonical-controller-postfix/row-evidence.jsonl.gz": {
+      "archiveSha256": "75df66986f43203dd89ad9746befe467f179adb93b927e8d5704c811d2b33fa7",
+      "originalBytes": 19397654,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-postfix/row-evidence.jsonl",
+      "originalSha256": "2208c8ec1ba754d4eaaa8b25458379ffc6214c07d5dd63d0fa537d023905db5f"
+    },
+    "canonical-controller-postfix/run.log.gz": {
+      "archiveSha256": "2643e391e9a9cf7136e4b21fd7ba4c80e2a441a77ce87f9a7bd48fe0246bf9d9",
+      "originalBytes": 209,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-postfix/run.log",
+      "originalSha256": "eb23f0c0f3325efc66f730f36cc7c55d787855d8d8972e3185f810fb6918f478"
+    },
+    "canonical-controller-postfix/run_diagnostic.py": {
+      "archiveSha256": "713a785794e12e1e46aa4ee7c10014d7338d5ddbd86e59f8111eadfc97b524b1",
+      "originalBytes": 11733,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-postfix/run_diagnostic.py",
+      "originalSha256": "713a785794e12e1e46aa4ee7c10014d7338d5ddbd86e59f8111eadfc97b524b1"
+    },
+    "canonical-controller-postfix/summary.json": {
+      "archiveSha256": "46c569e9306db98eb2c8f1c898d2e086b7e09091748ee6f5e3cfa50516ef56d1",
+      "originalBytes": 52554,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller-postfix/summary.json",
+      "originalSha256": "46c569e9306db98eb2c8f1c898d2e086b7e09091748ee6f5e3cfa50516ef56d1"
+    },
+    "canonical-controller/CanonicalAssetMatrix.kt": {
+      "archiveSha256": "62e524913bf1d79d0f5dda119ecf294c935f8d054aa47c62b2bd61b1df0a1c8c",
+      "originalBytes": 3128,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/CanonicalAssetMatrix.kt",
+      "originalSha256": "62e524913bf1d79d0f5dda119ecf294c935f8d054aa47c62b2bd61b1df0a1c8c"
+    },
+    "canonical-controller/CanonicalControllerDiagnostic.kt": {
+      "archiveSha256": "b1670e9d19e752a422b8d78ed087d04da5bea9bf42bd72a883165be4d0645361",
+      "originalBytes": 14305,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/CanonicalControllerDiagnostic.kt",
+      "originalSha256": "b1670e9d19e752a422b8d78ed087d04da5bea9bf42bd72a883165be4d0645361"
+    },
+    "canonical-controller/actual.jsonl.gz": {
+      "archiveSha256": "043b5d8efecde33e7e84c8ee35d9dbb0ae5fd9fbca2edb15091be440ff927e47",
+      "originalBytes": 16280175,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/actual.jsonl",
+      "originalSha256": "2909a2ce27e71a8ba545b3172a9d10635b399d4451b5cf4cc282283a4dc99fc0"
+    },
+    "canonical-controller/asset-matrix-commands.json": {
+      "archiveSha256": "fab22e1e42196c085a5ab01f13f0f5a233e32bd3f1e78cb342b5ead9bff6c45c",
+      "originalBytes": 8449,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/asset-matrix-commands.json",
+      "originalSha256": "fab22e1e42196c085a5ab01f13f0f5a233e32bd3f1e78cb342b5ead9bff6c45c"
+    },
+    "canonical-controller/asset-matrix-compile.log.gz": {
+      "archiveSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "originalBytes": 0,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/asset-matrix-compile.log",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "canonical-controller/asset-matrix-fixtures.txt": {
+      "archiveSha256": "01ac36501996ba16255f7a55e8a0f95d0efe7b6f5c107ae03f116334267a7ebc",
+      "originalBytes": 91,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/asset-matrix-fixtures.txt",
+      "originalSha256": "01ac36501996ba16255f7a55e8a0f95d0efe7b6f5c107ae03f116334267a7ebc"
+    },
+    "canonical-controller/asset-matrix-receipt.json": {
+      "archiveSha256": "c9f90a8315b80b644ba324b5424bf0bf64c41d31fc07cdef249125b6f39119a2",
+      "originalBytes": 14526,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/asset-matrix-receipt.json",
+      "originalSha256": "c9f90a8315b80b644ba324b5424bf0bf64c41d31fc07cdef249125b6f39119a2"
+    },
+    "canonical-controller/asset-matrix-run.log.gz": {
+      "archiveSha256": "e937431171985970fab3230094a2a7b36945e76c9ddccf6c249e924243236793",
+      "originalBytes": 38,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/asset-matrix-run.log",
+      "originalSha256": "8f6205ba14b05c8128d782a189a9e3bb3aca076e3928809bcae3ffe2c4155caa"
+    },
+    "canonical-controller/asset-matrix.json": {
+      "archiveSha256": "ba302d161211545d3d1e6df640d494f1ba83f5a249ac46ac1d105157b56fa9f9",
+      "originalBytes": 15812,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/asset-matrix.json",
+      "originalSha256": "ba302d161211545d3d1e6df640d494f1ba83f5a249ac46ac1d105157b56fa9f9"
+    },
+    "canonical-controller/asset-matrix.tsv.gz": {
+      "archiveSha256": "11e64d6b7cb6e57acd638823d87a81b4a663688b9b9d011a9f7a26aaf928ffbf",
+      "originalBytes": 3020,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/asset-matrix.tsv",
+      "originalSha256": "fbe6210fd337cc7e1390018b7ddb70bc988af3e5a41e474be883bd04a900c0e5"
+    },
+    "canonical-controller/commands.json": {
+      "archiveSha256": "187d61d544aa08d08dde41edf8d16c20631dafbdfcf3ac1ef358e9ed8c9d5769",
+      "originalBytes": 8989,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/commands.json",
+      "originalSha256": "187d61d544aa08d08dde41edf8d16c20631dafbdfcf3ac1ef358e9ed8c9d5769"
+    },
+    "canonical-controller/compile.log.gz": {
+      "archiveSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "originalBytes": 0,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/compile.log",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "canonical-controller/execution-receipt.json": {
+      "archiveSha256": "3ae7abdaffb818a97a7e7c66d705e61f5d8606e58d0fd9c029140e4d4546d72a",
+      "originalBytes": 16748,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/execution-receipt.json",
+      "originalSha256": "3ae7abdaffb818a97a7e7c66d705e61f5d8606e58d0fd9c029140e4d4546d72a"
+    },
+    "canonical-controller/frozen-negative-inputs.jsonl.gz": {
+      "archiveSha256": "fce2c8030096aa49f2a2d7fdbfae27999c9519fa78264d4a6117d79de4b52a05",
+      "originalBytes": 1609288,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/frozen-negative-inputs.jsonl",
+      "originalSha256": "d5feb6861c8b3d476636a6af2f9f94f2dadf61ea26a070a937dcea14afe36571"
+    },
+    "canonical-controller/input-binding.json": {
+      "archiveSha256": "ef90e4c1eb3b18ca68cdd8850f4788d022dce909fee26254b4ea281019d0396f",
+      "originalBytes": 13653,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/input-binding.json",
+      "originalSha256": "ef90e4c1eb3b18ca68cdd8850f4788d022dce909fee26254b4ea281019d0396f"
+    },
+    "canonical-controller/inputs.tsv.gz": {
+      "archiveSha256": "910f6a6c8b9c5fb9e6656dcb2953fe4238e6841e3928e810e0f8fdd615d9537d",
+      "originalBytes": 304495,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/inputs.tsv",
+      "originalSha256": "97ea9df390b7b586c3314ee7174cb0567202e04367dacedb51551f2ead8d7331"
+    },
+    "canonical-controller/public-controls.jsonl.gz": {
+      "archiveSha256": "0725d799c65a17d268fff2e36532652f18d7cdcb776a171a2ff384d9dd2d0136",
+      "originalBytes": 972,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/public-controls.jsonl",
+      "originalSha256": "9a21f63de0a924aef07266cdbce6ea7d4e789a1d2c9d7bff2375b365696f6045"
+    },
+    "canonical-controller/row-evidence.jsonl.gz": {
+      "archiveSha256": "05ab100f1fe90f397902dabed3e7ca5966874899b6aac73e09118f4290d85f53",
+      "originalBytes": 19391568,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/row-evidence.jsonl",
+      "originalSha256": "e41f7909dd2c1250ffd88638e97e4014986ecd913d7da452c526738776735360"
+    },
+    "canonical-controller/run.log.gz": {
+      "archiveSha256": "2643e391e9a9cf7136e4b21fd7ba4c80e2a441a77ce87f9a7bd48fe0246bf9d9",
+      "originalBytes": 209,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/run.log",
+      "originalSha256": "eb23f0c0f3325efc66f730f36cc7c55d787855d8d8972e3185f810fb6918f478"
+    },
+    "canonical-controller/run_asset_matrix.py": {
+      "archiveSha256": "2539338e3036e279bcaa0e9c0ae2f727cd444c04059d7d1912fd48db6f0be3e1",
+      "originalBytes": 4106,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/run_asset_matrix.py",
+      "originalSha256": "2539338e3036e279bcaa0e9c0ae2f727cd444c04059d7d1912fd48db6f0be3e1"
+    },
+    "canonical-controller/run_diagnostic.py": {
+      "archiveSha256": "713a785794e12e1e46aa4ee7c10014d7338d5ddbd86e59f8111eadfc97b524b1",
+      "originalBytes": 11733,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/run_diagnostic.py",
+      "originalSha256": "713a785794e12e1e46aa4ee7c10014d7338d5ddbd86e59f8111eadfc97b524b1"
+    },
+    "canonical-controller/summary.json.gz": {
+      "archiveSha256": "61d92f0f3f5e4ebb110f07478d4cdc55706b645f27ddfa83481078617622ec89",
+      "originalBytes": 103944,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/canonical-controller/summary.json",
+      "originalSha256": "5724baceca7763dc32307cc97b041399c98b48e0bdb93a78baf5bfabac64c112"
+    },
+    "product-controller-current/ProductControllerDiagnostic.kt": {
+      "archiveSha256": "6cc0b7119a0867cde63b2de23f1a922c9a1927123736cd7ad2710d48b5932e75",
+      "originalBytes": 18342,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/ProductControllerDiagnostic.kt",
+      "originalSha256": "6cc0b7119a0867cde63b2de23f1a922c9a1927123736cd7ad2710d48b5932e75"
+    },
+    "product-controller-current/actual.jsonl.gz": {
+      "archiveSha256": "b8771fa128608cd3b914c3f7dd15aff3cfcf82170137ec2d173e96340ab64d5b",
+      "originalBytes": 41489746,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/actual.jsonl",
+      "originalSha256": "37c609d9b347eca5c74172bb11ca698154b72352f1dc01bc24ce1885064a30a5"
+    },
+    "product-controller-current/commands.json": {
+      "archiveSha256": "03aa69f47f98d8bcfa44aff2a9d6390f60e8768db63d358199dd5094f36208e0",
+      "originalBytes": 9009,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/commands.json",
+      "originalSha256": "03aa69f47f98d8bcfa44aff2a9d6390f60e8768db63d358199dd5094f36208e0"
+    },
+    "product-controller-current/compile.log.gz": {
+      "archiveSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "originalBytes": 0,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/compile.log",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "product-controller-current/execution-receipt.json": {
+      "archiveSha256": "5a13c77843f47022fe656c6214c9d611e0bcad0f8b509b7f43e4799a2e0c9e0e",
+      "originalBytes": 24786,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/execution-receipt.json",
+      "originalSha256": "5a13c77843f47022fe656c6214c9d611e0bcad0f8b509b7f43e4799a2e0c9e0e"
+    },
+    "product-controller-current/fresh-responses.jsonl.gz": {
+      "archiveSha256": "5123618341a324c9bc4fea5ee601a3f6d32dcef8295c7d49481bb6f7c1f69cf0",
+      "originalBytes": 1036137,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/fresh-responses.jsonl",
+      "originalSha256": "f20ce14404ee7c4f4549092daf2ee3d77fd827ad100b05b4410b0991c6e61579"
+    },
+    "product-controller-current/frozen-inputs.jsonl.gz": {
+      "archiveSha256": "98cfb91a3154aa674b530addfad384b3f20656f9344b451ddb242001bbfb5c1d",
+      "originalBytes": 3167353,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/frozen-inputs.jsonl",
+      "originalSha256": "4c5783158e3d58c70df76f811d01679a8b7c2333501f8a6862e172d0b57b2e00"
+    },
+    "product-controller-current/input-binding.json": {
+      "archiveSha256": "f3cc20fdd69a707f3571824d6a183c85f1663c407f4e54db40e664a029b130e7",
+      "originalBytes": 21681,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/input-binding.json",
+      "originalSha256": "f3cc20fdd69a707f3571824d6a183c85f1663c407f4e54db40e664a029b130e7"
+    },
+    "product-controller-current/inputs.tsv.gz": {
+      "archiveSha256": "400f4436fe2b04db937a9abc755b3db902a3f0d545d33268976b7fdaa9242df2",
+      "originalBytes": 1252408,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/inputs.tsv",
+      "originalSha256": "7ba63be08ebb58ff12d816f8a37c347c31a8029719c8fcfc7b071e2505613dc9"
+    },
+    "product-controller-current/row-evidence.jsonl.gz": {
+      "archiveSha256": "a72fc7755f8d74ca91f01818f17d1ccfc497c29cf5bcc796f9969659d93ff8e9",
+      "originalBytes": 50520296,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/row-evidence.jsonl",
+      "originalSha256": "3c6139e2f1e2da8ac5d862c4e964edc19b85bd2be8b4ebd86847a6d90046701c"
+    },
+    "product-controller-current/run.log.gz": {
+      "archiveSha256": "1429229e16be61964a61fbd46e6a3d267220021985a90c52fc1cfda427dd3f9f",
+      "originalBytes": 329,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/run.log",
+      "originalSha256": "b26bdef94db2277541690bc82a50310bef9536d7fea4d6b23ec81775ef6b6f7c"
+    },
+    "product-controller-current/run_product_diagnostic.py": {
+      "archiveSha256": "2c39a8bfba8d0c76cabb579256540e81dd5398b30e5017ea31f6e507535ccc78",
+      "originalBytes": 16397,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/run_product_diagnostic.py",
+      "originalSha256": "2c39a8bfba8d0c76cabb579256540e81dd5398b30e5017ea31f6e507535ccc78"
+    },
+    "product-controller-current/score-binding.json": {
+      "archiveSha256": "677ce8feae1834e2cee882deb3d46aad98cc91781ed31b8354ba4ac2406145e0",
+      "originalBytes": 1991,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/score-binding.json",
+      "originalSha256": "677ce8feae1834e2cee882deb3d46aad98cc91781ed31b8354ba4ac2406145e0"
+    },
+    "product-controller-current/summary.json": {
+      "archiveSha256": "67c7e4018d7746825b1afac117bc59ef0fd68bb9f40affcad5203148141d2209",
+      "originalBytes": 51432,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/summary.json",
+      "originalSha256": "67c7e4018d7746825b1afac117bc59ef0fd68bb9f40affcad5203148141d2209"
+    },
+    "product-controller-current/verified-scored-requests.jsonl.gz": {
+      "archiveSha256": "aa00892e230bd5960d619118f57ee435c72b02885421980be0763cbe40c52e1d",
+      "originalBytes": 470416,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-current/verified-scored-requests.jsonl",
+      "originalSha256": "70ac0f0da06f4212351868d269735f52ee7685dd20cd1d66c549e45428836186"
+    },
+    "product-controller-postfix/ProductControllerDiagnostic.kt": {
+      "archiveSha256": "630bd1e0378b712c125452b2a156032f2071186ab66c6662ea859842917c88f0",
+      "originalBytes": 18414,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/ProductControllerDiagnostic.kt",
+      "originalSha256": "630bd1e0378b712c125452b2a156032f2071186ab66c6662ea859842917c88f0"
+    },
+    "product-controller-postfix/actual.jsonl.gz": {
+      "archiveSha256": "9cbaaf18164dc5c8fc3eb14e3d65db9c6de5d0984c11fea207ce72eacd8ee969",
+      "originalBytes": 42136831,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/actual.jsonl",
+      "originalSha256": "9a65dcc21b4376fe9c547bf60eef27c44ed3e13b0cdbc583cb33548d4b92d3e2"
+    },
+    "product-controller-postfix/commands.json": {
+      "archiveSha256": "8f04343381c26d23c604c9fdfd2605b4c6951b13538442848f22836ae9bf414f",
+      "originalBytes": 9009,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/commands.json",
+      "originalSha256": "8f04343381c26d23c604c9fdfd2605b4c6951b13538442848f22836ae9bf414f"
+    },
+    "product-controller-postfix/compile.log.gz": {
+      "archiveSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "originalBytes": 0,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/compile.log",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "product-controller-postfix/execution-receipt.json": {
+      "archiveSha256": "452ee093c8f5c16dd39c15b310a8851cf337e1d50480b6a332ccfc5911bea439",
+      "originalBytes": 25010,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/execution-receipt.json",
+      "originalSha256": "452ee093c8f5c16dd39c15b310a8851cf337e1d50480b6a332ccfc5911bea439"
+    },
+    "product-controller-postfix/fresh-responses.jsonl.gz": {
+      "archiveSha256": "5123618341a324c9bc4fea5ee601a3f6d32dcef8295c7d49481bb6f7c1f69cf0",
+      "originalBytes": 1036137,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/fresh-responses.jsonl",
+      "originalSha256": "f20ce14404ee7c4f4549092daf2ee3d77fd827ad100b05b4410b0991c6e61579"
+    },
+    "product-controller-postfix/frozen-inputs.jsonl.gz": {
+      "archiveSha256": "98cfb91a3154aa674b530addfad384b3f20656f9344b451ddb242001bbfb5c1d",
+      "originalBytes": 3167353,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/frozen-inputs.jsonl",
+      "originalSha256": "4c5783158e3d58c70df76f811d01679a8b7c2333501f8a6862e172d0b57b2e00"
+    },
+    "product-controller-postfix/input-binding.json": {
+      "archiveSha256": "a5f840ef97d40e1357b0344e7ea809f3873ed70c900b52d844192ebbfc61b2ad",
+      "originalBytes": 21793,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/input-binding.json",
+      "originalSha256": "a5f840ef97d40e1357b0344e7ea809f3873ed70c900b52d844192ebbfc61b2ad"
+    },
+    "product-controller-postfix/inputs.tsv.gz": {
+      "archiveSha256": "400f4436fe2b04db937a9abc755b3db902a3f0d545d33268976b7fdaa9242df2",
+      "originalBytes": 1252408,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/inputs.tsv",
+      "originalSha256": "7ba63be08ebb58ff12d816f8a37c347c31a8029719c8fcfc7b071e2505613dc9"
+    },
+    "product-controller-postfix/postfix-comparison.json": {
+      "archiveSha256": "c689705c9be3c47962236e0de25aa6f0dc2e63199ed6f3baf8675ad54cc84628",
+      "originalBytes": 46820,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/postfix-comparison.json",
+      "originalSha256": "c689705c9be3c47962236e0de25aa6f0dc2e63199ed6f3baf8675ad54cc84628"
+    },
+    "product-controller-postfix/row-evidence.jsonl.gz": {
+      "archiveSha256": "d0047d500bd8bea0c30cbcfbaf43b53719e872beab08a675c9fce3a5413a020d",
+      "originalBytes": 51204861,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/row-evidence.jsonl",
+      "originalSha256": "9b5b4d3c73a0942a2fb421ac34cb6aa4cee6b99b4012ae5f1f2ab273b8d8f332"
+    },
+    "product-controller-postfix/run.log.gz": {
+      "archiveSha256": "1429229e16be61964a61fbd46e6a3d267220021985a90c52fc1cfda427dd3f9f",
+      "originalBytes": 329,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/run.log",
+      "originalSha256": "b26bdef94db2277541690bc82a50310bef9536d7fea4d6b23ec81775ef6b6f7c"
+    },
+    "product-controller-postfix/run_product_diagnostic.py": {
+      "archiveSha256": "e98bcd982c261b8759743192c7cabd2620912d9d7fea47cba457079d5a700393",
+      "originalBytes": 17486,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/run_product_diagnostic.py",
+      "originalSha256": "e98bcd982c261b8759743192c7cabd2620912d9d7fea47cba457079d5a700393"
+    },
+    "product-controller-postfix/score-binding.json": {
+      "archiveSha256": "677ce8feae1834e2cee882deb3d46aad98cc91781ed31b8354ba4ac2406145e0",
+      "originalBytes": 1991,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/score-binding.json",
+      "originalSha256": "677ce8feae1834e2cee882deb3d46aad98cc91781ed31b8354ba4ac2406145e0"
+    },
+    "product-controller-postfix/scored-export-source-transition.json": {
+      "archiveSha256": "cb25369c65a5714d0bc52b83d0b65532b33bd757440dd8c67430ad389425c378",
+      "originalBytes": 676,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/scored-export-source-transition.json",
+      "originalSha256": "cb25369c65a5714d0bc52b83d0b65532b33bd757440dd8c67430ad389425c378"
+    },
+    "product-controller-postfix/summary.json": {
+      "archiveSha256": "50550f49dbd50c0f3392b79d242edf0f3fe977455e04530dbf8b0246d78cb950",
+      "originalBytes": 51493,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/summary.json",
+      "originalSha256": "50550f49dbd50c0f3392b79d242edf0f3fe977455e04530dbf8b0246d78cb950"
+    },
+    "product-controller-postfix/verified-scored-requests.jsonl.gz": {
+      "archiveSha256": "aa00892e230bd5960d619118f57ee435c72b02885421980be0763cbe40c52e1d",
+      "originalBytes": 470416,
+      "originalPath": "build/smart-typing-0.3/current-source-replay-20260906/product-controller-postfix/verified-scored-requests.jsonl",
+      "originalSha256": "70ac0f0da06f4212351868d269735f52ee7685dd20cd1d66c549e45428836186"
+    }
+  },
+  "omittedArtifacts": "Compiled JARs remain at original build paths; hashes and exact commands retained.",
+  "qualification": false,
+  "schemaVersion": 1,
+  "scope": "actual-controller-diagnostic-before-and-after-canonical-safety"
+}
