@@ -35,18 +35,25 @@ def named_rows():
     return rows
 
 
+def artifact_bindings(java, sources, jars, android):
+    runtime = replay.java_runtime_binding(java)
+    paths = sources + [Path(__file__), Path(select_local_policy.__file__),
+        Path(evaluate_local_holdout.__file__), Path(replay.__file__), replay.SOURCE_MANIFEST,
+        replay.TOOLCHAIN, replay.CORPUS / 'manifest.json', Path(sys.executable).resolve(),
+        *replay.asset_paths(), *jars, android,
+        *(Path(runtime['home']) / name for name in runtime['inventory'])]
+    return {replay.path_key(p): replay.sha256(p) for p in paths}, runtime
+
+
 def run(args):
     root = args.output.resolve()
     replay.require(root.is_relative_to(replay.REPO / 'build') and not root.exists(), 'FRESH_BUILD_OUTPUT')
     root.mkdir(parents=True)
     java = args.java.resolve(strict=True)
     sources, jars, android = replay.compile_inputs(java)
-    source_files = sources + [Path(__file__), Path(select_local_policy.__file__),
-                             Path(evaluate_local_holdout.__file__), replay.SOURCE_MANIFEST]
-    bindings = {str(p.relative_to(replay.REPO)): replay.sha256(p) for p in source_files + replay.asset_paths()}
-    bindings[str(java)] = replay.sha256(java)
-    for p in jars + [android]: bindings[str(p)] = replay.sha256(p)
+    bindings, runtime = artifact_bindings(java, sources, jars, android)
     replay.write_json(root / 'artifacts.json', bindings)
+    replay.write_json(root / 'java-runtime.json', runtime)
     jar, compile_command = replay.compile_harness(root, java, sources, jars, android)
     commands = {'compile': compile_command}
 
@@ -72,6 +79,7 @@ def run(args):
 
     calibration = corpus('calibration')
     observed = observe(calibration, 'calibration')
+    replay.verify_bound_files({'files': bindings})
     config = select_local_policy.select(calibration, observed, bindings)
     replay.write_json(root / 'selected-policy.json', config)
     holdout = corpus('holdout')
@@ -87,8 +95,7 @@ def run(args):
                 observation['boundaryChangedBeyondInsertedSpace'], 'NAMED_TARGET_AND_REPLACEMENT')
     named_report['allLanguagesPass'] = all(v['pass'] for v in named_report['languages'].values())
     replay.require(named_report['allLanguagesPass'], 'NAMED_ACCEPTANCE_FAILED')
-    for key, sha in bindings.items():
-        replay.require(replay.sha256(Path(key) if Path(key).is_absolute() else replay.REPO / key) == sha, 'SOURCE_DRIFT')
+    replay.verify_bound_files({'files': bindings})
     replay.write_json(root / 'holdout-report.json', report)
     replay.write_json(root / 'named-report.json', named_report)
     replay.write_json(root / 'receipt.json', {'scope': 'finite-common-confusion-qualification',
