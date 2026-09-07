@@ -98,19 +98,14 @@ internal class ComposingQaFixture(context: Context, mode: String) {
         publish()
     }
 
-    private var actionSerial = 0
-
-    /** A visible action marker lets the instrumentation process await the real click delivery. */
     private fun button(id: Int, label: Int, action: () -> Unit): Button = Button(editor.context).apply {
         this.id = id
-        contentDescription = "qa-action:0"
         setText(label)
         textSize = 11f
         minWidth = 0
         minimumWidth = 0
         setOnClickListener {
             action()
-            contentDescription = "qa-action:${++actionSerial}"
             editor.requestFocus()
             editor.context.getSystemService(InputMethodManager::class.java).showSoftInput(editor, 0)
             publish()

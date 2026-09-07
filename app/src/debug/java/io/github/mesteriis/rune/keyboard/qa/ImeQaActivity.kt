@@ -23,7 +23,6 @@ import io.github.mesteriis.rune.keyboard.R
 @SuppressLint("SetTextI18n")
 class ImeQaActivity : Activity() {
     private lateinit var plainText: EditText
-    private var actionSerial = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -207,16 +206,11 @@ class ImeQaActivity : Activity() {
         }
     }
 
-    /** Publishes a monotonically changing marker so cross-process UI tests can await the click. */
     private fun actionButton(id: Int, textResource: Int, action: () -> Unit): Button =
         Button(this).apply {
             this.id = id
-            contentDescription = "qa-action:0"
             setText(textResource)
-            setOnClickListener {
-                action()
-                contentDescription = "qa-action:${++actionSerial}"
-            }
+            setOnClickListener { action() }
         }
 
     private fun seed(

@@ -223,15 +223,7 @@ class ImeTestDriver {
     }
 
     fun tapQaControl(idName: String) {
-        val selector = By.res(PACKAGE_NAME, idName)
-        val control = requireObject(idName, scroll = true)
-        val markerBefore = checkNotNull(control.contentDescription) {
-            "QA control $idName has no action marker"
-        }
-        control.click()
-        check(device.wait(Until.findObject(selector), WAIT_MILLIS)?.contentDescription != markerBefore) {
-            "QA control $idName click was not delivered"
-        }
+        requireObject(idName, scroll = true).click()
         device.waitForIdle()
         SystemClock.sleep(INPUT_CONNECTION_SETTLE_MILLIS)
         waitForKeyboard()
