@@ -67,6 +67,9 @@ class MechanicalProtectedFormsInstrumentedTest : ImeTestBase() {
             driver.awaitFieldText(FIELD, unchanged) // No early fallback commit while the key is held.
             check(!bounds.isEmpty) { "Alternate has no visible bounds" }
             touch = driver.moveTouch(touch, bounds.exactCenterX(), bounds.exactCenterY())
+            // Input injection acknowledges delivery before the IME's next frame applies the
+            // highlight. Preserve the held pointer through that frame before the real release.
+            SystemClock.sleep(32)
             driver.releaseTouch(touch)
             released = true
         } finally {
