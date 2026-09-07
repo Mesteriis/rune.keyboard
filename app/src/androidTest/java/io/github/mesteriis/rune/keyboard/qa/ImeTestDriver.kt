@@ -223,6 +223,10 @@ class ImeTestDriver {
     }
 
     fun tapQaControl(idName: String) {
+        // Seed controls establish a fresh editor baseline. On the default AVD the expanded
+        // IME covers their click point even while accessibility still exposes the button.
+        // Composing controls exercise a live session and must keep that session attached.
+        if (idName.startsWith("qa_seed_")) prepareQaForScroll()
         requireObject(idName, scroll = true).click()
         device.waitForIdle()
         SystemClock.sleep(INPUT_CONNECTION_SETTLE_MILLIS)

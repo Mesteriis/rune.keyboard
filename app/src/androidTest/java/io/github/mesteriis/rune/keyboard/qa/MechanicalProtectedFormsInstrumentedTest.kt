@@ -60,7 +60,11 @@ class MechanicalProtectedFormsInstrumentedTest : ImeTestBase() {
     }
 
     private fun alternate(key: String, symbol: String, unchanged: String) {
-        var touch = driver.touchDown(driver.keyByText(key))
+        // The standard AVD can reserve a bottom home-gesture area without drawing a nav bar.
+        // Start inside the upper part of the actual key, as the language-swipe helper does.
+        val keyBounds = driver.keyByText(key).visibleBounds
+        val downBounds = Rect(keyBounds).apply { bottom = minOf(bottom, top + 8) }
+        var touch = driver.touchDown(downBounds)
         var released = false
         try {
             val bounds = awaitAlternateBounds(symbol)

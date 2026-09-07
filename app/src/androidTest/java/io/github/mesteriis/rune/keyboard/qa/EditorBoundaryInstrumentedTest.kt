@@ -103,6 +103,7 @@ class EditorBoundaryInstrumentedTest : ImeTestBase() {
     @Test
     fun cyrillicSurrogateAndComplexGraphemesAreAtomic() {
         driver.tapQaControl("qa_seed_unicode")
+        driver.awaitFieldText("qa_plain_text", "Привет😀")
         driver.tapDelete()
         driver.awaitFieldText("qa_plain_text", "Привет")
 
@@ -111,6 +112,7 @@ class EditorBoundaryInstrumentedTest : ImeTestBase() {
         driver.awaitFieldText("qa_plain_text", "Приветя")
 
         driver.tapQaControl("qa_seed_graphemes")
+        driver.awaitFieldText("qa_plain_text", "xе́1️⃣🇺🇦👍🏽🧑🏽‍💻👩‍❤️‍💋‍👨👨‍👩‍👧‍👦")
         val expectedAfterDeletes = listOf(
             "xе́1️⃣🇺🇦👍🏽🧑🏽‍💻👩‍❤️‍💋‍👨",
             "xе́1️⃣🇺🇦👍🏽🧑🏽‍💻",
