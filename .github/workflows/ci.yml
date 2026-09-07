@@ -163,10 +163,6 @@ jobs:
           disk-size: ${{ matrix.disk-size }}
           disable-animations: true
           emulator-options: -no-window -gpu ${{ matrix.gpu-mode }} ${{ matrix.emulator-features }} -noaudio -no-boot-anim -no-snapshot-save
-          pre-emulator-launch-script: |
-            tools/ci/install-adb-wrapper
-            ./gradlew assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest
-            ./gradlew --stop
           script: |
             set +e
             diagnose_failure() {
@@ -190,6 +186,7 @@ jobs:
                 exit "$status"
               fi
             }
+            run_step 'assemble Android test APKs' ./gradlew --no-daemon assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest
             run_step 'install debug APK' ./gradlew --no-daemon installDebug
             mkdir -p app/build/ci-device
             adb logcat -v threadtime > app/build/ci-device/logcat.txt 2>&1 &
