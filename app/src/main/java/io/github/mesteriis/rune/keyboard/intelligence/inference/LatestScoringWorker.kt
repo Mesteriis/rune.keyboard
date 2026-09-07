@@ -52,6 +52,7 @@ class LatestScoringWorker internal constructor(
     private var preparationSupported = true
     private var preparing: AtomicBoolean? = null
     private var preparationWindow: PreparationWindow? = null
+    private var invalidationEpoch = Any()
     private var stopped = false
     private var bound = true
     private var unloadRequested = false
@@ -99,6 +100,7 @@ class LatestScoringWorker internal constructor(
         // No main/Binder wait for scoring, watchdog or native teardown.
     }
     private fun invalidateLocked() {
+        invalidationEpoch = Any()
         prepareRequested = false
         preparationWindow = null
         preparing?.let { flag ->
@@ -185,12 +187,13 @@ class LatestScoringWorker internal constructor(
     /** No Work is captured here: cancellation/replacement can release pending input during load. */
     private fun prepare() {
         val flag = AtomicBoolean()
-        synchronized(monitor) {
+        val epoch = synchronized(monitor) {
             val admission = admitted()
             if (stopped || !bound || unloadRequested || !admission.admitted) return
             preparing = flag; unloaded = false
             preparationWindow = PreparationWindow(admission.state.generation, admission.state.elapsedMillis)
             startOperation(Operation(admission.state.generation, admission.state.elapsedMillis, flag))
+            invalidationEpoch
         }
         var result: ModelPreparation = ModelPreparation.Failure(ScoringCode.INTERNAL)
         try {
@@ -208,7 +211,10 @@ class LatestScoringWorker internal constructor(
                 if (result is ModelPreparation.Failure || flag.get()) {
                     // Never retry a failed load for the same queued word. Another actual
                     // request/bind is required; cancellation/cleanup still receive full accounting.
-                    val failed = pending; pending = null
+                    // Invalidation already retired the old queued word. A word admitted after
+                    // rebind belongs to the next preparation, even if this load returns late.
+                    val failed = pending?.takeIf { epoch === invalidationEpoch }
+                    if (failed != null) pending = null
                     val code = if (flag.get()) ScoringCode.CANCELLED else (result as ModelPreparation.Failure).code
                     failed?.let { reject(it, code) }
                     unloadRequested = true

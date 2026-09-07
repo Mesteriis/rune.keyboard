@@ -64,6 +64,23 @@ class ModelPreparationWorkerTest {
         }
     }
 
+    @Test fun lateCancelledPreparationCannotRejectAWordSubmittedAfterRebind() = Fixture().use { f ->
+        f.worker.onBind(); f.engine.entered.awaitDone()
+        val old = f.submit(1)
+        f.worker.onUnbind(); old.awaitDone()
+        f.worker.onBind()
+        val fresh = f.submit(2)
+        // The old load returns only after a word from the next binding is queued.
+        f.engine.release.countDown(); fresh.awaitDone()
+        val reply = f.replies.poll(3, TimeUnit.SECONDS)
+        assertNotNull(reply)
+        assertEquals(2L, reply!!.token.requestId)
+        assertEquals(ScoringCode.OK, reply.code)
+        assertEquals(2, f.engine.preparations.get())
+        assertEquals(1, f.engine.scores.get())
+        assertTrue(f.replies.isEmpty())
+    }
+
     @Test fun firstScoreDoesNotRestartTheThreeSecondPreparationDeadline() = Fixture().use { f ->
         f.worker.onBind(); f.engine.entered.awaitDone()
         f.clock.elapsed = 2000; f.clock.cpu = 600
