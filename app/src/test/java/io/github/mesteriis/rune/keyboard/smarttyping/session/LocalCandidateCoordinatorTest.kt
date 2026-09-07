@@ -484,7 +484,7 @@ class LocalCandidateCoordinatorTest {
     @Test fun `hidden automatic branches request only their qualified local or model work`() {
         for (mode in AutocorrectionMode.entries) for (strip in listOf(false, true)) {
             for (deterministic in listOf(false, true)) for (model in listOf(false, true)) {
-                Harness(withModel = true, qualified = true).use { h ->
+                Harness(withModel = true, modelOnly = true).use { h ->
                     h.owner = h.owner.copy(deterministicAutoReplaceQualified = deterministic,
                         modelAutoReplaceQualified = model)
                     h.configure(mode, strip)
@@ -550,7 +550,7 @@ class LocalCandidateCoordinatorTest {
     }
 
     @Test fun `hidden model branch accepts ready result without rendering or scheduling at boundary`() {
-        Harness(withModel = true, qualified = true).use { h ->
+        Harness(withModel = true, modelOnly = true).use { h ->
             h.owner = h.owner.copy(modelAutoReplaceQualified = true)
             h.configure(AutocorrectionMode.HIGH_CONFIDENCE, false)
             h.type("helos"); h.deliver(); h.pause.fire()
@@ -1006,9 +1006,61 @@ class LocalCandidateCoordinatorTest {
             input.token.candidateIds.map { NumericScore(it, if (it == winner) -1.0 else -10.0, 1) }))
     }
 
+    @Test fun `current local confusion bypasses model pause and fast Space keeps exact Undo`() {
+        Harness(withModel = true, currentQualification = true).use { h ->
+            h.lexicon.validWords += "the"
+            h.owner = h.owner.copy(contextualPunctuationEnabled = true, contextualModelReady = true)
+            h.type("teh"); h.deliver()
+            assertEquals(listOf("teh", "the"), h.labels())
+            assertNull(h.pause.task)
+            h.space()
+            assertEquals("the ", h.controller.state.contextText)
+            assertTrue(h.model.requests.isEmpty())
+            h.coordinator.edit { h.controller.deletePrevious(h.execute) }
+            assertEquals("teh", h.controller.state.contextText)
+            assertTrue(h.controller.state.originalSelected)
+        }
+    }
+
+    @Test fun `short valid words do not schedule contextual model either`() {
+        Harness(withModel = true).use { h ->
+            h.owner = h.owner.copy(contextualPunctuationEnabled = true, contextualModelReady = true)
+            h.lexicon.validWords += listOf("hello", "go")
+            h.type("hello"); h.deliver(); h.type(" "); h.type("go"); h.deliver()
+            assertNull(h.pause.task); h.pause.fire()
+            assertTrue(h.model.requests.isEmpty())
+        }
+    }
+
+    @Test fun `common confusion obeys coordinator OFF suggestions and owner invalidation gates`() {
+        for (mode in AutocorrectionMode.entries) {
+            Harness(withModel = true, currentQualification = true).use { h ->
+                h.lexicon.validWords += "the"; h.configure(mode, true)
+                h.type("teh")
+                if (mode != AutocorrectionMode.OFF) h.deliver()
+                assertEquals(if (mode == AutocorrectionMode.OFF) listOf("teh") else listOf("teh", "the"), h.labels())
+                h.space()
+                assertEquals(if (mode == AutocorrectionMode.HIGH_CONFIDENCE) "the " else "teh ", h.controller.state.contextText)
+                assertTrue(h.model.requests.isEmpty())
+            }
+        }
+        for (change in listOf<(CandidateOwnerState) -> CandidateOwnerState>(
+            { it.copy(editorAllowsSmartTyping = false) }, { it.copy(inputViewActive = false) },
+            { it.copy(hasSelection = true) }, { it.copy(language = KeyboardLanguage.RUSSIAN) },
+            { it.copy(layer = KeyboardLayer.SYMBOLS) })) {
+            Harness(withModel = true, currentQualification = true).use { h ->
+                h.lexicon.validWords += "the"; h.type("teh"); h.deliver()
+                h.owner = change(h.owner); h.coordinator.invalidate(); h.space()
+                assertEquals("teh ", h.controller.state.contextText)
+                assertNull(h.controller.state.lastAutoEdit)
+                assertTrue(h.model.requests.isEmpty())
+            }
+        }
+    }
+
     private class Harness(ready: Boolean = true, withModel: Boolean = false, qualified: Boolean = false,
-        modelOnly: Boolean = false) : AutoCloseable {
-        val controller = TypingSessionController(jvmGraphemes, SpellingQualification { _, model -> qualified || modelOnly && model })
+        modelOnly: Boolean = false, currentQualification: Boolean = false) : AutoCloseable {
+        val controller = TypingSessionController(jvmGraphemes, if (currentQualification) SpellingQualification.CURRENT else SpellingQualification { _, model -> qualified || modelOnly && model == io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingSource.MODEL })
         val lexicon = FixtureLexicon()
         var ready = ready
         var routeRequests = 0

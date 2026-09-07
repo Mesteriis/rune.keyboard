@@ -249,8 +249,8 @@ class CorrectionBoundaryTest {
 
     @Test fun `current 95 percent qualification admits only a ready model decision`() {
         for (language in KeyboardLanguage.entries) {
-            assertFalse(SpellingQualification.CURRENT.allows(language, false))
-            assertTrue(SpellingQualification.CURRENT.allows(language, true))
+            assertFalse(SpellingQualification.CURRENT.allowsGeneralLocal(language))
+            assertTrue(SpellingQualification.CURRENT.allowsModel(language))
             val f = Fixture(qualified = null)
             f.keyboard = KeyboardState(language)
             f.raw("helllo"); f.publish("hello")
@@ -290,15 +290,11 @@ class CorrectionBoundaryTest {
         }
     }
 
-    @Test fun `missing model uses ready deterministic decision and late callback cannot rewrite boundary`() {
+    @Test fun `qualified deterministic decision commits without requesting the model`() {
         val f = Fixture(); f.raw("helllo"); f.publish("hello")
-        val pending = f.controller.beginModelRanking(1)!!
+        assertNull(f.controller.beginModelRanking(1))
         f.type(" ")
         assertEquals("hello ", f.document)
-        f.calls.clear()
-        assertFalse(f.controller.acceptModelRanking(ScoringReply(pending.token, ScoringCode.OK, 0,
-            listOf(NumericScore(0, -100.0, 1), NumericScore(1, -1.0, 1)))))
-        assertTrue(f.calls.isEmpty()); assertEquals("hello ", f.document)
         val absent = Fixture(); absent.raw("helllo"); absent.type(" ")
         assertEquals("helllo ", absent.document)
     }
@@ -311,7 +307,7 @@ class CorrectionBoundaryTest {
         assertTrue(ready.controller.acceptModelRanking(ScoringReply(input.token, ScoringCode.OK, 0,
             listOf(NumericScore(0, -20.0, 1), NumericScore(1, -1.0, 1)))))
         ready.type(" "); assertEquals("hello ", ready.document)
-        val veto = Fixture(); veto.raw("helllo"); veto.publish("hello")
+        val veto = Fixture(modelOnly = true); veto.raw("helllo"); veto.publish("hello")
         val losing = veto.controller.beginModelRanking(1)!!
         veto.controller.acceptModelRanking(ScoringReply(losing.token, ScoringCode.OK, 0,
             listOf(NumericScore(0, -1.0, 1), NumericScore(1, -100.0, 1))))
@@ -465,9 +461,82 @@ class CorrectionBoundaryTest {
         f.undo(); assertEquals("outside@helllo helllo", f.document)
     }
 
+    @Test fun `all explicit confusions correct on fast Space with exact Undo and retained Original`() {
+        for ((language, original, target) in commonConfusions) {
+            val f = Fixture(qualified = null); f.keyboard = KeyboardState(language)
+            f.raw(original); f.publishCommon(target)
+            assertEquals(listOf(original, target), f.controller.candidateViewState.candidates.map { it.text })
+            assertFalse(f.controller.canRequestModelRanking)
+            assertNull(f.controller.beginModelRanking(1))
+            f.type(" "); assertEquals("$target ", f.document)
+            f.undo(); assertEquals(original, f.document)
+            assertTrue(f.controller.state.originalSelected)
+            f.type(" "); assertEquals("$original ", f.document)
+        }
+    }
+
+    @Test fun `explicit confusions stay suggestions outside automatic mode`() {
+        for (mode in listOf(AutocorrectionMode.OFF, AutocorrectionMode.SUGGESTIONS)) {
+            val f = Fixture(qualified = null); f.mode = mode
+            f.raw("teh"); f.publishCommon("the"); f.type(" ")
+            assertEquals("teh ", f.document); assertNull(f.controller.state.lastAutoEdit)
+        }
+    }
+
+    @Test fun `explicit confusions honor ownership language editor and incomplete search vetoes`() {
+        for (completion in listOf(CandidateCompletion.STATES_EXHAUSTED, CandidateCompletion.VERIFIED_EXHAUSTED)) {
+            val f = Fixture(qualified = null); f.raw("teh"); f.publishCommon("the", completion)
+            assertEquals(listOf("teh", "the"), f.controller.candidateViewState.candidates.map { it.text })
+            f.type(" "); assertEquals("teh ", f.document)
+        }
+        for (prefix in listOf("@", "/", ".", "x=")) {
+            val f = Fixture(qualified = null); f.raw(prefix); f.raw("teh"); f.publishCommon("the")
+            f.type(" "); assertEquals(prefix + "teh ", f.document)
+        }
+        for (change in listOf<(Fixture) -> Unit>(
+            { it.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN) },
+            { it.policy = it.policy.copy(inputPolicy = InputPolicy.SENSITIVE) },
+            { it.controller.clearCandidates() })) {
+            val f = Fixture(qualified = null); f.raw("teh"); f.publishCommon("the"); change(f)
+            f.type(" "); assertFalse(f.document.contains("the")); assertNull(f.controller.state.lastAutoEdit)
+        }
+        val f = Fixture(qualified = null); f.raw("teh"); f.publishCommon("the")
+        f.controller.endSession(); f.type(" "); assertEquals("teh", f.document)
+    }
+
+    @Test fun `one and two codepoint words never request spelling model`() {
+        for ((original, target) in listOf("a" to "at", "ba" to "bat")) {
+            val f = Fixture(qualified = null); f.raw(original); f.publish(target)
+            assertFalse(f.controller.canRequestModelRanking)
+            assertNull(f.controller.beginModelRanking(1))
+        }
+    }
+
+    @Test fun `stale model reply cannot overwrite a newly resolved local decision`() {
+        val f = Fixture(qualified = null); f.raw("helllo"); f.publish("hello")
+        val input = f.controller.beginModelRanking(1)!!
+        f.type(" "); f.raw("teh"); f.publishCommon("the")
+        assertFalse(f.controller.acceptModelRanking(winningReply(input)))
+        f.type(" "); assertEquals("helllo the ", f.document)
+    }
+
+    private val commonConfusions = listOf(
+        Triple(KeyboardLanguage.RUSSIAN, "автокрекция", "автокоррекция"),
+        Triple(KeyboardLanguage.RUSSIAN, "арфография", "орфография"),
+        Triple(KeyboardLanguage.RUSSIAN, "сообшение", "сообщение"),
+        Triple(KeyboardLanguage.RUSSIAN, "реалбно", "реально"),
+        Triple(KeyboardLanguage.RUSSIAN, "мододец", "молодец"),
+        Triple(KeyboardLanguage.RUSSIAN, "шоржусь", "горжусь"),
+        Triple(KeyboardLanguage.ENGLISH, "teh", "the"),
+        Triple(KeyboardLanguage.ENGLISH, "recieve", "receive"),
+        Triple(KeyboardLanguage.ENGLISH, "adress", "address"),
+        Triple(KeyboardLanguage.SPANISH, "mensage", "mensaje"),
+        Triple(KeyboardLanguage.SPANISH, "correcion", "corrección"),
+    )
+
     private class Fixture(qualified: Boolean? = true, modelOnly: Boolean = false, initial: String = "") {
         val controller = TypingSessionController(jvmGraphemes, qualified?.let { allowed ->
-            SpellingQualification { _, model -> allowed && (!modelOnly || model) }
+            SpellingQualification { _, model -> allowed && (!modelOnly || model == SpellingSource.MODEL) }
         } ?: SpellingQualification.CURRENT)
             .apply { startSession(EditorContext.from(1, 0), initial.length, initial.length) }
         var document = initial
@@ -545,6 +614,18 @@ class CorrectionBoundaryTest {
                 kotlin.math.abs(word.length - request.token.length), CasePattern.analyze(request.token))
             assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
                 CandidateGeneration(request.token, listOf(item), completion, false, null, 1, 1))))
+        }
+        fun publishCommon(target: String, completion: CandidateCompletion = CandidateCompletion.COMPLETE) {
+            val request = controller.beginCandidateRequest(++requestId, keyboard.language)!!
+            val lexicon = object : CandidateLexicon {
+                override fun exact(language: KeyboardLanguage, key: String, control: CandidateSearchControl) =
+                    if (language == keyboard.language && key == target) ExactMembership.PRESENT else ExactMembership.ABSENT
+                override fun scan(language: KeyboardLanguage, key: String, unitRadius: Int,
+                    control: CandidateSearchControl, visitor: CandidateVisitor) = LexiconScanStatus.COMPLETE
+            }
+            val result = CandidateGenerator(lexicon).generate(request.token, keyboard.language)
+            assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision,
+                request.requestId, result.copy(completion = completion))))
         }
         fun publishCanonical(word: String, unambiguous: Boolean, eligible: Boolean = unambiguous) {
             val request = controller.beginCandidateRequest(++requestId, keyboard.language)!!

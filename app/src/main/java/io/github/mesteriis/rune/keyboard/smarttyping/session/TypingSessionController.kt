@@ -18,6 +18,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CalibratedSpellingPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.RankingModelScore
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CalibratedRanking
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.CommonConfusions
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.ProtectedTokenPolicy
@@ -91,9 +92,15 @@ class TypingSessionController internal constructor(
     constructor() : this(IcuGraphemeSegmenter)
     internal constructor(trace: SmartTypingTracer) : this(IcuGraphemeSegmenter, SpellingQualification.CURRENT, trace)
 
-    /** Content-free availability; preferences and model readiness do not grant qualification. */
+    /** Legacy replay metadata reports general ranking only; finite exceptions are separate. */
     internal fun isSpellingQualified(language: KeyboardLanguage, modelAssisted: Boolean): Boolean =
-        spellingQualification.allows(language, modelAssisted)
+        if (modelAssisted) spellingQualification.allowsModel(language) else spellingQualification.allowsGeneralLocal(language)
+
+    /** Retrieval availability only: the selected source still needs its own boundary admission. */
+    internal fun isLocalSpellingQualified(language: KeyboardLanguage): Boolean =
+        spellingQualification.allowsCommonConfusion(language) || spellingQualification.allowsGeneralLocal(language)
+
+    internal fun isModelSpellingQualified(language: KeyboardLanguage): Boolean = spellingQualification.allowsModel(language)
 
     var state = TypingSessionState()
         private set
@@ -188,7 +195,11 @@ class TypingSessionController internal constructor(
         }
         val alternatives = generation.alternatives.toList()
         val snapshot = generation.copy(alternatives = alternatives)
-        val ranking = if (snapshot.isCanonicalCaseCorrection()) {
+        val commonId = CommonConfusions.preferredId(snapshot, stamp.language)
+        val ranking = if (commonId > 0) {
+            CalibratedRanking(listOf(commonId) + alternatives.indices.map { it + 1 }.filter { it != commonId },
+                preferredId = commonId, usedModel = false)
+        } else if (snapshot.isCanonicalCaseCorrection()) {
             CalibratedRanking(listOf(1), preferredId = 1, usedModel = false)
         } else trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
             CalibratedSpellingPolicy.rank(snapshot, stamp.language)
@@ -216,7 +227,8 @@ class TypingSessionController internal constructor(
     /** Snapshot only after consumer eligibility checks. Full candidate set; Rune-owned prefix only. */
     val canRequestModelRanking: Boolean
         get() = canRequestCandidates && candidateSelection?.let {
-            !it.modelRanked && !it.generation.isValidWord && it.alternatives.isNotEmpty() &&
+            it.original.codePointCount(0, it.original.length) > 2 && !isEligibleLocalReplacement(it) &&
+                !it.modelRanked && !it.generation.isValidWord && it.alternatives.isNotEmpty() &&
                 state.composing?.typedWord == it.original
         } == true
 
@@ -286,7 +298,7 @@ class TypingSessionController internal constructor(
             previous.text.length < MAX_COMPOSING_UTF16 &&
             (tokenStart > 0 || owned.startsAtTokenBoundary) && owned.text.substring(tokenStart) == previous.typedWord &&
             !ranking.selection.generation.prohibitsAutoReplace &&
-            spellingQualification.allows(ranking.selection.language, true)) {
+            spellingQualification.allowsModel(ranking.selection.language)) {
             SpaceCorrectionStamp(ranking, previous, composingStart, context!!.text)
         } else null
         val result = action()
@@ -363,7 +375,8 @@ class TypingSessionController internal constructor(
         get() {
             val selection = candidateSelection ?: return false
             val composing = state.composing ?: return false
-            return canRequestCandidates && selection.generation.isValidWord &&
+            return composing.typedWord.codePointCount(0, composing.typedWord.length) > 2 &&
+                canRequestCandidates && selection.generation.isValidWord &&
                 selection.alternatives.isEmpty() && contextualCompletedSelection !== selection &&
                 composing.leadingBoundary == " " &&
                 contextualInput(selection.language) != null
@@ -861,6 +874,14 @@ class TypingSessionController internal constructor(
         return ComposingSegment(text.substring(0, start), text.substring(start))
     }
 
+    private fun isEligibleLocalReplacement(selection: CandidateSelection): Boolean {
+        val ranking = selection.ranking ?: return false
+        if (ranking.usedModel || ranking.preferredId <= 0 || selection.generation.prohibitsAutoReplace) return false
+        return if (CommonConfusions.preferredId(selection.generation, selection.language) == ranking.preferredId)
+            spellingQualification.allowsCommonConfusion(selection.language)
+        else spellingQualification.allowsGeneralLocal(selection.language)
+    }
+
     /** Latest accepted numeric decision only. No scoring, waiting, editor reads or text reconstruction. */
     private fun applyBoundaryCorrection(boundary: String, policy: MechanicalPunctuationPolicy,
         keyboard: KeyboardState, mode: AutocorrectionMode, execute: (TypingEdit) -> Boolean): TypingTextResult {
@@ -880,7 +901,8 @@ class TypingSessionController internal constructor(
             val candidate = selection.generation.alternatives.single()
             candidate.canonicalCaseUnambiguous && candidate.canonicalCaseAutoEligible
         } else !selection.generation.prohibitsAutoReplace &&
-            spellingQualification.allows(selection.language, ranking.usedModel)
+            if (ranking.usedModel) spellingQualification.allowsModel(selection.language)
+            else isEligibleLocalReplacement(selection)
         if (selection.language != keyboard.language || ranking.preferredId <= 0 ||
             !automaticEligible) {
             return boundaryBypass(DiagnosticReason.POLICY_REJECTED)
