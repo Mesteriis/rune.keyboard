@@ -290,6 +290,8 @@ class ScoringLifecycleInstrumentedTest {
             // answer first; pressure injected then would precede the scoring bind and its
             // legitimate rearm. Establish the lifecycle under test before sending controls.
             scoringBinding.binder()
+            // A cached Binder may be delivered before Android dispatches onRebind.
+            assertHealthy(command(LifecycleModelInferenceService.AWAIT_SCORING_BOUND))
             command(LifecycleModelInferenceService.RELEASE)
             await { it.active == 0 }
         }
@@ -353,7 +355,14 @@ class ScoringLifecycleInstrumentedTest {
                     command(LifecycleModelInferenceService.INVALIDATE)
                     await { it.active == 0 }
                 }
-            } finally { scoringBinding.close(); controlBinding.close() }
+            } finally {
+                try {
+                    scoringBinding.close()
+                    // Keep control alive until the real unbind edge has completed, so the
+                    // next Fixture cannot observe this fixture's still-bound lifecycle.
+                    if (!killed) assertHealthy(command(LifecycleModelInferenceService.AWAIT_SCORING_UNBOUND))
+                } finally { controlBinding.close() }
+            }
         }
     }
 
