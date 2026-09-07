@@ -133,6 +133,7 @@ class RuneInputMethodService : InputMethodService() {
                 view.setOnActionListener(::handleAction)
                 view.setOnCandidateSelectedListener(::handleCandidateSelection)
                 renderKeyboard()
+                view.requestApplyInsets()
             }
         }
     }
@@ -175,6 +176,12 @@ class RuneInputMethodService : InputMethodService() {
         if (!editorContext.supportsSmartTyping) typingSession.endSession()
         state = withAutomaticCapitalization(state)
         renderKeyboard()
+        keyboardView?.requestApplyInsets()
+    }
+
+    override fun onWindowShown() {
+        super.onWindowShown()
+        keyboardView?.requestApplyInsets()
     }
 
     override fun onUpdateSelection(
@@ -242,6 +249,7 @@ class RuneInputMethodService : InputMethodService() {
         typingSession.invalidate(::executeTypingEdit)
         super.onConfigurationChanged(newConfig)
         if (wasInputViewActive) recreateInputView()
+        keyboardView?.requestApplyInsets()
     }
 
     private fun handleAction(action: KeyboardAction) {
@@ -471,6 +479,7 @@ class RuneInputMethodService : InputMethodService() {
         RuneTrace.section("Rune#recreateInputView") {
             keyboardView?.cancelActiveTouches()
             setInputView(onCreateInputView())
+            keyboardView?.requestApplyInsets()
         }
     }
 
