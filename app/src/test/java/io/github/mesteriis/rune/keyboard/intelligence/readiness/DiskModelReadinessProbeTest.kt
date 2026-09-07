@@ -55,6 +55,10 @@ class DiskModelReadinessProbeTest {
             File(version, "model-manifest.json").writeText("""{"schemaVersion":1,"modelId":"fixture","version":"1.0.0","displayName":"Fixture","fileName":"fixture.gguf","url":"https://github.com/Mesteriis/rune.keyboard/releases/download/fixture/fixture.gguf","sha256":"${"0".repeat(64)}","sizeBytes":1,"runtimeApi":1,"minimumRuneVersionCode":2,"ggufVersion":3,"architecture":"qwen3","fileType":15}""")
         }
         val probe = DiskModelReadinessProbe { root }
+        assertEquals(ModelReadinessHint.BROKEN, probe.read { false })
+        val manifest = File(version, "model-manifest.json")
+        manifest.writeText(manifest.readText().replace("0".repeat(64),
+            "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4"))
         assertEquals(ModelReadinessHint.READY, probe.read { false })
         gate.withLock { File(version, "fixture.gguf").delete() }
         assertEquals(ModelReadinessHint.BROKEN, probe.read { false })

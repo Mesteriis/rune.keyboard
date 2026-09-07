@@ -90,7 +90,7 @@ data class KeyboardSettings(
     val doubleSpacePeriod: Boolean,
     val autocorrectionMode: AutocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE,
     val mechanicalPunctuation: Boolean = true,
-    val contextualPunctuationMode: ContextualPunctuationMode = ContextualPunctuationMode.SUGGESTIONS,
+    val contextualPunctuationMode: ContextualPunctuationMode = ContextualPunctuationMode.OFF,
     val candidateStrip: Boolean = true,
 ) {
     init {

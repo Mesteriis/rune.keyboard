@@ -177,6 +177,7 @@ def inspect(sources, variant=None):
                     if re.search(r'\b(?:java\.io|java\.nio\.file|File|RandomAccessFile)\b',text): errors.append(f'{area}: {p}: filesystem')
                 if area == 'intelligence.storage' and not (package.startswith(BASE+'intelligence.storage') or package == BASE+'intelligence.model' and name in PURE_MODEL): errors.append(f'{area}: {p}: non-neutral storage dependency')
                 if area == 'intelligence.readiness' and not (package.startswith((BASE+'intelligence.readiness', BASE+'intelligence.storage')) or
+                        package == BASE+'intelligence.ipc' and name == 'ScoringContract.kt' or
                         package == BASE+'intelligence.client' and name in ('ModelReadinessSource.kt', 'ModelDemand.kt') or
                         package == BASE+'intelligence.model' and name in PURE_MODEL):
                     errors.append(f'{area}: {p}: readiness must stay payload-free and read-only')

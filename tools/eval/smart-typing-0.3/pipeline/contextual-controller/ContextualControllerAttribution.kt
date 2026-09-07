@@ -85,7 +85,8 @@ internal class AttributionSession(
     private val cases: CanonicalCaseLexicon,
     val routes: PrevalidatedRoutes,
 ) : AutoCloseable {
-    val settings = KeyboardSettings.DEFAULT
+    // This harness evaluates the explicit opt-in feature; new installs default to OFF in 0.3.1.
+    val settings = KeyboardSettings.DEFAULT.copy(contextualPunctuationMode = ContextualPunctuationMode.SUGGESTIONS)
     val context = EditorContext.from(1, 0)
     val keyboard = KeyboardState(language = language)
     val controller = TypingSessionController(graphemes = hostGraphemes)

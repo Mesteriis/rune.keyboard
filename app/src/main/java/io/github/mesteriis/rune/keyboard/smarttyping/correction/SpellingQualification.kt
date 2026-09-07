@@ -18,10 +18,10 @@ internal fun interface SpellingQualification {
          * independent 99% calibration/holdout qualification. The existing model qualification
          * remains the frozen 95% point-precision policy, independent of local qualification.
          */
-        val CURRENT = SpellingQualification { _, source -> when (source) {
-            SpellingSource.COMMON_CONFUSION -> true
+        val CURRENT = SpellingQualification { language, source -> when (source) {
+            SpellingSource.COMMON_CONFUSION -> QualificationArtifacts.allowsLocal(language, QualificationArtifacts.local())
             SpellingSource.GENERAL_LOCAL -> false
-            SpellingSource.MODEL -> true
+            SpellingSource.MODEL -> ModelRuntimeQualification.CURRENT
         } }
     }
 }

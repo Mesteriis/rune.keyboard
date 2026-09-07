@@ -30,8 +30,8 @@ android {
         applicationId = "io.github.mesteriis.rune.keyboard"
         minSdk = 26
         targetSdk = 37
-        versionCode = 3
-        versionName = "0.3.0"
+        versionCode = 4
+        versionName = "0.3.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // UTP collects failure screenshots/XML before uninstalling the test application.
         testInstrumentationRunnerArguments["additionalTestOutputDir"] =
@@ -216,6 +216,14 @@ val forbiddenRuntimeDependencies = tasks.register<ForbiddenRuntimeDependencyTask
             .sorted()
     })
 }
+
+// Runtime/model changes cannot silently retain a previously qualified build identity.
+val qualificationArtifacts = tasks.register<Exec>("qualificationArtifacts") {
+    group = "verification"
+    workingDir(rootProject.projectDir)
+    commandLine("python3", rootProject.file("tools/qualification_artifacts.py"))
+}
+tasks.named("preBuild").configure { dependsOn(qualificationArtifacts) }
 
 androidComponents {
     onVariants(selector().all()) { variant ->

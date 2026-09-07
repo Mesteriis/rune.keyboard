@@ -23,7 +23,7 @@ class SettingsCodecTest {
         assertTrue(settings.doubleSpacePeriod)
         assertEquals(AutocorrectionMode.HIGH_CONFIDENCE, settings.autocorrectionMode)
         assertTrue(settings.mechanicalPunctuation)
-        assertEquals(ContextualPunctuationMode.SUGGESTIONS, settings.contextualPunctuationMode)
+        assertEquals(ContextualPunctuationMode.OFF, settings.contextualPunctuationMode)
         assertTrue(settings.candidateStrip)
         SizeBucket.entries.forEach { bucket ->
             assertEquals(HeightPreset.NORMAL, settings.heightPreset(bucket))
@@ -170,7 +170,7 @@ class SettingsCodecTest {
             assertFalse(result.doubleSpacePeriod)
             assertEquals(AutocorrectionMode.HIGH_CONFIDENCE, result.autocorrectionMode)
             assertTrue(result.mechanicalPunctuation)
-            assertEquals(ContextualPunctuationMode.SUGGESTIONS, result.contextualPunctuationMode)
+            assertEquals(ContextualPunctuationMode.OFF, result.contextualPunctuationMode)
             assertTrue(result.candidateStrip)
         }
     }
@@ -256,7 +256,7 @@ class SettingsCodecTest {
             emptyMap(), GapPreset.NORMAL, false, ThemePreference.SYSTEM, HapticMode.OFF, SoundMode.OFF, true, false)
         assertEquals(AutocorrectionMode.HIGH_CONFIDENCE, settings.autocorrectionMode)
         assertTrue(settings.mechanicalPunctuation && settings.candidateStrip)
-        assertEquals(ContextualPunctuationMode.SUGGESTIONS, settings.contextualPunctuationMode)
+        assertEquals(ContextualPunctuationMode.OFF, settings.contextualPunctuationMode)
         assertFalse(settings.doubleSpacePeriod)
     }
 
