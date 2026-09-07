@@ -18,6 +18,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CalibratedSpellingPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.RankingModelScore
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CalibratedRanking
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.CommonConfusions
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.ProtectedTokenPolicy
@@ -44,6 +45,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticEvent
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticText
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticSource
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticCompletion
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.NoTypingDiagnostics
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnostics
 import java.util.ArrayDeque
@@ -58,11 +61,26 @@ class TypingSessionController internal constructor(
     private val trace: SmartTypingTracer = NoopSmartTypingTracer,
 ) {
     private var diagnostics: TypingDiagnostics = NoTypingDiagnostics
+    private var diagnosticOperationId = 0L
+    private var diagnosticAttempt: DiagnosticEvent? = null
+    private var diagnosticSegmentClosed = true
+    private var diagnosticDecisionStatus: Pair<Long, DiagnosticReason>? = null
     fun setDiagnostics(observer: TypingDiagnostics) {
         closeDiagnosticsAdmission()
         diagnostics = observer
     }
-    fun closeDiagnosticsAdmission() { try { diagnostics.invalidate() } catch (_: Throwable) { } }
+    fun closeDiagnosticsAdmission() {
+        diagnosticSegmentClosed = true
+        try { diagnostics.invalidate() } catch (_: Throwable) { }
+    }
+    /** The service calls after a language/layer invalidation has discarded owned context. */
+    fun reopenDiagnosticsForLetters(eligible: Boolean) {
+        if (!diagnosticSegmentClosed || !eligible || !state.enabled || awaitingEditorSelection ||
+            state.composing != null || context?.text?.isEmpty() != true) return
+        diagnosticSegmentClosed = false
+        try { diagnostics.startSession(state.sessionId, true, true) } catch (_: Throwable) { }
+        diagnose(DiagnosticKind.SESSION, DiagnosticReason.START)
+    }
     /** Called only with an actual Rune command, never an editor read. */
     fun recordInput(input: String) {
         diagnose(DiagnosticKind.INPUT, DiagnosticReason.NONE) { diagnosticText(input = input) }
@@ -70,30 +88,83 @@ class TypingSessionController internal constructor(
 
     private fun diagnose(kind: DiagnosticKind, reason: DiagnosticReason, count: Int = 0,
         selected: Int = -1, model: Boolean = false, session: Long = state.sessionId,
-        revision: Long = state.revision, text: (() -> DiagnosticText)? = { diagnosticText() }) {
-        try { diagnostics.record(DiagnosticEvent(kind, reason, session, revision,
-            count, selected, model), text) } catch (_: Throwable) { }
+        revision: Long = state.revision, source: DiagnosticSource = if (model) DiagnosticSource.MODEL else DiagnosticSource.NONE,
+        completion: DiagnosticCompletion = DiagnosticCompletion.NONE, scoringCode: Int = -1,
+        elapsedMs: Long = 0, requestId: Long = 0,
+        editorAttempt: Boolean = false,
+        text: (() -> DiagnosticText)? = { diagnosticText() }) {
+        val attempt = editorAttempt || (kind in listOf(DiagnosticKind.BOUNDARY, DiagnosticKind.MECHANICAL) && reason == DiagnosticReason.AUTO_REPLACE) ||
+            (kind == DiagnosticKind.MANUAL && reason in listOf(DiagnosticReason.CORRECTION, DiagnosticReason.CONTEXTUAL))
+        val event = DiagnosticEvent(kind, reason, session, revision, count, selected, model,
+            completion, source, scoringCode, elapsedMs, requestId, if (attempt) nextDiagnosticOperation() else 0)
+        if (session == state.sessionId && revision == state.revision) {
+            when {
+                kind == DiagnosticKind.REQUEST && reason in listOf(DiagnosticReason.SCHEDULED, DiagnosticReason.SUBMITTED) ->
+                    diagnosticDecisionStatus = revision to DiagnosticReason.RESULT_NOT_READY
+                kind == DiagnosticKind.REQUEST && reason == DiagnosticReason.SERVICE_REFUSED ->
+                    diagnosticDecisionStatus = revision to DiagnosticReason.SERVICE_REFUSED
+                kind == DiagnosticKind.CANDIDATES && reason == DiagnosticReason.ACCEPTED -> diagnosticDecisionStatus = null
+                kind == DiagnosticKind.RANKING && reason != DiagnosticReason.STALE -> diagnosticDecisionStatus = revision to reason
+            }
+        }
+        if (attempt) diagnosticAttempt = event
+        try { diagnostics.record(event, text) } catch (_: Throwable) { }
+    }
+    private fun nextDiagnosticOperation(): Long = if (diagnosticOperationId < 1_000_000_000) ++diagnosticOperationId else 0
+    private fun scoringFailureReason(code: Int) = when (code) {
+        ScoringCode.OK -> DiagnosticReason.NONE
+        ScoringCode.NO_MODEL, ScoringCode.LOAD_FAILED, ScoringCode.UNAVAILABLE -> DiagnosticReason.SERVICE_REFUSED
+        ScoringCode.CANCELLED -> DiagnosticReason.CANCELLED
+        else -> DiagnosticReason.MODEL_ERROR
+    }
+    internal fun recordScoringReply(reply: ScoringReply, reason: DiagnosticReason = scoringFailureReason(reply.code),
+        contextual: Boolean = false) {
+        diagnose(DiagnosticKind.RANKING, reason, session = reply.token.sessionId, revision = reply.token.revision,
+            source = if (contextual) DiagnosticSource.CONTEXTUAL else DiagnosticSource.MODEL,
+            scoringCode = reply.code, elapsedMs = reply.elapsedMillis, requestId = reply.token.requestId, text = null)
+    }
+    internal fun recordRequest(reason: DiagnosticReason, source: DiagnosticSource,
+        session: Long = state.sessionId, revision: Long = state.revision, requestId: Long = 0) {
+        diagnose(DiagnosticKind.REQUEST, reason, session = session, revision = revision,
+            source = source, requestId = requestId, text = null)
+    }
+    /** Called at the eligible owner's retrieval gate, before any worker/model submission. */
+    internal fun recordProtectedCandidate() {
+        if (!ownsCandidateComposition || !ProtectedTokenPolicy.isProtected(state.composing!!.typedWord)) return
+        diagnose(DiagnosticKind.CANDIDATES, DiagnosticReason.PROTECTED_FORM,
+            source = DiagnosticSource.LOCAL_POLICY, completion = DiagnosticCompletion.PROTECTED, text = null)
     }
     private fun diagnosticText(input: String = "", result: String = "") = DiagnosticText(
         input = input, context = context?.text.orEmpty(), original = state.composing?.typedWord.orEmpty(),
         candidates = candidateSelection?.alternatives?.map { it.text }.orEmpty(), result = result,
     )
-    private fun rankingRejected(reason: DiagnosticReason, origin: ScoringToken? = null, count: Int = 0,
+    private fun rankingRejected(reason: DiagnosticReason, reply: ScoringReply, count: Int = 0,
+        contextual: Boolean = false,
         text: (() -> DiagnosticText)? = if (reason == DiagnosticReason.STALE) null else { { diagnosticText() } }): Boolean {
-        diagnose(DiagnosticKind.RANKING, reason, count, session = origin?.sessionId ?: state.sessionId,
-            revision = origin?.revision ?: state.revision, text = text)
+        diagnose(DiagnosticKind.RANKING, reason, count, session = reply.token.sessionId,
+            revision = reply.token.revision, source = if (contextual) DiagnosticSource.CONTEXTUAL else DiagnosticSource.MODEL,
+            scoringCode = reply.code, elapsedMs = reply.elapsedMillis, requestId = reply.token.requestId, text = text)
         return false
     }
     private fun boundaryBypass(reason: DiagnosticReason): TypingTextResult {
-        diagnose(DiagnosticKind.BOUNDARY, reason)
+        val status = diagnosticDecisionStatus?.takeIf { it.first == state.revision }?.second
+        val outcome = if (reason in listOf(DiagnosticReason.NO_CANDIDATES, DiagnosticReason.NO_RANKING, DiagnosticReason.POLICY_REJECTED) &&
+            status in listOf(DiagnosticReason.RESULT_NOT_READY, DiagnosticReason.ABSTAINED, DiagnosticReason.SERVICE_REFUSED)) status!! else reason
+        diagnose(DiagnosticKind.BOUNDARY, outcome)
         return TypingTextResult.BYPASS
     }
     constructor() : this(IcuGraphemeSegmenter)
     internal constructor(trace: SmartTypingTracer) : this(IcuGraphemeSegmenter, SpellingQualification.CURRENT, trace)
 
-    /** Content-free availability; preferences and model readiness do not grant qualification. */
+    /** Legacy replay metadata reports general ranking only; finite exceptions are separate. */
     internal fun isSpellingQualified(language: KeyboardLanguage, modelAssisted: Boolean): Boolean =
-        spellingQualification.allows(language, modelAssisted)
+        if (modelAssisted) spellingQualification.allowsModel(language) else spellingQualification.allowsGeneralLocal(language)
+
+    /** Retrieval availability only: the selected source still needs its own boundary admission. */
+    internal fun isLocalSpellingQualified(language: KeyboardLanguage): Boolean =
+        spellingQualification.allowsCommonConfusion(language) || spellingQualification.allowsGeneralLocal(language)
+
+    internal fun isModelSpellingQualified(language: KeyboardLanguage): Boolean = spellingQualification.allowsModel(language)
 
     var state = TypingSessionState()
         private set
@@ -145,16 +216,27 @@ class TypingSessionController internal constructor(
         clearCandidates()
         lastCandidateRequestId = requestId
         pendingCandidate = CandidateStamp(state.sessionId, state.revision, requestId, activeLanguage)
+        recordRequest(DiagnosticReason.SUBMITTED, DiagnosticSource.LOCAL_POLICY, requestId = requestId)
         return LocalCandidateRequest(state.sessionId, state.revision, requestId,
             state.composing!!.typedWord, activeLanguage, eligible = true)
     }
 
     /** Service rechecks its policy/language/lifetime first; this owner checks the exact live word. */
     fun acceptCandidates(reply: LocalCandidateReply): Boolean {
-        val stamp = pendingCandidate ?: return false
-        if (stamp.sessionId != reply.sessionId || stamp.revision != reply.revision || stamp.requestId != reply.requestId) return false
+        val stamp = pendingCandidate
+        if (stamp == null || stamp.sessionId != reply.sessionId || stamp.revision != reply.revision || stamp.requestId != reply.requestId) {
+            diagnose(DiagnosticKind.CANDIDATES, DiagnosticReason.STALE, session = reply.sessionId,
+                revision = reply.revision, completion = DiagnosticCompletion.valueOf(reply.generation.completion.name),
+                source = DiagnosticSource.LOCAL_POLICY, requestId = reply.requestId, text = null)
+            return false
+        }
         pendingCandidate = null
         val generation = reply.generation
+        diagnose(DiagnosticKind.CANDIDATES, if (generation.completion == CandidateCompletion.CANCELLED)
+            DiagnosticReason.CANCELLED else DiagnosticReason.NONE, session = reply.sessionId, revision = reply.revision,
+            source = DiagnosticSource.LOCAL_POLICY, completion = DiagnosticCompletion.valueOf(generation.completion.name),
+            elapsedMs = ((System.nanoTime() - stamp.startedAt) / 1_000_000).coerceIn(0, 60_000),
+            requestId = reply.requestId, text = null)
         if (state.sessionId != stamp.sessionId || state.revision != stamp.revision ||
             !canRequestCandidates || generation.original != state.composing?.typedWord ||
             generation.completion == CandidateCompletion.CANCELLED ||
@@ -188,7 +270,11 @@ class TypingSessionController internal constructor(
         }
         val alternatives = generation.alternatives.toList()
         val snapshot = generation.copy(alternatives = alternatives)
-        val ranking = if (snapshot.isCanonicalCaseCorrection()) {
+        val commonId = CommonConfusions.preferredId(snapshot, stamp.language)
+        val ranking = if (commonId > 0) {
+            CalibratedRanking(listOf(commonId) + alternatives.indices.map { it + 1 }.filter { it != commonId },
+                preferredId = commonId, usedModel = false)
+        } else if (snapshot.isCanonicalCaseCorrection()) {
             CalibratedRanking(listOf(1), preferredId = 1, usedModel = false)
         } else trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
             CalibratedSpellingPolicy.rank(snapshot, stamp.language)
@@ -197,13 +283,17 @@ class TypingSessionController internal constructor(
             selectedIndex = (ranking?.preferredId ?: 0) - 1,
             order = ranking?.candidateIds?.map { it - 1 } ?: alternatives.indices.toList(), ranking = ranking)
         diagnose(DiagnosticKind.CANDIDATES, DiagnosticReason.ACCEPTED, alternatives.size,
-            (ranking?.preferredId ?: 0) - 1, ranking?.usedModel == true)
+            (ranking?.preferredId ?: 0) - 1, ranking?.usedModel == true,
+            source = if (snapshot.isCanonicalCaseCorrection()) DiagnosticSource.CANONICAL_CASE else DiagnosticSource.LOCAL_POLICY,
+            completion = DiagnosticCompletion.valueOf(generation.completion.name), requestId = reply.requestId)
         return true
     }
 
     /** No editor mutation or veto reset. Service calls this when its own policy/route invalidates. */
     fun clearCandidates() {
         candidateEpoch++
+        pendingCandidate?.let { recordRequest(DiagnosticReason.CANCELLED, DiagnosticSource.LOCAL_POLICY,
+            it.sessionId, it.revision, it.requestId) }
         pendingCandidate = null
         candidateSelection = null
         pendingModelRanking = null
@@ -216,7 +306,8 @@ class TypingSessionController internal constructor(
     /** Snapshot only after consumer eligibility checks. Full candidate set; Rune-owned prefix only. */
     val canRequestModelRanking: Boolean
         get() = canRequestCandidates && candidateSelection?.let {
-            !it.modelRanked && !it.generation.isValidWord && it.alternatives.isNotEmpty() &&
+            it.original.codePointCount(0, it.original.length) > 2 && !isEligibleLocalReplacement(it) &&
+                !it.modelRanked && !it.generation.isValidWord && it.alternatives.isNotEmpty() &&
                 state.composing?.typedWord == it.original
         } == true
 
@@ -233,27 +324,33 @@ class TypingSessionController internal constructor(
         } catch (_: IllegalArgumentException) { return null }
         lastModelRequestId = requestId
         pendingModelRanking = ModelRankingStamp(token, selection)
+        recordRequest(DiagnosticReason.SUBMITTED, DiagnosticSource.MODEL, token.sessionId, token.revision, token.requestId)
         return input
     }
 
     /** Store a calibrated ranking; boundary mutation separately checks preference and qualification. */
     fun acceptModelRanking(reply: ScoringReply): Boolean {
-        if (!isCurrentModelRanking(reply.token)) return rankingRejected(DiagnosticReason.STALE)
+        if (!isCurrentModelRanking(reply.token)) {
+            recordScoringReply(reply, DiagnosticReason.STALE)
+            return false
+        }
         pendingModelRanking = null
-        val selection = candidateSelection ?: return rankingRejected(DiagnosticReason.INVALID)
-        if (reply.code != ScoringCode.OK) return rankingRejected(DiagnosticReason.MODEL_ERROR)
+        val selection = candidateSelection ?: return rankingRejected(DiagnosticReason.INVALID, reply)
+        if (reply.code != ScoringCode.OK) return rankingRejected(scoringFailureReason(reply.code), reply, selection.alternatives.size)
         val ranking = trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
             CalibratedSpellingPolicy.rank(selection.generation, selection.language,
                 reply.scores.map { RankingModelScore(it.candidateId, it.sumLogProbability, it.tokenCount) })
-        } ?: return rankingRejected(DiagnosticReason.ABSTAINED)
+        } ?: return rankingRejected(DiagnosticReason.ABSTAINED, reply, selection.alternatives.size)
         candidateSelection = selection.copy(
             order = ranking.candidateIds.map { it - 1 },
             selectedIndex = ranking.preferredId - 1,
             modelRanked = true,
             ranking = ranking,
         )
-        diagnose(DiagnosticKind.RANKING, DiagnosticReason.ACCEPTED, selection.alternatives.size,
-            ranking.preferredId - 1, ranking.usedModel)
+        diagnose(DiagnosticKind.RANKING, if (ranking.preferredId <= 0) DiagnosticReason.ABSTAINED else DiagnosticReason.ACCEPTED,
+            selection.alternatives.size, ranking.preferredId - 1, ranking.usedModel,
+            source = DiagnosticSource.MODEL, scoringCode = reply.code, elapsedMs = reply.elapsedMillis,
+            requestId = reply.token.requestId)
         return true
     }
 
@@ -286,7 +383,7 @@ class TypingSessionController internal constructor(
             previous.text.length < MAX_COMPOSING_UTF16 &&
             (tokenStart > 0 || owned.startsAtTokenBoundary) && owned.text.substring(tokenStart) == previous.typedWord &&
             !ranking.selection.generation.prohibitsAutoReplace &&
-            spellingQualification.allows(ranking.selection.language, true)) {
+            spellingQualification.allowsModel(ranking.selection.language)) {
             SpaceCorrectionStamp(ranking, previous, composingStart, context!!.text)
         } else null
         val result = action()
@@ -316,20 +413,23 @@ class TypingSessionController internal constructor(
 
     /** Uses only the certified suffix. The caller also enforces the deadline and live preferences. */
     internal fun acceptSpaceCorrection(reply: ScoringReply, execute: (TypingEdit) -> Boolean): Boolean {
-        if (!isCurrentSpaceCorrection(reply.token)) return rankingRejected(DiagnosticReason.STALE)
-        val pending = pendingSpaceCorrection ?: return rankingRejected(DiagnosticReason.INVALID)
+        if (!isCurrentSpaceCorrection(reply.token)) { recordScoringReply(reply, DiagnosticReason.STALE); return false }
+        val pending = pendingSpaceCorrection ?: return rankingRejected(DiagnosticReason.INVALID, reply)
         pendingSpaceCorrection = null
         val selection = pending.ranking.selection
         val payload = { DiagnosticText(context = pending.contextBefore, original = selection.original,
             candidates = selection.alternatives.map { it.text }) }
-        if (reply.code != ScoringCode.OK) return rankingRejected(DiagnosticReason.MODEL_ERROR,
-            pending.ranking.token, selection.alternatives.size, payload)
+        if (reply.code != ScoringCode.OK) return rankingRejected(scoringFailureReason(reply.code),
+            reply, selection.alternatives.size, text = payload)
         val ranking = trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
             CalibratedSpellingPolicy.rank(selection.generation, selection.language,
                 reply.scores.map { RankingModelScore(it.candidateId, it.sumLogProbability, it.tokenCount) })
-        } ?: return rankingRejected(DiagnosticReason.ABSTAINED, pending.ranking.token, selection.alternatives.size, payload)
+        } ?: return rankingRejected(DiagnosticReason.ABSTAINED, reply, selection.alternatives.size, text = payload)
         if (!ranking.usedModel || ranking.preferredId <= 0) return rankingRejected(DiagnosticReason.ABSTAINED,
-            pending.ranking.token, selection.alternatives.size, payload)
+            reply, selection.alternatives.size, text = payload)
+        diagnose(DiagnosticKind.RANKING, DiagnosticReason.ACCEPTED, selection.alternatives.size,
+            ranking.preferredId - 1, true, reply.token.sessionId, reply.token.revision,
+            scoringCode = reply.code, elapsedMs = reply.elapsedMillis, requestId = reply.token.requestId, text = payload)
         val word = selection.alternatives.getOrNull(ranking.preferredId - 1)?.text ?: return false
         val rendered = pending.previous.copy(typedWord = word).text + " "
         val end = pending.start.toLong() + rendered.length
@@ -363,7 +463,8 @@ class TypingSessionController internal constructor(
         get() {
             val selection = candidateSelection ?: return false
             val composing = state.composing ?: return false
-            return canRequestCandidates && selection.generation.isValidWord &&
+            return composing.typedWord.codePointCount(0, composing.typedWord.length) > 2 &&
+                canRequestCandidates && selection.generation.isValidWord &&
                 selection.alternatives.isEmpty() && contextualCompletedSelection !== selection &&
                 composing.leadingBoundary == " " &&
                 contextualInput(selection.language) != null
@@ -378,6 +479,7 @@ class TypingSessionController internal constructor(
         catch (_: IllegalArgumentException) { return null }
         lastModelRequestId = requestId
         pendingContextualRanking = ContextualRankingStamp(token, selection, variants)
+        recordRequest(DiagnosticReason.SUBMITTED, DiagnosticSource.CONTEXTUAL, token.sessionId, token.revision, token.requestId)
         return input
     }
 
@@ -388,23 +490,26 @@ class TypingSessionController internal constructor(
     }
 
     fun acceptContextualRanking(reply: ScoringReply): Boolean {
-        if (!isCurrentContextualRanking(reply.token)) return rankingRejected(DiagnosticReason.STALE)
-        val pending = pendingContextualRanking ?: return rankingRejected(DiagnosticReason.INVALID)
+        if (!isCurrentContextualRanking(reply.token)) { recordScoringReply(reply, DiagnosticReason.STALE, true); return false }
+        val pending = pendingContextualRanking ?: return rankingRejected(DiagnosticReason.INVALID, reply, contextual = true)
         pendingContextualRanking = null
         val payload = { DiagnosticText(context = context?.text.orEmpty(), original = pending.selection.original,
             candidates = pending.variants.map { it.continuation }) }
         if (reply.code != ScoringCode.OK || reply.scores.size != pending.variants.size) return rankingRejected(
-            DiagnosticReason.MODEL_ERROR, pending.token, pending.variants.size, payload)
+            if (reply.code == ScoringCode.OK) DiagnosticReason.MODEL_ERROR else scoringFailureReason(reply.code),
+            reply, pending.variants.size, true, payload)
         contextualCompletedSelection = pending.selection
         return trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
             val winnerId = ContextualPunctuationPolicy.choose(pending.variants.map { it.id },
                 reply.scores.map { ContextualPunctuationPolicy.Score(it.candidateId, it.sumLogProbability, it.tokenCount) })
-                ?: return@section rankingRejected(DiagnosticReason.ABSTAINED, pending.token, pending.variants.size, payload)
+                ?: return@section rankingRejected(DiagnosticReason.ABSTAINED, reply, pending.variants.size, true, payload)
             val winner = pending.variants.singleOrNull { it.id == winnerId } ?: return@section rankingRejected(
-                DiagnosticReason.INVALID, pending.token, pending.variants.size, payload)
+                DiagnosticReason.INVALID, reply, pending.variants.size, true, payload)
             contextualSelection = ContextualSelection(pending.token, pending.selection, winner, pending.variants)
             diagnose(DiagnosticKind.RANKING, DiagnosticReason.CONTEXTUAL, pending.variants.size,
-                pending.variants.indexOf(winner), true, pending.token.sessionId, pending.token.revision) {
+                pending.variants.indexOf(winner), true, pending.token.sessionId, pending.token.revision,
+                source = DiagnosticSource.CONTEXTUAL, scoringCode = reply.code, elapsedMs = reply.elapsedMillis,
+                requestId = reply.token.requestId) {
                 DiagnosticText(context = context?.text.orEmpty(), original = pending.selection.original,
                     candidates = pending.variants.map { it.continuation }, result = winner.continuation)
             }
@@ -493,7 +598,12 @@ class TypingSessionController internal constructor(
         discardUndo()
         val expected = EditorSelection(caret.toInt(), caret.toInt(), composingStart, caret.toInt())
         diagnose(DiagnosticKind.MANUAL, if (index == -1) DiagnosticReason.ORIGINAL else DiagnosticReason.CORRECTION,
-            selection.alternatives.size, index) { diagnosticText(result = word) }
+            selection.alternatives.size, index,
+            source = if (selection.generation.isCanonicalCaseCorrection()) DiagnosticSource.CANONICAL_CASE
+                else if (selection.ranking?.usedModel == true) DiagnosticSource.MODEL else DiagnosticSource.LOCAL_POLICY,
+            requestId = selection.requestId, editorAttempt = index == -1) {
+            diagnosticText(result = word)
+        }
         return applyEdit(TypingEdit.SetComposingText(next.text), expected, execute) {
             check(context?.replaceSuffix(previous.text, next.text) == true) { "Candidate context mismatch" }
             state = state.copy(composing = next, originalSelected = state.originalSelected || index == -1)
@@ -519,7 +629,8 @@ class TypingSessionController internal constructor(
         if (end > Int.MAX_VALUE) return TypingTextResult.REJECTED
         discardUndo()
         diagnose(DiagnosticKind.MANUAL, DiagnosticReason.CONTEXTUAL, selection.variants.size,
-            selection.variants.indexOf(selection.variant), true, selection.token.sessionId, selection.token.revision) {
+            selection.variants.indexOf(selection.variant), true, selection.token.sessionId, selection.token.revision,
+            source = DiagnosticSource.CONTEXTUAL) {
             DiagnosticText(context = context?.text.orEmpty(), original = selection.selection.original,
                 candidates = selection.variants.map { it.continuation }, result = replacement)
         }
@@ -550,6 +661,7 @@ class TypingSessionController internal constructor(
             enabled = enabled,
         )
         try { diagnostics.startSession(state.sessionId, enabled, diagnosticsFresh) } catch (_: Throwable) { }
+        diagnosticSegmentClosed = !enabled || !diagnosticsFresh
         diagnose(DiagnosticKind.SESSION, DiagnosticReason.START)
     }
 
@@ -836,6 +948,9 @@ class TypingSessionController internal constructor(
         val next = splitComposition(rendered)
         val restore = splitComposition(plan.undoOriginal)
         val expected = EditorSelection(caret.toInt(), caret.toInt(), start, caret.toInt())
+        diagnose(DiagnosticKind.MECHANICAL, DiagnosticReason.AUTO_REPLACE, source = DiagnosticSource.MECHANICAL) {
+            DiagnosticText(context = before, original = plan.undoOriginal, result = rendered)
+        }
         return applyEdit(TypingEdit.SetComposingText(rendered), expected, execute) {
             // The read-only prefix is never sent to the editor or adopted as composing.
             context!!.restore(before.dropLast(previous?.text?.length ?: 0))
@@ -847,9 +962,6 @@ class TypingSessionController internal constructor(
                 lastAutoEdit = UndoableTextEdit(plan.undoOriginal, rendered, state.sessionId,
                     state.revision, restore, rawContext))
             publish()
-            diagnose(DiagnosticKind.BOUNDARY, DiagnosticReason.AUTO_REPLACE) {
-                DiagnosticText(context = context?.text.orEmpty(), original = plan.undoOriginal, result = rendered)
-            }
         }
     }
 
@@ -861,10 +973,19 @@ class TypingSessionController internal constructor(
         return ComposingSegment(text.substring(0, start), text.substring(start))
     }
 
+    private fun isEligibleLocalReplacement(selection: CandidateSelection): Boolean {
+        val ranking = selection.ranking ?: return false
+        if (ranking.usedModel || ranking.preferredId <= 0 || selection.generation.prohibitsAutoReplace) return false
+        return if (CommonConfusions.preferredId(selection.generation, selection.language) == ranking.preferredId)
+            spellingQualification.allowsCommonConfusion(selection.language)
+        else spellingQualification.allowsGeneralLocal(selection.language)
+    }
+
     /** Latest accepted numeric decision only. No scoring, waiting, editor reads or text reconstruction. */
     private fun applyBoundaryCorrection(boundary: String, policy: MechanicalPunctuationPolicy,
         keyboard: KeyboardState, mode: AutocorrectionMode, execute: (TypingEdit) -> Boolean): TypingTextResult {
         val closesComposition = boundary.isEmpty() || boundary == "\n"
+        if (!closesComposition && (boundary.length != 1 || boundary[0] !in PENDING_BOUNDARY)) return TypingTextResult.BYPASS
         if (mode != AutocorrectionMode.HIGH_CONFIDENCE ||
             (!closesComposition && (boundary.length != 1 || boundary[0] !in PENDING_BOUNDARY)) ||
             policy.inputPolicy != InputPolicy.NORMAL ||
@@ -873,17 +994,20 @@ class TypingSessionController internal constructor(
         // A first dot/colon can still start a hostname or URI scheme. Do not change a word
         // before that shape becomes distinguishable; the boundary must never wait for context.
         if (boundary == "." || boundary == ":") return boundaryBypass(DiagnosticReason.PROTECTED_FORM)
-        val selection = candidateSelection ?: return boundaryBypass(DiagnosticReason.NO_CANDIDATES)
-        val ranking = selection.ranking ?: return boundaryBypass(DiagnosticReason.NO_RANKING)
+        val selection = candidateSelection ?: return boundaryBypass(
+            if (pendingCandidate != null) DiagnosticReason.RESULT_NOT_READY else DiagnosticReason.NO_CANDIDATES)
+        val ranking = selection.ranking ?: return boundaryBypass(
+            if (pendingModelRanking != null) DiagnosticReason.RESULT_NOT_READY else DiagnosticReason.NO_RANKING)
         val canonicalCase = selection.generation.isCanonicalCaseCorrection()
         val automaticEligible = if (canonicalCase) {
             val candidate = selection.generation.alternatives.single()
             candidate.canonicalCaseUnambiguous && candidate.canonicalCaseAutoEligible
         } else !selection.generation.prohibitsAutoReplace &&
-            spellingQualification.allows(selection.language, ranking.usedModel)
+            if (ranking.usedModel) spellingQualification.allowsModel(selection.language)
+            else isEligibleLocalReplacement(selection)
         if (selection.language != keyboard.language || ranking.preferredId <= 0 ||
             !automaticEligible) {
-            return boundaryBypass(DiagnosticReason.POLICY_REJECTED)
+            return boundaryBypass(if (pendingModelRanking != null) DiagnosticReason.RESULT_NOT_READY else DiagnosticReason.POLICY_REJECTED)
         }
         val previous = state.composing ?: return boundaryBypass(DiagnosticReason.OWNERSHIP_REJECTED)
         val word = selection.alternatives.getOrNull(ranking.preferredId - 1)?.text ?: return boundaryBypass(DiagnosticReason.INVALID)
@@ -917,7 +1041,9 @@ class TypingSessionController internal constructor(
         val expected = if (next == null) EditorSelection(end, end, -1, -1) else
             EditorSelection(end, end, boundaryStart, end)
         diagnose(DiagnosticKind.BOUNDARY, DiagnosticReason.AUTO_REPLACE, selection.alternatives.size,
-            ranking.preferredId - 1, ranking.usedModel) { diagnosticText(input = boundary, result = rendered) }
+            ranking.preferredId - 1, ranking.usedModel,
+            source = if (canonicalCase) DiagnosticSource.CANONICAL_CASE else if (ranking.usedModel)
+                DiagnosticSource.MODEL else DiagnosticSource.LOCAL_POLICY) { diagnosticText(input = boundary, result = rendered) }
         return trace.section(SmartTypingTraceSection.CORRECTION_COMMIT) {
             applyGuardedBatch(edits, expected, execute) {
                 check(context!!.replaceSuffix(previous.text, rendered)) { "Correction ownership mismatch" }
@@ -1094,7 +1220,17 @@ class TypingSessionController internal constructor(
     ): TypingTextResult {
         val session = state.sessionId
         val revision = state.revision + 1
-        val refused = try { diagnostics.editorOperation(session, revision) } catch (_: Throwable) { null }
+        val attempt = diagnosticAttempt
+        diagnosticAttempt = null
+        val outcome = (attempt ?: DiagnosticEvent(DiagnosticKind.EDITOR, DiagnosticReason.NONE, session, revision,
+            operationId = nextDiagnosticOperation())).copy(kind = DiagnosticKind.EDITOR)
+        val terminal = try { diagnostics.editorOutcome(outcome) } catch (_: Throwable) { null }
+        fun complete(accepted: Boolean) {
+            try {
+                if (terminal != null) terminal(accepted) else diagnostics.record(outcome.copy(
+                    reason = if (accepted) DiagnosticReason.EDITOR_ACCEPTED else DiagnosticReason.EDITOR_REJECTED), null)
+            } catch (_: Throwable) { }
+        }
         clearCandidates()
         val expectedCandidateEpoch = candidateEpoch
         state = state.copy(revision = revision)
@@ -1104,13 +1240,13 @@ class TypingSessionController internal constructor(
         if (state.sessionId != session || state.revision != revision) {
             // A reentrant external/lifecycle callback already invalidated this operation.
             // Abort a multi-command action even if this individual editor call succeeded.
-            try { refused?.invoke() } catch (_: Throwable) { }
+            complete(false)
             return TypingTextResult.REJECTED
         }
         if (!handled || candidateEpoch != expectedCandidateEpoch) {
             // Owner policy may invalidate candidates reentrantly without changing the editor
             // session. Freeze an ambiguously applied span; never publish its old allowlist.
-            try { refused?.invoke() } catch (_: Throwable) { }
+            complete(false)
             disableSession()
             rejected()
             return TypingTextResult.REJECTED
@@ -1118,7 +1254,7 @@ class TypingSessionController internal constructor(
         selectionStart = expected.start
         selectionEnd = expected.end
         accepted()
-        diagnose(DiagnosticKind.EDITOR, DiagnosticReason.EDITOR_ACCEPTED)
+        complete(true)
         return TypingTextResult.HANDLED
     }
 
@@ -1158,7 +1294,7 @@ class TypingSessionController internal constructor(
     private data class EditorSelection(val start: Int, val end: Int, val composingStart: Int, val composingEnd: Int)
 
     private data class CandidateStamp(val sessionId: Long, val revision: Long, val requestId: Long,
-        val language: KeyboardLanguage)
+        val language: KeyboardLanguage, val startedAt: Long = System.nanoTime())
 
     private class ModelRankingStamp(val token: ScoringToken, val selection: CandidateSelection)
     private class SpaceCorrectionStamp(val ranking: ModelRankingStamp, val previous: ComposingSegment,

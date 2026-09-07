@@ -16,6 +16,8 @@ import io.github.mesteriis.rune.keyboard.settings.SettingsActivity
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticStream
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticSource
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticCompletion
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorder
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsProvider
 import java.io.ByteArrayOutputStream
@@ -153,7 +155,7 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
             val text = snapshot(DiagnosticStream.TEXT)
             val rows = text.lineSequence().filter(String::isNotBlank).map(::JSONObject).toList()
             assertTrue("Actual candidates missing", rows.any { it.getString("kind") == "CANDIDATES" &&
-                it.getString("original") == "helllo" && it.getInt("candidateCount") == 1 &&
+                it.optString("original") == "helllo" && it.getInt("candidateCount") == 1 &&
                 it.getJSONArray("candidates").let { candidates ->
                     candidates.length() == 1 && candidates.get(0) == "hello"
                 } })
@@ -164,10 +166,12 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
             assertTrue("Actual Undo payload missing", rows.any { it.getString("kind") == "UNDO" &&
                 it.getString("reason") == "ACCEPTED" && it.getString("original") == "helllo" &&
                 it.getString("result") == " helllo" && it.getString("context") == "a helllo" })
-            for (acceptedContext in listOf("a hello ", "a helllo")) {
-                assertTrue("Accepted editor outcome missing", rows.any { it.getString("kind") == "EDITOR" &&
-                    it.getString("reason") == "EDITOR_ACCEPTED" && it.getString("context") == acceptedContext })
-            }
+            val attempt = rows.last { it.getString("kind") == "BOUNDARY" && it.getString("reason") == "AUTO_REPLACE" }
+            val outcome = rows.single { it.getString("kind") == "EDITOR" &&
+                it.getLong("operationId") == attempt.getLong("operationId") }
+            assertEquals("EDITOR_ACCEPTED", outcome.getString("reason"))
+            assertEquals(attempt.getLong("revision"), outcome.getLong("revision"))
+            assertFalse("Final response must be content-free", outcome.has("context"))
             assertMetadataVocabulary(snapshot(DiagnosticStream.METADATA)); noReadback()
         }
         // Freeze after fixture cleanup; neither excluded field may add per-input metadata or text.
@@ -195,6 +199,29 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         assertEquals("", snapshot(DiagnosticStream.TEXT))
         assertEquals("", snapshot(DiagnosticStream.METADATA))
         assertTrue(File(context.noBackupFilesDir, "typing-diagnostics").listFiles().orEmpty().none { it.length() > 0 })
+    }
+
+    @Test fun returningToLettersAndSwitchingLanguageOpenFreshSegmentsWithoutRefocus() {
+        driver.configureMechanicalPunctuation(mechanical = false, doubleSpace = false)
+        driver.launchSettings(); enableTextThroughDialogs()
+        driver.launchComposingQa(); type("beforegap")
+        snapshot(DiagnosticStream.TEXT)
+        driver.tapKeyByDescription(context.getString(R.string.key_symbols))
+        driver.tapKey("1")
+        driver.tapKeyByDescription(context.getString(R.string.key_letters))
+        type("aftergap")
+        var rows = snapshot(DiagnosticStream.TEXT).lineSequence().filter(String::isNotBlank).map(::JSONObject).toList()
+        val after = rows.last { it.optString("input") == "p" }
+        assertFalse(after.optString("context").contains("beforegap"))
+        assertFalse(after.optString("context").contains("1"))
+        val starts = rows.count { it.getString("kind") == "SESSION" && it.getString("reason") == "START" }
+        assertTrue("Letters return did not reopen diagnostic segment", starts >= 2)
+        driver.switchToRussian(); type("новый")
+        rows = snapshot(DiagnosticStream.TEXT).lineSequence().filter(String::isNotBlank).map(::JSONObject).toList()
+        assertTrue(rows.count { it.getString("kind") == "SESSION" && it.getString("reason") == "START" } > starts)
+        val russian = rows.last { it.optString("input") == "й" }
+        assertFalse(russian.optString("context").contains("aftergap"))
+        assertTrue(recorder.preferences.text); noReadback()
     }
 
     private fun enableTextThroughDialogs() {
@@ -240,12 +267,13 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         }
     }
     private fun assertMetadataVocabulary(text: String, requireRows: Boolean = true) {
-        val allowed = setOf("schema", "kind", "reason", "session", "revision", "candidateCount", "selectedIndex", "modelUsed")
+        val allowed = setOf("schema", "kind", "reason", "session", "revision", "candidateCount", "selectedIndex", "modelUsed",
+            "source", "completion", "scoringCode", "elapsedMs", "requestId", "operationId")
         val rows = text.lineSequence().filter(String::isNotBlank).map(::JSONObject).toList()
         if (requireRows) assertTrue("Expected metadata rows", rows.isNotEmpty())
         rows.forEach { row ->
             assertEquals(allowed, row.keys().asSequence().toSet())
-            assertInteger(row, "schema", 1L..1L)
+            assertInteger(row, "schema", 2L..2L)
             val kind = row.get("kind"); val reason = row.get("reason")
             assertTrue("Kind must be an exact enum string", kind is String && DiagnosticKind.entries.any { it.name == kind })
             assertTrue("Reason must be an exact enum string", reason is String && DiagnosticReason.entries.any { it.name == reason })
@@ -253,6 +281,12 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
             assertInteger(row, "revision", 0L..1_000_000_000L)
             assertInteger(row, "candidateCount", 0L..8L)
             assertInteger(row, "selectedIndex", -1L..7L)
+            assertTrue(DiagnosticSource.entries.any { it.name == row.get("source") })
+            assertTrue(DiagnosticCompletion.entries.any { it.name == row.get("completion") })
+            assertInteger(row, "scoringCode", -1L..15L)
+            assertInteger(row, "elapsedMs", 0L..60_000L)
+            assertInteger(row, "requestId", 0L..1_000_000_000L)
+            assertInteger(row, "operationId", 0L..1_000_000_000L)
             assertTrue("modelUsed must be a JSON Boolean", row.get("modelUsed") is Boolean)
         }
     }

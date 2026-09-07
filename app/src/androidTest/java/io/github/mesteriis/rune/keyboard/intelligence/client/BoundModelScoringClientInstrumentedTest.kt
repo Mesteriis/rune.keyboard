@@ -12,6 +12,10 @@ import io.github.mesteriis.rune.keyboard.intelligence.ipc.IModelScoringCallback
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.IModelScoringService
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoreRequestParcel
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringInput
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringToken
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringCode
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoreReplyParcel
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
@@ -22,6 +26,45 @@ import org.junit.Test
 
 /** Real main Looper/Handler with controlled Context binding failures; not a remote Binder test. */
 class BoundModelScoringClientInstrumentedTest {
+    @Test fun cancelledTransportReplyReachesOnlyNumericDiscardObserver() {
+        val base = ApplicationProvider.getApplicationContext<Context>()
+        var connection: ServiceConnection? = null
+        var callback: IModelScoringCallback? = null
+        val context = object : ContextWrapper(base) {
+            override fun getApplicationContext(): Context = this
+            override fun bindService(intent: Intent, value: ServiceConnection, flags: Int): Boolean {
+                connection = value; return true
+            }
+            override fun unbindService(value: ServiceConnection) = Unit
+        }
+        val discarded = CountDownLatch(1)
+        val token = ScoringToken(1, 10, 1, listOf(0))
+        val listener = object : ModelScoringListener {
+            override fun currentCompositionRevision() = 11L
+            override fun onReply(reply: ScoringReply) = throw AssertionError("Stale reply admitted for typing")
+            override fun onDiscardedReply(reply: ScoringReply) {
+                assertEquals(token, reply.token); assertEquals(ScoringCode.CANCELLED, reply.code)
+                discarded.countDown()
+            }
+            override fun onAvailabilityChanged(available: Boolean) = Unit
+        }
+        val client = onMain {
+            BoundModelScoringClient(context, listener).also {
+                it.attachSession(1, true)
+                connection!!.onServiceConnected(ComponentName(base.packageName, "fixture"), object : IModelScoringService.Stub() {
+                    override fun score(request: ScoreRequestParcel?, reply: IModelScoringCallback?) { callback = reply }
+                    override fun cancel(sessionId: Long, requestId: Long) = Unit
+                })
+                it.score(ScoringInput(token, "", listOf("public")))
+                it.cancel()
+            }
+        }
+        try {
+            callback!!.onResult(ScoreReplyParcel(ScoringReply(token, ScoringCode.CANCELLED, 12, emptyList())))
+            assertTrue(discarded.await(3, TimeUnit.SECONDS))
+        } finally { onMain { client.close() } }
+    }
+
     @Test fun repeatedFalseBindsReleaseEveryConnectionAndStopRetryWhenIneligible() = failures(false)
     @Test fun repeatedSecurityExceptionsReleaseEveryConnectionAndStopRetryWhenIneligible() = failures(true)
 

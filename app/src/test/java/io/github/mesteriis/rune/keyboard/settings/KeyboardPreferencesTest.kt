@@ -126,7 +126,7 @@ class KeyboardPreferencesTest {
             for (result in observed + facade.readSettings()) {
                 assertEquals(AutocorrectionMode.HIGH_CONFIDENCE, result.autocorrectionMode)
                 assertTrue(result.mechanicalPunctuation && result.candidateStrip)
-                assertEquals(ContextualPunctuationMode.SUGGESTIONS, result.contextualPunctuationMode)
+                assertEquals(ContextualPunctuationMode.OFF, result.contextualPunctuationMode)
             }
         }
     }

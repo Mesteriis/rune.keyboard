@@ -20,7 +20,11 @@ def fixture(variant):
         ROOT.format('main') + 'TypingDiagnostics.kt': source('''
 enum class DiagnosticKind { INPUT }
 enum class DiagnosticReason { NONE }
+enum class DiagnosticSource { NONE, LOCAL_POLICY, MODEL, CANONICAL_CASE, MECHANICAL, CONTEXTUAL }
+enum class DiagnosticCompletion { NONE, COMPLETE, UNAVAILABLE }
 data class DiagnosticEvent(val kind: DiagnosticKind, val reason: DiagnosticReason,
+    val source: DiagnosticSource = DiagnosticSource.NONE, val completion: DiagnosticCompletion = DiagnosticCompletion.NONE,
+    val scoringCode: Int = -1, val elapsedMs: Long = 0, val requestId: Long = 0, val operationId: Long = 0,
     val candidateCount: Int = 0, val selectedIndex: Int = -1, val modelUsed: Boolean = false,
     val session: Long, val revision: Long)
 data class DiagnosticText(
@@ -32,6 +36,7 @@ interface TypingDiagnostics {
     fun invalidate()
     fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)? = null)
     fun editorOperation(session: Long, revision: Long): (() -> Unit)? = null
+    fun editorOutcome(event: DiagnosticEvent): ((Boolean) -> Unit)? = null
 }
 object NoTypingDiagnostics : TypingDiagnostics {
     override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit

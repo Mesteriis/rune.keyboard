@@ -8,7 +8,7 @@ import xml.etree.ElementTree as ET
 import zipfile
 
 PREFIX = 'io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.'
-CONTRACTS = {'DiagnosticKind', 'DiagnosticReason', 'DiagnosticEvent', 'DiagnosticText',
+CONTRACTS = {'DiagnosticKind', 'DiagnosticReason', 'DiagnosticSource', 'DiagnosticCompletion', 'DiagnosticEvent', 'DiagnosticText',
              'TypingDiagnostics', 'NoTypingDiagnostics', 'TypingDiagnosticsProvider',
              'DiagnosticsSettingsProvider'}
 # Observed in the pinned compiler's pre-R8 classes and mapped final DEX respectively.

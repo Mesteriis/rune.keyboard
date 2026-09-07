@@ -73,10 +73,15 @@ class BoundModelScoringClient internal constructor(
             override fun onResult(reply: ScoreReplyParcel?) {
                 val result = reply?.value ?: return
                 main.post {
-                    if (generation != admittedGeneration || connection !== admittedConnection || !available) return@post
+                    if (generation != admittedGeneration || connection !== admittedConnection || !available) {
+                        try { listener.onDiscardedReply(result) } catch (_: Throwable) { }
+                        return@post
+                    }
                     val currentRequest = listener.isCurrentRequest(result.token)
                     if (guard.accepts(result.token) && currentRequest) {
                         guard.invalidate(); latest = null; listener.onReply(result)
+                    } else {
+                        try { listener.onDiscardedReply(result) } catch (_: Throwable) { }
                     }
                 }
             }

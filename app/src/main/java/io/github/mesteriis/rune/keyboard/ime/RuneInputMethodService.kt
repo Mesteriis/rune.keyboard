@@ -133,6 +133,7 @@ class RuneInputMethodService : InputMethodService() {
                 view.setOnActionListener(::handleAction)
                 view.setOnCandidateSelectedListener(::handleCandidateSelection)
                 renderKeyboard()
+                view.requestApplyInsets()
             }
         }
     }
@@ -175,6 +176,12 @@ class RuneInputMethodService : InputMethodService() {
         if (!editorContext.supportsSmartTyping) typingSession.endSession()
         state = withAutomaticCapitalization(state)
         renderKeyboard()
+        keyboardView?.requestApplyInsets()
+    }
+
+    override fun onWindowShown() {
+        super.onWindowShown()
+        keyboardView?.requestApplyInsets()
     }
 
     override fun onUpdateSelection(
@@ -242,6 +249,7 @@ class RuneInputMethodService : InputMethodService() {
         typingSession.invalidate(::executeTypingEdit)
         super.onConfigurationChanged(newConfig)
         if (wasInputViewActive) recreateInputView()
+        keyboardView?.requestApplyInsets()
     }
 
     private fun handleAction(action: KeyboardAction) {
@@ -265,6 +273,11 @@ class RuneInputMethodService : InputMethodService() {
                 }
             }
             state = transition.state
+            if (action is KeyboardAction.SwitchLanguage || action == KeyboardAction.ToggleSymbols ||
+                action == KeyboardAction.ToggleSymbolsPage) {
+                typingSession.reopenDiagnosticsForLetters(inputViewActive && editorContext.supportsSmartTyping &&
+                    state.layer == KeyboardLayer.LETTERS && !hasSelection)
+            }
             if (action is KeyboardAction.SwitchLanguage) {
                 if (state.language != previousState.language) {
                     selectedLanguage = state.language
@@ -466,6 +479,7 @@ class RuneInputMethodService : InputMethodService() {
         RuneTrace.section("Rune#recreateInputView") {
             keyboardView?.cancelActiveTouches()
             setInputView(onCreateInputView())
+            keyboardView?.requestApplyInsets()
         }
     }
 
@@ -526,8 +540,8 @@ class RuneInputMethodService : InputMethodService() {
         hasSelection = hasSelection,
         autocorrectionMode = settings.autocorrectionMode,
         candidateStripEnabled = settings.candidateStrip,
-        deterministicAutoReplaceQualified = typingSession.isSpellingQualified(state.language, false),
-        modelAutoReplaceQualified = typingSession.isSpellingQualified(state.language, true),
+        deterministicAutoReplaceQualified = typingSession.isLocalSpellingQualified(state.language),
+        modelAutoReplaceQualified = typingSession.isModelSpellingQualified(state.language),
         modelRuntimeQualified = ModelRuntimeQualification.CURRENT,
         contextualPunctuationEnabled = settings.contextualPunctuationMode == ContextualPunctuationMode.SUGGESTIONS,
         contextualModelReady = candidates.modelReadinessHint == ModelReadinessHint.READY,

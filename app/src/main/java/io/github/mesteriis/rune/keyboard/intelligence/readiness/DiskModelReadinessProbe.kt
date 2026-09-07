@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.intelligence.readiness
 
 import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.QualifiedModelArtifact
 import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelResolver
 import io.github.mesteriis.rune.keyboard.intelligence.storage.ModelOperationGate
 import java.io.File
@@ -17,7 +18,9 @@ class DiskModelReadinessProbe(private val root: () -> File) {
                 if (cancelled()) return@tryWithReadLock ModelReadinessHint.UNKNOWN
                 val model = ActiveModelResolver(directory).resolve()
                 if (cancelled()) ModelReadinessHint.UNKNOWN
-                else if (model == null) ModelReadinessHint.MISSING else ModelReadinessHint.READY
+                else if (model == null) ModelReadinessHint.MISSING
+                else if (!QualifiedModelArtifact.accepts(model.descriptor.sha256, model.descriptor.runtimeApi))
+                    ModelReadinessHint.BROKEN else ModelReadinessHint.READY
             } ?: ModelReadinessHint.UNKNOWN
         } catch (_: Exception) { ModelReadinessHint.BROKEN }
     }

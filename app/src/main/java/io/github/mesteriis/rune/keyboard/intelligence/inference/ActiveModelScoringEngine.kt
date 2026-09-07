@@ -4,6 +4,7 @@ import io.github.mesteriis.rune.keyboard.intelligence.ipc.NumericScore
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringCode
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringInput
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.QualifiedModelArtifact
 import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelResolver
 import io.github.mesteriis.rune.keyboard.intelligence.storage.ModelOperationGate
 import io.github.mesteriis.rune.keyboard.intelligence.storage.ResolvedActiveModel
@@ -38,6 +39,8 @@ class ActiveModelScoringEngine(root: File, changed: () -> Unit,
 
     private fun ensureLoaded(cancelled: AtomicBoolean): Int = gate.withReadLock {
         val active = resolver.resolve() ?: return@withReadLock ScoringCode.NO_MODEL
+        if (!QualifiedModelArtifact.accepts(active.descriptor.sha256, active.descriptor.runtimeApi))
+            return@withReadLock ScoringCode.UNAVAILABLE
         if (loaded != active) {
             unload()
             if (!watch.start(active.directory)) return@withReadLock ScoringCode.UNAVAILABLE

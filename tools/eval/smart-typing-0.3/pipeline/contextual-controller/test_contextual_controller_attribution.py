@@ -220,8 +220,9 @@ class AdditionalGuardTest(unittest.TestCase):
                  mock.patch.object(self.tool.cq,'toolchain',return_value=[]), \
                  mock.patch.object(self.tool.subprocess,'run',return_value=mock.Mock(stderr=b'version "17.0.1"')):
                 sources,_,_=self.tool.compile_inputs('java','cache',android)
-            self.assertEqual(49,len(sources))
-            self.assertEqual(49,len(set(sources)))
+            self.assertEqual(len(sources), len(set(sources)))
+            self.assertTrue({'CommonConfusions.kt', 'QualificationArtifacts.kt', 'ModelRuntimeQualification.kt'} <=
+                            {path.name for path in sources})
             self.assertTrue(all(p.is_file() for p in sources))
             self.assertIn(self.tool.HERE/'ContextualControllerAttribution.kt',sources)
 

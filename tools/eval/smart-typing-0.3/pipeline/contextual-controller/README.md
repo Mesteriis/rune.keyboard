@@ -1,5 +1,10 @@
 # Contextual controller attribution
 
+For Rune 0.3.1 the harness explicitly opts into contextual `SUGGESTIONS` on top
+of `KeyboardSettings.DEFAULT`; fresh installs default to `OFF`. Historical
+receipts made before this change remain bound to their old source. Synthetic
+`test-host` needs no archived command receipt; prepare/replay still bind it.
+
 This isolated host tool attributes all unchanged v5 source-boundary examples through current packaged candidate generation, current controller ownership and eligibility, production model coordinator admission, and the production candidate tap gateway. It has no inference command and establishes no semantic correctness or unseen-data quality gate. Full numeric replay requires separate review authorization.
 
 `prepare` admits the strict existing v5 protocol/export/frozen config and complete calibration/holdout cache chain, binds current source, all twelve packaged assets and the pinned compiler/runtime, compiles the actual sources, types every exact input through an independent editor executor, and exports actual contextual requests. No numeric response is delivered in prepare. Previously excluded examples and every no-query or harness failure remain in the 1,200-row denominator. Exact prefix, ordered IDs and continuation strings are required for cache reuse. New or changed payloads are exported to `unscored-requests.jsonl` with a frozen receipt; they remain unresolved, never measured abstentions.

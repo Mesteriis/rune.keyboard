@@ -51,10 +51,10 @@ internal class RuneKeyboardView(
             keyboardPadding,
         )
         setOnApplyWindowInsetsListener { _, insets ->
-            val navigationBars = navigationBarInsets(insets)
-            val leftPadding = keyboardPadding + navigationBars.left
-            val rightPadding = keyboardPadding + navigationBars.right
-            val bottomPadding = keyboardPadding + navigationBars.bottom
+            val safePadding = safeAreaPadding(insets)
+            val leftPadding = safePadding.left
+            val rightPadding = safePadding.right
+            val bottomPadding = safePadding.bottom
             if (
                 paddingLeft != leftPadding ||
                 paddingRight != rightPadding ||
@@ -150,6 +150,11 @@ internal class RuneKeyboardView(
     override fun onDetachedFromWindow() {
         cancelActiveTouches()
         super.onDetachedFromWindow()
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        requestApplyInsets()
     }
 
     override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
@@ -310,30 +315,31 @@ internal class RuneKeyboardView(
         }
 
     @Suppress("DEPRECATION")
-    private fun navigationBarInsets(insets: WindowInsets): NavigationBarInsets =
+    private fun safeAreaPadding(insets: WindowInsets): SafePadding =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            insets.getInsets(
-                WindowInsets.Type.navigationBars() or WindowInsets.Type.displayCutout(),
+            // Newer Android reports IME hide/switch controls as a caption bar, which can be
+            // taller than gesture navigation. The combined mask takes the per-edge maximum.
+            insets.getInsetsIgnoringVisibility(
+                WindowInsets.Type.navigationBars() or WindowInsets.Type.displayCutout() or
+                    WindowInsets.Type.captionBar(),
             ).let { safeInsets ->
-                NavigationBarInsets(
-                    left = safeInsets.left,
-                    right = safeInsets.right,
-                    bottom = safeInsets.bottom,
+                SafeInsetPolicy.padding(
+                    base = keyboardPadding,
+                    visible = SafeInsets(),
+                    stable = SafeInsets(safeInsets.left, safeInsets.right, safeInsets.bottom),
                 )
             }
         } else {
-            NavigationBarInsets(
-                left = insets.systemWindowInsetLeft,
-                right = insets.systemWindowInsetRight,
-                bottom = insets.systemWindowInsetBottom,
+            // Older IME windows may omit stable values on one edge. Retain the conservative
+            // system-window exclusion there, without caching geometry across Fold displays.
+            SafeInsetPolicy.padding(
+                base = keyboardPadding,
+                visible = SafeInsets(insets.systemWindowInsetLeft, insets.systemWindowInsetRight,
+                    insets.systemWindowInsetBottom),
+                stable = SafeInsets(insets.stableInsetLeft, insets.stableInsetRight, insets.stableInsetBottom),
+                legacyFallback = true,
             )
         }
-
-    private data class NavigationBarInsets(
-        val left: Int,
-        val right: Int,
-        val bottom: Int,
-    )
 
     private data class PendingRender(
         val layout: KeyboardLayout,

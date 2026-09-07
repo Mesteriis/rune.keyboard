@@ -3,6 +3,15 @@ package io.github.mesteriis.rune.keyboard.intelligence.ipc
 import java.nio.CharBuffer
 import java.nio.charset.CodingErrorAction
 
+/** Payload-free artifact metadata; verified against packaged inputs by the pre-build gate. */
+object QualifiedModelArtifact {
+    const val MODEL_SHA256 = "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4"
+    const val RUNTIME_API = 1
+    const val RUNTIME_BUILD_ID = "356dc78ec8b156462d8384ca14f0e20ff831c66b83c38831f40edfd6bd645613"
+    fun accepts(sha256: String, runtimeApi: Int): Boolean =
+        sha256 == MODEL_SHA256 && runtimeApi == RUNTIME_API
+}
+
 /** Opaque ids only. Never put editor text into ids or failure codes. */
 class ScoringToken(val sessionId: Long, val revision: Long, val requestId: Long,
     candidateIds: List<Int>) {

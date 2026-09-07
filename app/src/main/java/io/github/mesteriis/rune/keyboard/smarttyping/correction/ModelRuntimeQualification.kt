@@ -7,5 +7,9 @@ package io.github.mesteriis.rune.keyboard.smarttyping.correction
  * unplugged battery or full release acceptance. Requalify when model/backend changes.
  */
 internal object ModelRuntimeQualification {
-    const val CURRENT = true
+    val CURRENT: Boolean get() = allows(QualificationArtifacts.model())
+    fun allows(fingerprint: ModelQualificationFingerprint) =
+        fingerprint.modelSha256 == "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4" &&
+        fingerprint.runtimeApi == 1 && fingerprint.runtimeBuildId == "356dc78ec8b156462d8384ca14f0e20ff831c66b83c38831f40edfd6bd645613" &&
+        fingerprint.spellingPolicyVersion == 1 && fingerprint.lexicons == QualificationArtifacts.qualifiedLexicons
 }

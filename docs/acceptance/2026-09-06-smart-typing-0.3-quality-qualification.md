@@ -1,5 +1,9 @@
 # Rune Smart Typing 0.3 — quality qualification
 
+Historical 0.3.0 evidence. The [0.3.1 report](2026-09-07-rune-0.3.1.md)
+supersedes this document as the current release status. The scores below are not
+a fresh run of the changed 0.3.1 source tree.
+
 Date: 2026-09-06. Scope: source-bound, model-assisted spelling evaluation on the
 frozen RU/EN/ES corpus. Physical Fold validation is excluded from this acceptance
 scope by the product owner; Android API validation uses emulators.

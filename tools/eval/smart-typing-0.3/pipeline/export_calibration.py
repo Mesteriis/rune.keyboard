@@ -20,7 +20,7 @@ CORPUS = EVALUATOR_ROOT
 LEXICON = REPO / "tools/lexicon/smart-typing-0.3"
 PRODUCTION = "app/src/main/java/io/github/mesteriis/rune/keyboard/"
 SOURCES = ["ime/model/KeyboardState.kt"] + [f"smarttyping/correction/{s}.kt" for s in (
-    "TokenUnicode", "ProtectedTokenPolicy", "CasePattern", "KeyboardDistance", "WeightedDamerauLevenshtein"
+    "TokenUnicode", "ProtectedTokenPolicy", "CasePattern", "KeyboardDistance", "WeightedDamerauLevenshtein", "CommonConfusions"
 )] + [f"smarttyping/lexicon/{s}.kt" for s in (
     "LanguageRouter", "CandidateLexicon", "CanonicalCaseLexicon", "CandidateGenerator", "PackedCandidateLexicon",
     "PackedLexiconData", "PackedLexiconManifest", "FrozenPackedLexicons",

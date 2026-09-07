@@ -8,6 +8,8 @@ import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringCode
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringToken
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticSource
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.NoopSmartTypingTracer
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceSection
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTracer
@@ -43,6 +45,9 @@ class ModelCandidateCoordinator(
     private var pendingKind: RequestKind? = null
     private var spaceStartedAt = 0L
     private var spaceExecutor: ((TypingEdit) -> Boolean)? = null
+    private var diagnosticRequest: ScoringToken? = null
+    private var diagnosticScheduled: Pair<Long, Long>? = null
+    private var diagnosticSource = DiagnosticSource.MODEL
 
     /** Cached metadata only, independent of transport connectivity and quality qualification. */
     val modelReadinessHint: ModelReadinessHint
@@ -68,6 +73,9 @@ class ModelCandidateCoordinator(
         // A valid word does not score, but must not abort payload-free weight loading for
         // this still-eligible text session. Idle unload and session invalidation remain active.
         val kind = requestKind() ?: return
+        diagnosticSource = if (kind == RequestKind.CONTEXTUAL) DiagnosticSource.CONTEXTUAL else DiagnosticSource.MODEL
+        diagnosticScheduled = session to revision
+        controller.recordRequest(DiagnosticReason.SCHEDULED, diagnosticSource, session, revision)
         val owner = ownerState()
         client.attachSession(session, true)
         val scheduledEpoch = epoch
@@ -77,7 +85,12 @@ class ModelCandidateCoordinator(
                 if (closed || timer !== this || epoch != scheduledEpoch) return
                 timer = null
                 if (!eligible() || requestKind() != kind || ownerState() != owner || controller.state.sessionId != session ||
-                    controller.state.revision != revision || !client.available || requestId == Long.MAX_VALUE) return
+                    controller.state.revision != revision || !client.available || requestId == Long.MAX_VALUE) {
+                    controller.recordRequest(if (!client.available) DiagnosticReason.SERVICE_REFUSED else DiagnosticReason.CANCELLED,
+                        diagnosticSource, session, revision)
+                    diagnosticScheduled = null
+                    return
+                }
                 val nextId = ++requestId
                 val input = when (kind) {
                     RequestKind.SPELLING -> controller.beginModelRanking(nextId)
@@ -85,6 +98,8 @@ class ModelCandidateCoordinator(
                 } ?: return
                 pendingOwner = owner
                 pendingKind = kind
+                diagnosticRequest = input.token
+                diagnosticScheduled = null
                 trace.section(SmartTypingTraceSection.MODEL_REQUEST) { client.score(input) }
             }
         }
@@ -96,6 +111,11 @@ class ModelCandidateCoordinator(
     fun cancel() {
         checkOwner()
         if (closed) return
+        diagnosticRequest?.let { controller.recordRequest(DiagnosticReason.CANCELLED, diagnosticSource,
+            it.sessionId, it.revision, it.requestId) }
+        diagnosticScheduled?.let { controller.recordRequest(DiagnosticReason.CANCELLED, diagnosticSource, it.first, it.second) }
+        diagnosticRequest = null
+        diagnosticScheduled = null
         epoch++
         pendingOwner = null
         pendingKind = null
@@ -144,6 +164,10 @@ class ModelCandidateCoordinator(
     }
 
     override fun currentCompositionRevision(): Long { checkOwner(); return controller.state.revision }
+    override fun onDiscardedReply(reply: ScoringReply) {
+        checkOwner()
+        controller.recordScoringReply(reply, DiagnosticReason.STALE)
+    }
     override fun isCurrentRequest(token: ScoringToken): Boolean {
         checkOwner()
         val kind = pendingKind ?: return false
@@ -153,14 +177,23 @@ class ModelCandidateCoordinator(
     override fun onReply(reply: ScoringReply) {
         trace.section(SmartTypingTraceSection.MODEL_RESULT) {
             checkOwner()
-            val kind = pendingKind ?: return@section
+            val kind = pendingKind ?: run {
+                controller.recordScoringReply(reply, DiagnosticReason.STALE)
+                return@section
+            }
             val executeSpace = spaceExecutor
             if (executeSpace != null && (!withinSpaceWindow() || !automaticSpaceEligible())) {
+                controller.recordScoringReply(reply, DiagnosticReason.STALE, kind == RequestKind.CONTEXTUAL)
                 cancel(); return@section
             }
             if (closed || (executeSpace == null && !eligible()) || pendingOwner != ownerState() ||
-                !isCurrentRequest(reply.token)) return@section
+                !isCurrentRequest(reply.token)) {
+                controller.recordScoringReply(reply, DiagnosticReason.STALE, kind == RequestKind.CONTEXTUAL)
+                return@section
+            }
             if (reply.code == ScoringCode.NO_MODEL || reply.code == ScoringCode.LOAD_FAILED) {
+                controller.recordScoringReply(reply, contextual = kind == RequestKind.CONTEXTUAL)
+                diagnosticRequest = null
                 cancel(); client.attachSession(null, false); readiness.setActive(false)
                 return@section
             }
@@ -170,6 +203,7 @@ class ModelCandidateCoordinator(
             }
             pendingOwner = null
             pendingKind = null
+            diagnosticRequest = null
             spaceExecutor = null
             timer?.let(scheduler::remove); timer = null
             if (accepted) changed()
@@ -177,7 +211,13 @@ class ModelCandidateCoordinator(
     }
     override fun onAvailabilityChanged(available: Boolean) {
         checkOwner()
-        if (!available && !closed) cancel()
+        if (!available && !closed) {
+            diagnosticRequest?.let { controller.recordRequest(DiagnosticReason.SERVICE_REFUSED, diagnosticSource,
+                it.sessionId, it.revision, it.requestId) }
+            diagnosticScheduled?.let { controller.recordRequest(DiagnosticReason.SERVICE_REFUSED, diagnosticSource,
+                it.first, it.second) }
+            cancel()
+        }
         // A new connection never resubmits an earlier composition.
     }
     override fun close() {

@@ -54,6 +54,9 @@ COMPILE_SOURCES = (
     'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt',
     'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt',
     'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt',
+    'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CommonConfusions.kt',
+    'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/QualificationArtifacts.kt',
+    'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt',
     'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt',
     'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt',
     'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt',
@@ -89,7 +92,7 @@ ERROR_MAP = {'INVALID_REQUEST':12,'INVALID_UTF8':8,'TOO_MANY_CANDIDATES':14,
              'CONTEXT_CREATE_FAILED':4,'SCORING_FAILED':15}
 ACTION_CONTRACT = {'version':2,'candidateAdmission':'current-owner/validated-route/live-reply-guards','input':'exact-prefix + ASCII-space + exact-currentWord',
     'step':'Unicode-code-point','priorWordCandidateCallbacks':False,'doubleSpaceGesture':False,
-    'settings':'KeyboardSettings.DEFAULT','qualification':'SpellingQualification.CURRENT',
+    'settings':'KeyboardSettings.DEFAULT with contextual SUGGESTIONS opt-in','qualification':'SpellingQualification.CURRENT',
     'availability':'final-target-ready-host-transport','diagnostics':'NoTypingDiagnostics',
     'graphemes':'JDK17-java.text.BreakIterator','nativeCalls':0,'realInputConnection':False,
     'nativeDuration':'preserve original; truncate toward zero only for integral host callback field; no wait'}
@@ -308,14 +311,15 @@ def validate_runtime_error_codes(source):
     require(all(runtime_codes.get(name)==value for name,value in ERROR_MAP.items()),'RUNTIME_ERROR_CODES')
 
 
-def bind_runtime(java,android,sources,jars):
+def bind_runtime(java,android,sources,jars,include_archive=True):
     validate_runtime_error_codes(ERROR_SOURCE.read_text())
     home=Path(java).resolve().parent.parent
     runtime=[home/p for p in ('bin/java','release','lib/modules','lib/libjli.dylib','lib/server/libjvm.dylib')]
-    files=[*sources,*jars,*runtime,Path(android),ERROR_SOURCE,*asset_paths(),ARCHIVE_COMMANDS,cq.TOOLCHAIN_MANIFEST,
+    files=[*sources,*jars,*runtime,Path(android),ERROR_SOURCE,*asset_paths(),cq.TOOLCHAIN_MANIFEST,
            *[HERE/p for p in ('contextual_controller_attribution.py','test_contextual_controller_attribution.py','README.md')],
            Path(sys.executable).resolve(),PIPELINE/'export_calibration.py',PIPELINE/'score_product_holdout.py',
            PIPELINE/'test_contextual_v5_adapter.py',PIPELINE/'contextual_quality.py',cq.shared.REPO/'tools/eval/smart-typing-0.3/evaluate.py']
+    if include_archive: files.append(ARCHIVE_COMMANDS)
     return {str(p.resolve()):sha(p) for p in files}
 
 
@@ -783,7 +787,7 @@ def validate_host_tests(records):
 def test_host(args):
     out=fresh_output(args.output);java=Path(args.java).resolve();android=Path(args.android_jar).resolve()
     sources,jars,version=compile_inputs(java,args.gradle_cache,android)
-    files=bind_runtime(java,android,sources,jars);write_json(out/'input-receipt.json',{'files':files,'nativeCalls':0})
+    files=bind_runtime(java,android,sources,jars,include_archive=False);write_json(out/'input-receipt.json',{'files':files,'nativeCalls':0})
     command=compile_host(out,java,android,sources,jars,version)
     actual=run_host(command,out,'synthetic.jsonl',['test'])
     validate_host_tests(actual)

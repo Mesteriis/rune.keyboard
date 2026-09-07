@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.lexicon
 
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.CommonConfusions
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.EditCostProfile
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.EditFeatures
@@ -14,7 +15,7 @@ enum class CandidateCompletion {
     CANCELLED, UNAVAILABLE, READER_FAILURE,
 }
 
-enum class GeneratedCandidateKind { SPELLING, CANONICAL_CASE }
+enum class GeneratedCandidateKind { SPELLING, CANONICAL_CASE, COMMON_CONFUSION }
 
 data class GeneratedCandidate(
     val text: String,
@@ -107,6 +108,26 @@ class CandidateGenerator(
             val route = LanguageRouter.route(token, activeLanguage)
             val primary = route.primary ?: return result(CandidateCompletion.PROTECTED)
             val languages = listOfNotNull(primary, route.fallback)
+            // The finite source has its own complete retrieval: one mapping and one exact
+            // target membership check. A verified match needs neither extended search nor a
+            // global-neighborhood certificate. Failed verification never grants this path.
+            CommonConfusions.target(primary, key)?.let { target ->
+                val membership = lexicon.exact(primary, target, control)
+                if (!control.checkpoint()) return result(control.stop!!)
+                if (membership == ExactMembership.PRESENT) {
+                    val display = pattern.preserve(target)
+                    if (display != null) {
+                        if (!control.verifyTerminal()) return result(control.stop!!)
+                        val common = GeneratedCandidate(display, TokenUnicode.folded(display), target, primary,
+                            false, route.primaryPrior, 1, unit.features(key, target, primary).editCost.toInt(),
+                            weighted.features(key, target, primary),
+                            kotlin.math.abs(key.codePointCount(0, key.length) - target.codePointCount(0, target.length)),
+                            pattern, kind = GeneratedCandidateKind.COMMON_CONFUSION)
+                        if (!control.checkpoint()) return result(control.stop!!)
+                        return result(CandidateCompletion.COMPLETE, listOf(common))
+                    }
+                }
+            }
             for (language in languages) {
                 val membership = lexicon.exact(language, key, control)
                 if (!control.checkpoint()) return result(control.stop!!)

@@ -19,6 +19,7 @@ data class SpellingCoefficients(
  * qualification these coefficients affect suggestions only. No model request or editor access.
  */
 object CalibratedSpellingPolicy {
+    const val VERSION = 1
     const val MAXIMUM_ALTERNATIVES = 3
 
     fun coefficients(language: KeyboardLanguage, model: Boolean): SpellingCoefficients = when (language) {

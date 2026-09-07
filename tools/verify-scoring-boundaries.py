@@ -29,7 +29,7 @@ DIAGNOSTICS = BASE + 'smarttyping.diagnostics'
 DIAGNOSTIC_PATH = 'app/src/{}/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/'
 DIAGNOSTIC_PROVIDERS = {'TypingDiagnosticsProvider', 'DiagnosticsSettingsProvider'}
 DIAGNOSTIC_CONTRACT = DIAGNOSTIC_PATH.format('main') + 'TypingDiagnostics.kt'
-DIAGNOSTIC_CONTRACT_NAMES = {'DiagnosticKind', 'DiagnosticReason', 'DiagnosticEvent',
+DIAGNOSTIC_CONTRACT_NAMES = {'DiagnosticKind', 'DiagnosticReason', 'DiagnosticEvent', 'DiagnosticSource', 'DiagnosticCompletion',
                              'DiagnosticText', 'TypingDiagnostics', 'NoTypingDiagnostics'}
 FINAL_DIAGNOSTIC_PROVIDERS = {
     'TypingDiagnosticsProvider': '''import android.content.Context
@@ -52,6 +52,7 @@ DIAGNOSTICS_INTERFACE = '''interface TypingDiagnostics {
     fun invalidate()
     fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)? = null)
     fun editorOperation(session: Long, revision: Long): (() -> Unit)? = null
+    fun editorOutcome(event: DiagnosticEvent): ((Boolean) -> Unit)? = null
 }'''
 DIAGNOSTICS_TEXT = '''data class DiagnosticText(
     val input: String = "",
@@ -176,6 +177,7 @@ def inspect(sources, variant=None):
                     if re.search(r'\b(?:java\.io|java\.nio\.file|File|RandomAccessFile)\b',text): errors.append(f'{area}: {p}: filesystem')
                 if area == 'intelligence.storage' and not (package.startswith(BASE+'intelligence.storage') or package == BASE+'intelligence.model' and name in PURE_MODEL): errors.append(f'{area}: {p}: non-neutral storage dependency')
                 if area == 'intelligence.readiness' and not (package.startswith((BASE+'intelligence.readiness', BASE+'intelligence.storage')) or
+                        package == BASE+'intelligence.ipc' and name == 'ScoringContract.kt' or
                         package == BASE+'intelligence.client' and name in ('ModelReadinessSource.kt', 'ModelDemand.kt') or
                         package == BASE+'intelligence.model' and name in PURE_MODEL):
                     errors.append(f'{area}: {p}: readiness must stay payload-free and read-only')
@@ -267,15 +269,17 @@ def inspect_diagnostics(clean, packages, symbols, declarations, edges, variant, 
     else:
         allowed_fields = {'kind': 'DiagnosticKind', 'reason': 'DiagnosticReason',
                           'session': 'Long', 'revision': 'Long', 'candidateCount': 'Int',
-                          'selectedIndex': 'Int', 'modelUsed': 'Boolean'}
+                          'selectedIndex': 'Int', 'modelUsed': 'Boolean',
+                          'source': 'DiagnosticSource', 'completion': 'DiagnosticCompletion',
+                          'scoringCode': 'Int', 'elapsedMs': 'Long', 'requestId': 'Long', 'operationId': 'Long'}
         # This frozen metadata DTO has constructor fields only. Reject inferred fields,
         # getters and methods too; scanning explicit property types alone misses them.
         if metadata.group().rstrip().endswith('{'):
             errors.append('diagnostics metadata field type: class body forbidden')
-        for enum_name in ('DiagnosticKind', 'DiagnosticReason'):
+        for enum_name in ('DiagnosticKind', 'DiagnosticReason', 'DiagnosticSource', 'DiagnosticCompletion'):
             if not re.search(r'\benum\s+class\s+' + enum_name + r'\b', contract):
                 errors.append('diagnostics metadata enum missing: ' + enum_name)
-        if re.search(r'\btypealias\s+(?:DiagnosticKind|DiagnosticReason|Long|Int|Boolean)\b', contract):
+        if re.search(r'\btypealias\s+(?:DiagnosticKind|DiagnosticReason|DiagnosticSource|DiagnosticCompletion|Long|Int|Boolean)\b', contract):
             errors.append('diagnostics metadata field type alias forbidden')
         fields = re.findall(r'\b(?:val|var)\s+(\w+)\s*:\s*([^=,\n]+)', metadata.group(1))
         if Counter(name for name, _ in fields) != Counter(allowed_fields.keys()):

@@ -18,6 +18,7 @@ import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
 import io.github.mesteriis.rune.keyboard.ime.model.EditorMode
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.*
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.TopCandidateSelection
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
@@ -37,6 +38,82 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class LocalCandidateCoordinatorTest {
+    @Test fun `Binder availability loss records refusal for scheduled and submitted origins before cancellation`() {
+        for (submitted in listOf(false, true)) Harness(withModel = true).use { h ->
+            val records = mutableListOf<DiagnosticEvent>()
+            h.controller.setDiagnostics(object : TypingDiagnostics {
+                override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                override fun invalidate() = Unit
+                override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { records += event }
+            })
+            h.type("helo"); h.deliver()
+            if (submitted) h.pause.fire()
+            val origin = records.last { it.kind == DiagnosticKind.REQUEST &&
+                it.reason == if (submitted) DiagnosticReason.SUBMITTED else DiagnosticReason.SCHEDULED }
+            h.model.available = false
+            h.model.listener.onAvailabilityChanged(false)
+            assertNull(h.pause.task)
+            val refused = records.single { it.kind == DiagnosticKind.REQUEST && it.reason == DiagnosticReason.SERVICE_REFUSED }
+            assertEquals(origin.session, refused.session); assertEquals(origin.revision, refused.revision)
+            assertEquals(origin.requestId, refused.requestId); assertEquals(origin.source, refused.source)
+            h.space()
+            assertEquals(DiagnosticReason.SERVICE_REFUSED, records.single { it.kind == DiagnosticKind.BOUNDARY }.reason)
+            assertEquals("helo ", h.controller.state.contextText)
+            assertEquals(if (submitted) 1 else 0, h.model.requests.size)
+        }
+    }
+
+    @Test fun `scheduled transport refusal survives cancellation at the next boundary`() {
+        Harness(withModel = true).use { h ->
+            val records = mutableListOf<DiagnosticEvent>()
+            h.controller.setDiagnostics(object : TypingDiagnostics {
+                override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                override fun invalidate() = Unit
+                override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { records += event }
+            })
+            h.type("helo"); h.deliver()
+            val scheduled = records.last { it.kind == DiagnosticKind.REQUEST && it.reason == DiagnosticReason.SCHEDULED }
+            h.model.available = false; h.pause.fire()
+            assertTrue(h.model.requests.isEmpty())
+            val refused = records.last { it.kind == DiagnosticKind.REQUEST && it.reason == DiagnosticReason.SERVICE_REFUSED }
+            assertEquals(scheduled.revision, refused.revision)
+            h.space()
+            val boundary = records.single { it.kind == DiagnosticKind.BOUNDARY }
+            assertEquals(DiagnosticReason.SERVICE_REFUSED, boundary.reason)
+            assertEquals(refused.session, boundary.session); assertEquals(refused.revision, boundary.revision)
+            assertEquals("helo ", h.controller.state.contextText)
+        }
+    }
+
+    @Test fun `protected admission emits only content free completion and never submits the token`() {
+        for (eligibility in listOf("eligible", "owner-excluded", "sensitive")) {
+            Harness(withModel = true).use { h ->
+                val records = mutableListOf<Pair<DiagnosticEvent, (() -> DiagnosticText)?>>()
+                h.controller.setDiagnostics(object : TypingDiagnostics {
+                    override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                    override fun invalidate() = Unit
+                    override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { records += event to text }
+                })
+                if (eligibility == "owner-excluded") h.owner = h.owner.copy(inputViewActive = false)
+                if (eligibility == "sensitive") h.controller.startSession(EditorContext.from(129, 0), 0, 0)
+                h.type("NASA")
+                assertEquals(0, h.routeRequests); assertTrue(h.model.requests.isEmpty()); assertNull(h.pause.task)
+                val completions = records.filter { it.first.kind == DiagnosticKind.CANDIDATES }
+                if (eligibility == "eligible") {
+                    val (event, payload) = completions.single()
+                    assertEquals(DiagnosticCompletion.PROTECTED, event.completion)
+                    assertEquals(DiagnosticReason.PROTECTED_FORM, event.reason)
+                    assertEquals(DiagnosticSource.LOCAL_POLICY, event.source)
+                    assertEquals(h.controller.state.sessionId, event.session)
+                    assertEquals(h.controller.state.revision, event.revision)
+                    assertEquals(0, event.candidateCount); assertEquals(0L, event.requestId)
+                    assertNull("Protected admission must never copy a text DTO", payload)
+                    assertEquals("NASA", h.controller.state.contextText)
+                } else assertTrue("Excluded owner/session emitted a protected event", completions.isEmpty())
+            }
+        }
+    }
+
     @Test fun `actual edit can prepare Ready model while the local lexicon is still loading`() {
         Harness(ready = false, withModel = true).use { h ->
             repeat(3) { h.coordinator.viewState }
@@ -484,7 +561,7 @@ class LocalCandidateCoordinatorTest {
     @Test fun `hidden automatic branches request only their qualified local or model work`() {
         for (mode in AutocorrectionMode.entries) for (strip in listOf(false, true)) {
             for (deterministic in listOf(false, true)) for (model in listOf(false, true)) {
-                Harness(withModel = true, qualified = true).use { h ->
+                Harness(withModel = true, modelOnly = true).use { h ->
                     h.owner = h.owner.copy(deterministicAutoReplaceQualified = deterministic,
                         modelAutoReplaceQualified = model)
                     h.configure(mode, strip)
@@ -550,7 +627,7 @@ class LocalCandidateCoordinatorTest {
     }
 
     @Test fun `hidden model branch accepts ready result without rendering or scheduling at boundary`() {
-        Harness(withModel = true, qualified = true).use { h ->
+        Harness(withModel = true, modelOnly = true).use { h ->
             h.owner = h.owner.copy(modelAutoReplaceQualified = true)
             h.configure(AutocorrectionMode.HIGH_CONFIDENCE, false)
             h.type("helos"); h.deliver(); h.pause.fire()
@@ -1006,9 +1083,61 @@ class LocalCandidateCoordinatorTest {
             input.token.candidateIds.map { NumericScore(it, if (it == winner) -1.0 else -10.0, 1) }))
     }
 
+    @Test fun `current local confusion bypasses model pause and fast Space keeps exact Undo`() {
+        Harness(withModel = true, currentQualification = true).use { h ->
+            h.lexicon.validWords += "the"
+            h.owner = h.owner.copy(contextualPunctuationEnabled = true, contextualModelReady = true)
+            h.type("teh"); h.deliver()
+            assertEquals(listOf("teh", "the"), h.labels())
+            assertNull(h.pause.task)
+            h.space()
+            assertEquals("the ", h.controller.state.contextText)
+            assertTrue(h.model.requests.isEmpty())
+            h.coordinator.edit { h.controller.deletePrevious(h.execute) }
+            assertEquals("teh", h.controller.state.contextText)
+            assertTrue(h.controller.state.originalSelected)
+        }
+    }
+
+    @Test fun `short valid words do not schedule contextual model either`() {
+        Harness(withModel = true).use { h ->
+            h.owner = h.owner.copy(contextualPunctuationEnabled = true, contextualModelReady = true)
+            h.lexicon.validWords += listOf("hello", "go")
+            h.type("hello"); h.deliver(); h.type(" "); h.type("go"); h.deliver()
+            assertNull(h.pause.task); h.pause.fire()
+            assertTrue(h.model.requests.isEmpty())
+        }
+    }
+
+    @Test fun `common confusion obeys coordinator OFF suggestions and owner invalidation gates`() {
+        for (mode in AutocorrectionMode.entries) {
+            Harness(withModel = true, currentQualification = true).use { h ->
+                h.lexicon.validWords += "the"; h.configure(mode, true)
+                h.type("teh")
+                if (mode != AutocorrectionMode.OFF) h.deliver()
+                assertEquals(if (mode == AutocorrectionMode.OFF) listOf("teh") else listOf("teh", "the"), h.labels())
+                h.space()
+                assertEquals(if (mode == AutocorrectionMode.HIGH_CONFIDENCE) "the " else "teh ", h.controller.state.contextText)
+                assertTrue(h.model.requests.isEmpty())
+            }
+        }
+        for (change in listOf<(CandidateOwnerState) -> CandidateOwnerState>(
+            { it.copy(editorAllowsSmartTyping = false) }, { it.copy(inputViewActive = false) },
+            { it.copy(hasSelection = true) }, { it.copy(language = KeyboardLanguage.RUSSIAN) },
+            { it.copy(layer = KeyboardLayer.SYMBOLS) })) {
+            Harness(withModel = true, currentQualification = true).use { h ->
+                h.lexicon.validWords += "the"; h.type("teh"); h.deliver()
+                h.owner = change(h.owner); h.coordinator.invalidate(); h.space()
+                assertEquals("teh ", h.controller.state.contextText)
+                assertNull(h.controller.state.lastAutoEdit)
+                assertTrue(h.model.requests.isEmpty())
+            }
+        }
+    }
+
     private class Harness(ready: Boolean = true, withModel: Boolean = false, qualified: Boolean = false,
-        modelOnly: Boolean = false) : AutoCloseable {
-        val controller = TypingSessionController(jvmGraphemes, SpellingQualification { _, model -> qualified || modelOnly && model })
+        modelOnly: Boolean = false, currentQualification: Boolean = false) : AutoCloseable {
+        val controller = TypingSessionController(jvmGraphemes, if (currentQualification) SpellingQualification.CURRENT else SpellingQualification { _, model -> qualified || modelOnly && model == io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingSource.MODEL })
         val lexicon = FixtureLexicon()
         var ready = ready
         var routeRequests = 0

@@ -33,6 +33,15 @@ import java.util.concurrent.atomic.AtomicReference
 
 /** Android kernel watches and the production adapter, without a real model/native-quality claim. */
 class ActiveModelLifecycleInstrumentedTest {
+    @Test fun unqualifiedModelIdentityNeverLoadsNativeRuntime() = ModelFixture().use { f ->
+        f.activate(1)
+        val manifest = File(f.model(1).parentFile, "model-manifest.json")
+        manifest.writeText(manifest.readText().replace(
+            "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4", "0".repeat(64)))
+        f.score(1)
+        assertEquals(ScoringCode.UNAVAILABLE, f.reply(1).code)
+        assertEquals(0, f.runtime.loads.get())
+    }
     @Test fun pointerRotationCancelsBlockedScoreAndReloadsNextIdentity() = ModelFixture().use { f ->
         f.activate(1)
         f.score(1)
@@ -495,6 +504,6 @@ class ActiveModelLifecycleInstrumentedTest {
     companion object {
         private fun directory(id: Int) = "fixture-$id.0.0"
         private fun pointer(id: Int) = ActiveModelPointerCodec.encode(ActiveModelPointer(directory(id), null))
-        private fun manifest(id: Int) = """{"schemaVersion":1,"modelId":"fixture","version":"$id.0.0","displayName":"Fixture","fileName":"fixture.gguf","url":"https://github.com/Mesteriis/rune.keyboard/releases/download/fixture/fixture.gguf","sha256":"${"0".repeat(64)}","sizeBytes":1,"runtimeApi":1,"minimumRuneVersionCode":2,"ggufVersion":3,"architecture":"qwen3","fileType":15}"""
+        private fun manifest(id: Int) = """{"schemaVersion":1,"modelId":"fixture","version":"$id.0.0","displayName":"Fixture","fileName":"fixture.gguf","url":"https://github.com/Mesteriis/rune.keyboard/releases/download/fixture/fixture.gguf","sha256":"7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4","sizeBytes":1,"runtimeApi":1,"minimumRuneVersionCode":2,"ggufVersion":3,"architecture":"qwen3","fileType":15}"""
     }
 }
