@@ -6,7 +6,10 @@ import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewConfiguration
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityManager
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.Button
 import android.widget.LinearLayout
@@ -42,11 +45,25 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
 
     fun render(state: SmartTypingViewState) {
         RuneTrace.section(SmartTypingTraceSection.CANDIDATE_RENDER) {
+            val childrenChanged = cells.count { it.visibility == VISIBLE } != state.candidates.size
             cells.forEachIndexed { index, cell ->
                 val item = state.candidates.getOrNull(index)
                 cell.bind(item, item != null && item.id == state.selectedCandidateId)
             }
             visibility = if (state.enabled) VISIBLE else GONE
+            if (childrenChanged && isShown &&
+                context.getSystemService(AccessibilityManager::class.java).isEnabled
+            ) {
+                // API 26 can retain the empty parent's child list when individual cells become
+                // visible. The strip itself is excluded from TalkBack's tree, so publish the
+                // completed structural update from its nearest exposed ancestor.
+                val source = parentForAccessibility as? View ?: this
+                source.sendAccessibilityEventUnchecked(
+                    AccessibilityEvent.obtain(AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED).apply {
+                        contentChangeTypes = AccessibilityEvent.CONTENT_CHANGE_TYPE_SUBTREE
+                    },
+                )
+            }
         }
     }
 

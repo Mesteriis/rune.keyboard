@@ -1,5 +1,6 @@
 package io.github.mesteriis.rune.keyboard.ime.ui
 
+import android.accessibilityservice.AccessibilityServiceInfo
 import android.content.Context
 import android.os.SystemClock
 import android.view.MotionEvent
@@ -10,6 +11,9 @@ import android.widget.TextView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.ime.layout.KeyAlternate
 import io.github.mesteriis.rune.keyboard.ime.layout.KeySpec
@@ -114,6 +118,40 @@ class CandidateStripInstrumentedTest {
         touch(letter, MotionEvent.ACTION_UP)
         touch(space, MotionEvent.ACTION_UP)
         assertTrue(actions.isEmpty())
+    }
+
+    @Test
+    fun candidatesAppearInAccessibilityAfterAnEmptyStripWasQueried() {
+        val device = UiDevice.getInstance(instrumentation)
+        val description = instrumentation.targetContext.getString(R.string.candidate_original, original.text)
+        val wasCompressed = instrumentation.uiAutomation.serviceInfo.flags and
+            AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS == 0
+        ActivityScenario.launch(SettingsActivity::class.java).use { scenario ->
+            lateinit var view: RuneKeyboardView
+            scenario.onActivity { activity ->
+                view = keyboard(activity)
+                activity.setContentView(view)
+            }
+            try {
+                // Check both UiAutomator's full tree and the important-only tree used by readers.
+                listOf(false, true).forEach { compressed ->
+                    device.setCompressedLayoutHierarchy(compressed)
+                    repeat(4) {
+                        scenario.onActivity { view.updateCandidates(SmartTypingViewState.EMPTY) }
+                        instrumentation.waitForIdleSync()
+                        assertTrue(device.wait(Until.gone(By.desc(description)), 2_000))
+                        // Querying the empty hierarchy primes the remote accessibility cache.
+                        scenario.onActivity { view.updateCandidates(SmartTypingViewState(true, listOf(original))) }
+                        assertTrue(
+                            "Populated cells must become discoverable through the public accessibility tree",
+                            device.wait(Until.hasObject(By.desc(description)), 2_000),
+                        )
+                    }
+                }
+            } finally {
+                device.setCompressedLayoutHierarchy(wasCompressed)
+            }
+        }
     }
 
     @Test
