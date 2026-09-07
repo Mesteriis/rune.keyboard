@@ -33,6 +33,9 @@ android {
         versionCode = 3
         versionName = "0.3.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // UTP collects failure screenshots/XML before uninstalling the test application.
+        testInstrumentationRunnerArguments["additionalTestOutputDir"] =
+            "/sdcard/Android/data/io.github.mesteriis.rune.keyboard/files/instrumentation-failures"
     }
 
     signingConfigs {

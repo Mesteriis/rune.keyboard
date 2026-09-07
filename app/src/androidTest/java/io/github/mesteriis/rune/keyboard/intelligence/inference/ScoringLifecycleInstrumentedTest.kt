@@ -285,7 +285,14 @@ class ScoringLifecycleInstrumentedTest {
             override fun onResult(reply: ScoreReplyParcel?) { reply?.value?.let { codes.add(it.code); replies.add(checkedId(it)) } }
         }
         private var killed = false
-        init { command(LifecycleModelInferenceService.RELEASE); await { it.active == 0 } }
+        init {
+            // bindService returns before onBind/onRebind. The separate control Binder can
+            // answer first; pressure injected then would precede the scoring bind and its
+            // legitimate rearm. Establish the lifecycle under test before sending controls.
+            scoringBinding.binder()
+            command(LifecycleModelInferenceService.RELEASE)
+            await { it.active == 0 }
+        }
         fun score(id: Long) = service.score(ScoreRequestParcel(input(id)), callback)
         fun rebindScoring() {
             scoringBinding.close()
