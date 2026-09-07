@@ -136,8 +136,9 @@ class CandidateStripInstrumentedTest {
                 // Check both UiAutomator's full tree and the important-only tree used by readers.
                 listOf(false, true).forEach { compressed ->
                     device.setCompressedLayoutHierarchy(compressed)
-                    repeat(4) {
-                        scenario.onActivity { view.updateCandidates(SmartTypingViewState.EMPTY) }
+                    repeat(4) { iteration ->
+                        val cleared = if (iteration % 2 == 0) SmartTypingViewState.EMPTY else SmartTypingViewState.HIDDEN
+                        scenario.onActivity { view.updateCandidates(cleared) }
                         instrumentation.waitForIdleSync()
                         assertTrue(device.wait(Until.gone(By.desc(description)), 2_000))
                         // Querying the empty hierarchy primes the remote accessibility cache.

@@ -22,7 +22,8 @@ class ImePrivacyInstrumentedTest : ImeTestBase() {
         driver.tapQaControl("qa_seed_cursor")
         observePreview(phase = 0, enabled = true, policy = InputPolicy.NORMAL, expectedVisible = true)
         driver.setKeyPreviewForTest(false)
-        driver.focusField("qa_plain_text")
+        // The same editor is still focused. Tapping its misspelled seed on API 26 opens
+        // Android's spelling popup and changes the accessibility window under observation.
         observePreview(phase = 1, enabled = false, policy = InputPolicy.NORMAL, expectedVisible = false)
         driver.setKeyPreviewForTest(true)
         driver.focusField("qa_password")

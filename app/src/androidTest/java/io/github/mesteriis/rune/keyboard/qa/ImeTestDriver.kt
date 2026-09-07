@@ -2,6 +2,7 @@ package io.github.mesteriis.rune.keyboard.qa
 
 import android.app.Instrumentation
 import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.os.SystemClock
@@ -14,8 +15,10 @@ import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.UiScrollable
 import androidx.test.uiautomator.UiSelector
+import androidx.test.uiautomator.StaleObjectException
 import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
+import io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.settings.SettingsCodec
@@ -38,6 +41,9 @@ class ImeTestDriver {
     private var previousPreferences: Map<String, *> = emptyMap<String, Any?>()
 
     fun setUp() {
+        // API 26's uncompressed tree can retain hidden, non-important container nodes.
+        // Query the same important-node hierarchy exposed to screen readers on that API.
+        if (android.os.Build.VERSION.SDK_INT == 26) device.setCompressedLayoutHierarchy(true)
         previousIme = shell("settings get secure default_input_method")
         previousEnabledImes = shell("settings get secure enabled_input_methods")
         runeWasEnabled = IME_COMPONENT in previousEnabledImes
@@ -69,6 +75,7 @@ class ImeTestDriver {
         if (!runeWasEnabled) shell("ime disable $IME_COMPONENT")
         val hardKeyboardSetting = previousHardKeyboardSetting.takeUnless { it.isBlank() || it == "null" } ?: "0"
         shell("settings put secure show_ime_with_hard_keyboard $hardKeyboardSetting")
+        if (android.os.Build.VERSION.SDK_INT == 26) device.setCompressedLayoutHierarchy(false)
     }
 
     /** Deterministic temporary QA settings; tearDown restores the full pre-test raw map. */
@@ -234,20 +241,30 @@ class ImeTestDriver {
         // The QA editor runs in a separate process. Drain Rune's main thread after its Binder
         // selection/update callbacks before dispatching the next keyboard action.
         instrumentation.waitForIdleSync()
+        if (idName == "qa_seed_selection") awaitSelectionAcknowledgement()
     }
 
     fun fieldText(idName: String): String = requireObject(idName, scroll = true).text.orEmpty()
 
+    private fun awaitSelectionAcknowledgement() {
+        var context = keyboardSnapshot().keyboard.context
+        while (context is ContextWrapper && context !is RuneInputMethodService) context = context.baseContext
+        val service = checkNotNull(context as? RuneInputMethodService)
+        val selection = RuneInputMethodService::class.java.getDeclaredField("hasSelection").apply { isAccessible = true }
+        // The remote editor's selection must reach Rune before the next Delete. The numeric
+        // acknowledgement is observed only; the final editor assertion still checks the command.
+        eventually(WAIT_MILLIS) { onMain { selection.getBoolean(service) } }
+    }
+
     fun tapKey(label: String) {
-        keyByText(label).click()
-        device.waitForIdle()
+        tapResolvedKey { keyByText(label) }
     }
 
     fun tapKey(vararg possibleLabels: String) {
-        val key = possibleLabels.firstNotNullOfOrNull(::findKeyByText)
-            ?: error("Rune key not found: ${possibleLabels.joinToString()}")
-        key.click()
-        device.waitForIdle()
+        tapResolvedKey {
+            possibleLabels.firstNotNullOfOrNull(::findKeyByText)
+                ?: error("Rune key not found: ${possibleLabels.joinToString()}")
+        }
     }
 
     fun tapDelete() = tapKeyByDescription(targetContext.getString(R.string.key_delete))
@@ -255,7 +272,22 @@ class ImeTestDriver {
     fun tapEnter(descriptionResource: Int) = tapKeyByDescription(targetContext.getString(descriptionResource))
 
     fun tapKeyByDescription(description: String) {
-        keyByDescription(description).click()
+        tapResolvedKey { keyByDescription(description) }
+    }
+
+    internal fun tapResolvedKey(resolve: () -> UiObject2) {
+        val deadline = SystemClock.uptimeMillis() + WAIT_MILLIS
+        while (true) {
+            try {
+                // UiObject2.click resolves its node before injecting the gesture. A stale
+                // node here means no tap was sent; only that pre-gesture lookup is retried.
+                resolve().click()
+                break
+            } catch (stale: StaleObjectException) {
+                if (SystemClock.uptimeMillis() >= deadline) throw stale
+                SystemClock.sleep(25)
+            }
+        }
         device.waitForIdle()
     }
 
@@ -565,7 +597,8 @@ class ImeTestDriver {
             ?: error("Rune key with description '$description' not found")
 
     private fun bottomMost(objects: List<UiObject2>): UiObject2? =
-        objects.filter { it.visibleBounds.height() > 0 }.maxByOrNull { it.visibleBounds.centerY() }
+        objects.map { it to it.visibleBounds }.filter { it.second.height() > 0 }
+            .maxByOrNull { it.second.centerY() }?.first
 
     private fun requireObject(idName: String, scroll: Boolean = false): UiObject2 {
         val selector = By.res(PACKAGE_NAME, idName)
