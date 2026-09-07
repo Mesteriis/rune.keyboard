@@ -20,21 +20,27 @@ class ImeInsetsInstrumentedTest : ImeTestBase() {
     @Test
     fun bottomRowStaysAboveNavigationAndClickableAfterReopenAndRotation() {
         driver.tapQaControl("qa_seed_cursor")
-        assertBottomRowSafeAndTapSpace("left right")
+        var text = assertBottomRowSafeAndTapSpace("leftright")
         driver.device.pressBack()
         assertTrue(driver.device.wait(Until.gone(By.desc(
             instrumentation.targetContext.getString(R.string.key_delete))), ImeTestDriver.WAIT_MILLIS))
         // Directly reopen the same editor; no driver fallback may rebind the service here.
         checkNotNull(driver.device.findObject(By.res(ImeTestDriver.PACKAGE_NAME, "qa_plain_text"))).click()
         awaitKeyboard()
-        // Clicking the editor to reopen also places its caret at the tapped text position.
-        assertBottomRowSafeAndTapSpace("left right ")
+        text = assertBottomRowSafeAndTapSpace(text)
         val beforeRotation = keyboardSnapshot().keyboard
+        val startingRotation = driver.device.displayRotation
+        val targetRotation = if (startingRotation == Surface.ROTATION_0 ||
+            startingRotation == Surface.ROTATION_180) Surface.ROTATION_90 else Surface.ROTATION_0
         try {
-            driver.device.setOrientationLeft()
+            // Change orientation even if this test starts on an already-rotated emulator.
+            if (targetRotation == Surface.ROTATION_90) driver.device.setOrientationLeft()
+            else driver.device.setOrientationNatural()
             awaitKeyboard()
+            assertEquals("Display must reach the different target rotation", targetRotation,
+                driver.device.displayRotation)
             awaitTransition(beforeRotation)
-            assertBottomRowSafeAndTapSpace("left right  ")
+            assertBottomRowSafeAndTapSpace(text)
         } finally {
             driver.device.setOrientationNatural()
             driver.device.unfreezeRotation()
@@ -57,7 +63,7 @@ class ImeInsetsInstrumentedTest : ImeTestBase() {
     }
 
     @Suppress("DEPRECATION")
-    private fun assertBottomRowSafeAndTapSpace(expected: String) {
+    private fun assertBottomRowSafeAndTapSpace(before: String): String {
         val snapshot = keyboardSnapshot()
         val spaceDescription = instrumentation.targetContext.getString(R.string.key_space)
         var spaceKey: View? = null
@@ -150,10 +156,21 @@ class ImeInsetsInstrumentedTest : ImeTestBase() {
         } finally {
             onMain { snapshot.keyboard.setOnActionListener(checkNotNull(original)) }
         }
+        // Reopening with a real editor tap places the caret according to its current text
+        // geometry. Read that selection without refocusing, rebinding, or changing the editor.
+        val editor = checkNotNull(driver.device.findObject(
+            By.res(ImeTestDriver.PACKAGE_NAME, "qa_plain_text"))).accessibilityNodeInfo
+        assertTrue("The original editor must still own focus", editor.isFocused)
+        assertEquals("Bottom-row observation must not change editor text", before, editor.text.toString())
+        val start = editor.textSelectionStart
+        val end = editor.textSelectionEnd
+        assertTrue("Editor must expose its actual selection", start in 0..before.length && end in 0..before.length)
+        val expected = before.replaceRange(minOf(start, end), maxOf(start, end), " ")
         val bounds = screenBounds(checkNotNull(spaceKey))
         // Exercise the lowest touchable pixels, where a navigation overlay used to steal input.
         assertTrue(driver.device.click(bounds.centerX(), bounds.bottom - 2))
         driver.awaitFieldText("qa_plain_text", expected)
+        return expected
     }
 
     private fun screenBounds(key: View): Rect {
