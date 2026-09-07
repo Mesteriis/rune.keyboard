@@ -232,11 +232,16 @@ class RuneInputMethodService : InputMethodService() {
     override fun onEvaluateFullscreenMode(): Boolean = false
 
     override fun onConfigurationChanged(newConfig: Configuration) {
+        // On some Fold firmware the focused editor survives the size change but the framework does
+        // not invoke onStartInputView again. Keep the active IME window attached by replacing its
+        // view after the framework consumes the configuration; no editor refocus or text replay.
+        val wasInputViewActive = inputViewActive
         // Capture before super can synchronously redeliver input callbacks/rebuild the view.
         visualContinuity.onConfigurationChanged(configurationSize(newConfig), state, SystemClock.uptimeMillis())
         candidates.invalidate()
         typingSession.invalidate(::executeTypingEdit)
         super.onConfigurationChanged(newConfig)
+        if (wasInputViewActive) recreateInputView()
     }
 
     private fun handleAction(action: KeyboardAction) {
