@@ -4,6 +4,67 @@ from typing_diagnostics_analyzer import analyze_events
 
 
 class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
+    def test_original_restoration_changes_prior_final_word_only_after_exact_acceptance(self):
+        correction = {"schema": 2, "kind": "MANUAL", "reason": "CORRECTION", "session": 7,
+                      "revision": 10, "operationId": 4, "requestId": 2, "original": "teh", "result": "the"}
+        accepted = {"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 7,
+                    "revision": 10, "operationId": 4}
+        original = {"schema": 2, "kind": "MANUAL", "reason": "ORIGINAL", "session": 7,
+                    "revision": 11, "operationId": 5, "requestId": 2, "original": "the", "result": "teh"}
+        terminal = {"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 7,
+                    "revision": 11, "operationId": 5}
+        for response in ([], [dict(terminal, operationId=99)], [dict(terminal, reason="EDITOR_REJECTED")]):
+            with self.subTest(response=response):
+                outcomes = analyze_events([correction, accepted, original] + response)["outcomes"]
+                self.assertEqual(1, len(outcomes)); self.assertEqual("the", outcomes[0]["final"])
+                self.assertEqual("APPLIED", outcomes[0]["outcome"])
+        outcomes = analyze_events([correction, accepted, original, terminal])["outcomes"]
+        self.assertEqual(1, len(outcomes)); self.assertEqual("teh", outcomes[0]["final"])
+        self.assertEqual("RESTORED", outcomes[0]["outcome"])
+        self.assertEqual(11, outcomes[0]["final_revision"])
+
+    def test_original_restoration_cannot_cancel_a_different_candidate_request(self):
+        events = [
+            {"schema": 2, "kind": "MANUAL", "reason": "CORRECTION", "session": 7,
+             "revision": 10, "operationId": 4, "requestId": 2, "original": "teh", "result": "the"},
+            {"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 7,
+             "revision": 10, "operationId": 4},
+            {"schema": 2, "kind": "MANUAL", "reason": "ORIGINAL", "session": 7,
+             "revision": 11, "operationId": 5, "requestId": 3, "original": "the", "result": "teh"},
+            {"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 7,
+             "revision": 11, "operationId": 5},
+        ]
+        self.assertEqual("the", analyze_events(events)["outcomes"][0]["final"])
+
+    def test_schema_one_original_restoration_uses_only_accepted_legacy_editor_adjacency(self):
+        events = [
+            {"schema": 1, "kind": "MANUAL", "reason": "CORRECTION", "session": 7,
+             "revision": 10, "original": "teh", "result": "the"},
+            {"schema": 1, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 7, "revision": 11},
+            {"schema": 1, "kind": "MANUAL", "reason": "ORIGINAL", "session": 7,
+             "revision": 12, "original": "the", "result": "teh"},
+        ]
+        self.assertEqual("the", analyze_events(events)["outcomes"][0]["final"])
+        events.append({"schema": 1, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 7, "revision": 13})
+        self.assertEqual("teh", analyze_events(events)["outcomes"][0]["final"])
+
+    def test_reset_session_start_revokes_pending_identity_before_numeric_ids_are_reused(self):
+        for include_old_start in (False, True):
+            events = ([{"schema": 2, "kind": "SESSION", "reason": "START", "session": 1, "revision": 2}]
+                      if include_old_start else [])
+            events.extend([
+                {"schema": 2, "kind": "MANUAL", "reason": "CORRECTION", "session": 1,
+                 "revision": 10, "operationId": 4, "original": "old", "result": "wrong"},
+                {"schema": 2, "kind": "SESSION", "reason": "START", "session": 1, "revision": 2},
+            ])
+            terminal = {"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 1,
+                        "revision": 10, "operationId": 4}
+            self.assertEqual([], analyze_events(events + [terminal])["outcomes"])
+            events.append({"schema": 2, "kind": "MANUAL", "reason": "CORRECTION", "session": 1,
+                           "revision": 10, "operationId": 4, "original": "teh", "result": "the"})
+            outcomes = analyze_events(events + [terminal])["outcomes"]
+            self.assertEqual("teh", outcomes[0]["original"]); self.assertEqual("the", outcomes[0]["final"])
+
     def test_schema_two_missing_operation_identity_cannot_use_legacy_adjacency(self):
         for attempt_schema, editor_schema, attempt_id, editor_id in (
             (2, 2, None, 99), (2, 1, None, None), (2, 2, 0, 99),

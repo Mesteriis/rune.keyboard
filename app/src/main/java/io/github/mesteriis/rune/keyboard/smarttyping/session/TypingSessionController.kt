@@ -91,8 +91,9 @@ class TypingSessionController internal constructor(
         revision: Long = state.revision, source: DiagnosticSource = if (model) DiagnosticSource.MODEL else DiagnosticSource.NONE,
         completion: DiagnosticCompletion = DiagnosticCompletion.NONE, scoringCode: Int = -1,
         elapsedMs: Long = 0, requestId: Long = 0,
+        editorAttempt: Boolean = false,
         text: (() -> DiagnosticText)? = { diagnosticText() }) {
-        val attempt = (kind in listOf(DiagnosticKind.BOUNDARY, DiagnosticKind.MECHANICAL) && reason == DiagnosticReason.AUTO_REPLACE) ||
+        val attempt = editorAttempt || (kind in listOf(DiagnosticKind.BOUNDARY, DiagnosticKind.MECHANICAL) && reason == DiagnosticReason.AUTO_REPLACE) ||
             (kind == DiagnosticKind.MANUAL && reason in listOf(DiagnosticReason.CORRECTION, DiagnosticReason.CONTEXTUAL))
         val event = DiagnosticEvent(kind, reason, session, revision, count, selected, model,
             completion, source, scoringCode, elapsedMs, requestId, if (attempt) nextDiagnosticOperation() else 0)
@@ -599,7 +600,8 @@ class TypingSessionController internal constructor(
         diagnose(DiagnosticKind.MANUAL, if (index == -1) DiagnosticReason.ORIGINAL else DiagnosticReason.CORRECTION,
             selection.alternatives.size, index,
             source = if (selection.generation.isCanonicalCaseCorrection()) DiagnosticSource.CANONICAL_CASE
-                else if (selection.ranking?.usedModel == true) DiagnosticSource.MODEL else DiagnosticSource.LOCAL_POLICY) {
+                else if (selection.ranking?.usedModel == true) DiagnosticSource.MODEL else DiagnosticSource.LOCAL_POLICY,
+            requestId = selection.requestId, editorAttempt = index == -1) {
             diagnosticText(result = word)
         }
         return applyEdit(TypingEdit.SetComposingText(next.text), expected, execute) {

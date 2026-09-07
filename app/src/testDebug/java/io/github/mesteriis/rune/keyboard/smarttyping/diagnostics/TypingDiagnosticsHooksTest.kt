@@ -13,6 +13,33 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class TypingDiagnosticsHooksTest {
+    @Test fun textChangingOriginalSelectionHasAnExactEditorOperationButVetoDoesNot() {
+        for (accepted in listOf(true, false)) {
+            val observer = Observer(); val controller = prepared(observer)
+            val correction = controller.candidateViewState.candidates.filterIsInstance<CandidateUiItem.Correction>().first().id
+            controller.selectCandidate(correction) { true }
+            val priorAttempt = observer.events.last { it.kind == DiagnosticKind.MANUAL }
+            assertEquals("hello", controller.state.contextText)
+            observer.records.clear()
+            controller.selectCandidate(controller.originalCandidateId!!) { accepted }
+            val attempt = observer.records.single { it.first.kind == DiagnosticKind.MANUAL }
+            val outcome = observer.events.single { it.kind == DiagnosticKind.EDITOR }
+            assertEquals(DiagnosticReason.ORIGINAL, attempt.first.reason)
+            assertTrue(attempt.first.operationId > 0)
+            assertEquals(attempt.first.operationId, outcome.operationId)
+            assertEquals(attempt.first.revision, outcome.revision)
+            assertEquals(priorAttempt.requestId, attempt.first.requestId)
+            assertTrue(attempt.first.requestId > 0)
+            assertEquals("hello", attempt.second!!.original); assertEquals("helllo", attempt.second!!.result)
+            assertEquals(if (accepted) DiagnosticReason.EDITOR_ACCEPTED else DiagnosticReason.EDITOR_REJECTED, outcome.reason)
+            if (accepted) assertEquals("helllo", controller.state.contextText)
+        }
+        val observer = Observer(); val controller = prepared(observer)
+        observer.records.clear()
+        controller.selectCandidate(controller.originalCandidateId!!) { error("Veto cannot mutate editor") }
+        assertEquals(0L, observer.events.single().operationId)
+    }
+
     @Test fun ordinaryLettersDoNotProduceBoundaryDecisions() {
         val observer = Observer(); val controller = prepared(observer)
         observer.records.clear()

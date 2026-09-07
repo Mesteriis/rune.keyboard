@@ -38,6 +38,31 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class LocalCandidateCoordinatorTest {
+    @Test fun `Binder availability loss records refusal for scheduled and submitted origins before cancellation`() {
+        for (submitted in listOf(false, true)) Harness(withModel = true).use { h ->
+            val records = mutableListOf<DiagnosticEvent>()
+            h.controller.setDiagnostics(object : TypingDiagnostics {
+                override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                override fun invalidate() = Unit
+                override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { records += event }
+            })
+            h.type("helo"); h.deliver()
+            if (submitted) h.pause.fire()
+            val origin = records.last { it.kind == DiagnosticKind.REQUEST &&
+                it.reason == if (submitted) DiagnosticReason.SUBMITTED else DiagnosticReason.SCHEDULED }
+            h.model.available = false
+            h.model.listener.onAvailabilityChanged(false)
+            assertNull(h.pause.task)
+            val refused = records.single { it.kind == DiagnosticKind.REQUEST && it.reason == DiagnosticReason.SERVICE_REFUSED }
+            assertEquals(origin.session, refused.session); assertEquals(origin.revision, refused.revision)
+            assertEquals(origin.requestId, refused.requestId); assertEquals(origin.source, refused.source)
+            h.space()
+            assertEquals(DiagnosticReason.SERVICE_REFUSED, records.single { it.kind == DiagnosticKind.BOUNDARY }.reason)
+            assertEquals("helo ", h.controller.state.contextText)
+            assertEquals(if (submitted) 1 else 0, h.model.requests.size)
+        }
+    }
+
     @Test fun `scheduled transport refusal survives cancellation at the next boundary`() {
         Harness(withModel = true).use { h ->
             val records = mutableListOf<DiagnosticEvent>()

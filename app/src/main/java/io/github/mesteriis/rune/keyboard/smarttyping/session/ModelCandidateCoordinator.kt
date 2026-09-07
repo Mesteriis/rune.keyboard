@@ -211,7 +211,13 @@ class ModelCandidateCoordinator(
     }
     override fun onAvailabilityChanged(available: Boolean) {
         checkOwner()
-        if (!available && !closed) cancel()
+        if (!available && !closed) {
+            diagnosticRequest?.let { controller.recordRequest(DiagnosticReason.SERVICE_REFUSED, diagnosticSource,
+                it.sessionId, it.revision, it.requestId) }
+            diagnosticScheduled?.let { controller.recordRequest(DiagnosticReason.SERVICE_REFUSED, diagnosticSource,
+                it.first, it.second) }
+            cancel()
+        }
         // A new connection never resubmits an earlier composition.
     }
     override fun close() {

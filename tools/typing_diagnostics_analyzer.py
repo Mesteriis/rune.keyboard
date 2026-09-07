@@ -16,6 +16,7 @@ CORRECTION_EVENTS = {
     ("BOUNDARY", "AUTO_REPLACE"): "AUTO_REPLACE",
     ("MANUAL", "CORRECTION"): "CORRECTION",
     ("MANUAL", "CONTEXTUAL"): "CONTEXTUAL",
+    ("MANUAL", "ORIGINAL"): "ORIGINAL",
 }
 ROTATED_JSONL = re.compile(r"^(.*)\.(\d+)\.jsonl$")
 
@@ -61,6 +62,39 @@ def analyze_events(events):
     pending = {}
     operations = {}
     segment_start = {}
+    last_start = None
+
+    def finish(attempt, accepted):
+        session = attempt["session"]
+        revision = attempt["initial_revision"]
+        current_segment = revision >= segment_start.get(session, 0)
+        if attempt["kind"] == "ORIGINAL":
+            # Schema 2 ties Original to the same local allowlist by numeric request ID.
+            # A veto, missing lineage, or rejected editor response cannot restore an outcome.
+            if accepted and current_segment:
+                eligible = [previous for previous in active.get(session, [])
+                            if previous["outcome"] == "APPLIED" and previous["initial_revision"] < revision]
+                if attempt["_requestId"] is None:
+                    # Schema 1 has no request lineage; its accepted adjacent restoration
+                    # can reconcile only the most recent matching original/correction pair.
+                    restored = [previous for previous in eligible if previous["_requestId"] is None and
+                                previous["final"] == attempt["original"] and
+                                previous["original"] == attempt["preliminary"]][-1:]
+                else:
+                    restored = [previous for previous in eligible if attempt["_requestId"] > 0 and
+                                previous["_requestId"] == attempt["_requestId"]]
+                for previous in restored:
+                    previous["final"] = attempt["preliminary"]
+                    previous["final_revision"] = revision
+                    previous["outcome"] = "RESTORED"
+            return
+        if not accepted:
+            # Refusal can follow an ambiguously applied edit; no readback is allowed.
+            attempt["final"] = None
+            attempt["outcome"] = "REJECTED"
+        elif current_segment:
+            active.setdefault(session, []).append(attempt)
+        outcomes.append(attempt)
 
     for event in events:
         schema, kind, reason, session, revision = _event_fields(event)
@@ -71,6 +105,14 @@ def analyze_events(events):
             if not 0 <= operation <= 1_000_000_000:
                 raise ValueError("operationId outside bounds")
         if kind == "SESSION" and reason == "START":
+            # Controller revision/session counters advance within one service lifetime.
+            # A reset marker revokes every old identity, including a truncated capture
+            # whose first START was rotated away. Forward segments retain late responses.
+            reset = (last_start is not None and (session < last_start[0] or revision <= last_start[1])) or any(
+                key[1] >= revision for key in operations)
+            if reset:
+                operations.clear(); pending.clear(); active.clear(); segment_start.clear()
+            last_start = (session, revision)
             segment_start[session] = revision
             active.pop(session, None)
             pending.pop(session, None)
@@ -94,6 +136,7 @@ def analyze_events(events):
                     "preliminary": result,
                     "final": result,
                     "outcome": "APPLIED",
+                    "_requestId": event.get("requestId", 0) if schema >= 2 else None,
                 }
                 if schema >= 2:
                     if operation is not None and operation > 0:
@@ -105,20 +148,13 @@ def analyze_events(events):
         if operation is not None and kind == "EDITOR" and reason in ("EDITOR_ACCEPTED", "EDITOR_REJECTED"):
             attempt = operations.pop((session, revision, operation), None)
             if attempt is not None:
-                if reason == "EDITOR_REJECTED":
-                    # Refusal can follow an ambiguously applied edit; no readback is allowed.
-                    attempt["final"] = None
-                    attempt["outcome"] = "REJECTED"
-                elif revision >= segment_start.get(session, 0):
-                    active.setdefault(session, []).append(attempt)
-                outcomes.append(attempt)
+                finish(attempt, reason == "EDITOR_ACCEPTED")
 
         attempt = pending.get(session)
         if attempt is not None and revision >= attempt["initial_revision"] + 1:
             pending.pop(session)
             if schema == 1 and kind == "EDITOR" and reason == "EDITOR_ACCEPTED" and revision == attempt["initial_revision"] + 1:
-                outcomes.append(attempt)
-                active.setdefault(session, []).append(attempt)
+                finish(attempt, True)
 
         if kind == "UNDO" and reason == "ACCEPTED":
             if not isinstance(result, str):
@@ -131,7 +167,8 @@ def analyze_events(events):
                 previous["final"] = result or previous["original"]
                 previous["outcome"] = "UNDONE"
 
-    return {"schemas": sorted(schemas), "outcomes": outcomes}
+    return {"schemas": sorted(schemas), "outcomes": [
+        {key: value for key, value in item.items() if key != "_requestId"} for item in outcomes]}
 
 
 def _rotation_order(path):
