@@ -115,7 +115,9 @@ jobs:
   emulator-smoke:
     name: emulator-smoke-api-${{ matrix.api-level }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # Full real-Binder suites now take about 22 minutes after an emulator is ready;
+    # allow provisioning, APK installation and artifact collection to complete.
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
