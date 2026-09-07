@@ -6,6 +6,7 @@ import android.os.SystemClock
 import android.view.View
 import android.view.Surface
 import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
@@ -84,6 +85,17 @@ class ImeInsetsInstrumentedTest : ImeTestBase() {
             val base = root.resources.getDimensionPixelSize(R.dimen.keyboard_padding)
             val display = android.graphics.Point()
             root.display.getRealSize(display)
+            if (Build.VERSION.SDK_INT >= 30) {
+                // Window metrics retain system exclusions consumed by a framework parent before
+                // rootWindowInsets is delivered. Merge overlapping sources per edge, not by sum.
+                val metrics = root.context.getSystemService(WindowManager::class.java).currentWindowMetrics
+                val windowSafe = metrics.windowInsets.getInsetsIgnoringVisibility(
+                    WindowInsets.Type.navigationBars() or WindowInsets.Type.displayCutout() or
+                        WindowInsets.Type.captionBar())
+                safe.left = maxOf(safe.left, windowSafe.left)
+                safe.right = maxOf(safe.right, windowSafe.right)
+                safe.bottom = maxOf(safe.bottom, windowSafe.bottom)
+            }
             if (Build.VERSION.SDK_INT >= 29) {
                 // A framework parent may already exclude a landscape display cutout as well.
                 root.display.cutout?.let { cutout ->
@@ -108,7 +120,7 @@ class ImeInsetsInstrumentedTest : ImeTestBase() {
                 safe.bottom > 0 || safe.left > 0 || safe.right > 0)
             val rootPosition = IntArray(2)
             root.getLocationOnScreen(rootPosition)
-            // API26's framework parent can consume the bar before dispatching to Rune. Measure
+            // The framework parent can consume the bar before dispatching to Rune. Measure
             // total exclusion on screen so both missing clearance and double padding fail.
             assertEquals(base + safe.bottom,
                 display.y - rootPosition[1] - root.height + root.paddingBottom)
