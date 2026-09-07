@@ -33,9 +33,10 @@ class ImePrivacyInstrumentedTest : ImeTestBase() {
     private fun observePreview(phase: Int, enabled: Boolean, policy: InputPolicy, expectedVisible: Boolean) {
         driver.device.waitForIdle()
         // A preference change can replace the input view after accessibility first reports
-        // its Delete key. Await this actual character target before freezing touch geometry.
+        // its Delete key, and can restore either enabled letter layout. Await a no-alternate
+        // character in both EN and RU before freezing touch geometry.
         val key = checkNotNull(driver.device.wait(
-            Until.findObject(By.text(Pattern.compile("[bB]"))), ImeTestDriver.WAIT_MILLIS,
+            Until.findObject(By.text(Pattern.compile("[bBвВ]"))), ImeTestDriver.WAIT_MILLIS,
         )) { "Preview phase $phase character target did not become visible" }
         val bounds = Rect(key.visibleBounds)
         assertPreviewFixture(bounds, enabled, policy)
