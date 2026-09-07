@@ -100,6 +100,8 @@ class TypingSessionController internal constructor(
             when {
                 kind == DiagnosticKind.REQUEST && reason in listOf(DiagnosticReason.SCHEDULED, DiagnosticReason.SUBMITTED) ->
                     diagnosticDecisionStatus = revision to DiagnosticReason.RESULT_NOT_READY
+                kind == DiagnosticKind.REQUEST && reason == DiagnosticReason.SERVICE_REFUSED ->
+                    diagnosticDecisionStatus = revision to DiagnosticReason.SERVICE_REFUSED
                 kind == DiagnosticKind.CANDIDATES && reason == DiagnosticReason.ACCEPTED -> diagnosticDecisionStatus = null
                 kind == DiagnosticKind.RANKING && reason != DiagnosticReason.STALE -> diagnosticDecisionStatus = revision to reason
             }
@@ -124,6 +126,12 @@ class TypingSessionController internal constructor(
         session: Long = state.sessionId, revision: Long = state.revision, requestId: Long = 0) {
         diagnose(DiagnosticKind.REQUEST, reason, session = session, revision = revision,
             source = source, requestId = requestId, text = null)
+    }
+    /** Called at the eligible owner's retrieval gate, before any worker/model submission. */
+    internal fun recordProtectedCandidate() {
+        if (!ownsCandidateComposition || !ProtectedTokenPolicy.isProtected(state.composing!!.typedWord)) return
+        diagnose(DiagnosticKind.CANDIDATES, DiagnosticReason.PROTECTED_FORM,
+            source = DiagnosticSource.LOCAL_POLICY, completion = DiagnosticCompletion.PROTECTED, text = null)
     }
     private fun diagnosticText(input: String = "", result: String = "") = DiagnosticText(
         input = input, context = context?.text.orEmpty(), original = state.composing?.typedWord.orEmpty(),

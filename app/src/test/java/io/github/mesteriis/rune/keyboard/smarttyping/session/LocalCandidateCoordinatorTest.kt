@@ -18,6 +18,7 @@ import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
 import io.github.mesteriis.rune.keyboard.ime.model.EditorMode
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.*
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.TopCandidateSelection
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
@@ -37,6 +38,57 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class LocalCandidateCoordinatorTest {
+    @Test fun `scheduled transport refusal survives cancellation at the next boundary`() {
+        Harness(withModel = true).use { h ->
+            val records = mutableListOf<DiagnosticEvent>()
+            h.controller.setDiagnostics(object : TypingDiagnostics {
+                override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                override fun invalidate() = Unit
+                override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { records += event }
+            })
+            h.type("helo"); h.deliver()
+            val scheduled = records.last { it.kind == DiagnosticKind.REQUEST && it.reason == DiagnosticReason.SCHEDULED }
+            h.model.available = false; h.pause.fire()
+            assertTrue(h.model.requests.isEmpty())
+            val refused = records.last { it.kind == DiagnosticKind.REQUEST && it.reason == DiagnosticReason.SERVICE_REFUSED }
+            assertEquals(scheduled.revision, refused.revision)
+            h.space()
+            val boundary = records.single { it.kind == DiagnosticKind.BOUNDARY }
+            assertEquals(DiagnosticReason.SERVICE_REFUSED, boundary.reason)
+            assertEquals(refused.session, boundary.session); assertEquals(refused.revision, boundary.revision)
+            assertEquals("helo ", h.controller.state.contextText)
+        }
+    }
+
+    @Test fun `protected admission emits only content free completion and never submits the token`() {
+        for (eligibility in listOf("eligible", "owner-excluded", "sensitive")) {
+            Harness(withModel = true).use { h ->
+                val records = mutableListOf<Pair<DiagnosticEvent, (() -> DiagnosticText)?>>()
+                h.controller.setDiagnostics(object : TypingDiagnostics {
+                    override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                    override fun invalidate() = Unit
+                    override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { records += event to text }
+                })
+                if (eligibility == "owner-excluded") h.owner = h.owner.copy(inputViewActive = false)
+                if (eligibility == "sensitive") h.controller.startSession(EditorContext.from(129, 0), 0, 0)
+                h.type("NASA")
+                assertEquals(0, h.routeRequests); assertTrue(h.model.requests.isEmpty()); assertNull(h.pause.task)
+                val completions = records.filter { it.first.kind == DiagnosticKind.CANDIDATES }
+                if (eligibility == "eligible") {
+                    val (event, payload) = completions.single()
+                    assertEquals(DiagnosticCompletion.PROTECTED, event.completion)
+                    assertEquals(DiagnosticReason.PROTECTED_FORM, event.reason)
+                    assertEquals(DiagnosticSource.LOCAL_POLICY, event.source)
+                    assertEquals(h.controller.state.sessionId, event.session)
+                    assertEquals(h.controller.state.revision, event.revision)
+                    assertEquals(0, event.candidateCount); assertEquals(0L, event.requestId)
+                    assertNull("Protected admission must never copy a text DTO", payload)
+                    assertEquals("NASA", h.controller.state.contextText)
+                } else assertTrue("Excluded owner/session emitted a protected event", completions.isEmpty())
+            }
+        }
+    }
+
     @Test fun `actual edit can prepare Ready model while the local lexicon is still loading`() {
         Harness(ready = false, withModel = true).use { h ->
             repeat(3) { h.coordinator.viewState }

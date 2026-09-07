@@ -4,6 +4,23 @@ from typing_diagnostics_analyzer import analyze_events
 
 
 class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
+    def test_schema_two_missing_operation_identity_cannot_use_legacy_adjacency(self):
+        for attempt_schema, editor_schema, attempt_id, editor_id in (
+            (2, 2, None, 99), (2, 1, None, None), (2, 2, 0, 99),
+            (2, 2, 4, None), (1, 2, None, None), (1, 2, None, 99),
+        ):
+            with self.subTest(attempt_schema=attempt_schema, editor_schema=editor_schema,
+                              attempt_id=attempt_id, editor_id=editor_id):
+                attempt = {"schema": attempt_schema, "kind": "MANUAL", "reason": "CORRECTION", "session": 7,
+                           "revision": 10, "original": "teh", "result": "the"}
+                editor = {"schema": editor_schema, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 7,
+                          "revision": 11}
+                if attempt_id is not None:
+                    attempt["operationId"] = attempt_id
+                if editor_id is not None:
+                    editor["operationId"] = editor_id
+                self.assertEqual([], analyze_events([attempt, editor])["outcomes"])
+
     def test_schema_two_matches_operations_instead_of_adjacent_revisions(self):
         events = [
             {"schema": 2, "kind": "BOUNDARY", "reason": "AUTO_REPLACE", "session": 7,
@@ -122,10 +139,10 @@ class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
         """Rejecting schema 2 or consuming its unknown fields would break compatible exports."""
         report = analyze_events([
             {"schema": 2, "kind": "MANUAL", "reason": "CORRECTION", "session": 10,
-             "revision": 20, "original": "spelng", "result": "spelling",
+             "revision": 20, "operationId": 8, "original": "spelng", "result": "spelling",
              "elapsedMs": 4, "source": "LOCAL_POLICY", "futureOnly": {"ignored": True}},
             {"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 10,
-             "revision": 21, "elapsedMs": 5, "source": "LOCAL_POLICY"},
+             "revision": 20, "operationId": 8, "elapsedMs": 5, "source": "LOCAL_POLICY"},
         ])
 
         self.assertEqual([2], report["schemas"])

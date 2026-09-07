@@ -195,6 +195,7 @@ class LocalCandidateCoordinator internal constructor(
     private fun requestCurrentWord() {
         val owner = ownerState?.invoke() ?: return
         if (!owner.canRequestCandidateWork || !controller.canRequestCandidates) {
+            if (owner.canRequestCandidateWork) controller.recordProtectedCandidate()
             invalidateLoads()
             return
         }

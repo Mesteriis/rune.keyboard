@@ -2,7 +2,7 @@
 """Produce final correction outcomes from opt-in typing diagnostics JSONL exports.
 
 Schema 2 pairs final editor responses by operation, session and originating
-revision. Legacy records without operation IDs use schema-1 adjacency rules.
+revision. Only schema-1 records use legacy adjacency rules.
 Unknown additive fields remain ignored.
 """
 import argparse
@@ -95,8 +95,8 @@ def analyze_events(events):
                     "final": result,
                     "outcome": "APPLIED",
                 }
-                if operation is not None:
-                    if operation > 0:
+                if schema >= 2:
+                    if operation is not None and operation > 0:
                         operations.setdefault((session, revision, operation), attempt)
                 else:
                     pending[session] = attempt
@@ -116,7 +116,7 @@ def analyze_events(events):
         attempt = pending.get(session)
         if attempt is not None and revision >= attempt["initial_revision"] + 1:
             pending.pop(session)
-            if kind == "EDITOR" and reason == "EDITOR_ACCEPTED" and revision == attempt["initial_revision"] + 1:
+            if schema == 1 and kind == "EDITOR" and reason == "EDITOR_ACCEPTED" and revision == attempt["initial_revision"] + 1:
                 outcomes.append(attempt)
                 active.setdefault(session, []).append(attempt)
 
