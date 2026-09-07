@@ -22,6 +22,8 @@ interface ModelScoringListener {
     /** Owner may certify one unchanged Rune-owned word after its space was committed. */
     fun isCurrentRequest(token: ScoringToken): Boolean = token.revision == currentCompositionRevision()
     fun onReply(reply: ScoringReply)
+    /** Numeric completion only; this callback never grants candidate/editor ownership. */
+    fun onDiscardedReply(reply: ScoringReply) = Unit
     /** Transport transitions only; initial/unmodified false is not repeatedly published. */
     fun onAvailabilityChanged(available: Boolean)
 }

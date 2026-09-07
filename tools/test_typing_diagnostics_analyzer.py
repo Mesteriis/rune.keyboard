@@ -4,6 +4,63 @@ from typing_diagnostics_analyzer import analyze_events
 
 
 class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
+    def test_schema_two_matches_operations_instead_of_adjacent_revisions(self):
+        events = [
+            {"schema": 2, "kind": "BOUNDARY", "reason": "AUTO_REPLACE", "session": 7,
+             "revision": 10, "operationId": 4, "original": "teh", "result": "the"},
+            {"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 7,
+             "revision": 11, "operationId": 5},
+        ]
+        self.assertEqual([], analyze_events(events)["outcomes"])
+        events.append({"schema": 2, "kind": "EDITOR", "reason": "EDITOR_REJECTED", "session": 7,
+                       "revision": 10, "operationId": 4})
+        outcome = analyze_events(events)["outcomes"][0]
+        self.assertEqual("REJECTED", outcome["outcome"])
+        self.assertIsNone(outcome["final"])
+
+    def test_schema_two_acceptance_is_one_shot_and_needs_matching_origin(self):
+        attempt = {"schema": 2, "kind": "MANUAL", "reason": "CORRECTION", "session": 7,
+                   "revision": 10, "operationId": 4, "original": "teh", "result": "the"}
+        accepted = {"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 7,
+                    "revision": 10, "operationId": 4}
+        self.assertEqual([], analyze_events([attempt, dict(accepted, session=8), dict(accepted, revision=11)])["outcomes"])
+        outcomes = analyze_events([attempt, accepted, accepted])["outcomes"]
+        self.assertEqual(1, len(outcomes))
+        self.assertEqual("APPLIED", outcomes[0]["outcome"])
+
+    def test_late_editor_response_cannot_join_undo_across_a_fresh_segment(self):
+        events = [
+            {"schema": 2, "kind": "MANUAL", "reason": "CORRECTION", "session": 7,
+             "revision": 10, "operationId": 4, "original": "teh", "result": "the"},
+            {"schema": 2, "kind": "SESSION", "reason": "START", "session": 7, "revision": 15},
+            {"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 7,
+             "revision": 10, "operationId": 4},
+            {"schema": 2, "kind": "UNDO", "reason": "ACCEPTED", "session": 7,
+             "revision": 17, "result": "unrelated"},
+        ]
+        self.assertEqual("the", analyze_events(events)["outcomes"][0]["final"])
+
+    def test_malformed_operation_ids_fail_closed(self):
+        for operation in (True, -1, 1_000_000_001, "4"):
+            with self.subTest(operation=operation), self.assertRaises(ValueError):
+                analyze_events([{"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED",
+                                 "session": 1, "revision": 1, "operationId": operation}])
+
+    def test_malformed_known_schema_two_metadata_is_rejected(self):
+        for field, value in (("elapsedMs", -1), ("elapsedMs", 60_001), ("scoringCode", 16),
+                             ("requestId", False), ("completion", "guessed"), ("source", "private free text")):
+            with self.subTest(field=field, value=value), self.assertRaises(ValueError):
+                analyze_events([{"schema": 2, "kind": "RANKING", "reason": "STALE",
+                                 "session": 1, "revision": 1, field: value}])
+
+    def test_mechanical_outcomes_wait_for_exact_editor_response(self):
+        attempt = {"schema": 2, "kind": "MECHANICAL", "reason": "AUTO_REPLACE", "session": 2,
+                   "revision": 3, "operationId": 7, "original": "hello  ", "result": "hello. "}
+        self.assertEqual([], analyze_events([attempt])["outcomes"])
+        report = analyze_events([attempt, {"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED",
+                                          "session": 2, "revision": 3, "operationId": 7}])
+        self.assertEqual("MECHANICAL", report["outcomes"][0]["kind"])
+
     def test_accepted_correction_followed_by_undo_has_the_final_original_word(self):
         """Dropping editor acceptance would turn a rejected attempt into a correction outcome."""
         report = analyze_events([
@@ -66,9 +123,9 @@ class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
         report = analyze_events([
             {"schema": 2, "kind": "MANUAL", "reason": "CORRECTION", "session": 10,
              "revision": 20, "original": "spelng", "result": "spelling",
-             "elapsedMs": 4, "source": "LOCAL", "futureOnly": {"ignored": True}},
+             "elapsedMs": 4, "source": "LOCAL_POLICY", "futureOnly": {"ignored": True}},
             {"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 10,
-             "revision": 21, "elapsedMs": 5, "source": "LOCAL"},
+             "revision": 21, "elapsedMs": 5, "source": "LOCAL_POLICY"},
         ])
 
         self.assertEqual([2], report["schemas"])

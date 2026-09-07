@@ -17,6 +17,8 @@ internal class DiagnosticsRecorder(private val backend: DiagnosticsBackend) : Ty
     private val lock = Object()
     private val events = ArrayDeque<Record>()
     private val controls = ArrayDeque<Command>()
+    // Numeric request stamps only; stale completions cannot retain or request text.
+    private val lateScoring = LinkedHashMap<Triple<Long, Long, Long>, DiagnosticSource>()
     private var epoch = 0L
     private var preferenceEpoch = 0L
     private var requestedSettings = DiagnosticsPreferences()
@@ -66,6 +68,7 @@ internal class DiagnosticsRecorder(private val backend: DiagnosticsBackend) : Ty
             val desired = transform(requestedSettings)
             requestedSettings = desired
             val changed = ++preferenceEpoch
+            lateScoring.clear()
             invalidateQueued()
             // Disable immediately; enabling becomes visible only after successful persistence.
             settings = DiagnosticsPreferences(settings.metadata && desired.metadata, settings.text && desired.text)
@@ -103,6 +106,7 @@ internal class DiagnosticsRecorder(private val backend: DiagnosticsBackend) : Ty
             if (closed || controls.size >= MAX_CONTROLS) { deliver(done, false); return }
             preferencesChanged = true
             val changed = ++preferenceEpoch
+            lateScoring.clear()
             requestedSettings = DiagnosticsPreferences()
             invalidateQueued(); exportEpoch++
             settings = DiagnosticsPreferences()
@@ -172,21 +176,26 @@ internal class DiagnosticsRecorder(private val backend: DiagnosticsBackend) : Ty
     }
     override fun invalidate() { synchronized(lock) { invalidateQueued() } }
 
-    override fun editorOperation(session: Long, revision: Long): (() -> Unit)? = synchronized(lock) {
-        if (closed || this.session != session || session < 0 || revision < 0 ||
+    override fun editorOperation(session: Long, revision: Long): (() -> Unit)? {
+        val outcome = editorOutcome(DiagnosticEvent(DiagnosticKind.EDITOR, DiagnosticReason.NONE, session, revision)) ?: return null
+        return { outcome(false) }
+    }
+
+    override fun editorOutcome(event: DiagnosticEvent): ((Boolean) -> Unit)? = synchronized(lock) {
+        if (closed || this.session != event.session || event.session < 0 || event.revision < 0 ||
             (!settings.metadata && !settings.text)) return@synchronized null
         val consent = preferenceEpoch
         val admitted = settings
         var consumed = false
-        val refusal: () -> Unit = {
+        val outcome: (Boolean) -> Unit = { accepted ->
             try {
                 synchronized(lock) {
                     if (!consumed) {
                         consumed = true
                         if (!closed && preferenceEpoch == consent) {
                             // No supplier or text DTO is accepted by this terminal path.
-                            val value = DiagnosticsEncoding.metadata(DiagnosticEvent(
-                                DiagnosticKind.EDITOR, DiagnosticReason.EDITOR_REJECTED, session, revision))
+                            val value = DiagnosticsEncoding.metadata(event.copy(kind = DiagnosticKind.EDITOR,
+                                reason = if (accepted) DiagnosticReason.EDITOR_ACCEPTED else DiagnosticReason.EDITOR_REJECTED))
                             if (admitted.metadata && settings.metadata) enqueue(DiagnosticStream.METADATA, value, terminal = true)
                             if (admitted.text && settings.text) enqueue(DiagnosticStream.TEXT, value, terminal = true)
                         }
@@ -194,14 +203,31 @@ internal class DiagnosticsRecorder(private val backend: DiagnosticsBackend) : Ty
                 }
             } catch (_: Throwable) { /* Failure-contained, content-free outcome only. */ }
         }
-        refusal
+        outcome
     }
 
     override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) {
         try {
             synchronized(lock) {
-                if (closed || session != event.session || event.session < 0) return
+                if (closed) return
+                val key = Triple(event.session, event.revision, event.requestId)
+                if (event.kind == DiagnosticKind.RANKING && event.reason == DiagnosticReason.STALE && text == null) {
+                    val source = lateScoring.remove(key) ?: return
+                    val value = DiagnosticsEncoding.metadata(event.copy(source = source))
+                    if (settings.metadata) enqueue(DiagnosticStream.METADATA, value, terminal = true)
+                    if (settings.text) enqueue(DiagnosticStream.TEXT, value, terminal = true)
+                    return
+                }
+                if (session != event.session || event.session < 0) return
+                if (event.kind == DiagnosticKind.REQUEST && event.reason == DiagnosticReason.SUBMITTED &&
+                    event.source in setOf(DiagnosticSource.MODEL, DiagnosticSource.CONTEXTUAL) &&
+                    event.requestId in 1..1_000_000_000 && (settings.metadata || settings.text)) {
+                    lateScoring[key] = event.source
+                    if (lateScoring.size > MAX_LATE_REQUESTS) lateScoring.remove(lateScoring.keys.first())
+                }
+                if (event.kind == DiagnosticKind.RANKING) lateScoring.remove(key)
                 if (settings.metadata) enqueue(DiagnosticStream.METADATA, DiagnosticsEncoding.metadata(event))
+                if (settings.text && text == null) enqueue(DiagnosticStream.TEXT, DiagnosticsEncoding.metadata(event))
                 // Gate before invoking the supplier or copying any Rune-owned payload.
                 if (settings.text && text != null && events.size < MAX_EVENTS && bytes < QUEUE_BYTES) {
                     val admittedGeneration = epoch
@@ -270,6 +296,7 @@ internal class DiagnosticsRecorder(private val backend: DiagnosticsBackend) : Ty
         synchronized(lock) {
             if (closed) return
             closed = true; invalidateQueued(); exportEpoch++
+            lateScoring.clear()
             while (controls.isNotEmpty()) deliver(controls.removeFirst().done, false)
             lock.notifyAll()
         }
@@ -283,6 +310,7 @@ internal class DiagnosticsRecorder(private val backend: DiagnosticsBackend) : Ty
         const val MAX_EVENTS = 256
         const val QUEUE_BYTES = 512 * 1024
         const val RECORD_BYTES = 8 * 1024
+        private const val MAX_LATE_REQUESTS = 32
         private const val MAX_CONTROLS = 16
         private fun deliver(done: (Boolean) -> Unit, success: Boolean) { try { done(success) } catch (_: Throwable) { } }
     }

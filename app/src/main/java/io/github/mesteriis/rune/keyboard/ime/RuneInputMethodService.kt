@@ -265,6 +265,11 @@ class RuneInputMethodService : InputMethodService() {
                 }
             }
             state = transition.state
+            if (action is KeyboardAction.SwitchLanguage || action == KeyboardAction.ToggleSymbols ||
+                action == KeyboardAction.ToggleSymbolsPage) {
+                typingSession.reopenDiagnosticsForLetters(inputViewActive && editorContext.supportsSmartTyping &&
+                    state.layer == KeyboardLayer.LETTERS && !hasSelection)
+            }
             if (action is KeyboardAction.SwitchLanguage) {
                 if (state.language != previousState.language) {
                     selectedLanguage = state.language

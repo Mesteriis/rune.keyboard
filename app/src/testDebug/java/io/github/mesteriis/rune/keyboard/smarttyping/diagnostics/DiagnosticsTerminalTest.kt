@@ -11,6 +11,65 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class DiagnosticsTerminalTest {
+    @Test fun lateScoringNeedsAnAdmittedExactRequestAndRetainsOnlyOriginMetadata() {
+        val backend = Backend()
+        DiagnosticsRecorder(backend).use { recorder ->
+            configure(recorder, setOf(DiagnosticStream.TEXT)); recorder.startSession(7, true, true)
+            recorder.record(DiagnosticEvent(DiagnosticKind.REQUEST, DiagnosticReason.SUBMITTED, 7, 10,
+                source = DiagnosticSource.CONTEXTUAL, requestId = 3), null)
+            await(recorder::barrier); backend.records.clear()
+            recorder.startSession(8, false, true)
+            val stale = DiagnosticEvent(DiagnosticKind.RANKING, DiagnosticReason.STALE, 7, 10,
+                source = DiagnosticSource.MODEL, requestId = 3, scoringCode = 9, elapsedMs = 21)
+            recorder.record(stale.copy(revision = 11), null)
+            recorder.record(stale, null); recorder.record(stale, null)
+            await(recorder::barrier)
+            val line = backend.records.single().second
+            assertTrue(line.contains("\"session\":7,")); assertTrue(line.contains("\"revision\":10,"))
+            assertTrue(line.contains("\"source\":\"CONTEXTUAL\"")); assertTrue(line.contains("\"scoringCode\":9"))
+            assertFalse(line.contains("\"input\""))
+        }
+    }
+
+    @Test fun lateScoringAdmissionIsBoundedAndRevokedByConsentChanges() {
+        val backend = Backend()
+        DiagnosticsRecorder(backend).use { recorder ->
+            configure(recorder, setOf(DiagnosticStream.TEXT)); recorder.startSession(7, true, true)
+            for (id in 1L..100) recorder.record(DiagnosticEvent(DiagnosticKind.REQUEST, DiagnosticReason.SUBMITTED,
+                7, 10, source = DiagnosticSource.MODEL, requestId = id), null)
+            await(recorder::barrier); backend.records.clear(); recorder.invalidate()
+            for (id in 1L..100) recorder.record(DiagnosticEvent(DiagnosticKind.RANKING, DiagnosticReason.STALE,
+                7, 10, requestId = id, scoringCode = 9), null)
+            await(recorder::barrier)
+            assertTrue(backend.records.size in 1..32)
+            recorder.startSession(8, true, true)
+            recorder.record(DiagnosticEvent(DiagnosticKind.REQUEST, DiagnosticReason.SUBMITTED,
+                8, 20, source = DiagnosticSource.MODEL, requestId = 101), null)
+            await(recorder::disableText); backend.records.clear()
+            recorder.record(DiagnosticEvent(DiagnosticKind.RANKING, DiagnosticReason.STALE,
+                8, 20, requestId = 101, scoringCode = 9), null)
+            await(recorder::barrier); assertTrue(backend.records.isEmpty())
+        }
+    }
+
+    @Test fun acceptedOutcomeRetainsExactAdmittedOperationWithoutTextAcrossPrivacyTransition() {
+        val backend = Backend()
+        DiagnosticsRecorder(backend).use { recorder ->
+            configure(recorder, DiagnosticStream.entries.toSet()); recorder.startSession(7, true, true)
+            val terminal = checkNotNull(recorder.editorOutcome(DiagnosticEvent(DiagnosticKind.MANUAL,
+                DiagnosticReason.CORRECTION, 7, 10, source = DiagnosticSource.CANONICAL_CASE, operationId = 31)))
+            recorder.invalidate(); recorder.startSession(8, false, true)
+            terminal(true); terminal(false)
+            await(recorder::barrier)
+            assertEquals(2, backend.records.size)
+            backend.records.forEach { (_, line) ->
+                assertTrue(line.contains("\"session\":7,")); assertTrue(line.contains("\"revision\":10,"))
+                assertTrue(line.contains("\"operationId\":31")); assertTrue(line.contains("EDITOR_ACCEPTED"))
+                assertTrue(line.contains("CANONICAL_CASE")); assertFalse(line.contains("\"input\""))
+            }
+        }
+    }
+
     @Test fun refusedEditorRetainsOnlyOriginalContentFreeOutcomeAcrossSensitiveTransition() = refusal(false)
     @Test fun reentrantEditorSessionUsesOriginIdsAndDoesNotCaptureReplacementSession() = refusal(true)
 

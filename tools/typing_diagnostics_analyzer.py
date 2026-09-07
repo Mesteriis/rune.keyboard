@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Produce final correction outcomes from opt-in typing diagnostics JSONL exports.
 
-The analyzer only relies on fields introduced by schema 1.  Later schemas may
-add fields and are accepted without changing the schema-1 interpretation.
+Schema 2 pairs final editor responses by operation, session and originating
+revision. Legacy records without operation IDs use schema-1 adjacency rules.
+Unknown additive fields remain ignored.
 """
 import argparse
 import json
@@ -11,6 +12,7 @@ from pathlib import Path
 
 
 CORRECTION_EVENTS = {
+    ("MECHANICAL", "AUTO_REPLACE"): "MECHANICAL",
     ("BOUNDARY", "AUTO_REPLACE"): "AUTO_REPLACE",
     ("MANUAL", "CORRECTION"): "CORRECTION",
     ("MANUAL", "CONTEXTUAL"): "CONTEXTUAL",
@@ -30,6 +32,20 @@ def _event_fields(event):
     schema = _integer(event.get("schema"), "schema")
     if schema < 1:
         raise ValueError("schema must be at least 1")
+    if schema >= 2:
+        for name, lower, upper in (("elapsedMs", 0, 60_000), ("scoringCode", -1, 15),
+                                   ("requestId", 0, 1_000_000_000), ("candidateCount", 0, 8),
+                                   ("selectedIndex", -1, 7)):
+            if name in event and not lower <= _integer(event[name], name) <= upper:
+                raise ValueError(f"{name} outside bounds")
+        enums = {
+            "source": {"NONE", "LOCAL_POLICY", "MODEL", "CANONICAL_CASE", "MECHANICAL", "CONTEXTUAL"},
+            "completion": {"NONE", "COMPLETE", "PROTECTED", "VALID_WORD", "STATES_EXHAUSTED",
+                           "VERIFIED_EXHAUSTED", "CANCELLED", "UNAVAILABLE", "READER_FAILURE"},
+        }
+        for name, allowed in enums.items():
+            if name in event and (not isinstance(event[name], str) or event[name] not in allowed):
+                raise ValueError(f"{name} must be a fixed enum")
     kind = event.get("kind")
     reason = event.get("reason")
     if not isinstance(kind, str) or not isinstance(reason, str):
@@ -43,11 +59,19 @@ def analyze_events(events):
     outcomes = []
     active = {}
     pending = {}
+    operations = {}
+    segment_start = {}
 
     for event in events:
         schema, kind, reason, session, revision = _event_fields(event)
         schemas.add(schema)
+        operation = None
+        if schema >= 2 and "operationId" in event:
+            operation = _integer(event["operationId"], "operationId")
+            if not 0 <= operation <= 1_000_000_000:
+                raise ValueError("operationId outside bounds")
         if kind == "SESSION" and reason == "START":
+            segment_start[session] = revision
             active.pop(session, None)
             pending.pop(session, None)
             continue
@@ -61,7 +85,7 @@ def analyze_events(events):
             if original and result and original != result:
                 # Correction diagnostics are emitted before the guarded editor mutation.
                 # Do not expose an outcome until its next editor revision accepts it.
-                pending[session] = {
+                attempt = {
                     "session": session,
                     "initial_revision": revision,
                     "final_revision": revision,
@@ -71,7 +95,23 @@ def analyze_events(events):
                     "final": result,
                     "outcome": "APPLIED",
                 }
+                if operation is not None:
+                    if operation > 0:
+                        operations.setdefault((session, revision, operation), attempt)
+                else:
+                    pending[session] = attempt
             continue
+
+        if operation is not None and kind == "EDITOR" and reason in ("EDITOR_ACCEPTED", "EDITOR_REJECTED"):
+            attempt = operations.pop((session, revision, operation), None)
+            if attempt is not None:
+                if reason == "EDITOR_REJECTED":
+                    # Refusal can follow an ambiguously applied edit; no readback is allowed.
+                    attempt["final"] = None
+                    attempt["outcome"] = "REJECTED"
+                elif revision >= segment_start.get(session, 0):
+                    active.setdefault(session, []).append(attempt)
+                outcomes.append(attempt)
 
         attempt = pending.get(session)
         if attempt is not None and revision >= attempt["initial_revision"] + 1:

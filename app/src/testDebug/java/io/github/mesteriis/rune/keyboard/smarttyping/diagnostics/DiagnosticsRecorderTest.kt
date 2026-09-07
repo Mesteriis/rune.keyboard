@@ -9,6 +9,37 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class DiagnosticsRecorderTest {
+    @Test fun textOnlyCaptureIncludesContentFreeScoringAttribution() {
+        val backend = MemoryBackend()
+        DiagnosticsRecorder(backend).use { recorder ->
+            await(recorder::barrier); enable(recorder); recorder.startSession(1, true, true)
+            recorder.record(DiagnosticEvent(DiagnosticKind.RANKING, DiagnosticReason.SERVICE_REFUSED, 1, 2,
+                source = DiagnosticSource.MODEL, scoringCode = 3, elapsedMs = 18, requestId = 4), null)
+            await(recorder::barrier)
+            assertEquals(1, backend.records.size)
+            assertEquals(DiagnosticStream.TEXT, backend.records.single().first)
+            val line = backend.records.single().second.decodeToString()
+            assertTrue(line.contains("\"scoringCode\":3")); assertFalse(line.contains("\"input\""))
+        }
+    }
+    @Test fun schemaTwoMetadataClampsUntrustedNumbersWithoutInvokingText() {
+        val backend = MemoryBackend()
+        DiagnosticsRecorder(backend).use { recorder ->
+            await(recorder::barrier); await { recorder.setMetadata(true, it) }
+            recorder.startSession(1, true, true)
+            recorder.record(DiagnosticEvent(DiagnosticKind.RANKING, DiagnosticReason.SERVICE_REFUSED, 1, Long.MAX_VALUE,
+                candidateCount = Int.MAX_VALUE, selectedIndex = Int.MIN_VALUE, scoringCode = Int.MAX_VALUE,
+                elapsedMs = Long.MAX_VALUE, operationId = Long.MAX_VALUE, requestId = -1)) { error("Metadata copied text") }
+            await(recorder::barrier)
+            val encoded = backend.records.single().second.decodeToString()
+            for (field in listOf("\"schema\":2", "\"elapsedMs\":60000", "\"scoringCode\":15",
+                "\"operationId\":1000000000", "\"requestId\":0", "\"candidateCount\":8", "\"selectedIndex\":-1")) {
+                assertTrue(encoded, encoded.contains(field))
+            }
+            assertFalse(encoded.contains("\"input\""))
+        }
+    }
+
     @Test fun malformedValuesFailClosedIndependently() {
         assertEquals(DiagnosticsPreferences(), DiagnosticsPreferences.decode(emptyMap<String, Any>()))
         assertEquals(DiagnosticsPreferences(true, false), DiagnosticsPreferences.decode(mapOf(
