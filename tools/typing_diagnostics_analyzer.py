@@ -42,22 +42,26 @@ def analyze_events(events):
     schemas = set()
     outcomes = []
     active = {}
+    pending = {}
 
     for event in events:
         schema, kind, reason, session, revision = _event_fields(event)
         schemas.add(schema)
         if kind == "SESSION" and reason == "START":
             active.pop(session, None)
+            pending.pop(session, None)
             continue
 
         correction_kind = CORRECTION_EVENTS.get((kind, reason))
         original = event.get("original", "")
-        result = event.get("result", "")
+        result = event.get("result")
         if correction_kind is not None:
             if not isinstance(original, str) or not isinstance(result, str):
                 raise ValueError("correction original and result must be strings")
             if original and result and original != result:
-                outcome = {
+                # Correction diagnostics are emitted before the guarded editor mutation.
+                # Do not expose an outcome until its next editor revision accepts it.
+                pending[session] = {
                     "session": session,
                     "initial_revision": revision,
                     "final_revision": revision,
@@ -67,17 +71,22 @@ def analyze_events(events):
                     "final": result,
                     "outcome": "APPLIED",
                 }
-                outcomes.append(outcome)
-                active.setdefault(session, []).append(outcome)
             continue
 
+        attempt = pending.get(session)
+        if attempt is not None and revision >= attempt["initial_revision"] + 1:
+            pending.pop(session)
+            if kind == "EDITOR" and reason == "EDITOR_ACCEPTED" and revision == attempt["initial_revision"] + 1:
+                outcomes.append(attempt)
+                active.setdefault(session, []).append(attempt)
+
         if kind == "UNDO" and reason == "ACCEPTED":
+            if not isinstance(result, str):
+                raise ValueError("undo result must be a string")
             candidates = active.get(session, [])
             previous = next((item for item in reversed(candidates)
                              if item["outcome"] == "APPLIED" and item["initial_revision"] <= revision), None)
             if previous is not None:
-                if result and not isinstance(result, str):
-                    raise ValueError("undo result must be a string")
                 previous["final_revision"] = revision
                 previous["final"] = result or previous["original"]
                 previous["outcome"] = "UNDONE"

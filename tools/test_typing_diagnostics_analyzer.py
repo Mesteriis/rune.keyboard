@@ -4,11 +4,13 @@ from typing_diagnostics_analyzer import analyze_events
 
 
 class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
-    def test_undo_finalizes_the_prior_automatic_word_correction(self):
-        """Removing the session correction stack would report `the` instead of final `teh`."""
+    def test_accepted_correction_followed_by_undo_has_the_final_original_word(self):
+        """Dropping editor acceptance would turn a rejected attempt into a correction outcome."""
         report = analyze_events([
             {"schema": 1, "kind": "BOUNDARY", "reason": "AUTO_REPLACE", "session": 7,
              "revision": 10, "original": "teh", "result": "the"},
+            {"schema": 1, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 7,
+             "revision": 11},
             {"schema": 1, "kind": "UNDO", "reason": "ACCEPTED", "session": 7,
              "revision": 12, "original": "", "result": "teh"},
         ])
@@ -24,17 +26,54 @@ class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
             "outcome": "UNDONE",
         }], report["outcomes"])
 
+    def test_rejected_correction_attempt_has_no_word_outcome(self):
+        """Reporting a correction before its editor acknowledgement creates a false positive."""
+        report = analyze_events([
+            {"schema": 1, "kind": "MANUAL", "reason": "CORRECTION", "session": 8,
+             "revision": 20, "original": "spelng", "result": "spelling"},
+            {"schema": 1, "kind": "EDITOR", "reason": "EDITOR_REJECTED", "session": 8,
+             "revision": 21},
+            {"schema": 1, "kind": "UNDO", "reason": "ACCEPTED", "session": 8,
+             "revision": 22, "original": "", "result": "spelng"},
+        ])
+
+        self.assertEqual([], report["outcomes"])
+
+    def test_accepted_undo_requires_a_string_result(self):
+        """Coercing a malformed Undo result to the original hides corrupt schema-1 data."""
+        undo_events = [
+            ("missing", {"schema": 1, "kind": "UNDO", "reason": "ACCEPTED", "session": 9,
+                         "revision": 32, "original": ""}),
+            ("null", {"schema": 1, "kind": "UNDO", "reason": "ACCEPTED", "session": 9,
+                      "revision": 32, "original": "", "result": None}),
+            ("false", {"schema": 1, "kind": "UNDO", "reason": "ACCEPTED", "session": 9,
+                       "revision": 32, "original": "", "result": False}),
+            ("zero", {"schema": 1, "kind": "UNDO", "reason": "ACCEPTED", "session": 9,
+                      "revision": 32, "original": "", "result": 0}),
+        ]
+        for label, undo in undo_events:
+            with self.subTest(result=label), self.assertRaisesRegex(ValueError, "undo result must be a string"):
+                analyze_events([
+                    {"schema": 1, "kind": "BOUNDARY", "reason": "AUTO_REPLACE", "session": 9,
+                     "revision": 30, "original": "teh", "result": "the"},
+                    {"schema": 1, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 9,
+                     "revision": 31},
+                    undo,
+                ])
+
     def test_additive_future_schema_fields_do_not_change_final_outcomes(self):
         """Rejecting schema 2 or consuming its unknown fields would break compatible exports."""
         report = analyze_events([
-            {"schema": 2, "kind": "MANUAL", "reason": "CORRECTION", "session": 8,
+            {"schema": 2, "kind": "MANUAL", "reason": "CORRECTION", "session": 10,
              "revision": 20, "original": "spelng", "result": "spelling",
              "elapsedMs": 4, "source": "LOCAL", "futureOnly": {"ignored": True}},
+            {"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 10,
+             "revision": 21, "elapsedMs": 5, "source": "LOCAL"},
         ])
 
         self.assertEqual([2], report["schemas"])
         self.assertEqual([{
-            "session": 8,
+            "session": 10,
             "initial_revision": 20,
             "final_revision": 20,
             "kind": "CORRECTION",
@@ -47,9 +86,11 @@ class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
     def test_late_stale_events_do_not_replace_an_applied_outcome(self):
         """Treating any later ranking event as a final result would erase a real correction."""
         report = analyze_events([
-            {"schema": 1, "kind": "MANUAL", "reason": "CORRECTION", "session": 9,
+            {"schema": 1, "kind": "MANUAL", "reason": "CORRECTION", "session": 11,
              "revision": 30, "original": "recieve", "result": "receive"},
-            {"schema": 2, "kind": "RANKING", "reason": "STALE", "session": 9,
+            {"schema": 1, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 11,
+             "revision": 31},
+            {"schema": 2, "kind": "RANKING", "reason": "STALE", "session": 11,
              "revision": 30, "original": "recieve", "result": "late-value", "source": "MODEL"},
         ])
 
