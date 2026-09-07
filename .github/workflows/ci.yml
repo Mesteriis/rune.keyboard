@@ -164,55 +164,16 @@ jobs:
           disable-animations: true
           emulator-options: -no-window -gpu ${{ matrix.gpu-mode }} ${{ matrix.emulator-features }} -noaudio -no-boot-anim -no-snapshot-save
           script: |
-            set +e
-            diagnose_failure() {
-              failed_step="$1"
-              echo "::error title=Android boundary failure::$failed_step"
-              echo '::group::Android boundary diagnostics'
-              adb devices -l || true
-              adb shell getprop ro.build.version.sdk || true
-              adb shell ime list -s || true
-              adb shell dumpsys input_method || true
-              adb logcat -d -t 400 || true
-              echo '::endgroup::'
-            }
-            run_step() {
-              label="$1"
-              shift
-              "$@"
-              status=$?
-              if [ "$status" -ne 0 ]; then
-                diagnose_failure "$label (exit $status)"
-                exit "$status"
-              fi
-            }
-            run_step 'assemble Android test APKs' ./gradlew --no-daemon assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest
-            run_step 'install debug APK' ./gradlew --no-daemon installDebug
+            ./gradlew --no-daemon assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest
+            ./gradlew --no-daemon installDebug
             mkdir -p app/build/ci-device
             adb logcat -v threadtime > app/build/ci-device/logcat.txt 2>&1 &
-            run_step 'enable hardware IME visibility' adb shell settings put secure show_ime_with_hard_keyboard 1
-            enabled=0
-            for attempt in $(seq 1 15); do
-              if adb shell ime enable io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService; then enabled=1; break; fi
-              sleep 2
-            done
-            if [ "$enabled" -ne 1 ]; then
-              diagnose_failure 'enable Rune IME'
-              exit 1
-            fi
-            run_step 'select Rune IME' adb shell ime set io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService
-            run_step 'launch QA editor' adb shell am start -W -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
+            adb shell settings put secure show_ime_with_hard_keyboard 1
+            for attempt in $(seq 1 15); do if adb shell ime enable io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService; then break; fi; if [ "$attempt" -eq 15 ]; then exit 1; fi; sleep 2; done
+            adb shell ime set io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService
+            adb shell am start -W -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
             ./gradlew --no-daemon :app:connectedDebugAndroidTest
-            status=$?
-            if [ "$status" -ne 0 ]; then
-              echo '::group::app instrumentation XML'
-              find app/build/outputs/androidTest-results/connected/debug -name 'TEST-*.xml' -type f -exec cat {} \; || true
-              python3 tools/ci/report-instrumentation-failures.py || true
-              echo '::endgroup::'
-              diagnose_failure "app instrumentation (exit $status)"
-              exit "$status"
-            fi
-            run_step 'runtime instrumentation' ./gradlew --no-daemon :runtime-llama:connectedDebugAndroidTest
+            ./gradlew --no-daemon :runtime-llama:connectedDebugAndroidTest
       - name: Upload instrumentation results
         if: always()
         uses: actions/upload-artifact@v4
