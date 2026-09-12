@@ -16,6 +16,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunct
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CalibratedSpellingPolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.LocalCorrectionPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.RankingModelScore
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CalibratedRanking
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CommonConfusions
@@ -95,12 +96,15 @@ class TypingSessionController internal constructor(
         revision: Long = state.revision, source: DiagnosticSource = if (model) DiagnosticSource.MODEL else DiagnosticSource.NONE,
         completion: DiagnosticCompletion = DiagnosticCompletion.NONE, scoringCode: Int = -1,
         elapsedMs: Long = 0, requestId: Long = 0,
+        localCompletion: DiagnosticCompletion = DiagnosticCompletion.NONE,
+        localInspectedStates: Int = 0, localVerifiedTerminals: Int = 0,
         editorAttempt: Boolean = false,
         text: (() -> DiagnosticText)? = { diagnosticText() }) {
         val attempt = editorAttempt || (kind in listOf(DiagnosticKind.BOUNDARY, DiagnosticKind.MECHANICAL) && reason == DiagnosticReason.AUTO_REPLACE) ||
             (kind == DiagnosticKind.MANUAL && reason in listOf(DiagnosticReason.CORRECTION, DiagnosticReason.CONTEXTUAL))
         val event = DiagnosticEvent(kind, reason, session, revision, count, selected, model,
-            completion, source, scoringCode, elapsedMs, requestId, if (attempt) nextDiagnosticOperation() else 0)
+            completion, source, scoringCode, elapsedMs, requestId, if (attempt) nextDiagnosticOperation() else 0,
+            localCompletion, localInspectedStates, localVerifiedTerminals)
         if (session == state.sessionId && revision == state.revision) {
             when {
                 kind == DiagnosticKind.REQUEST && reason in listOf(DiagnosticReason.SCHEDULED, DiagnosticReason.SUBMITTED) ->
@@ -196,6 +200,7 @@ class TypingSessionController internal constructor(
     private var candidateSelection: CandidateSelection? = null
     private var pendingModelRanking: ModelRankingStamp? = null
     private var pendingSpaceCorrection: SpaceCorrectionStamp? = null
+    private var pendingLocalSpaceCorrection: LocalSpaceCorrectionStamp? = null
     private var pendingContextualRanking: ContextualRankingStamp? = null
     private var contextualSelection: ContextualSelection? = null
     private var contextualCompletedSelection: CandidateSelection? = null
@@ -223,9 +228,40 @@ class TypingSessionController internal constructor(
         clearCandidates()
         lastCandidateRequestId = requestId
         pendingCandidate = CandidateStamp(state.sessionId, state.revision, requestId, activeLanguage)
-        recordRequest(DiagnosticReason.SUBMITTED, DiagnosticSource.LOCAL_POLICY, requestId = requestId)
+        recordRequest(DiagnosticReason.SCHEDULED, DiagnosticSource.LOCAL_POLICY, requestId = requestId)
         return LocalCandidateRequest(state.sessionId, state.revision, requestId,
             state.composing!!.typedWord, activeLanguage, eligible = true)
+    }
+
+    internal fun recordCandidateSubmitted(request: LocalCandidateRequest) {
+        val pending = pendingCandidate
+        val retained = pendingLocalSpaceCorrection?.request
+        if ((pending?.sessionId == request.sessionId && pending.revision == request.revision &&
+                pending.requestId == request.requestId) ||
+            (retained?.sessionId == request.sessionId && retained.revision == request.revision &&
+                retained.requestId == request.requestId)) {
+            recordRequest(DiagnosticReason.SUBMITTED, DiagnosticSource.LOCAL_POLICY,
+                request.sessionId, request.revision, request.requestId)
+        }
+    }
+
+    /** Recreates payload only from the still-owned live or retained composition. */
+    internal fun resumeCandidateRequest(sessionId: Long, revision: Long, requestId: Long,
+        language: KeyboardLanguage): LocalCandidateRequest? {
+        val live = pendingCandidate
+        if (live != null && live.sessionId == sessionId && live.revision == revision &&
+            live.requestId == requestId && live.language == language && canRequestCandidates) {
+            return LocalCandidateRequest(sessionId, revision, requestId,
+                state.composing!!.typedWord, language, eligible = true)
+        }
+        val retained = pendingLocalSpaceCorrection
+        if (retained != null && retained.request.sessionId == sessionId &&
+            retained.request.revision == revision && retained.request.requestId == requestId &&
+            retained.request.language == language && ownsSpaceAfter(retained.previous, retained.start)) {
+            return LocalCandidateRequest(sessionId, revision, requestId,
+                retained.previous.typedWord, language, eligible = true)
+        }
+        return null
     }
 
     /** Service rechecks its policy/language/lifetime first; this owner checks the exact live word. */
@@ -243,7 +279,10 @@ class TypingSessionController internal constructor(
             DiagnosticReason.CANCELLED else DiagnosticReason.NONE, session = reply.sessionId, revision = reply.revision,
             source = DiagnosticSource.LOCAL_POLICY, completion = DiagnosticCompletion.valueOf(generation.completion.name),
             elapsedMs = ((System.nanoTime() - stamp.startedAt) / 1_000_000).coerceIn(0, 60_000),
-            requestId = reply.requestId, text = null)
+            requestId = reply.requestId,
+            localCompletion = DiagnosticCompletion.valueOf(generation.localSearch.completion.name),
+            localInspectedStates = generation.localSearch.inspectedStates,
+            localVerifiedTerminals = generation.localSearch.verifiedTerminals, text = null)
         if (state.sessionId != stamp.sessionId || state.revision != stamp.revision ||
             !canRequestCandidates || generation.original != state.composing?.typedWord ||
             generation.completion == CandidateCompletion.CANCELLED ||
@@ -252,48 +291,71 @@ class TypingSessionController internal constructor(
             generation.verifiedTerminals !in 0..CandidateSearchControl.MAX_VERIFIED
         ) return false
 
+        val selection = candidateSelection(generation, stamp.language, stamp.requestId) ?: return false
+        candidateSelection = selection
+        diagnose(DiagnosticKind.CANDIDATES, DiagnosticReason.ACCEPTED, selection.alternatives.size,
+            selection.selectedIndex, selection.ranking?.usedModel == true,
+            source = if (selection.generation.isCanonicalCaseCorrection()) DiagnosticSource.CANONICAL_CASE else DiagnosticSource.LOCAL_POLICY,
+            completion = DiagnosticCompletion.valueOf(generation.completion.name), requestId = reply.requestId,
+            localCompletion = DiagnosticCompletion.valueOf(generation.localSearch.completion.name),
+            localInspectedStates = generation.localSearch.inspectedStates,
+            localVerifiedTerminals = generation.localSearch.verifiedTerminals)
+        return true
+    }
+
+    private fun candidateSelection(generation: CandidateGeneration, language: KeyboardLanguage,
+        requestId: Long): CandidateSelection? {
         val suggests = generation.completion == CandidateCompletion.COMPLETE ||
             generation.completion == CandidateCompletion.STATES_EXHAUSTED ||
             generation.completion == CandidateCompletion.VERIFIED_EXHAUSTED
         val canonicalCaseOnly = generation.alternatives.isNotEmpty() &&
             generation.alternatives.all { it.kind == GeneratedCandidateKind.CANONICAL_CASE }
         if ((!suggests || generation.isValidWord || generation.protectedReason != null) &&
-            generation.alternatives.isNotEmpty() && !(generation.isValidWord && canonicalCaseOnly)) return false
-        val original = generation.original!!
+            generation.alternatives.isNotEmpty() && !(generation.isValidWord && canonicalCaseOnly)) return null
+        val original = generation.original ?: return null
+        val local = generation.localSearch
+        if (local.alternatives.size > 64 ||
+            local.inspectedStates !in 0..CandidateSearchControl.MAX_STATES ||
+            local.verifiedTerminals !in 0..CandidateSearchControl.MAX_VERIFIED) return null
+        val localDecision = LocalCorrectionPolicy.decide(generation, language)
+        val localWinner = localDecision?.let { decision ->
+            local.alternatives.firstOrNull { it.canonicalKey == decision.canonicalKey }
+        }
+        val alternatives = if (localWinner == null || generation.alternatives.any {
+                it.canonicalKey == localWinner.canonicalKey }) generation.alternatives.toList() else
+            (listOf(localWinner) + generation.alternatives).distinctBy { it.canonicalKey }
+                .take(CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES)
         val originalCase = CasePattern.analyze(original)
         val seen = hashSetOf(TokenUnicode.folded(original))
         var canonicalCaseCount = 0
-        for (candidate in generation.alternatives) {
+        for (candidate in alternatives) {
             val reason = ProtectedTokenPolicy.reason(candidate.text)
-            // Eligible one-letter uppercase input can expand to a multi-letter uppercase display.
-            // Source admission stays protected; only its preserved ALL_CAPS output is allowed.
             val canonicalCase = candidate.kind == GeneratedCandidateKind.CANONICAL_CASE
             if (canonicalCase) canonicalCaseCount++
             if ((reason != null && !(reason == ProtectedTokenReason.ALL_CAPS && originalCase == CasePattern.UPPER)) ||
                 canonicalCase && (canonicalCaseCount > 1 || originalCase != CasePattern.LOWER ||
                     CasePattern.analyze(candidate.text) != CasePattern.TITLE ||
                     TokenUnicode.folded(candidate.text) != TokenUnicode.folded(original)) ||
-                !canonicalCase && !seen.add(TokenUnicode.folded(candidate.text))) return false
+                !canonicalCase && !seen.add(TokenUnicode.folded(candidate.text))) return null
         }
-        val alternatives = generation.alternatives.toList()
         val snapshot = generation.copy(alternatives = alternatives)
-        val commonId = CommonConfusions.preferredId(snapshot, stamp.language)
-        val ranking = if (commonId > 0) {
-            CalibratedRanking(listOf(commonId) + alternatives.indices.map { it + 1 }.filter { it != commonId },
-                preferredId = commonId, usedModel = false)
-        } else if (snapshot.isCanonicalCaseCorrection()) {
-            CalibratedRanking(listOf(1), preferredId = 1, usedModel = false)
-        } else trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
-            CalibratedSpellingPolicy.rank(snapshot, stamp.language)
+        val commonId = CommonConfusions.preferredId(snapshot, language)
+        val ranking = when {
+            commonId > 0 -> CalibratedRanking(listOf(commonId) + alternatives.indices.map { it + 1 }
+                .filter { it != commonId }, commonId, false)
+            snapshot.isCanonicalCaseCorrection() -> CalibratedRanking(listOf(1), 1, false)
+            localDecision != null -> {
+                val preferred = alternatives.indexOfFirst { it.canonicalKey == localDecision.canonicalKey } + 1
+                CalibratedRanking(listOf(preferred) + alternatives.indices.map { it + 1 }
+                    .filter { it != preferred }, preferred, false)
+            }
+            else -> trace.section(SmartTypingTraceSection.CANDIDATE_RANK) {
+                CalibratedSpellingPolicy.rank(snapshot, language)
+            }
         }
-        candidateSelection = CandidateSelection(snapshot, stamp.language, stamp.requestId,
+        return CandidateSelection(snapshot, language, requestId,
             selectedIndex = (ranking?.preferredId ?: 0) - 1,
             order = ranking?.candidateIds?.map { it - 1 } ?: alternatives.indices.toList(), ranking = ranking)
-        diagnose(DiagnosticKind.CANDIDATES, DiagnosticReason.ACCEPTED, alternatives.size,
-            (ranking?.preferredId ?: 0) - 1, ranking?.usedModel == true,
-            source = if (snapshot.isCanonicalCaseCorrection()) DiagnosticSource.CANONICAL_CASE else DiagnosticSource.LOCAL_POLICY,
-            completion = DiagnosticCompletion.valueOf(generation.completion.name), requestId = reply.requestId)
-        return true
     }
 
     /** No editor mutation or veto reset. Service calls this when its own policy/route invalidates. */
@@ -305,6 +367,7 @@ class TypingSessionController internal constructor(
         candidateSelection = null
         pendingModelRanking = null
         pendingSpaceCorrection = null
+        pendingLocalSpaceCorrection = null
         pendingContextualRanking = null
         contextualSelection = null
         contextualCompletedSelection = null
@@ -403,6 +466,30 @@ class TypingSessionController internal constructor(
         return result
     }
 
+    /** Preserve one already-admitted local request while an ordinary Space is committed. */
+    internal fun retainCandidateAcrossSpace(action: () -> TypingTextResult): TypingTextResult {
+        val request = pendingCandidate
+        val previous = state.composing
+        val owned = punctuationEvidence()
+        val tokenStart = owned?.text?.indexOfLast { it.isWhitespace() }?.plus(1)
+        val captured = if (request != null && previous != null && owned != null && tokenStart != null &&
+            previous.text.length < MAX_COMPOSING_UTF16 &&
+            (tokenStart > 0 || owned.startsAtTokenBoundary) &&
+            owned.text.substring(tokenStart) == previous.typedWord) {
+            LocalSpaceCorrectionStamp(request, previous, composingStart, context!!.text)
+        } else null
+        val result = action()
+        if (result == TypingTextResult.HANDLED && captured != null &&
+            state.sessionId == captured.request.sessionId && state.lastAutoEdit == null &&
+            ownsSpaceAfter(captured.previous, captured.start)) {
+            captured.revisionAfterSpace = state.revision
+            pendingLocalSpaceCorrection = captured
+        }
+        return result
+    }
+
+    internal val hasLocalSpaceCorrection: Boolean get() = pendingLocalSpaceCorrection != null
+
     internal val hasSpaceCorrection: Boolean get() = pendingSpaceCorrection != null
 
     internal fun isCurrentSpaceCorrection(token: ScoringToken): Boolean {
@@ -412,11 +499,97 @@ class TypingSessionController internal constructor(
     }
 
     private fun ownsSpaceAfter(pending: SpaceCorrectionStamp): Boolean =
+        ownsSpaceAfter(pending.previous, pending.start)
+
+    private fun ownsSpaceAfter(previous: ComposingSegment, start: Int): Boolean =
         state.enabled && !awaitingEditorSelection && editorEditDepth == 0 &&
             state.composing == ComposingSegment(leadingBoundary = " ") &&
-            selectionStart == selectionEnd && composingStart.toLong() == pending.start.toLong() + pending.previous.text.length &&
+            selectionStart == selectionEnd && composingStart.toLong() == start.toLong() + previous.text.length &&
             selectionStart.toLong() == composingStart.toLong() + 1 &&
-            context?.text?.endsWith(pending.previous.text + " ") == true
+            context?.text?.endsWith(previous.text + " ") == true
+
+    internal fun acceptLocalSpaceCorrection(reply: LocalCandidateReply,
+        execute: (TypingEdit) -> Boolean): Boolean {
+        val (pending, selection) = localSpaceSelection(reply) ?: return false
+        val generation = selection.generation
+        val ranking = selection.ranking ?: return false
+        if (ranking.preferredId <= 0 || !isEligibleLocalReplacement(selection)) return false
+        pendingLocalSpaceCorrection = null
+        val word = selection.alternatives.getOrNull(ranking.preferredId - 1)?.text ?: return false
+        val rendered = pending.previous.copy(typedWord = word).text + " "
+        val end = pending.start.toLong() + rendered.length
+        if (rendered.length > MAX_COMPOSING_UTF16 || rendered.codePointCount(0, rendered.length) > 128 ||
+            end > Int.MAX_VALUE) return false
+        val caret = end.toInt()
+        remember(EditorSelection(selectionStart, selectionEnd, pending.start, selectionStart))
+        remember(EditorSelection(caret, caret, -1, -1))
+        val boundary = ComposingSegment(leadingBoundary = " ")
+        diagnose(DiagnosticKind.CANDIDATES, DiagnosticReason.ACCEPTED, selection.alternatives.size,
+            ranking.preferredId - 1, false, reply.sessionId, reply.revision,
+            source = DiagnosticSource.LOCAL_POLICY,
+            completion = DiagnosticCompletion.valueOf(generation.completion.name), requestId = reply.requestId,
+            localCompletion = DiagnosticCompletion.valueOf(generation.localSearch.completion.name),
+            localInspectedStates = generation.localSearch.inspectedStates,
+            localVerifiedTerminals = generation.localSearch.verifiedTerminals)
+        diagnose(DiagnosticKind.BOUNDARY, DiagnosticReason.AUTO_REPLACE, selection.alternatives.size,
+            ranking.preferredId - 1, false, reply.sessionId, reply.revision,
+            source = DiagnosticSource.LOCAL_POLICY) {
+            DiagnosticText(context = context?.text.orEmpty(), original = selection.original,
+                candidates = selection.alternatives.map { it.text }, result = rendered)
+        }
+        return trace.section(SmartTypingTraceSection.CORRECTION_COMMIT) {
+            applyGuardedBatch(listOf(TypingEdit.SetComposingRegion(pending.start, selectionStart),
+                TypingEdit.CommitText(rendered), TypingEdit.SetComposingRegion(caret - 1, caret)),
+                EditorSelection(caret, caret, caret - 1, caret), execute) {
+                check(context!!.replaceSuffix(pending.previous.text + " ", rendered)) {
+                    "Local space correction ownership mismatch"
+                }
+                composingStart = caret - 1
+                state = state.copy(composing = boundary, originalSelected = false,
+                    lastAutoEdit = UndoableTextEdit(pending.previous.text, rendered, state.sessionId, state.revision,
+                        pending.previous, pending.contextBefore, pending.start, boundary,
+                        UndoCorrectionCandidates(selection.generation, selection.language, selection.requestId)))
+                publish()
+            } == TypingTextResult.HANDLED
+        }
+    }
+
+    /** Transfers one still-owned local abstention to model ranking within the same space window. */
+    internal fun beginModelRankingAfterLocalSpace(reply: LocalCandidateReply, requestId: Long): ScoringInput? {
+        val (pending, selection) = localSpaceSelection(reply) ?: return null
+        if (requestId <= lastModelRequestId || selection.original.codePointCount(0, selection.original.length) <= 2 ||
+            selection.generation.prohibitsAutoReplace || selection.generation.isValidWord ||
+            selection.alternatives.isEmpty() || isEligibleLocalReplacement(selection)) return null
+        val token = ScoringToken(reply.sessionId, reply.revision, requestId,
+            (0..selection.alternatives.size).toList())
+        val prefix = pending.contextBefore.dropLast(selection.original.length)
+        val input = try {
+            ScoringInput(token, prefix, listOf(selection.original) + selection.alternatives.map { it.text })
+        } catch (_: IllegalArgumentException) { return null }
+        lastModelRequestId = requestId
+        pendingLocalSpaceCorrection = null
+        val ranking = ModelRankingStamp(token, selection)
+        pendingModelRanking = ranking
+        pendingSpaceCorrection = SpaceCorrectionStamp(ranking, pending.previous, pending.start,
+            pending.contextBefore, pending.revisionAfterSpace)
+        recordRequest(DiagnosticReason.SUBMITTED, DiagnosticSource.MODEL,
+            token.sessionId, token.revision, token.requestId)
+        return input
+    }
+
+    private fun localSpaceSelection(reply: LocalCandidateReply): Pair<LocalSpaceCorrectionStamp, CandidateSelection>? {
+        val pending = pendingLocalSpaceCorrection ?: return null
+        val generation = reply.generation
+        if (reply.sessionId != pending.request.sessionId || reply.revision != pending.request.revision ||
+            reply.requestId != pending.request.requestId || state.sessionId != reply.sessionId ||
+            state.revision != pending.revisionAfterSpace || !ownsSpaceAfter(pending.previous, pending.start) ||
+            generation.original != pending.previous.typedWord || generation.completion == CandidateCompletion.CANCELLED ||
+            generation.alternatives.size > CandidateGenerator.MAX_ALTERNATIVES ||
+            generation.inspectedStates !in 0..CandidateSearchControl.MAX_STATES ||
+            generation.verifiedTerminals !in 0..CandidateSearchControl.MAX_VERIFIED) return null
+        val selection = candidateSelection(generation, pending.request.language, reply.requestId) ?: return null
+        return pending to selection
+    }
 
     /** Uses only the certified suffix. The caller also enforces the deadline and live preferences. */
     internal fun acceptSpaceCorrection(reply: ScoringReply, execute: (TypingEdit) -> Boolean): Boolean {
@@ -982,10 +1155,13 @@ class TypingSessionController internal constructor(
 
     private fun isEligibleLocalReplacement(selection: CandidateSelection): Boolean {
         val ranking = selection.ranking ?: return false
-        if (ranking.usedModel || ranking.preferredId <= 0 || selection.generation.prohibitsAutoReplace) return false
-        return if (CommonConfusions.preferredId(selection.generation, selection.language) == ranking.preferredId)
-            spellingQualification.allowsCommonConfusion(selection.language)
-        else spellingQualification.allowsGeneralLocal(selection.language)
+        if (ranking.usedModel || ranking.preferredId <= 0) return false
+        return if (CommonConfusions.preferredId(selection.generation, selection.language) == ranking.preferredId) {
+            !selection.generation.prohibitsAutoReplace &&
+                spellingQualification.allowsCommonConfusion(selection.language)
+        } else LocalCorrectionPolicy.decide(selection.generation, selection.language)?.canonicalKey ==
+            selection.alternatives.getOrNull(ranking.preferredId - 1)?.canonicalKey &&
+            spellingQualification.allowsGeneralLocal(selection.language)
     }
 
     /** Latest accepted numeric decision only. No scoring, waiting, editor reads or text reconstruction. */
@@ -1012,9 +1188,9 @@ class TypingSessionController internal constructor(
         val automaticEligible = if (canonicalCase) {
             val candidate = selection.generation.alternatives.single()
             candidate.canonicalCaseUnambiguous && candidate.canonicalCaseAutoEligible
-        } else !selection.generation.prohibitsAutoReplace &&
-            if (ranking.usedModel) spellingQualification.allowsModel(selection.language)
-            else isEligibleLocalReplacement(selection)
+        } else if (ranking.usedModel) !selection.generation.prohibitsAutoReplace &&
+            spellingQualification.allowsModel(selection.language)
+        else isEligibleLocalReplacement(selection)
         if (selection.language != keyboard.language || ranking.preferredId <= 0 ||
             !automaticEligible) {
             return boundaryBypass(if (pendingModelRanking != null) DiagnosticReason.RESULT_NOT_READY else DiagnosticReason.POLICY_REJECTED)
@@ -1308,6 +1484,8 @@ class TypingSessionController internal constructor(
 
     private class ModelRankingStamp(val token: ScoringToken, val selection: CandidateSelection)
     private class SpaceCorrectionStamp(val ranking: ModelRankingStamp, val previous: ComposingSegment,
+        val start: Int, val contextBefore: String, var revisionAfterSpace: Long = -1)
+    private class LocalSpaceCorrectionStamp(val request: CandidateStamp, val previous: ComposingSegment,
         val start: Int, val contextBefore: String, var revisionAfterSpace: Long = -1)
     private class ContextualRankingStamp(val token: ScoringToken, val selection: CandidateSelection,
         val variants: List<ContextualPunctuationEngine.Variant>)

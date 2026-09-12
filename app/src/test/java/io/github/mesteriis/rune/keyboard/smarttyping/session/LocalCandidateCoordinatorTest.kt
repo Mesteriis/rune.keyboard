@@ -787,7 +787,7 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
-    @Test fun `production coordinator requests four total candidates before search and model submission`() {
+    @Test fun `production coordinator keeps three local alternatives for model submission`() {
         Harness(withModel = true).use { h ->
             h.lexicon.extraNeighbors = true
             h.type("helo"); h.deliver(); h.pause.fire()
@@ -1099,6 +1099,80 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
+    @Test fun `distance one lookup finishing after Space applies within the local grace window`() {
+        Harness(qualified = true).use { h ->
+            val hold = Hold(); h.lexicon.hold = hold
+            h.type("helos"); hold.entered.awaitChecked()
+            h.space()
+            assertEquals("helos ", h.controller.state.contextText)
+            hold.release.countDown()
+            h.deliver()
+            assertEquals("hellos ", h.controller.state.contextText)
+            h.coordinator.edit { h.controller.deletePrevious(h.execute) }
+            assertEquals("helos", h.controller.state.contextText)
+            assertTrue(h.controller.state.originalSelected)
+        }
+    }
+
+    @Test fun `distance one lookup after the local grace deadline cannot change committed text`() {
+        Harness(qualified = true).use { h ->
+            val hold = Hold(); h.lexicon.hold = hold
+            h.type("helos"); hold.entered.awaitChecked(); h.space()
+            h.nowNanos = 250_000_000L
+            hold.release.countDown(); h.awaitQueued(); h.drain()
+            assertEquals("helos ", h.controller.state.contextText)
+            assertNull(h.controller.state.lastAutoEdit)
+        }
+    }
+
+    @Test fun `local abstention after Space gives model only the remaining grace window`() {
+        Harness(withModel = true, modelOnly = true).use { h ->
+            h.owner = h.owner.copy(modelAutoReplaceQualified = true)
+            val hold = Hold(); h.lexicon.hold = hold
+            h.type("helos"); hold.entered.awaitChecked(); h.space()
+            h.nowNanos = 100_000_000L
+            hold.release.countDown(); h.awaitQueued(); h.drain()
+            val input = h.model.requests.single()
+            assertEquals(150L, h.pause.delay)
+            assertTrue(h.model.listener.isCurrentRequest(input.token))
+            val winner = input.continuations.indexOf("hellos")
+            assertTrue(winner > 0)
+            h.model.reply(input, winner)
+            assertEquals("hellos ", h.controller.state.contextText)
+            h.coordinator.edit { h.controller.deletePrevious(h.execute) }
+            assertEquals("helos", h.controller.state.contextText)
+        }
+    }
+
+    @Test fun `next key cancels a local result retained by Space`() {
+        Harness(qualified = true).use { h ->
+            val hold = Hold(); h.lexicon.hold = hold
+            h.type("helos"); hold.entered.awaitChecked(); h.space(); h.type("w")
+            hold.release.countDown(); h.awaitQueued(); h.drain()
+            assertEquals("helos w", h.controller.state.contextText)
+            assertNull(h.controller.state.lastAutoEdit)
+        }
+    }
+
+    @Test fun `cold route becoming ready resumes only the retained current word`() {
+        Harness(ready = false, qualified = true).use { h ->
+            h.type("helos"); h.space()
+            assertEquals("helos ", h.controller.state.contextText)
+            h.ready = true; h.routeReadyCallback!!(1); h.drain(); h.deliver()
+            assertEquals("hellos ", h.controller.state.contextText)
+        }
+    }
+
+    @Test fun `cold route after grace expiry performs no candidate computation`() {
+        Harness(ready = false, qualified = true).use { h ->
+            h.type("helos"); h.space(); h.nowNanos = 250_000_000L
+            h.ready = true; h.routeReadyCallback!!(1); h.drain()
+            assertEquals("helos ", h.controller.state.contextText)
+            assertEquals(0, h.lexicon.exactCalls.get())
+            assertNull(h.controller.state.lastAutoEdit)
+        }
+    }
+
     @Test fun `short valid words do not schedule contextual model either`() {
         Harness(withModel = true).use { h ->
             h.owner = h.owner.copy(contextualPunctuationEnabled = true, contextualModelReady = true)
@@ -1135,6 +1209,32 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
+    @Test fun `eligible input view warms the exact current language route without text work`() {
+        Harness(ready = false).use { h ->
+            h.owner = h.owner.copy(language = KeyboardLanguage.RUSSIAN)
+            h.coordinator.warmCurrentLanguage()
+            assertEquals(1, h.routeRequests)
+            assertEquals(KeyboardLanguage.RUSSIAN, h.lastRoute?.primary)
+            assertNull(h.lastRoute?.fallback)
+            assertEquals("", h.controller.state.contextText)
+            assertTrue(h.coordinator.viewState.candidates.isEmpty())
+        }
+        Harness(ready = false).use { h ->
+            h.coordinator.warmCurrentLanguage()
+            assertEquals(1, h.routeRequests)
+            assertEquals(KeyboardLanguage.ENGLISH, h.lastRoute?.primary)
+            assertEquals(KeyboardLanguage.SPANISH, h.lastRoute?.fallback)
+        }
+    }
+
+    @Test fun `ineligible input view does not warm dictionaries`() {
+        Harness(ready = false).use { h ->
+            h.owner = h.owner.copy(inputViewActive = false)
+            h.coordinator.warmCurrentLanguage()
+            assertEquals(0, h.routeRequests)
+        }
+    }
+
     private class Harness(ready: Boolean = true, withModel: Boolean = false, qualified: Boolean = false,
         modelOnly: Boolean = false, currentQualification: Boolean = false) : AutoCloseable {
         val controller = TypingSessionController(jvmGraphemes, if (currentQualification) SpellingQualification.CURRENT else SpellingQualification { _, model -> qualified || modelOnly && model == io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingSource.MODEL })
@@ -1144,6 +1244,8 @@ class LocalCandidateCoordinatorTest {
         var invalidatedLoads = 0
         var closedLoads = 0
         var published = 0
+        var nowNanos = 0L
+        var routeReadyCallback: ((Long) -> Unit)? = null
         var lastRoute: LanguageRoute? = null
         var owner = CandidateOwnerState(true, true, KeyboardLayer.LETTERS, KeyboardLanguage.ENGLISH, false)
         var modelReady = true
@@ -1162,7 +1264,8 @@ class LocalCandidateCoordinatorTest {
         val coordinator = LocalCandidateCoordinator(controller, lexicon,
             { routeRequests++; lastRoute = it; this.ready }, { this.ready },
             { invalidatedLoads++ }, { closedLoads++ }, Executor { queue.add(it) },
-            { owner }, { published++ }, ranking)
+            { owner }, { published++ }, modelRanking = ranking, nanoTime = { nowNanos },
+            registerRouteReady = { routeReadyCallback = it })
 
         init { controller.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, 0), 0, 0) }
         fun configure(mode: AutocorrectionMode, strip: Boolean) {

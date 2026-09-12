@@ -174,6 +174,7 @@ class RuneInputMethodService : InputMethodService() {
         inputViewActive = true
         candidates.invalidate()
         if (!editorContext.supportsSmartTyping) typingSession.endSession()
+        candidates.warmCurrentLanguage()
         state = withAutomaticCapitalization(state)
         renderKeyboard()
         keyboardView?.requestApplyInsets()
@@ -288,6 +289,8 @@ class RuneInputMethodService : InputMethodService() {
             } else if (action == KeyboardAction.ToggleSymbols && state.layer == KeyboardLayer.LETTERS) {
                 state = withAutomaticCapitalization(state)
             }
+            if ((action is KeyboardAction.SwitchLanguage || action == KeyboardAction.ToggleSymbols) &&
+                state.layer == KeyboardLayer.LETTERS) candidates.warmCurrentLanguage()
 
             val outcome = transition.command?.let { executeTypingOrEditorCommand(it, previousState) }
                 ?: CommandOutcome.NO_COMMAND

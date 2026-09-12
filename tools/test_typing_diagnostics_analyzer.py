@@ -4,6 +4,16 @@ from typing_diagnostics_analyzer import analyze_events
 
 
 class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
+    def test_schema_three_validates_separate_local_search_evidence(self):
+        event = {"schema": 3, "kind": "CANDIDATES", "reason": "ACCEPTED", "session": 1,
+                 "revision": 2, "localCompletion": "COMPLETE", "localInspectedStates": 100,
+                 "localVerifiedTerminals": 3}
+        self.assertEqual([3], analyze_events([event])["schemas"])
+        for field, value in (("localCompletion", "guessed"), ("localInspectedStates", 8193),
+                             ("localVerifiedTerminals", 65)):
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                analyze_events([{**event, field: value}])
+
     def test_schema_two_counts_explicit_backspace_actions(self):
         events = [
             {"schema": 2, "kind": "BACKSPACE", "reason": "NONE", "session": 7,
@@ -14,6 +24,25 @@ class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
              "revision": 11, "operationId": 0},
         ]
         self.assertEqual(2, analyze_events(events)["backspaces"])
+
+    def test_explicit_backspace_run_reports_deleted_and_retyped_word(self):
+        def item(kind, revision, context, input_text=""):
+            return {"schema": 2, "kind": kind, "reason": "NONE", "session": 8,
+                "revision": revision, "context": context, "input": input_text,
+                "original": "", "result": "", "candidates": []}
+        report = analyze_events([
+            item("BACKSPACE", 10, "это резултат"),
+            item("EDITOR", 10, ""),
+            item("BACKSPACE", 11, "это резулта"),
+            item("INPUT", 12, "это резулт", "ь"),
+            item("INPUT", 13, "это результ", "а"),
+            item("INPUT", 14, "это результата", "т"),
+            item("INPUT", 15, "это результат", " "),
+        ])
+        self.assertEqual([{"session": 8, "initialRevision": 10, "backspaces": 2,
+            "evidence": "EXPLICIT_BACKSPACE_EVENTS", "beforeWord": "резултат",
+            "afterWord": "результат", "deleted": "ат", "retyped": "ьат"}],
+            report["manualEdits"])
 
     def test_original_restoration_changes_prior_final_word_only_after_exact_acceptance(self):
         correction = {"schema": 2, "kind": "MANUAL", "reason": "CORRECTION", "session": 7,

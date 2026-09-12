@@ -196,7 +196,7 @@ def immutable_bindings(java: Path, sources: list[Path], jars: list[Path], androi
     current = (REPO / "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt").read_text()
     settings = (REPO / "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt").read_text()
     calibrated = (REPO / "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt").read_text()
-    require("SpellingSource.GENERAL_LOCAL -> false" in current and
+    require("SpellingSource.GENERAL_LOCAL -> QualificationArtifacts.allowsGeneralLocal(" in current and
             "SpellingSource.MODEL -> ModelRuntimeQualification.CURRENT" in current and
             "QualificationArtifacts.allowsLocal(language, QualificationArtifacts.local())" in current,
             "CURRENT_QUALIFICATION_CONTRACT")

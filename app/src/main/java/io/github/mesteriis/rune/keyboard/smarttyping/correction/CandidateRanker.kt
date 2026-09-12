@@ -20,13 +20,13 @@ data class RankingThresholds(val originalPenalty: Int, val minimumMargin: Int, v
 data class RankingModelScore(val candidateId: Int, val sumLogProbability: Double, val tokenCount: Int)
 
 data class RankedCandidate(val candidateId: Int, val penalty: Double) {
-    init { require(candidateId in 1..7 && penalty.isFinite()) }
+    init { require(candidateId in 1..64 && penalty.isFinite()) }
 }
 
 /** Numeric proposal only. The owner still requires quality, input-policy, mode and revision gates. */
 data class RankingProposal(val candidateId: Int, val penalty: Double, val runnerUpPenalty: Double?, val tokenLength: Int) {
     init {
-        require(candidateId in 1..7 && penalty.isFinite() && tokenLength in 1..32 &&
+        require(candidateId in 1..64 && penalty.isFinite() && tokenLength in 1..32 &&
             (runnerUpPenalty == null || runnerUpPenalty.isFinite() && runnerUpPenalty >= penalty))
     }
 }
@@ -40,16 +40,26 @@ object CandidateRanker {
         return proposal(generation, ranked)
     }
 
+    fun proposeLocal(generation: CandidateGeneration, weights: RankingWeights): RankingProposal? {
+        if (generation.prohibitsAutoReplace) return null
+        val ranked = rankInternal(generation, weights, 0, null, 64) ?: return null
+        return proposal(generation, ranked)
+    }
+
     /** Partial searches may order suggestions, but can never produce an automatic proposal. */
     fun rank(generation: CandidateGeneration, weights: RankingWeights, modelWeight: Int = 0,
-        modelScores: List<RankingModelScore>? = null): List<RankedCandidate>? {
+        modelScores: List<RankingModelScore>? = null): List<RankedCandidate>? =
+        rankInternal(generation, weights, modelWeight, modelScores, 7)
+
+    private fun rankInternal(generation: CandidateGeneration, weights: RankingWeights, modelWeight: Int,
+        modelScores: List<RankingModelScore>?, maximumCandidates: Int): List<RankedCandidate>? {
         require(modelWeight in listOf(0, 1, 2, 4, 8))
         if (generation.alternatives.isEmpty()) return null
         val original = generation.original ?: return null
         val tokenLength = original.codePointCount(0, original.length)
         if (tokenLength !in 1..32) return null
         val count = generation.alternatives.size
-        if (count !in 1..7) return null
+        if (count !in 1..maximumCandidates) return null
         val means = DoubleArray(count + 1)
         if (modelWeight != 0) {
             if (modelScores == null || modelScores.size != means.size) return null

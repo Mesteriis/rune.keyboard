@@ -3,8 +3,11 @@ package io.github.mesteriis.rune.keyboard.smarttyping.correction
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.QualifiedModelArtifact
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.FrozenPackedLexicons
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGenerator
 
 internal data class LocalQualificationFingerprint(val policyVersion: Int,
+    val lexicons: Map<KeyboardLanguage, String>)
+internal data class GeneralLocalQualificationFingerprint(val policyVersion: Int, val searchVersion: Int,
     val lexicons: Map<KeyboardLanguage, String>)
 internal data class ModelQualificationFingerprint(val modelSha256: String, val runtimeApi: Int,
     val runtimeBuildId: String, val spellingPolicyVersion: Int, val lexicons: Map<KeyboardLanguage, String>)
@@ -19,9 +22,15 @@ internal object QualificationArtifacts {
     private val currentLexicons = listOf(FrozenPackedLexicons.ENGLISH, FrozenPackedLexicons.RUSSIAN,
         FrozenPackedLexicons.SPANISH).associate { it.language to it.manifest.identity() }
     fun local() = LocalQualificationFingerprint(CommonConfusions.VERSION, currentLexicons)
+    fun generalLocal() = GeneralLocalQualificationFingerprint(LocalCorrectionPolicy.VERSION,
+        CandidateGenerator.SEARCH_VERSION, currentLexicons)
     fun model() = ModelQualificationFingerprint(QualifiedModelArtifact.MODEL_SHA256,
         QualifiedModelArtifact.RUNTIME_API, QualifiedModelArtifact.RUNTIME_BUILD_ID,
         CalibratedSpellingPolicy.VERSION, currentLexicons)
     fun allowsLocal(language: KeyboardLanguage, fingerprint: LocalQualificationFingerprint) =
-        fingerprint.policyVersion == 1 && fingerprint.lexicons[language] == qualifiedLexicons[language]
+        fingerprint.policyVersion == 2 && fingerprint.lexicons[language] == qualifiedLexicons[language]
+    fun allowsGeneralLocal(language: KeyboardLanguage, fingerprint: GeneralLocalQualificationFingerprint) =
+        language in setOf(KeyboardLanguage.RUSSIAN, KeyboardLanguage.SPANISH) &&
+            fingerprint.policyVersion == 1 && fingerprint.searchVersion == 1 &&
+            fingerprint.lexicons[language] == qualifiedLexicons[language]
 }

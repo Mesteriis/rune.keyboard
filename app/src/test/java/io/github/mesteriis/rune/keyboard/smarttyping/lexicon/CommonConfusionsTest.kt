@@ -16,6 +16,7 @@ class CommonConfusionsTest {
         Triple(KeyboardLanguage.RUSSIAN, "реалбно", "реально"),
         Triple(KeyboardLanguage.RUSSIAN, "мододец", "молодец"),
         Triple(KeyboardLanguage.RUSSIAN, "шоржусь", "горжусь"),
+        Triple(KeyboardLanguage.RUSSIAN, "заьыл", "забыл"),
         Triple(KeyboardLanguage.ENGLISH, "teh", "the"),
         Triple(KeyboardLanguage.ENGLISH, "recieve", "receive"),
         Triple(KeyboardLanguage.ENGLISH, "adress", "address"),
@@ -47,6 +48,20 @@ class CommonConfusionsTest {
                 it.text == target && it.kind == GeneratedCandidateKind.COMMON_CONFUSION
             })
         }
+    }
+
+    @Test fun `Russian sentence start keeps title case for reviewed confusion`() {
+        val generator = CandidateGenerator(object : CandidateLexicon {
+            override fun exact(language: KeyboardLanguage, key: String, control: CandidateSearchControl) =
+                if (language == KeyboardLanguage.RUSSIAN && key == "забыл") ExactMembership.PRESENT
+                else ExactMembership.ABSENT
+            override fun scan(language: KeyboardLanguage, key: String, unitRadius: Int,
+                control: CandidateSearchControl, visitor: CandidateVisitor) = LexiconScanStatus.COMPLETE
+        })
+        val result = generator.generate("Заьыл", KeyboardLanguage.RUSSIAN)
+        assertEquals(CandidateCompletion.COMPLETE, result.completion)
+        assertEquals(listOf("Забыл"), result.alternatives.map { it.text })
+        assertEquals(GeneratedCandidateKind.COMMON_CONFUSION, result.alternatives.single().kind)
     }
 
     @Test fun `unvalidated target and protected input never publish a mapped candidate`() {

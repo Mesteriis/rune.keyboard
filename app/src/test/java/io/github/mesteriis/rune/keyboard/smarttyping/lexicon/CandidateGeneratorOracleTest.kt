@@ -69,8 +69,10 @@ class CandidateGeneratorOracleTest {
             add("sssss") // Three edits may be cheap but cannot enter radius two.
         }.distinct().filter { it != query }
         val dictionaries = mapOf(
-            en to corpus.filterIndexed { index, _ -> index % 4 != 0 }.map { Entry(it, 9) },
-            es to corpus.filterIndexed { index, _ -> index % 3 != 0 }.map { Entry(it, 1) },
+            // Partition the graph so the new complete radius-one pass plus the radius-two
+            // pass stays below the unchanged shared 64-terminal verification cap.
+            en to corpus.filterIndexed { index, _ -> index % 3 != 0 }.map { Entry(it, 9) },
+            es to corpus.filterIndexed { index, _ -> index % 3 == 0 }.map { Entry(it, 1) },
         )
         val unit = shortestEdits(query, "asd", 8, weighted = false)
         val weighted = shortestEdits(query, "asd", 10, weighted = true)

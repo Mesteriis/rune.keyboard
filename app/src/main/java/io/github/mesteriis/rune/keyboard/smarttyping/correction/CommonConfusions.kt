@@ -6,12 +6,12 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidateK
 
 /** Reviewed finite exceptions, independent of statistical spelling calibration. */
 object CommonConfusions {
-    const val VERSION = 1
+    const val VERSION = 2
     private val targets = mapOf(
         KeyboardLanguage.RUSSIAN to mapOf(
             "автокрекция" to "автокоррекция", "арфография" to "орфография",
             "сообшение" to "сообщение", "реалбно" to "реально",
-            "мододец" to "молодец", "шоржусь" to "горжусь",
+            "мододец" to "молодец", "шоржусь" to "горжусь", "заьыл" to "забыл",
         ),
         KeyboardLanguage.ENGLISH to mapOf("teh" to "the", "recieve" to "receive", "adress" to "address"),
         KeyboardLanguage.SPANISH to mapOf("mensage" to "mensaje", "correcion" to "corrección"),

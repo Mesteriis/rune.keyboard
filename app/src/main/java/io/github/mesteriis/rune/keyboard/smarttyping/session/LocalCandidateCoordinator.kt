@@ -74,6 +74,8 @@ class LocalCandidateCoordinator internal constructor(
     private val modelRanking: ModelCandidateCoordinator? = null,
     private val trace: SmartTypingTracer = NoopSmartTypingTracer,
     private val canonicalCaseLexicon: CanonicalCaseLexicon = CanonicalCaseLexicon.EMPTY,
+    private val nanoTime: () -> Long = System::nanoTime,
+    registerRouteReady: (((Long) -> Unit) -> Unit)? = null,
 ) : AutoCloseable {
     constructor(
         controller: TypingSessionController,
@@ -86,16 +88,23 @@ class LocalCandidateCoordinator internal constructor(
         canonicalCaseLexicon: CanonicalCaseLexicon = CanonicalCaseLexicon.EMPTY,
     ) : this(controller, lexicons.lexicon, lexicons::request, lexicons::isReady,
         lexicons::invalidate, lexicons::close, ownerDispatcher, ownerState, onCandidatesChanged,
-        modelRanking, trace, canonicalCaseLexicon)
+        modelRanking, trace, canonicalCaseLexicon, registerRouteReady = lexicons::setReadyListener)
 
     private val ownerThread = Thread.currentThread()
     private var ownerState: (() -> CandidateOwnerState)? = ownerState
     private var onCandidatesChanged: (() -> Unit)? = onCandidatesChanged
     private var worker: LocalCandidateWorker? = null
     private var pending: Pending? = null
+    private var pendingSpace: PendingSpace? = null
     private var epoch = 0L
     private var requestId = 0L
     private var closed = false
+
+    init {
+        registerRouteReady?.invoke { generation ->
+            ownerDispatcher.execute { acceptRouteReady(generation) }
+        }
+    }
 
     val modelReadinessHint: io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
         get() {
@@ -103,6 +112,15 @@ class LocalCandidateCoordinator internal constructor(
             return modelRanking?.modelReadinessHint
                 ?: io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint.MISSING
         }
+
+    /** Start validating the dictionaries used by the current layout before the first word ends. */
+    fun warmCurrentLanguage() {
+        checkOwner()
+        val owner = ownerState?.invoke() ?: return
+        if (closed || !owner.canRequestSpelling) return
+        val marker = if (owner.language == KeyboardLanguage.RUSSIAN) "а" else "a"
+        requestRoute(LanguageRouter.route(marker, owner.language))
+    }
 
     /** Wrap only actual typing commands. Their controller result decides whether admission is allowed. */
     fun edit(spaceCorrection: ((TypingEdit) -> Boolean)? = null, action: () -> TypingTextResult): TypingTextResult {
@@ -112,6 +130,20 @@ class LocalCandidateCoordinator internal constructor(
         // Cancel local work first. Only an explicitly marked Space may transfer one model
         // request to a separately checked committed suffix after the edit succeeds.
         val owner = ownerState?.invoke()
+        val local = pending
+        if (spaceCorrection != null && local != null && owner?.baseEligible == true &&
+            owner.autocorrectionMode == AutocorrectionMode.HIGH_CONFIDENCE) {
+            modelRanking?.cancel()
+            val result = controller.retainCandidateAcrossSpace(action)
+            if (!closed && pending === local && result == TypingTextResult.HANDLED &&
+                controller.hasLocalSpaceCorrection) {
+                pendingSpace = PendingSpace(local, spaceCorrection, nanoTime())
+            } else {
+                cancelCandidates(clearAllowlist = true)
+                invalidateLoads()
+            }
+            return result
+        }
         val retainSpace = spaceCorrection != null && modelRanking != null
         cancelCandidates(clearAllowlist = owner?.canRequestCandidateWork != true, cancelModel = !retainSpace)
         val editEpoch = epoch
@@ -201,19 +233,50 @@ class LocalCandidateCoordinator internal constructor(
         }
         modelRanking?.prepareForEdit()
         val route = LanguageRouter.route(controller.state.composing!!.typedWord, owner.language)
-        if (!requestRoute(route)) return
-        // No worker is created until the complete route is ready; later Ready additions use its bridge.
-        val target = worker ?: LocalCandidateWorker(CandidateGenerator(lexicon,
-            CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES, canonicalCaseLexicon),
-            ownerDispatcher, ::acceptReply, trace)
-            .also { worker = it }
         if (requestId == Long.MAX_VALUE) return
         val request = controller.beginCandidateRequest(++requestId, owner.language) ?: return
-        pending = Pending(request.sessionId, request.revision, request.requestId, owner.language, epoch)
-        if (!target.submit(request)) {
+        val current = Pending(request.sessionId, request.revision, request.requestId, owner.language, epoch)
+        pending = current
+        if (!requestRoute(route)) return
+        if (!submit(current, request)) {
             pending = null
             controller.clearCandidates()
         }
+    }
+
+    private fun acceptRouteReady(generation: Long) {
+        checkOwner()
+        val current = pending ?: return
+        if (closed || current.submitted || current.epoch != epoch || generation <= current.readyGeneration) return
+        val space = pendingSpace
+        if (space?.pending === current && nanoTime() - space.startedAtNanos !in 0 until SPACE_GRACE_NANOS) {
+            pending = null
+            pendingSpace = null
+            controller.clearCandidates()
+            return
+        }
+        current.readyGeneration = generation
+        val request = controller.resumeCandidateRequest(current.sessionId, current.revision,
+            current.requestId, current.language) ?: return
+        val owner = ownerState?.invoke() ?: return
+        val route = LanguageRouter.route(request.token, owner.language)
+        if (owner.language != current.language || !routeReady(route)) return
+        if (!submit(current, request)) {
+            pending = null
+            controller.clearCandidates()
+        }
+    }
+
+    private fun submit(current: Pending, request: io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateRequest): Boolean {
+        val target = worker ?: LocalCandidateWorker(CandidateGenerator(lexicon,
+            CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES, canonicalCaseLexicon),
+            ownerDispatcher, ::acceptReply, trace).also { worker = it }
+        val accepted = target.submit(request)
+        if (accepted) {
+            current.submitted = true
+            controller.recordCandidateSubmitted(request)
+        }
+        return accepted
     }
 
     private fun acceptReply(reply: LocalCandidateReply) {
@@ -222,6 +285,22 @@ class LocalCandidateCoordinator internal constructor(
         if (closed || current.epoch != epoch || reply.sessionId != current.sessionId ||
             reply.revision != current.revision || reply.requestId != current.requestId) return
         val owner = ownerState?.invoke()
+        val space = pendingSpace
+        if (space != null && space.pending === current) {
+            pending = null
+            pendingSpace = null
+            val elapsed = nanoTime() - space.startedAtNanos
+            val eligible = !closed && elapsed in 0 until SPACE_GRACE_NANOS && owner?.baseEligible == true &&
+                owner.language == current.language &&
+                routeReady(LanguageRouter.route(reply.generation.original.orEmpty(), owner.language))
+            if (eligible && controller.acceptLocalSpaceCorrection(reply, space.execute)) {
+                onCandidatesChanged?.invoke()
+            } else if (eligible && modelRanking?.candidatesChangedAcrossSpace(
+                    reply, space.execute, elapsed) == true) {
+                // The model owns the retained suffix for the remainder of the original window.
+            } else controller.clearCandidates()
+            return
+        }
         val typing = controller.state
         val original = typing.composing?.typedWord
         if (owner?.canRequestCandidateWork != true || owner.language != current.language ||
@@ -242,6 +321,7 @@ class LocalCandidateCoordinator internal constructor(
         if (cancelModel) modelRanking?.cancel()
         epoch++
         pending = null
+        pendingSpace = null
         worker?.cancel()
         if (clearAllowlist) controller.clearCandidates()
     }
@@ -256,5 +336,13 @@ class LocalCandidateCoordinator internal constructor(
         val requestId: Long,
         val language: KeyboardLanguage,
         val epoch: Long,
+        var submitted: Boolean = false,
+        var readyGeneration: Long = -1,
     )
+    private data class PendingSpace(val pending: Pending, val execute: (TypingEdit) -> Boolean,
+        val startedAtNanos: Long)
+
+    private companion object {
+        const val SPACE_GRACE_NANOS = 250_000_000L
+    }
 }

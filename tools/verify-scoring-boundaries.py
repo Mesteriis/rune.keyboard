@@ -271,7 +271,9 @@ def inspect_diagnostics(clean, packages, symbols, declarations, edges, variant, 
                           'session': 'Long', 'revision': 'Long', 'candidateCount': 'Int',
                           'selectedIndex': 'Int', 'modelUsed': 'Boolean',
                           'source': 'DiagnosticSource', 'completion': 'DiagnosticCompletion',
-                          'scoringCode': 'Int', 'elapsedMs': 'Long', 'requestId': 'Long', 'operationId': 'Long'}
+                          'scoringCode': 'Int', 'elapsedMs': 'Long', 'requestId': 'Long', 'operationId': 'Long',
+                          'localCompletion': 'DiagnosticCompletion', 'localInspectedStates': 'Int',
+                          'localVerifiedTerminals': 'Int'}
         # This frozen metadata DTO has constructor fields only. Reject inferred fields,
         # getters and methods too; scanning explicit property types alone misses them.
         if metadata.group().rstrip().endswith('{'):

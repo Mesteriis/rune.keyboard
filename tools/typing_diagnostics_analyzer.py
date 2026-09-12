@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Produce final correction outcomes from opt-in typing diagnostics JSONL exports.
+"""Produce correction outcomes and explicit manual-edit traces from diagnostics.
 
 Schema 2 pairs final editor responses by operation, session and originating
 revision. Only schema-1 records use legacy adjacency rules.
@@ -47,11 +47,89 @@ def _event_fields(event):
         for name, allowed in enums.items():
             if name in event and (not isinstance(event[name], str) or event[name] not in allowed):
                 raise ValueError(f"{name} must be a fixed enum")
+        if schema >= 3:
+            if event.get("localCompletion") not in enums["completion"]:
+                raise ValueError("localCompletion must be a fixed enum")
+            for name, upper in (("localInspectedStates", 8_192), ("localVerifiedTerminals", 64)):
+                if not 0 <= _integer(event.get(name), name) <= upper:
+                    raise ValueError(f"{name} outside bounds")
     kind = event.get("kind")
     reason = event.get("reason")
     if not isinstance(kind, str) or not isinstance(reason, str):
         raise ValueError("kind and reason must be strings")
     return schema, kind, reason, _integer(event.get("session"), "session"), _integer(event.get("revision"), "revision")
+
+
+def _last_word(text):
+    if not isinstance(text, str):
+        return None
+    match = re.search(r"[^\W\d_]+$", text, re.UNICODE)
+    return match.group(0) if match else None
+
+
+def _manual_edits(events):
+    """Recover bounded word edits only when explicit Backspace events provide provenance."""
+    traces = []
+    index = 0
+    while index < len(events):
+        event = events[index]
+        if event.get("kind") != "BACKSPACE" or event.get("reason") != "NONE":
+            index += 1
+            continue
+        session = event.get("session")
+        before = event.get("context")
+        initial_revision = event.get("revision")
+        backspaces = 0
+        cursor = index
+        first_input = None
+        while cursor < len(events):
+            current = events[cursor]
+            if current.get("session") != session or current.get("kind") == "SESSION":
+                break
+            if current.get("kind") == "BACKSPACE" and current.get("reason") == "NONE":
+                backspaces += 1
+            elif current.get("kind") == "INPUT":
+                first_input = cursor
+                break
+            cursor += 1
+        if first_input is None or not isinstance(before, str):
+            index += 1
+            continue
+        base = events[first_input].get("context")
+        if not isinstance(base, str) or not before.startswith(base):
+            index += 1
+            continue
+        retyped = []
+        after_word = None
+        cursor = first_input
+        while cursor < len(events):
+            current = events[cursor]
+            if current.get("session") != session or current.get("kind") == "SESSION":
+                break
+            if current.get("kind") == "BACKSPACE":
+                break
+            if current.get("kind") == "INPUT":
+                value = current.get("input")
+                if not isinstance(value, str):
+                    break
+                if value and all(_last_word(character) == character for character in value):
+                    retyped.append(value)
+                else:
+                    after_word = _last_word(current.get("context"))
+                    break
+            cursor += 1
+        before_word = _last_word(before)
+        after_word = after_word or _last_word(base + "".join(retyped))
+        deleted = before[len(base):]
+        if before_word and after_word and deleted and retyped and before_word != after_word:
+            traces.append({"session": session, "initialRevision": initial_revision,
+                "backspaces": backspaces, "evidence": "EXPLICIT_BACKSPACE_EVENTS",
+                "beforeWord": before_word, "afterWord": after_word,
+                "deleted": deleted, "retyped": "".join(retyped)})
+            index = cursor
+        else:
+            index += 1
+    return traces
 
 
 def analyze_events(events):
@@ -171,7 +249,8 @@ def analyze_events(events):
                 previous["final"] = result or previous["original"]
                 previous["outcome"] = "UNDONE"
 
-    return {"schemas": sorted(schemas), "backspaces": backspaces, "outcomes": [
+    return {"schemas": sorted(schemas), "backspaces": backspaces,
+        "manualEdits": _manual_edits(events), "outcomes": [
         {key: value for key, value in item.items() if key != "_requestId"} for item in outcomes]}
 
 

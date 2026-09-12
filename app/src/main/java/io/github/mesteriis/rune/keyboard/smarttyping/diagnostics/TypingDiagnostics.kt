@@ -29,6 +29,9 @@ data class DiagnosticEvent(
     val elapsedMs: Long = 0,
     val requestId: Long = 0,
     val operationId: Long = 0,
+    val localCompletion: DiagnosticCompletion = DiagnosticCompletion.NONE,
+    val localInspectedStates: Int = 0,
+    val localVerifiedTerminals: Int = 0,
 )
 
 /** Constructed only inside an admitted lazy callback; no editor read or arbitrary metadata. */

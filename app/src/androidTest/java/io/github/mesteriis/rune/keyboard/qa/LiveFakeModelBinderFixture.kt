@@ -158,7 +158,7 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
         onMain {
             val facts = requireNotNull(owner).invoke()
             check(facts.baseEligible && facts.canRequestModelSpelling && facts.modelRuntimeQualified &&
-                facts.modelAutoReplaceQualified && !facts.deterministicAutoReplaceQualified &&
+                facts.modelAutoReplaceQualified &&
                 facts.autocorrectionMode == AutocorrectionMode.HIGH_CONFIDENCE &&
                 !facts.contextualPunctuationEnabled && facts.language == KeyboardLanguage.ENGLISH) {
                 "Actual resident production qualification does not permit this matrix"

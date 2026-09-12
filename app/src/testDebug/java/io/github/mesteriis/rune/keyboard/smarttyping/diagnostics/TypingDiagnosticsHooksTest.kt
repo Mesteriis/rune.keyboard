@@ -79,12 +79,13 @@ class TypingDiagnosticsHooksTest {
         assertTrue(encoded.contains("\"elapsedMs\":17"))
     }
 
-    @Test fun schemaTwoAttributesCandidateCompletionAndDecisionSource() {
+    @Test fun schemaThreeAttributesBothSearchCompletionsAndDecisionSource() {
         val observer = Observer(); prepared(observer)
         val event = observer.events.last { it.kind == DiagnosticKind.CANDIDATES }
         val encoded = DiagnosticsEncoding.metadata(event).decodeToString()
-        assertTrue(encoded.contains("\"schema\":2"))
+        assertTrue(encoded.contains("\"schema\":3"))
         assertTrue(encoded.contains("\"completion\":\"COMPLETE\""))
+        assertTrue(encoded.contains("\"localCompletion\":\"UNAVAILABLE\""))
         assertTrue(encoded.contains("\"source\":\"LOCAL_POLICY\""))
     }
 
@@ -214,7 +215,7 @@ class TypingDiagnosticsHooksTest {
         val request = checkNotNull(controller.beginCandidateRequest(2, KeyboardLanguage.ENGLISH))
         controller.typeText("x") { true }
         val requests = observer.events.filter { it.kind == DiagnosticKind.REQUEST }
-        assertEquals(listOf(DiagnosticReason.SUBMITTED, DiagnosticReason.CANCELLED), requests.map { it.reason })
+        assertEquals(listOf(DiagnosticReason.SCHEDULED, DiagnosticReason.CANCELLED), requests.map { it.reason })
         assertTrue(requests.all { it.requestId == request.requestId && it.revision == request.revision &&
             it.source == DiagnosticSource.LOCAL_POLICY })
     }

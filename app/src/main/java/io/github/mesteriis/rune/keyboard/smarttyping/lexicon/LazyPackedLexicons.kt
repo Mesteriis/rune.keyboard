@@ -13,8 +13,9 @@ enum class LexiconLoaderFailure { WORKER_STOPPED }
 
 /**
  * One lazy serial loader; construct/request/invalidate/close on its owner thread. Demand contains
- * only up to three enum bits and a numeric generation. No editor, token, owner callback or dispatcher.
- * Completion publishes readiness only; the next eligible edit decides whether to submit candidates.
+ * only up to three enum bits and a numeric generation. No editor or token crosses this boundary.
+ * Completion publishes readiness and may notify one owner callback with only a numeric generation;
+ * the owner reconstructs any request from its current session state.
  *
  * [lexicon] belongs exclusively to one candidate compute worker for this component's lifetime.
  * Publication adds immutable validated entries; it never replaces Ready readers or restarts workers.
@@ -68,6 +69,12 @@ class LazyPackedLexicons internal constructor(
 
     fun isReady(route: LanguageRoute): Boolean = ready(state.snapshot, mask(route))
 
+    /** Loader emits only a monotonic generation; the owner decides whether any live demand remains. */
+    internal fun setReadyListener(listener: (Long) -> Unit) {
+        checkOwner()
+        synchronized(state.lock) { state.readyListener = listener }
+    }
+
     fun availability(language: KeyboardLanguage): LexiconAvailability {
         val snapshot = state.snapshot
         return when {
@@ -99,6 +106,7 @@ class LazyPackedLexicons internal constructor(
     override fun close() {
         checkOwner()
         synchronized(state.lock) {
+            state.readyListener = null
             stopLocked(state, failed = false)
             if (started) thread.interrupt()
             state.lock.notifyAll()
@@ -139,6 +147,8 @@ class LazyPackedLexicons internal constructor(
         var pending = 0
         var generation = 0L
         var active = false
+        var readyGeneration = 0L
+        var readyListener: ((Long) -> Unit)? = null
     }
 
     /** Worker-only scratch delegates selection over published immutable handles; never loads assets. */
@@ -211,13 +221,24 @@ class LazyPackedLexicons internal constructor(
             }
             val reader = if (result is PackedLexiconLoad.Ready && result.lexicon.language == work.language &&
                 !Thread.currentThread().isInterrupted) PackedCandidateLexicon(listOf(result.lexicon)) else null
+            var notification: Pair<(Long) -> Unit, Long>? = null
             synchronized(state.lock) {
                 state.active = false
                 if (!state.snapshot.closed && state.generation == work.generation) {
                     state.snapshot = if (reader != null) state.snapshot.withReader(work.language, reader)
                     else state.snapshot.copy(requested = state.snapshot.requested and bit(work.language).inv(),
                         unavailable = state.snapshot.unavailable or bit(work.language))
+                    if (reader != null && state.readyGeneration != Long.MAX_VALUE) {
+                        state.readyGeneration++
+                        state.readyListener?.let { notification = it to state.readyGeneration }
+                    }
                 }
+            }
+            try {
+                notification?.let { (listener, generation) -> listener(generation) }
+            } catch (_: RuntimeException) {
+                // Readiness observation is optional. A rejected owner dispatch must not kill the
+                // lexicon loader or change the published immutable reader.
             }
             return true
         }

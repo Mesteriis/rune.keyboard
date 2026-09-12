@@ -49,6 +49,7 @@ data class CandidateGeneration(
     val protectedReason: ProtectedTokenReason?,
     val inspectedStates: Int,
     val verifiedTerminals: Int,
+    val localSearch: LocalSearchEvidence = LocalSearchEvidence.NONE,
 ) {
     val isComplete: Boolean
         get() = completion == CandidateCompletion.COMPLETE
@@ -59,6 +60,20 @@ data class CandidateGeneration(
 
     override fun toString(): String =
         "CandidateGeneration(completion=$completion, candidateCount=${alternatives.size}, redacted)"
+}
+
+/** A separate certificate for the exhaustive unit-distance pass. */
+data class LocalSearchEvidence(
+    val completion: CandidateCompletion,
+    val alternatives: List<GeneratedCandidate>,
+    val inspectedStates: Int,
+    val verifiedTerminals: Int,
+) {
+    val isComplete: Boolean get() = completion == CandidateCompletion.COMPLETE
+
+    companion object {
+        val NONE = LocalSearchEvidence(CandidateCompletion.UNAVAILABLE, emptyList(), 0, 0)
+    }
 }
 
 /**
@@ -89,7 +104,8 @@ class CandidateGenerator(
         var candidateCount = 0
         var validWord = false
         var protectedReason: ProtectedTokenReason? = null
-        fun result(completion: CandidateCompletion, alternatives: List<GeneratedCandidate> = emptyList()) =
+        fun result(completion: CandidateCompletion, alternatives: List<GeneratedCandidate> = emptyList(),
+            localSearch: LocalSearchEvidence = LocalSearchEvidence.NONE) =
             CandidateGeneration(
                 original = if (completion == CandidateCompletion.CANCELLED) null else token,
                 alternatives = alternatives,
@@ -98,6 +114,7 @@ class CandidateGenerator(
                 protectedReason = protectedReason,
                 inspectedStates = control.inspectedStates,
                 verifiedTerminals = control.verifiedTerminals,
+                localSearch = localSearch,
             )
         try {
             if (!control.checkpoint()) return result(control.stop!!)
@@ -177,13 +194,75 @@ class CandidateGenerator(
             }
             val length = key.codePointCount(0, key.length)
             val radius = if (length < 5) 1 else 2
+            val localSelected = ArrayList<GeneratedCandidate>(maximumAlternatives)
+            var localSearch = LocalSearchEvidence.NONE
+            // General local replacement is admitted only from five scalars. Shorter words retain
+            // the historical extended suggestion search without paying for a redundant local pass.
+            if (length >= 5) {
+                val localStartedStates = control.inspectedStates
+                val localStartedTerminals = control.verifiedTerminals
+                val localCandidates = ArrayList<GeneratedCandidate>()
+                var localCompletion = CandidateCompletion.COMPLETE
+                for (language in languages) {
+                    val fallback = language != primary
+                    val status = lexicon.scan(language, key, 1, control) { terminal, frequency ->
+                        if (!control.verifyTerminal()) return@scan false
+                        if (terminal.isEmpty() || !TokenUnicode.bounded(terminal) || frequency <= 0 ||
+                            TokenUnicode.folded(terminal) != terminal || terminal == key) {
+                            control.rejectReader()
+                            return@scan false
+                        }
+                        val unitDistance = unit.features(key, terminal, language).editCost.toInt()
+                        if (!control.checkpoint()) return@scan false
+                        if (unitDistance != 1) {
+                            control.rejectReader()
+                            return@scan false
+                        }
+                        val features = weighted.features(key, terminal, language)
+                        if (!control.checkpoint()) return@scan false
+                        val display = pattern.preserve(terminal) ?: return@scan true
+                        val displayKey = TokenUnicode.folded(display)
+                        if (displayKey == key) return@scan true
+                        localCandidates += GeneratedCandidate(
+                            display, displayKey, terminal, language, fallback,
+                            if (fallback) route.fallbackPrior else route.primaryPrior,
+                            frequency, unitDistance, features,
+                            kotlin.math.abs(length - terminal.codePointCount(0, terminal.length)), pattern,
+                        )
+                        true
+                    }
+                    if (!control.checkpoint()) {
+                        localCompletion = control.stop!!
+                        break
+                    }
+                    if (status != LexiconScanStatus.COMPLETE) return result(CandidateCompletion.UNAVAILABLE)
+                }
+                if (!control.cancellationCheckpoint()) return result(CandidateCompletion.CANCELLED)
+                val localSorted = localCandidates.sortedWith(COMPARATOR).distinctBy { it.canonicalKey }
+                var localFallbackCount = 0
+                for (candidate in localSorted) {
+                    if (!control.cancellationCheckpoint()) return result(CandidateCompletion.CANCELLED)
+                    if (candidate.isFallback && localFallbackCount == route.fallbackCandidateLimit) continue
+                    localSelected += candidate
+                    if (candidate.isFallback) localFallbackCount++
+                    if (localSelected.size == maximumAlternatives) break
+                }
+                localSearch = LocalSearchEvidence(localCompletion, localSorted,
+                    control.inspectedStates - localStartedStates,
+                    control.verifiedTerminals - localStartedTerminals)
+                if (localCompletion != CandidateCompletion.COMPLETE) {
+                    return result(localCompletion, localSelected, localSearch)
+                }
+            }
+
             val top = lexicon.selectTop(key, route, pattern, control, maximumAlternatives)
             if (top != null) {
                 if (!control.cancellationCheckpoint()) return result(CandidateCompletion.CANCELLED)
                 check(top.maximumAlternatives == maximumAlternatives) { "TOP_SELECTION_WIDTH" }
                 check(control.stop == null || control.stop == top.completion) { "TOP_SELECTION_STOP" }
                 check(top.alternatives.size <= control.verifiedTerminals) { "TOP_SELECTION_VERIFICATION" }
-                return result(top.completion, top.alternatives)
+                return result(top.completion,
+                    if (top.alternatives.isEmpty()) localSelected else top.alternatives, localSearch)
             }
             var completion = CandidateCompletion.COMPLETE
             for (language in languages) {
@@ -246,7 +325,7 @@ class CandidateGenerator(
                 if (selected.size == maximumAlternatives) break
             }
             if (!control.cancellationCheckpoint()) return result(CandidateCompletion.CANCELLED)
-            return result(completion, selected.toList())
+            return result(completion, if (selected.isEmpty()) localSelected else selected.toList(), localSearch)
         } catch (_: InterruptedException) {
             // Preserve the worker's interrupt signal and treat interrupted reader work as cancellation.
             Thread.currentThread().interrupt()
@@ -263,6 +342,8 @@ class CandidateGenerator(
     }
 
     companion object {
+        /** Increment whenever the qualified complete distance-one candidate set can change. */
+        const val SEARCH_VERSION = 1
         const val MAX_ALTERNATIVES = 7
 
         internal val COMPARATOR = Comparator<GeneratedCandidate> { left, right ->

@@ -26,6 +26,8 @@ data class DiagnosticEvent(val kind: DiagnosticKind, val reason: DiagnosticReaso
     val source: DiagnosticSource = DiagnosticSource.NONE, val completion: DiagnosticCompletion = DiagnosticCompletion.NONE,
     val scoringCode: Int = -1, val elapsedMs: Long = 0, val requestId: Long = 0, val operationId: Long = 0,
     val candidateCount: Int = 0, val selectedIndex: Int = -1, val modelUsed: Boolean = false,
+    val localCompletion: DiagnosticCompletion = DiagnosticCompletion.NONE,
+    val localInspectedStates: Int = 0, val localVerifiedTerminals: Int = 0,
     val session: Long, val revision: Long)
 data class DiagnosticText(
     val input: String = "", val context: String = "", val original: String = "",

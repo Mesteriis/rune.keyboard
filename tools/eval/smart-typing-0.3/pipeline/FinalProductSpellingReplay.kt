@@ -4,6 +4,7 @@ import io.github.mesteriis.rune.keyboard.ime.model.*
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.*
 import io.github.mesteriis.rune.keyboard.settings.KeyboardSettings
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CalibratedSpellingPolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.LocalCorrectionPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.*
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
@@ -81,6 +82,18 @@ object FinalProductSpellingReplay {
         } }
     }
 
+    private fun item(candidate: GeneratedCandidate) = mapOf(
+        "text" to candidate.text, "canonicalKey" to candidate.canonicalKey,
+        "terminalKey" to candidate.terminalKey, "language" to candidate.language.locale.language,
+        "isFallback" to candidate.isFallback, "languagePrior" to candidate.languagePrior,
+        "frequencyRank" to candidate.frequencyRank, "unitDistance" to candidate.unitDistance,
+        "editCost" to candidate.editFeatures.editCost,
+        "repeatedCharacterEdits" to candidate.editFeatures.repeatedCharacterEdits,
+        "repetitionBonus" to candidate.editFeatures.repetitionBonus,
+        "lengthDifference" to candidate.lengthDifference, "casePattern" to candidate.casePattern.name,
+        "kind" to candidate.kind.name, "canonicalCaseUnambiguous" to candidate.canonicalCaseUnambiguous,
+        "canonicalCaseAutoEligible" to candidate.canonicalCaseAutoEligible)
+
     private fun candidate(generation: CandidateGeneration) = mapOf(
         "original" to generation.original, "completion" to generation.completion.name,
         "isValidWord" to generation.isValidWord,
@@ -88,17 +101,11 @@ object FinalProductSpellingReplay {
         "protectedReason" to generation.protectedReason?.name,
         "inspectedStates" to generation.inspectedStates,
         "verifiedTerminals" to generation.verifiedTerminals,
-        "alternatives" to generation.alternatives.map { candidate -> mapOf(
-            "text" to candidate.text, "canonicalKey" to candidate.canonicalKey,
-            "terminalKey" to candidate.terminalKey, "language" to candidate.language.locale.language,
-            "isFallback" to candidate.isFallback, "languagePrior" to candidate.languagePrior,
-            "frequencyRank" to candidate.frequencyRank, "unitDistance" to candidate.unitDistance,
-            "editCost" to candidate.editFeatures.editCost,
-            "repeatedCharacterEdits" to candidate.editFeatures.repeatedCharacterEdits,
-            "repetitionBonus" to candidate.editFeatures.repetitionBonus,
-            "lengthDifference" to candidate.lengthDifference, "casePattern" to candidate.casePattern.name,
-            "kind" to candidate.kind.name, "canonicalCaseUnambiguous" to candidate.canonicalCaseUnambiguous,
-            "canonicalCaseAutoEligible" to candidate.canonicalCaseAutoEligible) })
+        "alternatives" to generation.alternatives.map(::item),
+        "localSearch" to mapOf("completion" to generation.localSearch.completion.name,
+            "inspectedStates" to generation.localSearch.inspectedStates,
+            "verifiedTerminals" to generation.localSearch.verifiedTerminals,
+            "alternatives" to generation.localSearch.alternatives.map(::item)))
 
     private fun state(controller: TypingSessionController) = mapOf(
         "enabled" to controller.state.enabled, "sessionId" to controller.state.sessionId,
@@ -219,6 +226,7 @@ object FinalProductSpellingReplay {
                 result["typingCommands"] = editor.commands.toList()
                 val fullGeneration = generator.generate(typed, language)
                 result["fullTokenGeneration"] = candidate(fullGeneration)
+                result["localDecision"] = LocalCorrectionPolicy.decide(fullGeneration, language)?.canonicalKey
                 val localRequest = controller.beginCandidateRequest(index.toLong() + 1, language)
                 result["requestToken"] = localRequest?.token
                 val generation = localRequest?.let {

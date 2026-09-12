@@ -14,13 +14,14 @@ internal fun interface SpellingQualification {
 
     companion object {
         /**
-         * V1 common confusions are explicit reviewed exceptions. No general local rule has an
-         * independent 99% calibration/holdout qualification. The existing model qualification
-         * remains the frozen 95% point-precision policy, independent of local qualification.
+         * V2 common confusions are explicit reviewed exceptions. General local V1/search V1 is
+         * independently qualified for RU/ES at 99% point precision. The existing model
+         * qualification remains the frozen 95% policy, independent of local qualification.
          */
         val CURRENT = SpellingQualification { language, source -> when (source) {
             SpellingSource.COMMON_CONFUSION -> QualificationArtifacts.allowsLocal(language, QualificationArtifacts.local())
-            SpellingSource.GENERAL_LOCAL -> false
+            SpellingSource.GENERAL_LOCAL -> QualificationArtifacts.allowsGeneralLocal(
+                language, QualificationArtifacts.generalLocal())
             SpellingSource.MODEL -> ModelRuntimeQualification.CURRENT
         } }
     }

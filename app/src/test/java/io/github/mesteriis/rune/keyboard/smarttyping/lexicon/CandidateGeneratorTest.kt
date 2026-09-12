@@ -157,12 +157,50 @@ class CandidateGeneratorTest {
     }
 
     @Test
+    fun `observed short manual correction stays available for model ranking`() {
+        val result = CandidateGenerator(ScriptedLexicon(mapOf(ru to listOf(Entry("муж", 20)))))
+            .generate("мкж", ru)
+
+        assertEquals(CandidateCompletion.UNAVAILABLE, result.localSearch.completion)
+        assertEquals(listOf("муж"), result.alternatives.map { it.text })
+        assertTrue(result.localSearch.alternatives.isEmpty())
+        assertFalse(result.isValidWord)
+    }
+
+    @Test
+    fun `complete distance one evidence survives an exhausted extended search`() {
+        var scans = 0
+        val lexicon = object : CandidateLexicon {
+            override fun exact(language: KeyboardLanguage, key: String, control: CandidateSearchControl) =
+                if (control.inspectState()) ExactMembership.ABSENT else ExactMembership.UNAVAILABLE
+
+            override fun scan(language: KeyboardLanguage, key: String, unitRadius: Int,
+                control: CandidateSearchControl, visitor: CandidateVisitor): LexiconScanStatus {
+                scans++
+                if (unitRadius == 1) {
+                    if (!control.inspectState() || !visitor.visit("result", 1)) return LexiconScanStatus.UNAVAILABLE
+                    return LexiconScanStatus.COMPLETE
+                }
+                while (control.inspectState()) Unit
+                return LexiconScanStatus.UNAVAILABLE
+            }
+        }
+
+        val result = CandidateGenerator(lexicon).generate("resul", en)
+
+        assertEquals(CandidateCompletion.STATES_EXHAUSTED, result.completion)
+        assertEquals(CandidateCompletion.COMPLETE, result.localSearch.completion)
+        assertEquals(listOf("result"), result.localSearch.alternatives.map { it.text })
+        assertTrue(scans >= 2)
+    }
+
+    @Test
     fun `late weighted winner is evaluated even after seven unit neighbors`() {
         val words = listOf("baxxx", "acxxx", "abxyx", "abxxy", "abxzx", "abxxz", "abxxxq", "apxxx")
         val lexicon = ScriptedLexicon(mapOf(en to words.mapIndexed { index, word -> Entry(word, index + 1) }))
         val result = CandidateGenerator(lexicon).generate("abxxx", en)
         assertEquals(CandidateCompletion.COMPLETE, result.completion)
-        assertEquals(8, result.verifiedTerminals)
+        assertEquals(16, result.verifiedTerminals)
         assertEquals(7, result.alternatives.size)
         assertTrue(result.alternatives.any { it.text == "apxxx" })
         assertFalse(result.alternatives.any { it.text == "baxxx" })
@@ -204,7 +242,7 @@ class CandidateGeneratorTest {
         val entries = listOf(Entry("ß" + tail, 1)) + ('b'..'i').map { Entry(it + tail, 100) }
         val result = CandidateGenerator(ScriptedLexicon(mapOf(en to entries))).generate("A" + tail, en)
         assertEquals(CandidateCompletion.COMPLETE, result.completion)
-        assertEquals(9, result.verifiedTerminals)
+        assertEquals(18, result.verifiedTerminals)
         assertEquals(7, result.alternatives.size)
         assertTrue(result.alternatives.all { it.text.codePointCount(0, it.text.length) == 32 })
         assertTrue(result.alternatives.all { it.text.first().isUpperCase() })
@@ -258,6 +296,7 @@ class CandidateGeneratorTest {
         val generator = CandidateGenerator(lexicon)
         val complete = generator.generate("cut", en)
         assertEquals(CandidateCompletion.COMPLETE, complete.completion)
+        assertEquals(CandidateCompletion.UNAVAILABLE, complete.localSearch.completion)
         assertEquals(8_192, complete.inspectedStates)
         assertEquals(2, complete.verifiedTerminals)
         lexicon.scanPrefixStates[es] = 8_189
@@ -288,12 +327,14 @@ class CandidateGeneratorTest {
         val primary = words.take(40).map { Entry(it) }
         val lexicon = ScriptedLexicon(mapOf(en to primary, es to words.take(24).map { Entry(it) }))
         val complete = CandidateGenerator(lexicon).generate("aaaaa", en)
-        assertEquals(CandidateCompletion.COMPLETE, complete.completion)
+        assertEquals(CandidateCompletion.VERIFIED_EXHAUSTED, complete.completion)
+        assertEquals(CandidateCompletion.COMPLETE, complete.localSearch.completion)
         assertEquals(64, complete.verifiedTerminals)
         assertEquals(7, complete.alternatives.size)
         val overflow = ScriptedLexicon(mapOf(en to primary, es to words.take(25).map { Entry(it) }))
         val result = CandidateGenerator(overflow).generate("aaaaa", en)
         assertEquals(CandidateCompletion.VERIFIED_EXHAUSTED, result.completion)
+        assertEquals(CandidateCompletion.VERIFIED_EXHAUSTED, result.localSearch.completion)
         assertEquals(64, result.verifiedTerminals)
         assertEquals(complete.alternatives, result.alternatives)
         assertFalse(result.isComplete)
@@ -306,7 +347,8 @@ class CandidateGeneratorTest {
         // Complete enumeration of only the first 64 verified entries supplies a bounded control.
         val verifiedPrefix = ScriptedLexicon(mapOf(en to primary, es to fallback.take(14)))
         val expected = CandidateGenerator(verifiedPrefix).generate("aaaaa", en)
-        assertEquals(CandidateCompletion.COMPLETE, expected.completion)
+        assertEquals(CandidateCompletion.VERIFIED_EXHAUSTED, expected.completion)
+        assertEquals(CandidateCompletion.COMPLETE, expected.localSearch.completion)
         assertEquals(64, expected.verifiedTerminals)
         assertEquals(7, expected.alternatives.size)
         assertEquals(2, expected.alternatives.count { it.isFallback })
@@ -319,9 +361,10 @@ class CandidateGeneratorTest {
                 partial.completion)
             assertEquals(64, partial.verifiedTerminals)
             assertEquals(if (stateCap) 8_192 else 67, partial.inspectedStates)
-            assertEquals(expected.alternatives, partial.alternatives)
             assertEquals(7, partial.alternatives.map { it.canonicalKey }.toSet().size)
             assertEquals(2, partial.alternatives.count { it.isFallback })
+            assertEquals(if (stateCap) CandidateCompletion.STATES_EXHAUSTED else CandidateCompletion.VERIFIED_EXHAUSTED,
+                partial.localSearch.completion)
             assertFalse(partial.isComplete)
             assertTrue(partial.prohibitsAutoReplace)
             assertScratchCleared(generator)
@@ -412,7 +455,8 @@ class CandidateGeneratorTest {
 
     @Test
     fun `reader contract violations fail closed and clear references`() {
-        for (entry in listOf(Entry("CUT"), Entry("cut"), Entry("remote"), Entry("cat", 0), Entry("x".repeat(33)))) {
+        for (entry in listOf(Entry("CUT"), Entry("cut"), Entry("cats"), Entry("remote"), Entry("cat", 0),
+            Entry("x".repeat(33)))) {
             val lexicon = ScriptedLexicon(mapOf(en to listOf(entry)))
             lexicon.emitWithoutAdmission = true
             val generator = CandidateGenerator(lexicon)

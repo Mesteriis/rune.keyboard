@@ -146,13 +146,14 @@ class PackedTopSevenTest {
             val fallback = if (split == 0) listOf("zzzzzzzz") else words.take(count - split)
             val handles = listOf(handle(primary.associateWith { 1 }, en), handle(fallback.associateWith { 1 }, es))
             val result = CandidateGenerator(PackedCandidateLexicon(handles), maximum).generate("aaaaa", en)
-            // Five primary candidates precede the entire lower-prior fallback frontier.
-            // A requested prefix of those five has a proof without exhausting fallback.
-            val primaryCertificate = split == 5 && maximum <= 5
-            assertEquals(if (primaryCertificate) 5 else 64, result.verifiedTerminals)
-            val exhausted = count == 65 && !primaryCertificate
-            assertEquals(if (exhausted) CandidateCompletion.VERIFIED_EXHAUSTED else CandidateCompletion.COMPLETE, result.completion)
-            assertEquals(exhausted, result.prohibitsAutoReplace)
+            // The exhaustive local pass is deliberately independent of display width and early
+            // extended-search certification. It owns the same global terminal budget. Exactly 64
+            // local terminals can complete their own evidence, but leave no terminal for the
+            // extended pass; a 65th terminal exhausts the local pass itself.
+            assertEquals(64, result.verifiedTerminals)
+            assertEquals(CandidateCompletion.VERIFIED_EXHAUSTED, result.completion)
+            assertEquals(count == 64, result.localSearch.isComplete)
+            assertTrue(result.prohibitsAutoReplace)
         }
     }
 

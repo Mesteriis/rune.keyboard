@@ -222,9 +222,9 @@ class CorrectionBoundaryTest {
 
     @Test fun `all languages restore exact source including decomposed marks and length change`() {
         for ((language, original, replacement) in listOf(
-            Triple(KeyboardLanguage.ENGLISH, "Cafe\u0301ss", "Cafés"),
-            Triple(KeyboardLanguage.RUSSIAN, "Превет", "Привет"),
-            Triple(KeyboardLanguage.SPANISH, "holaa", "hola"))) {
+            Triple(KeyboardLanguage.ENGLISH, "cafe\u0301ss", "cafés"),
+            Triple(KeyboardLanguage.RUSSIAN, "преветствие", "приветствие"),
+            Triple(KeyboardLanguage.SPANISH, "mensage", "mensaje"))) {
             val f = Fixture(); f.keyboard = KeyboardState(language)
             f.raw(original); f.publish(replacement); f.type(" ")
             assertEquals("$replacement ", f.document)
@@ -247,9 +247,10 @@ class CorrectionBoundaryTest {
         }
     }
 
-    @Test fun `current 95 percent qualification admits only a ready model decision`() {
+    @Test fun `current qualification keeps English general local disabled and admits ready model decisions`() {
         for (language in KeyboardLanguage.entries) {
-            assertFalse(SpellingQualification.CURRENT.allowsGeneralLocal(language))
+            assertEquals(language != KeyboardLanguage.ENGLISH,
+                SpellingQualification.CURRENT.allowsGeneralLocal(language))
             assertTrue(SpellingQualification.CURRENT.allowsModel(language))
             val f = Fixture(qualified = null)
             f.keyboard = KeyboardState(language)
@@ -527,6 +528,7 @@ class CorrectionBoundaryTest {
         Triple(KeyboardLanguage.RUSSIAN, "реалбно", "реально"),
         Triple(KeyboardLanguage.RUSSIAN, "мододец", "молодец"),
         Triple(KeyboardLanguage.RUSSIAN, "шоржусь", "горжусь"),
+        Triple(KeyboardLanguage.RUSSIAN, "заьыл", "забыл"),
         Triple(KeyboardLanguage.ENGLISH, "teh", "the"),
         Triple(KeyboardLanguage.ENGLISH, "recieve", "receive"),
         Triple(KeyboardLanguage.ENGLISH, "adress", "address"),
@@ -613,7 +615,8 @@ class CorrectionBoundaryTest {
                 false, 4, 1, 1, EditFeatures(1.0, 0, 0.0),
                 kotlin.math.abs(word.length - request.token.length), CasePattern.analyze(request.token))
             assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
-                CandidateGeneration(request.token, listOf(item), completion, false, null, 1, 1))))
+                CandidateGeneration(request.token, listOf(item), completion, false, null, 1, 1,
+                    LocalSearchEvidence(completion, listOf(item), 1, 1)))))
         }
         fun publishCommon(target: String, completion: CandidateCompletion = CandidateCompletion.COMPLETE) {
             val request = controller.beginCandidateRequest(++requestId, keyboard.language)!!

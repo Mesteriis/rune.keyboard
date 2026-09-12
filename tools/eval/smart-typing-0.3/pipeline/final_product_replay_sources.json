@@ -13,6 +13,7 @@
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/LocalCorrectionPolicy.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CommonConfusions.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/QualificationArtifacts.kt",

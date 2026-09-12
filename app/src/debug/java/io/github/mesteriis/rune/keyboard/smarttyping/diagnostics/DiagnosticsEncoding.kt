@@ -16,12 +16,15 @@ internal object DiagnosticsEncoding {
         append("],\"result\":"); quoted(text.result.take(256)); append("}\n")
     }.toByteArray(Charsets.UTF_8)
 
-    private fun fields(event: DiagnosticEvent) = "{\"schema\":2,\"kind\":\"${event.kind.name}\"," +
+    private fun fields(event: DiagnosticEvent) = "{\"schema\":3,\"kind\":\"${event.kind.name}\"," +
         "\"reason\":\"${event.reason.name}\",\"session\":${event.session.coerceIn(0, 1_000_000_000)}," +
         "\"revision\":${event.revision.coerceIn(0, 1_000_000_000)}," +
         "\"candidateCount\":${event.candidateCount.coerceIn(0, 8)}," +
         "\"selectedIndex\":${event.selectedIndex.coerceIn(-1, 7)},\"modelUsed\":${event.modelUsed}," +
         "\"completion\":\"${event.completion.name}\",\"source\":\"${event.source.name}\"," +
+        "\"localCompletion\":\"${event.localCompletion.name}\"," +
+        "\"localInspectedStates\":${event.localInspectedStates.coerceIn(0, 8_192)}," +
+        "\"localVerifiedTerminals\":${event.localVerifiedTerminals.coerceIn(0, 64)}," +
         "\"scoringCode\":${event.scoringCode.coerceIn(-1, 15)},\"elapsedMs\":${event.elapsedMs.coerceIn(0, 60_000)}," +
         "\"requestId\":${event.requestId.coerceIn(0, 1_000_000_000)},\"operationId\":${event.operationId.coerceIn(0, 1_000_000_000)}"
 

@@ -7,6 +7,7 @@ import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringCode
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringToken
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateReply
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticSource
@@ -152,6 +153,38 @@ class ModelCandidateCoordinator(
         timer = expiry
         scheduler.postDelayed(expiry, SPACE_GRACE_MILLIS)
         return result
+    }
+
+    /** Starts spelling ranking after a completed local search abstains across an owned Space. */
+    internal fun candidatesChangedAcrossSpace(reply: LocalCandidateReply,
+        execute: (TypingEdit) -> Boolean, elapsedNanos: Long): Boolean {
+        checkOwner()
+        val elapsedMillis = (elapsedNanos + 999_999) / 1_000_000
+        val owner = ownerState()
+        if (closed || elapsedNanos < 0 || elapsedMillis >= SPACE_GRACE_MILLIS ||
+            !automaticSpaceEligible() || requestId == Long.MAX_VALUE) return false
+        readiness.setActive(featureEligible())
+        client.attachSession(controller.state.sessionId, true)
+        val input = controller.beginModelRankingAfterLocalSpace(reply, ++requestId) ?: return false
+        epoch++
+        pendingOwner = owner
+        pendingKind = RequestKind.SPELLING
+        diagnosticSource = DiagnosticSource.MODEL
+        diagnosticRequest = input.token
+        diagnosticScheduled = null
+        spaceExecutor = execute
+        spaceStartedAt = scheduler.nowMillis() - elapsedMillis
+        val currentEpoch = epoch
+        val expiry = object : Runnable {
+            override fun run() {
+                checkOwner()
+                if (timer === this && epoch == currentEpoch) cancel()
+            }
+        }
+        timer = expiry
+        scheduler.postDelayed(expiry, SPACE_GRACE_MILLIS - elapsedMillis)
+        trace.section(SmartTypingTraceSection.MODEL_REQUEST) { client.score(input) }
+        return true
     }
 
     /** Session/view/layer/language/settings/privacy invalidation, not an ordinary keystroke. */

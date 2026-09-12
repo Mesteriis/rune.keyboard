@@ -1,5 +1,28 @@
 # Production candidate calibration export
 
+## General distance-one local policy
+
+`evaluate_distance_one_policy.py` is the source-bound qualification for the
+general local correction branch. It validates the frozen schema-2 corpus,
+compiles the current production generator, policy and editor controller, and
+replays calibration before holdout with the model explicitly unavailable. The
+holdout gate is independent per language: at least 300 correct replacements of
+distinct target words, precision at least 99%, no protected-token changes, no
+loss of the original suggestion and exact Undo for every automatic edit.
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 \
+  tools/eval/smart-typing-0.3/pipeline/evaluate_distance_one_policy.py \
+  --output build/smart-typing-0.3/local-distance-one-current
+```
+
+The output directory must be fresh. `report.json`, `observations.jsonl` and
+`evidence.json` bind all compiled sources, corpus files, lexicon/rank/case
+assets, JDK and commands. A language stays disabled unless the current policy,
+search version and all packaged lexicon identities match its qualified
+fingerprint. EN remains disabled for the general branch in 0.3.2; its existing
+versioned common-confusion table and model path remain available.
+
 This host-only tool runs the current production `CandidateGenerator` and
 `PackedCandidateLexicon`, including membership, protection, language routing,
 weighted edit features and the shared 8192-state/64-terminal limits. It uses

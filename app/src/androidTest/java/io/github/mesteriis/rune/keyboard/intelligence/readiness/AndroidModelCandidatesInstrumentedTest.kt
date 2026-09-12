@@ -19,6 +19,7 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLayer
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
 import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
 import io.github.mesteriis.rune.keyboard.intelligence.inference.LifecycleModelInferenceService
+import io.github.mesteriis.rune.keyboard.intelligence.ipc.QualifiedModelArtifact
 import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelPointer
 import io.github.mesteriis.rune.keyboard.intelligence.storage.ActiveModelPointerCodec
 import io.github.mesteriis.rune.keyboard.intelligence.storage.ModelOperationGate
@@ -206,7 +207,7 @@ class AndroidModelCandidatesInstrumentedTest {
                 val version = File(store, "versions/fixture-1.0.0").apply { check(mkdirs()) }
                 File(store, "active-model.json").writeText(ActiveModelPointerCodec.encode(ActiveModelPointer("fixture-1.0.0", null)))
                 File(version, "fixture.gguf").writeBytes(byteArrayOf(0))
-                File(version, "model-manifest.json").writeText("""{"schemaVersion":1,"modelId":"fixture","version":"1.0.0","displayName":"Fixture","fileName":"fixture.gguf","url":"https://github.com/Mesteriis/rune.keyboard/releases/download/fixture/fixture.gguf","sha256":"${"0".repeat(64)}","sizeBytes":1,"runtimeApi":1,"minimumRuneVersionCode":2,"ggufVersion":3,"architecture":"qwen3","fileType":15}""")
+                File(version, "model-manifest.json").writeText("""{"schemaVersion":1,"modelId":"fixture","version":"1.0.0","displayName":"Fixture","fileName":"fixture.gguf","url":"https://github.com/Mesteriis/rune.keyboard/releases/download/fixture/fixture.gguf","sha256":"${QualifiedModelArtifact.MODEL_SHA256}","sizeBytes":1,"runtimeApi":${QualifiedModelArtifact.RUNTIME_API},"minimumRuneVersionCode":2,"ggufVersion":3,"architecture":"qwen3","fileType":15}""")
             }
         }
         fun prepare(word: String, alternative: String, id: Long) {

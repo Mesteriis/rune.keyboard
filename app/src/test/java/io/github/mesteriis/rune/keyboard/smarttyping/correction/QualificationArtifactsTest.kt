@@ -12,8 +12,19 @@ class QualificationArtifactsTest {
             assertFalse(QualificationArtifacts.allowsLocal(language, current.copy(policyVersion = 999)))
             assertFalse(QualificationArtifacts.allowsLocal(language, current.copy(
                 lexicons = current.lexicons + (language to "0".repeat(64)))))
-            assertFalse(SpellingQualification.CURRENT.allowsGeneralLocal(language))
+            assertEquals(language != KeyboardLanguage.ENGLISH,
+                SpellingQualification.CURRENT.allowsGeneralLocal(language))
         }
+        val general = QualificationArtifacts.generalLocal()
+        assertFalse(QualificationArtifacts.allowsGeneralLocal(KeyboardLanguage.ENGLISH, general))
+        assertTrue(QualificationArtifacts.allowsGeneralLocal(KeyboardLanguage.RUSSIAN, general))
+        assertTrue(QualificationArtifacts.allowsGeneralLocal(KeyboardLanguage.SPANISH, general))
+        assertFalse(QualificationArtifacts.allowsGeneralLocal(KeyboardLanguage.RUSSIAN,
+            general.copy(policyVersion = 999)))
+        assertFalse(QualificationArtifacts.allowsGeneralLocal(KeyboardLanguage.RUSSIAN,
+            general.copy(searchVersion = 999)))
+        assertFalse(QualificationArtifacts.allowsGeneralLocal(KeyboardLanguage.RUSSIAN,
+            general.copy(lexicons = general.lexicons + (KeyboardLanguage.RUSSIAN to "0".repeat(64)))))
     }
 
     @Test fun `model rejects a change to any member of its complete fingerprint`() {
