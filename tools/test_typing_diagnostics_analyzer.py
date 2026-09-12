@@ -4,6 +4,17 @@ from typing_diagnostics_analyzer import analyze_events
 
 
 class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
+    def test_schema_two_counts_explicit_backspace_actions(self):
+        events = [
+            {"schema": 2, "kind": "BACKSPACE", "reason": "NONE", "session": 7,
+             "revision": 10, "operationId": 0},
+            {"schema": 2, "kind": "EDITOR", "reason": "EDITOR_ACCEPTED", "session": 7,
+             "revision": 10, "operationId": 31},
+            {"schema": 2, "kind": "BACKSPACE", "reason": "NONE", "session": 7,
+             "revision": 11, "operationId": 0},
+        ]
+        self.assertEqual(2, analyze_events(events)["backspaces"])
+
     def test_original_restoration_changes_prior_final_word_only_after_exact_acceptance(self):
         correction = {"schema": 2, "kind": "MANUAL", "reason": "CORRECTION", "session": 7,
                       "revision": 10, "operationId": 4, "requestId": 2, "original": "teh", "result": "the"}

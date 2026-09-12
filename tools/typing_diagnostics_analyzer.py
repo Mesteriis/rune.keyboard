@@ -61,6 +61,7 @@ def analyze_events(events):
     active = {}
     pending = {}
     operations = {}
+    backspaces = 0
     segment_start = {}
     last_start = None
 
@@ -118,6 +119,9 @@ def analyze_events(events):
             pending.pop(session, None)
             continue
 
+        if schema >= 2 and kind == "BACKSPACE" and reason == "NONE":
+            backspaces += 1
+
         correction_kind = CORRECTION_EVENTS.get((kind, reason))
         original = event.get("original", "")
         result = event.get("result")
@@ -167,7 +171,7 @@ def analyze_events(events):
                 previous["final"] = result or previous["original"]
                 previous["outcome"] = "UNDONE"
 
-    return {"schemas": sorted(schemas), "outcomes": [
+    return {"schemas": sorted(schemas), "backspaces": backspaces, "outcomes": [
         {key: value for key, value in item.items() if key != "_requestId"} for item in outcomes]}
 
 

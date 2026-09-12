@@ -50,6 +50,21 @@ class TypingDiagnosticsHooksTest {
         assertTrue(observer.events.any { it.kind == DiagnosticKind.BOUNDARY })
     }
 
+    @Test fun backspaceRecordsTheOwnedWordWithoutStealingTheEditorOperation() {
+        val observer = Observer(); val controller = TypingSessionController(jvmGraphemes)
+        controller.setDiagnostics(observer); controller.startSession(EditorContext.from(1, 0), 0, 0)
+        controller.typeText("word") { true }
+        observer.records.clear()
+        controller.recordBackspace()
+        assertEquals(TypingTextResult.HANDLED, controller.deletePrevious { true })
+        val attempt = observer.records.single { it.first.kind == DiagnosticKind.BACKSPACE }
+        val outcome = observer.events.single { it.kind == DiagnosticKind.EDITOR }
+        assertEquals("word", attempt.second!!.original)
+        assertEquals(0L, attempt.first.operationId)
+        assertTrue(outcome.operationId > 0)
+        assertEquals(DiagnosticReason.EDITOR_ACCEPTED, outcome.reason)
+    }
+
     @Test fun staleScoringUsesOriginalIdentityAndExactCodeWithoutText() {
         val observer = Observer(); val controller = prepared(observer)
         val request = checkNotNull(controller.beginModelRanking(1))
@@ -133,6 +148,19 @@ class TypingDiagnosticsHooksTest {
         val other = Observer(); val ready = prepared(other)
         ready.typeText(" ", policy, keyboard, autocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE) { true }
         assertTrue(other.has(DiagnosticKind.BOUNDARY, DiagnosticReason.POLICY_REJECTED))
+    }
+
+    @Test fun validWordBoundaryIsNotMisreportedAsMissingContextualRanking() {
+        val observer = Observer(); val controller = TypingSessionController(jvmGraphemes)
+        controller.setDiagnostics(observer); controller.startSession(EditorContext.from(1, 0), 0, 0)
+        controller.typeText("word") { true }
+        val local = checkNotNull(controller.beginCandidateRequest(1, KeyboardLanguage.ENGLISH))
+        assertTrue(controller.acceptCandidates(LocalCandidateReply(local.sessionId, local.revision, local.requestId,
+            CandidateGeneration(local.token, emptyList(), CandidateCompletion.VALID_WORD, true, null, 1, 1))))
+        controller.recordRequest(DiagnosticReason.SCHEDULED, DiagnosticSource.CONTEXTUAL)
+        controller.typeText(" ", policy, keyboard, autocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE) { true }
+        assertEquals(DiagnosticReason.VALID_WORD,
+            observer.events.single { it.kind == DiagnosticKind.BOUNDARY }.reason)
     }
 
     @Test fun modelSchedulingCancellationAndUnavailableServiceRemainAttributed() {
@@ -225,7 +253,8 @@ class TypingDiagnosticsHooksTest {
     }
 
     @Test fun everyScoringDecisionKeepsExactCodeTimingAndAbstention() {
-        for (code in listOf(ScoringCode.OK, ScoringCode.CANCELLED, ScoringCode.UNAVAILABLE, ScoringCode.INTERNAL)) {
+        for (code in listOf(ScoringCode.OK, ScoringCode.CANCELLED, ScoringCode.UNAVAILABLE,
+                ScoringCode.INTERNAL, ScoringCode.SCORING_FAILED)) {
             val observer = Observer(); val controller = prepared(observer)
             val request = checkNotNull(controller.beginModelRanking(1))
             controller.acceptModelRanking(ScoringReply(request.token, code, 37,
@@ -240,9 +269,21 @@ class TypingDiagnosticsHooksTest {
                 ScoringCode.OK -> DiagnosticReason.ABSTAINED
                 ScoringCode.CANCELLED -> DiagnosticReason.CANCELLED
                 ScoringCode.UNAVAILABLE -> DiagnosticReason.SERVICE_REFUSED
+                ScoringCode.SCORING_FAILED -> DiagnosticReason.SCORING_FAILED
                 else -> DiagnosticReason.MODEL_ERROR
             }, event.reason)
         }
+    }
+
+    @Test fun scorerFailureRemainsTheFinalWordBoundaryReason() {
+        val observer = Observer(); val controller = prepared(observer)
+        val request = checkNotNull(controller.beginModelRanking(1))
+        assertFalse(controller.acceptModelRanking(ScoringReply(request.token,
+            ScoringCode.SCORING_FAILED, 0, emptyList())))
+        controller.typeText(" ", policy, keyboard,
+            autocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE) { true }
+        assertEquals(DiagnosticReason.SCORING_FAILED,
+            observer.events.single { it.kind == DiagnosticKind.BOUNDARY }.reason)
     }
 
     @Test fun mechanicalLetterTransformationIsNotABoundaryEvent() {

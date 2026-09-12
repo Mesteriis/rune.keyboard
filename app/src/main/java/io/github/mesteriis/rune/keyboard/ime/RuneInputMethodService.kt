@@ -324,6 +324,7 @@ class RuneInputMethodService : InputMethodService() {
             is EditorCommand.CommitText -> typingSession.recordInput(command.value)
             EditorCommand.ConvertPrecedingSpaceToPeriod -> typingSession.recordInput(" ")
             EditorCommand.InsertNewline -> typingSession.recordInput("\n")
+            EditorCommand.DeletePreviousCodePoint -> typingSession.recordBackspace()
             else -> Unit
         }
         val punctuation = MechanicalPunctuationPolicy(editorContext.inputPolicy, editorContext.mode,

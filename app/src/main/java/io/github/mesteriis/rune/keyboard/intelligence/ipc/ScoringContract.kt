@@ -52,6 +52,8 @@ object ScoringCode {
     const val CANCELLED = 9
     const val INTERNAL = 10
     const val INVALID = 12
+    /** Native scorer could not form one complete comparable candidate set. */
+    const val SCORING_FAILED = 15
 }
 private fun validText(value: String, maxBytes: Int, allowEmpty: Boolean): Boolean {
     if (value.length > maxBytes || (!allowEmpty && value.isEmpty())) return false

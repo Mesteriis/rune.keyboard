@@ -1,7 +1,7 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.diagnostics
 
 /** Observer vocabulary only. Persistence, serialization, consent and UI exist only in debug. */
-enum class DiagnosticKind { SESSION, INPUT, CANDIDATES, RANKING, BOUNDARY, MANUAL, UNDO, EDITOR, REQUEST, MECHANICAL }
+enum class DiagnosticKind { SESSION, INPUT, BACKSPACE, CANDIDATES, RANKING, BOUNDARY, MANUAL, UNDO, EDITOR, REQUEST, MECHANICAL }
 enum class DiagnosticSource { NONE, LOCAL_POLICY, MODEL, CANONICAL_CASE, MECHANICAL, CONTEXTUAL }
 enum class DiagnosticCompletion {
     NONE, COMPLETE, PROTECTED, VALID_WORD, STATES_EXHAUSTED, VERIFIED_EXHAUSTED,
@@ -13,6 +13,7 @@ enum class DiagnosticReason {
     OWNERSHIP_REJECTED, LIMIT, AUTO_REPLACE, ORIGINAL, CORRECTION, CONTEXTUAL,
     EDITOR_ACCEPTED, EDITOR_REJECTED,
     SCHEDULED, SUBMITTED, CANCELLED, RESULT_NOT_READY, SERVICE_REFUSED,
+    VALID_WORD, SCORING_FAILED,
 }
 data class DiagnosticEvent(
     val kind: DiagnosticKind,

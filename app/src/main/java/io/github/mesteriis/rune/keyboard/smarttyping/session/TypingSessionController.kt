@@ -85,6 +85,10 @@ class TypingSessionController internal constructor(
     fun recordInput(input: String) {
         diagnose(DiagnosticKind.INPUT, DiagnosticReason.NONE) { diagnosticText(input = input) }
     }
+    /** Records the explicit user action before its guarded editor mutation. */
+    fun recordBackspace() {
+        diagnose(DiagnosticKind.BACKSPACE, DiagnosticReason.NONE)
+    }
 
     private fun diagnose(kind: DiagnosticKind, reason: DiagnosticReason, count: Int = 0,
         selected: Int = -1, model: Boolean = false, session: Long = state.sessionId,
@@ -115,6 +119,7 @@ class TypingSessionController internal constructor(
         ScoringCode.OK -> DiagnosticReason.NONE
         ScoringCode.NO_MODEL, ScoringCode.LOAD_FAILED, ScoringCode.UNAVAILABLE -> DiagnosticReason.SERVICE_REFUSED
         ScoringCode.CANCELLED -> DiagnosticReason.CANCELLED
+        ScoringCode.SCORING_FAILED -> DiagnosticReason.SCORING_FAILED
         else -> DiagnosticReason.MODEL_ERROR
     }
     internal fun recordScoringReply(reply: ScoringReply, reason: DiagnosticReason = scoringFailureReason(reply.code),
@@ -149,7 +154,9 @@ class TypingSessionController internal constructor(
     private fun boundaryBypass(reason: DiagnosticReason): TypingTextResult {
         val status = diagnosticDecisionStatus?.takeIf { it.first == state.revision }?.second
         val outcome = if (reason in listOf(DiagnosticReason.NO_CANDIDATES, DiagnosticReason.NO_RANKING, DiagnosticReason.POLICY_REJECTED) &&
-            status in listOf(DiagnosticReason.RESULT_NOT_READY, DiagnosticReason.ABSTAINED, DiagnosticReason.SERVICE_REFUSED)) status!! else reason
+            status in listOf(DiagnosticReason.RESULT_NOT_READY, DiagnosticReason.ABSTAINED,
+                DiagnosticReason.SERVICE_REFUSED, DiagnosticReason.SCORING_FAILED,
+                DiagnosticReason.MODEL_ERROR)) status!! else reason
         diagnose(DiagnosticKind.BOUNDARY, outcome)
         return TypingTextResult.BYPASS
     }
@@ -996,6 +1003,9 @@ class TypingSessionController internal constructor(
         if (boundary == "." || boundary == ":") return boundaryBypass(DiagnosticReason.PROTECTED_FORM)
         val selection = candidateSelection ?: return boundaryBypass(
             if (pendingCandidate != null) DiagnosticReason.RESULT_NOT_READY else DiagnosticReason.NO_CANDIDATES)
+        if (selection.generation.isValidWord && !selection.generation.isCanonicalCaseCorrection()) {
+            return boundaryBypass(DiagnosticReason.VALID_WORD)
+        }
         val ranking = selection.ranking ?: return boundaryBypass(
             if (pendingModelRanking != null) DiagnosticReason.RESULT_NOT_READY else DiagnosticReason.NO_RANKING)
         val canonicalCase = selection.generation.isCanonicalCaseCorrection()
