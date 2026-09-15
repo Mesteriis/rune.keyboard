@@ -162,7 +162,9 @@ jobs:
           ram-size: ${{ matrix.ram-size }}
           disk-size: ${{ matrix.disk-size }}
           disable-animations: true
-          emulator-options: -no-window -gpu ${{ matrix.gpu-mode }} ${{ matrix.emulator-features }} -noaudio -no-boot-anim -no-snapshot-save
+          # The inset regression requires an actual software navigation bar. AVD
+          # hardware-key defaults otherwise remove it entirely on both API levels.
+          emulator-options: -no-window -prop qemu.hw.mainkeys=0 -gpu ${{ matrix.gpu-mode }} ${{ matrix.emulator-features }} -noaudio -no-boot-anim -no-snapshot-save
           script: |
             ./gradlew --no-daemon assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest
             ./gradlew --no-daemon installDebug

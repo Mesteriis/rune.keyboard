@@ -18,6 +18,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticSource
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticCompletion
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorder
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsProvider
 import java.io.ByteArrayOutputStream
@@ -271,13 +272,25 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         }
     }
     private fun assertMetadataVocabulary(text: String, requireRows: Boolean = true) {
-        val allowed = setOf("schema", "kind", "reason", "session", "revision", "candidateCount", "selectedIndex", "modelUsed",
-            "source", "completion", "scoringCode", "elapsedMs", "requestId", "operationId")
+        val allowed = setOf("schema", "kind", "reason", "session", "revision", "typingProfile", "features", "effectiveFeatures",
+            "candidateCount", "selectedIndex", "modelUsed", "source", "completion", "localCompletion",
+            "localInspectedStates", "localVerifiedTerminals", "scoringCode", "elapsedMs", "requestId", "operationId")
         val rows = text.lineSequence().filter(String::isNotBlank).map(::JSONObject).toList()
         if (requireRows) assertTrue("Expected metadata rows", rows.isNotEmpty())
         rows.forEach { row ->
             assertEquals(allowed, row.keys().asSequence().toSet())
-            assertInteger(row, "schema", 2L..2L)
+            assertInteger(row, "schema", 6L..6L)
+            assertInteger(row, "typingProfile", 0L..2L)
+            val configured = row.getJSONObject("features")
+            val effective = row.getJSONObject("effectiveFeatures")
+            val featureNames = DiagnosticFeature.entries.map { it.field }.toSet()
+            assertEquals(featureNames, configured.keys().asSequence().toSet())
+            assertEquals(featureNames, effective.keys().asSequence().toSet())
+            featureNames.forEach { name ->
+                assertTrue("Configured feature must be a JSON Boolean", configured.get(name) is Boolean)
+                assertTrue("Effective feature must be a JSON Boolean", effective.get(name) is Boolean)
+                assertTrue("Effective features must be configured", !effective.getBoolean(name) || configured.getBoolean(name))
+            }
             val kind = row.get("kind"); val reason = row.get("reason")
             assertTrue("Kind must be an exact enum string", kind is String && DiagnosticKind.entries.any { it.name == kind })
             assertTrue("Reason must be an exact enum string", reason is String && DiagnosticReason.entries.any { it.name == reason })
@@ -287,6 +300,9 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
             assertInteger(row, "selectedIndex", -1L..7L)
             assertTrue(DiagnosticSource.entries.any { it.name == row.get("source") })
             assertTrue(DiagnosticCompletion.entries.any { it.name == row.get("completion") })
+            assertTrue(DiagnosticCompletion.entries.any { it.name == row.get("localCompletion") })
+            assertInteger(row, "localInspectedStates", 0L..8_192L)
+            assertInteger(row, "localVerifiedTerminals", 0L..64L)
             assertInteger(row, "scoringCode", -1L..15L)
             assertInteger(row, "elapsedMs", 0L..60_000L)
             assertInteger(row, "requestId", 0L..1_000_000_000L)
