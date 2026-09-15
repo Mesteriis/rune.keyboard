@@ -175,7 +175,12 @@ def export(args):
     replay = load_replay()
     java = Path(args.java).resolve(strict=True)
     sources, jars, android = replay.compile_inputs(java)
-    sources = [p for p in sources if p != replay.HARNESS] + [HERE / 'ProductionCandidates.kt']
+    # Candidate export does not execute the editor/session/UI replay.
+    sources = [p for p in sources if (
+        '/smarttyping/correction/' in str(p) or
+        '/smarttyping/lexicon/' in str(p) and p.name != 'LocalCandidateWorker.kt' or
+        p.name in ('KeyboardState.kt', 'ScoringContract.kt')
+    )] + [HERE / 'ProductionCandidates.kt']
     source_bindings = bindings([*input_sources, *sources, *jars, android, java, *replay.asset_paths(),
         HERE / 'evaluate.py', PIPELINE / 'final_product_replay.py', replay.SOURCE_MANIFEST, replay.TOOLCHAIN])
     write_json(root / 'source-freeze.json', source_bindings)

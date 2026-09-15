@@ -1,117 +1,169 @@
 {
-  "androidPerformanceMeasured": false,
-  "assetSha256": {
-    "ru-context.bin": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
-    "ru-ranker.bin": "bc7542fa35ab615718ee636bd530868441101a4cb89d86aef26b3af1038d8c43"
-  },
-  "blend": "fixed before holdout: 0.8*tanh(CatBoost raw/4) + clip((mean neural logP+3)*0.25,-0.5,0.5)",
-  "evaluation": "public Wikipedia qualification rows with synthetic spelling corruptions; not chat accuracy",
-  "experimental": true,
-  "fitRows": 1700,
-  "holdoutRows": 1700,
-  "neural": {
-    "holdoutCharacters": 151562,
-    "holdoutCrossEntropy": 2.3802510959011856,
-    "holdoutNextCharAccuracy": 0.30643565009699003,
-    "trainCharacters": 151632,
-    "trainCrossEntropy": [
-      2.9240055728469727,
-      2.667314001116511,
-      2.5711688119031875,
-      2.517227739176034,
-      2.481579829077623,
-      2.454990234489453,
-      2.4338316371429993,
-      2.416456642564931,
-      2.401376702961356,
-      2.3884839110638465,
-      2.376299869896158,
-      2.3657090802204332,
-      2.356057355169111,
-      2.3470229723866165,
-      2.338888072837963,
-      2.331499790607903,
-      2.3242330106302007,
-      2.317992032406038
-    ],
-    "uniformCrossEntropy": 3.5263605246161616
-  },
-  "numpy": "2.2.6",
-  "personalTouch": "not supervised; separately bounded existing adjustments only",
-  "privateDataUsed": false,
-  "productionQualified": false,
-  "rankPairCount": 1360,
-  "ranking": {
-    "calibration": {
-      "catboostHost": {
-        "correctTop1": 668,
-        "top1OverRowsWithAlternatives": 0.7284623773173392
-      },
-      "catboostPlusContextFixed": {
-        "correctTop1": 672,
-        "top1OverRowsWithAlternatives": 0.732824427480916
-      },
-      "compactContext": {
-        "correctTop1": 376,
-        "top1OverRowsWithAlternatives": 0.4100327153762268
-      },
-      "expectedAvailable": 711,
-      "generatorFirst": {
-        "correctTop1": 507,
-        "top1OverRowsWithAlternatives": 0.5528898582333697
-      },
-      "learnedLinear": {
-        "correctTop1": 615,
-        "top1OverRowsWithAlternatives": 0.6706652126499455
-      },
-      "rowsWithAlternatives": 917
+  "assets": {
+    "ru-context.bin": {
+      "bytes": 81848,
+      "sha256": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b"
     },
-    "holdout": {
-      "catboostHost": {
-        "correctTop1": 680,
-        "top1OverRowsWithAlternatives": 0.734341252699784
-      },
-      "catboostPlusContextFixed": {
-        "correctTop1": 686,
-        "top1OverRowsWithAlternatives": 0.7408207343412527
-      },
-      "compactContext": {
-        "correctTop1": 303,
-        "top1OverRowsWithAlternatives": 0.32721382289416845
-      },
-      "expectedAvailable": 739,
-      "generatorFirst": {
-        "correctTop1": 500,
-        "top1OverRowsWithAlternatives": 0.5399568034557235
-      },
-      "learnedLinear": {
-        "correctTop1": 633,
-        "top1OverRowsWithAlternatives": 0.683585313174946
-      },
-      "rowsWithAlternatives": 926
+    "ru-ranker.bin": {
+      "bytes": 22036,
+      "sha256": "f3ac83997946b97b57f410f0955a9a479a72453f4c68ed4f473c1afded583648"
+    },
+    "ru-ranking-context.bin": {
+      "bytes": 320216,
+      "sha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50"
     }
   },
-  "schemaVersion": 1,
+  "baselineTapModel": "Unchanged REC1 asset; provenance in tools/typing_experiments/baseline/provenance.json",
+  "data": {
+    "dev": {
+      "characters": 250000,
+      "rows": 1000
+    },
+    "test": {
+      "characters": 250000,
+      "rows": 1500
+    },
+    "train": {
+      "characters": 2000000,
+      "rows": 5000
+    }
+  },
+  "dataFileSha256": {
+    "dev-rows.jsonl": "a2ddea29d8086a6c1d138e6ef59fc7399145b33b79becc3c0545940ad9ba260b",
+    "dev-text.jsonl": "24e7f1267f099291ffc4ac133cb6ddb613e5a43d6da8450677a9529f1b690666",
+    "test-rows.jsonl": "e83eb9b99f2df73a8eae001ebedf1cafbd3fa370b6166ae9548551495c97f204",
+    "test-text.jsonl": "ad67b64ca1c53df54d6569e7fad744efa0201ff4a40f06233199453e4b8f465c",
+    "train-rows.jsonl": "e86df521d3c1a249fe514044a75d20b64259ffb76df6920e3f236ec3f6b5fc64",
+    "train-text.jsonl": "ad2c62e5a8368e944af49fb3f71b2621ab82ce92efbac26e745d4af94f4bcc52"
+  },
+  "evaluation": {
+    "characterCrossEntropy": {
+      "new": 2.088469005374219,
+      "old": 2.460517616785356
+    },
+    "characters": 250000,
+    "expectedAvailable": 1416,
+    "exposedV1Regression": {
+      "expectedAvailable": 739,
+      "models": {
+        "generatorFirst": {
+          "correctTop1": 500,
+          "top1": 0.5399568034557235
+        },
+        "newCombined": {
+          "correctTop1": 679,
+          "top1": 0.7332613390928726
+        },
+        "newContext": {
+          "correctTop1": 313,
+          "top1": 0.33801295896328293
+        },
+        "newRanker": {
+          "correctTop1": 666,
+          "top1": 0.7192224622030238
+        },
+        "oldCombined": {
+          "correctTop1": 686,
+          "top1": 0.7408207343412527
+        },
+        "oldContext": {
+          "correctTop1": 303,
+          "top1": 0.32721382289416845
+        },
+        "oldRanker": {
+          "correctTop1": 680,
+          "top1": 0.734341252699784
+        }
+      },
+      "rowsWithAlternatives": 926
+    },
+    "models": {
+      "generatorFirst": {
+        "correctTop1": 1239,
+        "top1": 0.8388625592417062
+      },
+      "newCombined": {
+        "correctTop1": 1390,
+        "top1": 0.9410968178740691
+      },
+      "newContext": {
+        "correctTop1": 842,
+        "top1": 0.5700744752877455
+      },
+      "newRanker": {
+        "correctTop1": 1383,
+        "top1": 0.936357481381178
+      },
+      "oldCombined": {
+        "correctTop1": 1209,
+        "top1": 0.8185511171293162
+      },
+      "oldContext": {
+        "correctTop1": 602,
+        "top1": 0.4075829383886256
+      },
+      "oldRanker": {
+        "correctTop1": 1208,
+        "top1": 0.8178740690589031
+      }
+    },
+    "observationsSha256": "cd515f8869f3364687302540ac61f6314001fa486c80b02a4186c57100cad837",
+    "rowsWithAlternatives": 1477,
+    "scope": "Ranking existing alternatives, original remains separate; synthetic Wikipedia typos; no automatic-edit or chat-accuracy claim",
+    "selectionSha256": "e666f80bab017da8c707f5bae0b897d3051833ed80481b681ee11d00518c80cc"
+  },
+  "experimental": true,
+  "privateDataUsed": false,
+  "productionQualified": false,
+  "runtime": "RET2 95 features 128 depth-5 numeric symmetric trees; REC2 48-character 48-hidden; no Android ML framework",
+  "schemaVersion": 2,
+  "scope": "Reorders manual alternatives only. Original and automatic-edit policy unchanged. Russian only. Both independent controls default off.",
+  "selected": {
+    "blendGain": 1,
+    "devBlend": [
+      {
+        "correctTop1": 916,
+        "gain": 0
+      },
+      {
+        "correctTop1": 920,
+        "gain": 0.25
+      },
+      {
+        "correctTop1": 924,
+        "gain": 0.5
+      },
+      {
+        "correctTop1": 926,
+        "gain": 1
+      }
+    ],
+    "neural": "context-48-epoch6",
+    "neuralSha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+    "ranker": "pairwise",
+    "rankerSha256": "f3ac83997946b97b57f410f0955a9a479a72453f4c68ed4f473c1afded583648",
+    "scriptSha256": "05010f2d693e2ca08262d573a3b4e39d07d00b35ac6729474cb1910afce5f7f1",
+    "selectionFrozenBeforeTest": true
+  },
   "source": {
-    "articleSelection": {
-      "modulus": 4,
-      "residue": 0,
-      "seed": 3042026
-    },
-    "files": {
-      "en-0019.parquet": "99c23125b0dd115d68f4a921376880e307bdfcbf3bfd66ae4ed90e853e1dadac",
-      "es-0004.parquet": "09fcc5eb122edc35fb507935643995999e01cc286f1968d14a5a71f24d2a7cf8",
-      "ru-0009.parquet": "bf3781c558a3a2b8125e567f060895ead704577943832e6047bcc71f202975fd"
-    },
-    "licenses": [
+    "frequencySha256": "6095f507cc167488ec66ada5a85ac50433503a08ad24a07c6eabdf54352c4e7f",
+    "license": [
       "CC-BY-SA-3.0",
       "GFDL-1.3"
     ],
-    "parquetRevision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
-    "repository": "wikimedia/wikipedia",
-    "snapshot": "20231101"
+    "sourcePath": "20231101.ru/train/0007.parquet",
+    "sourceRepository": "wikimedia/wikipedia",
+    "sourceRevision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+    "sourceSha256": "39b59952cd92a148b301f4d2b3ae1fb71e4caab987c6abe278f0dbdf0b01bb88"
   },
-  "sourceCorpusSha256": "d72ac7c4d19ba157f2f1b64eacb7c237d5adb4eaff4be8adf34ed315eb85d145",
-  "split": "existing disjoint calibration/holdout families and templates, SHA256 row-ID ordering",
-  "trainingScriptSha256": "1c1742826e5dde39ef82f367b25b2f0bdeaab7b687d7ae8a7b1309b32307b45b"
+  "trainingScripts": {
+    "evaluate_refinement.py": "486c1ab8814721e713e7ad3a176b4eda5ac6a99fa15613fa1e4e7edabd56af4e",
+    "neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+    "prepare_refinement.py": "d2d84c3f328771fd0b9908a9216ee428eb2877079c8dacb481c42a0dafe11bab",
+    "promote_refinement.py": "7d08806ddae6eab8714871ddaaf332f6e3b7bb41e8e14d95b0ddd7a7ba7ae6b4",
+    "rank_refinement.py": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6",
+    "select_refinement.py": "f517b2d40068bcef0797c15f1d73d067bf2ec4021c634d9689c648782ecba99e",
+    "test_neural_refinement.py": "7eaef733f538ec5f968e8f8e6d14c8f1a2ffa7fbc309657fd9c711985b1220fe",
+    "test_refinement.py": "9a183595c9f52c6a6d6f39d79d6f168369b7a7ae966ecc6b475f1798e2e155d9"
+  }
 }

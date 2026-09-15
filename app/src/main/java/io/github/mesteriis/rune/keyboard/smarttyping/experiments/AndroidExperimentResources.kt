@@ -46,8 +46,10 @@ object AndroidExperimentResources {
                 } catch (_: IOException) { null }
                 asset("ru-ranker.bin", FrozenExperimentAssets.RANK_BYTES, FrozenExperimentAssets.RANK_SHA256)
                     ?.let(models::loadRanker)
-                asset("ru-context.bin", FrozenExperimentAssets.CONTEXT_BYTES, FrozenExperimentAssets.CONTEXT_SHA256)
+                asset("ru-ranking-context.bin", FrozenExperimentAssets.RANKING_CONTEXT_BYTES, FrozenExperimentAssets.RANKING_CONTEXT_SHA256)
                     ?.let(models::loadContext)
+                asset("ru-context.bin", FrozenExperimentAssets.CONTEXT_BYTES, FrozenExperimentAssets.CONTEXT_SHA256)
+                    ?.let(models::loadTapContext)
             } finally {
                 val pending = synchronized(lock) {
                     finished = true

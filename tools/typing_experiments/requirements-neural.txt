@@ -1,0 +1,4 @@
+# Host-only Apple Silicon training; NumPy-only inference has a separate environment.
+numpy==2.4.6
+pyarrow==25.0.1
+mlx==0.32.2

@@ -13,7 +13,7 @@ class TypingFeaturePolicyTest {
     private fun effective(state: CandidateOwnerState = owner, dictionary: Boolean = true,
         abbreviations: Boolean = true, personal: Boolean = true, touch: Boolean = true, quality: Boolean = true,
         configured: Int = DiagnosticFeature.MASK) =
-        TypingFeaturePolicy.effective(configured, state, dictionary, abbreviations, personal, touch, quality, learnedReady = true, contextReady = true)
+        TypingFeaturePolicy.effective(configured, state, dictionary, abbreviations, personal, touch, quality, learnedReady = true, contextReady = true, tapReady = true)
     private fun Int.has(feature: DiagnosticFeature) = this and feature.bit != 0
 
     @Test fun experimentsRespectReadinessLanguageVisibilityAndApplyDependency() {
@@ -30,6 +30,23 @@ class TypingFeaturePolicyTest {
         val hidden = effective(owner.copy(candidateStripEnabled = false))
         assertFalse(hidden.has(learned)); assertFalse(hidden.has(compact))
         assertTrue(hidden.has(dynamic)); assertTrue(hidden.has(apply))
+    }
+
+    @Test fun contextAndTapReadinessAreIndependentAndDefaultClosed() {
+        fun flags(context: Boolean, tap: Boolean) = TypingFeaturePolicy.effective(
+            DiagnosticFeature.MASK, owner, true, true, true, true, true,
+            learnedReady = true, contextReady = context, tapReady = tap)
+        val rankingOnly = flags(context = true, tap = false)
+        assertTrue(rankingOnly.has(DiagnosticFeature.COMPACT_CONTEXT))
+        assertFalse(rankingOnly.has(DiagnosticFeature.DYNAMIC_TOUCH))
+        assertFalse(rankingOnly.has(DiagnosticFeature.DYNAMIC_TOUCH_APPLY))
+        val tapOnly = flags(context = false, tap = true)
+        assertFalse(tapOnly.has(DiagnosticFeature.COMPACT_CONTEXT))
+        assertTrue(tapOnly.has(DiagnosticFeature.DYNAMIC_TOUCH))
+        assertTrue(tapOnly.has(DiagnosticFeature.DYNAMIC_TOUCH_APPLY))
+        val defaultTap = TypingFeaturePolicy.effective(DiagnosticFeature.MASK, owner,
+            true, true, true, true, true, contextReady = true)
+        assertFalse(defaultTap.has(DiagnosticFeature.DYNAMIC_TOUCH))
     }
 
     @Test fun runtimeAndReadinessGateContextualAndModelAutomaticFlags() {

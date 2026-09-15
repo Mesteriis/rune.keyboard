@@ -11,8 +11,8 @@ from catboost import CatBoostClassifier
 ROOT = Path(__file__).resolve().parents[2]
 CORPUS = ROOT / 'tools/eval/smart-typing-0.3/qualification-v2/corpus'
 EXPORT = ROOT / 'build/morphology-public-export-v3'
-ASSETS = ROOT / 'app/src/main/assets/smarttyping/experiments'
 OUT = ROOT / 'build/typing-experiments'
+ASSETS = OUT / 'assets'
 ALPHABET = ' абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
 WINDOW, HIDDEN, FEATURES = 24, 24, 22
 
@@ -222,7 +222,7 @@ def main():
     print(json.dumps({'ranking':results,'neural':neural,'assets':asset_hashes},ensure_ascii=False))
 
 def emit_runtime_fixtures(asset_hashes, parity):
-    runtime=ROOT/'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt'
+    runtime=OUT/'FrozenExperimentAssets.kt'
     runtime.write_text('package io.github.mesteriis.rune.keyboard.smarttyping.experiments\n\n'
         '/** Generated from public-only tools/typing_experiments/train.py assets. */\n'
         'internal object FrozenExperimentAssets {\n'
@@ -235,6 +235,6 @@ def emit_runtime_fixtures(asset_hashes, parity):
         letters=p['next'][1:]; total=sum(letters)
         lines.append('\t'.join([p['context'],p['original'],p['candidate'],str(p['rankScore']),str(p['contextScore']),
                               ','.join(str(x/total) for x in letters)]))
-    (Path(__file__).parent/'parity.tsv').write_text('\n'.join(lines)+'\n')
+    (OUT/'parity.tsv').write_text('\n'.join(lines)+'\n')
 
 if __name__=='__main__':main()

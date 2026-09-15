@@ -42,13 +42,13 @@ class ModelsTest(unittest.TestCase):
                  for c in o['generation']['alternatives']]
         vectors=np.array(vectors)
         expected=model.predict(vectors,prediction_type='RawFormulaVal')
-        actual=np.array([tree_score((train.ASSETS/'ru-ranker.bin').read_bytes(),v) for v in vectors])
+        actual=np.array([tree_score((Path(__file__).parent/'baseline/ru-ranker.bin').read_bytes(),v) for v in vectors])
         error=float(np.max(np.abs(expected-actual)))
         self.assertLess(error,1e-5)
         print(json.dumps({'treeParityRows':len(vectors),'maxAbsoluteError':error}))
 
     def test_neural_bounds_and_context(self):
-        blob=(train.ASSETS/'ru-context.bin').read_bytes()
+        blob=(train.ROOT/'app/src/main/assets/smarttyping/experiments/ru-context.bin').read_bytes()
         self.assertEqual(blob[:4],b'REC1')
         a=np.frombuffer(blob[16:],dtype='<f4').astype(np.float64)
         n=len(train.ALPHABET); w=train.WINDOW*n*train.HIDDEN

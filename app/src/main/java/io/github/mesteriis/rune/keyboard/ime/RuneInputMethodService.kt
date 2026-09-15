@@ -687,7 +687,7 @@ class RuneInputMethodService : InputMethodService() {
         val effective = TypingFeaturePolicy.effective(DiagnosticFeatures.configured(settings), candidateOwnerState(),
             personalResources.dictionaryLoaded, abbreviationStore.isReady, personalResources.personal.isReady,
             personalResources.touch.isReady, qualityStore.isReady, personalResources.controls.isReady, personalResources.learning.isReady,
-            personalResources.experiments.learnedReady, personalResources.experiments.contextReady)
+            personalResources.experiments.learnedReady, personalResources.experiments.contextReady, personalResources.experiments.tapReady)
         typingSession.configureFeatures(configured, effective, activeProfile.code)
         personalization.learningEnabled = eligible && settings.personalLearning
         personalization.touchEnabled = eligible && settings.touchPersonalization
@@ -704,7 +704,7 @@ class RuneInputMethodService : InputMethodService() {
 
     private fun dynamicTouchStamp(): Long {
         val enabled = inputViewActive && editorContext.supportsSmartTyping && !hasSelection &&
-            state.layer == KeyboardLayer.LETTERS && settings.dynamicTouch && personalResources.experiments.contextReady
+            state.layer == KeyboardLayer.LETTERS && settings.dynamicTouch && personalResources.experiments.tapReady
         return dynamicTouchContext.update(typingSession.state.sessionId, typingSession.state.revision,
             state.language, if (enabled) typingSession.experimentalInput() else null, enabled, settings.dynamicTouchApply)
     }

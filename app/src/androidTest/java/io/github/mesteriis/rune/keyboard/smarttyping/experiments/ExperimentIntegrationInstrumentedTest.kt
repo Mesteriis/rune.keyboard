@@ -14,6 +14,27 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
 class ExperimentIntegrationInstrumentedTest {
+    @Test fun packagedRankingAndTapModelsAreIndependent() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val model = ExperimentModels()
+        context.assets.open("smarttyping/experiments/ru-ranking-context.bin").use { model.loadContext(it.readBytes()) }
+        assertTrue(model.contextReady)
+        assertFalse(model.tapReady)
+        val ranking = model.contextScore("мы идём", "домой", KeyboardLanguage.RUSSIAN)
+        context.assets.open("smarttyping/experiments/ru-context.bin").use { model.loadTapContext(it.readBytes()) }
+        assertTrue(model.tapReady)
+        val letters = model.nextLetters("мы идём", "д", KeyboardLanguage.RUSSIAN)
+        model.loadContext(byteArrayOf())
+        assertFalse(model.contextReady)
+        assertTrue(model.tapReady)
+        assertEquals(letters, model.nextLetters("мы идём", "д", KeyboardLanguage.RUSSIAN))
+        context.assets.open("smarttyping/experiments/ru-ranking-context.bin").use { model.loadContext(it.readBytes()) }
+        model.loadTapContext(byteArrayOf())
+        assertTrue(model.contextReady)
+        assertFalse(model.tapReady)
+        assertEquals(ranking, model.contextScore("мы идём", "домой", KeyboardLanguage.RUSSIAN), 0.0)
+    }
+
     @Test fun packagedAssetsLoadAndIndependentSwitchesReachActualScorers() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val resources = PersonalTypingResources.get(context)
@@ -22,7 +43,7 @@ class ExperimentIntegrationInstrumentedTest {
             assertTrue(ready.await(15, TimeUnit.SECONDS))
         }
         val models = resources.experiments
-        assertTrue(models.learnedReady); assertTrue(models.contextReady)
+        assertTrue(models.learnedReady); assertTrue(models.contextReady); assertTrue(models.tapReady)
         resources.learning.configure(false, false, false)
         val candidate = GeneratedCandidate("привет", "привет", "привет", KeyboardLanguage.RUSSIAN,
             false, 4, 100, 1, EditFeatures(1.0, 0, 0.0), 1, CasePattern.analyze("привт"))
@@ -49,7 +70,19 @@ class ExperimentIntegrationInstrumentedTest {
         val rank = measure { models.rankScore("он сказал ", "привт", candidate) }
         val neural = measure { models.contextScore("он сказал ", "привет", KeyboardLanguage.RUSSIAN) }
         val letters = measure { models.nextLetters("он сказал ", "приве", KeyboardLanguage.RUSSIAN) }
+        val combined = measure {
+            repeat(3) {
+                models.rankScore("он сказал ", "привт", candidate)
+                models.contextScore("он сказал ", "привет", KeyboardLanguage.RUSSIAN)
+            }
+        }
+        val maximum = measure {
+            repeat(3) {
+                models.rankScore("он сказал ".repeat(16), "а".repeat(128), candidate)
+                models.contextScore("он сказал ".repeat(16), "а".repeat(32), KeyboardLanguage.RUSSIAN)
+            }
+        }
         File(context.cacheDir, "experiment-latency.json").writeText(
-            "{\"samples\":200,\"rankOneCandidate\":$rank,\"contextOneSixLetterCandidate\":$neural,\"nextLetters\":$letters}")
+            "{\"samples\":200,\"rankOneCandidate\":$rank,\"contextOneSixLetterCandidate\":$neural,\"nextLetters\":$letters,\"combinedThreeSixLetterCandidates\":$combined,\"combinedThreeBoundedLongCandidates\":$maximum}")
     }
 }

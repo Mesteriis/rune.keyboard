@@ -31,7 +31,7 @@ internal class ObliviousTreeRanker private constructor(
             if (bytes.size !in 20..65_536) return null
             val input = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
             return try {
-                if ("RET1".any { input.get().toInt() != it.code } || input.int != ExperimentModels.RANK_FLOATS) return null
+                if ("RET2".any { input.get().toInt() != it.code } || input.int != ExperimentModels.RANK_FLOATS) return null
                 val count = input.int
                 if (count !in 1..128) return null
                 val scale = input.float
