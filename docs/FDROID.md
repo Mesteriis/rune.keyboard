@@ -1,6 +1,6 @@
 # F-Droid
 
-Rune is being prepared for inclusion in the official F-Droid repository. The presence of metadata in this repository does not mean that an official listing is already available. F-Droid maintainers review submissions and build accepted applications independently.
+Rune has been submitted to the official F-Droid repository: [packaging request #4406](https://gitlab.com/fdroid/rfp/-/work_items/4406). The presence of metadata in this repository does not mean that an official listing is already available. F-Droid maintainers review submissions and build accepted applications independently.
 
 ## Packaging
 
