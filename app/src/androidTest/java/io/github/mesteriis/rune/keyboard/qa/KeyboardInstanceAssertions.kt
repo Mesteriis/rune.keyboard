@@ -3,6 +3,7 @@ package io.github.mesteriis.rune.keyboard.qa
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inspector.WindowInspector
 import io.github.mesteriis.rune.keyboard.ime.ui.CancelableKey
 import io.github.mesteriis.rune.keyboard.ime.ui.RuneKeyboardView
@@ -32,7 +33,10 @@ internal fun keyboardSnapshot(): KeyboardSnapshot {
                     for (index in 0 until view.childCount) findKeyboard(view.getChildAt(index))
                 }
             }
-            roots.forEach(::findKeyboard)
+            // The home screen now embeds a RuneKeyboardView preview. Only the input-method
+            // window belongs to the resident service exercised by Binder/lifecycle tests.
+            roots.filter { (it.layoutParams as? WindowManager.LayoutParams)?.type ==
+                WindowManager.LayoutParams.TYPE_INPUT_METHOD }.forEach(::findKeyboard)
             assertEquals("Expected one visible in-process Rune keyboard", 1, keyboards.size)
             val keyboard = keyboards.single()
             val keys = mutableListOf<View>()

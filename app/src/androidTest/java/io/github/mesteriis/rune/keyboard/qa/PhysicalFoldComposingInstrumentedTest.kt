@@ -140,7 +140,7 @@ class PhysicalFoldComposingInstrumentedTest {
         val snapshot = keyboardSnapshot()
         var service: InputMethodService? = null
         instrumentation.runOnMainSync {
-            var context = snapshot.keyboard.context
+            var context = snapshot.keyboard.rootView.context
             while (context is ContextWrapper && context !is InputMethodService) {
                 val base = context.baseContext
                 check(base !== context) { "Keyboard context wrapper cycle" }

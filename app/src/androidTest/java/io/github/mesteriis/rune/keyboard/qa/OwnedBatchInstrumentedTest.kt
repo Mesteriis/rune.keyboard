@@ -21,7 +21,7 @@ class OwnedBatchInstrumentedTest : ImeTestBase() {
         driver.launchComposingQa()
         val keyboard = keyboardSnapshot()
         val connection = onMain {
-            var context: Context = keyboard.keyboard.context
+            var context: Context = keyboard.keyboard.rootView.context
             while (context !is InputMethodService && context is ContextWrapper) context = context.baseContext
             checkNotNull((context as? InputMethodService)?.currentInputConnection)
         }

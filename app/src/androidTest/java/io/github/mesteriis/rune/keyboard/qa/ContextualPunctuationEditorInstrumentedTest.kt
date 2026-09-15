@@ -143,7 +143,7 @@ class ContextualPunctuationEditorInstrumentedTest : ImeTestBase() {
                 ComponentName(target, ImeQaActivity::class.java), 0)
             assertEquals("${target.packageName}:qa_editor", editorInfo.processName)
             connection = onMain {
-                var context: Context = keyboard.context
+                var context: Context = keyboard.rootView.context
                 while (context !is InputMethodService && context is ContextWrapper) context = context.baseContext
                 checkNotNull((context as? InputMethodService)?.currentInputConnection) { "Live editor connection unavailable" }
             }

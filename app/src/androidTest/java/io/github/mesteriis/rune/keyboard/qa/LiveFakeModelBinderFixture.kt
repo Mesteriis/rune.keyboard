@@ -1033,7 +1033,10 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
             }
         }
         private fun resident(snapshot: KeyboardSnapshot): RuneInputMethodService {
-            var context: Context = snapshot.keyboard.context
+            // A light/dark override uses createConfigurationContext for the keyboard's
+            // resources; that context need not retain the service as a ContextWrapper base.
+            // The owning IME window keeps the service context for every app theme.
+            var context: Context = snapshot.keyboard.rootView.context
             while (context !is RuneInputMethodService && context is ContextWrapper) context = context.baseContext
             return checkNotNull(context as? RuneInputMethodService) { "Resident IME context unavailable" }
         }

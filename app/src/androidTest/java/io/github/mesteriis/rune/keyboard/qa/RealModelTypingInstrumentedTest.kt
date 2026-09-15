@@ -74,7 +74,7 @@ class RealModelTypingInstrumentedTest {
             result = runCatching {
                 fun field(owner: Any, name: String): Any? = owner.javaClass.getDeclaredField(name)
                     .apply { isAccessible = true }.get(owner)
-                var owner: Context = snapshot.keyboard.context
+                var owner: Context = snapshot.keyboard.rootView.context
                 while (owner !is RuneInputMethodService && owner is ContextWrapper) owner = owner.baseContext
                 val service = checkNotNull(owner as? RuneInputMethodService)
                 val controller = field(service, "typingSession") as TypingSessionController

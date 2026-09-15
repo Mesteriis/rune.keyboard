@@ -256,7 +256,7 @@ class ImeTestDriver {
     fun fieldText(idName: String): String = requireObject(idName, scroll = true).text.orEmpty()
 
     private fun awaitSelectionAcknowledgement() {
-        var context = keyboardSnapshot().keyboard.context
+        var context = keyboardSnapshot().keyboard.rootView.context
         while (context is ContextWrapper && context !is RuneInputMethodService) context = context.baseContext
         val service = checkNotNull(context as? RuneInputMethodService)
         val selection = RuneInputMethodService::class.java.getDeclaredField("hasSelection").apply { isAccessible = true }

@@ -54,7 +54,7 @@ class EditorBoundaryInstrumentedTest : ImeTestBase() {
         var result: Result<Unit>? = null
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
             result = runCatching {
-                var context = keyboard.context
+                var context = keyboard.rootView.context
                 while (context is ContextWrapper && context !is InputMethodService) {
                     val base = context.baseContext
                     check(base !== context) { "Keyboard context wrapper cycle" }
