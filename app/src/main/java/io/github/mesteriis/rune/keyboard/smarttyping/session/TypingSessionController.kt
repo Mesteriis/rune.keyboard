@@ -51,6 +51,10 @@ import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticCompl
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.NoTypingDiagnostics
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnostics
 import java.util.ArrayDeque
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature
+import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityRecorder
+import io.github.mesteriis.rune.keyboard.smarttyping.quality.NoQualityRecorder
+import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityEvent
 
 /**
  * Main-thread session owner. The execution callback returns the editor's actual result; all
@@ -60,7 +64,38 @@ class TypingSessionController internal constructor(
     private val graphemes: GraphemeSegmenter,
     private val spellingQualification: SpellingQualification = SpellingQualification.CURRENT,
     private val trace: SmartTypingTracer = NoopSmartTypingTracer,
+    private val nanoTime: () -> Long = System::nanoTime,
 ) {
+    private var tools: TypingTools = NoTypingTools
+    private var visibleUndo = false
+    private var undoShownAtNanos = 0L
+    private var quality: QualityRecorder = NoQualityRecorder
+    private var comparedRevision: Long? = null
+    private var retypedQualityRevision: Long? = null
+    private var undoQualityRevision: Long? = null
+    private var configuredFeatures = 0
+    private var effectiveFeatures = 0
+    fun setTypingTools(value: TypingTools) { tools = value; clearCandidates() }
+    private fun invalidateQualityComparison() {
+        quality.invalidatePending()
+        comparedRevision = null
+        undoQualityRevision = null
+        retypedQualityRevision = null
+    }
+    fun setQualityRecorder(value: QualityRecorder) { invalidateQualityComparison(); quality = value }
+    fun configureFeatures(configured: Int, effective: Int) {
+        val next = effective and configured and DiagnosticFeature.MASK
+        val changed = configuredFeatures != configured || effectiveFeatures != next
+        configuredFeatures = configured and DiagnosticFeature.MASK
+        effectiveFeatures = next
+        visibleUndo = next and DiagnosticFeature.VISIBLE_UNDO.bit != 0
+        if (changed) {
+            invalidateQualityComparison()
+            clearCandidates()
+            diagnose(DiagnosticKind.CONFIGURATION, DiagnosticReason.NONE, text = null)
+        }
+    }
+
     private var personalization: TypingPersonalization = NoTypingPersonalization
     private var personalLanguage = KeyboardLanguage.ENGLISH
     private var retypedFrom: String? = null
@@ -84,6 +119,7 @@ class TypingSessionController internal constructor(
 
     private fun resetPersonalContext() {
         retypedFrom = null
+        retypedQualityRevision = null
         personalization.clearPending()
     }
     private fun allowsAutomatic(selection: CandidateSelection, index: Int): Boolean =
@@ -134,7 +170,8 @@ class TypingSessionController internal constructor(
             (kind == DiagnosticKind.MANUAL && reason in listOf(DiagnosticReason.CORRECTION, DiagnosticReason.CONTEXTUAL))
         val event = DiagnosticEvent(kind, reason, session, revision, count, selected, model,
             completion, source, scoringCode, elapsedMs, requestId, if (attempt) nextDiagnosticOperation() else 0,
-            localCompletion, localInspectedStates, localVerifiedTerminals)
+            localCompletion, localInspectedStates, localVerifiedTerminals, configuredFeatures,
+            if (state.enabled && !diagnosticSegmentClosed) effectiveFeatures else 0)
         if (session == state.sessionId && revision == state.revision) {
             when {
                 kind == DiagnosticKind.REQUEST && reason in listOf(DiagnosticReason.SCHEDULED, DiagnosticReason.SUBMITTED) ->
@@ -255,7 +292,9 @@ class TypingSessionController internal constructor(
     /** Only the numeric stamp is retained. Caller admits this request after live service checks. */
     fun beginCandidateRequest(requestId: Long, activeLanguage: KeyboardLanguage): LocalCandidateRequest? {
         if (!canRequestCandidates || requestId < 0 || requestId <= lastCandidateRequestId) return null
-        clearCandidates()
+        // Scheduling work for the same owned word must preserve a backed manual retype.
+        // Explicit settings/cursor invalidation still goes through clearCandidates().
+        clearCandidateState()
         lastCandidateRequestId = requestId
         pendingCandidate = CandidateStamp(state.sessionId, state.revision, requestId, activeLanguage)
         recordRequest(DiagnosticReason.SCHEDULED, DiagnosticSource.LOCAL_POLICY, requestId = requestId)
@@ -323,6 +362,9 @@ class TypingSessionController internal constructor(
 
         val selection = candidateSelection(generation, stamp.language, stamp.requestId) ?: return false
         candidateSelection = selection
+        quality.candidateResponseNanos((System.nanoTime() - stamp.startedAt).coerceAtLeast(0))
+        // Model-eligible words have no final primary decision until ranking or an explicit choice.
+        compareShadow(selection, deferForModel = true)
         diagnose(DiagnosticKind.CANDIDATES, DiagnosticReason.ACCEPTED, selection.alternatives.size,
             selection.selectedIndex, selection.ranking?.usedModel == true,
             source = if (selection.generation.isCanonicalCaseCorrection()) DiagnosticSource.CANONICAL_CASE else DiagnosticSource.LOCAL_POLICY,
@@ -390,6 +432,11 @@ class TypingSessionController internal constructor(
 
     /** No editor mutation or veto reset. Service calls this when its own policy/route invalidates. */
     fun clearCandidates() {
+        invalidateQualityComparison()
+        clearCandidateState()
+    }
+
+    private fun clearCandidateState() {
         candidateEpoch++
         pendingCandidate?.let { recordRequest(DiagnosticReason.CANCELLED, DiagnosticSource.LOCAL_POLICY,
             it.sessionId, it.revision, it.requestId) }
@@ -447,6 +494,7 @@ class TypingSessionController internal constructor(
             modelRanked = true,
             ranking = ranking,
         )
+        compareShadow(candidateSelection!!)
         diagnose(DiagnosticKind.RANKING, if (ranking.preferredId <= 0) DiagnosticReason.ABSTAINED else DiagnosticReason.ACCEPTED,
             selection.alternatives.size, ranking.preferredId - 1, ranking.usedModel,
             source = DiagnosticSource.MODEL, scoringCode = reply.code, elapsedMs = reply.elapsedMillis,
@@ -552,6 +600,8 @@ class TypingSessionController internal constructor(
         val end = pending.start.toLong() + rendered.length
         if (rendered.length > MAX_COMPOSING_UTF16 || rendered.codePointCount(0, rendered.length) > 128 ||
             end > Int.MAX_VALUE) return false
+        if (retypedQualityRevision != null) invalidateQualityComparison()
+        compareShadow(selection.copy(ranking = ranking, order = ranking.candidateIds.map { it - 1 }))
         val caret = end.toInt()
         remember(EditorSelection(selectionStart, selectionEnd, pending.start, selectionStart))
         remember(EditorSelection(caret, caret, -1, -1))
@@ -581,6 +631,9 @@ class TypingSessionController internal constructor(
                     lastAutoEdit = UndoableTextEdit(pending.previous.text, rendered, state.sessionId, state.revision,
                         pending.previous, pending.contextBefore, pending.start, boundary,
                         UndoCorrectionCandidates(selection.generation, selection.language, selection.requestId)))
+                undoShownAtNanos = nanoTime()
+                quality.record(QualityEvent.AUTOMATIC_APPLIED)
+                undoQualityRevision = comparedRevision
                 resetPersonalContext()
                 publish()
             } == TypingTextResult.HANDLED
@@ -649,6 +702,8 @@ class TypingSessionController internal constructor(
         val end = pending.start.toLong() + rendered.length
         if (rendered.length > MAX_COMPOSING_UTF16 || rendered.codePointCount(0, rendered.length) > 128 ||
             end > Int.MAX_VALUE) return false
+        if (retypedQualityRevision != null) invalidateQualityComparison()
+        compareShadow(selection.copy(ranking = ranking, order = ranking.candidateIds.map { it - 1 }))
         val caret = end.toInt()
         remember(EditorSelection(selectionStart, selectionEnd, pending.start, selectionStart))
         remember(EditorSelection(caret, caret, -1, -1))
@@ -668,6 +723,9 @@ class TypingSessionController internal constructor(
                     lastAutoEdit = UndoableTextEdit(pending.previous.text, rendered, state.sessionId, state.revision,
                         pending.previous, pending.contextBefore, pending.start, boundary,
                         UndoCorrectionCandidates(selection.generation, selection.language, selection.requestId)))
+                undoShownAtNanos = nanoTime()
+                quality.record(QualityEvent.AUTOMATIC_APPLIED)
+                undoQualityRevision = comparedRevision
                 resetPersonalContext()
                 publish()
             } == TypingTextResult.HANDLED
@@ -749,12 +807,18 @@ class TypingSessionController internal constructor(
     val candidateViewState: SmartTypingViewState
         get() {
             if (!state.enabled) return SmartTypingViewState.HIDDEN
-            if (ownsContinuation) return continuationViewState()
+            undoViewItem()?.let { return SmartTypingViewState(true, listOf(it)) }
+            val toolItems = toolSuggestions().map { CandidateUiItem.Tool(toolId(it), it.replacementSuffix.trim(), it.kind) }
+            if (!ownsCandidateComposition) {
+                if (toolItems.isNotEmpty()) return SmartTypingViewState(true, toolItems.take(3))
+                if (ownsContinuation) return continuationViewState()
+            }
             val originalId = originalCandidateId ?: return SmartTypingViewState.EMPTY
             val selection = candidateSelection
             val items = buildList {
                 add(CandidateUiItem.Original(originalId, selection?.original ?: state.composing!!.typedWord))
-                selection?.let(::visibleIndices)?.forEach { index ->
+                addAll(toolItems.take(SmartTypingViewState.MAX_VISIBLE_CANDIDATES - 1))
+                selection?.let(::visibleIndices)?.take(SmartTypingViewState.MAX_VISIBLE_CANDIDATES - size)?.forEach { index ->
                     add(CandidateUiItem.Correction(correctionId(selection.requestId, index), selection.alternatives[index].text))
                 }
                 contextualSelection?.takeIf { it.selection === selection }?.let { contextual ->
@@ -767,11 +831,93 @@ class TypingSessionController internal constructor(
             val selectedId = if (selection != null && selection.selectedIndex >= 0 &&
                 (!state.originalSelected || selection.manual) &&
                 (selection.manual || allowsAutomatic(selection, selection.selectedIndex)) &&
-                selection.selectedIndex in visibleIndices(selection)) {
+                items.any { it.id == correctionId(selection.requestId, selection.selectedIndex) }) {
                 correctionId(selection.requestId, selection.selectedIndex)
             } else originalId
             return SmartTypingViewState(true, items, selectedId)
         }
+
+    private fun compareShadow(selection: CandidateSelection, deferForModel: Boolean = false) {
+        if (effectiveFeatures and DiagnosticFeature.SHADOW_COMPARISON.bit == 0 ||
+            retypedQualityRevision != null || selection.manual) return
+        if (deferForModel && canRequestModelRanking) return
+        val ranking = selection.ranking
+        val index = (ranking?.preferredId ?: 0) - 1
+        val candidate = selection.alternatives.getOrNull(index)
+        val caseEligible = selection.generation.isCanonicalCaseCorrection() && candidate?.let {
+            it.canonicalCaseUnambiguous && it.canonicalCaseAutoEligible } == true
+        val baselineEligible = caseEligible || if (ranking?.usedModel == true)
+            !selection.generation.prohibitsAutoReplace && spellingQualification.allowsModel(selection.language)
+            else isEligibleLocalReplacement(selection)
+        val primary = if (effectiveFeatures and DiagnosticFeature.AUTO_CORRECTION.bit != 0 &&
+            baselineEligible && candidate != null && allowsAutomatic(selection, index)) candidate.text else selection.original
+        val experimental = visibleIndices(selection).firstOrNull()?.let { selection.alternatives[it].text } ?: selection.original
+        quality.compare(state.revision, selection.original, primary, experimental)
+        comparedRevision = state.revision
+    }
+
+    /** The only public eligibility needed by coordinator for non-composing manual tools. */
+    val ownsToolSurface: Boolean get() = ownsToolSuffix || undoViewItem() != null
+    private val ownsToolSuffix: Boolean
+        get() = state.enabled && !awaitingEditorSelection && editorEditDepth == 0 &&
+            selectionStart >= 0 && selectionStart == selectionEnd &&
+            context?.text?.isNotEmpty() == true && (state.composing == null ||
+                composingStart >= 0 && selectionStart == composingStart + state.composing!!.text.length &&
+                    context!!.text.endsWith(state.composing!!.text))
+
+    private fun toolSuggestions(): List<TypingToolSuggestion> {
+        if (!ownsToolSuffix) return emptyList()
+        val owned = context!!.text
+        if (owned.length > 256) return emptyList()
+        return tools.suggestions(owned, state.composing?.typedWord.orEmpty(), personalLanguage)
+            .filter { suggestion ->
+                val source = suggestion.sourceSuffix
+                val replacement = suggestion.replacementSuffix
+                val prefix = owned.dropLast(source.length.coerceAtMost(owned.length))
+                source.isNotEmpty() && source.length <= 256 && replacement.isNotBlank() && replacement.length <= 256 &&
+                    replacement.none { it.isISOControl() } && source != replacement && owned.endsWith(source) &&
+                    selectionStart >= source.length &&
+                    (prefix.lastOrNull()?.isWhitespace() == true || prefix.isEmpty() && selectionStart == owned.length)
+            }.distinctBy { it.kind to it.replacementSuffix }.take(2)
+    }
+
+    private fun toolId(value: TypingToolSuggestion): String = "t" + continuationId(
+        value.kind.name + "\u0000" + value.sourceSuffix + "\u0000" + value.replacementSuffix)
+
+    private fun undoViewItem(): CandidateUiItem.Undo? {
+        val edit = state.lastAutoEdit ?: return null
+        if (!visibleUndo || nanoTime() - undoShownAtNanos !in 0..8_000_000_000L || edit.correction == null || edit.sessionId != state.sessionId ||
+            edit.revision != state.revision || !ownsToolSuffix || context?.text?.endsWith(edit.applied) != true) return null
+        return CandidateUiItem.Undo("u:${state.sessionId}:$candidateEpoch", edit.restoreComposition.typedWord)
+    }
+
+    private fun selectTool(suggestion: TypingToolSuggestion, execute: (TypingEdit) -> Boolean): TypingTextResult {
+        val start = selectionStart - suggestion.sourceSuffix.length
+        val replacement = suggestion.replacementSuffix
+        val caret = start.toLong() + replacement.length
+        if (start < 0 || caret > Int.MAX_VALUE) return TypingTextResult.REJECTED
+        val end = caret.toInt()
+        val before = context!!.text
+        remember(EditorSelection(selectionStart, selectionEnd, start, selectionEnd))
+        remember(EditorSelection(end, end, -1, -1))
+        diagnose(DiagnosticKind.MANUAL, DiagnosticReason.TOOL, editorAttempt = true) {
+            DiagnosticText(context = before, original = suggestion.sourceSuffix, result = replacement)
+        }
+        return applyGuardedBatch(listOf(TypingEdit.SetComposingRegion(start, selectionEnd),
+            TypingEdit.CommitText(replacement)), EditorSelection(end, end, -1, -1), execute) {
+            check(context!!.replaceSuffix(suggestion.sourceSuffix, replacement))
+            composingStart = -1
+            state = state.copy(composing = null, lastAutoEdit = null, originalSelected = false)
+            quality.record(when (suggestion.kind) {
+                TypingToolKind.WORD_BOUNDARY -> QualityEvent.WORD_BOUNDARY_PICKED
+                TypingToolKind.ABBREVIATION -> QualityEvent.ABBREVIATION_PICKED
+                TypingToolKind.PHRASE_REVIEW -> QualityEvent.PHRASE_REVIEW_PICKED
+            })
+            invalidateQualityComparison()
+            resetPersonalContext()
+            publish()
+        }
+    }
 
     private fun visibleIndices(selection: CandidateSelection): List<Int> = selection.order
         .sortedByDescending { personalization.preference(selection.original,
@@ -817,6 +963,7 @@ class TypingSessionController internal constructor(
             composingStart = caret - 1
             state = state.copy(composing = ComposingSegment(leadingBoundary = " "), originalSelected = false,
                 lastAutoEdit = null)
+            invalidateQualityComparison()
             var prefix = before
             item.text.split(' ').forEach { word ->
                 personalization.confirmed(word, personalLanguage)
@@ -836,8 +983,11 @@ class TypingSessionController internal constructor(
     fun selectOriginal(candidateId: String): Boolean {
         if (candidateId != originalCandidateId) return false
         val selection = candidateSelection
+        selection?.let { compareShadow(it) }
         // The old no-editor API cannot restore a manually replaced word. Use selectCandidate.
         if (selection != null && selection.original != state.composing?.typedWord) return false
+        quality.record(QualityEvent.KEPT_ORIGINAL)
+        quality.explicitChoice(comparedRevision ?: state.revision, state.composing!!.typedWord)
         personalization.confirmed(state.composing!!.typedWord, selection?.language ?: personalLanguage)
         selection?.alternatives?.getOrNull(selection.selectedIndex)?.let {
             personalization.rejected(selection.original, it.text, selection.language)
@@ -853,6 +1003,8 @@ class TypingSessionController internal constructor(
 
     /** Explicit user choice only. Unknown/stale IDs are REJECTED and must never fall back/replay. */
     fun selectCandidate(candidateId: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
+        undoViewItem()?.takeIf { it.id == candidateId }?.let { return deletePrevious(execute) }
+        toolSuggestions().firstOrNull { toolId(it) == candidateId }?.let { return selectTool(it, execute) }
         if (ownsContinuation) return selectContinuation(candidateId, execute)
         if (!ownsCandidateComposition) return TypingTextResult.REJECTED
         contextualSelection?.takeIf { candidateId == contextualId(it) }?.let {
@@ -861,7 +1013,8 @@ class TypingSessionController internal constructor(
         val selection = candidateSelection
         val index = if (candidateId == originalCandidateId) -1 else {
             selection?.let(::visibleIndices)?.firstOrNull {
-                candidateId == correctionId(selection.requestId, it)
+                candidateId == correctionId(selection.requestId, it) &&
+                    candidateViewState.candidates.any { item -> item.id == candidateId }
             } ?: return TypingTextResult.REJECTED
         }
         if (index == -1 && (selection == null || selection.original == state.composing!!.typedWord)) {
@@ -871,6 +1024,8 @@ class TypingSessionController internal constructor(
         cancelModelRanking()
         val previous = state.composing!!
         val word = if (index == -1) selection.original else selection.alternatives[index].text
+        compareShadow(selection)
+        val feedbackRevision = comparedRevision ?: state.revision
         val next = previous.copy(typedWord = word)
         val caret = composingStart.toLong() + next.text.length
         if (caret > Int.MAX_VALUE || next.text.length > MAX_COMPOSING_UTF16) return TypingTextResult.REJECTED
@@ -887,6 +1042,8 @@ class TypingSessionController internal constructor(
             check(context?.replaceSuffix(previous.text, next.text) == true) { "Candidate context mismatch" }
             state = state.copy(composing = next, originalSelected = state.originalSelected || index == -1)
             candidateSelection = selection.copy(selectedIndex = index, manual = true)
+            quality.record(if (index >= 0) QualityEvent.CORRECTION_PICKED else QualityEvent.KEPT_ORIGINAL)
+            quality.explicitChoice(feedbackRevision, word)
             if (index >= 0) personalization.accepted(previous.typedWord, word, selection.language)
             else {
                 personalization.rejected(word, previous.typedWord, selection.language)
@@ -951,7 +1108,10 @@ class TypingSessionController internal constructor(
     }
 
     fun typeText(text: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
-        if (text.isNotEmpty()) discardUndo()
+        if (text.isNotEmpty()) {
+            discardUndo()
+            if (retypedQualityRevision == null) invalidateQualityComparison()
+        }
         if (!state.enabled || awaitingEditorSelection || text.isEmpty()) return TypingTextResult.BYPASS
         if (text.length == 1 && text[0] in PENDING_BOUNDARY) {
             val current = state.composing
@@ -959,7 +1119,7 @@ class TypingSessionController internal constructor(
             if (current?.typedWord?.isNotEmpty() == true || plainWordUntilBoundary ||
                 (current?.text?.length ?: 0) + text.length > MAX_COMPOSING_UTF16
             ) {
-                if (!finishComposition(execute)) return TypingTextResult.REJECTED
+                if (!finishOwnedComposition(execute, true)) return TypingTextResult.REJECTED
             }
             val pending = state.composing?.leadingBoundary.orEmpty()
             return compose(ComposingSegment(leadingBoundary = pending + text), text, execute)
@@ -969,13 +1129,13 @@ class TypingSessionController internal constructor(
             val previous = state.composing ?: ComposingSegment()
             val next = previous.copy(typedWord = previous.typedWord + text)
             if (next.text.length > MAX_COMPOSING_UTF16) {
-                if (!finishComposition(execute)) return TypingTextResult.REJECTED
+                if (!finishOwnedComposition(execute, true)) return TypingTextResult.REJECTED
                 plainWordUntilBoundary = true
                 return commitPlain(text, execute)
             }
             return compose(next, text, execute)
         }
-        if (!finishComposition(execute)) return TypingTextResult.REJECTED
+        if (!finishOwnedComposition(execute, true)) return TypingTextResult.REJECTED
         return commitPlain(text, execute)
     }
 
@@ -989,10 +1149,11 @@ class TypingSessionController internal constructor(
     }
 
     fun deletePrevious(execute: (TypingEdit) -> Boolean): TypingTextResult {
-        clearCandidates()
+        candidateSelection?.let { compareShadow(it) }
+        clearCandidateState()
         if (!state.enabled || awaitingEditorSelection) return TypingTextResult.BYPASS
         state.lastAutoEdit?.let { edit ->
-            discardUndo()
+            discardUndoState()
             if (edit.committedStart != null) return restoreBoundaryCorrection(edit, execute)
             if (edit.sessionId == state.sessionId && edit.revision == state.revision &&
                 state.composing?.text == edit.applied && composingStart >= 0 &&
@@ -1031,7 +1192,10 @@ class TypingSessionController internal constructor(
             remember(EditorSelection(caret, caret, -1, -1))
         }
         val result = applyEdit(TypingEdit.SetComposingText(shortened), expected, execute) {
-            if (retypedFrom == null && previous.typedWord.length >= 3) retypedFrom = previous.typedWord
+            if (retypedFrom == null && previous.typedWord.length >= 3) {
+                retypedFrom = previous.typedWord
+                retypedQualityRevision = comparedRevision
+            }
             personalization.clearPending()
             context?.removeLastGrapheme()
             state = state.copy(
@@ -1084,8 +1248,13 @@ class TypingSessionController internal constructor(
     }
 
     /** Finishes only Rune's owned span; invalidates revisions even when already idle. */
-    fun finishComposition(execute: (TypingEdit) -> Boolean): Boolean {
-        clearCandidates()
+    fun finishComposition(execute: (TypingEdit) -> Boolean): Boolean = finishOwnedComposition(execute, false)
+
+    private fun finishOwnedComposition(execute: (TypingEdit) -> Boolean, completesWord: Boolean): Boolean {
+        val retypeRevision = retypedQualityRevision.takeIf { completesWord }
+        val retypedWord = state.composing?.typedWord
+        if (retypeRevision == null) invalidateQualityComparison()
+        clearCandidateState()
         discardUndo()
         plainWordUntilBoundary = false
         state = state.copy(revision = state.revision + 1, originalSelected = false)
@@ -1095,6 +1264,8 @@ class TypingSessionController internal constructor(
         }
         val expected = EditorSelection(selectionStart, selectionEnd, -1, -1)
         return applyEdit(TypingEdit.FinishComposingText, expected, execute) {
+            if (retypeRevision != null && !retypedWord.isNullOrEmpty()) quality.explicitChoice(retypeRevision, retypedWord)
+            invalidateQualityComparison()
             resetPersonalContext()
             composingStart = -1
             state = state.copy(composing = null)
@@ -1103,6 +1274,7 @@ class TypingSessionController internal constructor(
 
     /** Cursor/layer/language boundaries can explicitly discard context without editor reads. */
     fun invalidate(execute: (TypingEdit) -> Boolean): Boolean {
+        invalidateQualityComparison()
         resetPersonalContext()
         closeDiagnosticsAdmission()
         val session = state.sessionId
@@ -1136,12 +1308,17 @@ class TypingSessionController internal constructor(
         val completed = state.composing?.typedWord.orEmpty()
         val prefix = context?.text.orEmpty().let { if (completed.isNotEmpty()) it.dropLast(completed.length) else it }
         val retype = retypedFrom
+        val retypeRevision = retypedQualityRevision
         val transformed = applyPunctuation(action, policy, keyboard, execute)
         // An ineligible gesture follows the ordinary space path once, never the legacy converter.
         val result = if (transformed == TypingTextResult.BYPASS) typeText(text, execute) else transformed
         if (result == TypingTextResult.HANDLED && text.isNotEmpty() &&
             !text.codePoints().allMatch(::isWordCodePoint)) {
-            if (completed.isNotEmpty()) personalization.committed(prefix, completed, retype, keyboard.language)
+            if (completed.isNotEmpty()) {
+                personalization.committed(prefix, completed, retype, keyboard.language)
+                if (retype != null && retypeRevision != null) quality.explicitChoice(retypeRevision, completed)
+            }
+            invalidateQualityComparison()
             resetPersonalContext()
         }
         return result
@@ -1348,6 +1525,8 @@ class TypingSessionController internal constructor(
             listOf(TypingEdit.CommitText(rendered), TypingEdit.SetComposingRegion(boundaryStart, end))
         val expected = if (next == null) EditorSelection(end, end, -1, -1) else
             EditorSelection(end, end, boundaryStart, end)
+        if (retypedQualityRevision != null) invalidateQualityComparison()
+        compareShadow(selection)
         diagnose(DiagnosticKind.BOUNDARY, DiagnosticReason.AUTO_REPLACE, selection.alternatives.size,
             ranking.preferredId - 1, ranking.usedModel,
             source = if (canonicalCase) DiagnosticSource.CANONICAL_CASE else if (ranking.usedModel)
@@ -1360,6 +1539,9 @@ class TypingSessionController internal constructor(
                     lastAutoEdit = UndoableTextEdit(previous.text, rendered, state.sessionId, state.revision,
                         previous, before, start, next,
                         UndoCorrectionCandidates(selection.generation, selection.language, selection.requestId)))
+                undoShownAtNanos = nanoTime()
+                quality.record(QualityEvent.AUTOMATIC_APPLIED)
+                undoQualityRevision = comparedRevision
                 resetPersonalContext()
                 publish()
             }
@@ -1389,6 +1571,9 @@ class TypingSessionController internal constructor(
                 edit.correction?.let { saved ->
                     val appliedWord = edit.applied.removePrefix(edit.restoreComposition.leadingBoundary)
                         .takeWhile { it.isLetter() }
+                    quality.record(QualityEvent.EXPLICIT_UNDO)
+                    undoQualityRevision?.let { quality.explicitChoice(it, edit.restoreComposition.typedWord) }
+                    undoQualityRevision = null
                     personalization.rejected(edit.restoreComposition.typedWord, appliedWord, saved.language)
                     retypedFrom = null
                     candidateSelection = CandidateSelection(saved.generation, saved.language, saved.requestId,
@@ -1413,6 +1598,11 @@ class TypingSessionController internal constructor(
 
     /** Settings and non-text boundaries can close Undo without making an editor call. */
     fun discardUndo() {
+        if (undoQualityRevision != null) invalidateQualityComparison()
+        discardUndoState()
+    }
+
+    private fun discardUndoState() {
         if (state.lastAutoEdit != null) state = state.copy(lastAutoEdit = null)
         sentenceCapitalizationPending = false
     }
@@ -1441,6 +1631,7 @@ class TypingSessionController internal constructor(
         ) return false
 
         sentenceCapitalizationPending = false
+        invalidateQualityComparison()
         resetPersonalContext()
         val hadComposition = state.composing != null ||
             (expectedEditorSelection?.composingStart ?: -1) >= 0
@@ -1474,6 +1665,7 @@ class TypingSessionController internal constructor(
     }
 
     fun endSession() {
+        invalidateQualityComparison()
         resetPersonalContext()
         closeDiagnosticsAdmission()
         sentenceCapitalizationPending = false
@@ -1538,7 +1730,8 @@ class TypingSessionController internal constructor(
         val attempt = diagnosticAttempt
         diagnosticAttempt = null
         val outcome = (attempt ?: DiagnosticEvent(DiagnosticKind.EDITOR, DiagnosticReason.NONE, session, revision,
-            operationId = nextDiagnosticOperation())).copy(kind = DiagnosticKind.EDITOR)
+            operationId = nextDiagnosticOperation(), configuredFeatures = configuredFeatures,
+            effectiveFeatures = if (state.enabled && !diagnosticSegmentClosed) effectiveFeatures else 0)).copy(kind = DiagnosticKind.EDITOR)
         val terminal = try { diagnostics.editorOutcome(outcome) } catch (_: Throwable) { null }
         fun complete(accepted: Boolean) {
             try {
@@ -1546,7 +1739,7 @@ class TypingSessionController internal constructor(
                     reason = if (accepted) DiagnosticReason.EDITOR_ACCEPTED else DiagnosticReason.EDITOR_REJECTED), null)
             } catch (_: Throwable) { }
         }
-        clearCandidates()
+        clearCandidateState()
         val expectedCandidateEpoch = candidateEpoch
         state = state.copy(revision = revision)
         remember(expected)
@@ -1585,6 +1778,7 @@ class TypingSessionController internal constructor(
     }
 
     private fun disableSession() {
+        invalidateQualityComparison()
         resetPersonalContext()
         closeDiagnosticsAdmission()
         sentenceCapitalizationPending = false

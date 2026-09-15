@@ -8,6 +8,21 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SettingsCodecTest {
+    @Test fun `all six typing tools toggle independently and default off`() {
+        val keys = listOf(SettingsCodec.KEY_QUALITY_METRICS, SettingsCodec.KEY_SHADOW_COMPARISON,
+            SettingsCodec.KEY_WORD_BOUNDARY_SUGGESTIONS, SettingsCodec.KEY_ABBREVIATIONS,
+            SettingsCodec.KEY_PHRASE_REVIEW, SettingsCodec.KEY_VISIBLE_UNDO)
+        fun values(s: KeyboardSettings) = listOf(s.qualityMetrics, s.shadowComparison,
+            s.wordBoundarySuggestions, s.abbreviations, s.phraseReview, s.visibleUndo)
+        assertEquals(List(6) { false }, values(SettingsCodec.decode(emptyMap())))
+        for ((index, key) in keys.withIndex()) {
+            assertEquals(List(6) { it == index }, values(SettingsCodec.decode(mapOf(key to true))))
+            assertEquals(List(6) { false }, values(SettingsCodec.decode(mapOf(key to "true"))))
+            assertEquals(List(6) { false }, values(SettingsCodec.decode(mapOf(key to true,
+                SettingsCodec.KEY_SCHEMA_VERSION to 999))))
+        }
+    }
+
     @Test fun `personal data features require explicit booleans and supported schema`() {
         val keys = listOf(SettingsCodec.KEY_PERSONAL_LEARNING, SettingsCodec.KEY_TOUCH_PERSONALIZATION,
             SettingsCodec.KEY_PHRASE_SUGGESTIONS)

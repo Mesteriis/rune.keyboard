@@ -147,6 +147,25 @@ class SettingsActivity : ThemedActivity() {
         ) { enabled ->
             preferences.writeDoubleSpacePeriod(enabled)
         }
+        addSection(R.string.settings_section_tools)
+        addToggleRow(R.string.settings_quality_metrics, R.string.settings_quality_metrics_summary,
+            settings.qualityMetrics) { preferences.writeQualityMetrics(it) }
+        addToggleRow(R.string.settings_shadow_comparison, R.string.settings_shadow_comparison_summary,
+            settings.shadowComparison) { preferences.writeShadowComparison(it) }
+        addNavigationRow(R.string.quality_dashboard_title, getString(R.string.settings_quality_dashboard_summary)) {
+            startActivity(Intent(this, io.github.mesteriis.rune.keyboard.settings.quality.QualityDashboardActivity::class.java))
+        }
+        addToggleRow(R.string.settings_word_boundaries, R.string.settings_word_boundaries_summary,
+            settings.wordBoundarySuggestions) { preferences.writeWordBoundarySuggestions(it) }
+        addToggleRow(R.string.settings_abbreviations, R.string.settings_abbreviations_summary,
+            settings.abbreviations) { preferences.writeAbbreviations(it) }
+        addNavigationRow(R.string.abbreviations_title, getString(R.string.settings_abbreviations_manage_summary)) {
+            startActivity(Intent(this, AbbreviationSettingsActivity::class.java))
+        }
+        addToggleRow(R.string.settings_phrase_review, R.string.settings_phrase_review_summary,
+            settings.phraseReview) { preferences.writePhraseReview(it) }
+        addToggleRow(R.string.settings_visible_undo, R.string.settings_visible_undo_summary,
+            settings.visibleUndo) { preferences.writeVisibleUndo(it) }
         addSection(R.string.settings_section_personal)
         addToggleRow(R.string.settings_personal_learning, R.string.settings_personal_learning_summary,
             settings.personalLearning) { preferences.writePersonalLearning(it) }

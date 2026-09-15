@@ -95,6 +95,13 @@ data class KeyboardSettings(
     val personalLearning: Boolean = false,
     val touchPersonalization: Boolean = false,
     val phraseSuggestions: Boolean = false,
+    val qualityMetrics: Boolean = false,
+    val shadowComparison: Boolean = false,
+    val wordBoundarySuggestions: Boolean = false,
+    val abbreviations: Boolean = false,
+    val phraseReview: Boolean = false,
+    val visibleUndo: Boolean = false,
+
 ) {
     init {
         require(enabledLanguages.isNotEmpty()) { "At least one language must stay enabled" }

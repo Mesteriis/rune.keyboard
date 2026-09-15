@@ -8,12 +8,202 @@ import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.*
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.*
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.quality.*
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature
 import java.lang.reflect.Proxy
 import org.junit.Assert.*
 import org.junit.Test
 
 /** Real owner/executor with an independent editor document. Synthetic quality admission only. */
 class CorrectionBoundaryTest {
+    @Test fun `word split join and abbreviation suggestions change only the current owned suffix on tap`() {
+        for ((source, replacement, kind) in listOf(
+            Triple("незнаю", "не знаю", TypingToolKind.WORD_BOUNDARY),
+            Triple("при вет", "привет", TypingToolKind.WORD_BOUNDARY),
+            Triple("щб", "щас буду", TypingToolKind.ABBREVIATION))) {
+            val f = Fixture(); f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+            f.controller.setTypingTools(TypingTools { context, _, _ ->
+                if (context.endsWith(source)) listOf(TypingToolSuggestion(source, replacement, kind)) else emptyList()
+            })
+            f.raw("Привет "); f.raw(source)
+            val id = f.controller.candidateViewState.candidates.filterIsInstance<io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem.Tool>().single().id
+            assertEquals("Привет $source", f.document)
+            assertEquals(TypingTextResult.HANDLED, f.controller.selectCandidate(id, f.execute))
+            assertEquals("Привет $replacement", f.document)
+            assertNull(f.controller.state.composing)
+            assertEquals(TypingTextResult.REJECTED, f.controller.selectCandidate(id, f.execute))
+        }
+    }
+
+    @Test fun `finished phrase review uses real policy and exact owned region`() {
+        val f = Fixture(); f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+        f.controller.setPersonalizationLanguage(KeyboardLanguage.RUSSIAN)
+        f.controller.setTypingTools(TypingTools { context, _, language ->
+            io.github.mesteriis.rune.keyboard.smarttyping.texttools.PhraseReviewPolicy.suggest(context, language)?.let {
+                listOf(TypingToolSuggestion(it.sourceSuffix, it.replacementSuffix, TypingToolKind.PHRASE_REVIEW))
+            }.orEmpty()
+        })
+        f.raw("Я идут домой.")
+        val candidate = f.controller.candidateViewState.candidates.single()
+        assertEquals("Я иду домой.", candidate.text)
+        assertEquals(TypingTextResult.HANDLED, f.controller.selectCandidate(candidate.id, f.execute))
+        assertEquals("Я иду домой.", f.document)
+    }
+
+    @Test fun `tool suggestions reject unknown boundary stale disabled and failed editor transactions`() {
+        for (prefix in listOf("@", "/", "x=")) {
+            val f = Fixture(); f.controller.setTypingTools(TypingTools { _, _, _ ->
+                listOf(TypingToolSuggestion("щб", "щас буду", TypingToolKind.ABBREVIATION)) })
+            f.raw(prefix); f.raw("щб")
+            assertTrue(f.controller.candidateViewState.candidates.none { it is io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem.Tool })
+        }
+        for (invalidate in listOf<(Fixture) -> Unit>(
+            { it.controller.clearCandidates() }, { it.controller.setTypingTools(NoTypingTools) },
+            { it.controller.endSession() }, { it.controller.updateSelection(0, 0, -1, -1, it.execute) })) {
+            val f = Fixture(); f.controller.setTypingTools(TypingTools { _, _, _ ->
+                listOf(TypingToolSuggestion("щб", "щас буду", TypingToolKind.ABBREVIATION)) })
+            f.raw("щб"); val id = f.controller.candidateViewState.candidates.last().id
+            invalidate(f)
+            assertEquals(TypingTextResult.REJECTED, f.controller.selectCandidate(id, f.execute))
+        }
+        val f = Fixture(); f.controller.setTypingTools(TypingTools { _, _, _ ->
+            listOf(TypingToolSuggestion("щб", "щас буду", TypingToolKind.ABBREVIATION)) })
+        f.raw("щб"); val id = f.controller.candidateViewState.candidates.last().id
+        f.fail = "commitText"
+        assertEquals(TypingTextResult.REJECTED, f.controller.selectCandidate(id, f.execute))
+        assertEquals("щб", f.document)
+        assertFalse(f.controller.state.enabled)
+    }
+
+    @Test fun `visible undo is explicit expires with edit and toggle without disabling backspace undo`() {
+        val flag = io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature.VISIBLE_UNDO.bit
+        val f = Fixture(); f.controller.configureFeatures(flag, flag)
+        f.raw("helllo"); f.publish("hello"); f.type(" ")
+        val undo = f.controller.candidateViewState.candidates.single()
+        assertTrue(undo is io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem.Undo)
+        assertEquals(TypingTextResult.HANDLED, f.controller.selectCandidate(undo.id, f.execute))
+        assertEquals("helllo", f.document)
+        assertEquals(TypingTextResult.REJECTED, f.controller.selectCandidate(undo.id, f.execute))
+        val hidden = Fixture(); hidden.controller.configureFeatures(flag, flag)
+        hidden.raw("helllo"); hidden.publish("hello"); hidden.type(" ")
+        val stale = hidden.controller.candidateViewState.candidates.single().id
+        hidden.controller.configureFeatures(0, 0)
+        assertEquals(TypingTextResult.REJECTED, hidden.controller.selectCandidate(stale, hidden.execute))
+        hidden.undo(); assertEquals("helllo", hidden.document)
+    }
+
+    @Test fun `diagnostics session changes carry configured and eligible feature states`() {
+        val f = Fixture()
+        val events = mutableListOf<io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticEvent>()
+        f.controller.setDiagnostics(object : io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) {}
+            override fun invalidate() {}
+            override fun record(event: io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticEvent,
+                text: (() -> io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticText)?) { events += event }
+        })
+        val flag = io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature.ABBREVIATIONS.bit
+        f.controller.configureFeatures(flag, flag)
+        f.controller.startSession(EditorContext.from(1, 0), 0, 0)
+        f.type("a")
+        val start = events.last { it.kind == io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind.SESSION }
+        assertEquals(flag, start.configuredFeatures)
+        assertEquals(flag, start.effectiveFeatures)
+        val editorEvents = events.filter { it.kind == io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind.EDITOR }
+        assertTrue(editorEvents.isNotEmpty())
+        assertTrue(editorEvents.all { it.configuredFeatures == flag && it.effectiveFeatures == flag })
+        f.controller.configureFeatures(flag, 0)
+        assertEquals(flag, events.last().configuredFeatures)
+        assertEquals(0, events.last().effectiveFeatures)
+        f.raw("b")
+        assertEquals(flag, events.last().configuredFeatures)
+        assertEquals(0, events.last().effectiveFeatures)
+        f.controller.configureFeatures(flag, flag)
+        f.controller.closeDiagnosticsAdmission()
+        f.raw("c")
+        val closedOutcome = events.last { it.kind == io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind.EDITOR }
+        assertEquals(flag, closedOutcome.configuredFeatures)
+        assertEquals(0, closedOutcome.effectiveFeatures)
+        f.controller.startSession(EditorContext.from(129, 0), 0, 0)
+        assertEquals(0, events.last().effectiveFeatures)
+    }
+
+
+    private fun quality(f: Fixture): QualityModel {
+        val model = QualityModel().apply { configure(true, true, true) }
+        f.controller.setQualityRecorder(object : QualityRecorder {
+            override fun compare(revision: Long, source: String, primaryChoice: String, experimentalChoice: String) {
+                model.compare(revision, source, primaryChoice, experimentalChoice)
+            }
+            override fun explicitChoice(revision: Long, chosen: String) { model.explicitChoice(revision, chosen) }
+            override fun invalidatePending() { model.invalidatePending() }
+        })
+        val flags = DiagnosticFeature.SHADOW_COMPARISON.bit or DiagnosticFeature.AUTO_CORRECTION.bit
+        f.controller.configureFeatures(flags, flags)
+        return model
+    }
+
+    @Test fun `quality comparison cannot label a later word or cursor-owned fragment`() {
+        for (boundary in listOf("space", "cursor", "settings", "new-letter")) {
+            val f = Fixture(); val model = quality(f)
+            f.raw("helllo"); f.publish("hello")
+            when (boundary) {
+                "space" -> { f.mode = AutocorrectionMode.SUGGESTIONS; f.type(" "); f.raw("hello") }
+                "cursor" -> { f.controller.updateSelection(2, 2, 0, 6, f.execute); f.raw("hello") }
+                "settings" -> f.controller.clearCandidates()
+                else -> f.raw("o")
+            }
+            assertTrue(f.controller.selectOriginal(f.controller.originalCandidateId!!))
+            assertEquals(boundary, 0L, model.snapshot().shadow.drop(2).sum())
+        }
+    }
+
+    @Test fun `only immediate undo or backed retype labels the compared word`() {
+        val undo = Fixture(); val undoModel = quality(undo)
+        undo.raw("helllo"); undo.publish("hello"); undo.type(" "); undo.undo()
+        assertEquals(1L, undoModel.snapshot()[ShadowResult.EXPLICIT_NEITHER])
+        val retype = Fixture(); val retypeModel = quality(retype)
+        retype.raw("hellp"); retype.publish("hello"); retype.undo(); retype.type("o"); retype.type(" ")
+        assertEquals(1L, retypeModel.snapshot().shadow.drop(2).sum())
+        val unrelated = Fixture(); val unrelatedModel = quality(unrelated)
+        unrelated.raw("helllo"); unrelated.publish("hello"); unrelated.type(" ")
+        unrelated.raw("hellp"); unrelated.undo(); unrelated.type("o"); unrelated.type(" ")
+        assertEquals(0L, unrelatedModel.snapshot().shadow.drop(2).sum())
+        val finished = Fixture(); val finishedModel = quality(finished)
+        finished.raw("hellp"); finished.publish("hello"); finished.undo(); finished.type("o")
+        finished.controller.finishComposition(finished.execute)
+        assertEquals(0L, finishedModel.snapshot().shadow.drop(2).sum())
+    }
+
+    @Test fun `qualified model choice is the primary with one comparison before manual pick or late undo`() {
+        val f = Fixture(modelOnly = true); val model = quality(f)
+        f.raw("helllo"); f.publish("hello")
+        val request = f.controller.beginModelRanking(1)!!
+        assertTrue(f.controller.acceptModelRanking(winningReply(request)))
+        repeat(3) { f.controller.candidateViewState }
+        val candidate = f.controller.candidateViewState.candidates[1]
+        assertEquals(TypingTextResult.HANDLED, f.controller.selectCandidate(candidate.id, f.execute))
+        assertEquals(1L, model.snapshot()[ShadowResult.EXPLICIT_BOTH])
+        assertEquals(1L, model.snapshot().shadow.take(2).sum())
+        val late = Fixture(modelOnly = true); val lateModel = quality(late)
+        val lateRequest = late.pendingSpace()
+        assertTrue(late.controller.acceptSpaceCorrection(winningReply(lateRequest), late.execute))
+        assertEquals("hello ", late.document)
+        late.undo()
+        assertEquals(1L, lateModel.snapshot().shadow.take(2).sum())
+        assertEquals(1L, lateModel.snapshot()[ShadowResult.EXPLICIT_NEITHER])
+    }
+
+    @Test fun `disabled shadow does not evaluate its ranking or personalization`() {
+        val f = Fixture()
+        f.controller.setPersonalization(object : TypingPersonalization {
+            override fun preference(original: String, candidate: String, language: KeyboardLanguage): Double =
+                error("Shadow ranking must stay off")
+            override fun allowsAutomatic(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                language: KeyboardLanguage): Boolean = error("Shadow guard must stay off")
+        }, KeyboardLanguage.ENGLISH)
+        f.raw("helllo"); f.publish("hello")
+    }
+
     private class PersonalEvents : TypingPersonalization {
         var allow = true
         val events = mutableListOf<String>()

@@ -94,7 +94,7 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
         fun bind(item: CandidateUiItem?, selected: Boolean) {
             if (this.item != item) cancelTouch()
             this.item = item
-            val label = item?.text.orEmpty()
+            val label = if (item is CandidateUiItem.Undo) context.getString(R.string.candidate_apply_undo, item.text) else item?.text.orEmpty()
             if (text.toString() != label) text = label
             isSelected = selected
             typeface = if (selected) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
@@ -104,6 +104,8 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
                     when (it) {
                         is CandidateUiItem.Original -> R.string.candidate_original
                         is CandidateUiItem.Correction -> R.string.candidate_correction
+                        is CandidateUiItem.Tool -> R.string.candidate_typing_tool
+                        is CandidateUiItem.Undo -> R.string.candidate_undo
                         is CandidateUiItem.Continuation -> R.string.candidate_continuation
                         is CandidateUiItem.Punctuation -> R.string.candidate_punctuation
                     },
@@ -184,6 +186,8 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
             val action = when (current) {
                 is CandidateUiItem.Original -> R.string.candidate_keep_original
                 is CandidateUiItem.Correction -> R.string.candidate_apply_correction
+                is CandidateUiItem.Tool -> R.string.candidate_apply_tool
+                is CandidateUiItem.Undo -> R.string.candidate_apply_undo
                 is CandidateUiItem.Continuation -> R.string.candidate_apply_continuation
                 is CandidateUiItem.Punctuation -> R.string.candidate_apply_punctuation
             }

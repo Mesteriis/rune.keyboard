@@ -17,7 +17,12 @@ CORRECTION_EVENTS = {
     ("MANUAL", "CORRECTION"): "CORRECTION",
     ("MANUAL", "CONTEXTUAL"): "CONTEXTUAL",
     ("MANUAL", "ORIGINAL"): "ORIGINAL",
+    ("MANUAL", "TOOL"): "TOOL",
 }
+FEATURE_KEYS = frozenset(("spellingSuggestions", "autoCorrection", "mechanicalPunctuation",
+    "contextualPunctuation", "candidateStrip", "personalLearning", "touchPersonalization",
+    "phraseSuggestions", "qualityMetrics", "shadowComparison", "wordBoundarySuggestions",
+    "abbreviations", "phraseReview", "visibleUndo"))
 ROTATED_JSONL = re.compile(r"^(.*)\.(\d+)\.jsonl$")
 
 
@@ -53,6 +58,13 @@ def _event_fields(event):
             for name, upper in (("localInspectedStates", 8_192), ("localVerifiedTerminals", 64)):
                 if not 0 <= _integer(event.get(name), name) <= upper:
                     raise ValueError(f"{name} outside bounds")
+    if schema >= 4:
+        for field in ("features", "effectiveFeatures"):
+            values = event.get(field)
+            if not isinstance(values, dict) or values.keys() != FEATURE_KEYS or any(type(v) is not bool for v in values.values()):
+                raise ValueError(f"{field} must contain fixed feature booleans")
+        if any(value and not event["features"][name] for name, value in event["effectiveFeatures"].items()):
+            raise ValueError("effective feature cannot be enabled without configuration")
     kind = event.get("kind")
     reason = event.get("reason")
     if not isinstance(kind, str) or not isinstance(reason, str):
@@ -142,6 +154,8 @@ def analyze_events(events):
     backspaces = 0
     segment_start = {}
     last_start = None
+    configurations = []
+    last_configuration = None
 
     def finish(attempt, accepted):
         session = attempt["session"]
@@ -178,6 +192,12 @@ def analyze_events(events):
     for event in events:
         schema, kind, reason, session, revision = _event_fields(event)
         schemas.add(schema)
+        if schema >= 4:
+            config = (session, event["features"], event["effectiveFeatures"])
+            if config != last_configuration:
+                configurations.append({"session": session, "revision": revision,
+                    "features": dict(event["features"]), "effectiveFeatures": dict(event["effectiveFeatures"])})
+                last_configuration = config
         operation = None
         if schema >= 2 and "operationId" in event:
             operation = _integer(event["operationId"], "operationId")
@@ -249,9 +269,12 @@ def analyze_events(events):
                 previous["final"] = result or previous["original"]
                 previous["outcome"] = "UNDONE"
 
-    return {"schemas": sorted(schemas), "backspaces": backspaces,
+    report = {"schemas": sorted(schemas), "backspaces": backspaces,
         "manualEdits": _manual_edits(events), "outcomes": [
         {key: value for key, value in item.items() if key != "_requestId"} for item in outcomes]}
+    if 4 in schemas:
+        report["featureConfigurations"] = configurations
+    return report
 
 
 def _rotation_order(path):

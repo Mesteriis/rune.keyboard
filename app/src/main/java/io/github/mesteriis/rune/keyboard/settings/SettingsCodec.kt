@@ -29,6 +29,13 @@ object SettingsCodec {
     const val KEY_PERSONAL_LEARNING = "personal_learning"
     const val KEY_TOUCH_PERSONALIZATION = "touch_personalization"
     const val KEY_PHRASE_SUGGESTIONS = "phrase_suggestions"
+    const val KEY_QUALITY_METRICS = "quality_metrics"
+    const val KEY_SHADOW_COMPARISON = "shadow_comparison"
+    const val KEY_WORD_BOUNDARY_SUGGESTIONS = "word_boundary_suggestions"
+    const val KEY_ABBREVIATIONS = "abbreviations"
+    const val KEY_PHRASE_REVIEW = "phrase_review"
+    const val KEY_VISIBLE_UNDO = "visible_undo"
+
 
     const val STARTING_LANGUAGE_LAST_USED = "LAST_USED"
 
@@ -88,6 +95,13 @@ object SettingsCodec {
             personalLearning = supported && strictBoolean(raw, KEY_PERSONAL_LEARNING, false),
             touchPersonalization = supported && strictBoolean(raw, KEY_TOUCH_PERSONALIZATION, false),
             phraseSuggestions = supported && strictBoolean(raw, KEY_PHRASE_SUGGESTIONS, false),
+            qualityMetrics = supported && strictBoolean(raw, KEY_QUALITY_METRICS, false),
+            shadowComparison = supported && strictBoolean(raw, KEY_SHADOW_COMPARISON, false),
+            wordBoundarySuggestions = supported && strictBoolean(raw, KEY_WORD_BOUNDARY_SUGGESTIONS, false),
+            abbreviations = supported && strictBoolean(raw, KEY_ABBREVIATIONS, false),
+            phraseReview = supported && strictBoolean(raw, KEY_PHRASE_REVIEW, false),
+            visibleUndo = supported && strictBoolean(raw, KEY_VISIBLE_UNDO, false),
+
         )
     }
 

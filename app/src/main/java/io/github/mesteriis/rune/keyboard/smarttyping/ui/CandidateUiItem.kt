@@ -25,6 +25,16 @@ sealed interface CandidateUiItem {
         override fun toString(): String = "Continuation(redacted)"
     }
 
+    data class Tool(override val id: String, override val text: String,
+        val kind: io.github.mesteriis.rune.keyboard.smarttyping.session.TypingToolKind) : CandidateUiItem {
+        init { validateCandidate(id, text) }
+        override fun toString() = "Tool(kind=$kind, redacted)"
+    }
+    data class Undo(override val id: String, override val text: String) : CandidateUiItem {
+        init { validateCandidate(id, text) }
+        override fun toString() = "Undo(redacted)"
+    }
+
     companion object {
         const val MAX_ID_LENGTH = 96
         const val MAX_TEXT_UTF16 = 256

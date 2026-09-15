@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="abbreviations_title">Abbreviations</string>
+    <string name="abbreviations_entry">%1$s → %2$s</string>
+    <string name="abbreviations_summary">Add your own shortcuts for each language, such as щб → щас буду. Tap an expansion in the suggestion strip to use it; you can always keep the abbreviation. Entries stay on this device. Tap an entry to edit or delete it.</string>
+    <string name="abbreviations_add">Add abbreviation</string>
+    <string name="abbreviations_edit">Edit abbreviation</string>
+    <string name="abbreviations_language">Language</string>
+    <string name="abbreviations_key">Abbreviation (up to 32 letters)</string>
+    <string name="abbreviations_expansion">Expansion (up to 128 characters)</string>
+    <string name="abbreviations_save">Save</string>
+    <string name="abbreviations_delete">Delete</string>
+    <string name="abbreviations_loading">Loading…</string>
+    <string name="abbreviations_count">%1$d of 128 entries</string>
+    <string name="abbreviations_empty">No abbreviations yet.</string>
+    <string name="abbreviations_load_failed">Could not load abbreviations. Reset to start again.</string>
+    <string name="abbreviations_io_failed">Could not save the change. Your entries have not changed.</string>
+    <string name="abbreviations_invalid">Use 1–32 letters for the abbreviation and 1–128 letters, numbers, spaces or punctuation for the expansion. No leading or trailing spaces or line breaks.</string>
+    <string name="abbreviations_duplicate">This language already has that abbreviation. Edit the existing entry.</string>
+    <string name="abbreviations_limit">All 128 entries are used. Delete an entry first.</string>
+    <string name="abbreviations_not_found">This entry has changed. Reopen it and try again.</string>
+    <string name="abbreviations_reset">Reset abbreviations</string>
+    <string name="abbreviations_reset_confirm">Delete all saved abbreviations on this device?</string>
+</resources>

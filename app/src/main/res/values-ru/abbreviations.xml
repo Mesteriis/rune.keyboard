@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="abbreviations_title">Сокращения</string>
+    <string name="abbreviations_entry">%1$s → %2$s</string>
+    <string name="abbreviations_summary">Добавляйте свои сокращения для каждого языка, например щб → щас буду. Нажмите на расшифровку в строке подсказок, чтобы вставить её; сокращение всегда можно оставить. Записи хранятся только на этом устройстве. Нажмите на запись, чтобы изменить или удалить её.</string>
+    <string name="abbreviations_add">Добавить сокращение</string>
+    <string name="abbreviations_edit">Изменить сокращение</string>
+    <string name="abbreviations_language">Язык</string>
+    <string name="abbreviations_key">Сокращение (до 32 букв)</string>
+    <string name="abbreviations_expansion">Расшифровка (до 128 символов)</string>
+    <string name="abbreviations_save">Сохранить</string>
+    <string name="abbreviations_delete">Удалить</string>
+    <string name="abbreviations_loading">Загрузка…</string>
+    <string name="abbreviations_count">Записей: %1$d из 128</string>
+    <string name="abbreviations_empty">Сокращений пока нет.</string>
+    <string name="abbreviations_load_failed">Не удалось загрузить сокращения. Сбросьте их, чтобы начать заново.</string>
+    <string name="abbreviations_io_failed">Не удалось сохранить изменение. Записи не изменены.</string>
+    <string name="abbreviations_invalid">Сокращение: 1–32 буквы. Расшифровка: 1–128 букв, цифр, пробелов или знаков препинания. Без пробелов по краям и переносов строк.</string>
+    <string name="abbreviations_duplicate">Такое сокращение уже есть для этого языка. Измените существующую запись.</string>
+    <string name="abbreviations_limit">Использованы все 128 записей. Сначала удалите одну из них.</string>
+    <string name="abbreviations_not_found">Запись изменилась. Откройте её заново и повторите попытку.</string>
+    <string name="abbreviations_reset">Сбросить сокращения</string>
+    <string name="abbreviations_reset_confirm">Удалить все сохранённые сокращения на этом устройстве?</string>
+</resources>

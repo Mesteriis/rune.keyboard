@@ -64,7 +64,7 @@ class PackagingTest(unittest.TestCase):
     def test_contracts_and_noop_variants_are_permitted(self):
         prefix = 'io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.'
         self.assertEqual([], forbidden_classes({prefix + n for n in
-            ('DiagnosticText', 'DiagnosticEvent', 'NoTypingDiagnostics', 'TypingDiagnosticsProvider', 'DiagnosticsSettingsProvider')}))
+            ('DiagnosticFeature', 'DiagnosticFeatures', 'DiagnosticFeature$Companion', 'DiagnosticText', 'DiagnosticEvent', 'NoTypingDiagnostics', 'TypingDiagnosticsProvider', 'DiagnosticsSettingsProvider')}))
         self.assertEqual([prefix + 'HiddenWriter'], forbidden_classes({prefix + 'HiddenWriter'}))
 
     def test_nested_debug_encoder_is_not_a_contract(self):
@@ -77,7 +77,8 @@ class PackagingTest(unittest.TestCase):
             self.assertEqual([], forbidden_classes({prefix + name}))
         for name in ('TypingDiagnostics$DefaultImpls$Recorder',
                      'DiagnosticsSettingsProvider$$ExternalSyntheticLambda1',
-                     'NoTypingDiagnostics$Recorder', 'DiagnosticEvent$Encoder'):
+                     'NoTypingDiagnostics$Recorder', 'DiagnosticEvent$Encoder',
+                     'DiagnosticFeatures$Recorder', 'DiagnosticFeature$Companion$Encoder'):
             self.assertEqual([prefix + name], forbidden_classes({prefix + name}))
 
     def test_nested_recorder_is_rejected_in_full_pre_r8_and_mapped_dex_admission(self):

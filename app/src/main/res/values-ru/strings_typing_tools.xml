@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="candidate_typing_tool">Подсказка для текста: %1$s</string>
+    <string name="candidate_undo">Вернуть: %1$s</string>
+    <string name="candidate_apply_tool">Применить подсказку %1$s</string>
+    <string name="candidate_apply_undo">Вернуть %1$s</string>
+    <string name="settings_section_tools">Инструменты ввода и качество</string>
+    <string name="settings_quality_metrics">Локальная статистика качества</string>
+    <string name="settings_quality_metrics_summary">Считать замены, явные отмены и выбор подсказок. Хранить интервалы времени ответа без текста переписки.</string>
+    <string name="settings_shadow_comparison">Сравнивать подсказки в теневом режиме</string>
+    <string name="settings_shadow_comparison_summary">Сравнивать текущее локальное решение с первым вариантом подсказки. Эксперимент не меняет текст.</string>
+    <string name="settings_quality_dashboard_summary">Счётчики, распределение времени ответа и результаты сравнения по явным действиям.</string>
+    <string name="settings_word_boundaries">Подсказки для пробелов в словах</string>
+    <string name="settings_word_boundaries_summary">Предлагать разделение и соединение русских слов. Применять только по нажатию.</string>
+    <string name="settings_abbreviations">Раскрывать мои сокращения</string>
+    <string name="settings_abbreviations_summary">Показывать сохранённое раскрытие в подсказках при наборе сокращения.</string>
+    <string name="settings_abbreviations_manage_summary">Добавлять, менять и удалять сокращения отдельно для каждого языка.</string>
+    <string name="settings_phrase_review">Проверять законченные фразы</string>
+    <string name="settings_phrase_review_summary">После знака конца предложения предлагать поддерживаемые исправления согласования и запятых. Применять по нажатию.</string>
+    <string name="settings_visible_undo">Показывать кнопку отмены</string>
+    <string name="settings_visible_undo_summary">После автозамены слова показывать «Вернуть» до 8 секунд или до следующего изменения. Отмена через Backspace сохраняется.</string>
+</resources>

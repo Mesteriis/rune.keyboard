@@ -85,6 +85,13 @@ class KeyboardPreferences internal constructor(private val preferences: SharedPr
         edit { putBoolean(SettingsCodec.KEY_CANDIDATE_STRIP, enabled) }
     }
 
+    fun writeQualityMetrics(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_QUALITY_METRICS, enabled) } }
+    fun writeShadowComparison(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_SHADOW_COMPARISON, enabled) } }
+    fun writeWordBoundarySuggestions(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_WORD_BOUNDARY_SUGGESTIONS, enabled) } }
+    fun writeAbbreviations(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_ABBREVIATIONS, enabled) } }
+    fun writePhraseReview(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_PHRASE_REVIEW, enabled) } }
+    fun writeVisibleUndo(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_VISIBLE_UNDO, enabled) } }
+
     fun writePersonalLearning(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_PERSONAL_LEARNING, enabled) } }
     fun writeTouchPersonalization(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_TOUCH_PERSONALIZATION, enabled) } }
     fun writePhraseSuggestions(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_PHRASE_SUGGESTIONS, enabled) } }

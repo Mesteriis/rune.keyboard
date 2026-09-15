@@ -273,5 +273,32 @@ class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
         self.assertEqual("APPLIED", report["outcomes"][0]["outcome"])
 
 
+class FeatureConfigurationTests(unittest.TestCase):
+    def test_schema_four_preserves_enabled_and_effective_transitions(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS
+        disabled = dict.fromkeys(FEATURE_KEYS, False)
+        configured = dict(disabled, qualityMetrics=True, visibleUndo=True)
+        base = dict(schema=4, kind='SESSION', reason='START', session=1, revision=1,
+                    localCompletion='NONE', localInspectedStates=0, localVerifiedTerminals=0,
+                    features=configured, effectiveFeatures=disabled)
+        active = dict(base, kind='CONFIGURATION', reason='NONE', revision=2, effectiveFeatures=configured)
+        report = analyze_events([base, active, dict(active, kind='INPUT', revision=3)])
+        self.assertEqual(2, len(report['featureConfigurations']))
+        self.assertTrue(report['featureConfigurations'][0]['features']['visibleUndo'])
+        self.assertFalse(report['featureConfigurations'][0]['effectiveFeatures']['visibleUndo'])
+        self.assertTrue(report['featureConfigurations'][1]['effectiveFeatures']['visibleUndo'])
+
+    def test_invalid_or_unconfigured_effective_features_rejected(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS
+        disabled = dict.fromkeys(FEATURE_KEYS, False)
+        base = dict(schema=4, kind='CONFIGURATION', reason='NONE', session=1, revision=1,
+                    localCompletion='NONE', localInspectedStates=0, localVerifiedTerminals=0,
+                    features=disabled, effectiveFeatures=disabled)
+        for changes in [dict(features=dict(disabled, qualityMetrics='yes')),
+                        dict(effectiveFeatures=dict(disabled, qualityMetrics=True)), dict(features={})]:
+            with self.assertRaises(ValueError):
+                analyze_events([dict(base, **changes)])
+
+
 if __name__ == "__main__":
     unittest.main()

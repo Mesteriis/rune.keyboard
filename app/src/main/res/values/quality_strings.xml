@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quality_dashboard_title">Local typing quality</string>
+    <string name="quality_dashboard_intro">Numeric totals stay on this device and are excluded from backups. No typed text is saved in these metrics. Collection requires the corresponding tool to be enabled and an eligible editor.</string>
+    <string name="quality_enabled">On</string>
+    <string name="quality_disabled">Off</string>
+    <string name="quality_status_format">Quality metrics: %1$s\nShadow comparison: %2$s\nStorage: %3$s</string>
+    <string name="quality_storage_loading">Loading; collection paused</string>
+    <string name="quality_storage_ready">Ready</string>
+    <string name="quality_storage_resetting">Resetting; collection paused</string>
+    <string name="quality_storage_failed">Unavailable; collection paused. Reset to retry.</string>
+    <string name="quality_actions_title">Acknowledged actions</string>
+    <string name="quality_actions_note">Automatic changes are unlabelled decisions. No undo does not mean a correction was right. Explicit choices express user preference, not independently verified accuracy.</string>
+    <string name="quality_automatic_applied">Automatic corrections applied</string>
+    <string name="quality_explicit_undo">Explicit correction undos</string>
+    <string name="quality_correction_picked">Correction candidates picked</string>
+    <string name="quality_kept_original">Original spellings explicitly kept</string>
+    <string name="quality_boundary_picked">Word boundary suggestions picked</string>
+    <string name="quality_abbreviation_picked">Abbreviations expanded</string>
+    <string name="quality_phrase_picked">Phrase reviews applied</string>
+    <string name="quality_latency_title">Candidate response time</string>
+    <string name="quality_latency_note">Time from a candidate request to its accepted response. This excludes screen rendering and is not end-to-end keystroke latency.</string>
+    <string-array name="quality_latency_labels">
+        <item>Under 5 ms</item><item>5 to under 10 ms</item><item>10 to under 25 ms</item>
+        <item>25 to under 50 ms</item><item>50 to under 100 ms</item><item>100 ms or more</item>
+    </string-array>
+    <string name="quality_shadow_title">Shadow algorithm comparison</string>
+    <string name="quality_shadow_note">Primary: the normal qualified decision. Experimental: the strongest explicit personal preference, otherwise the top ranked candidate before automatic qualification. Both use the same candidates. The experiment never changes text. Agreement is not proof of correctness; matches below count only explicit user choices.</string>
+    <string name="quality_shadow_agreement">Decisions that agreed</string>
+    <string name="quality_shadow_disagreement">Decisions that differed</string>
+    <string name="quality_shadow_primary">Explicit choice matched primary only</string>
+    <string name="quality_shadow_experimental">Explicit choice matched experimental only</string>
+    <string name="quality_shadow_both">Explicit choice matched both</string>
+    <string name="quality_shadow_neither">Explicit choice matched neither</string>
+    <string name="quality_count_format">%1$s: %2$d</string>
+    <string name="quality_refresh">Refresh totals</string>
+    <string name="quality_reset">Reset all quality totals</string>
+    <string name="quality_reset_done">Quality totals reset on this device.</string>
+    <string name="quality_reset_failed">Could not save the reset. Collection remains paused; try again.</string>
+</resources>

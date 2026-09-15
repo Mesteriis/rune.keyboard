@@ -29,6 +29,40 @@ DIAGNOSTICS = BASE + 'smarttyping.diagnostics'
 DIAGNOSTIC_PATH = 'app/src/{}/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/'
 DIAGNOSTIC_PROVIDERS = {'TypingDiagnosticsProvider', 'DiagnosticsSettingsProvider'}
 DIAGNOSTIC_CONTRACT = DIAGNOSTIC_PATH.format('main') + 'TypingDiagnostics.kt'
+DIAGNOSTIC_FEATURES = DIAGNOSTIC_PATH.format('main') + 'DiagnosticFeatures.kt'
+# Frozen, content-free flag vocabulary and settings mapping; no executable helpers may be added.
+DIAGNOSTIC_FEATURES_SOURCE = '''package io.github.mesteriis.rune.keyboard.smarttyping.diagnostics
+
+import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
+import io.github.mesteriis.rune.keyboard.settings.ContextualPunctuationMode
+import io.github.mesteriis.rune.keyboard.settings.KeyboardSettings
+
+/** Fixed, content-free schema4 vocabulary. Bit assignments are append-only. */
+enum class DiagnosticFeature(val field: String) {
+    SPELLING_SUGGESTIONS("spellingSuggestions"), AUTO_CORRECTION("autoCorrection"),
+    MECHANICAL_PUNCTUATION("mechanicalPunctuation"), CONTEXTUAL_PUNCTUATION("contextualPunctuation"),
+    CANDIDATE_STRIP("candidateStrip"), PERSONAL_LEARNING("personalLearning"),
+    TOUCH_PERSONALIZATION("touchPersonalization"), PHRASE_SUGGESTIONS("phraseSuggestions"),
+    QUALITY_METRICS("qualityMetrics"), SHADOW_COMPARISON("shadowComparison"),
+    WORD_BOUNDARIES("wordBoundarySuggestions"), ABBREVIATIONS("abbreviations"),
+    PHRASE_REVIEW("phraseReview"), VISIBLE_UNDO("visibleUndo");
+
+    val bit: Int get() = 1 shl ordinal
+    companion object { val MASK: Int = (1 shl entries.size) - 1 }
+}
+
+object DiagnosticFeatures {
+    fun configured(settings: KeyboardSettings): Int {
+        val enabled = listOf(settings.autocorrectionMode != AutocorrectionMode.OFF,
+            settings.autocorrectionMode == AutocorrectionMode.HIGH_CONFIDENCE,
+            settings.mechanicalPunctuation, settings.contextualPunctuationMode != ContextualPunctuationMode.OFF,
+            settings.candidateStrip, settings.personalLearning, settings.touchPersonalization, settings.phraseSuggestions,
+            settings.qualityMetrics, settings.shadowComparison, settings.wordBoundarySuggestions,
+            settings.abbreviations, settings.phraseReview, settings.visibleUndo)
+        return enabled.withIndex().fold(0) { mask, (index, value) -> if (value) mask or (1 shl index) else mask }
+    }
+}
+'''
 DIAGNOSTIC_CONTRACT_NAMES = {'DiagnosticKind', 'DiagnosticReason', 'DiagnosticEvent', 'DiagnosticSource', 'DiagnosticCompletion',
                              'DiagnosticText', 'TypingDiagnostics', 'NoTypingDiagnostics'}
 FINAL_DIAGNOSTIC_PROVIDERS = {
@@ -203,7 +237,7 @@ def inspect_diagnostics(clean, packages, symbols, declarations, edges, variant, 
             errors.append('duplicate diagnostics declaration: ' + name)
         if paths != [DIAGNOSTIC_PATH.format(variant) + name + '.kt']:
             errors.append('missing variant diagnostics provider: ' + variant + '/' + name)
-    allowed = {DIAGNOSTIC_CONTRACT} | expected_providers
+    allowed = {DIAGNOSTIC_CONTRACT, DIAGNOSTIC_FEATURES} | expected_providers
     if variant == 'debug':
         allowed |= {DIAGNOSTIC_PATH.format('debug') + name for name in DIAGNOSTIC_DEBUG_FILES}
     roots = [p for p, pkg in packages.items() if pkg == DIAGNOSTICS or pkg.startswith(DIAGNOSTICS + '.')]
@@ -211,7 +245,10 @@ def inspect_diagnostics(clean, packages, symbols, declarations, edges, variant, 
         if p not in allowed:
             errors.append(p + ': diagnostics declaration outside permitted variant inventory')
         # A permitted filename is not permission to add declarations inside it.
-        if p == DIAGNOSTIC_CONTRACT or variant != 'debug':
+        if p == DIAGNOSTIC_FEATURES:
+            if compact(sources[p]) != compact(DIAGNOSTIC_FEATURES_SOURCE):
+                errors.append(p + ': diagnostics feature vocabulary must be exact fixed mapping')
+        elif p == DIAGNOSTIC_CONTRACT or variant != 'debug':
             expected = DIAGNOSTIC_CONTRACT_NAMES if p == DIAGNOSTIC_CONTRACT else {Path(p).stem}
             actual = Counter(re.findall(r'\b(?:class|interface|object|typealias)\s+(\w+)', clean[p]))
             if (actual != Counter(expected) or '`' in clean[p] or
@@ -273,7 +310,7 @@ def inspect_diagnostics(clean, packages, symbols, declarations, edges, variant, 
                           'source': 'DiagnosticSource', 'completion': 'DiagnosticCompletion',
                           'scoringCode': 'Int', 'elapsedMs': 'Long', 'requestId': 'Long', 'operationId': 'Long',
                           'localCompletion': 'DiagnosticCompletion', 'localInspectedStates': 'Int',
-                          'localVerifiedTerminals': 'Int'}
+                          'localVerifiedTerminals': 'Int', 'configuredFeatures': 'Int', 'effectiveFeatures': 'Int'}
         # This frozen metadata DTO has constructor fields only. Reject inferred fields,
         # getters and methods too; scanning explicit property types alone misses them.
         if metadata.group().rstrip().endswith('{'):

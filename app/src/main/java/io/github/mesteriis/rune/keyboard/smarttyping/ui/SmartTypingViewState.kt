@@ -18,10 +18,12 @@ class SmartTypingViewState(
         val snapshot = candidates.toList()
         require(enabled || snapshot.isEmpty()) { "Hidden state must not retain candidate text" }
         require(snapshot.map { it.id }.distinct().size == snapshot.size) { "Duplicate candidate ID" }
-        require(snapshot.isEmpty() || snapshot.all { it is CandidateUiItem.Continuation } ||
-            (snapshot.none { it is CandidateUiItem.Continuation } && snapshot.count { it is CandidateUiItem.Original } == 1)) {
-            "Visible candidates must contain exactly one original"
-        }
+        val originals = snapshot.count { it is CandidateUiItem.Original }
+        val onlyActions = snapshot.all { it is CandidateUiItem.Continuation || it is CandidateUiItem.Tool || it is CandidateUiItem.Undo }
+        require(snapshot.isEmpty() || originals == 1 && snapshot.none { it is CandidateUiItem.Continuation || it is CandidateUiItem.Undo } ||
+            originals == 0 && onlyActions) { "Correction lists require an original; action lists do not" }
+        require(snapshot.none { it is CandidateUiItem.Undo } || snapshot.size == 1) { "Undo must be shown alone" }
+
         require(
             if (snapshot.isEmpty()) selectedCandidateId == null
             else snapshot.any { it.id == selectedCandidateId },

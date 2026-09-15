@@ -28,7 +28,8 @@ data class DiagnosticEvent(val kind: DiagnosticKind, val reason: DiagnosticReaso
     val candidateCount: Int = 0, val selectedIndex: Int = -1, val modelUsed: Boolean = false,
     val localCompletion: DiagnosticCompletion = DiagnosticCompletion.NONE,
     val localInspectedStates: Int = 0, val localVerifiedTerminals: Int = 0,
-    val session: Long, val revision: Long)
+    val session: Long, val revision: Long,
+    val configuredFeatures: Int = 0, val effectiveFeatures: Int = 0)
 data class DiagnosticText(
     val input: String = "", val context: String = "", val original: String = "",
     val candidates: List<String> = emptyList(), val result: String = "",
@@ -65,6 +66,25 @@ class DiagnosticsBoundaryTest(unittest.TestCase):
     def test_complete_variant_contracts_are_accepted(self):
         for variant in ('debug', 'release', 'profile'):
             self.assertEqual('', self.errors(fixture(variant), variant))
+
+    def test_feature_vocabulary_is_fixed_in_every_variant(self):
+        for variant in ('debug', 'release', 'profile'):
+            case = fixture(variant)
+            case['app/src/main/java/settings/KeyboardSettings.kt'] = (
+                'package ' + gate.BASE + 'settings\n'
+                'class KeyboardSettings\nenum class AutocorrectionMode { OFF }\n'
+                'enum class ContextualPunctuationMode { OFF }')
+            case[gate.DIAGNOSTIC_FEATURES] = gate.DIAGNOSTIC_FEATURES_SOURCE
+            self.assertEqual('', self.errors(case, variant))
+            case[gate.DIAGNOSTIC_FEATURES] += '\nclass HiddenRecorder'
+            self.assertIn('feature vocabulary must be exact', self.errors(case, variant))
+
+    def test_feature_masks_cannot_carry_text(self):
+        for field in ('configuredFeatures', 'effectiveFeatures'):
+            case = fixture('debug')
+            path = ROOT.format('main') + 'TypingDiagnostics.kt'
+            case[path] = case[path].replace('val ' + field + ': Int', 'val ' + field + ': String')
+            self.assertIn('metadata field type', self.errors(case))
 
     def test_missing_provider_is_not_resolved_by_another_variant(self):
         case = fixture('release')
@@ -119,8 +139,8 @@ class DiagnosticsBoundaryTest(unittest.TestCase):
     def test_metadata_body_payload_is_rejected(self):
         case = fixture('debug')
         path = ROOT.format('main') + 'TypingDiagnostics.kt'
-        case[path] = case[path].replace('val session: Long, val revision: Long)',
-            'val session: Long, val revision: Long) { var payload: String = "" }')
+        case[path] = case[path].replace('val effectiveFeatures: Int = 0)',
+            'val effectiveFeatures: Int = 0) { var payload: String = "" }')
         self.assertIn('diagnostics metadata field type', self.errors(case))
 
     def test_final_provider_cannot_hide_nested_encoder(self):
@@ -134,8 +154,8 @@ class DiagnosticsBoundaryTest(unittest.TestCase):
                      'fun payload(): String = "input"'):
             case = fixture('debug')
             path = ROOT.format('main') + 'TypingDiagnostics.kt'
-            case[path] = case[path].replace('val session: Long, val revision: Long)',
-                'val session: Long, val revision: Long) { ' + body + ' }')
+            case[path] = case[path].replace('val effectiveFeatures: Int = 0)',
+                'val effectiveFeatures: Int = 0) { ' + body + ' }')
             self.assertIn('diagnostics metadata field type', self.errors(case))
 
     def test_contract_cannot_hide_nested_or_duplicate_declaration(self):

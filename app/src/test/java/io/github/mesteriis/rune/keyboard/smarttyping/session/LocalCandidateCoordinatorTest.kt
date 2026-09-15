@@ -19,6 +19,7 @@ import io.github.mesteriis.rune.keyboard.ime.model.EditorMode
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.*
+import io.github.mesteriis.rune.keyboard.smarttyping.quality.*
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.TopCandidateSelection
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
@@ -38,6 +39,37 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class LocalCandidateCoordinatorTest {
+    @Test fun `coordinator candidate requests preserve backed retype until completion or explicit invalidation`() {
+        for (invalidate in listOf(false, true)) Harness(qualified = true).use { h ->
+            h.configure(AutocorrectionMode.SUGGESTIONS, true)
+            val model = QualityModel().apply { configure(false, true, true) }
+            val labels = mutableListOf<Pair<Long, String>>()
+            h.controller.setQualityRecorder(object : QualityRecorder {
+                override fun compare(revision: Long, source: String, primaryChoice: String, experimentalChoice: String) {
+                    model.compare(revision, source, primaryChoice, experimentalChoice)
+                }
+                override fun explicitChoice(revision: Long, chosen: String) {
+                    if (model.explicitChoice(revision, chosen)) labels += revision to chosen
+                }
+                override fun invalidatePending() { model.invalidatePending() }
+            })
+            val flag = DiagnosticFeature.SHADOW_COMPARISON.bit
+            h.controller.configureFeatures(flag, flag)
+            h.type("helo"); h.deliver()
+            val comparedRevision = h.controller.state.revision
+            assertEquals(TypingTextResult.HANDLED,
+                h.coordinator.edit { h.controller.deletePrevious(h.execute) })
+            // Production schedules and accepts candidates again after each owned edit.
+            h.deliver()
+            if (invalidate) h.coordinator.invalidate()
+            h.type("lo"); h.deliver()
+            assertEquals(TypingTextResult.HANDLED, h.space())
+            assertEquals("hello ", h.controller.state.contextText)
+            assertEquals(if (invalidate) 0L else 1L, model.snapshot().shadow.drop(2).sum())
+            assertEquals(if (invalidate) emptyList() else listOf(comparedRevision to "hello"), labels)
+        }
+    }
+
     @Test fun `phrase selection works with spelling off and expires with coordinator invalidation`() {
         Harness().use { h ->
             h.configure(AutocorrectionMode.OFF, true)

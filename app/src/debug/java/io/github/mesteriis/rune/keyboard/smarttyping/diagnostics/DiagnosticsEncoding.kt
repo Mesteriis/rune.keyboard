@@ -16,9 +16,15 @@ internal object DiagnosticsEncoding {
         append("],\"result\":"); quoted(text.result.take(256)); append("}\n")
     }.toByteArray(Charsets.UTF_8)
 
-    private fun fields(event: DiagnosticEvent) = "{\"schema\":3,\"kind\":\"${event.kind.name}\"," +
+    private fun features(mask: Int): String = DiagnosticFeature.entries.joinToString(",", "{", "}") {
+        "\"${it.field}\":${mask and it.bit != 0}"
+    }
+
+    private fun fields(event: DiagnosticEvent) = "{\"schema\":4,\"kind\":\"${event.kind.name}\"," +
         "\"reason\":\"${event.reason.name}\",\"session\":${event.session.coerceIn(0, 1_000_000_000)}," +
         "\"revision\":${event.revision.coerceIn(0, 1_000_000_000)}," +
+        "\"features\":${features(event.configuredFeatures)}," +
+        "\"effectiveFeatures\":${features(event.effectiveFeatures and event.configuredFeatures)}," +
         "\"candidateCount\":${event.candidateCount.coerceIn(0, 8)}," +
         "\"selectedIndex\":${event.selectedIndex.coerceIn(-1, 7)},\"modelUsed\":${event.modelUsed}," +
         "\"completion\":\"${event.completion.name}\",\"source\":\"${event.source.name}\"," +

@@ -10,10 +10,10 @@ import zipfile
 PREFIX = 'io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.'
 CONTRACTS = {'DiagnosticKind', 'DiagnosticReason', 'DiagnosticSource', 'DiagnosticCompletion', 'DiagnosticEvent', 'DiagnosticText',
              'TypingDiagnostics', 'NoTypingDiagnostics', 'TypingDiagnosticsProvider',
-             'DiagnosticsSettingsProvider'}
+             'DiagnosticsSettingsProvider', 'DiagnosticFeature', 'DiagnosticFeatures'}
 # Observed in the pinned compiler's pre-R8 classes and mapped final DEX respectively.
 # No prefix/wildcard allowance: a nested recorder or a new helper requires review.
-COMPILER_HELPERS = {'TypingDiagnostics$DefaultImpls',
+COMPILER_HELPERS = {'DiagnosticFeature$Companion', 'TypingDiagnostics$DefaultImpls',
                     'DiagnosticsSettingsProvider$$ExternalSyntheticLambda0'}
 ANDROID = '{http://schemas.android.com/apk/res/android}'
 

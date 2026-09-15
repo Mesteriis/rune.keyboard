@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="candidate_typing_tool">Text suggestion: %1$s</string>
+    <string name="candidate_undo">Restore: %1$s</string>
+    <string name="candidate_apply_tool">Apply suggestion %1$s</string>
+    <string name="candidate_apply_undo">Restore %1$s</string>
+    <string name="settings_section_tools">Typing tools and quality</string>
+    <string name="settings_quality_metrics">Local quality counters</string>
+    <string name="settings_quality_metrics_summary">Count replacements, explicit undo and suggestion choices. Store response-time buckets without typing text.</string>
+    <string name="settings_shadow_comparison">Compare suggestions in shadow mode</string>
+    <string name="settings_shadow_comparison_summary">Compare the current local decision with the first ranked suggestion. The experiment never edits text.</string>
+    <string name="settings_quality_dashboard_summary">View counts, response-time distribution and explicitly confirmed comparison outcomes.</string>
+    <string name="settings_word_boundaries">Word split and join suggestions</string>
+    <string name="settings_word_boundaries_summary">Offer supported Russian word splits and joins. Apply only when tapped.</string>
+    <string name="settings_abbreviations">Expand my abbreviations</string>
+    <string name="settings_abbreviations_summary">Show your saved expansion as a suggestion while typing its abbreviation.</string>
+    <string name="settings_abbreviations_manage_summary">Add, edit or remove shortcuts separately for each language.</string>
+    <string name="settings_phrase_review">Review completed phrases</string>
+    <string name="settings_phrase_review_summary">After a sentence-ending mark, offer supported Russian agreement and comma fixes. Apply by tapping.</string>
+    <string name="settings_visible_undo">Show an undo button</string>
+    <string name="settings_visible_undo_summary">After a word autocorrection, show Restore for up to 8 seconds or until the next edit. Backspace undo remains available.</string>
+</resources>

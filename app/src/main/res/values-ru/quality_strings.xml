@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quality_dashboard_title">Качество набора на устройстве</string>
+    <string name="quality_dashboard_intro">Числовые счётчики остаются на устройстве и не включаются в резервные копии. Введённый текст в этих метриках не сохраняется. Сбор работает только при включённом инструменте и в допустимом поле ввода.</string>
+    <string name="quality_enabled">Вкл.</string>
+    <string name="quality_disabled">Выкл.</string>
+    <string name="quality_status_format">Метрики качества: %1$s\nТеневое сравнение: %2$s\nХранилище: %3$s</string>
+    <string name="quality_storage_loading">Загрузка; сбор приостановлен</string>
+    <string name="quality_storage_ready">Готово</string>
+    <string name="quality_storage_resetting">Сброс; сбор приостановлен</string>
+    <string name="quality_storage_failed">Недоступно; сбор приостановлен. Для повтора сбросьте счётчики.</string>
+    <string name="quality_actions_title">Подтверждённые действия</string>
+    <string name="quality_actions_note">Автоматические изменения не имеют оценки правильности. Отсутствие отмены не означает, что исправление верно. Явный выбор показывает предпочтение пользователя, а не независимо проверенную точность.</string>
+    <string name="quality_automatic_applied">Применено автоисправлений</string>
+    <string name="quality_explicit_undo">Явных отмен исправлений</string>
+    <string name="quality_correction_picked">Выбрано вариантов исправления</string>
+    <string name="quality_kept_original">Явно сохранено исходных написаний</string>
+    <string name="quality_boundary_picked">Выбрано подсказок границ слов</string>
+    <string name="quality_abbreviation_picked">Раскрыто сокращений</string>
+    <string name="quality_phrase_picked">Применено проверок фраз</string>
+    <string name="quality_latency_title">Время ответа с вариантами</string>
+    <string name="quality_latency_note">Время от запроса вариантов до принятого ответа. Отрисовка экрана не учитывается; это не полная задержка от нажатия клавиши.</string>
+    <string-array name="quality_latency_labels">
+        <item>Менее 5 мс</item><item>От 5 до 10 мс</item><item>От 10 до 25 мс</item>
+        <item>От 25 до 50 мс</item><item>От 50 до 100 мс</item><item>100 мс и более</item>
+    </string-array>
+    <string name="quality_shadow_title">Теневое сравнение алгоритмов</string>
+    <string name="quality_shadow_note">Основной: обычное решение после проверки условий. Экспериментальный: самое сильное явное личное предпочтение, иначе первый вариант рейтинга до проверки условий автоисправления. Набор вариантов общий. Эксперимент не меняет текст. Совпадение не доказывает правильность; ниже учитывается только явный выбор пользователя.</string>
+    <string name="quality_shadow_agreement">Совпавших решений</string>
+    <string name="quality_shadow_disagreement">Различавшихся решений</string>
+    <string name="quality_shadow_primary">Выбор совпал только с основным</string>
+    <string name="quality_shadow_experimental">Выбор совпал только с экспериментальным</string>
+    <string name="quality_shadow_both">Выбор совпал с обоими</string>
+    <string name="quality_shadow_neither">Выбор не совпал ни с одним</string>
+    <string name="quality_count_format">%1$s: %2$d</string>
+    <string name="quality_refresh">Обновить счётчики</string>
+    <string name="quality_reset">Сбросить все метрики качества</string>
+    <string name="quality_reset_done">Метрики качества сброшены на этом устройстве.</string>
+    <string name="quality_reset_failed">Не удалось сохранить сброс. Сбор приостановлен; повторите попытку.</string>
+</resources>

@@ -321,6 +321,30 @@ class CandidateStripInstrumentedTest {
         }
     }
 
+    @Test
+    fun textToolsAndUndoExposeTheirActionAndCannotSurviveHiddenStrip() = onMain {
+        val keyboard = keyboard(instrumentation.targetContext)
+        val chosen = mutableListOf<String>()
+        keyboard.setOnCandidateSelectedListener(chosen::add)
+        val tool = CandidateUiItem.Tool("tool:1", "не знаю",
+            io.github.mesteriis.rune.keyboard.smarttyping.session.TypingToolKind.WORD_BOUNDARY)
+        val undo = CandidateUiItem.Undo("undo:1", "teh")
+        for (item in listOf(tool, undo)) {
+            keyboard.updateCandidates(SmartTypingViewState(true, listOf(item)))
+            val cell = (keyboard.getChildAt(0) as ViewGroup).getChildAt(0) as TextView
+            val label = if (item is CandidateUiItem.Undo) R.string.candidate_undo else R.string.candidate_typing_tool
+            assertEquals(keyboard.context.getString(label, item.text), cell.contentDescription)
+            if (item is CandidateUiItem.Undo)
+                assertEquals(keyboard.context.getString(R.string.candidate_apply_undo, item.text), cell.text.toString())
+            assertTrue(cell.performClick())
+            assertEquals(item.id, chosen.last())
+            keyboard.updateCandidates(SmartTypingViewState.HIDDEN)
+            val count = chosen.size
+            cell.performClick()
+            assertEquals(count, chosen.size)
+        }
+    }
+
     private fun keyboard(context: Context): RuneKeyboardView = RuneKeyboardView(
         context,
         KeyboardViewMetrics(
