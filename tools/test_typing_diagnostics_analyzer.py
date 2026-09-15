@@ -300,6 +300,20 @@ class FeatureConfigurationTests(unittest.TestCase):
                 analyze_events([dict(base, **changes)])
 
 
+    def test_schema_six_experiments_are_exact_and_tap_decisions_are_content_free(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS_V5, FEATURE_KEYS_V6
+        flags = dict.fromkeys(FEATURE_KEYS_V6, True)
+        base = dict(schema=6, kind='TAP', reason='TOUCH_SHADOW', session=1, revision=1,
+                    localCompletion='NONE', localInspectedStates=0, localVerifiedTerminals=0,
+                    features=flags, effectiveFeatures=flags, typingProfile=0)
+        report = analyze_events([base, dict(base, reason='TOUCH_REMAPPED')])
+        self.assertEqual({'TOUCH_UNCHANGED': 0, 'TOUCH_SHADOW': 1, 'TOUCH_REMAPPED': 1},
+                         report['dynamicTouchDecisions'])
+        self.assertEqual([], report['outcomes'])  # A tap decision is not an acknowledged replacement.
+        for wrong in (dict.fromkeys(FEATURE_KEYS_V5, True), dict(flags, compactContext='true'), dict(flags, coordinate=1)):
+            with self.assertRaises(ValueError):
+                analyze_events([dict(base, features=wrong)])
+
     def test_schema_five_records_profile_only_transitions_and_four_new_flags(self):
         from typing_diagnostics_analyzer import FEATURE_KEYS_V5
         flags = dict.fromkeys(FEATURE_KEYS_V5, True)

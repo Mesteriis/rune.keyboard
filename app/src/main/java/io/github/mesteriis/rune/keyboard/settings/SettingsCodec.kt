@@ -39,6 +39,10 @@ object SettingsCodec {
     const val KEY_APP_PROFILES = "app_profiles"
     const val KEY_COLLECT_EXAMPLES = "collect_examples"
     const val KEY_TYPO_PATTERNS = "typo_patterns"
+    const val KEY_LEARNED_RANKING = "learned_ranking"
+    const val KEY_COMPACT_CONTEXT = "compact_context"
+    const val KEY_DYNAMIC_TOUCH = "dynamic_touch"
+    const val KEY_DYNAMIC_TOUCH_APPLY = "dynamic_touch_apply"
 
 
     const val STARTING_LANGUAGE_LAST_USED = "LAST_USED"
@@ -109,6 +113,10 @@ object SettingsCodec {
             appProfiles = supported && strictBoolean(raw, KEY_APP_PROFILES, false),
             collectExamples = supported && strictBoolean(raw, KEY_COLLECT_EXAMPLES, false),
             typoPatterns = supported && strictBoolean(raw, KEY_TYPO_PATTERNS, false),
+            learnedRanking = supported && strictBoolean(raw, KEY_LEARNED_RANKING, false),
+            compactContext = supported && strictBoolean(raw, KEY_COMPACT_CONTEXT, false),
+            dynamicTouch = supported && strictBoolean(raw, KEY_DYNAMIC_TOUCH, false),
+            dynamicTouchApply = supported && strictBoolean(raw, KEY_DYNAMIC_TOUCH_APPLY, false),
 
         )
     }

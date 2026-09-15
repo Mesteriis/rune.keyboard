@@ -57,13 +57,16 @@ class TypingControlsInstrumentedTest {
         val writes = listOf(prefs::writePersonalLearning, prefs::writeTouchPersonalization, prefs::writePhraseSuggestions,
             prefs::writeQualityMetrics, prefs::writeShadowComparison, prefs::writeWordBoundarySuggestions,
             prefs::writeAbbreviations, prefs::writePhraseReview, prefs::writeVisibleUndo, prefs::writeProtectedWords,
-            prefs::writeAppProfiles, prefs::writeCollectExamples, prefs::writeTypoPatterns)
+            prefs::writeAppProfiles, prefs::writeCollectExamples, prefs::writeTypoPatterns,
+            prefs::writeLearnedRanking, prefs::writeCompactContext, prefs::writeDynamicTouch, prefs::writeDynamicTouchApply)
         val before = DiagnosticFeatures.configured(prefs.readSettings())
         val features = listOf(DiagnosticFeature.PERSONAL_LEARNING, DiagnosticFeature.TOUCH_PERSONALIZATION,
             DiagnosticFeature.PHRASE_SUGGESTIONS, DiagnosticFeature.QUALITY_METRICS, DiagnosticFeature.SHADOW_COMPARISON,
             DiagnosticFeature.WORD_BOUNDARIES, DiagnosticFeature.ABBREVIATIONS, DiagnosticFeature.PHRASE_REVIEW,
             DiagnosticFeature.VISIBLE_UNDO, DiagnosticFeature.PROTECTED_WORDS, DiagnosticFeature.APP_PROFILES,
-            DiagnosticFeature.COLLECT_EXAMPLES, DiagnosticFeature.TYPO_PATTERNS)
+            DiagnosticFeature.COLLECT_EXAMPLES, DiagnosticFeature.TYPO_PATTERNS,
+            DiagnosticFeature.LEARNED_RANKING, DiagnosticFeature.COMPACT_CONTEXT,
+            DiagnosticFeature.DYNAMIC_TOUCH, DiagnosticFeature.DYNAMIC_TOUCH_APPLY)
         awaitResult<TypingControlStore.Result> { store.protect("codex", language, it) }
         store.observePackage(context.packageName)
         assertEquals(TypingControlStore.Result.SAVED, awaitResult<TypingControlStore.Result> {

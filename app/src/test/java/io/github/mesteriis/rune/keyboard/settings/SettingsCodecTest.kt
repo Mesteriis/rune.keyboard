@@ -8,6 +8,20 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SettingsCodecTest {
+    @Test fun experimentalControlsAreIndependentAndFailClosed() {
+        val keys = listOf(SettingsCodec.KEY_LEARNED_RANKING, SettingsCodec.KEY_COMPACT_CONTEXT,
+            SettingsCodec.KEY_DYNAMIC_TOUCH, SettingsCodec.KEY_DYNAMIC_TOUCH_APPLY)
+        fun flags(s: KeyboardSettings) = listOf(s.learnedRanking, s.compactContext, s.dynamicTouch, s.dynamicTouchApply)
+        assertEquals(List(4) { false }, flags(SettingsCodec.decode(emptyMap())))
+        for (i in keys.indices) {
+            assertEquals(keys.indices.map { it == i }, flags(SettingsCodec.decode(mapOf(keys[i] to true))))
+            for (malformed in listOf<Any?>(null, "true", 1))
+                assertEquals(List(4) { false }, flags(SettingsCodec.decode(mapOf(keys[i] to malformed))))
+        }
+        assertEquals(List(4) { false }, flags(SettingsCodec.decode(keys.associateWith { true } +
+            (SettingsCodec.KEY_SCHEMA_VERSION to 999))))
+    }
+
     @Test fun controlAndLearningSwitchesAreIndependentAndFailClosed() {
         val keys = listOf(SettingsCodec.KEY_PROTECTED_WORDS, SettingsCodec.KEY_APP_PROFILES,
             SettingsCodec.KEY_COLLECT_EXAMPLES, SettingsCodec.KEY_TYPO_PATTERNS)

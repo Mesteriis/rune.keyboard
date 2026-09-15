@@ -100,7 +100,8 @@ class KeyboardPreferences internal constructor(private val preferences: SharedPr
                 SettingsCodec.KEY_SHADOW_COMPARISON, SettingsCodec.KEY_WORD_BOUNDARY_SUGGESTIONS,
                 SettingsCodec.KEY_ABBREVIATIONS, SettingsCodec.KEY_PHRASE_REVIEW, SettingsCodec.KEY_VISIBLE_UNDO,
                 SettingsCodec.KEY_PROTECTED_WORDS, SettingsCodec.KEY_APP_PROFILES,
-                SettingsCodec.KEY_COLLECT_EXAMPLES, SettingsCodec.KEY_TYPO_PATTERNS).forEach { putBoolean(it, false) }
+                SettingsCodec.KEY_COLLECT_EXAMPLES, SettingsCodec.KEY_TYPO_PATTERNS,
+                SettingsCodec.KEY_LEARNED_RANKING, SettingsCodec.KEY_COMPACT_CONTEXT, SettingsCodec.KEY_DYNAMIC_TOUCH, SettingsCodec.KEY_DYNAMIC_TOUCH_APPLY).forEach { putBoolean(it, false) }
         }
     }
 
@@ -108,6 +109,10 @@ class KeyboardPreferences internal constructor(private val preferences: SharedPr
     fun writeAppProfiles(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_APP_PROFILES, enabled) } }
     fun writeCollectExamples(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_COLLECT_EXAMPLES, enabled) } }
     fun writeTypoPatterns(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_TYPO_PATTERNS, enabled) } }
+    fun writeLearnedRanking(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_LEARNED_RANKING, enabled) } }
+    fun writeCompactContext(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_COMPACT_CONTEXT, enabled) } }
+    fun writeDynamicTouch(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_DYNAMIC_TOUCH, enabled) } }
+    fun writeDynamicTouchApply(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_DYNAMIC_TOUCH_APPLY, enabled) } }
     fun notifyTypingControlsChanged() { edit { putLong("typing_controls_revision", System.nanoTime()) } }
 
     fun writePersonalLearning(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_PERSONAL_LEARNING, enabled) } }

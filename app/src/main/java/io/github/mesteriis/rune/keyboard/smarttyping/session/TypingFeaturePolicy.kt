@@ -6,7 +6,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeatu
 /** Coarse runtime availability; individual candidates still need the existing ownership/confidence checks. */
 object TypingFeaturePolicy {
     fun effective(configured: Int, owner: CandidateOwnerState, dictionaryReady: Boolean,
-        abbreviationReady: Boolean, personalReady: Boolean, touchReady: Boolean, qualityReady: Boolean, controlsReady: Boolean = true, learningReady: Boolean = true): Int {
+        abbreviationReady: Boolean, personalReady: Boolean, touchReady: Boolean, qualityReady: Boolean, controlsReady: Boolean = true, learningReady: Boolean = true, learnedReady: Boolean = false, contextReady: Boolean = false): Int {
         if (!owner.baseEligible) return 0
         var result = configured and DiagnosticFeature.MASK
         fun exclude(feature: DiagnosticFeature) { result = result and feature.bit.inv() }
@@ -14,7 +14,8 @@ object TypingFeaturePolicy {
             listOf(DiagnosticFeature.SPELLING_SUGGESTIONS, DiagnosticFeature.CANDIDATE_STRIP,
                 DiagnosticFeature.PHRASE_SUGGESTIONS, DiagnosticFeature.WORD_BOUNDARIES,
                 DiagnosticFeature.ABBREVIATIONS, DiagnosticFeature.PHRASE_REVIEW,
-                DiagnosticFeature.VISIBLE_UNDO).forEach(::exclude)
+                DiagnosticFeature.VISIBLE_UNDO, DiagnosticFeature.LEARNED_RANKING,
+                DiagnosticFeature.COMPACT_CONTEXT).forEach(::exclude)
         }
         if (!owner.canRequestContextual) exclude(DiagnosticFeature.CONTEXTUAL_PUNCTUATION)
         if (!owner.deterministicAutoReplaceQualified &&
@@ -36,6 +37,13 @@ object TypingFeaturePolicy {
             if (configured and DiagnosticFeature.PROTECTED_WORDS.bit != 0) exclude(DiagnosticFeature.AUTO_CORRECTION)
         }
         if (!learningReady) { exclude(DiagnosticFeature.COLLECT_EXAMPLES); exclude(DiagnosticFeature.TYPO_PATTERNS) }
+        if (!learnedReady || owner.language != KeyboardLanguage.RUSSIAN) exclude(DiagnosticFeature.LEARNED_RANKING)
+        if (!contextReady || owner.language != KeyboardLanguage.RUSSIAN) {
+            exclude(DiagnosticFeature.COMPACT_CONTEXT)
+            exclude(DiagnosticFeature.DYNAMIC_TOUCH)
+            exclude(DiagnosticFeature.DYNAMIC_TOUCH_APPLY)
+        }
+        if (result and DiagnosticFeature.DYNAMIC_TOUCH.bit == 0) exclude(DiagnosticFeature.DYNAMIC_TOUCH_APPLY)
         return result
     }
 }

@@ -61,6 +61,10 @@ import io.github.mesteriis.rune.keyboard.smarttyping.session.AndroidTypingTools
 import io.github.mesteriis.rune.keyboard.smarttyping.abbreviations.AbbreviationStore
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityStore
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeatures
+import io.github.mesteriis.rune.keyboard.smarttyping.experiments.AndroidExperimentResources
+import io.github.mesteriis.rune.keyboard.smarttyping.touch.DynamicTouchContext
+import io.github.mesteriis.rune.keyboard.smarttyping.touch.DynamicTouchResolver
+import io.github.mesteriis.rune.keyboard.smarttyping.touch.PhysicalTouchSample
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
 import io.github.mesteriis.rune.keyboard.smarttyping.controls.TypingProfile
 import io.github.mesteriis.rune.keyboard.smarttyping.controls.TypingProfileResolver
@@ -92,6 +96,8 @@ class RuneInputMethodService : InputMethodService() {
     private lateinit var qualityStore: QualityStore
     private var timedUndoId: String? = null
     private var physicalLetterPending = false
+    private val dynamicTouchContext = DynamicTouchContext()
+    private var experimentReadySubscription: java.io.Closeable? = null
     private lateinit var candidates: LocalCandidateCoordinator
     private var inputViewActive = false
     private lateinit var visualContinuity: ConfigurationVisualContinuity
@@ -144,12 +150,18 @@ class RuneInputMethodService : InputMethodService() {
             RuneTrace,
             AndroidCanonicalCaseLexicon(applicationContext.assets),
         )
+        experimentReadySubscription = AndroidExperimentResources.whenReady {
+            if (!serviceDestroyed) { candidates.invalidate(); renderCandidates() }
+        }
         keyboardPreferences.registerListener(preferencesListener)
         personalResources.controls.whenReady { mainHandler.post { if (!serviceDestroyed) onSettingsChanged() } }
     }
 
     override fun onDestroy() {
         serviceDestroyed = true
+        dynamicTouchContext.reset()
+        experimentReadySubscription?.close()
+        experimentReadySubscription = null
         personalResources.learning.configure(false, false, false)
         visualContinuityStore.detach(visualContinuity)
         typingSession.closeDiagnosticsAdmission()
@@ -174,7 +186,11 @@ class RuneInputMethodService : InputMethodService() {
                         physicalLetterPending = true
                     }
                 }
-                view.setOnTouchGeometryChangedListener { personalization.clearPending() }
+                view.setOnTouchGeometryChangedListener {
+                    personalization.clearPending()
+                    dynamicTouchContext.invalidate()
+                }
+                view.setDynamicTouchResolver(::dynamicTouchStamp, ::resolveDynamicTouch)
                 view.setOnActionListener(::handleAction)
                 view.setOnCandidateSelectedListener(::handleCandidateSelection)
                 renderKeyboard()
@@ -185,6 +201,7 @@ class RuneInputMethodService : InputMethodService() {
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         typingSession.closeDiagnosticsAdmission()
+        dynamicTouchContext.reset()
         keyboardView?.cancelActiveTouches()
         inputViewActive = false
         candidates.invalidate()
@@ -277,6 +294,7 @@ class RuneInputMethodService : InputMethodService() {
      */
     override fun onFinishInput() {
         typingSession.closeDiagnosticsAdmission()
+        dynamicTouchContext.reset()
         keyboardView?.cancelActiveTouches()
         inputViewActive = false
         candidates.invalidate()
@@ -305,6 +323,9 @@ class RuneInputMethodService : InputMethodService() {
 
     private fun handleAction(action: KeyboardAction) {
         updatePersonalizationPolicy()
+        if (action == KeyboardAction.Delete) dynamicTouchContext.afterDelete()
+        if (action == KeyboardAction.Space || action == KeyboardAction.DoubleSpaceTap || action == KeyboardAction.Enter)
+            dynamicTouchContext.afterBoundary()
         if (action !is KeyboardAction.CommitLetter || !physicalLetterPending) personalization.clearPending()
         physicalLetterPending = false
         visualContinuity.invalidate()
@@ -529,7 +550,9 @@ class RuneInputMethodService : InputMethodService() {
                 settings.contextualPunctuationMode != previous.contextualPunctuationMode ||
                 settings.personalLearning != previous.personalLearning ||
                 settings.touchPersonalization != previous.touchPersonalization ||
-                settings.phraseSuggestions != previous.phraseSuggestions
+                settings.phraseSuggestions != previous.phraseSuggestions ||
+                settings.learnedRanking != previous.learnedRanking ||
+                settings.compactContext != previous.compactContext
             ) candidates.invalidate()
             if (settings.enabledLanguages != previous.enabledLanguages) candidates.invalidate()
             if (state.language != selectedLanguage) {
@@ -654,6 +677,8 @@ class RuneInputMethodService : InputMethodService() {
         typingTools.abbreviationsEnabled = visible && settings.abbreviations
         typingTools.reviewEnabled = visible && settings.phraseReview
         qualityStore.configure(settings.qualityMetrics, settings.shadowComparison, eligible)
+        personalization.learnedRankingEnabled = visible && settings.learnedRanking
+        personalization.compactContextEnabled = visible && settings.compactContext
         personalization.protectionEnabled = eligible && settings.protectedWords
         personalResources.learning.configure(settings.collectExamples, settings.typoPatterns, eligible)
         keyboardView?.setOnCandidateLongPressedListener(if (visible && settings.protectedWords && personalResources.controls.isReady)
@@ -661,7 +686,8 @@ class RuneInputMethodService : InputMethodService() {
         val configured = DiagnosticFeatures.configured(globalSettings)
         val effective = TypingFeaturePolicy.effective(DiagnosticFeatures.configured(settings), candidateOwnerState(),
             personalResources.dictionaryLoaded, abbreviationStore.isReady, personalResources.personal.isReady,
-            personalResources.touch.isReady, qualityStore.isReady, personalResources.controls.isReady, personalResources.learning.isReady)
+            personalResources.touch.isReady, qualityStore.isReady, personalResources.controls.isReady, personalResources.learning.isReady,
+            personalResources.experiments.learnedReady, personalResources.experiments.contextReady)
         typingSession.configureFeatures(configured, effective, activeProfile.code)
         personalization.learningEnabled = eligible && settings.personalLearning
         personalization.touchEnabled = eligible && settings.touchPersonalization
@@ -669,10 +695,32 @@ class RuneInputMethodService : InputMethodService() {
         personalResources.touch.model.setEnabled(personalization.touchEnabled)
         keyboardView?.setTouchLearningEnabled(personalization.touchEnabled)
         typingSession.setPersonalizationLanguage(state.language)
+        if (!eligible || !settings.dynamicTouch) dynamicTouchContext.invalidate()
         if (!eligible) {
             physicalLetterPending = false
             personalization.clearPending()
         }
+    }
+
+    private fun dynamicTouchStamp(): Long {
+        val enabled = inputViewActive && editorContext.supportsSmartTyping && !hasSelection &&
+            state.layer == KeyboardLayer.LETTERS && settings.dynamicTouch && personalResources.experiments.contextReady
+        return dynamicTouchContext.update(typingSession.state.sessionId, typingSession.state.revision,
+            state.language, if (enabled) typingSession.experimentalInput() else null, enabled, settings.dynamicTouchApply)
+    }
+
+    private fun resolveDynamicTouch(sample: PhysicalTouchSample): Char {
+        if (dynamicTouchStamp() == 0L) return sample.observedKey
+        val probabilities = dynamicTouchContext.probabilities(personalResources.experiments::nextLetters)
+        val proposed = DynamicTouchResolver.propose(sample, probabilities)
+        val apply = dynamicTouchContext.applies
+        typingSession.recordDynamicTouch(proposed != sample.observedKey, apply)
+        // A model-selected character must not become a new physical calibration label.
+        if (apply && proposed != sample.observedKey) {
+            physicalLetterPending = false
+            personalization.clearPending()
+        }
+        return if (apply) proposed else sample.observedKey
     }
 
     private fun renderCandidates() {

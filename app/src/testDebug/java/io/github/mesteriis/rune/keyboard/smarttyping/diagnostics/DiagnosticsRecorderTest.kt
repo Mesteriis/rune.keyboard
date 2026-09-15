@@ -47,7 +47,7 @@ class DiagnosticsRecorderTest {
             assertTrue(line.contains("\"scoringCode\":3")); assertFalse(line.contains("\"input\""))
         }
     }
-    @Test fun schemaFiveMetadataClampsUntrustedNumbersWithoutInvokingText() {
+    @Test fun schemaSixMetadataClampsUntrustedNumbersWithoutInvokingText() {
         val backend = MemoryBackend()
         DiagnosticsRecorder(backend).use { recorder ->
             await(recorder::barrier); await { recorder.setMetadata(true, it) }
@@ -57,7 +57,7 @@ class DiagnosticsRecorderTest {
                 elapsedMs = Long.MAX_VALUE, operationId = Long.MAX_VALUE, requestId = -1)) { error("Metadata copied text") }
             await(recorder::barrier)
             val encoded = backend.records.single().second.decodeToString()
-            for (field in listOf("\"schema\":5", "\"elapsedMs\":60000", "\"scoringCode\":15",
+            for (field in listOf("\"schema\":6", "\"elapsedMs\":60000", "\"scoringCode\":15",
                 "\"operationId\":1000000000", "\"requestId\":0", "\"candidateCount\":8", "\"selectedIndex\":-1")) {
                 assertTrue(encoded, encoded.contains(field))
             }

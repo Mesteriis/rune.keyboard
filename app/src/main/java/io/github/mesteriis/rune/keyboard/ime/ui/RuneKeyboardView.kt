@@ -17,6 +17,7 @@ import io.github.mesteriis.rune.keyboard.ime.layout.KeyStyle
 import io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayout
 import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLayer
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
 import io.github.mesteriis.rune.keyboard.ime.model.ShiftMode
@@ -37,6 +38,11 @@ internal class RuneKeyboardView(
     private var physicalTouchListener: ((PhysicalTouchSample) -> Unit)? = null
     private var touchGeometryChangedListener: (() -> Unit)? = null
     private var touchLearningEnabled = false
+    private var dynamicTouchStamp: (() -> Long)? = null
+    private var dynamicTouchResolver: ((PhysicalTouchSample) -> Char)? = null
+    private var dynamicEpoch = 1L
+    private var tapServiceStamp = 0L
+    private var tapEpoch = 0L
     private var touchLayoutIdentity: String? = null
     private var renderedState: KeyboardState? = null
     private val letterKeys = linkedMapOf<KeyboardKeyView, Char>()
@@ -105,6 +111,26 @@ internal class RuneKeyboardView(
         touchLearningEnabled = enabled
     }
 
+    fun setDynamicTouchResolver(stamp: (() -> Long)?, resolver: ((PhysicalTouchSample) -> Char)?) {
+        dynamicEpoch++
+        dynamicTouchStamp = stamp
+        dynamicTouchResolver = resolver
+    }
+
+    private fun currentDynamicStamp(): Long {
+        val serviceStamp = dynamicTouchStamp?.invoke() ?: return 0L
+        if (activeTouchCount > 1 || dynamicTouchResolver == null || inputPolicy != InputPolicy.NORMAL || serviceStamp == 0L) return 0L
+        // Return a local generation only while both service and view state remain unchanged.
+        if (tapServiceStamp != serviceStamp || tapEpoch != dynamicEpoch) {
+            tapServiceStamp = serviceStamp
+            tapEpoch = dynamicEpoch
+            dynamicToken++
+        }
+        return dynamicToken
+    }
+
+    private var dynamicToken = 1L
+
     fun setOnCandidateLongPressedListener(listener: ((String) -> Boolean)?) {
         candidateStrip.setOnCandidateLongPressedListener(listener)
     }
@@ -120,11 +146,15 @@ internal class RuneKeyboardView(
 
     fun setPopupPolicy(previewEnabled: Boolean, inputPolicy: InputPolicy) {
         this.previewEnabled = previewEnabled
-        if (this.inputPolicy != inputPolicy) touchGeometryChangedListener?.invoke()
+        if (this.inputPolicy != inputPolicy) {
+            dynamicEpoch++
+            touchGeometryChangedListener?.invoke()
+        }
         this.inputPolicy = inputPolicy
     }
 
     fun render(layout: KeyboardLayout, state: KeyboardState) {
+        dynamicEpoch++
         if (activeTouchCount > 0) {
             pendingRender = PendingRender(layout, state)
             return
@@ -152,6 +182,7 @@ internal class RuneKeyboardView(
     }
 
     fun cancelActiveTouches() {
+        dynamicEpoch++
         touchGeometryChangedListener?.invoke()
         pendingRender = null
         popupController?.dismissAll()
@@ -236,9 +267,11 @@ internal class RuneKeyboardView(
                     popupHost = this,
                     physicalTouchListener = { x, y -> capturePhysicalTouch(view, x, y) },
                     physicalTouchAllowed = {
-                        touchLearningEnabled && inputPolicy == InputPolicy.NORMAL &&
+                        (touchLearningEnabled || currentDynamicStamp() != 0L) && inputPolicy == InputPolicy.NORMAL &&
                             spec.action is KeyboardAction.CommitLetter
                     },
+                    physicalTapStamp = ::currentDynamicStamp,
+                    physicalTapResolver = { x, y, stamp -> resolvePhysicalTouch(view, spec, x, y, stamp) },
                 )
                 val letter = (spec.action as? KeyboardAction.CommitLetter)?.value?.singleOrNull()?.lowercaseChar()
                 if (letter != null && letter.isLetter()) letterKeys[view] = letter
@@ -250,18 +283,51 @@ internal class RuneKeyboardView(
         return keyView
     }
 
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+        dynamicEpoch++
+    }
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        if (w != oldw || h != oldh) touchGeometryChangedListener?.invoke()
+        if (w != oldw || h != oldh) {
+            dynamicEpoch++
+            touchGeometryChangedListener?.invoke()
+        }
     }
 
     private fun capturePhysicalTouch(key: KeyboardKeyView, localX: Float, localY: Float) {
         if (!touchLearningEnabled || inputPolicy != InputPolicy.NORMAL) return
         val listener = physicalTouchListener ?: return
-        val state = renderedState ?: return
-        if (state.layer != KeyboardLayer.LETTERS) return
-        val observed = letterKeys[key] ?: return
-        if (width <= 0 || keysContainer.height <= 0) return
+        buildPhysicalTouch(key, localX, localY)?.let(listener)
+    }
+
+    private fun resolvePhysicalTouch(key: KeyboardKeyView, spec: KeySpec, x: Float, y: Float, stamp: Long): KeyboardAction? {
+        if (stamp == 0L || currentDynamicStamp() != stamp) return null
+        if (renderedState?.language != KeyboardLanguage.RUSSIAN) return null
+        val original = spec.action as? KeyboardAction.CommitLetter ?: return null
+        val sample = buildPhysicalTouch(key, x, y) ?: return null
+        if (!(sample.observedKey in 'а'..'я' || sample.observedKey == 'ё')) return null
+        val proposed = dynamicTouchResolver?.invoke(sample) ?: return null
+        if (currentDynamicStamp() != stamp) return null
+        if (proposed == sample.observedKey) {
+            if (touchLearningEnabled) physicalTouchListener?.invoke(sample)
+            return original
+        }
+        if (!(proposed in 'а'..'я' || proposed == 'ё')) return null
+        if (sample.offsets.none { it.key == proposed && it.x.isFinite() && it.y.isFinite() &&
+                abs(it.x) <= 0.75 && abs(it.y) <= 0.75 }) return null
+        touchGeometryChangedListener?.invoke()
+        val value = if (original.value.singleOrNull()?.isUpperCase() == true) proposed.uppercaseChar() else proposed
+        return KeyboardAction.CommitLetter(value.toString())
+    }
+
+    private fun buildPhysicalTouch(key: KeyboardKeyView, localX: Float, localY: Float): PhysicalTouchSample? {
+        if (inputPolicy != InputPolicy.NORMAL) return null
+        val state = renderedState ?: return null
+        if (state.layer != KeyboardLayer.LETTERS) return null
+        val observed = letterKeys[key] ?: return null
+        if (width <= 0 || keysContainer.height <= 0) return null
         fun bounds(view: View): Rect = Rect(0, 0, view.width, view.height).also {
             offsetDescendantRectToMyCoords(view, it)
         }
@@ -292,7 +358,7 @@ internal class RuneKeyboardView(
             geometrySignature = MessageDigest.getInstance("SHA-256")
                 .digest(signature.toByteArray(Charsets.UTF_8)).joinToString("") { "%02x".format(it) },
         )
-        listener(PhysicalTouchSample(profile, observed, offsets))
+        return PhysicalTouchSample(profile, observed, offsets)
     }
 
     private fun styleKey(view: android.widget.TextView, spec: KeySpec, state: KeyboardState) {
@@ -345,6 +411,7 @@ internal class RuneKeyboardView(
         } else {
             (activeTouchCount - 1).coerceAtLeast(0)
         }
+        if (activeTouchCount > 1) dynamicEpoch++
         if (activeTouchCount != 0) return
 
         val render = pendingRender ?: return

@@ -9,6 +9,8 @@ interface TypingPersonalization {
     fun allowsAutomatic(generation: CandidateGeneration, candidate: GeneratedCandidate,
         language: KeyboardLanguage): Boolean = true
     fun preference(original: String, candidate: String, language: KeyboardLanguage): Double = 0.0
+    fun contextualPreference(context: String, original: String, candidate: GeneratedCandidate,
+        language: KeyboardLanguage): Double = preference(original, candidate.text, language)
     fun accepted(original: String, replacement: String, language: KeyboardLanguage) {}
     fun rejected(original: String, replacement: String, language: KeyboardLanguage) {}
     fun confirmed(word: String, language: KeyboardLanguage) {}

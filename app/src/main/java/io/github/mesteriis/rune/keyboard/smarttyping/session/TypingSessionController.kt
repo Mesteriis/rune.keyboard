@@ -156,6 +156,13 @@ class TypingSessionController internal constructor(
         diagnose(DiagnosticKind.INPUT, DiagnosticReason.NONE) { diagnosticText(input = input) }
     }
     /** Records the explicit user action before its guarded editor mutation. */
+    /** Records only a tap decision, not a claim that the editor accepted it. */
+    fun recordDynamicTouch(changed: Boolean, applied: Boolean) {
+        if (effectiveFeatures and DiagnosticFeature.DYNAMIC_TOUCH.bit == 0) return
+        diagnose(DiagnosticKind.TAP, if (!changed) DiagnosticReason.TOUCH_UNCHANGED
+            else if (applied) DiagnosticReason.TOUCH_REMAPPED else DiagnosticReason.TOUCH_SHADOW, text = null)
+    }
+
     fun recordBackspace() {
         diagnose(DiagnosticKind.BACKSPACE, DiagnosticReason.NONE)
     }
@@ -922,10 +929,26 @@ class TypingSessionController internal constructor(
         }
     }
 
-    private fun visibleIndices(selection: CandidateSelection): List<Int> = selection.order
-        .sortedByDescending { personalization.preference(selection.original,
-            selection.alternatives[it].text, selection.language) }
-        .take(SmartTypingViewState.MAX_VISIBLE_CANDIDATES - 1)
+    private fun visibleIndices(selection: CandidateSelection): List<Int> {
+        val owned = experimentalInput()
+        val prefix = if (owned?.word == selection.original) owned.context else ""
+        // Compute each bounded model score once; sorting must not repeatedly run inference.
+        val scores = selection.order.associateWith { index ->
+            personalization.contextualPreference(prefix, selection.original, selection.alternatives[index], selection.language)
+                .takeIf(Double::isFinite) ?: 0.0
+        }
+        return selection.order.sortedByDescending { scores.getValue(it) }
+            .take(SmartTypingViewState.MAX_VISIBLE_CANDIDATES - 1)
+    }
+
+    /** A snapshot of acknowledged Rune-owned composition only; never reads the surrounding editor. */
+    fun experimentalInput(): ExperimentalTypingInput? {
+        if (!canRequestCandidates) return null
+        val word = state.composing?.typedWord ?: return null
+        val text = context?.text ?: return null
+        if (!text.endsWith(word)) return null
+        return ExperimentalTypingInput(text.dropLast(word.length).takeLast(128), word)
+    }
 
     val ownsContinuation: Boolean
         get() = state.enabled && !awaitingEditorSelection && editorEditDepth == 0 &&

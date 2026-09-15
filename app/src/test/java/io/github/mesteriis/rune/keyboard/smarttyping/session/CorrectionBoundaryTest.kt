@@ -16,6 +16,36 @@ import org.junit.Test
 
 /** Real owner/executor with an independent editor document. Synthetic quality admission only. */
 class CorrectionBoundaryTest {
+    @Test fun `experimental context is owned and contains only preceding acknowledged text`() {
+        val f = Fixture()
+        assertNull(f.controller.experimentalInput())
+        f.raw("hello "); f.raw("worl")
+        val input = checkNotNull(f.controller.experimentalInput())
+        assertEquals("hello ", input.context)
+        assertEquals("worl", input.word)
+        assertEquals("ExperimentalTypingInput(redacted)", input.toString())
+        f.controller.awaitEditorSelection(f.execute)
+        assertNull(f.controller.experimentalInput())
+    }
+
+    @Test fun `experimental scoring sees context but cannot change the original or editor`() {
+        val f = Fixture()
+        val observed = mutableListOf<String>()
+        f.controller.setPersonalization(object : TypingPersonalization {
+            override fun contextualPreference(context: String, original: String, candidate: GeneratedCandidate,
+                language: KeyboardLanguage): Double {
+                observed.add(context)
+                return if (candidate.text == "help") 10.0 else 0.0
+            }
+        }, KeyboardLanguage.ENGLISH)
+        f.raw("say "); f.raw("hellp"); f.publishMany("hello", "help")
+        val choices = f.controller.candidateViewState.candidates
+        assertEquals("hellp", choices.first().text)
+        assertEquals("help", choices[1].text)
+        assertTrue(observed.isNotEmpty()); assertTrue(observed.all { it == "say " })
+        assertEquals("say hellp", f.document)
+    }
+
     @Test fun `protection resolves only live word ids and profile transitions invalidate them`() {
         val flag = DiagnosticFeature.PROTECTED_WORDS.bit
         val f = Fixture()
@@ -1039,6 +1069,14 @@ class CorrectionBoundaryTest {
             assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
                 CandidateGeneration(request.token, listOf(item), completion, false, null, 1, 1,
                     LocalSearchEvidence(completion, listOf(item), 1, 1)))))
+        }
+        fun publishMany(vararg words: String) {
+            val request = controller.beginCandidateRequest(++requestId, keyboard.language)!!
+            val items = words.map { word -> GeneratedCandidate(word, TokenUnicode.folded(word), TokenUnicode.folded(word), keyboard.language,
+                false, 4, 1, 1, EditFeatures(1.0, 0, 0.0),
+                kotlin.math.abs(word.length - request.token.length), CasePattern.analyze(request.token)) }
+            assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
+                CandidateGeneration(request.token, items, CandidateCompletion.COMPLETE, false, null, 1, items.size))))
         }
         fun publishCommon(target: String, completion: CandidateCompletion = CandidateCompletion.COMPLETE) {
             val request = controller.beginCandidateRequest(++requestId, keyboard.language)!!

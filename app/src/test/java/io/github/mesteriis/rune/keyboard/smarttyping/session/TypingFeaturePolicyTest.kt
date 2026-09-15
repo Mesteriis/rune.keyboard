@@ -13,8 +13,24 @@ class TypingFeaturePolicyTest {
     private fun effective(state: CandidateOwnerState = owner, dictionary: Boolean = true,
         abbreviations: Boolean = true, personal: Boolean = true, touch: Boolean = true, quality: Boolean = true,
         configured: Int = DiagnosticFeature.MASK) =
-        TypingFeaturePolicy.effective(configured, state, dictionary, abbreviations, personal, touch, quality)
+        TypingFeaturePolicy.effective(configured, state, dictionary, abbreviations, personal, touch, quality, learnedReady = true, contextReady = true)
     private fun Int.has(feature: DiagnosticFeature) = this and feature.bit != 0
+
+    @Test fun experimentsRespectReadinessLanguageVisibilityAndApplyDependency() {
+        val learned = DiagnosticFeature.LEARNED_RANKING
+        val compact = DiagnosticFeature.COMPACT_CONTEXT
+        val dynamic = DiagnosticFeature.DYNAMIC_TOUCH
+        val apply = DiagnosticFeature.DYNAMIC_TOUCH_APPLY
+        val unloaded = TypingFeaturePolicy.effective(DiagnosticFeature.MASK, owner, true, true, true, true, true)
+        for (f in listOf(learned, compact, dynamic, apply)) assertFalse(unloaded.has(f))
+        for (f in listOf(learned, compact, dynamic, apply)) assertFalse(effective(owner.copy(language = KeyboardLanguage.ENGLISH)).has(f))
+        assertFalse(effective(configured = apply.bit).has(apply))
+        assertTrue(effective(configured = dynamic.bit).has(dynamic))
+        assertFalse(effective(configured = dynamic.bit).has(apply))
+        val hidden = effective(owner.copy(candidateStripEnabled = false))
+        assertFalse(hidden.has(learned)); assertFalse(hidden.has(compact))
+        assertTrue(hidden.has(dynamic)); assertTrue(hidden.has(apply))
+    }
 
     @Test fun runtimeAndReadinessGateContextualAndModelAutomaticFlags() {
         assertEquals(DiagnosticFeature.MASK, effective())
@@ -55,7 +71,8 @@ class TypingFeaturePolicyTest {
     }
 
     @Test fun effectiveNeverEnablesAnUnconfiguredFlag() {
-        for (feature in DiagnosticFeature.entries) assertEquals(feature.bit, effective(configured = feature.bit))
+        for (feature in DiagnosticFeature.entries) assertEquals(
+            if (feature == DiagnosticFeature.DYNAMIC_TOUCH_APPLY) 0 else feature.bit, effective(configured = feature.bit))
         assertEquals(0, effective(configured = 0))
     }
 }

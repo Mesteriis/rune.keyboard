@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_learned_ranking">Learned suggestion ranking</string>
+    <string name="settings_learned_ranking_summary">Experimental, Russian. A trained model orders suggestions; automatic replacement rules remain in force.</string>
+    <string name="settings_compact_context">Compact context model</string>
+    <string name="settings_compact_context_summary">Experimental, Russian. Uses preceding words to order suggestions locally. Recommended together with learned suggestion ranking.</string>
+    <string name="settings_dynamic_touch">Dynamic touch experiment</string>
+    <string name="settings_dynamic_touch_summary">Russian. Estimates nearby letters in the background. Enable Apply below to change taps.</string>
+    <string name="settings_dynamic_touch_apply">Apply dynamic touch</string>
+    <string name="settings_dynamic_touch_apply_summary">Requires Dynamic touch experiment. Adjusts taps near key edges; central taps and typing after Backspace remain unchanged.</string>
+</resources>

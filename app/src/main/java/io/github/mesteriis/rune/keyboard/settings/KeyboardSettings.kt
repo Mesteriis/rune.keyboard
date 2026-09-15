@@ -105,6 +105,10 @@ data class KeyboardSettings(
     val appProfiles: Boolean = false,
     val collectExamples: Boolean = false,
     val typoPatterns: Boolean = false,
+    val learnedRanking: Boolean = false,
+    val compactContext: Boolean = false,
+    val dynamicTouch: Boolean = false,
+    val dynamicTouchApply: Boolean = false,
 
 ) {
     init {

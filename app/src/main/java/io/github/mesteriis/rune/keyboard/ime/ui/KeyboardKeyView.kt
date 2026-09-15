@@ -36,6 +36,10 @@ internal class KeyboardKeyView @JvmOverloads constructor(
     private var physicalTouchListener: ((Float, Float) -> Unit)? = null
     private var physicalTouchAllowed: (() -> Boolean)? = null
     private var physicalTapEligible = false
+    private var physicalTapStamp: (() -> Long)? = null
+    private var physicalTapResolver: ((Float, Float, Long) -> KeyboardAction?)? = null
+    private var downStamp = 0L
+    private var downTime = 0L
     private var touchDownX = 0f
     private var touchDownY = 0f
     private var touchStateListener: ((Boolean) -> Unit)? = null
@@ -84,6 +88,8 @@ internal class KeyboardKeyView @JvmOverloads constructor(
         popupHost: KeyPopupHost?,
         physicalTouchListener: ((Float, Float) -> Unit)? = null,
         physicalTouchAllowed: (() -> Boolean)? = null,
+        physicalTapStamp: (() -> Long)? = null,
+        physicalTapResolver: ((Float, Float, Long) -> KeyboardAction?)? = null,
     ) {
         cancelPendingActions()
         this.spec = spec
@@ -93,6 +99,8 @@ internal class KeyboardKeyView @JvmOverloads constructor(
         this.popupHost = popupHost
         this.physicalTouchListener = physicalTouchListener
         this.physicalTouchAllowed = physicalTouchAllowed
+        this.physicalTapStamp = physicalTapStamp
+        this.physicalTapResolver = physicalTapResolver
         isEnabled = spec.action != null
         isClickable = spec.action != null
         isLongClickable = spec.longPressAlternates.isNotEmpty() || repeatable
@@ -105,6 +113,8 @@ internal class KeyboardKeyView @JvmOverloads constructor(
                 beginTouch()
                 physicalTapEligible = event.pointerCount == 1 && physicalTouchListener != null &&
                     (physicalTouchAllowed?.invoke() != false)
+                downStamp = if (physicalTapEligible) physicalTapStamp?.invoke() ?: 0L else 0L
+                downTime = event.eventTime
                 touchDownX = if (physicalTapEligible) event.x else 0f
                 touchDownY = if (physicalTapEligible) event.y else 0f
                 armed = true
@@ -141,6 +151,8 @@ internal class KeyboardKeyView @JvmOverloads constructor(
                     val capturePhysicalTap = shouldClick && physicalTapEligible && event.pointerCount == 1 &&
                         touchDownX >= 0f && touchDownX < width && touchDownY >= 0f && touchDownY < height &&
                         event.x >= 0f && event.x < width && event.y >= 0f && event.y < height
+                    val stamp = downStamp
+                    val shortTap = event.eventTime - downTime in 0 until ViewConfiguration.getLongPressTimeout().toLong()
                     val contactX = touchDownX
                     val contactY = touchDownY
                     popupHost?.onKeyCancel(this)
@@ -148,8 +160,16 @@ internal class KeyboardKeyView @JvmOverloads constructor(
                     if (shouldClick) {
                         // Report the original contact before dispatching the acknowledged action.
                         // Accessibility performClick, repeats, cancels, and alternates never enter here.
-                        if (capturePhysicalTap) physicalTouchListener?.invoke(contactX, contactY)
-                        performClick()
+                        val replacement = if (capturePhysicalTap && shortTap && stamp != 0L &&
+                            physicalTapStamp?.invoke() == stamp) {
+                            physicalTapResolver?.invoke(contactX, contactY, stamp)
+                        } else null
+                        if (replacement == null && capturePhysicalTap) physicalTouchListener?.invoke(contactX, contactY)
+                        if (replacement == null) performClick() else {
+                            // No temporary action can leak into accessibility or a subsequent click.
+                            super.performClick()
+                            actionListener?.invoke(replacement)
+                        }
                     }
                     endTouch()
                 }
@@ -196,6 +216,8 @@ internal class KeyboardKeyView @JvmOverloads constructor(
     private fun finishGesture() {
         armed = false
         physicalTapEligible = false
+        downStamp = 0L
+        downTime = 0L
         touchDownX = 0f
         touchDownY = 0f
         longPressTriggered = false

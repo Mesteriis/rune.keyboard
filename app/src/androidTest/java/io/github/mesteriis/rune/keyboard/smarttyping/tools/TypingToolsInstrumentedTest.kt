@@ -24,19 +24,22 @@ class TypingToolsInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val context get() = instrumentation.targetContext
 
-    @Test fun tenControlsPersistIndependentlyThroughRecreation() {
+    @Test fun fourteenControlsPersistIndependentlyThroughRecreation() {
         val prefs = KeyboardPreferences(context)
         val before = prefs.readSettings()
         val titles = listOf(R.string.settings_quality_metrics, R.string.settings_shadow_comparison,
             R.string.settings_word_boundaries, R.string.settings_abbreviations,
             R.string.settings_phrase_review, R.string.settings_visible_undo, R.string.settings_protected_words,
-            R.string.settings_app_profiles, R.string.settings_collect_examples, R.string.settings_typo_patterns)
+            R.string.settings_app_profiles, R.string.settings_collect_examples, R.string.settings_typo_patterns,
+            R.string.settings_learned_ranking, R.string.settings_compact_context, R.string.settings_dynamic_touch, R.string.settings_dynamic_touch_apply)
         fun flags(s: KeyboardSettings) = listOf(s.qualityMetrics, s.shadowComparison,
             s.wordBoundarySuggestions, s.abbreviations, s.phraseReview, s.visibleUndo,
-            s.protectedWords, s.appProfiles, s.collectExamples, s.typoPatterns)
+            s.protectedWords, s.appProfiles, s.collectExamples, s.typoPatterns,
+            s.learnedRanking, s.compactContext, s.dynamicTouch, s.dynamicTouchApply)
         val writes = listOf(prefs::writeQualityMetrics, prefs::writeShadowComparison,
             prefs::writeWordBoundarySuggestions, prefs::writeAbbreviations, prefs::writePhraseReview, prefs::writeVisibleUndo,
-            prefs::writeProtectedWords, prefs::writeAppProfiles, prefs::writeCollectExamples, prefs::writeTypoPatterns)
+            prefs::writeProtectedWords, prefs::writeAppProfiles, prefs::writeCollectExamples, prefs::writeTypoPatterns,
+            prefs::writeLearnedRanking, prefs::writeCompactContext, prefs::writeDynamicTouch, prefs::writeDynamicTouchApply)
         writes.forEach { it(false) }
         try {
             ActivityScenario.launch(SettingsActivity::class.java).use { scenario ->

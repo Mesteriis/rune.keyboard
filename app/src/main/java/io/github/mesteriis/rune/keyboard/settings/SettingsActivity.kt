@@ -182,6 +182,14 @@ class SettingsActivity : ThemedActivity() {
         }
         addToggleRow(R.string.settings_collect_examples, R.string.settings_collect_examples_summary,
             settings.collectExamples) { preferences.writeCollectExamples(it) }
+        addToggleRow(R.string.settings_learned_ranking, R.string.settings_learned_ranking_summary,
+            settings.learnedRanking) { preferences.writeLearnedRanking(it) }
+        addToggleRow(R.string.settings_compact_context, R.string.settings_compact_context_summary,
+            settings.compactContext) { preferences.writeCompactContext(it) }
+        addToggleRow(R.string.settings_dynamic_touch, R.string.settings_dynamic_touch_summary,
+            settings.dynamicTouch) { preferences.writeDynamicTouch(it) }
+        addToggleRow(R.string.settings_dynamic_touch_apply, R.string.settings_dynamic_touch_apply_summary,
+            settings.dynamicTouchApply) { preferences.writeDynamicTouchApply(it) }
         addToggleRow(R.string.settings_typo_patterns, R.string.settings_typo_patterns_summary,
             settings.typoPatterns) { preferences.writeTypoPatterns(it) }
         addNavigationRow(R.string.learning_title, getString(R.string.settings_collect_examples_summary)) {

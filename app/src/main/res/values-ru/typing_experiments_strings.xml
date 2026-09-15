@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_learned_ranking">Обучаемая оценка подсказок</string>
+    <string name="settings_learned_ranking_summary">Эксперимент, русский язык. Обученная модель меняет порядок подсказок; проверки автозамены сохраняются.</string>
+    <string name="settings_compact_context">Компактная модель контекста</string>
+    <string name="settings_compact_context_summary">Эксперимент, русский язык. Учитывает предыдущие слова при выборе подсказок. Рекомендуется вместе с обучаемой оценкой. Работает на устройстве.</string>
+    <string name="settings_dynamic_touch">Эксперимент с областями нажатия</string>
+    <string name="settings_dynamic_touch_summary">Русский язык. Оценивает соседние буквы в фоне. Для изменения нажатий включите применение ниже.</string>
+    <string name="settings_dynamic_touch_apply">Применять к нажатиям</string>
+    <string name="settings_dynamic_touch_apply_summary">Требует включённого эксперимента. Уточняет попадания у границ клавиш; центр клавиши и ввод после удаления не меняются.</string>
+</resources>

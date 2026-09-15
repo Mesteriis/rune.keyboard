@@ -1,6 +1,8 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.personalization
 
 import android.content.Context
+import io.github.mesteriis.rune.keyboard.smarttyping.experiments.AndroidExperimentResources
+import io.github.mesteriis.rune.keyboard.smarttyping.experiments.ExperimentModels
 import io.github.mesteriis.rune.keyboard.smarttyping.controls.TypingControlStore
 import io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningStore
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
@@ -22,6 +24,7 @@ class PersonalTypingResources private constructor(context: Context) {
         private set
     val personal = PersonalTypingStore.get(context) { word, language -> lexicon.lookup(language, word).present }
     val touch = TouchCalibrationStore.get(context)
+    val experiments: ExperimentModels = AndroidExperimentResources.get(context)
     val controls = TypingControlStore.get(context)
     val learning = LearningStore.get(context) { word, language -> lexicon.lookup(language, word).present }
 
@@ -47,6 +50,8 @@ class AndroidTypingPersonalization(private val resources: PersonalTypingResource
     var touchEnabled = false
     var phrasesEnabled = false
     var protectionEnabled = false
+    var learnedRankingEnabled = false
+    var compactContextEnabled = false
     private val retypeDistance = WeightedDamerauLevenshtein(EditCostProfile.UNIT)
     private val ready get() = learningEnabled && resources.personal.isReady
 
@@ -64,6 +69,17 @@ class AndroidTypingPersonalization(private val resources: PersonalTypingResource
         (if (ready) resources.personal.model.preference(original, candidate, language).toDouble() else 0.0) +
             (if (touchEnabled && resources.touch.isReady) resources.touch.model.candidateBonus(original, candidate) else 0.0) +
             resources.learning.preference(original, candidate, language)
+
+    override fun contextualPreference(context: String, original: String, candidate: GeneratedCandidate,
+        language: KeyboardLanguage): Double {
+        val personal = if (ready) resources.personal.model.preference(original, candidate.text, language).toDouble() else 0.0
+        val touch = if (touchEnabled && resources.touch.isReady)
+            resources.touch.model.candidateBonus(original, candidate.text) else 0.0
+        val base = if (learnedRankingEnabled && resources.experiments.learnedReady && resources.experiments.supports(language))
+            resources.experiments.rankScore(context, original, candidate, personal, touch) else personal + touch
+        val neural = if (compactContextEnabled) resources.experiments.contextScore(context, candidate.text, language) else 0.0
+        return base + neural + resources.learning.preference(original, candidate.text, language)
+    }
 
     override fun accepted(original: String, replacement: String, language: KeyboardLanguage) {
         resources.learning.accepted(original, replacement, language)

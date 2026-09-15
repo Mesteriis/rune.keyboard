@@ -24,6 +24,7 @@ FEATURE_KEYS = frozenset(("spellingSuggestions", "autoCorrection", "mechanicalPu
     "phraseSuggestions", "qualityMetrics", "shadowComparison", "wordBoundarySuggestions",
     "abbreviations", "phraseReview", "visibleUndo"))
 FEATURE_KEYS_V5 = FEATURE_KEYS | frozenset(("protectedWords", "appProfiles", "collectExamples", "typoPatterns"))
+FEATURE_KEYS_V6 = FEATURE_KEYS_V5 | frozenset(("learnedRanking", "compactContext", "dynamicTouch", "dynamicTouchApply"))
 ROTATED_JSONL = re.compile(r"^(.*)\.(\d+)\.jsonl$")
 
 
@@ -62,7 +63,7 @@ def _event_fields(event):
     if schema >= 5 and _integer(event.get("typingProfile"), "typingProfile") not in (0, 1, 2):
         raise ValueError("typingProfile must be a fixed profile ID")
     if schema >= 4:
-        expected_features = FEATURE_KEYS_V5 if schema >= 5 else FEATURE_KEYS
+        expected_features = FEATURE_KEYS_V6 if schema >= 6 else FEATURE_KEYS_V5 if schema >= 5 else FEATURE_KEYS
         for field in ("features", "effectiveFeatures"):
             values = event.get(field)
             if not isinstance(values, dict) or values.keys() != expected_features or any(type(v) is not bool for v in values.values()):
@@ -280,6 +281,11 @@ def analyze_events(events):
         {key: value for key, value in item.items() if key != "_requestId"} for item in outcomes]}
     if any(schema >= 4 for schema in schemas):
         report["featureConfigurations"] = configurations
+    if any(schema >= 6 for schema in schemas):
+        report["dynamicTouchDecisions"] = {
+            reason: sum(event.get("kind") == "TAP" and event.get("reason") == reason for event in events)
+            for reason in ("TOUCH_UNCHANGED", "TOUCH_SHADOW", "TOUCH_REMAPPED")
+        }
     return report
 
 
