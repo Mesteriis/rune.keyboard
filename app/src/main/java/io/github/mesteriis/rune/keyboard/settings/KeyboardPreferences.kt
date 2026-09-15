@@ -92,6 +92,24 @@ class KeyboardPreferences internal constructor(private val preferences: SharedPr
     fun writePhraseReview(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_PHRASE_REVIEW, enabled) } }
     fun writeVisibleUndo(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_VISIBLE_UNDO, enabled) } }
 
+    /** One preference transaction: observers never see a partially disabled feature set. */
+    fun disableAdditionalTyping() {
+        edit {
+            listOf(SettingsCodec.KEY_PERSONAL_LEARNING, SettingsCodec.KEY_TOUCH_PERSONALIZATION,
+                SettingsCodec.KEY_PHRASE_SUGGESTIONS, SettingsCodec.KEY_QUALITY_METRICS,
+                SettingsCodec.KEY_SHADOW_COMPARISON, SettingsCodec.KEY_WORD_BOUNDARY_SUGGESTIONS,
+                SettingsCodec.KEY_ABBREVIATIONS, SettingsCodec.KEY_PHRASE_REVIEW, SettingsCodec.KEY_VISIBLE_UNDO,
+                SettingsCodec.KEY_PROTECTED_WORDS, SettingsCodec.KEY_APP_PROFILES,
+                SettingsCodec.KEY_COLLECT_EXAMPLES, SettingsCodec.KEY_TYPO_PATTERNS).forEach { putBoolean(it, false) }
+        }
+    }
+
+    fun writeProtectedWords(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_PROTECTED_WORDS, enabled) } }
+    fun writeAppProfiles(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_APP_PROFILES, enabled) } }
+    fun writeCollectExamples(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_COLLECT_EXAMPLES, enabled) } }
+    fun writeTypoPatterns(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_TYPO_PATTERNS, enabled) } }
+    fun notifyTypingControlsChanged() { edit { putLong("typing_controls_revision", System.nanoTime()) } }
+
     fun writePersonalLearning(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_PERSONAL_LEARNING, enabled) } }
     fun writeTouchPersonalization(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_TOUCH_PERSONALIZATION, enabled) } }
     fun writePhraseSuggestions(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_PHRASE_SUGGESTIONS, enabled) } }

@@ -105,6 +105,10 @@ internal class RuneKeyboardView(
         touchLearningEnabled = enabled
     }
 
+    fun setOnCandidateLongPressedListener(listener: ((String) -> Boolean)?) {
+        candidateStrip.setOnCandidateLongPressedListener(listener)
+    }
+
     fun setOnCandidateSelectedListener(listener: (String) -> Unit) {
         candidateStrip.setOnCandidateSelectedListener(listener)
     }

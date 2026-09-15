@@ -16,6 +16,39 @@ import org.junit.Test
 
 /** Real owner/executor with an independent editor document. Synthetic quality admission only. */
 class CorrectionBoundaryTest {
+    @Test fun `protection resolves only live word ids and profile transitions invalidate them`() {
+        val flag = DiagnosticFeature.PROTECTED_WORDS.bit
+        val f = Fixture()
+        f.controller.configureFeatures(flag, flag)
+        f.raw("teh"); f.publish("the")
+        val items = f.controller.candidateViewState.candidates
+        assertEquals("teh", f.controller.wordForProtection(items[0].id))
+        assertEquals("the", f.controller.wordForProtection(items[1].id))
+        assertEquals("teh", f.document)
+        assertNull(f.controller.wordForProtection("invented"))
+        f.controller.configureFeatures(flag, flag, 1)
+        assertNull(f.controller.wordForProtection(items[1].id))
+        f.controller.configureFeatures(0, 0)
+        assertNull(f.controller.wordForProtection(f.controller.candidateViewState.candidates.first().id))
+    }
+
+    @Test fun `profile code is logged on configuration and ordinary editor outcomes`() {
+        val events = mutableListOf<io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticEvent>()
+        val f = Fixture()
+        f.controller.setDiagnostics(object : io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) {}
+            override fun invalidate() {}
+            override fun record(event: io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticEvent,
+                text: (() -> io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticText)?) { events.add(event) }
+        })
+        val flag = DiagnosticFeature.APP_PROFILES.bit
+        f.controller.configureFeatures(flag, flag, 2)
+        f.raw("hello")
+        assertTrue(events.isNotEmpty())
+        assertTrue(events.all { it.typingProfile == 2 })
+        assertTrue(events.any { it.kind == io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind.EDITOR })
+    }
+
     @Test fun `word split join and abbreviation suggestions change only the current owned suffix on tap`() {
         for ((source, replacement, kind) in listOf(
             Triple("незнаю", "не знаю", TypingToolKind.WORD_BOUNDARY),

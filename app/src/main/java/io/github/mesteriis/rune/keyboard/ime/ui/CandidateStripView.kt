@@ -23,8 +23,9 @@ import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
 /** Three permanent cells: candidate updates have no reference to keys, popups or keyboard state. */
 internal class CandidateStripView(context: Context) : LinearLayout(context) {
     private var candidateListener: ((String) -> Unit)? = null
+    private var longPressListener: ((String) -> Boolean)? = null
     private val cells = List(SmartTypingViewState.MAX_VISIBLE_CANDIDATES) {
-        CandidateCell(context) { id -> candidateListener?.invoke(id) }
+        CandidateCell(context, { id -> candidateListener?.invoke(id) }, { id -> longPressListener?.invoke(id) == true })
     }
 
     init {
@@ -41,6 +42,11 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
 
     fun setOnCandidateSelectedListener(listener: (String) -> Unit) {
         candidateListener = listener
+    }
+
+    fun setOnCandidateLongPressedListener(listener: ((String) -> Boolean)?) {
+        longPressListener = listener
+        cells.forEach { it.setProtectionEnabled(listener != null) }
     }
 
     fun render(state: SmartTypingViewState) {
@@ -70,9 +76,15 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
     private class CandidateCell(
         context: Context,
         onSelected: (String) -> Unit,
+        onLongPressed: (String) -> Boolean,
     ) : TextView(context) {
         private var item: CandidateUiItem? = null
         private var pressedCandidate: CandidateUiItem? = null
+        private var protectionEnabled = false
+        private var longPressConsumed = false
+        private val longPress = Runnable {
+            if (isPressed && pressedCandidate == item && isLongClickable) longPressConsumed = performLongClick()
+        }
         private var activePointerId = MotionEvent.INVALID_POINTER_ID
         private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
 
@@ -89,6 +101,16 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
             background = context.getDrawable(R.drawable.candidate_background)
             isSoundEffectsEnabled = false
             setOnClickListener { item?.let { current -> onSelected(current.id) } }
+            setOnLongClickListener { item?.let { current ->
+                protectionEnabled && (current is CandidateUiItem.Original || current is CandidateUiItem.Correction) && onLongPressed(current.id)
+            } == true }
+            isLongClickable = false
+        }
+
+        fun setProtectionEnabled(enabled: Boolean) {
+            if (enabled != protectionEnabled) cancelTouch()
+            protectionEnabled = enabled
+            isLongClickable = enabled && (item is CandidateUiItem.Original || item is CandidateUiItem.Correction)
         }
 
         fun bind(item: CandidateUiItem?, selected: Boolean) {
@@ -114,6 +136,7 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
             }
             isEnabled = item != null
             isClickable = item != null
+            isLongClickable = protectionEnabled && (item is CandidateUiItem.Original || item is CandidateUiItem.Correction)
             isFocusable = item != null
             importantForAccessibility = if (item != null) {
                 IMPORTANT_FOR_ACCESSIBILITY_YES
@@ -143,6 +166,7 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
                         activePointerId = event.getPointerId(event.actionIndex)
                         pressedCandidate = item
                         isPressed = true
+                        if (isLongClickable) postDelayed(longPress, ViewConfiguration.getLongPressTimeout().toLong())
                         parent?.requestDisallowInterceptTouchEvent(true)
                     }
                 }
@@ -154,7 +178,7 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
                 }
                 MotionEvent.ACTION_UP -> {
                     val shouldClick = event.getPointerId(event.actionIndex) == activePointerId &&
-                        isInside(event, pointerIndex) && pressedCandidate != null && pressedCandidate == item
+                        !longPressConsumed && isInside(event, pointerIndex) && pressedCandidate != null && pressedCandidate == item
                     cancelTouch()
                     if (shouldClick) performClick()
                 }
@@ -171,6 +195,8 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
         }
 
         private fun cancelTouch() {
+            removeCallbacks(longPress)
+            longPressConsumed = false
             activePointerId = MotionEvent.INVALID_POINTER_ID
             pressedCandidate = null
             isPressed = false
@@ -191,6 +217,9 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
                 is CandidateUiItem.Continuation -> R.string.candidate_apply_continuation
                 is CandidateUiItem.Punctuation -> R.string.candidate_apply_punctuation
             }
+            info.removeAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_LONG_CLICK)
+            if (isLongClickable) info.addAction(AccessibilityNodeInfo.AccessibilityAction(
+                AccessibilityNodeInfo.ACTION_LONG_CLICK, context.getString(R.string.controls_protect_action)))
             info.removeAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK)
             info.addAction(
                 AccessibilityNodeInfo.AccessibilityAction(

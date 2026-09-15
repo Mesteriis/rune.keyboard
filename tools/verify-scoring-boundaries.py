@@ -37,7 +37,7 @@ import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.settings.ContextualPunctuationMode
 import io.github.mesteriis.rune.keyboard.settings.KeyboardSettings
 
-/** Fixed, content-free schema4 vocabulary. Bit assignments are append-only. */
+/** Fixed, content-free schema5 vocabulary. Bit assignments are append-only. */
 enum class DiagnosticFeature(val field: String) {
     SPELLING_SUGGESTIONS("spellingSuggestions"), AUTO_CORRECTION("autoCorrection"),
     MECHANICAL_PUNCTUATION("mechanicalPunctuation"), CONTEXTUAL_PUNCTUATION("contextualPunctuation"),
@@ -45,7 +45,9 @@ enum class DiagnosticFeature(val field: String) {
     TOUCH_PERSONALIZATION("touchPersonalization"), PHRASE_SUGGESTIONS("phraseSuggestions"),
     QUALITY_METRICS("qualityMetrics"), SHADOW_COMPARISON("shadowComparison"),
     WORD_BOUNDARIES("wordBoundarySuggestions"), ABBREVIATIONS("abbreviations"),
-    PHRASE_REVIEW("phraseReview"), VISIBLE_UNDO("visibleUndo");
+    PHRASE_REVIEW("phraseReview"), VISIBLE_UNDO("visibleUndo"),
+    PROTECTED_WORDS("protectedWords"), APP_PROFILES("appProfiles"),
+    COLLECT_EXAMPLES("collectExamples"), TYPO_PATTERNS("typoPatterns");
 
     val bit: Int get() = 1 shl ordinal
     companion object { val MASK: Int = (1 shl entries.size) - 1 }
@@ -58,7 +60,8 @@ object DiagnosticFeatures {
             settings.mechanicalPunctuation, settings.contextualPunctuationMode != ContextualPunctuationMode.OFF,
             settings.candidateStrip, settings.personalLearning, settings.touchPersonalization, settings.phraseSuggestions,
             settings.qualityMetrics, settings.shadowComparison, settings.wordBoundarySuggestions,
-            settings.abbreviations, settings.phraseReview, settings.visibleUndo)
+            settings.abbreviations, settings.phraseReview, settings.visibleUndo, settings.protectedWords,
+            settings.appProfiles, settings.collectExamples, settings.typoPatterns)
         return enabled.withIndex().fold(0) { mask, (index, value) -> if (value) mask or (1 shl index) else mask }
     }
 }
@@ -310,7 +313,7 @@ def inspect_diagnostics(clean, packages, symbols, declarations, edges, variant, 
                           'source': 'DiagnosticSource', 'completion': 'DiagnosticCompletion',
                           'scoringCode': 'Int', 'elapsedMs': 'Long', 'requestId': 'Long', 'operationId': 'Long',
                           'localCompletion': 'DiagnosticCompletion', 'localInspectedStates': 'Int',
-                          'localVerifiedTerminals': 'Int', 'configuredFeatures': 'Int', 'effectiveFeatures': 'Int'}
+                          'localVerifiedTerminals': 'Int', 'configuredFeatures': 'Int', 'effectiveFeatures': 'Int', 'typingProfile': 'Int'}
         # This frozen metadata DTO has constructor fields only. Reject inferred fields,
         # getters and methods too; scanning explicit property types alone misses them.
         if metadata.group().rstrip().endswith('{'):

@@ -101,6 +101,10 @@ data class KeyboardSettings(
     val abbreviations: Boolean = false,
     val phraseReview: Boolean = false,
     val visibleUndo: Boolean = false,
+    val protectedWords: Boolean = false,
+    val appProfiles: Boolean = false,
+    val collectExamples: Boolean = false,
+    val typoPatterns: Boolean = false,
 
 ) {
     init {

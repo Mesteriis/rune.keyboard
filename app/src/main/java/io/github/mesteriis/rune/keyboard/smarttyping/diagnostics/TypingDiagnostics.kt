@@ -34,6 +34,7 @@ data class DiagnosticEvent(
     val localVerifiedTerminals: Int = 0,
     val configuredFeatures: Int = 0,
     val effectiveFeatures: Int = 0,
+    val typingProfile: Int = 0,
 )
 
 /** Constructed only inside an admitted lazy callback; no editor read or arbitrary metadata. */

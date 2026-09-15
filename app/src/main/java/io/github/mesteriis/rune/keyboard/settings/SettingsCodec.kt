@@ -35,6 +35,10 @@ object SettingsCodec {
     const val KEY_ABBREVIATIONS = "abbreviations"
     const val KEY_PHRASE_REVIEW = "phrase_review"
     const val KEY_VISIBLE_UNDO = "visible_undo"
+    const val KEY_PROTECTED_WORDS = "protected_words"
+    const val KEY_APP_PROFILES = "app_profiles"
+    const val KEY_COLLECT_EXAMPLES = "collect_examples"
+    const val KEY_TYPO_PATTERNS = "typo_patterns"
 
 
     const val STARTING_LANGUAGE_LAST_USED = "LAST_USED"
@@ -101,6 +105,10 @@ object SettingsCodec {
             abbreviations = supported && strictBoolean(raw, KEY_ABBREVIATIONS, false),
             phraseReview = supported && strictBoolean(raw, KEY_PHRASE_REVIEW, false),
             visibleUndo = supported && strictBoolean(raw, KEY_VISIBLE_UNDO, false),
+            protectedWords = supported && strictBoolean(raw, KEY_PROTECTED_WORDS, false),
+            appProfiles = supported && strictBoolean(raw, KEY_APP_PROFILES, false),
+            collectExamples = supported && strictBoolean(raw, KEY_COLLECT_EXAMPLES, false),
+            typoPatterns = supported && strictBoolean(raw, KEY_TYPO_PATTERNS, false),
 
         )
     }

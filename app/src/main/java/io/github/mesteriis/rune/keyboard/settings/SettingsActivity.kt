@@ -148,6 +148,10 @@ class SettingsActivity : ThemedActivity() {
             preferences.writeDoubleSpacePeriod(enabled)
         }
         addSection(R.string.settings_section_tools)
+        addNavigationRow(R.string.controls_disable_all, getString(R.string.controls_disable_all_summary)) {
+            preferences.disableAdditionalTyping()
+            reload()
+        }
         addToggleRow(R.string.settings_quality_metrics, R.string.settings_quality_metrics_summary,
             settings.qualityMetrics) { preferences.writeQualityMetrics(it) }
         addToggleRow(R.string.settings_shadow_comparison, R.string.settings_shadow_comparison_summary,
@@ -166,6 +170,23 @@ class SettingsActivity : ThemedActivity() {
             settings.phraseReview) { preferences.writePhraseReview(it) }
         addToggleRow(R.string.settings_visible_undo, R.string.settings_visible_undo_summary,
             settings.visibleUndo) { preferences.writeVisibleUndo(it) }
+        addToggleRow(R.string.settings_protected_words, R.string.settings_protected_words_summary,
+            settings.protectedWords) { preferences.writeProtectedWords(it) }
+        addNavigationRow(R.string.controls_words_title, getString(R.string.controls_words_intro)) {
+            startActivity(Intent(this, ProtectedWordsActivity::class.java))
+        }
+        addToggleRow(R.string.settings_app_profiles, R.string.settings_app_profiles_summary,
+            settings.appProfiles) { preferences.writeAppProfiles(it) }
+        addNavigationRow(R.string.controls_apps_title, getString(R.string.controls_apps_intro)) {
+            startActivity(Intent(this, AppProfilesActivity::class.java))
+        }
+        addToggleRow(R.string.settings_collect_examples, R.string.settings_collect_examples_summary,
+            settings.collectExamples) { preferences.writeCollectExamples(it) }
+        addToggleRow(R.string.settings_typo_patterns, R.string.settings_typo_patterns_summary,
+            settings.typoPatterns) { preferences.writeTypoPatterns(it) }
+        addNavigationRow(R.string.learning_title, getString(R.string.settings_collect_examples_summary)) {
+            startActivity(Intent(this, LearningLabActivity::class.java))
+        }
         addSection(R.string.settings_section_personal)
         addToggleRow(R.string.settings_personal_learning, R.string.settings_personal_learning_summary,
             settings.personalLearning) { preferences.writePersonalLearning(it) }

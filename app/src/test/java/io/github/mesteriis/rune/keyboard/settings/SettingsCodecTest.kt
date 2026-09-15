@@ -8,6 +8,19 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SettingsCodecTest {
+    @Test fun controlAndLearningSwitchesAreIndependentAndFailClosed() {
+        val keys = listOf(SettingsCodec.KEY_PROTECTED_WORDS, SettingsCodec.KEY_APP_PROFILES,
+            SettingsCodec.KEY_COLLECT_EXAMPLES, SettingsCodec.KEY_TYPO_PATTERNS)
+        fun values(s: KeyboardSettings) = listOf(s.protectedWords, s.appProfiles, s.collectExamples, s.typoPatterns)
+        assertEquals(List(4) { false }, values(SettingsCodec.decode(emptyMap())))
+        for (index in keys.indices) {
+            assertEquals(keys.indices.map { it == index }, values(SettingsCodec.decode(mapOf(keys[index] to true))))
+            assertEquals(List(4) { false }, values(SettingsCodec.decode(mapOf(keys[index] to "true"))))
+        }
+        assertEquals(List(4) { false }, values(SettingsCodec.decode(keys.associateWith { true } +
+            (SettingsCodec.KEY_SCHEMA_VERSION to SettingsCodec.SCHEMA_VERSION + 1))))
+    }
+
     @Test fun `all six typing tools toggle independently and default off`() {
         val keys = listOf(SettingsCodec.KEY_QUALITY_METRICS, SettingsCodec.KEY_SHADOW_COMPARISON,
             SettingsCodec.KEY_WORD_BOUNDARY_SUGGESTIONS, SettingsCodec.KEY_ABBREVIATIONS,

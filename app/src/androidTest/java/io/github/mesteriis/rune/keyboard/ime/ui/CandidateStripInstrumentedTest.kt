@@ -345,6 +345,41 @@ class CandidateStripInstrumentedTest {
         }
     }
 
+    @Test
+    fun protectingByLongPressDoesNotAlsoPickTheCandidateAndHidingCancelsIt() {
+        val protectionDone = java.util.concurrent.CountDownLatch(1)
+        val choices = mutableListOf<String>()
+        val words = mutableListOf<String>()
+        ActivityScenario.launch(SettingsActivity::class.java).use { scenario ->
+            lateinit var keyboard: RuneKeyboardView
+            lateinit var cell: View
+            scenario.onActivity { activity ->
+                keyboard = keyboard(activity)
+                keyboard.setOnCandidateSelectedListener(choices::add)
+                keyboard.setOnCandidateLongPressedListener { id -> words.add(id); protectionDone.countDown(); true }
+                keyboard.updateCandidates(fullState())
+                activity.setContentView(keyboard)
+            }
+            instrumentation.waitForIdleSync()
+            scenario.onActivity {
+                cell = (keyboard.getChildAt(0) as ViewGroup).getChildAt(0)
+                touch(cell, MotionEvent.ACTION_DOWN)
+            }
+            assertTrue(protectionDone.await(3, java.util.concurrent.TimeUnit.SECONDS))
+            scenario.onActivity {
+                touch(cell, MotionEvent.ACTION_UP)
+                assertEquals(listOf(original.id), words)
+                assertTrue(choices.isEmpty())
+                touch(cell, MotionEvent.ACTION_DOWN)
+                keyboard.updateCandidates(SmartTypingViewState.HIDDEN)
+                touch(cell, MotionEvent.ACTION_UP)
+                assertFalse(cell.performLongClick())
+                assertEquals(1, words.size)
+                assertTrue(choices.isEmpty())
+            }
+        }
+    }
+
     private fun keyboard(context: Context): RuneKeyboardView = RuneKeyboardView(
         context,
         KeyboardViewMetrics(

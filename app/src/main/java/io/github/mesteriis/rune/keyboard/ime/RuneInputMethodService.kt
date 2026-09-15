@@ -62,6 +62,10 @@ import io.github.mesteriis.rune.keyboard.smarttyping.abbreviations.AbbreviationS
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityStore
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeatures
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
+import io.github.mesteriis.rune.keyboard.smarttyping.controls.TypingProfile
+import io.github.mesteriis.rune.keyboard.smarttyping.controls.TypingProfileResolver
+import io.github.mesteriis.rune.keyboard.smarttyping.controls.TypingControlSnapshot
+import io.github.mesteriis.rune.keyboard.smarttyping.controls.TypingControlStore
 import io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingResources
 import io.github.mesteriis.rune.keyboard.smarttyping.personalization.AndroidTypingPersonalization
 
@@ -72,6 +76,11 @@ class RuneInputMethodService : InputMethodService() {
     private var keyboardView: RuneKeyboardView? = null
     private var editorContext = EditorContext.from(InputType.TYPE_CLASS_TEXT, EditorInfo.IME_ACTION_NONE)
     private var settings = KeyboardSettings.DEFAULT
+    private var globalSettings = KeyboardSettings.DEFAULT
+    private var activePackage: String? = null
+    private var activeProfile = TypingProfile.DEFAULT
+    private var appliedControls: TypingControlSnapshot? = null
+    private var serviceDestroyed = false
     private var state = KeyboardState.initial(KeyboardLanguage.ENGLISH, automaticCapitalization = false)
     private var selectedLanguage = KeyboardLanguage.ENGLISH
     private var hasSelection = false
@@ -102,7 +111,8 @@ class RuneInputMethodService : InputMethodService() {
         try { typingSession.setDiagnostics(TypingDiagnosticsProvider.create(this)) } catch (_: Throwable) { }
         feedbackController = FeedbackController(this)
         keyboardPreferences = KeyboardPreferences(this)
-        settings = keyboardPreferences.readSettings()
+        globalSettings = keyboardPreferences.readSettings()
+        settings = globalSettings
         selectedLanguage = KeyboardSessionPolicy.resolveStartLanguage(
             settings = settings,
             lastUsedLanguage = keyboardPreferences.readLanguage(),
@@ -121,7 +131,7 @@ class RuneInputMethodService : InputMethodService() {
         typingTools = AndroidTypingTools(personalResources, abbreviationStore)
         typingSession.setTypingTools(typingTools)
         typingSession.setQualityRecorder(qualityStore)
-        typingSession.configureFeatures(DiagnosticFeatures.configured(settings), 0)
+        typingSession.configureFeatures(DiagnosticFeatures.configured(globalSettings), 0, activeProfile.code)
         val mainHandler = Handler(Looper.getMainLooper())
         candidates = LocalCandidateCoordinator(
             typingSession,
@@ -135,9 +145,12 @@ class RuneInputMethodService : InputMethodService() {
             AndroidCanonicalCaseLexicon(applicationContext.assets),
         )
         keyboardPreferences.registerListener(preferencesListener)
+        personalResources.controls.whenReady { mainHandler.post { if (!serviceDestroyed) onSettingsChanged() } }
     }
 
     override fun onDestroy() {
+        serviceDestroyed = true
+        personalResources.learning.configure(false, false, false)
         visualContinuityStore.detach(visualContinuity)
         typingSession.closeDiagnosticsAdmission()
         inputViewActive = false
@@ -178,12 +191,16 @@ class RuneInputMethodService : InputMethodService() {
         super.onStartInput(attribute, restarting)
         val editorInfo = attribute ?: EditorInfo()
         editorContext = EditorContext.from(editorInfo)
+        activePackage = editorInfo.packageName
+        resolveTypingProfile()
+        if (globalSettings.appProfiles && editorContext.supportsSmartTyping)
+            activePackage?.let(personalResources.controls::observePackage)
         hasSelection = editorInfo.initialSelStart >= 0 &&
             editorInfo.initialSelEnd >= 0 &&
             editorInfo.initialSelStart != editorInfo.initialSelEnd
         // Every callback starts fresh typing ownership. Visual-only continuation must not change
         // the framework restart flag used by typing or diagnostics admission.
-        typingSession.configureFeatures(DiagnosticFeatures.configured(settings), 0)
+        typingSession.configureFeatures(DiagnosticFeatures.configured(globalSettings), 0, activeProfile.code)
         typingSession.startSession(editorContext, editorInfo.initialSelStart, editorInfo.initialSelEnd,
             diagnosticsFresh = !restarting)
         state = visualContinuity.onStartInput(
@@ -483,7 +500,16 @@ class RuneInputMethodService : InputMethodService() {
         visualContinuity.invalidate()
         RuneTrace.section("Rune#applySettings") {
             val previous = settings
-            settings = keyboardPreferences.readSettings()
+            val previousProfile = activeProfile
+            val previousControls = appliedControls
+            globalSettings = keyboardPreferences.readSettings()
+            resolveTypingProfile()
+            if (previousProfile != activeProfile || previousControls !== appliedControls ||
+                previous.protectedWords != settings.protectedWords || previous.appProfiles != settings.appProfiles ||
+                previous.collectExamples != settings.collectExamples || previous.typoPatterns != settings.typoPatterns) {
+                typingSession.invalidate(::executeTypingEdit)
+                candidates.invalidate()
+            }
             typingSession.updatePersonalLearningPolicy(previous.personalLearning, settings.personalLearning,
                 ::executeTypingEdit)
             personalization.clearPending()
@@ -582,6 +608,28 @@ class RuneInputMethodService : InputMethodService() {
         renderCandidates()
     }
 
+    private fun resolveTypingProfile() {
+        appliedControls = personalResources.controls.snapshot.takeIf { personalResources.controls.isReady }
+        val resolved = TypingProfileResolver.resolve(globalSettings, activePackage, appliedControls)
+        activeProfile = resolved.first
+        settings = resolved.second
+    }
+
+    private fun handleCandidateProtection(id: String): Boolean {
+        updatePersonalizationPolicy()
+        if (!settings.protectedWords || !inputViewActive || !editorContext.supportsSmartTyping) return false
+        val word = typingSession.wordForProtection(id) ?: return false
+        personalResources.controls.protect(word, state.language) { result ->
+            if (result == TypingControlStore.Result.SAVED) keyboardPreferences.notifyTypingControlsChanged()
+            Handler(Looper.getMainLooper()).post {
+                if (!serviceDestroyed) android.widget.Toast.makeText(this,
+                    if (result == TypingControlStore.Result.SAVED) R.string.controls_saved else R.string.controls_save_failed,
+                    android.widget.Toast.LENGTH_SHORT).show()
+            }
+        }
+        return true
+    }
+
     private fun candidateOwnerState() = CandidateOwnerState(
         editorAllowsSmartTyping = editorContext.supportsSmartTyping,
         inputViewActive = inputViewActive,
@@ -606,11 +654,15 @@ class RuneInputMethodService : InputMethodService() {
         typingTools.abbreviationsEnabled = visible && settings.abbreviations
         typingTools.reviewEnabled = visible && settings.phraseReview
         qualityStore.configure(settings.qualityMetrics, settings.shadowComparison, eligible)
-        val configured = DiagnosticFeatures.configured(settings)
-        val effective = TypingFeaturePolicy.effective(configured, candidateOwnerState(),
+        personalization.protectionEnabled = eligible && settings.protectedWords
+        personalResources.learning.configure(settings.collectExamples, settings.typoPatterns, eligible)
+        keyboardView?.setOnCandidateLongPressedListener(if (visible && settings.protectedWords && personalResources.controls.isReady)
+            ::handleCandidateProtection else null)
+        val configured = DiagnosticFeatures.configured(globalSettings)
+        val effective = TypingFeaturePolicy.effective(DiagnosticFeatures.configured(settings), candidateOwnerState(),
             personalResources.dictionaryLoaded, abbreviationStore.isReady, personalResources.personal.isReady,
-            personalResources.touch.isReady, qualityStore.isReady)
-        typingSession.configureFeatures(configured, effective)
+            personalResources.touch.isReady, qualityStore.isReady, personalResources.controls.isReady, personalResources.learning.isReady)
+        typingSession.configureFeatures(configured, effective, activeProfile.code)
         personalization.learningEnabled = eligible && settings.personalLearning
         personalization.touchEnabled = eligible && settings.touchPersonalization
         personalization.phrasesEnabled = eligible && settings.phraseSuggestions

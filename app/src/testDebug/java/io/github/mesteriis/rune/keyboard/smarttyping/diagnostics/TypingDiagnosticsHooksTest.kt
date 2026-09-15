@@ -79,11 +79,11 @@ class TypingDiagnosticsHooksTest {
         assertTrue(encoded.contains("\"elapsedMs\":17"))
     }
 
-    @Test fun schemaFourAttributesBothSearchCompletionsAndDecisionSource() {
+    @Test fun schemaFiveAttributesBothSearchCompletionsAndDecisionSource() {
         val observer = Observer(); prepared(observer)
         val event = observer.events.last { it.kind == DiagnosticKind.CANDIDATES }
         val encoded = DiagnosticsEncoding.metadata(event).decodeToString()
-        assertTrue(encoded.contains("\"schema\":4"))
+        assertTrue(encoded.contains("\"schema\":5"))
         assertTrue(encoded.contains("\"completion\":\"COMPLETE\""))
         assertTrue(encoded.contains("\"localCompletion\":\"UNAVAILABLE\""))
         assertTrue(encoded.contains("\"source\":\"LOCAL_POLICY\""))

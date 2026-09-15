@@ -300,5 +300,19 @@ class FeatureConfigurationTests(unittest.TestCase):
                 analyze_events([dict(base, **changes)])
 
 
+    def test_schema_five_records_profile_only_transitions_and_four_new_flags(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS_V5
+        flags = dict.fromkeys(FEATURE_KEYS_V5, True)
+        base = dict(schema=5, kind='CONFIGURATION', reason='NONE', session=1, revision=1,
+                    localCompletion='NONE', localInspectedStates=0, localVerifiedTerminals=0,
+                    features=flags, effectiveFeatures=flags, typingProfile=0)
+        report = analyze_events([base, dict(base, revision=2, typingProfile=1)])
+        self.assertEqual([0, 1], [item['typingProfile'] for item in report['featureConfigurations']])
+        self.assertTrue(report['featureConfigurations'][1]['features']['protectedWords'])
+        for invalid in (True, -1, 3, 'org.example.app', None):
+            with self.assertRaises(ValueError):
+                analyze_events([dict(base, typingProfile=invalid)])
+
+
 if __name__ == "__main__":
     unittest.main()

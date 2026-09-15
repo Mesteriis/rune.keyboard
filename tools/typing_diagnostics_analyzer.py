@@ -23,6 +23,7 @@ FEATURE_KEYS = frozenset(("spellingSuggestions", "autoCorrection", "mechanicalPu
     "contextualPunctuation", "candidateStrip", "personalLearning", "touchPersonalization",
     "phraseSuggestions", "qualityMetrics", "shadowComparison", "wordBoundarySuggestions",
     "abbreviations", "phraseReview", "visibleUndo"))
+FEATURE_KEYS_V5 = FEATURE_KEYS | frozenset(("protectedWords", "appProfiles", "collectExamples", "typoPatterns"))
 ROTATED_JSONL = re.compile(r"^(.*)\.(\d+)\.jsonl$")
 
 
@@ -58,10 +59,13 @@ def _event_fields(event):
             for name, upper in (("localInspectedStates", 8_192), ("localVerifiedTerminals", 64)):
                 if not 0 <= _integer(event.get(name), name) <= upper:
                     raise ValueError(f"{name} outside bounds")
+    if schema >= 5 and _integer(event.get("typingProfile"), "typingProfile") not in (0, 1, 2):
+        raise ValueError("typingProfile must be a fixed profile ID")
     if schema >= 4:
+        expected_features = FEATURE_KEYS_V5 if schema >= 5 else FEATURE_KEYS
         for field in ("features", "effectiveFeatures"):
             values = event.get(field)
-            if not isinstance(values, dict) or values.keys() != FEATURE_KEYS or any(type(v) is not bool for v in values.values()):
+            if not isinstance(values, dict) or values.keys() != expected_features or any(type(v) is not bool for v in values.values()):
                 raise ValueError(f"{field} must contain fixed feature booleans")
         if any(value and not event["features"][name] for name, value in event["effectiveFeatures"].items()):
             raise ValueError("effective feature cannot be enabled without configuration")
@@ -193,10 +197,12 @@ def analyze_events(events):
         schema, kind, reason, session, revision = _event_fields(event)
         schemas.add(schema)
         if schema >= 4:
-            config = (session, event["features"], event["effectiveFeatures"])
+            config = (session, event["features"], event["effectiveFeatures"], event.get("typingProfile") if schema >= 5 else None)
             if config != last_configuration:
                 configurations.append({"session": session, "revision": revision,
                     "features": dict(event["features"]), "effectiveFeatures": dict(event["effectiveFeatures"])})
+                if schema >= 5:
+                    configurations[-1]["typingProfile"] = event["typingProfile"]
                 last_configuration = config
         operation = None
         if schema >= 2 and "operationId" in event:
@@ -272,7 +278,7 @@ def analyze_events(events):
     report = {"schemas": sorted(schemas), "backspaces": backspaces,
         "manualEdits": _manual_edits(events), "outcomes": [
         {key: value for key, value in item.items() if key != "_requestId"} for item in outcomes]}
-    if 4 in schemas:
+    if any(schema >= 4 for schema in schemas):
         report["featureConfigurations"] = configurations
     return report
 

@@ -9,6 +9,18 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class DiagnosticsRecorderTest {
+    @Test fun profileIsFixedNumericMetadataAndIncludesNewFlags() {
+        val all = DiagnosticFeature.MASK
+        val valid = DiagnosticsEncoding.metadata(DiagnosticEvent(DiagnosticKind.CONFIGURATION, DiagnosticReason.NONE,
+            1, 1, configuredFeatures = all, effectiveFeatures = all, typingProfile = 2)).decodeToString()
+        assertTrue(valid.contains("\"typingProfile\":2"))
+        assertTrue(valid.contains("\"protectedWords\":true"))
+        assertTrue(valid.contains("\"collectExamples\":true"))
+        val invalid = DiagnosticsEncoding.metadata(DiagnosticEvent(DiagnosticKind.INPUT, DiagnosticReason.NONE,
+            1, 1, typingProfile = 999)).decodeToString()
+        assertTrue(invalid.contains("\"typingProfile\":0"))
+    }
+
     @Test fun featureConfigurationIsContentFreeAndCannotClaimUnconfiguredFeatures() {
         val configured = DiagnosticFeature.QUALITY_METRICS.bit or DiagnosticFeature.VISIBLE_UNDO.bit
         val encoded = DiagnosticsEncoding.metadata(DiagnosticEvent(DiagnosticKind.CONFIGURATION,
@@ -35,7 +47,7 @@ class DiagnosticsRecorderTest {
             assertTrue(line.contains("\"scoringCode\":3")); assertFalse(line.contains("\"input\""))
         }
     }
-    @Test fun schemaFourMetadataClampsUntrustedNumbersWithoutInvokingText() {
+    @Test fun schemaFiveMetadataClampsUntrustedNumbersWithoutInvokingText() {
         val backend = MemoryBackend()
         DiagnosticsRecorder(backend).use { recorder ->
             await(recorder::barrier); await { recorder.setMetadata(true, it) }
@@ -45,7 +57,7 @@ class DiagnosticsRecorderTest {
                 elapsedMs = Long.MAX_VALUE, operationId = Long.MAX_VALUE, requestId = -1)) { error("Metadata copied text") }
             await(recorder::barrier)
             val encoded = backend.records.single().second.decodeToString()
-            for (field in listOf("\"schema\":4", "\"elapsedMs\":60000", "\"scoringCode\":15",
+            for (field in listOf("\"schema\":5", "\"elapsedMs\":60000", "\"scoringCode\":15",
                 "\"operationId\":1000000000", "\"requestId\":0", "\"candidateCount\":8", "\"selectedIndex\":-1")) {
                 assertTrue(encoded, encoded.contains(field))
             }

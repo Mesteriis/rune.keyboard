@@ -1,0 +1,14 @@
+<resources>
+    <string name="learning_title">Learning lab</string>
+    <string name="learning_scope">Optional local learning from explicit choices only. Up to 512 distinct records are kept outside backups. Disabling collection stops new examples; Reset removes saved examples and patterns. A fixed fifth of expected words is reserved for testing and never trains patterns. Results compare local suggestions on normalized words, excluding model, touch and exact-pair personalization; this is not automatic editing accuracy. Small or empty samples do not establish accuracy.</string>
+    <string name="learning_run">Run local evaluation</string>
+    <string name="learning_reset">Reset examples and patterns</string>
+    <string name="learning_resetting">Resetting…</string>
+    <string name="learning_reset_done">Examples and patterns removed.</string>
+    <string name="learning_loading">Loading</string>
+    <string name="learning_ready">Ready</string>
+    <string name="learning_failed">Storage or evaluation failed. Reset can recover storage.</string>
+    <string name="learning_running">Evaluating frozen snapshot…</string>
+    <string name="learning_status_format">%1$s\nExamples: %2$d (training %3$d, holdout %4$d)\nDedup records: %5$d / 512\nPattern evidence: %6$d</string>
+    <string name="learning_results_format">Eligible holdout: %1$d\nEvaluated: %2$d; unavailable/incomplete: %3$d\nExpected correction missing: %4$d / %15$d\nBaseline top suggestion: %5$d / %6$d\nLearned top suggestion: %7$d / %8$d\nIdentity preserved, baseline: %9$d / %10$d\nIdentity preserved, learned: %11$d / %12$d\nUnchanged local policy match: %13$d / %14$d\nThese counts describe this sample only. Vetoes and contradictory labels are excluded.</string>
+</resources>

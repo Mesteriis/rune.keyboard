@@ -6,7 +6,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeatu
 /** Coarse runtime availability; individual candidates still need the existing ownership/confidence checks. */
 object TypingFeaturePolicy {
     fun effective(configured: Int, owner: CandidateOwnerState, dictionaryReady: Boolean,
-        abbreviationReady: Boolean, personalReady: Boolean, touchReady: Boolean, qualityReady: Boolean): Int {
+        abbreviationReady: Boolean, personalReady: Boolean, touchReady: Boolean, qualityReady: Boolean, controlsReady: Boolean = true, learningReady: Boolean = true): Int {
         if (!owner.baseEligible) return 0
         var result = configured and DiagnosticFeature.MASK
         fun exclude(feature: DiagnosticFeature) { result = result and feature.bit.inv() }
@@ -31,6 +31,11 @@ object TypingFeaturePolicy {
         }
         if (!touchReady) exclude(DiagnosticFeature.TOUCH_PERSONALIZATION)
         if (!qualityReady) { exclude(DiagnosticFeature.QUALITY_METRICS); exclude(DiagnosticFeature.SHADOW_COMPARISON) }
+        if (!controlsReady) {
+            exclude(DiagnosticFeature.PROTECTED_WORDS); exclude(DiagnosticFeature.APP_PROFILES)
+            if (configured and DiagnosticFeature.PROTECTED_WORDS.bit != 0) exclude(DiagnosticFeature.AUTO_CORRECTION)
+        }
+        if (!learningReady) { exclude(DiagnosticFeature.COLLECT_EXAMPLES); exclude(DiagnosticFeature.TYPO_PATTERNS) }
         return result
     }
 }

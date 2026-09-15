@@ -75,6 +75,7 @@ class TypingSessionController internal constructor(
     private var undoQualityRevision: Long? = null
     private var configuredFeatures = 0
     private var effectiveFeatures = 0
+    private var typingProfile = 0
     fun setTypingTools(value: TypingTools) { tools = value; clearCandidates() }
     private fun invalidateQualityComparison() {
         quality.invalidatePending()
@@ -83,9 +84,11 @@ class TypingSessionController internal constructor(
         retypedQualityRevision = null
     }
     fun setQualityRecorder(value: QualityRecorder) { invalidateQualityComparison(); quality = value }
-    fun configureFeatures(configured: Int, effective: Int) {
+    fun configureFeatures(configured: Int, effective: Int, profile: Int = 0) {
         val next = effective and configured and DiagnosticFeature.MASK
-        val changed = configuredFeatures != configured || effectiveFeatures != next
+        val nextProfile = profile.takeIf { it in 0..2 } ?: 0
+        val changed = configuredFeatures != configured || effectiveFeatures != next || typingProfile != nextProfile
+        typingProfile = nextProfile
         configuredFeatures = configured and DiagnosticFeature.MASK
         effectiveFeatures = next
         visibleUndo = next and DiagnosticFeature.VISIBLE_UNDO.bit != 0
@@ -171,7 +174,7 @@ class TypingSessionController internal constructor(
         val event = DiagnosticEvent(kind, reason, session, revision, count, selected, model,
             completion, source, scoringCode, elapsedMs, requestId, if (attempt) nextDiagnosticOperation() else 0,
             localCompletion, localInspectedStates, localVerifiedTerminals, configuredFeatures,
-            if (state.enabled && !diagnosticSegmentClosed) effectiveFeatures else 0)
+            if (state.enabled && !diagnosticSegmentClosed) effectiveFeatures else 0, typingProfile)
         if (session == state.sessionId && revision == state.revision) {
             when {
                 kind == DiagnosticKind.REQUEST && reason in listOf(DiagnosticReason.SCHEDULED, DiagnosticReason.SUBMITTED) ->
@@ -1002,6 +1005,16 @@ class TypingSessionController internal constructor(
     }
 
     /** Explicit user choice only. Unknown/stale IDs are REJECTED and must never fall back/replay. */
+    /** Explicit long press resolves a current word ID; callers never trust rendered text. */
+    fun wordForProtection(candidateId: String): String? {
+        if (effectiveFeatures and DiagnosticFeature.PROTECTED_WORDS.bit == 0 || !canRequestCandidates) return null
+        return when (val item = candidateViewState.candidates.singleOrNull { it.id == candidateId }) {
+            is CandidateUiItem.Original -> item.text
+            is CandidateUiItem.Correction -> item.text
+            else -> null
+        }
+    }
+
     fun selectCandidate(candidateId: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
         undoViewItem()?.takeIf { it.id == candidateId }?.let { return deletePrevious(execute) }
         toolSuggestions().firstOrNull { toolId(it) == candidateId }?.let { return selectTool(it, execute) }
@@ -1731,7 +1744,7 @@ class TypingSessionController internal constructor(
         diagnosticAttempt = null
         val outcome = (attempt ?: DiagnosticEvent(DiagnosticKind.EDITOR, DiagnosticReason.NONE, session, revision,
             operationId = nextDiagnosticOperation(), configuredFeatures = configuredFeatures,
-            effectiveFeatures = if (state.enabled && !diagnosticSegmentClosed) effectiveFeatures else 0)).copy(kind = DiagnosticKind.EDITOR)
+            effectiveFeatures = if (state.enabled && !diagnosticSegmentClosed) effectiveFeatures else 0, typingProfile = typingProfile)).copy(kind = DiagnosticKind.EDITOR)
         val terminal = try { diagnostics.editorOutcome(outcome) } catch (_: Throwable) { null }
         fun complete(accepted: Boolean) {
             try {
