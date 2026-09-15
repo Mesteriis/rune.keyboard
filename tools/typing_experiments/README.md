@@ -67,3 +67,7 @@ Public `wikimedia/wikipedia`, snapshot `20231101`, revision `a634f78b1c435397c07
 ## Additional-epoch follow-up
 
 A further twelve epochs were evaluated with dev-only checkpoint selection and a newly reserved article test. The selected +2 checkpoint did not pass the predeclared fresh-improvement/regression gates; bundled models are unchanged. See [experiment results](../../docs/typing-extra-epochs.md) for counts, limitations and reproduction.
+
+## Candidate-level training follow-up
+
+A fixed six-epoch listwise candidate-selection experiment added exact one/two/three-edit public examples and correct-input controls. Dev improved slightly, but the frozen independent test failed promotion gates; bundled models remain unchanged. The main observed limit was missing gold candidates, especially for three-edit examples. See [candidate-training report](../../docs/typing-word-ranking.md) for exact counts, objective, source separation, tests and reproduction.
