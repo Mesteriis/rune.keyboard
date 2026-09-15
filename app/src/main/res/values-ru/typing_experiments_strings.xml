@@ -8,4 +8,6 @@
     <string name="settings_dynamic_touch_summary">Русский язык. Оценивает соседние буквы в фоне. Для изменения нажатий включите применение ниже.</string>
     <string name="settings_dynamic_touch_apply">Применять к нажатиям</string>
     <string name="settings_dynamic_touch_apply_summary">Требует включённого эксперимента. Уточняет попадания у границ клавиш; центр клавиши и ввод после удаления не меняются.</string>
+    <string name="settings_manual_candidate_expansion">Больше вариантов исправления</string>
+    <string name="settings_manual_candidate_expansion_summary">Эксперимент, русский язык. До семи локальных вариантов участвуют в выборе подсказок для ручного исправления. Автозамена использует прежние правила.</string>
 </resources>

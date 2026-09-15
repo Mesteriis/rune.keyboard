@@ -161,5 +161,5 @@
     <string name="settings_personal_imported">Phrase profile imported</string>
     <string name="settings_personal_empty">No supported dictionary phrases in this profile</string>
     <string name="settings_manual_candidate_expansion">More spelling suggestions</string>
-    <string name="settings_manual_candidate_expansion_summary">Experimental: rank up to seven local Russian alternatives for manual selection. Automatic correction stays the same.</string>
+    <string name="settings_manual_candidate_expansion_summary">Experimental: rank up to seven local Russian alternatives for manual selection. Automatic correction uses the existing rules.</string>
 </resources>
