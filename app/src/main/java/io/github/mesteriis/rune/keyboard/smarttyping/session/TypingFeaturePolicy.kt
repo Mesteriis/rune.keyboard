@@ -17,6 +17,7 @@ object TypingFeaturePolicy {
                 DiagnosticFeature.VISIBLE_UNDO, DiagnosticFeature.LEARNED_RANKING,
                 DiagnosticFeature.COMPACT_CONTEXT).forEach(::exclude)
         }
+        if (!owner.canExpandManualCandidates) exclude(DiagnosticFeature.MANUAL_CANDIDATE_EXPANSION)
         if (!owner.canRequestContextual) exclude(DiagnosticFeature.CONTEXTUAL_PUNCTUATION)
         if (!owner.deterministicAutoReplaceQualified &&
             !(owner.modelAutoReplaceQualified && owner.modelRuntimeQualified && owner.contextualModelReady)) {

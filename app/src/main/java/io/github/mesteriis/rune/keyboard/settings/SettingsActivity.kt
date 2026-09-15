@@ -195,6 +195,8 @@ class SettingsActivity : ThemedActivity() {
         addNavigationRow(R.string.learning_title, getString(R.string.settings_collect_examples_summary)) {
             startActivity(Intent(this, LearningLabActivity::class.java))
         }
+        addToggleRow(R.string.settings_manual_candidate_expansion, R.string.settings_manual_candidate_expansion_summary,
+            settings.manualCandidateExpansion) { preferences.writeManualCandidateExpansion(it) }
         addSection(R.string.settings_section_personal)
         addToggleRow(R.string.settings_personal_learning, R.string.settings_personal_learning_summary,
             settings.personalLearning) { preferences.writePersonalLearning(it) }

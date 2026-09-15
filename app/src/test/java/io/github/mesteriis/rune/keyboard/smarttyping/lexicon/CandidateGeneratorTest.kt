@@ -567,6 +567,70 @@ class CandidateGeneratorTest {
         assertEquals(CandidateCompletion.COMPLETE, generator.generate("cut", en).completion)
     }
 
+    @Test fun `manual width seven is optional distinct bounded and retains baseline`() {
+        val lexicon = ScriptedLexicon(mapOf(ru to listOf("мама", "мара", "мака", "мела", "мила", "мула", "малая", "малы").map(::Entry)))
+        val generator = CandidateGenerator(lexicon, 3)
+        val baseline = generator.generate("мала", ru)
+        val snapshot = baseline.copy()
+        val calls = lexicon.exactCalls
+        assertNull(generator.generateManualPool("мала", ru, baseline, false))
+        assertEquals(calls, lexicon.exactCalls)
+        val manual = generator.generateManualPool("мала", ru, baseline, true)!!
+        assertEquals(7, manual.alternatives.size)
+        assertEquals(7, manual.alternatives.map { it.canonicalKey }.distinct().size)
+        assertTrue(manual.alternatives.containsAll(baseline.alternatives))
+        assertTrue(manual.inspectedStates <= CandidateSearchControl.MAX_STATES)
+        assertTrue(manual.verifiedTerminals <= CandidateSearchControl.MAX_VERIFIED)
+        assertEquals(snapshot, baseline)
+        assertSame(snapshot.localSearch, baseline.localSearch)
+        assertTrue(manual.alternatives.none { it.text == "мала" })
+    }
+
+    @Test fun `manual exhaustion preserves baseline and cancellation releases supplemental result`() {
+        val lexicon = ScriptedLexicon(mapOf(ru to listOf("мама", "мара", "мака", "мела", "мила", "мула", "малая").map(::Entry)))
+        val generator = CandidateGenerator(lexicon, 3)
+        val baseline = generator.generate("мала", ru)
+        lexicon.scanPrefixStates[ru] = CandidateSearchControl.MAX_STATES
+        val partial = generator.generateManualPool("мала", ru, baseline, true)!!
+        assertEquals(CandidateCompletion.STATES_EXHAUSTED, partial.completion)
+        assertEquals(baseline.alternatives, partial.alternatives)
+        assertEquals(CandidateSearchControl.MAX_STATES, partial.inspectedStates)
+        assertEquals(CandidateCompletion.COMPLETE, baseline.completion)
+        var cancelled = false
+        lexicon.afterExactRead = { cancelled = true }
+        assertNull(generator.generateManualPool("мала", ru, baseline, true, CandidateCancellation { cancelled }))
+    }
+
+    @Test fun `manual expansion is Russian only and already wide baseline does no extra search`() {
+        val lexicon = ScriptedLexicon(mapOf(ru to listOf("мама", "мара", "мака", "мела", "мила", "мула", "малая").map(::Entry)))
+        val generator = CandidateGenerator(lexicon)
+        val baseline = generator.generate("мала", ru)
+        val calls = lexicon.exactCalls
+        assertSame(baseline, generator.generateManualPool("мала", ru, baseline, true))
+        assertNull(generator.generateManualPool("мала", en, baseline, true))
+        assertNull(generator.generateManualPool("мала", es, baseline, true))
+        assertEquals(calls, lexicon.exactCalls)
+        val latin = generator.generate("helo", ru)
+        assertNull(generator.generateManualPool("helo", ru, latin, true))
+    }
+
+    @Test fun `manual pool skips valid protected cancelled and complete underfilled searches`() {
+        val lexicon = ScriptedLexicon(mapOf(ru to listOf(Entry("мама"))))
+        val generator = CandidateGenerator(lexicon, 3)
+        for (word in listOf("мама", "https://x", "мaма")) {
+            val baseline = generator.generate(word, ru)
+            val calls = lexicon.exactCalls
+            assertNull(generator.generateManualPool(word, ru, baseline, true))
+            assertEquals(calls, lexicon.exactCalls)
+        }
+        val baseline = generator.generate("мала", ru)
+        val calls = lexicon.exactCalls
+        assertSame(baseline, generator.generateManualPool("мала", ru, baseline, true))
+        assertEquals(calls, lexicon.exactCalls)
+        assertNull(generator.generateManualPool("мала", ru, baseline, true, CandidateCancellation { true }))
+        assertNull(generator.generateManualPool("другая", ru, baseline, true))
+    }
+
     private fun neighborWords(): List<String> = (0..2).flatMap { position ->
         ('b'..'z').map { letter -> "aaaaa".replaceRange(position, position + 1, letter.toString()) }
     }

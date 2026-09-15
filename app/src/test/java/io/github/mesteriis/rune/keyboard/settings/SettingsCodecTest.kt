@@ -8,6 +8,16 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SettingsCodecTest {
+    @Test fun manualCandidateExpansionDefaultsOffAndRequiresExplicitSupportedBoolean() {
+        val key = SettingsCodec.KEY_MANUAL_CANDIDATE_EXPANSION
+        assertFalse(KeyboardSettings.DEFAULT.manualCandidateExpansion)
+        assertFalse(SettingsCodec.decode(emptyMap()).manualCandidateExpansion)
+        assertTrue(SettingsCodec.decode(mapOf(key to true)).manualCandidateExpansion)
+        for (value in listOf(null, false, "true", 1))
+            assertFalse(SettingsCodec.decode(mapOf(key to value)).manualCandidateExpansion)
+        assertFalse(SettingsCodec.decode(mapOf(key to true, SettingsCodec.KEY_SCHEMA_VERSION to 999)).manualCandidateExpansion)
+    }
+
     @Test fun experimentalControlsAreIndependentAndFailClosed() {
         val keys = listOf(SettingsCodec.KEY_LEARNED_RANKING, SettingsCodec.KEY_COMPACT_CONTEXT,
             SettingsCodec.KEY_DYNAMIC_TOUCH, SettingsCodec.KEY_DYNAMIC_TOUCH_APPLY)

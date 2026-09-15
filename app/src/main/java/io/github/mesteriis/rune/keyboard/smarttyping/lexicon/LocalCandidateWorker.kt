@@ -18,6 +18,7 @@ data class LocalCandidateRequest(
     val token: String,
     val activeLanguage: KeyboardLanguage,
     val eligible: Boolean,
+    val manualCandidateExpansion: Boolean = false,
 ) {
     override fun toString(): String =
         "LocalCandidateRequest(sessionId=$sessionId, revision=$revision, requestId=$requestId, redacted)"
@@ -29,6 +30,7 @@ data class LocalCandidateReply(
     val revision: Long,
     val requestId: Long,
     val generation: CandidateGeneration,
+    val manualGeneration: CandidateGeneration? = null,
 ) {
     override fun toString(): String =
         "LocalCandidateReply(sessionId=$sessionId, revision=$revision, requestId=$requestId, redacted)"
@@ -181,11 +183,14 @@ class LocalCandidateWorker internal constructor(
                 generator.generate(it.token, it.activeLanguage, CandidateCancellation { work.cancelled.get() })
             }
         }
+        val manual = if (request != null && result != null) generator.generateManualPool(
+            request.token, request.activeLanguage, result, request.manualCandidateExpansion,
+            CandidateCancellation { work.cancelled.get() }) else null
         val post = synchronized(lock) {
             active = null
             if (!closed && latest === work && !work.cancelled.get() && result != null &&
                 result.completion != CandidateCompletion.CANCELLED) {
-                delivery = Delivery(work, LocalCandidateReply(work.sessionId, work.revision, work.requestId, result))
+                delivery = Delivery(work, LocalCandidateReply(work.sessionId, work.revision, work.requestId, result, manual))
                 if (!deliveryScheduled) {
                     deliveryScheduled = true
                     true

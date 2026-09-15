@@ -109,6 +109,7 @@ data class KeyboardSettings(
     val compactContext: Boolean = false,
     val dynamicTouch: Boolean = false,
     val dynamicTouchApply: Boolean = false,
+    val manualCandidateExpansion: Boolean = false,
 
 ) {
     init {

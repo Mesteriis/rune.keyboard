@@ -27,6 +27,7 @@ data class CandidateOwnerState(
     val hasSelection: Boolean,
     val autocorrectionMode: AutocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE,
     val candidateStripEnabled: Boolean = true,
+    val manualCandidateExpansion: Boolean = false,
     val deterministicAutoReplaceQualified: Boolean = false,
     val modelAutoReplaceQualified: Boolean = false,
     val modelRuntimeQualified: Boolean = true,
@@ -37,6 +38,8 @@ data class CandidateOwnerState(
         get() = editorAllowsSmartTyping && inputViewActive && layer == KeyboardLayer.LETTERS && !hasSelection
     val spellingEnabled: Boolean
         get() = autocorrectionMode != AutocorrectionMode.OFF
+    val canExpandManualCandidates: Boolean
+        get() = showsCandidates && spellingEnabled && manualCandidateExpansion && language == KeyboardLanguage.RUSSIAN
     val showsCandidates: Boolean
         get() = baseEligible && candidateStripEnabled
     private val automaticMode: Boolean
@@ -272,7 +275,8 @@ class LocalCandidateCoordinator internal constructor(
         val target = worker ?: LocalCandidateWorker(CandidateGenerator(lexicon,
             CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES, canonicalCaseLexicon),
             ownerDispatcher, ::acceptReply, trace).also { worker = it }
-        val accepted = target.submit(request)
+        val accepted = target.submit(request.copy(manualCandidateExpansion =
+            ownerState?.invoke()?.canExpandManualCandidates == true))
         if (accepted) {
             current.submitted = true
             controller.recordCandidateSubmitted(request)
@@ -312,7 +316,7 @@ class LocalCandidateCoordinator internal constructor(
             return
         }
         pending = null
-        if (controller.acceptCandidates(reply)) {
+        if (controller.acceptCandidates(if (owner.canExpandManualCandidates) reply else reply.copy(manualGeneration = null))) {
             onCandidatesChanged?.invoke()
             modelRanking?.candidatesChanged()
         }

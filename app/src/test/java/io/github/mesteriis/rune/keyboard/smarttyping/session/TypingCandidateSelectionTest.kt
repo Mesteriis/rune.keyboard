@@ -625,6 +625,43 @@ class TypingCandidateSelectionTest {
         }
     }
 
+    @Test fun `manual pool ranks richer display without changing model input and tap restores original`() {
+        controller.setPersonalization(object : TypingPersonalization {
+            override fun contextualPreference(context: String, original: String, candidate: GeneratedCandidate,
+                language: KeyboardLanguage): Double = if (candidate.text == "мела") 100.0 else 0.0
+        }, KeyboardLanguage.RUSSIAN)
+        start("мала")
+        val request = controller.beginCandidateRequest(++requestId, KeyboardLanguage.RUSSIAN)!!
+        val baseline = reply(request, "мама", "мара", "мака")
+        val manual = reply(request, "мама", "мара", "мака", "мела", "мила", "мула", "малая").generation
+        assertTrue(controller.acceptCandidates(baseline.copy(manualGeneration = manual)))
+        assertEquals(3, labels().size)
+        assertEquals("мала", labels().first())
+        assertEquals("мела", labels()[1])
+        val input = controller.beginModelRanking(1)!!
+        assertEquals(4, input.token.candidateIds.size)
+        assertTrue(controller.acceptModelRanking(modelReply(input, 1)))
+        val id = controller.candidateViewState.candidates.single { it.text == "мела" }.id
+        assertEquals(TypingTextResult.HANDLED, controller.selectCandidate(id, execute))
+        assertEquals("мела", controller.state.composing!!.typedWord)
+        assertEquals(TypingTextResult.REJECTED, controller.selectCandidate(id, execute))
+        assertEquals(TypingTextResult.HANDLED, controller.selectCandidate(controller.originalCandidateId!!, execute))
+        assertEquals("мала", controller.state.composing!!.typedWord)
+        assertNull(controller.state.lastAutoEdit)
+    }
+
+    @Test fun `malformed supplemental snapshot never expands baseline and stale replies cannot publish`() {
+        start("мала")
+        val request = controller.beginCandidateRequest(++requestId, KeyboardLanguage.RUSSIAN)!!
+        val baseline = reply(request, "мама", "мара", "мака")
+        val manual = reply(request, "мела").generation.copy(original = "other")
+        assertTrue(controller.acceptCandidates(baseline.copy(manualGeneration = manual)))
+        assertFalse(labels().contains("мела"))
+        controller.clearCandidates()
+        assertFalse(controller.acceptCandidates(baseline.copy(manualGeneration = manual.copy(original = "мала"))))
+        assertEquals(listOf("мала"), labels())
+    }
+
     private fun modelReply(input: ScoringInput, winner: Int) = ScoringReply(input.token, ScoringCode.OK, 0,
         input.token.candidateIds.map { NumericScore(it, if (it == winner) -1.0 else -10.0, 1) })
 

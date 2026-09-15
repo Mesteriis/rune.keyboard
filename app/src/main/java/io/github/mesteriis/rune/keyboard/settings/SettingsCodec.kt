@@ -42,6 +42,7 @@ object SettingsCodec {
     const val KEY_LEARNED_RANKING = "learned_ranking"
     const val KEY_COMPACT_CONTEXT = "compact_context"
     const val KEY_DYNAMIC_TOUCH = "dynamic_touch"
+    const val KEY_MANUAL_CANDIDATE_EXPANSION = "manual_candidate_expansion"
     const val KEY_DYNAMIC_TOUCH_APPLY = "dynamic_touch_apply"
 
 
@@ -116,6 +117,7 @@ object SettingsCodec {
             learnedRanking = supported && strictBoolean(raw, KEY_LEARNED_RANKING, false),
             compactContext = supported && strictBoolean(raw, KEY_COMPACT_CONTEXT, false),
             dynamicTouch = supported && strictBoolean(raw, KEY_DYNAMIC_TOUCH, false),
+            manualCandidateExpansion = supported && strictBoolean(raw, KEY_MANUAL_CANDIDATE_EXPANSION, false),
             dynamicTouchApply = supported && strictBoolean(raw, KEY_DYNAMIC_TOUCH_APPLY, false),
 
         )

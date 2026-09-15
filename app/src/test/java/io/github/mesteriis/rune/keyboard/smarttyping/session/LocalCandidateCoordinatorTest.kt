@@ -838,6 +838,35 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
+    @Test fun `manual expansion changes retrieval width but preserves model inputs and invalidates on toggle`() {
+        Harness(withModel = true).use { h ->
+            h.owner = h.owner.copy(manualCandidateExpansion = true, language = KeyboardLanguage.RUSSIAN)
+            h.lexicon.extraNeighbors = true
+            h.type("мала"); h.deliver(); h.pause.fire()
+            assertEquals(listOf(3, 7), h.lexicon.requestedWidths.toList())
+            assertEquals(listOf(0, 1, 2, 3), h.model.requests.single().token.candidateIds)
+            assertEquals(3, h.coordinator.viewState.candidates.size)
+            val old = h.coordinator.viewState.candidates[1].id
+            h.owner = h.owner.copy(manualCandidateExpansion = false)
+            h.coordinator.invalidate()
+            assertEquals(listOf("мала"), h.labels())
+            assertEquals(TypingTextResult.REJECTED, h.coordinator.selectCandidate(old, h.execute))
+        }
+    }
+
+    @Test fun `manual expansion cancellation drops queued results after language or editor change`() {
+        for (changeLanguage in listOf(false, true)) Harness().use { h ->
+            h.owner = h.owner.copy(manualCandidateExpansion = true, language = KeyboardLanguage.RUSSIAN)
+            h.lexicon.extraNeighbors = true
+            h.type("мала"); h.awaitQueued()
+            h.owner = if (changeLanguage) h.owner.copy(language = KeyboardLanguage.ENGLISH)
+                else h.owner.copy(editorAllowsSmartTyping = false)
+            h.coordinator.invalidate()
+            h.drain()
+            assertTrue(h.coordinator.viewState.candidates.none { it is CandidateUiItem.Correction })
+        }
+    }
+
     @Test fun `production coordinator keeps three local alternatives for model submission`() {
         Harness(withModel = true).use { h ->
             h.lexicon.extraNeighbors = true
@@ -1389,6 +1418,7 @@ class LocalCandidateCoordinatorTest {
                 // Valid radius neighbors for the only tested spellings. Each language emits once.
                 val words = when (key) {
                     "helo" -> if (extraNeighbors) listOf("hello", "help", "held", "hero", "halo", "hell", "helm") else listOf("hello", "help")
+                    "мала" -> listOf("мама", "мара", "мака", "мела", "мила", "мула", "малая")
                     "helos" -> listOf("hellos")
                     else -> emptyList()
                 }

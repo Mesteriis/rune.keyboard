@@ -9,12 +9,25 @@ import org.junit.Test
 class TypingFeaturePolicyTest {
     private val owner = CandidateOwnerState(true, true, KeyboardLayer.LETTERS, KeyboardLanguage.RUSSIAN,
         false, deterministicAutoReplaceQualified = true, modelAutoReplaceQualified = true,
-        contextualPunctuationEnabled = true, contextualModelReady = true)
+        contextualPunctuationEnabled = true, contextualModelReady = true, manualCandidateExpansion = true)
     private fun effective(state: CandidateOwnerState = owner, dictionary: Boolean = true,
         abbreviations: Boolean = true, personal: Boolean = true, touch: Boolean = true, quality: Boolean = true,
         configured: Int = DiagnosticFeature.MASK) =
         TypingFeaturePolicy.effective(configured, state, dictionary, abbreviations, personal, touch, quality, learnedReady = true, contextReady = true, tapReady = true)
     private fun Int.has(feature: DiagnosticFeature) = this and feature.bit != 0
+
+    @Test fun manualExpansionRequiresOptInVisibleSpellingAndEligibleEditorAcrossLanguages() {
+        val feature = DiagnosticFeature.MANUAL_CANDIDATE_EXPANSION
+        for (language in KeyboardLanguage.entries) assertEquals(language == KeyboardLanguage.RUSSIAN,
+            effective(owner.copy(language = language)).has(feature))
+        for (state in listOf(owner.copy(manualCandidateExpansion = false), owner.copy(candidateStripEnabled = false),
+            owner.copy(editorAllowsSmartTyping = false), owner.copy(inputViewActive = false),
+            owner.copy(hasSelection = true), owner.copy(layer = KeyboardLayer.SYMBOLS),
+            owner.copy(autocorrectionMode = io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode.OFF))) {
+            assertFalse(effective(state).has(feature))
+            assertFalse(state.canExpandManualCandidates)
+        }
+    }
 
     @Test fun experimentsRespectReadinessLanguageVisibilityAndApplyDependency() {
         val learned = DiagnosticFeature.LEARNED_RANKING

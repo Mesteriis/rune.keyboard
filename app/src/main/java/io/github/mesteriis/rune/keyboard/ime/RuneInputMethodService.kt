@@ -552,6 +552,7 @@ class RuneInputMethodService : InputMethodService() {
                 settings.touchPersonalization != previous.touchPersonalization ||
                 settings.phraseSuggestions != previous.phraseSuggestions ||
                 settings.learnedRanking != previous.learnedRanking ||
+                settings.manualCandidateExpansion != previous.manualCandidateExpansion ||
                 settings.compactContext != previous.compactContext
             ) candidates.invalidate()
             if (settings.enabledLanguages != previous.enabledLanguages) candidates.invalidate()
@@ -661,6 +662,7 @@ class RuneInputMethodService : InputMethodService() {
         hasSelection = hasSelection,
         autocorrectionMode = settings.autocorrectionMode,
         candidateStripEnabled = settings.candidateStrip,
+        manualCandidateExpansion = settings.manualCandidateExpansion,
         deterministicAutoReplaceQualified = typingSession.isLocalSpellingQualified(state.language),
         modelAutoReplaceQualified = typingSession.isModelSpellingQualified(state.language),
         modelRuntimeQualified = ModelRuntimeQualification.CURRENT,

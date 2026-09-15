@@ -26,6 +26,9 @@ import io.github.mesteriis.rune.keyboard.smarttyping.correction.ProtectedTokenPo
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.ProtectedTokenReason
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.TokenUnicode
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateCompletion
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidate
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LanguageRouter
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalSearchEvidence
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidateKind
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneration
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGenerator
@@ -371,7 +374,20 @@ class TypingSessionController internal constructor(
         ) return false
 
         val selection = candidateSelection(generation, stamp.language, stamp.requestId) ?: return false
-        candidateSelection = selection
+        val manual = reply.manualGeneration?.takeIf {
+            stamp.language == KeyboardLanguage.RUSSIAN &&
+                LanguageRouter.route(
+                    generation.original.orEmpty(), stamp.language).primary == KeyboardLanguage.RUSSIAN &&
+                it.original == generation.original && !it.isValidWord && it.protectedReason == null &&
+                !generation.isValidWord && generation.protectedReason == null &&
+                it.alternatives.size <= CandidateGenerator.MAX_ALTERNATIVES &&
+                it.inspectedStates in 0..CandidateSearchControl.MAX_STATES &&
+                it.verifiedTerminals in 0..CandidateSearchControl.MAX_VERIFIED
+        }?.let {
+            // Validate display text without applying the widened search certificate to any policy.
+            candidateSelection(it.copy(localSearch = LocalSearchEvidence.NONE), stamp.language, stamp.requestId)
+        }
+        candidateSelection = selection.copy(manualAlternatives = manual?.alternatives.orEmpty())
         quality.candidateResponseNanos((System.nanoTime() - stamp.startedAt).coerceAtLeast(0))
         // Model-eligible words have no final primary decision until ranking or an explicit choice.
         compareShadow(selection, deferForModel = true)
@@ -829,7 +845,7 @@ class TypingSessionController internal constructor(
                 add(CandidateUiItem.Original(originalId, selection?.original ?: state.composing!!.typedWord))
                 addAll(toolItems.take(SmartTypingViewState.MAX_VISIBLE_CANDIDATES - 1))
                 selection?.let(::visibleIndices)?.take(SmartTypingViewState.MAX_VISIBLE_CANDIDATES - size)?.forEach { index ->
-                    add(CandidateUiItem.Correction(correctionId(selection.requestId, index), selection.alternatives[index].text))
+                    add(CandidateUiItem.Correction(correctionId(selection.requestId, index), selection.displayAlternatives[index].text))
                 }
                 contextualSelection?.takeIf { it.selection === selection }?.let { contextual ->
                     if (size < SmartTypingViewState.MAX_VISIBLE_CANDIDATES) {
@@ -861,7 +877,7 @@ class TypingSessionController internal constructor(
             else isEligibleLocalReplacement(selection)
         val primary = if (effectiveFeatures and DiagnosticFeature.AUTO_CORRECTION.bit != 0 &&
             baselineEligible && candidate != null && allowsAutomatic(selection, index)) candidate.text else selection.original
-        val experimental = visibleIndices(selection).firstOrNull()?.let { selection.alternatives[it].text } ?: selection.original
+        val experimental = visibleIndices(selection).firstOrNull()?.let { selection.displayAlternatives[it].text } ?: selection.original
         quality.compare(state.revision, selection.original, primary, experimental)
         comparedRevision = state.revision
     }
@@ -933,11 +949,12 @@ class TypingSessionController internal constructor(
         val owned = experimentalInput()
         val prefix = if (owned?.word == selection.original) owned.context else ""
         // Compute each bounded model score once; sorting must not repeatedly run inference.
-        val scores = selection.order.associateWith { index ->
-            personalization.contextualPreference(prefix, selection.original, selection.alternatives[index], selection.language)
+        val order = selection.order + (selection.alternatives.size until selection.displayAlternatives.size)
+        val scores = order.associateWith { index ->
+            personalization.contextualPreference(prefix, selection.original, selection.displayAlternatives[index], selection.language)
                 .takeIf(Double::isFinite) ?: 0.0
         }
-        return selection.order.sortedByDescending { scores.getValue(it) }
+        return order.sortedByDescending { scores.getValue(it) }
             .take(SmartTypingViewState.MAX_VISIBLE_CANDIDATES - 1)
     }
 
@@ -1059,7 +1076,7 @@ class TypingSessionController internal constructor(
         if (selection == null) return TypingTextResult.REJECTED
         cancelModelRanking()
         val previous = state.composing!!
-        val word = if (index == -1) selection.original else selection.alternatives[index].text
+        val word = if (index == -1) selection.original else selection.displayAlternatives[index].text
         compareShadow(selection)
         val feedbackRevision = comparedRevision ?: state.revision
         val next = previous.copy(typedWord = word)
@@ -1861,9 +1878,13 @@ class TypingSessionController internal constructor(
         val order: List<Int> = generation.alternatives.indices.toList(),
         val modelRanked: Boolean = false,
         val ranking: CalibratedRanking? = null,
+        val manualAlternatives: List<GeneratedCandidate> = emptyList(),
     ) {
         val original get() = generation.original!!
         val alternatives get() = generation.alternatives
+        // Baseline indices remain stable for model scores and automatic admission.
+        val displayAlternatives = (generation.alternatives + manualAlternatives)
+            .distinctBy { it.canonicalKey }.take(CandidateGenerator.MAX_ALTERNATIVES)
         val completion get() = generation.completion
         val visibleIndices get() = order.take(SmartTypingViewState.MAX_VISIBLE_CANDIDATES - 1)
         override fun toString(): String = "CandidateSelection(redacted)"

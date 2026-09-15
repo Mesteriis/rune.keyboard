@@ -95,6 +95,33 @@ class CandidateGenerator(
     private val weighted = WeightedDamerauLevenshtein()
     private val candidates = arrayOfNulls<GeneratedCandidate>(CandidateSearchControl.MAX_VERIFIED)
 
+    /** Optional display retrieval; never replace the baseline generation or its local certificate. */
+    fun generateManualPool(
+        token: String,
+        activeLanguage: KeyboardLanguage,
+        baseline: CandidateGeneration,
+        enabled: Boolean,
+        cancellation: CandidateCancellation = CandidateCancellation { false },
+    ): CandidateGeneration? {
+        if (!enabled || activeLanguage != KeyboardLanguage.RUSSIAN ||
+            LanguageRouter.route(token, activeLanguage).primary != KeyboardLanguage.RUSSIAN ||
+            cancellation.isCancelled() || baseline.original != token ||
+            baseline.isValidWord || baseline.protectedReason != null ||
+            baseline.completion !in setOf(CandidateCompletion.COMPLETE,
+                CandidateCompletion.STATES_EXHAUSTED, CandidateCompletion.VERIFIED_EXHAUSTED)) return null
+        // A complete underfilled selection already exhausted the available neighborhood.
+        if (maximumAlternatives == MAX_ALTERNATIVES ||
+            baseline.isComplete && baseline.alternatives.size < maximumAlternatives) return baseline
+        val expanded = CandidateGenerator(lexicon, MAX_ALTERNATIVES, canonicalCaseLexicon)
+            .generate(token, activeLanguage, cancellation)
+        if (cancellation.isCancelled() || expanded.completion == CandidateCompletion.CANCELLED) return null
+        if (expanded.completion !in setOf(CandidateCompletion.COMPLETE,
+                CandidateCompletion.STATES_EXHAUSTED, CandidateCompletion.VERIFIED_EXHAUSTED)) return null
+        // Wider retrieval may exhaust its budget: keep every baseline proposal before adding extras.
+        return expanded.copy(alternatives = (baseline.alternatives + expanded.alternatives)
+            .distinctBy { it.canonicalKey }.take(MAX_ALTERNATIVES))
+    }
+
     fun generate(
         token: String,
         activeLanguage: KeyboardLanguage,
