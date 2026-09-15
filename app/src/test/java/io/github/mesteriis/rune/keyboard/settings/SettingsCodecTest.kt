@@ -8,6 +8,23 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SettingsCodecTest {
+    @Test fun `personal data features require explicit booleans and supported schema`() {
+        val keys = listOf(SettingsCodec.KEY_PERSONAL_LEARNING, SettingsCodec.KEY_TOUCH_PERSONALIZATION,
+            SettingsCodec.KEY_PHRASE_SUGGESTIONS)
+        fun enabled(value: KeyboardSettings) = listOf(value.personalLearning, value.touchPersonalization,
+            value.phraseSuggestions)
+        assertEquals(listOf(false, false, false), enabled(SettingsCodec.decode(emptyMap())))
+        assertEquals(listOf(false, false, false), enabled(KeyboardSettings.DEFAULT))
+        val values = keys.associateWith { true } + mapOf(SettingsCodec.KEY_SCHEMA_VERSION to 3)
+        assertEquals(listOf(true, true, true), enabled(SettingsCodec.decode(values)))
+        assertEquals(listOf(false, false, false), enabled(SettingsCodec.decode(values +
+            (SettingsCodec.KEY_SCHEMA_VERSION to 999))))
+        for (malformed in listOf<Any?>(null, "true", 1)) {
+            assertEquals(listOf(false, false, false), enabled(SettingsCodec.decode(
+                keys.associateWith { malformed } + (SettingsCodec.KEY_SCHEMA_VERSION to 3))))
+        }
+    }
+
     @Test
     fun `an empty store decodes to the defaults`() {
         val settings = SettingsCodec.decode(emptyMap())

@@ -38,6 +38,25 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class LocalCandidateCoordinatorTest {
+    @Test fun `phrase selection works with spelling off and expires with coordinator invalidation`() {
+        Harness().use { h ->
+            h.configure(AutocorrectionMode.OFF, true)
+            h.controller.setPersonalization(object : TypingPersonalization {
+                override fun continuations(context: String, language: KeyboardLanguage) = listOf("my friend")
+            }, KeyboardLanguage.ENGLISH)
+            h.type("hello"); h.type(" ")
+            val stale = h.coordinator.viewState.candidates.single().id
+            h.coordinator.invalidate()
+            assertEquals(TypingTextResult.REJECTED, h.coordinator.selectCandidate(stale, h.execute))
+            val current = h.coordinator.viewState.candidates.single().id
+            assertEquals(TypingTextResult.HANDLED, h.coordinator.selectCandidate(current, h.execute))
+            assertEquals("hello my friend ", h.controller.state.contextText)
+            assertEquals(0, h.routeRequests)
+            h.configure(AutocorrectionMode.OFF, false)
+            assertFalse(h.coordinator.viewState.enabled)
+        }
+    }
+
     @Test fun `Binder availability loss records refusal for scheduled and submitted origins before cancellation`() {
         for (submitted in listOf(false, true)) Harness(withModel = true).use { h ->
             val records = mutableListOf<DiagnosticEvent>()

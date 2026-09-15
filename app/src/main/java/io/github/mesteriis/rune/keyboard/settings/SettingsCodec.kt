@@ -26,6 +26,9 @@ object SettingsCodec {
     const val KEY_MECHANICAL_PUNCTUATION = "mechanical_punctuation"
     const val KEY_CONTEXTUAL_PUNCTUATION_MODE = "contextual_punctuation_mode"
     const val KEY_CANDIDATE_STRIP = "candidate_strip"
+    const val KEY_PERSONAL_LEARNING = "personal_learning"
+    const val KEY_TOUCH_PERSONALIZATION = "touch_personalization"
+    const val KEY_PHRASE_SUGGESTIONS = "phrase_suggestions"
 
     const val STARTING_LANGUAGE_LAST_USED = "LAST_USED"
 
@@ -82,6 +85,9 @@ object SettingsCodec {
                 if (legacy) defaults.contextualPunctuationMode else ContextualPunctuationMode.OFF, ContextualPunctuationMode.OFF)
                 else ContextualPunctuationMode.OFF,
             candidateStrip = supported && strictBoolean(raw, KEY_CANDIDATE_STRIP, legacy && defaults.candidateStrip),
+            personalLearning = supported && strictBoolean(raw, KEY_PERSONAL_LEARNING, false),
+            touchPersonalization = supported && strictBoolean(raw, KEY_TOUCH_PERSONALIZATION, false),
+            phraseSuggestions = supported && strictBoolean(raw, KEY_PHRASE_SUGGESTIONS, false),
         )
     }
 

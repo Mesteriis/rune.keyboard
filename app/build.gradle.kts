@@ -23,7 +23,7 @@ android {
 
     androidResources {
         // Packed lexicon components are read-only APK mappings opened through AssetManager.openFd.
-        noCompress += listOf("trie", "lengths", "ranks")
+        noCompress += listOf("trie", "lengths", "ranks", "morph")
     }
 
     defaultConfig {

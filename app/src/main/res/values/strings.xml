@@ -142,4 +142,22 @@
   <string name="sound_system">System</string>
   <string name="sound_quiet">Quiet</string>
   <string name="sound_normal">Normal</string>
+    <string name="candidate_continuation">Phrase continuation</string>
+    <string name="candidate_apply_continuation">Insert continuation %1$s</string>
+    <string name="settings_section_personal">Personal typing</string>
+    <string name="settings_personal_learning">Learn from my corrections</string>
+    <string name="settings_personal_learning_summary">Remember chosen words and rejected replacements on this device. Sensitive fields are excluded.</string>
+    <string name="settings_touch_personalization">Adapt to my taps</string>
+    <string name="settings_touch_personalization_summary">Use confirmed choices to rank suggestions by where you tap. Each keyboard size and language learns separately.</string>
+    <string name="settings_phrase_suggestions">Personal phrase suggestions</string>
+    <string name="settings_phrase_suggestions_summary">Show frequent continuations after a space. Tap to insert. Import a profile or enable learning to collect phrases.</string>
+    <string name="settings_import_phrases">Import phrase profile</string>
+    <string name="settings_import_phrases_summary">Import a prepared Rune phrase profile. Original chats stay outside the keyboard.</string>
+    <string name="settings_reset_personal">Delete personal typing data</string>
+    <string name="settings_reset_personal_summary">Delete learned words, replacement feedback, phrase suggestions and tap calibration from this device.</string>
+    <string name="settings_personal_not_ready">Personal typing is not ready. Try again shortly; reset the data if loading failed.</string>
+    <string name="settings_personal_reset_done">Personal typing data deleted</string>
+    <string name="settings_personal_failed">The operation could not be saved. Try again.</string>
+    <string name="settings_personal_imported">Phrase profile imported</string>
+    <string name="settings_personal_empty">No supported dictionary phrases in this profile</string>
 </resources>

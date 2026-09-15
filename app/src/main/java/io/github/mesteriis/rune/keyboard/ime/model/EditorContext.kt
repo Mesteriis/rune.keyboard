@@ -15,7 +15,7 @@ enum class EditorMode {
 /**
  * Runtime input policy every text-touching component must consult.
  * SENSITIVE forbids anything beyond plain committing: no preview popups, no text reads,
- * no learning. An INCOGNITO value joins this enum once learning subsystems exist.
+ * no learning or personal suggestions. IME_FLAG_NO_PERSONALIZED_LEARNING uses this policy too.
  */
 enum class InputPolicy {
     NORMAL,

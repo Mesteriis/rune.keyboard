@@ -8,6 +8,9 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingResources
+import io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingStore
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsActivity
 import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
@@ -41,6 +44,7 @@ class SettingsActivity : ThemedActivity() {
         container = findViewById(R.id.settings_container)
         applySystemBarInsets(findViewById<View>(R.id.settings_scroll))
         appliedTheme = themePreference()
+        PersonalTypingResources.get(this)
     }
 
     override fun onResume() {
@@ -74,6 +78,23 @@ class SettingsActivity : ThemedActivity() {
                 }
             }
         }, "Rune-settings-readiness").apply { isDaemon = true }.start()
+    }
+
+    @Deprecated("Framework activity result callback")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode != PERSONAL_PROFILE_REQUEST || resultCode != RESULT_OK) return
+        val uri = data?.data ?: return
+        PersonalTypingResources.get(this).personal.importProfile(
+            { contentResolver.openInputStream(uri) ?: throw java.io.IOException("Profile unavailable") },
+        ) { result -> runOnUiThread {
+            preferences.notifyPersonalProfileChanged()
+            if (!isFinishing && !isDestroyed) Toast.makeText(this, when (result) {
+                PersonalTypingStore.ImportResult.IMPORTED -> R.string.settings_personal_imported
+                PersonalTypingStore.ImportResult.EMPTY -> R.string.settings_personal_empty
+                else -> R.string.settings_personal_failed
+            }, Toast.LENGTH_LONG).show()
+        } }
     }
 
     private fun reload() {
@@ -125,6 +146,41 @@ class SettingsActivity : ThemedActivity() {
             checked = settings.doubleSpacePeriod,
         ) { enabled ->
             preferences.writeDoubleSpacePeriod(enabled)
+        }
+        addSection(R.string.settings_section_personal)
+        addToggleRow(R.string.settings_personal_learning, R.string.settings_personal_learning_summary,
+            settings.personalLearning) { preferences.writePersonalLearning(it) }
+        addToggleRow(R.string.settings_touch_personalization, R.string.settings_touch_personalization_summary,
+            settings.touchPersonalization) { preferences.writeTouchPersonalization(it) }
+        addToggleRow(R.string.settings_phrase_suggestions, R.string.settings_phrase_suggestions_summary,
+            settings.phraseSuggestions) { preferences.writePhraseSuggestions(it) }
+        addNavigationRow(R.string.settings_import_phrases, getString(R.string.settings_import_phrases_summary)) {
+            val resources = PersonalTypingResources.get(this)
+            if (!resources.dictionaryLoaded || !resources.personal.isReady) {
+                Toast.makeText(this, R.string.settings_personal_not_ready, Toast.LENGTH_LONG).show()
+            } else {
+                @Suppress("DEPRECATION")
+                startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    type = "*/*"
+                }, PERSONAL_PROFILE_REQUEST)
+            }
+        }
+        addNavigationRow(R.string.settings_reset_personal, getString(R.string.settings_reset_personal_summary)) {
+            AlertDialog.Builder(this).setTitle(R.string.settings_reset_personal)
+                .setMessage(R.string.settings_reset_personal_summary)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.settings_reset_personal) { _, _ ->
+                    val resources = PersonalTypingResources.get(this)
+                    resources.touch.reset { touchSuccess ->
+                        resources.personal.reset { personalSuccess -> runOnUiThread {
+                            preferences.notifyPersonalProfileChanged()
+                            if (!isFinishing && !isDestroyed) Toast.makeText(this,
+                                if (touchSuccess && personalSuccess) R.string.settings_personal_reset_done else
+                                    R.string.settings_personal_failed, Toast.LENGTH_LONG).show()
+                        } }
+                    }
+                }.show()
         }
         addSection(R.string.settings_section_typing)
         addToggleRow(
@@ -368,3 +424,5 @@ class SettingsActivity : ThemedActivity() {
         SoundMode.NORMAL -> R.string.sound_normal
     }
 }
+
+private const val PERSONAL_PROFILE_REQUEST = 803

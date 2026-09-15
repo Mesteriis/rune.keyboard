@@ -1,0 +1,27 @@
+Russian morphology dictionary attribution and license
+
+Source: OpenCorpora project and contributors, https://opencorpora.org/
+Source dictionary version 0.92, revision 417150; corpus revision 4580142.
+Distributed source: pymorphy3-dicts-ru 2.4.417150.4580142.
+https://pypi.org/project/pymorphy3-dicts-ru/2.4.417150.4580142/
+
+The OpenCorpora linguistic data is licensed under Creative Commons Attribution-
+ShareAlike 3.0 Unported (CC BY-SA 3.0). This adapted dictionary is distributed
+under that same license.
+License: https://creativecommons.org/licenses/by-sa/3.0/
+Legal code: https://creativecommons.org/licenses/by-sa/3.0/legalcode
+
+Changes by Rune Keyboard contributors: selected exact lowercase NFC Russian
+words and hyphenated words up to 32 Unicode scalars; converted normal-form and
+paradigm identity into numeric lemma-family IDs; marked words with multiple
+families as ambiguous; encoded sorted exact spellings with UTF-8 front coding.
+No predicted forms, private messages, user frequencies, or personal profiles
+are included. The data provides membership and lexical-family evidence, not
+proof of semantic intent or correction accuracy. No endorsement is implied.
+
+Reproducible conversion: tools/morphology/export_dictionary.py in the Rune source.
+Package file hashes, dictionary provenance, output hash, and exporter hash are
+recorded in smarttyping/lexicon/provenance/morphology-manifest.json.
+
+The pymorphy3 and dawg2-python tools are MIT-licensed code; their code license
+and the dictionary package wrapper do not relicense OpenCorpora linguistic data.

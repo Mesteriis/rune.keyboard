@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.ime.ui
 
 import android.content.Context
+import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.drawable.InsetDrawable
 import android.os.Build
@@ -21,12 +22,24 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
 import io.github.mesteriis.rune.keyboard.ime.model.ShiftMode
 import io.github.mesteriis.rune.keyboard.settings.KeyboardViewMetrics
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
+import io.github.mesteriis.rune.keyboard.smarttyping.touch.PhysicalTouchSample
+import io.github.mesteriis.rune.keyboard.smarttyping.touch.TouchKeyOffset
+import io.github.mesteriis.rune.keyboard.smarttyping.touch.TouchLayoutProfile
+import io.github.mesteriis.rune.keyboard.smarttyping.touch.TouchCalibrationModel
+import java.security.MessageDigest
+import kotlin.math.abs
 
 internal class RuneKeyboardView(
     context: Context,
     private val metrics: KeyboardViewMetrics,
 ) : LinearLayout(context), KeyPopupHost {
     private var actionListener: ((KeyboardAction) -> Unit)? = null
+    private var physicalTouchListener: ((PhysicalTouchSample) -> Unit)? = null
+    private var touchGeometryChangedListener: (() -> Unit)? = null
+    private var touchLearningEnabled = false
+    private var touchLayoutIdentity: String? = null
+    private var renderedState: KeyboardState? = null
+    private val letterKeys = linkedMapOf<KeyboardKeyView, Char>()
     private var activeTouchCount = 0
     private var pendingRender: PendingRender? = null
     private var previewEnabled = true
@@ -79,6 +92,19 @@ internal class RuneKeyboardView(
         actionListener = listener
     }
 
+    fun setOnPhysicalTouchListener(listener: (PhysicalTouchSample) -> Unit) {
+        physicalTouchListener = listener
+    }
+
+    fun setOnTouchGeometryChangedListener(listener: () -> Unit) {
+        touchGeometryChangedListener = listener
+    }
+
+    fun setTouchLearningEnabled(enabled: Boolean) {
+        if (touchLearningEnabled && !enabled) touchGeometryChangedListener?.invoke()
+        touchLearningEnabled = enabled
+    }
+
     fun setOnCandidateSelectedListener(listener: (String) -> Unit) {
         candidateStrip.setOnCandidateSelectedListener(listener)
     }
@@ -90,6 +116,7 @@ internal class RuneKeyboardView(
 
     fun setPopupPolicy(previewEnabled: Boolean, inputPolicy: InputPolicy) {
         this.previewEnabled = previewEnabled
+        if (this.inputPolicy != inputPolicy) touchGeometryChangedListener?.invoke()
         this.inputPolicy = inputPolicy
     }
 
@@ -102,15 +129,26 @@ internal class RuneKeyboardView(
     }
 
     private fun applyRender(layout: KeyboardLayout, state: KeyboardState) {
+        val identity = state.language.name + ":" + state.layer.name + ":" + layout.rows.joinToString(";") { row ->
+            row.joinToString(",") { spec ->
+                val letter = (spec.action as? KeyboardAction.CommitLetter)?.value?.lowercase()
+                "${letter ?: spec.style.name}:${spec.weight}"
+            }
+        }
+        if (touchLayoutIdentity != identity) touchGeometryChangedListener?.invoke()
+        touchLayoutIdentity = identity
+        renderedState = state
         RuneTrace.section("Rune#rebuildKeys") {
             // Key views are about to be discarded; a popup anchored to one of them must go first.
             popupController?.dismissAll()
+            letterKeys.clear()
             keysContainer.removeAllViews()
             layout.rows.forEach { rowSpecs -> keysContainer.addView(createRow(rowSpecs, state)) }
         }
     }
 
     fun cancelActiveTouches() {
+        touchGeometryChangedListener?.invoke()
         pendingRender = null
         popupController?.dismissAll()
         forEachKey { key -> key.cancelPendingActions() }
@@ -192,13 +230,65 @@ internal class RuneKeyboardView(
                     actionListener = { action -> actionListener?.invoke(action) },
                     touchStateListener = ::onKeyTouchStateChanged,
                     popupHost = this,
+                    physicalTouchListener = { x, y -> capturePhysicalTouch(view, x, y) },
+                    physicalTouchAllowed = {
+                        touchLearningEnabled && inputPolicy == InputPolicy.NORMAL &&
+                            spec.action is KeyboardAction.CommitLetter
+                    },
                 )
+                val letter = (spec.action as? KeyboardAction.CommitLetter)?.value?.singleOrNull()?.lowercaseChar()
+                if (letter != null && letter.isLetter()) letterKeys[view] = letter
             }
         }
         keyView.layoutParams = LayoutParams(0, metrics.keyHeightPx, spec.weight).apply {
             setMargins(0, 0, 0, 0)
         }
         return keyView
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        if (w != oldw || h != oldh) touchGeometryChangedListener?.invoke()
+    }
+
+    private fun capturePhysicalTouch(key: KeyboardKeyView, localX: Float, localY: Float) {
+        if (!touchLearningEnabled || inputPolicy != InputPolicy.NORMAL) return
+        val listener = physicalTouchListener ?: return
+        val state = renderedState ?: return
+        if (state.layer != KeyboardLayer.LETTERS) return
+        val observed = letterKeys[key] ?: return
+        if (width <= 0 || keysContainer.height <= 0) return
+        fun bounds(view: View): Rect = Rect(0, 0, view.width, view.height).also {
+            offsetDescendantRectToMyCoords(view, it)
+        }
+        val source = bounds(key)
+        val tapX = source.left + localX
+        val tapY = source.top + localY
+        val geometries = letterKeys.map { (view, letter) -> letter to bounds(view) }
+        val signature = geometries.joinToString(";") { (letter, rect) ->
+            "${letter.code},${rect.left},${rect.top},${rect.width()},${rect.height()}"
+        }
+        val offsets = geometries.mapNotNull { (letter, rect) ->
+            if (rect.width() <= 0 || rect.height() <= 0) return@mapNotNull null
+            val x = (tapX - rect.exactCenterX()).toDouble() / rect.width()
+            val y = (tapY - rect.exactCenterY()).toDouble() / rect.height()
+            if (abs(x) > 1.75 || abs(y) > 1.75) null else TouchKeyOffset(letter, x, y)
+        }.sortedBy { it.x * it.x + it.y * it.y }.take(TouchCalibrationModel.MAX_NEIGHBOURS)
+        val configuration = resources.configuration
+        val profile = TouchLayoutProfile(
+            language = state.language.name,
+            layer = state.layer.name,
+            widthPx = width,
+            heightPx = keysContainer.height,
+            orientation = configuration.orientation,
+            screenWidthDp = configuration.screenWidthDp,
+            screenHeightDp = configuration.screenHeightDp,
+            densityDpi = configuration.densityDpi,
+            displayId = display?.displayId ?: 0,
+            geometrySignature = MessageDigest.getInstance("SHA-256")
+                .digest(signature.toByteArray(Charsets.UTF_8)).joinToString("") { "%02x".format(it) },
+        )
+        listener(PhysicalTouchSample(profile, observed, offsets))
     }
 
     private fun styleKey(view: android.widget.TextView, spec: KeySpec, state: KeyboardState) {

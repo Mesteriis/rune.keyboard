@@ -18,7 +18,8 @@ class SmartTypingViewState(
         val snapshot = candidates.toList()
         require(enabled || snapshot.isEmpty()) { "Hidden state must not retain candidate text" }
         require(snapshot.map { it.id }.distinct().size == snapshot.size) { "Duplicate candidate ID" }
-        require(snapshot.isEmpty() || snapshot.count { it is CandidateUiItem.Original } == 1) {
+        require(snapshot.isEmpty() || snapshot.all { it is CandidateUiItem.Continuation } ||
+            (snapshot.none { it is CandidateUiItem.Continuation } && snapshot.count { it is CandidateUiItem.Original } == 1)) {
             "Visible candidates must contain exactly one original"
         }
         require(

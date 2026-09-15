@@ -104,6 +104,7 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
                     when (it) {
                         is CandidateUiItem.Original -> R.string.candidate_original
                         is CandidateUiItem.Correction -> R.string.candidate_correction
+                        is CandidateUiItem.Continuation -> R.string.candidate_continuation
                         is CandidateUiItem.Punctuation -> R.string.candidate_punctuation
                     },
                     it.text,
@@ -183,6 +184,7 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
             val action = when (current) {
                 is CandidateUiItem.Original -> R.string.candidate_keep_original
                 is CandidateUiItem.Correction -> R.string.candidate_apply_correction
+                is CandidateUiItem.Continuation -> R.string.candidate_apply_continuation
                 is CandidateUiItem.Punctuation -> R.string.candidate_apply_punctuation
             }
             info.removeAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK)

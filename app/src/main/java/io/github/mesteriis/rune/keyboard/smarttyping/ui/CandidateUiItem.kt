@@ -20,6 +20,11 @@ sealed interface CandidateUiItem {
         override fun toString(): String = "Punctuation(redacted)"
     }
 
+    data class Continuation(override val id: String, override val text: String) : CandidateUiItem {
+        init { validateCandidate(id, text) }
+        override fun toString(): String = "Continuation(redacted)"
+    }
+
     companion object {
         const val MAX_ID_LENGTH = 96
         const val MAX_TEXT_UTF16 = 256

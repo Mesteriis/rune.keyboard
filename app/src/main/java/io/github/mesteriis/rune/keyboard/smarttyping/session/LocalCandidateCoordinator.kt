@@ -173,7 +173,7 @@ class LocalCandidateCoordinator internal constructor(
     fun selectCandidate(id: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
         checkOwner()
         val owner = ownerState?.invoke()
-        if (closed || owner?.showsCandidates != true || !controller.ownsCandidateComposition) {
+        if (closed || owner?.showsCandidates != true || (!controller.ownsCandidateComposition && !controller.ownsContinuation)) {
             invalidate()
             return TypingTextResult.REJECTED
         }
@@ -184,7 +184,7 @@ class LocalCandidateCoordinator internal constructor(
         invalidateLoads()
         // Under OFF, Original can acknowledge only the current spelling, never restore a prior
         // manual correction if a caller changed policy without clearing its old metadata.
-        if (!owner.spellingEnabled && item !is CandidateUiItem.Punctuation) {
+        if (!owner.spellingEnabled && item !is CandidateUiItem.Punctuation && item !is CandidateUiItem.Continuation) {
             return if (controller.selectOriginal(id)) TypingTextResult.HANDLED else TypingTextResult.REJECTED
         }
         return controller.selectCandidate(id, execute)
@@ -197,7 +197,7 @@ class LocalCandidateCoordinator internal constructor(
             val owner = ownerState?.invoke()
             if (closed || owner?.showsCandidates != true) return SmartTypingViewState.HIDDEN
             val view = controller.candidateViewState
-            if (!view.enabled) return view
+            if (!view.enabled || view.candidates.all { it is CandidateUiItem.Continuation }) return view
             if (owner.spellingEnabled) {
                 if (owner.canRequestContextual || view.candidates.none { it is CandidateUiItem.Punctuation }) return view
                 val visible = view.candidates.filterNot { it is CandidateUiItem.Punctuation }

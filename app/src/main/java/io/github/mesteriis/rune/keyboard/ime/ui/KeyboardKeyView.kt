@@ -33,6 +33,11 @@ internal class KeyboardKeyView @JvmOverloads constructor(
 ) : TextView(context, attrs), CancelableKey {
     private var spec: KeySpec? = null
     private var actionListener: ((KeyboardAction) -> Unit)? = null
+    private var physicalTouchListener: ((Float, Float) -> Unit)? = null
+    private var physicalTouchAllowed: (() -> Boolean)? = null
+    private var physicalTapEligible = false
+    private var touchDownX = 0f
+    private var touchDownY = 0f
     private var touchStateListener: ((Boolean) -> Unit)? = null
     private var popupHost: KeyPopupHost? = null
     private var repeatable = false
@@ -77,6 +82,8 @@ internal class KeyboardKeyView @JvmOverloads constructor(
         actionListener: (KeyboardAction) -> Unit,
         touchStateListener: (Boolean) -> Unit,
         popupHost: KeyPopupHost?,
+        physicalTouchListener: ((Float, Float) -> Unit)? = null,
+        physicalTouchAllowed: (() -> Boolean)? = null,
     ) {
         cancelPendingActions()
         this.spec = spec
@@ -84,6 +91,8 @@ internal class KeyboardKeyView @JvmOverloads constructor(
         this.actionListener = actionListener
         this.touchStateListener = touchStateListener
         this.popupHost = popupHost
+        this.physicalTouchListener = physicalTouchListener
+        this.physicalTouchAllowed = physicalTouchAllowed
         isEnabled = spec.action != null
         isClickable = spec.action != null
         isLongClickable = spec.longPressAlternates.isNotEmpty() || repeatable
@@ -94,6 +103,10 @@ internal class KeyboardKeyView @JvmOverloads constructor(
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 beginTouch()
+                physicalTapEligible = event.pointerCount == 1 && physicalTouchListener != null &&
+                    (physicalTouchAllowed?.invoke() != false)
+                touchDownX = if (physicalTapEligible) event.x else 0f
+                touchDownY = if (physicalTapEligible) event.y else 0f
                 armed = true
                 longPressTriggered = false
                 alternatesActive = false
@@ -105,7 +118,9 @@ internal class KeyboardKeyView @JvmOverloads constructor(
                     postDelayed(longPressRunnable, ViewConfiguration.getLongPressTimeout().toLong())
                 }
             }
+            MotionEvent.ACTION_POINTER_DOWN -> physicalTapEligible = false
             MotionEvent.ACTION_MOVE -> {
+                if (event.pointerCount != 1) physicalTapEligible = false
                 if (alternatesActive) {
                     // The finger is expected to leave the key while picking an alternate.
                     popupHost?.onKeyMove(this, event.x, event.y)
@@ -123,9 +138,19 @@ internal class KeyboardKeyView @JvmOverloads constructor(
                     endTouch()
                 } else {
                     val shouldClick = armed && !longPressTriggered
+                    val capturePhysicalTap = shouldClick && physicalTapEligible && event.pointerCount == 1 &&
+                        touchDownX >= 0f && touchDownX < width && touchDownY >= 0f && touchDownY < height &&
+                        event.x >= 0f && event.x < width && event.y >= 0f && event.y < height
+                    val contactX = touchDownX
+                    val contactY = touchDownY
                     popupHost?.onKeyCancel(this)
                     finishGesture()
-                    if (shouldClick) performClick()
+                    if (shouldClick) {
+                        // Report the original contact before dispatching the acknowledged action.
+                        // Accessibility performClick, repeats, cancels, and alternates never enter here.
+                        if (capturePhysicalTap) physicalTouchListener?.invoke(contactX, contactY)
+                        performClick()
+                    }
                     endTouch()
                 }
             }
@@ -170,6 +195,9 @@ internal class KeyboardKeyView @JvmOverloads constructor(
 
     private fun finishGesture() {
         armed = false
+        physicalTapEligible = false
+        touchDownX = 0f
+        touchDownY = 0f
         longPressTriggered = false
         alternatesActive = false
         repeatCount = 0

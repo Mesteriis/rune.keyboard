@@ -1,0 +1,113 @@
+{
+  "ambiguousWords": 69078,
+  "asset": "ru.morph",
+  "blockSize": 32,
+  "blocks": 95741,
+  "bytes": 28591430,
+  "exporterSha256": "e2d58269d986bb31730d8d600c3d7fdec4eefb181cd84dcc80a59e8c5030e6de",
+  "format": "RUNEMRF1",
+  "installedPackages": {
+    "dictionaryOnly": true,
+    "packages": {
+      "dawg2-python": {
+        "files": {
+          "dawg2_python-0.9.0.dist-info/INSTALLER": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508",
+          "dawg2_python-0.9.0.dist-info/LICENSE": "2e5e7d32243cec7f102512b909db245c1c83b56823ec2b5fa1020cbe4fc7c3f0",
+          "dawg2_python-0.9.0.dist-info/METADATA": "371d6b3c0f2dd0c875203524eb27694ec1d1863ebb4d76776d567599df6d6916",
+          "dawg2_python-0.9.0.dist-info/RECORD": "81685f3206d7a1b51eacb4f9b8da6353635a0d8a914a01ef74489bb8f20345ca",
+          "dawg2_python-0.9.0.dist-info/REQUESTED": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "dawg2_python-0.9.0.dist-info/WHEEL": "5db7990de4d629cd70ec2488cab7b968c0d4ffe3e8851c1341c7989e2b086186",
+          "dawg_python/__init__.py": "d85763e4d34f8abe3f72c676f1efb1229b14ed2eb8727ccd0ead991f23a3a613",
+          "dawg_python/dawgs.py": "4744fbadc8fb2d582094975174998197d4d9373b3bdd6bd862fbbd05fe537d43",
+          "dawg_python/units.py": "4915ef70373cc1df87aec869a0488fc8f1b37c282f199faa9dfae511e942c755",
+          "dawg_python/wrapper.py": "431a0d52db3112dae6e7fb728f6568e0727cd5dc8c5445bac5d2322efe085d60"
+        },
+        "version": "0.9.0"
+      },
+      "pymorphy3": {
+        "files": {
+          "pymorphy3-2.0.6.dist-info/INSTALLER": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508",
+          "pymorphy3-2.0.6.dist-info/METADATA": "cc267706d693da98ae515135f310e668335869e59d515cd139abe75eebe15651",
+          "pymorphy3-2.0.6.dist-info/RECORD": "28c6a1394cf253f15993c39bca146fb0a9582d80d77f0cab8adec78d54022289",
+          "pymorphy3-2.0.6.dist-info/REQUESTED": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "pymorphy3-2.0.6.dist-info/WHEEL": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b",
+          "pymorphy3-2.0.6.dist-info/entry_points.txt": "d949fedc8f7a7635885e2f259d4cafadc0d1333733bf412c794eb1ab58ed0699",
+          "pymorphy3-2.0.6.dist-info/licenses/AUTHORS.rst": "f7a8a2a9dddde7f12dff43afc914ac2feb3ad3d9de2842d7505ed2f60e6e2131",
+          "pymorphy3-2.0.6.dist-info/licenses/LICENSE.txt": "a5e6ddb3af783a02eacc848cbe309cc0940b4859ac653e9b1a2e21a4fea22552",
+          "pymorphy3-2.0.6.dist-info/top_level.txt": "7fe89543e7087fc5a101d670e74a73e94a2deba5a2f5f917693980001744e86b",
+          "pymorphy3/__init__.py": "7b9b7979c8a0b4070f0efe573dfde25b2aa12a71b3b7ed3c2b184acfb1c17c88",
+          "pymorphy3/analyzer.py": "9e2afb24caf5d59ee97ffa006ddbbf18c6792c45d9ca9294aacc14dfc7acd3c3",
+          "pymorphy3/cli.py": "859db3c0760996ae74187fc6fb1dc7dcc40fb3966e7d329d50c44038e9495c34",
+          "pymorphy3/dawg.py": "6c8b8b9d5cb88bb5eacd7e67bc63bfaa3b6cf0051791f606d153ee2ff3915bdd",
+          "pymorphy3/lang/__init__.py": "abe9c76aec383c264b2f0103a24037534795dd878acd5adc7e83056dcfbb124d",
+          "pymorphy3/lang/ru/__init__.py": "034d25a6750a83eab7cbf6fe70dde3285f6eae41931a36f6633fe019cf5608bb",
+          "pymorphy3/lang/ru/config.py": "50bd297aa5d122961f7da54dc85be9bc8aea7f14c6bc75da7aaa573e264072a4",
+          "pymorphy3/lang/uk/__init__.py": "034d25a6750a83eab7cbf6fe70dde3285f6eae41931a36f6633fe019cf5608bb",
+          "pymorphy3/lang/uk/_prefixes.py": "035afd56a5a2e3e0a6b56b128547375355049bdd4714edebc132a560eb514499",
+          "pymorphy3/lang/uk/config.py": "d7eb090fb86c8b0dc0329d39bd11ebbd6cb1e5701803185e5308db94e91735b2",
+          "pymorphy3/opencorpora_dict/__init__.py": "f109e628d2e3b51d4bcab70feeb7548026e99a578bd07b2327565b61847005a4",
+          "pymorphy3/opencorpora_dict/compile.py": "fded937c9ea0795bd7c0472573a3aa7f5864cd51508b69f6946ca079055b26e2",
+          "pymorphy3/opencorpora_dict/parse.py": "89928ec1b3556335d0605a2988d2113363100bc9ab8d31a2addc3179549da54a",
+          "pymorphy3/opencorpora_dict/preprocess.py": "1d656e15f3f7f01ae7ab2ec2ae53a1d6e988387aef249c09943edae1e9de7ff4",
+          "pymorphy3/opencorpora_dict/probability.py": "5cee8ccd06200aeeb03ca2df85299933655cdd6aa79796c49f2340a06d42b48e",
+          "pymorphy3/opencorpora_dict/storage.py": "170175053bcff3e1d8f1c12cdcff39b956268b41f1cc9d224bae0ae87c65d76f",
+          "pymorphy3/opencorpora_dict/wrapper.py": "f7d70cb26c3870a08d0d8034bd9b12c25f0eee7e0720f0cb1b3450ae437acace",
+          "pymorphy3/shapes.py": "56e97c412c0c389abb5bb927a19a69b58388555b4a9caa996dfde236eefa1f40",
+          "pymorphy3/tagset.py": "481a15aee31d8040dd14cf85ada652def573435febccff04e2ea04d879d8cf54",
+          "pymorphy3/tokenizers.py": "40519d78d22a4e92ed148929a8886761b24bc1dd47b5e7141c2179bd9e46710d",
+          "pymorphy3/units/__init__.py": "b90f2178b361ac9373bd83a2bfc48de67c2e10b622ec46197eaf1b3ac4f575d3",
+          "pymorphy3/units/abbreviations.py": "f6628a000f159ea6b68f7d33213496386b614efd5d8415f153968ea4d14cff5b",
+          "pymorphy3/units/base.py": "e7f11370e476cbfbddfa0136427421008896f25eca224001682b0ea4113763b7",
+          "pymorphy3/units/by_analogy.py": "200fc60772fff48b61f42c100c25712f4bd33a1d37700a0a0b213b1990bdfe4c",
+          "pymorphy3/units/by_hyphen.py": "3c5c79a4b79e284f46a7d068e6956a7964712e1ea69d038f3defe0b02de2d82f",
+          "pymorphy3/units/by_lookup.py": "0450d751668fdf6581871ec479264529f13fbd6b2242fa372978f1b1eff6c3df",
+          "pymorphy3/units/by_shape.py": "95b9365df1249c466effcc2cc7469f27854202b314120ab1ed7e97d476fa98f2",
+          "pymorphy3/units/unkn.py": "1a4589a260a59fd6609a1ada82b905d6309fceb62b4fba6c53072ab6166148f2",
+          "pymorphy3/units/utils.py": "55ff8d0def907a207181fc4d44d5277e054653280ac5a247e2d8dc35ba577b7f",
+          "pymorphy3/utils.py": "e764848a471065ad9b3969cf1705897fd09a9c949faa0177f46101a82fbd8b20",
+          "pymorphy3/version.py": "e18c5fb7f30d3adc101b9f266696bc7a83345c11daf153644cf1fdfe2d200da3"
+        },
+        "version": "2.0.6"
+      },
+      "pymorphy3-dicts-ru": {
+        "files": {
+          "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/INSTALLER": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508",
+          "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/METADATA": "07512674d15bbe2d92b97c5f185a73ee31623165c1e4c48eb40c3f51a530e17d",
+          "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/RECORD": "7b2c59ad80c65673065fe962cb50f92bc77c566b3f16bb94a8b14377305aadcc",
+          "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/REQUESTED": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/WHEEL": "cfd8f4c406bf26650a3299b3ef62b464600b48cfe7fb04159866e5797c765478",
+          "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/entry_points.txt": "0414fd734ef74e19844dc8de3793add7b0391b35aef7212850eebfdfd7c69685",
+          "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/top_level.txt": "86cd89be956f6b419c9642b10e801b50040186fb42ebf38074b3a1568c072e67",
+          "pymorphy3_dicts_ru/__init__.py": "a03fca8c0a7e6536b3032ccffbc58441945265a2b6e71aa98f5fac9d70f7bc0b",
+          "pymorphy3_dicts_ru/data/grammemes.json": "0c2dae69cf15c3cdd9b92c7bce2273b2f1ca0f806228a01de0fe3f24145337fb",
+          "pymorphy3_dicts_ru/data/gramtab-opencorpora-ext.json": "07ba6280d93ade73563289edac1a8fff4ce2388a813d0f47d32431cfaae84d90",
+          "pymorphy3_dicts_ru/data/gramtab-opencorpora-int.json": "1a72703ac84c16572deee6a92779a322b59763cbc336021433d52c33160fa05b",
+          "pymorphy3_dicts_ru/data/meta.json": "0c16fa06946dbda7db6df209128004f5edb36f9d8bdf48e5efff6045ec21a2fd",
+          "pymorphy3_dicts_ru/data/p_t_given_w.intdawg": "000a4d34ff42c44c65aca33ebcae689c77455a9a244145881b28fd8b8b7ea21e",
+          "pymorphy3_dicts_ru/data/paradigms.array": "dfc465558f1a2760bbde6fa89f0447a5c93896da429efe658fe2f0638954758b",
+          "pymorphy3_dicts_ru/data/prediction-suffixes-0.dawg": "85f38ab5a14566b7b22b8bfb5a63118992013f45757bf60ef1e5e937a92f1aae",
+          "pymorphy3_dicts_ru/data/prediction-suffixes-1.dawg": "31ddaef03712c6168488241be17ce59afa0f4c465e1ba7bf3a5bf095f2053b5f",
+          "pymorphy3_dicts_ru/data/prediction-suffixes-2.dawg": "4e6d6e687031b89e5e7035647570f69d28528e7df123210cc994b8aea36c85fd",
+          "pymorphy3_dicts_ru/data/suffixes.json": "c827ccc32b85e42c3edab8ac235bf91fdbc392e94455ad139da06fb1babcdb74",
+          "pymorphy3_dicts_ru/data/words.dawg": "ae4381a9d6e4e636309ac1a242e480a9470a05723f6673d5fcc3fcf293aa8a9e",
+          "pymorphy3_dicts_ru/version.py": "c2dc3477678f331101613c71e7d497a3f46a25e973cb3d0043ed91dc98114fe1"
+        },
+        "version": "2.4.417150.4580142"
+      }
+    },
+    "schemaVersion": 1
+  },
+  "lemmaFamilies": 177636,
+  "schemaVersion": 1,
+  "sha256": "c1707864a8fbc805aa98bc8307be99f2c9904eec5cc27d26a5220e001d88d28b",
+  "source": {
+    "license": "CC-BY-SA-3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "name": "OpenCorpora",
+    "revision": "417150",
+    "url": "https://opencorpora.org/",
+    "version": "0.92"
+  },
+  "transformation": "Exact NFC lowercase Russian dictionary words and hyphenated words, 1-32 scalars; no predictions or е/ё expansion. Lemma family = dictionary normal form and paradigm; multiple families = ambiguous. Front-coded UTF-8 with deterministic IDs.",
+  "words": 3063710
+}

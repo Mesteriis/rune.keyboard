@@ -92,6 +92,9 @@ data class KeyboardSettings(
     val mechanicalPunctuation: Boolean = true,
     val contextualPunctuationMode: ContextualPunctuationMode = ContextualPunctuationMode.OFF,
     val candidateStrip: Boolean = true,
+    val personalLearning: Boolean = false,
+    val touchPersonalization: Boolean = false,
+    val phraseSuggestions: Boolean = false,
 ) {
     init {
         require(enabledLanguages.isNotEmpty()) { "At least one language must stay enabled" }

@@ -85,6 +85,11 @@ class KeyboardPreferences internal constructor(private val preferences: SharedPr
         edit { putBoolean(SettingsCodec.KEY_CANDIDATE_STRIP, enabled) }
     }
 
+    fun writePersonalLearning(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_PERSONAL_LEARNING, enabled) } }
+    fun writeTouchPersonalization(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_TOUCH_PERSONALIZATION, enabled) } }
+    fun writePhraseSuggestions(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_PHRASE_SUGGESTIONS, enabled) } }
+    fun notifyPersonalProfileChanged() { edit { putLong("personal_profile_revision", System.nanoTime()) } }
+
     /**
      * Callers must hold a strong reference to [listener] for as long as they want updates —
      * SharedPreferences keeps registered listeners weakly.

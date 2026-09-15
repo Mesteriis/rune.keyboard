@@ -14,6 +14,205 @@ import org.junit.Test
 
 /** Real owner/executor with an independent editor document. Synthetic quality admission only. */
 class CorrectionBoundaryTest {
+    private class PersonalEvents : TypingPersonalization {
+        var allow = true
+        val events = mutableListOf<String>()
+        val committedPrefixes = mutableListOf<String>()
+        var phrases = emptyList<String>()
+        override fun allowsAutomatic(generation: CandidateGeneration, candidate: GeneratedCandidate,
+            language: KeyboardLanguage) = allow
+        override fun accepted(original: String, replacement: String, language: KeyboardLanguage) {
+            events.add("accept:$original:$replacement")
+        }
+        override fun rejected(original: String, replacement: String, language: KeyboardLanguage) {
+            events.add("reject:$original:$replacement")
+        }
+        override fun confirmed(word: String, language: KeyboardLanguage) { events.add("confirm:$word") }
+        override fun committed(prefix: String, word: String, retypedFrom: String?, language: KeyboardLanguage) {
+            events.add("commit:$word:$retypedFrom")
+            committedPrefixes.add(prefix)
+        }
+        override fun continuations(context: String, language: KeyboardLanguage) = phrases
+    }
+
+    @Test fun `personal veto preserves suggestions and prevents immediate and delayed replacements`() {
+        val direct = Fixture(); val hook = PersonalEvents().apply { allow = false }
+        direct.controller.setPersonalization(hook, KeyboardLanguage.ENGLISH)
+        direct.raw("helllo"); direct.publish("hello")
+        assertEquals(listOf("helllo", "hello"), direct.controller.candidateViewState.candidates.map { it.text })
+        assertEquals(direct.controller.originalCandidateId, direct.controller.candidateViewState.selectedCandidateId)
+        direct.type(" "); assertEquals("helllo ", direct.document)
+        val delayed = Fixture(modelOnly = true)
+        delayed.controller.setPersonalization(hook, KeyboardLanguage.ENGLISH)
+        val request = delayed.pendingSpace()
+        assertFalse(delayed.controller.acceptSpaceCorrection(winningReply(request), delayed.execute))
+        assertEquals("helllo ", delayed.document)
+    }
+
+    @Test fun `only acknowledged manual choices train and stale choices never train`() {
+        for (fails in listOf(false, true)) {
+            val f = Fixture(); val hook = PersonalEvents()
+            f.controller.setPersonalization(hook, KeyboardLanguage.ENGLISH)
+            f.raw("helllo"); f.publish("hello")
+            val id = f.controller.candidateViewState.candidates[1].id
+            if (fails) f.fail = "setComposingText"
+            val result = f.controller.selectCandidate(id, f.execute)
+            assertEquals(if (fails) TypingTextResult.REJECTED else TypingTextResult.HANDLED, result)
+            assertEquals(if (fails) emptyList<String>() else listOf("accept:helllo:hello"), hook.events)
+            val count = hook.events.size
+            assertEquals(TypingTextResult.REJECTED, f.controller.selectCandidate(id, f.execute))
+            assertEquals(count, hook.events.size)
+        }
+    }
+
+    @Test fun `undo teaches exact rejected pair but ordinary backspace teaches no rejection`() {
+        val f = Fixture(); val hook = PersonalEvents()
+        f.controller.setPersonalization(hook, KeyboardLanguage.ENGLISH)
+        f.raw("helllo"); f.publish("hello"); f.type(" ")
+        assertTrue(hook.events.isEmpty())
+        f.undo()
+        assertEquals(listOf("reject:helllo:hello"), hook.events)
+        hook.events.clear(); f.undo(); assertTrue(hook.events.isEmpty())
+    }
+
+    @Test fun `manual retype emitted only after owned word completed and forgotten on context loss`() {
+        val f = Fixture(); val hook = PersonalEvents()
+        f.controller.setPersonalization(hook, KeyboardLanguage.ENGLISH)
+        f.raw("hellp"); f.undo(); f.type("o")
+        assertTrue(hook.events.isEmpty())
+        f.type(" "); assertEquals(listOf("commit:hello:hellp"), hook.events)
+        hook.events.clear(); f.raw("worle"); f.undo()
+        f.controller.invalidate(f.execute)
+        f.raw("world"); f.type(" ")
+        assertEquals(listOf("commit:world:null"), hook.events)
+    }
+
+    @Test fun `automatic word boundaries discard retype evidence before the next word`() {
+        for (boundary in listOf(" ", "\n", "send")) {
+            val f = Fixture(); val hook = PersonalEvents()
+            f.controller.setPersonalization(hook, KeyboardLanguage.ENGLISH)
+            f.raw("helllp"); f.undo(); f.type("o"); f.publish("hello")
+            val result = if (boundary == "send") f.controller.prepareEditorAction(
+                f.policy, f.keyboard, f.mode, f.execute) else f.type(boundary)
+            assertEquals(TypingTextResult.HANDLED, result)
+            assertTrue(hook.events.isEmpty())
+            f.type("world"); f.type(" ")
+            assertEquals(listOf("commit:world:null"), hook.events)
+        }
+    }
+
+    @Test fun `late automatic acknowledgement and composition finish discard retype evidence`() {
+        for (lateCorrection in listOf(false, true)) {
+            val f = Fixture(modelOnly = true); val hook = PersonalEvents()
+            f.controller.setPersonalization(hook, KeyboardLanguage.ENGLISH)
+            f.raw("helllp"); f.undo(); f.type("o")
+            if (lateCorrection) {
+                f.publish("hello")
+                val request = f.controller.beginModelRanking(1)!!
+                assertEquals(TypingTextResult.HANDLED,
+                    f.controller.retainRankingAcrossSpace { f.raw(" ") })
+                assertTrue(f.controller.acceptSpaceCorrection(winningReply(request), f.execute))
+            } else {
+                assertEquals(TypingTextResult.HANDLED,
+                    f.controller.prepareEditorAction(f.policy, f.keyboard, f.mode, f.execute))
+            }
+            assertTrue(hook.events.isEmpty())
+            f.type("world"); f.type(" ")
+            assertEquals(listOf("commit:world:null"), hook.events)
+        }
+    }
+
+    @Test fun `learning policy changes finish owned text and discard prior prefix and retype`() {
+        for (wasEnabled in listOf(false, true)) {
+            val f = Fixture(); val hook = PersonalEvents()
+            f.controller.setPersonalization(hook, KeyboardLanguage.ENGLISH)
+            f.raw("earlier"); f.type(" "); f.raw("hellp"); f.undo()
+            hook.events.clear(); hook.committedPrefixes.clear()
+            val before = f.document
+            assertTrue(f.controller.updatePersonalLearningPolicy(wasEnabled, !wasEnabled, f.execute))
+            assertEquals(before, f.document)
+            assertNull(f.controller.state.composing)
+            assertEquals("", f.controller.state.contextText)
+            assertTrue(hook.events.isEmpty())
+            if (wasEnabled) {
+                f.raw("disabled"); f.type(" ")
+                assertTrue(f.controller.updatePersonalLearningPolicy(false, true, f.execute))
+                hook.events.clear(); hook.committedPrefixes.clear()
+            }
+            f.type("world"); f.type(" ")
+            assertEquals(listOf("commit:world:null"), hook.events)
+            assertEquals(listOf(""), hook.committedPrefixes)
+        }
+    }
+
+    @Test fun `unchanged learning policy preserves ownership and failed boundary cannot reuse it`() {
+        val f = Fixture(); f.raw("hello")
+        assertTrue(f.controller.updatePersonalLearningPolicy(true, true, f.execute))
+        assertEquals("hello", f.controller.state.composing?.typedWord)
+        f.fail = "finishComposingText"
+        assertFalse(f.controller.updatePersonalLearningPolicy(false, true, f.execute))
+        assertFalse(f.controller.state.enabled)
+        assertEquals("", f.controller.state.contextText)
+    }
+
+    @Test fun `candidate invalidation and personalization replacement expire continuation IDs`() {
+        for (replacePersonalization in listOf(false, true)) {
+            val f = Fixture(); val hook = PersonalEvents().apply { phrases = listOf("friend") }
+            f.controller.setPersonalization(hook, KeyboardLanguage.ENGLISH)
+            f.raw("hello"); f.type(" "); hook.events.clear()
+            val oldId = f.controller.candidateViewState.candidates.single().id
+            if (replacePersonalization) f.controller.setPersonalization(hook, KeyboardLanguage.ENGLISH)
+            else f.controller.clearCandidates()
+            val newId = f.controller.candidateViewState.candidates.single().id
+            assertNotEquals(oldId, newId)
+            assertEquals(TypingTextResult.REJECTED, f.controller.selectCandidate(oldId, f.execute))
+            assertEquals("hello ", f.document)
+            assertTrue(hook.events.isEmpty())
+            assertEquals(TypingTextResult.HANDLED, f.controller.selectCandidate(newId, f.execute))
+            assertEquals("hello friend ", f.document)
+        }
+    }
+
+    @Test fun `continuations insert only on explicit current tap and preserve owned suffix`() {
+        val f = Fixture(); val hook = PersonalEvents().apply { phrases = listOf("my friend") }
+        f.controller.setPersonalization(hook, KeyboardLanguage.ENGLISH)
+        f.raw("hello"); f.type(" "); hook.events.clear()
+        val id = f.controller.candidateViewState.candidates.single().id
+        assertEquals("hello ", f.document)
+        assertEquals(TypingTextResult.HANDLED, f.controller.selectCandidate(id, f.execute))
+        assertEquals("hello my friend ", f.document)
+        assertEquals(ComposingSegment(leadingBoundary = " "), f.controller.state.composing)
+        assertEquals(TypingTextResult.REJECTED, f.controller.selectCandidate(id, f.execute))
+        assertEquals(listOf("confirm:my", "commit:my:null", "confirm:friend", "commit:friend:null"), hook.events)
+    }
+
+    @Test fun `continuation allowlist changes and failed or reentrant commits cannot train`() {
+        for (action in listOf<(Fixture, PersonalEvents) -> Unit>(
+            { _, h -> h.phrases = listOf("different") },
+            { f, _ -> f.fail = "commitText" },
+            { f, _ -> f.afterCall = { if (it == "commitText") f.controller.endSession() } },
+            { f, _ -> f.controller.endSession() })) {
+            val f = Fixture(); val hook = PersonalEvents().apply { phrases = listOf("friend") }
+            f.controller.setPersonalization(hook, KeyboardLanguage.ENGLISH)
+            f.raw("hello"); f.type(" "); hook.events.clear()
+            val id = f.controller.candidateViewState.candidates.single().id
+            action(f, hook)
+            assertEquals(TypingTextResult.REJECTED, f.controller.selectCandidate(id, f.execute))
+            assertTrue(hook.events.isEmpty())
+        }
+    }
+
+    @Test fun `sensitive session cannot expose phrases or emit feedback`() {
+        val f = Fixture(); val hook = PersonalEvents().apply { phrases = listOf("friend") }
+        f.controller.setPersonalization(hook, KeyboardLanguage.ENGLISH)
+        f.controller.startSession(EditorContext.from(android.text.InputType.TYPE_CLASS_TEXT or
+            android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD, 0), 0, 0)
+        f.type("hello"); f.type(" ")
+        assertFalse(f.controller.candidateViewState.enabled)
+        assertTrue(hook.events.isEmpty())
+    }
+
+
     @Test fun `post-space score corrects the exact committed suffix and first Backspace restores complete original`() {
         for (synchronous in listOf(false, true)) {
             val f = Fixture(modelOnly = true); f.synchronous = synchronous

@@ -142,4 +142,22 @@
   <string name="sound_system">Как в системе</string>
   <string name="sound_quiet">Тихо</string>
   <string name="sound_normal">Обычно</string>
+    <string name="candidate_continuation">Продолжение фразы</string>
+    <string name="candidate_apply_continuation">Вставить продолжение %1$s</string>
+    <string name="settings_section_personal">Персонализация</string>
+    <string name="settings_personal_learning">Учиться на моих исправлениях</string>
+    <string name="settings_personal_learning_summary">Запоминать выбранные слова и отменённые замены на этом устройстве. Обучение в чувствительных полях выключено.</string>
+    <string name="settings_touch_personalization">Учитывать мои касания</string>
+    <string name="settings_touch_personalization_summary">Учитывать точки нажатий при выборе подсказок. Обучение по подтверждённым словам, отдельно для размеров клавиатуры и языков.</string>
+    <string name="settings_phrase_suggestions">Мои продолжения фраз</string>
+    <string name="settings_phrase_suggestions_summary">Показывать частые продолжения после пробела. Вставка по нажатию. Импортируйте профиль или включите обучение для накопления фраз.</string>
+    <string name="settings_import_phrases">Импортировать профиль фраз</string>
+    <string name="settings_import_phrases_summary">Загрузить подготовленный профиль фраз Rune. Исходные чаты в клавиатуру не переносятся.</string>
+    <string name="settings_reset_personal">Удалить данные персонализации</string>
+    <string name="settings_reset_personal_summary">Удалить изученные слова, историю замен, продолжения фраз и калибровку касаний с этого устройства.</string>
+    <string name="settings_personal_not_ready">Персонализация ещё не готова. Попробуйте позже; при ошибке загрузки сбросьте данные.</string>
+    <string name="settings_personal_reset_done">Данные персонализации удалены</string>
+    <string name="settings_personal_failed">Не удалось сохранить результат. Попробуйте ещё раз.</string>
+    <string name="settings_personal_imported">Профиль фраз импортирован</string>
+    <string name="settings_personal_empty">В профиле нет подходящих словарных фраз</string>
 </resources>

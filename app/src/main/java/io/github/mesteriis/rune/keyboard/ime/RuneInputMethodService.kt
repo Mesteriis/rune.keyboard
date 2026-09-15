@@ -56,6 +56,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceSection
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsProvider
 import java.util.concurrent.Executor
+import io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingResources
+import io.github.mesteriis.rune.keyboard.smarttyping.personalization.AndroidTypingPersonalization
 
 class RuneInputMethodService : InputMethodService() {
     private val layoutProvider = KeyboardLayoutProvider()
@@ -68,6 +70,9 @@ class RuneInputMethodService : InputMethodService() {
     private var selectedLanguage = KeyboardLanguage.ENGLISH
     private var hasSelection = false
     private val typingSession = TypingSessionController(RuneTrace)
+    private lateinit var personalResources: PersonalTypingResources
+    private lateinit var personalization: AndroidTypingPersonalization
+    private var physicalLetterPending = false
     private lateinit var candidates: LocalCandidateCoordinator
     private var inputViewActive = false
     private lateinit var visualContinuity: ConfigurationVisualContinuity
@@ -98,6 +103,9 @@ class RuneInputMethodService : InputMethodService() {
             enabledLanguages = settings.enabledLanguages,
             doubleSpacePeriodEnabled = settings.doubleSpacePeriod,
         )
+        personalResources = PersonalTypingResources.get(this)
+        personalization = AndroidTypingPersonalization(personalResources)
+        typingSession.setPersonalization(personalization, state.language)
         val mainHandler = Handler(Looper.getMainLooper())
         candidates = LocalCandidateCoordinator(
             typingSession,
@@ -130,6 +138,14 @@ class RuneInputMethodService : InputMethodService() {
             val themedContext = ThemeOverride.themedContext(this, settings.theme)
             RuneKeyboardView(themedContext, buildMetrics(themedContext)).also { view ->
                 keyboardView = view
+                view.setOnPhysicalTouchListener { sample ->
+                    updatePersonalizationPolicy()
+                    if (personalization.touchEnabled && personalResources.touch.isReady) {
+                        personalResources.touch.model.observe(sample)
+                        physicalLetterPending = true
+                    }
+                }
+                view.setOnTouchGeometryChangedListener { personalization.clearPending() }
                 view.setOnActionListener(::handleAction)
                 view.setOnCandidateSelectedListener(::handleCandidateSelection)
                 renderKeyboard()
@@ -254,6 +270,9 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     private fun handleAction(action: KeyboardAction) {
+        updatePersonalizationPolicy()
+        if (action !is KeyboardAction.CommitLetter || !physicalLetterPending) personalization.clearPending()
+        physicalLetterPending = false
         visualContinuity.invalidate()
         RuneTrace.section("Rune#touchUpDispatch") {
             val previousState = state
@@ -299,6 +318,7 @@ class RuneInputMethodService : InputMethodService() {
                 state = state.withAutomaticCapitalization(editorContext.supportsAutomaticCapitalization &&
                     state.layer == KeyboardLayer.LETTERS)
             }
+            if (outcome == CommandOutcome.DROPPED || action !is KeyboardAction.CommitLetter) personalization.clearPending()
             val stateChanged = state != previousState
             provideFeedback(action, stateChanged, outcome)
             if (stateChanged) renderKeyboard() else renderCandidates()
@@ -447,6 +467,10 @@ class RuneInputMethodService : InputMethodService() {
         RuneTrace.section("Rune#applySettings") {
             val previous = settings
             settings = keyboardPreferences.readSettings()
+            typingSession.updatePersonalLearningPolicy(previous.personalLearning, settings.personalLearning,
+                ::executeTypingEdit)
+            personalization.clearPending()
+            updatePersonalizationPolicy()
             state = state
                 .withEnabledLanguages(settings.enabledLanguages)
                 .copy(doubleSpacePeriodEnabled = settings.doubleSpacePeriod)
@@ -458,7 +482,10 @@ class RuneInputMethodService : InputMethodService() {
             }
             if (settings.autocorrectionMode != previous.autocorrectionMode ||
                 settings.candidateStrip != previous.candidateStrip ||
-                settings.contextualPunctuationMode != previous.contextualPunctuationMode
+                settings.contextualPunctuationMode != previous.contextualPunctuationMode ||
+                settings.personalLearning != previous.personalLearning ||
+                settings.touchPersonalization != previous.touchPersonalization ||
+                settings.phraseSuggestions != previous.phraseSuggestions
             ) candidates.invalidate()
             if (settings.enabledLanguages != previous.enabledLanguages) candidates.invalidate()
             if (state.language != selectedLanguage) {
@@ -532,6 +559,7 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     private fun handleCandidateSelection(id: String) {
+        updatePersonalizationPolicy()
         candidates.selectCandidate(id, ::executeTypingEdit)
         renderCandidates()
     }
@@ -551,7 +579,24 @@ class RuneInputMethodService : InputMethodService() {
         contextualModelReady = candidates.modelReadinessHint == ModelReadinessHint.READY,
     )
 
+    private fun updatePersonalizationPolicy() {
+        if (!::personalization.isInitialized) return
+        val eligible = inputViewActive && editorContext.supportsSmartTyping && !hasSelection &&
+            state.layer == KeyboardLayer.LETTERS
+        personalization.learningEnabled = eligible && settings.personalLearning
+        personalization.touchEnabled = eligible && settings.touchPersonalization
+        personalization.phrasesEnabled = eligible && settings.phraseSuggestions
+        personalResources.touch.model.setEnabled(personalization.touchEnabled)
+        keyboardView?.setTouchLearningEnabled(personalization.touchEnabled)
+        typingSession.setPersonalizationLanguage(state.language)
+        if (!eligible) {
+            physicalLetterPending = false
+            personalization.clearPending()
+        }
+    }
+
     private fun renderCandidates() {
+        updatePersonalizationPolicy()
         val view = keyboardView ?: return
         view.updateCandidates(candidates.viewState)
     }
