@@ -170,8 +170,12 @@ class ImeInsetsInstrumentedTest : ImeTestBase() {
         }
         // Reopening with a real editor tap places the caret according to its current text
         // geometry. Read that selection without refocusing, rebinding, or changing the editor.
-        val editor = checkNotNull(driver.device.findObject(
-            By.res(ImeTestDriver.PACKAGE_NAME, "qa_plain_text"))).accessibilityNodeInfo
+        // The IME window and the remote editor publish separate accessibility updates
+        // after rotation. Await the editor without changing its focus or scroll position.
+        val editor = checkNotNull(driver.device.wait(Until.findObject(
+            By.res(ImeTestDriver.PACKAGE_NAME, "qa_plain_text")), ImeTestDriver.WAIT_MILLIS)) {
+            "Original editor must be accessible after the keyboard transition"
+        }.accessibilityNodeInfo
         assertTrue("The original editor must still own focus", editor.isFocused)
         assertEquals("Bottom-row observation must not change editor text", before, editor.text.toString())
         val start = editor.textSelectionStart

@@ -166,10 +166,14 @@ class ImeTestDriver {
     }
 
     fun chooseSetting(titleRes: Int, choiceRes: Int) {
-        settingsRow(titleRes).click()
-        checkNotNull(device.wait(Until.findObject(By.text(targetContext.getString(choiceRes))), WAIT_MILLIS)) {
-            "Settings option unavailable"
-        }.click()
+        // A theme change can recreate SettingsActivity after its first visible frame.
+        // Resolve again only if the node became stale before the click was injected.
+        tapResolvedKey { settingsRow(titleRes) }
+        tapResolvedKey {
+            checkNotNull(device.wait(Until.findObject(By.text(targetContext.getString(choiceRes))), WAIT_MILLIS)) {
+                "Settings option unavailable"
+            }
+        }
         instrumentation.waitForIdleSync(); device.waitForIdle()
     }
 
