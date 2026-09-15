@@ -230,6 +230,10 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         awaitPreference(text = true)
     }
     private fun row(id: String): UiObject2 {
+        if (driver.device.hasObject(By.res(ImeTestDriver.PACKAGE_NAME, "menu_search"))) {
+            driver.shell("am start -W -f 0x24000000 -n ${ImeTestDriver.PACKAGE_NAME}/.settings.SettingsActivity --es settings_page ADVANCED")
+            instrumentation.waitForIdleSync()
+        }
         if (!driver.device.hasObject(By.res(ImeTestDriver.PACKAGE_NAME, id))) {
             assertTrue("Settings root not visible", driver.device.wait(Until.hasObject(
                 By.res(ImeTestDriver.PACKAGE_NAME, "settings_scroll")), ImeTestDriver.WAIT_MILLIS))

@@ -8,9 +8,10 @@
   <dimen name="keyboard_key_gap_tight">2dp</dimen>
   <dimen name="keyboard_key_gap">3dp</dimen>
   <dimen name="keyboard_key_gap_wide">5dp</dimen>
-  <dimen name="keyboard_key_height">52dp</dimen>
+  <dimen name="keyboard_key_height">56dp</dimen>
   <dimen name="keyboard_key_text_size">21sp</dimen>
-  <dimen name="keyboard_action_text_size">18sp</dimen>
+  <dimen name="keyboard_action_text_size">14sp</dimen>
+  <dimen name="keyboard_space_text_size">14sp</dimen>
   <dimen name="keyboard_preview_width">48dp</dimen>
   <dimen name="keyboard_preview_height">58dp</dimen>
   <dimen name="keyboard_preview_text_size">30sp</dimen>

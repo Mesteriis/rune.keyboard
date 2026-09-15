@@ -2,8 +2,9 @@ package io.github.mesteriis.rune.keyboard.ime.ui
 
 import android.content.Context
 import android.graphics.Rect
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.graphics.Typeface
-import android.graphics.drawable.InsetDrawable
 import android.os.Build
 import android.util.TypedValue
 import android.view.Gravity
@@ -22,6 +23,7 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLayer
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
 import io.github.mesteriis.rune.keyboard.ime.model.ShiftMode
 import io.github.mesteriis.rune.keyboard.settings.KeyboardViewMetrics
+import io.github.mesteriis.rune.keyboard.settings.KeyboardTheme
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
 import io.github.mesteriis.rune.keyboard.smarttyping.touch.PhysicalTouchSample
 import io.github.mesteriis.rune.keyboard.smarttyping.touch.TouchKeyOffset
@@ -33,7 +35,10 @@ import kotlin.math.abs
 internal class RuneKeyboardView(
     context: Context,
     private val metrics: KeyboardViewMetrics,
+    theme: KeyboardTheme = KeyboardTheme.AIR,
 ) : LinearLayout(context), KeyPopupHost {
+    private val appearance = KeyboardAppearance(context, theme)
+    private val bottomSurfacePaint = Paint().apply { color = appearance.bottomBackground }
     private var actionListener: ((KeyboardAction) -> Unit)? = null
     private var physicalTouchListener: ((PhysicalTouchSample) -> Unit)? = null
     private var touchGeometryChangedListener: (() -> Unit)? = null
@@ -52,7 +57,7 @@ internal class RuneKeyboardView(
     private var inputPolicy = InputPolicy.NORMAL
     private var popupController: KeyPopupController? = null
     private val keyboardPadding = resources.getDimensionPixelSize(R.dimen.keyboard_padding)
-    private val candidateStrip = CandidateStripView(context)
+    private val candidateStrip = CandidateStripView(context, appearance)
     private val keysContainer = LinearLayout(context).apply {
         orientation = VERTICAL
         layoutDirection = LAYOUT_DIRECTION_LTR
@@ -83,7 +88,7 @@ internal class RuneKeyboardView(
             }
             insets
         }
-        setBackgroundColor(context.getColor(R.color.keyboard_background))
+        setBackgroundColor(appearance.background)
         addView(
             candidateStrip,
             LayoutParams(
@@ -236,7 +241,7 @@ internal class RuneKeyboardView(
     }
 
     private fun controller(): KeyPopupController =
-        popupController ?: KeyPopupController(this).also { popupController = it }
+        popupController ?: KeyPopupController(this, appearance).also { popupController = it }
 
     private fun createRow(specs: List<KeySpec>, state: KeyboardState): LinearLayout =
         LinearLayout(context).apply {
@@ -245,12 +250,14 @@ internal class RuneKeyboardView(
             gravity = Gravity.CENTER
             isBaselineAligned = false
             layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+            if (specs.any { it.style == KeyStyle.SPACE }) setBackgroundColor(appearance.bottomBackground)
             specs.forEach { spec -> addView(createKey(spec, state)) }
         }
 
     private fun createKey(spec: KeySpec, state: KeyboardState): View {
         val keyView = if (spec.style == KeyStyle.SPACE) {
             SpaceKeyView(context, metrics.keyHeightPx).also { view ->
+                view.showSpaceIndicator = appearance.spaceIndicator
                 styleKey(view, spec, state)
                 view.configure(
                     actionListener = { action -> actionListener?.invoke(action) },
@@ -286,6 +293,18 @@ internal class RuneKeyboardView(
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
         dynamicEpoch++
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        if (appearance.theme == KeyboardTheme.MONOLITH) {
+            val bottomRow = keysContainer.getChildAt(keysContainer.childCount - 1) ?: return
+            if (bottomRow.background != null) {
+                // Continue the bottom strip through the safe area and outer padding.
+                canvas.drawRect(0f, (keysContainer.top + bottomRow.top).toFloat(),
+                    width.toFloat(), height.toFloat(), bottomSurfacePaint)
+            }
+        }
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -368,33 +387,30 @@ internal class RuneKeyboardView(
         view.maxLines = 1
         view.minWidth = 0
         view.setPadding(0, 0, 0, 0)
-        view.setTextColor(
-            context.getColor(
-                if (spec.style == KeyStyle.ACTION) R.color.key_text_accent else R.color.key_text,
-            ),
-        )
+        view.setTextColor(if (spec.style == KeyStyle.SPACE) {
+            android.content.res.ColorStateList.valueOf(appearance.secondaryText)
+        } else appearance.textColors)
         view.setTextSize(
             TypedValue.COMPLEX_UNIT_PX,
             resources.getDimension(
-                if (spec.style == KeyStyle.CHARACTER) {
+                if (spec.style == KeyStyle.SPACE) {
+                    R.dimen.keyboard_space_text_size
+                } else if (spec.style == KeyStyle.CHARACTER) {
                     R.dimen.keyboard_key_text_size
                 } else {
                     R.dimen.keyboard_action_text_size
                 },
             ),
         )
-        view.typeface = if (spec.style == KeyStyle.ACTION) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
-        view.background = InsetDrawable(
-            context.getDrawable(
-                when (spec.style) {
-                    KeyStyle.CHARACTER -> R.drawable.key_background
-                    KeyStyle.ACTION -> R.drawable.key_action_background
-                    KeyStyle.SPACE -> R.drawable.key_space_background
-                    KeyStyle.SPACER -> android.R.color.transparent
-                },
-            ),
-            metrics.keyGapPx / 2,
-        )
+        view.typeface = Typeface.DEFAULT
+        if (spec.accessibilityLabel != null) {
+            view.setAutoSizeTextTypeUniformWithConfiguration(10, 18, 1, TypedValue.COMPLEX_UNIT_SP)
+        }
+        if (view is KeyboardKeyView) {
+            view.secondaryTextColor = appearance.secondaryText
+            view.keyIcon = keyIconResource(spec, state)?.let { context.getDrawable(it)?.mutate() }
+        }
+        view.background = appearance.keyBackground(spec, metrics.keyGapPx, metrics.keyHeightPx)
         view.isSelected = spec.action == KeyboardAction.Shift && state.shiftMode != ShiftMode.OFF
         view.contentDescription = contentDescriptionFor(spec, state)
         view.importantForAccessibility = if (spec.style == KeyStyle.SPACER) {
@@ -403,6 +419,22 @@ internal class RuneKeyboardView(
             IMPORTANT_FOR_ACCESSIBILITY_YES
         }
         view.visibility = if (spec.style == KeyStyle.SPACER) INVISIBLE else VISIBLE
+    }
+
+    private fun keyIconResource(spec: KeySpec, state: KeyboardState): Int? = when (spec.action) {
+        KeyboardAction.Shift -> if (state.shiftMode == ShiftMode.LOCKED) R.drawable.ic_key_caps_lock else R.drawable.ic_key_shift
+        KeyboardAction.Delete -> R.drawable.ic_key_backspace
+        KeyboardAction.Enter -> if (spec.accessibilityLabel != null) null else when (spec.label) {
+            "↵" -> R.drawable.ic_key_return
+            "→" -> R.drawable.ic_key_go
+            "⌕" -> R.drawable.ic_key_search
+            "➤" -> R.drawable.ic_key_send
+            "›" -> R.drawable.ic_key_next
+            "‹" -> R.drawable.ic_key_previous
+            "✓" -> R.drawable.ic_key_done
+            else -> null
+        }
+        else -> null
     }
 
     private fun onKeyTouchStateChanged(isActive: Boolean) {

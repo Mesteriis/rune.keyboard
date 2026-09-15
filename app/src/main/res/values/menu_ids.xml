@@ -1,0 +1,15 @@
+<resources>
+<item type="id" name="menu_search" />
+<item type="id" name="menu_root" />
+<item type="id" name="menu_home_tab" />
+<item type="id" name="menu_settings_tab" />
+<item type="id" name="menu_preview" />
+<item type="id" name="menu_theme_choices" />
+<item type="id" name="menu_theme_name" />
+<item type="id" name="menu_try_input" />
+<item type="id" name="menu_back" />
+<item type="id" name="menu_detail_title" />
+<item type="id" name="settings_scroll" />
+<item type="id" name="settings_container" />
+<item type="id" name="action_key_flick" />
+</resources>

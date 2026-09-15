@@ -1,0 +1,5 @@
+<resources>
+  <string name="settings_key_flicks">Deslizar hacia abajo para símbolos</string>
+  <string name="settings_key_flicks_summary">Desliza hacia abajo sobre una tecla para escribir el símbolo pequeño. Mantén pulsado para letras acentuadas.</string>
+  <string name="key_flick_action">Escribir %1$s</string>
+</resources>

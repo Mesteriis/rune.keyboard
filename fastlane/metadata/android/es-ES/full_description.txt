@@ -1,0 +1,4 @@
+<p>Rune es un teclado privado para Android en español, inglés y ruso.</p>
+<ul><li>Cinco temas oscuros monocromos con letras sin bordes.</li><li>Desliza hacia abajo para números y símbolos; mantén pulsado para acentos.</li><li>Desliza la barra espaciadora para cambiar de idioma; mantenla pulsada para mover el cursor.</li><li>Sugerencias locales, autocorrección, deshacer, diccionarios y abreviaturas.</li><li>Fila numérica opcional, altura ajustable y perfiles para pantallas plegables.</li><li>Vista previa interactiva y búsqueda en ajustes.</li></ul>
+<p>Sin anuncios ni analítica. El texto permanece en el dispositivo. La escritura básica funciona sin conexión; el modelo local opcional se descarga o importa de forma explícita. El permiso de red se usa para esa descarga.</p>
+<p>Requiere Android 8.0+ y un procesador ARM o x86 de 64 bits. La escritura continua, el panel de emojis y el dictado aún no están implementados.</p>

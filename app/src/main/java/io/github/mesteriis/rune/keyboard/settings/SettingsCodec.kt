@@ -18,6 +18,8 @@ object SettingsCodec {
     const val KEY_KEY_GAP = "key_gap"
     const val KEY_NUMBER_ROW = "number_row"
     const val KEY_THEME = "theme"
+    const val KEY_KEY_FLICKS = "key_flicks"
+    const val KEY_KEYBOARD_THEME = "keyboard_theme"
     const val KEY_HAPTIC_MODE = "haptic_mode"
     const val KEY_SOUND_MODE = "sound_mode"
     const val KEY_KEY_PREVIEW = "key_preview"
@@ -88,9 +90,11 @@ object SettingsCodec {
             keyGap = enumOrDefault(raw[KEY_KEY_GAP] as? String, defaults.keyGap),
             numberRow = raw[KEY_NUMBER_ROW] as? Boolean ?: defaults.numberRow,
             theme = enumOrDefault(raw[KEY_THEME] as? String, defaults.theme),
+            keyboardTheme = enumOrDefault(raw[KEY_KEYBOARD_THEME] as? String, defaults.keyboardTheme),
             hapticMode = enumOrDefault(raw[KEY_HAPTIC_MODE] as? String, defaults.hapticMode),
             soundMode = enumOrDefault(raw[KEY_SOUND_MODE] as? String, defaults.soundMode),
             keyPreview = raw[KEY_KEY_PREVIEW] as? Boolean ?: defaults.keyPreview,
+            keyFlicks = raw[KEY_KEY_FLICKS] as? Boolean ?: defaults.keyFlicks,
             doubleSpacePeriod = supported && strictBoolean(raw, KEY_DOUBLE_SPACE_PERIOD, legacy && defaults.doubleSpacePeriod),
             autocorrectionMode = if (supported) strictEnum(raw, KEY_AUTOCORRECTION_MODE,
                 if (legacy) defaults.autocorrectionMode else AutocorrectionMode.OFF, AutocorrectionMode.OFF)

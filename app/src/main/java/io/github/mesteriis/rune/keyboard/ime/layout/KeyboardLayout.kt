@@ -26,6 +26,7 @@ data class KeySpec(
     val style: KeyStyle = KeyStyle.CHARACTER,
     val longPressAlternates: List<KeyAlternate> = emptyList(),
     val accessibilityLabel: String? = null,
+    val flickDown: KeyAlternate? = null,
 ) {
     init {
         require(weight > 0f) { "Key weight must be positive" }
@@ -50,7 +51,7 @@ data class KeyboardLayout(val rows: List<List<KeySpec>>) {
 }
 
 /** Presentation options that never participate in a state transition. */
-data class LayoutOptions(val showNumberRow: Boolean = false) {
+data class LayoutOptions(val showNumberRow: Boolean = false, val keyFlicks: Boolean = true) {
     companion object {
         val DEFAULT = LayoutOptions()
     }

@@ -2,6 +2,11 @@ package io.github.mesteriis.rune.keyboard.settings
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
+import android.view.inputmethod.InputMethodManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +31,21 @@ import java.util.concurrent.atomic.AtomicInteger
  * listener.
  */
 class SettingsActivity : ThemedActivity() {
+    companion object {
+        const val EXTRA_PAGE = "settings_page"
+        fun intent(context: Context, page: SettingsPage?): Intent = Intent(context, SettingsActivity::class.java).apply {
+            page?.let { putExtra(EXTRA_PAGE, it.name) }
+        }
+    }
+
+    private lateinit var ui: MenuUi
+    private lateinit var shell: MenuUi.Shell
+    private var page: SettingsPage? = null
+    private var searchQuery = ""
+    private var currentSection = 0
+    private var requestedRow = 0
+    private val rows = mutableListOf<SettingRow>()
+    private data class SettingRow(val view: View, val title: Int, val section: Int, val page: SettingsPage)
     private lateinit var preferences: KeyboardPreferences
     private lateinit var container: LinearLayout
     private lateinit var inflater: LayoutInflater
@@ -37,13 +57,28 @@ class SettingsActivity : ThemedActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
-        setTitle(R.string.settings_title)
+        ui = MenuUi(this)
+        shell = ui.shell(false, R.id.settings_scroll, R.id.settings_container) { home ->
+            val destination = if (home) Intent(this, SetupActivity::class.java) else intent(this, null)
+            startActivity(destination.apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            })
+        }
+        setContentView(shell.root)
+        page = SettingsPage.fromName(savedInstanceState?.getString("page") ?: intent.getStringExtra(EXTRA_PAGE))
+        searchQuery = savedInstanceState?.getString("search").orEmpty()
+        requestedRow = savedInstanceState?.getInt("row") ?: 0
+        setTitle(R.string.menu_settings)
         preferences = KeyboardPreferences(this)
         inflater = LayoutInflater.from(this)
         container = findViewById(R.id.settings_container)
-        applySystemBarInsets(findViewById<View>(R.id.settings_scroll))
+        applySystemBarInsets(shell.root, includeIme = true)
         appliedTheme = themePreference()
+        if (android.os.Build.VERSION.SDK_INT >= 33) {
+            onBackInvokedDispatcher.registerOnBackInvokedCallback(android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT) {
+                navigateBack()
+            }
+        }
         PersonalTypingResources.get(this)
     }
 
@@ -105,6 +140,7 @@ class SettingsActivity : ThemedActivity() {
     private fun buildRows() {
         diagnosticsContribution?.close()
         container.removeAllViews()
+        rows.clear()
 
         addSection(R.string.settings_section_languages)
         addNavigationRow(
@@ -233,6 +269,8 @@ class SettingsActivity : ThemedActivity() {
                 }.show()
         }
         addSection(R.string.settings_section_typing)
+        addToggleRow(R.string.settings_key_flicks, R.string.settings_key_flicks_summary,
+            settings.keyFlicks) { preferences.writeKeyFlicks(it) }
         addToggleRow(
             titleRes = R.string.settings_key_preview,
             summaryRes = R.string.settings_key_preview_summary,
@@ -269,6 +307,12 @@ class SettingsActivity : ThemedActivity() {
         }
 
         addSection(R.string.settings_section_appearance)
+        addChoiceRow(
+            titleRes = R.string.settings_keyboard_theme,
+            values = KeyboardTheme.entries,
+            labels = KeyboardTheme.entries.map { getString(keyboardThemeLabel(it)) },
+            selected = settings.keyboardTheme,
+        ) { preferences.writeKeyboardTheme(it) }
         addChoiceRow(
             titleRes = R.string.settings_theme,
             values = ThemePreference.entries,
@@ -309,31 +353,196 @@ class SettingsActivity : ThemedActivity() {
             summary = getString(R.string.settings_privacy_summary),
         )
 
-        diagnosticsContribution = DiagnosticsSettingsProvider.contribute(this, container)
+
         addSection(R.string.settings_section_about)
         addInfoRow(title = getString(R.string.settings_version), summary = versionName())
         addNavigationRow(titleRes = R.string.settings_setup_guide, summary = null) {
-            startActivity(Intent(this, SetupActivity::class.java))
+            startActivity(Intent(this, KeyboardSetupActivity::class.java))
         }
+        renderPage()
     }
 
     private fun addSection(titleRes: Int) {
-        val header = inflater.inflate(R.layout.view_settings_section, container, false) as TextView
-        header.setText(titleRes)
-        container.addView(header)
+        currentSection = titleRes
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        page = SettingsPage.fromName(intent.getStringExtra(EXTRA_PAGE))
+        searchQuery = ""
+        requestedRow = 0
+        reload()
+        shell.scroll.scrollTo(0, 0)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("page", page?.name)
+        outState.putString("search", searchQuery)
+        outState.putInt("row", requestedRow)
+        super.onSaveInstanceState(outState)
+    }
+
+    @Deprecated("Framework back callback")
+    @android.annotation.SuppressLint("GestureBackNavigation") // API 33+ uses the registered platform callback.
+    override fun onBackPressed() = navigateBack()
+
+    private fun navigateBack() {
+        if (page != null) {
+            page = null
+            requestedRow = 0
+            buildRows()
+            shell.scroll.scrollTo(0, 0)
+        } else {
+            finish()
+        }
+    }
+
+    private fun record(view: View, title: Int) {
+        view.tag = title
+        rows += SettingRow(view, title, currentSection, SettingsPage.forRow(currentSection, title))
+    }
+
+    private fun openPage(destination: SettingsPage, targetRow: Int = 0) {
+        getSystemService(InputMethodManager::class.java).hideSoftInputFromWindow(shell.root.windowToken, 0)
+        when (destination) {
+            SettingsPage.LANGUAGES -> startActivity(Intent(this, LanguageSettingsActivity::class.java))
+            SettingsPage.MODEL -> startActivity(Intent(this, ModelSettingsActivity::class.java))
+            else -> {
+                page = destination
+                requestedRow = targetRow
+                buildRows()
+                shell.scroll.scrollTo(0, 0)
+            }
+        }
+    }
+
+    private fun renderPage() {
+        val destination = page
+        shell.bottom.visibility = if (destination == null) View.VISIBLE else View.GONE
+        if (destination == null) {
+            ui.heading(container, getString(R.string.menu_settings))
+            val search = EditText(this).apply {
+                id = R.id.menu_search
+                hint = getString(R.string.menu_search)
+                contentDescription = hint
+                textSize = 16f
+                setTextColor(ui.color(R.color.setup_text_primary))
+                setHintTextColor(ui.color(R.color.setup_text_secondary))
+                background = ui.surface()
+                setSingleLine(true)
+                inputType = android.text.InputType.TYPE_CLASS_TEXT
+                imeOptions = android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
+                setPadding(ui.dp(14), ui.dp(14), ui.dp(14), ui.dp(14))
+                val searchIcon = getDrawable(R.drawable.ic_key_search)!!.mutate().apply {
+                    setTint(ui.color(R.color.setup_text_secondary))
+                    setBounds(0, 0, ui.dp(22), ui.dp(22))
+                }
+                setCompoundDrawablesRelative(searchIcon, null, null, null)
+                compoundDrawablePadding = ui.dp(12)
+                setText(searchQuery)
+            }
+            container.addView(search, LinearLayout.LayoutParams(-1, -2).apply { topMargin = ui.dp(8) })
+            val results = ui.column()
+            container.addView(results)
+            renderResults(results)
+            search.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    searchQuery = s?.toString().orEmpty()
+                    renderResults(results)
+                }
+                override fun afterTextChanged(s: Editable?) = Unit
+            })
+            search.setOnEditorActionListener { _, _, _ ->
+                getSystemService(InputMethodManager::class.java).hideSoftInputFromWindow(search.windowToken, 0)
+                search.clearFocus()
+                true
+            }
+            container.isFocusableInTouchMode = true
+            container.requestFocus()
+            return
+        }
+        ui.heading(container, getString(destination.title)) { navigateBack() }
+        var previousSection = 0
+        val visible = rows.filter { it.page == destination }.let { entries ->
+            if (destination == SettingsPage.APPEARANCE) entries.sortedBy { if (it.section == R.string.settings_section_appearance) 0 else 1 }
+            else entries
+        }
+        visible.forEach { entry ->
+            if (entry.section != previousSection) {
+                ui.section(container, entry.section)
+                previousSection = entry.section
+            }
+            container.addView(entry.view)
+            ui.divider(container)
+        }
+        if (destination == SettingsPage.ADVANCED) {
+            diagnosticsContribution = DiagnosticsSettingsProvider.contribute(this, container)
+        }
+        if (requestedRow != 0) container.post {
+            visible.firstOrNull { it.title == requestedRow }?.view?.let { target ->
+                shell.scroll.smoothScrollTo(0, (target.top - ui.dp(16)).coerceAtLeast(0))
+                target.requestFocus()
+            }
+            requestedRow = 0
+        }
+    }
+
+    private fun renderResults(results: LinearLayout) {
+        results.removeAllViews()
+        if (searchQuery.isBlank()) {
+            var group = 0
+            SettingsPage.entries.forEach { destination ->
+                if (destination.group != group) { ui.section(results, destination.group); group = destination.group }
+                val summary = if (destination == SettingsPage.LANGUAGES)
+                    settings.enabledLanguages.joinToString(" · ") { it.compactLabel }
+                    else getString(destination.summary)
+                ui.row(results, getString(destination.title), summary, destination.icon) { openPage(destination) }
+            }
+            return
+        }
+        var count = 0
+        SettingsPage.entries.filter { SettingsSearch.matches(searchQuery, getString(it.title), getString(it.summary)) }.forEach { destination ->
+            ui.row(results, getString(destination.title), getString(destination.summary), destination.icon) { openPage(destination) }
+            count++
+        }
+        rows.filter { entry ->
+            SettingsSearch.matches(searchQuery, entry.view.findViewById<TextView>(R.id.row_title).text.toString(),
+                entry.view.findViewById<TextView>(R.id.row_summary).text.toString())
+        }.forEach { entry ->
+            ui.row(results, entry.view.findViewById<TextView>(R.id.row_title).text.toString(), getString(entry.page.title), entry.page.icon) {
+                openPage(entry.page, entry.title)
+            }
+            count++
+        }
+        if (count == 0) {
+            results.addView(ui.text(getString(R.string.menu_empty), 18f).apply {
+                setPadding(0, ui.dp(24), 0, ui.dp(10))
+            })
+            results.addView(ui.text(getString(R.string.menu_empty_hint), 14f, true))
+        }
+    }
+
+    private fun keyboardThemeLabel(theme: KeyboardTheme): Int = when (theme) {
+        KeyboardTheme.AIR -> R.string.keyboard_theme_air
+        KeyboardTheme.SOFT -> R.string.keyboard_theme_soft
+        KeyboardTheme.OUTLINE -> R.string.keyboard_theme_outline
+        KeyboardTheme.MONOLITH -> R.string.keyboard_theme_monolith
+        KeyboardTheme.SILENT -> R.string.keyboard_theme_silent
     }
 
     private fun addInfoRow(title: String, summary: String?) {
         val row = newRow(title, summary)
         row.isClickable = false
         row.foreground = null
-        container.addView(row)
+        record(row, currentSection)
     }
 
     private fun addNavigationRow(titleRes: Int, summary: String?, onClick: () -> Unit) {
         val row = newRow(getString(titleRes), summary)
         row.setOnClickListener { onClick() }
-        container.addView(row)
+        record(row, titleRes)
     }
 
     private fun addToggleRow(
@@ -352,7 +561,7 @@ class SettingsActivity : ThemedActivity() {
             onChanged(updated)
             reload()
         }
-        container.addView(row)
+        record(row, titleRes)
     }
 
     private fun <T> addChoiceRow(
@@ -375,7 +584,7 @@ class SettingsActivity : ThemedActivity() {
                 }
                 .show()
         }
-        container.addView(row)
+        record(row, titleRes)
     }
 
     /**

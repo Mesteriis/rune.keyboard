@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="menu_home">Home</string>
+  <string name="menu_search">Find a setting</string>
+  <string name="menu_empty">No settings found</string>
+  <string name="menu_empty_hint">Try another word, such as theme or sound.</string>
+  <string name="menu_appearance">Appearance</string>
+  <string name="menu_appearance_summary">Theme, key height, spacing</string>
+  <string name="menu_languages">Languages and layout</string>
+  <string name="menu_feedback">Sound and vibration</string>
+  <string name="menu_feedback_summary">Keypress sounds and feedback</string>
+  <string name="menu_typing">Correction and punctuation</string>
+  <string name="menu_typing_summary">Corrections, suggestions, punctuation</string>
+  <string name="menu_dictionary">Dictionary and learning</string>
+  <string name="menu_dictionary_summary">Personal words, shortcuts, learning</string>
+  <string name="menu_model">Local model</string>
+  <string name="menu_model_summary">Packages and management</string>
+  <string name="menu_privacy">Privacy</string>
+  <string name="menu_privacy_summary">Your typing stays on this device</string>
+  <string name="menu_advanced">Advanced</string>
+  <string name="menu_advanced_summary">Tools, diagnostics, about Rune</string>
+  <string name="menu_keyboard_group">Keyboard</string>
+  <string name="menu_input_group">Typing</string>
+  <string name="menu_app_group">Application</string>
+  <string name="menu_smart_input">Smart typing</string>
+  <string name="menu_connect">Set up keyboard</string>
+  <string name="menu_active">Keyboard is active</string>
+  <string name="menu_enabled">Select Rune keyboard</string>
+  <string name="menu_disabled">Make yourself at home</string>
+  <string name="menu_tagline">Fast. Private. For your thoughts.</string>
+  <string name="menu_setup_hint">Enable Rune to use it in other apps.</string>
+  <string name="menu_try">Try typing here</string>
+  <string name="menu_preview">Keyboard preview</string>
+  <string name="menu_air">Air</string>
+  <string name="menu_soft">Soft</string>
+  <string name="menu_outline">Outline</string>
+  <string name="menu_monolith">Monolith</string>
+  <string name="menu_silent">Silent</string>
+  <string name="menu_air_summary">Light and minimal.</string>
+  <string name="menu_soft_summary">Soft, rounded controls.</string>
+  <string name="menu_outline_summary">Fine lines on the essentials.</string>
+  <string name="menu_monolith_summary">A single, quiet bottom strip.</string>
+  <string name="menu_silent_summary">Only Enter stands out.</string>
+<string name="menu_settings">Settings</string>
+<string name="menu_languages_short">Languages</string>
+<string name="menu_back_label">Back</string>
+</resources>

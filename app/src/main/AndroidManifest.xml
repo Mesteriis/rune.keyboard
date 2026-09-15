@@ -14,6 +14,7 @@
       android:theme="@style/Theme.RuneKeyboard.Setup"
       android:usesCleartextTraffic="false">
 
+    <activity android:name=".settings.KeyboardSetupActivity" android:exported="false" />
     <activity
         android:name=".settings.SetupActivity"
         android:exported="true"

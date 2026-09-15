@@ -83,7 +83,7 @@
   <string name="settings_height_cover">Высота клавиатуры — внешний экран</string>
   <string name="settings_height_inner">Высота клавиатуры — внутренний экран</string>
   <string name="settings_key_gap">Отступы между клавишами</string>
-  <string name="settings_theme">Тема</string>
+  <string name="settings_theme">Тема приложения</string>
   <string name="settings_haptic">Вибрация</string>
   <string name="settings_sound">Звук клавиш</string>
   <string name="settings_privacy_summary">Сеть используется только для явно запущенного скачивания модели. Введённый текст не отправляется. Нет аналитики, логирования ввода и доступа к буферу обмена. Настройки исключены из системного бэкапа.</string>

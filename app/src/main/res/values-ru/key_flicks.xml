@@ -1,0 +1,5 @@
+<resources>
+  <string name="settings_key_flicks">Свайп вниз для символов</string>
+  <string name="settings_key_flicks_summary">Проведите вниз по клавише, чтобы ввести маленький символ над буквой. Удержание открывает варианты букв.</string>
+  <string name="key_flick_action">Ввести %1$s</string>
+</resources>

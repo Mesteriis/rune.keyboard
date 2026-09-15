@@ -21,11 +21,11 @@ import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
 
 /** Three permanent cells: candidate updates have no reference to keys, popups or keyboard state. */
-internal class CandidateStripView(context: Context) : LinearLayout(context) {
+internal class CandidateStripView(context: Context, private val appearance: KeyboardAppearance) : LinearLayout(context) {
     private var candidateListener: ((String) -> Unit)? = null
     private var longPressListener: ((String) -> Boolean)? = null
     private val cells = List(SmartTypingViewState.MAX_VISIBLE_CANDIDATES) {
-        CandidateCell(context, { id -> candidateListener?.invoke(id) }, { id -> longPressListener?.invoke(id) == true })
+        CandidateCell(context, appearance, { id -> candidateListener?.invoke(id) }, { id -> longPressListener?.invoke(id) == true })
     }
 
     init {
@@ -75,6 +75,7 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
 
     private class CandidateCell(
         context: Context,
+        private val appearance: KeyboardAppearance,
         onSelected: (String) -> Unit,
         onLongPressed: (String) -> Boolean,
     ) : TextView(context) {
@@ -98,7 +99,7 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
             val horizontalPadding = resources.getDimensionPixelSize(R.dimen.candidate_horizontal_padding)
             setPadding(horizontalPadding, 0, horizontalPadding, 0)
             setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.candidate_text_size))
-            background = context.getDrawable(R.drawable.candidate_background)
+            background = appearance.candidateBackground()
             isSoundEffectsEnabled = false
             setOnClickListener { item?.let { current -> onSelected(current.id) } }
             setOnLongClickListener { item?.let { current ->
@@ -119,8 +120,8 @@ internal class CandidateStripView(context: Context) : LinearLayout(context) {
             val label = if (item is CandidateUiItem.Undo) context.getString(R.string.candidate_apply_undo, item.text) else item?.text.orEmpty()
             if (text.toString() != label) text = label
             isSelected = selected
-            typeface = if (selected) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
-            setTextColor(context.getColor(if (selected) R.color.key_text_accent else R.color.key_text))
+            typeface = Typeface.DEFAULT
+            setTextColor(if (selected) appearance.text else appearance.secondaryText)
             contentDescription = item?.let {
                 context.getString(
                     when (it) {

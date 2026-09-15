@@ -42,7 +42,7 @@ class ModelSettingsActivity : ThemedActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_model_settings)
         setTitle(R.string.model_settings_title)
-        applySystemBarInsets(findViewById(R.id.model_settings_scroll))
+        applySystemBarInsets(installDetailHeader(findViewById(R.id.model_settings_scroll), R.string.menu_model))
         manager = ModelDeliveryManager(this)
         name = findViewById(R.id.model_name)
         status = findViewById(R.id.model_status)

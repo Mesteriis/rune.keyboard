@@ -1,0 +1,28 @@
+Categories:
+  - Keyboard & IME
+License: MIT
+AuthorName: Mesteriis
+SourceCode: https://github.com/Mesteriis/rune.keyboard
+IssueTracker: https://github.com/Mesteriis/rune.keyboard/issues
+Changelog: https://github.com/Mesteriis/rune.keyboard/blob/HEAD/CHANGELOG.md
+
+AutoName: Rune Keyboard
+
+RepoType: git
+Repo: https://github.com/Mesteriis/rune.keyboard.git
+
+Builds:
+  - versionName: 0.4.0
+    versionCode: 6
+    commit: v0.4.0
+    subdir: app
+    submodules: true
+    gradle:
+      - yes
+    prebuild: sdkmanager 'cmake;3.31.6'
+    ndk: 29.0.14206865
+
+AutoUpdateMode: Version v%v
+UpdateCheckMode: Tags ^v[0-9]+\.[0-9]+\.[0-9]+$
+CurrentVersion: 0.4.0
+CurrentVersionCode: 6

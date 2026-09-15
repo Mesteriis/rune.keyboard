@@ -44,7 +44,7 @@ class KeyboardLayoutProvider {
             rows += numberRow(rowWeight)
         }
         sourceRows.forEachIndexed { index, row ->
-            val keys = row.map { letter -> letterKey(letter, state) }
+            val keys = row.map { letter -> letterKey(letter, state, options.keyFlicks) }
             val composed = if (index == sourceRows.lastIndex) {
                 listOf(shiftKey(state)) + keys + deleteKey()
             } else {
@@ -52,7 +52,12 @@ class KeyboardLayoutProvider {
             }
             rows += padToWeight(composed, rowWeight)
         }
-        rows += bottomRow(state, editorContext)
+        rows += bottomRow(state, editorContext).map { key ->
+            if (options.keyFlicks && key.label in listOf(",", ".")) {
+                val symbol = if (key.label == ",") "!" else "?"
+                key.copy(flickDown = KeyAlternate(symbol, KeyboardAction.CommitText(symbol)))
+            } else key
+        }
         return KeyboardLayout(rows)
     }
 
@@ -177,7 +182,7 @@ class KeyboardLayoutProvider {
         return listOf(gutter) + row + gutter
     }
 
-    private fun letterKey(letter: String, state: KeyboardState): KeySpec {
+    private fun letterKey(letter: String, state: KeyboardState, keyFlicks: Boolean): KeySpec {
         val uppercase = state.shiftMode.usesUppercase
         val visibleLetter = if (uppercase) letter.uppercase(state.language.locale) else letter
         val alternates = LongPressAlternates.forLetter(letter, state.language).map { alternate ->
@@ -190,6 +195,9 @@ class KeyboardLayoutProvider {
             label = visibleLetter,
             action = KeyboardAction.CommitLetter(letter),
             longPressAlternates = alternates,
+            flickDown = if (keyFlicks) KeyFlickSymbols.forLetter(letter, state.language)?.let {
+                KeyAlternate(it, KeyboardAction.CommitText(it))
+            } else null,
         )
     }
 

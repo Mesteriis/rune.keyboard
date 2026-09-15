@@ -1,6 +1,8 @@
 package io.github.mesteriis.rune.keyboard.ime.ui
 
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.os.SystemClock
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
@@ -22,6 +24,8 @@ internal class SpaceKeyView(
     context: Context,
     keyHeightPx: Int,
 ) : TextView(context), CancelableKey {
+    var showSpaceIndicator = false
+    private val indicatorPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val density = resources.displayMetrics.density
     private val holdTimeoutMillis = ViewConfiguration.getLongPressTimeout().toLong()
     private val detector = SpaceGestureDetector(
@@ -112,6 +116,16 @@ internal class SpaceKeyView(
         super.performClick()
         actionListener?.invoke(KeyboardAction.Space)
         return true
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        if (showSpaceIndicator) {
+            indicatorPaint.color = currentTextColor
+            indicatorPaint.strokeWidth = resources.displayMetrics.density
+            val y = height - 10f * resources.displayMetrics.density
+            canvas.drawLine(width * 0.3f, y, width * 0.7f, y, indicatorPaint)
+        }
     }
 
     override fun getAccessibilityClassName(): CharSequence = Button::class.java.name

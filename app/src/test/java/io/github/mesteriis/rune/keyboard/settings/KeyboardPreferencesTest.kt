@@ -16,6 +16,56 @@ class KeyboardPreferencesTest {
     private val preferences = KeyboardPreferences(store)
 
     @Test
+    fun `keyboard themes persist independently of app theme and typing settings`() {
+        preferences.writeTheme(ThemePreference.LIGHT)
+        preferences.writeHeightPreset(SizeBucket.COVER_PORTRAIT, HeightPreset.LARGE)
+        preferences.writeAutocorrectionMode(AutocorrectionMode.OFF)
+        for (theme in KeyboardTheme.entries) {
+            preferences.writeKeyboardTheme(theme)
+            val restored = KeyboardPreferences(store).readSettings()
+            assertEquals(theme, restored.keyboardTheme)
+            assertEquals(ThemePreference.LIGHT, restored.theme)
+            assertEquals(HeightPreset.LARGE, restored.heightPreset(SizeBucket.COVER_PORTRAIT))
+            assertEquals(AutocorrectionMode.OFF, restored.autocorrectionMode)
+        }
+    }
+
+    @Test
+    fun `absent or malformed keyboard themes fall back without rewriting saved data`() {
+        for (value in listOf(null, "FUTURE_THEME", 7, false)) {
+            val raw = mapOf(SettingsCodec.KEY_KEYBOARD_THEME to value, SettingsCodec.KEY_THEME to "DARK")
+            val source = FakeSharedPreferences(raw)
+            val settings = KeyboardPreferences(source).readSettings()
+            assertEquals(KeyboardTheme.AIR, settings.keyboardTheme)
+            assertEquals(ThemePreference.DARK, settings.theme)
+            assertEquals(raw, source.all)
+        }
+    }
+
+    @Test
+    fun `every theme change rebuilds the view but unchanged appearance does not`() {
+        for (theme in KeyboardTheme.entries) {
+            val before = KeyboardSettings.DEFAULT.copy(keyboardTheme = theme)
+            assertFalse(before.affectsKeyboardView(before.copy()))
+            for (other in KeyboardTheme.entries.filter { it != theme }) {
+                assertTrue(before.affectsKeyboardView(before.copy(keyboardTheme = other)))
+            }
+        }
+    }
+
+    @Test
+    fun `key flick preference persists and requests keyboard rebuild without changing opt ins`() {
+        val before = preferences.readSettings()
+        assertTrue(before.keyFlicks)
+        preferences.writeKeyFlicks(false)
+        val after = KeyboardPreferences(store).readSettings()
+        assertEquals(before.copy(keyFlicks = false), after)
+        assertTrue(before.affectsKeyboardView(after))
+        preferences.writeKeyFlicks(true)
+        assertEquals(before, KeyboardPreferences(store).readSettings())
+    }
+
+    @Test
     fun `a fresh store reads the defaults`() {
         assertEquals(KeyboardSettings.DEFAULT.enabledLanguages, preferences.readSettings().enabledLanguages)
         assertEquals(null, preferences.readLanguage())

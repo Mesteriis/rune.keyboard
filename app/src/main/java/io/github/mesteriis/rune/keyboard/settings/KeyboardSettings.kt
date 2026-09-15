@@ -21,6 +21,15 @@ enum class ThemePreference {
     DARK,
 }
 
+/** Keyboard-only monochrome designs, independent of the settings screen's light/dark mode. */
+enum class KeyboardTheme {
+    AIR,
+    SOFT,
+    OUTLINE,
+    MONOLITH,
+    SILENT,
+}
+
 enum class HapticMode {
     OFF,
     SYSTEM,
@@ -88,6 +97,8 @@ data class KeyboardSettings(
     val soundMode: SoundMode,
     val keyPreview: Boolean,
     val doubleSpacePeriod: Boolean,
+    val keyFlicks: Boolean = true,
+    val keyboardTheme: KeyboardTheme = KeyboardTheme.AIR,
     val autocorrectionMode: AutocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE,
     val mechanicalPunctuation: Boolean = true,
     val contextualPunctuationMode: ContextualPunctuationMode = ContextualPunctuationMode.OFF,
@@ -121,9 +132,11 @@ data class KeyboardSettings(
     /** Settings whose change requires rebuilding the keyboard view. */
     fun affectsKeyboardView(other: KeyboardSettings): Boolean =
         theme != other.theme ||
+            keyboardTheme != other.keyboardTheme ||
             keyGap != other.keyGap ||
             numberRow != other.numberRow ||
             keyPreview != other.keyPreview ||
+            keyFlicks != other.keyFlicks ||
             heightPresets != other.heightPresets
 
     companion object {
@@ -133,7 +146,7 @@ data class KeyboardSettings(
             heightPresets = emptyMap(),
             keyGap = GapPreset.NORMAL,
             numberRow = false,
-            theme = ThemePreference.SYSTEM,
+            theme = ThemePreference.DARK,
             hapticMode = HapticMode.SYSTEM,
             soundMode = SoundMode.SYSTEM,
             keyPreview = true,

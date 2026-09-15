@@ -1,79 +1,49 @@
 # Release
 
-Rune 0.2 ships as one signed APK installed by hand — no store and no ADB required
-on the target device.
+Public releases contain a signed release APK, SHA-256 checksums and release notes for an immutable source tag. Never upload signing keys or local configuration.
 
-## One-time: create a signing key
+## Signing
 
-The keystore and its passwords never enter the repository (`*.jks`, `*.keystore` and
-`keystore.properties` are git-ignored).
+The private `rune-release.jks` and `keystore.properties` files are ignored by Git. Keep a secure backup of both: future updates must use the same key. They are not CI artifacts.
 
-```bash
-keytool -genkeypair -v -keystore rune-release.jks -alias rune \
+For an independent distribution, create your own key interactively:
+
+```sh
+keytool -genkeypair -keystore rune-release.jks -alias rune \
   -keyalg RSA -keysize 4096 -validity 10000
-```
-
-Then copy the template and fill in the values you just chose:
-
-```bash
 cp keystore.properties.example keystore.properties
 ```
 
-| Key | Meaning |
-|---|---|
-| `storeFile` | Keystore path, relative to the repository root |
-| `storePassword` | Keystore password |
-| `keyAlias` | Key alias (`rune` above) |
-| `keyPassword` | Key password |
+Fill `storeFile`, `storePassword`, `keyAlias` and `keyPassword` locally. Restrict both files to the owner (`chmod 600`). Never paste passwords into shell commands or public logs. Without that file, the release build produces an unsigned APK for independent signing.
 
-Without `keystore.properties` the release build still succeeds; it just produces an unsigned APK,
-which is what CI does.
+## Version and checks
 
-## Build
+1. Increase `versionName` and `versionCode` in `app/build.gradle.kts`.
+2. Update `CHANGELOG.md`, the F-Droid recipe and Fastlane changelogs named with the version code.
+3. Run:
 
-```bash
-./gradlew clean testDebugUnitTest lint assembleDebug assembleRelease assembleProfile \
+```sh
+./gradlew testDebugUnitTest lint assembleDebug assembleRelease assembleProfile \
   privacyGateRelease privacyGateProfile imeIntelligenceBoundary \
   forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate
+
+tools/verify-native-runtime.sh app/build/outputs/apk/release/app-release.apk
 ```
 
-With local signing configured, the signed artifact lands at
-`app/build/outputs/apk/release/app-release.apk`. Without `keystore.properties`, Gradle and CI
-produce `app/build/outputs/apk/release/app-release-unsigned.apk`; this is a build artifact, not an
-installable release. CI also publishes the installable debug build as `rune-debug.apk` and the
-unsigned release output as `rune-release-unsigned.apk`, plus `lint-results` and
-`unit-test-results`.
+The privacy gates check permissions, cleartext/backup, logging, source dependency boundaries and the absence of debug recorders from release/profile before and after shrinking. Native checks cover both packaged ABIs. CI's unsigned build uses `app-release-unsigned.apk` for the APK check.
 
-## Verify before shipping
+4. Run the GitHub Actions API 26/API 37 instrumentation matrix for the release commit. Inspect actual job conclusions before claiming it passed.
+5. Exercise changed UI and typing flows on a disposable emulator and/or an explicitly selected test device. A signed release smoke test should cover launch, onboarding, offline input and settings. Never clear a personal device's data to resolve a signature mismatch.
+6. Model, dictionary, retrieval or runtime changes require the corresponding separate qualification in `docs/acceptance/`. A UI-only release does not establish a new model qualification.
 
-1. `privacyGateRelease` passes — merged release/profile manifests contain exactly
-   `android.permission.INTERNET`, cleartext and backup are disabled, and Rune-owned code does not log.
-2. Run `tools/verify-native-runtime.sh` against the exact APK being shipped; for a locally signed
-   release use `tools/verify-native-runtime.sh app/build/outputs/apk/release/app-release.apk`.
-   CI checks `app-release-unsigned.apk`. The gate confirms exactly `arm64-v8a + x86_64`,
-   `JNI_OnLoad`, allowed native dependencies, the packaged llama.cpp license, and no Rune JNI
-   logging/network symbols.
-3. The embedded model size/SHA match the qualified immutable asset and its
-   two-run reproducibility/Fold qualification evidence. The immutable release record also archives
-   `build-provenance.txt`, `gguf-metadata.json`, `QWEN3-BASE-APACHE-2.0.txt`,
-   `LLAMA-CPP-MIT.txt`, `THIRD_PARTY_NOTICES.md`, `python-sbom.txt` and `debian-sbom.txt`
-   from the qualified output. A Hugging Face source must use the full repository commit SHA in
-   `/resolve/<commit>/<file>`; branches, tags and `?download=true` URLs are not release inputs.
-4. Work through `docs/ACCEPTANCE.md` on a physical device, including model delivery/runtime, fold and settings.
-5. GitHub Actions passes the complete API 26 `google_apis/x86_64` and API 37
-   `google_apis_ps16k/x86_64` instrumentation matrix.
-6. Install the release APK on a clean device and complete onboarding without ADB:
-   open Rune → enable → select → the status card reads **Active**.
-7. Turn on airplane mode and type a message in all three languages.
+## Publish
 
-## Install
+Commit reviewed source and docs, push `main`, then create an annotated version tag on the verified commit. Copy the **signed** APK to an external staging directory as `rune-keyboard-<version>.apk` and compute SHA-256. Verify its signature with Android Build Tools `apksigner verify --verbose --print-certs`.
 
-```bash
-adb install -r app/build/outputs/apk/release/app-release.apk
-```
+Create the GitHub release from that tag, attach the APK and checksum file, and describe new behavior, validation and limitations. Confirm the remote release assets match the local sizes/hashes. The signed APK is `app/build/outputs/apk/release/app-release.apk`; an unsigned/debug APK is not a replacement.
 
-For a device without ADB, transfer the APK and install it from the file manager; Android will ask
-to allow installs from that source.
+The upstream release and a development debug build use different signing keys. Android deliberately rejects an in-place replacement between them. Users must make an explicit choice about removing a previous debug installation and its local data.
 
-For RC testing, install `rune-debug.apk` from CI or a locally signed release. Do not try to install
-`rune-release-unsigned.apk`.
+## F-Droid
+
+Update and submit the [build recipe and metadata](FDROID.md). Official inclusion requires maintainer acceptance and an independent build; creating a GitHub release does not automatically publish to F-Droid.

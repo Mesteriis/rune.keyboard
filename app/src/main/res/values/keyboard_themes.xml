@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_keyboard_theme">Keyboard theme</string>
+  <string name="keyboard_theme_air">Air · space and Enter</string>
+  <string name="keyboard_theme_soft">Soft · rounded controls</string>
+  <string name="keyboard_theme_outline">Outline · thin borders</string>
+  <string name="keyboard_theme_monolith">Monolith · bottom strip</string>
+  <string name="keyboard_theme_silent">Silent · Enter only</string>
+</resources>

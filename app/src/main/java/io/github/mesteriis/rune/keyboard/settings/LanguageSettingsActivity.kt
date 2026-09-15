@@ -30,7 +30,7 @@ class LanguageSettingsActivity : ThemedActivity() {
         preferences = KeyboardPreferences(this)
         inflater = LayoutInflater.from(this)
         container = findViewById(R.id.languages_container)
-        applySystemBarInsets(findViewById<View>(R.id.languages_scroll))
+        applySystemBarInsets(installDetailHeader(findViewById(R.id.languages_scroll), R.string.menu_languages))
     }
 
     override fun onResume() {

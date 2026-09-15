@@ -135,7 +135,7 @@ class ImeTestDriver {
     }
 
     fun launchSettings() {
-        shell("am start -W -n $PACKAGE_NAME/.settings.SettingsActivity")
+        shell("am start -W -f 0x24000000 -n $PACKAGE_NAME/.settings.SettingsActivity")
         check(device.wait(Until.hasObject(By.res(PACKAGE_NAME, "settings_scroll")), WAIT_MILLIS)) {
             "Settings screen unavailable"
         }
@@ -143,13 +143,22 @@ class ImeTestDriver {
 
     fun settingsRow(titleRes: Int): UiObject2 {
         val label = targetContext.getString(titleRes)
-        var title = device.findObject(By.text(label))
+        var title = device.findObject(By.text(label).clazz("android.widget.TextView"))
+        if (title == null) {
+            launchSettings()
+            checkNotNull(device.wait(Until.findObject(By.res(PACKAGE_NAME, "menu_search")), WAIT_MILLIS)).text = label
+            val result = checkNotNull(device.wait(Until.findObject(By.text(label).clazz("android.widget.TextView")), WAIT_MILLIS))
+            clickClosestClickable(result)
+            instrumentation.waitForIdleSync()
+            device.waitForIdle()
+            title = device.findObject(By.text(label).clazz("android.widget.TextView"))
+        }
         if (title == null) {
             @Suppress("DEPRECATION")
             UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/settings_scroll")).apply {
                 setAsVerticalList(); scrollIntoView(UiSelector().text(label))
             }
-            title = device.findObject(By.text(label))
+            title = device.findObject(By.text(label).clazz("android.widget.TextView"))
         }
         var row: UiObject2? = checkNotNull(title) { "Settings row unavailable" }
         while (row != null && !row.isClickable) row = row.parent
@@ -169,13 +178,13 @@ class ImeTestDriver {
         awaitQaActivity()
     }
 
-    fun launchComposingQa(mode: String = "accept") {
+    fun launchComposingQa(mode: String = "accept", language: KeyboardLanguage = KeyboardLanguage.ENGLISH) {
         require(mode in setOf("accept", "reject", "drop", "private", "raw", "password", "email", "url",
             "number", "phone", "date_time"))
         shell("am start -W -f 0x10008000 -n $QA_ACTIVITY --es qa_composing_fixture $mode")
         awaitQaActivity()
         waitForKeyboard()
-        switchToEnglish()
+        switchLanguageUntil(language.compactLabel)
     }
 
     private fun resumeQa() {
@@ -499,18 +508,7 @@ class ImeTestDriver {
     fun setNumberRowThroughSettings(enabled: Boolean) {
         if ((findKeyByText("1") != null) == enabled) return
         shell("am start -W -n $PACKAGE_NAME/.settings.SettingsActivity")
-        val label = targetContext.getString(R.string.settings_number_row)
-        var row = device.findObject(By.text(label))
-        if (row == null) {
-            @Suppress("DEPRECATION")
-            UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/settings_scroll")).apply {
-                setAsVerticalList()
-                setSwipeDeadZonePercentage(0.375)
-                scrollIntoView(UiSelector().text(label))
-            }
-            row = device.findObject(By.text(label))
-        }
-        clickClosestClickable(checkNotNull(row) { "Number-row setting was not found" })
+        settingsRow(R.string.settings_number_row).click()
         eventually(WAIT_MILLIS) {
             targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
                 .getBoolean(KEY_NUMBER_ROW, false) == enabled
@@ -523,6 +521,7 @@ class ImeTestDriver {
         // Drain the app's main queue so that handler and the IME preference listener finish before
         // API 26 restores the editor against the next input view.
         instrumentation.waitForIdleSync()
+        device.pressBack()
         device.pressBack()
         instrumentation.waitForIdleSync()
         // Detach the current input view without selecting the API 26 vendor IME: the settings
@@ -551,16 +550,7 @@ class ImeTestDriver {
         val wasEnabled = previousPreferences[KEY_PREVIEW] as? Boolean ?: true
         if (wasEnabled) return
         shell("am start -W -n $PACKAGE_NAME/.settings.SettingsActivity")
-        val label = targetContext.getString(R.string.settings_key_preview)
-        val row = device.findObject(By.text(label)) ?: run {
-            @Suppress("DEPRECATION")
-            UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/settings_scroll")).apply {
-                setAsVerticalList()
-                scrollIntoView(UiSelector().text(label))
-            }
-            device.findObject(By.text(label))
-        }
-        checkNotNull(row) { "Key-preview setting was not found" }.click()
+        settingsRow(R.string.settings_key_preview).click()
         device.pressBack()
         resumeQa()
         focusField("qa_plain_text")

@@ -1,0 +1,1 @@
+Cinco temas oscuros, nueva pantalla de inicio y búsqueda en ajustes. Desliza hacia abajo para símbolos secundarios en EN/RU/ES; se conservan los acentos al mantener pulsado. Licencia MIT y documentación de privacidad y contribución.

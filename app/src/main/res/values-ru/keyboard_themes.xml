@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_keyboard_theme">Тема клавиатуры</string>
+  <string name="keyboard_theme_air">Воздух · пробел и Enter</string>
+  <string name="keyboard_theme_soft">Мягкая · округлые кнопки</string>
+  <string name="keyboard_theme_outline">Контур · тонкие границы</string>
+  <string name="keyboard_theme_monolith">Монолит · нижняя полоса</string>
+  <string name="keyboard_theme_silent">Тишина · только Enter</string>
+</resources>

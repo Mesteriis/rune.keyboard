@@ -1,6 +1,13 @@
 package io.github.mesteriis.rune.keyboard.ime.ui
 
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.os.Bundle
+import android.view.accessibility.AccessibilityNodeInfo
+import io.github.mesteriis.rune.keyboard.R
+import io.github.mesteriis.rune.keyboard.ime.gesture.KeyFlickGesture
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewConfiguration
@@ -31,6 +38,44 @@ internal class KeyboardKeyView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : TextView(context, attrs), CancelableKey {
+    var keyIcon: Drawable? = null
+    var secondaryTextColor: Int = android.graphics.Color.GRAY
+    private val flickPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { textAlign = Paint.Align.CENTER }
+    private var flickGesture: KeyFlickGesture? = null
+
+
+    override fun onDraw(canvas: Canvas) {
+        val icon = keyIcon
+        if (icon == null) {
+            val alternate = spec?.flickDown
+            if (alternate == null) {
+                super.onDraw(canvas)
+            } else if (flickGesture?.state == KeyFlickGesture.State.SELECTED) {
+                flickPaint.typeface = typeface
+                flickPaint.textSize = textSize
+                flickPaint.color = currentTextColor
+                val metrics = flickPaint.fontMetrics
+                canvas.drawText(alternate.label, width / 2f, height / 2f - (metrics.ascent + metrics.descent) / 2, flickPaint)
+            } else {
+                val saved = canvas.save()
+                canvas.translate(0f, 4f * resources.displayMetrics.density)
+                super.onDraw(canvas)
+                canvas.restoreToCount(saved)
+                flickPaint.typeface = typeface
+                flickPaint.textSize = minOf(10f * resources.displayMetrics.scaledDensity, height * .2f)
+                flickPaint.color = secondaryTextColor
+                canvas.drawText(alternate.label, width / 2f, -flickPaint.fontMetrics.ascent + 2f * resources.displayMetrics.density, flickPaint)
+            }
+        } else {
+            // Keep the original TextView label and content description for accessibility.
+            val size = minOf((24f * resources.displayMetrics.density).toInt(), width, height)
+            val left = (width - size) / 2
+            val top = (height - size) / 2
+            icon.setBounds(left, top, left + size, top + size)
+            icon.setTint(currentTextColor)
+            icon.draw(canvas)
+        }
+    }
     private var spec: KeySpec? = null
     private var actionListener: ((KeyboardAction) -> Unit)? = null
     private var physicalTouchListener: ((Float, Float) -> Unit)? = null
@@ -115,8 +160,16 @@ internal class KeyboardKeyView @JvmOverloads constructor(
                     (physicalTouchAllowed?.invoke() != false)
                 downStamp = if (physicalTapEligible) physicalTapStamp?.invoke() ?: 0L else 0L
                 downTime = event.eventTime
-                touchDownX = if (physicalTapEligible) event.x else 0f
-                touchDownY = if (physicalTapEligible) event.y else 0f
+                touchDownX = event.x
+                touchDownY = event.y
+                flickGesture = if (spec?.flickDown != null) KeyFlickGesture(
+                    downX = event.x,
+                    downY = event.y,
+                    threshold = maxOf(18f * resources.displayMetrics.density, height * .32f),
+                    horizontalLimit = maxOf(touchSlop.toFloat(), width * .65f),
+                    upwardLimit = touchSlop.toFloat(),
+                    downwardLimit = maxOf(36f * resources.displayMetrics.density, height * 1.8f),
+                ) else null
                 armed = true
                 longPressTriggered = false
                 alternatesActive = false
@@ -128,20 +181,39 @@ internal class KeyboardKeyView @JvmOverloads constructor(
                     postDelayed(longPressRunnable, ViewConfiguration.getLongPressTimeout().toLong())
                 }
             }
-            MotionEvent.ACTION_POINTER_DOWN -> physicalTapEligible = false
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                physicalTapEligible = false
+                if (flickGesture != null && !alternatesActive) {
+                    popupHost?.onKeyCancel(this)
+                    cancelPendingActions()
+                }
+            }
             MotionEvent.ACTION_MOVE -> {
                 if (event.pointerCount != 1) physicalTapEligible = false
+                if (event.pointerCount != 1 && flickGesture != null && !alternatesActive) {
+                    popupHost?.onKeyCancel(this)
+                    cancelPendingActions()
+                    return true
+                }
+                if (updateFlick(event)) return true
                 if (alternatesActive) {
                     // The finger is expected to leave the key while picking an alternate.
                     popupHost?.onKeyMove(this, event.x, event.y)
-                } else if (armed && !isInsideWithSlop(event.x, event.y)) {
+                } else if (armed && flickGesture == null && !isInsideWithSlop(event.x, event.y)) {
                     popupHost?.onKeyCancel(this)
                     finishGesture()
                     endTouch()
                 }
             }
             MotionEvent.ACTION_UP -> {
-                if (alternatesActive) {
+                if (updateFlick(event)) return true
+                if (armed && !longPressTriggered && flickGesture?.state == KeyFlickGesture.State.SELECTED) {
+                    val action = spec?.flickDown?.action
+                    popupHost?.onKeyCancel(this)
+                    finishGesture()
+                    action?.let { actionListener?.invoke(it) }
+                    endTouch()
+                } else if (alternatesActive) {
                     val selected = popupHost?.onKeyUp(this)
                     finishGesture()
                     selected?.let { action -> actionListener?.invoke(action) }
@@ -182,6 +254,46 @@ internal class KeyboardKeyView @JvmOverloads constructor(
         return true
     }
 
+    /** Returns true after an escaped gesture has cancelled the entire key interaction. */
+    private fun updateFlick(event: MotionEvent): Boolean {
+        val gesture = flickGesture ?: return false
+        if (!armed || alternatesActive || longPressTriggered) return false
+        val previous = gesture.state
+        val next = gesture.move(event.x, event.y)
+        if (gesture.movedBeyondTap) {
+            physicalTapEligible = false
+            removeCallbacks(longPressRunnable)
+        }
+        if (next == KeyFlickGesture.State.CANCELLED) {
+            popupHost?.onKeyCancel(this)
+            cancelPendingActions()
+            return true
+        }
+        if (next != previous) {
+            popupHost?.onKeyCancel(this)
+            invalidate()
+        }
+        return false
+    }
+
+    override fun onInitializeAccessibilityNodeInfo(info: AccessibilityNodeInfo) {
+        super.onInitializeAccessibilityNodeInfo(info)
+        spec?.flickDown?.let { alternate ->
+            if (isEnabled) info.addAction(AccessibilityNodeInfo.AccessibilityAction(
+                R.id.action_key_flick, context.getString(R.string.key_flick_action, alternate.label),
+            ))
+        }
+    }
+
+    override fun performAccessibilityAction(action: Int, arguments: Bundle?): Boolean {
+        if (action == R.id.action_key_flick && isEnabled) {
+            val alternate = spec?.flickDown ?: return false
+            actionListener?.invoke(alternate.action)
+            return true
+        }
+        return super.performAccessibilityAction(action, arguments)
+    }
+
     override fun performClick(): Boolean {
         val handledBySuper = super.performClick()
         val action = spec?.action ?: return handledBySuper
@@ -215,6 +327,8 @@ internal class KeyboardKeyView @JvmOverloads constructor(
 
     private fun finishGesture() {
         armed = false
+        flickGesture = null
+        invalidate()
         physicalTapEligible = false
         downStamp = 0L
         downTime = 0L

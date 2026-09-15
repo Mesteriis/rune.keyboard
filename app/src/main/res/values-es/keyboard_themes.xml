@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_keyboard_theme">Tema del teclado</string>
+  <string name="keyboard_theme_air">Aire · espacio e Intro</string>
+  <string name="keyboard_theme_soft">Suave · controles redondos</string>
+  <string name="keyboard_theme_outline">Contorno · bordes finos</string>
+  <string name="keyboard_theme_monolith">Monolito · franja inferior</string>
+  <string name="keyboard_theme_silent">Silencio · solo Intro</string>
+</resources>

@@ -177,7 +177,7 @@ class RuneInputMethodService : InputMethodService() {
     override fun onCreateInputView(): View {
         return RuneTrace.section("Rune#createInputView") {
             val themedContext = ThemeOverride.themedContext(this, settings.theme)
-            RuneKeyboardView(themedContext, buildMetrics(themedContext)).also { view ->
+            RuneKeyboardView(themedContext, buildMetrics(themedContext), settings.keyboardTheme).also { view ->
                 keyboardView = view
                 view.setOnPhysicalTouchListener { sample ->
                     updatePersonalizationPolicy()
@@ -619,7 +619,7 @@ class RuneInputMethodService : InputMethodService() {
             layoutProvider.layoutFor(
                 state = state,
                 editorContext = editorContext,
-                options = LayoutOptions(showNumberRow = settings.numberRow),
+                options = LayoutOptions(showNumberRow = settings.numberRow, keyFlicks = settings.keyFlicks),
             )
         }
         view.render(layout, state)

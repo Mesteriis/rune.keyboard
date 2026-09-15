@@ -1,0 +1,1 @@
+Five dark themes, a redesigned home and searchable settings. Flick down on letter keys to enter secondary symbols in EN/RU/ES; long-press accents remain available. MIT-licensed release with privacy and contribution docs.

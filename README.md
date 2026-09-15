@@ -1,216 +1,123 @@
+<div align="center">
+
 # Rune Keyboard
 
-Rune Keyboard — компактная приватная Android-клавиатура на Kotlin. Проект реализован как независимый IME и не использует код или package identity Iris.
+**A quiet, private keyboard for Android.**
 
-## Возможности 0.3.2
+English · Русский · Español<br>
+Five dark themes. Symbols with a downward flick. Typing stays on your device.
 
-- русская, английская и испанская раскладки (ЙЦУКЕН, QWERTY, QWERTY с `ñ`);
-- жесты пробела: свайп влево/вправо меняет язык циклично, удержание перемещает курсор, двойной тап ставит `. `;
-- компактный индикатор языка на пробеле;
-- одноразовый Shift, Caps Lock по двойному нажатию, автокапитализация;
-- долгое нажатие с попапом альтернатив: `á é í ó ú ü`, `ё`, `ъ`, `« »`, `– —`, `¿ ¡`, валюты;
-- popup preview нажатой клавиши, отключаемый и никогда не показываемый в полях пароля;
-- две страницы символов, опциональный цифровой ряд, отдельные раскладки number/phone/date-time;
-- адаптация нижнего ряда для email и URL;
-- Unicode-safe Backspace с ускоряющимся повтором при удержании;
-- корректные `DONE`, `GO`, `NEXT`, `PREVIOUS`, `SEARCH`, `SEND` и многострочный Enter;
-- onboarding с выбором языков и тестовыми полями, полноценный экран настроек;
-- профили размеров под внешний и внутренний экран Fold, обе ориентации, пресеты высоты и отступов;
-- темы `Как в системе / Светлая / Тёмная`, пять режимов вибрации, четыре режима звука;
-- необязательная локальная Rune Text 0.1: явное скачивание/импорт, проверка и локальный runtime self-test, приватная оценка вариантов исправления;
-- ровно одно разрешение `android.permission.INTERNET`, используемое только для явно запущенного скачивания модели; без телеметрии, рекламы, истории ввода и доступа к clipboard.
+[Download APK](https://github.com/Mesteriis/rune.keyboard/releases/latest) · [User guide (RU)](docs/USER_GUIDE.ru.md) · [Report a bug](https://github.com/Mesteriis/rune.keyboard/issues) · [Contribute](CONTRIBUTING.md)
 
-Скользящий ввод, Emoji-панель, one-handed и split-режимы, свайп по Backspace и голосовой ввод отложены на следующие версии. Общий `generate()` не предоставляется IME.
+[![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
+[![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-lightgrey.svg)](#install)
+[![CI](https://github.com/Mesteriis/rune.keyboard/actions/workflows/ci.yml/badge.svg)](https://github.com/Mesteriis/rune.keyboard/actions/workflows/ci.yml)
 
-Работают composing-сессия с ограниченным RAM-контекстом, постоянная полоса кандидатов, [локальные словари](tools/lexicon/smart-typing-0.3/README.md), механическая пунктуация и единый Undo через Backspace. IME асинхронно оценивает готовые варианты через приватный процесс модели. Режим «Автозамена (95%)» применяет квалифицированные исправления на границе слова; результат должен успеть в разрешённое окно, ввод никогда не ждёт модель. В 0.3.2 завершённый поиск на расстоянии одной операции работает отдельно от расширенного поиска. Квалифицированная общая локальная автозамена включена для нижнего регистра RU/ES и начального верхнего регистра RU, а EN сохраняет проверенную таблицу частых ошибок и модельную ветку. Неоднозначные варианты остаются предложениями. Проверка словарей текущего языкового маршрута начинается при показе допустимого текстового поля. Пробел сохраняет уже начатый локальный поиск на 250 мс; если локальная политика воздержалась, модель получает остаток того же окна. Оригинал остаётся в полосе, Backspace точно отменяет замену. [Заглавные буквы известных имён и географических названий](docs/acceptance/2026-09-04-smart-typing-0.3-canonical-autoreplace.md) сохраняют отдельное локальное правило.
+</div>
 
-Для новых установок автозамена и механическая пунктуация включены, контекстуальная пунктуация выключена. Сохранённые настройки обновление не меняет. После включения контекстуальные предложения применяются только явным нажатием. Нижний ряд учитывает стабильные системные отступы, включая панель навигации IME.
+## Screenshots
 
-[Приёмка 0.3.2](docs/acceptance/2026-09-12-rune-0.3.2-autocorrection.md) отделяет свежую проверку общей локальной политики от исторической модельной qualification и физической проверки Fold. Активация привязана к версиям правил, манифестам словарей, SHA-256 модели и идентичности runtime. Изменение поиска, словарей, runtime или модели требует отдельной квалификации соответствующей ветки.
+<p align="center">
+  <img src="fastlane/metadata/android/ru-RU/images/phoneScreenshots/01-home.png" width="30%" alt="Rune home with an interactive keyboard preview and theme selector">
+  <img src="fastlane/metadata/android/ru-RU/images/phoneScreenshots/02-settings.png" width="30%" alt="Settings grouped by appearance, languages, typing and privacy">
+  <img src="fastlane/metadata/android/ru-RU/images/phoneScreenshots/03-keyboard.png" width="30%" alt="Russian keyboard with secondary symbols, shown in Rune's practice field">
+</p>
 
-В debug-сборке добавлены [необязательные локальные журналы](docs/DEBUG_DIAGNOSTICS.md): технические события без текста и отдельная запись ввода с двумя подтверждениями. Оба переключателя по умолчанию выключены. Запись исключает защищённые и неподходящие поля, ограничена по размеру и выгружается только вручную. В release/profile этот сбор отсутствует.
+Captured on a Samsung Galaxy Z Fold7 cover screen. System bars and the edge-panel handle are cropped out; the app UI is unchanged. The text is a sample typed in Rune's own practice field.
 
-## Требования
+## Features
 
-- JDK 17;
-- Android SDK Platform 37 и Build Tools 36.0.0;
-- Android NDK `29.0.14206865` и CMake `3.31.6`;
-- для установки: 64-разрядное устройство с Android 8.0 (API 26) или новее и ABI
-  `arm64-v8a` либо `x86_64`; 32-разрядные ABI не поддерживаются.
+- **Three languages:** English QWERTY, Russian ЙЦУКЕН and Spanish QWERTY with `ñ`.
+- **Five monochrome themes:** Air, Soft, Outline, Monolith and Silent. Borderless letters, restrained action keys, adjustable height and spacing.
+- **Downward key flicks:** enter the small symbol above a letter without opening the symbol layer. Numbers sit above the top row. Long-press still opens `ё`, accented letters and punctuation alternatives.
+- **Spacebar gestures:** swipe sideways to change language; hold and drag to move the cursor; double-tap for a full stop.
+- **Local typing tools:** suggestions, autocorrection, undo with Backspace, personal words, protected words and abbreviations.
+- **Layouts that fit:** optional number row, number/phone/date fields, email/URL keys, portrait and landscape sizing, and foldable screen profiles.
+- **Searchable settings:** a live keyboard preview, quick theme choices and grouped controls.
+- **Optional local model:** explicitly download or import Rune Text for additional candidate scoring. Ordinary typing and dictionaries work without it.
 
-После клонирования нужен pinned submodule runtime:
+Glide typing, an emoji panel, split/one-handed layouts and voice input are not implemented yet.
 
-```bash
-git submodule update --init --recursive
+## Install
+
+1. Download `rune-keyboard-0.4.0.apk` from [GitHub Releases](https://github.com/Mesteriis/rune.keyboard/releases/latest).
+2. Open the APK and allow installation from that source when Android asks.
+3. Open **Rune Keyboard → Set up keyboard**, enable Rune and select it as your keyboard.
+4. Choose languages and try the practice field.
+
+Requires **Android 8.0 (API 26) or newer**, with a **64-bit ARM or x86 processor** (`arm64-v8a` / `x86_64`). The APK contains both architectures.
+
+Keep the same distribution/signing key when updating. Development debug builds and the public release use different keys; Android will not install one over the other. Export anything you need before choosing to remove an older debug installation.
+
+**F-Droid:** packaging metadata and store descriptions are maintained in this repository. See [F-Droid submission and build notes](docs/FDROID.md) for the current status; an official listing is subject to F-Droid review.
+
+## Gestures
+
+| Action | Result |
+| --- | --- |
+| Tap a key | Type its letter |
+| Flick down and release | Type its secondary number or symbol |
+| Move back upward before release | Return to the letter |
+| Long-press a letter | Choose an accented letter or `ё` |
+| Swipe the spacebar left/right | Change language |
+| Hold the spacebar, then drag | Move the cursor |
+| Hold Backspace | Repeat deletion |
+
+Key flicks can be disabled in **Settings → Appearance → Swipe down for symbols**. Keyboard themes and the app's light/dark setting are separate.
+
+## Privacy
+
+Rune has no ads or analytics SDKs. Text is processed locally. The only declared permission is `INTERNET`, used for an explicitly requested model download; the keyboard does not upload typing data. Model downloads are pinned to an immutable source and checked by size and SHA-256.
+
+Personal dictionaries and enabled learning features can store data locally. The home preview does not feed learning. Model scoring runs in a separate private process; basic input never waits for it. Debug-only diagnostic recording is opt-in and excluded from release builds.
+
+See [Privacy](PRIVACY.md) for storage, exports and deletion details.
+
+## Build from source
+
+Use **JDK 17**, Android SDK **37**, Build Tools **36.0.0**, NDK **29.0.14206865**, and CMake **3.31.6**. The checked-in Gradle wrapper pins the Gradle version; no global Gradle install is required.
+
+```sh
+git clone --recurse-submodules https://github.com/Mesteriis/rune.keyboard.git
+cd rune.keyboard
+
+# Set JAVA_HOME and ANDROID_HOME for your installation.
+sdkmanager 'platforms;android-37' 'build-tools;36.0.0' \
+  'ndk;29.0.14206865' 'cmake;3.31.6'
+./gradlew assembleDebug
 ```
 
-При настроенных стандартных `JAVA_HOME` и `ANDROID_HOME` полная проверка запускается так:
+The development APK is `app/build/outputs/apk/debug/app-debug.apk`.
 
-```bash
-./gradlew testDebugUnitTest lint assembleDebug assembleRelease assembleProfile \
+```sh
+./gradlew testDebugUnitTest lint assembleRelease assembleProfile \
   privacyGateRelease privacyGateProfile imeIntelligenceBoundary \
   forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate
 ```
 
-`privacyGateRelease` проверяет ровно одно разрешение `INTERNET`, отключённые cleartext/backup и отсутствие Logcat-логирования. `imeIntelligenceBoundary` проверяет транзитивные границы client/IPC/storage/inference отдельно по вариантам, запрещая сеть, delivery, JNI вне adapter и сохранение payload в модельном пути. Отдельная точная граница разрешает opt-in debug-журналы и проверяет отсутствие recorder/UI в release/profile до R8 и в итоговом APK. Native gate проверяет ABI, зависимости и отсутствие JNI/log/network symbols.
+Release signing is local and optional for compilation: without signing configuration, `assembleRelease` produces an **unsigned** APK. Follow [Release instructions](docs/RELEASE.md) to produce an installable release. Do not publish a debug build as a production release.
 
-Подпись release-сборки описана в [docs/RELEASE.md](docs/RELEASE.md); без keystore release собирается неподписанным.
+Bundled dictionaries and small experimental model weights have pinned provenance and rebuild tools; normal Gradle builds use the committed assets. The large optional Rune Text model is downloaded separately and is not bundled in the APK.
 
-## Как включить
+## Project layout
 
-1. Установите `app/build/outputs/apk/debug/app-debug.apk`.
-2. Откройте Rune Keyboard.
-3. Нажмите «Открыть настройки клавиатур» и включите Rune.
-4. Вернитесь в приложение, нажмите «Выбрать клавиатуру» и выберите Rune.
-5. Выберите языки и проверьте ввод в тестовых полях на том же экране.
+| Path | Purpose |
+| --- | --- |
+| `app/` | Native Kotlin IME, keyboard views, settings, local typing tools and tests |
+| `runtime-llama/` | JNI adapter and pinned llama.cpp submodule |
+| `tools/` | Boundary checks, dictionary/model pipelines and evaluation tools |
+| `docs/` | Architecture, build/release instructions and acceptance evidence |
+| `fastlane/metadata/android/` | Localized store descriptions, changelogs and screenshots |
+| `fdroid/` | Proposed F-Droid build recipe |
 
-Язык переключается свайпом по пробелу. Rune не дублирует системную кнопку скрытия клавиатуры. `Ё` доступна долгим нажатием `Е`.
+## Contributing
 
-## Иконка
+Bug reports, translations, accessibility improvements and focused patches are welcome. Include your Android version, screen configuration and reproducible steps, using sample text instead of private messages. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
-Исходный RGBA-мастер хранится в `artwork/rune-keyboard-icon-source.png`. Adaptive foreground
-генерируется детерминированно с настоящим alpha-каналом и безопасными полями:
+Useful references: [architecture](docs/ARCHITECTURE.md), [acceptance checks](docs/ACCEPTANCE.md), [changelog](CHANGELOG.md), [detailed Russian guide](docs/USER_GUIDE.ru.md).
 
-```bash
-ffmpeg -i artwork/rune-keyboard-icon-source.png \
-  -vf 'scale=600:-1:flags=lanczos,pad=1024:1024:(ow-iw)/2:(oh-ih)/2:color=0x00000000' \
-  -frames:v 1 -pix_fmt rgba \
-  app/src/main/res/drawable-nodpi/ic_launcher_foreground_art.png
-```
+## License and credits
 
-Полноцветный foreground используется Android adaptive icon, а прежний простой Rune-вектор —
-как monochrome-слой для системных themed icons.
+Rune's original code and documentation are licensed under the **[MIT License](LICENSE)**.
 
-Архитектура описана в [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), реальная IME-приёмка — в [docs/ACCEPTANCE.md](docs/ACCEPTANCE.md).
-
-## Персонализация ввода
-
-Клавиатура дополнительно проверяет русские слова по морфологическому словарю: редкие
-правильные формы защищены, а близкие варианты из разных лемм остаются подсказками.
-Эта проверка может только запретить автоматическую замену; прежние требования к
-уверенности и редактору сохраняются.
-
-В настройках появились три независимых выключателя (по умолчанию выключены):
-
-- **Учиться на моих исправлениях** — сохранять подтверждённые замены, выбранные слова
-  и отмены. Обычный Backspace не считается отказом от автозамены.
-- **Учитывать мои касания** — после явного выбора слова подстраивать порядок подсказок
-  по точкам нажатий, отдельно для языков и геометрии клавиатуры.
-- **Мои продолжения фраз** — показывать частые продолжения после пробела; вставлять
-  только по нажатию. Для накопления фраз включите обучение либо импортируйте профиль.
-
-Данные хранятся локально в `no_backup`, без отправки в сеть. В паролях, полях с запретом
-обучения, URI/email и числовых полях эти функции не работают. Есть импорт подготовленного
-профиля фраз и удаление всех данных персонализации. Отключение обучения сохраняет ранее
-накопленные данные; для удаления используйте отдельную кнопку.
-
-Подготовка профиля из локального экспорта Telegram описана в
-[tools/morphology/README.md](tools/morphology/README.md). Файл профиля содержит личные
-фразы: его нельзя добавлять в Git или общедоступный APK. Словарь увеличивает размер
-APK примерно на 28.6 MB; условия данных и воспроизводимая сборка описаны в
-[DICTIONARY_ASSET.md](tools/morphology/DICTIONARY_ASSET.md).
-
-Ограничения: калибровка касаний обучается на подтверждённых парах одинаковой длины,
-а вставки/удаления букв не используются для неё. Одна только частота фразы не подтверждает
-написание слова. Новая точность автокоррекции и задержки на Fold требуют отдельного
-измерения на реальном устройстве.
-
-## Инструменты ввода и статистика
-
-Ещё шесть функций включаются независимо в настройках и по умолчанию выключены:
-
-- **Статистика качества** — локальные счётчики автозамен, явных выборов и отмен,
-  распределение времени ответа подсказок; просмотр и сброс на отдельном экране.
-- **Теневое сравнение** — сравнивает решение текущей автокоррекции с первым вариантом
-  подсказок, учитывающим включённую персонализацию. Само сравнение текст не меняет.
-  Оценка по выбору пользователя появляется только при явном выборе, отмене или
-  подтверждённом переписывании; отсутствие отмены не считается правильным ответом.
-- **Пробелы между словами** — ручные предложения разделить или соединить русские слова.
-- **Мои сокращения** — свои пары «сокращение → фраза», отдельно для каждого языка.
-  Пары добавляются, изменяются и удаляются на отдельном экране; вставка по нажатию.
-- **Проверка законченной фразы** — ручные предложения для ограниченного набора русских
-  конструкций после точки, вопросительного или восклицательного знака.
-- **Кнопка отмены** — восемь секунд показывает отмену последней автозамены слова,
-  пока курсор и текст принадлежат той же операции. Обычная отмена Backspace сохраняется.
-
-Подсказки требуют включённой строки кандидатов. Они работают только с текущим текстом,
-набранным Rune, без чтения окружающего содержимого редактора. Сокращения и числовые
-счётчики хранятся локально в `no_backup`; выключение сохраняет данные, удаление выполняется
-кнопкой сброса. Проверка фраз не является универсальным грамматическим редактором.
-
-При включённой отладочной диагностике формат **schema 6** записывает в каждое событие
-два набора фиксированных флагов: `features` — настройки, `effectiveFeatures` — доступность
-с учётом поля ввода, языка, готовности ресурсов и допуска модели. `CONFIGURATION`
-отмечает изменение конфигурации; начало сессии также содержит флаги. Разница между
-наборами объясняет, например, почему включённая функция недоступна в закрытом поле.
-Это доступность функции: отдельная замена по-прежнему требует проверки кандидата.
-Сбор текстовой диагностики сохраняет прежнее отдельное согласие; в release её нет.
-Анализатор `tools/typing_diagnostics_analyzer.py` поддерживает schema 1–6 и добавляет
-`featureConfigurations` для schema 4–6.
-
-
-## Защита слов, профили и обучение опечаткам
-
-Четыре дополнительных переключателя также по умолчанию выключены:
-
-- **Защищать мои слова** — долгое нажатие на слово в подсказках добавляет его в
-  защищённый список. Можно добавлять и удалять слова в настройках. Защита действует
-  отдельно для языка и запрещает автоматическую замену слова; явный выбор подсказки
-  остаётся доступен. До загрузки списка или при ошибке чтения автоматические замены
-  слов блокируются, пока защита включена.
-- **Использовать профили приложений** — назначить профиль приложению из списка недавно
-  использованных для ввода. «Основные настройки» наследует общие параметры; «Переписка»
-  ограничивает автокоррекцию подсказками, отключает механическую пунктуацию, точку по двойному пробелу, контекстные
-  запятые и проверку фраз; «Деловой» скрывает личные продолжения и сокращения. Профили
-  не включают функции, выключенные в основных настройках, и не меняют согласие на обучение.
-  Список установленных приложений не сканируется; запоминаются только приложения,
-  в которых начат разрешённый ввод при включённых профилях. Максимум 64 записи.
-- **Сохранять подтверждённые примеры** — сохранять явные выборы, подтверждения исходного
-  слова, отмены и поддерживаемые ручные переписывания. Обычный набор и отсутствие отмены
-  не дают положительной оценки. Исходное и исправленное слово сохраняются только при
-  включённом сборе примеров, без контекста переписки.
-- **Учиться на типах моих опечаток** — учить типы одиночных ошибок: пропуск, лишняя буква,
-  замена, перестановка и повтор. После подтверждений на минимум трёх разных целевых словах
-  одного языка начислять ограниченный бонус уже найденным словарным подсказкам.
-  Это меняет только порядок предложений; допуск автоматической замены не расширяется.
-
-В «Лаборатории обучения» можно запустить проверку на локальных словарях и сбросить
-примеры вместе с шаблонами. Хранится максимум 512 уникальных записей. Фиксированная
-доля целевых слов, определяемая хешем, отведена под проверку: все варианты одного целевого
-слова остаются в одной части, проверочные слова не обучают шаблоны. Повторы не наращивают
-вес, противоречивые оценки исключаются. Без сбора текстовых примеров обучение хранит
-ограниченные хеши подтверждённых пар и категории ошибок для устранения повторов.
-
-Проверка сравнивает первую локальную подсказку до и после бонуса за шаблон ошибки,
-показывает размер выборки, пропущенных кандидатов и сохранение подтверждённых слов.
-Она не включает модель, калибровку касаний и персональные точные пары; это не измерение
-точности всей автокоррекции. Ручное переписывание принимается только при доступной
-словарной проверке целевого слова. Маленькая выборка не доказывает улучшение качества.
-
-Кнопка **«Выключить все дополнительные функции»** одним действием выключает все 17
-дополнительных переключателей — предыдущие и новые. Списки, профили и обучающие данные
-сохраняются; для удаления есть отдельные кнопки. Основная автокоррекция и пунктуация
-управляются своими прежними настройками.
-
-В диагностике schema 5 добавлены флаги `protectedWords`, `appProfiles`, `collectExamples`,
-`typoPatterns` и числовой `typingProfile`: 0 — основные настройки, 1 — переписка,
-2 — деловой. Имена приложений не записываются в метаданные. `features` показывает
-основные настройки, `effectiveFeatures` — доступность после профиля и текущих проверок.
-
-
-### Экспериментальные модели и области нажатия
-
-Четыре независимых переключателя по умолчанию выключены:
-
-- **Обучаемая оценка подсказок** — небольшой обученный CatBoost меняет порядок уже найденных слов с учётом ошибок, частотности и контекста. Персональные и геометрические поправки добавляются только при собственных разрешениях.
-- **Компактная модель контекста** — локальная нейросеть с окном 24 символа добавляет оценку по предыдущему тексту. На текущей проверочной выборке отдельно она хуже базового порядка; совместно с CatBoost дала небольшой дополнительный прирост. Рекомендуется проверять совместное включение.
-- **Эксперимент с областями нажатия** — оценивает вероятную соседнюю букву, сохраняя исходное нажатие (теневой режим).
-- **Применять к нажатиям** — при включённом эксперименте может уточнить одиночное короткое касание около границы клавиш. Центр клавиши сохраняется. После удаления буквы до следующего пробела/границы эксперимент не применяется. Долгое нажатие, альтернативы, несколько пальцев, отмена и accessibility-click сохраняют обычное поведение. Смена контекста между DOWN/UP отменяет уточнение.
-
-Сейчас модели работают только для русского языка. Они загружаются с проверкой хешей на отдельном потоке; до готовности ресурсов новые функции недоступны. Для теневого/активного уточнения касаний модель контекста используется независимо от переключателя её влияния на подсказки. Строка кандидатов нужна только для двух переключателей порядка подсказок. Нейросеть не читает окружающий текст редактора: контекст ограничен текущим текстом, набранным Rune. Неподтверждённый, закрытый или потерянный контекст отключает уточнение касаний.
-
-Общий размер двух наборов весов — 89 604 байта. Они обучены на публичных текстах Wikipedia; личных переписок и данных касаний в APK нет. На 926 отложенных **синтетических опечатках с найденными кандидатами** нужное слово оказалось первым в 500 случаях у базового порядка, 680 у CatBoost и 686 у фиксированной комбинации с нейросетью. Варианты без нужного слова учитываются как ошибки. Это проверка порядка подсказок, а не точность автоматических замен или реальные замеры на личных сообщениях. Текущие правила допуска автозамены не меняются.
-
-Диагностика schema 6 добавляет `learnedRanking`, `compactContext`, `dynamicTouch`, `dynamicTouchApply` в настроенные и фактически доступные флаги. События `TAP` содержат только фиксированное решение: `TOUCH_UNCHANGED`, `TOUCH_SHADOW`, `TOUCH_REMAPPED`. Последнее обозначает выбор буквы для отправки, а не подтверждение редактором. Координаты и текст в эти события не добавляются. Анализатор выдаёт числовой раздел `dynamicTouchDecisions`. Действуют прежнее согласие на диагностику и отсутствие её в release.
-
-[Воспроизведение обучения, метрики и происхождение весов](tools/typing_experiments/README.md).
+Third-party components retain their own licenses. These include llama.cpp (MIT), Material icons (Apache-2.0), and dictionaries, frequency data and experimental weights under their respective licenses. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md); MIT does not relicense those assets.

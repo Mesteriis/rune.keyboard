@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <dimen name="candidate_strip_height">48dp</dimen>
-  <dimen name="candidate_text_size">18sp</dimen>
+  <dimen name="candidate_text_size">16sp</dimen>
   <dimen name="candidate_horizontal_padding">8dp</dimen>
   <string name="candidate_original">Original: %1$s</string>
   <string name="candidate_correction">Correction: %1$s</string>

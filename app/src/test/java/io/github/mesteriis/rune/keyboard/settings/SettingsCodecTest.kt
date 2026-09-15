@@ -84,7 +84,7 @@ class SettingsCodecTest {
         assertEquals(KeyboardSettings.DEFAULT.enabledLanguages, settings.enabledLanguages)
         assertEquals(StartingLanguage.LastUsed, settings.startingLanguage)
         assertEquals(GapPreset.NORMAL, settings.keyGap)
-        assertEquals(ThemePreference.SYSTEM, settings.theme)
+        assertEquals(ThemePreference.DARK, settings.theme)
         assertEquals(HapticMode.SYSTEM, settings.hapticMode)
         assertEquals(SoundMode.SYSTEM, settings.soundMode)
         assertFalse(settings.numberRow)
@@ -147,7 +147,7 @@ class SettingsCodecTest {
         val settings = SettingsCodec.decode(raw)
 
         assertEquals(GapPreset.NORMAL, settings.keyGap)
-        assertEquals(ThemePreference.SYSTEM, settings.theme)
+        assertEquals(ThemePreference.DARK, settings.theme)
         assertEquals(HapticMode.SYSTEM, settings.hapticMode)
         assertEquals(SoundMode.SYSTEM, settings.soundMode)
         assertEquals(HeightPreset.NORMAL, settings.heightPreset(SizeBucket.INNER_PORTRAIT))
@@ -210,7 +210,7 @@ class SettingsCodecTest {
     fun `keyboard view relevant changes are detected`() {
         val base = KeyboardSettings.DEFAULT
 
-        assertTrue(base.affectsKeyboardView(base.copy(theme = ThemePreference.DARK)))
+        assertTrue(base.affectsKeyboardView(base.copy(theme = ThemePreference.LIGHT)))
         assertTrue(base.affectsKeyboardView(base.copy(numberRow = true)))
         assertTrue(base.affectsKeyboardView(base.copy(keyGap = GapPreset.WIDE)))
         assertTrue(base.affectsKeyboardView(base.copy(keyPreview = false)))

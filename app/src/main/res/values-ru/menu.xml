@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="menu_home">Главная</string>
+  <string name="menu_search">Найти настройку</string>
+  <string name="menu_empty">Настройки не найдены</string>
+  <string name="menu_empty_hint">Попробуйте другое слово, например «тема» или «звук».</string>
+  <string name="menu_appearance">Оформление</string>
+  <string name="menu_appearance_summary">Тема, высота клавиш, расстояние</string>
+  <string name="menu_languages">Языки и раскладка</string>
+  <string name="menu_feedback">Звук и вибрация</string>
+  <string name="menu_feedback_summary">Нажатия клавиш, отклик</string>
+  <string name="menu_typing">Автозамена и пунктуация</string>
+  <string name="menu_typing_summary">Исправления, подсказки, знаки препинания</string>
+  <string name="menu_dictionary">Словарь и обучение</string>
+  <string name="menu_dictionary_summary">Личные слова, сокращения, обучение</string>
+  <string name="menu_model">Локальная модель</string>
+  <string name="menu_model_summary">Пакеты и управление</string>
+  <string name="menu_privacy">Приватность</string>
+  <string name="menu_privacy_summary">Ваши тексты остаются на устройстве</string>
+  <string name="menu_advanced">Дополнительно</string>
+  <string name="menu_advanced_summary">Инструменты, диагностика, о приложении</string>
+  <string name="menu_keyboard_group">Клавиатура</string>
+  <string name="menu_input_group">Ввод</string>
+  <string name="menu_app_group">Приложение</string>
+  <string name="menu_smart_input">Умный ввод</string>
+  <string name="menu_connect">Подключение клавиатуры</string>
+  <string name="menu_active">Клавиатура активна</string>
+  <string name="menu_enabled">Выберите клавиатуру Rune</string>
+  <string name="menu_disabled">Настройте под себя</string>
+  <string name="menu_tagline">Быстрый. Приватный. Для ваших мыслей.</string>
+  <string name="menu_setup_hint">Подключите Rune для ввода в других приложениях.</string>
+  <string name="menu_try">Попробуйте написать здесь</string>
+  <string name="menu_preview">Предпросмотр клавиатуры</string>
+  <string name="menu_air">Воздух</string>
+  <string name="menu_soft">Мягкая</string>
+  <string name="menu_outline">Контур</string>
+  <string name="menu_monolith">Монолит</string>
+  <string name="menu_silent">Тишина</string>
+  <string name="menu_air_summary">Лёгкий и минималистичный вид.</string>
+  <string name="menu_soft_summary">Мягкие, округлые кнопки.</string>
+  <string name="menu_outline_summary">Тонкие линии на главных кнопках.</string>
+  <string name="menu_monolith_summary">Единая спокойная нижняя полоса.</string>
+  <string name="menu_silent_summary">Выделяется только Enter.</string>
+<string name="menu_settings">Настройки</string>
+<string name="menu_languages_short">Языки</string>
+<string name="menu_back_label">Назад</string>
+</resources>

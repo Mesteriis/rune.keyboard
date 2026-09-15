@@ -19,7 +19,7 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
  * drives the selection through [onTouchMoved]. Both are created once and reused so pressing a key
  * never inflates a view.
  */
-internal class KeyPopupController(private val anchorRoot: View) {
+internal class KeyPopupController(private val anchorRoot: View, private val appearance: KeyboardAppearance) {
     private val context: Context = anchorRoot.context
     private val previewWidth = context.resources.getDimensionPixelSize(R.dimen.keyboard_preview_width)
     private val previewHeight = context.resources.getDimensionPixelSize(R.dimen.keyboard_preview_height)
@@ -176,8 +176,8 @@ internal class KeyPopupController(private val anchorRoot: View) {
                     context.resources.getDimension(R.dimen.keyboard_preview_text_size),
                 )
                 typeface = Typeface.DEFAULT
-                setTextColor(context.getColor(R.color.key_text))
-                background = context.getDrawable(R.drawable.key_preview_background)
+                setTextColor(appearance.text)
+                background = appearance.popupBackground()
                 importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
             }
             previewLabel = label
@@ -186,7 +186,7 @@ internal class KeyPopupController(private val anchorRoot: View) {
     }
 
     private fun createAlternatesPopup(): PopupWindow {
-        val row = AlternatesRowView(context)
+        val row = AlternatesRowView(context, appearance)
         alternatesRow = row
         return newPopup(row)
     }

@@ -1,0 +1,5 @@
+<resources>
+  <string name="settings_key_flicks">Swipe down for symbols</string>
+  <string name="settings_key_flicks_summary">Swipe down on a key to type the small symbol above its letter. Hold for accented letters.</string>
+  <string name="key_flick_action">Type %1$s</string>
+</resources>

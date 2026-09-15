@@ -15,7 +15,7 @@
     <item name="android:fontFamily">sans</item>
     <item name="android:windowBackground">@color/keyboard_background</item>
     <item name="android:navigationBarColor">@color/keyboard_background</item>
-    <item name="android:windowLightNavigationBar">true</item>
+    <item name="android:windowLightNavigationBar">false</item>
   </style>
 </resources>
 

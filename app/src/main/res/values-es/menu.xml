@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="menu_home">Inicio</string>
+  <string name="menu_search">Buscar un ajuste</string>
+  <string name="menu_empty">No se encontraron ajustes</string>
+  <string name="menu_empty_hint">Prueba otra palabra, como tema o sonido.</string>
+  <string name="menu_appearance">Apariencia</string>
+  <string name="menu_appearance_summary">Tema, altura de teclas, espacio</string>
+  <string name="menu_languages">Idiomas y distribución</string>
+  <string name="menu_feedback">Sonido y vibración</string>
+  <string name="menu_feedback_summary">Sonidos de teclas y respuesta</string>
+  <string name="menu_typing">Corrección y puntuación</string>
+  <string name="menu_typing_summary">Correcciones, sugerencias, puntuación</string>
+  <string name="menu_dictionary">Diccionario y aprendizaje</string>
+  <string name="menu_dictionary_summary">Palabras personales, abreviaturas, aprendizaje</string>
+  <string name="menu_model">Modelo local</string>
+  <string name="menu_model_summary">Paquetes y gestión</string>
+  <string name="menu_privacy">Privacidad</string>
+  <string name="menu_privacy_summary">Tu escritura permanece en el dispositivo</string>
+  <string name="menu_advanced">Avanzado</string>
+  <string name="menu_advanced_summary">Herramientas, diagnóstico, acerca de Rune</string>
+  <string name="menu_keyboard_group">Teclado</string>
+  <string name="menu_input_group">Escritura</string>
+  <string name="menu_app_group">Aplicación</string>
+  <string name="menu_smart_input">Escritura inteligente</string>
+  <string name="menu_connect">Configurar teclado</string>
+  <string name="menu_active">Teclado activo</string>
+  <string name="menu_enabled">Selecciona el teclado Rune</string>
+  <string name="menu_disabled">Hazlo a tu gusto</string>
+  <string name="menu_tagline">Rápido. Privado. Para tus ideas.</string>
+  <string name="menu_setup_hint">Activa Rune para usarlo en otras aplicaciones.</string>
+  <string name="menu_try">Prueba a escribir aquí</string>
+  <string name="menu_preview">Vista previa del teclado</string>
+  <string name="menu_air">Aire</string>
+  <string name="menu_soft">Suave</string>
+  <string name="menu_outline">Contorno</string>
+  <string name="menu_monolith">Monolito</string>
+  <string name="menu_silent">Silencio</string>
+  <string name="menu_air_summary">Ligero y minimalista.</string>
+  <string name="menu_soft_summary">Controles suaves y redondeados.</string>
+  <string name="menu_outline_summary">Líneas finas en lo esencial.</string>
+  <string name="menu_monolith_summary">Una franja inferior discreta.</string>
+  <string name="menu_silent_summary">Solo destaca Intro.</string>
+<string name="menu_settings">Ajustes</string>
+<string name="menu_languages_short">Idiomas</string>
+<string name="menu_back_label">Atrás</string>
+</resources>

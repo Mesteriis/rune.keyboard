@@ -42,8 +42,9 @@ class TypingToolsInstrumentedTest {
             prefs::writeLearnedRanking, prefs::writeCompactContext, prefs::writeDynamicTouch, prefs::writeDynamicTouchApply)
         writes.forEach { it(false) }
         try {
-            ActivityScenario.launch(SettingsActivity::class.java).use { scenario ->
-                for (index in titles.indices) {
+            for (index in titles.indices) {
+                val page = SettingsPage.forRow(R.string.settings_section_tools, titles[index])
+                ActivityScenario.launch<SettingsActivity>(SettingsActivity.intent(context, page)).use { scenario ->
                     scenario.onActivity { activity ->
                         val title = descendants(activity.window.decorView).filterIsInstance<TextView>()
                             .single { it.id == R.id.row_title && it.text.toString() == activity.getString(titles[index]) }
@@ -52,12 +53,10 @@ class TypingToolsInstrumentedTest {
                         assertTrue(row.performClick())
                     }
                     assertEquals(titles.indices.map { it <= index }, flags(prefs.readSettings()))
-                }
-                scenario.recreate()
-                scenario.onActivity { activity ->
-                    titles.forEach { resource ->
+                    scenario.recreate()
+                    scenario.onActivity { activity ->
                         val title = descendants(activity.window.decorView).filterIsInstance<TextView>()
-                            .single { it.id == R.id.row_title && it.text.toString() == activity.getString(resource) }
+                            .single { it.id == R.id.row_title && it.text.toString() == activity.getString(titles[index]) }
                         assertTrue((title.parent.parent as View).findViewById<CheckBox>(R.id.row_checkbox).isChecked)
                     }
                 }
