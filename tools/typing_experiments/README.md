@@ -63,3 +63,7 @@ Legacy `train.py` now emits only ignored `build/typing-experiments` artifacts an
 ## Provenance and license
 
 Public `wikimedia/wikipedia`, snapshot `20231101`, revision `a634f78b1c435397c07001e175fa74cc4ad5e775`; contributors are the original authors. Source metadata declares CC-BY-SA-3.0 and GFDL-1.3; derived weights are distributed under CC-BY-SA-3.0. See the packaged `NOTICE.md` and license. Changes include text extraction, synthetic spelling perturbations, model fitting and numeric export. APK provenance contains aggregate metrics and public hashes only.
+
+## Additional-epoch follow-up
+
+A further twelve epochs were evaluated with dev-only checkpoint selection and a newly reserved article test. The selected +2 checkpoint did not pass the predeclared fresh-improvement/regression gates; bundled models are unchanged. See [experiment results](../../docs/typing-extra-epochs.md) for counts, limitations and reproduction.
