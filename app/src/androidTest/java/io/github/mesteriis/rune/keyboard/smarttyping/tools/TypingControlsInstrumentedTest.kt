@@ -58,7 +58,8 @@ class TypingControlsInstrumentedTest {
             prefs::writeQualityMetrics, prefs::writeShadowComparison, prefs::writeWordBoundarySuggestions,
             prefs::writeAbbreviations, prefs::writePhraseReview, prefs::writeVisibleUndo, prefs::writeProtectedWords,
             prefs::writeAppProfiles, prefs::writeCollectExamples, prefs::writeTypoPatterns,
-            prefs::writeLearnedRanking, prefs::writeCompactContext, prefs::writeDynamicTouch, prefs::writeDynamicTouchApply)
+            prefs::writeLearnedRanking, prefs::writeCompactContext, prefs::writeDynamicTouch, prefs::writeDynamicTouchApply,
+            prefs::writeManualCandidateExpansion)
         val before = DiagnosticFeatures.configured(prefs.readSettings())
         val features = listOf(DiagnosticFeature.PERSONAL_LEARNING, DiagnosticFeature.TOUCH_PERSONALIZATION,
             DiagnosticFeature.PHRASE_SUGGESTIONS, DiagnosticFeature.QUALITY_METRICS, DiagnosticFeature.SHADOW_COMPARISON,
@@ -66,7 +67,7 @@ class TypingControlsInstrumentedTest {
             DiagnosticFeature.VISIBLE_UNDO, DiagnosticFeature.PROTECTED_WORDS, DiagnosticFeature.APP_PROFILES,
             DiagnosticFeature.COLLECT_EXAMPLES, DiagnosticFeature.TYPO_PATTERNS,
             DiagnosticFeature.LEARNED_RANKING, DiagnosticFeature.COMPACT_CONTEXT,
-            DiagnosticFeature.DYNAMIC_TOUCH, DiagnosticFeature.DYNAMIC_TOUCH_APPLY)
+            DiagnosticFeature.DYNAMIC_TOUCH, DiagnosticFeature.DYNAMIC_TOUCH_APPLY, DiagnosticFeature.MANUAL_CANDIDATE_EXPANSION)
         awaitResult<TypingControlStore.Result> { store.protect("codex", language, it) }
         store.observePackage(context.packageName)
         assertEquals(TypingControlStore.Result.SAVED, awaitResult<TypingControlStore.Result> {
@@ -91,6 +92,32 @@ class TypingControlsInstrumentedTest {
             writes.zip(features).forEach { (write, feature) -> write(before and feature.bit != 0) }
             awaitResult<TypingControlStore.Result> { store.reset(it) }
         }
+    }
+
+    @Test fun manualExpansionTogglePersistsAcrossSettingsRecreation() {
+        val prefs = KeyboardPreferences(context)
+        val before = prefs.readSettings().manualCandidateExpansion
+        prefs.writeManualCandidateExpansion(false)
+        try {
+            ActivityScenario.launch(SettingsActivity::class.java).use { scenario ->
+                fun toggle(expected: Boolean) {
+                    scenario.onActivity { activity ->
+                        val title = descendants(activity.window.decorView).filterIsInstance<TextView>()
+                            .single { it.id == R.id.row_title &&
+                                it.text.toString() == activity.getString(R.string.settings_manual_candidate_expansion) }
+                        val row = title.parent.parent as View
+                        assertEquals(expected, row.findViewById<android.widget.CheckBox>(R.id.row_checkbox).isChecked)
+                        assertTrue(row.performClick())
+                    }
+                    assertEquals(!expected, prefs.readSettings().manualCandidateExpansion)
+                }
+                toggle(false)
+                scenario.recreate()
+                val configured = DiagnosticFeatures.configured(prefs.readSettings())
+                assertTrue(configured and DiagnosticFeature.MANUAL_CANDIDATE_EXPANSION.bit != 0)
+                toggle(true)
+            }
+        } finally { prefs.writeManualCandidateExpansion(before) }
     }
 
     @Test fun profileManagerShowsAssignedAppAndItsPreset() {
