@@ -75,7 +75,7 @@ class TypingControlsInstrumentedTest {
         })
         try {
             writes.forEach { it(true) }
-            ActivityScenario.launch(SettingsActivity::class.java).use { scenario ->
+            ActivityScenario.launch<SettingsActivity>(SettingsActivity.intent(context, SettingsPage.ADVANCED)).use { scenario ->
                 scenario.onActivity { activity ->
                     val title = descendants(activity.window.decorView).filterIsInstance<TextView>()
                         .single { it.id == R.id.row_title && it.text.toString() == activity.getString(R.string.controls_disable_all) }
@@ -99,7 +99,7 @@ class TypingControlsInstrumentedTest {
         val before = prefs.readSettings().manualCandidateExpansion
         prefs.writeManualCandidateExpansion(false)
         try {
-            ActivityScenario.launch(SettingsActivity::class.java).use { scenario ->
+            ActivityScenario.launch<SettingsActivity>(SettingsActivity.intent(context, SettingsPage.TYPING)).use { scenario ->
                 fun toggle(expected: Boolean) {
                     scenario.onActivity { activity ->
                         val title = descendants(activity.window.decorView).filterIsInstance<TextView>()
@@ -143,12 +143,18 @@ class TypingControlsInstrumentedTest {
     @Test fun learningLabRecreatesAndEvaluatesShippedLexiconOnFrozenHoldout() {
         val store = LearningStore.get(context)
         assertTrue(awaitResult<Boolean> { store.reset(it) })
-        store.configure(true, true, true)
         // Known words with deterministic holdout selection; do not assume a particular hash bucket.
         val word = listOf("hello", "world", "test", "good", "house", "work", "people", "water", "time", "day", "night", "friend")
             .first { LearningModel.holdout(language, it) }
-        store.confirmed(word, language)
-        val result = AndroidLearningEvaluation.run(context.assets, store.snapshot()) { false }
+        var frozen: LearningSnapshot? = null
+        instrumentation.runOnMainSync {
+            // The resident IME also updates this store's eligibility on the main thread.
+            // Seed and freeze one synthetic example without an intervening editor callback.
+            store.configure(true, true, true)
+            assertTrue("Synthetic holdout must be admitted", store.confirmed(word, language))
+            frozen = store.snapshot()
+        }
+        val result = AndroidLearningEvaluation.run(context.assets, checkNotNull(frozen)) { false }
         assertEquals(1, result.heldOut)
         assertEquals(1, result.evaluated)
         assertFalse(result.cancelled)

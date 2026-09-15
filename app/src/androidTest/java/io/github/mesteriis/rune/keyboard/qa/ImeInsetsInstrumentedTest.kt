@@ -7,6 +7,7 @@ import android.view.View
 import android.view.Surface
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.accessibility.AccessibilityNodeInfo
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
@@ -170,12 +171,9 @@ class ImeInsetsInstrumentedTest : ImeTestBase() {
         }
         // Reopening with a real editor tap places the caret according to its current text
         // geometry. Read that selection without refocusing, rebinding, or changing the editor.
-        // The IME window and the remote editor publish separate accessibility updates
-        // after rotation. Await the editor without changing its focus or scroll position.
-        val editor = checkNotNull(driver.device.wait(Until.findObject(
-            By.res(ImeTestDriver.PACKAGE_NAME, "qa_plain_text")), ImeTestDriver.WAIT_MILLIS)) {
-            "Original editor must be accessible after the keyboard transition"
-        }.accessibilityNodeInfo
+        // On a 320dp landscape screen the focused editor can be outside ScrollView's
+        // viewport. Query input focus in its real window; do not scroll or refocus it.
+        val editor = focusedEditor()
         assertTrue("The original editor must still own focus", editor.isFocused)
         assertEquals("Bottom-row observation must not change editor text", before, editor.text.toString())
         val start = editor.textSelectionStart
@@ -185,8 +183,31 @@ class ImeInsetsInstrumentedTest : ImeTestBase() {
         val bounds = screenBounds(checkNotNull(spaceKey))
         // Exercise the lowest touchable pixels, where a navigation overlay used to steal input.
         assertTrue(driver.device.click(bounds.centerX(), bounds.bottom - 2))
-        driver.awaitFieldText("qa_plain_text", expected)
+        val deadline = SystemClock.uptimeMillis() + ImeTestDriver.WAIT_MILLIS
+        var actual = focusedEditor().text.toString()
+        while (actual != expected && SystemClock.uptimeMillis() < deadline) {
+            SystemClock.sleep(25)
+            actual = focusedEditor().text.toString()
+        }
+        assertEquals("Space must reach the original focused editor", expected, actual)
         return expected
+    }
+
+    private fun focusedEditor(): AccessibilityNodeInfo {
+        val deadline = SystemClock.uptimeMillis() + ImeTestDriver.WAIT_MILLIS
+        do {
+            val editors = instrumentation.uiAutomation.windows.mapNotNull { window ->
+                val root = window.root ?: return@mapNotNull null
+                if (root.packageName != ImeTestDriver.PACKAGE_NAME) return@mapNotNull null
+                root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)?.takeIf {
+                    it.viewIdResourceName == "${ImeTestDriver.PACKAGE_NAME}:id/qa_plain_text"
+                }
+            }
+            if (editors.size == 1) return editors.single()
+            assertTrue("Only the original editor may own input focus", editors.size <= 1)
+            SystemClock.sleep(25)
+        } while (SystemClock.uptimeMillis() < deadline)
+        error("Original editor must retain accessible input focus")
     }
 
     private fun screenBounds(key: View): Rect {

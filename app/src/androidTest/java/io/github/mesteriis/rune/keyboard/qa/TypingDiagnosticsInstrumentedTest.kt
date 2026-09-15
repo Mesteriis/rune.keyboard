@@ -208,6 +208,8 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         driver.launchComposingQa(); type("beforegap")
         snapshot(DiagnosticStream.TEXT)
         driver.tapKeyByDescription(context.getString(R.string.key_symbols))
+        assertTrue("Symbols layout must become visible", driver.device.wait(Until.hasObject(
+            By.desc(context.getString(R.string.key_letters))), ImeTestDriver.WAIT_MILLIS))
         driver.tapKey("1")
         driver.tapKeyByDescription(context.getString(R.string.key_letters))
         type("aftergap")
