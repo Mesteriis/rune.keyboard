@@ -79,6 +79,18 @@ class DiagnosticsBoundaryTest(unittest.TestCase):
             case[gate.DIAGNOSTIC_FEATURES] += '\nclass HiddenRecorder'
             self.assertIn('feature vocabulary must be exact', self.errors(case, variant))
 
+    def test_manual_expansion_mapping_is_exact_and_append_only(self):
+        for variant in ('debug', 'release', 'profile'):
+            for old, replacement in (
+                ('MANUAL_CANDIDATE_EXPANSION("manualCandidateExpansion")', 'MANUAL_CANDIDATE_EXPANSION("arbitraryText")'),
+                ('settings.dynamicTouchApply, settings.manualCandidateExpansion', 'settings.manualCandidateExpansion, settings.dynamicTouchApply'),
+                ('settings.manualCandidateExpansion)', 'true)'),
+            ):
+                case = fixture(variant)
+                self.assertIn(old, gate.DIAGNOSTIC_FEATURES_SOURCE)
+                case[gate.DIAGNOSTIC_FEATURES] = gate.DIAGNOSTIC_FEATURES_SOURCE.replace(old, replacement)
+                self.assertIn('feature vocabulary must be exact', self.errors(case, variant))
+
     def test_feature_masks_cannot_carry_text(self):
         for field in ('configuredFeatures', 'effectiveFeatures', 'typingProfile'):
             case = fixture('debug')

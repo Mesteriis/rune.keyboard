@@ -387,10 +387,11 @@ class TypingSessionController internal constructor(
             // Validate display text without applying the widened search certificate to any policy.
             candidateSelection(it.copy(localSearch = LocalSearchEvidence.NONE), stamp.language, stamp.requestId)
         }
-        candidateSelection = selection.copy(manualAlternatives = manual?.alternatives.orEmpty())
+        val acceptedSelection = selection.copy(manualAlternatives = manual?.alternatives.orEmpty())
+        candidateSelection = acceptedSelection
         quality.candidateResponseNanos((System.nanoTime() - stamp.startedAt).coerceAtLeast(0))
         // Model-eligible words have no final primary decision until ranking or an explicit choice.
-        compareShadow(selection, deferForModel = true)
+        compareShadow(acceptedSelection, deferForModel = true)
         diagnose(DiagnosticKind.CANDIDATES, DiagnosticReason.ACCEPTED, selection.alternatives.size,
             selection.selectedIndex, selection.ranking?.usedModel == true,
             source = if (selection.generation.isCanonicalCaseCorrection()) DiagnosticSource.CANONICAL_CASE else DiagnosticSource.LOCAL_POLICY,

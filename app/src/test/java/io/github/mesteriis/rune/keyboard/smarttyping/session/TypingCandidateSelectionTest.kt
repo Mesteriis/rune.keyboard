@@ -625,6 +625,36 @@ class TypingCandidateSelectionTest {
         }
     }
 
+    @Test fun `initial shadow comparison uses accepted manual pool and unchanged local primary`() {
+        val subject = TypingSessionController(jvmGraphemes,
+            io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification { _, _ -> true })
+        val observed = mutableListOf<Pair<String, String>>()
+        subject.setQualityRecorder(object : io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityRecorder {
+            override fun compare(revision: Long, source: String, primaryChoice: String, experimentalChoice: String) {
+                observed += primaryChoice to experimentalChoice
+            }
+        })
+        subject.setPersonalization(object : TypingPersonalization {
+            override fun preference(original: String, candidate: String, language: KeyboardLanguage) =
+                if (candidate == "сообщения") 100.0 else 0.0
+        }, KeyboardLanguage.RUSSIAN)
+        subject.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, 0), 0, 0)
+        subject.typeText("сообшение", execute)
+        val flags = io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature.SHADOW_COMPARISON.bit or
+            io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature.AUTO_CORRECTION.bit
+        subject.configureFeatures(flags, flags)
+        val request = subject.beginCandidateRequest(1, KeyboardLanguage.RUSSIAN)!!
+        val raw = reply(request, "сообщение")
+        val baseline = raw.generation.copy(alternatives = raw.generation.alternatives.map {
+            it.copy(language = KeyboardLanguage.RUSSIAN, kind = GeneratedCandidateKind.COMMON_CONFUSION)
+        })
+        val manual = reply(request, "сообщение", "сообщения").generation
+        assertTrue(subject.acceptCandidates(raw.copy(generation = baseline, manualGeneration = manual)))
+        assertFalse(subject.canRequestModelRanking)
+        assertEquals("сообщения", subject.candidateViewState.candidates[1].text)
+        assertEquals(listOf("сообщение" to "сообщения"), observed)
+    }
+
     @Test fun `manual pool ranks richer display without changing model input and tap restores original`() {
         controller.setPersonalization(object : TypingPersonalization {
             override fun contextualPreference(context: String, original: String, candidate: GeneratedCandidate,

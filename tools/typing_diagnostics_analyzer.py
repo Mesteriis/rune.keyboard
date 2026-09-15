@@ -25,6 +25,7 @@ FEATURE_KEYS = frozenset(("spellingSuggestions", "autoCorrection", "mechanicalPu
     "abbreviations", "phraseReview", "visibleUndo"))
 FEATURE_KEYS_V5 = FEATURE_KEYS | frozenset(("protectedWords", "appProfiles", "collectExamples", "typoPatterns"))
 FEATURE_KEYS_V6 = FEATURE_KEYS_V5 | frozenset(("learnedRanking", "compactContext", "dynamicTouch", "dynamicTouchApply"))
+FEATURE_KEYS_V6_MANUAL = FEATURE_KEYS_V6 | frozenset(("manualCandidateExpansion",))
 ROTATED_JSONL = re.compile(r"^(.*)\.(\d+)\.jsonl$")
 
 
@@ -64,6 +65,9 @@ def _event_fields(event):
         raise ValueError("typingProfile must be a fixed profile ID")
     if schema >= 4:
         expected_features = FEATURE_KEYS_V6 if schema >= 6 else FEATURE_KEYS_V5 if schema >= 5 else FEATURE_KEYS
+        # Schema 6 has two explicitly known additive vocabularies; historical exports remain readable.
+        if schema >= 6 and isinstance(event.get("features"), dict) and event["features"].keys() == FEATURE_KEYS_V6_MANUAL:
+            expected_features = FEATURE_KEYS_V6_MANUAL
         for field in ("features", "effectiveFeatures"):
             values = event.get(field)
             if not isinstance(values, dict) or values.keys() != expected_features or any(type(v) is not bool for v in values.values()):

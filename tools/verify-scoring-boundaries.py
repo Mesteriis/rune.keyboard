@@ -48,7 +48,7 @@ enum class DiagnosticFeature(val field: String) {
     PHRASE_REVIEW("phraseReview"), VISIBLE_UNDO("visibleUndo"),
     PROTECTED_WORDS("protectedWords"), APP_PROFILES("appProfiles"),
     COLLECT_EXAMPLES("collectExamples"), TYPO_PATTERNS("typoPatterns"),
-    LEARNED_RANKING("learnedRanking"), COMPACT_CONTEXT("compactContext"), DYNAMIC_TOUCH("dynamicTouch"), DYNAMIC_TOUCH_APPLY("dynamicTouchApply");
+    LEARNED_RANKING("learnedRanking"), COMPACT_CONTEXT("compactContext"), DYNAMIC_TOUCH("dynamicTouch"), DYNAMIC_TOUCH_APPLY("dynamicTouchApply"), MANUAL_CANDIDATE_EXPANSION("manualCandidateExpansion");
 
     val bit: Int get() = 1 shl ordinal
     companion object { val MASK: Int = (1 shl entries.size) - 1 }
@@ -63,7 +63,7 @@ object DiagnosticFeatures {
             settings.qualityMetrics, settings.shadowComparison, settings.wordBoundarySuggestions,
             settings.abbreviations, settings.phraseReview, settings.visibleUndo, settings.protectedWords,
             settings.appProfiles, settings.collectExamples, settings.typoPatterns,
-            settings.learnedRanking, settings.compactContext, settings.dynamicTouch, settings.dynamicTouchApply)
+            settings.learnedRanking, settings.compactContext, settings.dynamicTouch, settings.dynamicTouchApply, settings.manualCandidateExpansion)
         return enabled.withIndex().fold(0) { mask, (index, value) -> if (value) mask or (1 shl index) else mask }
     }
 }

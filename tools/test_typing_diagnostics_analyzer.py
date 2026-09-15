@@ -314,6 +314,23 @@ class FeatureConfigurationTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 analyze_events([dict(base, features=wrong)])
 
+    def test_schema_six_manual_expansion_accepts_only_matching_old_or_new_complete_vocabularies(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS_V6, FEATURE_KEYS_V6_MANUAL
+        old = dict.fromkeys(FEATURE_KEYS_V6, False)
+        new = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)
+        base = dict(schema=6, kind='TAP', reason='TOUCH_SHADOW', session=1, revision=1,
+                    localCompletion='NONE', localInspectedStates=0, localVerifiedTerminals=0, typingProfile=0)
+        for flags in (old, new, dict(new, manualCandidateExpansion=True)):
+            report = analyze_events([dict(base, features=flags, effectiveFeatures=flags)])
+            self.assertEqual(flags, report['featureConfigurations'][0]['features'])
+        for configured, effective in ((old, new), (new, old),
+                (dict(new, manualCandidateExpansion='true'), new),
+                (new, dict(new, manualCandidateExpansion=1)),
+                (dict(new, unknownFlag=False), new),
+                (new, dict(new, manualCandidateExpansion=True))):
+            with self.assertRaises(ValueError):
+                analyze_events([dict(base, features=configured, effectiveFeatures=effective)])
+
     def test_schema_five_records_profile_only_transitions_and_four_new_flags(self):
         from typing_diagnostics_analyzer import FEATURE_KEYS_V5
         flags = dict.fromkeys(FEATURE_KEYS_V5, True)
