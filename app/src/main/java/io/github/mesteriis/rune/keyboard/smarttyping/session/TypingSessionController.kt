@@ -1086,7 +1086,7 @@ class TypingSessionController internal constructor(
         discardUndo()
         val expected = EditorSelection(caret.toInt(), caret.toInt(), composingStart, caret.toInt())
         diagnose(DiagnosticKind.MANUAL, if (index == -1) DiagnosticReason.ORIGINAL else DiagnosticReason.CORRECTION,
-            selection.alternatives.size, index,
+            selection.displayAlternatives.size, index,
             source = if (selection.generation.isCanonicalCaseCorrection()) DiagnosticSource.CANONICAL_CASE
                 else if (selection.ranking?.usedModel == true) DiagnosticSource.MODEL else DiagnosticSource.LOCAL_POLICY,
             requestId = selection.requestId, editorAttempt = index == -1) {

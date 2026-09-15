@@ -11,6 +11,11 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.TokenUnicode
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.EditFeatures
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticEvent
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticText
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnostics
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateCompletion
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneration
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGenerator
@@ -656,6 +661,12 @@ class TypingCandidateSelectionTest {
     }
 
     @Test fun `manual pool ranks richer display without changing model input and tap restores original`() {
+        val events = mutableListOf<DiagnosticEvent>()
+        controller.setDiagnostics(object : TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+            override fun invalidate() = Unit
+            override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { events += event }
+        })
         controller.setPersonalization(object : TypingPersonalization {
             override fun contextualPreference(context: String, original: String, candidate: GeneratedCandidate,
                 language: KeyboardLanguage): Double = if (candidate.text == "мела") 100.0 else 0.0
@@ -674,6 +685,16 @@ class TypingCandidateSelectionTest {
         val id = controller.candidateViewState.candidates.single { it.text == "мела" }.id
         assertEquals(TypingTextResult.HANDLED, controller.selectCandidate(id, execute))
         assertEquals("мела", controller.state.composing!!.typedWord)
+        val manualChoice = events.single {
+            it.kind == DiagnosticKind.MANUAL && it.reason == DiagnosticReason.CORRECTION
+        }
+        assertEquals(7, manualChoice.candidateCount)
+        assertEquals(3, manualChoice.selectedIndex)
+        assertTrue(manualChoice.selectedIndex in 0 until manualChoice.candidateCount)
+        assertEquals(3, events.single {
+            it.kind == DiagnosticKind.CANDIDATES && it.reason == DiagnosticReason.ACCEPTED
+        }.candidateCount)
+        assertEquals(3, events.single { it.kind == DiagnosticKind.RANKING }.candidateCount)
         assertEquals(TypingTextResult.REJECTED, controller.selectCandidate(id, execute))
         assertEquals(TypingTextResult.HANDLED, controller.selectCandidate(controller.originalCandidateId!!, execute))
         assertEquals("мала", controller.state.composing!!.typedWord)
