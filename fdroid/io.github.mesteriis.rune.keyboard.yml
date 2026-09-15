@@ -20,6 +20,14 @@ Builds:
     gradle:
       - yes
     prebuild: sdkmanager 'cmake;3.31.6'
+    # Numeric model data (not executable code), with parsers, training source,
+    # pinned Wikipedia provenance and CC-BY-SA-3.0 notices in this repository.
+    scanignore:
+      - app/src/main/assets/smarttyping/experiments/ru-context.bin
+      - app/src/main/assets/smarttyping/experiments/ru-ranker.bin
+      - app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin
+    scandelete:
+      - tools/typing_experiments/baseline/ru-ranker.bin
     ndk: 29.0.14206865
 
 AutoUpdateMode: Version v%v
