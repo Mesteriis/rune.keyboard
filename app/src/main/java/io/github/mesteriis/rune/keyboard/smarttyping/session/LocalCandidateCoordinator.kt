@@ -16,6 +16,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.NoopSmartTypingTracer
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTracer
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticSource
 import java.util.concurrent.Executor
 
 /** Only non-text live eligibility. The service derives editorAllowsSmartTyping from EditorContext. */
@@ -254,6 +256,8 @@ class LocalCandidateCoordinator internal constructor(
         if (closed || current.submitted || current.epoch != epoch || generation <= current.readyGeneration) return
         val space = pendingSpace
         if (space?.pending === current && nanoTime() - space.startedAtNanos !in 0 until SPACE_GRACE_NANOS) {
+            controller.recordRequest(DiagnosticReason.DEADLINE_MISSED, DiagnosticSource.LOCAL_POLICY,
+                current.sessionId, current.revision, current.requestId)
             pending = null
             pendingSpace = null
             controller.clearCandidates()
@@ -295,6 +299,10 @@ class LocalCandidateCoordinator internal constructor(
             pending = null
             pendingSpace = null
             val elapsed = nanoTime() - space.startedAtNanos
+            if (elapsed !in 0 until SPACE_GRACE_NANOS) {
+                controller.recordRequest(DiagnosticReason.DEADLINE_MISSED, DiagnosticSource.LOCAL_POLICY,
+                    current.sessionId, current.revision, current.requestId)
+            }
             val eligible = !closed && elapsed in 0 until SPACE_GRACE_NANOS && owner?.baseEligible == true &&
                 owner.language == current.language &&
                 routeReady(LanguageRouter.route(reply.generation.original.orEmpty(), owner.language))

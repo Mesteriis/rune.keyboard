@@ -79,11 +79,11 @@ class TypingDiagnosticsHooksTest {
         assertTrue(encoded.contains("\"elapsedMs\":17"))
     }
 
-    @Test fun schemaSixAttributesBothSearchCompletionsAndDecisionSource() {
+    @Test fun schemaSevenAttributesBothSearchCompletionsAndDecisionSource() {
         val observer = Observer(); prepared(observer)
         val event = observer.events.last { it.kind == DiagnosticKind.CANDIDATES }
         val encoded = DiagnosticsEncoding.metadata(event).decodeToString()
-        assertTrue(encoded.contains("\"schema\":6"))
+        assertTrue(encoded.contains("\"schema\":7"))
         assertTrue(encoded.contains("\"completion\":\"COMPLETE\""))
         assertTrue(encoded.contains("\"localCompletion\":\"UNAVAILABLE\""))
         assertTrue(encoded.contains("\"source\":\"LOCAL_POLICY\""))
@@ -148,7 +148,7 @@ class TypingDiagnosticsHooksTest {
         assertTrue(observer.has(DiagnosticKind.BOUNDARY, DiagnosticReason.RESULT_NOT_READY))
         val other = Observer(); val ready = prepared(other)
         ready.typeText(" ", policy, keyboard, autocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE) { true }
-        assertTrue(other.has(DiagnosticKind.BOUNDARY, DiagnosticReason.POLICY_REJECTED))
+        assertTrue(other.has(DiagnosticKind.BOUNDARY, DiagnosticReason.SEARCH_INCOMPLETE))
     }
 
     @Test fun validWordBoundaryIsNotMisreportedAsMissingContextualRanking() {
@@ -160,7 +160,7 @@ class TypingDiagnosticsHooksTest {
             CandidateGeneration(local.token, emptyList(), CandidateCompletion.VALID_WORD, true, null, 1, 1))))
         controller.recordRequest(DiagnosticReason.SCHEDULED, DiagnosticSource.CONTEXTUAL)
         controller.typeText(" ", policy, keyboard, autocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE) { true }
-        assertEquals(DiagnosticReason.VALID_WORD,
+        assertEquals(DiagnosticReason.ORIGINAL_VALID,
             observer.events.single { it.kind == DiagnosticKind.BOUNDARY }.reason)
     }
 
@@ -267,7 +267,7 @@ class TypingDiagnosticsHooksTest {
             assertEquals(37L, event.elapsedMs)
             assertEquals(request.token.requestId, event.requestId)
             assertEquals(when (code) {
-                ScoringCode.OK -> DiagnosticReason.ABSTAINED
+                ScoringCode.OK -> DiagnosticReason.INSUFFICIENT_MARGIN
                 ScoringCode.CANCELLED -> DiagnosticReason.CANCELLED
                 ScoringCode.UNAVAILABLE -> DiagnosticReason.SERVICE_REFUSED
                 ScoringCode.SCORING_FAILED -> DiagnosticReason.SCORING_FAILED
@@ -432,7 +432,7 @@ class TypingDiagnosticsHooksTest {
                     NumericScore(it, if (it == 0) -1.0 else -100.0, 1)
                 } else emptyList())) { true })
             assertDecision(observer, DiagnosticKind.RANKING,
-                if (code == ScoringCode.OK) DiagnosticReason.ABSTAINED else DiagnosticReason.CANCELLED,
+                if (code == ScoringCode.OK) DiagnosticReason.INSUFFICIENT_MARGIN else DiagnosticReason.CANCELLED,
                 request, "helllo", listOf("hello"), -1, "")
             assertEquals("helllo ", controller.state.contextText)
         }

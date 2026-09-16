@@ -32,7 +32,8 @@ data class DiagnosticEvent(val kind: DiagnosticKind, val reason: DiagnosticReaso
     val configuredFeatures: Int = 0, val effectiveFeatures: Int = 0, val typingProfile: Int = 0)
 data class DiagnosticText(
     val input: String = "", val context: String = "", val original: String = "",
-    val candidates: List<String> = emptyList(), val result: String = "",
+    val candidates: List<String> = emptyList(), val manualCandidates: List<String> = emptyList(),
+    val result: String = "",
 )
 interface TypingDiagnostics {
     fun startSession(session: Long, eligible: Boolean, fresh: Boolean)

@@ -7,6 +7,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.controls.TypingControlStore
 import io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningStore
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.AutoCorrectionAdmissionGuard
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.EditCostProfile
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshtein
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneration
@@ -14,6 +15,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidate
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.AndroidMorphologyLexiconLoader
 import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingPersonalization
+import io.github.mesteriis.rune.keyboard.smarttyping.session.AutomaticTypingDecision
 import io.github.mesteriis.rune.keyboard.smarttyping.touch.TouchCalibrationStore
 
 /** Shared dictionaries/stores; session eligibility remains owned by the IME, never by this singleton. */
@@ -56,13 +58,22 @@ class AndroidTypingPersonalization(private val resources: PersonalTypingResource
     private val ready get() = learningEnabled && resources.personal.isReady
 
     override fun allowsAutomatic(generation: CandidateGeneration, candidate: GeneratedCandidate,
-        language: KeyboardLanguage): Boolean {
+        language: KeyboardLanguage): Boolean = automaticDecision(generation, candidate, language).allowed
+
+    override fun automaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+        language: KeyboardLanguage): AutomaticTypingDecision {
         if (protectionEnabled && (!resources.controls.isReady ||
-            resources.controls.snapshot.contains(generation.original.orEmpty(), language))) return false
-        if (!AutoCorrectionAdmissionGuard(resources.lexicon).allows(generation, candidate)) return false
-        val original = generation.original ?: return false
-        return !ready || (!resources.personal.model.protectsOriginal(original, language) &&
+            resources.controls.snapshot.contains(generation.original.orEmpty(), language))) {
+            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+        }
+        val admission = AutoCorrectionAdmissionGuard(resources.lexicon).evaluate(generation, candidate)
+        if (!admission.allowed) return AutomaticTypingDecision(false, admission.refusal)
+        val original = generation.original
+            ?: return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+        val allowed = !ready || (!resources.personal.model.protectsOriginal(original, language) &&
             !resources.personal.model.rejects(original, candidate.text, language))
+        return AutomaticTypingDecision(allowed,
+            if (allowed) null else AutomaticAdmissionRefusal.NOT_QUALIFIED)
     }
 
     override fun preference(original: String, candidate: String, language: KeyboardLanguage): Double =

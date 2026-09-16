@@ -27,6 +27,13 @@ FEATURE_KEYS_V5 = FEATURE_KEYS | frozenset(("protectedWords", "appProfiles", "co
 FEATURE_KEYS_V6 = FEATURE_KEYS_V5 | frozenset(("learnedRanking", "compactContext", "dynamicTouch", "dynamicTouchApply"))
 FEATURE_KEYS_V6_MANUAL = FEATURE_KEYS_V6 | frozenset(("manualCandidateExpansion",))
 ROTATED_JSONL = re.compile(r"^(.*)\.(\d+)\.jsonl$")
+REFUSAL_REASONS = frozenset((
+    "TARGET_NOT_IN_DICTIONARY", "SEARCH_INCOMPLETE", "TARGET_NOT_FOUND", "TOP_K_EXCLUDED",
+    "MANUAL_ONLY", "TOO_SHORT", "ORIGINAL_VALID", "MORPHOLOGY_UNAVAILABLE",
+    "WINNER_AMBIGUOUS", "RIVAL_OTHER_LEMMA", "INSUFFICIENT_MARGIN", "NOT_QUALIFIED",
+    "RESULT_NOT_READY", "STALE_REVISION", "OWNERSHIP_REJECTED", "EDITOR_REJECTED",
+    "DEADLINE_MISSED",
+))
 
 
 def _integer(value, field):
@@ -153,7 +160,47 @@ def _manual_edits(events):
     return traces
 
 
-def analyze_events(events):
+def _target_refusals(events, ground_truth):
+    candidates = {}
+    for event in events:
+        if event.get("kind") == "CANDIDATES" and event.get("reason") == "ACCEPTED":
+            candidates[(event.get("session"), event.get("revision"))] = event
+    refusals = []
+    for row in ground_truth:
+        if not isinstance(row, dict):
+            raise ValueError("ground truth row must be an object")
+        session = _integer(row.get("session"), "groundTruth.session")
+        revision = _integer(row.get("revision"), "groundTruth.revision")
+        target = row.get("target")
+        in_dictionary = row.get("targetInDictionary")
+        if not isinstance(target, str) or not target or len(target) > 128:
+            raise ValueError("groundTruth.target must be a nonempty bounded string")
+        if type(in_dictionary) is not bool:
+            raise ValueError("groundTruth.targetInDictionary must be a boolean")
+        reasons = []
+        if not in_dictionary:
+            reasons.append("TARGET_NOT_IN_DICTIONARY")
+        else:
+            event = candidates.get((session, revision))
+            automatic = event.get("candidates", []) if event else []
+            manual = event.get("manualCandidates", []) if event else []
+            if not isinstance(automatic, list) or not all(isinstance(item, str) for item in automatic):
+                raise ValueError("candidates must contain strings")
+            if not isinstance(manual, list) or not all(isinstance(item, str) for item in manual):
+                raise ValueError("manualCandidates must contain strings")
+            if target not in automatic:
+                if target in manual:
+                    reasons.extend(("TOP_K_EXCLUDED", "MANUAL_ONLY"))
+                elif event is not None and event.get("completion") == "COMPLETE":
+                    reasons.append("TARGET_NOT_FOUND")
+                else:
+                    reasons.append("SEARCH_INCOMPLETE")
+        refusals.append({"session": session, "revision": revision, "targetKnown": True,
+                         "reasons": reasons})
+    return refusals
+
+
+def analyze_events(events, ground_truth=None):
     """Return deterministic, final correction outcomes for events in capture order."""
     schemas = set()
     outcomes = []
@@ -165,6 +212,7 @@ def analyze_events(events):
     last_start = None
     configurations = []
     last_configuration = None
+    refusal_events = []
 
     def finish(attempt, accepted):
         session = attempt["session"]
@@ -201,6 +249,10 @@ def analyze_events(events):
     for event in events:
         schema, kind, reason, session, revision = _event_fields(event)
         schemas.add(schema)
+        if schema >= 7 and reason in REFUSAL_REASONS:
+            refusal_events.append({"kind": kind, "reason": reason, "session": session,
+                "revision": revision, "source": event.get("source", "NONE"),
+                "requestId": event.get("requestId", 0), "operationId": event.get("operationId", 0)})
         if schema >= 4:
             config = (session, event["features"], event["effectiveFeatures"], event.get("typingProfile") if schema >= 5 else None)
             if config != last_configuration:
@@ -290,6 +342,10 @@ def analyze_events(events):
             reason: sum(event.get("kind") == "TAP" and event.get("reason") == reason for event in events)
             for reason in ("TOUCH_UNCHANGED", "TOUCH_SHADOW", "TOUCH_REMAPPED")
         }
+    if any(schema >= 7 for schema in schemas):
+        report["refusalEvents"] = refusal_events
+    if ground_truth is not None:
+        report["targetRefusals"] = _target_refusals(events, ground_truth)
     return report
 
 
@@ -324,9 +380,12 @@ def main(argv=None):
                         help="opt-in text JSONL export; repeat for rotated parts")
     parser.add_argument("--output", required=True, type=Path,
                         help="destination JSON report (use ignored build output for captured text)")
+    parser.add_argument("--ground-truth", action="append", type=Path,
+                        help="optional authorized test-corpus JSONL with session/revision/target facts")
     args = parser.parse_args(argv)
     try:
-        report = analyze_events(load_events(args.input))
+        report = analyze_events(load_events(args.input),
+                                load_events(args.ground_truth) if args.ground_truth else None)
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     except ValueError as error:

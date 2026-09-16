@@ -105,6 +105,28 @@ class CandidateRankerTest {
         assertThrows(IllegalArgumentException::class.java) { RankingProposal(1, Double.NEGATIVE_INFINITY, null, 3) }
     }
 
+    @Test fun `explained choices are decision equivalent and distinguish refusal causes`() {
+        val thresholds = RankingThresholds(20, 4, 3)
+        val cases = listOf(
+            null,
+            RankingProposal(1, 1.0, 12.0, 2),
+            RankingProposal(1, 10.0, 12.0, 5),
+            RankingProposal(1, 18.0, 40.0, 5),
+            RankingProposal(1, 1.0, 12.0, 5),
+        )
+        for (proposal in cases) {
+            assertEquals(CandidateRanker.choose(proposal, thresholds),
+                CandidateRanker.chooseWithReason(proposal, thresholds).candidateId)
+        }
+        assertEquals(RankingRefusal.TOO_SHORT,
+            CandidateRanker.chooseWithReason(cases[1], thresholds).refusal)
+        assertEquals(RankingRefusal.WINNER_AMBIGUOUS,
+            CandidateRanker.chooseWithReason(cases[2], thresholds).refusal)
+        assertEquals(RankingRefusal.INSUFFICIENT_MARGIN,
+            CandidateRanker.chooseWithReason(cases[3], thresholds).refusal)
+        assertNull(CandidateRanker.chooseWithReason(cases[4], thresholds).refusal)
+    }
+
     @Test fun `unusable model falls back and oversized returned sets do not inherit confidence`() {
         val input = generation(listOf(candidate(1)))
         val deterministic = CalibratedSpellingPolicy.rank(input, KeyboardLanguage.ENGLISH)!!

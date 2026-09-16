@@ -147,7 +147,12 @@ class ModelCandidateCoordinator(
         val expiry = object : Runnable {
             override fun run() {
                 checkOwner()
-                if (timer === this && epoch == editingEpoch) cancel()
+                if (timer === this && epoch == editingEpoch) {
+                    diagnosticRequest?.let { controller.recordRequest(DiagnosticReason.DEADLINE_MISSED,
+                        diagnosticSource, it.sessionId, it.revision, it.requestId) }
+                    diagnosticRequest = null
+                    cancel()
+                }
             }
         }
         timer = expiry
@@ -178,7 +183,12 @@ class ModelCandidateCoordinator(
         val expiry = object : Runnable {
             override fun run() {
                 checkOwner()
-                if (timer === this && epoch == currentEpoch) cancel()
+                if (timer === this && epoch == currentEpoch) {
+                    diagnosticRequest?.let { controller.recordRequest(DiagnosticReason.DEADLINE_MISSED,
+                        diagnosticSource, it.sessionId, it.revision, it.requestId) }
+                    diagnosticRequest = null
+                    cancel()
+                }
             }
         }
         timer = expiry
@@ -215,7 +225,13 @@ class ModelCandidateCoordinator(
                 return@section
             }
             val executeSpace = spaceExecutor
-            if (executeSpace != null && (!withinSpaceWindow() || !automaticSpaceEligible())) {
+            if (executeSpace != null && !withinSpaceWindow()) {
+                controller.recordRequest(DiagnosticReason.DEADLINE_MISSED, diagnosticSource,
+                    reply.token.sessionId, reply.token.revision, reply.token.requestId)
+                diagnosticRequest = null
+                cancel(); return@section
+            }
+            if (executeSpace != null && !automaticSpaceEligible()) {
                 controller.recordScoringReply(reply, DiagnosticReason.STALE, kind == RequestKind.CONTEXTUAL)
                 cancel(); return@section
             }

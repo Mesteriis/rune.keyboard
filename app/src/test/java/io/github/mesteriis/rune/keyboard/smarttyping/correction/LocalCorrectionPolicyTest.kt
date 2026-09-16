@@ -36,6 +36,27 @@ class LocalCorrectionPolicyTest {
             KeyboardLanguage.RUSSIAN))
     }
 
+    @Test fun `explained policy preserves decisions and first known refusal`() {
+        val winner = candidate("несколько", 20)
+        val inputs = listOf(
+            generation("нескрлько", listOf(winner)),
+            generation("нескрлько", listOf(winner), CandidateCompletion.STATES_EXHAUSTED),
+            generation("мало", listOf(winner)),
+            generation("нескрлько", emptyList()),
+        )
+        for (input in inputs) {
+            assertEquals(LocalCorrectionPolicy.decide(input, KeyboardLanguage.RUSSIAN),
+                LocalCorrectionPolicy.evaluate(input, KeyboardLanguage.RUSSIAN).decision)
+        }
+        assertNull(LocalCorrectionPolicy.evaluate(inputs[0], KeyboardLanguage.RUSSIAN).refusal)
+        assertEquals(LocalCorrectionRefusal.SEARCH_INCOMPLETE,
+            LocalCorrectionPolicy.evaluate(inputs[1], KeyboardLanguage.RUSSIAN).refusal)
+        assertEquals(LocalCorrectionRefusal.TOO_SHORT,
+            LocalCorrectionPolicy.evaluate(inputs[2], KeyboardLanguage.RUSSIAN).refusal)
+        assertEquals(LocalCorrectionRefusal.NO_CANDIDATES,
+            LocalCorrectionPolicy.evaluate(inputs[3], KeyboardLanguage.RUSSIAN).refusal)
+    }
+
     @Test fun `title case is limited to qualified Russian branch`() {
         val russian = candidate("несколько", 20)
         val title = russian.copy(text = "Несколько", casePattern = CasePattern.TITLE)

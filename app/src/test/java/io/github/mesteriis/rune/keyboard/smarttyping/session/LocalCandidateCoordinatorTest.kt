@@ -230,6 +230,12 @@ class LocalCandidateCoordinatorTest {
 
     @Test fun `space deadline rejects callback even when its expiry timer has not run`() {
         for (fireTimer in listOf(false, true)) Harness(withModel = true, modelOnly = true).use { h ->
+            val records = mutableListOf<DiagnosticEvent>()
+            h.controller.setDiagnostics(object : TypingDiagnostics {
+                override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                override fun invalidate() = Unit
+                override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { records += event }
+            })
             h.owner = h.owner.copy(modelAutoReplaceQualified = true)
             h.type("helos"); h.deliver(); h.space()
             val input = h.model.requests.single()
@@ -239,6 +245,10 @@ class LocalCandidateCoordinatorTest {
             assertEquals("helos ", h.controller.state.contextText)
             assertTrue(h.commands.isEmpty()); assertFalse(h.controller.hasSpaceCorrection)
             assertNull(h.pause.task)
+            val deadline = records.single { it.reason == DiagnosticReason.DEADLINE_MISSED }
+            assertEquals(input.token.sessionId, deadline.session)
+            assertEquals(input.token.revision, deadline.revision)
+            assertEquals(input.token.requestId, deadline.requestId)
         }
     }
 
@@ -1196,12 +1206,20 @@ class LocalCandidateCoordinatorTest {
 
     @Test fun `distance one lookup after the local grace deadline cannot change committed text`() {
         Harness(qualified = true).use { h ->
+            val records = mutableListOf<DiagnosticEvent>()
+            h.controller.setDiagnostics(object : TypingDiagnostics {
+                override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                override fun invalidate() = Unit
+                override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { records += event }
+            })
             val hold = Hold(); h.lexicon.hold = hold
             h.type("helos"); hold.entered.awaitChecked(); h.space()
             h.nowNanos = 250_000_000L
             hold.release.countDown(); h.awaitQueued(); h.drain()
             assertEquals("helos ", h.controller.state.contextText)
             assertNull(h.controller.state.lastAutoEdit)
+            assertEquals(1, records.count { it.reason == DiagnosticReason.DEADLINE_MISSED &&
+                it.source == DiagnosticSource.LOCAL_POLICY })
         }
     }
 

@@ -75,8 +75,8 @@ No third roadmap slice will be implemented in this branch.
 
 | Target | Build/source | Geometry/profile | Configured/effective test controls | Result |
 | --- | --- | --- | --- | --- |
-| API 37 `google_apis_ps16k/arm64-v8a` AVD | local debug, Stage A worktree | 1080×2340 emulator; fixed test key geometry | flick ON; autocorrection OFF; dynamic touch shadow/apply OFF; personal/touch learning OFF. Preferences were asserted after synchronous write and the live IME listener was drained. | RED reproduced in View and Binder-editor; GREEN for 20 scoped JVM/View/IME/multi-touch/rapid/dynamic tests. |
-| API 26 `google_apis/arm64-v8a` AVD | local debug, Stage A worktree | 1080×2340 emulator; fixed test key geometry | same deterministic profile; runner restored the complete previous raw preference map and previous IME after every test | GREEN: 20 scoped Android tests, 0 skipped/failed. |
+| API 37 `google_apis_ps16k/arm64-v8a` AVD | local debug, final worktree | 1080×2340 emulator; fixed test key geometry | flick ON; autocorrection OFF; dynamic touch shadow/apply OFF; personal/touch learning OFF in the Stage A profile. Preferences were asserted after synchronous write and the live IME listener was drained. Full diagnostics tests exercised configured/effective flags and consent. | RED reproduced in View and Binder-editor; Stage A scoped GREEN 20/20; final full run: app 215 (211 passed, 4 expected skipped), runtime 6/6, 0 failed. |
+| API 26 `google_apis/arm64-v8a` AVD | local debug, final worktree | 1080×2340 emulator; fixed test key geometry | same deterministic profile; runner restored the complete previous raw preference map and previous IME after every test | Stage A scoped GREEN 20/20. Final full app run: 209 passed, 4 expected skipped, one language-switch diagnostics timing failure; that exact test passed 1/1 immediately in isolation. Runtime 6/6 passed. |
 | Physical Fold, outer screen, flick OFF/ON AB/BA | installed APK unknown | NOT_RUN | configured/effective values NOT_RUN | No device connected; no APK/settings/IME changes attempted. |
 | Physical Fold, inner screen, flick OFF/ON AB/BA | installed APK unknown | NOT_RUN | configured/effective values NOT_RUN | No device connected; no APK/settings/IME changes attempted. |
 
@@ -124,6 +124,89 @@ second-pointer cancellation on one unsplit child, `ACTION_CANCEL`, explicit reco
 dynamic-touch invalidation and rapid editor delivery. A Fold/configuration transition itself was
 not physically run.
 
-## Final results
+## Stage B result
 
-Stage A complete; Stage B pending.
+### RED and decision equivalence
+
+- New correction tests initially failed to compile because `chooseWithReason`, `evaluate` and the
+  typed refusal enums did not exist. Receipt:
+  `build/reliable-typing/stage-b/red/gradle-app.log`.
+- New analyzer tests failed because `analyze_events` accepted no ground truth and produced no
+  schema-7 refusal report. Receipt: `build/reliable-typing/stage-b/red/analyzer-real.log`.
+- GREEN equivalence checks assert, over accepted and rejected fixtures, that:
+  `CandidateRanker.choose == chooseWithReason.candidateId`,
+  `LocalCorrectionPolicy.decide == evaluate.decision`, and
+  `AutoCorrectionAdmissionGuard.allows == evaluate.allowed`.
+- The independent 6,000-row ranker calibration oracle and all existing controller/editor tests
+  also remain green. Threshold values, short-circuit order, candidate ordering, qualification and
+  morphology veto decisions were not changed.
+
+### Known refusal evidence
+
+Schema 7 keeps metadata content-free and adds fixed reasons only at established decision points:
+
+- retrieval: `SEARCH_INCOMPLETE`; target-aware `TARGET_NOT_IN_DICTIONARY`, `TARGET_NOT_FOUND`,
+  `TOP_K_EXCLUDED` and `MANUAL_ONLY` exist only in analyzer output supplied with an explicit
+  authorized corpus row;
+- ranking/policy: `TOO_SHORT`, `ORIGINAL_VALID`, `WINNER_AMBIGUOUS`,
+  `INSUFFICIENT_MARGIN`, `NOT_QUALIFIED`;
+- morphology: `MORPHOLOGY_UNAVAILABLE`, `RIVAL_OTHER_LEMMA`;
+- lifecycle/editor: `DEADLINE_MISSED`, `STALE_REVISION`, existing
+  `OWNERSHIP_REJECTED`, and existing terminal `EDITOR_REJECTED`.
+
+For example, equal plausible alternatives now report `WINNER_AMBIGUOUS`; a winner that fails only
+the original-word margin reports `INSUFFICIENT_MARGIN`; an unavailable morphology lexicon reports
+`MORPHOLOGY_UNAVAILABLE`; and a plausible Russian competitor with another observed lemma reports
+`RIVAL_OTHER_LEMMA`. The analyzer reports a corpus target found only in `manualCandidates` as both
+`TOP_K_EXCLUDED` and `MANUAL_ONLY`, but does not include the target string in its report. Without
+ground truth it emits only reasons explicitly recorded by the app and does not infer intent from
+free typing or the absence of Undo.
+
+The optional `manualCandidates` text field exists only in the separately consented debug text
+stream. Release/profile still use the exact no-op provider. No coordinates, key labels, words or
+hashes were added to metadata, and no recorder, permission, network or service was added.
+
+### Final verification receipts
+
+- `python3 -m unittest test_typing_diagnostics_analyzer.py test_typing_diagnostics_boundary.py`:
+  51/51 PASS.
+- `./gradlew testDebugUnitTest --rerun-tasks`: 985/985 PASS, plus runtime module tests PASS.
+- `./gradlew lint assembleDebug assembleRelease assembleProfile privacyGateRelease
+  privacyGateProfile imeIntelligenceBoundary forbiddenRuntimeDependencies
+  :runtime-llama:nativeSymbolGate --rerun-tasks`: PASS (242 tasks); debug/release/profile
+  diagnostics packaging, 17 negative + 6 positive boundary fixtures, privacy and native symbol
+  gates passed.
+- API 37 full `connectedDebugAndroidTest`: PASS; app 215 tests with 4 expected skips, runtime 6
+  tests, 0 failures. Receipt: `build/reliable-typing/stage-b/green/instrumentation-api37.log`.
+- API 26 full `connectedDebugAndroidTest`: one failure in 214 app tests after 33.6 seconds in the
+  language-switch diagnostics UI test; the exact test then passed 1/1 in 56 seconds. All other app
+  tests and all 6 runtime tests passed. Receipts:
+  `build/reliable-typing/stage-b/green/instrumentation-api26.log` and
+  `build/reliable-typing/stage-b/green/instrumentation-api26-diagnostics-rerun.log`.
+
+The four expected instrumentation skips on each API are physical Fold and installed-real-model
+checks unavailable in these AVDs. The API 26 full-run timing failure is retained as a known flaky
+limitation rather than rewritten as a clean full-suite pass.
+
+## Known limits and next priority
+
+- The handoff pure probe remains NOT_RUN because the machine has no `kotlinc`; stronger Android
+  View and Binder-editor regressions did run.
+- Physical Fold outer/inner controlled A/B is NOT_RUN. No miss, duplicate, adjacent-key or
+  false-flick rate was measured, so this work does not claim that everyday misclicks are solved.
+- Installed real-model instrumentation is SKIPPED, and refusal diagnostics do not establish that
+  autocorrection quality is sufficient.
+- Free conversation has no known intended target; target/dictionary/top-K/manual-only analysis is
+  limited to an explicit synthetic or authorized test corpus.
+
+The next priority is the controlled physical Fold A/B with identical phrases and geometry, flick
+OFF/ON in balanced order, and configured/effective autocorrection, dynamic touch and learning
+disabled. It supplies the missing real-device miss/duplicate/false-flick measurements before any
+ranking snapshot or touch-aware retrieval proposal is considered. General ranking snapshots,
+touch-aware retrieval and new learning remain proposed future work and were not implemented here.
+
+## Commit record
+
+- Baseline: `f3802d53c6b26dae45a5faed8eb2210c2a0571bd`.
+- Stage A: `fcecaf5aeef49741fd30da4ca6603e4dd6c926d9`.
+- Stage B: the commit containing this final receipt; its SHA is reported from Git after creation.

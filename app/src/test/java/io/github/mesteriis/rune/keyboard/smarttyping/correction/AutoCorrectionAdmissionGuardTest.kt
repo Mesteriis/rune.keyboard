@@ -9,6 +9,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalSearchEvidence
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyMembership
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -71,5 +73,24 @@ class AutoCorrectionAdmissionGuardTest {
         assertTrue(unavailable.allows(generation("москва", listOf(case)), case))
         val english = candidate("hello").copy(language = KeyboardLanguage.ENGLISH)
         assertTrue(unavailable.allows(generation("helloo", listOf(english)), english))
+    }
+
+    @Test fun `explained admission is decision equivalent and reports only observed evidence`() {
+        val winner = candidate("нужен")
+        val rival = candidate("нужно", 1.25)
+        val input = generation("нужнн", listOf(winner, rival))
+        val unavailable = AutoCorrectionAdmissionGuard(MorphologyLexicon.UNAVAILABLE)
+        assertEquals(unavailable.allows(input, winner), unavailable.evaluate(input, winner).allowed)
+        assertEquals(AutomaticAdmissionRefusal.MORPHOLOGY_UNAVAILABLE,
+            unavailable.evaluate(input, winner).refusal)
+
+        val competing = guard("нужен" to 1, "нужно" to 2)
+        assertEquals(competing.allows(input, winner), competing.evaluate(input, winner).allowed)
+        assertEquals(AutomaticAdmissionRefusal.RIVAL_OTHER_LEMMA,
+            competing.evaluate(input, winner).refusal)
+
+        val admitted = guard("нужен" to 1, "нужно" to 1).evaluate(input, winner)
+        assertTrue(admitted.allowed)
+        assertNull(admitted.refusal)
     }
 }

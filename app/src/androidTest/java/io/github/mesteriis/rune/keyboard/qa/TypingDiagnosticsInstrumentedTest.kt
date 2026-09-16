@@ -281,7 +281,7 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         if (requireRows) assertTrue("Expected metadata rows", rows.isNotEmpty())
         rows.forEach { row ->
             assertEquals(allowed, row.keys().asSequence().toSet())
-            assertInteger(row, "schema", 6L..6L)
+            assertInteger(row, "schema", 7L..7L)
             assertInteger(row, "typingProfile", 0L..2L)
             val configured = row.getJSONObject("features")
             val effective = row.getJSONObject("effectiveFeatures")

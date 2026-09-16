@@ -4,7 +4,8 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneration
 
 /** Numeric evidence only. Calibration is not authorization to write an automatic correction. */
-data class CalibratedRanking(val candidateIds: List<Int>, val preferredId: Int, val usedModel: Boolean)
+data class CalibratedRanking(val candidateIds: List<Int>, val preferredId: Int, val usedModel: Boolean,
+    val refusal: RankingRefusal? = null)
 
 data class SpellingCoefficients(
     val weights: RankingWeights,
@@ -35,9 +36,10 @@ object CalibratedSpellingPolicy {
         val selected = if (combined != null) model else coefficients(language, false)
         val ordered = combined ?: CandidateRanker.rank(generation, selected.weights) ?: return null
         // Larger returned sets may show ordering, but have no preferred calibration candidate.
-        val preferred = if (generation.alternatives.size > MAXIMUM_ALTERNATIVES) 0 else
-            CandidateRanker.choose(CandidateRanker.proposal(generation, ordered), selected.thresholds)
-        return CalibratedRanking(ordered.map { it.candidateId }, preferred, combined != null)
+        val choice = if (generation.alternatives.size > MAXIMUM_ALTERNATIVES)
+            RankingChoice(0, RankingRefusal.NOT_QUALIFIED) else
+            CandidateRanker.chooseWithReason(CandidateRanker.proposal(generation, ordered), selected.thresholds)
+        return CalibratedRanking(ordered.map { it.candidateId }, choice.candidateId, combined != null, choice.refusal)
     }
 
     private val EN_DETERMINISTIC = SpellingCoefficients(RankingWeights(4, 1, 2, 4, 1), RankingThresholds(48, 8, 1))

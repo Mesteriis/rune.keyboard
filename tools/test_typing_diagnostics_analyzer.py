@@ -4,6 +4,52 @@ from typing_diagnostics_analyzer import analyze_events
 
 
 class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
+    def test_schema_seven_reports_explicit_refusals_without_inferring_targets(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
+        flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)
+        common = {"localCompletion": "NONE", "localInspectedStates": 0,
+                  "localVerifiedTerminals": 0, "typingProfile": 0,
+                  "features": flags, "effectiveFeatures": flags}
+        events = [
+            {"schema": 7, "kind": "BOUNDARY", "reason": "MORPHOLOGY_UNAVAILABLE",
+             "session": 3, "revision": 9, "source": "LOCAL_POLICY", **common},
+            {"schema": 7, "kind": "EDITOR", "reason": "EDITOR_REJECTED",
+             "session": 3, "revision": 10, "operationId": 8, **common},
+        ]
+        report = analyze_events(events)
+        self.assertEqual([
+            {"kind": "BOUNDARY", "reason": "MORPHOLOGY_UNAVAILABLE",
+             "session": 3, "revision": 9, "source": "LOCAL_POLICY",
+             "requestId": 0, "operationId": 0},
+            {"kind": "EDITOR", "reason": "EDITOR_REJECTED",
+             "session": 3, "revision": 10, "source": "NONE",
+             "requestId": 0, "operationId": 8},
+        ], report["refusalEvents"])
+        self.assertNotIn("targetRefusals", report)
+
+    def test_ground_truth_distinguishes_dictionary_search_top_k_and_manual_only(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
+        flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)
+        events = [
+            {"schema": 7, "kind": "CANDIDATES", "reason": "ACCEPTED", "session": 4,
+             "revision": 12, "completion": "COMPLETE", "localCompletion": "COMPLETE",
+             "localInspectedStates": 20, "localVerifiedTerminals": 3, "typingProfile": 0,
+             "features": flags, "effectiveFeatures": flags,
+             "candidates": ["alpha", "beta"], "manualCandidates": ["target"]},
+        ]
+        truth = [{"session": 4, "revision": 12, "target": "target", "targetInDictionary": True}]
+        refusal = analyze_events(events, truth)["targetRefusals"][0]
+        self.assertEqual(["TOP_K_EXCLUDED", "MANUAL_ONLY"], refusal["reasons"])
+        self.assertNotIn("target", refusal)
+
+        missing = analyze_events(events, [dict(truth[0], targetInDictionary=False)])["targetRefusals"][0]
+        self.assertEqual(["TARGET_NOT_IN_DICTIONARY"], missing["reasons"])
+
+        absent = [dict(events[0], manualCandidates=[])]
+        self.assertEqual(["TARGET_NOT_FOUND"], analyze_events(absent, truth)["targetRefusals"][0]["reasons"])
+        incomplete = [dict(absent[0], completion="STATES_EXHAUSTED")]
+        self.assertEqual(["SEARCH_INCOMPLETE"], analyze_events(incomplete, truth)["targetRefusals"][0]["reasons"])
+
     def test_schema_three_validates_separate_local_search_evidence(self):
         event = {"schema": 3, "kind": "CANDIDATES", "reason": "ACCEPTED", "session": 1,
                  "revision": 2, "localCompletion": "COMPLETE", "localInspectedStates": 100,

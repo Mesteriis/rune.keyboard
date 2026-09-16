@@ -37,7 +37,7 @@ import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.settings.ContextualPunctuationMode
 import io.github.mesteriis.rune.keyboard.settings.KeyboardSettings
 
-/** Fixed, content-free schema6 vocabulary. Bit assignments are append-only. */
+/** Fixed, content-free schema7 vocabulary. Bit assignments are append-only. */
 enum class DiagnosticFeature(val field: String) {
     SPELLING_SUGGESTIONS("spellingSuggestions"), AUTO_CORRECTION("autoCorrection"),
     MECHANICAL_PUNCTUATION("mechanicalPunctuation"), CONTEXTUAL_PUNCTUATION("contextualPunctuation"),
@@ -98,6 +98,7 @@ DIAGNOSTICS_TEXT = '''data class DiagnosticText(
     val context: String = "",
     val original: String = "",
     val candidates: List<String> = emptyList(),
+    val manualCandidates: List<String> = emptyList(),
     val result: String = "",
 )'''
 DIAGNOSTIC_DEBUG_FILES = {

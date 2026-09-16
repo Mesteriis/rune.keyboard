@@ -14,6 +14,9 @@ enum class DiagnosticReason {
     EDITOR_ACCEPTED, EDITOR_REJECTED,
     SCHEDULED, SUBMITTED, CANCELLED, RESULT_NOT_READY, SERVICE_REFUSED,
     VALID_WORD, SCORING_FAILED, TOOL, TOUCH_UNCHANGED, TOUCH_SHADOW, TOUCH_REMAPPED,
+    TARGET_NOT_IN_DICTIONARY, SEARCH_INCOMPLETE, TARGET_NOT_FOUND, TOP_K_EXCLUDED,
+    MANUAL_ONLY, TOO_SHORT, ORIGINAL_VALID, MORPHOLOGY_UNAVAILABLE, WINNER_AMBIGUOUS,
+    RIVAL_OTHER_LEMMA, INSUFFICIENT_MARGIN, NOT_QUALIFIED, DEADLINE_MISSED, STALE_REVISION,
 }
 data class DiagnosticEvent(
     val kind: DiagnosticKind,
@@ -43,6 +46,7 @@ data class DiagnosticText(
     val context: String = "",
     val original: String = "",
     val candidates: List<String> = emptyList(),
+    val manualCandidates: List<String> = emptyList(),
     val result: String = "",
 )
 

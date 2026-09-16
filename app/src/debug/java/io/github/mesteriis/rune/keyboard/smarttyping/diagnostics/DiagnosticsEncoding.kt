@@ -13,6 +13,11 @@ internal object DiagnosticsEncoding {
             if (index != 0) append(',')
             quoted(word.take(128))
         }
+        append("],\"manualCandidates\":[")
+        text.manualCandidates.take(8).forEachIndexed { index, word ->
+            if (index != 0) append(',')
+            quoted(word.take(128))
+        }
         append("],\"result\":"); quoted(text.result.take(256)); append("}\n")
     }.toByteArray(Charsets.UTF_8)
 
@@ -20,7 +25,7 @@ internal object DiagnosticsEncoding {
         "\"${it.field}\":${mask and it.bit != 0}"
     }
 
-    private fun fields(event: DiagnosticEvent) = "{\"schema\":6,\"kind\":\"${event.kind.name}\"," +
+    private fun fields(event: DiagnosticEvent) = "{\"schema\":7,\"kind\":\"${event.kind.name}\"," +
         "\"reason\":\"${event.reason.name}\",\"session\":${event.session.coerceIn(0, 1_000_000_000)}," +
         "\"revision\":${event.revision.coerceIn(0, 1_000_000_000)}," +
         "\"typingProfile\":${event.typingProfile.takeIf { it in 0..2 } ?: 0}," +

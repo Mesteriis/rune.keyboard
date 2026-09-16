@@ -31,6 +31,9 @@ data class RankingProposal(val candidateId: Int, val penalty: Double, val runner
     }
 }
 
+enum class RankingRefusal { NOT_QUALIFIED, TOO_SHORT, WINNER_AMBIGUOUS, INSUFFICIENT_MARGIN }
+data class RankingChoice(val candidateId: Int, val refusal: RankingRefusal? = null)
+
 /** Pure bounded ranking, no editor, model execution, payload retention or qualification state. */
 object CandidateRanker {
     fun propose(generation: CandidateGeneration, weights: RankingWeights, modelWeight: Int = 0,
@@ -98,9 +101,17 @@ object CandidateRanker {
     }
 
     /** Original0 when either margin or minimum length is insufficient. No editor mutation. */
-    fun choose(proposal: RankingProposal?, thresholds: RankingThresholds?): Int {
-        if (proposal == null || thresholds == null || proposal.tokenLength < thresholds.minimumLength) return 0
+    fun choose(proposal: RankingProposal?, thresholds: RankingThresholds?): Int =
+        chooseWithReason(proposal, thresholds).candidateId
+
+    /** Same decision as [choose], with a refusal only where the numeric evidence establishes it. */
+    fun chooseWithReason(proposal: RankingProposal?, thresholds: RankingThresholds?): RankingChoice {
+        if (proposal == null || thresholds == null) return RankingChoice(0, RankingRefusal.NOT_QUALIFIED)
+        if (proposal.tokenLength < thresholds.minimumLength) return RankingChoice(0, RankingRefusal.TOO_SHORT)
         val rival = minOf(thresholds.originalPenalty.toDouble(), proposal.runnerUpPenalty ?: Double.POSITIVE_INFINITY)
-        return if (rival - proposal.penalty >= thresholds.minimumMargin) proposal.candidateId else 0
+        if (rival - proposal.penalty >= thresholds.minimumMargin) return RankingChoice(proposal.candidateId)
+        return RankingChoice(0, if (proposal.runnerUpPenalty != null &&
+            proposal.runnerUpPenalty <= thresholds.originalPenalty) RankingRefusal.WINNER_AMBIGUOUS
+            else RankingRefusal.INSUFFICIENT_MARGIN)
     }
 }
