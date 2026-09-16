@@ -1,0 +1,1 @@
+New neon Rune app icon and a dedicated circular variant. Removed the extra blue backing with a transparent adaptive-icon background.

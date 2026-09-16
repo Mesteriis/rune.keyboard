@@ -30,8 +30,8 @@ android {
         applicationId = "io.github.mesteriis.rune.keyboard"
         minSdk = 26
         targetSdk = 37
-        versionCode = 6
-        versionName = "0.4.0"
+        versionCode = 7
+        versionName = "0.4.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // UTP collects failure screenshots/XML before uninstalling the test application.
         testInstrumentationRunnerArguments["additionalTestOutputDir"] =

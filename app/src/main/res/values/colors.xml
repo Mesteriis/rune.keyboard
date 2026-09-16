@@ -9,5 +9,5 @@
   <color name="status_enabled">#303030</color>
   <color name="status_disabled">#626262</color>
   <color name="keyboard_background">#181818</color>
-  <color name="icon_background">#070A24</color>
+  <color name="icon_background">#00000000</color>
 </resources>

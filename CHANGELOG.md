@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1 — 2026-09-16
+
+- New neon Rune launcher artwork with a dedicated circular variant.
+- Transparent adaptive-icon background, removing the extra blue backing around the artwork.
+- Original icon artwork and five additional shape variants preserved in the source tree.
+
 ## 0.4.0 — 2026-09-15
 
 - Five monochrome dark keyboard themes with borderless letter keys and taller rows.

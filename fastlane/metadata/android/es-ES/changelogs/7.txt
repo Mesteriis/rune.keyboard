@@ -1,0 +1,1 @@
+Nuevo icono de Rune con efecto neón y una variante circular. Se elimina el fondo azul adicional: el fondo del icono adaptativo es transparente.

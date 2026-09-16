@@ -98,18 +98,32 @@ git submodule update --init --recursive
 
 ## Иконка
 
-Исходный RGBA-мастер хранится в `artwork/rune-keyboard-icon-source.png`. Adaptive foreground
-генерируется детерминированно с настоящим alpha-каналом и безопасными полями:
+Исходная иконка с неоновой руной и скруглённой рамкой хранится в
+`artwork/rune-keyboard-icon-source.png`. Android использует точную копию PNG
+с исходным alpha-каналом:
 
 ```bash
-ffmpeg -i artwork/rune-keyboard-icon-source.png \
-  -vf 'scale=600:-1:flags=lanczos,pad=1024:1024:(ow-iw)/2:(oh-ih)/2:color=0x00000000' \
-  -frames:v 1 -pix_fmt rgba \
+cp artwork/rune-keyboard-icon-source.png \
   app/src/main/res/drawable-nodpi/ic_launcher_foreground_art.png
 ```
 
-Полноцветный foreground используется Android adaptive icon, а прежний простой Rune-вектор —
-как monochrome-слой для системных themed icons.
+`ic_launcher_art_inset.xml` размещает изображение в центральной области 72dp
+адаптивной иконки 108dp, с полями по 1/6 с каждой стороны. Системная маска
+может обрезать углы декоративной рамки; руна и маленькая клавиатура остаются
+внутри. Простой Rune-вектор используется как monochrome-слой для системных
+themed icons.
+Фоновый слой обычной и круглой адаптивных иконок прозрачный: дополнительная
+синяя подложка вокруг изображения отключена. Сам рисунок в PNG не изменён.
+
+Для `android:roundIcon` отдельно подключён круглый вариант
+`artwork/launcher-variants/01-circle.png`: его точная копия —
+`app/src/main/res/drawable-nodpi/ic_launcher_round_art.png`, с такими же полями
+в `ic_launcher_round_art_inset.xml`. Все пять дополнительных вариантов
+сохранены в `artwork/launcher-variants/`; остальные четыре служат исходниками
+и не входят в APK. Android предоставляет обычную и круглую иконки, но не
+отдельные ресурсы для каждой формы маски. Squircle, скруглённый квадрат и
+капля формируются лаунчером из общей адаптивной иконки.
+См. [адаптивные иконки Android](https://source.android.com/docs/core/display/adaptive-icons).
 
 Архитектура описана в [docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md), реальная IME-приёмка — в [docs/ACCEPTANCE.md](../docs/ACCEPTANCE.md).
 
