@@ -30,7 +30,25 @@ Builds:
       - tools/typing_experiments/baseline/ru-ranker.bin
     ndk: 29.0.14206865
 
+  - versionName: 0.4.2
+    versionCode: 8
+    commit: v0.4.2
+    subdir: app
+    submodules: true
+    gradle:
+      - yes
+    prebuild: sdkmanager 'cmake;3.31.6'
+    # Numeric model data (not executable code), with parsers, training source,
+    # pinned Wikipedia provenance and CC-BY-SA-3.0 notices in this repository.
+    scanignore:
+      - app/src/main/assets/smarttyping/experiments/ru-context.bin
+      - app/src/main/assets/smarttyping/experiments/ru-ranker.bin
+      - app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin
+    scandelete:
+      - tools/typing_experiments/baseline/ru-ranker.bin
+    ndk: 29.0.14206865
+
 AutoUpdateMode: Version v%v
 UpdateCheckMode: Tags ^v[0-9]+\.[0-9]+\.[0-9]+$
-CurrentVersion: 0.4.1
-CurrentVersionCode: 7
+CurrentVersion: 0.4.2
+CurrentVersionCode: 8

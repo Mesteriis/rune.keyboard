@@ -1,0 +1,1 @@
+Mejora de fiabilidad al escribir: un ligero movimiento hacia arriba ya no pierde la letra al usar gestos para símbolos. Se añaden diagnósticos privados de rechazo de autocorrección para QA.

@@ -77,12 +77,17 @@ No third roadmap slice will be implemented in this branch.
 | --- | --- | --- | --- | --- |
 | API 37 `google_apis_ps16k/arm64-v8a` AVD | local debug, final worktree | 1080×2340 emulator; fixed test key geometry | flick ON; autocorrection OFF; dynamic touch shadow/apply OFF; personal/touch learning OFF in the Stage A profile. Preferences were asserted after synchronous write and the live IME listener was drained. Full diagnostics tests exercised configured/effective flags and consent. | RED reproduced in View and Binder-editor; Stage A scoped GREEN 20/20; final full run: app 215 (211 passed, 4 expected skipped), runtime 6/6, 0 failed. |
 | API 26 `google_apis/arm64-v8a` AVD | local debug, final worktree | 1080×2340 emulator; fixed test key geometry | same deterministic profile; runner restored the complete previous raw preference map and previous IME after every test | Stage A scoped GREEN 20/20. Final full app run: 209 passed, 4 expected skipped, one language-switch diagnostics timing failure; that exact test passed 1/1 immediately in isolation. Runtime 6/6 passed. |
-| Physical Fold, outer screen, flick OFF/ON AB/BA | installed APK unknown | NOT_RUN | configured/effective values NOT_RUN | No device connected; no APK/settings/IME changes attempted. |
-| Physical Fold, inner screen, flick OFF/ON AB/BA | installed APK unknown | NOT_RUN | configured/effective values NOT_RUN | No device connected; no APK/settings/IME changes attempted. |
+| Physical Fold, outer screen | Samsung SM-F966B, Android 16/API 36; local debug 0.4.1 (7) from `26c4e7c` | cover portrait, 1080×2520 px | IME regression profile asserted flick ON, autocorrection OFF, dynamic touch shadow/apply OFF and personal/touch learning OFF; the runner restored the complete raw preference map | 15/15 View/IME tests passed, including editor delivery, downward flick, long press, cancellation, accessibility and two-pointer parent dispatch. Balanced phrase AB/BA was not run on the cover screen. |
+| Physical Fold, inner screen, flick OFF/ON AB/BA | same APK/source | inner portrait, 1968×2184 px; app window 750×832 dp | autocorrection, all diagnostic Smart Typing features, dynamic touch and learning were configured OFF and observed effective OFF (`configuredFeatures=0`, `effectiveFeatures=0`) in every run; full raw preferences and the original IME were restored | 15/15 View/IME tests passed. Identical synthetic touch phrase with 20% upward drift passed OFF→ON→ON→OFF (4/4); the downward control produced one secondary symbol only with flick ON. |
+| Physical Fold transition | same APK/source | real cover → inner expansion | autocorrection OFF; no diagnostic recorder; test-owned editor only | 1/1 PASS; editor/composition and keyboard state survived, the next key was fresh, and the same IME service instance remained active. |
 
-The emulator matrix is not a physical A/B measurement and therefore supplies no real-device miss,
-duplicate, adjacent-key or false-flick rate. The tests use synthetic known text only and do not
-modify or erase accumulated learning outside their restored test preferences.
+The physical A/B used deterministic injected touch gestures on a real Fold, not human-finger
+typing, so it does not supply an everyday miss, adjacent-key or false-flick rate. The tests used
+only the known phrase `qwerty asdf zxcv`; no recorder was enabled. The original explicit
+`HIGH_CONFIDENCE` autocorrection preference, default Rune IME, hardware-keyboard display setting
+and complete raw preference map were restored. No uninstall, `pm clear`, learning reset or signing
+change occurred. The phone disconnected before the cleaned test APK could replace the temporary
+test-only harness APK; the production APK and repository do not contain that harness.
 
 ## Stage A result
 
@@ -121,8 +126,8 @@ The parent-surface regression sends two overlapping pointer IDs to different chi
 the old key views remain until the second contact ends, then the queued render is applied. Existing
 tests continue to cover downward flick, flick retreat, long-press alternatives, accessibility,
 second-pointer cancellation on one unsplit child, `ACTION_CANCEL`, explicit reconfiguration cancel,
-dynamic-touch invalidation and rapid editor delivery. A Fold/configuration transition itself was
-not physically run.
+dynamic-touch invalidation and rapid editor delivery. The same regressions passed on both physical
+Fold screens, and the physical cover-to-inner transition passed without replaying composition.
 
 ## Stage B result
 
@@ -192,21 +197,23 @@ limitation rather than rewritten as a clean full-suite pass.
 
 - The handoff pure probe remains NOT_RUN because the machine has no `kotlinc`; stronger Android
   View and Binder-editor regressions did run.
-- Physical Fold outer/inner controlled A/B is NOT_RUN. No miss, duplicate, adjacent-key or
-  false-flick rate was measured, so this work does not claim that everyday misclicks are solved.
+- Physical Fold inner-screen deterministic AB/BA passed, as did the cover and inner regression
+  suites and a real cover-to-inner transition. Cover-screen balanced phrase AB/BA and human-finger
+  miss, duplicate, adjacent-key and false-flick rates remain unmeasured, so this work does not claim
+  that everyday misclicks are solved.
 - Installed real-model instrumentation is SKIPPED, and refusal diagnostics do not establish that
   autocorrection quality is sufficient.
 - Free conversation has no known intended target; target/dictionary/top-K/manual-only analysis is
   limited to an explicit synthetic or authorized test corpus.
 
-The next priority is the controlled physical Fold A/B with identical phrases and geometry, flick
-OFF/ON in balanced order, and configured/effective autocorrection, dynamic touch and learning
-disabled. It supplies the missing real-device miss/duplicate/false-flick measurements before any
-ranking snapshot or touch-aware retrieval proposal is considered. General ranking snapshots,
-touch-aware retrieval and new learning remain proposed future work and were not implemented here.
+The next priority is a human-finger controlled Fold A/B on both screens with identical phrases,
+geometry and balanced flick OFF/ON order. It supplies the still-missing real-device miss,
+duplicate, adjacent-key and false-flick rates before any ranking snapshot or touch-aware retrieval
+proposal is considered. General ranking snapshots, touch-aware retrieval and new learning remain
+proposed future work and were not implemented here.
 
 ## Commit record
 
 - Baseline: `f3802d53c6b26dae45a5faed8eb2210c2a0571bd`.
 - Stage A: `fcecaf5aeef49741fd30da4ca6603e4dd6c926d9`.
-- Stage B: the commit containing this final receipt; its SHA is reported from Git after creation.
+- Stage B: `26c4e7ca9b5be9ebcae315fa9eda7a5c4aded870`.

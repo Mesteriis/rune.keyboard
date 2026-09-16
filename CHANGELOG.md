@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.2 — 2026-09-16
+
+- Ordinary letters are no longer dropped when a small upward finger drift rejects a secondary-symbol flick while the contact remains inside the key.
+- Downward flick symbols, long-press alternatives, cancellation, accessibility and multi-touch delivery retain their existing behavior.
+- Privacy-preserving diagnostics now distinguish verified autocorrection refusal stages without recording words, coordinates, key labels or hashes in metadata.
+
 ## 0.4.1 — 2026-09-16
 
 - New neon Rune launcher artwork with a dedicated circular variant.

@@ -1,0 +1,1 @@
+Improved typing reliability: slight upward finger drift no longer drops a letter when flick symbols are enabled. Added privacy-preserving autocorrection refusal diagnostics for QA.

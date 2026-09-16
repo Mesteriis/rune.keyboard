@@ -8,7 +8,7 @@ Rune has been submitted to the official F-Droid repository: [packaging request #
 - Original code license: MIT; separately licensed assets are listed in [third-party notices](../THIRD_PARTY_NOTICES.md).
 - Proposed recipe: [fdroid/io.github.mesteriis.rune.keyboard.yml](../fdroid/io.github.mesteriis.rune.keyboard.yml)
 - Localized store metadata: [fastlane/metadata/android](../fastlane/metadata/android)
-- Source tag: `v0.4.1`, version code `7`.
+- Source tag: `v0.4.2`, version code `8`.
 - Build: Gradle release, `app` subdirectory, recursive submodules; JDK 17, SDK 37, NDK 29.0.14206865 and CMake 3.31.6.
 
 No signing secrets are required to compile the source. Without the ignored local `keystore.properties`, Gradle produces an unsigned release APK. F-Droid can sign its independently built APK. That signing identity is different from the upstream GitHub release unless reproducible upstream signing is separately configured and verified. Byte-for-byte reproducibility has not yet been established.
