@@ -254,7 +254,7 @@ internal class KeyboardKeyView @JvmOverloads constructor(
         return true
     }
 
-    /** Returns true after an escaped gesture has cancelled the entire key interaction. */
+    /** Returns true only after the entire key interaction, rather than just flick recognition, ends. */
     private fun updateFlick(event: MotionEvent): Boolean {
         val gesture = flickGesture ?: return false
         if (!armed || alternatesActive || longPressTriggered) return false
@@ -268,6 +268,13 @@ internal class KeyboardKeyView @JvmOverloads constructor(
             popupHost?.onKeyCancel(this)
             cancelPendingActions()
             return true
+        }
+        if (next == KeyFlickGesture.State.REJECTED) {
+            if (!isInsideWithSlop(event.x, event.y)) {
+                popupHost?.onKeyCancel(this)
+                cancelPendingActions()
+                return true
+            }
         }
         if (next != previous) {
             popupHost?.onKeyCancel(this)

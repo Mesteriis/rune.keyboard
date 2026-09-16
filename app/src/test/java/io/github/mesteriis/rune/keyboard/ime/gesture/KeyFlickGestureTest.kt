@@ -23,11 +23,12 @@ class KeyFlickGestureTest {
         assertEquals(KeyFlickGesture.State.PENDING, g.move(20f, 28f))
         assertTrue(g.movedBeyondTap) // Never train letter touch correction from a reverted gesture.
     }
-    @Test fun `sideways and upward escapes cannot become symbols or letters later`() {
+    @Test fun `movement outside the flick envelope rejects only flick recognition`() {
         for ((x, y) in listOf(50f to 50f, 20f to 10f, 20f to 130f)) {
             val g = gesture()
-            assertEquals(KeyFlickGesture.State.CANCELLED, g.move(x, y))
-            assertEquals(KeyFlickGesture.State.CANCELLED, g.move(20f, 50f))
+            assertEquals(KeyFlickGesture.State.REJECTED, g.move(x, y))
+            assertEquals(KeyFlickGesture.State.REJECTED, g.move(20f, 50f))
+            assertTrue(g.movedBeyondTap)
         }
     }
     @Test fun `diagonal movement requires vertical intent`() {

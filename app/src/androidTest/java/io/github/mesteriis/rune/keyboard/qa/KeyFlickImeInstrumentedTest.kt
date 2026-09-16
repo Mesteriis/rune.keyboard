@@ -13,6 +13,41 @@ class KeyFlickImeInstrumentedTest : ImeTestBase() {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val preferences get() = KeyboardPreferences(instrumentation.targetContext)
 
+    @Test fun upwardDriftInsideKeyCommitsThroughTheRealEditor() {
+        preferences.writeKeyFlicks(true)
+        preferences.writeDynamicTouch(false)
+        preferences.writeDynamicTouchApply(false)
+        preferences.writePersonalLearning(false)
+        preferences.writeTouchPersonalization(false)
+        driver.configureEnglishStartingLanguage()
+        driver.configureSmartTyping(AutocorrectionMode.OFF, false, mechanical = false, doubleSpace = false)
+        instrumentation.waitForIdleSync()
+        preferences.readSettings().let { configured ->
+            assertTrue(configured.keyFlicks)
+            assertEquals(AutocorrectionMode.OFF, configured.autocorrectionMode)
+            assertFalse(configured.dynamicTouch)
+            assertFalse(configured.dynamicTouchApply)
+            assertFalse(configured.personalLearning)
+            assertFalse(configured.touchPersonalization)
+        }
+        driver.launchComposingQa()
+        val bounds = Rect(driver.characterKey("q", "Q").visibleBounds)
+        val held = driver.touchDown(bounds)
+        var released = false
+        try {
+            val moved = driver.moveTouch(
+                held,
+                bounds.exactCenterX(),
+                bounds.exactCenterY() - maxOf(10f, bounds.height() * .2f),
+            )
+            driver.releaseTouch(moved)
+            released = true
+        } finally {
+            if (!released) driver.cancelTouch(held)
+        }
+        driver.awaitFieldText("qa_composing_text", "q")
+    }
+
     @Test fun allThemesAndLanguagesCommitSecondaryCharactersWithoutTheBaseLetter() {
         preferences.writeKeyFlicks(true)
         driver.configureEnglishStartingLanguage()

@@ -16,6 +16,16 @@ import org.junit.Test
 class KeyFlickViewInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
 
+    @Test fun upwardDriftInsideTheKeyStillCommitsOneOrdinaryLetter() = instrumentation.runOnMainSync {
+        val f = Fixture()
+        f.touch(MotionEvent.ACTION_DOWN, 50f, 60f)
+        f.touch(MotionEvent.ACTION_MOVE, 50f, 50f) // Beyond touch slop, still inside the key.
+        f.touch(MotionEvent.ACTION_UP, 50f, 50f)
+        assertEquals(listOf(KeyboardAction.CommitLetter("q")), f.actions)
+        assertEquals(0, f.learnedTouches)
+        assertEquals(listOf(true, false), f.touches)
+    }
+
     @Test fun downwardReleaseCommitsOneSymbolAndNeverTrainsTheLetterTouch() = instrumentation.runOnMainSync {
         val f = Fixture()
         f.touch(MotionEvent.ACTION_DOWN, 50f, 60f)
