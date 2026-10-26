@@ -46,6 +46,25 @@ internal class CanonicalCaseData private constructor(
         private const val HEADER_BYTES = 8
         private val MAGIC = byteArrayOf('R'.code.toByte(), 'N'.code.toByte(), 'C'.code.toByte(), '1'.code.toByte())
 
+        /**
+         * Constant-time framing check for a hash-verified asset from the signed APK. Exhaustive
+         * Unicode/order validation remains in [validate] and in the asset qualification pipeline.
+         */
+        fun openPackaged(bytes: ByteArray): CanonicalCaseData {
+            require(bytes.size >= HEADER_BYTES + 8 && bytes.copyOfRange(0, 4).contentEquals(MAGIC)) { "CASE_HEADER" }
+            val buffer = ByteBuffer.wrap(bytes)
+            buffer.position(4)
+            val count = buffer.int
+            require(count in 1..100_000) { "CASE_COUNT" }
+            val recordsStart = HEADER_BYTES.toLong() + (count.toLong() + 1) * 4
+            require(recordsStart <= bytes.size) { "CASE_OFFSETS" }
+            require(buffer.int == 0) { "CASE_OFFSET" }
+            buffer.position(HEADER_BYTES + count * 4)
+            val recordsLength = buffer.int
+            require(recordsLength >= 0 && recordsStart + recordsLength == bytes.size.toLong()) { "CASE_LENGTH" }
+            return CanonicalCaseData(bytes, count, recordsStart.toInt())
+        }
+
         fun validate(bytes: ByteArray): CanonicalCaseData {
             require(bytes.size >= HEADER_BYTES + 4 && bytes.copyOfRange(0, 4).contentEquals(MAGIC)) { "CASE_HEADER" }
             val buffer = ByteBuffer.wrap(bytes)

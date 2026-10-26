@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.smarttyping.learning.AndroidLearningEvaluation
+import io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningEvaluation
 import io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningStore
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
@@ -21,7 +22,8 @@ class LearningLabActivity : ThemedActivity() {
         override fun run() {
             // Capture before rendering so completion during render still gets a terminal refresh.
             val pending = store.readiness == LearningStore.Readiness.LOADING ||
-                store.readiness == LearningStore.Readiness.RESETTING
+                store.readiness == LearningStore.Readiness.RESETTING ||
+                store.readiness == LearningStore.Readiness.PROMOTING
             render()
             if (pending) handler.postDelayed(this, 250)
         }
@@ -49,7 +51,13 @@ class LearningLabActivity : ThemedActivity() {
     private fun cancelRun() { revision++; running?.cancel(true); running = null; findViewById<Button>(R.id.learning_run).isEnabled = store.isReady }
     private fun render() {
         val snapshot = store.snapshot()
-        val status = when (store.readiness) { LearningStore.Readiness.LOADING -> R.string.learning_loading; LearningStore.Readiness.RESETTING -> R.string.learning_resetting; LearningStore.Readiness.READY -> R.string.learning_ready; LearningStore.Readiness.FAILED -> R.string.learning_failed }
+        val status = when (store.readiness) {
+            LearningStore.Readiness.LOADING -> R.string.learning_loading
+            LearningStore.Readiness.RESETTING -> R.string.learning_resetting
+            LearningStore.Readiness.PROMOTING -> R.string.learning_promoting
+            LearningStore.Readiness.READY -> R.string.learning_ready
+            LearningStore.Readiness.FAILED -> R.string.learning_failed
+        }
         findViewById<TextView>(R.id.learning_status).text = getString(R.string.learning_status_format,
             getString(if (store.lastWriteSucceeded == false) R.string.learning_failed else status), snapshot.examples.size, snapshot.examples.count { !it.holdout }, snapshot.examples.count { it.holdout },
             snapshot.evidence.size, snapshot.counts().values.sum())
@@ -64,13 +72,31 @@ class LearningLabActivity : ThemedActivity() {
             val result = try { AndroidLearningEvaluation.run(assets, snapshot) { Thread.currentThread().isInterrupted } } catch (_: Exception) { null }
             handler.post {
                 if (isDestroyed || isFinishing || request != revision) return@post
-                running = null; render()
-                findViewById<TextView>(R.id.learning_results).text = if (result == null) getString(R.string.learning_failed) else getString(
-                    R.string.learning_results_format, result.heldOut, result.evaluated, result.unavailable, result.missingCandidates,
-                    result.baselineTop, result.evaluated, result.learnedTop, result.evaluated,
-                    result.baselinePreserved, result.identities, result.learnedPreserved, result.identities,
-                    result.policyMatches, result.evaluated, result.evaluated - result.identities)
+                if (result == null) {
+                    running = null; render()
+                    findViewById<TextView>(R.id.learning_results).setText(R.string.learning_failed)
+                } else if (result.promotion.promotionApproved) {
+                    findViewById<TextView>(R.id.learning_results).setText(R.string.learning_promoting)
+                    store.promoteCandidate(snapshot) { success -> handler.post {
+                        if (isDestroyed || isFinishing || request != revision) return@post
+                        running = null; render()
+                        showResult(result, if (success) R.string.learning_promotion_approved else R.string.learning_promotion_failed)
+                    } }
+                } else {
+                    running = null; render(); showResult(result, R.string.learning_promotion_refused)
+                }
             }
         }
+    }
+
+    private fun showResult(result: LearningEvaluation, outcome: Int) {
+        val metrics = getString(R.string.learning_results_format, result.heldOut, result.evaluated,
+            result.unavailable, result.missingCandidates, result.baselineTop, result.evaluated,
+            result.learnedTop, result.evaluated, result.baselinePreserved, result.identities,
+            result.learnedPreserved, result.identities, result.policyMatches, result.evaluated,
+            result.evaluated - result.identities)
+        val comparison = getString(R.string.learning_comparison_format, result.improvements, result.regressions)
+        findViewById<TextView>(R.id.learning_results).text =
+            getString(R.string.learning_result_with_decision, metrics, comparison, getString(outcome))
     }
 }

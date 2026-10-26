@@ -23,7 +23,7 @@ android {
 
     androidResources {
         // Packed lexicon components are read-only APK mappings opened through AssetManager.openFd.
-        noCompress += listOf("trie", "lengths", "ranks", "morph")
+        noCompress += listOf("trie", "lengths", "ranks", "morph", "rare", "ctx", "gram")
     }
 
     defaultConfig {
@@ -84,6 +84,16 @@ android {
         // Keyboard views are built programmatically with injected metrics; they are never inflated.
         disable += "ViewConstructor"
     }
+}
+
+// These JVM tests read packaged model/dictionary bytes and reference vectors directly.
+// They are not all Java resources, so declare them explicitly in the cache key.
+tasks.withType<org.gradle.api.tasks.testing.Test>().configureEach {
+    inputs.dir(layout.projectDirectory.dir("src/main/assets"))
+        .withPropertyName("typingAssets").withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.files(rootProject.file("tools/typing_experiments/parity.tsv"),
+        rootProject.file("tools/typing_experiments/features-parity.tsv"))
+        .withPropertyName("typingReferenceVectors").withPathSensitivity(PathSensitivity.RELATIVE)
 }
 
 dependencies {

@@ -1,0 +1,12 @@
+{
+  "blockSize": 32,
+  "bytes": 3009479,
+  "format": "RUNERAR1",
+  "schemaVersion": 1,
+  "scriptSha256": "c9d1b614da298140e59a0755019b7df2dba32c47ca9991b87f87caa842330656",
+  "sha256": "434b462d4edb0165946568dfdf2a6729ff8b2590fead1fe815d3912817837b6e",
+  "sourceCountsSha256": "a5cbe64549f53b007fd6e346cc9870d73e9c155c594ad62ab0456b6e5a9fd628",
+  "sourceManifestSha256": "6f03165af59124f5e6dd4bddd24cf51345370e75f12cf83a685b4ee415fbb535",
+  "sourceWordsSha256": "22d4eb221a9ff7c6131ea84841652222fd114b71c941848c2c9952a61e52ce31",
+  "words": 288246
+}

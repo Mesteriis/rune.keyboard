@@ -10,6 +10,7 @@ class SmartTypingViewState(
     val enabled: Boolean,
     candidates: List<CandidateUiItem> = emptyList(),
     val selectedCandidateId: String? = candidates.firstOrNull()?.id,
+    val automaticReplacementId: String? = null,
 ) {
     val candidates: List<CandidateUiItem>
 
@@ -20,14 +21,17 @@ class SmartTypingViewState(
         require(snapshot.map { it.id }.distinct().size == snapshot.size) { "Duplicate candidate ID" }
         val originals = snapshot.count { it is CandidateUiItem.Original }
         val onlyActions = snapshot.all { it is CandidateUiItem.Continuation || it is CandidateUiItem.Tool || it is CandidateUiItem.Undo }
-        require(snapshot.isEmpty() || originals == 1 && snapshot.none { it is CandidateUiItem.Continuation || it is CandidateUiItem.Undo } ||
+        require(snapshot.isEmpty() || originals == 1 && snapshot.none { it is CandidateUiItem.Continuation } ||
             originals == 0 && onlyActions) { "Correction lists require an original; action lists do not" }
-        require(snapshot.none { it is CandidateUiItem.Undo } || snapshot.size == 1) { "Undo must be shown alone" }
+        require(snapshot.count { it is CandidateUiItem.Undo } <= 1) { "Only one Undo may be shown" }
 
         require(
             if (snapshot.isEmpty()) selectedCandidateId == null
             else snapshot.any { it.id == selectedCandidateId },
         ) { "Selection must refer to a visible candidate" }
+        require(automaticReplacementId == null || snapshot.any {
+            it is CandidateUiItem.Correction && it.id == automaticReplacementId
+        }) { "Automatic replacement must refer to a visible correction" }
         this.candidates = Collections.unmodifiableList(snapshot)
     }
 

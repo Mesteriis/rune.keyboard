@@ -25,8 +25,9 @@ internal object DiagnosticsEncoding {
         "\"${it.field}\":${mask and it.bit != 0}"
     }
 
-    private fun fields(event: DiagnosticEvent) = "{\"schema\":7,\"kind\":\"${event.kind.name}\"," +
+    private fun fields(event: DiagnosticEvent) = "{\"schema\":8,\"kind\":\"${event.kind.name}\"," +
         "\"reason\":\"${event.reason.name}\",\"session\":${event.session.coerceIn(0, 1_000_000_000)}," +
+        "\"reasonCode\":${event.reason.ordinal}," +
         "\"revision\":${event.revision.coerceIn(0, 1_000_000_000)}," +
         "\"typingProfile\":${event.typingProfile.takeIf { it in 0..2 } ?: 0}," +
         "\"features\":${features(event.configuredFeatures)}," +
@@ -37,6 +38,10 @@ internal object DiagnosticsEncoding {
         "\"localCompletion\":\"${event.localCompletion.name}\"," +
         "\"localInspectedStates\":${event.localInspectedStates.coerceIn(0, 8_192)}," +
         "\"localVerifiedTerminals\":${event.localVerifiedTerminals.coerceIn(0, 64)}," +
+        "\"correctionId\":${event.correctionId.coerceIn(0, 1_000_000_000)}," +
+        "\"recoveryCompletion\":\"${event.recoveryCompletion.name}\"," +
+        "\"recoveryInspectedStates\":${event.recoveryInspectedStates.coerceIn(0, 32_768)}," +
+        "\"recoveryVerifiedTerminals\":${event.recoveryVerifiedTerminals.coerceIn(0, 64)}," +
         "\"scoringCode\":${event.scoringCode.coerceIn(-1, 15)},\"elapsedMs\":${event.elapsedMs.coerceIn(0, 60_000)}," +
         "\"requestId\":${event.requestId.coerceIn(0, 1_000_000_000)},\"operationId\":${event.operationId.coerceIn(0, 1_000_000_000)}"
 

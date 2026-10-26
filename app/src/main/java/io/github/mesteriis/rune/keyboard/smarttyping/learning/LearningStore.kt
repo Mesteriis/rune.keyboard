@@ -10,7 +10,7 @@ import java.util.concurrent.Executors
 
 /** Single asynchronous no-backup writer. Callbacks run on its worker; load failures require reset. */
 class LearningStore internal constructor(private val storage: LearningStorage, private val worker: Executor) {
-    enum class Readiness { LOADING, RESETTING, READY, FAILED }
+    enum class Readiness { LOADING, RESETTING, PROMOTING, READY, FAILED }
     private constructor(context: Context) : this(AndroidLearningStorage(context),
         Executors.newSingleThreadExecutor { task -> Thread(task, "rune-learning-store").apply { isDaemon = true } })
     private val lock = Any()
@@ -21,6 +21,7 @@ class LearningStore internal constructor(private val storage: LearningStorage, p
     @Volatile var readiness = Readiness.LOADING; private set
     @Volatile var lastWriteSucceeded: Boolean? = null; private set
     val isReady get() = readiness == Readiness.READY
+    private val canServe get() = readiness == Readiness.READY || readiness == Readiness.PROMOTING
     init {
         worker.execute {
             try {
@@ -49,9 +50,49 @@ class LearningStore internal constructor(private val storage: LearningStorage, p
         true
     }
     fun preference(original: String, candidate: String, language: KeyboardLanguage): Double = synchronized(lock) {
-        if (isReady) model.preference(original, candidate, language) else 0.0
+        if (canServe) model.preference(original, candidate, language) else 0.0
     }
     fun snapshot(): LearningSnapshot = synchronized(lock) { model.snapshot() }
+    /** Candidate is published only after its exact evaluated snapshot is durably committed. */
+    internal fun promoteCandidate(evaluated: LearningSnapshot, callback: (Boolean) -> Unit = {}) =
+        commitPolicy(evaluated, promote = true, callback)
+    internal fun rollback(evaluated: LearningSnapshot = snapshot(), callback: (Boolean) -> Unit = {}) =
+        commitPolicy(evaluated, promote = false, callback)
+
+    private fun commitPolicy(expected: LearningSnapshot, promote: Boolean, callback: (Boolean) -> Unit) {
+        val prepared = synchronized(lock) {
+            val transition = if (!isReady || model.snapshot() != expected) null else
+                if (promote) model.promotedSnapshot(expected) else model.rollbackSnapshot(expected)
+            transition?.let {
+                readiness = Readiness.PROMOTING
+                lastWriteSucceeded = null
+                Pair(it, ++generation)
+            }
+        }
+        if (prepared == null) {
+            worker.execute { callback(false) }
+            return
+        }
+        val (transition, transitionGeneration) = prepared
+        worker.execute {
+            val success = write(transition)
+            val current = synchronized(lock) {
+                if (generation != transitionGeneration) false else if (success) {
+                    model.restore(transition)
+                    readiness = Readiness.READY
+                    true
+                } else {
+                    val oldStillDurable = try {
+                        storage.read()?.let(LearningCodec::decode) == expected
+                    } catch (_: Exception) { false }
+                    readiness = if (oldStillDurable) Readiness.READY else Readiness.FAILED
+                    true
+                }
+            }
+            callback(success && current)
+        }
+    }
+
     fun reset(callback: (Boolean) -> Unit = {}) = synchronized(lock) {
         val resetGeneration = ++generation
         model.reset(); readiness = Readiness.RESETTING; lastWriteSucceeded = null

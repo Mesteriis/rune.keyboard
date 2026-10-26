@@ -6,7 +6,11 @@
     },
     "ru-ranker.bin": {
       "bytes": 22036,
-      "sha256": "f3ac83997946b97b57f410f0955a9a479a72453f4c68ed4f473c1afded583648"
+      "sha256": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec"
+    },
+    "ru-ranker-auto-v1.bin": {
+      "bytes": 22036,
+      "sha256": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd"
     },
     "ru-ranking-context.bin": {
       "bytes": 320216,
@@ -112,12 +116,41 @@
     "scope": "Ranking existing alternatives, original remains separate; synthetic Wikipedia typos; no automatic-edit or chat-accuracy claim",
     "selectionSha256": "e666f80bab017da8c707f5bae0b897d3051833ed80481b681ee11d00518c80cc"
   },
+  "automaticQualification": {
+    "policySha256": "5057e9e955fafdc507e06b4b1e88307b4dd2201d6864a9620b39e23358a33acd",
+    "policyPath": "tools/typing_experiments/compact_auto_cascade_policy_v2.json",
+    "ordering": ["qualified-v1", "retrained-v2-on-v1-abstention"],
+    "stageWinnerAbstention": "Abstain when the selected stage winner has an unresolved one-character Russian е/э minimal-pair rival",
+    "legacyModelSha256": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+    "retrainedModelSha256": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+    "legacyThresholds": {"minimumScore": 0.2962572457107321, "minimumMargin": 0.42795266413380256},
+    "retrainedThresholds": {"minimumScore": 0.24258020149114667, "minimumMargin": 0.45231463979111636},
+    "trainingEvidence": "Public, disclosed v2-v8 spelling rows plus disclosed v11 policy failure; no private messages",
+    "disclosedPolicyFailure": {
+      "holdout": "wikimedia/wikipedia 20231101.ru/train/0016.parquet",
+      "observedError": "грйсон -> грейсон; expected грэйсон",
+      "decision": "rejected and rolled back to manual-only compact use before policy revision"
+    },
+    "unseenHoldout": "wikimedia/wikipedia 20231101.ru/train/0017.parquet",
+    "holdoutManifestSha256": "b755fb65c73cf764782759cc7eea62bdaafe8882c7156af52aee990bc2b3fce2",
+    "holdoutRowsSha256": "95c0f40915241ef72e5bc7bcc1dd484e5aafcee691b32cb31d1e983b012d8fa2",
+    "observationsSha256": "1b3252eec2de950888bbad8ed5f633ee9995c902506d9017c77763d40ac5e204",
+    "decisionReportSha256": "9356ad00f231176aad1ff8097c18177a7d73923b30ba0b99fe57398e2fcf5de2",
+    "productEvaluatorSha256": "023bb5d49112af03d051073526ea28e978613b71b4778da79be3d9958bec79e7",
+    "holdoutRows": 1700,
+    "baseline": {"changes": 343, "correct": 343, "incorrect": 0, "controlChanges": 0},
+    "additions": {"changes": 262, "correct": 262, "incorrect": 0, "controlChanges": 0},
+    "product": {"changes": 605, "correct": 605, "incorrect": 0, "controlChanges": 0},
+    "promotionApproved": true,
+    "rollbackRequired": false,
+    "privateDataUsed": false
+  },
   "experimental": true,
   "privateDataUsed": false,
-  "productionQualified": false,
+  "productionQualified": true,
   "runtime": "RET2 95 features 128 depth-5 numeric symmetric trees; REC2 48-character 48-hidden; no Android ML framework",
   "schemaVersion": 2,
-  "scope": "Reorders manual alternatives only. Original and automatic-edit policy unchanged. Russian only. Both independent controls default off.",
+  "scope": "Russian manual ranking plus the independently qualified original-aware additive automatic policy. Automatic promotion requires exact public retrieval, score/margin thresholds, zero new errors and preserved baseline decisions.",
   "selected": {
     "blendGain": 1,
     "devBlend": [
@@ -140,9 +173,9 @@
     ],
     "neural": "context-48-epoch6",
     "neuralSha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
-    "ranker": "pairwise",
-    "rankerSha256": "f3ac83997946b97b57f410f0955a9a479a72453f4c68ed4f473c1afded583648",
-    "scriptSha256": "05010f2d693e2ca08262d573a3b4e39d07d00b35ac6729474cb1910afce5f7f1",
+    "ranker": "augmented-abstaining-pairwise-w6-v3",
+    "rankerSha256": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+    "scriptSha256": "653c6bfe61f448d33f6a3672cffa4f296ff9e1632d61b845a0d80870bf67d384",
     "selectionFrozenBeforeTest": true
   },
   "source": {

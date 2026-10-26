@@ -6,7 +6,7 @@
     <string name="settings_collect_examples">Сохранять подтверждённые примеры</string>
     <string name="settings_collect_examples_summary">Хранить ограниченный локальный набор явных исправлений и подтверждённых слов для проверки качества подсказок.</string>
     <string name="settings_typo_patterns">Учиться на типах моих опечаток</string>
-    <string name="settings_typo_patterns_summary">Учитывать повторяющиеся типы ошибок в подтверждённых исправлениях при сортировке словарных подсказок.</string>
+    <string name="settings_typo_patterns_summary">Учитывать повторяющиеся типы ошибок в подтверждённых исправлениях при сортировке словарных подсказок. При включённом сохранении примеров неактивные кандидаты проверяются ночью, на зарядке и в простое; вариант с регрессией не включается.</string>
     <string name="controls_words_title">Защищённые слова</string>
     <string name="controls_words_intro">Слова защищены отдельно для каждого языка. Нажмите на запись, чтобы удалить её. Выключение защиты сохраняет список.</string>
     <string name="controls_apps_title">Профили приложений</string>

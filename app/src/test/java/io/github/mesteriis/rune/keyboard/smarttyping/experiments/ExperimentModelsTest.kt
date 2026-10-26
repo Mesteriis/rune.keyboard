@@ -14,6 +14,7 @@ class ExperimentModelsTest {
     private val assets = File("src/main/assets/smarttyping/experiments")
     private fun loaded() = ExperimentModels().apply {
         loadRanker(File(assets, "ru-ranker.bin").readBytes())
+        loadLegacyAutomaticRanker(File(assets, "ru-ranker-auto-v1.bin").readBytes())
         loadContext(File(assets, "ru-ranking-context.bin").readBytes())
         loadTapContext(File(assets, "ru-context.bin").readBytes())
     }
@@ -23,18 +24,19 @@ class ExperimentModelsTest {
     @Test fun unavailableAndUnsupportedAreNoOp() {
         val unavailable = ExperimentModels()
         assertFalse(unavailable.learnedReady)
+        assertFalse(unavailable.legacyAutomaticReady)
         assertFalse(unavailable.contextReady)
         assertFalse(unavailable.tapReady)
         assertEquals(0.0, unavailable.rankScore("мы", "дм", candidate("дом")), 0.0)
         assertTrue(unavailable.nextLetters("мы", "", KeyboardLanguage.RUSSIAN).isEmpty())
         val ready = loaded()
-        assertTrue(ready.learnedReady && ready.contextReady && ready.tapReady)
+        assertTrue(ready.learnedReady && ready.legacyAutomaticReady && ready.contextReady && ready.tapReady)
         assertEquals(0.0, ready.contextScore("we", "home", KeyboardLanguage.ENGLISH), 0.0)
         assertTrue(ready.nextLetters("we", "", KeyboardLanguage.ENGLISH).isEmpty())
     }
 
     @Test fun rejectsTruncatedExtraNonFiniteAndWrongDimensions() {
-        for (name in listOf("ru-ranker.bin", "ru-ranking-context.bin", "ru-context.bin")) {
+        for (name in listOf("ru-ranker.bin", "ru-ranker-auto-v1.bin", "ru-ranking-context.bin", "ru-context.bin")) {
             val bytes = File(assets, name).readBytes()
             val invalids = listOf(bytes.copyOf(bytes.size - 1), bytes + 0,
                 bytes.clone().apply { this[0] = 0 }, bytes.clone().apply { this[4] = 0 },
@@ -43,7 +45,10 @@ class ExperimentModelsTest {
                 bytes.clone().apply { ByteBuffer.wrap(this).order(ByteOrder.LITTLE_ENDIAN).putFloat(size - 4, Float.NaN) })
             for (invalid in invalids) {
                 val model = ExperimentModels()
-                if (name.contains("ranker")) { model.loadRanker(invalid); assertFalse(model.learnedReady) }
+                if (name == "ru-ranker.bin") { model.loadRanker(invalid); assertFalse(model.learnedReady) }
+                else if (name == "ru-ranker-auto-v1.bin") {
+                    model.loadLegacyAutomaticRanker(invalid); assertFalse(model.legacyAutomaticReady)
+                }
                 else if (name == "ru-ranking-context.bin") { model.loadContext(invalid); assertFalse(model.contextReady) }
                 else { model.loadTapContext(invalid); assertFalse(model.tapReady) }
             }
@@ -62,6 +67,7 @@ class ExperimentModelsTest {
         assertNotEquals(letters, model.nextLetters("мы хотим", "д", KeyboardLanguage.RUSSIAN))
         model.loadRanker(byteArrayOf())
         assertFalse(model.learnedReady)
+        assertTrue(model.legacyAutomaticReady)
         assertTrue(model.contextReady)
     }
 

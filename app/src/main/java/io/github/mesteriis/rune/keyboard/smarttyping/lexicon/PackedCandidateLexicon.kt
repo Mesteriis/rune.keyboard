@@ -19,6 +19,11 @@ class PackedCandidateLexicon(handles: Collection<PackedLexiconData>) : Candidate
     private val lower = IntArray(33)
     private val topSeven by lazy(LazyThreadSafetyMode.NONE) { PackedTopSeven(::handle) }
 
+    private val recovery by lazy(LazyThreadSafetyMode.NONE) { NeighborRecoverySearch({ handle(KeyboardLanguage.RUSSIAN) }) }
+
+    override fun recoverNeighbors(token: String, cancellation: CandidateCancellation): LocalSearchEvidence =
+        recovery.search(token, cancellation)
+
     internal fun handle(language: KeyboardLanguage): PackedLexiconData? = indices[language.ordinal]
 
     override fun selectTop(key: String, route: LanguageRoute, pattern: CasePattern,

@@ -65,10 +65,11 @@ class PackedMorphologyLexiconTest {
     }
 
     @Test fun `packaged real dictionary protects rare word and rejects typo`() {
-        val file = File("src/main/assets/smarttyping/lexicon/ru.morph")
+        val file = File("src/main/assets/${FrozenMorphologyLexicon.ASSET_PATH}")
+        assertEquals(FrozenMorphologyLexicon.ASSET_BYTES, file.length())
         val lexicon = FileInputStream(file).use {
             PackedMorphologyLexicon.open(it.channel.map(FileChannel.MapMode.READ_ONLY, 0, file.length()),
-                AndroidMorphologyLexiconLoader.ASSET_SHA256)
+                FrozenMorphologyLexicon.ASSET_SHA256)
         }
         assertTrue(lexicon.lookup(russian, "почтений").present)
         assertTrue(lexicon.lookup(russian, "Почтений").present)

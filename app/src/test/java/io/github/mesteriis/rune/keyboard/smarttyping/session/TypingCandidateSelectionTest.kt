@@ -630,7 +630,7 @@ class TypingCandidateSelectionTest {
         }
     }
 
-    @Test fun `initial shadow comparison uses accepted manual pool and unchanged local primary`() {
+    @Test fun `qualified Space winner leads the UI while shadow still measures the raw manual preference`() {
         val subject = TypingSessionController(jvmGraphemes,
             io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification { _, _ -> true })
         val observed = mutableListOf<Pair<String, String>>()
@@ -656,8 +656,16 @@ class TypingCandidateSelectionTest {
         val manual = reply(request, "сообщение", "сообщения").generation
         assertTrue(subject.acceptCandidates(raw.copy(generation = baseline, manualGeneration = manual)))
         assertFalse(subject.canRequestModelRanking)
-        assertEquals("сообщения", subject.candidateViewState.candidates[1].text)
+        val beforeView = subject.state
+        assertEquals(listOf("сообшение", "сообщение", "сообщения"), subject.candidateViewState.candidates.map { it.text })
+        assertEquals(subject.candidateViewState.candidates[1].id, subject.spaceReplacementCandidateId(KeyboardLanguage.RUSSIAN))
+        assertEquals(beforeView, subject.state)
         assertEquals(listOf("сообщение" to "сообщения"), observed)
+        subject.configureFeatures(flags, io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature.SHADOW_COMPARISON.bit)
+        val suggestions = subject.beginCandidateRequest(2, KeyboardLanguage.RUSSIAN)!!
+        assertTrue(subject.acceptCandidates(raw.copy(sessionId = suggestions.sessionId, revision = suggestions.revision,
+            requestId = suggestions.requestId, generation = baseline, manualGeneration = manual)))
+        assertEquals("сообщения", subject.candidateViewState.candidates[1].text)
     }
 
     @Test fun `manual pool ranks richer display without changing model input and tap restores original`() {
@@ -699,6 +707,26 @@ class TypingCandidateSelectionTest {
         assertEquals(TypingTextResult.HANDLED, controller.selectCandidate(controller.originalCandidateId!!, execute))
         assertEquals("мала", controller.state.composing!!.typedWord)
         assertNull(controller.state.lastAutoEdit)
+    }
+
+    @Test fun `known original rejects supplemental automatic certificates and ordinary spelling kinds`() {
+        for (claimCertificate in listOf(false, true)) {
+            start("нуден")
+            val request = controller.beginCandidateRequest(++requestId, KeyboardLanguage.RUSSIAN)!!
+            val candidate = GeneratedCandidate("нужен", "нужен", "нужен", KeyboardLanguage.RUSSIAN,
+                false, 4, 100, 1, EditFeatures(.75, 0, 0.0), 0, CasePattern.LOWER,
+                if (claimCertificate) GeneratedCandidateKind.PUBLIC_AUGMENTED else GeneratedCandidateKind.SPELLING)
+            val original = CandidateGeneration("нуден", emptyList(), CandidateCompletion.VALID_WORD, true, null, 1, 0)
+            val manual = original.copy(alternatives = listOf(candidate), completion = CandidateCompletion.COMPLETE,
+                isValidWord = false, localSearch = if (claimCertificate)
+                    io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalSearchEvidence(
+                        CandidateCompletion.COMPLETE, listOf(candidate), 1, 1) else
+                    io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalSearchEvidence.NONE)
+            assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision,
+                request.requestId, original, manualGeneration = manual)))
+            assertEquals(listOf("нуден"), labels())
+            assertNull(controller.beginModelRanking(1))
+        }
     }
 
     @Test fun `malformed supplemental snapshot never expands baseline and stale replies cannot publish`() {

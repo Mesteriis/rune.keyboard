@@ -16,6 +16,78 @@ import org.junit.runner.RunWith
 /** Public fixture only; observations cross the existing :qa_editor Binder connection. */
 @RunWith(AndroidJUnit4::class)
 class LiveCandidatesInstrumentedTest : ImeTestBase() {
+    @Test fun shortRussianCorrectionPreviewAndUndoPreserveTheNextWord() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        assertTrue(context.getSharedPreferences(ImeTestDriver.PREFERENCES_NAME, android.content.Context.MODE_PRIVATE)
+            .edit().putBoolean(io.github.mesteriis.rune.keyboard.settings.SettingsCodec.KEY_VISIBLE_UNDO, true).commit())
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa(language =
+            io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.RUSSIAN)
+        "зочу".forEach { driver.tapKey(it.toString()) }
+        val preview = awaitCandidate(R.string.candidate_correction, "хочу")
+        assertEquals(InstrumentationRegistry.getInstrumentation().targetContext
+            .getString(R.string.candidate_auto_preview_label, "хочу"), preview.text)
+        space()
+        driver.awaitFieldText(FIELD, "хочу ")
+        "до".forEach { driver.tapKey(it.toString()) }
+        driver.awaitFieldText(FIELD, "хочу до")
+        awaitCandidate(R.string.candidate_undo, "зочу").click()
+        driver.awaitFieldText(FIELD, "зочу до")
+        noReadback()
+    }
+
+    @Test fun jointShortWordCorrectionPreviewAndUndoPreserveTheNextWord() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        assertTrue(context.getSharedPreferences(ImeTestDriver.PREFERENCES_NAME, android.content.Context.MODE_PRIVATE)
+            .edit().putBoolean(io.github.mesteriis.rune.keyboard.settings.SettingsCodec.KEY_VISIBLE_UNDO, true).commit())
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa(language =
+            io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.RUSSIAN)
+        "ссын".forEach { driver.tapKey(it.toString()) }
+        val preview = awaitCandidate(R.string.candidate_correction, "сын")
+        assertEquals(InstrumentationRegistry.getInstrumentation().targetContext
+            .getString(R.string.candidate_auto_preview_label, "сын"), preview.text)
+        space()
+        driver.awaitFieldText(FIELD, "сын ")
+        "до".forEach { driver.tapKey(it.toString()) }
+        driver.awaitFieldText(FIELD, "сын до")
+        awaitCandidate(R.string.candidate_undo, "ссын").click()
+        driver.awaitFieldText(FIELD, "ссын до")
+        noReadback()
+    }
+
+    @Test fun reportedRussianMisspellingsCorrectOnSpaceWhileAmbiguousFragmentStaysUntouched() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa(language =
+            io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.RUSSIAN)
+
+        fun type(word: String) {
+            word.forEach { driver.tapKey(it.toString()) }
+            space()
+        }
+
+        type("смотруть")
+        driver.awaitFieldText(FIELD, "смотреть ")
+        type("ощющениям")
+        driver.awaitFieldText(FIELD, "смотреть ощущениям ")
+        type("заберай")
+        driver.awaitFieldText(FIELD, "смотреть ощущениям забирай ")
+        type("пвременить")
+        driver.awaitFieldText(FIELD, "смотреть ощущениям забирай повременить ")
+        type("ерминатор")
+        driver.awaitFieldText(FIELD, "смотреть ощущениям забирай повременить терминатор ")
+        type("спаателей")
+        driver.awaitFieldText(FIELD,
+            "смотреть ощущениям забирай повременить терминатор спасателей ")
+        type("ность")
+        driver.awaitFieldText(FIELD,
+            "смотреть ощущениям забирай повременить терминатор спасателей ность ")
+        noReadback()
+    }
+
     @Test fun canonicalCaseAutoReplacesOnBoundaryAndBackspaceRestoresOriginal() {
         driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
             mechanical = false, doubleSpace = false)
@@ -55,6 +127,35 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
         assertEquals(7, deleted.getValue("end"))
         assertEquals(7, deleted.getValue("selectionStart"))
         assertEquals(7, deleted.getValue("selectionEnd"))
+        noReadback()
+    }
+
+    @Test fun russianSentencePeriodCorrectsReadyWordAndBackspaceRestoresExactSource() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa(language =
+            io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.RUSSIAN)
+        for (key in listOf("с", "м", "о", "т", "р", "у", "т", "ь")) driver.tapKey(key)
+
+        val deadline = SystemClock.uptimeMillis() + 120_000L
+        var correction: UiObject2? = null
+        do {
+            correction = driver.device.wait(Until.findObject(By.desc(
+                description(R.string.candidate_correction, "смотреть"))), 2_000L)
+            if (correction == null) {
+                driver.tapDelete()
+                driver.awaitFieldText(FIELD, "смотрут")
+                driver.tapKey("ь")
+                driver.awaitFieldText(FIELD, "смотруть")
+            }
+        } while (correction == null && SystemClock.uptimeMillis() < deadline)
+        assertTrue("Russian correction unavailable", correction != null)
+
+        driver.tapKey(".")
+        driver.awaitFieldText(FIELD, "смотреть.")
+        driver.tapDelete()
+        driver.awaitFieldText(FIELD, "смотруть")
+        assertTrue(awaitCandidate(R.string.candidate_original, "смотруть").isSelected)
         noReadback()
     }
 

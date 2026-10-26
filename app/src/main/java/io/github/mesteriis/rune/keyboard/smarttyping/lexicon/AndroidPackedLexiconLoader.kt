@@ -17,7 +17,7 @@ object AndroidPackedLexiconLoader {
                 }
             }
             val m = trusted.manifest
-            PackedLexiconData.validate(trusted, map(m.trie), map(m.lengths), map(m.ranks))
+            PackedLexiconData.openPackaged(trusted, map(m.trie), map(m.lengths), map(m.ranks))
         } catch (failure: PackedValidationException) {
             PackedLexiconLoad.Failed(failure.reason)
         } catch (_: Exception) {

@@ -49,6 +49,7 @@ class ModelCandidateCoordinator(
     private var diagnosticRequest: ScoringToken? = null
     private var diagnosticScheduled: Pair<Long, Long>? = null
     private var diagnosticSource = DiagnosticSource.MODEL
+    internal var onPreviousWordRefined: (() -> Unit)? = null
 
     /** Cached metadata only, independent of transport connectivity and quality qualification. */
     val modelReadinessHint: ModelReadinessHint
@@ -66,6 +67,7 @@ class ModelCandidateCoordinator(
     fun candidatesChanged() {
         checkOwner()
         if (closed) return
+        if (pendingKind == RequestKind.REFINEMENT && controller.canRefinePreviousWord) return
         cancel()
         val session = controller.state.sessionId
         val revision = controller.state.revision
@@ -96,6 +98,7 @@ class ModelCandidateCoordinator(
                 val input = when (kind) {
                     RequestKind.SPELLING -> controller.beginModelRanking(nextId)
                     RequestKind.CONTEXTUAL -> controller.beginContextualRanking(nextId)
+                    RequestKind.REFINEMENT -> null
                 } ?: return
                 pendingOwner = owner
                 pendingKind = kind
@@ -115,6 +118,7 @@ class ModelCandidateCoordinator(
         diagnosticRequest?.let { controller.recordRequest(DiagnosticReason.CANCELLED, diagnosticSource,
             it.sessionId, it.revision, it.requestId) }
         diagnosticScheduled?.let { controller.recordRequest(DiagnosticReason.CANCELLED, diagnosticSource, it.first, it.second) }
+        if (pendingKind == RequestKind.REFINEMENT) controller.cancelPreviousWordRefinement()
         diagnosticRequest = null
         diagnosticScheduled = null
         epoch++
@@ -126,24 +130,63 @@ class ModelCandidateCoordinator(
         client.cancel()
     }
 
+    /** Only acknowledged next-word appends keep a refinement; the controller owns that decision. */
+    internal fun edit(action: () -> TypingTextResult): TypingTextResult {
+        if (pendingKind != RequestKind.REFINEMENT) cancel()
+        val result = action()
+        if (pendingKind == RequestKind.REFINEMENT && !controller.canRefinePreviousWord) cancel()
+        return result
+    }
+
+    internal fun startPreviousWordRefinement(execute: (TypingEdit) -> Boolean): Boolean {
+        checkOwner()
+        if (closed || !controller.canRefinePreviousWord || !automaticSpaceEligible() || requestId == Long.MAX_VALUE) return false
+        // One replacement request is allowed after local application; old scoring cannot outlive it.
+        cancel()
+        val input = controller.beginPreviousWordRefinement(++requestId) ?: return false
+        pendingOwner = ownerState()
+        pendingKind = RequestKind.REFINEMENT
+        diagnosticSource = DiagnosticSource.MODEL_REFINEMENT
+        diagnosticRequest = input.token
+        spaceExecutor = execute
+        val currentEpoch = epoch
+        val expiry = object : Runnable {
+            override fun run() {
+                if (timer === this && epoch == currentEpoch) cancel()
+            }
+        }
+        timer = expiry
+        scheduler.postDelayed(expiry, controller.previousWordRemainingMillis())
+        client.attachSession(controller.state.sessionId, true)
+        trace.section(SmartTypingTraceSection.MODEL_REQUEST) { client.score(input) }
+        return true
+    }
+
     /** Space never waits. Flush its existing pause once and retain only this unchanged suffix. */
     internal fun editSpace(execute: (TypingEdit) -> Boolean, action: () -> TypingTextResult): TypingTextResult {
         checkOwner()
         val owner = ownerState()
+        val startedAt = scheduler.nowMillis()
         if (closed || !automaticSpaceEligible() || requestKind() != RequestKind.SPELLING) {
             cancel()
-            return action()
+            val result = action()
+            if (result == TypingTextResult.HANDLED) startPreviousWordRefinement(execute)
+            return result
         }
         timer?.let { task -> scheduler.remove(task); task.run() }
         val editingEpoch = epoch
         val result = controller.retainRankingAcrossSpace(action)
+        if (result == TypingTextResult.HANDLED && controller.canRefinePreviousWord) {
+            startPreviousWordRefinement(execute)
+            return result
+        }
         if (closed || epoch != editingEpoch || ownerState() != owner || pendingKind != RequestKind.SPELLING ||
             result != TypingTextResult.HANDLED || !controller.hasSpaceCorrection || !automaticSpaceEligible()) {
             cancel()
             return result
         }
         spaceExecutor = execute
-        spaceStartedAt = scheduler.nowMillis()
+        spaceStartedAt = startedAt
         val expiry = object : Runnable {
             override fun run() {
                 checkOwner()
@@ -156,7 +199,7 @@ class ModelCandidateCoordinator(
             }
         }
         timer = expiry
-        scheduler.postDelayed(expiry, SPACE_GRACE_MILLIS)
+        scheduler.postDelayed(expiry, (SPACE_GRACE_MILLIS - (scheduler.nowMillis() - startedAt)).coerceAtLeast(0))
         return result
     }
 
@@ -214,6 +257,7 @@ class ModelCandidateCoordinator(
     override fun isCurrentRequest(token: ScoringToken): Boolean {
         checkOwner()
         val kind = pendingKind ?: return false
+        if (kind == RequestKind.REFINEMENT) return controller.isCurrentPreviousWordRefinement(token)
         return if (spaceExecutor != null) withinSpaceWindow() && controller.isCurrentSpaceCorrection(token)
             else isCurrent(kind, token)
     }
@@ -225,7 +269,7 @@ class ModelCandidateCoordinator(
                 return@section
             }
             val executeSpace = spaceExecutor
-            if (executeSpace != null && !withinSpaceWindow()) {
+            if (executeSpace != null && (if (kind == RequestKind.REFINEMENT) !controller.canRefinePreviousWord else !withinSpaceWindow())) {
                 controller.recordRequest(DiagnosticReason.DEADLINE_MISSED, diagnosticSource,
                     reply.token.sessionId, reply.token.revision, reply.token.requestId)
                 diagnosticRequest = null
@@ -246,16 +290,22 @@ class ModelCandidateCoordinator(
                 cancel(); client.attachSession(null, false); readiness.setActive(false)
                 return@section
             }
-            val accepted = if (executeSpace != null) controller.acceptSpaceCorrection(reply, executeSpace) else when (kind) {
+            val accepted = if (executeSpace != null && kind == RequestKind.REFINEMENT)
+                controller.acceptPreviousWordRefinement(reply, executeSpace)
+            else if (executeSpace != null) controller.acceptSpaceCorrection(reply, executeSpace) else when (kind) {
                 RequestKind.SPELLING -> controller.acceptModelRanking(reply)
                 RequestKind.CONTEXTUAL -> controller.acceptContextualRanking(reply)
+                RequestKind.REFINEMENT -> false
             }
             pendingOwner = null
             pendingKind = null
             diagnosticRequest = null
             spaceExecutor = null
             timer?.let(scheduler::remove); timer = null
-            if (accepted) changed()
+            if (accepted) {
+                if (kind == RequestKind.REFINEMENT) onPreviousWordRefined?.invoke()
+                changed()
+            }
         }
     }
     override fun onAvailabilityChanged(available: Boolean) {
@@ -290,9 +340,10 @@ class ModelCandidateCoordinator(
     private fun isCurrent(kind: RequestKind, token: ScoringToken) = when (kind) {
         RequestKind.SPELLING -> controller.isCurrentModelRanking(token)
         RequestKind.CONTEXTUAL -> controller.isCurrentContextualRanking(token)
+        RequestKind.REFINEMENT -> controller.isCurrentPreviousWordRefinement(token)
     }
     private fun checkOwner() = check(Thread.currentThread() === ownerThread) { "Model candidate owner thread required" }
-    private enum class RequestKind { SPELLING, CONTEXTUAL }
+    private enum class RequestKind { SPELLING, CONTEXTUAL, REFINEMENT }
     companion object {
         /** Development pause, not a measured latency/energy budget; service CPU duty still applies. */
         const val PAUSE_MILLIS = 400L

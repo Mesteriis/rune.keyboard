@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "source": "public-only Russian Wikipedia synthetic misspellings; lemma and article disjoint evaluations",
+  "model": {
+    "asset": "ru-joint-ranker.bin",
+    "bytes": 22036,
+    "sha256": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+    "format": "RET2",
+    "features": 95,
+    "trees": 128
+  },
+  "contextSha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+  "short": {
+    "policySha256": "36fbdfd7c7c96e580b3d68b7fd6abaec58c0a62aa8302351606acbff15c5f722",
+    "rowsSha256": "03e32ae46a61dd3c5ee0f84a308b9b2d79bf17f7c18de78442d2284738e8084d",
+    "thresholds": {
+      "calibrationPassed": true,
+      "minimumScore": -0.1159913845255558,
+      "minimumMargin": 0.24699818316768785,
+      "metrics": {
+        "replacements": 120,
+        "correct": 120,
+        "wrong": 0,
+        "precision": 1.0,
+        "baselineCorrect": 0,
+        "baselineWrong": 0,
+        "baselineCorrectToWrong": 0,
+        "baselineCorrectAbstained": 0,
+        "wrongResolved": 0,
+        "controlChanges": 0,
+        "newCorrect": 120,
+        "newCorrectFamilies": 46
+      }
+    },
+    "holdout": {
+      "rows": 2924,
+      "typos": 2183,
+      "controls": 741,
+      "baselineCorrect": 0,
+      "baselineWrong": 0,
+      "replacements": 81,
+      "correct": 81,
+      "wrong": 0,
+      "newCorrect": 81,
+      "newCorrectFamilies": 33,
+      "baselineCorrectToWrong": 0,
+      "baselineCorrectAbstained": 0,
+      "wrongResolved": 0,
+      "controlChanges": 0,
+      "undoFailures": 0,
+      "prefixChanges": 0,
+      "precision": 1.0,
+      "passed": true
+    }
+  },
+  "long": {
+    "policySha256": "ba3d9f20cdf7d5dabe8ff306df59fc76016dd6c1d0a2bdb6019c6164442dd82c",
+    "rowsSha256": "04f779a29ee0a13ae9c27ea70af9513410facd063c164a59f755ef4c18593c75",
+    "thresholds": {
+      "acquisition": {
+        "qualifiedCalibration": true,
+        "minimumScore": 0.5526915271546093,
+        "minimumMargin": 0.4475581943461431,
+        "metrics": {
+          "changes": 354,
+          "newCorrect": 354,
+          "newWrong": 0,
+          "regressions": 0,
+          "correctedWrong": 354,
+          "suppressedWrong": 0,
+          "wrongChanged": 0,
+          "controlChanges": 0,
+          "newCorrectFamilies": 245
+        }
+      },
+      "retention": {
+        "calibrationPassed": true,
+        "minimumScore": 0.47757815371058715,
+        "minimumMargin": 0.10336967059629464,
+        "metrics": {
+          "replacements": 1858,
+          "correct": 1843,
+          "wrong": 15,
+          "precision": 0.9919268030139935,
+          "baselineCorrect": 1990,
+          "baselineWrong": 37,
+          "baselineCorrectToWrong": 0,
+          "baselineCorrectAbstained": 147,
+          "wrongResolved": 22,
+          "controlChanges": 0,
+          "newCorrect": 0,
+          "newCorrectFamilies": 0
+        }
+      }
+    },
+    "holdout": {
+      "rows": 4777,
+      "typos": 3777,
+      "controls": 1000,
+      "baselineCorrect": 2139,
+      "baselineWrong": 44,
+      "replacements": 2376,
+      "correct": 2361,
+      "wrong": 15,
+      "newCorrect": 362,
+      "newCorrectFamilies": 242,
+      "baselineCorrectToWrong": 0,
+      "baselineCorrectAbstained": 140,
+      "wrongResolved": 30,
+      "controlChanges": 0,
+      "undoFailures": 0,
+      "prefixChanges": 0,
+      "precision": 0.9936868686868687,
+      "passed": true
+    },
+    "acquisition": {
+      "correct": 362,
+      "wrong": 1,
+      "precision": 0.9972451790633609,
+      "passed": true
+    }
+  },
+  "trainingCorpusSha256": "27c7084f8c739f608da77f617eca1c5ac552ff16b74da05a1a3c3cc888120e3f",
+  "trainingRows": {
+    "rows": 8536,
+    "bands": {
+      "short": 3774,
+      "long": 4762
+    },
+    "families": 660
+  },
+  "trainingGroups": 5492,
+  "sourceRevision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+  "sourceShards": [
+    "0011",
+    "0018",
+    "0019",
+    "0020"
+  ],
+  "trainingLemmaPartition": "sha256 rune-joint-v1-20261025 family; mod5 train0..2 calibration3 holdout4",
+  "freshLongExcludedFamilies": 2980,
+  "freshLongExcludedArticles": 4211,
+  "failedPolicies": [
+    {
+      "policySha256": "36fbdfd7c7c96e580b3d68b7fd6abaec58c0a62aa8302351606acbff15c5f722",
+      "band": "long",
+      "reason": "98.52% total precision; two correct-to-wrong regressions"
+    },
+    {
+      "policySha256": "7cd01ab7be0f32cffee0bc58e10981eb8adbb299ae5d238b0ed2a3fcd232f20d",
+      "band": "long acquisition",
+      "reason": "98.8% acquisition precision despite passing total precision"
+    }
+  ],
+  "limitations": [
+    "Synthetic public writing, not personal chat quality.",
+    "Long holdout still has 15 wrong replacements; 140 formerly correct replacements are now abstained.",
+    "No on-device threshold fitting; no private messages or touch records used in training.",
+    "Device timing and interaction require their own validation; host JVM results do not prove physical Fold behavior."
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "stage": "frozen-before-independent-holdout",
+  "version": 1,
+  "scope": "New long RU replacements only when raw legacy and existing qualified joint both retain the original; complete pool, known morphology target, ranked dictionary frequency <=50000; original protections retained.",
+  "protocol": "Calibration precision >=99.5%; independent new-change precision >=99%, >=100 new correct, >=20 families; zero control changes, old correct-to-wrong, prefix and Undo failures. No model or threshold fitting on private user text or holdout.",
+  "alpha": 0.0,
+  "frequencyScale": 5000.0,
+  "minimumScore": 0.46357352954758124,
+  "minimumMargin": 0.632436045368692,
+  "calibrationCorrect": 114,
+  "calibrationWrong": 0,
+  "calibrationFamilies": 96,
+  "holdoutSha256": "080a880598461948f49f7635fd0fb1fd6ebf53eea7f218368ba3404100420723",
+  "calibrationRowsSha256": "09089d6d173268f5908a7b320a99dfd5f6778a672f09baa67a3fc92c785421ff",
+  "calibrationScoresSha256": "3d6a5d2b4bd52d09fe773527aa0eed821b7b677de9aad67de38187e989875907",
+  "modelSha256": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+  "secondaryCalibrationScoresSha256": "3f2f92d4657fe230d5904c8140ac9312702f3d0ff4e5543c65ee6e4709c85c0a",
+  "trainingReceiptSha256": "e811ebde4ada1e0bceb2e5086f062dfcb762cdc0c3e7ed56891a5fa91a5e4bc9"
+}

@@ -22,6 +22,7 @@ import io.github.mesteriis.rune.keyboard.intelligence.client.ModelReadinessHint
 import io.github.mesteriis.rune.keyboard.intelligence.readiness.DiskModelReadinessProbe
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.ModelRuntimeQualification
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsSettingsProvider
+import io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningJobScheduler
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -89,6 +90,7 @@ class SettingsActivity : ThemedActivity() {
             return
         }
         reload()
+        syncLearningJob()
         refreshModelReadiness()
     }
 
@@ -186,6 +188,7 @@ class SettingsActivity : ThemedActivity() {
         addSection(R.string.settings_section_tools)
         addNavigationRow(R.string.controls_disable_all, getString(R.string.controls_disable_all_summary)) {
             preferences.disableAdditionalTyping()
+            syncLearningJob()
             reload()
         }
         addToggleRow(R.string.settings_quality_metrics, R.string.settings_quality_metrics_summary,
@@ -217,7 +220,7 @@ class SettingsActivity : ThemedActivity() {
             startActivity(Intent(this, AppProfilesActivity::class.java))
         }
         addToggleRow(R.string.settings_collect_examples, R.string.settings_collect_examples_summary,
-            settings.collectExamples) { preferences.writeCollectExamples(it) }
+            settings.collectExamples) { preferences.writeCollectExamples(it); syncLearningJob() }
         addToggleRow(R.string.settings_learned_ranking, R.string.settings_learned_ranking_summary,
             settings.learnedRanking) { preferences.writeLearnedRanking(it) }
         addToggleRow(R.string.settings_compact_context, R.string.settings_compact_context_summary,
@@ -227,7 +230,7 @@ class SettingsActivity : ThemedActivity() {
         addToggleRow(R.string.settings_dynamic_touch_apply, R.string.settings_dynamic_touch_apply_summary,
             settings.dynamicTouchApply) { preferences.writeDynamicTouchApply(it) }
         addToggleRow(R.string.settings_typo_patterns, R.string.settings_typo_patterns_summary,
-            settings.typoPatterns) { preferences.writeTypoPatterns(it) }
+            settings.typoPatterns) { preferences.writeTypoPatterns(it); syncLearningJob() }
         addNavigationRow(R.string.learning_title, getString(R.string.settings_collect_examples_summary)) {
             startActivity(Intent(this, LearningLabActivity::class.java))
         }
@@ -360,6 +363,11 @@ class SettingsActivity : ThemedActivity() {
             startActivity(Intent(this, KeyboardSetupActivity::class.java))
         }
         renderPage()
+    }
+
+    private fun syncLearningJob() {
+        val current = preferences.readSettings()
+        LearningJobScheduler.sync(this, current.collectExamples && current.typoPatterns)
     }
 
     private fun addSection(titleRes: Int) {

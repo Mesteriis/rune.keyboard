@@ -9,4 +9,7 @@
   <string name="candidate_keep_original">Keep original word</string>
   <string name="candidate_apply_correction">Apply correction</string>
   <string name="candidate_apply_punctuation">Apply punctuation</string>
+  <string name="candidate_auto_preview_label">→ %1$s</string>
+  <string name="candidate_auto_preview_hint">Will replace on Space</string>
+  <string name="candidate_apply_auto_correction">Apply correction now; also replaces on Space</string>
 </resources>

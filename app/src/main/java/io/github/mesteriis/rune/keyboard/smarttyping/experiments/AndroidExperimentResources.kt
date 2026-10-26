@@ -46,10 +46,31 @@ object AndroidExperimentResources {
                 } catch (_: IOException) { null }
                 asset("ru-ranker.bin", FrozenExperimentAssets.RANK_BYTES, FrozenExperimentAssets.RANK_SHA256)
                     ?.let(models::loadRanker)
+                asset("ru-ranker-auto-v1.bin", FrozenExperimentAssets.LEGACY_AUTOMATIC_RANK_BYTES,
+                    FrozenExperimentAssets.LEGACY_AUTOMATIC_RANK_SHA256)
+                    ?.let(models::loadLegacyAutomaticRanker)
+                asset("ru-neighbor-ranker.bin",
+                    io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryQualification.RANKER_BYTES,
+                    io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryQualification.RANKER_SHA256)
+                    ?.let(models::loadRecoveryRanker)
+                asset("ru-joint-ranker.bin",
+                    io.github.mesteriis.rune.keyboard.smarttyping.correction.JointQualification.RANKER_BYTES,
+                    io.github.mesteriis.rune.keyboard.smarttyping.correction.JointQualification.RANKER_SHA256)
+                    ?.let(models::loadJointRanker)
+                asset("ru-joint-rescue-ranker.bin",
+                    io.github.mesteriis.rune.keyboard.smarttyping.correction.JointRescueQualification.RANKER_BYTES,
+                    io.github.mesteriis.rune.keyboard.smarttyping.correction.JointRescueQualification.RANKER_SHA256)
+                    ?.let(models::loadRescueRanker)
                 asset("ru-ranking-context.bin", FrozenExperimentAssets.RANKING_CONTEXT_BYTES, FrozenExperimentAssets.RANKING_CONTEXT_SHA256)
                     ?.let(models::loadContext)
                 asset("ru-context.bin", FrozenExperimentAssets.CONTEXT_BYTES, FrozenExperimentAssets.CONTEXT_SHA256)
                     ?.let(models::loadTapContext)
+                if (asset("ru-contextual-policy.json", FrozenContextualAssets.POLICY_BYTES,
+                        FrozenContextualAssets.POLICY_SHA256) != null) {
+                    asset("ru-contextual-ranker.bin", FrozenContextualAssets.MODEL_BYTES, FrozenContextualAssets.MODEL_SHA256)
+                        ?.let { AndroidContextualRankerLoader.load(assets, it) }
+                        ?.let(models::loadContextualRanker)
+                }
             } finally {
                 val pending = synchronized(lock) {
                     finished = true

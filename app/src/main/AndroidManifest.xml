@@ -81,6 +81,10 @@
         android:name=".intelligence.inference.ModelInferenceService"
         android:exported="false"
         android:process=":model_runtime" />
+    <service
+        android:name=".smarttyping.learning.LearningEvaluationJobService"
+        android:exported="false"
+        android:permission="android.permission.BIND_JOB_SERVICE" />
   </application>
 
 </manifest>

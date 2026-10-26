@@ -13,6 +13,137 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class TypingDiagnosticsHooksTest {
+    @Test fun lateJointRefusalKeepsTheOriginalRequestRevisionAndCannotMutateProtectedText() {
+        val observer = Observer()
+        val controller = TypingSessionController(jvmGraphemes,
+            SpellingQualification { _, _ -> true }, nanoTime = { 0L })
+        controller.setDiagnostics(observer)
+        controller.setPersonalization(object : TypingPersonalization {
+            override fun jointAutomaticEvaluation(context: String, generation: CandidateGeneration,
+                language: KeyboardLanguage, baselineWord: String?) =
+                io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionEvaluation(
+                    refusal = io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionRefusal.RARE_ORIGINAL,
+                    rescueAttempted = true,
+                    rescueRefusal = io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionRefusal.RARE_ORIGINAL,
+                    wordContextAttempted = true,
+                    wordContextRefusal = io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionRefusal.RARE_ORIGINAL)
+        }, KeyboardLanguage.RUSSIAN)
+        controller.startSession(EditorContext.from(1, 0), 0, 0)
+        controller.typeText("сдоварь") { true }
+        val request = controller.beginCandidateRequest(1, KeyboardLanguage.RUSSIAN)!!
+        controller.retainCandidateAcrossSpace {
+            controller.typeText(" ", policy, KeyboardState(KeyboardLanguage.RUSSIAN),
+                autocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE) { true }
+        }
+        assertNotEquals(request.revision, controller.state.revision)
+        observer.records.clear()
+        val word = GeneratedCandidate("словарь", "словарь", "словарь", KeyboardLanguage.RUSSIAN,
+            false, 4, 1, 1, EditFeatures(1.0, 0, 0.0), 0, CasePattern.LOWER)
+        val reply = LocalCandidateReply(request.sessionId, request.revision, request.requestId,
+            CandidateGeneration(request.token, listOf(word), CandidateCompletion.COMPLETE, false, null, 1, 1,
+                jointEvaluated = true, jointSearch = LocalSearchEvidence(CandidateCompletion.VALID_WORD, emptyList(), 0, 0)))
+        assertFalse(controller.acceptLocalSpaceCorrection(reply) { error("Protected late word cannot mutate editor") })
+        for (source in listOf(DiagnosticSource.JOINT, DiagnosticSource.JOINT_RESCUE, DiagnosticSource.WORD_CONTEXT)) {
+            val (event, text) = observer.records.single { it.first.source == source && it.first.kind == DiagnosticKind.RANKING }
+            assertEquals(request.sessionId, event.session)
+            assertEquals(request.revision, event.revision)
+            assertEquals(request.requestId, event.requestId)
+            assertEquals(DiagnosticReason.RARE_ORIGINAL, event.reason)
+            assertNull(text)
+        }
+        assertEquals(DiagnosticReason.RARE_ORIGINAL, observer.events.last { it.kind == DiagnosticKind.BOUNDARY }.reason)
+        assertEquals("сдоварь ", controller.state.contextText)
+        assertNull(controller.beginModelRankingAfterLocalSpace(reply, 2))
+    }
+    @Test fun recoveryProtectionReasonSurvivesRetentionOfAnEarlierQualifiedBaseline() {
+        val observer = Observer()
+        val controller = TypingSessionController(jvmGraphemes, SpellingQualification { _, _ -> true })
+        controller.setDiagnostics(observer)
+        controller.setPersonalization(object : TypingPersonalization {
+            override fun jointAutomaticEvaluation(context: String, generation: CandidateGeneration,
+                language: KeyboardLanguage, baselineWord: String?) =
+                io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionEvaluation(
+                    refusal = if (generation.jointEvaluated)
+                        io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionRefusal.RARE_ORIGINAL else null)
+        }, KeyboardLanguage.RUSSIAN)
+        controller.startSession(EditorContext.from(1, 0), 0, 0)
+        controller.typeText("сдоварь") { true }
+        val request = controller.beginCandidateRequest(1, KeyboardLanguage.RUSSIAN)!!
+        val word = GeneratedCandidate("словарь", "словарь", "словарь", KeyboardLanguage.RUSSIAN,
+            false, 4, 1, 1, EditFeatures(1.0, 0, 0.0), 0, CasePattern.LOWER)
+        val generation = CandidateGeneration(request.token, listOf(word), CandidateCompletion.COMPLETE, false, null,
+            1, 1, LocalSearchEvidence(CandidateCompletion.COMPLETE, listOf(word), 1, 1))
+        assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
+            generation, isFinal = false)))
+        assertTrue(controller.acceptRecoveryCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
+            generation.copy(jointEvaluated = true,
+                jointSearch = LocalSearchEvidence(CandidateCompletion.VALID_WORD, emptyList(), 0, 0)),
+            stage = CandidateStage.RECOVERY)))
+        controller.typeText(" ", policy, KeyboardState(KeyboardLanguage.RUSSIAN),
+            autocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE) { true }
+        assertEquals("сдоварь ", controller.state.contextText)
+        assertEquals(DiagnosticReason.RARE_ORIGINAL, observer.events.last { it.kind == DiagnosticKind.BOUNDARY }.reason)
+    }
+    @Test fun knownRareVetoIsTheSpaceReasonAndCannotLaunchAFutileModelRequest() {
+        for (manualChoice in listOf(false, true)) {
+        val observer = Observer(); val controller = TypingSessionController(jvmGraphemes)
+        controller.setDiagnostics(observer)
+        controller.setPersonalization(object : TypingPersonalization {
+            override fun jointAutomaticEvaluation(context: String, generation: CandidateGeneration,
+                language: KeyboardLanguage, baselineWord: String?) =
+                io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionEvaluation(
+                    refusal = io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionRefusal.RARE_ORIGINAL)
+        }, KeyboardLanguage.RUSSIAN)
+        controller.startSession(EditorContext.from(1, 0), 0, 0)
+        controller.typeText("тпора") { true }
+        val request = controller.beginCandidateRequest(1, KeyboardLanguage.RUSSIAN)!!
+        val word = GeneratedCandidate("топора", "топора", "топора", KeyboardLanguage.RUSSIAN,
+            false, 4, 1, 1, EditFeatures(1.0, 0, 0.0), 1, CasePattern.LOWER)
+        assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
+            CandidateGeneration(request.token, listOf(word), CandidateCompletion.COMPLETE, false, null, 1, 1,
+                jointEvaluated = true, jointSearch = LocalSearchEvidence(CandidateCompletion.VALID_WORD, emptyList(), 0, 0)))))
+        assertFalse(controller.canRequestModelRanking)
+        assertNull(controller.beginModelRanking(2))
+        if (manualChoice) controller.selectCandidate(controller.candidateViewState.candidates
+            .filterIsInstance<CandidateUiItem.Correction>().first().id) { true }
+        controller.typeText(" ", policy, KeyboardState(KeyboardLanguage.RUSSIAN),
+            autocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE) { true }
+        val refusal = observer.events.last { it.kind == DiagnosticKind.BOUNDARY }.reason
+        if (manualChoice) assertNotEquals(DiagnosticReason.RARE_ORIGINAL, refusal)
+        else assertEquals(DiagnosticReason.RARE_ORIGINAL, refusal)
+        assertEquals(if (manualChoice) "топора " else "тпора ", controller.state.contextText)
+        }
+    }
+    @Test fun jointRefusalsAreRequestBoundMetadataAlongsideLegacyBoundaryReasons() {
+        for (reason in io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionRefusal.entries) {
+            val observer = Observer(); val controller = TypingSessionController(jvmGraphemes)
+            controller.setDiagnostics(observer)
+            controller.setPersonalization(object : TypingPersonalization {
+                override fun jointAutomaticEvaluation(context: String, generation: CandidateGeneration,
+                    language: KeyboardLanguage, baselineWord: String?) =
+                    io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionEvaluation(
+                        refusal = reason, rescueAttempted = true, rescueRefusal = reason)
+            }, KeyboardLanguage.RUSSIAN)
+            controller.startSession(EditorContext.from(1, 0), 0, 0)
+            controller.typeText("сдово") { true }
+            val request = controller.beginCandidateRequest(17, KeyboardLanguage.RUSSIAN)!!
+            val word = GeneratedCandidate("слово", "слово", "слово", KeyboardLanguage.RUSSIAN,
+                false, 4, 1, 1, EditFeatures(1.0, 0, 0.0), 0, CasePattern.LOWER)
+            val generation = CandidateGeneration(request.token, listOf(word), CandidateCompletion.COMPLETE, false, null, 1, 1)
+            assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
+                generation, manualGeneration = generation)))
+            val record = observer.records.single { it.first.source == DiagnosticSource.JOINT }
+            assertEquals(DiagnosticReason.valueOf(reason.name), record.first.reason)
+            assertEquals(request.requestId, record.first.requestId)
+            assertEquals(request.revision, record.first.revision)
+            assertNull(record.second)
+            val rescue = observer.records.single { it.first.source == DiagnosticSource.JOINT_RESCUE }
+            assertEquals(record.first.reason, rescue.first.reason)
+            assertEquals(record.first.requestId, rescue.first.requestId)
+            assertNull(rescue.second)
+            assertEquals("сдово", controller.state.composing?.typedWord)
+        }
+    }
     @Test fun textChangingOriginalSelectionHasAnExactEditorOperationButVetoDoesNot() {
         for (accepted in listOf(true, false)) {
             val observer = Observer(); val controller = prepared(observer)
@@ -79,11 +210,11 @@ class TypingDiagnosticsHooksTest {
         assertTrue(encoded.contains("\"elapsedMs\":17"))
     }
 
-    @Test fun schemaSevenAttributesBothSearchCompletionsAndDecisionSource() {
+    @Test fun schemaEightAttributesBothSearchCompletionsAndDecisionSource() {
         val observer = Observer(); prepared(observer)
         val event = observer.events.last { it.kind == DiagnosticKind.CANDIDATES }
         val encoded = DiagnosticsEncoding.metadata(event).decodeToString()
-        assertTrue(encoded.contains("\"schema\":7"))
+        assertTrue(encoded.contains("\"schema\":8"))
         assertTrue(encoded.contains("\"completion\":\"COMPLETE\""))
         assertTrue(encoded.contains("\"localCompletion\":\"UNAVAILABLE\""))
         assertTrue(encoded.contains("\"source\":\"LOCAL_POLICY\""))
@@ -218,6 +349,50 @@ class TypingDiagnosticsHooksTest {
         assertEquals(listOf(DiagnosticReason.SCHEDULED, DiagnosticReason.CANCELLED), requests.map { it.reason })
         assertTrue(requests.all { it.requestId == request.requestId && it.revision == request.revision &&
             it.source == DiagnosticSource.LOCAL_POLICY })
+    }
+
+    @Test fun explicitRuneLetterStartsOnlyAnEligibleEmptySegmentAfterFrameworkRestart() {
+        val observer = Observer(); val controller = TypingSessionController(jvmGraphemes)
+        controller.setDiagnostics(observer)
+        controller.startSession(EditorContext.from(1, 0), 9, 9, diagnosticsFresh = false)
+        controller.recordInput("x")
+        assertFalse(observer.active)
+        controller.recordInput("x", allowFreshDiagnostics = true)
+        assertTrue(observer.active)
+        assertEquals("", observer.texts.last().context)
+        assertEquals("", observer.texts.last().original)
+        assertEquals("x", observer.texts.last().input)
+        controller.typeText("x") { true }
+        controller.closeDiagnosticsAdmission()
+        controller.recordInput("y", allowFreshDiagnostics = true)
+        assertFalse(observer.active) // Prior owned text cannot be exposed by reopening.
+        controller.startSession(EditorContext.from(1, 0), 0, 0)
+        observer.invalidate() // Preferences can finish loading after the initial session callback.
+        controller.recordInput("z", allowFreshDiagnostics = true)
+        assertTrue(observer.active)
+        assertEquals("", observer.texts.last().context)
+        assertEquals("z", observer.texts.last().input)
+    }
+
+    @Test fun diagnosticsReopenRejectsSelectionPrivateFieldsPendingCaretAndNonletters() {
+        for (input in listOf(" ", "\n", "1", "word", "😀", "")) {
+            val observer = Observer(); val controller = TypingSessionController(jvmGraphemes)
+            controller.setDiagnostics(observer)
+            controller.startSession(EditorContext.from(1, 0), 0, 0, diagnosticsFresh = false)
+            controller.recordInput(input, allowFreshDiagnostics = true)
+            assertFalse(input, observer.active)
+            assertTrue(observer.texts.isEmpty())
+        }
+        for ((editor, start, end, wait) in listOf(
+            arrayOf(129, 0, 0, 0), arrayOf(1, 0, 2, 0), arrayOf(1, 0, 0, 1))) {
+            val observer = Observer(); val controller = TypingSessionController(jvmGraphemes)
+            controller.setDiagnostics(observer)
+            controller.startSession(EditorContext.from(editor, 0), start, end, diagnosticsFresh = false)
+            if (wait == 1) controller.awaitEditorSelection { true }
+            controller.recordInput("x", allowFreshDiagnostics = true)
+            assertFalse(observer.active)
+            assertTrue(observer.texts.isEmpty())
+        }
     }
 
     @Test fun eligibleLanguageAndLettersReturnReopensOnlyAnEmptyFreshSegment() {

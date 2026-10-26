@@ -6,7 +6,7 @@
     <string name="settings_collect_examples">Save confirmed examples</string>
     <string name="settings_collect_examples_summary">Keep a bounded local set of explicit corrections and confirmed words to test suggestion quality.</string>
     <string name="settings_typo_patterns">Learn my typo patterns</string>
-    <string name="settings_typo_patterns_summary">Learn recurring edit types from confirmed corrections and use them to order dictionary suggestions.</string>
+    <string name="settings_typo_patterns_summary">Learn recurring edit types from confirmed corrections and use them to order dictionary suggestions. With example saving enabled, inactive candidates are tested overnight while charging and idle; a regression is never activated.</string>
     <string name="controls_words_title">Protected words</string>
     <string name="controls_words_intro">Words are protected separately for each language. Tap an entry to remove it. Turning protection off keeps the list.</string>
     <string name="controls_apps_title">App profiles</string>

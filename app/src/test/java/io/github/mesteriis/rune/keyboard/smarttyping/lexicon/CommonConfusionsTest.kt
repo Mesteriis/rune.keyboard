@@ -17,6 +17,13 @@ class CommonConfusionsTest {
         Triple(KeyboardLanguage.RUSSIAN, "мододец", "молодец"),
         Triple(KeyboardLanguage.RUSSIAN, "шоржусь", "горжусь"),
         Triple(KeyboardLanguage.RUSSIAN, "заьыл", "забыл"),
+        Triple(KeyboardLanguage.RUSSIAN, "заберай", "забирай"),
+        Triple(KeyboardLanguage.RUSSIAN, "зочу", "хочу"),
+        Triple(KeyboardLanguage.RUSSIAN, "расмотри", "рассмотри"),
+        Triple(KeyboardLanguage.RUSSIAN, "прийду", "приду"),
+        Triple(KeyboardLanguage.RUSSIAN, "спосибо", "спасибо"),
+        Triple(KeyboardLanguage.RUSSIAN, "скороо", "скоро"),
+        Triple(KeyboardLanguage.RUSSIAN, "всее", "все"),
         Triple(KeyboardLanguage.ENGLISH, "teh", "the"),
         Triple(KeyboardLanguage.ENGLISH, "recieve", "receive"),
         Triple(KeyboardLanguage.ENGLISH, "adress", "address"),
@@ -48,6 +55,13 @@ class CommonConfusionsTest {
                 it.text == target && it.kind == GeneratedCandidateKind.COMMON_CONFUSION
             })
         }
+    }
+
+    @Test fun `phrase fixes do not generalize to valid words ambiguous short forms or unreviewed variants`() {
+        val language = KeyboardLanguage.RUSSIAN
+        for (original in listOf("приду", "прийти", "приеду", "спасибо", "способ", "скоро",
+            "скорого", "скорооо", "новй", "завтро", "прийдут"))
+            assertNull(original, io.github.mesteriis.rune.keyboard.smarttyping.correction.CommonConfusions.target(language, original))
     }
 
     @Test fun `Russian sentence start keeps title case for reviewed confusion`() {

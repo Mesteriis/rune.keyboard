@@ -59,6 +59,7 @@ class LocalCandidateWorkerTest {
         val calls = AtomicInteger()
         lateinit var thread: Thread
         val worker = LocalCandidateWorker(CandidateGenerator(object : CandidateLexicon {
+            override fun recoverNeighbors(token: String, cancellation: CandidateCancellation) = lexicon.recoverNeighbors(token, cancellation)
             override fun exact(language: KeyboardLanguage, key: String, control: CandidateSearchControl): ExactMembership {
                 calls.incrementAndGet()
                 return lexicon.exact(language, key, control)
@@ -80,6 +81,36 @@ class LocalCandidateWorkerTest {
             worker.close()
             thread.join(3000)
             assertFalse("Worker did not stop", thread.isAlive)
+        }
+    }
+
+    @Test fun `baseline is delivered before recovery and callback cancellation drops its second stage`() {
+        for (cancel in listOf(false, true)) {
+            val entered = CountDownLatch(1)
+            val release = CountDownLatch(1)
+            val lexicon = object : EmptyLexicon() {
+                override fun recoverNeighbors(token: String, cancellation: CandidateCancellation): LocalSearchEvidence {
+                    entered.countDown()
+                    check(release.await(3, TimeUnit.SECONDS))
+                    return if (cancellation.isCancelled()) LocalSearchEvidence(CandidateCompletion.CANCELLED, emptyList(), 0, 0)
+                        else LocalSearchEvidence(CandidateCompletion.COMPLETE, emptyList(), 1, 0)
+                }
+            }
+            val replies = mutableListOf<LocalCandidateReply>()
+            Harness(lexicon, replies::add).use { h ->
+                assertTrue(h.worker.submit(LocalCandidateRequest(7, 11, 1, "ролверка", KeyboardLanguage.RUSSIAN,
+                    true, neighborRecoveryEnabled = true)))
+                assertTrue(entered.await(3, TimeUnit.SECONDS))
+                h.posted().run()
+                assertEquals(listOf(CandidateStage.BASELINE), replies.map { it.stage })
+                assertFalse(replies.single().isFinal)
+                if (cancel) h.worker.cancel()
+                release.countDown()
+                h.idle()
+                if (!cancel) h.posted().run()
+                assertEquals(if (cancel) 1 else 2, replies.size)
+                if (!cancel) assertEquals(CandidateStage.RECOVERY, replies.last().stage)
+            }
         }
     }
 

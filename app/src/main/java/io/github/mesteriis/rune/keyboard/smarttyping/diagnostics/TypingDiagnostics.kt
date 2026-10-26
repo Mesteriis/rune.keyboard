@@ -2,11 +2,12 @@ package io.github.mesteriis.rune.keyboard.smarttyping.diagnostics
 
 /** Observer vocabulary only. Persistence, serialization, consent and UI exist only in debug. */
 enum class DiagnosticKind { CONFIGURATION, SESSION, INPUT, BACKSPACE, CANDIDATES, RANKING, BOUNDARY, MANUAL, UNDO, EDITOR, REQUEST, MECHANICAL, TAP }
-enum class DiagnosticSource { NONE, LOCAL_POLICY, MODEL, CANONICAL_CASE, MECHANICAL, CONTEXTUAL }
+enum class DiagnosticSource { NONE, LOCAL_POLICY, MODEL, CANONICAL_CASE, MECHANICAL, CONTEXTUAL, NEIGHBOR_RECOVERY, MODEL_REFINEMENT, JOINT, JOINT_RESCUE, WORD_CONTEXT, CONTEXTUAL_RANKER }
 enum class DiagnosticCompletion {
     NONE, COMPLETE, PROTECTED, VALID_WORD, STATES_EXHAUSTED, VERIFIED_EXHAUSTED,
     CANCELLED, UNAVAILABLE, READER_FAILURE,
 }
+/** Append only: schema 8 exposes the ordinal as a numeric reasonCode. */
 enum class DiagnosticReason {
     START, NONE, ACCEPTED, STALE, INVALID, MODEL_ERROR, ABSTAINED,
     INELIGIBLE, PROTECTED_FORM, NO_CANDIDATES, NO_RANKING, POLICY_REJECTED,
@@ -16,7 +17,8 @@ enum class DiagnosticReason {
     VALID_WORD, SCORING_FAILED, TOOL, TOUCH_UNCHANGED, TOUCH_SHADOW, TOUCH_REMAPPED,
     TARGET_NOT_IN_DICTIONARY, SEARCH_INCOMPLETE, TARGET_NOT_FOUND, TOP_K_EXCLUDED,
     MANUAL_ONLY, TOO_SHORT, ORIGINAL_VALID, MORPHOLOGY_UNAVAILABLE, WINNER_AMBIGUOUS,
-    RIVAL_OTHER_LEMMA, INSUFFICIENT_MARGIN, NOT_QUALIFIED, DEADLINE_MISSED, STALE_REVISION,
+    RIVAL_OTHER_LEMMA, INSUFFICIENT_MARGIN, NOT_QUALIFIED, DEADLINE_MISSED, STALE_REVISION, MODEL_REFINED,
+    RARE_ORIGINAL, RESOURCE_UNAVAILABLE, SCORE_TOO_LOW, ORIGINAL_PREFERRED, REPLACEMENT_VETOED,
 }
 data class DiagnosticEvent(
     val kind: DiagnosticKind,
@@ -38,6 +40,10 @@ data class DiagnosticEvent(
     val configuredFeatures: Int = 0,
     val effectiveFeatures: Int = 0,
     val typingProfile: Int = 0,
+    val correctionId: Long = 0,
+    val recoveryCompletion: DiagnosticCompletion = DiagnosticCompletion.NONE,
+    val recoveryInspectedStates: Int = 0,
+    val recoveryVerifiedTerminals: Int = 0,
 )
 
 /** Constructed only inside an admitted lazy callback; no editor read or arbitrary metadata. */

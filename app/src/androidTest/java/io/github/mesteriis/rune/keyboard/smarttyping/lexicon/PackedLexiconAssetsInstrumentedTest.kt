@@ -22,7 +22,7 @@ import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/** Actual APK contract only: one validated load per language, no forced GC, no latency threshold. */
+/** Actual signed-APK contract: one packaged load per language, no forced GC, no latency threshold. */
 @RunWith(AndroidJUnit4::class)
 class PackedLexiconAssetsInstrumentedTest {
     @Test

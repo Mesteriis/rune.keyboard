@@ -18,6 +18,17 @@ class SmartTypingViewStateTest {
     }
 
     @Test
+    fun automaticPreviewIsSeparateFromSelectionAndMustBeAVisibleCorrection() {
+        val state = SmartTypingViewState(true, listOf(original, correction), original.id, correction.id)
+        assertEquals(correction.id, state.automaticReplacementId)
+        assertEquals(original.id, state.selectedCandidateId)
+        for (id in listOf(original.id, "unknown")) assertThrows(IllegalArgumentException::class.java) {
+            SmartTypingViewState(true, listOf(original, correction), original.id, id)
+        }
+        assertThrows(IllegalArgumentException::class.java) { SmartTypingViewState(false, automaticReplacementId = correction.id) }
+    }
+
+    @Test
     fun hiddenAndEmptyAreDistinctAndRetainNoText() {
         assertFalse(SmartTypingViewState.HIDDEN.enabled)
         assertTrue(SmartTypingViewState.EMPTY.enabled)

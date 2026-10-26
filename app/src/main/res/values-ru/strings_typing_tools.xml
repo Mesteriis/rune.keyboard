@@ -18,5 +18,5 @@
     <string name="settings_phrase_review">Проверять законченные фразы</string>
     <string name="settings_phrase_review_summary">После знака конца предложения предлагать поддерживаемые исправления согласования и запятых. Применять по нажатию.</string>
     <string name="settings_visible_undo">Показывать кнопку отмены</string>
-    <string name="settings_visible_undo_summary">После автозамены слова показывать «Вернуть» до 8 секунд или до следующего изменения. Отмена через Backspace сохраняется.</string>
+    <string name="settings_visible_undo_summary">Показывать кнопку «Вернуть» после автокоррекции. Для русского языка можно вернуть предыдущее слово во время набора следующего.</string>
 </resources>

@@ -450,6 +450,25 @@ class TypingSessionControllerTest {
     }
 
     @Test
+    fun `backspace at document start cannot strand the first letter waiting for a caret change`() {
+        for (eraseOwnedWord in listOf(false, true)) {
+            start()
+            if (eraseOwnedWord) {
+                controller.typeText("ab", execute)
+                controller.deletePrevious(execute)
+                controller.deletePrevious(execute)
+            }
+            edits.clear()
+            repeat(3) { assertEquals(TypingTextResult.HANDLED, controller.deletePrevious(execute)) }
+            assertTrue(edits.isEmpty())
+            // An editor need not send any callback for a deletion that cannot change its text.
+            for (letter in "тест") assertEquals(TypingTextResult.HANDLED, controller.typeText(letter.toString(), execute))
+            assertEquals("тест", controller.state.composing?.typedWord)
+            assertEquals("тест", controller.state.contextText)
+        }
+    }
+
+    @Test
     fun `unknown plain deletion suspends composing until changed selection arrives`() {
         start()
         controller.typeText("abc", execute)
@@ -670,7 +689,7 @@ class TypingSessionControllerTest {
         assertTrue(selection(0, 0, 4, 6))
         assertNull(controller.state.lastAutoEdit)
         edits.clear()
-        assertEquals(TypingTextResult.BYPASS, controller.deletePrevious(execute))
+        assertEquals(TypingTextResult.HANDLED, controller.deletePrevious(execute))
         assertTrue(edits.isEmpty())
         assertEquals("", controller.state.contextText)
     }

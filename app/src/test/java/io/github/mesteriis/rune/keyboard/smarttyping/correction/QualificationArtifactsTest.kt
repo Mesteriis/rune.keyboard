@@ -9,6 +9,10 @@ class QualificationArtifactsTest {
         val current = QualificationArtifacts.local()
         KeyboardLanguage.entries.forEach { language ->
             assertTrue(QualificationArtifacts.allowsLocal(language, current))
+            assertFalse(QualificationArtifacts.allowsLocal(language, current.copy(policyVersion = 3)))
+            assertFalse(QualificationArtifacts.allowsLocal(language, current.copy(policyVersion = 4)))
+            assertFalse(QualificationArtifacts.allowsLocal(language, current.copy(policyVersion = 5)))
+            assertFalse(QualificationArtifacts.allowsLocal(language, current.copy(policyVersion = 6)))
             assertFalse(QualificationArtifacts.allowsLocal(language, current.copy(policyVersion = 999)))
             assertFalse(QualificationArtifacts.allowsLocal(language, current.copy(
                 lexicons = current.lexicons + (language to "0".repeat(64)))))
@@ -24,7 +28,20 @@ class QualificationArtifactsTest {
         assertFalse(QualificationArtifacts.allowsGeneralLocal(KeyboardLanguage.RUSSIAN,
             general.copy(searchVersion = 999)))
         assertFalse(QualificationArtifacts.allowsGeneralLocal(KeyboardLanguage.RUSSIAN,
+            general.copy(admissionVersion = 999)))
+        assertFalse(QualificationArtifacts.allowsGeneralLocal(KeyboardLanguage.RUSSIAN,
             general.copy(lexicons = general.lexicons + (KeyboardLanguage.RUSSIAN to "0".repeat(64)))))
+        val compact = QualificationArtifacts.compactPublic()
+        assertTrue(QualificationArtifacts.allowsCompactPublic(KeyboardLanguage.RUSSIAN, compact))
+        assertFalse(QualificationArtifacts.allowsCompactPublic(KeyboardLanguage.ENGLISH, compact))
+        assertFalse(QualificationArtifacts.allowsCompactPublic(KeyboardLanguage.RUSSIAN,
+            compact.copy(policySha256 = "0".repeat(64))))
+        assertFalse(QualificationArtifacts.allowsCompactPublic(KeyboardLanguage.RUSSIAN,
+            compact.copy(rankerSha256 = "0".repeat(64))))
+        assertFalse(QualificationArtifacts.allowsCompactPublic(KeyboardLanguage.RUSSIAN,
+            compact.copy(legacyRankerSha256 = "0".repeat(64))))
+        assertFalse(QualificationArtifacts.allowsCompactPublic(KeyboardLanguage.RUSSIAN,
+            compact.copy(rareWordsSha256 = "0".repeat(64))))
     }
 
     @Test fun `model rejects a change to any member of its complete fingerprint`() {

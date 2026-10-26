@@ -72,6 +72,9 @@ import io.github.mesteriis.rune.keyboard.smarttyping.controls.TypingControlSnaps
 import io.github.mesteriis.rune.keyboard.smarttyping.controls.TypingControlStore
 import io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingResources
 import io.github.mesteriis.rune.keyboard.smarttyping.personalization.AndroidTypingPersonalization
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon
+import io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningJobScheduler
 
 class RuneInputMethodService : InputMethodService() {
     private val layoutProvider = KeyboardLayoutProvider()
@@ -118,6 +121,7 @@ class RuneInputMethodService : InputMethodService() {
         feedbackController = FeedbackController(this)
         keyboardPreferences = KeyboardPreferences(this)
         globalSettings = keyboardPreferences.readSettings()
+        LearningJobScheduler.sync(this, globalSettings.collectExamples && globalSettings.typoPatterns)
         settings = globalSettings
         selectedLanguage = KeyboardSessionPolicy.resolveStartLanguage(
             settings = settings,
@@ -149,6 +153,8 @@ class RuneInputMethodService : InputMethodService() {
                 RuneTrace),
             RuneTrace,
             AndroidCanonicalCaseLexicon(applicationContext.assets),
+            MorphologyLexicon { language, key -> personalResources.lexicon.lookup(language, key) },
+            RareWordLexicon { key -> personalResources.rareWords.lookup(key) },
         )
         experimentReadySubscription = AndroidExperimentResources.whenReady {
             if (!serviceDestroyed) { candidates.invalidate(); renderCandidates() }
@@ -399,7 +405,9 @@ class RuneInputMethodService : InputMethodService() {
 
     private fun executeTypingOrEditorCommand(command: EditorCommand, beforeAction: KeyboardState): CommandOutcome {
         when (command) {
-            is EditorCommand.CommitText -> typingSession.recordInput(command.value)
+            is EditorCommand.CommitText -> typingSession.recordInput(command.value,
+                allowFreshDiagnostics = inputViewActive && editorContext.supportsSmartTyping &&
+                    state.layer == KeyboardLayer.LETTERS && !hasSelection)
             EditorCommand.ConvertPrecedingSpaceToPeriod -> typingSession.recordInput(" ")
             EditorCommand.InsertNewline -> typingSession.recordInput("\n")
             EditorCommand.DeletePreviousCodePoint -> typingSession.recordBackspace()
@@ -524,6 +532,7 @@ class RuneInputMethodService : InputMethodService() {
             val previousProfile = activeProfile
             val previousControls = appliedControls
             globalSettings = keyboardPreferences.readSettings()
+            LearningJobScheduler.sync(this, globalSettings.collectExamples && globalSettings.typoPatterns)
             resolveTypingProfile()
             if (previousProfile != activeProfile || previousControls !== appliedControls ||
                 previous.protectedWords != settings.protectedWords || previous.appProfiles != settings.appProfiles ||

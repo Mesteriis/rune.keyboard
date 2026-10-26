@@ -1,0 +1,132 @@
+{
+  "contextSha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+  "corpusManifestSha256": "2aeaf745c132c869d2560c89f3831f9710d82d34f559083a352eeb99b604060e",
+  "device": {
+    "api26": true,
+    "api37": true,
+    "editorReadCounters": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "foldFirstLocalP95DeltaMs": 0.193282,
+    "foldRecoveryMaxMs": 25.175208
+  },
+  "frozenPolicySha256": "9014d85e15e530fcdf112561fda4ddd456f9b5ea3c869414e44cfed5547e3cce",
+  "fullProductHoldout": {
+    "controlChanges": 0,
+    "correctAdditions": 1899,
+    "correctByGroup": {
+      "adjacent2": 606,
+      "adjacent3": 594,
+      "mixed2": 375,
+      "mixed3": 324
+    },
+    "existingAmbiguousControlChanges": 16,
+    "immediateUndoFailures": 0,
+    "incorrectAdditions": 0,
+    "publicSupplementalAmbiguousControls": 500,
+    "rows": 6000,
+    "supplementalControlChanges": 0
+  },
+  "holdout": {
+    "controlChanges": 0,
+    "correctAdditions": 1896,
+    "correctByGroup": {
+      "adjacent2": 606,
+      "adjacent3": 594,
+      "mixed2": 373,
+      "mixed3": 323
+    },
+    "frozenPolicySha256": "9014d85e15e530fcdf112561fda4ddd456f9b5ea3c869414e44cfed5547e3cce",
+    "incorrectAdditions": 0,
+    "passed": true,
+    "replayReceiptSha256": "903eef8d66b312f9a7c5a30c9a695df5e0e57c308e2680ae64f1dd350b7dd162",
+    "rows": 6000,
+    "schema": 1
+  },
+  "kind": "ru-neighbor-recovery-ret2",
+  "modelRefinement": {
+    "correctToWrongRegressions": 6,
+    "frozenPolicySha256": "16dba34252177b30cef4081fd21874f6fe30028100a552bb95d0059f6ccbf77b",
+    "improvements": 5,
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "reason": "INDEPENDENT_HOLDOUT_FAILED",
+    "releaseQualified": false,
+    "thresholds": {
+      "minimumMargin": 2.1959238658551015,
+      "minimumScore": -7.6423018735874235
+    }
+  },
+  "publicOnly": true,
+  "rankerBytes": 22036,
+  "rankerSha256": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+  "releaseQualified": true,
+  "remainingGates": [],
+  "schema": 1,
+  "sources": {
+    "build/typing-ranker-v2/ru-0011.parquet": {
+      "bytes": 200905664,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0011.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f"
+    },
+    "build/typing-ranker-v2/ru-0012.parquet": {
+      "bytes": 196511972,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0012.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "21e33d8a7a0d068e573db688f5816a22fd690bf699dee958373f9b9e957921ad"
+    },
+    "build/typing-ranker-v2/ru-0013.parquet": {
+      "bytes": 205965652,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0013.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "475666c0d80153ab9a76adca42db8afd18fc16c87804e3de0532ffc1309b2d0c"
+    },
+    "build/typing-ranker-v2/ru-0014.parquet": {
+      "bytes": 214902777,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0014.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "d2ad352beecb92765110e57e8ee9409f4ffe03ff9e4b6ec0640840dec748db18"
+    },
+    "build/typing-ranker-v2/ru-0015.parquet": {
+      "bytes": 219480494,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0015.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "dc248873a3cc80b857f11a0320cfaa889da803eabf09351f1ba8abbf9348eda0"
+    },
+    "build/typing-ranker-v2/ru-0016.parquet": {
+      "bytes": 229151965,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0016.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "0e2d2100e924ebedb057a37e789fec861fe2b78787c912c266e36eadd8d2e0a7"
+    },
+    "build/typing-ranker-v2/ru-0017.parquet": {
+      "bytes": 210166516,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0017.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "1a5c96dfda452e7725229760347e781b46f88ccd5df4196a5c1a9d46b51b1a65"
+    }
+  },
+  "thresholds": {
+    "minimumMargin": 0.317066726012393,
+    "minimumScore": 0.5337506772948372
+  }
+}

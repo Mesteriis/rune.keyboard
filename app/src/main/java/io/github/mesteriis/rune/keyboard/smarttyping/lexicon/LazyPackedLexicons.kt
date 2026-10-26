@@ -157,6 +157,9 @@ class LazyPackedLexicons internal constructor(
             PackedTopSeven { language -> state.snapshot.reader(language)?.handle(language) }
         }
 
+        override fun recoverNeighbors(token: String, cancellation: CandidateCancellation): LocalSearchEvidence =
+            state.snapshot.reader(KeyboardLanguage.RUSSIAN)?.recoverNeighbors(token, cancellation) ?: LocalSearchEvidence.NONE
+
         override fun exact(language: KeyboardLanguage, key: String, control: CandidateSearchControl): ExactMembership =
             state.snapshot.reader(language)?.exact(language, key, control) ?: ExactMembership.UNAVAILABLE
 

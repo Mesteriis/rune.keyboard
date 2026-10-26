@@ -22,6 +22,10 @@ paths, SHA256, sizes, word/node counts and notice identities are in `packed-asse
   title-case source spelling. Its ambiguity bit remains false when the source also contains a lowercase
   surface. These assets provide explicit suggestions for names and geographic names; they do not
   authorize automatic replacement.
+* `ru.rare`: exact front-coded public mid-sentence capitalized forms extracted from pinned Russian
+  Wikipedia shards `0007` through `0009`. A form requires at least three occurrences in at least two
+  articles. `rare-word-manifest.json` pins the source supplement, packer, size, and SHA-256. The data
+  remains attributed to Wikipedia contributors under CC-BY-SA-3.0/GFDL.
 
 All 14 original notice files are copied verbatim, including historical Hunspell host-tool notices.
 Hunspell binaries, original source archives, expanded word lists, frequency TSVs and models are not
@@ -59,7 +63,8 @@ Paths are explicit examples, not implicit prototype dependencies. `--rank-root` 
 direct RNK1 builder's `rank-assets/`; `--index-root` contains `assets/*.trie{,.lengths}`. Staging
 checks every declared byte length/hash, refuses drift/unlisted files/symlink output paths, and writes
 only the explicit build child. `asset-inventory.json` is the exact copy allowlist for
-`app/src/main/assets/`. Review it before copying. Nine binary files must be stored uncompressed in
-the APK for `AssetManager.openFd`; AGP `androidResources.noCompress` is limited to their extensions.
-All original notices/provenance use normal packaging. Actual APK size and Android load behavior must
+`app/src/main/assets/`. Review it before copying. Fourteen binary files must be stored uncompressed
+in the APK for `AssetManager.openFd`; AGP `androidResources.noCompress` is limited to their
+extensions. All original notices/provenance use normal packaging. The independently generated
+`morph` and `rare` exact-lookup assets are included in that count. Actual APK size and Android load behavior must
 be measured on the built APK; raw component bytes and host tests are not those measurements.

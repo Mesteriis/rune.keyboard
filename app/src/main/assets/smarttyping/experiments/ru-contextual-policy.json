@@ -1,0 +1,19 @@
+{
+  "stage": "frozen-before-new-holdout-scoring",
+  "calibrationPassed": true,
+  "minimumScore": -0.10238100540254857,
+  "minimumMargin": 0.038424043936311734,
+  "requiredPrecision": 0.95,
+  "minimumNewCorrect": 100,
+  "modelSha256": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+  "holdoutRowsSha256": "bcbaa61dd8dd44c77148af494702fa1433c5f56660d6f14df9c4394052cfcb45",
+  "planSha256": "b6a9819d86d708d506d77f9bf66bac775573d8e2921484e095aedb1a730996aa",
+  "calibrationMetrics": {
+    "newCorrect": 605,
+    "newWrong": 14,
+    "newPrecision": 0.9773828756058158,
+    "controlChanges": 0,
+    "priorCorrectLosses": 0,
+    "netCorrect": 605
+  }
+}

@@ -10,7 +10,7 @@
     <string name="quality_storage_resetting">Сброс; сбор приостановлен</string>
     <string name="quality_storage_failed">Недоступно; сбор приостановлен. Для повтора сбросьте счётчики.</string>
     <string name="quality_actions_title">Подтверждённые действия</string>
-    <string name="quality_actions_note">Автоматические изменения не имеют оценки правильности. Отсутствие отмены не означает, что исправление верно. Явный выбор показывает предпочтение пользователя, а не независимо проверенную точность.</string>
+    <string name="quality_actions_note">Автоматические изменения не имеют оценки правильности. Отсутствие отмены не означает, что исправление верно. Явный выбор показывает предпочтение пользователя, а не независимо проверенную точность. Ручное изменение слова — наблюдаемое действие, а не доказательство пропущенной ошибки.</string>
     <string name="quality_automatic_applied">Применено автоисправлений</string>
     <string name="quality_explicit_undo">Явных отмен исправлений</string>
     <string name="quality_correction_picked">Выбрано вариантов исправления</string>
@@ -18,6 +18,7 @@
     <string name="quality_boundary_picked">Выбрано подсказок границ слов</string>
     <string name="quality_abbreviation_picked">Раскрыто сокращений</string>
     <string name="quality_phrase_picked">Применено проверок фраз</string>
+    <string name="quality_manual_retype">Слов вручную изменено перед завершением</string>
     <string name="quality_latency_title">Время ответа с вариантами</string>
     <string name="quality_latency_note">Время от запроса вариантов до принятого ответа. Отрисовка экрана не учитывается; это не полная задержка от нажатия клавиши.</string>
     <string-array name="quality_latency_labels">

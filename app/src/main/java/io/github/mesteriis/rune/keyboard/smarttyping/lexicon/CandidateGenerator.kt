@@ -15,7 +15,7 @@ enum class CandidateCompletion {
     CANCELLED, UNAVAILABLE, READER_FAILURE,
 }
 
-enum class GeneratedCandidateKind { SPELLING, CANONICAL_CASE, COMMON_CONFUSION }
+enum class GeneratedCandidateKind { SPELLING, CANONICAL_CASE, COMMON_CONFUSION, PUBLIC_AUGMENTED }
 
 data class GeneratedCandidate(
     val text: String,
@@ -50,6 +50,11 @@ data class CandidateGeneration(
     val inspectedStates: Int,
     val verifiedTerminals: Int,
     val localSearch: LocalSearchEvidence = LocalSearchEvidence.NONE,
+    /** Separate additive pool; it must never change the qualified baseline local decision. */
+    val compactAlternatives: List<GeneratedCandidate> = emptyList(),
+    val neighborRecovery: LocalSearchEvidence = LocalSearchEvidence.NONE,
+    val jointSearch: LocalSearchEvidence = LocalSearchEvidence.NONE,
+    val jointEvaluated: Boolean = false,
 ) {
     val isComplete: Boolean
         get() = completion == CandidateCompletion.COMPLETE
@@ -89,11 +94,14 @@ class CandidateGenerator(
     private val lexicon: CandidateLexicon,
     private val maximumAlternatives: Int = MAX_ALTERNATIVES,
     private val canonicalCaseLexicon: CanonicalCaseLexicon = CanonicalCaseLexicon.EMPTY,
+    private val morphologyLexicon: MorphologyLexicon = MorphologyLexicon.UNAVAILABLE,
+    private val rareWordLexicon: RareWordLexicon = RareWordLexicon.UNAVAILABLE,
 ) {
     init { require(maximumAlternatives in 1..MAX_ALTERNATIVES) { "CANDIDATE_WIDTH" } }
     private val unit = WeightedDamerauLevenshtein(EditCostProfile.UNIT)
     private val weighted = WeightedDamerauLevenshtein()
     private val candidates = arrayOfNulls<GeneratedCandidate>(CandidateSearchControl.MAX_VERIFIED)
+    private val publicAugmenter = PublicCandidateAugmenter(morphologyLexicon, rareWordLexicon)
 
     /** Optional display retrieval; never replace the baseline generation or its local certificate. */
     fun generateManualPool(
@@ -103,23 +111,118 @@ class CandidateGenerator(
         enabled: Boolean,
         cancellation: CandidateCancellation = CandidateCancellation { false },
     ): CandidateGeneration? {
+        // A dictionary-valid typo may still need explicit alternatives (e.g. нуден / нужен).
+        // This display-only snapshot never replaces the original validity/admission certificate.
+        if (enabled && activeLanguage == KeyboardLanguage.RUSSIAN && baseline.original == token &&
+            baseline.isValidWord && baseline.completion == CandidateCompletion.VALID_WORD &&
+            baseline.protectedReason == null && CasePattern.analyze(token) == CasePattern.LOWER &&
+            token.length in 3..12 && LanguageRouter.route(token, activeLanguage).primary == activeLanguage &&
+            !cancellation.isCancelled()) {
+            val additions = publicAugmenter.augment(TokenUnicode.folded(token), emptyList(), activeLanguage,
+                LanguageRouter.route(token, activeLanguage).primaryPrior, CasePattern.LOWER, cancellation,
+                allowKnownOriginalForManual = true) ?: return null
+            if (cancellation.isCancelled() || additions.isEmpty()) return null
+            return baseline.copy(alternatives = additions.take(MAX_ALTERNATIVES), completion = CandidateCompletion.COMPLETE,
+                isValidWord = false, localSearch = LocalSearchEvidence.NONE, compactAlternatives = emptyList(),
+                neighborRecovery = LocalSearchEvidence.NONE, jointSearch = LocalSearchEvidence.NONE,
+                jointEvaluated = false, inspectedStates = 0, verifiedTerminals = additions.size)
+        }
         if (!enabled || activeLanguage != KeyboardLanguage.RUSSIAN ||
             LanguageRouter.route(token, activeLanguage).primary != KeyboardLanguage.RUSSIAN ||
             cancellation.isCancelled() || baseline.original != token ||
             baseline.isValidWord || baseline.protectedReason != null ||
             baseline.completion !in setOf(CandidateCompletion.COMPLETE,
                 CandidateCompletion.STATES_EXHAUSTED, CandidateCompletion.VERIFIED_EXHAUSTED)) return null
-        // A complete underfilled selection already exhausted the available neighborhood.
+        val shortWord = token.codePointCount(0, token.length) in 3..4
         if (maximumAlternatives == MAX_ALTERNATIVES ||
-            baseline.isComplete && baseline.alternatives.size < maximumAlternatives) return baseline
-        val expanded = CandidateGenerator(lexicon, MAX_ALTERNATIVES, canonicalCaseLexicon)
-            .generate(token, activeLanguage, cancellation)
+            !shortWord && baseline.isComplete && baseline.alternatives.size < maximumAlternatives) return baseline
+        // Short words have a separate manual-only public-dictionary pool. The frozen
+        // automatic path and its minimum length never consume this wider evidence.
+        val expanded = if (maximumAlternatives == MAX_ALTERNATIVES ||
+            baseline.isComplete && baseline.alternatives.size < maximumAlternatives) baseline else
+            CandidateGenerator(lexicon, MAX_ALTERNATIVES, canonicalCaseLexicon)
+                .generate(token, activeLanguage, cancellation)
         if (cancellation.isCancelled() || expanded.completion == CandidateCompletion.CANCELLED) return null
         if (expanded.completion !in setOf(CandidateCompletion.COMPLETE,
                 CandidateCompletion.STATES_EXHAUSTED, CandidateCompletion.VERIFIED_EXHAUSTED)) return null
+        val additions = if (shortWord && baseline.isComplete && expanded.isComplete) {
+            val route = LanguageRouter.route(token, activeLanguage)
+            publicAugmenter.augment(TokenUnicode.folded(token), expanded.alternatives, activeLanguage,
+                route.primaryPrior, CasePattern.analyze(token), cancellation).orEmpty()
+        } else emptyList()
+        if (cancellation.isCancelled()) return null
+        if (expanded === baseline && additions.all { added ->
+                baseline.alternatives.any { it.canonicalKey == added.canonicalKey } }) return baseline
         // Wider retrieval may exhaust its budget: keep every baseline proposal before adding extras.
-        return expanded.copy(alternatives = (baseline.alternatives + expanded.alternatives)
-            .distinctBy { it.canonicalKey }.take(MAX_ALTERNATIVES))
+        return expanded.copy(alternatives = (baseline.alternatives + expanded.alternatives + additions)
+            .distinctBy { it.canonicalKey }.take(MAX_ALTERNATIVES),
+            localSearch = if (shortWord) LocalSearchEvidence.NONE else expanded.localSearch)
+    }
+
+    /** Independent complete pool for joint ranking; never substitutes a baseline certificate. */
+    internal fun generateJointPool(token: String, language: KeyboardLanguage, baseline: CandidateGeneration,
+        cancellation: CandidateCancellation = CandidateCancellation { false }): LocalSearchEvidence = try {
+        completeJointPool(token, language, baseline, cancellation)
+    } catch (_: Exception) {
+        LocalSearchEvidence(if (cancellation.isCancelled()) CandidateCompletion.CANCELLED else
+            CandidateCompletion.READER_FAILURE, emptyList(), 0, 0)
+    }
+
+    private fun completeJointPool(token: String, language: KeyboardLanguage, baseline: CandidateGeneration,
+        cancellation: CandidateCancellation): LocalSearchEvidence {
+        if (cancellation.isCancelled()) return LocalSearchEvidence(CandidateCompletion.CANCELLED, emptyList(), 0, 0)
+        val key = TokenUnicode.folded(token)
+        val pattern = CasePattern.analyze(token)
+        if (language != KeyboardLanguage.RUSSIAN || baseline.original != token || baseline.isValidWord ||
+            baseline.protectedReason != null || ProtectedTokenPolicy.isProtected(token) ||
+            key.length !in 3..32 || key.any { it !in "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" } ||
+            pattern !in listOf(CasePattern.LOWER, CasePattern.TITLE) ||
+            baseline.alternatives.any { it.kind == GeneratedCandidateKind.COMMON_CONFUSION }) return LocalSearchEvidence.NONE
+        val originalMorphology = morphologyLexicon.lookup(language, key)
+        val originalRare = rareWordLexicon.lookup(key)
+        if (!originalMorphology.available || !originalRare.available) return LocalSearchEvidence.NONE
+        if (originalMorphology.present || originalRare.present)
+            return LocalSearchEvidence(CandidateCompletion.VALID_WORD, emptyList(), 0, 0)
+        val control = CandidateSearchControl(cancellation)
+        var invalidEmission = false
+        val local = if (baseline.localSearch.isComplete) baseline.localSearch.alternatives.filter { it.language == language }
+        else {
+            val found = ArrayList<GeneratedCandidate>()
+            val status = lexicon.scan(language, key, 1, control) { terminal, frequency ->
+                if (!control.verifyTerminal()) return@scan false
+                if (unit.features(key, terminal, language).editCost != 1.0) {
+                    invalidEmission = true
+                    return@scan false
+                }
+                val display = pattern.preserve(terminal) ?: return@scan true
+                found += GeneratedCandidate(display, TokenUnicode.folded(display), terminal, language, false,
+                    2, frequency, 1, weighted.features(key, terminal, language),
+                    kotlin.math.abs(key.length - terminal.length), pattern)
+                true
+            }
+            if (invalidEmission) return LocalSearchEvidence(CandidateCompletion.READER_FAILURE, emptyList(), control.inspectedStates, control.verifiedTerminals)
+            if (!control.checkpoint() || status != LexiconScanStatus.COMPLETE)
+                return LocalSearchEvidence(control.stop ?: CandidateCompletion.UNAVAILABLE, emptyList(), control.inspectedStates, control.verifiedTerminals)
+            found
+        }
+        val augmented = publicAugmenter.augment(key, local, language, 2, pattern, cancellation)
+            ?: return LocalSearchEvidence.NONE
+        val recovery = if (key.length >= 5) baseline.neighborRecovery else
+            LocalSearchEvidence(CandidateCompletion.COMPLETE, emptyList(), 0, 0)
+        if (!recovery.isComplete) return LocalSearchEvidence(recovery.completion, emptyList(), control.inspectedStates, control.verifiedTerminals)
+        val pool = (augmented + recovery.alternatives).distinctBy { it.canonicalKey }
+        if (pool.size > 64) return LocalSearchEvidence(CandidateCompletion.VERIFIED_EXHAUSTED, emptyList(), control.inspectedStates, control.verifiedTerminals)
+        if (cancellation.isCancelled()) return LocalSearchEvidence(CandidateCompletion.CANCELLED, emptyList(), control.inspectedStates, control.verifiedTerminals)
+        return LocalSearchEvidence(CandidateCompletion.COMPLETE, pool, control.inspectedStates, control.verifiedTerminals)
+    }
+
+    fun generateRecovery(token: String, activeLanguage: KeyboardLanguage, baseline: CandidateGeneration,
+        cancellation: CandidateCancellation = CandidateCancellation { false }): CandidateGeneration {
+        if (activeLanguage != KeyboardLanguage.RUSSIAN || baseline.original != token ||
+            baseline.isValidWord || baseline.protectedReason != null ||
+            baseline.completion !in listOf(CandidateCompletion.COMPLETE, CandidateCompletion.STATES_EXHAUSTED,
+                CandidateCompletion.VERIFIED_EXHAUSTED)) return baseline
+        return baseline.copy(neighborRecovery = lexicon.recoverNeighbors(token, cancellation))
     }
 
     fun generate(
@@ -131,6 +234,7 @@ class CandidateGenerator(
         var candidateCount = 0
         var validWord = false
         var protectedReason: ProtectedTokenReason? = null
+        var compactAlternatives: List<GeneratedCandidate> = emptyList()
         fun result(completion: CandidateCompletion, alternatives: List<GeneratedCandidate> = emptyList(),
             localSearch: LocalSearchEvidence = LocalSearchEvidence.NONE) =
             CandidateGeneration(
@@ -142,6 +246,7 @@ class CandidateGenerator(
                 inspectedStates = control.inspectedStates,
                 verifiedTerminals = control.verifiedTerminals,
                 localSearch = localSearch,
+                compactAlternatives = compactAlternatives,
             )
         try {
             if (!control.checkpoint()) return result(control.stop!!)
@@ -274,6 +379,9 @@ class CandidateGenerator(
                     if (candidate.isFallback) localFallbackCount++
                     if (localSelected.size == maximumAlternatives) break
                 }
+                val augmented = publicAugmenter.augment(key, localSorted, primary,
+                    route.primaryPrior, pattern, cancellation)
+                compactAlternatives = augmented.orEmpty()
                 localSearch = LocalSearchEvidence(localCompletion, localSorted,
                     control.inspectedStates - localStartedStates,
                     control.verifiedTerminals - localStartedTerminals)

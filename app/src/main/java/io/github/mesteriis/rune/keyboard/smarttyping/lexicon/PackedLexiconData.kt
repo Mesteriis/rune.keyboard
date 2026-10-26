@@ -28,6 +28,36 @@ class PackedLexiconData private constructor(
 
     companion object {
         /**
+         * Fast path for immutable assets read directly from the installed, signed APK. The
+         * generated manifest and asset bytes share the APK signature, so repeating SHA-256 and a
+         * full graph walk in every short-lived IME process adds no independent trust boundary.
+         * Build/qualification code and [validate] retain exhaustive content validation.
+         */
+        internal fun openPackaged(
+            trusted: TrustedPackedLexicon,
+            trie: ByteBuffer,
+            lengths: ByteBuffer,
+            ranks: ByteBuffer,
+        ): PackedLexiconLoad = try {
+            verifyManifest(trusted)
+            val manifest = trusted.manifest
+            val data = PackedLexiconData(
+                manifest.language,
+                manifest.wordCount,
+                manifest.nodeCount,
+                packagedBuffer(trie, manifest.trie),
+                packagedBuffer(lengths, manifest.lengths),
+                packagedBuffer(ranks, manifest.ranks),
+            )
+            data.validatePackagedHeaders()
+            PackedLexiconLoad.Ready(data)
+        } catch (failure: PackedValidationException) {
+            PackedLexiconLoad.Failed(failure.reason)
+        } catch (_: Exception) {
+            PackedLexiconLoad.Failed(if (Thread.currentThread().isInterrupted) PackedLoadFailure.CANCELLED else PackedLoadFailure.IO)
+        }
+
+        /**
          * Off-main-thread load. Inputs must be read-only, position zero, full limit, with immutable
          * backing storage for the handle's lifetime (APK mappings in production). A read-only view
          * cannot make an externally writable alias safe; callers must not supply one.
@@ -69,11 +99,10 @@ class PackedLexiconData private constructor(
         }
 
         private fun verifiedBuffer(input: ByteBuffer, asset: PackedAsset): ByteBuffer {
-            packedRequire(input.isReadOnly && input.position() == 0 && input.limit() == input.capacity() &&
-                input.capacity().toLong() == asset.bytes, PackedLoadFailure.HEADER)
+            val packaged = packagedBuffer(input, asset)
             val digest = MessageDigest.getInstance("SHA-256")
             val scratch = ByteArray(8_192)
-            val view = input.duplicate()
+            val view = packaged.duplicate()
             while (view.hasRemaining()) {
                 checkInterrupted()
                 val count = minOf(view.remaining(), scratch.size)
@@ -81,12 +110,33 @@ class PackedLexiconData private constructor(
                 digest.update(scratch, 0, count)
             }
             packedRequire(PackedLexiconManifest.hex(digest.digest()) == asset.sha256, PackedLoadFailure.HASH)
+            return packaged
+        }
+
+        private fun packagedBuffer(input: ByteBuffer, asset: PackedAsset): ByteBuffer {
+            packedRequire(input.isReadOnly && input.position() == 0 && input.limit() == input.capacity() &&
+                input.capacity().toLong() == asset.bytes, PackedLoadFailure.HEADER)
+            checkInterrupted()
             return input.asReadOnlyBuffer().order(ByteOrder.LITTLE_ENDIAN)
         }
 
         internal fun checkInterrupted() {
             packedRequire(!Thread.currentThread().isInterrupted, PackedLoadFailure.CANCELLED)
         }
+    }
+
+    private fun validatePackagedHeaders() {
+        packedRequire(trie.getInt(0) == 0x31525452 && trie.getInt(4) == wordCount &&
+            trie.getInt(8) == nodeCount && trie.getInt(12) == 16, PackedLoadFailure.HEADER)
+        packedRequire(lengths.getInt(0) == 0x314e454c && lengths.getInt(4) == 1 &&
+            lengths.getInt(8) == nodeCount && lengths.getInt(12) == 0, PackedLoadFailure.HEADER)
+        packedRequire(ranks.getInt(0) == 0x314b4e52 && ranks.getInt(4) == wordCount &&
+            ranks.getInt(8) == 4 && ranks.getInt(12) == 0, PackedLoadFailure.HEADER)
+        packedRequire(label(0) == 0 && child(0) in 0 until nodeCount && sibling(0) == 0 &&
+            terminal(0) == 0 && minLength(0) in 1..32 &&
+            maxLength(0) in minLength(0)..32 && rank(0) == Int.MAX_VALUE,
+            PackedLoadFailure.HEADER)
+        checkInterrupted()
     }
 
     private fun validateStructure(wordsSha256: String, maximumRank: Int) {

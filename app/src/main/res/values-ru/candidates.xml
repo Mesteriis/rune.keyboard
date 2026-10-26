@@ -6,4 +6,7 @@
   <string name="candidate_keep_original">Не исправлять это слово</string>
   <string name="candidate_apply_correction">Применить исправление</string>
   <string name="candidate_apply_punctuation">Применить пунктуацию</string>
+  <string name="candidate_auto_preview_label">→ %1$s</string>
+  <string name="candidate_auto_preview_hint">Заменится по пробелу</string>
+  <string name="candidate_apply_auto_correction">Применить исправление сейчас; также заменится по пробелу</string>
 </resources>

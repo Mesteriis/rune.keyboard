@@ -53,4 +53,75 @@ class LearningEvaluatorTest {
         model.record(held + "z", held, en, FeedbackSource.REJECTED)
         assertEquals(0, LearningEvaluator.evaluate(model.snapshot(), { _, _ -> error("Excluded") }).heldOut)
     }
+
+    @Test fun rollbackReplayChallengesActivePolicyAgainstRetainedBaseline() {
+        val model = LearningModel().apply { configure(true, true, true) }
+        words.filterNot { LearningModel.holdout(en, it) }.take(3).forEach {
+            model.record(it + "z", it, en, FeedbackSource.ACCEPTED)
+        }
+        assertTrue(model.promoteCandidate(model.snapshot()))
+        val expected = words.first { LearningModel.holdout(en, it) }
+        val original = expected.dropLast(1) + if (expected.last() == 'x') 'y' else 'x'
+        assertTrue(model.record(original, expected, en, FeedbackSource.ACCEPTED))
+        val wrongDeletion = original.dropLast(1)
+        val evaluation = checkNotNull(LearningEvaluator.evaluateRollback(model.snapshot(), { word, _ ->
+            assertEquals(original, word)
+            result(word, listOf(candidate(expected), candidate(wrongDeletion)))
+        }))
+        assertEquals(1, evaluation.regressions)
+        assertEquals(0, evaluation.improvements)
+        assertTrue(evaluation.promotion.rollbackRequired)
+    }
+
+    @Test fun promotionRequiresEnoughEvidenceImprovementAndZeroRegressions() {
+        val improvement = LearningEvaluator.promotionDecision(
+            evaluated = 20, correctionRows = 15, identities = 5,
+            baselineTop = 10, learnedTop = 11, baselinePreserved = 5,
+            learnedPreserved = 5, improvements = 1, regressions = 0,
+            unavailable = 0, cancelled = false, candidateChanged = true,
+        )
+        assertTrue(improvement.promotionApproved)
+        assertFalse(improvement.rollbackRequired)
+
+        val regression = LearningEvaluator.promotionDecision(
+            evaluated = 20, correctionRows = 15, identities = 5,
+            baselineTop = 10, learnedTop = 10, baselinePreserved = 5,
+            learnedPreserved = 5, improvements = 1, regressions = 1,
+            unavailable = 0, cancelled = false, candidateChanged = true,
+        )
+        assertFalse(regression.promotionApproved)
+        assertTrue(regression.rollbackRequired)
+        assertTrue(regression.reasons.contains("NEW_REGRESSION"))
+
+        val small = LearningEvaluator.promotionDecision(
+            evaluated = 19, correctionRows = 14, identities = 5,
+            baselineTop = 10, learnedTop = 11, baselinePreserved = 5,
+            learnedPreserved = 5, improvements = 1, regressions = 0,
+            unavailable = 0, cancelled = false, candidateChanged = true,
+        )
+        assertFalse(small.promotionApproved)
+        assertFalse(small.rollbackRequired)
+        assertTrue(small.reasons.contains("INSUFFICIENT_HOLDOUT"))
+    }
+
+    @Test fun rollbackRequiresCompleteSufficientEvidenceOfRegression() {
+        fun evaluation(evaluated: Int = 20, identities: Int = 5, unavailable: Int = 0,
+            cancelled: Boolean = false, rollback: Boolean = true) = LearningEvaluation(
+            heldOut = evaluated, evaluated = evaluated, unavailable = unavailable,
+            missingCandidates = 0, baselineTop = 12, learnedTop = if (rollback) 11 else 13,
+            identities = identities, baselinePreserved = identities,
+            learnedPreserved = if (rollback) identities - 1 else identities,
+            policyMatches = 0, improvements = if (rollback) 0 else 1,
+            regressions = if (rollback) 1 else 0, cancelled = cancelled,
+            promotion = LearningPromotionDecision(!rollback, rollback, emptyList()),
+        )
+        assertTrue(LearningEvaluator.rollbackQualified(evaluation()))
+        assertTrue(LearningEvaluator.completePolicyEvidence(evaluation(rollback = false)))
+        assertFalse(LearningEvaluator.rollbackQualified(evaluation(evaluated = 19)))
+        assertFalse(LearningEvaluator.completePolicyEvidence(evaluation(evaluated = 19)))
+        assertFalse(LearningEvaluator.rollbackQualified(evaluation(identities = 4)))
+        assertFalse(LearningEvaluator.rollbackQualified(evaluation(unavailable = 1)))
+        assertFalse(LearningEvaluator.rollbackQualified(evaluation(cancelled = true)))
+        assertFalse(LearningEvaluator.rollbackQualified(evaluation(rollback = false)))
+    }
 }

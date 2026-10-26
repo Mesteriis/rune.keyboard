@@ -1,6 +1,6 @@
 <resources>
     <string name="learning_title">Learning lab</string>
-    <string name="learning_scope">Optional local learning from explicit choices only. Up to 512 distinct records are kept outside backups. Disabling collection stops new examples; Reset removes saved examples and patterns. A fixed fifth of expected words is reserved for testing and never trains patterns. Results compare local suggestions on normalized words, excluding model, touch and exact-pair personalization; this is not automatic editing accuracy. Small or empty samples do not establish accuracy.</string>
+    <string name="learning_scope">Optional local learning from explicit choices only. Up to 512 distinct records are kept outside backups. Disabling collection stops new examples; Reset removes saved examples and patterns. A fixed fifth of expected words is reserved for testing and never trains patterns. New patterns remain inactive until they improve that holdout without a single regression; the previous active policy is retained and restored if later canary evidence is worse. With example collection and typo learning enabled, this check runs locally from 01:00–05:00 only while charging, idle, thermally safe, and not low on battery or storage. Results compare local suggestions on normalized words, excluding model, touch and exact-pair personalization; this is not automatic editing accuracy. Small or empty samples do not establish accuracy.</string>
     <string name="learning_run">Run local evaluation</string>
     <string name="learning_reset">Reset examples and patterns</string>
     <string name="learning_resetting">Resetting…</string>
@@ -9,6 +9,12 @@
     <string name="learning_ready">Ready</string>
     <string name="learning_failed">Storage or evaluation failed. Reset can recover storage.</string>
     <string name="learning_running">Evaluating frozen snapshot…</string>
+    <string name="learning_promoting">Durably saving the tested candidate…</string>
     <string name="learning_status_format">%1$s\nExamples: %2$d (training %3$d, holdout %4$d)\nDedup records: %5$d / 512\nPattern evidence: %6$d</string>
     <string name="learning_results_format">Eligible holdout: %1$d\nEvaluated: %2$d; unavailable/incomplete: %3$d\nExpected correction missing: %4$d / %15$d\nBaseline top suggestion: %5$d / %6$d\nLearned top suggestion: %7$d / %8$d\nIdentity preserved, baseline: %9$d / %10$d\nIdentity preserved, learned: %11$d / %12$d\nUnchanged local policy match: %13$d / %14$d\nThese counts describe this sample only. Vetoes and contradictory labels are excluded.</string>
+    <string name="learning_comparison_format">Improved rows: %1$d; regressed rows: %2$d</string>
+    <string name="learning_result_with_decision">%1$s\n\n%2$s\n%3$s</string>
+    <string name="learning_promotion_approved">Candidate passed and is now active. The previous policy is available for rollback.</string>
+    <string name="learning_promotion_refused">Candidate was not activated; the current policy remains active.</string>
+    <string name="learning_promotion_failed">Candidate passed evaluation but could not be committed. The current policy remains active.</string>
 </resources>

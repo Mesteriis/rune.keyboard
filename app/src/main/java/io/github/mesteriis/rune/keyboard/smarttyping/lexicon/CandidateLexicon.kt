@@ -19,6 +19,9 @@ import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
  * and completeness require separate reader tests; the generator cannot detect an omitted branch.
  */
 interface CandidateLexicon {
+    /** Separate bounded RU neighbourhood; unavailable readers cannot grant recovery admission. */
+    fun recoverNeighbors(token: String, cancellation: CandidateCancellation): LocalSearchEvidence = LocalSearchEvidence.NONE
+
     fun exact(language: KeyboardLanguage, key: String, control: CandidateSearchControl): ExactMembership
 
     fun scan(

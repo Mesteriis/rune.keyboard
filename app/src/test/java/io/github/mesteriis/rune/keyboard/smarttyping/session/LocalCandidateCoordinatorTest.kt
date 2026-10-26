@@ -21,6 +21,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.*
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.*
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneration
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidate
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.TopCandidateSelection
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
@@ -1189,6 +1191,85 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
+    @Test fun `automatic preview honors mode personal veto and never submits extra work`() {
+        for (suggestions in listOf(false, true)) for (veto in listOf(false, true)) {
+            Harness(currentQualification = true).use { h ->
+                h.owner = h.owner.copy(language = KeyboardLanguage.RUSSIAN,
+                    autocorrectionMode = if (suggestions) AutocorrectionMode.SUGGESTIONS else AutocorrectionMode.HIGH_CONFIDENCE)
+                h.controller.setPersonalization(object : TypingPersonalization {
+                    override fun allowsAutomatic(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                        language: KeyboardLanguage) = !veto
+                }, KeyboardLanguage.RUSSIAN)
+                h.lexicon.validWords += "хочу"
+                h.type("зочу"); h.deliver()
+                val requests = h.lexicon.exactCalls.get()
+                repeat(3) {
+                    val view = h.coordinator.viewState
+                    val expected = view.candidates.single { it.text == "хочу" }.id.takeUnless { suggestions || veto }
+                    assertEquals(expected, view.automaticReplacementId)
+                }
+                assertEquals(requests, h.lexicon.exactCalls.get())
+                h.configure(AutocorrectionMode.OFF, true)
+                assertNull(h.coordinator.viewState.automaticReplacementId)
+            }
+        }
+    }
+
+    @Test fun `rapid typing schedule preserves a late correction while the next word starts`() {
+        for (intervalMillis in listOf(30L, 60L, 100L, 150L)) {
+            for (count in 1..3) Harness(withModel = true, currentQualification = true).use { h ->
+                h.owner = h.owner.copy(language = KeyboardLanguage.RUSSIAN)
+                h.lexicon.validWords += "хочу"
+                h.type("зочу"); h.awaitQueued(); h.space()
+                repeat(count) { index ->
+                    h.nowNanos = (index + 1) * intervalMillis * 1_000_000
+                    h.type("дом"[index].toString())
+                }
+                h.drain()
+                val expectedWord = if (count * intervalMillis < 250) "хочу" else "зочу"
+                assertEquals("interval=$intervalMillis count=$count", "$expectedWord ${"дом".take(count)}",
+                    h.controller.state.contextText)
+                assertNull(h.controller.state.lastAutoEdit)
+                assertTrue(h.model.requests.isEmpty())
+            }
+        }
+    }
+
+    @Test fun `visible Undo of a late correction preserves the next word`() {
+        Harness(currentQualification = true).use { h ->
+            h.owner = h.owner.copy(language = KeyboardLanguage.RUSSIAN)
+            val flag = io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature.VISIBLE_UNDO.bit
+            h.controller.configureFeatures(flag, flag)
+            h.lexicon.validWords += "хочу"
+            h.type("зочу"); h.awaitQueued(); h.space()
+            h.nowNanos = 60_000_000
+            h.type("до"); h.drain()
+            assertEquals("хочу до", h.controller.state.contextText)
+            val undo = h.controller.candidateViewState.candidates.filterIsInstance<
+                io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem.Undo>().single()
+            assertEquals(TypingTextResult.HANDLED, h.coordinator.selectCandidate(undo.id, h.execute))
+            assertEquals("зочу до", h.controller.state.contextText)
+        }
+    }
+
+    @Test fun `short Russian confusion bypasses model for ready and post-space local results`() {
+        for (afterSpace in listOf(false, true)) Harness(withModel = true, currentQualification = true).use { h ->
+            h.owner = h.owner.copy(language = KeyboardLanguage.RUSSIAN)
+            h.lexicon.validWords += "хочу"
+            h.type("зочу")
+            if (afterSpace) {
+                // The worker result is queued, but the owner has not accepted it at Space.
+                h.awaitQueued(); h.space(); h.deliver()
+            } else {
+                h.deliver(); h.space()
+            }
+            assertEquals("хочу ", h.controller.state.contextText)
+            assertTrue(h.model.requests.isEmpty())
+            h.coordinator.edit { h.controller.deletePrevious(h.execute) }
+            assertEquals("зочу", h.controller.state.contextText)
+        }
+    }
+
     @Test fun `distance one lookup finishing after Space applies within the local grace window`() {
         Harness(qualified = true).use { h ->
             val hold = Hold(); h.lexicon.hold = hold
@@ -1201,6 +1282,16 @@ class LocalCandidateCoordinatorTest {
             h.coordinator.edit { h.controller.deletePrevious(h.execute) }
             assertEquals("helos", h.controller.state.contextText)
             assertTrue(h.controller.state.originalSelected)
+        }
+    }
+
+    @Test fun `initial correction observes exact 249 250 and 251 millisecond boundaries`() {
+        for (millis in listOf(249L, 250L, 251L)) Harness(qualified = true).use { h ->
+            val hold = Hold(); h.lexicon.hold = hold
+            h.type("helos"); hold.entered.awaitChecked(); h.space()
+            h.nowNanos = millis * 1_000_000L
+            hold.release.countDown(); h.awaitQueued(); h.drain()
+            assertEquals(if (millis < 250) "hellos " else "helos ", h.controller.state.contextText)
         }
     }
 
@@ -1242,12 +1333,12 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
-    @Test fun `next key cancels a local result retained by Space`() {
+    @Test fun `next letter preserves a local result retained by Space`() {
         Harness(qualified = true).use { h ->
             val hold = Hold(); h.lexicon.hold = hold
             h.type("helos"); hold.entered.awaitChecked(); h.space(); h.type("w")
             hold.release.countDown(); h.awaitQueued(); h.drain()
-            assertEquals("helos w", h.controller.state.contextText)
+            assertEquals("hellos w", h.controller.state.contextText)
             assertNull(h.controller.state.lastAutoEdit)
         }
     }
@@ -1258,6 +1349,18 @@ class LocalCandidateCoordinatorTest {
             assertEquals("helos ", h.controller.state.contextText)
             h.ready = true; h.routeReadyCallback!!(1); h.drain(); h.deliver()
             assertEquals("hellos ", h.controller.state.contextText)
+        }
+    }
+
+    @Test fun `cold route resumes a retained previous word or the next word after expiry`() {
+        for (elapsedMillis in listOf(100L, 250L)) Harness(ready = false, qualified = true).use { h ->
+            h.type("helos"); h.space()
+            h.nowNanos = 60_000_000
+            h.type("w")
+            h.nowNanos = elapsedMillis * 1_000_000
+            h.ready = true; h.routeReadyCallback!!(1); h.drain(); h.deliver()
+            assertEquals(if (elapsedMillis < 250) "hellos w" else "helos w", h.controller.state.contextText)
+            assertTrue(h.lexicon.exactCalls.get() > 0)
         }
     }
 
@@ -1333,9 +1436,48 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
+    @Test fun `one refinement survives next word local requests and refreshes candidates after application`() {
+        Harness(withModel = true, qualified = true, refinement = true).use { h ->
+            h.owner = h.owner.copy(language = KeyboardLanguage.RUSSIAN, modelAutoReplaceQualified = true)
+            h.type("рроверка"); h.deliver(); h.space()
+            assertEquals("проверка ", h.controller.state.contextText)
+            val request = h.model.requests.single()
+            val cancels = h.model.cancels
+            h.type("сл"); h.deliver(); h.type("ед"); h.deliver()
+            assertEquals(cancels, h.model.cancels)
+            assertEquals(1, h.model.requests.size)
+            assertTrue(h.model.listener.isCurrentRequest(request.token))
+            h.nowNanos = 999_000_000
+            h.model.reply(request, 0)
+            assertEquals("рроверка след", h.controller.state.contextText)
+            assertFalse(h.model.listener.isCurrentRequest(request.token))
+            assertFalse(h.controller.canRefinePreviousWord)
+        }
+    }
+
+    @Test fun `refinement expires without extending original space on typing or next boundary`() {
+        for (end in listOf("deadline", "space", "invalidate")) Harness(withModel = true, qualified = true, refinement = true).use { h ->
+            h.owner = h.owner.copy(language = KeyboardLanguage.RUSSIAN, modelAutoReplaceQualified = true)
+            h.type("рроверка"); h.deliver(); h.space()
+            val request = h.model.requests.single()
+            h.type("след"); h.deliver()
+            when (end) {
+                "deadline" -> { h.nowNanos = 1_000_000_000; h.pause.now = 1000; h.pause.fire() }
+                "space" -> h.space()
+                else -> h.coordinator.invalidate()
+            }
+            val before = h.controller.state.contextText
+            h.model.reply(request, 0)
+            assertEquals(before, h.controller.state.contextText)
+            assertFalse(h.model.listener.isCurrentRequest(request.token))
+        }
+    }
+
     private class Harness(ready: Boolean = true, withModel: Boolean = false, qualified: Boolean = false,
-        modelOnly: Boolean = false, currentQualification: Boolean = false) : AutoCloseable {
-        val controller = TypingSessionController(jvmGraphemes, if (currentQualification) SpellingQualification.CURRENT else SpellingQualification { _, model -> qualified || modelOnly && model == io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingSource.MODEL })
+        modelOnly: Boolean = false, currentQualification: Boolean = false, refinement: Boolean = false) : AutoCloseable {
+        val controller = TypingSessionController(jvmGraphemes, if (currentQualification) SpellingQualification.CURRENT else SpellingQualification { _, model -> qualified || modelOnly && model == io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingSource.MODEL },
+            nanoTime = { nowNanos }, refinementThresholds = if (refinement)
+                io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryThresholds(-3.0, 0.5) else null)
         val lexicon = FixtureLexicon()
         var ready = ready
         var routeRequests = 0
@@ -1438,6 +1580,7 @@ class LocalCandidateCoordinatorTest {
                     "helo" -> if (extraNeighbors) listOf("hello", "help", "held", "hero", "halo", "hell", "helm") else listOf("hello", "help")
                     "мала" -> listOf("мама", "мара", "мака", "мела", "мила", "мула", "малая")
                     "helos" -> listOf("hellos")
+                    "рроверка" -> listOf("проверка")
                     else -> emptyList()
                 }
                 for ((index, word) in words.withIndex()) {

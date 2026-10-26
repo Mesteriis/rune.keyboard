@@ -146,6 +146,20 @@ class QualityModelTest {
         assertFalse(restored.explicitChoice(12, "secret-primary"))
     }
 
+    @Test fun `legacy codec appends a zero manual retype counter without moving old fields`() {
+        val legacyEventCount = 7
+        val values = (1L..(legacyEventCount + QualityModel.LATENCY_BUCKET_COUNT +
+            ShadowResult.entries.size).toLong()).toList()
+        val legacy = ("RUNE_QUALITY_1\n" + values.joinToString("\n") + "\n")
+            .toByteArray(Charsets.US_ASCII)
+        val decoded = QualityCodec.decode(legacy)
+        assertEquals(values.take(legacyEventCount) + 0L, decoded.events)
+        assertEquals(values.subList(legacyEventCount,
+            legacyEventCount + QualityModel.LATENCY_BUCKET_COUNT), decoded.candidateResponseBuckets)
+        assertEquals(values.takeLast(ShadowResult.entries.size), decoded.shadow)
+        assertTrue(QualityCodec.encode(decoded).toString(Charsets.US_ASCII).startsWith("RUNE_QUALITY_2\n"))
+    }
+
     @Test fun `malformed snapshots fail closed and counts saturate`() {
         val snapshot = QualitySnapshot(events = List(QualityEvent.entries.size) { QualityModel.MAX_COUNT })
         val model = QualityModel().apply { configure(true, false, true); restore(snapshot) }

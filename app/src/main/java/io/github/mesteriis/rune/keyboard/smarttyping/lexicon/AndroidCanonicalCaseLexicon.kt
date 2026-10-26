@@ -17,7 +17,7 @@ class AndroidCanonicalCaseLexicon(private val assets: AssetManager) : CanonicalC
                 val trusted = FrozenCanonicalCaseLexicons.forLanguage(language)
                 val bytes = assets.open(trusted.path, AssetManager.ACCESS_BUFFER).use { it.readBytes() }
                 require(bytes.size.toLong() == trusted.bytes && sha256(bytes) == trusted.sha256) { "CASE_HASH" }
-                CanonicalCaseData.validate(bytes)
+                CanonicalCaseData.openPackaged(bytes)
             } catch (_: Exception) {
                 null
             }

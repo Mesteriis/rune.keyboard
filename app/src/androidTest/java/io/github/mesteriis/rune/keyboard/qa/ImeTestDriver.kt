@@ -61,7 +61,8 @@ class ImeTestDriver {
     }
 
     fun tearDown() {
-        device.pressHome()
+        // An interrupted run must not navigate another active app away from its task.
+        if (device.currentPackageName == PACKAGE_NAME) device.pressHome()
         restorePreferences()
         // restorePreferences() runs on the instrumentation thread. Its commit makes the values
         // visible immediately, but the IME listener is dispatched on the app's main thread.
@@ -185,10 +186,13 @@ class ImeTestDriver {
     fun launchComposingQa(mode: String = "accept", language: KeyboardLanguage = KeyboardLanguage.ENGLISH) {
         require(mode in setOf("accept", "reject", "drop", "private", "raw", "password", "email", "url",
             "number", "phone", "date_time"))
-        shell("am start -W -f 0x10008000 -n $QA_ACTIVITY --es qa_composing_fixture $mode")
+        val launched = shell("am start -W -f 0x10008000 -n $QA_ACTIVITY --es qa_composing_fixture $mode")
+        check("Status: ok" in launched) { "QA launch did not succeed: $launched" }
         awaitQaActivity()
         waitForKeyboard()
         switchLanguageUntil(language.compactLabel)
+        instrumentation.waitForIdleSync()
+        device.waitForIdle()
     }
 
     private fun resumeQa() {
@@ -341,7 +345,8 @@ class ImeTestDriver {
             } ?: false
         }
         check(lastObserved == expected) {
-            "Field $idName expected <$expected>, actual <${lastObserved ?: "unavailable"}>"
+            "Field $idName expected <$expected>, actual <${lastObserved ?: "unavailable"}>; " +
+                "foreground=${device.currentPackageName}, screenOn=${device.isScreenOn}"
         }
     }
 
@@ -567,7 +572,20 @@ class ImeTestDriver {
         check(SettingsCodec.decode(preferences.all).keyPreview == enabled)
     }
 
-    fun keyByText(label: String): UiObject2 = findKeyByText(label) ?: error("Rune key '$label' not found")
+    fun keyByText(label: String): UiObject2 {
+        // A layout rebind can briefly remove a key between two taps. Wait only before
+        // dispatch: retrying the gesture itself could duplicate a character.
+        val deadline = SystemClock.uptimeMillis() + WAIT_MILLIS
+        do {
+            findKeyByText(label)?.let { return it }
+            SystemClock.sleep(25)
+        } while (SystemClock.uptimeMillis() < deadline)
+        val ownField = device.findObject(By.res(PACKAGE_NAME, "qa_composing_text"))
+        val nativeKeyboardPresent = runCatching { keyboardSnapshot().keys.isNotEmpty() }.getOrDefault(false)
+        error("Rune key '$label' not found; foreground=${device.currentPackageName}; " +
+            "screenOn=${device.isScreenOn}; ownField=${ownField != null}; focused=${ownField?.isFocused}; " +
+            "uppercase=${findKeyByText(label.uppercase()) != null}; nativeKeyboard=$nativeKeyboardPresent")
+    }
 
     private fun restorePreferences() {
         val editor = targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE).edit().clear()
@@ -586,9 +604,17 @@ class ImeTestDriver {
 
     private fun findKeyByText(label: String): UiObject2? = bottomMost(device.findObjects(By.text(label)))
 
-    private fun keyByDescription(description: String): UiObject2 =
-        bottomMost(device.findObjects(By.desc(description)))
-            ?: error("Rune key with description '$description' not found")
+    private fun keyByDescription(description: String): UiObject2 {
+        // Like character lookup, wait for a transient layout rebind before any gesture.
+        // A missing node never authorizes repeating an already dispatched tap or swipe.
+        val deadline = SystemClock.uptimeMillis() + WAIT_MILLIS
+        do {
+            bottomMost(device.findObjects(By.desc(description)))?.let { return it }
+            SystemClock.sleep(25)
+        } while (SystemClock.uptimeMillis() < deadline)
+        error("Rune key with description '$description' not found; " +
+            "foreground=${device.currentPackageName}, screenOn=${device.isScreenOn}")
+    }
 
     private fun bottomMost(objects: List<UiObject2>): UiObject2? =
         objects.map { it to it.visibleBounds }.filter { it.second.height() > 0 }

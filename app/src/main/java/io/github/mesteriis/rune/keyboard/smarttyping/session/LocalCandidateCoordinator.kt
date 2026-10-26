@@ -11,6 +11,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LanguageRouter
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexicons
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateReply
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorker
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
@@ -79,6 +81,8 @@ class LocalCandidateCoordinator internal constructor(
     private val modelRanking: ModelCandidateCoordinator? = null,
     private val trace: SmartTypingTracer = NoopSmartTypingTracer,
     private val canonicalCaseLexicon: CanonicalCaseLexicon = CanonicalCaseLexicon.EMPTY,
+    private val morphologyLexicon: MorphologyLexicon = MorphologyLexicon.UNAVAILABLE,
+    private val rareWordLexicon: RareWordLexicon = RareWordLexicon.UNAVAILABLE,
     private val nanoTime: () -> Long = System::nanoTime,
     registerRouteReady: (((Long) -> Unit) -> Unit)? = null,
 ) : AutoCloseable {
@@ -91,9 +95,12 @@ class LocalCandidateCoordinator internal constructor(
         modelRanking: ModelCandidateCoordinator? = null,
         trace: SmartTypingTracer = NoopSmartTypingTracer,
         canonicalCaseLexicon: CanonicalCaseLexicon = CanonicalCaseLexicon.EMPTY,
+        morphologyLexicon: MorphologyLexicon = MorphologyLexicon.UNAVAILABLE,
+        rareWordLexicon: RareWordLexicon = RareWordLexicon.UNAVAILABLE,
     ) : this(controller, lexicons.lexicon, lexicons::request, lexicons::isReady,
         lexicons::invalidate, lexicons::close, ownerDispatcher, ownerState, onCandidatesChanged,
-        modelRanking, trace, canonicalCaseLexicon, registerRouteReady = lexicons::setReadyListener)
+        modelRanking, trace, canonicalCaseLexicon, morphologyLexicon, rareWordLexicon,
+        registerRouteReady = lexicons::setReadyListener)
 
     private val ownerThread = Thread.currentThread()
     private var ownerState: (() -> CandidateOwnerState)? = ownerState
@@ -106,6 +113,7 @@ class LocalCandidateCoordinator internal constructor(
     private var closed = false
 
     init {
+        modelRanking?.onPreviousWordRefined = { if (!closed) requestCurrentWord() }
         registerRouteReady?.invoke { generation ->
             ownerDispatcher.execute { acceptRouteReady(generation) }
         }
@@ -131,18 +139,32 @@ class LocalCandidateCoordinator internal constructor(
     fun edit(spaceCorrection: ((TypingEdit) -> Boolean)? = null, action: () -> TypingTextResult): TypingTextResult {
         checkOwner()
         if (closed) return action()
+        val spaceStartedAt = nanoTime()
         // Retain the latest accepted decision until this action consumes its exact word.
         // Cancel local work first. Only an explicitly marked Space may transfer one model
         // request to a separately checked committed suffix after the edit succeeds.
         val owner = ownerState?.invoke()
         val local = pending
+        val retainedSpace = pendingSpace
+        if (retainedSpace != null && local === retainedSpace.pending) {
+            val result = controller.retainLocalSpaceAcrossNextWord(action)
+            if (!closed && pending === local &&
+                (!controller.hasLocalSpaceCorrection || ownerState?.invoke() != owner)) {
+                cancelCandidates(clearAllowlist = true)
+                if (result == TypingTextResult.HANDLED) requestCurrentWord()
+            }
+            return result
+        }
         if (spaceCorrection != null && local != null && owner?.baseEligible == true &&
             owner.autocorrectionMode == AutocorrectionMode.HIGH_CONFIDENCE) {
             modelRanking?.cancel()
             val result = controller.retainCandidateAcrossSpace(action)
             if (!closed && pending === local && result == TypingTextResult.HANDLED &&
                 controller.hasLocalSpaceCorrection) {
-                pendingSpace = PendingSpace(local, spaceCorrection, nanoTime())
+                pendingSpace = PendingSpace(local, spaceCorrection, spaceStartedAt)
+            } else if (result == TypingTextResult.HANDLED && controller.state.lastAutoEdit != null) {
+                cancelCandidates(clearAllowlist = false)
+                modelRanking?.startPreviousWordRefinement(spaceCorrection)
             } else {
                 cancelCandidates(clearAllowlist = true)
                 invalidateLoads()
@@ -150,11 +172,11 @@ class LocalCandidateCoordinator internal constructor(
             return result
         }
         val retainSpace = spaceCorrection != null && modelRanking != null
-        cancelCandidates(clearAllowlist = owner?.canRequestCandidateWork != true, cancelModel = !retainSpace)
+        cancelCandidates(clearAllowlist = owner?.canRequestCandidateWork != true, cancelModel = !retainSpace && modelRanking == null)
         val editEpoch = epoch
         val session = controller.state.sessionId
         val revision = controller.state.revision
-        val result = if (retainSpace) modelRanking!!.editSpace(spaceCorrection!!, action) else action()
+        val result = if (retainSpace) modelRanking!!.editSpace(spaceCorrection!!, action) else modelRanking?.edit(action) ?: action()
         if (!closed && epoch == editEpoch && controller.state.sessionId == session &&
             controller.state.revision != revision && result == TypingTextResult.HANDLED) {
             requestCurrentWord()
@@ -201,14 +223,18 @@ class LocalCandidateCoordinator internal constructor(
             checkOwner()
             val owner = ownerState?.invoke()
             if (closed || owner?.showsCandidates != true) return SmartTypingViewState.HIDDEN
-            val view = controller.candidateViewState
+            val raw = controller.candidateViewState
+            val preview = if (owner.autocorrectionMode == AutocorrectionMode.HIGH_CONFIDENCE)
+                controller.spaceReplacementCandidateId(owner.language)?.takeIf { id -> raw.candidates.any { it.id == id } }
+                else null
+            val view = SmartTypingViewState(raw.enabled, raw.candidates, raw.selectedCandidateId, preview)
             if (!view.enabled || view.candidates.all { it is CandidateUiItem.Continuation || it is CandidateUiItem.Tool || it is CandidateUiItem.Undo }) return view
             if (owner.spellingEnabled) {
                 if (owner.canRequestContextual || view.candidates.none { it is CandidateUiItem.Punctuation }) return view
                 val visible = view.candidates.filterNot { it is CandidateUiItem.Punctuation }
                 val selected = view.selectedCandidateId?.takeIf { id -> visible.any { it.id == id } }
                     ?: visible.firstOrNull()?.id
-                return SmartTypingViewState(true, visible, selected)
+                return SmartTypingViewState(true, visible, selected, view.automaticReplacementId?.takeIf { id -> visible.any { it.id == id } })
             }
             val originalId = controller.originalCandidateId ?: return SmartTypingViewState.EMPTY
             val original = CandidateUiItem.Original(originalId, controller.state.composing!!.typedWord)
@@ -225,6 +251,7 @@ class LocalCandidateCoordinator internal constructor(
         worker?.close()
         worker = null
         closeLoads()
+        modelRanking?.onPreviousWordRefined = null
         modelRanking?.close()
         ownerState = null
         onCandidatesChanged = null
@@ -261,6 +288,7 @@ class LocalCandidateCoordinator internal constructor(
             pending = null
             pendingSpace = null
             controller.clearCandidates()
+            requestCurrentWord()
             return
         }
         current.readyGeneration = generation
@@ -277,10 +305,14 @@ class LocalCandidateCoordinator internal constructor(
 
     private fun submit(current: Pending, request: io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateRequest): Boolean {
         val target = worker ?: LocalCandidateWorker(CandidateGenerator(lexicon,
-            CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES, canonicalCaseLexicon),
+            CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES, canonicalCaseLexicon,
+            morphologyLexicon, rareWordLexicon),
             ownerDispatcher, ::acceptReply, trace).also { worker = it }
         val accepted = target.submit(request.copy(manualCandidateExpansion =
-            ownerState?.invoke()?.canExpandManualCandidates == true))
+            ownerState?.invoke()?.canExpandManualCandidates == true, neighborRecoveryEnabled =
+            current.language == KeyboardLanguage.RUSSIAN, jointCorrectionEnabled =
+            io.github.mesteriis.rune.keyboard.smarttyping.correction.JointQualification.enabled(
+                current.language, request.token.length)))
         if (accepted) {
             current.submitted = true
             controller.recordCandidateSubmitted(request)
@@ -296,8 +328,7 @@ class LocalCandidateCoordinator internal constructor(
         val owner = ownerState?.invoke()
         val space = pendingSpace
         if (space != null && space.pending === current) {
-            pending = null
-            pendingSpace = null
+            if (reply.isFinal) { pending = null; pendingSpace = null }
             val elapsed = nanoTime() - space.startedAtNanos
             if (elapsed !in 0 until SPACE_GRACE_NANOS) {
                 controller.recordRequest(DiagnosticReason.DEADLINE_MISSED, DiagnosticSource.LOCAL_POLICY,
@@ -307,11 +338,19 @@ class LocalCandidateCoordinator internal constructor(
                 owner.language == current.language &&
                 routeReady(LanguageRouter.route(reply.generation.original.orEmpty(), owner.language))
             if (eligible && controller.acceptLocalSpaceCorrection(reply, space.execute)) {
+                pending = null; pendingSpace = null; worker?.cancel()
+                modelRanking?.startPreviousWordRefinement(space.execute)
                 onCandidatesChanged?.invoke()
+                requestCurrentWord()
+            } else if (!reply.isFinal && eligible) {
+                // Preserve the original Space clock while the separate recovery pass finishes.
             } else if (eligible && modelRanking?.candidatesChangedAcrossSpace(
                     reply, space.execute, elapsed) == true) {
                 // The model owns the retained suffix for the remainder of the original window.
-            } else controller.clearCandidates()
+            } else {
+                controller.clearCandidates()
+                requestCurrentWord()
+            }
             return
         }
         val typing = controller.state
@@ -323,8 +362,11 @@ class LocalCandidateCoordinator internal constructor(
             invalidate()
             return
         }
-        pending = null
-        if (controller.acceptCandidates(if (owner.canExpandManualCandidates) reply else reply.copy(manualGeneration = null))) {
+        if (reply.isFinal) pending = null
+        val visibleReply = if (owner.canExpandManualCandidates) reply else reply.copy(manualGeneration = null)
+        val accepted = if (reply.stage == io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateStage.RECOVERY)
+            controller.acceptRecoveryCandidates(visibleReply) else controller.acceptCandidates(visibleReply)
+        if (accepted) {
             onCandidatesChanged?.invoke()
             modelRanking?.candidatesChanged()
         }

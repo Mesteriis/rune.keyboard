@@ -3,7 +3,7 @@ package io.github.mesteriis.rune.keyboard.smarttyping.quality
 /** Only acknowledged editor actions belong here. Automatic application is not a correctness label. */
 enum class QualityEvent {
     AUTOMATIC_APPLIED, EXPLICIT_UNDO, CORRECTION_PICKED, KEPT_ORIGINAL,
-    WORD_BOUNDARY_PICKED, ABBREVIATION_PICKED, PHRASE_REVIEW_PICKED,
+    WORD_BOUNDARY_PICKED, ABBREVIATION_PICKED, PHRASE_REVIEW_PICKED, MANUAL_RETYPE,
 }
 
 enum class ShadowResult {

@@ -10,7 +10,7 @@
     <string name="quality_storage_resetting">Resetting; collection paused</string>
     <string name="quality_storage_failed">Unavailable; collection paused. Reset to retry.</string>
     <string name="quality_actions_title">Acknowledged actions</string>
-    <string name="quality_actions_note">Automatic changes are unlabelled decisions. No undo does not mean a correction was right. Explicit choices express user preference, not independently verified accuracy.</string>
+    <string name="quality_actions_note">Automatic changes are unlabelled decisions. No undo does not mean a correction was right. Explicit choices express user preference, not independently verified accuracy. A manual retype is an observed word edit, not proof that autocorrection missed an error.</string>
     <string name="quality_automatic_applied">Automatic corrections applied</string>
     <string name="quality_explicit_undo">Explicit correction undos</string>
     <string name="quality_correction_picked">Correction candidates picked</string>
@@ -18,6 +18,7 @@
     <string name="quality_boundary_picked">Word boundary suggestions picked</string>
     <string name="quality_abbreviation_picked">Abbreviations expanded</string>
     <string name="quality_phrase_picked">Phrase reviews applied</string>
+    <string name="quality_manual_retype">Words manually changed before committing</string>
     <string name="quality_latency_title">Candidate response time</string>
     <string name="quality_latency_note">Time from a candidate request to its accepted response. This excludes screen rendering and is not end-to-end keystroke latency.</string>
     <string-array name="quality_latency_labels">

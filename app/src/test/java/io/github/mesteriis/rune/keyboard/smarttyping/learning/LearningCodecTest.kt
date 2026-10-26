@@ -30,7 +30,7 @@ class LearningCodecTest {
         }
         val snapshot = model.snapshot()
         val bytes = LearningCodec.encode(snapshot)
-        assertEquals(372744, bytes.size)
+        assertEquals(372749, bytes.size)
         assertTrue(bytes.size <= LearningCodec.MAX_BYTES)
         assertEquals(snapshot, LearningCodec.decode(bytes))
     }
@@ -39,5 +39,15 @@ class LearningCodecTest {
         fails { LearningCodec.encode(LearningSnapshot(listOf(row.copy(original = "secret")))) }
         fails { LearningCodec.encode(LearningSnapshot(listOf(row.copy(holdout = true, trains = true)))) }
         fails { LearningCodec.encode(LearningSnapshot(listOf(row.copy(source = FeedbackSource.REJECTED, trains = true)))) }
+    }
+
+    @Test fun legacyLedgerMigratesItsPreviouslyLiveCountsIntoTheActivePolicy() {
+        val snapshot = snapshot()
+        val v2 = LearningCodec.encode(snapshot)
+        val v1 = v2.copyOf(v2.size - 5).also { it[3] = 0x31 }
+        val migrated = LearningCodec.decode(v1)
+        assertEquals(snapshot.evidence, migrated.evidence)
+        assertEquals(migrated.candidatePolicy(), migrated.activePolicy)
+        assertNull(migrated.rollbackPolicy)
     }
 }

@@ -4,7 +4,24 @@ import io.github.mesteriis.rune.keyboard.ime.model.*
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.*
 import io.github.mesteriis.rune.keyboard.settings.KeyboardSettings
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CalibratedSpellingPolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.PublicOriginalProtection
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.AutoCorrectionAdmissionGuard
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionDecision
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.JointRescueQualification
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.LocalCorrectionPolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.TokenUnicode
+import io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionPolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointRescuePolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.experiments.WordContextPolicy
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.WordContextQualification
+import io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionThresholds
+import io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionChoice
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.JointQualification
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingSource
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryThresholds
+import io.github.mesteriis.rune.keyboard.smarttyping.experiments.ExperimentModels
+import io.github.mesteriis.rune.keyboard.smarttyping.experiments.FrozenExperimentAssets
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.*
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
@@ -18,6 +35,167 @@ import java.util.Locale
 
 /** Developer-only observer. Expected text, labels and corpus cohorts never enter this process. */
 object FinalProductSpellingReplay {
+    private class AdmissionPersonalization(private val guard: AutoCorrectionAdmissionGuard,
+        private val morphology: MorphologyLexicon, private val rareWords: RareWordLexicon,
+        private val experiments: ExperimentModels,
+        private val jointThresholds: JointCorrectionThresholds? = null,
+        private val productionJoint: Boolean = false,
+        private val rescueEnabled: Boolean = false, private val wordContextEnabled: Boolean = false,
+        private val contextualEnabled: Boolean = false) : TypingPersonalization {
+        var decision: AutomaticTypingDecision? = null
+            private set
+        var candidate: String? = null
+            private set
+
+        fun reset() { decision = null; candidate = null }
+
+        override fun awaitingJointCandidates(generation: CandidateGeneration, language: KeyboardLanguage): Boolean =
+            jointThresholds != null && (!productionJoint || JointQualification.enabled(language, generation.original?.length ?: 0)) &&
+                experiments.jointReady && experiments.contextReady && !generation.jointEvaluated
+
+        override fun jointAutomaticEvaluation(context: String, generation: CandidateGeneration,
+            language: KeyboardLanguage, baselineWord: String?): io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionEvaluation {
+            val baseline = io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionEvaluation(
+                jointAutomaticChoice(context, generation, language, baselineWord))
+            if (!contextualEnabled || morphology.lookup(language, generation.original.orEmpty()).present ||
+                rareWords.lookup(generation.original.orEmpty()).present) return baseline
+            return io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualCorrectionPolicy.evaluate(
+                experiments, context, generation, language, baseline, baselineWord) { candidate ->
+                val decision = contextualAutomaticDecision(generation, candidate, language)
+                if (decision.allowed) null else decision.refusal ?: AutomaticAdmissionRefusal.NOT_QUALIFIED
+            }
+        }
+
+        override fun contextualAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+            language: KeyboardLanguage): AutomaticTypingDecision {
+            if (!contextualEnabled || !experiments.contextualReady ||
+                !io.github.mesteriis.rune.keyboard.smarttyping.correction.ContextualQualification.enabled(
+                    language, generation.original?.length ?: 0))
+                return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+            return jointAutomaticDecision(generation, candidate, language)
+        }
+
+        override fun jointAutomaticChoice(context: String, generation: CandidateGeneration,
+            language: KeyboardLanguage, baselineWord: String?): JointCorrectionChoice? {
+            val thresholds = jointThresholds ?: return null
+            if (productionJoint && !JointQualification.enabled(language, generation.original?.length ?: 0)) return null
+            if (!generation.jointSearch.isComplete || !generation.jointEvaluated ||
+                generation.alternatives.any { it.kind == GeneratedCandidateKind.COMMON_CONFUSION }) return null
+            fun withWordContext(primary: JointCorrectionChoice?): JointCorrectionChoice? {
+                if (!WordContextPolicy.maySupplement(primary, baselineWord) || !wordContextEnabled) return primary
+                val evaluated = WordContextPolicy.evaluate(context, generation, language)
+                val proposal = evaluated.choice?.candidate ?: return primary
+                return if (wordContextAutomaticDecision(generation, proposal, language).allowed)
+                    JointCorrectionChoice(proposal, wordContext = true) else primary
+            }
+            val choice = JointCorrectionPolicy.select(experiments, context, generation, language, thresholds, baselineWord)
+                ?: JointCorrectionChoice(null)
+            val primary = if (choice.candidate != null &&
+                !jointAutomaticDecision(generation, choice.candidate, language).allowed) null else choice
+            if (primary?.candidate != null || baselineWord != null || !rescueEnabled) return withWordContext(primary)
+            val rescue = JointRescuePolicy.select(experiments, context, generation, language) ?: return withWordContext(primary)
+            return if (rescueAutomaticDecision(generation, rescue, language).allowed)
+                JointCorrectionChoice(rescue, rescue = true) else withWordContext(primary)
+        }
+
+        override fun contextualPreference(context: String, original: String, candidate: GeneratedCandidate,
+            language: KeyboardLanguage): Double =
+            PublicOriginalProtection.manualPreference(original, candidate, morphology, rareWords)
+
+        override fun abstainingJointPreference(context: String, original: String, candidate: GeneratedCandidate,
+            language: KeyboardLanguage): Double = if (rescueEnabled && original.length in 5..32 && experiments.rescueReady)
+            experiments.rescueScore(context, original, candidate).takeIf(Double::isFinite) ?: 0.0 else 0.0
+
+        override fun wordContextAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+            language: KeyboardLanguage): AutomaticTypingDecision {
+            val publicWord = PublicOriginalProtection.evaluate(generation, candidate, rareWords)
+            val evaluated = if (wordContextEnabled && publicWord.allowed)
+                guard.evaluateWordContext(generation, candidate) else if (!publicWord.allowed) publicWord
+                else AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+            return AutomaticTypingDecision(evaluated.allowed, evaluated.refusal)
+                .also { decision = it; this.candidate = candidate.terminalKey }
+        }
+
+        override fun rescueAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+            language: KeyboardLanguage): AutomaticTypingDecision {
+            val publicWord = PublicOriginalProtection.evaluate(generation, candidate, rareWords)
+            val evaluated = if (rescueEnabled && publicWord.allowed) guard.evaluateRescue(generation, candidate)
+                else if (!publicWord.allowed) publicWord
+                else AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+            return AutomaticTypingDecision(evaluated.allowed, evaluated.refusal)
+                .also { decision = it; this.candidate = candidate.terminalKey }
+        }
+
+        override fun jointAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+            language: KeyboardLanguage): AutomaticTypingDecision {
+            if (productionJoint && !JointQualification.enabled(language, generation.original?.length ?: 0))
+                return AutomaticTypingDecision(false)
+            if (!generation.jointEvaluated || !generation.jointSearch.isComplete ||
+                candidate !in generation.jointSearch.alternatives) return AutomaticTypingDecision(false)
+            val publicWord = PublicOriginalProtection.evaluate(generation, candidate, rareWords)
+            val evaluated = if (publicWord.allowed) guard.evaluateJoint(generation, candidate,
+                JointQualification.uniqueAmbiguousWinnerEnabled(language, generation.original?.length ?: 0)) else publicWord
+            return AutomaticTypingDecision(evaluated.allowed, evaluated.refusal)
+                .also { decision = it; this.candidate = candidate.terminalKey }
+        }
+
+        override fun allowsAutomatic(generation: CandidateGeneration, candidate: GeneratedCandidate,
+            language: KeyboardLanguage): Boolean = guard.allows(generation, candidate)
+
+        override fun automaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+            language: KeyboardLanguage): AutomaticTypingDecision {
+            val publicWord = PublicOriginalProtection.evaluate(generation, candidate, rareWords)
+            val evaluated = if (publicWord.allowed) guard.evaluate(generation, candidate) else publicWord
+            this.candidate = candidate.terminalKey
+            return AutomaticTypingDecision(evaluated.allowed, evaluated.refusal).also { decision = it }
+        }
+
+        override fun recoveryAutomaticCandidate(context: String, generation: CandidateGeneration,
+            language: KeyboardLanguage): GeneratedCandidate? = experiments.recoveryAutomaticCandidate(context, generation, language)
+
+        override fun recoveryAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+            language: KeyboardLanguage): AutomaticTypingDecision {
+            val source = generation.original?.let(TokenUnicode::folded) ?: return AutomaticTypingDecision(false)
+            val rare = rareWords.lookup(source)
+            if (!rare.available || rare.present || !generation.neighborRecovery.isComplete ||
+                candidate !in generation.neighborRecovery.alternatives) return AutomaticTypingDecision(false)
+            return refinementDecision(generation, candidate.text, language, emptyList())
+                .also { decision = it; this.candidate = candidate.terminalKey }
+        }
+
+        override fun refinementDecision(generation: CandidateGeneration, word: String,
+            language: KeyboardLanguage, comparedWords: List<String>): AutomaticTypingDecision {
+            if (word == generation.original) return AutomaticTypingDecision(true)
+            val all = (generation.alternatives + generation.compactAlternatives + generation.neighborRecovery.alternatives)
+                .distinctBy { it.canonicalKey }
+            val candidate = all.firstOrNull { it.text == word } ?: return AutomaticTypingDecision(false)
+            val publicWord = PublicOriginalProtection.evaluate(generation, candidate, rareWords)
+            val evaluated = if (publicWord.allowed)
+                guard.evaluateRefinement(generation.copy(alternatives = all), candidate, comparedWords) else publicWord
+            return AutomaticTypingDecision(evaluated.allowed, evaluated.refusal)
+        }
+
+        override fun compactAutomaticCandidate(context: String, generation: CandidateGeneration,
+            language: KeyboardLanguage): GeneratedCandidate? {
+            val source = generation.original?.let(TokenUnicode::folded) ?: return null
+            val morph = morphology.lookup(language, source); val rare = rareWords.lookup(source)
+            if (!morph.available || !rare.available || morph.present || rare.present) return null
+            return experiments.compactAutomaticCandidate(context, generation, language)
+        }
+
+        override fun compactAutomaticDecision(generation: CandidateGeneration,
+            candidate: GeneratedCandidate, language: KeyboardLanguage): AutomaticTypingDecision {
+            val source = generation.original?.let(TokenUnicode::folded)
+                ?: return AutomaticTypingDecision(false, io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal.NOT_QUALIFIED)
+            val morph = morphology.lookup(language, source); val rare = rareWords.lookup(source)
+            val allowed = morph.available && rare.available && !morph.present && !rare.present &&
+                generation.compactAlternatives.any { it.canonicalKey == candidate.canonicalKey }
+            return AutomaticTypingDecision(allowed,
+                if (allowed) null else io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal.NOT_QUALIFIED)
+                .also { decision = it; this.candidate = candidate.terminalKey }
+        }
+    }
+
     private fun json(value: Any?): String = when (value) {
         null -> "null"
         is String -> buildString {
@@ -105,7 +283,12 @@ object FinalProductSpellingReplay {
         "localSearch" to mapOf("completion" to generation.localSearch.completion.name,
             "inspectedStates" to generation.localSearch.inspectedStates,
             "verifiedTerminals" to generation.localSearch.verifiedTerminals,
-            "alternatives" to generation.localSearch.alternatives.map(::item)))
+            "alternatives" to generation.localSearch.alternatives.map(::item)),
+        "compactAlternatives" to generation.compactAlternatives.map(::item),
+        "neighborRecovery" to mapOf("completion" to generation.neighborRecovery.completion.name,
+            "inspectedStates" to generation.neighborRecovery.inspectedStates,
+            "verifiedTerminals" to generation.neighborRecovery.verifiedTerminals,
+            "alternatives" to generation.neighborRecovery.alternatives.map(::item)))
 
     private fun state(controller: TypingSessionController) = mapOf(
         "enabled" to controller.state.enabled, "sessionId" to controller.state.sessionId,
@@ -139,13 +322,20 @@ object FinalProductSpellingReplay {
     @JvmStatic fun main(args: Array<String>) {
         check(args.size in 4..5)
         val mode = args[2]
-        check(mode in setOf("export", "ready", "unavailable"))
+        check(mode in setOf("export", "ready", "unavailable", "recovery", "joint-export", "joint-ready", "joint-production", "contextual-production", "joint-rescue-ready", "joint-primary-only", "word-context-ready", "word-context-baseline", "refinement-export", "refinement-ready"))
+        val productionMode = mode in setOf("joint-production", "contextual-production", "joint-rescue-ready",
+            "joint-primary-only", "word-context-ready", "word-context-baseline")
+        val jointPipelineMode = productionMode || mode == "joint-ready" || mode == "joint-export"
         val targetSplit = args[3]
         check(targetSplit in setOf("all", "calibration", "holdout"))
-        check((mode == "ready") == (args.size == 5))
+        check((mode in setOf("ready", "refinement-ready", "joint-ready")) == (args.size == 5))
+        val jointConfig = if (mode == "joint-ready") File(args[4]).readText().trim().split('	').also { check(it.size == 6 || it.size == 8) } else null
+        val jointThresholds = if (productionMode) JointQualification.thresholds else jointConfig?.let { JointCorrectionThresholds(
+            RecoveryThresholds(it[2].toDouble(), it[3].toDouble()), RecoveryThresholds(it[4].toDouble(), it[5].toDouble()),
+            if (it.size == 8) RecoveryThresholds(it[6].toDouble(), it[7].toDouble()) else RecoveryThresholds(it[4].toDouble(), it[5].toDouble())) }
         executorSelfCheck()
         val deliveries = mutableMapOf<String, Delivery>()
-        if (mode == "ready") File(args[4]).useLines { lines -> lines.forEach { line ->
+        if (mode in setOf("ready", "refinement-ready")) File(args[4]).useLines { lines -> lines.forEach { line ->
             val fields = line.split('\t'); check(fields.size == 11)
             val id = String(Base64.getDecoder().decode(fields[0]), Charsets.UTF_8)
             val candidateIds = fields[7].split(',').map(String::toInt)
@@ -183,10 +373,78 @@ object FinalProductSpellingReplay {
             check(bytes.size.toLong() == trust.bytes && digest == trust.sha256) { "CASE_HASH" }
             CanonicalCaseData.validate(bytes)
         }
+        val morphologyFile = File(assets, FrozenMorphologyLexicon.ASSET_PATH)
+        check(morphologyFile.length() == FrozenMorphologyLexicon.ASSET_BYTES) { "MORPHOLOGY_SIZE" }
+        val morphology = PackedMorphologyLexicon.open(
+            mapping(morphologyFile), FrozenMorphologyLexicon.ASSET_SHA256)
+        check(morphology.lookup(KeyboardLanguage.RUSSIAN, "слово").available) { "MORPHOLOGY_NOT_READY" }
+        val rareFile = File(assets, FrozenRareWordLexicon.ASSET_PATH)
+        check(rareFile.length() == FrozenRareWordLexicon.ASSET_BYTES) { "RARE_WORDS_SIZE" }
+        val rareWords = PackedRareWordLexicon.open(mapping(rareFile), FrozenRareWordLexicon.ASSET_SHA256)
+        check(rareWords.lookup("кармен").available) { "RARE_WORDS_NOT_READY" }
         val generator = CandidateGenerator(PackedCandidateLexicon(handles),
             CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES,
-            CanonicalCaseLexicon { language, key -> cases.getValue(language).lookup(key) })
-        System.err.println("ALL_12_PACKAGED_TRIE_LENGTH_RANK_CASE_ASSETS_VALIDATED")
+            CanonicalCaseLexicon { language, key -> cases.getValue(language).lookup(key) },
+            morphology, rareWords)
+        val admissionGuard = AutoCorrectionAdmissionGuard(morphology)
+        fun experimentAsset(name: String, size: Int, expectedHash: String): ByteArray {
+            val bytes = File(assets, "smarttyping/experiments/$name").readBytes()
+            val actualHash = MessageDigest.getInstance("SHA-256").digest(bytes)
+                .joinToString("") { "%02x".format(it) }
+            check(bytes.size == size && actualHash == expectedHash) { "EXPERIMENT_ASSET_IDENTITY:$name" }
+            return bytes
+        }
+        val experiments = ExperimentModels().apply {
+            if (productionMode) loadJointRanker(experimentAsset("ru-joint-ranker.bin",
+                JointQualification.RANKER_BYTES, JointQualification.RANKER_SHA256))
+            if (productionMode) loadRescueRanker(experimentAsset("ru-joint-rescue-ranker.bin",
+                JointRescueQualification.RANKER_BYTES, JointRescueQualification.RANKER_SHA256))
+            if (jointConfig != null) {
+                val model = File(jointConfig[0]); check(model.length() in 20..65536)
+                val bytes = model.readBytes()
+                check(MessageDigest.getInstance("SHA-256").digest(bytes).joinToString("") { "%02x".format(it) } == jointConfig[1])
+                loadJointRanker(bytes)
+            }
+            loadRanker(experimentAsset("ru-ranker.bin", FrozenExperimentAssets.RANK_BYTES,
+                FrozenExperimentAssets.RANK_SHA256))
+            loadLegacyAutomaticRanker(experimentAsset("ru-ranker-auto-v1.bin",
+                FrozenExperimentAssets.LEGACY_AUTOMATIC_RANK_BYTES,
+                FrozenExperimentAssets.LEGACY_AUTOMATIC_RANK_SHA256))
+            loadRecoveryRanker(experimentAsset("ru-neighbor-ranker.bin",
+                io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryQualification.RANKER_BYTES,
+                io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryQualification.RANKER_SHA256))
+
+            loadContext(experimentAsset("ru-ranking-context.bin", FrozenExperimentAssets.RANKING_CONTEXT_BYTES,
+                FrozenExperimentAssets.RANKING_CONTEXT_SHA256))
+        }
+        if (mode == "contextual-production") {
+            val frozen = io.github.mesteriis.rune.keyboard.smarttyping.experiments.FrozenContextualAssets
+            fun mapped(name: String, size: Long): java.nio.ByteBuffer {
+                val file = File(assets, "smarttyping/experiments/$name"); check(file.length() == size)
+                return FileChannel.open(file.toPath(), StandardOpenOption.READ).use {
+                    it.map(FileChannel.MapMode.READ_ONLY, 0, it.size())
+                }
+            }
+            experimentAsset("ru-contextual-policy.json", frozen.POLICY_BYTES, frozen.POLICY_SHA256)
+            val wiki = io.github.mesteriis.rune.keyboard.smarttyping.experiments.WordPairFeatures.open(
+                mapped("ru-wiki.ctx", frozen.WIKI_BYTES), frozen.WIKI_SHA256)!!
+            val conversation = io.github.mesteriis.rune.keyboard.smarttyping.experiments.WordPairFeatures.open(
+                mapped("ru-conversation.ctx", frozen.CONVERSATION_BYTES), frozen.CONVERSATION_SHA256)!!
+            val grammar = io.github.mesteriis.rune.keyboard.smarttyping.experiments.GrammarFeatureDictionary.open(
+                mapped("ru-context.gram", frozen.GRAMMAR_BYTES), frozen.GRAMMAR_SHA256)!!
+            experiments.loadContextualRanker(io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualRanker.create(
+                experimentAsset("ru-contextual-ranker.bin", frozen.MODEL_BYTES, frozen.MODEL_SHA256), wiki, conversation, grammar)!!)
+            check(experiments.contextualReady)
+        }
+        check(experiments.learnedReady && experiments.legacyAutomaticReady && experiments.contextReady) {
+            "COMPACT_MODELS_NOT_READY"
+        }
+        val personalization = AdmissionPersonalization(admissionGuard, morphology, rareWords, experiments, jointThresholds, productionMode,
+            mode == "joint-rescue-ready" || mode in setOf("joint-production", "contextual-production", "word-context-ready", "word-context-baseline") && JointRescueQualification.QUALIFIED,
+            mode == "word-context-ready" || mode in setOf("joint-production", "contextual-production") && WordContextQualification.enabled(KeyboardLanguage.RUSSIAN),
+            mode == "contextual-production")
+        System.err.println("ALL_14_PACKAGED_LEXICON_MORPHOLOGY_AND_RARE_ASSETS_VALIDATED")
+        System.err.println("COMPACT_RANKER_AND_CONTEXT_ASSETS_VALIDATED")
         val settings = KeyboardSettings.DEFAULT
         File(args[0]).useLines { lines -> lines.forEachIndexed { index, line ->
             val fields = line.split('\t'); check(fields.size == 6 && fields[0].toInt() == index)
@@ -199,11 +457,38 @@ object FinalProductSpellingReplay {
             val editorContext = EditorContext.from(1, 0)
             val policy = MechanicalPunctuationPolicy(editorContext.inputPolicy, editorContext.mode,
                 editorContext.requiresRawKeyEvents, settings.mechanicalPunctuation, settings.doubleSpacePeriod)
-            val controller = TypingSessionController(graphemes); val editor = Editor()
+            val controller = if (mode == "word-context-ready") TypingSessionController(graphemes,
+                io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification { lang, source ->
+                    source == SpellingSource.WORD_CONTEXT ||
+                        io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification.CURRENT.allows(lang, source)
+                }) else if (mode == "joint-rescue-ready") TypingSessionController(graphemes,
+                io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification { lang, source ->
+                    source == SpellingSource.JOINT_RESCUE ||
+                        io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification.CURRENT.allows(lang, source)
+                }) else if (mode == "joint-ready") TypingSessionController(graphemes,
+                io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification { lang, source ->
+                    source in setOf(SpellingSource.JOINT_SHORT, SpellingSource.JOINT_LONG) ||
+                        io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification.CURRENT.allows(lang, source)
+                }) else if (mode.startsWith("refinement")) TypingSessionController(graphemes,
+                io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification { lang, source ->
+                    source in setOf(io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingSource.NEIGHBOR_RECOVERY,
+                        io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingSource.MODEL_REFINEMENT) ||
+                        io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification.CURRENT.allows(lang, source)
+                }, refinementThresholds = if (mode == "refinement-ready")
+                    io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryQualification.refinement else
+                    io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryThresholds(-1000.0, 0.000001))
+                else TypingSessionController(graphemes)
+            val editor = Editor()
+            personalization.reset()
+            controller.setPersonalization(personalization, language)
             controller.startSession(editorContext, 0, 0)
+            if (mode.startsWith("refinement")) controller.configureFeatures(
+                io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature.VISIBLE_UNDO.bit,
+                io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature.VISIBLE_UNDO.bit)
             val result = linkedMapOf<String, Any?>("index" to index, "id" to id, "split" to split,
                 "language" to language.locale.language, "prefix" to prefix, "typed" to typed,
                 "maximumAlternatives" to CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES,
+                "morphologyAdmission" to true,
                 "autocorrectionMode" to settings.autocorrectionMode.name,
                 "currentQualificationWithoutModel" to controller.isSpellingQualified(language, false),
                 "currentQualificationWithModel" to controller.isSpellingQualified(language, true))
@@ -224,20 +509,116 @@ object FinalProductSpellingReplay {
                 result["stateBeforeCandidates"] = state(controller)
                 result["inputChangedByTyping"] = editor.text != fullInput
                 result["typingCommands"] = editor.commands.toList()
-                val fullGeneration = generator.generate(typed, language)
+                val generationStarted = System.nanoTime()
+                val baselineGeneration = generator.generate(typed, language)
+                val baselineFinished = System.nanoTime()
+                val recovered = if (mode == "recovery" || jointPipelineMode || mode.startsWith("refinement")) generator.generateRecovery(typed, language, baselineGeneration) else baselineGeneration
+                val recoveryFinished = System.nanoTime()
+                val fullGeneration = if (mode == "joint-ready" ||
+                    productionMode && JointQualification.enabled(language, typed.length)) recovered.copy(
+                    jointSearch = generator.generateJointPool(typed, language, recovered), jointEvaluated = true) else recovered
+                val jointFinished = System.nanoTime()
+                val stageTimings = linkedMapOf(
+                    "baselineSearch" to baselineFinished - generationStarted,
+                    "recoverySearch" to recoveryFinished - baselineFinished,
+                    "jointSearch" to jointFinished - recoveryFinished)
+                result["hostStageNanos"] = stageTimings
+                if (mode == "recovery") {
+                    val all = (fullGeneration.alternatives + fullGeneration.compactAlternatives + fullGeneration.neighborRecovery.alternatives).distinctBy { it.canonicalKey }
+                    val sourceRare = rareWords.lookup(TokenUnicode.folded(typed))
+                    result["recoveryAdmission"] = fullGeneration.neighborRecovery.alternatives.associate { candidate ->
+                        candidate.text to (sourceRare.available && !sourceRare.present &&
+                            admissionGuard.evaluate(fullGeneration.copy(alternatives = all, localSearch = LocalSearchEvidence.NONE), candidate).allowed)
+                    }
+                }
+                result["fullTokenGenerationNanos"] = System.nanoTime() - generationStarted
                 result["fullTokenGeneration"] = candidate(fullGeneration)
-                result["localDecision"] = LocalCorrectionPolicy.decide(fullGeneration, language)?.canonicalKey
+                if ((mode == "joint-ready" || productionMode)) {
+                    val ownedPrefix = (if (prefix.isNotEmpty()) "$prefix " else "").takeLast(128)
+                    result["jointModelScores"] = listOf(experiments.jointOriginalScore(ownedPrefix, typed)) +
+                        fullGeneration.jointSearch.alternatives.map { experiments.jointScore(ownedPrefix, typed, it) }
+                    result["jointSearch"] = mapOf("completion" to fullGeneration.jointSearch.completion.name,
+                        "alternatives" to fullGeneration.jointSearch.alternatives.map(::item))
+                    result["jointTargetKnown"] = fullGeneration.jointSearch.alternatives.associate { proposal ->
+                        proposal.canonicalKey to morphology.lookup(language, proposal.terminalKey).present
+                    }
+                }
+                if (mode == "joint-export") {
+                    val joint = generator.generateJointPool(typed, language, fullGeneration)
+                    val compared = (listOf(typed) + joint.alternatives.map { it.text }).distinct()
+                    result["jointSearch"] = mapOf("completion" to joint.completion.name,
+                        "alternatives" to joint.alternatives.map(::item))
+                    result["jointAdmission"] = joint.alternatives.associate { proposal ->
+                        val publicWord = PublicOriginalProtection.evaluate(fullGeneration, proposal, rareWords)
+                        proposal.text to (publicWord.allowed && admissionGuard.evaluateRefinement(
+                            fullGeneration.copy(alternatives = joint.alternatives), proposal, compared).allowed)
+                    }
+                }
+                if (experiments.rescueReady) {
+                    val ownedPrefix = (if (prefix.isNotEmpty()) "$prefix " else "").takeLast(128)
+                    result["rescueModelScores"] = listOf(experiments.rescueOriginalScore(ownedPrefix, typed)) +
+                        fullGeneration.jointSearch.alternatives.map { experiments.rescueScore(ownedPrefix, typed, it) }
+                }
+                // Match the worker's separate manual reply; it never supplies automatic evidence.
+                val manualStarted = System.nanoTime()
+                val manualSearch = generator.generateManualPool(typed, language, baselineGeneration, enabled = true)
+                stageTimings["manualSearch"] = System.nanoTime() - manualStarted
+                result["manualSearchGeneration"] = manualSearch?.let(::candidate)
+                val localDecision = LocalCorrectionPolicy.decide(fullGeneration, language)?.canonicalKey
+                result["localDecision"] = localDecision
+                result["compactPolicyCandidate"] = experiments.compactAutomaticCandidate(
+                    prefix, fullGeneration, language)?.terminalKey
+                val sourceMorphology = if (language == KeyboardLanguage.RUSSIAN)
+                    morphology.lookup(language, TokenUnicode.folded(typed)) else null
+                result["compactSourceMorphology"] = sourceMorphology?.let {
+                    mapOf("available" to it.available, "present" to it.present)
+                }
+                val compactCandidates = if (language == KeyboardLanguage.RUSSIAN && localDecision == null &&
+                    !fullGeneration.isValidWord && fullGeneration.protectedReason == null &&
+                    fullGeneration.localSearch.completion == CandidateCompletion.COMPLETE)
+                    fullGeneration.localSearch.alternatives else emptyList()
+                result["compactScores"] = compactCandidates.map { scored ->
+                    val rankerScore = experiments.rankScore(prefix, typed, scored)
+                    val contextScore = experiments.contextScore(prefix, scored.text, language)
+                    val admission = admissionGuard.evaluate(fullGeneration, scored)
+                    mapOf("text" to scored.text, "canonicalKey" to scored.canonicalKey,
+                        "terminalKey" to scored.terminalKey, "rankerScore" to rankerScore,
+                        "contextScore" to contextScore, "combinedScore" to rankerScore + contextScore,
+                        "strictAdmissionAllowed" to admission.allowed,
+                        "strictAdmissionRefusal" to admission.refusal?.name)
+                }
                 val localRequest = controller.beginCandidateRequest(index.toLong() + 1, language)
                 result["requestToken"] = localRequest?.token
+                val stagedMode = (mode == "joint-ready" || productionMode)
+                val actualBaseline = localRequest?.let {
+                    if (it.token == typed) baselineGeneration else generator.generate(it.token, language)
+                }
                 val generation = localRequest?.let {
-                    if (it.token == typed) fullGeneration else generator.generate(it.token, language)
+                    if (it.token == typed) fullGeneration else if (stagedMode) {
+                        val recoveredActual = generator.generateRecovery(it.token, language, actualBaseline!!)
+                        if (mode == "joint-ready" || JointQualification.enabled(language, it.token.length))
+                            recoveredActual.copy(jointSearch = generator.generateJointPool(it.token, language, recoveredActual),
+                                jointEvaluated = true) else recoveredActual
+                    } else actualBaseline!!
+                }
+                val actualManual = localRequest?.let {
+                    if (it.token == typed) manualSearch else
+                        generator.generateManualPool(it.token, language, actualBaseline!!, enabled = true)
                 }
                 result["actualRequestGeneration"] = generation?.let(::candidate)
                 result["actualOriginal"] = generation?.original ?: controller.state.composing?.typedWord
-                result["candidatesAccepted"] = if (localRequest != null) controller.acceptCandidates(
-                    LocalCandidateReply(localRequest.sessionId, localRequest.revision, localRequest.requestId,
-                        generation!!)) else null
-                val modelRequest = controller.beginModelRanking(index.toLong() + 1)
+                val rankingStarted = System.nanoTime()
+                result["candidatesAccepted"] = if (localRequest != null) {
+                    val staged = stagedMode
+                    val accepted = controller.acceptCandidates(LocalCandidateReply(localRequest.sessionId, localRequest.revision,
+                        localRequest.requestId, if (staged) actualBaseline!! else generation!!,
+                        manualGeneration = actualManual, isFinal = !staged))
+                    if (staged && accepted) controller.acceptRecoveryCandidates(LocalCandidateReply(localRequest.sessionId,
+                        localRequest.revision, localRequest.requestId, generation!!, manualGeneration = actualManual,
+                        stage = CandidateStage.RECOVERY)) else accepted
+                } else null
+                stageTimings["controllerCandidateRanking"] = System.nanoTime() - rankingStarted
+                val modelRequest = if (mode.startsWith("refinement")) null else controller.beginModelRanking(index.toLong() + 1)
                 result["actualModelRequest"] = modelRequest?.let { mapOf(
                     "sessionId" to it.token.sessionId, "revision" to it.token.revision,
                     "requestId" to it.token.requestId, "prefix" to it.prefix,
@@ -248,8 +629,8 @@ object FinalProductSpellingReplay {
                     return@forEachIndexed
                 }
                 result["modelAdmission"] = if (modelRequest == null) {
-                    check(deliveries[id] == null) { "DELIVERY_FOR_NO_REQUEST" }; "NO_CURRENT_MODEL_REQUEST"
-                } else if (mode == "unavailable") {
+                    if (!mode.startsWith("refinement")) check(deliveries[id] == null) { "DELIVERY_FOR_NO_REQUEST" }; "NO_CURRENT_MODEL_REQUEST"
+                } else if (mode == "unavailable" || mode == "recovery" || jointPipelineMode) {
                     result["modelReplyAccepted"] = controller.acceptModelRanking(ScoringReply(
                         modelRequest.token, ScoringCode.UNAVAILABLE, 0, emptyList()))
                     "EXPLICIT_MODEL_UNAVAILABLE"
@@ -284,9 +665,18 @@ object FinalProductSpellingReplay {
                             is CandidateUiItem.Original -> "ORIGINAL"
                             is CandidateUiItem.Correction -> "CORRECTION"
                             is CandidateUiItem.Punctuation -> "PUNCTUATION"
+                            is CandidateUiItem.Continuation -> "CONTINUATION"
+                            is CandidateUiItem.Tool -> "TOOL"
+                            is CandidateUiItem.Undo -> "UNDO"
                         }) })
                 val beforeBoundaryText = editor.text; editor.commands.clear()
-                result["boundaryResult"] = type(" ").name; result["afterBoundary"] = editor.snapshot()
+                val boundaryStarted = System.nanoTime()
+                result["boundaryResult"] = type(" ").name
+                stageTimings["spaceBoundary"] = System.nanoTime() - boundaryStarted
+                result["afterBoundary"] = editor.snapshot()
+                result["automaticAdmissionAllowed"] = personalization.decision?.allowed
+                result["automaticAdmissionRefusal"] = personalization.decision?.refusal?.name
+                result["automaticAdmissionCandidate"] = personalization.candidate
                 result["boundaryCommands"] = editor.commands.toList()
                 result["boundaryChangedBeyondInsertedSpace"] = editor.text != beforeBoundaryText + " "
                 result["stateAfterBoundary"] = state(controller)
@@ -296,6 +686,35 @@ object FinalProductSpellingReplay {
                     "restoreComposition" to it.restoreComposition.text,
                     "hasCorrectionCandidates" to (it.correction != null),
                     "correctionGeneration" to it.correction?.generation?.let(::candidate)) }
+                if (mode.startsWith("refinement")) {
+                    val refinement = controller.beginPreviousWordRefinement(index.toLong() + 1)
+                    result["refinementRequest"] = refinement?.let { mapOf("sessionId" to it.token.sessionId,
+                        "revision" to it.token.revision, "requestId" to it.token.requestId, "prefix" to it.prefix,
+                        "candidateIds" to it.token.candidateIds, "continuations" to it.continuations) }
+                    val correction = controller.state.lastAutoEdit?.correction
+                    result["refinementAdmission"] = if (refinement != null && correction != null)
+                        refinement.continuations.associateWith { personalization.refinementDecision(correction.generation,
+                            it, language, refinement.continuations).allowed } else emptyMap<String, Boolean>()
+                    if (mode == "refinement-ready" && refinement != null) {
+                        val delivery = deliveries[id] ?: error("MISSING_REFINEMENT_DELIVERY")
+                        check(delivery.prefix == refinement.prefix && delivery.continuations == refinement.continuations &&
+                            delivery.candidateIds == refinement.token.candidateIds && delivery.sessionId == refinement.token.sessionId &&
+                            delivery.revision == refinement.token.revision && delivery.requestId == refinement.token.requestId)
+                        consumedDeliveries.add(id)
+                        type("след")
+                        result["refinementAccepted"] = controller.acceptPreviousWordRefinement(ScoringReply(refinement.token,
+                            if (delivery.code == "OK") ScoringCode.OK else ScoringCode.UNAVAILABLE, 0, delivery.scores), editor::execute)
+                        ack()
+                        result["afterRefinement"] = editor.snapshot()
+                        check(editor.text.endsWith(" след") && controller.state.composing?.text == " след")
+                        val rootUndo = controller.candidateViewState.candidates.filterIsInstance<CandidateUiItem.Undo>().single()
+                        check(controller.selectCandidate(rootUndo.id, editor::execute) == TypingTextResult.HANDLED)
+                        ack()
+                        result["afterRootUndo"] = editor.snapshot()
+                        check(editor.text == beforeBoundaryText + " след") { "ROOT_UNDO_DIVERGENCE" }
+                        check(controller.candidateViewState.candidates.none { it is CandidateUiItem.Undo })
+                    }
+                }
                 editor.commands.clear(); val undo = controller.deletePrevious(editor::execute)
                 result["backspaceResult"] = undo.name; if (undo == TypingTextResult.HANDLED) ack()
                 result["afterBackspace"] = editor.snapshot(); result["backspaceCommands"] = editor.commands.toList()
@@ -309,7 +728,7 @@ object FinalProductSpellingReplay {
             }
             println(json(result)); if ((index + 1) % 500 == 0) System.err.println("ROWS_COMPLETED:${index + 1}")
         } }
-        if (mode == "ready") check(consumedDeliveries == deliveries.keys) { "UNCONSUMED_OR_FOREIGN_DELIVERY" }
+        if (mode in setOf("ready", "refinement-ready")) check(consumedDeliveries == deliveries.keys) { "UNCONSUMED_OR_FOREIGN_DELIVERY" }
         check(!hadError) { "ROW_ERRORS" }
     }
 }

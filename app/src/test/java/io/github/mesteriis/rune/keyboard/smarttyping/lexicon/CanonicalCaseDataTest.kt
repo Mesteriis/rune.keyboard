@@ -2,6 +2,7 @@ package io.github.mesteriis.rune.keyboard.smarttyping.lexicon
 
 import java.io.ByteArrayOutputStream
 import java.io.DataOutputStream
+import java.nio.ByteBuffer
 import java.nio.file.Files
 import java.nio.file.Path
 import org.junit.Assert.*
@@ -35,6 +36,23 @@ class CanonicalCaseDataTest {
         assertEquals(CanonicalCase("Москва", true), data.lookup("москва"))
         assertNull(data.lookup("unknown"))
         assertEquals("CanonicalCase(redacted)", data.lookup("москва").toString())
+    }
+
+    @Test
+    fun `packaged fast path checks framing and performs indexed lookup`() {
+        val bytes = asset(listOf(
+            Triple("london", "London", true),
+            Triple("москва", "Москва", true),
+        ))
+        val data = CanonicalCaseData.openPackaged(bytes)
+        assertEquals(CanonicalCase("Москва", true), data.lookup("москва"))
+
+        assertThrows(IllegalArgumentException::class.java) {
+            CanonicalCaseData.openPackaged(bytes.copyOf().also { it[0] = 0 })
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            CanonicalCaseData.openPackaged(bytes.copyOf().also { ByteBuffer.wrap(it).putInt(16, 0) })
+        }
     }
 
     @Test

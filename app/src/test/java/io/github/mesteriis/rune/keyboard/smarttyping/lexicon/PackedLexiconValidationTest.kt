@@ -9,6 +9,36 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class PackedLexiconValidationTest {
+    @Test fun `packaged fast path trusts signed asset contents but still checks identity sizes and headers`() {
+        val fixture = PackedFixture.build(listOf("aa", "ab", "ba"))
+        val trusted = fixture.trusted()
+        val ready = PackedLexiconData.openPackaged(
+            trusted,
+            PackedFixture.readOnly(fixture.trie),
+            PackedFixture.readOnly(fixture.lengths),
+            PackedFixture.readOnly(fixture.ranks),
+        )
+        assertTrue(ready is PackedLexiconLoad.Ready)
+        val reader = PackedCandidateLexicon(listOf((ready as PackedLexiconLoad.Ready).lexicon))
+        assertEquals(ExactMembership.PRESENT,
+            reader.exact(KeyboardLanguage.ENGLISH, "ab", CandidateSearchControl { false }))
+
+        assertFailure(PackedLexiconData.openPackaged(
+            trusted.copy(expectedSha256 = "0".repeat(64)),
+            PackedFixture.readOnly(fixture.trie),
+            PackedFixture.readOnly(fixture.lengths),
+            PackedFixture.readOnly(fixture.ranks),
+        ), PackedLoadFailure.MANIFEST)
+
+        val badHeader = fixture.trie.copyOf().also { fixture.put(it, 0, 0) }
+        assertFailure(PackedLexiconData.openPackaged(
+            trusted,
+            PackedFixture.readOnly(badHeader),
+            PackedFixture.readOnly(fixture.lengths),
+            PackedFixture.readOnly(fixture.ranks),
+        ), PackedLoadFailure.HEADER)
+    }
+
     @Test fun `trusted identity is checked before accepting self consistent swapped assets`() {
         val fixture = PackedFixture.build(listOf("a", "ab", "é", "ё", "😀"))
         val original = fixture.trusted()

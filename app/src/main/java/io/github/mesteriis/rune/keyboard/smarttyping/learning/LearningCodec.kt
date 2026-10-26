@@ -27,20 +27,23 @@ object LearningCodec {
         validate(snapshot)
         val bytes = ByteArrayOutputStream()
         DataOutputStream(bytes).use { out ->
-            out.writeInt(0x524c4231); out.writeInt(snapshot.evidence.size)
+            out.writeInt(MAGIC_V2); out.writeInt(snapshot.evidence.size)
             snapshot.evidence.forEach { e ->
                 out.writeInt(e.language.ordinal); out.writeUTF(e.originalHash); out.writeUTF(e.expectedHash)
                 out.writeInt(e.source.ordinal); out.writeInt(e.pattern?.ordinal ?: -1)
                 out.writeBoolean(e.holdout); out.writeBoolean(e.trains); out.writeBoolean(e.conflicted); out.writeBoolean(e.original != null)
                 if (e.original != null) { out.writeUTF(e.original); out.writeUTF(checkNotNull(e.expected)) }
             }
+            writePolicy(out, snapshot.activePolicy)
+            out.writeBoolean(snapshot.rollbackPolicy != null)
+            snapshot.rollbackPolicy?.let { writePolicy(out, it) }
         }
         return bytes.toByteArray().also { require(it.size <= MAX_BYTES) }
     }
     fun decode(bytes: ByteArray): LearningSnapshot {
         require(bytes.size <= MAX_BYTES)
         return DataInputStream(ByteArrayInputStream(bytes)).use { input ->
-            require(input.readInt() == 0x524c4231)
+            val magic = input.readInt(); require(magic == MAGIC_V1 || magic == MAGIC_V2)
             val size = input.readInt(); require(size in 0..LearningModel.MAX_EVIDENCE)
             val rows = List(size) {
                 val language = KeyboardLanguage.entries.getOrNull(input.readInt()) ?: error("LEARNING_LANGUAGE")
@@ -53,10 +56,39 @@ object LearningCodec {
                 LearningEvidence(language, fromHash, toHash, source, pattern, holdout, trains,
                     if (raw) input.readUTF() else null, if (raw) input.readUTF() else null, conflicted)
             }
+            val snapshot = if (magic == MAGIC_V1) {
+                val legacy = LearningSnapshot(rows)
+                legacy.copy(activePolicy = legacy.candidatePolicy())
+            } else {
+                val active = readPolicy(input)
+                val hasRollback = input.readUnsignedByte().also { require(it in 0..1) } == 1
+                LearningSnapshot(rows, active, if (hasRollback) readPolicy(input) else null)
+            }
             require(input.read() == -1)
-            LearningSnapshot(rows).also(::validate)
+            snapshot.also(::validate)
         }
     }
+
+    private fun writePolicy(out: DataOutputStream, policy: LearningPatternPolicy) {
+        val entries = policy.counts.entries.sortedWith(compareBy({ it.key.first.ordinal }, { it.key.second.ordinal }))
+        out.writeInt(entries.size)
+        entries.forEach { (key, count) ->
+            out.writeInt(key.first.ordinal); out.writeInt(key.second.ordinal); out.writeInt(count)
+        }
+    }
+
+    private fun readPolicy(input: DataInputStream): LearningPatternPolicy {
+        val size = input.readInt(); require(size in 0..MAX_POLICY_ENTRIES)
+        val counts = LinkedHashMap<Pair<KeyboardLanguage, TypoPattern>, Int>()
+        repeat(size) {
+            val language = KeyboardLanguage.entries.getOrNull(input.readInt()) ?: error("LEARNING_POLICY_LANGUAGE")
+            val pattern = TypoPattern.entries.getOrNull(input.readInt()) ?: error("LEARNING_POLICY_PATTERN")
+            val count = input.readInt(); require(count in 1..LearningModel.MAX_EVIDENCE)
+            require(counts.put(language to pattern, count) == null)
+        }
+        return LearningPatternPolicy(counts)
+    }
+
     private fun validate(snapshot: LearningSnapshot) {
         require(snapshot.evidence.size <= LearningModel.MAX_EVIDENCE)
         val keys = HashSet<String>()
@@ -76,5 +108,16 @@ object LearningCodec {
                 require(LearningModel.classify(e.original, expected) == e.pattern)
             }
         }
+        validatePolicy(snapshot.activePolicy)
+        snapshot.rollbackPolicy?.let(::validatePolicy)
     }
+
+    private fun validatePolicy(policy: LearningPatternPolicy) {
+        require(policy.counts.size <= MAX_POLICY_ENTRIES)
+        require(policy.counts.values.all { it in 1..LearningModel.MAX_EVIDENCE })
+    }
+
+    private const val MAGIC_V1 = 0x524c4231
+    private const val MAGIC_V2 = 0x524c4232
+    private val MAX_POLICY_ENTRIES = KeyboardLanguage.entries.size * TypoPattern.entries.size
 }

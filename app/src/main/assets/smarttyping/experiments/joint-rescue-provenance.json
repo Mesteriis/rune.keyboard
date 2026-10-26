@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "source": "Public Russian Wikipedia only; same pinned corpus and attribution as the primary joint model.",
+  "model": {
+    "asset": "ru-joint-rescue-ranker.bin",
+    "bytes": 39444,
+    "sha256": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+    "format": "RET2",
+    "features": 95,
+    "trees": 128,
+    "depth": 6
+  },
+  "policy": {
+    "asset": "ru-joint-rescue-policy.json",
+    "sha256": "ebdb0e83f3c4ed3476f5b317e31619415ca020d9703cd3d6900b9e8ac5c4701d"
+  },
+  "training": {
+    "trainingGroups": 5492,
+    "calibrationGroups": 3511,
+    "rankerSha256": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+    "trainRowsSha256": "a67ee9d103851f8b5c54e4059338a60e1cd5b8776e22440057eb48f07885bab9",
+    "trainExportSha256": "09a01ebcc7e5a683854f8a18d8c88a0b0c83a12d1e56af5380515797517ac19f",
+    "calibrationRowsSha256": "09089d6d173268f5908a7b320a99dfd5f6778a672f09baa67a3fc92c785421ff",
+    "calibrationExportSha256": "ecd92c00756328798542aed1ce1c22fff8ddb10a0dc2c83e42fc9ca6510a7dff",
+    "parameters": {
+      "iterations": 128,
+      "depth": 6,
+      "learningRate": 0.05,
+      "seed": 25102026
+    },
+    "containsPrivateText": false
+  },
+  "independentAcquisition": {
+    "passed": true,
+    "gate": "New acquisitions >=99%, >=100 correct, >=20 families; no control changes, old correct-to-wrong, old correct abstentions, prefix changes or Undo failures",
+    "metrics": {
+      "short": {
+        "rows": 25,
+        "typos": 25,
+        "controls": 0,
+        "baselineCorrect": 2,
+        "baselineWrong": 0,
+        "replacements": 2,
+        "correct": 2,
+        "wrong": 0,
+        "newCorrect": 0,
+        "newCorrectFamilies": 0,
+        "baselineCorrectToWrong": 0,
+        "baselineCorrectAbstained": 0,
+        "wrongResolved": 0,
+        "controlChanges": 0,
+        "undoFailures": 0,
+        "prefixChanges": 0,
+        "precision": 1.0,
+        "passed": false
+      },
+      "long": {
+        "rows": 4763,
+        "typos": 3763,
+        "controls": 1000,
+        "baselineCorrect": 2375,
+        "baselineWrong": 14,
+        "replacements": 2515,
+        "correct": 2501,
+        "wrong": 14,
+        "newCorrect": 126,
+        "newCorrectFamilies": 107,
+        "baselineCorrectToWrong": 0,
+        "baselineCorrectAbstained": 0,
+        "wrongResolved": 0,
+        "controlChanges": 0,
+        "undoFailures": 0,
+        "prefixChanges": 0,
+        "precision": 0.9944333996023856,
+        "passed": false
+      }
+    },
+    "acquisition": {
+      "correct": 126,
+      "wrong": 0,
+      "precision": 1.0,
+      "passed": true
+    },
+    "policySha256": "ebdb0e83f3c4ed3476f5b317e31619415ca020d9703cd3d6900b9e8ac5c4701d",
+    "rowsSha256": "080a880598461948f49f7635fd0fb1fd6ebf53eea7f218368ba3404100420723"
+  },
+  "limitations": [
+    "Only additional long Russian corrections after both legacy and primary joint abstention; no override of an existing replacement.",
+    "Correct and rare originals, protected words and explicit personal rejections retain their vetoes.",
+    "The independent source adds 126 correct replacements and zero wrong ones; 14 pre-existing errors remain.",
+    "Short rare originals are not automatically rewritten; their manual suggestions can be reordered.",
+    "No private user text or touch records used in model fitting or threshold selection."
+  ],
+  "nativeEquivalentReplay": {
+    "stages": "Baseline, recovery, manual generation; actual controller token including automatic case changes",
+    "baselineMode": "joint-primary-only",
+    "candidateMode": "joint-production",
+    "supersedes": "Initial one-phase replay and intermediate case-incomplete staged replay"
+  },
+  "manualValidation": {
+    "passed": true,
+    "rows": 867,
+    "oldTop1": 444,
+    "newTop1": 483,
+    "oldTop2": 559,
+    "newTop2": 628,
+    "scope": "Long typos retained by both policies, at least two baseline alternatives; default public ordering versus qualified display-only model ordering."
+  },
+  "previousHoldoutRegression": {
+    "passed": true,
+    "metrics": {
+      "short": {
+        "rows": 22,
+        "typos": 22,
+        "controls": 0,
+        "baselineCorrect": 0,
+        "baselineWrong": 0,
+        "replacements": 0,
+        "correct": 0,
+        "wrong": 0,
+        "newCorrect": 0,
+        "newCorrectFamilies": 0,
+        "baselineCorrectToWrong": 0,
+        "baselineCorrectAbstained": 0,
+        "wrongResolved": 0,
+        "controlChanges": 0,
+        "undoFailures": 0,
+        "prefixChanges": 0,
+        "precision": null,
+        "passed": false
+      },
+      "long": {
+        "rows": 4777,
+        "typos": 3777,
+        "controls": 1000,
+        "baselineCorrect": 2369,
+        "baselineWrong": 15,
+        "replacements": 2499,
+        "correct": 2484,
+        "wrong": 15,
+        "newCorrect": 115,
+        "newCorrectFamilies": 101,
+        "baselineCorrectToWrong": 0,
+        "baselineCorrectAbstained": 0,
+        "wrongResolved": 0,
+        "controlChanges": 0,
+        "undoFailures": 0,
+        "prefixChanges": 0,
+        "precision": 0.9939975990396158,
+        "passed": false
+      }
+    },
+    "acquisition": {
+      "correct": 115,
+      "wrong": 0,
+      "precision": 1.0,
+      "passed": true
+    }
+  },
+  "reproduction": {
+    "modelBytesIdentical": true,
+    "calibrationScoresIdentical": true,
+    "trainingReceiptIdentical": true,
+    "frozenPolicyIdentical": true
+  }
+}

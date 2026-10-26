@@ -16,7 +16,19 @@ data class LearningEvidence(
 ) {
     override fun toString() = "LearningEvidence(redacted)"
 }
-data class LearningSnapshot(val evidence: List<LearningEvidence> = emptyList()) {
+
+/** Content-free, bounded policy that is safe to persist beside the evidence ledger. */
+data class LearningPatternPolicy(
+    val counts: Map<Pair<KeyboardLanguage, TypoPattern>, Int> = emptyMap(),
+) {
+    override fun toString() = "LearningPatternPolicy(entries=${counts.size})"
+}
+
+data class LearningSnapshot(
+    val evidence: List<LearningEvidence> = emptyList(),
+    val activePolicy: LearningPatternPolicy = LearningPatternPolicy(),
+    val rollbackPolicy: LearningPatternPolicy? = null,
+) {
     val examples get() = evidence.filter { it.original != null }
     /** Contradictory originals and all explicit vetoes abstain, including previously learned evidence. */
     fun counts(): Map<Pair<KeyboardLanguage, TypoPattern>, Int> {
@@ -27,6 +39,8 @@ data class LearningSnapshot(val evidence: List<LearningEvidence> = emptyList()) 
             rows.map { it.expectedHash }.distinct().size.coerceAtMost(LearningModel.MAX_EVIDENCE)
         }
     }
+
+    fun candidatePolicy() = LearningPatternPolicy(counts())
 }
 
 /** Explicit feedback only. The bridge must configure current editor eligibility before every event. */
@@ -35,6 +49,8 @@ class LearningModel {
     private var learn = false
     private var eligible = false
     private val evidence = ArrayList<LearningEvidence>()
+    private var activePolicy = LearningPatternPolicy()
+    private var rollbackPolicy: LearningPatternPolicy? = null
     fun configure(collectExamples: Boolean, learnPatterns: Boolean, eligible: Boolean) {
         collect = collectExamples; learn = learnPatterns; this.eligible = eligible
     }
@@ -74,10 +90,36 @@ class LearningModel {
         return true
     }
     fun preference(original: String, candidate: String, language: KeyboardLanguage): Double =
-        if (!eligible || !learn) 0.0 else preference(snapshot(), original, candidate, language)
-    fun snapshot() = LearningSnapshot(evidence.toList())
-    fun restore(snapshot: LearningSnapshot) { evidence.clear(); evidence.addAll(snapshot.evidence) }
-    fun reset() { evidence.clear() }
+        if (!eligible || !learn) 0.0 else preference(activePolicy, original, candidate, language)
+    fun snapshot() = LearningSnapshot(evidence.toList(), activePolicy, rollbackPolicy)
+    fun restore(snapshot: LearningSnapshot) {
+        evidence.clear(); evidence.addAll(snapshot.evidence)
+        activePolicy = snapshot.activePolicy
+        rollbackPolicy = snapshot.rollbackPolicy
+    }
+    /** Pure state rotation. Callers must durably commit the returned snapshot before publication. */
+    fun promotedSnapshot(expected: LearningSnapshot): LearningSnapshot? {
+        if (snapshot() != expected) return null
+        val candidate = expected.candidatePolicy()
+        if (candidate == expected.activePolicy) return null
+        return expected.copy(activePolicy = candidate, rollbackPolicy = expected.activePolicy)
+    }
+    fun rollbackSnapshot(expected: LearningSnapshot): LearningSnapshot? {
+        if (snapshot() != expected) return null
+        val rollback = expected.rollbackPolicy ?: return null
+        return expected.copy(activePolicy = rollback, rollbackPolicy = null)
+    }
+    internal fun promoteCandidate(expected: LearningSnapshot): Boolean {
+        val promoted = promotedSnapshot(expected) ?: return false
+        restore(promoted)
+        return true
+    }
+    internal fun rollback(): Boolean {
+        val restored = rollbackSnapshot(snapshot()) ?: return false
+        restore(restored)
+        return true
+    }
+    fun reset() { evidence.clear(); activePolicy = LearningPatternPolicy(); rollbackPolicy = null }
     companion object {
         const val MAX_EVIDENCE = 512
         const val MIN_EVIDENCE = 3
@@ -90,11 +132,13 @@ class LearningModel {
         internal fun digest(value: String) = MessageDigest.getInstance("SHA-256").digest(value.toByteArray(Charsets.UTF_8)).joinToString("") { "%02x".format(it) }
         fun holdout(language: KeyboardLanguage, expected: String): Boolean =
             digest(language.name + ":" + checkNotNull(normalize(expected))).take(8).toLong(16) % 5L == 0L
-        fun preference(snapshot: LearningSnapshot, original: String, candidate: String, language: KeyboardLanguage): Double {
+        fun preference(snapshot: LearningSnapshot, original: String, candidate: String, language: KeyboardLanguage): Double =
+            preference(snapshot.activePolicy, original, candidate, language)
+        fun preference(policy: LearningPatternPolicy, original: String, candidate: String, language: KeyboardLanguage): Double {
             val from = normalize(original) ?: return 0.0
             val to = normalize(candidate) ?: return 0.0
             val pattern = classify(from, to) ?: return 0.0
-            val count = snapshot.counts()[language to pattern] ?: 0
+            val count = policy.counts[language to pattern] ?: 0
             return if (count < MIN_EVIDENCE) 0.0 else (count * 0.025).coerceAtMost(MAX_BONUS)
         }
         /** Exactly one unambiguous edit. Multiple deletion positions in a run form one repetition. */

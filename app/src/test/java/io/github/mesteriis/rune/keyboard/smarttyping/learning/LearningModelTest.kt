@@ -49,10 +49,16 @@ class LearningModelTest {
         training.take(2).forEach { model.record(it + "z", it, en, FeedbackSource.ACCEPTED) }
         assertEquals(0.0, model.preference("plantz", "plant", en), 0.0)
         model.record(training[2] + "z", training[2], en, FeedbackSource.ACCEPTED)
+        assertEquals(0.0, model.preference("plantz", "plant", en), 0.0)
+        assertTrue(model.promoteCandidate(model.snapshot()))
         assertTrue(model.preference("plantz", "plant", en) > 0.0)
         assertEquals(0.0, model.preference("plantz", "plant", KeyboardLanguage.RUSSIAN), 0.0)
         model.record(training[0] + "z", training[0], en, FeedbackSource.REJECTED)
+        assertTrue(model.preference("plantz", "plant", en) > 0.0)
+        assertTrue(model.promoteCandidate(model.snapshot()))
         assertEquals(0.0, model.preference("plantz", "plant", en), 0.0)
+        assertTrue(model.rollback())
+        assertTrue(model.preference("plantz", "plant", en) > 0.0)
         model.configure(true, true, false)
         assertEquals(0.0, model.preference("plantz", "plant", en), 0.0)
     }
@@ -69,8 +75,11 @@ class LearningModelTest {
         val model = enabled()
         val training = listOf("cat", "dog", "bird", "apple", "tree", "blue", "green").filterNot { LearningModel.holdout(en, it) }.take(3)
         training.forEach { model.record(it + "z", it, en, FeedbackSource.ACCEPTED) }
+        assertTrue(model.promoteCandidate(model.snapshot()))
         assertTrue(model.preference("plantz", "plant", en) > 0.0)
         model.record(training[0] + "z", "different", en, FeedbackSource.ACCEPTED)
+        assertTrue(model.preference("plantz", "plant", en) > 0.0)
+        assertTrue(model.promoteCandidate(model.snapshot()))
         assertEquals(0.0, model.preference("plantz", "plant", en), 0.0)
         assertFalse(model.record("worrd", "word", en, FeedbackSource.MANUAL_RETYPE) { _, _ -> error("Unavailable") })
     }

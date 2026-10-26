@@ -100,9 +100,13 @@ class TypingToolsInstrumentedTest {
         try {
             ActivityScenario.launch(QualityDashboardActivity::class.java).use { scenario ->
                 scenario.onActivity { activity ->
-                    assertTrue(activity.findViewById<TextView>(R.id.quality_actions).text.contains(
+                    val actions = activity.findViewById<TextView>(R.id.quality_actions).text
+                    assertTrue(actions.contains(
                         activity.getString(R.string.quality_count_format,
                             activity.getString(R.string.quality_abbreviation_picked), 1L)))
+                    assertTrue(actions.contains(
+                        activity.getString(R.string.quality_count_format,
+                            activity.getString(R.string.quality_manual_retype), 0L)))
                     assertTrue(activity.findViewById<Button>(R.id.quality_reset).isEnabled)
                 }
             }

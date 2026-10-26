@@ -5,7 +5,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneration
 
 /** Numeric evidence only. Calibration is not authorization to write an automatic correction. */
 data class CalibratedRanking(val candidateIds: List<Int>, val preferredId: Int, val usedModel: Boolean,
-    val refusal: RankingRefusal? = null)
+    val refusal: RankingRefusal? = null, val compactPublic: Boolean = false, val neighborRecovery: Boolean = false,
+    val jointPublic: Boolean = false, val jointRescue: Boolean = false, val wordContext: Boolean = false, val contextualPublic: Boolean = false)
 
 data class SpellingCoefficients(
     val weights: RankingWeights,

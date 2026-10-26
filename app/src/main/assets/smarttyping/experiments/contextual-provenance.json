@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "featureCount": 146,
+  "frozenPolicy": {
+    "stage": "frozen-before-new-holdout-scoring",
+    "calibrationPassed": true,
+    "minimumScore": -0.10238100540254857,
+    "minimumMargin": 0.038424043936311734,
+    "requiredPrecision": 0.95,
+    "minimumNewCorrect": 100,
+    "modelSha256": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+    "holdoutRowsSha256": "bcbaa61dd8dd44c77148af494702fa1433c5f56660d6f14df9c4394052cfcb45",
+    "planSha256": "b6a9819d86d708d506d77f9bf66bac775573d8e2921484e095aedb1a730996aa",
+    "calibrationMetrics": {
+      "newCorrect": 605,
+      "newWrong": 14,
+      "newPrecision": 0.9773828756058158,
+      "controlChanges": 0,
+      "priorCorrectLosses": 0,
+      "netCorrect": 605
+    }
+  },
+  "offlineResult": {
+    "independentCandidateGatePassed": true,
+    "productQualified": false,
+    "reference108Metrics": {
+      "newCorrect": 570,
+      "newWrong": 8,
+      "newPrecision": 0.986159169550173,
+      "controlChanges": 0,
+      "priorCorrectLosses": 0,
+      "netCorrect": 570
+    },
+    "reference108RawCorrect": 5319,
+    "metrics": {
+      "newCorrect": 585,
+      "newWrong": 6,
+      "newPrecision": 0.9898477157360406,
+      "controlChanges": 0,
+      "priorCorrectLosses": 0,
+      "netCorrect": 585
+    },
+    "ranking": {
+      "totalRows": 12000,
+      "eligibleGroups": 5564,
+      "characterParityCases": 32,
+      "baselineTop1": 4728,
+      "experimentalTop1": 5356,
+      "gains": 685,
+      "losses": 57
+    },
+    "calibrationRanking": {
+      "totalRows": 12000,
+      "eligibleGroups": 5510,
+      "characterParityCases": 32,
+      "baselineTop1": 4641,
+      "experimentalTop1": 5309,
+      "gains": 738,
+      "losses": 70
+    },
+    "policySha256": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6",
+    "promotedTrainingNotQualification": true
+  },
+  "featureAndScoreParityCases": 67143,
+  "assets": {
+    "ru-contextual-ranker.bin": {
+      "bytes": 22036,
+      "sha256": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0"
+    },
+    "ru-contextual-policy.json": {
+      "bytes": 668,
+      "sha256": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6"
+    },
+    "ru-wiki.ctx": {
+      "bytes": 14912091,
+      "sha256": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b"
+    },
+    "ru-conversation.ctx": {
+      "bytes": 2083526,
+      "sha256": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6"
+    },
+    "ru-context.gram": {
+      "bytes": 39593067,
+      "sha256": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b"
+    }
+  },
+  "trainingSources": [
+    "Russian Wikipedia contributors, wikimedia/wikipedia 20231101, revision a634f78b1c435397c07001e175fa74cc4ad5e775",
+    "Tatoeba Russian CC0 training subset",
+    "Tatoeba Russian detailed export, promoted owner-authorized disclosed audit, CC-BY-2.0-FR; see contextual-tatoeba-attribution.json"
+  ],
+  "grammarData": {
+    "name": "OpenCorpora",
+    "version": "0.92",
+    "revision": "417150",
+    "license": "CC-BY-SA-3.0",
+    "url": "https://opencorpora.org/"
+  },
+  "runtimeAcceptance": "pending controller and physical-device checks"
+}

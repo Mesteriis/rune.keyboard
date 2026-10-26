@@ -73,6 +73,7 @@ class QualityDashboardActivity : ThemedActivity() {
             R.string.quality_automatic_applied, R.string.quality_explicit_undo,
             R.string.quality_correction_picked, R.string.quality_kept_original,
             R.string.quality_boundary_picked, R.string.quality_abbreviation_picked, R.string.quality_phrase_picked,
+            R.string.quality_manual_retype,
         )
         findViewById<TextView>(R.id.quality_actions).text = QualityEvent.entries.joinToString("\n") {
             getString(R.string.quality_count_format, getString(eventLabels[it.ordinal]), snapshot[it])

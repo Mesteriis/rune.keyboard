@@ -116,7 +116,9 @@ class QualityModel {
 /** A strict, fixed-size numeric schema; no arbitrary keys or text-bearing fields. */
 object QualityCodec {
     const val MAX_BYTES = 1024
-    private const val HEADER = "RUNE_QUALITY_1"
+    private const val HEADER = "RUNE_QUALITY_2"
+    private const val LEGACY_HEADER = "RUNE_QUALITY_1"
+    private const val LEGACY_EVENT_COUNT = 7
 
     fun encode(snapshot: QualitySnapshot): ByteArray =
         (HEADER + "\n" + (snapshot.events + snapshot.candidateResponseBuckets + snapshot.shadow).joinToString("\n") + "\n")
@@ -125,14 +127,21 @@ object QualityCodec {
     fun decode(bytes: ByteArray): QualitySnapshot {
         require(bytes.size <= MAX_BYTES)
         val lines = bytes.toString(Charsets.US_ASCII).split('\n')
-        val count = QualityEvent.entries.size + QualityModel.LATENCY_BUCKET_COUNT + ShadowResult.entries.size
-        require(lines.size == count + 2 && lines.first() == HEADER && lines.last().isEmpty())
+        val eventCount = when (lines.firstOrNull()) {
+            HEADER -> QualityEvent.entries.size
+            LEGACY_HEADER -> LEGACY_EVENT_COUNT
+            else -> throw IllegalArgumentException("QUALITY_HEADER")
+        }
+        require(eventCount <= QualityEvent.entries.size)
+        val count = eventCount + QualityModel.LATENCY_BUCKET_COUNT + ShadowResult.entries.size
+        require(lines.size == count + 2 && lines.last().isEmpty())
         val values = lines.drop(1).dropLast(1).map { line ->
             require(line.isNotEmpty() && line.length <= 13 && line.all { it in '0'..'9' })
             requireNotNull(line.toLongOrNull()).also { require(it <= QualityModel.MAX_COUNT) }
         }
-        val eventsEnd = QualityEvent.entries.size
+        val eventsEnd = eventCount
         val latencyEnd = eventsEnd + QualityModel.LATENCY_BUCKET_COUNT
-        return QualitySnapshot(values.take(eventsEnd), values.subList(eventsEnd, latencyEnd), values.drop(latencyEnd))
+        val events = values.take(eventsEnd) + List(QualityEvent.entries.size - eventCount) { 0L }
+        return QualitySnapshot(events, values.subList(eventsEnd, latencyEnd), values.drop(latencyEnd))
     }
 }

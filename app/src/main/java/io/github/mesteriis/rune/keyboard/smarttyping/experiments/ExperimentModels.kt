@@ -13,9 +13,19 @@ import kotlin.math.tanh
 /** Opt-in manual-ranking adjustments only. This type never admits automatic edits. */
 class ExperimentModels internal constructor() {
     @Volatile private var ranker: ObliviousTreeRanker? = null
+    @Volatile private var legacyAutomaticRanker: ObliviousTreeRanker? = null
     @Volatile private var neural: CompactCharacterModel? = null
     @Volatile private var tapModel: CompactCharacterModel? = null
+    @Volatile private var recoveryRanker: ObliviousTreeRanker? = null
+    @Volatile private var jointRanker: ObliviousTreeRanker? = null
+    @Volatile private var rescueRanker: ObliviousTreeRanker? = null
+    @Volatile private var contextualRanker: ContextualRanker? = null
+    val contextualReady: Boolean get() = contextualRanker != null && contextReady
+    val rescueReady: Boolean get() = rescueRanker != null
+    val jointReady: Boolean get() = jointRanker != null
+    val recoveryReady: Boolean get() = recoveryRanker != null
     val learnedReady: Boolean get() = ranker != null
+    val legacyAutomaticReady: Boolean get() = legacyAutomaticRanker != null
     val contextReady: Boolean get() = neural != null
     val tapReady: Boolean get() = tapModel != null
 
@@ -28,7 +38,12 @@ class ExperimentModels internal constructor() {
         personalBonus: Double = 0.0,
         touchBonus: Double = 0.0,
     ): Double {
-        val weights = ranker ?: return 0.0
+        return rankScore(ranker, context, original, candidate, personalBonus, touchBonus)
+    }
+
+    private fun rankScore(weights: ObliviousTreeRanker?, context: String, original: String,
+        candidate: GeneratedCandidate, personalBonus: Double = 0.0, touchBonus: Double = 0.0): Double {
+        weights ?: return 0.0
         if (!supports(candidate.language) || original.length !in 1..128 || candidate.text.length !in 1..128) return 0.0
         val features = rankFeatures(context, original, candidate.text, candidate.unitDistance,
             candidate.frequencyRank, candidate.editFeatures.editCost.toDouble(), candidate.isFallback)
@@ -51,6 +66,64 @@ class ExperimentModels internal constructor() {
         return ((total / word.length + 3.0) * 0.25).coerceIn(-0.5, 0.5)
     }
 
+    internal fun loadJointRanker(bytes: ByteArray) { jointRanker = ObliviousTreeRanker.decode(bytes) }
+    internal fun loadContextualRanker(ranker: ContextualRanker) { contextualRanker = ranker }
+    internal fun contextualScore(context: String, original: String, candidate: GeneratedCandidate): Double =
+        contextualRanker?.score(this, context, original, candidate) ?: Double.NaN
+    internal fun contextualOriginalScore(context: String, original: String): Double =
+        contextualRanker?.originalScore(this, context, original) ?: Double.NaN
+
+    internal fun loadRescueRanker(bytes: ByteArray) { rescueRanker = ObliviousTreeRanker.decode(bytes) }
+    internal fun rescueScore(context: String, original: String, candidate: GeneratedCandidate): Double =
+        if (rescueRanker == null) Double.NaN else rankScore(rescueRanker, context, original, candidate) +
+            contextScore(context, candidate.text, candidate.language)
+    internal fun rescueOriginalScore(context: String, original: String): Double {
+        val weights = rescueRanker ?: return Double.NaN
+        val features = rankFeatures(context, original, original, 0, Int.MAX_VALUE, 0.0, false)
+        return 0.8 * tanh(weights.score(features) / 4.0) + contextScore(context, original, KeyboardLanguage.RUSSIAN)
+    }
+
+    internal fun jointScore(context: String, original: String, candidate: GeneratedCandidate): Double =
+        if (jointRanker == null) Double.NaN else rankScore(jointRanker, context, original, candidate) +
+            contextScore(context, candidate.text, candidate.language)
+
+    internal fun jointOriginalScore(context: String, original: String): Double {
+        val weights = jointRanker ?: return Double.NaN
+        val features = rankFeatures(context, original, original, 0, Int.MAX_VALUE, 0.0, false)
+        return 0.8 * tanh(weights.score(features) / 4.0) + contextScore(context, original, KeyboardLanguage.RUSSIAN)
+    }
+
+    internal fun loadRecoveryRanker(bytes: ByteArray) { recoveryRanker = ObliviousTreeRanker.decode(bytes) }
+
+    internal fun recoveryScore(context: String, original: String, candidate: GeneratedCandidate): Double =
+        if (recoveryRanker == null) Double.NaN else rankScore(recoveryRanker, context, original, candidate) +
+            contextScore(context, candidate.text, candidate.language)
+
+    internal fun recoveryOriginalScore(context: String, original: String): Double {
+        val weights = recoveryRanker ?: return Double.NaN
+        val features = rankFeatures(context, original, original, 0, Int.MAX_VALUE, 0.0, false)
+        return 0.8 * tanh(weights.score(features) / 4.0) + contextScore(context, original, KeyboardLanguage.RUSSIAN)
+    }
+
+    internal fun recoveryAutomaticCandidate(context: String, generation: io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneration,
+        language: KeyboardLanguage): GeneratedCandidate? = NeighborRecoveryPolicy.select(this, context, generation, language)
+
+    internal fun compactScore(context: String, original: String, candidate: GeneratedCandidate,
+        legacy: Boolean): Double = rankScore(if (legacy) legacyAutomaticRanker else ranker,
+        context, original, candidate) + contextScore(context, candidate.text, candidate.language)
+
+    internal fun compactOriginalScore(context: String, original: String,
+        language: KeyboardLanguage, legacy: Boolean): Double {
+        val weights = if (legacy) legacyAutomaticRanker else ranker
+        weights ?: return Double.NaN
+        val features = rankFeatures(context, original, original, 0, Int.MAX_VALUE, 0.0, false)
+        return 0.8 * tanh(weights.score(features) / 4.0) + contextScore(context, original, language)
+    }
+
+    internal fun compactAutomaticCandidate(context: String, generation: io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneration,
+        language: KeyboardLanguage): GeneratedCandidate? =
+        CompactAutoCorrectionPolicy.select(this, context, generation, language)
+
     /** Conditional probabilities over Russian letters, excluding the space class. */
     fun nextLetters(context: String, prefix: String, language: KeyboardLanguage): Map<Char, Double> {
         val model = tapModel ?: return emptyMap()
@@ -67,6 +140,10 @@ class ExperimentModels internal constructor() {
     /** Invalid or missing assets leave their independent experiment unavailable. Off-thread caller. */
     internal fun loadRanker(bytes: ByteArray) {
         ranker = ObliviousTreeRanker.decode(bytes)
+    }
+
+    internal fun loadLegacyAutomaticRanker(bytes: ByteArray) {
+        legacyAutomaticRanker = ObliviousTreeRanker.decode(bytes)
     }
 
     internal fun loadContext(bytes: ByteArray) {

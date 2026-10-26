@@ -54,7 +54,7 @@ internal class CandidateStripView(context: Context, private val appearance: Keyb
             val childrenChanged = cells.count { it.visibility == VISIBLE } != state.candidates.size
             cells.forEachIndexed { index, cell ->
                 val item = state.candidates.getOrNull(index)
-                cell.bind(item, item != null && item.id == state.selectedCandidateId)
+                cell.bind(item, item != null && item.id == state.selectedCandidateId, item != null && item.id == state.automaticReplacementId)
             }
             visibility = if (state.enabled) VISIBLE else GONE
             if (childrenChanged && isShown &&
@@ -80,6 +80,7 @@ internal class CandidateStripView(context: Context, private val appearance: Keyb
         onLongPressed: (String) -> Boolean,
     ) : TextView(context) {
         private var item: CandidateUiItem? = null
+        private var automaticReplacement = false
         private var pressedCandidate: CandidateUiItem? = null
         private var protectionEnabled = false
         private var longPressConsumed = false
@@ -114,13 +115,21 @@ internal class CandidateStripView(context: Context, private val appearance: Keyb
             isLongClickable = enabled && (item is CandidateUiItem.Original || item is CandidateUiItem.Correction)
         }
 
-        fun bind(item: CandidateUiItem?, selected: Boolean) {
+        fun bind(item: CandidateUiItem?, selected: Boolean, automatic: Boolean) {
+            automaticReplacement = automatic
             if (this.item != item) cancelTouch()
             this.item = item
-            val label = if (item is CandidateUiItem.Undo) context.getString(R.string.candidate_apply_undo, item.text) else item?.text.orEmpty()
+            val label = when {
+                item is CandidateUiItem.Undo -> context.getString(R.string.candidate_apply_undo, item.text)
+                automatic && item != null -> context.getString(R.string.candidate_auto_preview_label, item.text)
+                else -> item?.text.orEmpty()
+            }
+            val hint = if (automatic) context.getString(R.string.candidate_auto_preview_hint) else null
+            tooltipText = hint
+            if (android.os.Build.VERSION.SDK_INT >= 30) stateDescription = hint
             if (text.toString() != label) text = label
             isSelected = selected
-            typeface = Typeface.DEFAULT
+            typeface = if (automatic) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
             setTextColor(if (selected) appearance.text else appearance.secondaryText)
             contentDescription = item?.let {
                 context.getString(
@@ -212,7 +221,7 @@ internal class CandidateStripView(context: Context, private val appearance: Keyb
             val current = item ?: return
             val action = when (current) {
                 is CandidateUiItem.Original -> R.string.candidate_keep_original
-                is CandidateUiItem.Correction -> R.string.candidate_apply_correction
+                is CandidateUiItem.Correction -> if (automaticReplacement) R.string.candidate_apply_auto_correction else R.string.candidate_apply_correction
                 is CandidateUiItem.Tool -> R.string.candidate_apply_tool
                 is CandidateUiItem.Undo -> R.string.candidate_apply_undo
                 is CandidateUiItem.Continuation -> R.string.candidate_apply_continuation

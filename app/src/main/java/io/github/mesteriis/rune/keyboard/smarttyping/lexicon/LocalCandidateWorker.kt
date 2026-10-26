@@ -19,10 +19,14 @@ data class LocalCandidateRequest(
     val activeLanguage: KeyboardLanguage,
     val eligible: Boolean,
     val manualCandidateExpansion: Boolean = false,
+    val neighborRecoveryEnabled: Boolean = false,
+    val jointCorrectionEnabled: Boolean = false,
 ) {
     override fun toString(): String =
         "LocalCandidateRequest(sessionId=$sessionId, revision=$revision, requestId=$requestId, redacted)"
 }
+
+enum class CandidateStage { BASELINE, RECOVERY }
 
 /** Owner must still check its live session, revision, owned composition and eligibility before use. */
 data class LocalCandidateReply(
@@ -31,6 +35,8 @@ data class LocalCandidateReply(
     val requestId: Long,
     val generation: CandidateGeneration,
     val manualGeneration: CandidateGeneration? = null,
+    val stage: CandidateStage = CandidateStage.BASELINE,
+    val isFinal: Boolean = true,
 ) {
     override fun toString(): String =
         "LocalCandidateReply(sessionId=$sessionId, revision=$revision, requestId=$requestId, redacted)"
@@ -80,7 +86,7 @@ class LocalCandidateWorker internal constructor(
     private var active: Work? = null
     private var pending: Work? = null
     private var latest: Work? = null
-    private var delivery: Delivery? = null
+    private val deliveries = ArrayDeque<Delivery>(2)
     private var deliveryScheduled = false
     @Volatile private var closed = false
     @Volatile var lastFailure: LocalCandidateWorkerFailure? = null
@@ -141,7 +147,7 @@ class LocalCandidateWorker internal constructor(
         pending?.payload = null
         pending = null
         latest = null
-        delivery = null
+        deliveries.clear()
         // Keep one already-posted empty action; it may deliver a newer completed result later.
     }
 
@@ -183,51 +189,66 @@ class LocalCandidateWorker internal constructor(
                 generator.generate(it.token, it.activeLanguage, CandidateCancellation { work.cancelled.get() })
             }
         }
-        val manual = if (request != null && result != null) generator.generateManualPool(
-            request.token, request.activeLanguage, result, request.manualCandidateExpansion,
-            CandidateCancellation { work.cancelled.get() }) else null
-        val post = synchronized(lock) {
-            active = null
-            if (!closed && latest === work && !work.cancelled.get() && result != null &&
-                result.completion != CandidateCompletion.CANCELLED) {
-                delivery = Delivery(work, LocalCandidateReply(work.sessionId, work.revision, work.requestId, result, manual))
-                if (!deliveryScheduled) {
-                    deliveryScheduled = true
-                    true
-                } else false
-            } else false
+        if (request != null && result != null && !work.cancelled.get()) {
+            val staged = (request.neighborRecoveryEnabled || request.jointCorrectionEnabled) &&
+                request.activeLanguage == KeyboardLanguage.RUSSIAN
+            if (staged) publish(work, LocalCandidateReply(work.sessionId, work.revision, work.requestId,
+                result, isFinal = false))
+            val manual = generator.generateManualPool(request.token, request.activeLanguage, result,
+                request.manualCandidateExpansion, CandidateCancellation { work.cancelled.get() })
+            val recovered = if (staged) generator.generateRecovery(request.token, request.activeLanguage,
+                result, CandidateCancellation { work.cancelled.get() }) else result
+            val complete = if (request.jointCorrectionEnabled) recovered.copy(
+                jointSearch = generator.generateJointPool(request.token, request.activeLanguage, recovered,
+                    CandidateCancellation { work.cancelled.get() }), jointEvaluated = true) else recovered
+            publish(work, LocalCandidateReply(work.sessionId, work.revision, work.requestId, complete,
+                manual, if (staged) CandidateStage.RECOVERY else CandidateStage.BASELINE))
         }
-        if (post) {
-            try {
-                ownerDispatcher.execute(deliverAction)
-            } catch (_: Exception) {
-                synchronized(lock) {
-                    lastFailure = LocalCandidateWorkerFailure.OWNER_DISPATCH
-                    delivery = null
-                    deliveryScheduled = false
-                }
+        synchronized(lock) { if (active === work) active = null }
+    }
+
+    private fun publish(work: Work, reply: LocalCandidateReply) {
+        val post = synchronized(lock) {
+            if (closed || latest !== work || work.cancelled.get() ||
+                reply.generation.completion == CandidateCompletion.CANCELLED ||
+                reply.generation.neighborRecovery.completion == CandidateCompletion.CANCELLED ||
+                reply.generation.jointSearch.completion == CandidateCompletion.CANCELLED) false
+            else {
+                check(deliveries.size < 2) { "CANDIDATE_DELIVERY_BOUND" }
+                deliveries.addLast(Delivery(work, reply))
+                if (deliveryScheduled) false else { deliveryScheduled = true; true }
+            }
+        }
+        if (post) try {
+            ownerDispatcher.execute(deliverAction)
+        } catch (_: Exception) {
+            synchronized(lock) {
+                lastFailure = LocalCandidateWorkerFailure.OWNER_DISPATCH
+                deliveries.clear()
+                deliveryScheduled = false
+                work.cancelled.set(true)
             }
         }
     }
 
     private fun deliver() {
         checkOwner()
-        val ready = synchronized(lock) {
-            deliveryScheduled = false
-            val current = delivery
-            delivery = null
-            if (closed || current == null || latest !== current.work || current.work.cancelled.get()) null
-            else {
-                latest = null
-                current.reply
+        while (true) {
+            val ready = synchronized(lock) {
+                val current = deliveries.removeFirstOrNull()
+                if (current == null) deliveryScheduled = false
+                if (closed || current == null || latest !== current.work || current.work.cancelled.get()) null
+                else {
+                    if (current.reply.isFinal) latest = null
+                    current.reply
+                }
+            } ?: return
+            // Recheck identity for every callback: baseline callbacks may reentrantly cancel/submit.
+            try {
+                listener?.invoke(ready)
+            } catch (_: Exception) {
+                lastFailure = LocalCandidateWorkerFailure.OWNER_CALLBACK
             }
-        } ?: return
-        // Owner confinement makes the final guard and callback indivisible with respect to
-        // submit/cancel/close. User code runs without the worker lock and may submit reentrantly.
-        try {
-            listener?.invoke(ready)
-        } catch (_: Exception) {
-            lastFailure = LocalCandidateWorkerFailure.OWNER_CALLBACK
         }
     }
 }

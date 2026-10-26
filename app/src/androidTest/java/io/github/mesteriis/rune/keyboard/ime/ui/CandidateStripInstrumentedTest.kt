@@ -84,6 +84,28 @@ class CandidateStripInstrumentedTest {
     }
 
     @Test
+    fun automaticPreviewShowsArrowAndClearsHintWhenReturningToSuggestions() = onMain {
+        val keyboard = keyboard(instrumentation.targetContext)
+        val strip = keyboard.getChildAt(0) as ViewGroup
+        keyboard.updateCandidates(SmartTypingViewState(true, listOf(original, correction), correction.id, correction.id))
+        val cell = strip.getChildAt(1) as TextView
+        assertEquals(keyboard.context.getString(R.string.candidate_auto_preview_label, correction.text), cell.text.toString())
+        assertEquals(keyboard.context.getString(R.string.candidate_auto_preview_hint), cell.tooltipText)
+        val info = cell.createAccessibilityNodeInfo()
+        try {
+            assertEquals(keyboard.context.getString(R.string.candidate_apply_auto_correction, correction.text),
+                info.actionList.single { it.id == AccessibilityNodeInfo.ACTION_CLICK }.label)
+        } finally {
+            @Suppress("DEPRECATION")
+            info.recycle()
+        }
+        keyboard.updateCandidates(SmartTypingViewState(true, listOf(original, correction), correction.id))
+        assertEquals(correction.text, cell.text.toString())
+        assertEquals(null, cell.tooltipText)
+        if (android.os.Build.VERSION.SDK_INT >= 30) assertEquals(null, cell.stateDescription)
+    }
+
+    @Test
     fun updateDuringHeldKeyDoesNotCancelTouchOrFlushPendingRender() = onMain {
         val actions = mutableListOf<KeyboardAction>()
         val keyboard = keyboard(instrumentation.targetContext).apply { setOnActionListener(actions::add) }
