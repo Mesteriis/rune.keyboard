@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "parentCommit": "e23acc8",
+  "schemaVersion": 1,
+  "featureCount": 16,
+  "authoredTrainingRows": 1968,
+  "authoredTrainingFamilies": 24,
+  "corpusSha256": "361495f8260486f4feb56f6e8c256801828bd2039cc047647a4cacac0e1f9b55",
+  "featureAudit": {
+    "schema": 1,
+    "passed": true,
+    "rows": 1968,
+    "families": 24,
+    "counts": {
+      "unknown_original": 840,
+      "alreadyCorrectApplied": 420,
+      "wouldRequireRevision": 420,
+      "correct_original": 288,
+      "correctOriginalWithConflictingCue": 144,
+      "insufficient_right_evidence": 840
+    },
+    "failures": [],
+    "precisionMeasured": false,
+    "candidateRetrievalMeasured": false,
+    "productionAdmissionEnabled": false,
+    "dictionaryOnly": true,
+    "corpusSha256": "361495f8260486f4feb56f6e8c256801828bd2039cc047647a4cacac0e1f9b55",
+    "dictionaryReceiptSha256": "5e493712561862765b2874b5648f9b7b77510cd59cb0064af66b721e303b3c51"
+  },
+  "parity": {
+    "cases": 1870,
+    "features": 16,
+    "dictionaries": 2,
+    "numericComparisons": 59840,
+    "maxAbsoluteDifference": 0
+  },
+  "jvm": {
+    "tests": 1128,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "pythonTests": {
+    "tests": 14,
+    "passed": true
+  },
+  "debugLintPassed": true,
+  "scoringBoundariesPassed": true,
+  "productionActivation": false,
+  "modelTrained": false,
+  "phoneCommandsIssued": false,
+  "independentPrecisionMeasured": false,
+  "sourceHashes": {
+    "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+    "tools/typing_experiments/right_context_contrast_corpus.py": "d6cd17951bd19e11115f515c09eb4eed9442644132f870a43450137eb65a5456",
+    "tools/typing_experiments/export_right_context_feature_fixtures.py": "3adb89b2c70e396a1d1be81f462380f6d71c18f1b38860622d3340856f9e42d3",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/RightContextGrammarFeatures.kt": "40a4375678c79468a352a5ae3954d33bb07bcd099f98bd31524b14133f41c385",
+    "app/src/test/resources/right-context-feature-parity/grammar.bin": "13119badeada644a5ab33a4a7e44b21ee98a11fca6fae884f4d0e49f4f258de8",
+    "app/src/test/resources/right-context-feature-parity/vectors.tsv": "3dacde9dc0f630f2c5a7d1675638640084cb7d0ea3ab316743bc3f08f2bdee8c",
+    "app/src/main/assets/smarttyping/experiments/ru-context.gram": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b"
+  }
+}
