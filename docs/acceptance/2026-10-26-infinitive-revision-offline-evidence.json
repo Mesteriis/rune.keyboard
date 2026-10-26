@@ -1,0 +1,121 @@
+{
+  "status": "OFFLINE_QUALIFIED_ANDROID_INTEGRATION_PENDING",
+  "policy": {
+    "stage": "frozen-before-focused-holdout-scoring",
+    "calibrationPassed": true,
+    "calibrationRequiredPrecision": 0.975,
+    "requiredPrecision": 0.95,
+    "minimumIncrementalCorrect": 100,
+    "modelSha256": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+    "scopeSha256": "819714c454636eeff0c772fabf1f848af715046547f74ffe9d0cb9b0e0d8c999",
+    "planSha256": "b5164421aed42138c003cbd2c1e1016d99290cbc87f64e1ac75a67a78365906b",
+    "holdoutSha256": "0aa0d7cb9e7f08c08cfc6dca66ba2b01f6f09b55c51b8dd7211d85258bd4e6aa",
+    "eligibleCalibrationRevisions": 180,
+    "minimumScore": 0.41741117881683354,
+    "minimumMargin": 0.004802324582884099,
+    "calibrationMetrics": {
+      "newCorrect": 180,
+      "newWrong": 0,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "installedCorrectLosses": 0,
+      "installedCorrectGains": 180,
+      "netCorrectVsInstalled": 180,
+      "precision": 1.0
+    }
+  },
+  "focused": {
+    "focusedIndependentGatePassed": true,
+    "holdoutScored": true,
+    "eligibleHoldoutRevisions": 158,
+    "metrics": {
+      "newCorrect": 158,
+      "newWrong": 0,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "installedCorrectLosses": 0,
+      "installedCorrectGains": 158,
+      "netCorrectVsInstalled": 158,
+      "precision": 1.0
+    },
+    "broadGatePending": true,
+    "physicalDeviceQualified": false,
+    "installedModelChanged": false,
+    "policySha256": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595"
+  },
+  "broad": {
+    "broadGatePassed": true,
+    "rows": 12000,
+    "controls": 6000,
+    "globalControlChanges": 0,
+    "installedControlChanges": 0,
+    "eligibleRevisions": 1,
+    "metrics": {
+      "newCorrect": 1,
+      "newWrong": 0,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "installedCorrectLosses": 0,
+      "installedCorrectGains": 1,
+      "netCorrectVsInstalled": 1,
+      "precision": 1.0
+    },
+    "policyUnchanged": true,
+    "physicalDeviceQualified": false,
+    "installedModelChanged": false
+  },
+  "focusedSentenceSeparation": {
+    "priorRowsWithSentenceHash": 145382,
+    "overlaps": {},
+    "calibrationHoldoutHashOverlap": 0,
+    "passed": true
+  },
+  "broadSentenceSeparation": {
+    "priorRowsWithSentenceHash": 121382,
+    "overlapCount": 0,
+    "overlapFiles": {},
+    "passed": true
+  },
+  "packedLemmaPortability": {
+    "pairs": 339,
+    "sameNonNullPackedLemmaPairs": 339,
+    "unsupported": []
+  },
+  "focusedCounts": {
+    "calibration": {
+      "rows": 2000,
+      "contexts": 500,
+      "families": 155
+    },
+    "holdout": {
+      "rows": 2000,
+      "contexts": 500,
+      "families": 148
+    }
+  },
+  "scopeProbe": {
+    "stage": "CALIBRATION_SCOPE_PROBE_NOT_QUALIFICATION",
+    "processed": 5574,
+    "eligibleRevisions": 0,
+    "rawCorrectRevisions": 0,
+    "rawWrongRevisions": 0,
+    "rawInstalledCorrectLosses": 0,
+    "refusals": {
+      "UNCHANGED": 3607,
+      "NO_RETRIEVED_REVISION": 1400,
+      "SOURCE_ADMISSION_REFUSED": 565,
+      "PREVIOUS_NOT_UNAMBIGUOUS_FINITE": 2
+    },
+    "minimumIncrementalCorrect": 100,
+    "enoughEligibleRowsToCalibrate": false,
+    "holdoutScored": false,
+    "modelChanged": false
+  },
+  "tests": 41,
+  "phoneCommands": 0,
+  "installedAssetsUnchanged": true,
+  "focusedManifestSha256": "11efa3793df4ac550e9f6680af3e9b2e8fcb47394c80dd2b5dd86a8a6c8f853a",
+  "broadManifestSha256": "8a7807aee382a994cff8c975aa6035cb29fff51a4665924349ea6748b4a1c2cb",
+  "scopeSourceSha256": "819714c454636eeff0c772fabf1f848af715046547f74ffe9d0cb9b0e0d8c999",
+  "metricsSourceSha256": "3c279bebc0fa60ca57f51ebcd5b47962437a609bc0ac7aa20353783e5a74075e"
+}
