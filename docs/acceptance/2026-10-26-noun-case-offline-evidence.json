@@ -1,0 +1,228 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "offlineComponentGatePassed": true,
+  "modelSha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+  "policy": {
+    "stage": "frozen-before-any-holdout-model-scoring",
+    "calibrationPassed": true,
+    "calibrationRequiredPrecision": 0.975,
+    "requiredPrecision": 0.95,
+    "minimumIncrementalCorrect": 100,
+    "modelSha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+    "scopeSha256": "7b66e507c0b361c4a26c46ee9e38ea7f0784ca54de8f09d0e261db2c7fc76a60",
+    "scopeVersion": 1,
+    "planSha256": "20f34362e02fdfc1a6c8dcc0ca711780cc8a84af908b6340253be82f73d17872",
+    "holdoutSha256": "fbab74826dcd133dd00e762fc23d99fb6b76807d0109f52920da5e4eb673c145",
+    "eligibleCalibrationRevisions": 120,
+    "minimumScore": 0.6485549857424353,
+    "minimumMargin": 0.05342739426456289,
+    "calibrationMetrics": {
+      "newCorrect": 120,
+      "newWrong": 0,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "installedCorrectLosses": 0,
+      "installedCorrectGains": 120,
+      "netCorrectVsInstalled": 120,
+      "precision": 1.0
+    }
+  },
+  "policySha256": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+  "scopeSha256": "7b66e507c0b361c4a26c46ee9e38ea7f0784ca54de8f09d0e261db2c7fc76a60",
+  "scopeVersion": 1,
+  "calibration": {
+    "calibrationPassed": true,
+    "holdoutScored": false,
+    "holdoutReplayed": false,
+    "baselineControllerObservations": 4000,
+    "scopeEligible": 120,
+    "actualControllerIntegrationPending": true,
+    "physicalDeviceQualified": false,
+    "packagedModelChanged": false,
+    "metrics": {
+      "newCorrect": 120,
+      "newWrong": 0,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "installedCorrectLosses": 0,
+      "installedCorrectGains": 120,
+      "netCorrectVsInstalled": 120,
+      "precision": 1.0
+    }
+  },
+  "focusedHoldout": {
+    "focusedIndependentGatePassed": true,
+    "holdoutScored": true,
+    "eligibleHoldoutRevisions": 184,
+    "metrics": {
+      "newCorrect": 171,
+      "newWrong": 0,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "installedCorrectLosses": 0,
+      "installedCorrectGains": 171,
+      "netCorrectVsInstalled": 171,
+      "precision": 1.0
+    },
+    "fullProjection": {
+      "rows": 4000,
+      "controls": 3000,
+      "newCorrect": 171,
+      "newWrong": 0,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "baselineCorrect": 3035,
+      "projectedCorrect": 3206
+    },
+    "changedFamilyCount": 24,
+    "maximumChangesPerFamily": 37,
+    "baselineAndPoolControllerRows": 8000,
+    "exactUndoChecks": 8000,
+    "actualNewControllerIntegration": false,
+    "physicalDeviceQualified": false,
+    "broadGatePending": true,
+    "packagedAssetsChanged": false,
+    "policySha256": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d"
+  },
+  "broad": {
+    "regressionGatePassed": true,
+    "metrics": {
+      "rows": 12000,
+      "controls": 6000,
+      "newCorrect": 0,
+      "newWrong": 0,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "baselineCorrect": 9911,
+      "baselineCorrectTypos": 3911,
+      "projectedCorrect": 9911,
+      "scopeEligible": 0,
+      "precision": null
+    },
+    "observationsComplete": 24000,
+    "exactUndoChecks": 24000,
+    "scopeRefusals": {
+      "NO_COMPLETE_POOL": 6448,
+      "NO_EXISTING_REPLACEMENT": 1628,
+      "SOURCE_ADMISSION_REFUSED": 582,
+      "UNCHANGED": 3338,
+      "PREVIOUS_NOT_UNAMBIGUOUS_INSTRUMENTAL": 3,
+      "ORIGINAL_PROTECTED": 1
+    },
+    "policySha256": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+    "actualNewControllerIntegration": false,
+    "physicalDeviceQualified": false,
+    "packagedAssetsChanged": false
+  },
+  "naturalInstrumental": {
+    "regressionGatePassed": true,
+    "metrics": {
+      "rows": 68,
+      "controls": 51,
+      "newCorrect": 0,
+      "newWrong": 0,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "baselineCorrect": 62,
+      "baselineCorrectTypos": 11,
+      "projectedCorrect": 62,
+      "scopeEligible": 0,
+      "precision": null
+    },
+    "observationsComplete": 136,
+    "exactUndoChecks": 136,
+    "scopeRefusals": {
+      "NO_COMPLETE_POOL": 51,
+      "SOURCE_ADMISSION_REFUSED": 11,
+      "NO_EXISTING_REPLACEMENT": 6
+    },
+    "policySha256": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+    "actualNewControllerIntegration": false,
+    "physicalDeviceQualified": false,
+    "packagedAssetsChanged": false
+  },
+  "observerAudit": {
+    "editorOutputsUnchanged": true,
+    "exactUndoAll": true,
+    "statistics": {
+      "rows": 4000,
+      "refusedCandidates": 10514,
+      "admittedCandidates": 2730
+    },
+    "actualGuardEvidence": "Same pure jointAdmissionEvidence function used by baseline controller and export",
+    "applicationSourcesUnchanged": true
+  },
+  "packedLemmaAudits": [
+    {
+      "part": "calibration",
+      "assetSha256": "c1707864a8fbc805aa98bc8307be99f2c9904eec5cc27d26a5220e001d88d28b",
+      "selectedPairs": 120,
+      "matchingNonzeroPackedLemmaIds": 120,
+      "failures": []
+    },
+    {
+      "part": "holdout",
+      "assetSha256": "c1707864a8fbc805aa98bc8307be99f2c9904eec5cc27d26a5220e001d88d28b",
+      "selectedPairs": 171,
+      "matchingNonzeroPackedLemmaIds": 171,
+      "failures": []
+    }
+  ],
+  "pythonTests": {
+    "tests": 36,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0
+  },
+  "primaryReferenceAndPoolObservations": 40164,
+  "primaryReferenceAndPoolExactUndoChecks": 40164,
+  "experimentalNounControllerEditingVerified": false,
+  "kotlinScopeAndScorerParityPending": true,
+  "physicalDeviceQualified": false,
+  "applicationSourcesUnchangedFrom": "a614d07",
+  "packagedAssetsChanged": false,
+  "phoneCommandsPerformed": false,
+  "limitations": [
+    "Focused synthetic corruption; not arbitrary human typing accuracy",
+    "No broad precision estimate: zero eligible revisions in the broad sample",
+    "Natural instrumental sample has only17 contexts/5families",
+    "Experimental corrections are projections; their controller editing,deadline andUndo remain unverified"
+  ],
+  "probeSummary": [
+    {
+      "purpose": "AUTHORED_REGRESSION_ONLY_NOT_INDEPENDENT_QUALIFICATION",
+      "policySha256": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+      "priorCorrectLosses": 0,
+      "improvements": 1,
+      "holdoutScored": false,
+      "actualNewControllerIntegration": false
+    },
+    {
+      "purpose": "AUTHORED_REGRESSION_ONLY_NOT_INDEPENDENT_QUALIFICATION",
+      "policySha256": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+      "priorCorrectLosses": 0,
+      "improvements": 0,
+      "holdoutScored": false,
+      "actualNewControllerIntegration": false
+    }
+  ],
+  "artifactHashes": {
+    "build/noun-case-qualification-v2-20261026/evaluation-code-lock.json": "bc1282a90bccca2c8afd1f37fdfbe03c6c87939ec4c5024ad6c4cd507565dabf",
+    "build/noun-case-qualification-v2-20261026/calibration-result.json": "747a39fd5699b9e53fbe7cc0db6fb8ff034114783472b5c7bb81a1af26e72b8c",
+    "build/noun-case-qualification-v2-20261026/holdout-code-lock.json": "43ed9e5b183c5eee919923d4ebfcaebd43c72a9dcaf733720969f8791ec044e5",
+    "build/noun-case-qualification-v2-20261026/holdout-result.json": "2166e1d2dd01d383d70566c2085db85f1c29c3bb47e29131ed6b235298950b40",
+    "build/noun-case-qualification-v2-20261026/observer-audit.json": "e9ae849b3dd9c827d01803d1145e0978090bf3a293c4ba12327be9f356a01f13",
+    "build/noun-case-qualification-v2-20261026/tests.log": "68f8ff5988e3e07a5014db5ab362a2b960486b64a967cec6468d62235c571e74",
+    "build/noun-case-qualification-v2-20261026/controller-compiler/receipt.json": "8c86dc8ca259cf5de99566293e434d72a63473358509e43b998b5a2287d6014c",
+    "build/noun-case-qualification-v2-20261026/probe-result.json": "704ca71f808a87d68fcd5a8460a6e6480469f4b3753afc2716f4dd8c66ead460",
+    "build/noun-case-qualification-v2-20261026/probe2-result.json": "92dc2f2d5da0181aa99d3fb056507c400aa3157bdadcb46b3989653782947fbe",
+    "build/noun-case-broad-v2-20261026/corpus/manifest.json": "5d9ea43e614ba358343a598ea5012dec96a120a8f8a1ffec58fa81838a3641c2",
+    "build/noun-case-broad-v2-20261026/result.json": "77d6f5aef767d9570dc9ac0733943e94c2105795476c251666df610b433a508b",
+    "build/noun-case-instrumental-20261026/corpus/manifest.json": "98320208d118a965bcbe9c8f8a3336a9d16849c657fd145f772281ee8f6d7b31",
+    "build/noun-case-instrumental-20261026/result.json": "b28adf7ee228bb87bd47a1baf66d6c230c97eead7912abdf783ed596194c3865",
+    "build/noun-case-qualification-20261026/evaluate-calibration.log": "8038ad4d3ccb6d934b53a7eec87de13d76eafabab94447a1951ece3c13a48e6e",
+    "build/noun-case-broad-20261026/corpus/manifest.json": "06eeace1707216fb3383b73d2e06dad80ebcd80a7aea670026fa8d2ac6aabe7f",
+    "build/noun-case-qualification-v2-20261026/replay-holdout-initial.log": "91ff06f341095621d0da1dde644a1c84303d8e174254e4d183c566cac99f4ea2"
+  }
+}

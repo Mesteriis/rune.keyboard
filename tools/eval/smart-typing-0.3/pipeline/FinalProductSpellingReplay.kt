@@ -150,7 +150,7 @@ object FinalProductSpellingReplay {
                 .also { decision = it; this.candidate = candidate.terminalKey }
         }
 
-        override fun jointAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+        fun jointAdmissionEvidence(generation: CandidateGeneration, candidate: GeneratedCandidate,
             language: KeyboardLanguage): AutomaticTypingDecision {
             if (productionJoint && !JointQualification.enabled(language, generation.original?.length ?: 0))
                 return AutomaticTypingDecision(false)
@@ -160,8 +160,12 @@ object FinalProductSpellingReplay {
             val evaluated = if (publicWord.allowed) guard.evaluateJoint(generation, candidate,
                 JointQualification.uniqueAmbiguousWinnerEnabled(language, generation.original?.length ?: 0)) else publicWord
             return AutomaticTypingDecision(evaluated.allowed, evaluated.refusal)
-                .also { decision = it; this.candidate = candidate.terminalKey }
         }
+
+        override fun jointAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+            language: KeyboardLanguage): AutomaticTypingDecision =
+            jointAdmissionEvidence(generation, candidate, language)
+                .also { decision = it; this.candidate = candidate.terminalKey }
 
         override fun allowsAutomatic(generation: CandidateGeneration, candidate: GeneratedCandidate,
             language: KeyboardLanguage): Boolean = guard.allows(generation, candidate)
@@ -571,6 +575,10 @@ object FinalProductSpellingReplay {
                         fullGeneration.jointSearch.alternatives.map { experiments.jointScore(ownedPrefix, typed, it) }
                     result["jointSearch"] = mapOf("completion" to fullGeneration.jointSearch.completion.name,
                         "alternatives" to fullGeneration.jointSearch.alternatives.map(::item))
+                    // Exact joint-source guard, without changing observer decision/candidate state.
+                    result["jointSourceAdmission"] = fullGeneration.jointSearch.alternatives.associate { proposal ->
+                        proposal.text to personalization.jointAdmissionEvidence(fullGeneration, proposal, language).allowed
+                    }
                     result["jointTargetKnown"] = fullGeneration.jointSearch.alternatives.associate { proposal ->
                         proposal.canonicalKey to morphology.lookup(language, proposal.terminalKey).present
                     }
