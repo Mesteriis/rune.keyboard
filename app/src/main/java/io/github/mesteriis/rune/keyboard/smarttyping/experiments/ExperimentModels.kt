@@ -21,6 +21,8 @@ class ExperimentModels internal constructor() {
     @Volatile private var rescueRanker: ObliviousTreeRanker? = null
     @Volatile private var contextualRanker: ContextualRanker? = null
     @Volatile private var grammarRevisionRanker: ContextualRanker? = null
+    @Volatile private var nounCaseRanker: ContextualRanker? = null
+    val nounCaseReady: Boolean get() = nounCaseRanker != null && contextualReady
     val grammarRevisionReady: Boolean get() = grammarRevisionRanker != null && contextualReady
     val contextualReady: Boolean get() = contextualRanker != null && contextReady
     val rescueReady: Boolean get() = rescueRanker != null
@@ -71,6 +73,7 @@ class ExperimentModels internal constructor() {
     internal fun loadJointRanker(bytes: ByteArray) { jointRanker = ObliviousTreeRanker.decode(bytes) }
     internal fun loadContextualRanker(ranker: ContextualRanker) {
         grammarRevisionRanker = null
+        nounCaseRanker = null
         contextualRanker = ranker
     }
     internal fun contextualScore(context: String, original: String, candidate: GeneratedCandidate): Double =
@@ -97,6 +100,24 @@ class ExperimentModels internal constructor() {
         morphology: io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon): InfinitiveRevisionRefusal? {
         val ranker = grammarRevisionRanker ?: return InfinitiveRevisionRefusal.LEMMA_UNAVAILABLE
         return ranker.revisionRefusal(context, previous, proposed, morphology)
+    }
+
+    internal fun loadNounCaseRanker(bytes: ByteArray) {
+        nounCaseRanker = contextualRanker?.withWeights(bytes)
+    }
+    internal fun nounCaseScore(context: String, original: String, candidate: GeneratedCandidate): Double =
+        nounCaseRanker?.score(this, context, original, candidate) ?: Double.NaN
+    internal fun nounCaseOriginalScore(context: String, original: String): Double =
+        nounCaseRanker?.originalScore(this, context, original) ?: Double.NaN
+    internal fun nounCasePrecondition(context: String, previous: String,
+        morphology: io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon): NounCaseRevisionRefusal? {
+        val ranker = nounCaseRanker ?: return NounCaseRevisionRefusal.LEMMA_UNAVAILABLE
+        return ranker.nounCasePrecondition(context, previous, morphology)
+    }
+    internal fun nounCaseScopeRefusal(context: String, previous: String, proposed: String,
+        morphology: io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon): NounCaseRevisionRefusal? {
+        val ranker = nounCaseRanker ?: return NounCaseRevisionRefusal.LEMMA_UNAVAILABLE
+        return ranker.nounCaseRefusal(context, previous, proposed, morphology)
     }
 
     internal fun loadRescueRanker(bytes: ByteArray) { rescueRanker = ObliviousTreeRanker.decode(bytes) }

@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "scopeVersion": 1,
+  "modelSha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+  "scoreCasesPerModel": 97973,
+  "scoreModels": [
+    "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+    "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+    "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd"
+  ],
+  "maximumAbsoluteErrorPerModel": [
+    2.220446049250313e-16,
+    2.220446049250313e-16,
+    2.220446049250313e-16
+  ],
+  "scopeCases": 20068,
+  "rawDictionaryScopeAllowed": 545,
+  "packedScopeAllowed": 508,
+  "additionalPackedLemmaRefusals": 37,
+  "externallyAdmittedScopeAllowed": 304,
+  "offlineEligibleCasesLost": 0,
+  "unitTests": {
+    "tests": 1112,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "debugLint": "PASS",
+  "packagedAssetsChanged": false,
+  "androidNounActivation": false,
+  "controllerEditingQualificationPending": true,
+  "physicalDeviceQualified": false,
+  "sourceHashes": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NounCaseRevisionScope.kt": "37a50bbd3a4cd3d6c89b9aa9d655ffd87a94199d904841a17c856155db6471a1",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualRanker.kt": "9dec77ba47e8af4e77c58fedaa6e06d426d40e0f8df157cc7c0abc4c15924cc4",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ExperimentModels.kt": "0034506f520a9716f5cdb9a18b257646da9960f2350af8596d431ce50400ab1a"
+  },
+  "caseTagAudit": {
+    "dictionaryTagCount": 5532,
+    "singularNounSpecialAccusativeTags": [],
+    "count": 0
+  },
+  "artifactHashes": {
+    "build/noun-case-android-core-20261026/parity-preparation.json": "7277d00c32455ee3d5237de67cf3bdef72067b20c311dc55a92ecbbd16407175",
+    "build/noun-case-android-core-20261026/parity-compiler/receipt.json": "3ac95147426ae73f661a132a6abb4dac91dcfade786894db29efdd643536dbff",
+    "build/noun-case-android-core-20261026/native-parity.log": "e907127456aa02f34b14fb36db4fa878d0a6c0265d42120a37cf409193ebee30",
+    "build/noun-case-android-core-20261026/native-parity-command.json": "046792023a48bf1a47723108aee8a03d510405e75217934c907ab7d4c5735f79",
+    "build/noun-case-android-core-20261026/all-unit-lint.log": "2fc1b6cce8d2b41ff6a69641787f4fb1c3ea0d909b9aab76a6ec2c284afbc34e",
+    "build/noun-case-android-core-20261026/core-tests.log": "26f4576be130e3bc9e0f798aa285ec1f45392ee515f5c086a3448054be5443f9",
+    "build/noun-case-android-core-20261026/core-tests-final.log": "e44145e19e53b150fde20b74290f494da48215c1fcaad5d9889da1e7a58a3b2c",
+    "build/noun-case-android-core-20261026/unit-counts.json": "f73da6f6b8ee63a548d084535e23a0ff2155f5584ce1d9f8c006582d2ec178d9"
+  }
+}

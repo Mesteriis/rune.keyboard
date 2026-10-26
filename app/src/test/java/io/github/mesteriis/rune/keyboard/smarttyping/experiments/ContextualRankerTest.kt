@@ -93,4 +93,41 @@ class ContextualRankerTest {
         models.loadContextualRanker(contextual(tree(left = 2f, right = 2f))!!)
         assertFalse(models.grammarRevisionReady)
     }
+    @Test fun nounWeightsShareIndicesWithoutReplacingEitherExistingScorer() {
+        val models = ExperimentModels().apply {
+            loadContext(File("src/main/assets/smarttyping/experiments/ru-ranking-context.bin").readBytes())
+        }
+        models.loadNounCaseRanker(tree())
+        assertFalse(models.nounCaseReady)
+        assertTrue(models.nounCaseOriginalScore("я вижу ", "фотографие").isNaN())
+        assertEquals(NounCaseRevisionRefusal.LEMMA_UNAVAILABLE,
+            models.nounCaseScopeRefusal("я вижу ", "фотографией", "фотографию",
+                io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon.UNAVAILABLE))
+        models.loadContextualRanker(contextual(tree(left = 2f, right = 2f))!!)
+        models.loadGrammarRevisionRanker(tree(left = 1f, right = 1f))
+        val installed = models.contextualScore("надо ", "научищься", candidate())
+        val infinitive = models.grammarRevisionScore("надо ", "научищься", candidate())
+        models.loadNounCaseRanker(tree(left = 3f, right = 3f))
+        assertTrue(models.nounCaseReady)
+        val morphology = io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon { _, _ ->
+            io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyMembership(true, true, 100)
+        }
+        assertNull(models.nounCasePrecondition("Том показал мне ", "фотографией", morphology))
+        assertNull(models.nounCaseScopeRefusal("Том показал мне ", "фотографией", "фотографию", morphology))
+        assertEquals(NounCaseRevisionRefusal.NO_ACCUSATIVE_CUE,
+            models.nounCaseScopeRefusal("с ", "фотографией", "фотографию", morphology))
+        assertEquals(0.8 * tanh(0.75), models.nounCaseScore("надо ", "научищься", candidate()), 1e-12)
+        assertEquals(installed, models.contextualScore("надо ", "научищься", candidate()), 0.0)
+        assertEquals(infinitive, models.grammarRevisionScore("надо ", "научищься", candidate()), 0.0)
+        models.loadNounCaseRanker(tree(95, 94))
+        assertFalse(models.nounCaseReady)
+        assertTrue(models.nounCaseScore("надо ", "научищься", candidate()).isNaN())
+        assertTrue(models.grammarRevisionReady)
+        assertEquals(installed, models.contextualScore("надо ", "научищься", candidate()), 0.0)
+        models.loadNounCaseRanker(tree())
+        models.loadContextualRanker(contextual(tree())!!)
+        assertFalse(models.nounCaseReady)
+        assertFalse(models.grammarRevisionReady)
+    }
+
 }

@@ -12,11 +12,12 @@ internal class ContextualRanker private constructor(
     private val conversation: WordPairFeatures,
     private val grammar: GrammaticalContextFeatures,
     private val revisionScope: InfinitiveRevisionScope,
+    private val nounCaseScope: NounCaseRevisionScope,
 ) {
     /** Share validated immutable feature indices; only the numeric weights differ. */
     fun withWeights(bytes: ByteArray): ContextualRanker? =
         ObliviousTreeRanker.decode(bytes, FEATURES)?.let {
-            ContextualRanker(it, wiki, conversation, grammar, revisionScope)
+            ContextualRanker(it, wiki, conversation, grammar, revisionScope, nounCaseScope)
         }
 
     fun allowsInfinitiveRevision(context: String, previous: String, proposed: String,
@@ -26,6 +27,11 @@ internal class ContextualRanker private constructor(
         revisionScope.preconditionRefusal(context, previous, morphology)
     fun revisionRefusal(context: String, previous: String, proposed: String, morphology: MorphologyLexicon) =
         revisionScope.refusal(context, previous, proposed, morphology)
+
+    fun nounCasePrecondition(context: String, previous: String, morphology: MorphologyLexicon) =
+        nounCaseScope.preconditionRefusal(context, previous, morphology)
+    fun nounCaseRefusal(context: String, previous: String, proposed: String, morphology: MorphologyLexicon) =
+        nounCaseScope.refusal(context, previous, proposed, morphology)
 
     fun score(models: ExperimentModels, context: String, original: String, candidate: GeneratedCandidate): Double {
         if (candidate.language != KeyboardLanguage.RUSSIAN) return Double.NaN
@@ -51,7 +57,7 @@ internal class ContextualRanker private constructor(
             dictionary: GrammarFeatureDictionary): ContextualRanker? =
             ObliviousTreeRanker.decode(bytes, FEATURES)?.let {
                 ContextualRanker(it, wiki, conversation, GrammaticalContextFeatures(dictionary),
-                    InfinitiveRevisionScope(dictionary))
+                    InfinitiveRevisionScope(dictionary), NounCaseRevisionScope(dictionary))
             }
     }
 }
