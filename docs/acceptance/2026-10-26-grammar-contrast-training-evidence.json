@@ -1,0 +1,128 @@
+{
+  "stage": "REJECTED_FOR_PROMOTION",
+  "reason": "Independent proposal precision below 95%; fixed installed thresholds also lose one installed-correct case",
+  "result": {
+    "independentGatePassed": false,
+    "physicalDeviceQualified": false,
+    "installedModelChanged": false,
+    "calibrationPassed": true,
+    "metrics": {
+      "newCorrect": 609,
+      "newWrong": 37,
+      "precision": 0.9427244582043344,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "installedCorrectLosses": 0,
+      "installedCorrectGains": 73,
+      "netCorrectVsInstalled": 73
+    },
+    "fixedInstalledThresholdMetrics": {
+      "newCorrect": 548,
+      "newWrong": 18,
+      "precision": 0.9681978798586572,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "installedCorrectLosses": 1,
+      "installedCorrectGains": 13,
+      "netCorrectVsInstalled": 12
+    },
+    "rawRanking": {
+      "referenceCorrect": 5305,
+      "experimentalCorrect": 5306
+    },
+    "policySha256": "9397d8b58ad21d5db0f68fb84ec53eee2e90997c7061b8a9c3a20c5afd02de26"
+  },
+  "trainingDiagnostic": {
+    "purpose": "TRAINING_DIAGNOSTIC_NOT_QUALIFICATION",
+    "statistics": {
+      "broad": {
+        "groups": 19802,
+        "referenceRawCorrect": 18851,
+        "experimentalRawCorrect": 18820
+      },
+      "contrastTypo": {
+        "groups": 204,
+        "referenceRawCorrect": 103,
+        "experimentalRawCorrect": 165
+      },
+      "contrastRetention": {
+        "groups": 408,
+        "referenceRawCorrect": 360,
+        "experimentalRawCorrect": 406
+      }
+    },
+    "fiveDisclosedTrainingCases": [
+      {
+        "id": "supervised-final-audit-004789",
+        "typed": "фотографие",
+        "expected": "фотографию",
+        "referenceRawWinner": "фотографией",
+        "experimentalRawWinner": "фотографией"
+      },
+      {
+        "id": "supervised-final-audit-007529",
+        "typed": "злищься",
+        "expected": "злиться",
+        "referenceRawWinner": "злишься",
+        "experimentalRawWinner": "злишься"
+      },
+      {
+        "id": "supervised-final-audit-007709",
+        "typed": "научищься",
+        "expected": "научиться",
+        "referenceRawWinner": "научишься",
+        "experimentalRawWinner": "научишься"
+      },
+      {
+        "id": "supervised-final-audit-008977",
+        "typed": "заплатищь",
+        "expected": "заплатить",
+        "referenceRawWinner": "заплатишь",
+        "experimentalRawWinner": "заплатить"
+      },
+      {
+        "id": "supervised-final-audit-014304",
+        "typed": "виновн",
+        "expected": "виновны",
+        "referenceRawWinner": "виновен",
+        "experimentalRawWinner": "виновен"
+      }
+    ],
+    "modelSha256": "71454f1b6ce2f3755b17a5af4712a077525230bc4cc4d448f904972a1c40be69"
+  },
+  "featureCount": 146,
+  "treeCount": 128,
+  "groups": 20414,
+  "candidateRows": 234984,
+  "contrastGroups": 612,
+  "contrastTypos": 204,
+  "contrastRetention": 408,
+  "skipped": {
+    "incomplete_pool": 12,
+    "protected_original": 6
+  },
+  "evaluationCounts": {
+    "calibration": {
+      "rows": 12000,
+      "contexts": 3000,
+      "families": 1451
+    },
+    "holdout": {
+      "rows": 12000,
+      "contexts": 3000,
+      "families": 1422
+    }
+  },
+  "excludedContrastFamilies": 32,
+  "modelSha256": "71454f1b6ce2f3755b17a5af4712a077525230bc4cc4d448f904972a1c40be69",
+  "selectionSha256": "3c041417774701a2bd3b20d81a84b0c24fe64851748b4eceaf365338d7160c4f",
+  "corpusManifestSha256": "dc360183a36b887fb1c763bf8d4d80660fe4e0845ddc18b2880f6cf5fd8572a2",
+  "matrixParity": {
+    "samplesPerModel": 128,
+    "models": 2,
+    "maximumAbsoluteError": 0
+  },
+  "installedModelUnchanged": true,
+  "tests": 18,
+  "physicalDeviceCommands": 0
+}
