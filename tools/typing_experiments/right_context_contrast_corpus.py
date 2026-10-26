@@ -39,7 +39,7 @@ def _paradigm(lexicon, singular, plural):
     return next(iter(lemmas))
 
 
-def generate(lexicon, *, copula_coverage=False):
+def generate(lexicon, *, copula_coverage=False, original_acquisition=False):
     rows, skipped = [], []
     for singular, plural in PAIRS:
         lemma = _paradigm(lexicon, singular, plural)
@@ -59,13 +59,13 @@ def generate(lexicon, *, copula_coverage=False):
         for prefix, singular_right, plural_right in contexts:
             for target, suffix in [(singular, singular_right), (plural, plural_right)]:
                 for typo in variants:
-                    for applied in (singular, plural):
+                    for applied in (singular, plural) + ((typo,) if original_acquisition else ()):
                         add(typo, applied, target, prefix, suffix, 'unknown_original')
                 for original in (singular, plural):
                     add(original, original, original, prefix, suffix, 'correct_original')
         for suffix in WEAK_SUFFIXES:
             for typo in variants:
-                for applied in (singular, plural):
+                for applied in (singular, plural) + ((typo,) if original_acquisition else ()):
                     add(typo, applied, applied, '', suffix, 'insufficient_right_evidence')
     if not rows or len({r['id'] for r in rows}) != len(rows):
         raise ValueError('EMPTY_OR_DUPLICATE_RIGHT_CONTEXT_CONTRASTS')
@@ -76,15 +76,16 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', required=True, type=Path, help='New directory, never overwritten')
     parser.add_argument('--copula-coverage', action='store_true', help='Include copula-only and intervening-word contrasts')
+    parser.add_argument('--original-acquisition', action='store_true', help='Include the unknown original as the previous applied state')
     args = parser.parse_args()
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'morphology'))
     from ranker import PymorphyLexicon
     lexicon = PymorphyLexicon()
-    rows, skipped = generate(lexicon, copula_coverage=args.copula_coverage)
+    rows, skipped = generate(lexicon, copula_coverage=args.copula_coverage, original_acquisition=args.original_acquisition)
     payload = ''.join(json.dumps(r, ensure_ascii=False, sort_keys=True) + '\n' for r in rows).encode()
     manifest = dict(schema=1, purpose='TRAINING_ONLY_NOT_QUALIFICATION',
                     origin='Authored templates, dictionary-only paradigms; no owner or downloaded sentence text',
-                    copulaCoverage=args.copula_coverage, rows=len(rows), families=len({r['family'] for r in rows}), skipped=skipped,
+                    copulaCoverage=args.copula_coverage, originalAcquisition=args.original_acquisition, rows=len(rows), families=len({r['family'] for r in rows}), skipped=skipped,
                     corpusSha256=hashlib.sha256(payload).hexdigest(),
                     generatorSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                     corruptionSelectorSha256=hashlib.sha256(Path(__file__).with_name('grammar_contrast_corpus.py').read_bytes()).hexdigest(),

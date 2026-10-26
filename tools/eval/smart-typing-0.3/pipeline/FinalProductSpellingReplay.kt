@@ -609,8 +609,12 @@ object FinalProductSpellingReplay {
                     result["jointSearch"] = mapOf("completion" to fullGeneration.jointSearch.completion.name,
                         "alternatives" to fullGeneration.jointSearch.alternatives.map(::item))
                     // Exact joint-source guard, without changing observer decision/candidate state.
-                    result["jointSourceAdmission"] = fullGeneration.jointSearch.alternatives.associate { proposal ->
-                        proposal.text to personalization.jointAdmissionEvidence(fullGeneration, proposal, language).allowed
+                    val jointSourceDecisions = fullGeneration.jointSearch.alternatives.associate { proposal ->
+                        proposal.text to personalization.jointAdmissionEvidence(fullGeneration, proposal, language)
+                    }
+                    result["jointSourceAdmission"] = jointSourceDecisions.mapValues { it.value.allowed }
+                    result["jointSourceRefusals"] = jointSourceDecisions.mapValues { (_, decision) ->
+                        if (decision.allowed) null else (decision.refusal ?: AutomaticAdmissionRefusal.NOT_QUALIFIED).name
                     }
                     result["jointTargetKnown"] = fullGeneration.jointSearch.alternatives.associate { proposal ->
                         proposal.canonicalKey to morphology.lookup(language, proposal.terminalKey).present

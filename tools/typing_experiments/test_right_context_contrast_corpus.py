@@ -68,6 +68,21 @@ class RightContrastsTest(unittest.TestCase):
             if row['kind'] != 'unknown_original':
                 self.assertEqual(row['applied'], row['expectedApplied'])
 
+    def test_original_acquisition_requires_strong_context_but_retains_raw_input_without_it(self):
+        previous, _ = corpus.generate(Dictionary(), copula_coverage=True)
+        expanded, _ = corpus.generate(Dictionary(), copula_coverage=True, original_acquisition=True)
+        self.assertTrue({r['id'] for r in previous} <= {r['id'] for r in expanded})
+        self.assertEqual(len(expanded), len({r['id'] for r in expanded}))
+        raw = [r for r in expanded if r['original'] == r['applied'] and r['kind'] != 'correct_original']
+        self.assertTrue(raw)
+        for row in raw:
+            self.assertFalse(Dictionary().analyses(row['original']))
+            if row['kind'] == 'unknown_original':
+                self.assertNotEqual(row['original'], row['expectedApplied'])
+                self.assertIn(row['expectedApplied'], row['candidateForms'])
+            else:
+                self.assertEqual(row['original'], row['expectedApplied'])
+
     def test_missing_or_different_lemma_analyses_are_not_silent_labels(self):
         for tags in [[], [SimpleNamespace(lemma='другой', pos='ADJS', number='plur', gender=None)]]:
             dictionary = Dictionary()

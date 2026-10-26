@@ -24,6 +24,15 @@ class RightTrainingGroupsTest(unittest.TestCase):
         self.assertFalse(skips);self.assertEqual([2,1],[g['target'] for g in groups])
         self.assertTrue(all(g['counterfactualApplied'] for g in groups))
 
+    def test_an_explicit_raw_applied_training_state_is_distinct_from_a_runtime_admission(self):
+        strong=row(applied='готв')
+        weak=row('weak',kind='insufficient_right_evidence',applied='готв',expectedApplied='готв',rightContext=' буд')
+        groups,skips=select_groups([strong,weak],[observation(strong)])
+        self.assertFalse(skips)
+        self.assertEqual([2,0],[g['target'] for g in groups])
+        self.assertTrue(all(g['counterfactualApplied'] for g in groups))
+        self.assertEqual([{},{}],[g['sourceAdmission'] for g in groups])
+
     def test_absent_target_or_applied_is_not_injected(self):
         r=row();o=observation(r);o['jointSearch']['alternatives']=[dict(text='готов')]
         self.assertEqual(([],{'missing_target':1}),select_groups([r],[o]))

@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "parentCommit": "6c0cd91",
+  "previousModelCalibration": {
+    "calibrationPassed": false,
+    "statistics": {
+      "rows": 1600,
+      "controls": 1200,
+      "admittedPrevious": 66,
+      "scoredPools": 18,
+      "candidateScores": 251
+    },
+    "refusals": {
+      "NO_ADMITTED_PREVIOUS_REPLACEMENT": 1415,
+      "INPUT_OR_PREFIX_CHANGED": 119,
+      "PREVIOUS_NOT_UNAMBIGUOUS_SHORT_PREDICATE": 29,
+      "NO_COMPLETED_RIGHT_NUMBER_CONFLICT": 19,
+      "PROPOSAL_ADMISSION_REFUSED": 16
+    },
+    "unthresholdedEligible": {
+      "eligibleProposals": 2,
+      "correctProposals": 1,
+      "wrongProposals": 1,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0
+    },
+    "policy": null,
+    "holdoutEvaluated": false,
+    "modelSha256": "fd27f9224620e1866cbace6510d4de7c1034bccc36d480750887bc6e0f70def4",
+    "stage": "offline-admitted-revision-only"
+  },
+  "scopeVersion2Calibration": {
+    "calibrationPassed": false,
+    "statistics": {
+      "rows": 1600,
+      "controls": 1200,
+      "admittedPrevious": 66,
+      "scoredPools": 18,
+      "candidateScores": 251
+    },
+    "refusals": {
+      "NO_ADMITTED_PREVIOUS_REPLACEMENT": 1415,
+      "INPUT_OR_PREFIX_CHANGED": 119,
+      "PREVIOUS_NOT_UNAMBIGUOUS_SHORT_PREDICATE": 29,
+      "NO_COMPLETED_RIGHT_NUMBER_CONFLICT": 19,
+      "PROPOSAL_ADMISSION_REFUSED": 16,
+      "CONTRADICTORY_RIGHT_GENDER_CUE": 1
+    },
+    "unthresholdedEligible": {
+      "eligibleProposals": 1,
+      "correctProposals": 1,
+      "wrongProposals": 0,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0
+    },
+    "policy": null,
+    "holdoutEvaluated": false,
+    "modelSha256": "fd27f9224620e1866cbace6510d4de7c1034bccc36d480750887bc6e0f70def4",
+    "stage": "offline-admitted-revision-only"
+  },
+  "policyFrozen": false,
+  "holdoutScored": false,
+  "observerAudit": {
+    "rows": 1600,
+    "semanticMismatches": [],
+    "addedField": "jointSourceRefusals",
+    "ignoredTimingFields": [
+      "hostStageNanos",
+      "fullTokenGenerationNanos"
+    ],
+    "candidateDecisions": 5514,
+    "allowed": 366,
+    "refused": 5148,
+    "refusedProposals": {
+      "WINNER_AMBIGUOUS": 16
+    },
+    "passed": true
+  },
+  "previousSpanAudit": {
+    "previousReplacementsChecked": 66,
+    "exactSpanAndCaret": 66,
+    "failures": [],
+    "editorOwnershipAcrossFollowingWordsProven": false
+  },
+  "rivalAudit": {
+    "proposals": 16,
+    "winnerPositivePackedLemma": 16,
+    "withPlausibleAmbiguousOrUnknownRival": 16
+  },
+  "inputAudit": {
+    "changedRows": 119,
+    "categories": {
+      "CONTENT_CHANGED": 24,
+      "CASE_ONLY": 87,
+      "WHITESPACE_RUNS_ONLY": 8
+    },
+    "rowsAutomaticallyNormalizedOrReadmitted": 0,
+    "sameNonWhitespaceCharactersIgnoringCase": 119,
+    "baselineExactBoundaryRestorations": 1600
+  },
+  "nextTrainingModel": {
+    "sha256": "170205268883a58d9a7968391b9ccf7aa753b838d3176287c4a73a63ae8af808",
+    "bytes": 22036,
+    "features": 163,
+    "qualified": false,
+    "calibrationScored": false,
+    "training": {
+      "groups": 4738,
+      "candidateRows": 71398,
+      "categories": {
+        "existing-unknown_originalGroups": 1904,
+        "existing-unknown_originalTargetFirst": 1897,
+        "raw-unknown_originalGroups": 952,
+        "raw-unknown_originalTargetFirst": 945,
+        "existing-correct_originalGroups": 658,
+        "existing-correct_originalTargetFirst": 658,
+        "existing-insufficient_right_evidenceGroups": 816,
+        "existing-insufficient_right_evidenceTargetFirst": 816,
+        "raw-insufficient_right_evidenceGroups": 408,
+        "raw-insufficient_right_evidenceTargetFirst": 408
+      },
+      "costMismatches": 0,
+      "excludedByKind": {
+        "correct_original": 14,
+        "unknown_original": 84,
+        "insufficient_right_evidence": 36
+      },
+      "trainingOnly": true,
+      "automaticAdmissionQualified": false
+    },
+    "trainingCorpusSha256": "a7922139ecc2d610be4b63ba6964449f9783452775d5c0bee4a9758bc1a58af7",
+    "trainingVectorsSha256": "2d1105f6ed31f6c1672a66e685eed996bcf839999a63a6bcb7d8c0f0c992801a",
+    "trainingPlanSha256": "0c393cae2bbdfc43578a1585fb9774d6b3a51d80d5426e2ffa31f164930613c5",
+    "corpusBindingSha256": "0185b92a613207630aad07004f946499dde4e767a3c64fc076b37d01d192036c"
+  },
+  "checks": {
+    "pythonTests": 42,
+    "pythonPassed": true,
+    "kotlinObserverCompiled": true,
+    "semanticObserverAuditPassed": true,
+    "diffCheckPassed": true,
+    "androidApplicationRebuilt": false,
+    "phoneCommandsIssued": false
+  },
+  "sourceHashes": {
+    "tools/typing_experiments/right_context_revision_scope.py": "69dbba32378165ce9fea678b20bca006ac0ed7071567d02f6f10c7dba22c63aa",
+    "tools/typing_experiments/right_context_input_audit.py": "9857b6f94f9f33eae51db69bdac14298c8c420b9ac6a70f5580f4a832f5ace6e",
+    "tools/typing_experiments/right_context_contrast_corpus.py": "3e0ccdc638a479889f2fe22f9bbcbde0a96729916ff890f97ad9a75b1a230b73",
+    "tools/eval/smart-typing-0.3/pipeline/FinalProductSpellingReplay.kt": "53fc6c3bc34f21234a1df9526c3f805d68f78becc90f40a3709d542582a2d2fb"
+  },
+  "artifacts": {
+    "initialCalibrationRecordsSha256": "d62daf6c15f3a7a1d54b451d3c32146b371b8f1b40228fb4145a2dbf4f7bd718",
+    "finalCalibrationRecordsSha256": "f85ed40ce39f2ea54662b25317a430c1415d4123c7fbbcaca068402caad43628",
+    "observerJarSha256": "00f77adbb56c7e6fcf3d27d685cf2b64878ea0badba927ca6ba177b42b009198"
+  },
+  "productionChanges": false,
+  "installedAssetsUnchanged": true
+}
