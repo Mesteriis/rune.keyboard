@@ -1,0 +1,58 @@
+{
+  "purpose": "TRAINING_DIAGNOSTIC_ONLY",
+  "modelChanged": false,
+  "independentQualification": false,
+  "perKind": {
+    "infinitive": {
+      "rows": 360,
+      "undoFailures": 0,
+      "typos": 120,
+      "targetRetrieved": 120,
+      "bothFormsRetrieved": 120,
+      "correct": 13,
+      "abstained": 104,
+      "wrong": 3,
+      "controls": 240,
+      "controlChanges": 0,
+      "protectedKnownSource": 0,
+      "unavailableUnknownSource": 0
+    },
+    "predicate": {
+      "rows": 126,
+      "undoFailures": 0,
+      "typos": 42,
+      "targetRetrieved": 42,
+      "bothFormsRetrieved": 42,
+      "correct": 0,
+      "abstained": 42,
+      "wrong": 0,
+      "controls": 84,
+      "controlChanges": 0,
+      "protectedKnownSource": 0,
+      "unavailableUnknownSource": 0
+    },
+    "object": {
+      "rows": 144,
+      "undoFailures": 0,
+      "typos": 48,
+      "targetRetrieved": 42,
+      "bothFormsRetrieved": 42,
+      "correct": 9,
+      "abstained": 30,
+      "wrong": 9,
+      "controls": 96,
+      "controlChanges": 0,
+      "protectedKnownSource": 6,
+      "unavailableUnknownSource": 0
+    }
+  },
+  "observationsSha256": "b637529921da01284190e1adc744cfd23677c3f2857312ba3b0b6611a1efe2e9",
+  "corpusSha256": "ef8d60f79f3d63a89531174d0355b6db6826b0c6e508bb55d73e5d4487523e02",
+  "note": "Six копие rows are morphology-unknown but production VALID_WORD/prohibitsAutoReplace. Exclude from correction training; retain original protection. Target absence is not a ranking failure.",
+  "generatorSha256": "91442e2655c12ab157815d848965f9d02b3f2b0ed6313c60ee9c1f4fb7b4f64f",
+  "sourceCommit": "e7397be",
+  "rows": 630,
+  "families": 35,
+  "dictionaryOnlyValidation": true,
+  "labelsEnteredHarness": false
+}
