@@ -20,6 +20,8 @@ class ExperimentModels internal constructor() {
     @Volatile private var jointRanker: ObliviousTreeRanker? = null
     @Volatile private var rescueRanker: ObliviousTreeRanker? = null
     @Volatile private var contextualRanker: ContextualRanker? = null
+    @Volatile private var grammarRevisionRanker: ContextualRanker? = null
+    val grammarRevisionReady: Boolean get() = grammarRevisionRanker != null && contextualReady
     val contextualReady: Boolean get() = contextualRanker != null && contextReady
     val rescueReady: Boolean get() = rescueRanker != null
     val jointReady: Boolean get() = jointRanker != null
@@ -67,11 +69,25 @@ class ExperimentModels internal constructor() {
     }
 
     internal fun loadJointRanker(bytes: ByteArray) { jointRanker = ObliviousTreeRanker.decode(bytes) }
-    internal fun loadContextualRanker(ranker: ContextualRanker) { contextualRanker = ranker }
+    internal fun loadContextualRanker(ranker: ContextualRanker) {
+        grammarRevisionRanker = null
+        contextualRanker = ranker
+    }
     internal fun contextualScore(context: String, original: String, candidate: GeneratedCandidate): Double =
         contextualRanker?.score(this, context, original, candidate) ?: Double.NaN
     internal fun contextualOriginalScore(context: String, original: String): Double =
         contextualRanker?.originalScore(this, context, original) ?: Double.NaN
+
+    internal fun loadGrammarRevisionRanker(bytes: ByteArray) {
+        grammarRevisionRanker = contextualRanker?.withWeights(bytes)
+    }
+    internal fun grammarRevisionScore(context: String, original: String, candidate: GeneratedCandidate): Double =
+        grammarRevisionRanker?.score(this, context, original, candidate) ?: Double.NaN
+    internal fun grammarRevisionOriginalScore(context: String, original: String): Double =
+        grammarRevisionRanker?.originalScore(this, context, original) ?: Double.NaN
+    internal fun allowsInfinitiveRevision(context: String, previous: String, proposed: String,
+        morphology: io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon): Boolean =
+        grammarRevisionRanker?.allowsInfinitiveRevision(context, previous, proposed, morphology) == true
 
     internal fun loadRescueRanker(bytes: ByteArray) { rescueRanker = ObliviousTreeRanker.decode(bytes) }
     internal fun rescueScore(context: String, original: String, candidate: GeneratedCandidate): Double =

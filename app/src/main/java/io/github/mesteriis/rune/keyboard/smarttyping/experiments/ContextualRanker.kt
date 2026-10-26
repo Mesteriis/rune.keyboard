@@ -2,6 +2,7 @@ package io.github.mesteriis.rune.keyboard.smarttyping.experiments
 
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidate
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon
 import kotlin.math.tanh
 
 /** Frozen unified model: character context is an input feature, never an added score bonus. */
@@ -10,7 +11,17 @@ internal class ContextualRanker private constructor(
     private val wiki: WordPairFeatures,
     private val conversation: WordPairFeatures,
     private val grammar: GrammaticalContextFeatures,
+    private val revisionScope: InfinitiveRevisionScope,
 ) {
+    /** Share validated immutable feature indices; only the numeric weights differ. */
+    fun withWeights(bytes: ByteArray): ContextualRanker? =
+        ObliviousTreeRanker.decode(bytes, FEATURES)?.let {
+            ContextualRanker(it, wiki, conversation, grammar, revisionScope)
+        }
+
+    fun allowsInfinitiveRevision(context: String, previous: String, proposed: String,
+        morphology: MorphologyLexicon): Boolean = revisionScope.refusal(context, previous, proposed, morphology) == null
+
     fun score(models: ExperimentModels, context: String, original: String, candidate: GeneratedCandidate): Double {
         if (candidate.language != KeyboardLanguage.RUSSIAN) return Double.NaN
         return score(models, context, original, candidate.text, candidate.unitDistance,
@@ -34,7 +45,8 @@ internal class ContextualRanker private constructor(
         fun create(bytes: ByteArray, wiki: WordPairFeatures, conversation: WordPairFeatures,
             dictionary: GrammarFeatureDictionary): ContextualRanker? =
             ObliviousTreeRanker.decode(bytes, FEATURES)?.let {
-                ContextualRanker(it, wiki, conversation, GrammaticalContextFeatures(dictionary))
+                ContextualRanker(it, wiki, conversation, GrammaticalContextFeatures(dictionary),
+                    InfinitiveRevisionScope(dictionary))
             }
     }
 }

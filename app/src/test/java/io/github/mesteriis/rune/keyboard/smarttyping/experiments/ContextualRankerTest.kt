@@ -63,4 +63,34 @@ class ContextualRankerTest {
         assertTrue(ranker.score(models, "", "научищься", candidate().copy(language = KeyboardLanguage.ENGLISH)).isNaN())
         assertNull(contextual(tree(95, 94)))
     }
+
+    @Test fun secondaryWeightsRetainTheInstalledScorerAndFailClosedWhenUnavailable() {
+        val models = ExperimentModels().apply {
+            loadContext(File("src/main/assets/smarttyping/experiments/ru-ranking-context.bin").readBytes())
+        }
+        models.loadGrammarRevisionRanker(tree())
+        assertFalse(models.grammarRevisionReady)
+        assertTrue(models.grammarRevisionScore("надо ", "научищься", candidate()).isNaN())
+        models.loadContextualRanker(contextual(tree(left = 2f, right = 2f))!!)
+        assertFalse(models.grammarRevisionReady)
+        val installed = models.contextualScore("надо ", "научищься", candidate())
+        models.loadGrammarRevisionRanker(tree(left = 1f, right = 1f))
+        assertTrue(models.grammarRevisionReady)
+        assertEquals(0.8 * tanh(0.25), models.grammarRevisionScore("надо ", "научищься", candidate()), 1e-12)
+        assertEquals(installed, models.contextualScore("надо ", "научищься", candidate()), 0.0)
+        val morphology = io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon { _, _ ->
+            io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyMembership(true, true, 100)
+        }
+        assertTrue(models.allowsInfinitiveRevision("тебе надо ", "научишься", "научиться", morphology))
+        assertFalse(models.allowsInfinitiveRevision("ты ", "научишься", "научиться", morphology))
+        models.loadGrammarRevisionRanker(tree(95, 94))
+        assertFalse(models.grammarRevisionReady)
+        assertTrue(models.grammarRevisionOriginalScore("надо ", "научищься").isNaN())
+        assertEquals(installed, models.contextualScore("надо ", "научищься", candidate()), 0.0)
+        assertFalse(models.allowsInfinitiveRevision("надо ", "научишься", "научиться", morphology))
+        models.loadGrammarRevisionRanker(tree(left = 1f, right = 1f))
+        assertTrue(models.grammarRevisionReady)
+        models.loadContextualRanker(contextual(tree(left = 2f, right = 2f))!!)
+        assertFalse(models.grammarRevisionReady)
+    }
 }

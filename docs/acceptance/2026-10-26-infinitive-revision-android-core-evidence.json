@@ -1,0 +1,39 @@
+{
+  "status": "ANDROID_CORE_PORT_VERIFIED_CONTROLLER_NOT_WIRED",
+  "unitTests": {
+    "tests": 1099,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "pythonTests": 41,
+  "grammarScores": {
+    "cases": 66645,
+    "maximumError": 2.220446049250313e-16
+  },
+  "installedScores": {
+    "cases": 67143,
+    "maximumError": 2.220446049250313e-16
+  },
+  "scope": {
+    "cases": 6506,
+    "allowed": 339,
+    "allMatched": true
+  },
+  "initialPreparationFailure": {
+    "exitCode": 1,
+    "expectedCases": 6507,
+    "actualCases": 6506,
+    "reason": "One focused calibration input had no complete joint pool; source-derived record count was 499 rather than 500",
+    "correctedInputBytesUnchanged": true,
+    "artifactsRetained": true
+  },
+  "featureIndicesShared": true,
+  "newModelHash": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+  "installedModelHash": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+  "installedAssetsUnchanged": true,
+  "phoneCommands": 0,
+  "controllerIntegration": false,
+  "physicalDeviceQualified": false,
+  "parityJarSha256": "cf55be7fd7cd41e2b8b3a918f968af63e6b33397371e3ec2fb0ed32aeb3e91ad"
+}
