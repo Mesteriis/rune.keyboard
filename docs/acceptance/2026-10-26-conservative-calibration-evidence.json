@@ -1,0 +1,43 @@
+{
+  "result": {
+    "independentGatePassed": false,
+    "holdoutScored": false,
+    "reason": "NO_CALIBRATION_POLICY_PASSED_ALL_CONSTRAINTS; holdout labels remain unused",
+    "physicalDeviceQualified": false,
+    "installedModelChanged": false,
+    "policySha256": "7bf9ef026e1bcafdbe7b6a97c9381d1c70dda50b253048d1506e2766a70baecb"
+  },
+  "policy": {
+    "stage": "frozen-before-new-holdout-scoring",
+    "calibrationPassed": false,
+    "modelSha256": "71454f1b6ce2f3755b17a5af4712a077525230bc4cc4d448f904972a1c40be69",
+    "calibrationRequiredPrecision": 0.975,
+    "requiredPrecision": 0.95,
+    "calibrationRowsSha256": "fc59d3cfa3ca53968d40c03f9b53f22bada785c2bebc0e4479a646a9724a6611",
+    "holdoutRowsSha256": "e0ecd0544db579203bb489bdf611d621da4bba9659105c6acd23a83484c3d1d9",
+    "planSha256": "0dc37ad3260276b913281137bfb6f6c8b80199f828a2fb113284bc1921f96207",
+    "calibratorSha256": "27a1c146a2e8ba36468baa2597eed2cb1e8f8e60d22fdacff13d2e4d7fa54f77",
+    "minimumNewCorrect": 100
+  },
+  "modelRefit": false,
+  "planSha256": "0dc37ad3260276b913281137bfb6f6c8b80199f828a2fb113284bc1921f96207",
+  "corpusManifestSha256": "8a7807aee382a994cff8c975aa6035cb29fff51a4665924349ea6748b4a1c2cb",
+  "calibrationRecordsSha256": "2c9704cc1937a88d34d177795cd437b0c3d93b61f2c1f238af25be1b7c21733b",
+  "calibrationEligibleGroups": 5574,
+  "evaluationCounts": {
+    "calibration": {
+      "rows": 12000,
+      "contexts": 3000,
+      "families": 1468
+    },
+    "holdout": {
+      "rows": 12000,
+      "contexts": 3000,
+      "families": 1417
+    }
+  },
+  "unitTests": 27,
+  "phoneCommands": 0,
+  "installedAssetsUnchanged": true,
+  "holdoutArtifactsAbsent": true
+}
