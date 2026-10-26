@@ -80,6 +80,30 @@ class GrammarContrastCorpusTest(unittest.TestCase):
         changed, _ = corpus.generate(dictionary)
         self.assertTrue(all(row['typed'] != selected for row in changed if not row['noAuto']))
 
+    def test_edit_profiles_cover_both_cost_asymmetries_and_keep_controls_once(self):
+        dictionary = Dictionary()
+        variants = corpus.shared_variants('учиться', 'учишься', dictionary, True)
+        costs = {(corpus.one_edit_cost(word, 'учиться'), corpus.one_edit_cost(word, 'учишься'))
+                 for word in variants}
+        self.assertEqual(costs, {(1., 1.), (.75, 1.), (1., .75)})
+        rows, _ = corpus.generate(dictionary, edit_profiles=True)
+        self.assertEqual(rows, corpus.generate(dictionary, edit_profiles=True)[0])
+        controls = [r for r in rows if r['noAuto']]
+        self.assertEqual(len(controls), 420)
+        for row in rows:
+            if not row['noAuto']:
+                self.assertFalse(dictionary.analyses(row['typed']))
+                self.assertEqual(row['contrastEditCosts'], [
+                    corpus.one_edit_cost(row['typed'], form) for form in row['contrastCandidates']])
+
+    def test_one_edit_cost_rejects_identity_multiedit_and_transposition(self):
+        self.assertEqual(corpus.one_edit_cost('учищься', 'учиться'), 1.)
+        self.assertEqual(corpus.one_edit_cost('учищься', 'учишься'), .75)
+        self.assertEqual(corpus.one_edit_cost('учиься', 'учиться'), 1.)
+        for left, right in [('слово', 'слово'), ('аб', 'ба'), ('слово', 'сл')]:
+            with self.assertRaisesRegex(ValueError, 'NOT_ONE_EDIT'):
+                corpus.one_edit_cost(left, right)
+
 
 if __name__ == '__main__':
     unittest.main()

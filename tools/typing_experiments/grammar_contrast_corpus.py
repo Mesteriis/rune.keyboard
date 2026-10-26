@@ -12,6 +12,7 @@ import sys
 
 
 ALPHABET = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+KEY_ROWS = ('йцукенгшщзхъ', 'фывапролджэ', 'ячсмитьбю')
 # These paradigms deliberately exclude the five disclosed failure targets.
 VERBS = (
     ('говорить', 'говоришь'), ('любить', 'любишь'),
@@ -59,7 +60,49 @@ def _valid_pair(kind, left, right):
         a.pos == 'NOUN' and a.case == 'ablt' for a in right)
 
 
-def generate(lexicon):
+def one_edit_cost(source, target):
+    """INITIAL-profile cost for a verified one-edit pair, not a general DL port."""
+    if len(source) == len(target):
+        different = [(a, b) for a, b in zip(source, target) if a != b]
+        if len(different) == 1:
+            positions = {c: (2 * x + y, y) for y, row in enumerate(KEY_ROWS) for x, c in enumerate(row)}
+            a, b = different[0]
+            if a in positions and b in positions:
+                ax, ay = positions[a]; bx, by = positions[b]
+                if (ay == by and abs(ax - bx) == 2) or (abs(ay - by) == 1 and abs(ax - bx) <= 1):
+                    return .75
+            return 1.0
+    elif abs(len(source) - len(target)) == 1:
+        short, long = sorted((source, target), key=len)
+        if any(long[:i] + long[i + 1:] == short for i in range(len(long))):
+            return 1.0
+    raise ValueError('NOT_ONE_EDIT')
+
+
+def shared_variants(left, right, lexicon, edit_profiles=False):
+    candidates = one_edit_words(left) & one_edit_words(right)
+    ordered = sorted(candidates, key=lambda word: (
+        len(word), hashlib.sha256(('grammar-contrast-v1:' + word).encode()).hexdigest()))
+    if not edit_profiles:
+        first = next((word for word in ordered if not lexicon.analyses(word)), None)
+        return [first] if first else []
+    buckets = {}
+    for word in ordered:
+        if lexicon.analyses(word):
+            continue
+        # Distinguish both cost asymmetries and insertion/deletion shapes.
+        profile = (one_edit_cost(word, left) - one_edit_cost(word, right),
+                   len(word) - len(left), len(word) - len(right))
+        buckets.setdefault(profile, word)
+    if not buckets:
+        return []
+    first = next(iter(buckets))
+    profiles = [first] + sorted((p for p in buckets if p != first),
+                               key=lambda p: (p[0] == 0, p))
+    return [buckets[p] for p in profiles[:3]]
+
+
+def generate(lexicon, *, edit_profiles=False):
     rows, skipped = [], []
     specifications = (
         ('infinitive', VERBS, ('тебе нужно', 'я хочу', 'можно'), ('ты', 'ты уже', 'ты снова')),
@@ -72,26 +115,25 @@ def generate(lexicon):
             if not _valid_pair(kind, left_tags, right_tags) or not (
                     {a.lemma for a in left_tags} & {a.lemma for a in right_tags}):
                 raise ValueError('PARADIGM_DICTIONARY_MISMATCH:' + left)
-            candidates = one_edit_words(left) & one_edit_words(right)
-            ordered = sorted(candidates, key=lambda word: (
-                len(word), hashlib.sha256(('grammar-contrast-v1:' + word).encode()).hexdigest()))
-            typed = next((word for word in ordered if not lexicon.analyses(word)), None)
-            if typed is None:
+            variants = shared_variants(left, right, lexicon, edit_profiles)
+            if not variants:
                 skipped.append(dict(kind=kind, forms=[left, right], reason='NO_UNKNOWN_SHARED_ONE_EDIT'))
                 continue
             family = kind + ':' + left
             for target, rival, contexts in ((left, right, left_contexts), (right, left, right_contexts)):
                 for prefix in contexts:
                     # Both already-correct forms stay unchanged, including grammatical disagreement.
-                    for source, no_auto in ((typed, False), (target, True), (rival, True)):
+                    for source, no_auto in ([(typed, False) for typed in variants] + [(target, True), (rival, True)]):
                         row = dict(purpose='AUTHORED_CONTRAST_TRAINING_ONLY',
-                                   source='rune-authored-grammar-contrast-v1', split='train',
+                                   source='rune-authored-grammar-contrast-v2' if edit_profiles else 'rune-authored-grammar-contrast-v1', split='train',
                                    family=family, contrastKind=kind, language='ru', prefix=prefix,
                                    typed=source, expectedSpelling=source if no_auto else target,
                                    word=source if no_auto else target, noAuto=no_auto,
                                    group='correct' if no_auto else 'shared_one_edit',
                                    cohort='correct' if no_auto else 'typo',
                                    contrastCandidates=[left, right])
+                        if edit_profiles and not no_auto:
+                            row['contrastEditCosts'] = [one_edit_cost(source, form) for form in (left, right)]
                         row['id'] = 'grammar-contrast-' + hashlib.sha256(
                             json.dumps(row, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:24]
                         rows.append(row)
@@ -103,11 +145,12 @@ def generate(lexicon):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True, help='New output directory; never overwritten')
+    parser.add_argument('--edit-profiles', action='store_true', help='Up to three distinct shared-corruption profiles per pair')
     args = parser.parse_args()
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'morphology'))
     from ranker import PymorphyLexicon
     lexicon = PymorphyLexicon()
-    rows, skipped = generate(lexicon)
+    rows, skipped = generate(lexicon, edit_profiles=args.edit_profiles)
     payload = ''.join(json.dumps(row, ensure_ascii=False, sort_keys=True) + '\n' for row in rows).encode()
     receipt = dict(schemaVersion=1, purpose='TRAINING_ONLY_NOT_QUALIFICATION',
                    origin='Authored templates and dictionary-validated paradigms; no downloaded sentences',
@@ -119,6 +162,10 @@ def main():
                    limitations=['Synthetic distribution; does not establish real typing precision',
                                 'Must exclude overlapping families/contexts from future independent evaluation',
                                 'Not a candidate retrieval or correction admission certificate'])
+    if args.edit_profiles:
+        keyboard = Path(__file__).resolve().parents[2] / 'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt'
+        receipt['corruptionSelection'] = 'distinct-edit-profiles-v2; max three; correct-word controls not duplicated'
+        receipt['keyboardFeatureSha256'] = hashlib.sha256(keyboard.read_bytes()).hexdigest()
     args.output.mkdir(parents=True, exist_ok=False)
     (args.output / 'train.jsonl').write_bytes(payload)
     (args.output / 'manifest.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n')

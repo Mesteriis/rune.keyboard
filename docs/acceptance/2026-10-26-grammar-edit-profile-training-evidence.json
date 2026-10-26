@@ -1,0 +1,139 @@
+{
+  "status": "NOT_QUALIFIED_FOR_FULL_MODEL_REPLACEMENT",
+  "training": {
+    "purpose": "TRAINING_DIAGNOSTIC_NOT_QUALIFICATION",
+    "statistics": {
+      "broad": {
+        "groups": 19802,
+        "referenceRawCorrect": 18851,
+        "experimentalRawCorrect": 18809
+      },
+      "contrastTypo": {
+        "groups": 540,
+        "referenceRawCorrect": 271,
+        "experimentalRawCorrect": 433
+      },
+      "contrastRetention": {
+        "groups": 408,
+        "referenceRawCorrect": 360,
+        "experimentalRawCorrect": 405
+      }
+    },
+    "fiveDisclosedTrainingCases": [
+      {
+        "id": "supervised-final-audit-004789",
+        "typed": "фотографие",
+        "expected": "фотографию",
+        "referenceRawWinner": "фотографией",
+        "experimentalRawWinner": "фотографией"
+      },
+      {
+        "id": "supervised-final-audit-007529",
+        "typed": "злищься",
+        "expected": "злиться",
+        "referenceRawWinner": "злишься",
+        "experimentalRawWinner": "злиться"
+      },
+      {
+        "id": "supervised-final-audit-007709",
+        "typed": "научищься",
+        "expected": "научиться",
+        "referenceRawWinner": "научишься",
+        "experimentalRawWinner": "научиться"
+      },
+      {
+        "id": "supervised-final-audit-008977",
+        "typed": "заплатищь",
+        "expected": "заплатить",
+        "referenceRawWinner": "заплатишь",
+        "experimentalRawWinner": "заплатить"
+      },
+      {
+        "id": "supervised-final-audit-014304",
+        "typed": "виновн",
+        "expected": "виновны",
+        "referenceRawWinner": "виновен",
+        "experimentalRawWinner": "виновен"
+      }
+    ],
+    "modelSha256": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd"
+  },
+  "selection": {
+    "baseGroups": 19802,
+    "contrastGroups": 948,
+    "contrastTypos": 540,
+    "contrastRetention": 408,
+    "skipped": {
+      "incomplete_pool": 24,
+      "protected_original": 6
+    },
+    "groupsSha256": "4faf26f42570a9ddc015d13709224af37d03e3568e9b6c219b9bd50f11170525"
+  },
+  "profileValidation": {
+    "purpose": "TRAINING_PREPARATION_NOT_QUALIFICATION",
+    "selectedGroups": 948,
+    "selectedTypos": 540,
+    "selectedRetention": 408,
+    "skipped": {
+      "incomplete_pool": 24,
+      "protected_original": 6
+    },
+    "verifiedProductionCostPairs": 540,
+    "productionCostDisagreement": 0,
+    "editCostDeltaProfiles": {
+      "infinitive": {
+        "0.0": 120,
+        "-0.25": 114,
+        "0.25": 108
+      },
+      "predicate": {
+        "-0.25": 24,
+        "0.25": 30,
+        "0.0": 54
+      },
+      "object": {
+        "0.0": 90
+      }
+    },
+    "corpusSha256": "f869d22f36e1e7bbfdb17058b12db6d996a87ebc7178f32f64aa39ed6448c41f",
+    "observationsSha256": "aee358ca132b2fb8678b80eea74824d826eb3c1a9e8b13af760afbfe09d706e4"
+  },
+  "calibration": {
+    "stage": "frozen-before-new-holdout-scoring",
+    "calibrationPassed": false,
+    "modelSha256": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+    "calibrationRequiredPrecision": 0.975,
+    "requiredPrecision": 0.95,
+    "calibrationRowsSha256": "fc59d3cfa3ca53968d40c03f9b53f22bada785c2bebc0e4479a646a9724a6611",
+    "holdoutRowsSha256": "e0ecd0544db579203bb489bdf611d621da4bba9659105c6acd23a83484c3d1d9",
+    "planSha256": "0abf1a01c4e859d4bec592e29c9578ca5fb650da21a5992f05bd5c58bd35a069",
+    "calibratorSha256": "27a1c146a2e8ba36468baa2597eed2cb1e8f8e60d22fdacff13d2e4d7fa54f77",
+    "minimumNewCorrect": 100
+  },
+  "result": {
+    "independentGatePassed": false,
+    "holdoutScored": false,
+    "reason": "NO_CALIBRATION_POLICY_PASSED_ALL_CONSTRAINTS; holdout labels remain unused",
+    "physicalDeviceQualified": false,
+    "installedModelChanged": false,
+    "policySha256": "bc47fbaf06fbbc0b4158041877873508ddbf54968ab64f306a4fc36e465d11b8"
+  },
+  "failureDiagnostic": {
+    "purpose": "CALIBRATION_FAILURE_DIAGNOSTIC_NOT_POLICY",
+    "bestPrecisionWithAllRetentionGuards": null,
+    "fewestInstalledLossesAtRequiredPrecision": null
+  },
+  "matrixParity": {
+    "samplesPerModel": 128,
+    "models": 2,
+    "maximumAbsoluteError": 0
+  },
+  "tests": 29,
+  "v1CorpusByteIdentical": true,
+  "installedAssetsUnchanged": true,
+  "phoneCommands": 0,
+  "holdoutScored": false,
+  "trainingRows": 239460,
+  "planSha256": "0abf1a01c4e859d4bec592e29c9578ca5fb650da21a5992f05bd5c58bd35a069",
+  "calibrationRecordsSha256": "2da1a45b8eeea506bf7495531673e67b0aaf8af24efc3f43e012ecfe073736b2"
+}
