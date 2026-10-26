@@ -16,6 +16,36 @@ import org.junit.Test
 
 /** Real owner/executor with an independent editor document. Synthetic quality admission only. */
 class CorrectionBoundaryTest {
+    @Test fun `infinitive revision needs its own qualification and admission and keeps exact undo`() {
+        for (qualified in listOf(false, true)) for (admitted in listOf(false, true)) {
+            val f = Fixture(grammarRevisionQualified = qualified)
+            f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+            val target = GeneratedCandidate("научиться", "научиться", "научиться", KeyboardLanguage.RUSSIAN,
+                false, 4, 100, 1, EditFeatures(1.0, 0, 0.0), 0, CasePattern.LOWER)
+            f.controller.setPersonalization(object : TypingPersonalization {
+                override fun jointAutomaticChoice(context: String, generation: CandidateGeneration,
+                    language: KeyboardLanguage, baselineWord: String?) =
+                    io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionChoice(target, grammarRevision = true)
+                override fun grammarRevisionAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                    language: KeyboardLanguage) = AutomaticTypingDecision(admitted)
+                // Other sources deliberately admit: this source must not borrow their authority.
+                override fun jointAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                    language: KeyboardLanguage) = AutomaticTypingDecision(true)
+                override fun contextualAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                    language: KeyboardLanguage) = AutomaticTypingDecision(true)
+            }, KeyboardLanguage.RUSSIAN)
+            f.raw("надо"); f.type(" "); f.raw("научищься")
+            val request = f.controller.beginCandidateRequest(1, KeyboardLanguage.RUSSIAN)!!
+            val pool = LocalSearchEvidence(CandidateCompletion.COMPLETE, listOf(target), 1, 1)
+            assertTrue(f.controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
+                CandidateGeneration(request.token, listOf(target), CandidateCompletion.COMPLETE,
+                    false, null, 1, 1, jointSearch = pool, jointEvaluated = true))))
+            f.type(" ")
+            assertEquals(if (qualified && admitted) "надо научиться " else "надо научищься ", f.document)
+            if (qualified && admitted) { f.undo(); assertEquals("надо научищься", f.document) }
+        }
+    }
+
     @Test fun `known original may offer explicit neighbours without ever replacing on Space`() {
         for (staged in listOf(false, true)) {
         val f = Fixture()
@@ -1641,10 +1671,11 @@ class CorrectionBoundaryTest {
     }
 
     private class Fixture(qualified: Boolean? = true, modelOnly: Boolean = false, initial: String = "", refinement: Boolean = false,
-        rescueQualified: Boolean? = null, wordContextQualified: Boolean? = null) {
+        rescueQualified: Boolean? = null, wordContextQualified: Boolean? = null, grammarRevisionQualified: Boolean? = null) {
         var now = 0L
         val controller = TypingSessionController(jvmGraphemes, qualified?.let { allowed ->
-            SpellingQualification { _, model -> if (model == SpellingSource.WORD_CONTEXT && wordContextQualified != null)
+            SpellingQualification { _, model -> if (model == SpellingSource.INFINITIVE_REVISION && grammarRevisionQualified != null)
+                grammarRevisionQualified else if (model == SpellingSource.WORD_CONTEXT && wordContextQualified != null)
                 wordContextQualified else if (model == SpellingSource.JOINT_RESCUE && rescueQualified != null)
                 rescueQualified else allowed && (!modelOnly || model == SpellingSource.MODEL) }
         } ?: SpellingQualification.CURRENT, nanoTime = { now },

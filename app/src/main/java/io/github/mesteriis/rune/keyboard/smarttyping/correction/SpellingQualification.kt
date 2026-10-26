@@ -2,7 +2,7 @@ package io.github.mesteriis.rune.keyboard.smarttyping.correction
 
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 
-internal enum class SpellingSource { COMMON_CONFUSION, GENERAL_LOCAL, COMPACT_PUBLIC, MODEL, NEIGHBOR_RECOVERY, MODEL_REFINEMENT, JOINT_SHORT, JOINT_LONG, JOINT_RESCUE, WORD_CONTEXT, CONTEXTUAL_PUBLIC }
+internal enum class SpellingSource { COMMON_CONFUSION, GENERAL_LOCAL, COMPACT_PUBLIC, MODEL, NEIGHBOR_RECOVERY, MODEL_REFINEMENT, JOINT_SHORT, JOINT_LONG, JOINT_RESCUE, WORD_CONTEXT, CONTEXTUAL_PUBLIC, INFINITIVE_REVISION }
 
 /** Quality admission is separate for the finite local source, general ranking, and model ranking. */
 internal fun interface SpellingQualification {
@@ -20,6 +20,7 @@ internal fun interface SpellingQualification {
          * qualification remains the frozen 95% policy, independent of local qualification.
          */
         val CURRENT = SpellingQualification { language, source -> when (source) {
+            SpellingSource.INFINITIVE_REVISION -> InfinitiveRevisionQualification.enabled(language, 3) && InfinitiveRevisionQualification.enabled(language, 5)
             SpellingSource.CONTEXTUAL_PUBLIC -> ContextualQualification.enabled(language, 3) && ContextualQualification.enabled(language, 5)
             SpellingSource.WORD_CONTEXT -> WordContextQualification.enabled(language)
             SpellingSource.JOINT_RESCUE -> JointRescueQualification.enabled(language)

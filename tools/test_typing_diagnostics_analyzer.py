@@ -4,6 +4,76 @@ from typing_diagnostics_analyzer import analyze_events
 
 
 class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
+    def test_joint_refusals_survive_as_metadata_without_editor_text(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
+        flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)
+        reasons = ['RARE_ORIGINAL', 'RESOURCE_UNAVAILABLE', 'SCORE_TOO_LOW',
+                   'ORIGINAL_PREFERRED', 'REPLACEMENT_VETOED', 'INSUFFICIENT_MARGIN',
+                   'UNCHANGED', 'PREVIOUS_NOT_UNAMBIGUOUS_FINITE', 'PROPOSAL_NOT_UNAMBIGUOUS_INFINITIVE',
+                   'LEMMA_UNAVAILABLE', 'DIFFERENT_LEMMA', 'NO_INFINITIVE_CUE']
+        events = [dict(schema=8, session=1, revision=i, kind='RANKING', source=source, reason=reason,
+                       features=flags, effectiveFeatures=flags, typingProfile=0, correctionId=0,
+                       localCompletion='NONE', localInspectedStates=0, localVerifiedTerminals=0,
+                       recoveryCompletion='NONE', recoveryInspectedStates=0, recoveryVerifiedTerminals=0)
+                  for i, (source, reason) in enumerate([(source, reason) for source in ['JOINT', 'WORD_CONTEXT', 'CONTEXTUAL_RANKER', 'INFINITIVE_REVISION'] for reason in reasons], 1)]
+        report = analyze_events(events)
+        self.assertEqual(reasons * 4, [e['reason'] for e in report['refusalEvents']])
+        self.assertEqual([], report['outcomes'])
+
+    def test_schema_eight_metadata_undo_requires_exact_editor_response_and_never_invents_text(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
+        flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)
+        common = dict(schema=8, session=3, localCompletion="NONE", localInspectedStates=0,
+                      localVerifiedTerminals=0, typingProfile=0, features=flags,
+                      effectiveFeatures=flags, recoveryCompletion="NONE",
+                      recoveryInspectedStates=0, recoveryVerifiedTerminals=0, correctionId=7)
+        applied = [dict(common, kind="BOUNDARY", reason="AUTO_REPLACE", revision=10,
+                        operationId=1, original="зочу", result="хочу "),
+                   dict(common, kind="EDITOR", reason="EDITOR_ACCEPTED", revision=10, operationId=1)]
+        undo = dict(common, kind="UNDO", reason="ACCEPTED", revision=12, operationId=2)
+        for response, outcome in [(None, "UNDO_PENDING"), ("EDITOR_ACCEPTED", "UNDONE"),
+                                  ("EDITOR_REJECTED", "UNDO_REJECTED")]:
+            with self.subTest(response=response):
+                events = applied + [undo]
+                if response:
+                    events += [dict(common, kind="EDITOR", reason=response, revision=12, operationId=2)]
+                report = analyze_events(events)
+                self.assertEqual(outcome, report["outcomes"][0]["outcome"])
+                self.assertIsNone(report["outcomes"][0]["final"])
+        for changes in [dict(session=4), dict(revision=13), dict(operationId=3), dict(correctionId=8)]:
+            report = analyze_events(applied + [undo, dict(common, kind="EDITOR", reason="EDITOR_ACCEPTED",
+                revision=12, operationId=2) | changes])
+            self.assertEqual("UNDO_PENDING", report["outcomes"][0]["outcome"])
+        report = analyze_events(applied + [dict(undo, correctionId=8)])
+        self.assertEqual("APPLIED", report["outcomes"][0]["outcome"])
+        report = analyze_events(applied + [undo, dict(common, kind="SESSION", reason="START", revision=1),
+            dict(common, kind="EDITOR", reason="EDITOR_ACCEPTED", revision=12, operationId=2)])
+        self.assertEqual("UNDO_PENDING", report["outcomes"][0]["outcome"])
+        legacy = [dict(e, schema=2, correctionId={"ignored": True}) for e in applied]
+        self.assertEqual("APPLIED", analyze_events(legacy)["outcomes"][0]["outcome"])
+        with self.assertRaisesRegex(ValueError, "undo result must be a string"):
+            analyze_events(applied + [dict(undo, result=None)])
+
+    def test_schema_eight_links_correction_chain_with_numeric_metadata(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
+        flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)
+        common = dict(schema=8, session=3, localCompletion="NONE", localInspectedStates=0,
+                      localVerifiedTerminals=0, typingProfile=0, features=flags,
+                      effectiveFeatures=flags, recoveryCompletion="COMPLETE",
+                      recoveryInspectedStates=32768, recoveryVerifiedTerminals=64, correctionId=7)
+        events = [dict(common, kind="BOUNDARY", reason="AUTO_REPLACE", revision=10,
+                       operationId=7, source="NEIGHBOR_RECOVERY", original="", result=""),
+                  dict(common, kind="BOUNDARY", reason="MODEL_REFINED", revision=11,
+                       operationId=8, source="MODEL_REFINEMENT")]
+        report = analyze_events(events)
+        self.assertEqual(1, len(report["correctionChains"]))
+        self.assertEqual(7, report["correctionChains"][0]["correctionId"])
+        self.assertEqual(2, len(report["correctionChains"][0]["events"]))
+        for field, value in (("reasonCode", -1), ("reasonCode", 256), ("correctionId", -1), ("recoveryInspectedStates", 32769),
+                             ("recoveryVerifiedTerminals", 65)):
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                analyze_events([dict(events[0], **{field: value})])
+
     def test_schema_seven_reports_explicit_refusals_without_inferring_targets(self):
         from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
         flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)

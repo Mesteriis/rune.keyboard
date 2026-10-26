@@ -88,6 +88,16 @@ class ExperimentModels internal constructor() {
     internal fun allowsInfinitiveRevision(context: String, previous: String, proposed: String,
         morphology: io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon): Boolean =
         grammarRevisionRanker?.allowsInfinitiveRevision(context, previous, proposed, morphology) == true
+    internal fun grammarRevisionPrecondition(context: String, previous: String,
+        morphology: io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon): InfinitiveRevisionRefusal? {
+        val ranker = grammarRevisionRanker ?: return InfinitiveRevisionRefusal.LEMMA_UNAVAILABLE
+        return ranker.revisionPrecondition(context, previous, morphology)
+    }
+    internal fun grammarRevisionScopeRefusal(context: String, previous: String, proposed: String,
+        morphology: io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon): InfinitiveRevisionRefusal? {
+        val ranker = grammarRevisionRanker ?: return InfinitiveRevisionRefusal.LEMMA_UNAVAILABLE
+        return ranker.revisionRefusal(context, previous, proposed, morphology)
+    }
 
     internal fun loadRescueRanker(bytes: ByteArray) { rescueRanker = ObliviousTreeRanker.decode(bytes) }
     internal fun rescueScore(context: String, original: String, candidate: GeneratedCandidate): Double =

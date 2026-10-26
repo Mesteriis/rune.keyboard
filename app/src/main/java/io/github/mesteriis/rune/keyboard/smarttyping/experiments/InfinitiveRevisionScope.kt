@@ -13,6 +13,19 @@ internal enum class InfinitiveRevisionRefusal {
 internal class InfinitiveRevisionScope(private val dictionary: GrammarFeatureDictionary) {
     private val grammar = GrammaticalContextFeatures(dictionary)
 
+    /** Necessary conditions before paying for a second complete model comparison. */
+    fun preconditionRefusal(context: String, previous: String,
+        morphology: MorphologyLexicon): InfinitiveRevisionRefusal? {
+        val analyses = dictionary.analyses(previous).analyses
+        if (analyses.isEmpty() || analyses.any { it.pos != "VERB" })
+            return InfinitiveRevisionRefusal.PREVIOUS_NOT_UNAMBIGUOUS_FINITE
+        val lemma = morphology.lookup(KeyboardLanguage.RUSSIAN, previous.lowercase(Locale.ROOT))
+        if (!lemma.available || !lemma.present || lemma.lemmaId == null)
+            return InfinitiveRevisionRefusal.LEMMA_UNAVAILABLE
+        return if (grammar.extract(context, previous)[INFINITIVE_CUE] == 1.0) null
+            else InfinitiveRevisionRefusal.NO_INFINITIVE_CUE
+    }
+
     fun refusal(context: String, previous: String, proposed: String,
         morphology: MorphologyLexicon): InfinitiveRevisionRefusal? {
         if (previous == proposed) return InfinitiveRevisionRefusal.UNCHANGED
@@ -33,6 +46,8 @@ internal class InfinitiveRevisionScope(private val dictionary: GrammarFeatureDic
     }
 
     companion object {
+        const val VERSION = 1
+        private const val INFINITIVE_CUE = 24
         // Frozen 38-feature schema: cue at 24, infinitive-supported at 25.
         private const val INFINITIVE_SUPPORTED = 25
     }

@@ -31,6 +31,9 @@ REFUSAL_REASONS = frozenset((
     "TARGET_NOT_IN_DICTIONARY", "SEARCH_INCOMPLETE", "TARGET_NOT_FOUND", "TOP_K_EXCLUDED",
     "MANUAL_ONLY", "TOO_SHORT", "ORIGINAL_VALID", "MORPHOLOGY_UNAVAILABLE",
     "WINNER_AMBIGUOUS", "RIVAL_OTHER_LEMMA", "INSUFFICIENT_MARGIN", "NOT_QUALIFIED",
+    "RARE_ORIGINAL", "RESOURCE_UNAVAILABLE", "SCORE_TOO_LOW", "ORIGINAL_PREFERRED", "REPLACEMENT_VETOED",
+    "UNCHANGED", "PREVIOUS_NOT_UNAMBIGUOUS_FINITE", "PROPOSAL_NOT_UNAMBIGUOUS_INFINITIVE",
+    "LEMMA_UNAVAILABLE", "DIFFERENT_LEMMA", "NO_INFINITIVE_CUE",
     "RESULT_NOT_READY", "STALE_REVISION", "OWNERSHIP_REJECTED", "EDITOR_REJECTED",
     "DEADLINE_MISSED",
 ))
@@ -55,7 +58,7 @@ def _event_fields(event):
             if name in event and not lower <= _integer(event[name], name) <= upper:
                 raise ValueError(f"{name} outside bounds")
         enums = {
-            "source": {"NONE", "LOCAL_POLICY", "MODEL", "CANONICAL_CASE", "MECHANICAL", "CONTEXTUAL"},
+            "source": {"NONE", "LOCAL_POLICY", "MODEL", "CANONICAL_CASE", "MECHANICAL", "CONTEXTUAL", "NEIGHBOR_RECOVERY", "MODEL_REFINEMENT", "JOINT", "JOINT_RESCUE", "WORD_CONTEXT", "CONTEXTUAL_RANKER", "INFINITIVE_REVISION"},
             "completion": {"NONE", "COMPLETE", "PROTECTED", "VALID_WORD", "STATES_EXHAUSTED",
                            "VERIFIED_EXHAUSTED", "CANCELLED", "UNAVAILABLE", "READER_FAILURE"},
         }
@@ -68,6 +71,15 @@ def _event_fields(event):
             for name, upper in (("localInspectedStates", 8_192), ("localVerifiedTerminals", 64)):
                 if not 0 <= _integer(event.get(name), name) <= upper:
                     raise ValueError(f"{name} outside bounds")
+    if schema >= 8:
+        if "reasonCode" in event and not 0 <= _integer(event["reasonCode"], "reasonCode") <= 255:
+            raise ValueError("reasonCode outside bounds")
+        if event.get("recoveryCompletion") not in enums["completion"]:
+            raise ValueError("recoveryCompletion must be a fixed enum")
+        for name, upper in (("correctionId", 1_000_000_000), ("recoveryInspectedStates", 32_768),
+                            ("recoveryVerifiedTerminals", 64)):
+            if not 0 <= _integer(event.get(name), name) <= upper:
+                raise ValueError(f"{name} outside bounds")
     if schema >= 5 and _integer(event.get("typingProfile"), "typingProfile") not in (0, 1, 2):
         raise ValueError("typingProfile must be a fixed profile ID")
     if schema >= 4:
@@ -207,6 +219,7 @@ def analyze_events(events, ground_truth=None):
     active = {}
     pending = {}
     operations = {}
+    metadata_undos = {}
     backspaces = 0
     segment_start = {}
     last_start = None
@@ -271,9 +284,10 @@ def analyze_events(events, ground_truth=None):
             # A reset marker revokes every old identity, including a truncated capture
             # whose first START was rotated away. Forward segments retain late responses.
             reset = (last_start is not None and (session < last_start[0] or revision <= last_start[1])) or any(
-                key[1] >= revision for key in operations)
+                key[1] >= revision for key in operations) or any(
+                key[1] >= revision for key in metadata_undos)
             if reset:
-                operations.clear(); pending.clear(); active.clear(); segment_start.clear()
+                operations.clear(); metadata_undos.clear(); pending.clear(); active.clear(); segment_start.clear()
             last_start = (session, revision)
             segment_start[session] = revision
             active.pop(session, None)
@@ -302,6 +316,7 @@ def analyze_events(events, ground_truth=None):
                     "final": result,
                     "outcome": "APPLIED",
                     "_requestId": event.get("requestId", 0) if schema >= 2 else None,
+                    "_correctionId": event.get("correctionId", 0) if schema >= 8 else 0,
                 }
                 if schema >= 2:
                     if operation is not None and operation > 0:
@@ -314,6 +329,13 @@ def analyze_events(events, ground_truth=None):
             attempt = operations.pop((session, revision, operation), None)
             if attempt is not None:
                 finish(attempt, reason == "EDITOR_ACCEPTED")
+            undo = (metadata_undos.pop((session, revision, operation, event["correctionId"]), None)
+                    if schema >= 8 else None)
+            if undo is not None:
+                undo["outcome"] = "UNDONE" if reason == "EDITOR_ACCEPTED" else "UNDO_REJECTED"
+                # Metadata confirms an operation, not the resulting editor payload.
+                undo["final"] = None
+                undo["final_revision"] = revision
 
         attempt = pending.get(session)
         if attempt is not None and revision >= attempt["initial_revision"] + 1:
@@ -322,6 +344,17 @@ def analyze_events(events, ground_truth=None):
                 finish(attempt, True)
 
         if kind == "UNDO" and reason == "ACCEPTED":
+            if schema >= 8 and "result" not in event:
+                identity = event.get("correctionId", 0)
+                previous = next((item for item in reversed(active.get(session, []))
+                    if identity > 0 and item["_correctionId"] == identity and
+                    item["outcome"] == "APPLIED" and item["initial_revision"] <= revision), None)
+                if previous is not None and operation is not None and operation > 0:
+                    previous["outcome"] = "UNDO_PENDING"
+                    previous["final"] = None
+                    previous["final_revision"] = revision
+                    metadata_undos[(session, revision, operation, identity)] = previous
+                continue
             if not isinstance(result, str):
                 raise ValueError("undo result must be a string")
             candidates = active.get(session, [])
@@ -334,7 +367,17 @@ def analyze_events(events, ground_truth=None):
 
     report = {"schemas": sorted(schemas), "backspaces": backspaces,
         "manualEdits": _manual_edits(events), "outcomes": [
-        {key: value for key, value in item.items() if key != "_requestId"} for item in outcomes]}
+        {key: value for key, value in item.items() if key not in ("_requestId", "_correctionId")} for item in outcomes]}
+    if any(schema >= 8 for schema in schemas):
+        chains = {}
+        for event in events:
+            identity = event.get("correctionId", 0)
+            if event.get("schema", 0) >= 8 and identity:
+                key = (event["session"], identity)
+                chains.setdefault(key, []).append({name: event.get(name) for name in
+                    ("kind", "reason", "revision", "operationId", "source")})
+        report["correctionChains"] = [dict(session=session, correctionId=identity, events=steps)
+            for (session, identity), steps in sorted(chains.items())]
     if any(schema >= 4 for schema in schemas):
         report["featureConfigurations"] = configurations
     if any(schema >= 6 for schema in schemas):

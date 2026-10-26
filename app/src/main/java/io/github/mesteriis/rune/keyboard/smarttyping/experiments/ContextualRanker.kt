@@ -22,6 +22,11 @@ internal class ContextualRanker private constructor(
     fun allowsInfinitiveRevision(context: String, previous: String, proposed: String,
         morphology: MorphologyLexicon): Boolean = revisionScope.refusal(context, previous, proposed, morphology) == null
 
+    fun revisionPrecondition(context: String, previous: String, morphology: MorphologyLexicon) =
+        revisionScope.preconditionRefusal(context, previous, morphology)
+    fun revisionRefusal(context: String, previous: String, proposed: String, morphology: MorphologyLexicon) =
+        revisionScope.refusal(context, previous, proposed, morphology)
+
     fun score(models: ExperimentModels, context: String, original: String, candidate: GeneratedCandidate): Double {
         if (candidate.language != KeyboardLanguage.RUSSIAN) return Double.NaN
         return score(models, context, original, candidate.text, candidate.unitDistance,

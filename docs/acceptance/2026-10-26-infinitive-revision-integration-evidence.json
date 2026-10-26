@@ -1,0 +1,191 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "scope": "Learned same-lemma finite-to-infinitive revision after the unchanged installed contextual model",
+  "mainApkSha256": "4dc482c6e28776f06abd0490e26c4b3685f40b576c9c4ece3f6cf19f904c3d3f",
+  "secondaryModelSha256": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+  "secondaryPolicySha256": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595",
+  "unitTests": {
+    "tests": 1107,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "diagnosticsPythonTests": {
+    "tests": 54,
+    "failed": 0
+  },
+  "gradleBuildAssembleAndroidTestLint": "PASS",
+  "scoringBoundaries": "PASS",
+  "controller": {
+    "controllerGatePassed": true,
+    "results": {
+      "focus-calibration": {
+        "passed": true,
+        "stats": {
+          "rows": 2000,
+          "controls": 1500,
+          "correctChanges": 179,
+          "wrongChanges": 0,
+          "priorCorrectLosses": 0,
+          "controlChanges": 0,
+          "baselineUndoFailures": 0,
+          "revisionUndoFailures": 0,
+          "prefixChanges": 0,
+          "statusErrors": 0,
+          "inputChanges": 4,
+          "additionalInputChanges": 0,
+          "precision": 1.0
+        }
+      },
+      "focus-holdout": {
+        "passed": true,
+        "stats": {
+          "rows": 2000,
+          "controls": 1500,
+          "correctChanges": 157,
+          "wrongChanges": 0,
+          "priorCorrectLosses": 0,
+          "controlChanges": 0,
+          "baselineUndoFailures": 0,
+          "revisionUndoFailures": 0,
+          "prefixChanges": 0,
+          "statusErrors": 0,
+          "inputChanges": 0,
+          "additionalInputChanges": 0,
+          "precision": 1.0
+        }
+      },
+      "broad-holdout": {
+        "passed": true,
+        "stats": {
+          "rows": 12000,
+          "controls": 6000,
+          "correctChanges": 1,
+          "wrongChanges": 0,
+          "priorCorrectLosses": 0,
+          "controlChanges": 0,
+          "baselineUndoFailures": 0,
+          "revisionUndoFailures": 0,
+          "prefixChanges": 0,
+          "statusErrors": 0,
+          "inputChanges": 4,
+          "additionalInputChanges": 0,
+          "precision": 1.0
+        }
+      }
+    },
+    "physicalDeviceQualified": false
+  },
+  "controllerObservationCount": 32000,
+  "controllerExactUndoCount": 32000,
+  "physical": {
+    "deviceClass": "Samsung Fold 7",
+    "tests": [
+      {
+        "exitCode": 0,
+        "passed": true,
+        "method": "learnedInfinitiveRevisionsPreserveExactUndoAtTwoPaces",
+        "logSha256": "13278c1c00495c4577a440a6223c2038a48b79f718999dc60f8fe66c9164cf46",
+        "reportedPhrases": 18
+      },
+      {
+        "exitCode": 0,
+        "passed": true,
+        "method": "learnedContextualCorrectionsAtTwoPacesPreserveExactUndo",
+        "logSha256": "5002903269461d13a5e58167a30e8d91d798c480bdf3c5770f7ab973a7da5965",
+        "reportedPhrases": 20
+      },
+      {
+        "exitCode": 0,
+        "passed": true,
+        "method": "repeatedRealTouchInputAndUndoKeepTheRequestedCharacters",
+        "logSha256": "1ddf44bb63ae05ee299be7f8fe74821a8c5c60875d59f36554abbe0caa780701",
+        "matchedReports": 12,
+        "reportedPhrases": 8,
+        "reportedUndoAssertions": 4
+      }
+    ],
+    "phrases": 46,
+    "exactImmediateUndoAssertions": 30,
+    "nativeDownUpPairs": 160,
+    "readbackAssertions": "PASS"
+  },
+  "ownerState": {
+    "persistentStateExact": true,
+    "settingsExact": true,
+    "bootExact": true,
+    "userExact": true,
+    "installedApkExact": true,
+    "persistentFiles": 3,
+    "allFourStoresAndAtomicVariantsChecked": true,
+    "knownStoreVariantsPresent": 0,
+    "delayedComparisonAlsoExact": true,
+    "knownStoresAbsentBeforeAndAfter": true,
+    "delayedCheckSeparationSeconds": 20.1
+  },
+  "installation": {
+    "mainAndTestInstalledBytesVerified": true,
+    "sameSigningIdentityVerified": true,
+    "versionName": "0.4.2",
+    "versionCode": 8,
+    "dataCleared": false,
+    "permissionsGranted": false
+  },
+  "boundaryDifferences": {
+    "calibration": 1,
+    "holdout": 1,
+    "completePoolRefusal": "INSUFFICIENT_MARGIN",
+    "thresholdsChanged": false,
+    "scoreRoundingCause": "not established"
+  },
+  "validationHistory": {
+    "initialControllerGate": "FAIL: pre-existing capitalization changed four calibration and four broad inputs identically in both versions",
+    "correctedInvariant": "No additional input or prefix changes against the installed controller; no records excluded",
+    "artifactsRetained": true,
+    "initialScreenCheck": "OEM fields absent; read-only keyguard/power/display checks confirmed awake, unlocked and one active Fold panel ON",
+    "initialSnapshotCommands": "Read-only shell quoting/exec-out exit-status errors; replaced with shell run-as discrete commands, explicit presence checks, hashes and verified tar; no phone mutation before verified snapshot"
+  },
+  "rawPhoneLogsTracked": false,
+  "limitations": [
+    "Finite-to-infinitive same-lemma scope only; correctly spelled inputs remain protected",
+    "Physical scripts are synthetic typing in Rune own QA field, not a human typing study",
+    "No guarantee of 95% correctness on arbitrary future text",
+    "фотографие and right-context-dependent виновн remain unresolved"
+  ],
+  "controllerMainSourcesStillExact": true,
+  "controllerHarnessSha256": "99bcfa711d5f49b0cdc17f7cd5637407639a79b5f482f848d3f6f0bc64e92614",
+  "controllerObserverDiagnostics": "Two point cases recompiled with bounded refusal history; production application sources identical to bulk run",
+  "artifactHashes": {
+    "android-build.log": "7f43debd46e8c3b4e1791b153cdb5bf4a6305c995a70b2a42d846fb5f3589971",
+    "controller-result.json": "e892494a37a4d361ef4530e80bee48d9badbe9fbcdc89aed8777616cb0c3556e",
+    "controller-result-initial.json": "9cdd8498b5c3e04267415a3827bd238be489c75188827a63f819059a3c377274",
+    "controller-run-bindings.json": "1b974cc6a440bf0c777fc05263ceb774d84551f31f8219517f5cb25b4797ca5c",
+    "point-history/result.json": "309372b5392d7151ff1b36024ae732d2481a570e7c712bb0416d6ffc7bf7cf57",
+    "diagnostics-tests-final.log": "830102db931c0f0ba12490b7b6b2f8ab560922046b5466d82049a097d7d9208b",
+    "journal-collection.json": "f266efb4b919e98bd0e2a74e22a9d338258ec90cb774e440971b089f02cc05a5",
+    "installation-verified.json": "590edd88da5e20a4e4b0c7f42bea64ff4b664183fb1ae3c7b33e475be42d3955",
+    "owner-immediate-result.json": "d7c29846ec2f319cbe4afc856540ab3c75334c4e850672285cb797803785c409",
+    "owner-delayed-result.json": "d7c29846ec2f319cbe4afc856540ab3c75334c4e850672285cb797803785c409",
+    "journal-analyzer-result.json": "d0a48c969538b0edc629e3be297377ff76509e14fadba3ffaf81f84911230e9d",
+    "journal-metadata-summary.json": "36030ffb39a093f6b5bfbf650e4bdded3237ba8b9270947466337fc61876ee30"
+  },
+  "phoneWindowReleased": true,
+  "phoneJournalsAnalyzed": {
+    "passed": true,
+    "cases": [
+      {
+        "case": "infinitive",
+        "exitCode": 0
+      },
+      {
+        "case": "contextual",
+        "exitCode": 0
+      },
+      {
+        "case": "forensic",
+        "exitCode": 0
+      }
+    ]
+  }
+}

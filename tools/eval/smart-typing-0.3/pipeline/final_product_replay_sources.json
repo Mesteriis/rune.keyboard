@@ -79,6 +79,9 @@
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/InfinitiveRevisionScope.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenContextualAssets.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualCorrectionPolicy.kt",
-    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ContextualQualification.kt"
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ContextualQualification.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenInfinitiveRevisionAssets.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/InfinitiveRevisionPolicy.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/InfinitiveRevisionQualification.kt"
   ]
 }

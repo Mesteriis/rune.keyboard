@@ -283,6 +283,49 @@ class FoldAutocorrectionInstrumentedTest {
         }
     }
 
+    @Test fun learnedInfinitiveRevisionsPreserveExactUndoAtTwoPaces() {
+        val resources = io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingResources.get(context)
+        val deadline = SystemClock.uptimeMillis() + 60_000L
+        while ((!resources.experiments.grammarRevisionReady || !resources.dictionaryLoaded ||
+                !resources.controls.isReady || !resources.personal.isReady) && SystemClock.uptimeMillis() < deadline)
+            SystemClock.sleep(50)
+        assertTrue("Grammar revision resources unavailable", resources.experiments.grammarRevisionReady && resources.dictionaryLoaded)
+        assertTrue("Original-protection stores unavailable", resources.controls.isReady && resources.personal.isReady)
+        val cases = listOf("том начал немного злищься " to "том начал немного злиться ",
+            "тебе надо научищься " to "тебе надо научиться ",
+            "я не могу тебе заплатищь " to "я не могу тебе заплатить ",
+            "ты уже злишься " to "ты уже злишься ",
+            "тебе надо научиться " to "тебе надо научиться ",
+            "тебе надо научишься " to "тебе надо научишься ",
+            "ты научищься " to "ты научишься ",
+            "нужен новй " to "нужен новый ")
+        for (pause in listOf(50L, 100L)) {
+            for ((typed, expected) in cases) {
+                fresh()
+                val bounds = typed.toSet().associateWith { char -> Rect(if (char == ' ')
+                    checkNotNull(driver.device.findObject(By.desc(context.getString(R.string.key_space)))).visibleBounds
+                    else driver.characterKey(char.toString()).visibleBounds) }
+                val started = SystemClock.uptimeMillis()
+                for (char in typed) { touchOwnQaKey(bounds.getValue(char)); SystemClock.sleep(pause) }
+                driver.awaitFieldText(field, expected)
+                report("infinitive-revision-$pause", typed, expected, text(), SystemClock.uptimeMillis() - started)
+                if (typed != expected) { driver.tapDelete(); driver.awaitFieldText(field, typed.trimEnd()) }
+                noReadback()
+            }
+            fresh()
+            val typed = "тебе надо научищься этому "
+            val expected = "тебе надо научиться этому "
+            val bounds = typed.toSet().associateWith { char -> Rect(if (char == ' ')
+                checkNotNull(driver.device.findObject(By.desc(context.getString(R.string.key_space)))).visibleBounds
+                else driver.characterKey(char.toString()).visibleBounds) }
+            val started = SystemClock.uptimeMillis()
+            for (char in typed) { touchOwnQaKey(bounds.getValue(char)); SystemClock.sleep(pause) }
+            driver.awaitFieldText(field, expected)
+            report("infinitive-following-word-$pause", typed, expected, text(), SystemClock.uptimeMillis() - started)
+            noReadback()
+        }
+    }
+
     @Test fun contextualInternalEditsKeepWordFormsAndExactUndoAtTwoPaces() {
         val cases = listOf("нужен новй " to "нужен новый ",
             "мне нужен новй " to "мне нужен новый ",

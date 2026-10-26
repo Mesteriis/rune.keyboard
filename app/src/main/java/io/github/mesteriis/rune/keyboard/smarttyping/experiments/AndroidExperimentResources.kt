@@ -71,6 +71,11 @@ object AndroidExperimentResources {
                         ?.let { AndroidContextualRankerLoader.load(assets, it) }
                         ?.let(models::loadContextualRanker)
                 }
+                if (models.contextualReady && asset("ru-infinitive-revision-policy.json",
+                        FrozenInfinitiveRevisionAssets.POLICY_BYTES, FrozenInfinitiveRevisionAssets.POLICY_SHA256) != null) {
+                    asset("ru-infinitive-revision-ranker.bin", FrozenInfinitiveRevisionAssets.MODEL_BYTES,
+                        FrozenInfinitiveRevisionAssets.MODEL_SHA256)?.let(models::loadGrammarRevisionRanker)
+                }
             } finally {
                 val pending = synchronized(lock) {
                     finished = true

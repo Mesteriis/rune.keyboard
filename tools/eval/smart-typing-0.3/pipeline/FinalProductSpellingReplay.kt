@@ -41,13 +41,16 @@ object FinalProductSpellingReplay {
         private val jointThresholds: JointCorrectionThresholds? = null,
         private val productionJoint: Boolean = false,
         private val rescueEnabled: Boolean = false, private val wordContextEnabled: Boolean = false,
-        private val contextualEnabled: Boolean = false) : TypingPersonalization {
+        private val contextualEnabled: Boolean = false,
+        private val grammarRevisionEnabled: Boolean = false) : TypingPersonalization {
         var decision: AutomaticTypingDecision? = null
             private set
         var candidate: String? = null
+        var grammarEvaluation: io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionEvaluation? = null
             private set
 
-        fun reset() { decision = null; candidate = null }
+        val grammarHistory = ArrayList<Map<String, Any?>>()
+        fun reset() { decision = null; candidate = null; grammarEvaluation = null; grammarHistory.clear() }
 
         override fun awaitingJointCandidates(generation: CandidateGeneration, language: KeyboardLanguage): Boolean =
             jointThresholds != null && (!productionJoint || JointQualification.enabled(language, generation.original?.length ?: 0)) &&
@@ -59,11 +62,32 @@ object FinalProductSpellingReplay {
                 jointAutomaticChoice(context, generation, language, baselineWord))
             if (!contextualEnabled || morphology.lookup(language, generation.original.orEmpty()).present ||
                 rareWords.lookup(generation.original.orEmpty()).present) return baseline
-            return io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualCorrectionPolicy.evaluate(
+            val contextual = io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualCorrectionPolicy.evaluate(
                 experiments, context, generation, language, baseline, baselineWord) { candidate ->
                 val decision = contextualAutomaticDecision(generation, candidate, language)
                 if (decision.allowed) null else decision.refusal ?: AutomaticAdmissionRefusal.NOT_QUALIFIED
             }
+            if (!grammarRevisionEnabled) return contextual
+            return io.github.mesteriis.rune.keyboard.smarttyping.experiments.InfinitiveRevisionPolicy.evaluate(
+                experiments, context, generation, language, contextual, baselineWord, morphology) { candidate ->
+                val decision = grammarRevisionAutomaticDecision(generation, candidate, language)
+                if (decision.allowed) null else decision.refusal ?: AutomaticAdmissionRefusal.NOT_QUALIFIED
+            }.also {
+                grammarEvaluation = it
+                if (grammarHistory.size < 16) grammarHistory.add(mapOf(
+                    "completePool" to (generation.jointEvaluated && generation.jointSearch.isComplete),
+                    "refusal" to it.grammarRevisionRefusal?.name,
+                    "admissionRefusal" to it.grammarRevisionAdmissionRefusal?.name,
+                    "selectedRevision" to (it.choice?.grammarRevision == true)))
+            }
+        }
+
+        override fun grammarRevisionAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+            language: KeyboardLanguage): AutomaticTypingDecision {
+            if (!grammarRevisionEnabled || !experiments.grammarRevisionReady ||
+                !io.github.mesteriis.rune.keyboard.smarttyping.correction.InfinitiveRevisionQualification.enabled(
+                    language, generation.original?.length ?: 0)) return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+            return jointAutomaticDecision(generation, candidate, language)
         }
 
         override fun contextualAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
@@ -322,8 +346,9 @@ object FinalProductSpellingReplay {
     @JvmStatic fun main(args: Array<String>) {
         check(args.size in 4..5)
         val mode = args[2]
-        check(mode in setOf("export", "ready", "unavailable", "recovery", "joint-export", "joint-ready", "joint-production", "contextual-production", "joint-rescue-ready", "joint-primary-only", "word-context-ready", "word-context-baseline", "refinement-export", "refinement-ready"))
-        val productionMode = mode in setOf("joint-production", "contextual-production", "joint-rescue-ready",
+        val contextualMode = mode == "contextual-production" || mode == "infinitive-revision-production"
+        check(mode in setOf("export", "ready", "unavailable", "recovery", "joint-export", "joint-ready", "joint-production", "contextual-production", "infinitive-revision-production", "joint-rescue-ready", "joint-primary-only", "word-context-ready", "word-context-baseline", "refinement-export", "refinement-ready"))
+        val productionMode = mode in setOf("joint-production", "contextual-production", "infinitive-revision-production", "joint-rescue-ready",
             "joint-primary-only", "word-context-ready", "word-context-baseline")
         val jointPipelineMode = productionMode || mode == "joint-ready" || mode == "joint-export"
         val targetSplit = args[3]
@@ -417,7 +442,7 @@ object FinalProductSpellingReplay {
             loadContext(experimentAsset("ru-ranking-context.bin", FrozenExperimentAssets.RANKING_CONTEXT_BYTES,
                 FrozenExperimentAssets.RANKING_CONTEXT_SHA256))
         }
-        if (mode == "contextual-production") {
+        if (contextualMode) {
             val frozen = io.github.mesteriis.rune.keyboard.smarttyping.experiments.FrozenContextualAssets
             fun mapped(name: String, size: Long): java.nio.ByteBuffer {
                 val file = File(assets, "smarttyping/experiments/$name"); check(file.length() == size)
@@ -435,14 +460,21 @@ object FinalProductSpellingReplay {
             experiments.loadContextualRanker(io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualRanker.create(
                 experimentAsset("ru-contextual-ranker.bin", frozen.MODEL_BYTES, frozen.MODEL_SHA256), wiki, conversation, grammar)!!)
             check(experiments.contextualReady)
+            if (mode == "infinitive-revision-production") {
+                val revision = io.github.mesteriis.rune.keyboard.smarttyping.experiments.FrozenInfinitiveRevisionAssets
+                experimentAsset("ru-infinitive-revision-policy.json", revision.POLICY_BYTES, revision.POLICY_SHA256)
+                experiments.loadGrammarRevisionRanker(experimentAsset("ru-infinitive-revision-ranker.bin",
+                    revision.MODEL_BYTES, revision.MODEL_SHA256))
+                check(experiments.grammarRevisionReady)
+            }
         }
         check(experiments.learnedReady && experiments.legacyAutomaticReady && experiments.contextReady) {
             "COMPACT_MODELS_NOT_READY"
         }
         val personalization = AdmissionPersonalization(admissionGuard, morphology, rareWords, experiments, jointThresholds, productionMode,
-            mode == "joint-rescue-ready" || mode in setOf("joint-production", "contextual-production", "word-context-ready", "word-context-baseline") && JointRescueQualification.QUALIFIED,
-            mode == "word-context-ready" || mode in setOf("joint-production", "contextual-production") && WordContextQualification.enabled(KeyboardLanguage.RUSSIAN),
-            mode == "contextual-production")
+            mode == "joint-rescue-ready" || mode in setOf("joint-production", "contextual-production", "infinitive-revision-production", "word-context-ready", "word-context-baseline") && JointRescueQualification.QUALIFIED,
+            mode == "word-context-ready" || (contextualMode || mode == "joint-production") && WordContextQualification.enabled(KeyboardLanguage.RUSSIAN),
+            contextualMode, mode == "infinitive-revision-production")
         System.err.println("ALL_14_PACKAGED_LEXICON_MORPHOLOGY_AND_RARE_ASSETS_VALIDATED")
         System.err.println("COMPACT_RANKER_AND_CONTEXT_ASSETS_VALIDATED")
         val settings = KeyboardSettings.DEFAULT
@@ -674,6 +706,10 @@ object FinalProductSpellingReplay {
                 result["boundaryResult"] = type(" ").name
                 stageTimings["spaceBoundary"] = System.nanoTime() - boundaryStarted
                 result["afterBoundary"] = editor.snapshot()
+                result["grammarRevisionAttempted"] = personalization.grammarEvaluation?.grammarRevisionAttempted ?: false
+                result["grammarRevisionRefusal"] = personalization.grammarEvaluation?.grammarRevisionRefusal?.name
+                result["grammarRevisionAdmissionRefusal"] = personalization.grammarEvaluation?.grammarRevisionAdmissionRefusal?.name
+                result["grammarRevisionHistory"] = personalization.grammarHistory.toList()
                 result["automaticAdmissionAllowed"] = personalization.decision?.allowed
                 result["automaticAdmissionRefusal"] = personalization.decision?.refusal?.name
                 result["automaticAdmissionCandidate"] = personalization.candidate

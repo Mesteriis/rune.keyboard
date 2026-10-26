@@ -24,7 +24,7 @@
     "exitCode": 1,
     "expectedCases": 6507,
     "actualCases": 6506,
-    "reason": "One focused calibration input had no complete joint pool; source-derived record count was 499 rather than 500",
+    "reason": "One focused calibration context underwent existing input capitalization; its typo row was excluded from scoring, leaving 499 eligible groups. Its joint pool was complete.",
     "correctedInputBytesUnchanged": true,
     "artifactsRetained": true
   },

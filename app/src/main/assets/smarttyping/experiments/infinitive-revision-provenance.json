@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "modelSha256": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+  "policySha256": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595",
+  "referenceModelSha256": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+  "referencePolicySha256": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6",
+  "featureCount": 146,
+  "training": "Same frozen broad training mix plus authored edit-profile grammar contrasts; existing contextual Tatoeba attribution applies",
+  "license": "CC-BY-SA-3.0; see NOTICE.md and contextual-tatoeba-attribution.json",
+  "offlineEvidenceSha256": "de64bbe0a50ff1985237a356f85d96af471c09e1bcc714d1586638e4c501c55d",
+  "focusedHoldout": {
+    "correctRevisions": 158,
+    "wrongRevisions": 0
+  },
+  "broadHoldout": {
+    "correctRevisions": 1,
+    "wrongRevisions": 0,
+    "correctControlChanges": 0
+  },
+  "runtimeAcceptance": "Pending integrated controller and physical-device checks at asset creation"
+}

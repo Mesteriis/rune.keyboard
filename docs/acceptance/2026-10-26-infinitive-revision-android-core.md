@@ -48,8 +48,9 @@ both frozen models:
   holdout.
 
 The first scope-input preparation assertion expected 6,507 cases. It stopped
-before the Kotlin comparison because one focused calibration input did not
-have a complete joint pool: there were 499 scored groups, not 500. The corrected
+before the Kotlin comparison because existing capitalization changed the input in one focused calibration
+context: its typo row was excluded from scoring, leaving 499 scored groups, not
+500. Its joint pool was complete; this cause was verified during integration. The corrected
 expectation is derived from frozen source record counts. Original failing
 artifacts remain ignored, and the regenerated input is byte-identical; no case
 was dropped or relabeled to pass the comparison.

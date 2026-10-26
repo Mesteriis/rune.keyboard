@@ -159,11 +159,25 @@ class AndroidTypingPersonalization(private val resources: PersonalTypingResource
         if (!resources.experiments.contextualReady || !jointReady(generation, language) ||
             resources.rareWords.lookup(generation.original.orEmpty()).present ||
             resources.lexicon.lookup(language, generation.original.orEmpty()).present) return baseline
-        return io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualCorrectionPolicy.evaluate(
+        val contextual = io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualCorrectionPolicy.evaluate(
             resources.experiments, context, generation, language, baseline, baselineWord) { candidate ->
             val decision = contextualAutomaticDecision(generation, candidate, language)
             if (decision.allowed) null else decision.refusal ?: AutomaticAdmissionRefusal.NOT_QUALIFIED
         }
+        return io.github.mesteriis.rune.keyboard.smarttyping.experiments.InfinitiveRevisionPolicy.evaluate(
+            resources.experiments, context, generation, language, contextual, baselineWord, resources.lexicon) { candidate ->
+            val decision = grammarRevisionAutomaticDecision(generation, candidate, language)
+            if (decision.allowed) null else decision.refusal ?: AutomaticAdmissionRefusal.NOT_QUALIFIED
+        }
+    }
+
+    override fun grammarRevisionAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+        language: KeyboardLanguage): AutomaticTypingDecision {
+        if (!resources.experiments.grammarRevisionReady ||
+            !io.github.mesteriis.rune.keyboard.smarttyping.correction.InfinitiveRevisionQualification.enabled(
+                language, generation.original?.length ?: 0))
+            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+        return jointAutomaticDecision(generation, candidate, language)
     }
 
     override fun contextualAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
