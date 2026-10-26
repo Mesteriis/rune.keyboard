@@ -1,0 +1,253 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "purpose": "TRAINING_DIAGNOSTIC_AND_UNSCORED_CORPUS_ONLY",
+  "model": {
+    "stage": "frozen-before-evaluation-scoring",
+    "purpose": "TRAINING_ONLY_NOT_PRODUCTION_QUALIFICATION",
+    "modelSha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+    "featureCount": 146,
+    "groups": 21890,
+    "candidates": 248796,
+    "trainingSelectionSha256": "e6394975725a32312d85e94517298d6be234e5a44872272e6379ec2ffa243ba1",
+    "trainingVectorsSha256": "f9b615a5c63c1c7916b57a9e1db6fb4b0f294f24d18d6274066057363b530286",
+    "trainingScriptSha256": "de2688b18a6f782df12baa767ea37daa8b706fcab1ac8ba2d8548e1761ef6b81",
+    "planSha256": "e84d7d42bd71a25105f38b3d9f8f78c0a16da9c51d3f39a7931b6ca323984b63",
+    "baseFrozenModelSha256": "e093412d8b77740875cea174308875d3853b446aa0595f0e062a243af59cfa74",
+    "countsSha256": [
+      "921175789d8cb5def69cd575329184f29dcacde19082ba9e373ed54bb694659d",
+      "523f6c57c797e6d708de55efc06f9bd39dc7a363bcef76e5dd631deb9d1bc7b3"
+    ],
+    "morphologyReceiptSha256": "60ad058adabcf7cca3b941c188c08369e755fb296da99bf752bf613cf4ca0747",
+    "installedAssetsUnchanged": true,
+    "qualified": false
+  },
+  "trainingSelection": {
+    "baseGroups": 20750,
+    "newGroups": 1140,
+    "newTypos": 564,
+    "newRetention": 576,
+    "skipped": {},
+    "duplicateTuplesExcluded": 0,
+    "newGroupsSha256": "2b330ed813da04100eea71da5fe8bb5ffbbd2037a3db3e03a34f44337a4124bf",
+    "baseGroupsSha256": "4faf26f42570a9ddc015d13709224af37d03e3568e9b6c219b9bd50f11170525",
+    "baseVectorsSha256": "55496541a881bfe661d1858eb0991af215888b5cdfc905e35215b846673944ed",
+    "corpusSha256": "35f375cd101714f44aff35d4ac544af24037c6fef2a75dd10b5c73c0f2acc747",
+    "observationsSha256": "2875bc0fc26ac8ca7a51713a066307ac3238b0a3bb2b5ba5ced6f1e4039feb18",
+    "selectorSha256": "b5101155c7b893eac5e0cd65f2b352f587941b8048f7dfc3c5a71467799faefd",
+    "planSha256": "e84d7d42bd71a25105f38b3d9f8f78c0a16da9c51d3f39a7931b6ca323984b63"
+  },
+  "poolVerification": {
+    "allRowsComplete": true,
+    "rows": 1140,
+    "verifiedTypoCostPairs": 564,
+    "costProfiles": {
+      "(1.0, 1.0)": 564
+    },
+    "newOriginalOrTargetInjected": false,
+    "retentionControlsSelected": 576
+  },
+  "trainingDiagnostic": {
+    "purpose": "TRAINING_DIAGNOSTIC_NOT_QUALIFICATION",
+    "statistics": {
+      "broad": {
+        "groups": 19802,
+        "previousRawCorrect": 18809,
+        "newRawCorrect": 18842,
+        "previousCorrectLosses": 68,
+        "newCorrectGains": 101
+      },
+      "oldTypo": {
+        "groups": 540,
+        "previousRawCorrect": 433,
+        "newRawCorrect": 449,
+        "previousCorrectLosses": 2,
+        "newCorrectGains": 18
+      },
+      "oldRetention": {
+        "groups": 408,
+        "previousRawCorrect": 405,
+        "newRawCorrect": 406,
+        "previousCorrectLosses": 0,
+        "newCorrectGains": 1
+      },
+      "newTypo": {
+        "groups": 564,
+        "previousRawCorrect": 389,
+        "newRawCorrect": 532,
+        "previousCorrectLosses": 0,
+        "newCorrectGains": 143
+      },
+      "newRetention": {
+        "groups": 576,
+        "previousRawCorrect": 528,
+        "newRawCorrect": 564,
+        "previousCorrectLosses": 0,
+        "newCorrectGains": 36
+      }
+    },
+    "disclosedPhotoTrainingRow": {
+      "prefix": "Том показал мне",
+      "target": "фотографию",
+      "previousRawWinner": "фотографией",
+      "newRawWinner": "фотографию",
+      "scores": [
+        {
+          "word": "фотографие",
+          "previous": -0.15063628558272293,
+          "new": -0.04823469553906066
+        },
+        {
+          "word": "фотографию",
+          "previous": 0.579069553125132,
+          "new": 0.6728921834343355
+        },
+        {
+          "word": "фотографией",
+          "previous": 0.6219670585663925,
+          "new": 0.5563192224913724
+        }
+      ]
+    },
+    "fiveDisclosedTrainingCases": [
+      {
+        "id": "supervised-final-audit-004789",
+        "typed": "фотографие",
+        "target": "фотографию",
+        "previousRawWinner": "фотографией",
+        "newRawWinner": "фотографию"
+      },
+      {
+        "id": "supervised-final-audit-007529",
+        "typed": "злищься",
+        "target": "злиться",
+        "previousRawWinner": "злиться",
+        "newRawWinner": "злиться"
+      },
+      {
+        "id": "supervised-final-audit-007709",
+        "typed": "научищься",
+        "target": "научиться",
+        "previousRawWinner": "научиться",
+        "newRawWinner": "научиться"
+      },
+      {
+        "id": "supervised-final-audit-008977",
+        "typed": "заплатищь",
+        "target": "заплатить",
+        "previousRawWinner": "заплатить",
+        "newRawWinner": "заплатить"
+      },
+      {
+        "id": "supervised-final-audit-014304",
+        "typed": "виновн",
+        "target": "виновны",
+        "previousRawWinner": "виновен",
+        "newRawWinner": "виновен"
+      }
+    ],
+    "matrixScalarParity": {
+      "samplesPerModel": 128,
+      "maxError": 0.0
+    },
+    "installedAssetsUnchanged": true,
+    "productionQualified": false
+  },
+  "cohortManifest": {
+    "stage": "frozen-before-model-scoring",
+    "sourceSha256": "3993a545d85db1e60a9423c0165a909c0d52beba85070883adf93cf5abe3db5f",
+    "sourceUrl": "https://downloads.tatoeba.org/exports/per_language/rus/rus_sentences_detailed.tsv.bz2",
+    "sourceLicense": "CC-BY-2.0-FR",
+    "files": {
+      "calibration.jsonl": "981732276a7357df9a347c95ac348ed2e6298f939d5b764ac24063835b7765fe",
+      "holdout.jsonl": "fbab74826dcd133dd00e762fc23d99fb6b76807d0109f52920da5e4eb673c145"
+    },
+    "counts": {
+      "calibration": {
+        "rows": 4000,
+        "contexts": 1000,
+        "families": 157
+      },
+      "holdout": {
+        "rows": 4000,
+        "contexts": 1000,
+        "families": 168
+      }
+    },
+    "planSha256": "20f34362e02fdfc1a6c8dcc0ca711780cc8a84af908b6340253be82f73d17872",
+    "preparerSha256": "d22734e202939a4276190ef5a570bf2760b12af01f185fdeba1c525ff39a9631",
+    "excludedContrastFamilies": 68,
+    "excludedDisclosedFamilies": [
+      "виновный",
+      "заплатить",
+      "злиться",
+      "научиться",
+      "фотография"
+    ],
+    "excludedAuthoredContexts": 25,
+    "blockedPriorSentenceIds": 52077,
+    "blockedNormalizedSentenceHashes": 52077,
+    "modelCalls": 0,
+    "limitations": [
+      "Natural public contexts with synthetic equal-cost corruptions, not natural human typing",
+      "Calibration/holdout family and sentence separation, not contributor independence"
+    ],
+    "exclusionBindingsSha256": "e9a5587d62ed98e010a7c2466a54d40f3394c5bc50a69cb6421445d5609ad3e6"
+  },
+  "cohortAudit": {
+    "stage": "corpus-only-no-model-scoring",
+    "parts": {
+      "calibration": {
+        "contexts": 1000,
+        "families": 157,
+        "rows": 4000,
+        "controls": 3000
+      },
+      "holdout": {
+        "contexts": 1000,
+        "families": 168,
+        "rows": 4000,
+        "controls": 3000
+      }
+    },
+    "calibrationHoldoutSentenceOrFamilyOverlap": 0,
+    "priorSourceSentenceIdOverlap": 0,
+    "priorNormalizedSentenceHashOverlap": 0,
+    "priorTargetContextOverlap": 0,
+    "authoredTemplateContextOverlap": 0,
+    "disclosedFailureFamilyOverlap": 0,
+    "priorSentenceIdsChecked": 62018,
+    "priorSentenceHashesChecked": 52077,
+    "bindingFilesChecked": 56,
+    "evaluationScoresConsumed": false
+  },
+  "checks": {
+    "pythonTests": 23,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "androidBuildAndDeviceChecks": "NOT_RUN_NO_APPLICATION_CHANGE",
+    "diffCheck": "PASS"
+  },
+  "packagedAssetsUnchanged": true,
+  "applicationSourcesUnchangedFrom": "a614d07",
+  "phoneCommandsPerformed": false,
+  "qualified": false,
+  "calibrationScoresConsumed": false,
+  "holdoutScoresConsumed": false,
+  "artifactHashes": {
+    "build/noun-case-training-20261026/diagnostic.json": "68c35867770dbb412aaa718de4dc2b46eb0ebf752a18b9d618915ce173bf97a1",
+    "build/noun-case-training-20261026/training-selection.json": "e6394975725a32312d85e94517298d6be234e5a44872272e6379ec2ffa243ba1",
+    "build/noun-case-training-20261026/frozen-model.json": "35f6f035a6d4a29885ddfc7f60870cb9ef1ee3302ab038c4936ab74326a64ed4",
+    "build/noun-case-training-20261026/pool-verification.json": "2a576fb79b0e8429345462275d673f87f8b8d34bce62da50cf9863720d2df4f4",
+    "build/noun-case-training-20261026/training-diagnostic.json": "44a59b35830bd1745ada64a0861a2a75033e5810a84398c14f4fdc351d68b7a4",
+    "build/noun-case-training-20261026/tests-final.log": "f74f71f92b6d8068a1dfe92c0faf6fb2a909988fe3cfbdcab369a0ccd7c628f9",
+    "build/noun-case-focus-v3-20261026/plan.json": "20f34362e02fdfc1a6c8dcc0ca711780cc8a84af908b6340253be82f73d17872",
+    "build/noun-case-focus-v3-20261026/corpus/manifest.json": "0a25ccbaa8cde3a65ef5da985e1e751f59409122be9773f0260bd3199e88eaf1",
+    "build/noun-case-focus-v3-20261026/separation-audit.json": "ff49d5c2c0a737fdc2cc44e045ea5ec5a11774693c851db61e93f4917897f56f",
+    "build/noun-case-focus-20261026/plan.json": "cfa1e6fbaec7bc2d062881a7736a7ec0b3333a6555ca2de36a876c0d72dd8d68",
+    "build/noun-case-focus-20261026/availability.json": "84d2bf714e4df1d077e857e0488f8e63c615c4b4e67ea9d364ba29ad6aa46f97",
+    "build/noun-case-focus-v2-20261026/plan.json": "ce6b42025888a042344e2b588d1e4f22c55c78dcc2a37ee0a4d08444eb8c6e20",
+    "build/noun-case-focus-v2-20261026/corpus/manifest.json": "8b6ae6dbd877d10f074bc60c052b5e2c5525c79c54b768a305cfc7f20fa3e5e4"
+  }
+}
