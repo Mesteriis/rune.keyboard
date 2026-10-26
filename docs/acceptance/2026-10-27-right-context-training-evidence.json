@@ -1,0 +1,156 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "parentCommit": "9e31f24",
+  "featureCount": 163,
+  "modelSha256": "fd27f9224620e1866cbace6510d4de7c1034bccc36d480750887bc6e0f70def4",
+  "modelBytes": 22036,
+  "qualified": false,
+  "trainingDiagnostic": {
+    "groups": 3378,
+    "candidateRows": 49218,
+    "counts": {
+      "unknown_originalGroups": 1904,
+      "unknown_originalTargetFirst": 1897,
+      "correct_originalGroups": 658,
+      "correct_originalTargetFirst": 658,
+      "insufficient_right_evidenceGroups": 816,
+      "insufficient_right_evidenceTargetFirst": 816
+    },
+    "scalarVsCatBoostMaxAbsoluteDifference": 1.7008611810642726e-08,
+    "trainingOnly": true
+  },
+  "poolAudit": {
+    "groups": 3378,
+    "families": 24,
+    "excludedByKind": {
+      "correct_original": 14,
+      "unknown_original": 56,
+      "insufficient_right_evidence": 24
+    },
+    "productionCostPairs": {
+      "(1.0, 1.0)": 1240,
+      "(0.75, 1.0)": 640,
+      "(1.0, 0.75)": 840
+    },
+    "costMismatches": 0,
+    "counterfactualApplied": true
+  },
+  "regression": {
+    "regressionOnly": true,
+    "notIndependentQualification": true,
+    "poolCandidates": 7,
+    "sourceSentence": "tatoeba:1873299",
+    "sourceLicense": "CC-BY-2.0-FR",
+    "modelSha256": "fd27f9224620e1866cbace6510d4de7c1034bccc36d480750887bc6e0f70def4",
+    "cases": [
+      {
+        "case": "natural-completed",
+        "selected": "виновны",
+        "previousApplied": "виновен",
+        "rawScore": 4.77719168132171,
+        "rawMargin": 4.140471004648134,
+        "jointSourceAdmission": true,
+        "rightContextOnlyWasChanged": true
+      },
+      {
+        "case": "withheld",
+        "selected": "виновен",
+        "previousApplied": "виновен",
+        "rawScore": 5.123821394518018,
+        "rawMargin": 3.710500721106655,
+        "jointSourceAdmission": true,
+        "rightContextOnlyWasChanged": true
+      },
+      {
+        "case": "unfinished",
+        "selected": "виновен",
+        "previousApplied": "виновен",
+        "rawScore": 5.123821394518018,
+        "rawMargin": 3.710500721106655,
+        "jointSourceAdmission": true,
+        "rightContextOnlyWasChanged": true
+      },
+      {
+        "case": "singular",
+        "selected": "виновен",
+        "previousApplied": "виновен",
+        "rawScore": 5.140420309267938,
+        "rawMargin": 4.055551951285452,
+        "jointSourceAdmission": true,
+        "rightContextOnlyWasChanged": true
+      }
+    ],
+    "automaticEditorBehaviorChanged": false
+  },
+  "naturalCorpus": {
+    "calibration": {
+      "rows": 1600,
+      "contexts": 400,
+      "families": 129,
+      "articles": 400,
+      "controls": 1200,
+      "maxContextsInOneFamily": 30
+    },
+    "holdout": {
+      "rows": 1600,
+      "contexts": 400,
+      "families": 157,
+      "articles": 400,
+      "controls": 1200,
+      "maxContextsInOneFamily": 30
+    }
+  },
+  "naturalSeparation": {
+    "families": true,
+    "articles": true,
+    "normalizedContexts": true
+  },
+  "baselineReplays": {
+    "calibration": {
+      "rows": 1600,
+      "completedBaselineObservations": 1600,
+      "rightModelCalls": 0,
+      "observationsSha256": "b379c4673946a4a194b88294a7daa6b439c76d1705163c1508d2568cd901faeb"
+    },
+    "holdout": {
+      "rows": 1600,
+      "completedBaselineObservations": 1600,
+      "rightModelCalls": 0,
+      "observationsSha256": "2de900cba7a3c138a56e8fe68a37b4b1b654536a1c790b80762cc9e5bebfeb60"
+    }
+  },
+  "corpusFiles": {
+    "calibration.jsonl": "ed88066300f08322c3c85d7a0eb0f93d4e6887578b9edc8aee8620727de0927c",
+    "calibration.tsv": "3728513d2bdfb033474cf9b39cc662bbe47d13d5cbf66fff7b5f720e8f554d46",
+    "holdout.jsonl": "1d2f913750a5f2cf7c2d0fd2c306194fd12a60bd5be74ae63e1f100bb6822142",
+    "holdout.tsv": "e28323b75dc57e6daf8b437686dd3fe764e448220728aede87f9d9f62a5cb997"
+  },
+  "trainingCorpusSha256": "580581dca64b0cc08976b6318d69c175d9699fa97684fa35e142cfb207c8d059",
+  "trainingSelectionSha256": "6ef76eeadd372f01d685da0bd6e58205383daace8d877f7a38ba2b6bf61846b3",
+  "trainingVectorsSha256": "d0069eb816c9d9d653f240f3b84727ff1758f16fc70cd2cef490deed00d795cc",
+  "trainingPlanSha256": "58d572e12879b7d2c345ad21c29cf26d1478141bb5ab3347b7ff2e1edcb35327",
+  "naturalPlanSha256": "a744b5afbb92fc655037fa6ace8890d4f40a10d7f37b02527c2b00c2c1141e89",
+  "modelBindingSha256": "687e5a933d8f65f25c02f502d63a30a1cc764ebae0f4d4185e3deb25de666fa6",
+  "sourceHashes": {
+    "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c",
+    "tools/typing_experiments/right_context_revision_features.py": "3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd",
+    "tools/typing_experiments/right_context_focus_forms.py": "9cb95f0039d48b0b196ee08697b8368d00cab79df446b8ad6f017c1ec1d802ae",
+    "tools/typing_experiments/right_context_corpus_separation.py": "c50d8fc22d403fab3468b53e7b2a06a2d78a5682585d9497097d435aedbcedf4",
+    "tools/typing_experiments/right_context_contrast_corpus.py": "d2c269bbfaa1aa145f89bd3e4515171f09b4c17e29644dab47435d5c15d3810a"
+  },
+  "checks": {
+    "pythonTests": 29,
+    "pythonPassed": true,
+    "diffCheckPassed": true,
+    "androidRebuilt": false,
+    "phoneCommandsIssued": false
+  },
+  "independentRightModelScoresComputed": false,
+  "installedAssetsUnchanged": true,
+  "observedTrainingRuntime": {
+    "python": "3.11.14",
+    "catboost": "1.2.8",
+    "numpy": "2.2.6"
+  }
+}

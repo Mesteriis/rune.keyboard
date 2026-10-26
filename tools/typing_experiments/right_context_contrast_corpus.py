@@ -23,6 +23,10 @@ PAIRS = (
 )
 CONTEXTS = (('к тому времени ', ' будет он ', ' будут они '),
             ('тогда ', ' был он ', ' были они '), ('', ' он ', ' они '))
+COPULA_CONTEXTS = (('к тому времени ', ' будет ', ' будут '),
+                   ('тогда ', ' был ', ' были '),
+                   ('как оказалось ', ' будет завтра ', ' будут завтра '),
+                   ('к тому времени ', ' будет не только он ', ' будут не только они '))
 WEAK_SUFFIXES = (' ', ' бу', ' будет', ', будут ', ' будут_тест ', ' где они ')
 
 
@@ -35,7 +39,7 @@ def _paradigm(lexicon, singular, plural):
     return next(iter(lemmas))
 
 
-def generate(lexicon):
+def generate(lexicon, *, copula_coverage=False):
     rows, skipped = [], []
     for singular, plural in PAIRS:
         lemma = _paradigm(lexicon, singular, plural)
@@ -51,7 +55,8 @@ def generate(lexicon):
                 row['contrastEditCosts'] = [one_edit_cost(original, w) for w in (singular, plural)]
             row['id'] = 'right-context-' + hashlib.sha256(json.dumps(row, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:24]
             rows.append(row)
-        for prefix, singular_right, plural_right in CONTEXTS:
+        contexts = CONTEXTS + COPULA_CONTEXTS if copula_coverage else CONTEXTS
+        for prefix, singular_right, plural_right in contexts:
             for target, suffix in [(singular, singular_right), (plural, plural_right)]:
                 for typo in variants:
                     for applied in (singular, plural):
@@ -70,15 +75,16 @@ def generate(lexicon):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', required=True, type=Path, help='New directory, never overwritten')
+    parser.add_argument('--copula-coverage', action='store_true', help='Include copula-only and intervening-word contrasts')
     args = parser.parse_args()
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'morphology'))
     from ranker import PymorphyLexicon
     lexicon = PymorphyLexicon()
-    rows, skipped = generate(lexicon)
+    rows, skipped = generate(lexicon, copula_coverage=args.copula_coverage)
     payload = ''.join(json.dumps(r, ensure_ascii=False, sort_keys=True) + '\n' for r in rows).encode()
     manifest = dict(schema=1, purpose='TRAINING_ONLY_NOT_QUALIFICATION',
                     origin='Authored templates, dictionary-only paradigms; no owner or downloaded sentence text',
-                    rows=len(rows), families=len({r['family'] for r in rows}), skipped=skipped,
+                    copulaCoverage=args.copula_coverage, rows=len(rows), families=len({r['family'] for r in rows}), skipped=skipped,
                     corpusSha256=hashlib.sha256(payload).hexdigest(),
                     generatorSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                     corruptionSelectorSha256=hashlib.sha256(Path(__file__).with_name('grammar_contrast_corpus.py').read_bytes()).hexdigest(),

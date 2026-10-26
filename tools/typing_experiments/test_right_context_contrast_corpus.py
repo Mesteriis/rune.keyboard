@@ -52,6 +52,22 @@ class RightContrastsTest(unittest.TestCase):
                 self.assertTrue(dictionary.analyses(row['original']))
         self.assertEqual(set(corpus.WEAK_SUFFIXES), {r['rightContext'] for r in rows if r['kind'] == 'insufficient_right_evidence'})
 
+    def test_copula_coverage_adds_standalone_and_non_immediate_subject_contexts(self):
+        old, _ = corpus.generate(Dictionary())
+        expanded, _ = corpus.generate(Dictionary(), copula_coverage=True)
+        self.assertGreater(len(expanded), len(old))
+        self.assertTrue({r['id'] for r in old} <= {r['id'] for r in expanded})
+        self.assertEqual(len(expanded), len({r['id'] for r in expanded}))
+        suffixes = {r['rightContext'] for r in expanded if r['kind'] == 'unknown_original'}
+        for _, left, right in corpus.COPULA_CONTEXTS:
+            self.assertIn(left, suffixes)
+            self.assertIn(right, suffixes)
+        self.assertIn(' будут ', suffixes)
+        self.assertIn(' будут не только они ', suffixes)
+        for row in expanded:
+            if row['kind'] != 'unknown_original':
+                self.assertEqual(row['applied'], row['expectedApplied'])
+
     def test_missing_or_different_lemma_analyses_are_not_silent_labels(self):
         for tags in [[], [SimpleNamespace(lemma='другой', pos='ADJS', number='plur', gender=None)]]:
             dictionary = Dictionary()
