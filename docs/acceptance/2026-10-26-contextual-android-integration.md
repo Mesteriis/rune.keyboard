@@ -26,3 +26,13 @@ Small public test fixtures compare Kotlin outputs with the Python training extra
 - Initial parser/fixture test mistakes were corrected before the final runs: a changed opaque payload byte is not structural corruption; and an asserted ё-spelling must be present in the fixture. Initial failing logs remain under the ignored run root; no failed check is counted as a pass.
 
 Full generated assets, export receipts and command logs are retained in ignored `build/contextual-runtime-20261026/`. Generated full assets are not yet packaged. Model loading, runtime policy/controller integration, full replay, Android timing/Undo acceptance and device installation remain pending. Existing product behavior and model assets are unchanged at this step.
+
+## Full-data extraction and unified scorer
+
+After the feature-port commit, a host JVM harness compiled the actual Kotlin index/extractor sources and opened all three full generated assets. Every one of 67,143 candidate vectors in 5,564 complete groups from the frozen grammatical holdout matched all 50 Python feature values, with exactly matching float32 bits and maximum double error `1.1102230246251565e-16`. Host index validation took about 484 ms; this is not Android startup or latency evidence.
+
+`ContextualRanker` now assembles 95 existing features + 6 Wikipedia + 6 conversational + the frozen character score + 38 grammatical features. Its 146-feature model decoder is explicitly selected; all older model loaders still require the existing 95-feature schema. Wrong-sized or non-finite score vectors fail closed. The final score is `0.8 * tanh(tree / 4)`; the character score is not added again.
+
+A separate harness compiled the current product model classes and scored the same 67,143 actual candidates, including the original-token option, using the full indices and frozen model `4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0`. All scores matched the frozen Python computation within `2.220446049250313e-16` (required tolerance `1e-8`). The harness inputs contain candidate attributes and reference numeric scores, not expected spelling labels used to choose candidates. Source/JAR/asset hashes and command logs are retained in the run root.
+
+`./gradlew :app:testDebugUnitTest` after scorer integration: **1,090 passed, zero failures/errors/skips**, exit 0. The two new scorer tests cover explicit dimensional selection, invalid vectors, unsupported language, missing character resources, and exclusion of an additive character bonus. Loading the model into the process resource owner, automatic policy/controller integration, packaged assets and physical Android acceptance are still pending; no new model is enabled by this step.

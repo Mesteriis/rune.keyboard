@@ -43,6 +43,10 @@
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt",
-    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt"
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/PackedContextIndex.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextFeatureData.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/GrammaticalContextFeatures.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualRanker.kt"
   ]
 }

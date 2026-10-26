@@ -7,6 +7,7 @@ import kotlin.math.abs
 
 /** CatBoost symmetric numeric trees; no executable model code or Android ML dependency. */
 internal class ObliviousTreeRanker private constructor(
+    private val featureCount: Int,
     private val scale: Float,
     private val bias: Float,
     private val trees: List<Tree>,
@@ -14,6 +15,7 @@ internal class ObliviousTreeRanker private constructor(
     private class Tree(val features: IntArray, val borders: FloatArray, val leaves: FloatArray)
 
     fun score(features: DoubleArray): Double {
+        if (features.size != featureCount || features.any { !it.isFinite() }) return Double.NaN
         var result = 0.0
         for (tree in trees) {
             var leaf = 0
@@ -27,11 +29,12 @@ internal class ObliviousTreeRanker private constructor(
     }
 
     companion object {
-        fun decode(bytes: ByteArray): ObliviousTreeRanker? {
+        fun decode(bytes: ByteArray, expectedFeatures: Int = ExperimentModels.RANK_FLOATS): ObliviousTreeRanker? {
             if (bytes.size !in 20..65_536) return null
+            if (expectedFeatures != ExperimentModels.RANK_FLOATS && expectedFeatures != ContextualRanker.FEATURES) return null
             val input = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
             return try {
-                if ("RET2".any { input.get().toInt() != it.code } || input.int != ExperimentModels.RANK_FLOATS) return null
+                if ("RET2".any { input.get().toInt() != it.code } || input.int != expectedFeatures) return null
                 val count = input.int
                 if (count !in 1..128) return null
                 val scale = input.float
@@ -46,13 +49,13 @@ internal class ObliviousTreeRanker private constructor(
                     repeat(depth) { d ->
                         features[d] = input.int
                         borders[d] = input.float
-                        if (features[d] !in 0 until ExperimentModels.RANK_FLOATS || !valid(borders[d])) return null
+                        if (features[d] !in 0 until expectedFeatures || !valid(borders[d])) return null
                     }
                     val leaves = FloatArray(1 shl depth) { input.float }
                     if (leaves.any { !valid(it) }) return null
                     trees.add(Tree(features, borders, leaves))
                 }
-                if (input.hasRemaining()) null else ObliviousTreeRanker(scale, bias, trees)
+                if (input.hasRemaining()) null else ObliviousTreeRanker(expectedFeatures, scale, bias, trees)
             } catch (_: BufferUnderflowException) { null }
         }
 
