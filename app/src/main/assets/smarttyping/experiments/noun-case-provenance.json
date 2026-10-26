@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "modelSha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+  "policySha256": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+  "referenceModelSha256": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+  "referenceInfinitiveModelSha256": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+  "featureCount": 146,
+  "training": "Frozen prior broad/grammar groups plus authored24-family noun-case contrasts",
+  "license": "CC-BY-SA-3.0; existing contextual Tatoeba attribution applies",
+  "offlineEvidenceSha256": "6b2ac3b08d16dfcc4421d8404a52452845a0dcd0e9d47dfecfc7e79b15e8b788",
+  "kotlinCoreEvidenceSha256": "57746e6768831eba7836c2572782cce9e25fe5b36e57a5849a34d55a3663ff3c",
+  "focusedHoldout": {
+    "correctRevisions": 171,
+    "wrongRevisions": 0
+  },
+  "runtimeAcceptance": "Pending integrated controller and physical checks at asset creation"
+}

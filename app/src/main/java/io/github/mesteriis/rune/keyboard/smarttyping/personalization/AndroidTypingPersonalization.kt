@@ -164,11 +164,25 @@ class AndroidTypingPersonalization(private val resources: PersonalTypingResource
             val decision = contextualAutomaticDecision(generation, candidate, language)
             if (decision.allowed) null else decision.refusal ?: AutomaticAdmissionRefusal.NOT_QUALIFIED
         }
-        return io.github.mesteriis.rune.keyboard.smarttyping.experiments.InfinitiveRevisionPolicy.evaluate(
+        val infinitive = io.github.mesteriis.rune.keyboard.smarttyping.experiments.InfinitiveRevisionPolicy.evaluate(
             resources.experiments, context, generation, language, contextual, baselineWord, resources.lexicon) { candidate ->
             val decision = grammarRevisionAutomaticDecision(generation, candidate, language)
             if (decision.allowed) null else decision.refusal ?: AutomaticAdmissionRefusal.NOT_QUALIFIED
         }
+        return io.github.mesteriis.rune.keyboard.smarttyping.experiments.NounCaseRevisionPolicy.evaluate(
+            resources.experiments, context, generation, language, infinitive, baselineWord, resources.lexicon) { candidate ->
+            val decision = nounCaseAutomaticDecision(generation, candidate, language)
+            if (decision.allowed) null else decision.refusal ?: AutomaticAdmissionRefusal.NOT_QUALIFIED
+        }
+    }
+
+    override fun nounCaseAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+        language: KeyboardLanguage): AutomaticTypingDecision {
+        if (!resources.experiments.nounCaseReady ||
+            !io.github.mesteriis.rune.keyboard.smarttyping.correction.NounCaseRevisionQualification.enabled(
+                language, generation.original?.length ?: 0))
+            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+        return jointAutomaticDecision(generation, candidate, language)
     }
 
     override fun grammarRevisionAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,

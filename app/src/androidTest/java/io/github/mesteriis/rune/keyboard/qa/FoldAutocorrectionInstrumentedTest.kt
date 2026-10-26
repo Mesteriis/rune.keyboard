@@ -326,6 +326,50 @@ class FoldAutocorrectionInstrumentedTest {
         }
     }
 
+    @Test fun learnedNounCaseRevisionsPreserveExactUndoAtTwoPaces() {
+        val resources = io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingResources.get(context)
+        val deadline = SystemClock.uptimeMillis() + 60_000L
+        while ((!resources.experiments.nounCaseReady || !resources.dictionaryLoaded ||
+                !resources.controls.isReady || !resources.personal.isReady) && SystemClock.uptimeMillis() < deadline)
+            SystemClock.sleep(50)
+        assertTrue("Noun revision resources unavailable", resources.experiments.nounCaseReady && resources.dictionaryLoaded)
+        assertTrue("Original-protection stores unavailable", resources.controls.isReady && resources.personal.isReady)
+        // Extra public fragments: Tatoeba 12838513 (marafon), 3277903 (Ooneykcall), CC BY 2.0 FR.
+        val cases = listOf("том показал мне фотографие " to "том показал мне фотографию ",
+            "я ищу помадо " to "я ищу помаду ",
+            "вижу мужчино " to "вижу мужчину ",
+            "том показал мне фотографию " to "том показал мне фотографию ",
+            "том показал мне фотографией " to "том показал мне фотографией ",
+            "она довольна фотографие " to "она довольна фотографией ",
+            "я пишу ручко " to "я пишу ручкой ",
+            "тебе надо научищься " to "тебе надо научиться ")
+        for (pause in listOf(50L, 100L)) {
+            for ((typed, expected) in cases) {
+                fresh()
+                val bounds = typed.toSet().associateWith { char -> Rect(if (char == ' ')
+                    checkNotNull(driver.device.findObject(By.desc(context.getString(R.string.key_space)))).visibleBounds
+                    else driver.characterKey(char.toString()).visibleBounds) }
+                val started = SystemClock.uptimeMillis()
+                for (char in typed) { touchOwnQaKey(bounds.getValue(char)); SystemClock.sleep(pause) }
+                driver.awaitFieldText(field, expected)
+                report("noun-case-revision-$pause", typed, expected, text(), SystemClock.uptimeMillis() - started)
+                if (typed != expected) { driver.tapDelete(); driver.awaitFieldText(field, typed.trimEnd()) }
+                noReadback()
+            }
+            fresh()
+            val typed = "том показал мне фотографие вчера "
+            val expected = "том показал мне фотографию вчера "
+            val bounds = typed.toSet().associateWith { char -> Rect(if (char == ' ')
+                checkNotNull(driver.device.findObject(By.desc(context.getString(R.string.key_space)))).visibleBounds
+                else driver.characterKey(char.toString()).visibleBounds) }
+            val started = SystemClock.uptimeMillis()
+            for (char in typed) { touchOwnQaKey(bounds.getValue(char)); SystemClock.sleep(pause) }
+            driver.awaitFieldText(field, expected)
+            report("noun-case-following-word-$pause", typed, expected, text(), SystemClock.uptimeMillis() - started)
+            noReadback()
+        }
+    }
+
     @Test fun contextualInternalEditsKeepWordFormsAndExactUndoAtTwoPaces() {
         val cases = listOf("нужен новй " to "нужен новый ",
             "мне нужен новй " to "мне нужен новый ",

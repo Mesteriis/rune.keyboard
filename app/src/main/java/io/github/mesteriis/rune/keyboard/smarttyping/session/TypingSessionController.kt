@@ -137,7 +137,9 @@ class TypingSessionController internal constructor(
     }
     private fun allowsAutomatic(selection: CandidateSelection, index: Int): Boolean =
         selection.alternatives.getOrNull(index)?.let {
-            if (selection.ranking?.grammarRevision == true)
+            if (selection.ranking?.nounCaseRevision == true)
+                personalization.nounCaseAutomaticDecision(selection.generation, it, selection.language).allowed
+            else if (selection.ranking?.grammarRevision == true)
                 personalization.grammarRevisionAutomaticDecision(selection.generation, it, selection.language).allowed
             else if (selection.ranking?.contextualPublic == true)
                 personalization.contextualAutomaticDecision(selection.generation, it, selection.language).allowed
@@ -155,7 +157,9 @@ class TypingSessionController internal constructor(
         } == true
     private fun automaticDecision(selection: CandidateSelection, index: Int): AutomaticTypingDecision =
         selection.alternatives.getOrNull(index)?.let {
-            if (selection.ranking?.grammarRevision == true)
+            if (selection.ranking?.nounCaseRevision == true)
+                personalization.nounCaseAutomaticDecision(selection.generation, it, selection.language)
+            else if (selection.ranking?.grammarRevision == true)
                 personalization.grammarRevisionAutomaticDecision(selection.generation, it, selection.language)
             else if (selection.ranking?.contextualPublic == true)
                 personalization.contextualAutomaticDecision(selection.generation, it, selection.language)
@@ -548,7 +552,7 @@ class TypingSessionController internal constructor(
             // The independent diagnostic vocabulary deliberately shares these stable names.
             DiagnosticReason.valueOf(reason.name)
         } ?: evaluation.admissionRefusal?.diagnosticReason()
-        if (recordDecision && (jointReason != null || evaluation.choice != null && !evaluation.choice.rescue && !evaluation.choice.wordContext && !evaluation.choice.contextual && !evaluation.choice.grammarRevision)) diagnose(DiagnosticKind.RANKING,
+        if (recordDecision && (jointReason != null || evaluation.choice != null && !evaluation.choice.rescue && !evaluation.choice.wordContext && !evaluation.choice.contextual && !evaluation.choice.grammarRevision && !evaluation.choice.nounCaseRevision)) diagnose(DiagnosticKind.RANKING,
             jointReason ?: DiagnosticReason.ACCEPTED, generation.jointSearch.alternatives.size,
             source = DiagnosticSource.JOINT,
             requestId = requestId, session = diagnosticSession, revision = diagnosticRevision,
@@ -577,6 +581,12 @@ class TypingSessionController internal constructor(
             generation.jointSearch.alternatives.size, source = DiagnosticSource.INFINITIVE_REVISION,
             requestId = requestId, session = diagnosticSession, revision = diagnosticRevision,
             completion = DiagnosticCompletion.valueOf(generation.jointSearch.completion.name), text = null)
+        if (recordDecision && evaluation.nounCaseAttempted) diagnose(DiagnosticKind.RANKING,
+            evaluation.nounCaseRefusal?.let { DiagnosticReason.valueOf(it.name) }
+                ?: evaluation.nounCaseAdmissionRefusal?.diagnosticReason() ?: DiagnosticReason.ACCEPTED,
+            generation.jointSearch.alternatives.size, source = DiagnosticSource.NOUN_CASE_REVISION,
+            requestId = requestId, session = diagnosticSession, revision = diagnosticRevision,
+            completion = DiagnosticCompletion.valueOf(generation.jointSearch.completion.name), text = null)
         val choice = evaluation.choice
         val waiting = personalization.awaitingJointCandidates(generation, language)
         if (choice == null && !waiting) return baseline.copy(jointRefusal =
@@ -591,7 +601,7 @@ class TypingSessionController internal constructor(
         return baseline.copy(generation = generation.copy(alternatives = alternatives), selectedIndex = preferred - 1,
             order = alternatives.indices.toList(), ranking = CalibratedRanking(alternatives.indices.map { it + 1 },
                 preferred, false, if (preferred == 0) RankingRefusal.NOT_QUALIFIED else null,
-                jointPublic = true, jointRescue = choice?.rescue == true, wordContext = choice?.wordContext == true, contextualPublic = choice?.contextual == true, grammarRevision = choice?.grammarRevision == true),
+                jointPublic = true, jointRescue = choice?.rescue == true, wordContext = choice?.wordContext == true, contextualPublic = choice?.contextual == true, grammarRevision = choice?.grammarRevision == true, nounCaseRevision = choice?.nounCaseRevision == true),
             jointRefusal = evaluation.rescueRefusal?.let { DiagnosticReason.valueOf(it.name) }
                 ?: evaluation.rescueAdmissionRefusal?.diagnosticReason() ?: jointReason)
     }
@@ -1010,6 +1020,7 @@ class TypingSessionController internal constructor(
             candidates = selection.alternatives.map { it.text },
             manualCandidates = selection.manualAlternatives.map { it.text }) }
         val diagnosticSource = when {
+            ranking.nounCaseRevision -> DiagnosticSource.NOUN_CASE_REVISION
             ranking.grammarRevision -> DiagnosticSource.INFINITIVE_REVISION
             ranking.contextualPublic -> DiagnosticSource.CONTEXTUAL_RANKER
             ranking.wordContext -> DiagnosticSource.WORD_CONTEXT
@@ -1990,7 +2001,7 @@ class TypingSessionController internal constructor(
             return LocalReplacementEligibility(false, LocalCorrectionRefusal.NOT_QUALIFIED)
         return if (ranking.jointPublic) {
             val eligible = spellingQualification.allows(selection.language,
-                if (ranking.grammarRevision) SpellingSource.INFINITIVE_REVISION else if (ranking.contextualPublic) SpellingSource.CONTEXTUAL_PUBLIC else if (ranking.wordContext) SpellingSource.WORD_CONTEXT else if (ranking.jointRescue) SpellingSource.JOINT_RESCUE
+                if (ranking.nounCaseRevision) SpellingSource.NOUN_CASE_REVISION else if (ranking.grammarRevision) SpellingSource.INFINITIVE_REVISION else if (ranking.contextualPublic) SpellingSource.CONTEXTUAL_PUBLIC else if (ranking.wordContext) SpellingSource.WORD_CONTEXT else if (ranking.jointRescue) SpellingSource.JOINT_RESCUE
                 else if (selection.original.length <= 4) SpellingSource.JOINT_SHORT else SpellingSource.JOINT_LONG) &&
                 selection.generation.jointEvaluated && selection.generation.jointSearch.isComplete
             LocalReplacementEligibility(eligible, if (eligible) null else LocalCorrectionRefusal.NOT_QUALIFIED)
@@ -2122,7 +2133,8 @@ class TypingSessionController internal constructor(
         diagnose(DiagnosticKind.BOUNDARY, DiagnosticReason.AUTO_REPLACE, selection.alternatives.size,
             ranking.preferredId - 1, ranking.usedModel,
             source = if (canonicalCase) DiagnosticSource.CANONICAL_CASE else if (ranking.usedModel)
-                DiagnosticSource.MODEL else if (ranking.grammarRevision) DiagnosticSource.INFINITIVE_REVISION
+                DiagnosticSource.MODEL else if (ranking.nounCaseRevision) DiagnosticSource.NOUN_CASE_REVISION
+                else if (ranking.grammarRevision) DiagnosticSource.INFINITIVE_REVISION
                 else if (ranking.contextualPublic) DiagnosticSource.CONTEXTUAL_RANKER
                 else if (ranking.wordContext) DiagnosticSource.WORD_CONTEXT
                 else if (ranking.jointRescue) DiagnosticSource.JOINT_RESCUE

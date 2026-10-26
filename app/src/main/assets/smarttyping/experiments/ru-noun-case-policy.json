@@ -1,0 +1,25 @@
+{
+  "stage": "frozen-before-any-holdout-model-scoring",
+  "calibrationPassed": true,
+  "calibrationRequiredPrecision": 0.975,
+  "requiredPrecision": 0.95,
+  "minimumIncrementalCorrect": 100,
+  "modelSha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+  "scopeSha256": "7b66e507c0b361c4a26c46ee9e38ea7f0784ca54de8f09d0e261db2c7fc76a60",
+  "scopeVersion": 1,
+  "planSha256": "20f34362e02fdfc1a6c8dcc0ca711780cc8a84af908b6340253be82f73d17872",
+  "holdoutSha256": "fbab74826dcd133dd00e762fc23d99fb6b76807d0109f52920da5e4eb673c145",
+  "eligibleCalibrationRevisions": 120,
+  "minimumScore": 0.6485549857424353,
+  "minimumMargin": 0.05342739426456289,
+  "calibrationMetrics": {
+    "newCorrect": 120,
+    "newWrong": 0,
+    "priorCorrectLosses": 0,
+    "controlChanges": 0,
+    "installedCorrectLosses": 0,
+    "installedCorrectGains": 120,
+    "netCorrectVsInstalled": 120,
+    "precision": 1.0
+  }
+}

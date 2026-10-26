@@ -76,6 +76,11 @@ object AndroidExperimentResources {
                     asset("ru-infinitive-revision-ranker.bin", FrozenInfinitiveRevisionAssets.MODEL_BYTES,
                         FrozenInfinitiveRevisionAssets.MODEL_SHA256)?.let(models::loadGrammarRevisionRanker)
                 }
+                if (models.grammarRevisionReady && asset("ru-noun-case-policy.json",
+                        FrozenNounCaseAssets.POLICY_BYTES, FrozenNounCaseAssets.POLICY_SHA256) != null) {
+                    asset("ru-noun-case-ranker.bin", FrozenNounCaseAssets.MODEL_BYTES,
+                        FrozenNounCaseAssets.MODEL_SHA256)?.let(models::loadNounCaseRanker)
+                }
             } finally {
                 val pending = synchronized(lock) {
                     finished = true

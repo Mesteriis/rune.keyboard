@@ -10,14 +10,15 @@ class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
         reasons = ['RARE_ORIGINAL', 'RESOURCE_UNAVAILABLE', 'SCORE_TOO_LOW',
                    'ORIGINAL_PREFERRED', 'REPLACEMENT_VETOED', 'INSUFFICIENT_MARGIN',
                    'UNCHANGED', 'PREVIOUS_NOT_UNAMBIGUOUS_FINITE', 'PROPOSAL_NOT_UNAMBIGUOUS_INFINITIVE',
-                   'LEMMA_UNAVAILABLE', 'DIFFERENT_LEMMA', 'NO_INFINITIVE_CUE']
+                   'LEMMA_UNAVAILABLE', 'DIFFERENT_LEMMA', 'NO_INFINITIVE_CUE',
+                   'PREVIOUS_NOT_UNAMBIGUOUS_INSTRUMENTAL', 'PROPOSAL_NOT_UNAMBIGUOUS_ACCUSATIVE', 'NO_ACCUSATIVE_CUE']
         events = [dict(schema=8, session=1, revision=i, kind='RANKING', source=source, reason=reason,
                        features=flags, effectiveFeatures=flags, typingProfile=0, correctionId=0,
                        localCompletion='NONE', localInspectedStates=0, localVerifiedTerminals=0,
                        recoveryCompletion='NONE', recoveryInspectedStates=0, recoveryVerifiedTerminals=0)
-                  for i, (source, reason) in enumerate([(source, reason) for source in ['JOINT', 'WORD_CONTEXT', 'CONTEXTUAL_RANKER', 'INFINITIVE_REVISION'] for reason in reasons], 1)]
+                  for i, (source, reason) in enumerate([(source, reason) for source in ['JOINT', 'WORD_CONTEXT', 'CONTEXTUAL_RANKER', 'INFINITIVE_REVISION', 'NOUN_CASE_REVISION'] for reason in reasons], 1)]
         report = analyze_events(events)
-        self.assertEqual(reasons * 4, [e['reason'] for e in report['refusalEvents']])
+        self.assertEqual(reasons * 5, [e['reason'] for e in report['refusalEvents']])
         self.assertEqual([], report['outcomes'])
 
     def test_schema_eight_metadata_undo_requires_exact_editor_response_and_never_invents_text(self):

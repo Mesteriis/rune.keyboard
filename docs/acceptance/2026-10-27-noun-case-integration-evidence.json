@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "parentCommit": "e430239",
+  "controller": {
+    "controllerGatePassed": true,
+    "results": {
+      "calibration": {
+        "passed": true,
+        "stats": {
+          "rows": 4000,
+          "controls": 3000,
+          "correctChanges": 120,
+          "wrongChanges": 0,
+          "priorCorrectLosses": 0,
+          "controlChanges": 0,
+          "baselineUndoFailures": 0,
+          "nounUndoFailures": 0,
+          "prefixChanges": 0,
+          "inputChanges": 0,
+          "additionalInputChanges": 0,
+          "unexpectedAcquisitions": 0,
+          "precision": 1.0
+        }
+      },
+      "holdout": {
+        "passed": true,
+        "stats": {
+          "rows": 4000,
+          "controls": 3000,
+          "correctChanges": 171,
+          "wrongChanges": 0,
+          "priorCorrectLosses": 0,
+          "controlChanges": 0,
+          "baselineUndoFailures": 0,
+          "nounUndoFailures": 0,
+          "prefixChanges": 0,
+          "inputChanges": 0,
+          "additionalInputChanges": 0,
+          "unexpectedAcquisitions": 0,
+          "precision": 1.0
+        }
+      },
+      "broad": {
+        "passed": true,
+        "stats": {
+          "rows": 12000,
+          "controls": 6000,
+          "correctChanges": 0,
+          "wrongChanges": 0,
+          "priorCorrectLosses": 0,
+          "controlChanges": 0,
+          "baselineUndoFailures": 0,
+          "nounUndoFailures": 0,
+          "prefixChanges": 0,
+          "inputChanges": 0,
+          "additionalInputChanges": 0,
+          "unexpectedAcquisitions": 0,
+          "precision": null
+        }
+      },
+      "instrumental": {
+        "passed": true,
+        "stats": {
+          "rows": 68,
+          "controls": 51,
+          "correctChanges": 0,
+          "wrongChanges": 0,
+          "priorCorrectLosses": 0,
+          "controlChanges": 0,
+          "baselineUndoFailures": 0,
+          "nounUndoFailures": 0,
+          "prefixChanges": 0,
+          "inputChanges": 0,
+          "additionalInputChanges": 0,
+          "unexpectedAcquisitions": 0,
+          "precision": null
+        }
+      }
+    },
+    "physicalDeviceQualified": true
+  },
+  "jvm": {
+    "tests": 1121,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "pythonDiagnosticsTests": {
+    "tests": 54,
+    "passed": true
+  },
+  "buildDebugApk": true,
+  "buildDebugAndroidTestApk": true,
+  "lintDebugPassed": true,
+  "scoringBoundaryCheckPassed": true,
+  "physical": {
+    "tests": {
+      "noun": {
+        "exitCode": 0,
+        "passed": true,
+        "method": "learnedNounCaseRevisionsPreserveExactUndoAtTwoPaces",
+        "matchedReports": 18,
+        "reportedPhrases": 18,
+        "reportedUndoAssertions": 0
+      },
+      "infinitive": {
+        "exitCode": 0,
+        "passed": true,
+        "method": "learnedInfinitiveRevisionsPreserveExactUndoAtTwoPaces",
+        "matchedReports": 18,
+        "reportedPhrases": 18,
+        "reportedUndoAssertions": 0
+      },
+      "contextual": {
+        "exitCode": 0,
+        "passed": true,
+        "method": "learnedContextualCorrectionsAtTwoPacesPreserveExactUndo",
+        "matchedReports": 20,
+        "reportedPhrases": 20,
+        "reportedUndoAssertions": 0
+      },
+      "forensic": {
+        "exitCode": 0,
+        "passed": true,
+        "method": "repeatedRealTouchInputAndUndoKeepTheRequestedCharacters",
+        "matchedReports": 12,
+        "reportedPhrases": 8,
+        "reportedUndoAssertions": 4
+      }
+    },
+    "totalPhrases": 64,
+    "immediateExactUndoAssertions": 42,
+    "nativeEvents": {
+      "phrases": 8,
+      "nativeDown": 160,
+      "nativeUp": 160,
+      "requestedAndReceivedMatched": true
+    },
+    "editorPayloadReads": 0,
+    "ownerInvariants": {
+      "immediate": {
+        "persistentStateExact": true,
+        "settingsExact": true,
+        "bootExact": true,
+        "userExact": true,
+        "installedApkExact": true,
+        "allFourStoresAndAtomicVariantsChecked": true
+      },
+      "delayed": {
+        "persistentStateExact": true,
+        "settingsExact": true,
+        "bootExact": true,
+        "userExact": true,
+        "installedApkExact": true,
+        "allFourStoresAndAtomicVariantsChecked": true
+      }
+    },
+    "delayedCheckGapSeconds": 32.0,
+    "journalExports": 4,
+    "journalStreamFiles": 8,
+    "boundedJournalCoverage": true,
+    "newSourceBoundaryEventsRetained": 5,
+    "windowReleased": true
+  },
+  "installation": {
+    "mainApkSha256": "d03982e24ae5f63a839af81a362bc524abef8363028111c5f1a785a808864201",
+    "testApkSha256": "ae70a4851ebbf3cf87e3361b996533ec90e3a864fbba2f25f3459414b144d1f1",
+    "signatureMatch": true,
+    "assetsVerified": 9,
+    "mainUpdateVerified": true,
+    "testUpdateVerified": true,
+    "dataClearOrPermissionGrant": false
+  },
+  "thresholdRetunedFromHoldoutOrDevice": false,
+  "scope": "Existing admitted instrumental-to-accusative noun revision only"
+}

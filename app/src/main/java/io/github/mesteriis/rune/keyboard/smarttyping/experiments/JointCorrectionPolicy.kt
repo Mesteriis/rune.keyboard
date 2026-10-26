@@ -6,7 +6,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneration
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidate
 
 /** A decided null candidate retains the original; a null choice leaves the baseline untouched. */
-data class JointCorrectionChoice(val candidate: GeneratedCandidate?, val rescue: Boolean = false, val wordContext: Boolean = false, val contextual: Boolean = false, val grammarRevision: Boolean = false)
+data class JointCorrectionChoice(val candidate: GeneratedCandidate?, val rescue: Boolean = false, val wordContext: Boolean = false, val contextual: Boolean = false, val grammarRevision: Boolean = false, val nounCaseRevision: Boolean = false)
 
 enum class JointCorrectionRefusal {
     NOT_QUALIFIED, RESULT_NOT_READY, SEARCH_INCOMPLETE, ORIGINAL_VALID, RARE_ORIGINAL,
@@ -14,6 +14,7 @@ enum class JointCorrectionRefusal {
     ORIGINAL_PREFERRED, REPLACEMENT_VETOED,
     UNCHANGED, PREVIOUS_NOT_UNAMBIGUOUS_FINITE, PROPOSAL_NOT_UNAMBIGUOUS_INFINITIVE,
     LEMMA_UNAVAILABLE, DIFFERENT_LEMMA, NO_INFINITIVE_CUE,
+    PREVIOUS_NOT_UNAMBIGUOUS_INSTRUMENTAL, PROPOSAL_NOT_UNAMBIGUOUS_ACCUSATIVE, NO_ACCUSATIVE_CUE,
 }
 data class JointCorrectionEvaluation(
     val choice: JointCorrectionChoice? = null,
@@ -31,6 +32,9 @@ data class JointCorrectionEvaluation(
     val grammarRevisionAttempted: Boolean = false,
     val grammarRevisionRefusal: JointCorrectionRefusal? = null,
     val grammarRevisionAdmissionRefusal: io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal? = null,
+    val nounCaseAttempted: Boolean = false,
+    val nounCaseRefusal: JointCorrectionRefusal? = null,
+    val nounCaseAdmissionRefusal: io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal? = null,
 )
 
 internal data class JointCorrectionThresholds(val short: RecoveryThresholds, val long: RecoveryThresholds, val retention: RecoveryThresholds = long)

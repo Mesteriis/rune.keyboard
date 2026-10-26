@@ -10,7 +10,7 @@ import kotlin.math.exp
 import kotlin.math.ln
 import kotlin.math.tanh
 
-/** Opt-in manual-ranking adjustments only. This type never admits automatic edits. */
+/** Shared numeric resources; automatic policies own qualification and editor admission. */
 class ExperimentModels internal constructor() {
     @Volatile private var ranker: ObliviousTreeRanker? = null
     @Volatile private var legacyAutomaticRanker: ObliviousTreeRanker? = null

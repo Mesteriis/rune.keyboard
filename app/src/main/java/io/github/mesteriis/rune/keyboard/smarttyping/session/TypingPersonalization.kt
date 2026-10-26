@@ -28,6 +28,8 @@ interface TypingPersonalization {
         io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionChoice? = null
     fun contextualAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
         language: KeyboardLanguage): AutomaticTypingDecision = AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+    fun nounCaseAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+        language: KeyboardLanguage): AutomaticTypingDecision = AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
     fun grammarRevisionAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
         language: KeyboardLanguage): AutomaticTypingDecision = AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
     fun jointAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
