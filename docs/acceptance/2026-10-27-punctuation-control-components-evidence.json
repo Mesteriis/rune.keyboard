@@ -1,0 +1,96 @@
+{
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "holdout_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"freshnessCoverageComplete\": false, \"entries\": 38}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "control_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"coverageComplete\": false, \"entries\": 9}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py"
+      ],
+      "exitCode": 0,
+      "output": "..................................................................................\n----------------------------------------------------------------------\nRan 82 tests in 1.137s\n\nOK\n"
+    }
+  ],
+  "controlLedgerSha256": "dd2cbac011856d3c26c7fbb6e140512452734cd87857264a5cd7f7f5bcb3cfd3",
+  "lexicalLedgerSha256": "a528828b4a261e67a24236438013ddd7eaaa98822480316c8b21812c3b7e7bc4",
+  "receipt": {
+    "bindings": {
+      "build/smart-typing-0.3/compact-v3-external-20260919/source/manifest.json": "56a5b994bc2048c4cf434a123ebbe2e2f7a746102b936a83d535fc582ceecee3",
+      "build/smart-typing-0.3/compact-v3-external-20260919/source/punctuation-en.jsonl": "4bc56f5710e58764ccdde8c9541d766213a12ab6d2a29acf0968e95506d77daf",
+      "build/smart-typing-0.3/compact-v3-external-20260919/source/punctuation-es.jsonl": "2fe4435620a88370107252034f542eba4cf5372c5b1ca884b4d5570b834dfee0",
+      "build/smart-typing-0.3/compact-v3-external-20260919/source/punctuation-ru.jsonl": "8ce8109ee5b462ae340d7e76cabb064134f4e43844fecfac5c89108ddfe99cb1",
+      "build/smart-typing-0.3/compact-v4-external-20260919/source/manifest.json": "a1579d3596ba733dbf5fff49adb6c9dad5d7a54902fe5d98776329578328c9cc",
+      "build/smart-typing-0.3/compact-v4-external-20260919/source/punctuation-en.jsonl": "f0ba5c5d4d5ddfaa6ba36aad1c14589c69e0c1bfcba35b3e3860817ab12221e4",
+      "build/smart-typing-0.3/compact-v4-external-20260919/source/punctuation-es.jsonl": "70a054d1e155a5db3fd5cc8aed1919383ab03f8e7a0616d3a4871c9e198b41a0",
+      "build/smart-typing-0.3/compact-v4-external-20260919/source/punctuation-ru.jsonl": "c0fe2e989d12f874c450386033e9a046fe246d5482c6edefcfc0dfe0c003c251",
+      "tools/eval/smart-typing-0.3/qualification-v2/corpus/manifest.json": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+      "tools/eval/smart-typing-0.3/qualification-v2/corpus/punctuation-en.jsonl": "83c08372631d007264685ad43e63d886435a1f26070f494647b1bfe9aaaf96ab",
+      "tools/eval/smart-typing-0.3/qualification-v2/corpus/punctuation-es.jsonl": "01094a4539479a903da594259c912026f58fc2cc6ac7ae8705bb3af1d2ba477e",
+      "tools/eval/smart-typing-0.3/qualification-v2/corpus/punctuation-ru.jsonl": "f141165d9b5e38da5c82cddefcf48449ed56fe7c9a30f875965061fdb95d214e",
+      "tools/typing_experiments/frozen_sources/qualification_v2_2cbcb2508ef66b32.py": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+      "tools/typing_experiments/frozen_sources/qualification_v2_source_lock_e3ad381de42a6ac0.json": "e3ad381de42a6ac08defd3bad7486789ea15329742e19448b39bf4ebaed795ed",
+      "tools/typing_experiments/frozen_sources/qualification_v3_60cb1cdf671dcc07.py": "60cb1cdf671dcc0781d47225d225eebc178392f7b616a7ae77d084e4906126a7",
+      "tools/typing_experiments/frozen_sources/qualification_v3_source_lock_14ceb1c0cbe8b20e.json": "14ceb1c0cbe8b20e9d12db83d5983999a97fff0e1e1b080409c65ed4f7d65fa0",
+      "tools/typing_experiments/frozen_sources/qualification_v4_9615bc8033760257.py": "9615bc8033760257bc384ece09d67f6b92e0b7541e144ea6ec746a2f4cc06de4",
+      "tools/typing_experiments/frozen_sources/qualification_v4_source_lock_3f86e8b384c094e7.json": "3f86e8b384c094e7c54241359a6b6703c35ba04cdee9bc9d1558fdab3c313ae8"
+    },
+    "counts": {
+      "compact-v3": {
+        "languages": {
+          "en": 400,
+          "es": 400,
+          "ru": 400
+        },
+        "rows": 1200
+      },
+      "compact-v4": {
+        "languages": {
+          "en": 400,
+          "es": 400,
+          "ru": 400
+        },
+        "rows": 1200
+      },
+      "qualification-v2": {
+        "languages": {
+          "en": 400,
+          "es": 400,
+          "ru": 400
+        },
+        "rows": 1200
+      }
+    },
+    "kind": "punctuation",
+    "lexicalFamiliesChanged": false,
+    "lexicalLedgerChanged": false,
+    "modelCalls": 0,
+    "purpose": "PUBLIC_CONTROL_COMPONENT_EXCLUSIONS_NOT_QUALIFICATION",
+    "sourceBindings": {
+      "tools/typing_experiments/control_ledger.py": "35bc93fb02b81b7fe8d8027fddf2f478b818acf372708c6c47b8584aea15d678",
+      "tools/typing_experiments/import_control_components.py": "54656b573969eac495c2638eb40741857dba6d6d4b139f60f921d9cff5788888"
+    }
+  },
+  "unitTests": 82
+}

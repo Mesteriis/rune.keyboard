@@ -27,6 +27,10 @@ jobs:
           python3 -m unittest discover -s tools/typing_experiments -p test_import_early_ru_history.py
           python3 -m unittest discover -s tools/typing_experiments -p test_recover_early_ru_sources.py
           python3 -m unittest discover -s tools/typing_experiments -p test_merge_early_ru_sources.py
+          python3 tools/typing_experiments/control_ledger.py --validate-only
+          python3 -m unittest discover -s tools/typing_experiments -p test_control_ledger.py
+          python3 -m unittest discover -s tools/typing_experiments -p test_import_control_components.py
+          python3 -m unittest discover -s tools/typing_experiments -p test_public_control_ledger.py
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
