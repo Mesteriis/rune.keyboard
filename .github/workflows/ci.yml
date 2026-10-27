@@ -44,6 +44,7 @@ jobs:
           python3 -m unittest discover -s tools/typing_experiments -p test_recover_ranker_sources.py
           python3 -m unittest discover -s tools/typing_experiments -p test_audit_authored_training_history.py
           python3 -m unittest discover -s tools/typing_experiments -p test_audit_late_authored_history.py
+          python3 -m unittest discover -s tools/typing_experiments -p test_audit_applied_authored_history.py
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

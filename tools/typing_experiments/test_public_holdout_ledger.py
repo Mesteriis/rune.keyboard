@@ -114,6 +114,12 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:family'):
             assert_disjoint([dict(families=['полезно'])],self.ledger,kinds=('family',),usages=('supervised','prepared-training-quarantine'))
 
+    def test_applied_role_template_history_keeps_alternative_full_adjective_lemma(self):
+        entries={e['id']:e for e in self.ledger['entries'] if e['id'].startswith('authored-right-context-applied-history-')}
+        self.assertEqual(4,len(entries));self.assertEqual(60,len(entries['authored-right-context-applied-history-v2-families']['keys']['family']))
+        with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:family'):
+            assert_disjoint([dict(families=['честной'])],self.ledger,kinds=('family',),usages=('supervised','prepared-training-quarantine'))
+
     def test_historical_overlap_disclosure_matches_recorded_keys(self):
         scope={f'public-spelling-v{v}' for v in range(7,13)}|{'public-legacy-spelling-v6'}|{
             'public-early-ru-'+name for name in ('qualification-v2','compact-v3','compact-v4')}

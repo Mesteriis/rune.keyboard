@@ -1,0 +1,256 @@
+{
+  "artifactBindings": {
+    "build/applied-authored-history-20261027/baseline-ledger.json": "46762e150069e5b7a735f65172e2bf98163288bfea7e5f51f26177db00051c66",
+    "build/applied-authored-history-20261027/recovery/receipt.json": "15b6017addb1c554bef34fde3ef70251a6d84a01a0b58a69616359cc90169490",
+    "build/applied-authored-history-20261027/source-only-checks/checks.json": "166002f13dd43f989f5be3d3cbc5117958f100c879cea77507e4dd6798c948b3"
+  },
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "holdout_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"freshnessCoverageComplete\": false, \"entries\": 103}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "control_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"coverageComplete\": false, \"entries\": 18}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py"
+      ],
+      "exitCode": 0,
+      "output": ".....................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 181 tests in 12.320s\n\nOK\n"
+    }
+  ],
+  "execution": {
+    "command": [
+      "build/typing-ranker-v2-venv/bin/python",
+      "tools/typing_experiments/audit_applied_authored_history.py",
+      "--base",
+      "tools/typing_experiments/holdout-ledger.json",
+      "--output",
+      "build/applied-authored-history-20261027/recovery"
+    ],
+    "exitCode": 0,
+    "inputLedgerSha256": "46762e150069e5b7a735f65172e2bf98163288bfea7e5f51f26177db00051c66"
+  },
+  "exposureRows": 66280,
+  "globalCoverageUnchanged": true,
+  "ledgerSha256": "62365d5102b53cda9726889dbeef2556f0a93316bcc1850257f19f0f4598bd21",
+  "newArchives": {
+    "602890657811a39c17ce01e1557a01b6aa124bb0c1f6a1886131f6a79fa835d9": {
+      "file": "right_context_applied_corpus_602890657811a39c.py",
+      "originalPath": "tools/typing_experiments/right_context_applied_corpus.py"
+    },
+    "7e9b8780a969645aa97309f3096a594fc509e24cd32da82fd153c4cda3363d7c": {
+      "file": "right_context_applied_corpus_7e9b8780a969645a.py",
+      "originalPath": "tools/typing_experiments/right_context_applied_corpus.py"
+    },
+    "cf6502fd69c52de3ab4b0a2b25bcd45f5053857c4a1978e30f23d54d5744ec6c": {
+      "file": "prepare_cf6502fd69c52de3.py",
+      "originalPath": "build/right-context-applied-v10-20261027/prepare.py"
+    }
+  },
+  "newEntries": 4,
+  "newlyBlockedContextCount": 379,
+  "newlyBlockedDefaultFamilies": [
+    "честной"
+  ],
+  "newlyBlockedDefaultFamilyCount": 1,
+  "previousEntriesUnchanged": true,
+  "priorArchiveCataloguePreserved": true,
+  "priorEntries": 99,
+  "purpose": "APPLIED_ROLE_AUTHORSHIP_AND_REUSED_GROUP_HISTORY_NOT_QUALIFICATION",
+  "receipt": {
+    "aliases": {
+      "right-context-residual-v9-20261027": {
+        "allGroupRowsMatchCorpus": true,
+        "exactParentGroupBytes": true,
+        "groups": 30512,
+        "modelExecutionEstablished": false
+      },
+      "right-context-training-v8-20261027": {
+        "allGroupRowsMatchCorpus": true,
+        "exactParentGroupBytes": true,
+        "groups": 30512,
+        "modelExecutionEstablished": false
+      }
+    },
+    "archivedPreparationScriptsExecuted": false,
+    "bindings": {
+      "build/right-context-applied-v10-20261027/corpus/manifest.json": "0faf1aa17ebc4750d23bda0cd35291aefe911541074ab83e5aefede4e7972f08",
+      "build/right-context-applied-v10-20261027/corpus/train.jsonl": "31ecbd6855cad818fae652f75828422a64036d1afbad2a326b7b916352152370",
+      "build/right-context-applied-v10-20261027/groups.jsonl": "eb7e1530e37562830e01339486061de854131de642c240a1d2ed10fde721f621",
+      "build/right-context-applied-v10-20261027/prepare.py": "cf6502fd69c52de3ab4b0a2b25bcd45f5053857c4a1978e30f23d54d5744ec6c",
+      "build/right-context-applied-v10-20261027/selection.json": "60b4237a8b85c0a9480ae55d5ab40de8dc7f53ef18a7d6464613b4ca7c2d25ab",
+      "build/right-context-applied-v10-v2-20261027/corpus/manifest.json": "841e177e6f883690c86c60925bebdb8e09a91d441822521f5083a9084b9d97c5",
+      "build/right-context-applied-v10-v2-20261027/corpus/train.jsonl": "fdfb4d2858580562f1bb13c77335661f0bd044e48fccbf4145f23896b02d35fa",
+      "build/right-context-applied-v10-v2-20261027/groups.jsonl": "686877ec73f2392eef9754fc4d2b9a958fc542b79a2d415bcdb11798d2f7db31",
+      "build/right-context-applied-v10-v2-20261027/prepare.py": "cf6502fd69c52de3ab4b0a2b25bcd45f5053857c4a1978e30f23d54d5744ec6c",
+      "build/right-context-applied-v10-v2-20261027/selection.json": "ab8ed238a457b15742d1e74d62b93272213c39ca6e869fe9c9ad11153344a780",
+      "build/right-context-residual-v9-20261027/groups.jsonl": "87fdbe762a514671209e92146dbe92b3249e2f9f95d3a095a09438b4c0ac2e62",
+      "build/right-context-residual-v9-20261027/plan.json": "5fea5113c58dbc7c1cab08320af3f514ebf577e5b28db2d7d345ac075c0ace81",
+      "build/right-context-residual-v9-20261027/selection.json": "e90d1336e6d7dc4447a9de49564df6512d033ccb736474752e015eea29dbc179",
+      "build/right-context-training-v7-20261027/corpus/manifest.json": "29e4b578b02a3519c45b3a8fb45e2d3fe01a524721ee0dca10e9c08b2064c456",
+      "build/right-context-training-v7-20261027/corpus/train.jsonl": "e504fefab24003c7650aff8118859bad10cba1d76bb36b86cf546e0d290bd78f",
+      "build/right-context-training-v7-20261027/groups.jsonl": "87fdbe762a514671209e92146dbe92b3249e2f9f95d3a095a09438b4c0ac2e62",
+      "build/right-context-training-v8-20261027/groups.jsonl": "87fdbe762a514671209e92146dbe92b3249e2f9f95d3a095a09438b4c0ac2e62",
+      "build/right-context-training-v8-20261027/plan.json": "51710ee2a77371a444cfd5d55db0eeff2e7aaf12bf499045210ec47ea5b27914",
+      "build/right-context-training-v8-20261027/selection.json": "e90d1336e6d7dc4447a9de49564df6512d033ccb736474752e015eea29dbc179",
+      "tools/morphology/ranker.py": "66a4004867f68b04942cf08975641523d0bd40f82d57bed82b6b14eb93035c3d",
+      "tools/typing_experiments/audit_applied_authored_history.py": "388fa5073f80abeadae02cd1ee8b6458930e15a397e3c31d27ab329b79dffdfe",
+      "tools/typing_experiments/audit_authored_training_history.py": "9cfd7e35a007c81f96465808aa60c92ba199a009b1f3d019f4f52ec2c9608387",
+      "tools/typing_experiments/audit_late_authored_history.py": "85f0ef678a52b0efc8b5903fef038765e231071fa0d33e918477c7f1f59822d1",
+      "tools/typing_experiments/frozen_sources/prepare_cf6502fd69c52de3.py": "cf6502fd69c52de3ab4b0a2b25bcd45f5053857c4a1978e30f23d54d5744ec6c",
+      "tools/typing_experiments/frozen_sources/right_context_applied_corpus_602890657811a39c.py": "602890657811a39c17ce01e1557a01b6aa124bb0c1f6a1886131f6a79fa835d9",
+      "tools/typing_experiments/frozen_sources/right_context_applied_corpus_7e9b8780a969645a.py": "7e9b8780a969645aa97309f3096a594fc509e24cd32da82fd153c4cda3363d7c",
+      "tools/typing_experiments/grammar_contrast_corpus.py": "eeb289a4572eda11889a7180200d9b94894411bddd6ad97a92578b5bdb8f402f",
+      "tools/typing_experiments/right_context_applied_features.py": "0207f2013564b4e0cb736a984ce89074ee292a0861d1223090bc1d80ff8f81bb",
+      "tools/typing_experiments/right_context_contrast_corpus.py": "3e0ccdc638a479889f2fe22f9bbcbde0a96729916ff890f97ad9a75b1a230b73",
+      "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c"
+    },
+    "counts": {
+      "v1": {
+        "addedRows": 936,
+        "contexts": 1444,
+        "dictionaryFamilies": 59,
+        "rows": 32852,
+        "selection": {
+          "allGroupRowsMatchCorpus": true,
+          "groups": 31448,
+          "modelExecutionEstablished": false
+        }
+      },
+      "v2": {
+        "addedRows": 1512,
+        "contexts": 1588,
+        "dictionaryFamilies": 60,
+        "rows": 33428,
+        "selection": {
+          "allGroupRowsMatchCorpus": true,
+          "groups": 32024,
+          "modelExecutionEstablished": false
+        }
+      }
+    },
+    "dictionary": {
+      "dictionaryOnly": true,
+      "packages": {
+        "dawg2-python": {
+          "files": {
+            "dawg2_python-0.9.0.dist-info/INSTALLER": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508",
+            "dawg2_python-0.9.0.dist-info/LICENSE": "2e5e7d32243cec7f102512b909db245c1c83b56823ec2b5fa1020cbe4fc7c3f0",
+            "dawg2_python-0.9.0.dist-info/METADATA": "371d6b3c0f2dd0c875203524eb27694ec1d1863ebb4d76776d567599df6d6916",
+            "dawg2_python-0.9.0.dist-info/RECORD": "81685f3206d7a1b51eacb4f9b8da6353635a0d8a914a01ef74489bb8f20345ca",
+            "dawg2_python-0.9.0.dist-info/REQUESTED": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "dawg2_python-0.9.0.dist-info/WHEEL": "5db7990de4d629cd70ec2488cab7b968c0d4ffe3e8851c1341c7989e2b086186",
+            "dawg_python/__init__.py": "d85763e4d34f8abe3f72c676f1efb1229b14ed2eb8727ccd0ead991f23a3a613",
+            "dawg_python/dawgs.py": "4744fbadc8fb2d582094975174998197d4d9373b3bdd6bd862fbbd05fe537d43",
+            "dawg_python/units.py": "4915ef70373cc1df87aec869a0488fc8f1b37c282f199faa9dfae511e942c755",
+            "dawg_python/wrapper.py": "431a0d52db3112dae6e7fb728f6568e0727cd5dc8c5445bac5d2322efe085d60"
+          },
+          "version": "0.9.0"
+        },
+        "pymorphy3": {
+          "files": {
+            "pymorphy3-2.0.6.dist-info/INSTALLER": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508",
+            "pymorphy3-2.0.6.dist-info/METADATA": "cc267706d693da98ae515135f310e668335869e59d515cd139abe75eebe15651",
+            "pymorphy3-2.0.6.dist-info/RECORD": "91cf616cc9d6d5b9399bdca916de9b2bbeeb2bccb8eb47b3ca6b4b3174c4d909",
+            "pymorphy3-2.0.6.dist-info/REQUESTED": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "pymorphy3-2.0.6.dist-info/WHEEL": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b",
+            "pymorphy3-2.0.6.dist-info/entry_points.txt": "d949fedc8f7a7635885e2f259d4cafadc0d1333733bf412c794eb1ab58ed0699",
+            "pymorphy3-2.0.6.dist-info/licenses/AUTHORS.rst": "f7a8a2a9dddde7f12dff43afc914ac2feb3ad3d9de2842d7505ed2f60e6e2131",
+            "pymorphy3-2.0.6.dist-info/licenses/LICENSE.txt": "a5e6ddb3af783a02eacc848cbe309cc0940b4859ac653e9b1a2e21a4fea22552",
+            "pymorphy3-2.0.6.dist-info/top_level.txt": "7fe89543e7087fc5a101d670e74a73e94a2deba5a2f5f917693980001744e86b",
+            "pymorphy3/__init__.py": "7b9b7979c8a0b4070f0efe573dfde25b2aa12a71b3b7ed3c2b184acfb1c17c88",
+            "pymorphy3/analyzer.py": "9e2afb24caf5d59ee97ffa006ddbbf18c6792c45d9ca9294aacc14dfc7acd3c3",
+            "pymorphy3/cli.py": "859db3c0760996ae74187fc6fb1dc7dcc40fb3966e7d329d50c44038e9495c34",
+            "pymorphy3/dawg.py": "6c8b8b9d5cb88bb5eacd7e67bc63bfaa3b6cf0051791f606d153ee2ff3915bdd",
+            "pymorphy3/lang/__init__.py": "abe9c76aec383c264b2f0103a24037534795dd878acd5adc7e83056dcfbb124d",
+            "pymorphy3/lang/ru/__init__.py": "034d25a6750a83eab7cbf6fe70dde3285f6eae41931a36f6633fe019cf5608bb",
+            "pymorphy3/lang/ru/config.py": "50bd297aa5d122961f7da54dc85be9bc8aea7f14c6bc75da7aaa573e264072a4",
+            "pymorphy3/lang/uk/__init__.py": "034d25a6750a83eab7cbf6fe70dde3285f6eae41931a36f6633fe019cf5608bb",
+            "pymorphy3/lang/uk/_prefixes.py": "035afd56a5a2e3e0a6b56b128547375355049bdd4714edebc132a560eb514499",
+            "pymorphy3/lang/uk/config.py": "d7eb090fb86c8b0dc0329d39bd11ebbd6cb1e5701803185e5308db94e91735b2",
+            "pymorphy3/opencorpora_dict/__init__.py": "f109e628d2e3b51d4bcab70feeb7548026e99a578bd07b2327565b61847005a4",
+            "pymorphy3/opencorpora_dict/compile.py": "fded937c9ea0795bd7c0472573a3aa7f5864cd51508b69f6946ca079055b26e2",
+            "pymorphy3/opencorpora_dict/parse.py": "89928ec1b3556335d0605a2988d2113363100bc9ab8d31a2addc3179549da54a",
+            "pymorphy3/opencorpora_dict/preprocess.py": "1d656e15f3f7f01ae7ab2ec2ae53a1d6e988387aef249c09943edae1e9de7ff4",
+            "pymorphy3/opencorpora_dict/probability.py": "5cee8ccd06200aeeb03ca2df85299933655cdd6aa79796c49f2340a06d42b48e",
+            "pymorphy3/opencorpora_dict/storage.py": "170175053bcff3e1d8f1c12cdcff39b956268b41f1cc9d224bae0ae87c65d76f",
+            "pymorphy3/opencorpora_dict/wrapper.py": "f7d70cb26c3870a08d0d8034bd9b12c25f0eee7e0720f0cb1b3450ae437acace",
+            "pymorphy3/shapes.py": "56e97c412c0c389abb5bb927a19a69b58388555b4a9caa996dfde236eefa1f40",
+            "pymorphy3/tagset.py": "481a15aee31d8040dd14cf85ada652def573435febccff04e2ea04d879d8cf54",
+            "pymorphy3/tokenizers.py": "40519d78d22a4e92ed148929a8886761b24bc1dd47b5e7141c2179bd9e46710d",
+            "pymorphy3/units/__init__.py": "b90f2178b361ac9373bd83a2bfc48de67c2e10b622ec46197eaf1b3ac4f575d3",
+            "pymorphy3/units/abbreviations.py": "f6628a000f159ea6b68f7d33213496386b614efd5d8415f153968ea4d14cff5b",
+            "pymorphy3/units/base.py": "e7f11370e476cbfbddfa0136427421008896f25eca224001682b0ea4113763b7",
+            "pymorphy3/units/by_analogy.py": "200fc60772fff48b61f42c100c25712f4bd33a1d37700a0a0b213b1990bdfe4c",
+            "pymorphy3/units/by_hyphen.py": "3c5c79a4b79e284f46a7d068e6956a7964712e1ea69d038f3defe0b02de2d82f",
+            "pymorphy3/units/by_lookup.py": "0450d751668fdf6581871ec479264529f13fbd6b2242fa372978f1b1eff6c3df",
+            "pymorphy3/units/by_shape.py": "95b9365df1249c466effcc2cc7469f27854202b314120ab1ed7e97d476fa98f2",
+            "pymorphy3/units/unkn.py": "1a4589a260a59fd6609a1ada82b905d6309fceb62b4fba6c53072ab6166148f2",
+            "pymorphy3/units/utils.py": "55ff8d0def907a207181fc4d44d5277e054653280ac5a247e2d8dc35ba577b7f",
+            "pymorphy3/utils.py": "e764848a471065ad9b3969cf1705897fd09a9c949faa0177f46101a82fbd8b20",
+            "pymorphy3/version.py": "e18c5fb7f30d3adc101b9f266696bc7a83345c11daf153644cf1fdfe2d200da3"
+          },
+          "version": "2.0.6"
+        },
+        "pymorphy3-dicts-ru": {
+          "files": {
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/INSTALLER": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508",
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/METADATA": "07512674d15bbe2d92b97c5f185a73ee31623165c1e4c48eb40c3f51a530e17d",
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/RECORD": "7b2c59ad80c65673065fe962cb50f92bc77c566b3f16bb94a8b14377305aadcc",
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/REQUESTED": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/WHEEL": "cfd8f4c406bf26650a3299b3ef62b464600b48cfe7fb04159866e5797c765478",
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/entry_points.txt": "0414fd734ef74e19844dc8de3793add7b0391b35aef7212850eebfdfd7c69685",
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/top_level.txt": "86cd89be956f6b419c9642b10e801b50040186fb42ebf38074b3a1568c072e67",
+            "pymorphy3_dicts_ru/__init__.py": "a03fca8c0a7e6536b3032ccffbc58441945265a2b6e71aa98f5fac9d70f7bc0b",
+            "pymorphy3_dicts_ru/data/grammemes.json": "0c2dae69cf15c3cdd9b92c7bce2273b2f1ca0f806228a01de0fe3f24145337fb",
+            "pymorphy3_dicts_ru/data/gramtab-opencorpora-ext.json": "07ba6280d93ade73563289edac1a8fff4ce2388a813d0f47d32431cfaae84d90",
+            "pymorphy3_dicts_ru/data/gramtab-opencorpora-int.json": "1a72703ac84c16572deee6a92779a322b59763cbc336021433d52c33160fa05b",
+            "pymorphy3_dicts_ru/data/meta.json": "0c16fa06946dbda7db6df209128004f5edb36f9d8bdf48e5efff6045ec21a2fd",
+            "pymorphy3_dicts_ru/data/p_t_given_w.intdawg": "000a4d34ff42c44c65aca33ebcae689c77455a9a244145881b28fd8b8b7ea21e",
+            "pymorphy3_dicts_ru/data/paradigms.array": "dfc465558f1a2760bbde6fa89f0447a5c93896da429efe658fe2f0638954758b",
+            "pymorphy3_dicts_ru/data/prediction-suffixes-0.dawg": "85f38ab5a14566b7b22b8bfb5a63118992013f45757bf60ef1e5e937a92f1aae",
+            "pymorphy3_dicts_ru/data/prediction-suffixes-1.dawg": "31ddaef03712c6168488241be17ce59afa0f4c465e1ba7bf3a5bf095f2053b5f",
+            "pymorphy3_dicts_ru/data/prediction-suffixes-2.dawg": "4e6d6e687031b89e5e7035647570f69d28528e7df123210cc994b8aea36c85fd",
+            "pymorphy3_dicts_ru/data/suffixes.json": "c827ccc32b85e42c3edab8ac235bf91fdbc392e94455ad139da06fb1babcdb74",
+            "pymorphy3_dicts_ru/data/words.dawg": "ae4381a9d6e4e636309ac1a242e480a9470a05723f6673d5fcc3fcf293aa8a9e",
+            "pymorphy3_dicts_ru/version.py": "c2dc3477678f331101613c71e7d497a3f46a25e973cb3d0043ed91dc98114fe1"
+          },
+          "version": "2.4.417150.4580142"
+        }
+      },
+      "schemaVersion": 1
+    },
+    "modelCalls": 0,
+    "purpose": "APPLIED_TEMPLATE_PREPARATION_AND_GROUP_REUSE_NOT_QUALIFICATION",
+    "sourceBindings": {
+      "tools/morphology/ranker.py": "66a4004867f68b04942cf08975641523d0bd40f82d57bed82b6b14eb93035c3d",
+      "tools/typing_experiments/audit_applied_authored_history.py": "388fa5073f80abeadae02cd1ee8b6458930e15a397e3c31d27ab329b79dffdfe",
+      "tools/typing_experiments/audit_authored_training_history.py": "9cfd7e35a007c81f96465808aa60c92ba199a009b1f3d019f4f52ec2c9608387",
+      "tools/typing_experiments/audit_late_authored_history.py": "85f0ef678a52b0efc8b5903fef038765e231071fa0d33e918477c7f1f59822d1"
+    },
+    "versionsAreIndependentSamples": false
+  },
+  "uniqueRowIds": 33428,
+  "unitTests": 181,
+  "versionsAreIndependentSamples": false
+}
