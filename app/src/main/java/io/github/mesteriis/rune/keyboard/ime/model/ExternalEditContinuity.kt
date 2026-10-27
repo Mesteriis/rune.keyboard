@@ -13,9 +13,13 @@ internal class ExternalEditContinuity {
 
     fun arm() { required = true }
 
-    fun onStart(packageName: String?, fieldId: Int, restarting: Boolean): Boolean {
+    fun onStart(packageName: String?, fieldId: Int, restarting: Boolean,
+        selectionStart: Int, selectionEnd: Int): Boolean {
         val next = packageName?.takeIf { it.isNotBlank() }?.let { Target(it, fieldId) }
-        required = required && restarting && next != null && next == target
+        // Every start disowns the old typing context. A nonzero left boundary means unknown
+        // preceding text even in a new service, without reading or retaining that text.
+        val unknownLeftContext = minOf(selectionStart, selectionEnd) > 0
+        required = unknownLeftContext || (required && restarting && next != null && next == target)
         target = next
         return required
     }

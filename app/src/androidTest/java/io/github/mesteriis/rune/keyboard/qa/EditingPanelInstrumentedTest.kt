@@ -177,6 +177,73 @@ class EditingPanelInstrumentedTest {
         noPayloadReads()
     }
 
+    @Test fun hideAndShowKeepPastedSuffixLiteralUntilOwnBoundary() {
+        type("old")
+        openPanel()
+        instrumentation.runOnMainSync {
+            clipboardTouched = true
+            context.getSystemService(ClipboardManager::class.java)
+                .setPrimaryClip(ClipData.newPlainText("Rune QA", "foreign"))
+        }
+        driver.tapKeyByDescription("Paste")
+        driver.awaitFieldText("qa_composing_text", "oldforeign")
+        driver.tapKeyByDescription(context.getString(R.string.key_letters))
+        driver.device.pressBack()
+        assertTrue(driver.device.wait(Until.gone(By.desc(context.getString(R.string.key_delete))), 3_000))
+        checkNotNull(driver.device.findObject(By.res(context.packageName, "qa_composing_text"))).click()
+        assertNotNull(driver.device.wait(Until.findObject(By.desc(context.getString(R.string.key_delete))), 3_000))
+        type("teh"); space()
+        driver.awaitFieldText("qa_composing_text", "oldforeignteh ")
+        type("teh"); space()
+        driver.awaitFieldText("qa_composing_text", "oldforeignteh the ")
+        noPayloadReads()
+    }
+
+    @Test fun realServiceRebindCannotCorrectThePastedAdjacentSuffix() {
+        type("old")
+        openPanel()
+        instrumentation.runOnMainSync {
+            clipboardTouched = true
+            context.getSystemService(ClipboardManager::class.java)
+                .setPrimaryClip(ClipData.newPlainText("Rune QA", "foreign"))
+        }
+        driver.tapKeyByDescription("Paste")
+        driver.awaitFieldText("qa_composing_text", "oldforeign")
+        driver.tapKeyByDescription(context.getString(R.string.key_letters))
+        fun serviceOwner(): io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService {
+            var owner: android.content.Context = keyboardSnapshot().keyboard.rootView.context
+            while (owner is android.content.ContextWrapper && owner !is io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService)
+                owner = owner.baseContext
+            return checkNotNull(owner as? io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService)
+        }
+        val old = serviceOwner()
+        driver.rebindRuneKeepingEditor()
+        val fresh = serviceOwner()
+        assertNotSame("Require actual framework service recreation", old, fresh)
+        val controller = io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService::class.java
+            .getDeclaredField("typingSession").apply { isAccessible = true }.get(fresh)
+            as io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionController
+        var enabled = false
+        var fenced = false
+        instrumentation.runOnMainSync { enabled = controller.state.enabled; fenced = controller.requiresExternalWordBoundary }
+        assertTrue("Actual smart typing session must be enabled", enabled)
+        assertTrue("Fresh service must fence its unknown left context", fenced)
+        // The fallback IME may legitimately read its editor. Retain its transition counters;
+        // only subsequent Rune typing is subject to this case's no-additional-read assertion.
+        val baseline = stats()
+        type("teh")
+        var adopted = false
+        instrumentation.runOnMainSync { adopted = controller.state.composing != null || controller.state.contextText.isNotEmpty() }
+        assertFalse("Adjacent unknown suffix must not be adopted", adopted)
+        space()
+        driver.awaitFieldText("qa_composing_text", "oldforeignteh ")
+        type("teh"); space()
+        driver.awaitFieldText("qa_composing_text", "oldforeignteh the ")
+        val after = stats()
+        for (name in listOf("before", "after", "selected", "extracted", "surrounding", "snapshot"))
+            assertEquals("Rune added a payload read: $name", baseline.getValue(name), after.getValue(name))
+    }
+
     private fun openPanel() {
         val mode = keyboardSnapshot().keys.single { it.contentDescription == context.getString(R.string.key_symbols) }
         instrumentation.runOnMainSync {

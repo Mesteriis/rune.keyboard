@@ -222,6 +222,14 @@ class ImeTestDriver {
         device.waitForIdle()
     }
 
+    /** Explicit lifecycle QA action; keep the current disposable editor focused and rebind Rune. */
+    fun rebindRuneKeepingEditor() {
+        restartRuneIme()
+        waitForKeyboard()
+        instrumentation.waitForIdleSync()
+        device.waitForIdle()
+    }
+
     private fun resumeQa() {
         shell("am start -W -n $QA_ACTIVITY")
         awaitQaActivity()

@@ -224,7 +224,8 @@ class RuneInputMethodService : InputMethodService() {
         super.onStartInput(attribute, restarting)
         val editorInfo = attribute ?: EditorInfo()
         externalEditContinuity.observe(typingSession.state.enabled, typingSession.requiresExternalWordBoundary)
-        val requireExternalBoundary = externalEditContinuity.onStart(editorInfo.packageName, editorInfo.fieldId, restarting)
+        val requireExternalBoundary = externalEditContinuity.onStart(editorInfo.packageName, editorInfo.fieldId, restarting,
+            editorInfo.initialSelStart, editorInfo.initialSelEnd)
         editorContext = EditorContext.from(editorInfo)
         activePackage = editorInfo.packageName
         resolveTypingProfile()

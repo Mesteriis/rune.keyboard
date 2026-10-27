@@ -16,6 +16,8 @@ Model scoring uses bounded input context in memory and a separate private proces
 
 Android application backup and cleartext traffic are disabled in the manifest. The keyboard does not read clipboard contents or maintain a clipboard history. Copy, Cut and Paste controls delegate Android context-menu commands to the focused editor through InputConnection.performContextMenuAction. The editor performs the operation; a dispatch acknowledgement does not prove that it completed. Rune does not fetch editor text to implement these commands.
 
+New input sessions do not adopt unknown preceding editor text. When the numeric selection starts after the beginning of the field, Rune commits the adjacent suffix literally until new Rune whitespace establishes a word boundary. This decision uses cursor offsets, not editor-text reads or retained text from another session.
+
 ## Diagnostics and exports
 
 Release builds exclude the debug typing recorder and its settings UI. Debug builds offer optional technical diagnostics and a separate text recorder; text recording requires two explicit confirmations. Both are off by default. Debug exports and explicit model/data exports are user-initiated. Review a file before sharing it.
