@@ -50,6 +50,13 @@ class SpellingBuilderTest(unittest.TestCase):
             self.assertEqual('BLOCKED_OVERLAP',report['status']);self.assertEqual(1,report['unsupportedTargetOverlaps'])
             self.assertFalse((Path(folder)/'output').exists())
 
+    def test_prepared_family_from_rejected_unmanifested_material_is_blocked(self):
+        with tempfile.TemporaryDirectory() as folder:
+            result=run_builder(folder,'prepare_public_spelling_v1.py',[candidate(typed='привыкать',expectedSpelling='привыкать',families=['привыкать'])])
+            self.assertEqual(2,result.returncode,result.stderr);report=json.loads(result.stdout)
+            self.assertEqual('BLOCKED_OVERLAP',report['status']);self.assertEqual(1,report['lexicalOverlaps']['family'])
+            self.assertFalse((Path(folder)/'output').exists())
+
     def test_changed_proposal_bytes_cannot_reuse_a_frozen_manifest(self):
         with tempfile.TemporaryDirectory() as folder:
             result=run_builder(folder,'prepare_public_spelling_v1.py',[candidate()],bad_hash=True)

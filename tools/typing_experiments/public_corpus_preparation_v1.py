@@ -58,7 +58,7 @@ def preflight(rows,task,lexical,controls,profile='new-sentences'):
                 except ValueError:errors.add('lexical-'+axis+'-schema')
         elif task!='protected':unsupported.add(str(language))
     for axis,proposed in lex_keys.items():
-        blocked={k for e in lexical['entries'] if axis!='family' or profile=='new-families' or e['usage']=='supervised'
+        blocked={k for e in lexical['entries'] if axis!='family' or profile=='new-families' or e['usage'] in ('supervised','prepared-training-quarantine')
                  for k in e['keys'].get(axis,[])}
         lexical_overlap[axis]=len(proposed&blocked)
     for kind in ('punctuation','protected'):

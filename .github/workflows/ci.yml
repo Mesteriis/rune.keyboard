@@ -40,6 +40,7 @@ jobs:
           python3 -m unittest discover -s tools/typing_experiments -p test_import_tatoeba_history.py
           python3 -m unittest discover -s tools/typing_experiments -p test_quarantine_unknown_families.py
           python3 -m unittest discover -s tools/typing_experiments -p test_import_legacy_context_history.py
+          python3 -m unittest discover -s tools/typing_experiments -p test_audit_unmanifested_conversation.py
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

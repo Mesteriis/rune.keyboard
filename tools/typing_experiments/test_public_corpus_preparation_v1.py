@@ -74,6 +74,13 @@ class PreparationGateTest(unittest.TestCase):
         invalid=controls();invalid['coverageComplete']=True
         with self.assertRaisesRegex(ValueError,'CONTROL_LEDGER_SCHEMA'):self.report(candidate(article='123'),controls=invalid)
 
+    def test_prepared_training_quarantine_blocks_default_family_profile(self):
+        lex=ledger(False);row=candidate()
+        lex['entries'].append(dict(id='prepared',usage='prepared-training-quarantine',bindings={'audit':'a'*64},
+            keys={'family':sorted(keys_for([row],'family'))},missingAxes=[]))
+        result=self.report(row,lexical=lex)
+        self.assertEqual('BLOCKED_OVERLAP',result['status']);self.assertEqual(1,result['lexicalOverlaps']['family'])
+
     def test_tatoeba_source_namespace_and_source_backed_protected_rows_are_checked(self):
         row=candidate(sourceRepository='tatoeba',article='tatoeba:123',sentenceHash='b'*64)
         result=self.report(row)

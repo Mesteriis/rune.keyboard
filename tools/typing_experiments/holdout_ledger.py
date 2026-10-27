@@ -18,7 +18,7 @@ from source_identities import tatoeba_identity
 SCHEMA = 1
 KEY_SCHEMA = 'rune-public-exclusions-v1'
 KINDS = ('article', 'family', 'sentence', 'context')
-USAGES = ('supervised', 'disclosed', 'reserved', 'historical-exclusion', 'historical-family-exclusion', 'historical-source-exclusion')
+USAGES = ('supervised', 'disclosed', 'reserved', 'historical-exclusion', 'historical-family-exclusion', 'historical-source-exclusion', 'prepared-training-quarantine', 'historical-context-exclusion')
 _HASH = re.compile(r'[0-9a-f]{64}\Z')
 
 
@@ -100,11 +100,13 @@ def validate_ledger(ledger):
                 or not isinstance(missing, list) or any(k not in KINDS for k in missing)
                 or set(keys) & set(missing) or (coverage['complete'] and missing)):
             raise ValueError('LEDGER_ENTRY_KEYS')
-        if entry['usage'] in ('supervised', 'historical-family-exclusion'):
+        if entry['usage'] in ('supervised', 'historical-family-exclusion', 'prepared-training-quarantine'):
             if set(keys) != {'family'} or missing:
                 raise ValueError('LEDGER_SUPERVISED_FAMILY_SCOPE')
         elif entry['usage']=='historical-source-exclusion':
             if set(keys)!={'article','sentence'} or missing:raise ValueError('LEDGER_SOURCE_SCOPE')
+        elif entry['usage']=='historical-context-exclusion':
+            if set(keys)!={'context'} or missing:raise ValueError('LEDGER_CONTEXT_SCOPE')
         elif set(keys) | set(missing) != set(KINDS):
             raise ValueError('LEDGER_ENTRY_AXES_UNDECLARED')
         for values in keys.values():
@@ -163,7 +165,7 @@ def main():
     # Existing new-sentence protocol allows previously evaluated families, but
     # never supervised families. Legacy family-novel protocols exclude all.
     assert_disjoint(rows, ledger, kinds=('family',),
-                    usages=('supervised',) if args.profile == 'new-sentences' else None,
+                    usages=('supervised','prepared-training-quarantine') if args.profile == 'new-sentences' else None,
                     require_complete=False)
     assert_disjoint(rows, ledger, kinds=('article', 'sentence', 'context'))
     print('LEDGER_DISJOINT')
