@@ -1,0 +1,174 @@
+{
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "holdout_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"freshnessCoverageComplete\": false, \"entries\": 85}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "control_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"coverageComplete\": false, \"entries\": 18}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py"
+      ],
+      "exitCode": 0,
+      "output": ".......................................................................................................................................................\n----------------------------------------------------------------------\nRan 151 tests in 8.696s\n\nOK\n"
+    }
+  ],
+  "currentArticleOverlap": {
+    "public-right-context-available-v6-calibration": 0,
+    "public-right-context-available-v6-holdout": 0
+  },
+  "globalCoverageUnchanged": true,
+  "initialUnitCheck": {
+    "errors": 1,
+    "exitCode": 1,
+    "failures": 1,
+    "reason": "Two fixture assumptions disagreed with historical semantics: short captures collapse to one full window; a hyphen-ended prefix fails the producer whitespace requirement.",
+    "resolution": "Correct test inputs; no source recovery rule changed.",
+    "tests": 5
+  },
+  "ledgerSha256": "1cdd6f64c9cc4b10342e24d990570d81ec10194847f432313b5f27979cfe2e8b",
+  "previousEntriesUnchanged": true,
+  "purpose": "PUBLIC_RANKER_TARGET_WINDOW_RECOVERY_NOT_QUALIFICATION",
+  "receipt": {
+    "allTargetCapturesVerified": true,
+    "bindings": {
+      "build/smart-typing-0.3/model-v02/wikipedia-20231101/ru-0007.parquet": "39b59952cd92a148b301f4d2b3ae1fb71e4caab987c6abe278f0dbdf0b01bb88",
+      "build/typing-ranker-v2/data/dev-rows.jsonl": "a2ddea29d8086a6c1d138e6ef59fc7399145b33b79becc3c0545940ad9ba260b",
+      "build/typing-ranker-v2/data/dev-text.jsonl": "24e7f1267f099291ffc4ac133cb6ddb613e5a43d6da8450677a9529f1b690666",
+      "build/typing-ranker-v2/data/manifest.json": "20b32e840b890aab726fabea30c6409fce058d0c9ba3dd64d603aaaa24475ce7",
+      "build/typing-ranker-v2/data/test-rows.jsonl": "e83eb9b99f2df73a8eae001ebedf1cafbd3fa370b6166ae9548551495c97f204",
+      "build/typing-ranker-v2/data/test-text.jsonl": "ad67b64ca1c53df54d6569e7fad744efa0201ff4a40f06233199453e4b8f465c",
+      "build/typing-ranker-v2/data/train-rows.jsonl": "e86df521d3c1a249fe514044a75d20b64259ffb76df6920e3f236ec3f6b5fc64",
+      "build/typing-ranker-v2/data/train-text.jsonl": "ad2c62e5a8368e944af49fb3f71b2621ab82ce92efbac26e745d4af94f4bcc52",
+      "tools/typing_experiments/prepare_refinement.py": "d2d84c3f328771fd0b9908a9216ee428eb2877079c8dacb481c42a0dafe11bab"
+    },
+    "counts": {
+      "dev": {
+        "articles": 94,
+        "contexts": 999,
+        "rows": 1000,
+        "sourceWindows": 998
+      },
+      "test": {
+        "articles": 151,
+        "contexts": 1500,
+        "rows": 1500,
+        "sourceWindows": 1498
+      },
+      "train": {
+        "articles": 487,
+        "contexts": 4999,
+        "rows": 5000,
+        "sourceWindows": 5010
+      }
+    },
+    "globalCoverageComplete": false,
+    "modelCalls": 0,
+    "purpose": "PUBLIC_RANKER_TARGET_WINDOW_EXCLUSIONS_NOT_QUALIFICATION",
+    "reproductionManifestSha256": "20b32e840b890aab726fabea30c6409fce058d0c9ba3dd64d603aaaa24475ce7",
+    "sourceBindings": {
+      "tools/typing_experiments/recover_ranker_sources.py": "de034d2a45e0a516f6dabd91ff980df2dd513684c37dd505deb7a75daed5f061",
+      "tools/typing_experiments/right_context_sentence_audit.py": "73b7965af2aaceaea6b2fc591405c45a721b6b8b6b9b77e943afe51012d5a231"
+    }
+  },
+  "recovery": {
+    "command": [
+      "build/typing-ranker-v2-venv/bin/python",
+      "tools/typing_experiments/recover_ranker_sources.py",
+      "--base",
+      "tools/typing_experiments/holdout-ledger.json",
+      "--reproduced",
+      "build/ranker-source-recovery-20261027/reproduced",
+      "--output",
+      "build/ranker-source-recovery-20261027/recovery"
+    ],
+    "exitCode": 0,
+    "inputLedgerSha256": "ca97717a8e09a3d3ad83f21afa0b3cac38829985a35a5373cf67a117a92d2f40"
+  },
+  "reproduction": {
+    "command": [
+      "build/typing-ranker-v2-venv/bin/python",
+      "tools/typing_experiments/prepare_refinement.py",
+      "--parquet",
+      "build/smart-typing-0.3/model-v02/wikipedia-20231101/ru-0007.parquet",
+      "--frequency",
+      "build/smart-typing-0.3/corpus-inputs/ru_50k.txt",
+      "--output",
+      "build/ranker-source-recovery-20261027/reproduced"
+    ],
+    "comparison": {
+      "exitCode": 0,
+      "files": [
+        {
+          "actual": "20b32e840b890aab726fabea30c6409fce058d0c9ba3dd64d603aaaa24475ce7",
+          "expected": "20b32e840b890aab726fabea30c6409fce058d0c9ba3dd64d603aaaa24475ce7",
+          "file": "manifest.json",
+          "match": true
+        },
+        {
+          "actual": "a2ddea29d8086a6c1d138e6ef59fc7399145b33b79becc3c0545940ad9ba260b",
+          "expected": "a2ddea29d8086a6c1d138e6ef59fc7399145b33b79becc3c0545940ad9ba260b",
+          "file": "dev-rows.jsonl",
+          "match": true
+        },
+        {
+          "actual": "24e7f1267f099291ffc4ac133cb6ddb613e5a43d6da8450677a9529f1b690666",
+          "expected": "24e7f1267f099291ffc4ac133cb6ddb613e5a43d6da8450677a9529f1b690666",
+          "file": "dev-text.jsonl",
+          "match": true
+        },
+        {
+          "actual": "e83eb9b99f2df73a8eae001ebedf1cafbd3fa370b6166ae9548551495c97f204",
+          "expected": "e83eb9b99f2df73a8eae001ebedf1cafbd3fa370b6166ae9548551495c97f204",
+          "file": "test-rows.jsonl",
+          "match": true
+        },
+        {
+          "actual": "ad67b64ca1c53df54d6569e7fad744efa0201ff4a40f06233199453e4b8f465c",
+          "expected": "ad67b64ca1c53df54d6569e7fad744efa0201ff4a40f06233199453e4b8f465c",
+          "file": "test-text.jsonl",
+          "match": true
+        },
+        {
+          "actual": "e86df521d3c1a249fe514044a75d20b64259ffb76df6920e3f236ec3f6b5fc64",
+          "expected": "e86df521d3c1a249fe514044a75d20b64259ffb76df6920e3f236ec3f6b5fc64",
+          "file": "train-rows.jsonl",
+          "match": true
+        },
+        {
+          "actual": "ad2c62e5a8368e944af49fb3f71b2621ab82ce92efbac26e745d4af94f4bcc52",
+          "expected": "ad2c62e5a8368e944af49fb3f71b2621ab82ce92efbac26e745d4af94f4bcc52",
+          "file": "train-text.jsonl",
+          "match": true
+        }
+      ]
+    },
+    "exitCode": 0
+  },
+  "uniqueAddedKeys": {
+    "article": 732,
+    "context": 7498,
+    "sentence": 7506
+  },
+  "unitTests": 151
+}

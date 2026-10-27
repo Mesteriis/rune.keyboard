@@ -89,6 +89,13 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         self.assertEqual('historical-context-exclusion',entry['usage'])
         self.assertEqual({'context'},set(entry['keys']));self.assertEqual(740,len(entry['keys']['context']))
 
+    def test_reproduced_ranker_source_windows_survive_without_build_data(self):
+        entries=[e for e in self.ledger['entries'] if e['id'].startswith('public-ranker-source-windows-')]
+        self.assertEqual(3,len(entries));self.assertEqual(7500,sum(e['rowCount'] for e in entries))
+        self.assertTrue(all(e['missingAxes']==['family'] for e in entries))
+        with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:context'):
+            assert_disjoint([dict(prefix='Дху́лия, Дхуле, ',expectedSpelling='раннее',typed='другаяопечатка')],self.ledger,kinds=('context',))
+
     def test_historical_overlap_disclosure_matches_recorded_keys(self):
         scope={f'public-spelling-v{v}' for v in range(7,13)}|{'public-legacy-spelling-v6'}|{
             'public-early-ru-'+name for name in ('qualification-v2','compact-v3','compact-v4')}
