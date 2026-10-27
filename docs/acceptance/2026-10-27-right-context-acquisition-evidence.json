@@ -1,0 +1,131 @@
+{
+  "stage": "rejected-frozen-policy-after-first-holdout-evaluation",
+  "modelSha256": "170205268883a58d9a7968391b9ccf7aa753b838d3176287c4a73a63ae8af808",
+  "minimumScore": 0.5799239253194995,
+  "minimumMargin": 0.43703741385116235,
+  "calibration": {
+    "matched": {
+      "newCorrect": 123,
+      "newWrong": 0,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "installedCorrectLosses": 0,
+      "installedCorrectGains": 123,
+      "netCorrectVsInstalled": 123,
+      "acquisitions": 90,
+      "revisions": 33,
+      "firstBoundaryActions": {
+        "1": 106,
+        "2": 17
+      },
+      "precision": 1.0
+    },
+    "side": {
+      "newCorrect": 2,
+      "newWrong": 0,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "installedCorrectLosses": 0,
+      "installedCorrectGains": 2,
+      "netCorrectVsInstalled": 2,
+      "acquisitions": 2,
+      "revisions": 0,
+      "firstBoundaryActions": {
+        "1": 2
+      },
+      "precision": 1.0
+    }
+  },
+  "holdout": {
+    "matched": {
+      "newCorrect": 114,
+      "newWrong": 2,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "installedCorrectLosses": 0,
+      "installedCorrectGains": 114,
+      "netCorrectVsInstalled": 114,
+      "acquisitions": 70,
+      "revisions": 46,
+      "firstBoundaryActions": {
+        "1": 99,
+        "2": 17
+      },
+      "precision": 0.9827586206896551
+    },
+    "side": {
+      "newCorrect": 2,
+      "newWrong": 4,
+      "priorCorrectLosses": 0,
+      "controlChanges": 0,
+      "installedCorrectLosses": 0,
+      "installedCorrectGains": 2,
+      "netCorrectVsInstalled": 2,
+      "acquisitions": 0,
+      "revisions": 6,
+      "firstBoundaryActions": {
+        "1": 6
+      },
+      "precision": 0.3333333333333333
+    }
+  },
+  "holdoutRows": {
+    "matched": 1600,
+    "side": 5810
+  },
+  "policyRefittedOnHoldout": false,
+  "productionQualified": false,
+  "applicationInstalled": false,
+  "androidApplicationSourcesOrAssetsChanged": false,
+  "holdoutNowConsumed": true,
+  "checks": {
+    "focusedPythonTests": {
+      "count": 63,
+      "outcome": "PASS"
+    },
+    "observerSemanticNoninterference": {
+      "rows": 1600,
+      "outcome": "PASS"
+    },
+    "androidBuild": "NOT_RUN",
+    "deviceAcceptance": "NOT_RUN"
+  },
+  "bindings": {
+    "build/right-context-validation-20261027/frozen-policy.json": "9461e06f4b737c97fd4cd9f1dc62c8492d42f9c4bf0bc2e6994fe75e94ed8b72",
+    "build/right-context-validation-20261027/holdout-plan.json": "adf78cacedaeace6a1439627f33f68ab6217e3add3af3912e83fe583ce46296c",
+    "build/right-context-validation-20261027/matched-holdout/holdout-result.json": "264ff7cc0a91cbb2488b35f76650c7b18cf2d89a208aa327c432270b3f25691a",
+    "build/right-context-validation-20261027/side-holdout/holdout-result.json": "b37d786b8f7abb23232c72d1148742f8086168d6ef9edb86fac29804ff6a5f21",
+    "build/right-context-validation-20261027/matched-holdout/holdout-paths.json": "a468caac3f857b3eee2136e50b2591d6b02dfc8a3c91d9bff1c55db6265e9f37",
+    "build/right-context-validation-20261027/side-holdout/holdout-paths.json": "0b5cee0fc7f5fa4e1bec238baf5d5ae1656217869466df8762c08dca23225634",
+    "build/right-context-validation-20261027/matched-holdout/errors.json": "fd1e305dfae09bc08d2d928ff58486cf7df98818e3a664268c169924738814c6",
+    "build/right-context-validation-20261027/side-holdout/errors.json": "5011f1a1565ecc8c4079523d67cdb9f64bf10eef61caba1d97a974cab9202b98",
+    "build/right-context-timeline-20261027/unit-tests.log": "b0fafaef42123cd5907cf71edb489249aa036cf162fabd5e767b539061264b91",
+    "build/right-context-acquisition-20261027/observer-audit.json": "ca87c3492835020de7c0ae7e7801386c62eec73e2b68bd14680f40b0de0ae026"
+  },
+  "sourceBindings": {
+    "build/right-context-training-v3-20261027/experimental-ranker.bin": "170205268883a58d9a7968391b9ccf7aa753b838d3176287c4a73a63ae8af808",
+    "build/right-context-timeline-20261027/calibration-paths.json": "6b2fb8fef5e261b18080f6cd509ae15bc159073658dd08b21e9877e843efcb79",
+    "build/right-context-timeline-20261027/calibration-result.json": "978b19089a09e0d186aa27c3b0047cdc624d90d78e45a490d265b1db12c2f7af",
+    "build/right-context-side-timeline-20261027/calibration-paths.json": "e8105aa9b3d031a46f8c4ee7a50fbe40f8f77d50092b7b7f9639ae29e2c6957b",
+    "build/right-context-side-timeline-20261027/calibration-result.json": "5ec02631c50bd52f2196b10b7683e93db8b86be9ea96d02e5482fb70fdc6dfe5",
+    "build/right-context-natural-frozen-20261027/corpus/manifest.json": "7ed0a1f09bf39a73659c66ba21243de92ea39bdf7bd49ac75f9e2aed759662aa",
+    "build/right-context-side-20261027/corpus/manifest.json": "67d6d51f20af739c27ee8526796ae3f7c6331a4ed990861a14b587a39a8685fd",
+    "build/right-context-timeline-20261027/score.py": "47a8a43bab8ea6c084dca7ec82e1582b493aeb3faccf93502599997d102b586e",
+    "build/right-context-side-timeline-20261027/score.py": "495eda3d8933a7e397dfa6475b9c9367734c4ee26b826aaf35ddcca7ba81ae3c",
+    "build/right-context-side-20261027/prepare.py": "a108a87b00fca32165eedc11fcfbec1fa95da9665a21a156b6f440e83abb55e4",
+    "tools/typing_experiments/right_context_source_scope.py": "a2711dec680f0de01c33469e2444d5e252aabd12a6167efbc0288a92360d70d5",
+    "tools/typing_experiments/right_context_prior_evidence.py": "c82d029f09be33f55029edb756f5b2549d5c4df96c62767cb5b6fc0be0064493",
+    "tools/typing_experiments/right_context_timeline_calibration.py": "599a6a01f45980eda4b31a960f9f25785dc0195a467b109c5f17872043b00678",
+    "tools/typing_experiments/right_context_side_forms.py": "0470d16df93f2da4e42b1f554b3dd72ab106179b2038df2224f0cc0074889286",
+    "tools/typing_experiments/grammar_contrast_corpus.py": "eeb289a4572eda11889a7180200d9b94894411bddd6ad97a92578b5bdb8f402f",
+    "build/right-context-acquisition-20261027/controller-compiler/receipt.json": "d0d4154725a1899b9714d4459c7cf1ff67dd92a4a75b0c5cc24d6f222be95950",
+    "build/right-context-acquisition-20261027/controller-compiler/final-product-spelling-replay.jar": "dc3ff4445afda52ccaadccda0cad09b439690e7b16215d8c1745842df84bc924"
+  },
+  "nextRequiredWork": [
+    "Model subject case ambiguity rather than treating any nominative reading as proof of subject role",
+    "Train and validate singular gender ambiguity without defaulting to masculine from number alone",
+    "Audit source surface case and proper-name homographs before making new independent corpora",
+    "Keep consumed holdout as disclosed regression evidence; use a new frozen independent holdout after changes",
+    "Qualify scorer parity, actual multiword ownership, vetoes, Undo and device behavior before activation"
+  ]
+}

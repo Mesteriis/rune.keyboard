@@ -619,6 +619,19 @@ object FinalProductSpellingReplay {
                     result["jointTargetKnown"] = fullGeneration.jointSearch.alternatives.associate { proposal ->
                         proposal.canonicalKey to morphology.lookup(language, proposal.terminalKey).present
                     }
+                    val originalMorphology = morphology.lookup(language, TokenUnicode.folded(typed))
+                    result["rightContextSourceCertificates"] = fullGeneration.jointSearch.alternatives.associate { proposal ->
+                        val publicOriginal = PublicOriginalProtection.evaluate(fullGeneration, proposal, rareWords)
+                        val target = morphology.lookup(proposal.language, proposal.terminalKey)
+                        proposal.text to mapOf(
+                            "publicOriginalAllowed" to publicOriginal.allowed,
+                            "publicOriginalRefusal" to publicOriginal.refusal?.name,
+                            "originalMorphologyAvailable" to originalMorphology.available,
+                            "originalMorphologyPresent" to originalMorphology.present,
+                            "targetMorphologyAvailable" to target.available,
+                            "targetMorphologyPresent" to target.present,
+                            "targetLemmaId" to target.lemmaId)
+                    }
                 }
                 if (mode == "joint-export") {
                     val joint = generator.generateJointPool(typed, language, fullGeneration)
