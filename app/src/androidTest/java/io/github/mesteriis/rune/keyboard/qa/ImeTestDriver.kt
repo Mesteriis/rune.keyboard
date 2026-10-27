@@ -195,6 +195,22 @@ class ImeTestDriver {
         device.waitForIdle()
     }
 
+    fun launchWebViewQa() {
+        val launched = shell("am start -W -f 0x10008000 -n $QA_ACTIVITY --ez qa_webview_fixture true")
+        check("Status: ok" in launched) { "Offline WebView QA launch failed" }
+        check(device.wait(Until.hasObject(By.res(PACKAGE_NAME, "qa_webview_stats")), WAIT_MILLIS)) {
+            "Offline WebView QA surface did not become visible"
+        }
+        // A browser editor is focused by one real user tap; page load can finish before the
+        // Activity window receives focus, so its opportunistic showSoftInput is not readiness.
+        val field = device.wait(Until.findObject(By.clazz("android.widget.EditText")), WAIT_MILLIS)
+        checkNotNull(field) { "Offline HTML editor did not become visible" }.click()
+        waitForKeyboard()
+        switchLanguageUntil("EN")
+        instrumentation.waitForIdleSync()
+        device.waitForIdle()
+    }
+
     private fun resumeQa() {
         shell("am start -W -n $QA_ACTIVITY")
         awaitQaActivity()

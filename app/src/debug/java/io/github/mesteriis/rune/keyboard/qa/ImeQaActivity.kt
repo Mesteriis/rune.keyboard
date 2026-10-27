@@ -23,9 +23,23 @@ import io.github.mesteriis.rune.keyboard.R
 @SuppressLint("SetTextI18n")
 class ImeQaActivity : Activity() {
     private lateinit var plainText: EditText
+    private var webEditingFixture: WebEditingQaFixture? = null
+
+    override fun onDestroy() {
+        webEditingFixture?.dispose()
+        webEditingFixture = null
+        super.onDestroy()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (intent.getBooleanExtra("qa_webview_fixture", false)) {
+            val fixture = WebEditingQaFixture(this)
+            webEditingFixture = fixture
+            setContentView(fixture.content)
+            applySystemBarInsets(fixture.content)
+            return
+        }
         intent.getStringExtra("qa_composing_fixture")?.let { mode ->
             val fixture = ComposingQaFixture(this, mode)
             val scrollView = ScrollView(this).apply {
@@ -245,7 +259,7 @@ class ImeQaActivity : Activity() {
     }
 
     @Suppress("DEPRECATION")
-    private fun applySystemBarInsets(scrollView: ScrollView) {
+    private fun applySystemBarInsets(scrollView: View) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
         window.setDecorFitsSystemWindows(false)
         val initialLeft = scrollView.paddingLeft

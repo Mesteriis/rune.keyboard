@@ -31,4 +31,6 @@
   <item name="qa_composing_restart" type="id" />
   <item name="qa_composing_prefix" type="id" />
   <item name="qa_composing_dash" type="id" />
+  <item name="qa_webview" type="id" />
+  <item name="qa_webview_stats" type="id" />
 </resources>
