@@ -4,6 +4,13 @@ This manual benchmark scores fixed public synthetic English, Russian and Spanish
 
 The model must already exist as `qualification-model.gguf` in the instrumentation app's private files directory. The test fails unless its canonical parent, size **396704416 bytes**, and SHA-256 **7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4** match before runtime construction or load. This workflow contains no download or model staging command. The checksum reads the whole model before load, so the load measurement is **not a cold filesystem measurement**.
 
+The instrumentation-only APK is explicitly debuggable so `run-as` can stage the
+verified local model without shared storage or extra permissions, including when
+testing the release native variant. This does not change the app manifest or
+native compiler flags. Release measurements require byte-for-byte equality of
+both native libraries with the actual app release APK; the fixture flag alone
+is never release evidence.
+
 ## Explicit profiles and build variant
 
 Every configuration combines one language with 2, 4 or 8 candidates. Candidate ID zero is the unchanged synthetic original; larger sets contain the smaller set in the same order. All nine configurations get one warmup request first. Measured rounds each visit all nine configurations, starting at `(round * 4) mod 9`; order and fixtures are shared across profiles. Counts are balanced per configuration. A full run gives each configuration each within-round position two or three times; neither profile is a randomized population sample.

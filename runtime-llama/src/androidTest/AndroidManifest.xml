@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <application>
+    <!-- Test-only APK: ADB stages the verified local model through run-as.
+         Its native libraries must still match the app release byte for byte. -->
+    <application android:debuggable="true">
         <meta-data android:name="rune.runtime.benchmark.buildType"
             android:value="${runeRuntimeBenchmarkBuildType}" />
     </application>
