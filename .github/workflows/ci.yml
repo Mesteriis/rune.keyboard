@@ -25,6 +25,8 @@ jobs:
           python3 -m unittest discover -s tools/typing_experiments -p test_audit_family_coverage.py
           python3 -m unittest discover -s tools/typing_experiments -p test_import_spelling_v6.py
           python3 -m unittest discover -s tools/typing_experiments -p test_import_early_ru_history.py
+          python3 -m unittest discover -s tools/typing_experiments -p test_recover_early_ru_sources.py
+          python3 -m unittest discover -s tools/typing_experiments -p test_merge_early_ru_sources.py
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

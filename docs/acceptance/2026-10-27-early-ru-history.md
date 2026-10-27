@@ -1,5 +1,8 @@
 # Q6: preserve early RU spelling components and recover deleted generators
 
+Historical component receipt. Article/window identities were subsequently
+[recovered separately](2026-10-27-early-ru-source-recovery.md).
+
 Imported RU spelling components from qualification-v2 and compact-v3/v4:
 3,400 rows and distinct target/context identities per component, 10,200 total.
 Each exact manifest, RU row-file hash, public RU Parquet hash and archived

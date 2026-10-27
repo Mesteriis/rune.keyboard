@@ -1,0 +1,203 @@
+{
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "holdout_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"freshnessCoverageComplete\": false, \"entries\": 38}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py"
+      ],
+      "exitCode": 0,
+      "output": "........................................................................\n----------------------------------------------------------------------\nRan 72 tests in 1.716s\n\nOK\n"
+    }
+  ],
+  "coverageComplete": false,
+  "finalScanRuns": [
+    {
+      "corpus": "qualification-v2",
+      "exitCode": 0
+    },
+    {
+      "corpus": "compact-v3",
+      "exitCode": 0
+    },
+    {
+      "corpus": "compact-v4",
+      "exitCode": 0
+    }
+  ],
+  "historicalArticleOverlap": {
+    "entries": {
+      "public-right-context-available-v6-calibration": 122,
+      "public-right-context-available-v6-holdout": 131
+    },
+    "historicalArticles": 17963,
+    "note": "Expanded to early RU spelling components and spelling v6-v12. Existing rows/scores unchanged; freshness coverage remains incomplete.",
+    "scopeEntries": [
+      "public-early-ru-compact-v3",
+      "public-early-ru-compact-v4",
+      "public-early-ru-qualification-v2",
+      "public-legacy-spelling-v6",
+      "public-spelling-v10",
+      "public-spelling-v11",
+      "public-spelling-v12",
+      "public-spelling-v7",
+      "public-spelling-v8",
+      "public-spelling-v9"
+    ],
+    "status": "NOT_INDEPENDENT_OF_HISTORICAL_SPELLING"
+  },
+  "initialIsolatedCheck": {
+    "errors": 2,
+    "exitCode": 1,
+    "rawEvidence": "build/early-ru-source-recovery-20261027/source-only-checks/checks.json",
+    "reason": "Test fixture assumed checkout directory layout",
+    "resolution": "Nested self-contained archive fixtures",
+    "sha256": "38f2d540dbb7b613fb78434928b40ce80139c8fdf71f644e2f0ad3b24a6a369c"
+  },
+  "ledgerSha256": "a528828b4a261e67a24236438013ddd7eaaa98822480316c8b21812c3b7e7bc4",
+  "modelCalls": 0,
+  "otherEntriesUnchanged": true,
+  "previousKeysAndBindingsPreserved": true,
+  "purpose": "EARLY_RU_SOURCE_RECOVERY_NOT_FRESH_QUALIFICATION",
+  "receipts": [
+    {
+      "allRowsRecovered": true,
+      "articleSelection": {
+        "modulus": 4,
+        "residue": 0,
+        "seed": 3042026
+      },
+      "articles": 2282,
+      "bindings": {
+        "build/early-ru-source-recovery-20261027/qualification-v2/identities.jsonl": "2ddd4ff49cfe431dd2119b0f885da1778d58474396049adcd85b7eaf07124a0b",
+        "build/smart-typing-0.3/qualification-v2/wikipedia-20231101/ru-0009.parquet": "bf3781c558a3a2b8125e567f060895ead704577943832e6047bcc71f202975fd",
+        "tools/eval/smart-typing-0.3/qualification-v2/corpus/manifest.json": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+        "tools/eval/smart-typing-0.3/qualification-v2/corpus/spelling-ru.jsonl": "d72ac7c4d19ba157f2f1b64eacb7c237d5adb4eaff4be8adf34ed315eb85d145",
+        "tools/typing_experiments/frozen_sources/qualification_v2_2cbcb2508ef66b32.py": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+        "tools/typing_experiments/frozen_sources/qualification_v2_source_lock_e3ad381de42a6ac0.json": "e3ad381de42a6ac08defd3bad7486789ea15329742e19448b39bf4ebaed795ed",
+        "tools/typing_experiments/import_early_ru_history.py": "3e5bd63af20f85f995619aa1a841d10e47a93f83a0920a01307352ecc61bbedc",
+        "tools/typing_experiments/recover_early_ru_sources.py": "4c7a8586a8a676967bd84166a1c66011be60e0975a0140680b104c2a9f54df8a",
+        "tools/typing_experiments/recover_legacy_holdout.py": "96e865488bea430a0472cee2ca20f94d50b7ce804e9cb6eb34b366dab5f67531",
+        "tools/typing_experiments/right_context_sentence_audit.py": "73b7965af2aaceaea6b2fc591405c45a721b6b8b6b9b77e943afe51012d5a231"
+      },
+      "corpus": "qualification-v2",
+      "corpusSeed": 3042026,
+      "eligibleArticles": 23195,
+      "matchedOccurrences": 3433,
+      "missingRows": [],
+      "modelCalls": 0,
+      "projection": "Current whole-article 256-char prefix input / 128-char suffix source-window hash; not a full-sentence hash",
+      "purpose": "EARLY_RU_SOURCE_RECOVERY_NOT_QUALIFICATION",
+      "recoveredRows": 3400,
+      "sourceArticlesScanned": 92622,
+      "sourceRows": 3400
+    },
+    {
+      "allRowsRecovered": true,
+      "articleSelection": {
+        "modulus": 4,
+        "residue": 1,
+        "seed": 3052026
+      },
+      "articles": 2332,
+      "bindings": {
+        "build/early-ru-source-recovery-20261027/compact-v3/identities.jsonl": "4226b8d469d146073fdd2bdcff7abce51c8fc008eb39c0ae8013eed688e9e2b9",
+        "build/smart-typing-0.3/compact-v3-external-20260919/source/manifest.json": "56a5b994bc2048c4cf434a123ebbe2e2f7a746102b936a83d535fc582ceecee3",
+        "build/smart-typing-0.3/compact-v3-external-20260919/source/spelling-ru.jsonl": "c9adcf515b29617e656731151db392ba2e100970074f96d4c805386fdb342d20",
+        "build/smart-typing-0.3/qualification-v3/wikipedia-20231101/ru-0010.parquet": "f480c34cd725c63ce276a322ac2f06aa97c3b356c4574a94fb5a273a1501857b",
+        "tools/typing_experiments/frozen_sources/qualification_v3_60cb1cdf671dcc07.py": "60cb1cdf671dcc0781d47225d225eebc178392f7b616a7ae77d084e4906126a7",
+        "tools/typing_experiments/frozen_sources/qualification_v3_source_lock_14ceb1c0cbe8b20e.json": "14ceb1c0cbe8b20e9d12db83d5983999a97fff0e1e1b080409c65ed4f7d65fa0",
+        "tools/typing_experiments/import_early_ru_history.py": "3e5bd63af20f85f995619aa1a841d10e47a93f83a0920a01307352ecc61bbedc",
+        "tools/typing_experiments/recover_early_ru_sources.py": "4c7a8586a8a676967bd84166a1c66011be60e0975a0140680b104c2a9f54df8a",
+        "tools/typing_experiments/recover_legacy_holdout.py": "96e865488bea430a0472cee2ca20f94d50b7ce804e9cb6eb34b366dab5f67531",
+        "tools/typing_experiments/right_context_sentence_audit.py": "73b7965af2aaceaea6b2fc591405c45a721b6b8b6b9b77e943afe51012d5a231"
+      },
+      "corpus": "compact-v3",
+      "corpusSeed": 3052026,
+      "eligibleArticles": 23199,
+      "matchedOccurrences": 3432,
+      "missingRows": [],
+      "modelCalls": 0,
+      "projection": "Current whole-article 256-char prefix input / 128-char suffix source-window hash; not a full-sentence hash",
+      "purpose": "EARLY_RU_SOURCE_RECOVERY_NOT_QUALIFICATION",
+      "recoveredRows": 3400,
+      "sourceArticlesScanned": 92622,
+      "sourceRows": 3400
+    },
+    {
+      "allRowsRecovered": true,
+      "articleSelection": {
+        "modulus": 4,
+        "residue": 2,
+        "seed": 7042026
+      },
+      "articles": 2261,
+      "bindings": {
+        "build/early-ru-source-recovery-20261027/compact-v4/identities.jsonl": "f33dd3f9e297b3414cc533f2b5d9ffa84e267fe0e05e1e42ff3a58a189b39294",
+        "build/smart-typing-0.3/compact-v4-external-20260919/source/manifest.json": "a1579d3596ba733dbf5fff49adb6c9dad5d7a54902fe5d98776329578328c9cc",
+        "build/smart-typing-0.3/compact-v4-external-20260919/source/spelling-ru.jsonl": "5f5246781207a12bd7271c226ca90080594e50207ba612ff94c9922813f0e8ac",
+        "build/smart-typing-0.3/qualification-v4/wikipedia-20231101/ru-0008.parquet": "9df744fb888585b0db5cacf605f8a8ba8562828a0c240106c70d716738e41e87",
+        "tools/typing_experiments/frozen_sources/qualification_v4_9615bc8033760257.py": "9615bc8033760257bc384ece09d67f6b92e0b7541e144ea6ec746a2f4cc06de4",
+        "tools/typing_experiments/frozen_sources/qualification_v4_source_lock_3f86e8b384c094e7.json": "3f86e8b384c094e7c54241359a6b6703c35ba04cdee9bc9d1558fdab3c313ae8",
+        "tools/typing_experiments/import_early_ru_history.py": "3e5bd63af20f85f995619aa1a841d10e47a93f83a0920a01307352ecc61bbedc",
+        "tools/typing_experiments/recover_early_ru_sources.py": "4c7a8586a8a676967bd84166a1c66011be60e0975a0140680b104c2a9f54df8a",
+        "tools/typing_experiments/recover_legacy_holdout.py": "96e865488bea430a0472cee2ca20f94d50b7ce804e9cb6eb34b366dab5f67531",
+        "tools/typing_experiments/right_context_sentence_audit.py": "73b7965af2aaceaea6b2fc591405c45a721b6b8b6b9b77e943afe51012d5a231"
+      },
+      "corpus": "compact-v4",
+      "corpusSeed": 7042026,
+      "eligibleArticles": 23116,
+      "matchedOccurrences": 3413,
+      "missingRows": [],
+      "modelCalls": 0,
+      "projection": "Current whole-article 256-char prefix input / 128-char suffix source-window hash; not a full-sentence hash",
+      "purpose": "EARLY_RU_SOURCE_RECOVERY_NOT_QUALIFICATION",
+      "recoveredRows": 3400,
+      "sourceArticlesScanned": 92622,
+      "sourceRows": 3400
+    }
+  ],
+  "sourceBindings": {
+    "tools/typing_experiments/merge_early_ru_sources.py": "aad35ef87aa81306e7b71edcec212c8c57125a2dfa00cb33eaf40802f9bcb262",
+    "tools/typing_experiments/test_merge_early_ru_sources.py": "e07cf6750a9196e9ca793f133ead02c3356c35c0ce89131cfbe2653fd92cbc14",
+    "tools/typing_experiments/test_recover_early_ru_sources.py": "8e22e58f746c340be2f64840b3f493dcf5b1e7fbeb0b9c97110ee4fdc243c092"
+  },
+  "sourceLockRestorations": [
+    {
+      "archiveFile": "tools/typing_experiments/frozen_sources/qualification_v2_source_lock_e3ad381de42a6ac0.json",
+      "commit": "95a355796025a114cea1a4185d3ced6f52de328f",
+      "originalPath": "tools/eval/smart-typing-0.3/qualification-v2/source-lock.json",
+      "sha256": "e3ad381de42a6ac08defd3bad7486789ea15329742e19448b39bf4ebaed795ed",
+      "version": 2
+    },
+    {
+      "archiveFile": "tools/typing_experiments/frozen_sources/qualification_v3_source_lock_14ceb1c0cbe8b20e.json",
+      "commit": "8965be52d0a08ba26cc1a9a65591908db603427d",
+      "originalPath": "tools/eval/smart-typing-0.3/qualification-v3/source-lock.json",
+      "sha256": "14ceb1c0cbe8b20e9d12db83d5983999a97fff0e1e1b080409c65ed4f7d65fa0",
+      "version": 3
+    },
+    {
+      "archiveFile": "tools/typing_experiments/frozen_sources/qualification_v4_source_lock_3f86e8b384c094e7.json",
+      "commit": "998a1e9b08a0edb2225313a44133530c1af75300",
+      "originalPath": "tools/eval/smart-typing-0.3/qualification-v4/source-lock.json",
+      "sha256": "3f86e8b384c094e7c54241359a6b6703c35ba04cdee9bc9d1558fdab3c313ae8",
+      "version": 4
+    }
+  ],
+  "unitTests": 72
+}

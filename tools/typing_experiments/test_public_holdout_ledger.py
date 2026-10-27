@@ -48,12 +48,18 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:context'):
             assert_disjoint([row],self.ledger,kinds=('context',))
 
+    def test_recovered_early_article_is_blocked_without_original_inputs(self):
+        with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:article'):
+            assert_disjoint([dict(article='4027525')],self.ledger,kinds=('article',))
+
     def test_historical_overlap_disclosure_matches_recorded_keys(self):
-        historical = {key for e in self.ledger['entries']
-                      if e['id'].startswith('public-spelling-v') or e['id']=='public-legacy-spelling-v6'
+        scope={f'public-spelling-v{v}' for v in range(7,13)}|{'public-legacy-spelling-v6'}|{
+            'public-early-ru-'+name for name in ('qualification-v2','compact-v3','compact-v4')}
+        historical = {key for e in self.ledger['entries'] if e['id'] in scope
                       for key in e['keys']['article']}
         disclosure = self.ledger['historicalArticleOverlap']
         self.assertEqual('NOT_INDEPENDENT_OF_HISTORICAL_SPELLING', disclosure['status'])
+        self.assertEqual(sorted(scope),disclosure['scopeEntries'])
         self.assertEqual(len(historical), disclosure['historicalArticles'])
         for e in self.ledger['entries']:
             if e['id'] in disclosure['entries']:

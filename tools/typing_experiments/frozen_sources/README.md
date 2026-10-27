@@ -40,3 +40,8 @@ and `9615bc8033760257bc384ece09d67f6b92e0b7541e144ea6ec746a2f4cc06de4`.
 Their bytes match the early compact corpus manifests. The early-RU importer
 checks these snapshots but does not execute them. The archives' dependent
 helper/evaluation/source-lock/runtime bindings still need separate preservation.
+
+Exact qualification source-lock JSON files v2-v4 are preserved as well. Their
+manifest hashes, original paths, seeds, article selection rules and RU Parquet
+bindings are checked before early source recovery. Restoration used matching
+Git blobs; no source-lock field was rewritten to fit the current environment.

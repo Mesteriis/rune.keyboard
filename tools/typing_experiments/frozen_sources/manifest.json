@@ -1,9 +1,17 @@
 {
   "schema": 1,
   "sources": {
+    "14ceb1c0cbe8b20e9d12db83d5983999a97fff0e1e1b080409c65ed4f7d65fa0": {
+      "file": "qualification_v3_source_lock_14ceb1c0cbe8b20e.json",
+      "originalPath": "tools/eval/smart-typing-0.3/qualification-v3/source-lock.json"
+    },
     "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65": {
       "file": "qualification_v2_2cbcb2508ef66b32.py",
       "originalPath": "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py"
+    },
+    "3f86e8b384c094e7c54241359a6b6703c35ba04cdee9bc9d1558fdab3c313ae8": {
+      "file": "qualification_v4_source_lock_3f86e8b384c094e7.json",
+      "originalPath": "tools/eval/smart-typing-0.3/qualification-v4/source-lock.json"
     },
     "60cb1cdf671dcc0781d47225d225eebc178392f7b616a7ae77d084e4906126a7": {
       "file": "qualification_v3_60cb1cdf671dcc07.py",
@@ -28,6 +36,10 @@
     "cfa5777d2a2ac53ffb339aa56b34d57c4a4a6a0ec1a712b1867b857d85043728": {
       "file": "prepare_joint_correction_cfa5777d2a2ac53f.py",
       "originalPath": "tools/typing_experiments/prepare_joint_correction.py"
+    },
+    "e3ad381de42a6ac08defd3bad7486789ea15329742e19448b39bf4ebaed795ed": {
+      "file": "qualification_v2_source_lock_e3ad381de42a6ac0.json",
+      "originalPath": "tools/eval/smart-typing-0.3/qualification-v2/source-lock.json"
     },
     "ed9928d64d80911c0182e03446d710a60abb990cb5fb1cff30730443db773225": {
       "file": "qualification_v2_ed9928d64d80911c.py",

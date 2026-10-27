@@ -155,3 +155,24 @@ original qualification generators v2/v3/v4 are archived and checked, not execute
 The v3/v4 sources were recovered from local Git at their original manifest hashes.
 Article/window recovery, punctuation/protected-token components and other languages
 remain pending. EN/ES cannot be silently imported into the current RU namespaces.
+
+Early RU source recovery is now a separate append-only migration:
+
+```sh
+python3 tools/typing_experiments/recover_early_ru_sources.py --corpus qualification-v2 \
+  --base LEDGER --output build/recovery/qualification-v2
+# Repeat for compact-v3 and compact-v4 into build/recovery/<corpus>.
+python3 tools/typing_experiments/merge_early_ru_sources.py --base LEDGER \
+  --recovery-root build/recovery --output build/enriched-early-ledger.json
+```
+
+Exact source locks v2-v4 were restored from Git and archived. Recovery checks the
+original seed and article hash/modulus filter, normalizes only the split-template
+wrapper in copied rows, and verifies original selector parity. V2 uses the literal
+3042026 in its archived builder; v3/v4 use their source locks' corpusSeed. All
+matching eligible articles/occurrences are retained. The merge preserves previous
+keys/bindings and family gaps. It adds 6,875 articles, expanding registered spelling
+history to 17,963 articles across ten component entries; current 122/131 overlap
+counts are unchanged. Window hashes are projections, not full-sentence identities.
+Punctuation/protected components and EN/ES remain pending. CLI scans need PyArrow;
+reading keys and running the unit tests do not.
