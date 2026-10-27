@@ -1,0 +1,15 @@
+# Fixed compatibility sample, not a latest-version recommendation.
+# The compiler matches the observed Rune Kotlin compiler classpath.
+[versions]
+agp = "9.2.1"
+kotlin = "2.2.10"
+activity = "1.10.1"
+compose = "1.9.3"
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+[libraries]
+activity = { module = "androidx.activity:activity", version.ref = "activity" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }

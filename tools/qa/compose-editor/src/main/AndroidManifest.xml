@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <application android:allowBackup="false" android:usesCleartextTraffic="false"
+      android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules"
+      android:icon="@android:drawable/ic_menu_edit"
+      android:label="Rune Compose QA" android:theme="@android:style/Theme.Material.Light.NoActionBar">
+    <activity android:name=".ComposeEditorQaActivity" android:exported="true"
+        android:excludeFromRecents="true" android:windowSoftInputMode="stateHidden|adjustResize" />
+  </application>
+</manifest>

@@ -211,6 +211,17 @@ class ImeTestDriver {
         device.waitForIdle()
     }
 
+    fun launchComposeQa() {
+        val launched = shell("am start -W -f 0x10008000 -n io.github.mesteriis.rune.qa.compose/.ComposeEditorQaActivity")
+        check("Status: ok" in launched) { "Independent Compose QA launch failed" }
+        val field = device.wait(Until.findObject(By.pkg("io.github.mesteriis.rune.qa.compose").clazz("android.widget.EditText")), WAIT_MILLIS)
+        checkNotNull(field) { "Independent Compose field did not become visible" }.click()
+        waitForKeyboard()
+        switchLanguageUntil("EN")
+        instrumentation.waitForIdleSync()
+        device.waitForIdle()
+    }
+
     private fun resumeQa() {
         shell("am start -W -n $QA_ACTIVITY")
         awaitQaActivity()
