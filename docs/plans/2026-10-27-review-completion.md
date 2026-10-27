@@ -26,6 +26,9 @@ U10 is verified in `docs/acceptance/2026-10-27-u10-editor-suggestion-flags.md`:
 old-code regressions, 1,168 JVM tests, ten real IME/editor instrumentation cases,
 release privacy/boundary/lint checks, and byte-identical 12,000-row replay
 projections before/after (excluding host timings).
+U7 is verified in `docs/acceptance/2026-10-27-u7-mode-and-undo-copy.md`: accurate
+EN/RU source and Undo help, preserved 95% labels, four settings/setup/live-input/
+accessibility instrumentation checks and debug lint/builds pass.
 Other cards remain open until their complete evidence is established.
 
 ## Acceptance inventory
@@ -42,7 +45,7 @@ Other cards remain open until their complete evidence is established.
 | U4 | Reproduce shifted/changed composing ownership first; correct final text and finish behavior in simulator/qa_editor; preserve ownership safeguards; regression replay. | Open |
 | U5 | Visible confirmed-word list and individual deletion; preserve pair rejections; phrase validation, capacity and restart persistence; privacy/user documentation. | Open |
 | U6 | Settings registry, dependencies and Switch controls; registry/disable-list completeness; search/recreate/back, accessibility and updated screenshot/guide. | Open |
-| U7 | Accurate mode/source and arrow/Undo descriptions; settings instrumentation, EN/RU lint and synchronized user/architecture text. | Open |
+| U7 | Accurate mode/source and arrow/Undo descriptions; settings instrumentation, EN/RU lint and synchronized user/architecture text. | Verified locally; receipt above |
 | U8 | Editing commands/layer with zero text reads; clipboard test setup; foreign-text boundary isolation; EditText/WebView/Compose and TalkBack. | Open |
 | U9 | Emoji panel and row layout; context boundary, ZWJ/flag/modifier insertion and deletion; accessibility, opening/startup budgets, Fold displays and API 26 font. | Open |
 | U10 | NO_SUGGESTIONS/AUTO_COMPLETE/FILTER combinations; hidden strip and no correction/model calls; unchanged search submission and frozen replay. | Verified locally; receipt above |

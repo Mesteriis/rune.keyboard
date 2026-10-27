@@ -2,6 +2,10 @@ package io.github.mesteriis.rune.keyboard.qa
 
 import android.content.res.Configuration
 import android.os.Looper
+import android.graphics.Rect
+import android.widget.TextView
+import androidx.test.core.app.ActivityScenario
+import io.github.mesteriis.rune.keyboard.settings.KeyboardSetupActivity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
@@ -58,12 +62,50 @@ class SmartTypingSettingsInstrumentedTest : ImeTestBase() {
         assertCurrentContextualSummary()
         assertFalse(preferences.readSettings().candidateStrip)
         for ((language, automatic, unavailable) in listOf(
-            Triple("en", "ready local model automatically applies spelling corrections", "Available when the local model is Ready."),
-            Triple("ru", "Готовая локальная модель автоматически применяет исправления", "Доступно, когда локальная модель готова."))) {
+            Triple("en", "Local rules and language models", "Available when the local model is Ready."),
+            Triple("ru", "Встроенные правила и языковые модели", "Доступно, когда локальная модель готова."))) {
             val config = Configuration(context.resources.configuration).apply { setLocale(Locale.forLanguageTag(language)) }
             val localized = context.createConfigurationContext(config)
             assertTrue(localized.getString(R.string.settings_autocorrection_high_confidence_summary).contains(automatic))
             assertTrue(localized.getString(R.string.settings_contextual_unavailable).contains(unavailable))
+            val summary = localized.getString(R.string.settings_autocorrection_high_confidence_summary)
+            val help = localized.getString(R.string.setup_try_description)
+            for (copy in listOf(summary, help)) {
+                assertTrue(copy.contains("→")); assertTrue(copy.contains("Backspace"))
+                assertFalse("Descriptions must not promise a single precision", copy.contains("95%"))
+            }
+            assertEquals(if (language == "ru") "Автозамена (95%)" else "Auto-replace (95%)",
+                localized.getString(R.string.smart_typing_high_confidence))
+            assertTrue(summary.contains(if (language == "ru") "Вернуть" else "Restore"))
+            assertTrue(summary.contains(if (language == "ru") "необязательный" else "optional"))
+        }
+    }
+
+    @Test fun helpMatchesRealAutomaticArrowSpaceAndImmediateBackspace() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false, contextual = ContextualPunctuationMode.OFF)
+        driver.launchComposingQa(language = io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.RUSSIAN)
+        "зочу".forEach { driver.tapKey(it.toString()) }
+        val preview = awaitCandidate(R.string.candidate_correction, "хочу")
+        assertEquals(context.getString(R.string.candidate_auto_preview_label, "хочу"), preview.text)
+        space(); driver.awaitFieldText(FIELD, "хочу ")
+        driver.tapDelete(); driver.awaitFieldText(FIELD, "зочу")
+        noReadback()
+    }
+
+    @Test fun actualSetupScreenDisplaysTheArrowAndBackspaceHelp() {
+        ActivityScenario.launch(KeyboardSetupActivity::class.java).use { scenario ->
+            instrumentation.waitForIdleSync()
+            scenario.onActivity { activity ->
+                val help = activity.findViewById<TextView>(R.id.setup_try_help)
+                assertEquals(activity.getString(R.string.setup_try_description), help.text.toString())
+                assertTrue(help.width > 0 && help.height > 0)
+                help.requestRectangleOnScreen(Rect(0, 0, help.width, help.height), true)
+            }
+            val help = driver.device.wait(Until.findObject(By.res(ImeTestDriver.PACKAGE_NAME, "setup_try_help")),
+                ImeTestDriver.WAIT_MILLIS)
+            assertNotNull("Setup help did not become visible", help)
+            assertEquals(context.getString(R.string.setup_try_description), help!!.text)
         }
     }
 

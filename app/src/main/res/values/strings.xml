@@ -20,7 +20,7 @@
   <string name="setup_languages_description">Swipe the space bar to cycle through the languages you enable here.</string>
   <string name="setup_languages_button">Language settings</string>
   <string name="setup_try_title">4. Try it</string>
-  <string name="setup_try_description">Type below to check the layout, language swipe, shift, symbols, the enter key and cursor mode (hold the space bar).</string>
+  <string name="setup_try_description">Type below to check the layout, language swipe, shift, symbols, the enter key and cursor mode (hold the space bar). In Auto-replace mode, → marks a suggestion ready to replace on Space. Press Backspace immediately to restore your spelling.</string>
   <string name="setup_try_text_hint">Write a sentence</string>
   <string name="setup_try_email_hint">name@example.com</string>
   <string name="setup_try_number_hint">Number</string>
@@ -58,7 +58,7 @@
   <string name="smart_typing_high_confidence">Auto-replace (95%)</string>
   <string name="settings_autocorrection_off_summary">Spelling corrections are off. Mechanical punctuation is controlled separately.</string>
   <string name="settings_autocorrection_suggestions_summary">Tap a suggestion to replace the word. A ready local model can order suggestions using context.</string>
-  <string name="settings_autocorrection_high_confidence_summary">A ready local model automatically applies spelling corrections that passed the frozen 95% precision profile. Proper-name capitalization is applied locally. Backspace immediately restores the original.</string>
+  <string name="settings_autocorrection_high_confidence_summary">Local rules and language models can apply qualified corrections at word boundaries. → marks a suggestion ready to replace on Space. Press Backspace immediately to restore the original; you can enable a Restore button in settings. Russian has additional built-in rules and models; Spanish also has local corrections for lowercase words; English has a small set of common corrections. Known-name capitalization works locally. A downloaded local model is an optional fallback. Each source has its own checks.</string>
   <string name="settings_suggestions_hidden">Suggestions are hidden while the candidate strip is off.</string>
   <string name="settings_mechanical_punctuation">Mechanical punctuation</string>
   <string name="settings_mechanical_punctuation_summary">Adjust punctuation spacing and sentence capitalization in text typed with Rune.</string>

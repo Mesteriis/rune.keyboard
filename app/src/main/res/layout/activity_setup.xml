@@ -182,6 +182,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="6dp"
           android:lineSpacingExtra="2dp"
+          android:id="@+id/setup_try_help"
           android:text="@string/setup_try_description"
           android:textColor="@color/setup_text_secondary"
           android:textSize="15sp" />

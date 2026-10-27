@@ -1,0 +1,107 @@
+{
+  "architectureSha256": "32f36ee23ad84b51f23accd8e85da6c23a27ea802dc9702b73051e8666a89099",
+  "artifactBindings": {
+    "build/review-u7-20261027/cleanup.json": "be4a95628547e9fd28e4f9b8d0a2c8121e1a84dfe46700c96bca95f866c58b90",
+    "build/review-u7-20261027/copy-source-checks.json": "8b775197a72ee1323fa817febb58555c682c6c3b75d7cdd7b79dbc11b39de0cf",
+    "build/review-u7-20261027/guide-only.patch": "15a57eb6460187a334c76212cf2933a7b9d020981fc0062a26e1e75059012f83",
+    "build/review-u7-20261027/u7-instrumentation.log": "edb6b5d6daf70f65c57ca53dfae8e47dc5863b3b2b076bfd4ef1f9028e46c2db"
+  },
+  "artifacts": {
+    "app.apk": {
+      "bytes": 345265768,
+      "sha256": "81c10682823d8d7261bd2f35b4b294317bd0e65f03053f05cd9b6ad754ee5164"
+    },
+    "tests.apk": {
+      "bytes": 1771040,
+      "sha256": "4634e7e8b6d569884ad3b7a9fd230e3b4d313c7bb18b16a2d99f946b6b84fcd6"
+    }
+  },
+  "baselineRevision": "50822c6",
+  "checks": [
+    {
+      "command": [
+        "./gradlew",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:lintDebug",
+        "--console=plain"
+      ],
+      "exitCode": 0,
+      "logSha256": "43712f3f566ee0fe61c658aa48650575fa8c92a9b1219a85b9e6fc61b1de1682"
+    },
+    {
+      "command": [
+        "./gradlew",
+        ":app:assembleDebugAndroidTest",
+        ":app:lintDebug",
+        "--console=plain"
+      ],
+      "exitCode": 0,
+      "logSha256": "0f1b43f05c03204a0496072e5476eaa6c8b4ad24a8140bd1ab95e1cd5e54f95b"
+    }
+  ],
+  "cleanup": {
+    "ownEmulatorStopped": true,
+    "ownFreshAvdDeleted": true,
+    "physicalDevicesTouched": false
+  },
+  "committedGuideSha256": "1ec90093f02dea91eff85d6887e507bccee543dbd469b77b3f75b1f06c4422cc",
+  "copyChecks": {
+    "locales": {
+      "values": {
+        "changedKeys": [
+          "settings_autocorrection_high_confidence_summary",
+          "setup_try_description"
+        ],
+        "labelUnchanged": true,
+        "newSha256": "046e58c50d7fa679d8e0f25ef0842703733cac1da2bb89ef71a759195621e80b",
+        "oldSha256": "d744cb0eb5b6e44a596079dd2f9501b0ea821dbebdcf1f09047207b94f235538"
+      },
+      "values-ru": {
+        "changedKeys": [
+          "settings_autocorrection_high_confidence_summary",
+          "setup_try_description"
+        ],
+        "labelUnchanged": true,
+        "newSha256": "87eb198987d4470cd76b50f4bdcef2be7235cfbedc99ba330ff95a9b641728eb",
+        "oldSha256": "ac3545be09def75402a54d45031f7df3ca9370bd93199b28cd0fa37f7b11ee9d"
+      }
+    },
+    "runtimeSourcesManifestAndAssetsUnchanged": true
+  },
+  "instrumentation": {
+    "hostExitCode": 0,
+    "passed": true,
+    "tests": 4
+  },
+  "instrumentationScenarios": [
+    "real settings controls and EN/RU source/arrow/Undo descriptions with unchanged 95% labels",
+    "actual setup help visible in KeyboardSetupActivity",
+    "real public RU typo preview, Space replacement and immediate Backspace original restoration",
+    "candidate-strip automatic accessibility label and arrow/tooltip clearing on manual mode"
+  ],
+  "labelRemovalAuthorizedOrPerformed": false,
+  "limitations": [
+    "Android 36 emulator acceptance; no physical Fold or remote CI execution claimed.",
+    "Copy/help changes do not constitute fresh spelling quality qualification or a universal precision guarantee.",
+    "Other privacy, feature and data-provenance cards remain open."
+  ],
+  "purpose": "U7_ACCURATE_COPY_AND_LIVE_PREVIEW_UNDO_ACCEPTANCE_NOT_NEW_QUALITY",
+  "runtimeSourcesManifestAndAssetsUnchanged": true,
+  "sourceBindings": {
+    "app/lint.xml": "3110a87b5f295c7070c05e459e3d808490f0d809c7ec3758661298a8f177c176",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/ime/ui/CandidateStripInstrumentedTest.kt": "a70b481ec419f05c158a45cb9f6388c7e58a4ad8e4765f2b4ae7d9731726afd3",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingSettingsInstrumentedTest.kt": "cff37c0edbf9391963c3c012c9fd8e925c3a444525ca1b3c1284293d88d59a2e",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/ui/CandidateStripView.kt": "56993947efeed73547afa2162f75bcc651a38c589718994157f825dfb46de123",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt": "204ac642d733cd6c31754967aeeb8438cffee362a34f9f6c284e3c44ca32ffdc",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSetupActivity.kt": "4ffade75519e836bf489d51b151b2fc2382e5be09a99e8e4b731be5308cf970f",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SettingsActivity.kt": "7e58e955a831c8dda28a06f24cdaa988eb25de3ada3ca173a9f4ed850effe1e3",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SetupActivity.kt": "6687d4cfcdea9a352c791aa06a0e5658f910684c6359241992abd2696e9f04cc",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CommonConfusions.kt": "dd9483f2c12d7025218c98166b5116f349799c5eec36dbe3be96f6251c45533e",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt": "67c0b3215c6183239632ce521c7d7d16f64cda01caeb1421eb31791b35085c9b",
+    "app/src/main/res/layout/activity_setup.xml": "b162c129cbaa252d089c9a8d2c305e27d38ac8ee3d4edf9eb720ec6bd0f1205e",
+    "app/src/main/res/values-ru/strings.xml": "87eb198987d4470cd76b50f4bdcef2be7235cfbedc99ba330ff95a9b641728eb",
+    "app/src/main/res/values/strings.xml": "046e58c50d7fa679d8e0f25ef0842703733cac1da2bb89ef71a759195621e80b"
+  },
+  "staticCandidateDemoAdded": false
+}
