@@ -18,6 +18,7 @@ jobs:
           python3 -m unittest discover -s tools/typing_experiments -p 'test_*holdout_ledger.py'
           python3 -m unittest discover -s tools/typing_experiments -p test_conversation_split_checks.py
           python3 -m unittest discover -s tools/typing_experiments -p 'test_legacy_holdout_*.py'
+          python3 -m unittest discover -s tools/typing_experiments -p test_legacy_family_recovery.py
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

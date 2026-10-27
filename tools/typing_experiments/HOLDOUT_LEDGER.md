@@ -93,3 +93,23 @@ versioned replacements. Import other joint/context/conversation public histories
 with source-specific adapters and verified privacy/provenance, then wire the
 complete registry into new preparation entry points. Do not mark Q6 complete
 based on this bootstrap or a schema-only CI pass.
+
+Dictionary-only legacy family recovery is a separate append-only addendum with
+usage `historical-family-exclusion`. It stores the union of all dictionary
+analyses, including ambiguous words, without guessing unknown lemmas. The six
+parent entries retain their missing family axis. The current addendum covers
+9,563 of 10,200 rows (6,975 distinct lemmas); 637 unresolved row IDs remain in its
+receipt. This usage is family-only, is included by `new-families`, and does not
+turn historical evaluation into supervised training for `new-sentences`.
+
+```sh
+python3 tools/typing_experiments/recover_legacy_families.py \
+  --base build/enriched-ledger.json --output build/legacy-family-recovery
+python3 -m unittest discover -s tools/typing_experiments -p test_legacy_family_recovery.py
+```
+
+Extraction requires the pinned dictionary packages from `tools/morphology/ranker.py`;
+its receipt hashes installed package code/data. Reading the resulting exclusion
+keys and running the unit tests requires only the standard library. The importer
+rejects changed corpus bindings, missing targets, duplicate row IDs and repeated
+addendum import; it does not update old rows or clear pending coverage.

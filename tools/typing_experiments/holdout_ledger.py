@@ -17,7 +17,7 @@ from conversation_split_checks import target_context_key
 SCHEMA = 1
 KEY_SCHEMA = 'rune-public-exclusions-v1'
 KINDS = ('article', 'family', 'sentence', 'context')
-USAGES = ('supervised', 'disclosed', 'reserved', 'historical-exclusion')
+USAGES = ('supervised', 'disclosed', 'reserved', 'historical-exclusion', 'historical-family-exclusion')
 _HASH = re.compile(r'[0-9a-f]{64}\Z')
 
 
@@ -95,7 +95,7 @@ def validate_ledger(ledger):
                 or not isinstance(missing, list) or any(k not in KINDS for k in missing)
                 or set(keys) & set(missing) or (coverage['complete'] and missing)):
             raise ValueError('LEDGER_ENTRY_KEYS')
-        if entry['usage'] == 'supervised':
+        if entry['usage'] in ('supervised', 'historical-family-exclusion'):
             if set(keys) != {'family'} or missing:
                 raise ValueError('LEDGER_SUPERVISED_FAMILY_SCOPE')
         elif set(keys) | set(missing) != set(KINDS):
