@@ -96,6 +96,15 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:context'):
             assert_disjoint([dict(prefix='Дху́лия, Дхуле, ',expectedSpelling='раннее',typed='другаяопечатка')],self.ledger,kinds=('context',))
 
+    def test_template_authored_history_keeps_ambiguous_family_exclusions(self):
+        entries=[e for e in self.ledger['entries'] if e['id'].startswith('authored-right-context-template-history-')]
+        self.assertEqual(6,len(entries))
+        family_entries=[e for e in entries if e['usage']=='prepared-training-quarantine']
+        self.assertEqual(3,len(family_entries));self.assertTrue(all(len(e['keys']['family'])==29 for e in family_entries))
+        for word in ('весло','красить'):
+            with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:family'):
+                assert_disjoint([dict(families=[word])],self.ledger,kinds=('family',),usages=('supervised','prepared-training-quarantine'))
+
     def test_historical_overlap_disclosure_matches_recorded_keys(self):
         scope={f'public-spelling-v{v}' for v in range(7,13)}|{'public-legacy-spelling-v6'}|{
             'public-early-ru-'+name for name in ('qualification-v2','compact-v3','compact-v4')}
