@@ -107,14 +107,18 @@ class AndroidTypingPersonalization(
     private val retypeDistance = WeightedDamerauLevenshtein(EditCostProfile.UNIT)
     private val ready get() = learningEnabled && resources.personal.isReady
 
+    private fun protectedOriginalRefusal(original: String, language: KeyboardLanguage) =
+        PersonalAdmissionPolicy.protectedOriginalRefusal(protectionEnabled, resources.controls.isReady) {
+            resources.controls.snapshot.contains(original, language)
+        }
+
     override fun allowsAutomatic(generation: CandidateGeneration, candidate: GeneratedCandidate,
         language: KeyboardLanguage): Boolean = automaticDecision(generation, candidate, language).allowed
 
     override fun automaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
         language: KeyboardLanguage): AutomaticTypingDecision {
-        if (protectionEnabled && (!resources.controls.isReady ||
-            resources.controls.snapshot.contains(generation.original.orEmpty(), language))) {
-            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+        protectedOriginalRefusal(generation.original.orEmpty(), language)?.let {
+            return AutomaticTypingDecision(false, it)
         }
         val publicWord = PublicOriginalProtection.evaluate(generation, candidate, resources.rareWords)
         if (!publicWord.allowed) return AutomaticTypingDecision(false, publicWord.refusal)
@@ -122,10 +126,9 @@ class AndroidTypingPersonalization(
         if (!admission.allowed) return AutomaticTypingDecision(false, admission.refusal)
         val original = generation.original
             ?: return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
-        val allowed = !ready || (!resources.personal.model.protectsOriginal(original, language) &&
-            !resources.personal.model.rejects(original, candidate.text, language))
-        return AutomaticTypingDecision(allowed,
-            if (allowed) null else AutomaticAdmissionRefusal.NOT_QUALIFIED)
+        val refusal = PersonalAdmissionPolicy.personalRefusal(ready, resources.personal.model,
+            original, candidate.text, language)
+        return AutomaticTypingDecision(refusal == null, refusal)
     }
 
     override fun refinementDecision(generation: CandidateGeneration, word: String,
@@ -136,11 +139,10 @@ class AndroidTypingPersonalization(
         language: KeyboardLanguage, comparedWords: List<String>, jointWinner: Boolean,
         rescueWinner: Boolean = false, wordContextWinner: Boolean = false): AutomaticTypingDecision {
         val original = generation.original ?: return AutomaticTypingDecision(false)
-        if (protectionEnabled && (!resources.controls.isReady || resources.controls.snapshot.contains(original, language)))
-            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
-        if (ready && (resources.personal.model.protectsOriginal(original, language) ||
-                resources.personal.model.rejects(original, word, language)))
-            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+        protectedOriginalRefusal(original, language)?.let { return AutomaticTypingDecision(false, it) }
+        PersonalAdmissionPolicy.personalRefusal(ready, resources.personal.model, original, word, language)?.let {
+            return AutomaticTypingDecision(false, it)
+        }
         if (word == original) return AutomaticTypingDecision(true)
         val all = (generation.alternatives + generation.compactAlternatives + generation.neighborRecovery.alternatives)
             .distinctBy { it.canonicalKey }
@@ -337,7 +339,7 @@ class AndroidTypingPersonalization(
         val original = generation.original ?: return AutomaticTypingDecision(false)
         val rare = resources.rareWords.lookup(io.github.mesteriis.rune.keyboard.smarttyping.correction.TokenUnicode.folded(original))
         if (!rare.available || rare.present) return AutomaticTypingDecision(false,
-            if (rare.present) AutomaticAdmissionRefusal.ORIGINAL_VALID else AutomaticAdmissionRefusal.MORPHOLOGY_UNAVAILABLE)
+            if (rare.present) AutomaticAdmissionRefusal.ORIGINAL_VALID else AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE)
         return refinementDecision(generation, candidate.text, language, emptyList())
     }
 
@@ -372,15 +374,14 @@ class AndroidTypingPersonalization(
                 (!targetMorphology.present && !targetRare.present))
                 return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
         }
-        if (protectionEnabled && (!resources.controls.isReady ||
-            resources.controls.snapshot.contains(generation.original.orEmpty(), language)))
-            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+        protectedOriginalRefusal(generation.original.orEmpty(), language)?.let {
+            return AutomaticTypingDecision(false, it)
+        }
         val original = generation.original
             ?: return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
-        val allowed = !ready || (!resources.personal.model.protectsOriginal(original, language) &&
-            !resources.personal.model.rejects(original, candidate.text, language))
-        return AutomaticTypingDecision(allowed,
-            if (allowed) null else AutomaticAdmissionRefusal.NOT_QUALIFIED)
+        val refusal = PersonalAdmissionPolicy.personalRefusal(ready, resources.personal.model,
+            original, candidate.text, language)
+        return AutomaticTypingDecision(refusal == null, refusal)
     }
 
     override fun accepted(original: String, replacement: String, language: KeyboardLanguage) {

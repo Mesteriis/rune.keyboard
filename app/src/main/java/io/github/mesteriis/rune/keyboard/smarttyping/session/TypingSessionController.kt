@@ -315,6 +315,8 @@ class TypingSessionController internal constructor(
         AutomaticAdmissionRefusal.TARGET_UNKNOWN -> DiagnosticReason.TARGET_UNKNOWN
         AutomaticAdmissionRefusal.RIVAL_UNKNOWN -> DiagnosticReason.RIVAL_UNKNOWN
         AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE -> DiagnosticReason.RESOURCE_UNAVAILABLE
+        AutomaticAdmissionRefusal.PERSONAL_VETO -> DiagnosticReason.PERSONAL_VETO
+        AutomaticAdmissionRefusal.PROTECTED_WORD -> DiagnosticReason.PROTECTED_WORD
         AutomaticAdmissionRefusal.NOT_QUALIFIED, null -> DiagnosticReason.NOT_QUALIFIED
     }
     private fun rankingRejected(reason: DiagnosticReason, reply: ScoringReply, count: Int = 0,

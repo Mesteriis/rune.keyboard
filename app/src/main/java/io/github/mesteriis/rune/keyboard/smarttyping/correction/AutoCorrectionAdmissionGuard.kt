@@ -10,6 +10,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon
 enum class AutomaticAdmissionRefusal {
     MORPHOLOGY_UNAVAILABLE, ORIGINAL_VALID, WINNER_AMBIGUOUS, RIVAL_OTHER_LEMMA, NOT_QUALIFIED,
     TARGET_UNKNOWN, RIVAL_UNKNOWN, RESOURCE_UNAVAILABLE,
+    PERSONAL_VETO, PROTECTED_WORD,
 }
 data class AutomaticAdmissionDecision(
     val allowed: Boolean,

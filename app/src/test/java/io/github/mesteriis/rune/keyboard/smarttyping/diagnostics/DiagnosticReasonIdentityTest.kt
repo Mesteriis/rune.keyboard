@@ -70,14 +70,14 @@ class DiagnosticReasonIdentityTest {
             "EDITOR_SUGGESTIONS_DISABLED"
         )
         assertEquals(frozen, DiagnosticReason.entries.take(frozen.size).map { it.name })
-        assertEquals(listOf("TARGET_UNKNOWN", "RIVAL_UNKNOWN", "LOCAL_SEARCH_EMPTY"),
+        assertEquals(listOf("TARGET_UNKNOWN", "RIVAL_UNKNOWN", "LOCAL_SEARCH_EMPTY", "PERSONAL_VETO", "PROTECTED_WORD"),
             DiagnosticReason.entries.drop(frozen.size).map { it.name })
     }
 
     @Test fun admissionReasonPrefixKeepsItsOriginalOrdinals() {
         assertEquals(listOf("MORPHOLOGY_UNAVAILABLE", "ORIGINAL_VALID", "WINNER_AMBIGUOUS",
             "RIVAL_OTHER_LEMMA", "NOT_QUALIFIED"), AutomaticAdmissionRefusal.entries.take(5).map { it.name })
-        assertEquals(listOf("TARGET_UNKNOWN", "RIVAL_UNKNOWN", "RESOURCE_UNAVAILABLE"),
+        assertEquals(listOf("TARGET_UNKNOWN", "RIVAL_UNKNOWN", "RESOURCE_UNAVAILABLE", "PERSONAL_VETO", "PROTECTED_WORD"),
             AutomaticAdmissionRefusal.entries.drop(5).map { it.name })
     }
 }

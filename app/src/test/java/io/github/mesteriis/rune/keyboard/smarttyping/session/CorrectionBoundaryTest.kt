@@ -890,6 +890,49 @@ class CorrectionBoundaryTest {
         assertEquals("helllo ", delayed.document)
     }
 
+    @Test fun `specific admission vetoes reach immediate and delayed boundary diagnostics without replacement`() {
+        val reasons = listOf(
+            AutomaticAdmissionRefusal.TARGET_UNKNOWN to io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason.TARGET_UNKNOWN,
+            AutomaticAdmissionRefusal.RIVAL_UNKNOWN to io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason.RIVAL_UNKNOWN,
+            AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE to io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason.RESOURCE_UNAVAILABLE,
+            AutomaticAdmissionRefusal.PERSONAL_VETO to io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason.PERSONAL_VETO,
+            AutomaticAdmissionRefusal.PROTECTED_WORD to io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason.PROTECTED_WORD,
+        )
+        for ((refusal, expected) in reasons) for (late in listOf(false, true)) {
+            val f = Fixture(modelOnly = late)
+            val events = mutableListOf<io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticEvent>()
+            f.controller.setDiagnostics(object : io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnostics {
+                override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                override fun invalidate() = Unit
+                override fun record(event: io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticEvent,
+                    text: (() -> io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticText)?) { events += event }
+            })
+            f.controller.setPersonalization(object : TypingPersonalization {
+                override fun allowsAutomatic(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                    language: KeyboardLanguage) = false
+                override fun automaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                    language: KeyboardLanguage) = AutomaticTypingDecision(false, refusal)
+            }, KeyboardLanguage.ENGLISH)
+            if (late) {
+                val request = f.pendingSpace()
+                events.clear()
+                assertFalse(f.controller.acceptSpaceCorrection(winningReply(request), f.execute))
+            } else {
+                f.raw("helllo"); f.publish("hello")
+                assertTrue(f.controller.candidateViewState.candidates.any { it.text == "hello" })
+                events.clear()
+                f.type(" ")
+            }
+            val boundary = events.single {
+                it.kind == io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind.BOUNDARY
+            }
+            assertEquals("refusal=$refusal late=$late", expected, boundary.reason)
+            assertEquals("helllo ", f.document)
+            assertNull(f.controller.state.lastAutoEdit)
+            assertTrue(f.calls.none { it.startsWith("get") })
+        }
+    }
+
     @Test fun `only acknowledged manual choices train and stale choices never train`() {
         for (fails in listOf(false, true)) {
             val f = Fixture(); val hook = PersonalEvents()
