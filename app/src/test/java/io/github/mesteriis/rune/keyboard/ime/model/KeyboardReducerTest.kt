@@ -9,7 +9,7 @@ import org.junit.Test
 
 class KeyboardReducerTest {
     @Test
-    fun `sensitive session routes deletion through the ordinary editor command`() {
+    fun `incognito session routes deletion through the ordinary editor command`() {
         val context = EditorContext.from(
             InputType.TYPE_CLASS_TEXT,
             EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING,
@@ -23,14 +23,14 @@ class KeyboardReducerTest {
     }
 
     @Test
-    fun `no personalized learning double tap stays a plain space`() {
+    fun `no personalized learning double tap uses owned space gesture`() {
         val context = EditorContext.from(
             InputType.TYPE_CLASS_TEXT,
             EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING,
         )
         val transition = reduceDoubleSpace(KeyboardState(KeyboardLanguage.ENGLISH), context)
 
-        assertEquals(EditorCommand.CommitText(" "), transition.command)
+        assertEquals(EditorCommand.ConvertPrecedingSpaceToPeriod, transition.command)
 
     }
 

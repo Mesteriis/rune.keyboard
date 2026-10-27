@@ -43,6 +43,7 @@ object KeyboardSessionPolicy {
         }
         if (hasComposingWord) return state
         if (ownedSentenceBoundary) return state.withAutomaticCapitalization(true)
+        if (!editor.inputPolicy.allowsEditorReads) return state.withAutomaticCapitalization(false)
         val caps = readCursorCapsMode() ?: return state
         return state.withAutomaticCapitalization(caps != 0)
     }

@@ -12,8 +12,12 @@ class NonNormalEditorInstrumentedTest : ImeTestBase() {
     @Test fun passwordKeepsOriginalWithoutSmartTypingOrReads() =
         verify("password", EditorMode.TEXT, InputPolicy.SENSITIVE, "a helllo .  ")
 
-    @Test fun noPersonalizedLearningKeepsOriginalWithoutSmartTypingOrReads() =
-        verify("private", EditorMode.TEXT, InputPolicy.SENSITIVE, "a helllo .  ")
+    @Test fun noPersonalizedLearningAllowsCorrectionAndUndoWithoutPersonalizationOrReads() {
+        LiveFakeModelBinderFixture.install(driver).use { fixture ->
+            fixture.proveNormalPipelineObservers()
+            fixture.verifyIncognitoCorrection()
+        }
+    }
 
     @Test fun emailKeepsOriginalWithoutSmartTypingOrReads() =
         verify("email", EditorMode.EMAIL, InputPolicy.NORMAL, "a helllo .  ")

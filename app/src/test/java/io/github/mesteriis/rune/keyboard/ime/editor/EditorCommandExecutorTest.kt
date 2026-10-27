@@ -53,15 +53,36 @@ class EditorCommandExecutorTest {
     @Test fun `batch privacy raw selection and stale guard reject before touching connection`() {
         val connection = Proxy.newProxyInstance(InputConnection::class.java.classLoader,
             arrayOf(InputConnection::class.java)) { _, _, _ -> throw AssertionError("Forbidden connection operation") } as InputConnection
-        for (case in 0..4) {
+        for (case in listOf(0, 2, 3, 4)) {
             val command = EditorCommand.Batch(listOf(EditorCommand.SetComposingText("word"))) { case != 4 }
             val policy = when (case) {
                 0 -> InputPolicy.SENSITIVE
-                1 -> EditorContext.from(1, EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING).inputPolicy
                 else -> InputPolicy.NORMAL
             }
             assertFalse(EditorCommandExecutor.execute(command, connection, case == 2, case == 3, policy).handled)
         }
+    }
+
+    @Test fun `incognito permits owned composing batch but forces deletion without reads`() {
+        val calls = mutableListOf<String>()
+        val connection = Proxy.newProxyInstance(InputConnection::class.java.classLoader,
+            arrayOf(InputConnection::class.java)) { _, method, _ ->
+            check(method.name in setOf("beginBatchEdit", "setComposingText", "setComposingRegion",
+                "finishComposingText", "endBatchEdit", "deleteSurroundingTextInCodePoints"))
+            calls += method.name
+            true
+        } as InputConnection
+        val command = EditorCommand.Batch(listOf(EditorCommand.SetComposingText("word"),
+            EditorCommand.SetComposingRegion(0, 4))) { true }
+        assertTrue(EditorCommandExecutor.execute(command, connection, false, DeleteMode.GRAPHEME_AWARE,
+            InputPolicy.INCOGNITO).handled)
+        assertEquals(listOf("beginBatchEdit", "setComposingText", "setComposingRegion", "endBatchEdit"), calls)
+        assertTrue(EditorCommandExecutor.execute(EditorCommand.FinishComposingText, connection, false,
+            DeleteMode.GRAPHEME_AWARE, InputPolicy.INCOGNITO).handled)
+        calls.clear()
+        assertTrue(EditorCommandExecutor.execute(EditorCommand.DeletePreviousCodePoint, connection, false,
+            DeleteMode.GRAPHEME_AWARE, InputPolicy.INCOGNITO).handled)
+        assertEquals(listOf("deleteSurroundingTextInCodePoints"), calls)
     }
 
     @Test fun `batch editor exception stops remaining writes and attempts cleanup`() {

@@ -185,7 +185,7 @@ class ImeTestDriver {
 
     fun launchComposingQa(mode: String = "accept", language: KeyboardLanguage = KeyboardLanguage.ENGLISH) {
         require(mode in setOf("accept", "reject", "drop", "private", "raw", "password", "email", "url",
-            "number", "phone", "date_time", "no_suggestions", "autocomplete", "filter"))
+            "number", "phone", "date_time", "no_suggestions", "private_no_suggestions", "autocomplete", "filter"))
         val launched = shell("am start -W -f 0x10008000 -n $QA_ACTIVITY --es qa_composing_fixture $mode")
         check("Status: ok" in launched) { "QA launch did not succeed: $launched" }
         awaitQaActivity()

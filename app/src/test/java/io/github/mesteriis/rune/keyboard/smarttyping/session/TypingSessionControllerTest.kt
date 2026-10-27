@@ -293,7 +293,6 @@ class TypingSessionControllerTest {
     fun `sensitive raw email URI and numeric editors bypass with no retained content`() {
         val editors = listOf(
             EditorContext.from(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD, 0),
-            EditorContext.from(InputType.TYPE_CLASS_TEXT, EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING),
             EditorContext.from(InputType.TYPE_NULL, 0),
             EditorContext.from(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS, 0),
             EditorContext.from(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI, 0),

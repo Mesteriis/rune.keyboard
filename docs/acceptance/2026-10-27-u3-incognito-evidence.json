@@ -1,0 +1,2624 @@
+{
+  "artifacts": {
+    "app": {
+      "bytes": 345266077,
+      "sha256": "c0e4e5fce82549d1ffb92029df97ed88bd3638f8d0677aecad16abafd3db9156"
+    },
+    "tests": {
+      "bytes": 1780478,
+      "sha256": "19a2cd715d2f514acc70fb91e4bcd1f8933c71df5e799ba467a29dbf2bdfbff2"
+    }
+  },
+  "baseCommit": "2eab289",
+  "baselineReceipt": "docs/acceptance/2026-10-27-u2-token-scoped-mechanics-evidence.json",
+  "baselineReusedAfterSourceIdentityCheck": true,
+  "card": "U3",
+  "checks": [
+    {
+      "command": [
+        "./gradlew",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "*EditorContextTest",
+        "--tests",
+        "*MechanicalCapitalizationStateTest"
+      ],
+      "exitCode": 1,
+      "failures": 2,
+      "log": "red.log",
+      "phase": "old-code regression",
+      "tests": 21
+    },
+    {
+      "exitCode": 1,
+      "failures": 4,
+      "log": "first-full.log",
+      "phase": "intermediate full run",
+      "reason": "Two incorrectly edited existing expectations, invalid test batch and old NORMAL terminal outcome contract; corrected",
+      "tests": 1184
+    },
+    {
+      "exitCode": 0,
+      "log": "second-full.log",
+      "phase": "corrected full run",
+      "tests": 1184
+    },
+    {
+      "exitCode": 0,
+      "log": "diagnostics-full.log",
+      "phase": "explicit diagnostic regressions",
+      "tests": 1186
+    },
+    {
+      "command": [
+        "./gradlew",
+        ":app:testDebugUnitTest",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:imeIntelligenceBoundary",
+        ":app:privacyGateRelease",
+        ":app:lintDebug"
+      ],
+      "exitCode": 0,
+      "log": "final-build.log",
+      "phase": "final production build and JVM integration"
+    },
+    {
+      "command": [
+        "./gradlew",
+        ":app:testDebugUnitTest",
+        ":app:imeIntelligenceBoundary",
+        ":app:privacyGateRelease",
+        ":app:lintDebug"
+      ],
+      "exitCode": 0,
+      "log": "final-gates.log",
+      "phase": "final gates after instrumented fixture repairs"
+    },
+    {
+      "command": [
+        "./gradlew",
+        ":app:testDebugUnitTest"
+      ],
+      "exitCode": 0,
+      "log": "final-jvm.log",
+      "phase": "final fresh JVM run after test-name alignment",
+      "tests": 1186
+    }
+  ],
+  "committedDocumentationBindings": {
+    "docs/ACCEPTANCE.md": "370ae6c7d19b28287ea16ec91925f3e395ea838d6857f524d4ef2f50a1587261",
+    "docs/ARCHITECTURE.md": "e9472e0cc23cfb593bfb40e4c708316e6b90c92ad4cc04f3a409399f5d255830",
+    "docs/USER_GUIDE.ru.md": "8dc415505eeeeaacc6a17a24ced8e85d75d31d813213b1226096268e051ddef7",
+    "docs/acceptance/2026-09-02-rune-smart-typing-0.3.md": "eb7297a72438a9e514e5328e42f7b3604d6105108123b8bccc104e5e12449487",
+    "docs/acceptance/2026-10-27-u3-incognito.md": "52db52656372e10d9387f3d3ec14a3d5c9a29f3f938d2f1ef02a513b026b0762",
+    "docs/plans/2026-10-27-review-completion.md": "b2078af730f4f5fcda5fa06fe460d447c3e57440671356bdbfe357b83c049425"
+  },
+  "comparison": {
+    "changedRows": 0,
+    "differences": [],
+    "hashes": {
+      "baseline": "ceb4f8a67e457182e0bc0f986963c0a15776bb0d49d118ac0eb7ed54c5cbcc03",
+      "candidate": "ceb4f8a67e457182e0bc0f986963c0a15776bb0d49d118ac0eb7ed54c5cbcc03"
+    },
+    "rows": 12000
+  },
+  "currentRuntimeAssetBindings": {
+    "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+    "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+    "app/src/main/assets/smarttyping/experiments/ru-ranker.bin": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+    "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+    "app/src/main/assets/smarttyping/lexicon/case/en.case": "2d5ba3c807ef8c66be5222b01c3cd0f98645a891c12b6356827ea58544725a34",
+    "app/src/main/assets/smarttyping/lexicon/case/es.case": "52614678597416daf63763bb1f34015097d97ab974d9aa951b0221a67105a6fa",
+    "app/src/main/assets/smarttyping/lexicon/case/ru.case": "845144afb06ae7881f0db2f577f340694b8c7dfa5fee9685563ec4852939c81b",
+    "app/src/main/assets/smarttyping/lexicon/en.trie": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc",
+    "app/src/main/assets/smarttyping/lexicon/en.trie.lengths": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4",
+    "app/src/main/assets/smarttyping/lexicon/es.trie": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681",
+    "app/src/main/assets/smarttyping/lexicon/es.trie.lengths": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78",
+    "app/src/main/assets/smarttyping/lexicon/frequency/en.ranks": "a8786c4d9fa1d7522e8c9d068679e3c61e32ee49dc3ca34898ccbd0fd19f4c6f",
+    "app/src/main/assets/smarttyping/lexicon/frequency/es.ranks": "5fb3e5cca1493e1aebb64f2960ac823fe50ee189c222a9df952b622ebd3cf613",
+    "app/src/main/assets/smarttyping/lexicon/frequency/ru.ranks": "09cb1675723b66703e76f871b621068df6c0677b4c17b71e6a68fe2c8d3f328b",
+    "app/src/main/assets/smarttyping/lexicon/ru.morph": "c1707864a8fbc805aa98bc8307be99f2c9904eec5cc27d26a5220e001d88d28b",
+    "app/src/main/assets/smarttyping/lexicon/ru.rare": "434b462d4edb0165946568dfdf2a6729ff8b2590fead1fe815d3912817837b6e",
+    "app/src/main/assets/smarttyping/lexicon/ru.trie": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b",
+    "app/src/main/assets/smarttyping/lexicon/ru.trie.lengths": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c"
+  },
+  "environment": {
+    "abi": "arm64-v8a",
+    "androidApi": "36",
+    "avdDeleted": true,
+    "emulatorStopped": true,
+    "isolatedTaskOwnedAvd": true,
+    "physicalDeviceAccess": false,
+    "testsCompleted": true
+  },
+  "identicalMetrics": {
+    "calibration": {
+      "languages": {
+        "en": {
+          "abstention": {
+            "denominator": 2000,
+            "numerator": 1997,
+            "value": 0.9985,
+            "wilson95RowDescriptive": [
+              0.9955989674442294,
+              0.9994897364163615
+            ]
+          },
+          "aggregateFinalText": {
+            "changedRows": 3,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "candidateRecall": {
+            "denominator": 1000,
+            "numerator": 951,
+            "value": 0.951,
+            "wilson95RowDescriptive": [
+              0.9358092984933898,
+              0.9627389653526394
+            ]
+          },
+          "canonical": {
+            "automaticChanges": 0,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "cohorts": {
+            "correct": {
+              "abstention": {
+                "denominator": 700,
+                "numerator": 700,
+                "value": 1.0,
+                "wilson95RowDescriptive": [
+                  0.9945421532469393,
+                  1.0
+                ]
+              },
+              "coverage": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "rows": 700,
+              "spellingAutomaticChanges": 0
+            },
+            "protected": {
+              "abstention": {
+                "denominator": 300,
+                "numerator": 300,
+                "value": 1.0,
+                "wilson95RowDescriptive": [
+                  0.9873570287754538,
+                  0.9999999999999998
+                ]
+              },
+              "coverage": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              },
+              "rows": 300,
+              "spellingAutomaticChanges": 0
+            },
+            "typo": {
+              "abstention": {
+                "denominator": 1000,
+                "numerator": 997,
+                "value": 0.997,
+                "wilson95RowDescriptive": [
+                  0.9912169859464969,
+                  0.9989792161188614
+                ]
+              },
+              "coverage": {
+                "denominator": 1000,
+                "numerator": 3,
+                "value": 0.003,
+                "wilson95RowDescriptive": [
+                  0.0010207838811386186,
+                  0.008783014053503173
+                ]
+              },
+              "rows": 1000,
+              "spellingAutomaticChanges": 3
+            }
+          },
+          "coverage": {
+            "denominator": 2000,
+            "numerator": 3,
+            "value": 0.0015,
+            "wilson95RowDescriptive": [
+              0.0005102635836384819,
+              0.004401032555770693
+            ]
+          },
+          "exactUndo": {
+            "denominator": 3,
+            "numerator": 3,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "fixedPointPolicyGates": {
+            "aggregateFalseChangePass": true,
+            "allPass": false,
+            "exactImmediateUndoPass": true,
+            "ordinarySpellingFalseChangePass": true,
+            "originalAlwaysAvailablePass": true,
+            "precisionPass": true,
+            "volumePass": false
+          },
+          "mechanical": {
+            "changedRows": 0,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "model": {
+            "errors": 0,
+            "noRequests": 997,
+            "refusals": 0,
+            "requests": 1003
+          },
+          "ordinarySpelling": {
+            "automaticChanges": 3,
+            "correctChanges": 3,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            },
+            "precision": {
+              "denominator": 3,
+              "numerator": 3,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.4385029682449546,
+                1.0
+              ]
+            }
+          },
+          "originalRetention": {
+            "denominator": 1902,
+            "numerator": 1902,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9979843765057607,
+              0.9999999999999999
+            ]
+          },
+          "rows": 2000
+        },
+        "es": {
+          "abstention": {
+            "denominator": 2000,
+            "numerator": 1510,
+            "value": 0.755,
+            "wilson95RowDescriptive": [
+              0.735673828496995,
+              0.773348477389566
+            ]
+          },
+          "aggregateFinalText": {
+            "changedRows": 491,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "candidateRecall": {
+            "denominator": 1000,
+            "numerator": 920,
+            "value": 0.92,
+            "wilson95RowDescriptive": [
+              0.9015335609704976,
+              0.9352519619016361
+            ]
+          },
+          "canonical": {
+            "automaticChanges": 1,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "cohorts": {
+            "correct": {
+              "abstention": {
+                "denominator": 700,
+                "numerator": 700,
+                "value": 1.0,
+                "wilson95RowDescriptive": [
+                  0.9945421532469393,
+                  1.0
+                ]
+              },
+              "coverage": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "rows": 700,
+              "spellingAutomaticChanges": 0
+            },
+            "protected": {
+              "abstention": {
+                "denominator": 300,
+                "numerator": 300,
+                "value": 1.0,
+                "wilson95RowDescriptive": [
+                  0.9873570287754538,
+                  0.9999999999999998
+                ]
+              },
+              "coverage": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              },
+              "rows": 300,
+              "spellingAutomaticChanges": 0
+            },
+            "typo": {
+              "abstention": {
+                "denominator": 1000,
+                "numerator": 510,
+                "value": 0.51,
+                "wilson95RowDescriptive": [
+                  0.47903749580454597,
+                  0.5408859690257428
+                ]
+              },
+              "coverage": {
+                "denominator": 1000,
+                "numerator": 490,
+                "value": 0.49,
+                "wilson95RowDescriptive": [
+                  0.45911403097425707,
+                  0.520962504195454
+                ]
+              },
+              "rows": 1000,
+              "spellingAutomaticChanges": 490
+            }
+          },
+          "coverage": {
+            "denominator": 2000,
+            "numerator": 490,
+            "value": 0.245,
+            "wilson95RowDescriptive": [
+              0.22665152261043398,
+              0.26432617150300497
+            ]
+          },
+          "exactUndo": {
+            "denominator": 491,
+            "numerator": 491,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9922369907528583,
+              1.0
+            ]
+          },
+          "fixedPointPolicyGates": {
+            "aggregateFalseChangePass": true,
+            "allPass": true,
+            "exactImmediateUndoPass": true,
+            "ordinarySpellingFalseChangePass": true,
+            "originalAlwaysAvailablePass": true,
+            "precisionPass": true,
+            "volumePass": true
+          },
+          "mechanical": {
+            "changedRows": 0,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "model": {
+            "errors": 0,
+            "noRequests": 1509,
+            "refusals": 0,
+            "requests": 491
+          },
+          "ordinarySpelling": {
+            "automaticChanges": 490,
+            "correctChanges": 489,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            },
+            "precision": {
+              "denominator": 490,
+              "numerator": 489,
+              "value": 0.9979591836734694,
+              "wilson95RowDescriptive": [
+                0.988531733453399,
+                0.9996396549216398
+              ]
+            }
+          },
+          "originalRetention": {
+            "denominator": 1902,
+            "numerator": 1902,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9979843765057607,
+              0.9999999999999999
+            ]
+          },
+          "rows": 2000
+        },
+        "ru": {
+          "abstention": {
+            "denominator": 2000,
+            "numerator": 1303,
+            "value": 0.6515,
+            "wilson95RowDescriptive": [
+              0.6303446296905924,
+              0.672074504983188
+            ]
+          },
+          "aggregateFinalText": {
+            "changedRows": 699,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "candidateRecall": {
+            "denominator": 1000,
+            "numerator": 922,
+            "value": 0.922,
+            "wilson95RowDescriptive": [
+              0.9037173834289277,
+              0.9370528324092638
+            ]
+          },
+          "canonical": {
+            "automaticChanges": 2,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "cohorts": {
+            "correct": {
+              "abstention": {
+                "denominator": 700,
+                "numerator": 700,
+                "value": 1.0,
+                "wilson95RowDescriptive": [
+                  0.9945421532469393,
+                  1.0
+                ]
+              },
+              "coverage": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "rows": 700,
+              "spellingAutomaticChanges": 0
+            },
+            "protected": {
+              "abstention": {
+                "denominator": 300,
+                "numerator": 300,
+                "value": 1.0,
+                "wilson95RowDescriptive": [
+                  0.9873570287754538,
+                  0.9999999999999998
+                ]
+              },
+              "coverage": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              },
+              "rows": 300,
+              "spellingAutomaticChanges": 0
+            },
+            "typo": {
+              "abstention": {
+                "denominator": 1000,
+                "numerator": 303,
+                "value": 0.303,
+                "wilson95RowDescriptive": [
+                  0.27531542432193984,
+                  0.3321923185213688
+                ]
+              },
+              "coverage": {
+                "denominator": 1000,
+                "numerator": 697,
+                "value": 0.697,
+                "wilson95RowDescriptive": [
+                  0.6678076814786311,
+                  0.72468457567806
+                ]
+              },
+              "rows": 1000,
+              "spellingAutomaticChanges": 697
+            }
+          },
+          "coverage": {
+            "denominator": 2000,
+            "numerator": 697,
+            "value": 0.3485,
+            "wilson95RowDescriptive": [
+              0.32792549501681195,
+              0.3696553703094076
+            ]
+          },
+          "exactUndo": {
+            "denominator": 699,
+            "numerator": 699,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9945343878445365,
+              1.0
+            ]
+          },
+          "fixedPointPolicyGates": {
+            "aggregateFalseChangePass": true,
+            "allPass": true,
+            "exactImmediateUndoPass": true,
+            "ordinarySpellingFalseChangePass": true,
+            "originalAlwaysAvailablePass": true,
+            "precisionPass": true,
+            "volumePass": true
+          },
+          "mechanical": {
+            "changedRows": 0,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "model": {
+            "errors": 0,
+            "noRequests": 1951,
+            "refusals": 0,
+            "requests": 49
+          },
+          "ordinarySpelling": {
+            "automaticChanges": 697,
+            "correctChanges": 672,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            },
+            "precision": {
+              "denominator": 697,
+              "numerator": 672,
+              "value": 0.9641319942611191,
+              "wilson95RowDescriptive": [
+                0.9475872624806188,
+                0.9755887167040413
+              ]
+            }
+          },
+          "originalRetention": {
+            "denominator": 1902,
+            "numerator": 1902,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9979843765057607,
+              0.9999999999999999
+            ]
+          },
+          "rows": 2000
+        }
+      },
+      "overall": {
+        "abstention": {
+          "denominator": 6000,
+          "numerator": 4810,
+          "value": 0.8016666666666666,
+          "wilson95RowDescriptive": [
+            0.7913855878509937,
+            0.811561712611377
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 1193,
+          "falseChanges": {
+            "denominator": 3000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0012788487253259629
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 2100,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.0018259260005492287
+              ]
+            },
+            "protected": {
+              "denominator": 900,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                4.336808689942018e-19,
+                0.004250146730054126
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 3000,
+          "numerator": 2793,
+          "value": 0.931,
+          "wilson95RowDescriptive": [
+            0.9213683004184239,
+            0.9395293319803453
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 3,
+          "falseChanges": {
+            "denominator": 3000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0012788487253259629
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 2100,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.0018259260005492287
+              ]
+            },
+            "protected": {
+              "denominator": 900,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                4.336808689942018e-19,
+                0.004250146730054126
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 2100,
+              "numerator": 2100,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9981740739994507,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 2100,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.0018259260005492287
+              ]
+            },
+            "rows": 2100,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 900,
+              "numerator": 900,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9957498532699458,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 900,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                4.336808689942018e-19,
+                0.004250146730054126
+              ]
+            },
+            "rows": 900,
+            "spellingAutomaticChanges": 0
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 3000,
+              "numerator": 1810,
+              "value": 0.6033333333333334,
+              "wilson95RowDescriptive": [
+                0.5857062040128032,
+                0.6206961672506295
+              ]
+            },
+            "coverage": {
+              "denominator": 3000,
+              "numerator": 1190,
+              "value": 0.39666666666666667,
+              "wilson95RowDescriptive": [
+                0.3793038327493706,
+                0.4142937959871968
+              ]
+            },
+            "rows": 3000,
+            "spellingAutomaticChanges": 1190
+          }
+        },
+        "coverage": {
+          "denominator": 6000,
+          "numerator": 1190,
+          "value": 0.19833333333333333,
+          "wilson95RowDescriptive": [
+            0.18843828738862292,
+            0.2086144121490062
+          ]
+        },
+        "exactUndo": {
+          "denominator": 1193,
+          "numerator": 1193,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9967903361030964,
+            0.9999999999999999
+          ]
+        },
+        "fixedPointPolicyGates": {
+          "aggregateFalseChangePass": true,
+          "allPass": true,
+          "exactImmediateUndoPass": true,
+          "ordinarySpellingFalseChangePass": true,
+          "originalAlwaysAvailablePass": true,
+          "precisionPass": true,
+          "volumePass": true
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 3000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0012788487253259629
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 2100,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.0018259260005492287
+              ]
+            },
+            "protected": {
+              "denominator": 900,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                4.336808689942018e-19,
+                0.004250146730054126
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 0,
+          "noRequests": 4457,
+          "refusals": 0,
+          "requests": 1543
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 1190,
+          "correctChanges": 1164,
+          "falseChanges": {
+            "denominator": 3000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0012788487253259629
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 2100,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.0018259260005492287
+              ]
+            },
+            "protected": {
+              "denominator": 900,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                4.336808689942018e-19,
+                0.004250146730054126
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 1190,
+            "numerator": 1164,
+            "value": 0.9781512605042016,
+            "wilson95RowDescriptive": [
+              0.9681785741137215,
+              0.9850468241097111
+            ]
+          }
+        },
+        "originalRetention": {
+          "denominator": 5706,
+          "numerator": 5706,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9993272214564277,
+            1.0
+          ]
+        },
+        "rows": 6000
+      }
+    },
+    "holdout": {
+      "languages": {
+        "en": {
+          "abstention": {
+            "denominator": 2000,
+            "numerator": 2000,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9980829527187469,
+              0.9999999999999998
+            ]
+          },
+          "aggregateFinalText": {
+            "changedRows": 0,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "candidateRecall": {
+            "denominator": 1000,
+            "numerator": 924,
+            "value": 0.924,
+            "wilson95RowDescriptive": [
+              0.9059043568759517,
+              0.9388505519282977
+            ]
+          },
+          "canonical": {
+            "automaticChanges": 0,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "cohorts": {
+            "correct": {
+              "abstention": {
+                "denominator": 700,
+                "numerator": 700,
+                "value": 1.0,
+                "wilson95RowDescriptive": [
+                  0.9945421532469393,
+                  1.0
+                ]
+              },
+              "coverage": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "rows": 700,
+              "spellingAutomaticChanges": 0
+            },
+            "protected": {
+              "abstention": {
+                "denominator": 300,
+                "numerator": 300,
+                "value": 1.0,
+                "wilson95RowDescriptive": [
+                  0.9873570287754538,
+                  0.9999999999999998
+                ]
+              },
+              "coverage": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              },
+              "rows": 300,
+              "spellingAutomaticChanges": 0
+            },
+            "typo": {
+              "abstention": {
+                "denominator": 1000,
+                "numerator": 1000,
+                "value": 1.0,
+                "wilson95RowDescriptive": [
+                  0.996173241514445,
+                  1.0
+                ]
+              },
+              "coverage": {
+                "denominator": 1000,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  2.168404344971009e-19,
+                  0.0038267584855551234
+                ]
+              },
+              "rows": 1000,
+              "spellingAutomaticChanges": 0
+            }
+          },
+          "coverage": {
+            "denominator": 2000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              1.0842021724855044e-19,
+              0.001917047281252934
+            ]
+          },
+          "exactUndo": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null,
+            "wilson95RowDescriptive": null
+          },
+          "fixedPointPolicyGates": {
+            "aggregateFalseChangePass": true,
+            "allPass": false,
+            "exactImmediateUndoPass": true,
+            "ordinarySpellingFalseChangePass": true,
+            "originalAlwaysAvailablePass": true,
+            "precisionPass": false,
+            "volumePass": false
+          },
+          "mechanical": {
+            "changedRows": 0,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "model": {
+            "errors": 0,
+            "noRequests": 985,
+            "refusals": 0,
+            "requests": 1015
+          },
+          "ordinarySpelling": {
+            "automaticChanges": 0,
+            "correctChanges": 0,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            },
+            "precision": {
+              "denominator": 0,
+              "numerator": 0,
+              "value": null,
+              "wilson95RowDescriptive": null
+            }
+          },
+          "originalRetention": {
+            "denominator": 1901,
+            "numerator": 1901,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9979833183476213,
+              1.0
+            ]
+          },
+          "rows": 2000
+        },
+        "es": {
+          "abstention": {
+            "denominator": 2000,
+            "numerator": 1537,
+            "value": 0.7685,
+            "wilson95RowDescriptive": [
+              0.7495103570396379,
+              0.7864601885703292
+            ]
+          },
+          "aggregateFinalText": {
+            "changedRows": 464,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 1,
+              "value": 0.001,
+              "wilson95RowDescriptive": [
+                0.00017654637062607809,
+                0.0056425585979579355
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 1,
+                "value": 0.0033333333333333335,
+                "wilson95RowDescriptive": [
+                  0.0005886577218511581,
+                  0.018636693694531237
+                ]
+              }
+            }
+          },
+          "candidateRecall": {
+            "denominator": 1000,
+            "numerator": 888,
+            "value": 0.888,
+            "wilson95RowDescriptive": [
+              0.8669499763240903,
+              0.906080459091119
+            ]
+          },
+          "canonical": {
+            "automaticChanges": 1,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "cohorts": {
+            "correct": {
+              "abstention": {
+                "denominator": 700,
+                "numerator": 700,
+                "value": 1.0,
+                "wilson95RowDescriptive": [
+                  0.9945421532469393,
+                  1.0
+                ]
+              },
+              "coverage": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "rows": 700,
+              "spellingAutomaticChanges": 0
+            },
+            "protected": {
+              "abstention": {
+                "denominator": 300,
+                "numerator": 299,
+                "value": 0.9966666666666667,
+                "wilson95RowDescriptive": [
+                  0.9813633063054688,
+                  0.9994113422781488
+                ]
+              },
+              "coverage": {
+                "denominator": 300,
+                "numerator": 1,
+                "value": 0.0033333333333333335,
+                "wilson95RowDescriptive": [
+                  0.0005886577218511581,
+                  0.018636693694531237
+                ]
+              },
+              "rows": 300,
+              "spellingAutomaticChanges": 1
+            },
+            "typo": {
+              "abstention": {
+                "denominator": 1000,
+                "numerator": 538,
+                "value": 0.538,
+                "wilson95RowDescriptive": [
+                  0.5070132970793998,
+                  0.5686958692756982
+                ]
+              },
+              "coverage": {
+                "denominator": 1000,
+                "numerator": 462,
+                "value": 0.462,
+                "wilson95RowDescriptive": [
+                  0.43130413072430196,
+                  0.4929867029206003
+                ]
+              },
+              "rows": 1000,
+              "spellingAutomaticChanges": 462
+            }
+          },
+          "coverage": {
+            "denominator": 2000,
+            "numerator": 463,
+            "value": 0.2315,
+            "wilson95RowDescriptive": [
+              0.21353981142967077,
+              0.250489642960362
+            ]
+          },
+          "exactUndo": {
+            "denominator": 464,
+            "numerator": 464,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9917889730628459,
+              0.9999999999999999
+            ]
+          },
+          "fixedPointPolicyGates": {
+            "aggregateFalseChangePass": true,
+            "allPass": true,
+            "exactImmediateUndoPass": true,
+            "ordinarySpellingFalseChangePass": true,
+            "originalAlwaysAvailablePass": true,
+            "precisionPass": true,
+            "volumePass": true
+          },
+          "mechanical": {
+            "changedRows": 0,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "model": {
+            "errors": 0,
+            "noRequests": 1499,
+            "refusals": 0,
+            "requests": 501
+          },
+          "ordinarySpelling": {
+            "automaticChanges": 463,
+            "correctChanges": 461,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 1,
+              "value": 0.001,
+              "wilson95RowDescriptive": [
+                0.00017654637062607809,
+                0.0056425585979579355
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 1,
+                "value": 0.0033333333333333335,
+                "wilson95RowDescriptive": [
+                  0.0005886577218511581,
+                  0.018636693694531237
+                ]
+              }
+            },
+            "precision": {
+              "denominator": 463,
+              "numerator": 461,
+              "value": 0.9956803455723542,
+              "wilson95RowDescriptive": [
+                0.9843885707306793,
+                0.9988145945569481
+              ]
+            }
+          },
+          "originalRetention": {
+            "denominator": 1901,
+            "numerator": 1901,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9979833183476213,
+              1.0
+            ]
+          },
+          "rows": 2000
+        },
+        "ru": {
+          "abstention": {
+            "denominator": 2000,
+            "numerator": 1365,
+            "value": 0.6825,
+            "wilson95RowDescriptive": [
+              0.6617654738724162,
+              0.7025348038699263
+            ]
+          },
+          "aggregateFinalText": {
+            "changedRows": 635,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "candidateRecall": {
+            "denominator": 1000,
+            "numerator": 918,
+            "value": 0.918,
+            "wilson95RowDescriptive": [
+              0.8993527833262955,
+              0.9334480465797805
+            ]
+          },
+          "canonical": {
+            "automaticChanges": 0,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "cohorts": {
+            "correct": {
+              "abstention": {
+                "denominator": 700,
+                "numerator": 700,
+                "value": 1.0,
+                "wilson95RowDescriptive": [
+                  0.9945421532469393,
+                  1.0
+                ]
+              },
+              "coverage": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "rows": 700,
+              "spellingAutomaticChanges": 0
+            },
+            "protected": {
+              "abstention": {
+                "denominator": 300,
+                "numerator": 300,
+                "value": 1.0,
+                "wilson95RowDescriptive": [
+                  0.9873570287754538,
+                  0.9999999999999998
+                ]
+              },
+              "coverage": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              },
+              "rows": 300,
+              "spellingAutomaticChanges": 0
+            },
+            "typo": {
+              "abstention": {
+                "denominator": 1000,
+                "numerator": 365,
+                "value": 0.365,
+                "wilson95RowDescriptive": [
+                  0.3357304774271326,
+                  0.3953027473639673
+                ]
+              },
+              "coverage": {
+                "denominator": 1000,
+                "numerator": 635,
+                "value": 0.635,
+                "wilson95RowDescriptive": [
+                  0.6046972526360328,
+                  0.6642695225728674
+                ]
+              },
+              "rows": 1000,
+              "spellingAutomaticChanges": 635
+            }
+          },
+          "coverage": {
+            "denominator": 2000,
+            "numerator": 635,
+            "value": 0.3175,
+            "wilson95RowDescriptive": [
+              0.2974651961300736,
+              0.33823452612758365
+            ]
+          },
+          "exactUndo": {
+            "denominator": 635,
+            "numerator": 635,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9939868354383488,
+              1.0
+            ]
+          },
+          "fixedPointPolicyGates": {
+            "aggregateFalseChangePass": true,
+            "allPass": true,
+            "exactImmediateUndoPass": true,
+            "ordinarySpellingFalseChangePass": true,
+            "originalAlwaysAvailablePass": true,
+            "precisionPass": true,
+            "volumePass": true
+          },
+          "mechanical": {
+            "changedRows": 0,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            }
+          },
+          "model": {
+            "errors": 0,
+            "noRequests": 1953,
+            "refusals": 0,
+            "requests": 47
+          },
+          "ordinarySpelling": {
+            "automaticChanges": 635,
+            "correctChanges": 607,
+            "falseChanges": {
+              "denominator": 1000,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                2.168404344971009e-19,
+                0.0038267584855551234
+              ]
+            },
+            "falseChangesByCohort": {
+              "correct": {
+                "denominator": 700,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  0.0,
+                  0.005457846753060833
+                ]
+              },
+              "protected": {
+                "denominator": 300,
+                "numerator": 0,
+                "value": 0.0,
+                "wilson95RowDescriptive": [
+                  8.673617379884035e-19,
+                  0.012642971224546034
+                ]
+              }
+            },
+            "precision": {
+              "denominator": 635,
+              "numerator": 607,
+              "value": 0.9559055118110236,
+              "wilson95RowDescriptive": [
+                0.937009469571151,
+                0.9693186843167292
+              ]
+            }
+          },
+          "originalRetention": {
+            "denominator": 1901,
+            "numerator": 1901,
+            "value": 1.0,
+            "wilson95RowDescriptive": [
+              0.9979833183476213,
+              1.0
+            ]
+          },
+          "rows": 2000
+        }
+      },
+      "overall": {
+        "abstention": {
+          "denominator": 6000,
+          "numerator": 4902,
+          "value": 0.817,
+          "wilson95RowDescriptive": [
+            0.8070143672833244,
+            0.826579978285421
+          ]
+        },
+        "aggregateFinalText": {
+          "changedRows": 1099,
+          "falseChanges": {
+            "denominator": 3000,
+            "numerator": 1,
+            "value": 0.0003333333333333333,
+            "wilson95RowDescriptive": [
+              5.8843941871566355e-05,
+              0.0018858188843041794
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 2100,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.0018259260005492287
+              ]
+            },
+            "protected": {
+              "denominator": 900,
+              "numerator": 1,
+              "value": 0.0011111111111111111,
+              "wilson95RowDescriptive": [
+                0.00019616532807583548,
+                0.0062667588536892815
+              ]
+            }
+          }
+        },
+        "candidateRecall": {
+          "denominator": 3000,
+          "numerator": 2730,
+          "value": 0.91,
+          "wilson95RowDescriptive": [
+            0.8992281049732107,
+            0.919723239072022
+          ]
+        },
+        "canonical": {
+          "automaticChanges": 1,
+          "falseChanges": {
+            "denominator": 3000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0012788487253259629
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 2100,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.0018259260005492287
+              ]
+            },
+            "protected": {
+              "denominator": 900,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                4.336808689942018e-19,
+                0.004250146730054126
+              ]
+            }
+          }
+        },
+        "cohorts": {
+          "correct": {
+            "abstention": {
+              "denominator": 2100,
+              "numerator": 2100,
+              "value": 1.0,
+              "wilson95RowDescriptive": [
+                0.9981740739994507,
+                1.0
+              ]
+            },
+            "coverage": {
+              "denominator": 2100,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.0018259260005492287
+              ]
+            },
+            "rows": 2100,
+            "spellingAutomaticChanges": 0
+          },
+          "protected": {
+            "abstention": {
+              "denominator": 900,
+              "numerator": 899,
+              "value": 0.9988888888888889,
+              "wilson95RowDescriptive": [
+                0.9937332411463108,
+                0.9998038346719241
+              ]
+            },
+            "coverage": {
+              "denominator": 900,
+              "numerator": 1,
+              "value": 0.0011111111111111111,
+              "wilson95RowDescriptive": [
+                0.00019616532807583548,
+                0.0062667588536892815
+              ]
+            },
+            "rows": 900,
+            "spellingAutomaticChanges": 1
+          },
+          "typo": {
+            "abstention": {
+              "denominator": 3000,
+              "numerator": 1903,
+              "value": 0.6343333333333333,
+              "wilson95RowDescriptive": [
+                0.6169375957743712,
+                0.6513854868680911
+              ]
+            },
+            "coverage": {
+              "denominator": 3000,
+              "numerator": 1097,
+              "value": 0.36566666666666664,
+              "wilson95RowDescriptive": [
+                0.34861451313190883,
+                0.38306240422562865
+              ]
+            },
+            "rows": 3000,
+            "spellingAutomaticChanges": 1097
+          }
+        },
+        "coverage": {
+          "denominator": 6000,
+          "numerator": 1098,
+          "value": 0.183,
+          "wilson95RowDescriptive": [
+            0.17342002171457893,
+            0.19298563271667551
+          ]
+        },
+        "exactUndo": {
+          "denominator": 1099,
+          "numerator": 1099,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9965167624140626,
+            0.9999999999999999
+          ]
+        },
+        "fixedPointPolicyGates": {
+          "aggregateFalseChangePass": true,
+          "allPass": true,
+          "exactImmediateUndoPass": true,
+          "ordinarySpellingFalseChangePass": true,
+          "originalAlwaysAvailablePass": true,
+          "precisionPass": true,
+          "volumePass": true
+        },
+        "mechanical": {
+          "changedRows": 0,
+          "falseChanges": {
+            "denominator": 3000,
+            "numerator": 0,
+            "value": 0.0,
+            "wilson95RowDescriptive": [
+              0.0,
+              0.0012788487253259629
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 2100,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.0018259260005492287
+              ]
+            },
+            "protected": {
+              "denominator": 900,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                4.336808689942018e-19,
+                0.004250146730054126
+              ]
+            }
+          }
+        },
+        "model": {
+          "errors": 0,
+          "noRequests": 4437,
+          "refusals": 0,
+          "requests": 1563
+        },
+        "ordinarySpelling": {
+          "automaticChanges": 1098,
+          "correctChanges": 1068,
+          "falseChanges": {
+            "denominator": 3000,
+            "numerator": 1,
+            "value": 0.0003333333333333333,
+            "wilson95RowDescriptive": [
+              5.8843941871566355e-05,
+              0.0018858188843041794
+            ]
+          },
+          "falseChangesByCohort": {
+            "correct": {
+              "denominator": 2100,
+              "numerator": 0,
+              "value": 0.0,
+              "wilson95RowDescriptive": [
+                0.0,
+                0.0018259260005492287
+              ]
+            },
+            "protected": {
+              "denominator": 900,
+              "numerator": 1,
+              "value": 0.0011111111111111111,
+              "wilson95RowDescriptive": [
+                0.00019616532807583548,
+                0.0062667588536892815
+              ]
+            }
+          },
+          "precision": {
+            "denominator": 1098,
+            "numerator": 1068,
+            "value": 0.9726775956284153,
+            "wilson95RowDescriptive": [
+              0.9612639031508838,
+              0.9807954028321892
+            ]
+          }
+        },
+        "originalRetention": {
+          "denominator": 5703,
+          "numerator": 5703,
+          "value": 1.0,
+          "wilson95RowDescriptive": [
+            0.9993268677869513,
+            1.0
+          ]
+        },
+        "rows": 6000
+      }
+    }
+  },
+  "instrumentation": {
+    "bothDiagnosticStreamsUnchanged": true,
+    "downloadedModelScoring": false,
+    "editorReadCounters": [
+      "before",
+      "after",
+      "selected",
+      "extracted",
+      "caps",
+      "surrounding",
+      "snapshot"
+    ],
+    "fileComparison": "SHA-256, file identity, sidecars and absence/creation/deletion states",
+    "finalPassed": [
+      "io.github.mesteriis.rune.keyboard.qa.NonNormalEditorInstrumentedTest#passwordKeepsOriginalWithoutSmartTypingOrReads",
+      "io.github.mesteriis.rune.keyboard.qa.NonNormalEditorInstrumentedTest#noPersonalizedLearningAllowsCorrectionAndUndoWithoutPersonalizationOrReads",
+      "io.github.mesteriis.rune.keyboard.qa.SmartTypingComposingInstrumentedTest#noPersonalizedLearningComposesWithoutReadingEditorText",
+      "io.github.mesteriis.rune.keyboard.qa.EditorSuggestionFlagsInstrumentedTest#noSuggestionsInIncognitoStillSuppressesCandidatesAndLearning",
+      "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest#actualCandidateDecisionUndoAndSensitiveExclusionsReachSeparateStreams"
+    ],
+    "finalTestCount": 5,
+    "intermediateFailures": [
+      {
+        "cause": "Personal profile loading fallback disabled incognito typing; production fix applied",
+        "failed": 1,
+        "log": "incognito-device.log"
+      },
+      {
+        "cause": "New mode missing from driver allowlist and UI row click before consent dialog",
+        "failed": 2,
+        "log": "incognito-final-device.log"
+      },
+      {
+        "cause": "Repeated UI click failure; changed to actual enabled row listener, retaining both consent dialogs",
+        "failed": 1,
+        "log": "incognito-ui-device.log"
+      },
+      {
+        "cause": "Old schema-7 metadata assertion; synchronized strict schema-8 keys and bounds",
+        "failed": 1,
+        "log": "incognito-stores-and-streams-device.log"
+      }
+    ],
+    "log": "final-five-device.log",
+    "metadataSchema": 8,
+    "publicFakeModelBinder": true,
+    "seededThroughRealStores": true,
+    "storeRoots": [
+      "personal-typing",
+      "personal-touch-v1.tsv",
+      "learning-lab",
+      "typing-controls-v1.bin",
+      "typing-quality-v1.txt",
+      "typing-diagnostics"
+    ]
+  },
+  "jvm": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 1186
+  },
+  "limitations": [
+    "12,000-row replay covers ordinary NORMAL fields; NPL policy uses JVM and instrumented tests",
+    "Existing EN gates and ES holdout false change are unchanged",
+    "No physical Fold acceptance or installation",
+    "Previously admitted NORMAL operations may finish their original content-free terminal record across privacy transitions"
+  ],
+  "logs": {
+    "avd-create.log": "56afd1670f6d2c4c61e2f14cb75bdac91d6036d872ec80df01c6dba78b3ab18c",
+    "avd-delete.log": "b87b11e444d3a4f668239b16622818264012473962667188bc2dd8c5313ce437",
+    "build.log": "3affef346e95f57e1c7822362985cb2972bfb3534eb5ca316721eefc1a0e0047",
+    "candidate.log": "a271e7c68743295748e062916073aa6e26110525833393732113cb70dca0ab6f",
+    "comparison-metrics.log": "e827a70d4336d6a3dd4895179f3b6f7c84c1698e05395307fd30ec6f446420f7",
+    "diagnostics-full.log": "8b606d2cbc32887f11c7bc8eb4f6a24d55a7f8ba382b5400ccd867c40d3737c1",
+    "emulator-stop.log": "e2d4238ce853e3f4c1ba7b36adf25ff824d93c36a0b94db50cb96dc047aac6d3",
+    "emulator.log": "ad95f2b335fcdcce4d387b7ef3565236c000f0b645c86caf881d43f6d9cc7e46",
+    "final-build.log": "dcbc4e664e6005cd82b58bebf0f61da0846b65e4aa7ddb6304f5e397372a2280",
+    "final-five-device.log": "ecde3cd97bfd83d5c795e671d708ac3e5d68ba1754367f42c2beab6da0a50182",
+    "final-gates.log": "05b60c276100374c3e95f97a4d7bd0e135531a5b56a55f883ead7499f1412b8c",
+    "final-install.log": "72e56d167686a8e23d174c8e84767c3b487723df259bdfd032119915318d687d",
+    "final-jvm.log": "46ef0e3e38a80a6d126332e79244cdd22102ab04f1d102abf39684b7a0087c07",
+    "final-test-harness-build.log": "799e35040a93636171234369dd4646f6d1aa159f4335769083fca88109964604",
+    "first-full.log": "ca64f031e0cc60f3b25577c2ddd1eb74502dd11d5a57ff2feb462e332c8b97e0",
+    "incognito-device.log": "dd65607ce9c4f0c56efd6193cea1db997cb2a08e0bd3e4e7cfcfbd84604dd325",
+    "incognito-diagnostics-device.log": "a5821ce740b0ab3b35ebba2010a4ce30c64cbdc2ccdbbeacbf575ae6260f1e9b",
+    "incognito-final-device.log": "9ce058503585e3d79b4ae054c921e5f45f3aa7dea332e6c624c3385347cdc03e",
+    "incognito-stores-and-streams-device.log": "f7c2bd01e12c25b3f12bf41f65c51ebea86a90518c88d1f33b9365c281e78b02",
+    "incognito-ui-device.log": "51ec8ac02e267454fe1570ec59772e6919cc7d01ee1b336973513240da093420",
+    "install-app.log": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7",
+    "install-tests.log": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7",
+    "last-tests-install.log": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7",
+    "metadata-test-build.log": "4f415dfd8d90ad0608d4a163f42a3dfca61605daa1bd721b7a858cbf2fbc1bf5",
+    "metadata-tests-install.log": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7",
+    "red.log": "5b1526c616b43e1a1c6a1d87f944daac40c6043dd85a8710ec6a42d2aa589cb3",
+    "second-full.log": "7248a201e6ce5e3822390d9d58fb69f61356bec62089783bd66b732fa1009f7d",
+    "store-test-build.log": "f21f05bd720263ded30c85f5502ac800575b844dbc674e0b85545f767d8202e6",
+    "store-test-final-build.log": "851d6ed1d9f58589712e89224ab011f95f7ac8f6b3148e0ecf32777efffa7c5a",
+    "ui-fixture-build.log": "cdc2e27e9f03ed7bbcb3bfdc662a4aadc23842ee7af6975abeca26a3c862e460",
+    "ui-tests-install.log": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+  },
+  "newAggregateFalseChanges": 0,
+  "receiptArtifacts": {
+    "build/review-u3-20261027/baseline-metrics.json": "799def2ab557727456d6971aa481a6683f00aace3ab862a9c90997e8c732aa08",
+    "build/review-u3-20261027/baseline-receipt.json": "0312ccb1724a062d3be9c9bdefbb641127244e55ed9ba36da6db45f03b98b6f0",
+    "build/review-u3-20261027/candidate-metrics.json": "799def2ab557727456d6971aa481a6683f00aace3ab862a9c90997e8c732aa08",
+    "build/review-u3-20261027/candidate-receipt.json": "95d2d66b0573a19934e6bc056edaae8b882910f6d0794295e915204de53c9d79",
+    "build/review-u3-20261027/cleanup.json": "a130d8f35985e1287e01a1b6ab8455e1f62dc7d6a9efaeb77fd72cc749664a45",
+    "build/review-u3-20261027/comparison.json": "a64b01c5481779ba1bf8df19ea284dc2811740216f01521a100ff7ef55a03ee3"
+  },
+  "replay": {
+    "baseline": {
+      "exitCode": 0,
+      "inputSha256": "b828dc8c5f57e5996a0a88442297c004b4939dadd74f15d9b101dadc8618e415",
+      "jarSha256": "3a1b373ec58ba8901ac654b2d543dd332e6aa9b1bda671b2dc4b5dc03b3481f8",
+      "mode": "noun-case-production",
+      "observationSha256": "92affa716614c66bab091efaf509790b1c680df5a750ac2d8e6e7087f8ff4c12",
+      "rows": 12000,
+      "sources": {
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt": "07a43f4a18218d3eb7bb2ddfa67be680808d903acddb0b7b58153a6a4f137719",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt": "5a47dc7db1ffe75e84d799cbbafd614abb27cf2238dad13ad6122cd0ec48bb6c",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt": "9b94b991dcd53407fd53c3fce529eb83736326c3dcf924c6d1a2e62856373312",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/AutoCorrectionAdmissionGuard.kt": "adb24f2482668a78a5e2eea8c0f3c384dae7c07ee5129e59bca521aa3ca91f16",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt": "585d3ca38dc9750bee4bee580c81350ad037fd836b5a049a3f862c545e3545da",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt": "17a84a259cc1f91fbd85585f79a26237bffabf3a53072703b20b2ccf69fac501",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CommonConfusions.kt": "dd9483f2c12d7025218c98166b5116f349799c5eec36dbe3be96f6251c45533e",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ContextualQualification.kt": "b6900050ec487e8ccb92eb2e177900bd48190e7d3bb82f9d0337b97da07a48d7",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/InfinitiveRevisionQualification.kt": "e5c54f713ef37d0420d580723969d5d16605fc5a2d69d9cc7619f0c7593d3a9e",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointQualification.kt": "0365f0df915381ba9fcb538275f9db7b9413f277cfadde9eb3f3ab27bc0a24d6",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointRescueQualification.kt": "b49be5277ecf4ee64cde8672a0eac67043b99b2c9e64819f179f04e4a898827a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/LocalCorrectionPolicy.kt": "5f89598f4094936e9bdfd7bb54770301cb05e4ae87f47f1b003f53bfb36677d5",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt": "680370e00056a9c4fde479cd0efb371e520b4ed1ec1a33381fb5fc20318056fe",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/NounCaseRevisionQualification.kt": "6f369b885e00ccb01a1da0c5470666e281e4ef41de5f2e4b90c01c64764cd559",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/QualificationArtifacts.kt": "dc554c02e83fa735189bdea7a9cbd860a6a567cc82a14ba445ff04df768ff2e4",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/RecoveryQualification.kt": "7cfb75351cfc6cc53a2f4b36ebb891581ab795f0f307a09673a1d4ad94ebfad6",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt": "67c0b3215c6183239632ce521c7d7d16f64cda01caeb1421eb31791b35085c9b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WordContextQualification.kt": "37b7cfb22a2c32e0188cc961c7bfb133405bd20c03a3afa4ee1c32325ff4428f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticFeatures.kt": "7e945dd7057ac5d30b4d237a315fe59b23ba5de3c806a94a825b6fb3a199afd5",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt": "6cdfdc20a9c2b117dab5b7abae4cd4d64e6ee817d7966c29f064f5147bf3533b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/CompactAutoCorrectionPolicy.kt": "90170cedd685a3f90ce13032af493b6a87fe75dce8a6e230388ae29529d40c86",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextFeatureData.kt": "3b49f40802fb4bcd6e4854d157fb41d5c5e23c4edf7dae47e8b5fee65176aabb",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualCorrectionPolicy.kt": "a7946c3907fa8e1986b9077e54e61e5d485cb2e35b2380356e2553b5a7c74a8f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualRanker.kt": "95387d0f4fed4f45530935c13f1f2b87890f6513a503f2909f9a764ec434ec4f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ExperimentModels.kt": "e73e385587595a9a89199176eb461b95866c2b8d6c986a09936100c65f8c6359",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenContextualAssets.kt": "0ea0dd297b7444c0f05622ad123ba085483775fd163ca9dcab682b360156d28f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt": "ff4e3cc8b0f67da2295e375b129518100fa8b2b981f32ed490e6e38daa01fd34",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenInfinitiveRevisionAssets.kt": "275677a907ee5a7bc39b530ce1e06ecffc8344afcbe6851d3d4db4bf4bbf6bcb",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenNounCaseAssets.kt": "eaa6044f2e4daa39386861ffdacb5babc72dea9df85316d8ced62ce1966099b2",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/GrammaticalContextFeatures.kt": "f0aea36776f3000c619fb160780c05d50ac0309fdeb28bbeeed5ea22d2e910ca",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/InfinitiveRevisionPolicy.kt": "5c1bc1979191ed404f2c5d906df1b6e62b3907e2824fc4b3e5055ee11664950d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/InfinitiveRevisionScope.kt": "b2c9ca204b8ab0cb4d97364298c41fa2c0d9ec02453af38576dcf9cb9979faa8",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/JointCorrectionPolicy.kt": "1a30c167af91a9241a18f964419f060617448082cb035c954fc08926088ffc6f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/JointRescuePolicy.kt": "78018a90cded762b08cda7aa29c389b8699ebd712a454833adbd66be787ead58",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NeighborRecoveryPolicy.kt": "5758babf28e12cd3dbfe06870d07902b3ed6be0004707bdb5d66b61e786cc93d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NounCaseRevisionPolicy.kt": "cf3210f119e456e49c94dc7a8c28735f86dd2cb2d488c5f4232a5d9405853313",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NounCaseRevisionScope.kt": "37a50bbd3a4cd3d6c89b9aa9d655ffd87a94199d904841a17c856155db6471a1",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ObliviousTreeRanker.kt": "5ad360481b4db761bc539f5af6ebe7d0c9a0e858060b50c99b5422d2317794e1",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/PackedContextIndex.kt": "935a93ced12dcec88c5b2fcbf9a0a8d44af04b875e592b0b9f199cf97541f9f8",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/RankFeatures.kt": "210c81129bfe7b50ac2802a5afb401cb1e700a1eb68f88138b63d48a755de484",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/WordContextPolicy.kt": "df123d3e57e801b7a086c66c0d325a170450ef2ce1317b3bfd7b7fca7fcc580a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "4d830724cc66f967f7c7736efedd540da9f5e27892d1f09cb753dabaa592e684",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt": "ec68fc1d939897a92d7767f25790ddb38e1f3fa14213d27689ba0dd59646f900",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt": "c3342a3c2badc48ec245a6650731ef3b1c03dec9daa5bc967eb9ce57d72b6bbe",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenMorphologyLexicon.kt": "5236dec0a5a269c5221768db95ef10a5e767a58c8182d4c36cf39013b15bd8da",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenRareWordLexicon.kt": "1eae0a01c794eb4137944555b97b4b2744c1ac00ddbf1d0538a40854a21f6afb",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt": "30589c408a785ca0a876d68a485f55e1e81201954e27756556468aa480b451e0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/MorphologyLexicon.kt": "b434dc8dc1f349bc7d02a97069406ba93d73f4b9946136d74b56351a3bd65f56",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/NeighborRecoverySearch.kt": "0c30517b0f59e4d2d1b4927c5e654d22d190119d059af6cdcfbe059309032b55",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt": "0d59152024c64263cf7d1d178cd353446ab0c0a1bea79ee3b8f55ec4fe788d54",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt": "2e6e581663e6634dc1f4a596c6ff59d661c5c83ee03e58182113a62e1a9ca369",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedMorphologyLexicon.kt": "479e39b7d3c895a1e3d64607d560de5953a58df94480d7d17ca8140e1f7fde87",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedRareWordLexicon.kt": "82fcba321650482df5a01f92ac71775e70e49967707c57f558e1c9d619a98cc3",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PublicCandidateAugmenter.kt": "609963fc8d8cad6a4288f331331a972ffc1fa74a93eb816a134cf3c5bad5aa5a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/RareWordLexicon.kt": "ef56fc34c05e0a20850a190494d36d3a666e425cad0bfdd9e7e42a6a96c763a0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt": "932beb08c75059b820be5787bccf186f10c20d6689f808f20cf130d3797eecd1",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt": "0356308483c95336e49460c7226ae80acb6632f03d56f90a2ed2f889b6c87294",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRecorder.kt": "ce29500364b27a6979dae9b1762a3dc22d5894eddcc1ea6cc2731a79fdb13b41",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ExperimentalTypingInput.kt": "6b7cc32436be42ad595c9a6248365a2f1251c416fb01eddbc264787c9e590311",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/PreviousWordRefinementTicket.kt": "18131a6304706599068fe7485a6a7addd95e3388172e0b7bd1cc518eb5f2b203",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingPersonalization.kt": "9f94f415c91270fee3469ebdc7ad6901d3a7a63b10c414bd53f1bd6c1bd9bec0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "f442112b751118756067ef4f66f86206336af120d3c2e7f164398934e7a7b01f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingTools.kt": "65fe8dc9371ecdc469961ecc83307c7bea81cbb3dee1db29571982fc30fc01e2",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt": "bca5697c00c39eba55be74b7accb25b9c573c49dbd065a1a38e5b03f8e78218c",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt": "9ed741a1131dbdec9e5e1f30851055e49fad720c641945a4c353858cfb59c31b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt": "5068584153b5916788005a259cdd27a1adcd65bda0ff3f1182aa43604a64ca84",
+        "tools/eval/smart-typing-0.3/pipeline/FinalProductSpellingReplay.kt": "be0a8d8b0c255016e44dda9f8c8c74efe63741924413168f809e81947dd3cf95"
+      }
+    },
+    "candidate": {
+      "exitCode": 0,
+      "inputSha256": "b828dc8c5f57e5996a0a88442297c004b4939dadd74f15d9b101dadc8618e415",
+      "jarSha256": "0fce13e70c6ef90343f1cef161d9356b8ab20a3a3fa6440c9d51162a8d954ae8",
+      "mode": "noun-case-production",
+      "observationSha256": "18808df0cac94438953474927f6a52f6056733fd83e0ec889b68ee2884055026",
+      "rows": 12000,
+      "sources": {
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt": "1728aad737d3b13e12c351ecc4e87b2f59632e818eeb3457b9dacb9dcc2fc609",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt": "a0cc1f6fd42f91429b34b4a25af7d3282d0bc6a838f32a7407a1d90c42d2f182",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt": "5a47dc7db1ffe75e84d799cbbafd614abb27cf2238dad13ad6122cd0ec48bb6c",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt": "9b94b991dcd53407fd53c3fce529eb83736326c3dcf924c6d1a2e62856373312",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/AutoCorrectionAdmissionGuard.kt": "adb24f2482668a78a5e2eea8c0f3c384dae7c07ee5129e59bca521aa3ca91f16",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt": "585d3ca38dc9750bee4bee580c81350ad037fd836b5a049a3f862c545e3545da",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt": "17a84a259cc1f91fbd85585f79a26237bffabf3a53072703b20b2ccf69fac501",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CommonConfusions.kt": "dd9483f2c12d7025218c98166b5116f349799c5eec36dbe3be96f6251c45533e",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ContextualQualification.kt": "b6900050ec487e8ccb92eb2e177900bd48190e7d3bb82f9d0337b97da07a48d7",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/InfinitiveRevisionQualification.kt": "e5c54f713ef37d0420d580723969d5d16605fc5a2d69d9cc7619f0c7593d3a9e",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointQualification.kt": "0365f0df915381ba9fcb538275f9db7b9413f277cfadde9eb3f3ab27bc0a24d6",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointRescueQualification.kt": "b49be5277ecf4ee64cde8672a0eac67043b99b2c9e64819f179f04e4a898827a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/LocalCorrectionPolicy.kt": "5f89598f4094936e9bdfd7bb54770301cb05e4ae87f47f1b003f53bfb36677d5",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt": "680370e00056a9c4fde479cd0efb371e520b4ed1ec1a33381fb5fc20318056fe",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/NounCaseRevisionQualification.kt": "6f369b885e00ccb01a1da0c5470666e281e4ef41de5f2e4b90c01c64764cd559",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/QualificationArtifacts.kt": "dc554c02e83fa735189bdea7a9cbd860a6a567cc82a14ba445ff04df768ff2e4",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/RecoveryQualification.kt": "7cfb75351cfc6cc53a2f4b36ebb891581ab795f0f307a09673a1d4ad94ebfad6",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt": "67c0b3215c6183239632ce521c7d7d16f64cda01caeb1421eb31791b35085c9b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WordContextQualification.kt": "37b7cfb22a2c32e0188cc961c7bfb133405bd20c03a3afa4ee1c32325ff4428f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticFeatures.kt": "7e945dd7057ac5d30b4d237a315fe59b23ba5de3c806a94a825b6fb3a199afd5",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt": "6cdfdc20a9c2b117dab5b7abae4cd4d64e6ee817d7966c29f064f5147bf3533b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/CompactAutoCorrectionPolicy.kt": "90170cedd685a3f90ce13032af493b6a87fe75dce8a6e230388ae29529d40c86",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextFeatureData.kt": "3b49f40802fb4bcd6e4854d157fb41d5c5e23c4edf7dae47e8b5fee65176aabb",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualCorrectionPolicy.kt": "a7946c3907fa8e1986b9077e54e61e5d485cb2e35b2380356e2553b5a7c74a8f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualRanker.kt": "95387d0f4fed4f45530935c13f1f2b87890f6513a503f2909f9a764ec434ec4f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ExperimentModels.kt": "e73e385587595a9a89199176eb461b95866c2b8d6c986a09936100c65f8c6359",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenContextualAssets.kt": "0ea0dd297b7444c0f05622ad123ba085483775fd163ca9dcab682b360156d28f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt": "ff4e3cc8b0f67da2295e375b129518100fa8b2b981f32ed490e6e38daa01fd34",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenInfinitiveRevisionAssets.kt": "275677a907ee5a7bc39b530ce1e06ecffc8344afcbe6851d3d4db4bf4bbf6bcb",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenNounCaseAssets.kt": "eaa6044f2e4daa39386861ffdacb5babc72dea9df85316d8ced62ce1966099b2",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/GrammaticalContextFeatures.kt": "f0aea36776f3000c619fb160780c05d50ac0309fdeb28bbeeed5ea22d2e910ca",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/InfinitiveRevisionPolicy.kt": "5c1bc1979191ed404f2c5d906df1b6e62b3907e2824fc4b3e5055ee11664950d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/InfinitiveRevisionScope.kt": "b2c9ca204b8ab0cb4d97364298c41fa2c0d9ec02453af38576dcf9cb9979faa8",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/JointCorrectionPolicy.kt": "1a30c167af91a9241a18f964419f060617448082cb035c954fc08926088ffc6f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/JointRescuePolicy.kt": "78018a90cded762b08cda7aa29c389b8699ebd712a454833adbd66be787ead58",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NeighborRecoveryPolicy.kt": "5758babf28e12cd3dbfe06870d07902b3ed6be0004707bdb5d66b61e786cc93d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NounCaseRevisionPolicy.kt": "cf3210f119e456e49c94dc7a8c28735f86dd2cb2d488c5f4232a5d9405853313",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NounCaseRevisionScope.kt": "37a50bbd3a4cd3d6c89b9aa9d655ffd87a94199d904841a17c856155db6471a1",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ObliviousTreeRanker.kt": "5ad360481b4db761bc539f5af6ebe7d0c9a0e858060b50c99b5422d2317794e1",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/PackedContextIndex.kt": "935a93ced12dcec88c5b2fcbf9a0a8d44af04b875e592b0b9f199cf97541f9f8",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/RankFeatures.kt": "210c81129bfe7b50ac2802a5afb401cb1e700a1eb68f88138b63d48a755de484",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/WordContextPolicy.kt": "df123d3e57e801b7a086c66c0d325a170450ef2ce1317b3bfd7b7fca7fcc580a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "4d830724cc66f967f7c7736efedd540da9f5e27892d1f09cb753dabaa592e684",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt": "ec68fc1d939897a92d7767f25790ddb38e1f3fa14213d27689ba0dd59646f900",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt": "c3342a3c2badc48ec245a6650731ef3b1c03dec9daa5bc967eb9ce57d72b6bbe",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenMorphologyLexicon.kt": "5236dec0a5a269c5221768db95ef10a5e767a58c8182d4c36cf39013b15bd8da",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenRareWordLexicon.kt": "1eae0a01c794eb4137944555b97b4b2744c1ac00ddbf1d0538a40854a21f6afb",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt": "30589c408a785ca0a876d68a485f55e1e81201954e27756556468aa480b451e0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/MorphologyLexicon.kt": "b434dc8dc1f349bc7d02a97069406ba93d73f4b9946136d74b56351a3bd65f56",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/NeighborRecoverySearch.kt": "0c30517b0f59e4d2d1b4927c5e654d22d190119d059af6cdcfbe059309032b55",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt": "0d59152024c64263cf7d1d178cd353446ab0c0a1bea79ee3b8f55ec4fe788d54",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt": "2e6e581663e6634dc1f4a596c6ff59d661c5c83ee03e58182113a62e1a9ca369",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedMorphologyLexicon.kt": "479e39b7d3c895a1e3d64607d560de5953a58df94480d7d17ca8140e1f7fde87",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedRareWordLexicon.kt": "82fcba321650482df5a01f92ac71775e70e49967707c57f558e1c9d619a98cc3",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PublicCandidateAugmenter.kt": "609963fc8d8cad6a4288f331331a972ffc1fa74a93eb816a134cf3c5bad5aa5a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/RareWordLexicon.kt": "ef56fc34c05e0a20850a190494d36d3a666e425cad0bfdd9e7e42a6a96c763a0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt": "932beb08c75059b820be5787bccf186f10c20d6689f808f20cf130d3797eecd1",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt": "94706877b77cf0ab1ec6ddaa2469708d85d3fd6167054abbccd65fd7efaa5968",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRecorder.kt": "ce29500364b27a6979dae9b1762a3dc22d5894eddcc1ea6cc2731a79fdb13b41",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ExperimentalTypingInput.kt": "6b7cc32436be42ad595c9a6248365a2f1251c416fb01eddbc264787c9e590311",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/PreviousWordRefinementTicket.kt": "18131a6304706599068fe7485a6a7addd95e3388172e0b7bd1cc518eb5f2b203",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingPersonalization.kt": "9f94f415c91270fee3469ebdc7ad6901d3a7a63b10c414bd53f1bd6c1bd9bec0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "ad095e4e745f4be77519f2c90a6a7d3dd13af502ec18145f733734407badb653",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingTools.kt": "65fe8dc9371ecdc469961ecc83307c7bea81cbb3dee1db29571982fc30fc01e2",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt": "bca5697c00c39eba55be74b7accb25b9c573c49dbd065a1a38e5b03f8e78218c",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt": "9ed741a1131dbdec9e5e1f30851055e49fad720c641945a4c353858cfb59c31b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt": "5068584153b5916788005a259cdd27a1adcd65bda0ff3f1182aa43604a64ca84",
+        "tools/eval/smart-typing-0.3/pipeline/FinalProductSpellingReplay.kt": "be0a8d8b0c255016e44dda9f8c8c74efe63741924413168f809e81947dd3cf95"
+      }
+    }
+  },
+  "sourceBindings": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/EditorSuggestionFlagsInstrumentedTest.kt": "c72168a48880b4f8b15a1234b8dcc0dfdf6e49b2d55f3e0e7a28e1515ccd53bb",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt": "da8d3f0c33b44cafa7cbaf487b1bf38cb76f286ecef4211501c1eee6b209c0da",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LiveFakeModelBinderFixture.kt": "676805be5ad005ab77e08320ba6b0c395485eece23090e791d72ad08cec045f8",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/NonNormalEditorInstrumentedTest.kt": "5b636d6ea14874d0c11f056c12450a498ec0e1c67eb6e6e8fe7b8f58a424e24d",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/PersonalStoreSnapshot.kt": "2aee4da545928744567c97df86aaefe2195148094e9319ea951e990cb3d8b890",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SmartTypingComposingInstrumentedTest.kt": "a3192987e9b38a3101ae08a60e68d6957b17ffeedd2c978af067e14a02d99ed7",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/TypingDiagnosticsInstrumentedTest.kt": "1f1950e636cd6025a7cd8b1363e35febc8500e23b62c5f4569d87dd567da497a",
+    "app/src/debug/java/io/github/mesteriis/rune/keyboard/qa/ComposingQaFixture.kt": "12aa2505412ad60b43aef87e366addfb60a4de08532b4b8e2f78e81d6eb363b6",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt": "946a760beb99a1e9bcbd2aeb12aee70c97c41032442b010bdb122ba966967c13",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/EditorCommandExecutor.kt": "bcb46547377ebe823c06f4fd2b271eb1ffc3765aae604ef0bfbe198d3f360e16",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt": "1728aad737d3b13e12c351ecc4e87b2f59632e818eeb3457b9dacb9dcc2fc609",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardSessionPolicy.kt": "7b2e6d2b873cdfdb996a896c4147974990604e07cbd1255f4a63140a6a965ff6",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt": "94706877b77cf0ab1ec6ddaa2469708d85d3fd6167054abbccd65fd7efaa5968",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "ad095e4e745f4be77519f2c90a6a7d3dd13af502ec18145f733734407badb653",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/ime/editor/EditorCommandExecutorTest.kt": "5e24355977ec3d5f836258e5ba401866e0c7b8d912faeddb25e63f00b0746f10",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContextTest.kt": "7fa40cd380a8627264d0a4ce2e63d403153b4d99ed77f1773f5ded5f8b19590b",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardReducerTest.kt": "d55c382447ce6a920aef012341f678f3abc20d17f2c62669240a43531e272ee7",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/ime/model/MechanicalCapitalizationStateTest.kt": "d617399485379b131ea850134e6be6910e623c5cb0a76f250453ea01853c9b68",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinatorTest.kt": "dc985edfd2cda01ac5138529b8786b09da249baaed14199aeb6cf57f99e2037a",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/MechanicalTypingSessionTest.kt": "601dd10ad2e621550455e90a12f1866e7b20379c4217b1d0ac8650a014c9f4cd",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionControllerTest.kt": "700ef000221f23399f82d1285313db7596141628b6960ab93cd76ba72d311553",
+    "app/src/testDebug/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/IncognitoDiagnosticsTest.kt": "29a8317d64820483738ed51fad8162c15fcf939cbadfe5d5fa39693cc348c8f8"
+  },
+  "status": "VERIFIED_LOCAL_AND_EMULATOR_ACCEPTANCE"
+}

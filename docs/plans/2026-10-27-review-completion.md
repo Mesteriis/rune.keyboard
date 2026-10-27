@@ -40,6 +40,7 @@ schema-4 migration and next-word model/canonical Undo, 1,174 JVM tests, eight
 emulator instrumentation scenarios and unchanged 12,012-row historical boundary/
 Undo/admission replay. Physical Fold acceptance is still required; U1 stays open.
 U2 is verified locally in `docs/acceptance/2026-10-27-u2-token-scoped-mechanics.md`: token-scoped prose protection, explicit command/marker line protection, exact refusal regressions, zero-read Undo, 1,181 JVM tests and byte-identical 12,000-row product replay with zero new aggregate false changes. Existing quality gate failures are disclosed in the receipt.
+U3 is verified locally in `docs/acceptance/2026-10-27-u3-incognito.md`: explicit NPL incognito policy, zero editor reads, unchanged six personal-store roots and both diagnostic streams, 1,186 JVM tests, five emulator scenarios and byte-identical 12,000-row ordinary-product replay. Physical release acceptance remains separate.
 Other cards remain open until their complete evidence is established.
 
 ## Acceptance inventory
@@ -52,7 +53,7 @@ Other cards remain open until their complete evidence is established.
 | A4 | Category-level period/colon controls with source/asset/corpus hashes and exit codes; Fold protected abbreviation, useful correction and exact Undo. | Open |
 | U1 | Visible Undo default with compatible schema migration and explicit preference retention; model/canonical Undo survives next character without new refinement; replay and device coverage. | In progress: local acceptance verified; physical Fold pending |
 | U2 | Token-scoped mechanical protection, exact refusal reasons and command/marker controls; Undo with zero reads; zero new correct/protected false changes. | Verified locally; receipt above |
-| U3 | NPL incognito policy; composing/corrections with zero content reads; no mutation of six personal/diagnostic stores; JVM, instrumentation and replay. | Open |
+| U3 | NPL incognito policy; composing/corrections with zero content reads; no mutation of six personal/diagnostic stores; JVM, instrumentation and replay. | Verified locally; receipt above |
 | U4 | Reproduce shifted/changed composing ownership first; correct final text and finish behavior in simulator/qa_editor; preserve ownership safeguards; regression replay. | Open |
 | U5 | Visible confirmed-word list and individual deletion; preserve pair rejections; phrase validation, capacity and restart persistence; privacy/user documentation. | Open |
 | U6 | Settings registry, dependencies and Switch controls; registry/disable-list completeness; search/recreate/back, accessibility and updated screenshot/guide. | Open |

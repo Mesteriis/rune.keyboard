@@ -281,7 +281,7 @@ class MechanicalTypingSessionTest {
     }
 
     @Test fun `nontext sensitive and raw editors never enter mechanical composition`() {
-        for (context in listOf(editor.copy(isPassword = true), editor.copy(noPersonalizedLearning = true),
+        for (context in listOf(editor.copy(isPassword = true),
             editor.copy(requiresRawKeyEvents = true), editor.copy(mode = EditorMode.NUMBER),
             editor.copy(mode = EditorMode.EMAIL), editor.copy(mode = EditorMode.URI))) {
             val f = Fixture(context = context)

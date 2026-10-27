@@ -11,7 +11,7 @@ object MechanicalPunctuationPlanner {
         action: PunctuationAction,
         policy: MechanicalPunctuationPolicy,
     ): MechanicalPunctuationPlan {
-        if (policy.inputPolicy != InputPolicy.NORMAL) return keep(UnchangedPunctuationReason.INPUT_POLICY)
+        if (!policy.inputPolicy.allowsOwnedComposition) return keep(UnchangedPunctuationReason.INPUT_POLICY)
         if (policy.mode != EditorMode.TEXT) return keep(UnchangedPunctuationReason.NON_TEXT_MODE)
         if (policy.requiresRawKeyEvents) return keep(UnchangedPunctuationReason.RAW_EDITOR)
         if (action == PunctuationAction.Send) return keep(UnchangedPunctuationReason.SEND)

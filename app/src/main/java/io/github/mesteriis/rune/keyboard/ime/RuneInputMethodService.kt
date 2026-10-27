@@ -216,7 +216,7 @@ class RuneInputMethodService : InputMethodService() {
         editorContext = EditorContext.from(editorInfo)
         activePackage = editorInfo.packageName
         resolveTypingProfile()
-        if (globalSettings.appProfiles && editorContext.supportsSmartTyping)
+        if (globalSettings.appProfiles && editorContext.allowsPersonalization)
             activePackage?.let(personalResources.controls::observePackage)
         hasSelection = editorInfo.initialSelStart >= 0 &&
             editorInfo.initialSelEnd >= 0 &&
@@ -501,7 +501,7 @@ class RuneInputMethodService : InputMethodService() {
                 inputPolicy = editorContext.inputPolicy,
                 deleteMode = when {
                     editorContext.requiresRawKeyEvents -> DeleteMode.RAW_KEY_EVENT
-                    editorContext.inputPolicy == io.github.mesteriis.rune.keyboard.ime.model.InputPolicy.SENSITIVE -> {
+                    !editorContext.inputPolicy.allowsEditorReads -> {
                         DeleteMode.CODE_POINT
                     }
                     else -> DeleteMode.GRAPHEME_AWARE
@@ -642,15 +642,18 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     private fun resolveTypingProfile() {
-        appliedControls = personalResources.controls.snapshot.takeIf { personalResources.controls.isReady }
-        val resolved = TypingProfileResolver.resolve(globalSettings, activePackage, appliedControls)
+        appliedControls = if (editorContext.allowsPersonalization && personalResources.controls.isReady)
+            personalResources.controls.snapshot else null
+        // Incognito uses global typing settings, never a personal package profile or its loading fallback.
+        val profileSettings = if (editorContext.allowsPersonalization) globalSettings else globalSettings.copy(appProfiles = false)
+        val resolved = TypingProfileResolver.resolve(profileSettings, activePackage, appliedControls)
         activeProfile = resolved.first
         settings = resolved.second
     }
 
     private fun handleCandidateProtection(id: String): Boolean {
         updatePersonalizationPolicy()
-        if (!settings.protectedWords || !inputViewActive || !editorContext.supportsSmartTyping) return false
+        if (!settings.protectedWords || !inputViewActive || !editorContext.allowsPersonalization) return false
         val word = typingSession.wordForProtection(id) ?: return false
         personalResources.controls.protect(word, state.language) { result ->
             if (result == TypingControlStore.Result.SAVED) keyboardPreferences.notifyTypingControlsChanged()
@@ -682,7 +685,7 @@ class RuneInputMethodService : InputMethodService() {
 
     private fun updatePersonalizationPolicy() {
         if (!::personalization.isInitialized) return
-        val eligible = inputViewActive && editorContext.editorAllowsSuggestions && !hasSelection &&
+        val eligible = inputViewActive && editorContext.allowsPersonalization && !hasSelection &&
             state.layer == KeyboardLayer.LETTERS
         val visible = eligible && settings.candidateStrip
         typingTools.boundariesEnabled = visible && settings.wordBoundarySuggestions
@@ -715,7 +718,7 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     private fun dynamicTouchStamp(): Long {
-        val enabled = inputViewActive && editorContext.editorAllowsSuggestions && !hasSelection &&
+        val enabled = inputViewActive && editorContext.allowsPersonalization && !hasSelection &&
             state.layer == KeyboardLayer.LETTERS && settings.dynamicTouch && personalResources.experiments.tapReady
         return dynamicTouchContext.update(typingSession.state.sessionId, typingSession.state.revision,
             state.language, if (enabled) typingSession.experimentalInput() else null, enabled, settings.dynamicTouchApply)

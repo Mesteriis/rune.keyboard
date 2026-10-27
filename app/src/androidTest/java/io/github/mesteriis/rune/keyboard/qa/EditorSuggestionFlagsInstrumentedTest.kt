@@ -14,6 +14,13 @@ class EditorSuggestionFlagsInstrumentedTest : ImeTestBase() {
         }
     }
 
+    @Test fun noSuggestionsInIncognitoStillSuppressesCandidatesAndLearning() {
+        LiveFakeModelBinderFixture.install(driver).use { fixture ->
+            fixture.proveNormalPipelineObservers()
+            fixture.verifyNoSuggestionsComposingSearchAndMechanics("private_no_suggestions")
+        }
+    }
+
     @Test fun autoCompleteSearchSubmitsOriginalWithoutModelWork() = verify("autocomplete")
     @Test fun filterSearchSubmitsOriginalWithoutModelWork() = verify("filter")
 

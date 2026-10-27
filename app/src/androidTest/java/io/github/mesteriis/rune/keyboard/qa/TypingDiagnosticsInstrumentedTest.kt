@@ -60,20 +60,20 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         row("diagnostics_text_toggle").click(); dialog("diagnostics_scope_title")
         assertFalse(recorder.preferences.text)
         driver.device.pressBack(); settle(); assertFalse(recorder.preferences.text)
-        row("diagnostics_text_toggle").click(); dialog("diagnostics_scope_title"); positive()
+        clickRow("diagnostics_text_toggle"); dialog("diagnostics_scope_title"); positive()
         dialog("diagnostics_storage_title"); assertFalse(recorder.preferences.text)
         button("button2").click(); settle(); assertFalse(recorder.preferences.text)
         enableTextThroughDialogs()
         assertFalse(recorder.preferences.metadata)
         row("diagnostics_text_toggle").click(); awaitPreference(text = false)
-        row("diagnostics_metadata_toggle").click(); awaitPreference(metadata = true)
+        clickRow("diagnostics_metadata_toggle"); awaitPreference(metadata = true)
         assertFalse(recorder.preferences.text)
         row("diagnostics_metadata_toggle").click(); awaitPreference(metadata = false)
     }
 
     @Test fun recreationDuringSecondConfirmationLeavesTextOff() {
         driver.launchSettings()
-        row("diagnostics_text_toggle").click(); dialog("diagnostics_scope_title"); positive()
+        clickRow("diagnostics_text_toggle"); dialog("diagnostics_scope_title"); positive()
         dialog("diagnostics_storage_title")
         val replacementResumed = CountDownLatch(1)
         var previous: SettingsActivity? = null
@@ -121,7 +121,7 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         assertTrue(recorder.preferences.text); assertFalse(recorder.preferences.metadata); noReadback()
 
         driver.launchSettings()
-        row("diagnostics_metadata_toggle").click(); awaitPreference(metadata = true)
+        clickRow("diagnostics_metadata_toggle"); awaitPreference(metadata = true)
         driver.launchComposingQa(); type("aftercanary"); space()
         val text = snapshot(DiagnosticStream.TEXT)
         assertTrue("Permitted input did not reach recorder", text.contains("aftercanary"))
@@ -144,7 +144,7 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
 
     @Test fun actualCandidateDecisionUndoAndSensitiveExclusionsReachSeparateStreams() {
         driver.launchSettings(); enableTextThroughDialogs()
-        row("diagnostics_metadata_toggle").click(); awaitPreference(metadata = true)
+        clickRow("diagnostics_metadata_toggle"); awaitPreference(metadata = true)
         // Return to a real input window before installing the existing bounded fake scorer.
         driver.launchComposingQa()
         LiveFakeModelBinderFixture.install(driver).use { fixture ->
@@ -178,6 +178,7 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         // Freeze after fixture cleanup; neither excluded field may add per-input metadata or text.
         val textBefore = snapshot(DiagnosticStream.TEXT)
         val metadataBefore = snapshot(DiagnosticStream.METADATA)
+        val storesBefore = personalStoreSnapshot(context)
         for (mode in listOf("password", "private")) {
             driver.launchComposingQa(mode)
             type("sensitivecanary")
@@ -185,12 +186,14 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
             assertEquals(0, stats().getValue("caps")); noReadback()
             assertEquals(textBefore, snapshot(DiagnosticStream.TEXT))
             assertEquals(metadataBefore, snapshot(DiagnosticStream.METADATA))
+            assertEquals("Private input changed persistent store bytes", storesBefore, personalStoreSnapshot(context))
+            if (mode == "private") assertTrue(stats().getValue("compose") > 0)
         }
     }
 
     @Test fun managementDeleteDisablesBothAndRemovesManagedLogs() {
         driver.launchSettings(); enableTextThroughDialogs()
-        row("diagnostics_metadata_toggle").click(); awaitPreference(metadata = true)
+        clickRow("diagnostics_metadata_toggle"); awaitPreference(metadata = true)
         driver.launchComposingQa(); type("deletecanary"); space()
         assertTrue(snapshot(DiagnosticStream.TEXT).isNotBlank())
         driver.launchSettings(); row("diagnostics_manage").click()
@@ -228,10 +231,22 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
     }
 
     private fun enableTextThroughDialogs() {
-        row("diagnostics_text_toggle").click(); dialog("diagnostics_scope_title"); positive()
+        clickRow("diagnostics_text_toggle"); dialog("diagnostics_scope_title"); positive()
         dialog("diagnostics_storage_title"); assertFalse(recorder.preferences.text); positive()
         awaitPreference(text = true)
     }
+    private fun clickRow(id: String) {
+        row(id) // Scroll and wait for the enabled real row before invoking its actual click listener.
+        instrumentation.runOnMainSync {
+            val activity = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED)
+                .filterIsInstance<SettingsActivity>().single()
+            val resource = context.resources.getIdentifier(id, "id", context.packageName)
+            val view = activity.findViewById<android.view.View>(resource)
+            assertTrue(view.isShown && view.isEnabled)
+            assertTrue(view.performClick())
+        }
+    }
+
     private fun row(id: String): UiObject2 {
         if (driver.device.hasObject(By.res(ImeTestDriver.PACKAGE_NAME, "menu_search"))) {
             driver.shell("am start -W -f 0x24000000 -n ${ImeTestDriver.PACKAGE_NAME}/.settings.SettingsActivity --es settings_page ADVANCED")
@@ -244,7 +259,7 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
             UiScrollable(UiSelector().resourceId("${ImeTestDriver.PACKAGE_NAME}:id/settings_scroll"))
                 .apply { setAsVerticalList(); scrollIntoView(UiSelector().resourceId("${ImeTestDriver.PACKAGE_NAME}:id/$id")) }
         }
-        return checkNotNull(driver.device.wait(Until.findObject(By.res(ImeTestDriver.PACKAGE_NAME, id)), ImeTestDriver.WAIT_MILLIS))
+        return checkNotNull(driver.device.wait(Until.findObject(By.res(ImeTestDriver.PACKAGE_NAME, id).enabled(true)), ImeTestDriver.WAIT_MILLIS))
     }
     private fun dialog(name: String) {
         val id = context.resources.getIdentifier(name, "string", context.packageName)
@@ -276,12 +291,13 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
     private fun assertMetadataVocabulary(text: String, requireRows: Boolean = true) {
         val allowed = setOf("schema", "kind", "reason", "session", "revision", "typingProfile", "features", "effectiveFeatures",
             "candidateCount", "selectedIndex", "modelUsed", "source", "completion", "localCompletion",
-            "localInspectedStates", "localVerifiedTerminals", "scoringCode", "elapsedMs", "requestId", "operationId")
+            "localInspectedStates", "localVerifiedTerminals", "scoringCode", "elapsedMs", "requestId", "operationId", "reasonCode", "correctionId",
+            "recoveryCompletion", "recoveryInspectedStates", "recoveryVerifiedTerminals")
         val rows = text.lineSequence().filter(String::isNotBlank).map(::JSONObject).toList()
         if (requireRows) assertTrue("Expected metadata rows", rows.isNotEmpty())
         rows.forEach { row ->
             assertEquals(allowed, row.keys().asSequence().toSet())
-            assertInteger(row, "schema", 7L..7L)
+            assertInteger(row, "schema", 8L..8L)
             assertInteger(row, "typingProfile", 0L..2L)
             val configured = row.getJSONObject("features")
             val effective = row.getJSONObject("effectiveFeatures")
@@ -296,6 +312,12 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
             val kind = row.get("kind"); val reason = row.get("reason")
             assertTrue("Kind must be an exact enum string", kind is String && DiagnosticKind.entries.any { it.name == kind })
             assertTrue("Reason must be an exact enum string", reason is String && DiagnosticReason.entries.any { it.name == reason })
+            assertInteger(row, "reasonCode", 0L..DiagnosticReason.entries.lastIndex.toLong())
+            assertEquals(DiagnosticReason.valueOf(reason as String).ordinal, row.getInt("reasonCode"))
+            assertInteger(row, "correctionId", 0L..1_000_000_000L)
+            assertTrue(DiagnosticCompletion.entries.any { it.name == row.get("recoveryCompletion") })
+            assertInteger(row, "recoveryInspectedStates", 0L..32_768L)
+            assertInteger(row, "recoveryVerifiedTerminals", 0L..64L)
             assertInteger(row, "session", 0L..1_000_000_000L)
             assertInteger(row, "revision", 0L..1_000_000_000L)
             assertInteger(row, "candidateCount", 0L..8L)

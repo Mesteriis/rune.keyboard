@@ -16,11 +16,17 @@ enum class EditorMode {
 /**
  * Runtime input policy every text-touching component must consult.
  * SENSITIVE forbids anything beyond plain committing: no preview popups, no text reads,
- * no learning or personal suggestions. IME_FLAG_NO_PERSONALIZED_LEARNING uses this policy too.
+ * no learning or personal suggestions. INCOGNITO permits owned typing without editor reads,
+ * personalization or diagnostics for IME_FLAG_NO_PERSONALIZED_LEARNING.
  */
 enum class InputPolicy {
     NORMAL,
     SENSITIVE,
+    INCOGNITO;
+
+    val allowsOwnedComposition: Boolean get() = this != SENSITIVE
+    val allowsEditorReads: Boolean get() = this == NORMAL
+    val allowsPersonalization: Boolean get() = this == NORMAL
 }
 
 data class EditorContext(
@@ -37,24 +43,31 @@ data class EditorContext(
     val customActionLabel: String? = null,
 ) {
     val inputPolicy: InputPolicy
-        get() = if (isPassword || noPersonalizedLearning) InputPolicy.SENSITIVE else InputPolicy.NORMAL
+        get() = when {
+            isPassword -> InputPolicy.SENSITIVE
+            noPersonalizedLearning -> InputPolicy.INCOGNITO
+            else -> InputPolicy.NORMAL
+        }
 
     val supportsAutomaticCapitalization: Boolean
         get() = supportsSmartTyping
 
     val supportsSmartTyping: Boolean
-        get() = mode == EditorMode.TEXT && inputPolicy == InputPolicy.NORMAL && !requiresRawKeyEvents
+        get() = mode == EditorMode.TEXT && inputPolicy.allowsOwnedComposition && !requiresRawKeyEvents
 
     /** Keep owned composing/mechanics in NO_SUGGESTIONS, but never candidate work or learning. */
     val editorAllowsSuggestions: Boolean
         get() = supportsSmartTyping && !noSuggestions
+
+    val allowsPersonalization: Boolean
+        get() = editorAllowsSuggestions && inputPolicy.allowsPersonalization
 
     val noSuggestions: Boolean
         get() = inputType and InputType.TYPE_MASK_CLASS == InputType.TYPE_CLASS_TEXT &&
             inputType and InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS != 0
 
     /**
-     * Double space may transform a Rune-owned suffix only in NORMAL plain text, never
+     * Double space may transform a Rune-owned suffix only in non-sensitive plain text, never
      * sensitive/raw input. The typing controller additionally verifies ownership without reads.
      */
     val supportsDoubleSpacePeriod: Boolean

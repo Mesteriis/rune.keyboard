@@ -43,7 +43,7 @@ class SmartTypingComposingInstrumentedTest : ImeTestBase() {
         val resources = InstrumentationRegistry.getInstrumentation().targetContext
         val description = resources.getString(R.string.candidate_original, "ab")
         awaitOriginal("ab")
-        driver.launchComposingQa("private")
+        driver.launchComposingQa("password")
         assertTrue(!driver.device.hasObject(By.desc(description)))
         type("c")
         driver.awaitFieldText(FIELD, "c")
@@ -231,24 +231,15 @@ class SmartTypingComposingInstrumentedTest : ImeTestBase() {
     }
 
     @Test
-    fun noPersonalizedLearningNeverReadsEditorTextOrSetsComposition() {
+    fun noPersonalizedLearningComposesWithoutReadingEditorText() {
         driver.launchComposingQa("private")
-        type("a", "b")
-        space()
-        type("c")
+        type("a", "b"); space(); type("c")
         driver.awaitFieldText(FIELD, "ab c")
-        driver.tapDelete()
-        driver.awaitFieldText(FIELD, "ab ")
-        driver.tapQaControl("qa_composing_cursor")
-        type("x")
-        driver.awaitFieldText(FIELD, "xab ")
+        driver.tapDelete(); driver.awaitFieldText(FIELD, "ab ")
         val observed = stats()
-        assertTrue("Connection wrapper did not observe plain commits", observed.getValue("commit") >= 5)
-        listOf(
-            "before", "after", "selected", "extracted", "caps", "surrounding", "snapshot",
-            "compose", "region",
-        ).forEach { counter ->
-            assertEquals("Sensitive editor unexpectedly called $counter", 0, observed.getValue(counter))
+        assertTrue("Incognito must use owned composition", observed.getValue("compose") >= 4)
+        listOf("before", "after", "selected", "extracted", "caps", "surrounding", "snapshot").forEach { counter ->
+            assertEquals("Incognito editor unexpectedly called $counter", 0, observed.getValue(counter))
         }
     }
 

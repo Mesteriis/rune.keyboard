@@ -29,7 +29,7 @@ adb shell am start -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
 
 ## Smart Typing composing foundation
 
-Компактный debug-fixture запускается с `--es qa_composing_fixture accept`; режимы `reject`, `drop` и `private` проверяют редакторы без composing spans и `NO_PERSONALIZED_LEARNING`. Счётчики отражают только число операций, длину и числовые границы, без текста.
+Компактный debug-fixture запускается с `--es qa_composing_fixture accept`; режимы `reject`/`drop` проверяют редакторы без composing spans; `private` проверяет NPL, `private_no_suggestions` — NPL вместе с NO_SUGGESTIONS. Счётчики отражают только число операций, длину и числовые границы, без текста.
 
 - первая буква создаёт composing span, последующие изменяют только этот span;
 - Space оставляет одну видимую pending boundary; следующая буква не дублирует пробел;
@@ -39,7 +39,8 @@ adb shell am start -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
 - внешняя замена в той же InputConnection и потеря span уничтожают контекст; последующий plain ввод не возвращает старое слово;
 - restartInput сохраняет отображённый текст и начинает новую typing-сессию;
 - callback собственного double-space не сбрасывает immediate Undo;
-- sensitive/NPL editor не получает composing, getTextBefore/AfterCursor, getSelectedText, getExtractedText, getCursorCapsMode, getSurroundingText или takeSnapshot;
+- password editor не получает composing или чтений текста; NPL без пароля допускает owned-композицию/исправления, но не getTextBefore/AfterCursor, getSelectedText, getExtractedText, getCursorCapsMode, getSurroundingText или takeSnapshot;
+- в NPL не меняются personal profile, touch calibration, learning, typing-controls, typing-quality и диагностические файлы; оба потока диагностики заморожены; NPL + NO_SUGGESTIONS подавляет candidates/исправления;
 - отказ без достоверного результата не приводит к повторной отправке того же текста. Редактор, молча отбрасывающий span без callback, не получает универсальной гарантии composition.
 
 Эти сценарии покрываются `SmartTypingComposingInstrumentedTest` через настоящий Binder. JVM-тесты дополнительно проверяют задержанные/объединённые callback, reentrancy, Unicode-границы, лимиты RAM и session-only отказ. Они не заменяют API 26/37 и physical Fold gates.
@@ -65,7 +66,7 @@ adb shell am start -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
 - symbols, number, signed/decimal number, phone, date/time, email и URL;
 - Space, punctuation, короткий и удерживаемый Backspace;
 - удержание Backspace ускоряется в две ступени и мгновенно останавливается при отпускании;
-- в обычных полях Backspace атомарно удаляет surrogate emoji, family/kiss/profession ZWJ, skin tone, flag, keycap и combining-mark clusters; в sensitive-полях намеренно остаётся code-point fallback без чтения текста;
+- в обычных полях Backspace атомарно удаляет surrogate emoji, family/kiss/profession ZWJ, skin tone, flag, keycap и combining-mark clusters; в password/NPL-полях намеренно остаётся code-point fallback без чтения текста;
 - Enter проверен для multiline, DONE, GO, NEXT, PREVIOUS, SEARCH и SEND; в multiline-поле с `IME_ACTION_DONE` Enter даёт перенос строки, а метка клавиши — `↵`;
 - выделенный текст заменяется обычным вводом и полностью удаляется Backspace;
 - password-поле не включает автокапитализацию, не показывает preview и нигде не появляется в логах;

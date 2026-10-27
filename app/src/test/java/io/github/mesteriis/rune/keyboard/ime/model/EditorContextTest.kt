@@ -36,14 +36,14 @@ class EditorContextTest {
     }
 
     @Test
-    fun `no personalized learning forbids capitalization and double space reads`() {
+    fun `no personalized learning allows owned capitalization and double space without reads`() {
         val context = EditorContext.from(
             InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES,
             EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING,
         )
 
-        assertFalse(context.supportsAutomaticCapitalization)
-        assertFalse(context.supportsDoubleSpacePeriod)
+        assertTrue(context.supportsAutomaticCapitalization)
+        assertTrue(context.supportsDoubleSpacePeriod)
     }
 
     @Test
@@ -145,7 +145,7 @@ class EditorContextTest {
     }
 
     @Test
-    fun `sensitive input policy covers passwords and no-personalized-learning`() {
+    fun `password is sensitive and no-personalized-learning is incognito`() {
         val plain = EditorContext.from(
             inputType = InputType.TYPE_CLASS_TEXT,
             imeOptions = EditorInfo.IME_ACTION_NONE,
@@ -161,7 +161,21 @@ class EditorContextTest {
 
         assertEquals(InputPolicy.NORMAL, plain.inputPolicy)
         assertEquals(InputPolicy.SENSITIVE, password.inputPolicy)
-        assertEquals(InputPolicy.SENSITIVE, noLearning.inputPolicy)
+        assertEquals(InputPolicy.INCOGNITO, noLearning.inputPolicy)
+        assertFalse(noLearning.allowsPersonalization)
+        assertFalse(noLearning.inputPolicy.allowsEditorReads)
+        assertEquals(InputPolicy.SENSITIVE, noLearning.copy(isPassword = true).inputPolicy)
+    }
+
+    @Test fun `no learning editor permits owned typing but still obeys suggestion flags`() {
+        val private = EditorContext.from(InputType.TYPE_CLASS_TEXT, EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING)
+        assertTrue(private.supportsSmartTyping)
+        assertTrue(private.editorAllowsSuggestions)
+        assertTrue(private.supportsDoubleSpacePeriod)
+        val noSuggestions = EditorContext.from(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS,
+            EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING)
+        assertTrue(noSuggestions.supportsSmartTyping)
+        assertFalse(noSuggestions.editorAllowsSuggestions)
     }
 
     @Test

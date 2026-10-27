@@ -69,12 +69,22 @@ class MechanicalCapitalizationStateTest {
             KeyboardSessionPolicy.withAutomaticCapitalization(state, context, word, boundary) { reads++; 0 }
         assertEquals(ShiftMode.AUTO, caps(editor, false, true).shiftMode)
         assertEquals(ShiftMode.OFF, caps(editor, true, false).shiftMode)
-        for (context in listOf(editor.copy(isPassword = true), editor.copy(noPersonalizedLearning = true),
+        for (context in listOf(editor.copy(isPassword = true),
             editor.copy(requiresRawKeyEvents = true), editor.copy(mode = EditorMode.NUMBER))) {
             assertEquals(ShiftMode.OFF, caps(context, false, true).shiftMode)
         }
         assertEquals(0, reads)
         assertEquals(state, KeyboardSessionPolicy.withAutomaticCapitalization(state, editor, false, false) { null })
+    }
+
+    @Test fun `no learning capitalizes only after owned boundary without querying caps`() {
+        val state = KeyboardState(KeyboardLanguage.ENGLISH)
+        val private = EditorContext.from(1, android.view.inputmethod.EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING)
+        val noReads = { throw AssertionError("Private field must not query caps") }
+        assertEquals(ShiftMode.AUTO, KeyboardSessionPolicy.withAutomaticCapitalization(state, private,
+            false, true, noReads).shiftMode)
+        assertEquals(ShiftMode.OFF, KeyboardSessionPolicy.withAutomaticCapitalization(state, private,
+            false, false, noReads).shiftMode)
     }
 
     @Test fun `gesture consumes old lowercase suppression before priming next action`() {

@@ -370,3 +370,11 @@ See [publication provenance](2026-09-05-rune-text-v1-hugging-face.md).
 | Named target retrieval/demonstration | INCOMPLETE: автокрекция→автокоррекция, teh→the and correcion→corrección absent from current returned/displayed candidates in their frozen contexts; three other requested typos are suggestions only. Full named host records retained; bounded model-free search investigation separate |
 | Current external CI | No PR-triggered runs returned for fd8872f by the GitHub connector; remote main remains b5400cb; not a full workflow inventory |
 | Model final release / version0.3.0 / main merge | BLOCKED by remaining gates |
+
+
+2026-10-27 U3 revision: criterion 15 above records the historical password/NPL
+contract. Current acceptance separates password (`SENSITIVE`) from NPL without
+password (`INCOGNITO`). Incognito permits owned composition and qualified
+corrections without editor reads, personalization or diagnostic capture. See
+`docs/acceptance/2026-10-27-u3-incognito.md` for current evidence; the historical
+full152 runs do not establish the revised behavior.

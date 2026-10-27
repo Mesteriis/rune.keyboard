@@ -418,16 +418,16 @@ suggestion и меняет только Rune-owned composing span после я�
 - IME service экспортирован только с signature permission `android.permission.BIND_INPUT_METHOD`; interactive inference service приватный и отдельно проверяет UID caller;
 - backup и cleartext traffic отключены;
 - вибрация реализована через `View.performHapticFeedback`, поэтому Rune не просит `android.permission.VIBRATE`; интенсивности выражены платформенными haptic-константами, а не амплитудами;
-- `EditorContext.inputPolicy` (`NORMAL`/`SENSITIVE`) — единая точка, которую обязаны спрашивать компоненты, работающие с текстом. `SENSITIVE` включается для password-полей и `IME_FLAG_NO_PERSONALIZED_LEARNING`; он, в частности, выключает popup preview. Значение `INCOGNITO` появится вместе с первой обучающейся подсистемой — пустую заглушку заранее не вводим;
+- `EditorContext.inputPolicy` (`NORMAL`/`SENSITIVE`/`INCOGNITO`) разделяет owned-композицию, чтение редактора и персонализацию. Пароль всегда `SENSITIVE`. `IME_FLAG_NO_PERSONALIZED_LEARNING` без пароля даёт `INCOGNITO`: допускаются owned-композиция, квалифицированные исправления и механика, но не чтения редактора, персональные подсказки/обучение или диагностика. Popup preview по-прежнему допускается только в `NORMAL`;
 - история ввода на диске, clipboard, аналитика и crash SDK отсутствуют; composing и текущий Rune-owned контекст существуют только в RAM;
-- sensitive/raw редакторы не создают composing/context; automatic Caps и double-space также требуют `InputPolicy.NORMAL`.
+- sensitive/raw редакторы не создают composing/context. В incognito Caps работают только после собственной границы Rune, без `getCursorCapsMode`; double-space использует только owned suffix. `NO_SUGGESTIONS` продолжает подавлять candidates и исправления, в том числе вместе с NPL.
 
 ### Осознанное расширение инварианта чтения текста
 
 До введения правила двойного пробела и Unicode-safe Backspace клавиатура читала из редактора только `getCursorCapsMode` и числовые границы selection. Правило двойного пробела (SPACE-002) и атомарное удаление logical character требуют минимального surrounding-text контекста. Rune разрешает ограниченное эфемерное чтение для удаления вне собственной composition:
 
 - double-space и его Undo используют собственный pending span и Rune-owned RAM-контекст, без чтений редактора;
-- `getTextBeforeCursor(64, 0)` — только непосредственно во время Backspace в non-sensitive поле. Android ICU и ограниченный compatibility scan находят предыдущий grapheme cluster, после чего удаление передаётся редактору числом code points;
+- `getTextBeforeCursor(64, 0)` — только непосредственно во время Backspace в поле `NORMAL`. Android ICU и ограниченный compatibility scan находят предыдущий grapheme cluster, после чего удаление передаётся редактору числом code points;
 - selection удаляется целиком через `commitText("", 1)` без чтения выделенного или surrounding text;
 - password и `IME_FLAG_NO_PERSONALIZED_LEARNING` никогда не читаются: там Backspace удаляет один code point; `TYPE_NULL` получает `KEYCODE_DEL`;
 - прочитанное существует только в стеке одной команды, не сохраняется, не логируется, не попадает в trace и не передаётся другим компонентам.

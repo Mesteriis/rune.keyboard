@@ -180,6 +180,7 @@ class TypingSessionController internal constructor(
     private var diagnostics: TypingDiagnostics = NoTypingDiagnostics
     private var diagnosticOperationId = 0L
     private var diagnosticAttempt: DiagnosticEvent? = null
+    private var diagnosticsPermitted = false
     private var diagnosticSegmentClosed = true
     private var diagnosticDecisionStatus: Pair<Long, DiagnosticReason>? = null
     fun setDiagnostics(observer: TypingDiagnostics) {
@@ -192,7 +193,7 @@ class TypingSessionController internal constructor(
     }
     /** Reopen only an empty owned segment after an explicit eligible Rune action. */
     fun reopenDiagnosticsForLetters(eligible: Boolean, refreshEmpty: Boolean = false) {
-        if ((!diagnosticSegmentClosed && !refreshEmpty) || !eligible || !state.enabled || awaitingEditorSelection ||
+        if ((!diagnosticSegmentClosed && !refreshEmpty) || !eligible || !diagnosticsPermitted || !state.enabled || awaitingEditorSelection ||
             selectionStart < 0 || selectionStart != selectionEnd ||
             state.composing != null || context?.text?.isEmpty() != true) return
         diagnosticSegmentClosed = false
@@ -231,6 +232,7 @@ class TypingSessionController internal constructor(
         recoveryInspectedStates: Int = 0, recoveryVerifiedTerminals: Int = 0,
         editorAttempt: Boolean = false,
         text: (() -> DiagnosticText)? = { diagnosticText() }) {
+        if (!diagnosticsPermitted) return
         val attempt = editorAttempt || (kind in listOf(DiagnosticKind.BOUNDARY, DiagnosticKind.MECHANICAL) && reason == DiagnosticReason.AUTO_REPLACE) ||
             (kind == DiagnosticKind.MANUAL && reason in listOf(DiagnosticReason.CORRECTION, DiagnosticReason.CONTEXTUAL))
         val operation = if (attempt) nextDiagnosticOperation() else 0
@@ -1633,8 +1635,9 @@ class TypingSessionController internal constructor(
             revision = state.revision + 1,
             enabled = enabled,
         )
-        try { diagnostics.startSession(state.sessionId, enabled, diagnosticsFresh) } catch (_: Throwable) { }
-        diagnosticSegmentClosed = !enabled || !diagnosticsFresh
+        diagnosticsPermitted = enabled && editor.inputPolicy.allowsPersonalization
+        try { diagnostics.startSession(state.sessionId, diagnosticsPermitted, diagnosticsFresh) } catch (_: Throwable) { }
+        diagnosticSegmentClosed = !diagnosticsPermitted || !diagnosticsFresh
         diagnose(DiagnosticKind.SESSION, if (editorAllowsSuggestions || !editor.supportsSmartTyping)
             DiagnosticReason.START else DiagnosticReason.EDITOR_SUGGESTIONS_DISABLED)
     }
@@ -2076,7 +2079,7 @@ class TypingSessionController internal constructor(
         if (!editorAllowsSuggestions) return boundaryBypass(DiagnosticReason.EDITOR_SUGGESTIONS_DISABLED)
         if (mode != AutocorrectionMode.HIGH_CONFIDENCE ||
             (!closesComposition && (boundary.length != 1 || boundary[0] !in PENDING_BOUNDARY)) ||
-            policy.inputPolicy != InputPolicy.NORMAL ||
+            !policy.inputPolicy.allowsOwnedComposition ||
             policy.mode != EditorMode.TEXT || policy.requiresRawKeyEvents || keyboard.layer != KeyboardLayer.LETTERS ||
             !canRequestCandidates) return boundaryBypass(DiagnosticReason.INELIGIBLE)
         // A first dot/colon after ASCII can still start a hostname or URI scheme. In a normal
@@ -2300,6 +2303,7 @@ class TypingSessionController internal constructor(
     }
 
     fun endSession() {
+        diagnosticsPermitted = false
         editorAllowsSuggestions = false
         invalidateQualityComparison()
         resetPersonalContext()
@@ -2369,8 +2373,10 @@ class TypingSessionController internal constructor(
         val outcome = (attempt ?: DiagnosticEvent(DiagnosticKind.EDITOR, DiagnosticReason.NONE, session, revision,
             operationId = nextDiagnosticOperation(), configuredFeatures = configuredFeatures,
             effectiveFeatures = if (state.enabled && !diagnosticSegmentClosed) effectiveFeatures else 0, typingProfile = typingProfile)).copy(kind = DiagnosticKind.EDITOR)
-        val terminal = try { diagnostics.editorOutcome(outcome) } catch (_: Throwable) { null }
+        val admittedDiagnostics = diagnosticsPermitted
+        val terminal = if (admittedDiagnostics) try { diagnostics.editorOutcome(outcome) } catch (_: Throwable) { null } else null
         fun complete(accepted: Boolean) {
+            if (!admittedDiagnostics) return
             try {
                 if (terminal != null) terminal(accepted) else diagnostics.record(outcome.copy(
                     reason = if (accepted) DiagnosticReason.EDITOR_ACCEPTED else DiagnosticReason.EDITOR_REJECTED), null)

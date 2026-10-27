@@ -46,19 +46,19 @@ object EditorCommandExecutor {
         inputPolicy: InputPolicy = InputPolicy.NORMAL,
     ): EditorExecutionResult = when (command) {
         is EditorCommand.Batch -> textMutationResult(
-            inputPolicy == InputPolicy.NORMAL && deleteMode != DeleteMode.RAW_KEY_EVENT && !hasSelection &&
+            inputPolicy.allowsOwnedComposition && deleteMode != DeleteMode.RAW_KEY_EVENT && !hasSelection &&
                 executeBatch(command, inputConnection, deleteMode),
         )
         is EditorCommand.SetComposingRegion -> EditorExecutionResult(
-            handled = inputPolicy == InputPolicy.NORMAL && deleteMode != DeleteMode.RAW_KEY_EVENT && !hasSelection &&
+            handled = inputPolicy.allowsOwnedComposition && deleteMode != DeleteMode.RAW_KEY_EVENT && !hasSelection &&
                 inputConnection.setComposingRegion(command.start, command.end),
         )
         is EditorCommand.SetComposingText -> textMutationResult(
-            inputPolicy == InputPolicy.NORMAL && deleteMode != DeleteMode.RAW_KEY_EVENT &&
+            inputPolicy.allowsOwnedComposition && deleteMode != DeleteMode.RAW_KEY_EVENT &&
                 inputConnection.setComposingText(command.value, 1),
         )
         EditorCommand.FinishComposingText -> EditorExecutionResult(
-            handled = inputPolicy == InputPolicy.NORMAL && deleteMode != DeleteMode.RAW_KEY_EVENT &&
+            handled = inputPolicy.allowsOwnedComposition && deleteMode != DeleteMode.RAW_KEY_EVENT &&
                 inputConnection.finishComposingText(),
         )
         is EditorCommand.CommitText -> textMutationResult(
@@ -72,7 +72,7 @@ object EditorCommandExecutor {
             deletePrevious(
                 inputConnection = inputConnection,
                 hasSelection = hasSelection,
-                deleteMode = if (inputPolicy == InputPolicy.SENSITIVE && deleteMode != DeleteMode.RAW_KEY_EVENT) {
+                deleteMode = if (!inputPolicy.allowsEditorReads && deleteMode != DeleteMode.RAW_KEY_EVENT) {
                     DeleteMode.CODE_POINT
                 } else deleteMode,
             ),

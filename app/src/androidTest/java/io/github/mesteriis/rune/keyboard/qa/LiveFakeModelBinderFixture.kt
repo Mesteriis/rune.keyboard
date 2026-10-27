@@ -152,10 +152,10 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
     }
 
     /** Fresh editor, actual keys, real local work, exact public remote request held behind its latch. */
-    fun blockedWord(mode: Int): ScoringToken {
+    fun blockedWord(mode: Int, editorMode: String = "accept", beforeTyping: () -> Unit = {}): ScoringToken {
         val remote = requireNotNull(control)
         remote.command(mode)
-        driver.launchComposingQa()
+        driver.launchComposingQa(editorMode)
         assertResident()
         onMain {
             val facts = requireNotNull(owner).invoke()
@@ -166,6 +166,7 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
                 "Actual resident production qualification does not permit this matrix"
             }
         }
+        beforeTyping()
         remote.command(LifecycleModelInferenceService.BLOCK_NEXT_PUBLIC)
         assertEquals(1, remote.publicSnapshot().armed)
         driver.tapKey("a")
@@ -608,6 +609,65 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
         editor("a hello ", 8, 7, 8)
     }
 
+    fun verifyIncognitoCorrection() {
+        val preferences = context.getSharedPreferences(ImeTestDriver.PREFERENCES_NAME, Context.MODE_PRIVATE)
+        check(preferences.edit().putBoolean(SettingsCodec.KEY_PERSONAL_LEARNING, true)
+            .putBoolean(SettingsCodec.KEY_TOUCH_PERSONALIZATION, true).putBoolean(SettingsCodec.KEY_PHRASE_SUGGESTIONS, true)
+            .putBoolean(SettingsCodec.KEY_PROTECTED_WORDS, true).putBoolean(SettingsCodec.KEY_APP_PROFILES, true)
+            .putBoolean(SettingsCodec.KEY_LEARNED_RANKING, true).putBoolean(SettingsCodec.KEY_COMPACT_CONTEXT, true)
+            .putBoolean(SettingsCodec.KEY_DYNAMIC_TOUCH, true).putBoolean(SettingsCodec.KEY_COLLECT_EXAMPLES, true)
+            .putBoolean(SettingsCodec.KEY_TYPO_PATTERNS, true).putBoolean(SettingsCodec.KEY_QUALITY_METRICS, true)
+            .putBoolean(SettingsCodec.KEY_SHADOW_COMPARISON, true).commit())
+        proveNormalPipelineObservers() // Positive control with learning/metrics explicitly enabled.
+        val resources = io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingResources.get(context)
+        await("Synthetic personal stores not ready") { resources.learning.isReady && resources.touch.isReady }
+        // Seed valid non-empty files through the actual stores, never with fabricated storage bytes.
+        onMain {
+            if (!java.io.File(context.noBackupFilesDir, "learning-lab/learning.bin").exists()) {
+                resources.learning.configure(true, true, true)
+                check(resources.learning.confirmed("hello", KeyboardLanguage.ENGLISH))
+            }
+            if (!java.io.File(context.noBackupFilesDir, "personal-touch-v1.tsv").exists()) check(resources.touch.scheduleSave())
+        }
+        await("Synthetic store files not persisted") {
+            java.io.File(context.noBackupFilesDir, "learning-lab/learning.bin").isFile &&
+                java.io.File(context.noBackupFilesDir, "personal-touch-v1.tsv").isFile
+        }
+        var before: Map<String, Map<String, String>>? = null
+        val token = blockedWord(LifecycleModelInferenceService.SCORES_PUBLIC_CORRECTION, "private") {
+            // Let prior normal-session writes finish before freezing synthetic store bytes.
+            var snapshot = personalStoreSnapshot(context)
+            var stable = 0
+            await("Prior synthetic store writes did not settle") {
+                SystemClock.sleep(150)
+                val next = personalStoreSnapshot(context)
+                stable = if (next == snapshot) stable + 1 else 0
+                snapshot = next
+                stable >= 3
+            }
+            before = snapshot
+        }
+        onMain {
+            val editor = field(requireNotNull(service), "editorContext") as EditorContext
+            assertEquals(InputPolicy.INCOGNITO, editor.inputPolicy)
+            assertTrue(editor.supportsSmartTyping && editor.editorAllowsSuggestions)
+            assertFalse(editor.allowsPersonalization || editor.inputPolicy.allowsEditorReads)
+            val personalization = requireNotNull(field(requireNotNull(service), "personalization"))
+            for (flag in listOf("learningEnabled", "touchEnabled", "phrasesEnabled", "protectionEnabled",
+                "learnedRankingEnabled", "compactContextEnabled"))
+                assertEquals("Incognito enabled $flag", false, field(personalization, flag))
+        }
+        release(); awaitCompletion(token, LifecycleModelInferenceService.MODE_PUBLIC_CORRECTION)
+        awaitRanking(token, 1); space()
+        val corrected = editor("a hello ", 8, 7, 8)
+        assertTrue(corrected.stats.getValue("compose") > 0)
+        for (counter in listOf("before", "after", "selected", "extracted", "caps", "surrounding", "snapshot"))
+            assertEquals("Incognito read $counter", 0, corrected.stats.getValue(counter))
+        driver.tapDelete(); editor("a helllo", 8, 1, 8)
+        SystemClock.sleep(500)
+        assertEquals("Incognito mutated a personal store", before, personalStoreSnapshot(context))
+    }
+
     /** Real editor metadata is the only policy input. Counts are deltas after the positive session. */
     fun verifyNonNormalEditor(mode: String, expectedMode: EditorMode, expectedPolicy: InputPolicy, publicText: String) {
         require(mode in setOf("password", "private", "email", "url", "number", "phone", "date_time", "autocomplete", "filter"))
@@ -669,7 +729,7 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
         assertEquals(before, modelActivity())
     }
 
-    fun verifyNoSuggestionsComposingSearchAndMechanics() {
+    fun verifyNoSuggestionsComposingSearchAndMechanics(mode: String = "no_suggestions") {
         hide(); requireNotNull(control).awaitIdle()
         driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
             mechanical = true, doubleSpace = true, contextual = ContextualPunctuationMode.SUGGESTIONS)
@@ -681,7 +741,7 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
             .putBoolean(SettingsCodec.KEY_TYPO_PATTERNS, true).commit())
         instrumentation.waitForIdleSync()
         val before = modelActivity()
-        driver.launchComposingQa("no_suggestions")
+        driver.launchComposingQa(mode)
         await("NO_SUGGESTIONS editor not active") { onMain {
             val editor = field(requireNotNull(service), "editorContext") as EditorContext
             editor.noSuggestions && requireNotNull(owner).invoke().inputViewActive
@@ -719,7 +779,7 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
         submitPublicSearch()
         assertSuppressed()
         // A fresh editor proves mechanics remain enabled independently of candidate work.
-        hide(); driver.launchComposingQa("no_suggestions")
+        hide(); driver.launchComposingQa(mode)
         "helllo".forEach { driver.tapKey(it.toString()) }
         editor("helllo", 6, 0, 6)
         driver.doubleTap(checkNotNull(driver.device.findObject(By.desc(context.getString(R.string.key_space)))))
