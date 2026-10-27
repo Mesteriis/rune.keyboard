@@ -61,7 +61,14 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         row=dict(sourceRepository='tatoeba',language='ru',article='tatoeba:11122358',sentenceHash='26454da27d2d82877e728be5c9611a8342d63a3e6f302f116d749cb1c28a2542')
         with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:article'):assert_disjoint([row],self.ledger,kinds=('article',))
         entries={e['id']:e for e in self.ledger['entries'] if e['id'].startswith('public-tatoeba-history-')}
-        self.assertEqual(15,len(entries));self.assertEqual('supervised',entries['public-tatoeba-history-promoted-followon-holdout-families']['usage'])
+        self.assertEqual(29,len(entries));self.assertEqual('supervised',entries['public-tatoeba-history-promoted-followon-holdout-families']['usage'])
+
+    def test_derived_tatoeba_aliases_do_not_pretend_to_be_independent_data(self):
+        entries={e['id']:e for e in self.ledger['entries']}
+        for part in ('calibration','holdout'):
+            baseline=entries['public-tatoeba-history-grammar-profile-eval-'+part]['keys']
+            self.assertEqual(baseline,entries['public-tatoeba-history-grammar-revision-broad-'+part]['keys'])
+            self.assertEqual(baseline,entries['public-tatoeba-history-grammar-conservative-'+part]['keys'])
 
     def test_unsupported_surface_exclusions_do_not_clear_unproven_families(self):
         entries=[e for e in self.ledger['entries'] if 'unsupportedSurfaceKeys' in e]

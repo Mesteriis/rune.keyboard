@@ -26,6 +26,15 @@ CORPORA={
  'supervised95':('build/conversation-supervised95-20261026/corpus','cd0ea49a51b04e70059291fac7208a054aafee33e7c11a8491df2dcd038ad91e','detail'),
  'grammar-context':('build/grammar-context-ranking-20261026/corpus','612498f019bcc052ef3ec51651d4a4d71a9ff2fcf6a9af197796d41a0e0e8a11','detail'),
 }
+DERIVED_CORPORA={
+ 'grammar-focused':('build/grammar-focused-eval-20261026/corpus','11efa3793df4ac550e9f6680af3e9b2e8fcb47394c80dd2b5dd86a8a6c8f853a','detail'),
+ 'grammar-contrast-eval':('build/grammar-contrast-training-20261026/corpus','dc360183a36b887fb1c763bf8d4d80660fe4e0845ddc18b2880f6cf5fd8572a2','detail'),
+ 'noun-case-v2':('build/noun-case-focus-v2-20261026/corpus','8b6ae6dbd877d10f074bc60c052b5e2c5525c79c54b768a305cfc7f20fa3e5e4','detail'),
+ 'noun-case-v3':('build/noun-case-focus-v3-20261026/corpus','0a25ccbaa8cde3a65ef5da985e1e751f59409122be9773f0260bd3199e88eaf1','detail'),
+ 'grammar-profile-eval':('build/grammar-profile-training-20261026/corpus','8a7807aee382a994cff8c975aa6035cb29fff51a4665924349ea6748b4a1c2cb','detail'),
+ 'grammar-revision-broad':('build/grammar-revision-broad-20261026/corpus','8a7807aee382a994cff8c975aa6035cb29fff51a4665924349ea6748b4a1c2cb','detail'),
+ 'grammar-conservative':('build/grammar-conservative-20261026/corpus','8a7807aee382a994cff8c975aa6035cb29fff51a4665924349ea6748b4a1c2cb','detail'),
+}
 
 
 def sentence_hash(text):
@@ -78,9 +87,10 @@ def partition_entries(name,part,rows,trained,lexicon,bindings):
         contexts=len(keys['context']),dictionaryFamilies=len(families),unresolvedRows=sorted(set(unknown)),supervised=trained)
 
 
-def build(root,base,lexicon):
+def build(root,base,lexicon,corpora=None):
     root=Path(root);result=copy.deepcopy(validate_ledger(base))
-    if any(e['id'].startswith(PREFIX) for e in result['entries']):raise ValueError('TATOEBA_ALREADY_IMPORTED')
+    corpora=CORPORA if corpora is None else corpora
+    if any(any(e['id'].startswith(PREFIX+name+'-') for name in corpora) for e in result['entries']):raise ValueError('TATOEBA_ALREADY_IMPORTED')
     lock_path=CC0_ROOT+'/tatoeba-source-lock.json'
     if sha(root/lock_path)!=CC0_LOCK_SHA or sha(root/CC0_SPLITS)!=CC0_SPLIT_SHA:raise ValueError('TATOEBA_CC0_LOCK')
     lock=json.loads((root/lock_path).read_text())
@@ -96,7 +106,7 @@ def build(root,base,lexicon):
     common.update(source_bindings)
     promotion_path='build/conversation-supervised95-20261026/plan.json';promotion=json.loads((root/promotion_path).read_text())
     counts={};bindings=dict(common)
-    for name,(directory,digest,source) in CORPORA.items():
+    for name,(directory,digest,source) in corpora.items():
         manifest_path=directory+'/manifest.json'
         if sha(root/manifest_path)!=digest:raise ValueError('TATOEBA_CORPUS_MANIFEST')
         manifest=json.loads((root/manifest_path).read_text())
@@ -132,9 +142,14 @@ def build(root,base,lexicon):
     verify_sources(root/cc0_path,wanted_cc0,4,captures['cc0']);verify_sources(root/detail_path,wanted_detail,6,captures['detail'])
     for part in ('train','calibration','holdout'):
         rows=[dict(sourceRepository='tatoeba',language='ru',article='tatoeba:'+r['id'],sentenceHash=r['normalizedSha256']) for r in splits if r['split']==part]
-        result['entries'].append(dict(id=PREFIX+'cc0-source-'+part,usage='historical-source-exclusion',rowCount=len(rows),bindings=common,
-            keys={axis:sorted(keys_for(rows,axis)) for axis in ('article','sentence')},missingAxes=[],
-            notes='Full preprocessed public source split, not a labeled family corpus; target-training families tracked separately.'))
+        entry_id=PREFIX+'cc0-source-'+part;keys={axis:sorted(keys_for(rows,axis)) for axis in ('article','sentence')}
+        existing=next((e for e in result['entries'] if e['id']==entry_id),None)
+        if existing is not None:
+            if existing['keys']!=keys or existing['rowCount']!=len(rows) or any(existing['bindings'].get(path)!=common[path] for path in (lock_path,CC0_SPLITS,cc0_path,detail_path)):
+                raise ValueError('TATOEBA_SOURCE_REIMPORT_CHANGED')
+        else:
+            result['entries'].append(dict(id=entry_id,usage='historical-source-exclusion',rowCount=len(rows),bindings=common,
+                keys=keys,missingAxes=[],notes='Full preprocessed public source split, not a labeled family corpus; target-training families tracked separately.'))
     for name,part,rows,trained,local in jobs:
         entries,counts[name+'/'+part]=partition_entries(name,part,rows,trained,lexicon,local);result['entries'].extend(entries)
     receipt=dict(purpose='PUBLIC_TATOEBA_HISTORY_EXCLUSIONS_NOT_QUALIFICATION',counts=counts,bindings=bindings,
@@ -145,10 +160,12 @@ def build(root,base,lexicon):
 
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--base',type=Path,required=True);parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--base',type=Path,required=True);parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--scope',choices=('core','derived'),default='core');args=parser.parse_args()
     if args.output.exists():parser.error('output already exists')
     sys.path.insert(0,str(ROOT/'tools/morphology'));from ranker import PymorphyLexicon
-    ledger,receipt=build(ROOT,load_ledger(args.base),PymorphyLexicon(cache_size=16384))
+    ledger,receipt=build(ROOT,load_ledger(args.base),PymorphyLexicon(cache_size=16384),CORPORA if args.scope=='core' else DERIVED_CORPORA)
+    receipt['scope']=args.scope
     args.output.mkdir(parents=True,exist_ok=False)
     for name,value in (('ledger.json',ledger),('receipt.json',receipt)):(args.output/name).write_text(json.dumps(value,ensure_ascii=False,sort_keys=True,indent=2)+'\n')
     print(json.dumps(dict(rows=sum(c['rows'] for c in receipt['counts'].values()),cc0Sentences=receipt['verifiedCc0Sentences'],detailedSentences=receipt['verifiedDetailedSentences'],unresolvedRows=sum(len(c['unresolvedRows']) for c in receipt['counts'].values()))))

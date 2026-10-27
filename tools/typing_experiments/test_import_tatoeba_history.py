@@ -3,7 +3,7 @@ from pathlib import Path
 import tempfile
 from types import SimpleNamespace
 import unittest
-from import_tatoeba_history import partition_entries,sentence_hash,verify_sources
+from import_tatoeba_history import partition_entries,sentence_hash,verify_sources,build,DERIVED_CORPORA
 
 
 class Dictionary:
@@ -16,6 +16,12 @@ def row(**changes):
 
 
 class TatoebaHistoryTest(unittest.TestCase):
+    def test_duplicate_derived_scope_is_rejected_before_opening_source_files(self):
+        from test_holdout_ledger import ledger
+        base=ledger(False);base['entries'][0]['id']='public-tatoeba-history-grammar-focused-calibration'
+        with tempfile.TemporaryDirectory() as folder:
+            with self.assertRaisesRegex(ValueError,'ALREADY_IMPORTED'):build(Path(folder),base,Dictionary(),DERIVED_CORPORA)
+
     def entries(self,rows=None,trained=True):return partition_entries('fixture','train',rows or [row()],trained,Dictionary(),{'file':'b'*64})
 
     def test_native_family_ids_are_not_lemmas_and_supervised_promotion_is_explicit(self):

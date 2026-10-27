@@ -218,3 +218,12 @@ recorded diagnostically; their normal forms are never imported. Existing family
 axes remain missing and global coverage remains incomplete. New preparation checks
 both typed/expected surfaces, so a claimed new canonical family cannot hide direct
 reuse of a quarantined target. Other inflections are not claimed covered.
+
+`import_tatoeba_history.py --scope derived` appends the seven pinned derived
+Tatoeba evaluation sets (grammar-focused, contrast, noun-case v2/v3, profile,
+broad revision and conservative aliases). All existing source-only entries are
+reverified and retained without changing bindings. It verifies the same source
+IDs/full text/prefix captures; all 116,000 labeled rows have supported candidate
+analyses. Duplicate scopes fail before file reads. Exact duplicate snapshots are
+registered as historical reuse, never independent new evidence or supervision
+inferred solely from an experiment's name.
