@@ -22,5 +22,8 @@ Two joint builders are also preserved byte for byte: the original joint builder
 source evidence only; they are not executed by the history importer and their
 relocated path-relative defaults are not supported. The older follow-up SHA
 `964b7c6505cf5b3a0d766563e29ff750b3db70638302267db9c0318ffa05aef8`
-is still not archived. Its absence remains a provenance gap, not a reason to
-substitute the v3 generator or regenerate old rows with different code.
+is now restored byte for byte and archived as well. The deterministic restoration
+removes the later v3 article/extra-corpus exclusions and verifies both the v3
+input hash and v1 output hash from the original manifest. See
+`restore_frozen_followup.py`. These sources still depend on other historical
+helpers/runtime/files; preservation does not claim complete corpus reproduction.

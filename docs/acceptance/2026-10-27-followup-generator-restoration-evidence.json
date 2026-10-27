@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "holdout_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"freshnessCoverageComplete\": false, \"entries\": 30}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py"
+      ],
+      "exitCode": 0,
+      "output": "................................................\n----------------------------------------------------------------------\nRan 48 tests in 0.833s\n\nOK\n"
+    }
+  ],
+  "modelCalls": 0,
+  "sourceBindings": {
+    "build/joint-correction-20261025/followup-corpus/manifest.json": "abfb4cdea2657478f7834f4d645339238907bce71de31f13339a1410967f471b",
+    "tools/typing_experiments/frozen_sources/manifest.json": "8fe13ef09e5a026c84fb98c4525a86e51d5b8ae4260ade9b8e14a30d1b009b9d",
+    "tools/typing_experiments/frozen_sources/prepare_joint_followup_964b7c6505cf5b3a.py": "964b7c6505cf5b3a0d766563e29ff750b3db70638302267db9c0318ffa05aef8",
+    "tools/typing_experiments/frozen_sources/prepare_joint_followup_b9cc4859e08021f8.py": "b9cc4859e08021f851711bcabff12d329d6219312d3d988157b9716a1af574b6",
+    "tools/typing_experiments/restore_frozen_followup.py": "93656218d62a06503fe6afa8f52c72a478a731f6c0844473d4f069431d592858"
+  },
+  "unitTests": 48
+}

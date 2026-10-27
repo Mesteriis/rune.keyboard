@@ -1,5 +1,8 @@
 # Q6: import joint and follow-up historical exclusions
 
+Historical import receipt. The previously missing v1 builder was subsequently
+[restored exactly](2026-10-27-followup-generator-restoration.md).
+
 Imported the original joint corpus and both historical follow-up versions:
 44,816 rows, 5,173 unique source articles and 10,770 distinct target-context
 keys across their seven partitions. Every prior entry/key/binding and incomplete

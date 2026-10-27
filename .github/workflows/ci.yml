@@ -21,6 +21,7 @@ jobs:
           python3 -m unittest discover -s tools/typing_experiments -p test_legacy_family_recovery.py
           python3 -m unittest discover -s tools/typing_experiments -p test_import_ranker_history.py
           python3 -m unittest discover -s tools/typing_experiments -p test_import_joint_history.py
+          python3 -m unittest discover -s tools/typing_experiments -p test_restore_frozen_followup.py
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
