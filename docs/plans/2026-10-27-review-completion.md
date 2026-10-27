@@ -8,8 +8,8 @@ covers the whole item; passing a narrower check closes only that check.
 The incoming-review triage and its diagnostics-fixture repair are recorded in
 `docs/acceptance/2026-10-27-review-triage.md`. Subsequent work has concentrated on
 Q6. The latest Q6 receipt is
-`docs/acceptance/2026-10-27-applied-authored-history-evidence.json`: 181 local
-source-only tests pass, the lexical ledger has 103 entries, and global coverage
+`docs/acceptance/2026-10-27-auxiliary-authored-history-evidence.json`: 189 local
+source-only tests pass, the lexical ledger has 113 entries, and global coverage
 is explicitly incomplete. No A/U/Q card is marked fully verified by this map.
 
 ## Acceptance inventory
@@ -50,12 +50,17 @@ is explicitly incomplete. No A/U/Q card is marked fully verified by this map.
 
 ## Q6 outstanding evidence
 
-- Audit remaining instrumental, left-sequence, oblique, input-combination and
-  residual/signature transformation chains and preserve their consumed data.
+- Finish the remaining historical qualification/training provenance inventory.
+  Instrumental, left-sequence, oblique, combined v11/v12 and residual group
+  reuse through v14 are now source/data-audited in the latest receipt; model
+  execution and complete model-driver provenance are not established by it.
 - Keep unsupported lexical surfaces quarantined until canonical-family evidence
   exists. Prediction-only analyses do not establish canonical lemmas.
 - Recover or explicitly resolve the historical role-feature source at hash
   `2442a38501946f6fcaad293a99b11d0ad785123efb1fe207b03beb5332a841d0`.
+  The original left-sequence feature hash
+  `82aeb37a82f7ac32aafd2f5f08eab36469ad2605b169943359db9a069726788e`
+  also remains unavailable among checked copies.
 - Establish provenance for the separate 120-example file; matching its manifest
   alone does not establish authorship. Keep its text/private fingerprints out
   of the public exclusions.

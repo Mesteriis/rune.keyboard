@@ -120,6 +120,14 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:family'):
             assert_disjoint([dict(families=['честной'])],self.ledger,kinds=('family',),usages=('supervised','prepared-training-quarantine'))
 
+    def test_auxiliary_template_exclusions_and_sequence_reuse_are_durable(self):
+        entries={e['id']:e for e in self.ledger['entries'] if e['id'].startswith('authored-right-context-auxiliary-history-')}
+        self.assertEqual(10,len(entries))
+        for suffix in ('families','contexts'):
+            self.assertEqual(entries['authored-right-context-auxiliary-history-left-sequence-v1-'+suffix]['keys'],entries['authored-right-context-auxiliary-history-left-sequence-v1-v2-'+suffix]['keys'])
+        with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:context'):
+            assert_disjoint([dict(prefix='раньше он был ',typed='другаяопечатка',expectedSpelling='болью')],self.ledger,kinds=('context',))
+
     def test_historical_overlap_disclosure_matches_recorded_keys(self):
         scope={f'public-spelling-v{v}' for v in range(7,13)}|{'public-legacy-spelling-v6'}|{
             'public-early-ru-'+name for name in ('qualification-v2','compact-v3','compact-v4')}
