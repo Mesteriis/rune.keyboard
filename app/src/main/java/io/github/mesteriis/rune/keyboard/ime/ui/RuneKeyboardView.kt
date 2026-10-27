@@ -184,8 +184,8 @@ internal class RuneKeyboardView(
             letterKeys.clear()
             keysContainer.removeAllViews()
             if (layout.emojiPanel) {
-                val panel = emojiPanel ?: EmojiPanelView(context, metrics.keyHeightPx, appearance) {
-                    actionListener?.invoke(it)
+                val panel = emojiPanel ?: RuneTrace.section("Rune#emojiConstruct") {
+                    EmojiPanelView(context, metrics.keyHeightPx, appearance) { actionListener?.invoke(it) }
                 }.also { emojiPanel = it }
                 panel.render(state.language, inputPolicy == InputPolicy.NORMAL)
                 keysContainer.addView(panel, LayoutParams(LayoutParams.MATCH_PARENT, metrics.keyHeightPx * 3))

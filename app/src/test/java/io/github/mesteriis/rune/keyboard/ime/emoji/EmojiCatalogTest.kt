@@ -7,6 +7,34 @@ import java.io.ByteArrayInputStream
 import java.io.File
 
 class EmojiCatalogTest {
+    @Test fun `all ISO controls line separators and Unicode blank fields are refused`() {
+        val controls = (0..0xFFFF).filter { Character.isISOControl(it) }.map { it.toChar() } + listOf('\u2028', '\u2029')
+        val rows = fixture.trimEnd('\n').split('\n')
+        for (column in 2..5) {
+            val fields = rows.last().split('\t').toMutableList()
+            for (control in controls) {
+                fields[column] = "x${control}y"
+                val text = rows.take(2).joinToString("\n", postfix = "\n") + fields.joinToString("\t") + "\n"
+                assertThrows(IllegalArgumentException::class.java) { read(text) }
+            }
+            for (blank in listOf("", " ", "\u00A0", "\u2007", "\u202F", "\u3000")) {
+                fields[column] = blank
+                val text = rows.take(2).joinToString("\n", postfix = "\n") + fields.joinToString("\t") + "\n"
+                assertThrows(IllegalArgumentException::class.java) { read(text) }
+            }
+        }
+    }
+
+    @Test fun `field slot reuse preserves earlier entries and exact surrounding whitespace`() {
+        val extra = "E\tpeople\t😀\t second name \t второе имя \t segundo nombre \n"
+        val entries = read(fixture + extra).categories.single().entries
+        assertEquals(listOf("👩‍💻", "😀"), entries.map { it.glyph })
+        assertEquals("woman technologist", entries.first().names.english)
+        assertEquals(" second name ", entries.last().names.english)
+        assertEquals(" второе имя ", entries.last().names.russian)
+        assertEquals(" segundo nombre ", entries.last().names.spanish)
+    }
+
     private val asset = File("src/main/assets/emoji/catalog-v1.tsv")
     private fun read(text: String) = EmojiCatalog.read(text.byteInputStream())
     private val fixture = "# rune-emoji-catalog-v1\n" +
@@ -24,6 +52,12 @@ class EmojiCatalogTest {
         assertEquals("широко улыбается", first.names.inLanguage(KeyboardLanguage.RUSSIAN))
         assertEquals("cara sonriendo", first.names.inLanguage(KeyboardLanguage.SPANISH))
         assertEquals("Смайлы и эмоции", catalog.categories.first().names.inLanguage(KeyboardLanguage.RUSSIAN))
+        // An independent line/split reference checks every persisted field and source order.
+        val groups = catalog.categories.map { listOf("G", it.id, it.icon, it.names.english, it.names.russian, it.names.spanish).joinToString("\t") }
+        val rows = catalog.categories.flatMap { category -> category.entries.map {
+            listOf("E", category.id, it.glyph, it.names.english, it.names.russian, it.names.spanish).joinToString("\t")
+        } }
+        assertEquals(asset.readLines().drop(1), groups + rows)
     }
 
     @Test fun `sequence bytes preserve joiners flags selectors keycaps and tag sequences`() {

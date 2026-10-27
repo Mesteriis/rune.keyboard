@@ -38,7 +38,11 @@ This adds no network operation to a build or to keyboard startup.
 320,000-byte input, preserving complete glyph strings and all three names. It
 closes the supplied stream on success and failure. Duplicate/unknown groups,
 duplicate sequences, missing names, control characters and malformed rows refuse
-the whole catalog. Build-time source/hash verification remains the provenance
+the whole catalog. A single delimiter/control scan reuses six field slots;
+whole-file line lists, per-row split lists and repeated blank scans are avoided.
+ISO controls and Unicode whitespace are covered independently in JVM regression
+tests, and every parsed field is compared with the original packaged TSV.
+Build-time source/hash verification remains the provenance
 gate; the reader is not a substitute for it.
 
 `EmojiPalette` provides view-owned lazy catalog state for the future GridView.
@@ -50,6 +54,13 @@ support is verified on the pinned API 26 emulator (1,545 accepted and 353 hidden
 entries), across all nine categories and three languages. The 50 ms preview
 opening budget failed its first sample on a clean AVD; opening/startup/PSS and
 physical Fold acceptance remain open. See the u9-emoji-api26 acceptance receipt.
+
+The parser follow-up adds constant Rune#emojiConstruct, Rune#emojiCatalogRead,
+Rune#emojiTabs and Rune#emojiGlyphFilter trace labels without user content.
+Profiling identifies catalog load/parse as the largest measured phase. The
+optimized parser's three-clean-AVD preview series still has one late first open;
+the 50 ms gate remains failed. See the u9-emoji-parser acceptance receipt for
+all samples, scope and unchanged ordinary replay identities.
 
 To restore a missing archive from its exact pins, or verify a restored copy:
 

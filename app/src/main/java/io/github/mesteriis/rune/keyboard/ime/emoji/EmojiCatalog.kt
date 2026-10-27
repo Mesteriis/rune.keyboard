@@ -27,7 +27,7 @@ internal class EmojiCatalog private constructor(val categories: List<EmojiCatego
     companion object {
         const val ASSET_PATH = "emoji/catalog-v1.tsv"
         private const val MAX_BYTES = 320_000
-        private val CATEGORY_ID = Regex("[a-z]+")
+        private const val HEADER = "# rune-emoji-catalog-v1\n"
 
         /** Owns and closes the supplied stream, including on a malformed/oversized asset. */
         fun read(input: InputStream): EmojiCatalog = input.use { stream ->
@@ -47,20 +47,39 @@ internal class EmojiCatalog private constructor(val categories: List<EmojiCatego
 
         private fun parse(text: String): EmojiCatalog {
             require(text.endsWith('\n')) { "Emoji catalog must end with LF" }
-            val lines = text.dropLast(1).split('\n')
-            require(lines.firstOrNull() == "# rune-emoji-catalog-v1") { "Unknown emoji catalog schema" }
+            require(text.startsWith(HEADER)) { "Unknown emoji catalog schema" }
             val categories = linkedMapOf<String, EmojiCategory>()
             val entries = linkedMapOf<String, MutableList<EmojiEntry>>()
             val seenGlyphs = hashSetOf<String>()
             var readingEntries = false
-            lines.drop(1).forEach { line ->
-                val columns = line.split('\t')
-                require(columns.size == 6 && columns.all { field ->
-                    field.isNotBlank() && field.none { it.isISOControl() || it == '\u2028' || it == '\u2029' }
-                }) { "Invalid emoji catalog row" }
-                val (kind, id, glyph) = columns
-                require(id.matches(CATEGORY_ID)) { "Invalid emoji category ID" }
-                val names = EmojiNames(columns[3], columns[4], columns[5])
+            // Scan delimiters and validate controls/blank fields once. Reuse six field slots;
+            // no whole-file line list, per-row split lists or repeated Unicode blank scans.
+            val fields = arrayOfNulls<String>(6)
+            var fieldStart = HEADER.length
+            var column = 0
+            var nonBlank = false
+            var cursor = fieldStart
+            while (cursor < text.length) {
+                val char = text[cursor]
+                if (char != '\t' && char != '\n') {
+                    require(char > '\u001F' && char !in '\u007F'..'\u009F' &&
+                        char != '\u2028' && char != '\u2029') { "Invalid emoji catalog control" }
+                    if (!nonBlank && !char.isWhitespace()) nonBlank = true
+                    cursor++
+                    continue
+                }
+                require(column < fields.size && nonBlank) { "Invalid emoji catalog field" }
+                fields[column++] = text.substring(fieldStart, cursor)
+                fieldStart = ++cursor
+                nonBlank = false
+                if (char == '\t') continue
+                require(column == fields.size) { "Invalid emoji catalog row" }
+                column = 0
+                val kind = fields[0]!!
+                val id = fields[1]!!
+                val glyph = fields[2]!!
+                require(id.all { it in 'a'..'z' }) { "Invalid emoji category ID" }
+                val names = EmojiNames(fields[3]!!, fields[4]!!, fields[5]!!)
                 when (kind) {
                     "G" -> {
                         require(!readingEntries && id !in categories) { "Duplicate or late emoji category" }
@@ -76,6 +95,7 @@ internal class EmojiCatalog private constructor(val categories: List<EmojiCatego
                     else -> throw IllegalArgumentException("Unknown emoji catalog row type")
                 }
             }
+            require(column == 0 && fieldStart == text.length) { "Incomplete emoji catalog row" }
             require(categories.isNotEmpty() && entries.values.all { it.isNotEmpty() }) {
                 "Empty emoji category or catalog"
             }

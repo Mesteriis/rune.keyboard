@@ -1,0 +1,525 @@
+{
+  "card": "U9",
+  "status": "partial; parser optimized and validation retained; preview budget still FAILED",
+  "baseCommit": "3e7496ce26e6827e6c052a0c1f0b5c4523e945da",
+  "sources": [
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/emoji/EmojiCatalog.kt",
+      "bytes": 5045,
+      "sha256": "032dbedcca811c7c9b542babbb0f10132533c5263874ab029626da12d0ec3b03"
+    },
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/ui/EmojiPanelView.kt",
+      "bytes": 6115,
+      "sha256": "6bd90ba211ea309838ed72f9406e0f0aa0f0d0ad61df760f4faf66a3c50f9c44"
+    },
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/ui/RuneKeyboardView.kt",
+      "bytes": 24926,
+      "sha256": "f0cf45494afd8a7255e5fec86f26b0e7745656e7a03dd2bc7e90dd0ae7952dff"
+    },
+    {
+      "path": "app/src/test/java/io/github/mesteriis/rune/keyboard/ime/emoji/EmojiCatalogTest.kt",
+      "bytes": 8336,
+      "sha256": "16f5e5b6a9c900e8073e6251c69c98594d8dfea10a1cff7b38c58d4bc5784484"
+    },
+    {
+      "path": "tools/emoji/README.md",
+      "bytes": 5212,
+      "sha256": "c4fbe213c025d12aaee89c940bfc8499ab1eaa176fbb90cdf7cbeb59a7d22c57"
+    },
+    {
+      "path": "docs/plans/2026-10-27-review-completion.md",
+      "bytes": 17445,
+      "sha256": "7a749903fe8681f88138f148485aaa946ce4e4415bdee6880325ea7f2008ba25"
+    }
+  ],
+  "jvm": {
+    "tests": 1251,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "sourceTests": 15,
+  "checks": [
+    {
+      "name": "optimized-final-build",
+      "result": {
+        "command": [
+          "./gradlew",
+          "--offline",
+          ":app:emojiCatalogTests",
+          ":app:testDebugUnitTest",
+          ":app:imeIntelligenceBoundary",
+          ":app:privacyGateRelease",
+          ":app:lintDebug",
+          ":app:assembleDebug",
+          ":app:assembleDebugAndroidTest"
+        ],
+        "exitCode": 0
+      },
+      "log": {
+        "path": "build/review-u9-optimize-20261027/optimized-final-build.log",
+        "bytes": 13659,
+        "sha256": "d765f6ed29bedaa1c771fe6da5ca1ce6ad602bbcd5f6c6b4b466003192fba866"
+      }
+    },
+    {
+      "name": "optimized-final-unit",
+      "result": {
+        "command": [
+          "./gradlew",
+          "--offline",
+          ":app:testDebugUnitTest"
+        ],
+        "exitCode": 0
+      },
+      "log": {
+        "path": "build/review-u9-optimize-20261027/optimized-final-unit.log",
+        "bytes": 2765,
+        "sha256": "b5643d44733aae302eb775c2050fcae2a6791a711b448e6c0ed48ab2f00d4dcd"
+      }
+    },
+    {
+      "name": "trace/native-optimized-functional",
+      "result": {
+        "hostExitCode": 0,
+        "expectedTests": 7,
+        "successfulTests": 7,
+        "passed": true,
+        "hostTimeout": false
+      },
+      "log": {
+        "path": "build/review-u9-optimize-20261027/trace/native-optimized-functional.log",
+        "bytes": 5694,
+        "sha256": "53ad0dc58d385ef6e07fdf363476c4224d7158de8415b70d963869737547a1ae"
+      }
+    }
+  ],
+  "profiling": {
+    "baseline": {
+      "profilingOnly": true,
+      "milliseconds": {
+        "Rune#emojiConstruct": [
+          5.754,
+          1.013,
+          0.761,
+          0.796
+        ],
+        "Rune#emojiCatalogRead": [
+          21.39,
+          11.826,
+          12.099,
+          9.02
+        ],
+        "Rune#emojiTabs": [
+          23.365,
+          12.754,
+          13.188,
+          9.967
+        ],
+        "Rune#emojiGlyphFilter": [
+          4.313,
+          0.355,
+          0.097,
+          0.088
+        ]
+      }
+    },
+    "optimized": {
+      "profilingOnly": true,
+      "milliseconds": {
+        "Rune#emojiConstruct": [
+          1.658,
+          0.567,
+          0.505,
+          0.938
+        ],
+        "Rune#emojiCatalogRead": [
+          6.669,
+          3.712,
+          3.132,
+          3.844
+        ],
+        "Rune#emojiTabs": [
+          8.17,
+          5.157,
+          3.63,
+          5.524
+        ],
+        "Rune#emojiGlyphFilter": [
+          0.921,
+          0.321,
+          0.085,
+          0.151
+        ]
+      }
+    },
+    "baselineApk": {
+      "apkSha256": "2a91eaf36d113fda9e2c02f27b7bf5aa0b90dc477a42f1594e4e5358b995cb18",
+      "baseCommit": "3e7496ce26e6827e6c052a0c1f0b5c4523e945da"
+    },
+    "baselineSource": {
+      "path": "build/review-u9-optimize-20261027/baseline/EmojiCatalog.kt",
+      "bytes": 4041,
+      "sha256": "905ffb1d953e8f1611dd329fea58473a92896c6186b5cf42dfdf74765283b3cb"
+    },
+    "baselineTracePatch": {
+      "path": "build/review-u9-optimize-20261027/baseline/source-trace-patch.diff",
+      "bytes": 3956,
+      "sha256": "b0214758a96c3839fa537a1179ff5e3a1ca543f1f4b350ecd2e332de860aa408"
+    },
+    "rawTraceBindings": [
+      {
+        "path": "build/review-u9-profile-20261027/app-view.atrace",
+        "bytes": 204397,
+        "sha256": "7d3b6d1101e8e18b9f1ee7e20ce9c1df7d5ac60c7c53e57128dba6331e3ae523"
+      },
+      {
+        "path": "build/review-u9-optimize-20261027/trace/app-view.atrace",
+        "bytes": 186366,
+        "sha256": "fd40da964588b0a39d92450fb6d27298355d839f08890e6e54f6265a07b40ab1"
+      }
+    ],
+    "note": "Profiling only, updated VM/context; not an independent performance qualification. Raw traces stay private; only constant-label durations summarized."
+  },
+  "plan": {
+    "series": 3,
+    "palettesPerSeries": 4,
+    "budgetNanos": 50000000,
+    "traceEnabled": false,
+    "mainApkSha256": "399e12d7f4a4d19205d854fc2dcb99666d4516c3c441d2dc97b5080c3072bf8e",
+    "testApkSha256": "0499980b3c58efccec6f492ddb9f85079f75db22897adf3efccab0443d82231c",
+    "scope": "Three clean API26 AVDs; fresh install then only preview opening measurement. All samples and all series count; no retry after budget failure.",
+    "initialPortUnavailableBeforeAvdCreation": true,
+    "voidBeforeNativeDispatch": {
+      "phase": "accept-0",
+      "reason": "SDK guard received empty/transient read before runner launch; no measurement log or samples"
+    }
+  },
+  "acceptance": {
+    "series": [
+      {
+        "series": 0,
+        "samples": [
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 0,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 27909667,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 35925792,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 1,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 10694583,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 14872667,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 2,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 18842167,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 37261792,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 3,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 7447875,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 19015209,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          }
+        ]
+      },
+      {
+        "series": 1,
+        "samples": [
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 0,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 54500750,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 61802583,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": false,
+            "emoji_handler_budget_pass": false,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 1,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 15875667,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 19445292,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 2,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 14193500,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 17327500,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 3,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 15864375,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 17614583,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          }
+        ]
+      },
+      {
+        "series": 2,
+        "samples": [
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 0,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 24169916,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 32038208,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 1,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 14468417,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 17547083,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 2,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 7947458,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 15143417,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 3,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 7411917,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 14897959,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          }
+        ]
+      }
+    ],
+    "performancePass": false,
+    "failures": [
+      {
+        "series": 1,
+        "sample": 0,
+        "handlerMs": 54.50075,
+        "drawStartMs": 61.802583
+      }
+    ],
+    "seriesProof": [
+      {
+        "series": 0,
+        "result": {
+          "hostExitCode": 0,
+          "expectedTests": 1,
+          "successfulTests": 1,
+          "passed": true,
+          "hostTimeout": false
+        },
+        "log": {
+          "path": "build/review-u9-optimize-20261027/accept-valid-0/native-opening.log",
+          "bytes": 3427,
+          "sha256": "53e682072ddba0537560ca6a8e62fb572c724a9d55e0ee7694f3ba20d671aadc"
+        },
+        "cleanup": {
+          "androidApi": "26",
+          "abi": "arm64-v8a",
+          "isolatedTaskOwnedAvd": true,
+          "testsCompleted": true,
+          "emulatorStopped": true,
+          "avdDeleted": true,
+          "physicalDeviceAccess": false
+        }
+      },
+      {
+        "series": 1,
+        "result": {
+          "hostExitCode": 0,
+          "expectedTests": 1,
+          "successfulTests": 1,
+          "passed": true,
+          "hostTimeout": false
+        },
+        "log": {
+          "path": "build/review-u9-optimize-20261027/accept-valid-1/native-opening.log",
+          "bytes": 3430,
+          "sha256": "730300de55899e463481145aea234f2e8dd8d4bb1f7f2b53c5fb030131c5e208"
+        },
+        "cleanup": {
+          "androidApi": "26",
+          "abi": "arm64-v8a",
+          "isolatedTaskOwnedAvd": true,
+          "testsCompleted": true,
+          "emulatorStopped": true,
+          "avdDeleted": true,
+          "physicalDeviceAccess": false
+        }
+      },
+      {
+        "series": 2,
+        "result": {
+          "hostExitCode": 0,
+          "expectedTests": 1,
+          "successfulTests": 1,
+          "passed": true,
+          "hostTimeout": false
+        },
+        "log": {
+          "path": "build/review-u9-optimize-20261027/accept-valid-2/native-opening.log",
+          "bytes": 3426,
+          "sha256": "6ede48820637d389b5edc2655f690f53fda12305bd8239a6f8b0488563b3eddb"
+        },
+        "cleanup": {
+          "androidApi": "26",
+          "abi": "arm64-v8a",
+          "isolatedTaskOwnedAvd": true,
+          "testsCompleted": true,
+          "emulatorStopped": true,
+          "avdDeleted": true,
+          "physicalDeviceAccess": false
+        }
+      }
+    ]
+  },
+  "replayReuse": {
+    "basis": {
+      "path": "docs/acceptance/2026-10-27-u9-emoji-key-evidence.json",
+      "bytes": 94590,
+      "sha256": "fc5b5504856747f2479c5a6857ce56730324aba404a8f4e7ee71ae040e1f4ec1"
+    },
+    "sourcesVerified": 88,
+    "assetsVerified": 18,
+    "driverSha256": "bf63b2ddf9b8eebe62f2110fd9b00d8a8cc03f708d43bb670100e800a7a57618",
+    "priorComparison": {
+      "rows": 12000,
+      "identical": true,
+      "excludedFields": [
+        "hostStageNanos",
+        "fullTokenGenerationNanos"
+      ],
+      "projectionSha256": "33c3a96fed5b3322601f6b7a0307e3a4b62bfbc9bc7650b82bf644a1afffd8a3",
+      "baselineSha256": "02da96da1a2fb520db6d6c22bbc1e8da9d4adb6ad7a4b271184fed762b2662a3",
+      "candidateSha256": "20b19ccf73732e94edbe2c4079ac4551fd1398b853263afe394ab079ae66014e"
+    },
+    "note": "No fresh replay: all harness sources/assets/driver remain identical."
+  },
+  "preparationFailures": [
+    {
+      "stage": "port bind before AVD creation",
+      "log": {
+        "path": "build/review-u9-optimize-20261027/accept-0/initial-busy-port.host.log",
+        "bytes": 326,
+        "sha256": "069f8df43dd2d73a253558828130a49b260c72d67eb607ae43e184d64ade5418"
+      },
+      "nativeSamples": 0
+    },
+    {
+      "stage": "SDK probe before native dispatch",
+      "log": {
+        "path": "build/review-u9-optimize-20261027/accept-0/run-device-streamed.py.host.log",
+        "bytes": 497,
+        "sha256": "7e21a6769cd6a6e63cfabbb1d9d14cd5d7e69a88cd16e2ec43038b3d48454e74"
+      },
+      "nativeSamples": 0,
+      "resourceCleanup": {
+        "androidApi": "26",
+        "abi": "arm64-v8a",
+        "emulatorStopped": true,
+        "avdDeleted": true
+      }
+    }
+  ],
+  "profilingVmCleanup": {
+    "androidApi": "26",
+    "abi": "arm64-v8a",
+    "isolatedTaskOwnedAvd": true,
+    "testsCompleted": true,
+    "emulatorStopped": true,
+    "avdDeleted": true,
+    "physicalDeviceAccess": false
+  },
+  "phoneRun": false,
+  "phoneUpdate": false,
+  "outstanding": [
+    "Remaining clean first-open >50ms; investigate cold path",
+    "Cold IME/PSS and real IME/presented frame budgets",
+    "Release/profile timing",
+    "Modifier insertion",
+    "Fold both displays",
+    "Manual TalkBack"
+  ]
+}

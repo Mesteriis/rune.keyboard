@@ -12,6 +12,7 @@ import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.TextView
 import io.github.mesteriis.rune.keyboard.ime.emoji.EmojiCatalog
+import io.github.mesteriis.rune.keyboard.ime.RuneTrace
 import io.github.mesteriis.rune.keyboard.ime.emoji.EmojiEntry
 import io.github.mesteriis.rune.keyboard.ime.emoji.EmojiPalette
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
@@ -27,7 +28,9 @@ internal class EmojiPanelView(
     private val glyphPaint = Paint().apply {
         textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 28f, resources.displayMetrics)
     }
-    private val palette = EmojiPalette({ EmojiCatalog.read(context.assets.open(EmojiCatalog.ASSET_PATH)) }, glyphPaint::hasGlyph)
+    private val palette = EmojiPalette({ RuneTrace.section("Rune#emojiCatalogRead") {
+        EmojiCatalog.read(context.assets.open(EmojiCatalog.ASSET_PATH))
+    } }, glyphPaint::hasGlyph)
     private var language = KeyboardLanguage.ENGLISH
     private var selectedCategory: String? = "smileys"
     private var recentsAllowed = true
@@ -95,9 +98,13 @@ internal class EmojiPanelView(
                 setOnClickListener { selectedCategory = id; render(language, recentsAllowed) }
             }, LayoutParams((48f * resources.displayMetrics.density + 0.5f).toInt(), rowHeight))
         }
-        if (recentsAllowed) tab(null, "◷", localized("Recent emoji", "Недавние эмодзи", "Emojis recientes"))
-        palette.categories.forEach { category -> tab(category.id, category.icon, category.names.inLanguage(language)) }
-        entries = selectedCategory?.let(palette::entries) ?: palette.recents
+        RuneTrace.section("Rune#emojiTabs") {
+            if (recentsAllowed) tab(null, "◷", localized("Recent emoji", "Недавние эмодзи", "Emojis recientes"))
+            palette.categories.forEach { category -> tab(category.id, category.icon, category.names.inLanguage(language)) }
+        }
+        entries = RuneTrace.section("Rune#emojiGlyphFilter") {
+            selectedCategory?.let(palette::entries) ?: palette.recents
+        }
         empty.text = if (selectedCategory == null) localized("No recent emoji", "Нет недавних эмодзи", "No hay emojis recientes")
             else localized("No supported emoji", "Нет доступных эмодзи", "No hay emojis compatibles")
         cells.notifyDataSetChanged()
