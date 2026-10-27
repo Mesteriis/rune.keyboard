@@ -1,5 +1,11 @@
 package io.github.mesteriis.rune.keyboard.ime.model
 
+/** Editor-owned navigation; offsets and grapheme boundaries are never calculated from readback. */
+enum class CursorDirection { LEFT, RIGHT, UP, DOWN, HOME, END }
+
+/** The editor performs clipboard operations; Rune does not acquire clipboard or selection text. */
+enum class EditorContextAction { SELECT_ALL, COPY, CUT, PASTE }
+
 sealed interface EditorCommand {
     data class CommitText(val value: String) : EditorCommand
     data class SetComposingText(val value: String) : EditorCommand {
@@ -23,6 +29,9 @@ sealed interface EditorCommand {
     data object InsertNewline : EditorCommand
     data object SwitchToNextInputMethod : EditorCommand
     data object HideKeyboard : EditorCommand
+
+    data class NavigateCursor(val direction: CursorDirection, val extendSelection: Boolean = false) : EditorCommand
+    data class ContextMenu(val action: EditorContextAction) : EditorCommand
 
     data class MoveCursor(val steps: Int) : EditorCommand {
         init {

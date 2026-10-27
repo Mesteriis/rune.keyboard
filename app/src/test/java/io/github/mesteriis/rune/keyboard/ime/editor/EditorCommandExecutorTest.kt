@@ -2,6 +2,8 @@ package io.github.mesteriis.rune.keyboard.ime.editor
 
 import android.view.KeyEvent
 import android.view.inputmethod.InputConnection
+import io.github.mesteriis.rune.keyboard.ime.model.CursorDirection
+import io.github.mesteriis.rune.keyboard.ime.model.EditorContextAction
 import io.github.mesteriis.rune.keyboard.ime.model.EditorCommand
 import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
@@ -179,6 +181,97 @@ class EditorCommandExecutorTest {
         assertEquals(3, left.presses)
         assertEquals(KeyEvent.KEYCODE_DPAD_RIGHT, right.keyCode)
         assertEquals(2, right.presses)
+    }
+
+    @Test fun navigationUsesEditorKeyDirectionsAndNoSyntheticSelectionMetadata() {
+        val expected = mapOf(CursorDirection.LEFT to KeyEvent.KEYCODE_DPAD_LEFT,
+            CursorDirection.RIGHT to KeyEvent.KEYCODE_DPAD_RIGHT, CursorDirection.UP to KeyEvent.KEYCODE_DPAD_UP,
+            CursorDirection.DOWN to KeyEvent.KEYCODE_DPAD_DOWN, CursorDirection.HOME to KeyEvent.KEYCODE_MOVE_HOME,
+            CursorDirection.END to KeyEvent.KEYCODE_MOVE_END)
+        for ((direction, code) in expected) for (extend in listOf(false, true)) {
+            val events = mutableListOf<Triple<Int, Int, Int>>()
+            assertTrue(EditorCommandExecutor.dispatchNavigation(EditorCommand.NavigateCursor(direction, extend)) { action, key, meta ->
+                events += Triple(action, key, meta); true
+            })
+            val meta = if (extend) KeyEvent.META_SHIFT_ON else 0
+            val arrows = listOf(Triple(KeyEvent.ACTION_DOWN, code, meta), Triple(KeyEvent.ACTION_UP, code, meta))
+            val plan = if (extend) listOf(Triple(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, meta)) + arrows +
+                Triple(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SHIFT_LEFT, 0) else arrows
+            assertEquals(plan, events)
+        }
+    }
+
+    @Test fun navigationRefusalOrExceptionAlwaysAttemptsReleasesAndNeverRetries() {
+        for (failure in 0..3) for (throws in listOf(false, true)) {
+            val events = mutableListOf<Pair<Int, Int>>()
+            val handled = EditorCommandExecutor.dispatchNavigation(EditorCommand.NavigateCursor(CursorDirection.LEFT, true)) { action, key, _ ->
+                val index = events.size
+                events += action to key
+                if (index == failure && throws) throw IllegalStateException("synthetic")
+                index != failure
+            }
+            assertFalse(handled)
+            assertEquals(KeyEvent.ACTION_UP to KeyEvent.KEYCODE_SHIFT_LEFT, events.last())
+            assertEquals(if (failure == 0) 2 else 4, events.size)
+            if (failure != 0) assertEquals(KeyEvent.ACTION_UP to KeyEvent.KEYCODE_DPAD_LEFT, events[2])
+        }
+    }
+
+    @Test fun ordinaryNavigationAlsoReleasesARefusedOrThrowingArrowDown() {
+        for (throws in listOf(false, true)) {
+            val actions = mutableListOf<Int>()
+            assertFalse(EditorCommandExecutor.dispatchNavigation(EditorCommand.NavigateCursor(CursorDirection.END)) { action, _, meta ->
+                assertEquals(0, meta)
+                actions += action
+                if (action == KeyEvent.ACTION_DOWN && throws) throw IllegalStateException("synthetic")
+                action != KeyEvent.ACTION_DOWN
+            })
+            assertEquals(listOf(KeyEvent.ACTION_DOWN, KeyEvent.ACTION_UP), actions)
+        }
+    }
+
+    @Test fun contextMenuDispatchesOnlyTheNamedEditorActionWithoutReadsOrSelectionClaims() {
+        val ids = mapOf(EditorContextAction.SELECT_ALL to android.R.id.selectAll,
+            EditorContextAction.COPY to android.R.id.copy, EditorContextAction.CUT to android.R.id.cut,
+            EditorContextAction.PASTE to android.R.id.paste)
+        for ((action, id) in ids) for (policy in listOf(InputPolicy.NORMAL, InputPolicy.INCOGNITO)) {
+            for (accepted in listOf(false, true)) {
+                val calls = mutableListOf<Pair<String, Int>>()
+                val connection = Proxy.newProxyInstance(InputConnection::class.java.classLoader,
+                    arrayOf(InputConnection::class.java)) { _, method, args ->
+                    check(method.name == "performContextMenuAction") { "Unexpected editor operation" }
+                    calls += method.name to (args!![0] as Int)
+                    accepted
+                } as InputConnection
+                val result = EditorCommandExecutor.execute(EditorCommand.ContextMenu(action), connection, true, false, policy)
+                assertEquals(accepted, result.handled)
+                assertFalse(result.clearsSelection)
+                assertEquals(listOf("performContextMenuAction" to id), calls)
+            }
+        }
+    }
+
+    @Test fun rawAndSensitiveContextMenusRefuseBeforeTouchingTheEditor() {
+        val connection = Proxy.newProxyInstance(InputConnection::class.java.classLoader,
+            arrayOf(InputConnection::class.java)) { _, _, _ -> throw AssertionError("Forbidden editor call") } as InputConnection
+        for (action in EditorContextAction.entries) {
+            assertFalse(EditorCommandExecutor.execute(EditorCommand.ContextMenu(action), connection, false, true).handled)
+            assertFalse(EditorCommandExecutor.execute(EditorCommand.ContextMenu(action), connection, false, false, InputPolicy.SENSITIVE).handled)
+        }
+    }
+
+    @Test fun contextMenuExceptionReturnsUnknownFailureWithoutRetryOrSelectionReset() {
+        var calls = 0
+        val connection = Proxy.newProxyInstance(InputConnection::class.java.classLoader,
+            arrayOf(InputConnection::class.java)) { _, method, _ ->
+            check(method.name == "performContextMenuAction")
+            calls++
+            throw IllegalStateException("synthetic")
+        } as InputConnection
+        val result = EditorCommandExecutor.execute(EditorCommand.ContextMenu(EditorContextAction.PASTE), connection, true, false)
+        assertFalse(result.handled)
+        assertFalse(result.clearsSelection)
+        assertEquals(1, calls)
     }
 
     private class RecordingInputConnection(

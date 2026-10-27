@@ -4,6 +4,8 @@ import android.os.SystemClock
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.inputmethod.InputConnection
+import io.github.mesteriis.rune.keyboard.ime.model.CursorDirection
+import io.github.mesteriis.rune.keyboard.ime.model.EditorContextAction
 import io.github.mesteriis.rune.keyboard.ime.model.EditorCommand
 import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
 
@@ -103,9 +105,66 @@ object EditorCommandExecutor {
             }
             EditorExecutionResult(handled = allSent, clearsSelection = true)
         }
+        is EditorCommand.NavigateCursor -> EditorExecutionResult(
+            handled = dispatchNavigation(command) { action, code, meta ->
+                sendNavigationEvent(inputConnection, action, code, meta)
+            },
+        )
+        is EditorCommand.ContextMenu -> EditorExecutionResult(
+            // true acknowledges dispatch, not completion. Await actual editor selection elsewhere.
+            handled = deleteMode != DeleteMode.RAW_KEY_EVENT && inputPolicy != InputPolicy.SENSITIVE &&
+                try { inputConnection.performContextMenuAction(contextMenuActionId(command.action)) }
+                catch (_: RuntimeException) { false },
+        )
         EditorCommand.SwitchToNextInputMethod,
         EditorCommand.HideKeyboard,
         -> EditorExecutionResult(handled = false)
+    }
+
+    internal fun contextMenuActionId(action: EditorContextAction): Int = when (action) {
+        EditorContextAction.SELECT_ALL -> android.R.id.selectAll
+        EditorContextAction.COPY -> android.R.id.copy
+        EditorContextAction.CUT -> android.R.id.cut
+        EditorContextAction.PASTE -> android.R.id.paste
+    }
+
+    /** The callback seam keeps failure/cleanup tests independent of mock Android KeyEvent objects. */
+    internal fun dispatchNavigation(command: EditorCommand.NavigateCursor, send: (Int, Int, Int) -> Boolean): Boolean {
+        val code = when (command.direction) {
+            CursorDirection.LEFT -> KeyEvent.KEYCODE_DPAD_LEFT
+            CursorDirection.RIGHT -> KeyEvent.KEYCODE_DPAD_RIGHT
+            CursorDirection.UP -> KeyEvent.KEYCODE_DPAD_UP
+            CursorDirection.DOWN -> KeyEvent.KEYCODE_DPAD_DOWN
+            CursorDirection.HOME -> KeyEvent.KEYCODE_MOVE_HOME
+            CursorDirection.END -> KeyEvent.KEYCODE_MOVE_END
+        }
+        val meta = if (command.extendSelection) KeyEvent.META_SHIFT_ON else 0
+        var handled = true
+        try {
+            if (command.extendSelection) handled = send(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, meta)
+            if (handled) {
+                try {
+                    handled = send(KeyEvent.ACTION_DOWN, code, meta)
+                } finally {
+                    // Attempt release even after a refused/throwing Down: its effects may be unknown.
+                    handled = send(KeyEvent.ACTION_UP, code, meta) && handled
+                }
+            }
+        } catch (_: RuntimeException) {
+            handled = false
+        } finally {
+            if (command.extendSelection) {
+                handled = try { send(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SHIFT_LEFT, 0) && handled }
+                    catch (_: RuntimeException) { false }
+            }
+        }
+        return handled
+    }
+
+    private fun sendNavigationEvent(connection: InputConnection, action: Int, code: Int, meta: Int): Boolean {
+        val time = SystemClock.uptimeMillis()
+        return connection.sendKeyEvent(KeyEvent(time, time, action, code, 0, meta,
+            KeyCharacterMap.VIRTUAL_KEYBOARD, 0, KeyEvent.FLAG_SOFT_KEYBOARD))
     }
 
     internal data class CursorKeyPlan(val keyCode: Int, val presses: Int)
