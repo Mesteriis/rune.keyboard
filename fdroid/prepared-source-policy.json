@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "preparer": "fdroidserver-2.4.5",
+  "changes": [
+    {
+      "path": "app/build.gradle.kts",
+      "action": "replace",
+      "beforeSha256": "d5ca9f092567ec8c423c762c0864d1853ead525a57f1d470b78e120a48fc6b20",
+      "afterSha256": "2f1aaeb3d5687860646b00d211b7fab50dff2a8f96e2e2de34858da7e45de300"
+    },
+    {
+      "path": "gradlew",
+      "action": "delete",
+      "beforeSha256": "aed171fb114f82e6eaea4970a245a200e0582a7dcc8ec0891ca41b6e4a62b754"
+    },
+    {
+      "path": "gradlew.bat",
+      "action": "delete",
+      "beforeSha256": "fedad02c18e266ec094995a5751b7fe1eb6e74f66bf75db64fae2e50eb22c234"
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.jar",
+      "action": "delete",
+      "beforeSha256": "55243ef57851f12b070ad14f7f5bb8302daceeebc5bce5ece5fa6edb23e1145c"
+    },
+    {
+      "path": "tools/typing_experiments/baseline/ru-ranker.bin",
+      "action": "delete",
+      "beforeSha256": "bc7542fa35ab615718ee636bd530868441101a4cb89d86aef26b3af1038d8c43"
+    },
+    {
+      "path": "runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradlew",
+      "action": "delete",
+      "beforeSha256": "63135287117a1e6d12c84580f1f49c61d1ba02218ecd28660605e97f976e7d65"
+    },
+    {
+      "path": "runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradle/wrapper/gradle-wrapper.jar",
+      "action": "delete",
+      "beforeSha256": "e996d452d2645e70c01c11143ca2d3742734a28da2bf61f25c82bdc288c9e637"
+    }
+  ]
+}

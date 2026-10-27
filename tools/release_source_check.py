@@ -70,9 +70,14 @@ def check(root: Path) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=REPO)
+    parser.add_argument('--prepared-source', choices=['fdroidserver-2.4.5'])
     args = parser.parse_args()
     try:
-        report = check(args.root)
+        if args.prepared_source:
+            from fdroid_prepared_source import check_prepared
+            report = check_prepared(args.root)
+        else:
+            report = check(args.root)
         print(json.dumps(report, sort_keys=True))
         if not report['passed']:
             raise SourceCheckError(report['reason'])

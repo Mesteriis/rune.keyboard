@@ -290,8 +290,9 @@ val apkFootprintTests = tasks.register<Exec>("apkFootprintTests") {
 val releaseSourceCheckTests = tasks.register<Exec>("releaseSourceCheckTests") {
     group = "verification"
     workingDir(rootProject.projectDir)
-    inputs.files(rootProject.file("tools/release_source_check.py"), rootProject.file("tools/test_release_source_check.py"))
-    commandLine("python3", "-m", "unittest", "discover", "-s", "tools", "-p", "test_release_source_check.py")
+    inputs.files(rootProject.file("tools/release_source_check.py"), rootProject.file("tools/test_release_source_check.py"),
+        rootProject.file("tools/fdroid_prepared_source.py"), rootProject.file("tools/test_fdroid_prepared_source.py"))
+    commandLine("python3", "-m", "unittest", "discover", "-s", "tools", "-p", "test_*source*.py")
 }
 
 val releaseSourceCheck = tasks.register<Exec>("releaseSourceCheck") {
@@ -301,6 +302,7 @@ val releaseSourceCheck = tasks.register<Exec>("releaseSourceCheck") {
     dependsOn(releaseSourceCheckTests)
     // No outputs: every invocation must query live Git state, including cache reuse.
     commandLine("python3", rootProject.file("tools/release_source_check.py"), "--root", rootProject.projectDir)
+    providers.gradleProperty("runePreparedSource").orNull?.let { args("--prepared-source", it) }
 }
 tasks.matching { it.name == "preReleaseBuild" }.configureEach { dependsOn(releaseSourceCheck) }
 

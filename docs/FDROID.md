@@ -58,6 +58,48 @@ blocked. See the [data-overlay receipt](acceptance/2026-10-27-q1-fdroid-data.md)
 No new distribution recipe, isolated build-server success or public release is
 established by this overlay.
 
+## Prepared-source release checkpoint
+
+Normal release builds still require a clean committed Git checkout. F-Droid
+2.4.5 prepares a different, precisely defined source state: its signing scrub
+changes `app/build.gradle.kts`, build cleanup removes wrapper launchers, and its
+scanner removes wrapper JARs and the declared training baseline. The committed
+[prepared-source policy](../fdroid/prepared-source-policy.json) binds the original
+and resulting bytes of the signing scrub and the original bytes of six deletions.
+
+A future versioned recipe must run both guards in `init`, before preparation,
+and explicitly select the prepared-source mode for Gradle:
+
+```yaml
+init:
+  - cd .. && python3 tools/release_source_check.py && python3 tools/fdroid_data_policy.py
+gradleprops:
+  - runePreparedSource=fdroidserver-2.4.5
+```
+
+Use the current review data overlay with that entry; retain historical recipes.
+After source scanning, the equivalent standalone checkpoint is:
+
+```sh
+python3 tools/release_source_check.py --prepared-source fdroidserver-2.4.5
+```
+
+This mode requires the complete exact delta, not merely a subset of permitted
+paths. It checks policy bytes against HEAD, original file hashes against Git
+objects, replacement bytes/mode, absent deletion targets, matching recursive
+submodule commits and exact unstaged NUL-delimited status in every checkout.
+Additional edits, staged changes, untracked files, symlinks and hidden index
+flags are refused. It does not stash, restore wrappers, edit Git metadata or
+accept an arbitrary dirty checkout. The property selects a reviewed source
+transformation; it is not proof that a particular service performed it.
+
+Refresh the fixed hashes deliberately when the app build script or any listed
+original changes. Use the actual pinned fdroidserver signing transformation to
+obtain the replacement hash, then repeat preparation/scanning/build validation
+in a disposable checkout. Missing Git metadata fails closed; exported source
+tarballs without Git are not accepted by this mode. Historical commits without
+this checkpoint retain their original build behavior.
+
 ## Submission and validation
 
 The 2026-10-27 check with `fdroidserver 2.4.5` passes metadata lint using a captured official category catalogue and its eleven icons. A disposable scan of historical commit `d332c0e` plus its pinned submodule returns zero fatal findings; two warnings remain for a compressed test fixture and a Keynote document in llama.cpp documentation. The unmodified package SUSS defaults were used with network blocked during scanning. A separate scan of review commit `0f24f2e` with the historical exceptions returns eight fatal findings and ten warnings; this is not current-source acceptance. See the [historical source/tag receipt](acceptance/2026-10-27-q1-fdroid-history.md). An isolated F-Droid build-server build has not been run locally.
