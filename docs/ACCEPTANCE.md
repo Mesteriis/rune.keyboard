@@ -37,6 +37,7 @@ adb shell am start -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
 - неподвижное удержание Space завершает span до первого движения cursor mode;
 - Enter, язык, слой, внешняя selection и lifecycle не воспроизводят старый буфер;
 - внешняя замена в той же InputConnection и потеря span уничтожают контекст; последующий plain ввод не возвращает старое слово;
+- сдвинутый или чужой reported composing-span снимается через FinishComposingText без перепосылки текста; вставка префикса и замена `--` на `—` сохраняют слово/pending space при следующем plain вводе;
 - restartInput сохраняет отображённый текст и начинает новую typing-сессию;
 - callback собственного double-space не сбрасывает immediate Undo;
 - password editor не получает composing или чтений текста; NPL без пароля допускает owned-композицию/исправления, но не getTextBefore/AfterCursor, getSelectedText, getExtractedText, getCursorCapsMode, getSurroundingText или takeSnapshot;

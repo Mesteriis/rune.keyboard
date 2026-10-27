@@ -77,6 +77,40 @@ class SmartTypingComposingInstrumentedTest : ImeTestBase() {
         awaitOriginal("abd")
     }
 
+    @Test fun shiftedWordSpanIsFinishedBeforePlainFallbackInput() {
+        driver.configureMechanicalPunctuation(mechanical = false, doubleSpace = false)
+        driver.launchComposingQa()
+        type("h", "e", "l", "l", "o")
+        awaitStats { it["start"] == 0 && it["end"] == 5 }
+        val before = stats()
+        driver.tapQaControl("qa_composing_prefix")
+        driver.awaitFieldText(FIELD, "X hello")
+        driver.device.waitForIdle()
+        type("x"); driver.awaitFieldText(FIELD, "X hellox")
+        awaitStats { it.getValue("finish") > before.getValue("finish") && it["start"] == -1 && it["end"] == -1 }
+        assertEquals(before.getValue("compose"), stats().getValue("compose"))
+        assertEquals(before.getValue("connections"), stats().getValue("connections"))
+    }
+
+    @Test fun rewrittenPrefixCannotLeavePendingSpaceToBeReplacedByNextLetter() {
+        driver.configureMechanicalPunctuation(mechanical = false, doubleSpace = false)
+        driver.launchComposingQa()
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        type("a")
+        driver.tapKeyByDescription(context.getString(R.string.key_symbols)); type("-", "-")
+        driver.tapKeyByDescription(context.getString(R.string.key_letters)); space(); type("b"); space()
+        driver.awaitFieldText(FIELD, "a-- b ")
+        awaitStats { it["start"] == 5 && it["end"] == 6 }
+        val before = stats()
+        driver.tapQaControl("qa_composing_dash")
+        driver.awaitFieldText(FIELD, "a— b ")
+        driver.device.waitForIdle()
+        type("x"); driver.awaitFieldText(FIELD, "a— b x")
+        awaitStats { it.getValue("finish") > before.getValue("finish") && it["start"] == -1 && it["end"] == -1 }
+        assertEquals(before.getValue("compose"), stats().getValue("compose"))
+        assertEquals(before.getValue("connections"), stats().getValue("connections"))
+    }
+
     @Test
     fun editorRewriteInvalidatesOwnedTextWithoutReplay() {
         driver.launchComposingQa()

@@ -85,6 +85,18 @@ internal class ComposingQaFixture(context: Context, mode: String) {
             })
         })
         addView(LinearLayout(context).apply {
+            addView(button(R.id.qa_composing_prefix, R.string.qa_composing_prefix) {
+                // Editable preserves and shifts the live composing/selection spans.
+                editor.text.insert(0, "X ")
+                editor.notifySelection()
+            })
+            addView(button(R.id.qa_composing_dash, R.string.qa_composing_dash) {
+                val position = editor.text.indexOf("--")
+                if (position >= 0) editor.text.replace(position, position + 2, "—")
+                editor.notifySelection()
+            })
+        })
+        addView(LinearLayout(context).apply {
             addView(button(R.id.qa_composing_drop, R.string.qa_composing_drop) {
                 BaseInputConnection.removeComposingSpans(editor.text)
                 editor.notifySelection()

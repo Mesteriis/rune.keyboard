@@ -42,4 +42,6 @@
   <string name="qa_composing_select" translatable="false">Select all</string>
   <string name="qa_composing_drop" translatable="false">Drop span</string>
   <string name="qa_composing_restart" translatable="false">Restart input</string>
+  <string name="qa_composing_prefix" translatable="false">Insert prefix</string>
+  <string name="qa_composing_dash" translatable="false">Rewrite dash</string>
 </resources>

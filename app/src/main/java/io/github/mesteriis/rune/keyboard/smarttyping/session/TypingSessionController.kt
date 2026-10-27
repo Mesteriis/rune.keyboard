@@ -2254,6 +2254,7 @@ class TypingSessionController internal constructor(
         execute: (TypingEdit) -> Boolean,
     ): Boolean {
         if (!state.enabled) return false
+        val session = state.sessionId
         val incoming = EditorSelection(newStart, newEnd, candidatesStart, candidatesEnd)
         if (expectedSelections.contains(incoming)) {
             // Framework callbacks are ordered but may coalesce several edits. Retire that prefix;
@@ -2290,14 +2291,17 @@ class TypingSessionController internal constructor(
         composingStart = -1
         selectionStart = newStart
         selectionEnd = newEnd
+        val clearedRevision = state.revision
         publish()
-        // Never finish an unknown replacement span and never reapply a stale Rune buffer.
-        if (stillOwnsSpan) {
+        if (state.sessionId != session || state.revision != clearedRevision) return true
+        // Drop a reported editor composition even after ownership is lost. This is non-text
+        // cleanup: never adopt that span or reapply a stale Rune buffer on the next plain commit.
+        if (stillOwnsSpan || candidatesStart >= 0) {
             val expected = EditorSelection(newStart, newEnd, -1, -1)
             applyEdit(TypingEdit.FinishComposingText, expected, execute) {}
         }
-        if ((hadComposition && !stillOwnsSpan) || (!stillOwnsSpan && candidatesStart >= 0) ||
-            newStart < 0 || newEnd < 0
+        if (state.sessionId == session && ((hadComposition && !stillOwnsSpan) ||
+            (!stillOwnsSpan && candidatesStart >= 0) || newStart < 0 || newEnd < 0)
         ) disableSession()
         return true
     }

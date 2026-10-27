@@ -1780,6 +1780,46 @@ class CorrectionBoundaryTest {
         assertEquals(before, f.document); assertEquals(calls, f.calls.size)
     }
 
+    @Test fun `shifted composing word is finished before plain fallback preserves its text`() {
+        val f = Fixture(); f.raw("hello")
+        val oldSession = f.controller.state.sessionId
+        f.document = "X " + f.document; f.caret += 2; f.composingStart += 2; f.composingEnd += 2
+        val calls = f.calls.size
+        assertTrue(f.controller.updateSelection(f.caret, f.caret, f.composingStart, f.composingEnd, f.execute))
+        assertEquals(listOf("finishComposingText"), f.calls.drop(calls))
+        assertFalse(f.controller.state.enabled)
+        assertNull(f.controller.state.composing)
+        assertEquals("", f.controller.state.contextText)
+        assertEquals(oldSession, f.controller.state.sessionId)
+        assertEquals(TypingTextResult.BYPASS, f.type("x"))
+        assertTrue(f.execute(TypingEdit.CommitText("x")))
+        assertEquals("X hellox", f.document)
+    }
+
+    @Test fun `prefix rewrite keeps pending owned space before plain fallback`() {
+        val f = Fixture(initial = "a-- ").apply { synchronous = true }; f.raw("b"); f.type(" ")
+        assertEquals("a-- b ", f.document)
+        assertEquals(5, f.composingStart)
+        f.document = f.document.replace("--", "—"); f.caret--; f.composingStart--; f.composingEnd--
+        assertTrue(f.controller.updateSelection(f.caret, f.caret, f.composingStart, f.composingEnd, f.execute))
+        assertFalse(f.controller.state.enabled)
+        assertEquals(-1, f.composingStart)
+        assertEquals(TypingTextResult.BYPASS, f.type("x"))
+        assertTrue(f.execute(TypingEdit.CommitText("x")))
+        assertEquals("a— b x", f.document)
+    }
+
+    @Test fun `unknown reported span without Rune composition is finished without adopting it`() {
+        val f = Fixture(initial = "editor")
+        f.composingStart = 0; f.composingEnd = 6
+        assertTrue(f.controller.updateSelection(6, 6, 0, 6, f.execute))
+        assertEquals(listOf("finishComposingText"), f.calls)
+        assertFalse(f.controller.state.enabled)
+        assertEquals(TypingTextResult.BYPASS, f.type("x"))
+        assertTrue(f.execute(TypingEdit.CommitText("x")))
+        assertEquals("editorx", f.document)
+    }
+
     private class Fixture(qualified: Boolean? = true, modelOnly: Boolean = false, initial: String = "", refinement: Boolean = false,
         refinementQualified: Boolean? = null, rescueQualified: Boolean? = null, wordContextQualified: Boolean? = null, grammarRevisionQualified: Boolean? = null, nounCaseQualified: Boolean? = null) {
         var now = 0L

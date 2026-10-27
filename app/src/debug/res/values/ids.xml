@@ -29,4 +29,6 @@
   <item name="qa_composing_select" type="id" />
   <item name="qa_composing_drop" type="id" />
   <item name="qa_composing_restart" type="id" />
+  <item name="qa_composing_prefix" type="id" />
+  <item name="qa_composing_dash" type="id" />
 </resources>

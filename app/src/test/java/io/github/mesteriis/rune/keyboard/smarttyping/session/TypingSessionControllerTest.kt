@@ -237,14 +237,41 @@ class TypingSessionControllerTest {
     }
 
     @Test
-    fun `external replacement composing span is never finished or overwritten`() {
+    fun `external replacement composing span is finished without resending a buffer`() {
         start()
         controller.typeText("abc", execute)
         assertTrue(selection(8, 8, 6, 8))
-        assertEquals(1, edits.size)
+        assertEquals(2, edits.size)
+        assertEquals(TypingEdit.FinishComposingText, edits.last())
         assertNull(controller.state.composing)
         assertEquals("", controller.state.contextText)
         assertFalse(controller.state.enabled)
+    }
+
+    @Test fun `cleanup callback starting a new session cannot disable the new editor`() {
+        start(); controller.typeText("abc", execute)
+        val session = controller.state.sessionId
+        assertTrue(controller.updateSelection(8, 8, 6, 8) { edit ->
+            assertEquals(TypingEdit.FinishComposingText, edit)
+            controller.startSession(EditorContext.from(1, 0), 0, 0)
+            true
+        })
+        assertTrue(controller.state.sessionId > session)
+        assertTrue(controller.state.enabled)
+        assertEquals(TypingTextResult.HANDLED, controller.typeText("x", execute))
+        assertEquals("x", controller.state.contextText)
+    }
+
+    @Test fun `refused cleanup is attempted once and cannot enable lost ownership`() {
+        start(); controller.typeText("abc", execute)
+        var attempts = 0
+        assertTrue(controller.updateSelection(8, 8, 6, 8) { edit ->
+            assertEquals(TypingEdit.FinishComposingText, edit); attempts++; false
+        })
+        assertEquals(1, attempts)
+        assertFalse(controller.state.enabled)
+        assertNull(controller.state.composing)
+        assertEquals(TypingTextResult.BYPASS, controller.typeText("x", execute))
     }
 
     @Test
@@ -712,6 +739,8 @@ class TypingSessionControllerTest {
         assertTrue(selection(5, 5, 4, 5))
         assertNull(controller.state.lastAutoEdit)
         assertFalse(controller.state.enabled)
+        assertEquals(listOf(TypingEdit.FinishComposingText), edits)
+        edits.clear()
         assertEquals(TypingTextResult.BYPASS, controller.deletePrevious(execute))
         assertTrue(edits.isEmpty())
     }
