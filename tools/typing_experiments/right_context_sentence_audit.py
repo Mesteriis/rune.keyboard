@@ -22,6 +22,25 @@ def _part(family, seed):
     return 'calibration' if hashlib.sha256((seed+':family:'+family).encode()).digest()[0]%2==0 else 'holdout'
 
 
+def exclude_prior_contexts(parts, prior_rows):
+    """Explicitly remove every variant of a previously bound source context.
+
+    This is a separately recorded pre-score transformation, never a hidden
+    repair inside the audit. Cohort-size requirements must be rechecked.
+    """
+    if not isinstance(parts,dict) or set(parts)!={'calibration','holdout'}:
+        raise ValueError('SENTENCE_EXCLUSION_INPUT')
+    blocked={r['contextHash'] for r in prior_rows if isinstance(r.get('contextHash'),str) and _HASH.fullmatch(r['contextHash'])}
+    kept={};report={}
+    for part,rows in parts.items():
+        if not isinstance(rows,list) or any(not isinstance(r,dict) or not isinstance(r.get('contextHash'),str) or not _HASH.fullmatch(r['contextHash']) for r in rows):
+            raise ValueError('SENTENCE_EXCLUSION_SCHEMA')
+        removed={r['contextHash'] for r in rows if r['contextHash'] in blocked}
+        kept[part]=[r for r in rows if r['contextHash'] not in removed]
+        report[part]=dict(originalRows=len(rows),keptRows=len(kept[part]),removedRows=len(rows)-len(kept[part]),removedContextHashes=sorted(removed))
+    return kept,report
+
+
 def audit_new_sentences(parts, prior_rows, training_families, *, seed):
     if (not isinstance(parts,dict) or set(parts)!={'calibration','holdout'}
             or any(not isinstance(rows,list) for rows in parts.values()) or not isinstance(seed,str) or not seed):

@@ -1,7 +1,7 @@
 import copy
 import hashlib
 import unittest
-from right_context_sentence_audit import audit_new_sentences
+from right_context_sentence_audit import audit_new_sentences,exclude_prior_contexts
 
 SEED='authored-audit-tests'
 
@@ -36,6 +36,15 @@ class SentenceAuditTest(unittest.TestCase):
     def test_legacy_manifest_family_counts_are_not_mistaken_for_declared_families(self):
         result=self.audit(self.parts(),[dict(families=42)])
         self.assertTrue(result['passed']);self.assertEqual(0,result['parts']['holdout']['previouslyBoundFamilies'])
+
+    def test_prior_context_exclusion_is_explicit_whole_group_and_does_not_mutate_inputs(self):
+        parts=self.parts();before=copy.deepcopy(parts);prior=[dict(article='999',contextHash=parts['holdout'][0]['contextHash'])]
+        kept,report=exclude_prior_contexts(parts,prior)
+        self.assertEqual(parts,before);self.assertEqual(parts['calibration'],kept['calibration'])
+        self.assertEqual([],kept['holdout']);self.assertEqual(5,report['holdout']['removedRows'])
+        self.assertEqual(0,report['calibration']['removedRows'])
+        self.assertTrue(self.audit(kept,prior)['passed'])
+        with self.assertRaises(ValueError):exclude_prior_contexts(dict(calibration=[{}],holdout=[]),prior)
 
     def test_supervised_families_and_old_articles_are_not_silently_readmitted(self):
         parts=self.parts();self.assertFalse(self.audit(parts,[dict(article='202')])['passed'])

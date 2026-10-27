@@ -29,9 +29,12 @@ internal class ObliviousTreeRanker private constructor(
     }
 
     companion object {
+        // Explicit numeric schema, without linking optional feature extractors into legacy replay tools.
+        const val RIGHT_CONTEXT_FEATURES = 178
         fun decode(bytes: ByteArray, expectedFeatures: Int = ExperimentModels.RANK_FLOATS): ObliviousTreeRanker? {
             if (bytes.size !in 20..65_536) return null
-            if (expectedFeatures != ExperimentModels.RANK_FLOATS && expectedFeatures != ContextualRanker.FEATURES) return null
+            if (expectedFeatures != ExperimentModels.RANK_FLOATS && expectedFeatures != ContextualRanker.FEATURES &&
+                expectedFeatures != RIGHT_CONTEXT_FEATURES) return null
             val input = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
             return try {
                 if ("RET2".any { input.get().toInt() != it.code } || input.int != expectedFeatures) return null

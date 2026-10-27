@@ -42,13 +42,29 @@ internal class ContextualRanker private constructor(
     fun originalScore(models: ExperimentModels, context: String, original: String): Double =
         score(models, context, original, original, 0, Int.MAX_VALUE, 0.0, false)
 
+    /** Reuse the exact installed feature indices without applying its numeric weights. */
+    fun candidateFeatures(models: ExperimentModels, context: String, original: String,
+        candidate: GeneratedCandidate): DoubleArray? =
+        if (candidate.language != KeyboardLanguage.RUSSIAN) null else features(models, context, original,
+            candidate.text, candidate.unitDistance, candidate.frequencyRank,
+            candidate.editFeatures.editCost.toDouble(), candidate.isFallback)
+
+    fun originalFeatures(models: ExperimentModels, context: String, original: String): DoubleArray? =
+        features(models, context, original, original, 0, Int.MAX_VALUE, 0.0, false)
+
     private fun score(models: ExperimentModels, context: String, original: String, word: String,
         distance: Int, frequency: Int, editCost: Double, fallback: Boolean): Double {
-        if (!models.contextReady || original.length !in 1..128 || word.length !in 1..128) return Double.NaN
-        val features = ExperimentModels.rankFeatures(context, original, word, distance, frequency, editCost, fallback) +
+        val values = features(models, context, original, word, distance, frequency, editCost, fallback) ?: return Double.NaN
+        return 0.8 * tanh(weights.score(values) / 4.0)
+    }
+
+    private fun features(models: ExperimentModels, context: String, original: String, word: String,
+        distance: Int, frequency: Int, editCost: Double, fallback: Boolean): DoubleArray? {
+        if (!models.contextReady || original.length !in 1..128 || word.length !in 1..128) return null
+        val values = ExperimentModels.rankFeatures(context, original, word, distance, frequency, editCost, fallback) +
             wiki.extract(context, original, word) + conversation.extract(context, original, word) +
             doubleArrayOf(models.contextScore(context, word, KeyboardLanguage.RUSSIAN)) + grammar.extract(context, word)
-        return 0.8 * tanh(weights.score(features) / 4.0)
+        return values.takeIf { it.size == FEATURES && it.all(Double::isFinite) }
     }
 
     companion object {

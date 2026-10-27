@@ -64,6 +64,26 @@ class ContextualRankerTest {
         assertNull(contextual(tree(95, 94)))
     }
 
+    @Test fun exposedVectorsShareIndicesAcrossWeightsWithoutSharingMutableBuffersOrLosingReadinessGuards() {
+        val first = contextual(tree())!!
+        val second = first.withWeights(tree(left = 3f, right = 3f))!!
+        val models = ExperimentModels().apply {
+            loadContext(File("src/main/assets/smarttyping/experiments/ru-ranking-context.bin").readBytes())
+        }
+        val context = "тебе надо "; val original = "научищься"; val candidate = candidate()
+        val vector = first.candidateFeatures(models, context, original, candidate)!!
+        val expected = vector.clone(); val score = first.score(models, context, original, candidate)
+        assertEquals(ContextualRanker.FEATURES, vector.size)
+        assertArrayEquals(expected, second.candidateFeatures(models, context, original, candidate), 0.0)
+        vector[0] = 999.0
+        assertArrayEquals(expected, first.candidateFeatures(models, context, original, candidate), 0.0)
+        assertEquals(score, first.score(models, context, original, candidate), 0.0)
+        assertEquals(ContextualRanker.FEATURES, first.originalFeatures(models, context, original)!!.size)
+        assertNull(first.candidateFeatures(ExperimentModels(), context, original, candidate))
+        assertNull(first.candidateFeatures(models, context, original, candidate.copy(language = KeyboardLanguage.ENGLISH)))
+        assertNull(first.originalFeatures(models, context, ""))
+    }
+
     @Test fun secondaryWeightsRetainTheInstalledScorerAndFailClosedWhenUnavailable() {
         val models = ExperimentModels().apply {
             loadContext(File("src/main/assets/smarttyping/experiments/ru-ranking-context.bin").readBytes())
