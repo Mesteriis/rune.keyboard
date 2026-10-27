@@ -41,6 +41,7 @@ internal class ComposingQaFixture(context: Context, mode: String) {
         id = R.id.qa_composing_text
         setHint(R.string.qa_composing_hint)
         inputType = when (mode) {
+            "multiline" -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
             "password" -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             "email" -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
             "url" -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI
@@ -54,9 +55,14 @@ internal class ComposingQaFixture(context: Context, mode: String) {
             else -> InputType.TYPE_CLASS_TEXT
         }
         imeOptions = (if (mode in setOf("no_suggestions", "private_no_suggestions", "autocomplete", "filter"))
-            EditorInfo.IME_ACTION_SEARCH else EditorInfo.IME_ACTION_DONE) or
+            EditorInfo.IME_ACTION_SEARCH else if (mode == "multiline") EditorInfo.IME_ACTION_NONE else EditorInfo.IME_ACTION_DONE) or
             if (mode in setOf("private", "private_no_suggestions")) EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING else 0
-        isSingleLine = true
+        isSingleLine = mode != "multiline"
+        if (mode == "multiline") {
+            minLines = 3
+            maxLines = 3
+            typeface = android.graphics.Typeface.MONOSPACE
+        }
         importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
         setAutofillHints(*emptyArray())
     }

@@ -1,7 +1,8 @@
 package io.github.mesteriis.rune.keyboard.settings
 
 import android.os.SystemClock
-import android.view.inputmethod.EditorInfo
+import android.view.KeyCharacterMap
+import android.view.KeyEvent
 import io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutor
 import android.widget.EditText
 import io.github.mesteriis.rune.keyboard.ime.model.EditorCommand
@@ -35,11 +36,22 @@ internal object PreviewEditor {
                 val steps = command.steps.coerceIn(-available, available)
                 field.setSelection(Character.offsetByCodePoints(text, if (steps > 0) end else start, steps))
             }
-            is EditorCommand.NavigateCursor, is EditorCommand.ContextMenu -> {
+            is EditorCommand.NavigateCursor -> {
                 field.requestFocus()
-                field.onCreateInputConnection(EditorInfo())?.let { connection ->
-                    EditorCommandExecutor.execute(command, connection, start != end, false, context.inputPolicy)
+                // The embedded sample is not an IME-served editor. A manually created
+                // InputConnection cannot establish that ownership; dispatch only to this view.
+                EditorCommandExecutor.dispatchNavigation(command) { eventAction, code, meta ->
+                    val now = SystemClock.uptimeMillis()
+                    val handled = field.dispatchKeyEvent(KeyEvent(now, now, eventAction, code, 0,
+                        meta, KeyCharacterMap.VIRTUAL_KEYBOARD, 0, KeyEvent.FLAG_SOFT_KEYBOARD))
+                    // Modifier delivery may update TextView's meta state without consuming the
+                    // event. Continue its paired sequence and always release Shift.
+                    handled || code == KeyEvent.KEYCODE_SHIFT_LEFT
                 }
+            }
+            is EditorCommand.ContextMenu -> {
+                field.requestFocus()
+                field.onTextContextMenuItem(EditorCommandExecutor.contextMenuActionId(command.action))
             }
             EditorCommand.ConvertPrecedingSpaceToPeriod -> insert(" ")
             // The preview owns no external editor, IME picker, or composing session.

@@ -133,6 +133,50 @@ class EditingPanelInstrumentedTest {
         noPayloadReads()
     }
 
+    @Test fun multilineArrowsPreserveColumnAndExtendAcrossLineBoundary() {
+        driver.launchComposingQa("multiline")
+        type("abcd")
+        driver.tapKeyByDescription(context.getString(R.string.key_enter))
+        type("efgh")
+        driver.awaitFieldText("qa_composing_text", "abcd\nefgh")
+        openPanel()
+        driver.tapKeyByDescription("Move up")
+        awaitSelection(4, 4)
+        driver.tapKey("Home")
+        awaitSelection(0, 0)
+        driver.tapKeyByDescription("Move down")
+        awaitSelection(5, 5)
+        driver.tapKey("End")
+        awaitSelection(9, 9)
+        driver.tapKeyByDescription("Selection off")
+        driver.tapKeyByDescription("Move up")
+        awaitSelection(9, 4)
+        driver.tapKeyByDescription("Selection on")
+        driver.tapKeyByDescription("Move right")
+        awaitSelection(9, 9)
+        noPayloadReads()
+    }
+
+    @Test fun restartClearsSelectionModeAndFreshFieldDoesNotInheritTheForeignBoundary() {
+        type("old")
+        openPanel()
+        driver.tapKeyByDescription("Selection off")
+        // tapQaControl waits for Delete, which is intentionally absent from EDITING.
+        checkNotNull(driver.device.findObject(By.res(context.packageName, "qa_composing_restart"))).click()
+        driver.device.waitForIdle()
+        assertNotNull(driver.device.wait(Until.findObject(By.desc("Selection off")), 3_000))
+        assertNull(driver.device.findObject(By.desc("Selection on")))
+        driver.awaitFieldText("qa_composing_text", "old")
+        // New Activity/editor instance with the same package and resource ID is a fresh start.
+        // Public correction behavior proves the previous protective flag was not inherited.
+        driver.launchComposingQa()
+        type("teh")
+        assertNotNull(driver.device.wait(Until.findObject(By.desc(context.getString(R.string.candidate_correction, "the"))), 5_000))
+        space()
+        driver.awaitFieldText("qa_composing_text", "the ")
+        noPayloadReads()
+    }
+
     private fun openPanel() {
         val mode = keyboardSnapshot().keys.single { it.contentDescription == context.getString(R.string.key_symbols) }
         instrumentation.runOnMainSync {
