@@ -1,0 +1,225 @@
+{
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "holdout_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"freshnessCoverageComplete\": false, \"entries\": 38}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "control_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"coverageComplete\": false, \"entries\": 18}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py"
+      ],
+      "exitCode": 0,
+      "output": ".........................................................................................................\n----------------------------------------------------------------------\nRan 105 tests in 2.673s\n\nOK\n"
+    }
+  ],
+  "initialCoverageFixture": {
+    "reason": "Real family probny was already supervised",
+    "resolution": "Keep real overlap as a regression and isolate coverage using an explicitly artificial test identity",
+    "testExitCode": 1
+  },
+  "modelCalls": 0,
+  "probes": [
+    {
+      "case": "supervised-family",
+      "exitCode": 2,
+      "outputExists": false,
+      "report": {
+        "builderBindings": {
+          "control_ledger.py": "7809941f54cd6d44734dfaa0d64fc2c2b26ba64132e34f6fd8e3386320212777",
+          "conversation_split_checks.py": "373879a4483989d8adb7f1831265ee0803502fb25660a202a6898ed74c613683",
+          "holdout_ledger.py": "e50da63016fb720df607a6c3c5b1523b4d88867a49d976cf4feb438beebc1f3d",
+          "public_corpus_preparation_v1.py": "57c0f4d25280cb9e2af0b6da18b4403785d0098fedc22e67c23703a2b30325cc",
+          "recover_legacy_families.py": "9eaa8ee2584075b5c0184b2f907d0795ae2913ef0cb83a14c259088e6cb89866"
+        },
+        "builderSha256": "57c0f4d25280cb9e2af0b6da18b4403785d0098fedc22e67c23703a2b30325cc",
+        "controlArticleCoverage": true,
+        "controlCoverageComplete": false,
+        "controlOverlaps": {
+          "article": 0,
+          "protected": 0,
+          "punctuation": 0
+        },
+        "identityErrors": [],
+        "inputBindings": {
+          "control-ledger.json": "3e02c2a25580d121a8abb7f37541ddfa044f71af3e64a81bd82a34227d56937b",
+          "lexical-ledger.json": "a528828b4a261e67a24236438013ddd7eaaa98822480316c8b21812c3b7e7bc4",
+          "rows.jsonl": "242ff79464e096c82ba8aecfd7eadde153da8723e1d70c261d5f3930aa83d154",
+          "source-manifest.json": "7b6e3ce628637ea04eed1d9e696e36923d91209ca38d55188b1025e928b445e4"
+        },
+        "lexicalCoverageComplete": false,
+        "lexicalOverlaps": {
+          "article": 0,
+          "context": 0,
+          "family": 1,
+          "sentence": 0
+        },
+        "modelQualityQualified": false,
+        "profile": "new-sentences",
+        "rows": 1,
+        "sourceLabelsQualified": false,
+        "status": "BLOCKED_OVERLAP",
+        "task": "spelling",
+        "unsupportedLexicalLanguages": []
+      }
+    },
+    {
+      "case": "punctuation-article",
+      "exitCode": 2,
+      "outputExists": false,
+      "report": {
+        "builderBindings": {
+          "control_ledger.py": "7809941f54cd6d44734dfaa0d64fc2c2b26ba64132e34f6fd8e3386320212777",
+          "conversation_split_checks.py": "373879a4483989d8adb7f1831265ee0803502fb25660a202a6898ed74c613683",
+          "holdout_ledger.py": "e50da63016fb720df607a6c3c5b1523b4d88867a49d976cf4feb438beebc1f3d",
+          "public_corpus_preparation_v1.py": "57c0f4d25280cb9e2af0b6da18b4403785d0098fedc22e67c23703a2b30325cc",
+          "recover_legacy_families.py": "9eaa8ee2584075b5c0184b2f907d0795ae2913ef0cb83a14c259088e6cb89866"
+        },
+        "builderSha256": "57c0f4d25280cb9e2af0b6da18b4403785d0098fedc22e67c23703a2b30325cc",
+        "controlArticleCoverage": true,
+        "controlCoverageComplete": false,
+        "controlOverlaps": {
+          "article": 1,
+          "protected": 0,
+          "punctuation": 0
+        },
+        "identityErrors": [],
+        "inputBindings": {
+          "control-ledger.json": "3e02c2a25580d121a8abb7f37541ddfa044f71af3e64a81bd82a34227d56937b",
+          "lexical-ledger.json": "a528828b4a261e67a24236438013ddd7eaaa98822480316c8b21812c3b7e7bc4",
+          "rows.jsonl": "4d3dd39f532e56482af98609bb697c40d3138eae6f3a70b99b98da95bcb0ee88",
+          "source-manifest.json": "04a5ecd6a6df637139412969a47d134a340b64d3e8e26e2f7038cafe6347961c"
+        },
+        "lexicalCoverageComplete": false,
+        "lexicalOverlaps": {
+          "article": 0,
+          "context": 0,
+          "family": 0,
+          "sentence": 0
+        },
+        "modelQualityQualified": false,
+        "profile": "new-sentences",
+        "rows": 1,
+        "sourceLabelsQualified": false,
+        "status": "BLOCKED_OVERLAP",
+        "task": "spelling",
+        "unsupportedLexicalLanguages": []
+      }
+    },
+    {
+      "case": "protected-control",
+      "exitCode": 2,
+      "outputExists": false,
+      "report": {
+        "builderBindings": {
+          "control_ledger.py": "7809941f54cd6d44734dfaa0d64fc2c2b26ba64132e34f6fd8e3386320212777",
+          "conversation_split_checks.py": "373879a4483989d8adb7f1831265ee0803502fb25660a202a6898ed74c613683",
+          "holdout_ledger.py": "e50da63016fb720df607a6c3c5b1523b4d88867a49d976cf4feb438beebc1f3d",
+          "public_corpus_preparation_v1.py": "57c0f4d25280cb9e2af0b6da18b4403785d0098fedc22e67c23703a2b30325cc",
+          "recover_legacy_families.py": "9eaa8ee2584075b5c0184b2f907d0795ae2913ef0cb83a14c259088e6cb89866"
+        },
+        "builderSha256": "57c0f4d25280cb9e2af0b6da18b4403785d0098fedc22e67c23703a2b30325cc",
+        "controlArticleCoverage": true,
+        "controlCoverageComplete": false,
+        "controlOverlaps": {
+          "article": 0,
+          "protected": 1,
+          "punctuation": 0
+        },
+        "identityErrors": [],
+        "inputBindings": {
+          "control-ledger.json": "3e02c2a25580d121a8abb7f37541ddfa044f71af3e64a81bd82a34227d56937b",
+          "lexical-ledger.json": "a528828b4a261e67a24236438013ddd7eaaa98822480316c8b21812c3b7e7bc4",
+          "rows.jsonl": "c14619b1cee5bb288bd531a57f5ed106437e82cff8a1e2e99509ad7865fee3b3",
+          "source-manifest.json": "e43b8b60e7f034809d80f23b932cf6d39944e9f99fda0bfb9d43028e63fedb61"
+        },
+        "lexicalCoverageComplete": false,
+        "lexicalOverlaps": {
+          "article": 0,
+          "context": 0,
+          "family": 0,
+          "sentence": 0
+        },
+        "modelQualityQualified": false,
+        "profile": "new-sentences",
+        "rows": 1,
+        "sourceLabelsQualified": false,
+        "status": "BLOCKED_OVERLAP",
+        "task": "protected",
+        "unsupportedLexicalLanguages": []
+      }
+    },
+    {
+      "case": "incomplete-coverage",
+      "exitCode": 2,
+      "outputExists": false,
+      "report": {
+        "builderBindings": {
+          "control_ledger.py": "7809941f54cd6d44734dfaa0d64fc2c2b26ba64132e34f6fd8e3386320212777",
+          "conversation_split_checks.py": "373879a4483989d8adb7f1831265ee0803502fb25660a202a6898ed74c613683",
+          "holdout_ledger.py": "e50da63016fb720df607a6c3c5b1523b4d88867a49d976cf4feb438beebc1f3d",
+          "public_corpus_preparation_v1.py": "57c0f4d25280cb9e2af0b6da18b4403785d0098fedc22e67c23703a2b30325cc",
+          "recover_legacy_families.py": "9eaa8ee2584075b5c0184b2f907d0795ae2913ef0cb83a14c259088e6cb89866"
+        },
+        "builderSha256": "57c0f4d25280cb9e2af0b6da18b4403785d0098fedc22e67c23703a2b30325cc",
+        "controlArticleCoverage": true,
+        "controlCoverageComplete": false,
+        "controlOverlaps": {
+          "article": 0,
+          "protected": 0,
+          "punctuation": 0
+        },
+        "identityErrors": [],
+        "inputBindings": {
+          "control-ledger.json": "3e02c2a25580d121a8abb7f37541ddfa044f71af3e64a81bd82a34227d56937b",
+          "lexical-ledger.json": "a528828b4a261e67a24236438013ddd7eaaa98822480316c8b21812c3b7e7bc4",
+          "rows.jsonl": "fb643c553536f2590d27e0df3a9d722cde669550cd3e670d14185bbf90f1c33f",
+          "source-manifest.json": "21796563b39132bee14a9a25532f8a7b1dbce6e1e4fa67080a22096f15057e25"
+        },
+        "lexicalCoverageComplete": false,
+        "lexicalOverlaps": {
+          "article": 0,
+          "context": 0,
+          "family": 0,
+          "sentence": 0
+        },
+        "modelQualityQualified": false,
+        "profile": "new-sentences",
+        "rows": 1,
+        "sourceLabelsQualified": false,
+        "status": "BLOCKED_COVERAGE",
+        "task": "spelling",
+        "unsupportedLexicalLanguages": []
+      }
+    }
+  ],
+  "sourceBindings": {
+    "tools/typing_experiments/control-ledger.json": "3e02c2a25580d121a8abb7f37541ddfa044f71af3e64a81bd82a34227d56937b",
+    "tools/typing_experiments/holdout-ledger.json": "a528828b4a261e67a24236438013ddd7eaaa98822480316c8b21812c3b7e7bc4",
+    "tools/typing_experiments/prepare_public_controls_v1.py": "616d5355a0563215811426dc493c5961e7e8f17cad7a9668990c20c79b14c8e0",
+    "tools/typing_experiments/prepare_public_spelling_v1.py": "5815c1dff950e6d262b37580d123fd4d675e0aec41dc903427b0d3916836f572",
+    "tools/typing_experiments/public_corpus_preparation_v1.py": "57c0f4d25280cb9e2af0b6da18b4403785d0098fedc22e67c23703a2b30325cc"
+  },
+  "successfulFreshCorpusBuild": false,
+  "unitTests": 105
+}

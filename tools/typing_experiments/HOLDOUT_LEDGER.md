@@ -176,3 +176,9 @@ history to 17,963 articles across ten component entries; current 122/131 overlap
 counts are unchanged. Window hashes are projections, not full-sentence identities.
 Punctuation/protected components and EN/ES remain pending. CLI scans need PyArrow;
 reading keys and running the unit tests do not.
+
+New versioned proposal finalizers now enforce lexical and control exclusions
+together, including language-qualified punctuation articles. See
+[PUBLIC_CORPUS_PREPARATION_V1.md](PUBLIC_CORPUS_PREPARATION_V1.md). The old hash-bound
+builders remain unchanged. Current incomplete coverage rejects final publication;
+source/label/model qualification is separate.

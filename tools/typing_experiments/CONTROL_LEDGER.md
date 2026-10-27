@@ -70,3 +70,7 @@ Each scan saves an immutable copy of its input control registry. The merge
 verifies all original inputs, identity hashes, row IDs/selections and complete
 nine-group coverage before adding keys. Scanning requires PyArrow; reading keys,
 namespace validation and tests do not. No source windows are guessed.
+
+New versioned spelling/control finalizers now enforce both registries, including
+the recovered article keys. See [PUBLIC_CORPUS_PREPARATION_V1.md](PUBLIC_CORPUS_PREPARATION_V1.md).
+Current coverage blocks final output; no historical generator is rewritten.
