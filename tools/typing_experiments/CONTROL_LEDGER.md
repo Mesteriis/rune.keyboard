@@ -47,3 +47,26 @@ only then are its identity hashes registered. All punctuation entries/bindings
 remain unchanged. The isolated snapshot test regenerates the entire protected
 key set using only committed archived sources. This records historical control
 exposure; it does not add a personal dictionary or change runtime protection.
+
+Punctuation source articles are now stored as optional `articleKeys` on all nine
+punctuation entries. Their identity includes language and canonical decimal
+Wikipedia ID; foreign IDs are never mixed with the RU lexical namespace.
+Recovery retains all matching eligible articles, using the exact archived
+punctuation selector and original article hash/modulus filter. The 3,600 rows
+map to 3,617 occurrences and 3,476 language-qualified articles (1,150 RU).
+777 RU articles supplement the lexical article exclusions; 373 were already
+covered. The lexical registry and its own overlap report are unchanged.
+
+```sh
+python3 tools/typing_experiments/recover_punctuation_articles.py scan \
+  --corpus qualification-v2 --language ru --controls CONTROL_LEDGER \
+  --output build/recovery/qualification-v2-ru
+# Repeat for each of three corpus names and en/ru/es.
+python3 tools/typing_experiments/recover_punctuation_articles.py merge \
+  --base CONTROL_LEDGER --recovery-root build/recovery --output build/enriched-controls.json
+```
+
+Each scan saves an immutable copy of its input control registry. The merge
+verifies all original inputs, identity hashes, row IDs/selections and complete
+nine-group coverage before adding keys. Scanning requires PyArrow; reading keys,
+namespace validation and tests do not. No source windows are guessed.

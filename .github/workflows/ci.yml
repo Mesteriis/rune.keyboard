@@ -31,6 +31,7 @@ jobs:
           python3 -m unittest discover -s tools/typing_experiments -p test_control_ledger.py
           python3 -m unittest discover -s tools/typing_experiments -p test_import_control_components.py
           python3 -m unittest discover -s tools/typing_experiments -p test_public_control_ledger.py
+          python3 -m unittest discover -s tools/typing_experiments -p test_recover_punctuation_articles.py
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

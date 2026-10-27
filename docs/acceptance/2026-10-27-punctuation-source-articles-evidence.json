@@ -1,0 +1,343 @@
+{
+  "audit": {
+    "languageQualifiedArticles": 3476,
+    "occurrences": 3617,
+    "rows": 3600,
+    "ruAdditionalArticles": 777,
+    "ruAlreadyLexicallyExcluded": 373,
+    "ruArticles": 1150
+  },
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "holdout_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"freshnessCoverageComplete\": false, \"entries\": 38}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "control_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"coverageComplete\": false, \"entries\": 18}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py"
+      ],
+      "exitCode": 0,
+      "output": "...........................................................................................\n----------------------------------------------------------------------\nRan 91 tests in 1.273s\n\nOK\n"
+    }
+  ],
+  "controlLedgerSha256": "3e02c2a25580d121a8abb7f37541ddfa044f71af3e64a81bd82a34227d56937b",
+  "finalRuns": [
+    {
+      "corpus": "qualification-v2",
+      "exitCode": 0,
+      "language": "en"
+    },
+    {
+      "corpus": "qualification-v2",
+      "exitCode": 0,
+      "language": "ru"
+    },
+    {
+      "corpus": "qualification-v2",
+      "exitCode": 0,
+      "language": "es"
+    },
+    {
+      "corpus": "compact-v3",
+      "exitCode": 0,
+      "language": "en"
+    },
+    {
+      "corpus": "compact-v3",
+      "exitCode": 0,
+      "language": "ru"
+    },
+    {
+      "corpus": "compact-v3",
+      "exitCode": 0,
+      "language": "es"
+    },
+    {
+      "corpus": "compact-v4",
+      "exitCode": 0,
+      "language": "en"
+    },
+    {
+      "corpus": "compact-v4",
+      "exitCode": 0,
+      "language": "ru"
+    },
+    {
+      "corpus": "compact-v4",
+      "exitCode": 0,
+      "language": "es"
+    }
+  ],
+  "lexicalLedgerChanged": false,
+  "modelCalls": 0,
+  "oldControlKeysAndBindingsPreserved": true,
+  "protectedEntriesUnchanged": true,
+  "receipts": [
+    {
+      "allRowsRecovered": true,
+      "articles": 387,
+      "bindings": {
+        "build/punctuation-articles-final-20261027/compact-v3-en/identities.jsonl": "47d55162425c2e3da594a39c2240c8e304ef2353e9a823133bc73e10496f776b",
+        "build/punctuation-articles-final-20261027/compact-v3-en/source-controls.json": "71bf71e0563b1208d20bb600a7ea0f275d23183669b9b077045d267e1f559341",
+        "build/smart-typing-0.3/compact-v3-external-20260919/source/manifest.json": "56a5b994bc2048c4cf434a123ebbe2e2f7a746102b936a83d535fc582ceecee3",
+        "build/smart-typing-0.3/compact-v3-external-20260919/source/punctuation-en.jsonl": "4bc56f5710e58764ccdde8c9541d766213a12ab6d2a29acf0968e95506d77daf",
+        "build/smart-typing-0.3/qualification-v3/wikipedia-20231101/en-0030.parquet": "1de329963a4aaed0c40d820a564487dc98ef113c8ca6b88b11d495d6a4b98774",
+        "tools/typing_experiments/control_ledger.py": "7809941f54cd6d44734dfaa0d64fc2c2b26ba64132e34f6fd8e3386320212777",
+        "tools/typing_experiments/frozen_sources/qualification_v3_60cb1cdf671dcc07.py": "60cb1cdf671dcc0781d47225d225eebc178392f7b616a7ae77d084e4906126a7",
+        "tools/typing_experiments/frozen_sources/qualification_v3_source_lock_14ceb1c0cbe8b20e.json": "14ceb1c0cbe8b20e9d12db83d5983999a97fff0e1e1b080409c65ed4f7d65fa0",
+        "tools/typing_experiments/import_control_components.py": "be052de1357a2ee91e6b229feca4c7534a1b191bb6654d6e81383950c6a36b09",
+        "tools/typing_experiments/recover_early_ru_sources.py": "4c7a8586a8a676967bd84166a1c66011be60e0975a0140680b104c2a9f54df8a",
+        "tools/typing_experiments/recover_punctuation_articles.py": "f427141ed6420b8696482dd5ff6b1374b8a27a42ca5b9f0777d8b897a5acf121"
+      },
+      "corpus": "compact-v3",
+      "eligible": 39026,
+      "language": "en",
+      "missingRows": [],
+      "modelCalls": 0,
+      "occurrences": 402,
+      "purpose": "PUNCTUATION_ARTICLE_RECOVERY_NOT_QUALIFICATION",
+      "recoveredRows": 400,
+      "scanned": 156288,
+      "sourceRows": 400
+    },
+    {
+      "allRowsRecovered": true,
+      "articles": 392,
+      "bindings": {
+        "build/punctuation-articles-final-20261027/compact-v3-es/identities.jsonl": "2591e1c753903f6b7b1aa2d17d31982529678b8ea57eac42a25e8c40e5b00041",
+        "build/punctuation-articles-final-20261027/compact-v3-es/source-controls.json": "71bf71e0563b1208d20bb600a7ea0f275d23183669b9b077045d267e1f559341",
+        "build/smart-typing-0.3/compact-v3-external-20260919/source/manifest.json": "56a5b994bc2048c4cf434a123ebbe2e2f7a746102b936a83d535fc582ceecee3",
+        "build/smart-typing-0.3/compact-v3-external-20260919/source/punctuation-es.jsonl": "2fe4435620a88370107252034f542eba4cf5372c5b1ca884b4d5570b834dfee0",
+        "build/smart-typing-0.3/qualification-v3/wikipedia-20231101/es-0005.parquet": "f62215c55935e6e0d4df9c0b4dd35be38899126457f233d229119c35bec749ae",
+        "tools/typing_experiments/control_ledger.py": "7809941f54cd6d44734dfaa0d64fc2c2b26ba64132e34f6fd8e3386320212777",
+        "tools/typing_experiments/frozen_sources/qualification_v3_60cb1cdf671dcc07.py": "60cb1cdf671dcc0781d47225d225eebc178392f7b616a7ae77d084e4906126a7",
+        "tools/typing_experiments/frozen_sources/qualification_v3_source_lock_14ceb1c0cbe8b20e.json": "14ceb1c0cbe8b20e9d12db83d5983999a97fff0e1e1b080409c65ed4f7d65fa0",
+        "tools/typing_experiments/import_control_components.py": "be052de1357a2ee91e6b229feca4c7534a1b191bb6654d6e81383950c6a36b09",
+        "tools/typing_experiments/recover_early_ru_sources.py": "4c7a8586a8a676967bd84166a1c66011be60e0975a0140680b104c2a9f54df8a",
+        "tools/typing_experiments/recover_punctuation_articles.py": "f427141ed6420b8696482dd5ff6b1374b8a27a42ca5b9f0777d8b897a5acf121"
+      },
+      "corpus": "compact-v3",
+      "eligible": 35502,
+      "language": "es",
+      "missingRows": [],
+      "modelCalls": 0,
+      "occurrences": 402,
+      "purpose": "PUNCTUATION_ARTICLE_RECOVERY_NOT_QUALIFICATION",
+      "recoveredRows": 400,
+      "scanned": 141627,
+      "sourceRows": 400
+    },
+    {
+      "allRowsRecovered": true,
+      "articles": 391,
+      "bindings": {
+        "build/punctuation-articles-final-20261027/compact-v3-ru/identities.jsonl": "4bc5de55e31e0840f4ad668f09214015a7fee2bbf5382c389d8af02fb3caa35e",
+        "build/punctuation-articles-final-20261027/compact-v3-ru/source-controls.json": "71bf71e0563b1208d20bb600a7ea0f275d23183669b9b077045d267e1f559341",
+        "build/smart-typing-0.3/compact-v3-external-20260919/source/manifest.json": "56a5b994bc2048c4cf434a123ebbe2e2f7a746102b936a83d535fc582ceecee3",
+        "build/smart-typing-0.3/compact-v3-external-20260919/source/punctuation-ru.jsonl": "8ce8109ee5b462ae340d7e76cabb064134f4e43844fecfac5c89108ddfe99cb1",
+        "build/smart-typing-0.3/qualification-v3/wikipedia-20231101/ru-0010.parquet": "f480c34cd725c63ce276a322ac2f06aa97c3b356c4574a94fb5a273a1501857b",
+        "tools/typing_experiments/control_ledger.py": "7809941f54cd6d44734dfaa0d64fc2c2b26ba64132e34f6fd8e3386320212777",
+        "tools/typing_experiments/frozen_sources/qualification_v3_60cb1cdf671dcc07.py": "60cb1cdf671dcc0781d47225d225eebc178392f7b616a7ae77d084e4906126a7",
+        "tools/typing_experiments/frozen_sources/qualification_v3_source_lock_14ceb1c0cbe8b20e.json": "14ceb1c0cbe8b20e9d12db83d5983999a97fff0e1e1b080409c65ed4f7d65fa0",
+        "tools/typing_experiments/import_control_components.py": "be052de1357a2ee91e6b229feca4c7534a1b191bb6654d6e81383950c6a36b09",
+        "tools/typing_experiments/recover_early_ru_sources.py": "4c7a8586a8a676967bd84166a1c66011be60e0975a0140680b104c2a9f54df8a",
+        "tools/typing_experiments/recover_punctuation_articles.py": "f427141ed6420b8696482dd5ff6b1374b8a27a42ca5b9f0777d8b897a5acf121"
+      },
+      "corpus": "compact-v3",
+      "eligible": 23199,
+      "language": "ru",
+      "missingRows": [],
+      "modelCalls": 0,
+      "occurrences": 404,
+      "purpose": "PUNCTUATION_ARTICLE_RECOVERY_NOT_QUALIFICATION",
+      "recoveredRows": 400,
+      "scanned": 92622,
+      "sourceRows": 400
+    },
+    {
+      "allRowsRecovered": true,
+      "articles": 385,
+      "bindings": {
+        "build/punctuation-articles-final-20261027/compact-v4-en/identities.jsonl": "2eecd7c09146066ad73df7791dc8ea44bc321fd59ff377ca2ad1fc0ae6276a46",
+        "build/punctuation-articles-final-20261027/compact-v4-en/source-controls.json": "71bf71e0563b1208d20bb600a7ea0f275d23183669b9b077045d267e1f559341",
+        "build/smart-typing-0.3/compact-v4-external-20260919/source/manifest.json": "a1579d3596ba733dbf5fff49adb6c9dad5d7a54902fe5d98776329578328c9cc",
+        "build/smart-typing-0.3/compact-v4-external-20260919/source/punctuation-en.jsonl": "f0ba5c5d4d5ddfaa6ba36aad1c14589c69e0c1bfcba35b3e3860817ab12221e4",
+        "build/smart-typing-0.3/qualification-v4/wikipedia-20231101/en-0027.parquet": "1f0c7bcaf2aeb9765a981c8911b95ab3a9e50456bbad64e50e722a53b8608ccc",
+        "tools/typing_experiments/control_ledger.py": "7809941f54cd6d44734dfaa0d64fc2c2b26ba64132e34f6fd8e3386320212777",
+        "tools/typing_experiments/frozen_sources/qualification_v4_9615bc8033760257.py": "9615bc8033760257bc384ece09d67f6b92e0b7541e144ea6ec746a2f4cc06de4",
+        "tools/typing_experiments/frozen_sources/qualification_v4_source_lock_3f86e8b384c094e7.json": "3f86e8b384c094e7c54241359a6b6703c35ba04cdee9bc9d1558fdab3c313ae8",
+        "tools/typing_experiments/import_control_components.py": "be052de1357a2ee91e6b229feca4c7534a1b191bb6654d6e81383950c6a36b09",
+        "tools/typing_experiments/recover_early_ru_sources.py": "4c7a8586a8a676967bd84166a1c66011be60e0975a0140680b104c2a9f54df8a",
+        "tools/typing_experiments/recover_punctuation_articles.py": "f427141ed6420b8696482dd5ff6b1374b8a27a42ca5b9f0777d8b897a5acf121"
+      },
+      "corpus": "compact-v4",
+      "eligible": 39167,
+      "language": "en",
+      "missingRows": [],
+      "modelCalls": 0,
+      "occurrences": 401,
+      "purpose": "PUNCTUATION_ARTICLE_RECOVERY_NOT_QUALIFICATION",
+      "recoveredRows": 400,
+      "scanned": 156288,
+      "sourceRows": 400
+    },
+    {
+      "allRowsRecovered": true,
+      "articles": 387,
+      "bindings": {
+        "build/punctuation-articles-final-20261027/compact-v4-es/identities.jsonl": "daf930d057ed4512fd18099bc46ab30a3de04917a31b23485aedacbab38972a6",
+        "build/punctuation-articles-final-20261027/compact-v4-es/source-controls.json": "71bf71e0563b1208d20bb600a7ea0f275d23183669b9b077045d267e1f559341",
+        "build/smart-typing-0.3/compact-v4-external-20260919/source/manifest.json": "a1579d3596ba733dbf5fff49adb6c9dad5d7a54902fe5d98776329578328c9cc",
+        "build/smart-typing-0.3/compact-v4-external-20260919/source/punctuation-es.jsonl": "70a054d1e155a5db3fd5cc8aed1919383ab03f8e7a0616d3a4871c9e198b41a0",
+        "build/smart-typing-0.3/qualification-v4/wikipedia-20231101/es-0006.parquet": "2e3543788d1cf3c3cadfd800cbea1c0f6d76a2bb639455825e368f25fb47de9d",
+        "tools/typing_experiments/control_ledger.py": "7809941f54cd6d44734dfaa0d64fc2c2b26ba64132e34f6fd8e3386320212777",
+        "tools/typing_experiments/frozen_sources/qualification_v4_9615bc8033760257.py": "9615bc8033760257bc384ece09d67f6b92e0b7541e144ea6ec746a2f4cc06de4",
+        "tools/typing_experiments/frozen_sources/qualification_v4_source_lock_3f86e8b384c094e7.json": "3f86e8b384c094e7c54241359a6b6703c35ba04cdee9bc9d1558fdab3c313ae8",
+        "tools/typing_experiments/import_control_components.py": "be052de1357a2ee91e6b229feca4c7534a1b191bb6654d6e81383950c6a36b09",
+        "tools/typing_experiments/recover_early_ru_sources.py": "4c7a8586a8a676967bd84166a1c66011be60e0975a0140680b104c2a9f54df8a",
+        "tools/typing_experiments/recover_punctuation_articles.py": "f427141ed6420b8696482dd5ff6b1374b8a27a42ca5b9f0777d8b897a5acf121"
+      },
+      "corpus": "compact-v4",
+      "eligible": 35722,
+      "language": "es",
+      "missingRows": [],
+      "modelCalls": 0,
+      "occurrences": 403,
+      "purpose": "PUNCTUATION_ARTICLE_RECOVERY_NOT_QUALIFICATION",
+      "recoveredRows": 400,
+      "scanned": 141627,
+      "sourceRows": 400
+    },
+    {
+      "allRowsRecovered": true,
+      "articles": 375,
+      "bindings": {
+        "build/punctuation-articles-final-20261027/compact-v4-ru/identities.jsonl": "7944e201c279764650f9f83c47f0c73b9d1892ce0a9242ad20af1dd4b8a8e1aa",
+        "build/punctuation-articles-final-20261027/compact-v4-ru/source-controls.json": "71bf71e0563b1208d20bb600a7ea0f275d23183669b9b077045d267e1f559341",
+        "build/smart-typing-0.3/compact-v4-external-20260919/source/manifest.json": "a1579d3596ba733dbf5fff49adb6c9dad5d7a54902fe5d98776329578328c9cc",
+        "build/smart-typing-0.3/compact-v4-external-20260919/source/punctuation-ru.jsonl": "c0fe2e989d12f874c450386033e9a046fe246d5482c6edefcfc0dfe0c003c251",
+        "build/smart-typing-0.3/qualification-v4/wikipedia-20231101/ru-0008.parquet": "9df744fb888585b0db5cacf605f8a8ba8562828a0c240106c70d716738e41e87",
+        "tools/typing_experiments/control_ledger.py": "7809941f54cd6d44734dfaa0d64fc2c2b26ba64132e34f6fd8e3386320212777",
+        "tools/typing_experiments/frozen_sources/qualification_v4_9615bc8033760257.py": "9615bc8033760257bc384ece09d67f6b92e0b7541e144ea6ec746a2f4cc06de4",
+        "tools/typing_experiments/frozen_sources/qualification_v4_source_lock_3f86e8b384c094e7.json": "3f86e8b384c094e7c54241359a6b6703c35ba04cdee9bc9d1558fdab3c313ae8",
+        "tools/typing_experiments/import_control_components.py": "be052de1357a2ee91e6b229feca4c7534a1b191bb6654d6e81383950c6a36b09",
+        "tools/typing_experiments/recover_early_ru_sources.py": "4c7a8586a8a676967bd84166a1c66011be60e0975a0140680b104c2a9f54df8a",
+        "tools/typing_experiments/recover_punctuation_articles.py": "f427141ed6420b8696482dd5ff6b1374b8a27a42ca5b9f0777d8b897a5acf121"
+      },
+      "corpus": "compact-v4",
+      "eligible": 23116,
+      "language": "ru",
+      "missingRows": [],
+      "modelCalls": 0,
+      "occurrences": 401,
+      "purpose": "PUNCTUATION_ARTICLE_RECOVERY_NOT_QUALIFICATION",
+      "recoveredRows": 400,
+      "scanned": 92622,
+      "sourceRows": 400
+    },
+    {
+      "allRowsRecovered": true,
+      "articles": 389,
+      "bindings": {
+        "build/punctuation-articles-final-20261027/qualification-v2-en/identities.jsonl": "244a4c85019be010e687b918a2db03a2efec5670b6d7a08248eff87029ce3471",
+        "build/punctuation-articles-final-20261027/qualification-v2-en/source-controls.json": "71bf71e0563b1208d20bb600a7ea0f275d23183669b9b077045d267e1f559341",
+        "build/smart-typing-0.3/qualification-v2/wikipedia-20231101/en-0019.parquet": "99c23125b0dd115d68f4a921376880e307bdfcbf3bfd66ae4ed90e853e1dadac",
+        "tools/eval/smart-typing-0.3/qualification-v2/corpus/manifest.json": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+        "tools/eval/smart-typing-0.3/qualification-v2/corpus/punctuation-en.jsonl": "83c08372631d007264685ad43e63d886435a1f26070f494647b1bfe9aaaf96ab",
+        "tools/typing_experiments/control_ledger.py": "7809941f54cd6d44734dfaa0d64fc2c2b26ba64132e34f6fd8e3386320212777",
+        "tools/typing_experiments/frozen_sources/qualification_v2_2cbcb2508ef66b32.py": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+        "tools/typing_experiments/frozen_sources/qualification_v2_source_lock_e3ad381de42a6ac0.json": "e3ad381de42a6ac08defd3bad7486789ea15329742e19448b39bf4ebaed795ed",
+        "tools/typing_experiments/import_control_components.py": "be052de1357a2ee91e6b229feca4c7534a1b191bb6654d6e81383950c6a36b09",
+        "tools/typing_experiments/recover_early_ru_sources.py": "4c7a8586a8a676967bd84166a1c66011be60e0975a0140680b104c2a9f54df8a",
+        "tools/typing_experiments/recover_punctuation_articles.py": "f427141ed6420b8696482dd5ff6b1374b8a27a42ca5b9f0777d8b897a5acf121"
+      },
+      "corpus": "qualification-v2",
+      "eligible": 39248,
+      "language": "en",
+      "missingRows": [],
+      "modelCalls": 0,
+      "occurrences": 401,
+      "purpose": "PUNCTUATION_ARTICLE_RECOVERY_NOT_QUALIFICATION",
+      "recoveredRows": 400,
+      "scanned": 156288,
+      "sourceRows": 400
+    },
+    {
+      "allRowsRecovered": true,
+      "articles": 386,
+      "bindings": {
+        "build/punctuation-articles-final-20261027/qualification-v2-es/identities.jsonl": "c19218fc2b6503b9935727f02ae6172bf20b34c3d4a90fc4dd5e1a11ec514bca",
+        "build/punctuation-articles-final-20261027/qualification-v2-es/source-controls.json": "71bf71e0563b1208d20bb600a7ea0f275d23183669b9b077045d267e1f559341",
+        "build/smart-typing-0.3/qualification-v2/wikipedia-20231101/es-0004.parquet": "09fcc5eb122edc35fb507935643995999e01cc286f1968d14a5a71f24d2a7cf8",
+        "tools/eval/smart-typing-0.3/qualification-v2/corpus/manifest.json": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+        "tools/eval/smart-typing-0.3/qualification-v2/corpus/punctuation-es.jsonl": "01094a4539479a903da594259c912026f58fc2cc6ac7ae8705bb3af1d2ba477e",
+        "tools/typing_experiments/control_ledger.py": "7809941f54cd6d44734dfaa0d64fc2c2b26ba64132e34f6fd8e3386320212777",
+        "tools/typing_experiments/frozen_sources/qualification_v2_2cbcb2508ef66b32.py": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+        "tools/typing_experiments/frozen_sources/qualification_v2_source_lock_e3ad381de42a6ac0.json": "e3ad381de42a6ac08defd3bad7486789ea15329742e19448b39bf4ebaed795ed",
+        "tools/typing_experiments/import_control_components.py": "be052de1357a2ee91e6b229feca4c7534a1b191bb6654d6e81383950c6a36b09",
+        "tools/typing_experiments/recover_early_ru_sources.py": "4c7a8586a8a676967bd84166a1c66011be60e0975a0140680b104c2a9f54df8a",
+        "tools/typing_experiments/recover_punctuation_articles.py": "f427141ed6420b8696482dd5ff6b1374b8a27a42ca5b9f0777d8b897a5acf121"
+      },
+      "corpus": "qualification-v2",
+      "eligible": 35745,
+      "language": "es",
+      "missingRows": [],
+      "modelCalls": 0,
+      "occurrences": 401,
+      "purpose": "PUNCTUATION_ARTICLE_RECOVERY_NOT_QUALIFICATION",
+      "recoveredRows": 400,
+      "scanned": 141627,
+      "sourceRows": 400
+    },
+    {
+      "allRowsRecovered": true,
+      "articles": 384,
+      "bindings": {
+        "build/punctuation-articles-final-20261027/qualification-v2-ru/identities.jsonl": "e2a093b75d690ec97ef4c00fb72f23ea0eb21efd2535bba77706a0782ede1641",
+        "build/punctuation-articles-final-20261027/qualification-v2-ru/source-controls.json": "71bf71e0563b1208d20bb600a7ea0f275d23183669b9b077045d267e1f559341",
+        "build/smart-typing-0.3/qualification-v2/wikipedia-20231101/ru-0009.parquet": "bf3781c558a3a2b8125e567f060895ead704577943832e6047bcc71f202975fd",
+        "tools/eval/smart-typing-0.3/qualification-v2/corpus/manifest.json": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+        "tools/eval/smart-typing-0.3/qualification-v2/corpus/punctuation-ru.jsonl": "f141165d9b5e38da5c82cddefcf48449ed56fe7c9a30f875965061fdb95d214e",
+        "tools/typing_experiments/control_ledger.py": "7809941f54cd6d44734dfaa0d64fc2c2b26ba64132e34f6fd8e3386320212777",
+        "tools/typing_experiments/frozen_sources/qualification_v2_2cbcb2508ef66b32.py": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+        "tools/typing_experiments/frozen_sources/qualification_v2_source_lock_e3ad381de42a6ac0.json": "e3ad381de42a6ac08defd3bad7486789ea15329742e19448b39bf4ebaed795ed",
+        "tools/typing_experiments/import_control_components.py": "be052de1357a2ee91e6b229feca4c7534a1b191bb6654d6e81383950c6a36b09",
+        "tools/typing_experiments/recover_early_ru_sources.py": "4c7a8586a8a676967bd84166a1c66011be60e0975a0140680b104c2a9f54df8a",
+        "tools/typing_experiments/recover_punctuation_articles.py": "f427141ed6420b8696482dd5ff6b1374b8a27a42ca5b9f0777d8b897a5acf121"
+      },
+      "corpus": "qualification-v2",
+      "eligible": 23195,
+      "language": "ru",
+      "missingRows": [],
+      "modelCalls": 0,
+      "occurrences": 402,
+      "purpose": "PUNCTUATION_ARTICLE_RECOVERY_NOT_QUALIFICATION",
+      "recoveredRows": 400,
+      "scanned": 92622,
+      "sourceRows": 400
+    }
+  ],
+  "repeatedIdentityFilesByteIdentical": true,
+  "unitTests": 91
+}

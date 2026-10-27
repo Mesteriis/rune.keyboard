@@ -2,7 +2,7 @@ from pathlib import Path
 import shutil
 import tempfile
 import unittest
-from control_ledger import load,key_for,assert_disjoint
+from control_ledger import load,key_for,article_key,assert_disjoint
 from import_control_components import load_original
 
 
@@ -23,6 +23,12 @@ class PublicControlSnapshotTest(unittest.TestCase):
         entries=[e for e in self.ledger['entries'] if e['kind']=='protected']
         self.assertEqual(9,len(entries));self.assertEqual(5400,sum(e['rowCount'] for e in entries))
         self.assertEqual(1800,len({k for e in entries for k in e['keys']}))
+
+    def test_all_punctuation_articles_are_persisted_with_language_namespace(self):
+        entries=[e for e in self.ledger['entries'] if e['kind']=='punctuation']
+        self.assertEqual(3476,sum(len(e['articleKeys']) for e in entries))
+        self.assertIn(article_key(dict(language='ru',article='4476020')),{k for e in entries for k in e['articleKeys']})
+        self.assertTrue(all('articleKeys' not in e for e in self.ledger['entries'] if e['kind']=='protected'))
 
     def test_protected_ru_token_is_blocked_without_original_corpora(self):
         with self.assertRaisesRegex(ValueError,'CONTROL_OVERLAP:protected'):

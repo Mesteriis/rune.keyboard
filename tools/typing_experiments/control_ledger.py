@@ -29,6 +29,15 @@ def key_for(row,kind):
     return hashlib.sha256(json.dumps(payload,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
 
 
+def article_key(row):
+    if not isinstance(row,dict) or row.get('language') not in LANGUAGES:raise ValueError('CONTROL_ARTICLE_SCOPE')
+    article=row.get('article')
+    if not isinstance(article,str) or not 1<=len(article)<=20 or not article.isascii() or not article.isdecimal():
+        raise ValueError('CONTROL_ARTICLE_ID')
+    payload=[SCHEMA,'wikipedia-article',row['language'],str(int(article))]
+    return hashlib.sha256(json.dumps(payload,separators=(',',':')).encode()).hexdigest()
+
+
 def validate(ledger):
     if (not isinstance(ledger,dict) or ledger.get('schema')!=SCHEMA or ledger.get('publicDataOnly') is not True
             or ledger.get('coverageComplete') is not False or not ledger.get('pending')
@@ -46,6 +55,10 @@ def validate(ledger):
         if (not isinstance(keys,list) or not keys or len(keys)>entry['rowCount']
                 or any(not isinstance(k,str) or not HASH.fullmatch(k) for k in keys) or keys!=sorted(set(keys))):
             raise ValueError('CONTROL_KEYS')
+        if 'articleKeys' in entry:
+            keys=entry['articleKeys']
+            if (not isinstance(keys,list) or not keys or any(not isinstance(k,str) or not HASH.fullmatch(k) for k in keys)
+                    or keys!=sorted(set(keys))):raise ValueError('CONTROL_ARTICLE_KEYS')
     return ledger
 
 
