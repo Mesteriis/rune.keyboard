@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "featureCount": 202,
+  "newFields": 24,
+  "tests": {
+    "command": "python3 -m unittest discover -s tools/typing_experiments -p 'test_right_context*.py'",
+    "exitCode": 0,
+    "tests": 108,
+    "newTests": 11
+  },
+  "diagnosticRows": 7905,
+  "firstActionPaths": 454,
+  "holdoutRead": false,
+  "newModelTrained": false,
+  "productionActivated": false,
+  "apkInstalled": false,
+  "files": {
+    "tools/typing_experiments/right_context_continuation_features.py": "80c7799ecc81aa9894aac63117383a53a0595f76194b0fb6ad3edad52afb8ee8",
+    "tools/typing_experiments/test_right_context_continuation_features.py": "8ce9af8cbd6c9205cfca6e79bf8086a59512fd51b947771546952c9adaba873b",
+    "build/right-context-continuation-evidence-v2-20261027/audit.py": "6799203a2fb927ae78933cb15f6631cfb35bc42c2d29f4e17640e03d26173e8e",
+    "build/right-context-continuation-evidence-v2-20261027/report.json": "7a78a217ac3cddc368efc94d1cca176dc8727711741ace6705172938bd619b86",
+    "build/right-context-continuation-evidence-v2-20261027/features.jsonl": "503441315539d43dde2c6a4d31a34ce3d7c7176352442bf50d12e769c176b528",
+    "build/right-context-continuation-evidence-v2-20261027/audit.log": "8a1cd5ab1183e8cf2ddb2d259dbe402592abc9a0646b08bdff71f2ef30987cf8",
+    "build/right-context-continuation-evidence-v2-20261027/python-tests.log": "8eb906439ce4e2f8df8af68e902fafe601d35b3f33cd64831829956acc4d7fed"
+  }
+}
