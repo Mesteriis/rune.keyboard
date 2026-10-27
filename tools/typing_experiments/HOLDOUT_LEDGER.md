@@ -227,3 +227,13 @@ IDs/full text/prefix captures; all 116,000 labeled rows have supported candidate
 analyses. Duplicate scopes fail before file reads. Exact duplicate snapshots are
 registered as historical reuse, never independent new evidence or supervision
 inferred solely from an experiment's name.
+
+`import_legacy_context_history.py` preserves the six early contextual-ranker
+partitions (23,977 rows). Original manifest row hashes must also match the old
+availability-plan exclusion bindings. Each original word/prefix occurrence is
+verified in the pinned public Parquet article, retaining every matching projected
+window. Historical joint.WORDS tokenization permits hyphens; recovery preserves
+that old rule without granting new correction eligibility. Native numeric or
+ambiguous surface fallback family identifiers are not canonical lemmas: every
+supported dictionary analysis is recorded instead. All six partitions have full
+article/window/context/family coverage; global history remains incomplete.

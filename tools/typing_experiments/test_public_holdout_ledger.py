@@ -75,6 +75,11 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         self.assertEqual(11,len(entries));self.assertEqual(1357,len({k for e in entries for k in e['unsupportedSurfaceKeys']}))
         self.assertTrue(all('family' in e['missingAxes'] for e in entries));self.assertFalse(self.ledger['coverage']['complete'])
 
+    def test_legacy_context_partitions_are_durable_and_fully_source_verified(self):
+        entries=[e for e in self.ledger['entries'] if e['id'].startswith('public-legacy-context-')]
+        self.assertEqual(6,len(entries));self.assertEqual(23977,sum(e['rowCount'] for e in entries))
+        self.assertTrue(all(not e['missingAxes'] for e in entries))
+
     def test_historical_overlap_disclosure_matches_recorded_keys(self):
         scope={f'public-spelling-v{v}' for v in range(7,13)}|{'public-legacy-spelling-v6'}|{
             'public-early-ru-'+name for name in ('qualification-v2','compact-v3','compact-v4')}
