@@ -28,6 +28,8 @@ data class DiagnosticEvent(val kind: DiagnosticKind, val reason: DiagnosticReaso
     val candidateCount: Int = 0, val selectedIndex: Int = -1, val modelUsed: Boolean = false,
     val localCompletion: DiagnosticCompletion = DiagnosticCompletion.NONE,
     val localInspectedStates: Int = 0, val localVerifiedTerminals: Int = 0,
+    val correctionId: Long = 0, val recoveryCompletion: DiagnosticCompletion = DiagnosticCompletion.NONE,
+    val recoveryInspectedStates: Int = 0, val recoveryVerifiedTerminals: Int = 0,
     val session: Long, val revision: Long,
     val configuredFeatures: Int = 0, val effectiveFeatures: Int = 0, val typingProfile: Int = 0)
 data class DiagnosticText(
