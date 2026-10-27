@@ -25,6 +25,7 @@ class ControlLedgerTest(unittest.TestCase):
         self.assertNotEqual(key_for(row,'protected'),key_for(row|dict(typed='api36'),'protected'))
         self.assertNotEqual(key_for(row,'protected'),key_for(row|dict(typed='API-36'),'protected'))
         self.assertEqual(key_for(row|dict(typed='е\u0308лка'),'protected'),key_for(row|dict(typed='ёлка'),'protected'))
+        self.assertNotEqual(key_for(row|dict(typed='съемка'),'protected'),key_for(row|dict(typed='съёмка'),'protected'))
         with self.assertRaisesRegex(ValueError,'CONTROL_OVERLAP:protected'):
             assert_disjoint([row],registry('protected',row),'protected')
 
@@ -36,6 +37,7 @@ class ControlLedgerTest(unittest.TestCase):
     def test_invalid_scope_schema_hashes_duplicates_and_false_coverage_fail(self):
         for row in (punctuation(language='fr'),punctuation(expectedBoundary='! '),punctuation(prefix=None)):
             with self.assertRaises(ValueError):key_for(row,'punctuation')
+        with self.assertRaises(ValueError):key_for([],'punctuation')
         cases=[[],{},registry()|dict(coverageComplete=True)]
         x=registry();x['entries']*=2;cases.append(x)
         x=registry();x['entries'][0]['keys']=['bad'];cases.append(x)

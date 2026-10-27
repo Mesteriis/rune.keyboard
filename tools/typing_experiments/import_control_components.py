@@ -48,6 +48,7 @@ def build(root,kind,base=None):
     root=Path(root)
     result=copy.deepcopy(validate(base)) if base is not None else dict(schema=SCHEMA,publicDataOnly=True,
         coverageComplete=False,pending=['Other historical controls and versioned preparation integration; lexical registry also required.'],entries=[])
+    if any(entry['kind']==kind for entry in result['entries']):raise ValueError('CONTROL_ALREADY_IMPORTED')
     counts={};bindings={}
     for name,(directory,digest,_) in CORPORA.items():
         manifest_path=directory+'/manifest.json'

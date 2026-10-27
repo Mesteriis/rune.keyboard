@@ -18,7 +18,7 @@ def text(value):
 
 
 def key_for(row,kind):
-    if kind not in KINDS or row.get('language') not in LANGUAGES:raise ValueError('CONTROL_SCOPE')
+    if not isinstance(row,dict) or kind not in KINDS or row.get('language') not in LANGUAGES:raise ValueError('CONTROL_SCOPE')
     if kind=='punctuation':
         boundary=row.get('expectedBoundary')
         if boundary not in (' ', ', ', ': ', '. '):raise ValueError('CONTROL_BOUNDARY')

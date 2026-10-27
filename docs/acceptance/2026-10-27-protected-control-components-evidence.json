@@ -1,0 +1,92 @@
+{
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "holdout_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"freshnessCoverageComplete\": false, \"entries\": 38}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "control_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"coverageComplete\": false, \"entries\": 18}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py"
+      ],
+      "exitCode": 0,
+      "output": "......................................................................................\n----------------------------------------------------------------------\nRan 86 tests in 1.190s\n\nOK\n"
+    }
+  ],
+  "controlLedgerSha256": "71bf71e0563b1208d20bb600a7ea0f275d23183669b9b077045d267e1f559341",
+  "lexicalLedgerChanged": false,
+  "lexicalLedgerSha256": "a528828b4a261e67a24236438013ddd7eaaa98822480316c8b21812c3b7e7bc4",
+  "punctuationEntriesUnchanged": true,
+  "receipt": {
+    "bindings": {
+      "build/smart-typing-0.3/compact-v3-external-20260919/source/manifest.json": "56a5b994bc2048c4cf434a123ebbe2e2f7a746102b936a83d535fc582ceecee3",
+      "build/smart-typing-0.3/compact-v3-external-20260919/source/protected-tokens.jsonl": "891fc26deb227833664ab5d9cc1c3dae170e5c03c9171c15c3d789220220f8d6",
+      "build/smart-typing-0.3/compact-v4-external-20260919/source/manifest.json": "a1579d3596ba733dbf5fff49adb6c9dad5d7a54902fe5d98776329578328c9cc",
+      "build/smart-typing-0.3/compact-v4-external-20260919/source/protected-tokens.jsonl": "ea5c5eb782cfaf0220d634d2ccd6cd1b67d750969609bc7683b4399cacc42369",
+      "tools/eval/smart-typing-0.3/qualification-v2/corpus/manifest.json": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+      "tools/eval/smart-typing-0.3/qualification-v2/corpus/protected-tokens.jsonl": "2f22612079c237ba7ae95266d41e9286f2117b7ade9e7bd83a8c9165c1b6a012",
+      "tools/typing_experiments/frozen_sources/qualification_v2_2cbcb2508ef66b32.py": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+      "tools/typing_experiments/frozen_sources/qualification_v2_source_lock_e3ad381de42a6ac0.json": "e3ad381de42a6ac08defd3bad7486789ea15329742e19448b39bf4ebaed795ed",
+      "tools/typing_experiments/frozen_sources/qualification_v3_60cb1cdf671dcc07.py": "60cb1cdf671dcc0781d47225d225eebc178392f7b616a7ae77d084e4906126a7",
+      "tools/typing_experiments/frozen_sources/qualification_v3_source_lock_14ceb1c0cbe8b20e.json": "14ceb1c0cbe8b20e9d12db83d5983999a97fff0e1e1b080409c65ed4f7d65fa0",
+      "tools/typing_experiments/frozen_sources/qualification_v4_9615bc8033760257.py": "9615bc8033760257bc384ece09d67f6b92e0b7541e144ea6ec746a2f4cc06de4",
+      "tools/typing_experiments/frozen_sources/qualification_v4_source_lock_3f86e8b384c094e7.json": "3f86e8b384c094e7c54241359a6b6703c35ba04cdee9bc9d1558fdab3c313ae8"
+    },
+    "counts": {
+      "compact-v3": {
+        "languages": {
+          "en": 600,
+          "es": 600,
+          "ru": 600
+        },
+        "rows": 1800
+      },
+      "compact-v4": {
+        "languages": {
+          "en": 600,
+          "es": 600,
+          "ru": 600
+        },
+        "rows": 1800
+      },
+      "qualification-v2": {
+        "languages": {
+          "en": 600,
+          "es": 600,
+          "ru": 600
+        },
+        "rows": 1800
+      }
+    },
+    "kind": "protected",
+    "lexicalFamiliesChanged": false,
+    "lexicalLedgerChanged": false,
+    "modelCalls": 0,
+    "purpose": "PUBLIC_CONTROL_COMPONENT_EXCLUSIONS_NOT_QUALIFICATION",
+    "sourceBindings": {
+      "tools/typing_experiments/control_ledger.py": "5d19b61549ec9a59a9eebad3628f77518d6618725cc5302fc48dceb793acdd39",
+      "tools/typing_experiments/import_control_components.py": "be052de1357a2ee91e6b229feca4c7534a1b191bb6654d6e81383950c6a36b09"
+    }
+  },
+  "unitTests": 86
+}

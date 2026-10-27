@@ -38,3 +38,12 @@ These three corpora contain 3,600 punctuation rows (nine language/component
 entries). The separate source-recovery process is required for article/window
 exclusions. Unit checks and reading persisted keys need only the standard library;
 no models, morphology package, PyArrow or Android device is required.
+
+The protected component import adds all 5,400 authored matrix rows: nine
+language/component entries, 600 rows each. Across v2-v4 these repeat 1,800 unique
+protected identities. Every original row is compared with the exact archived
+`protected_rows(language)` output, including categories, flags and candidates;
+only then are its identity hashes registered. All punctuation entries/bindings
+remain unchanged. The isolated snapshot test regenerates the entire protected
+key set using only committed archived sources. This records historical control
+exposure; it does not add a personal dictionary or change runtime protection.

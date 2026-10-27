@@ -1,6 +1,9 @@
 import hashlib
 import unittest
-from import_control_components import validate_rows
+from pathlib import Path
+import tempfile
+from control_ledger import SCHEMA,key_for
+from import_control_components import validate_rows,build
 
 
 def row():
@@ -26,6 +29,13 @@ class ImportControlTest(unittest.TestCase):
     def test_empty_and_duplicate_source_ids_fail(self):
         for rows in ([],[row(),row()]):
             with self.assertRaises(ValueError):validate_rows(rows,'punctuation',7)
+
+    def test_duplicate_component_import_fails_before_accessing_original_files(self):
+        value=dict(language='ru',prefix='Сохранить',typed='API36')
+        base=dict(schema=SCHEMA,publicDataOnly=True,coverageComplete=False,pending=['pending'],entries=[
+            dict(id='existing',kind='protected',language='ru',rowCount=1,bindings={'file':'a'*64},keys=[key_for(value,'protected')])])
+        with tempfile.TemporaryDirectory() as folder:
+            with self.assertRaisesRegex(ValueError,'ALREADY_IMPORTED'):build(Path(folder),'protected',base)
 
 
 if __name__=='__main__':unittest.main()
