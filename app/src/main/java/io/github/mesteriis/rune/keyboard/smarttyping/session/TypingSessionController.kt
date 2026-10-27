@@ -764,12 +764,12 @@ class TypingSessionController internal constructor(
             state.composing?.typedWord == selection.original
     }
 
-    private fun armPreviousWord(word: String, startedAt: Long) {
+    private fun armPreviousWord(word: String, startedAt: Long, refinementAllowed: Boolean = true) {
         val edit = state.lastAutoEdit ?: return
         if (edit.correction == null || edit.committedStart == null ||
             state.composing?.leadingBoundary != " ") return
         previousWord = PreviousWordRefinementTicket(diagnosticOperationId, edit, word, startedAt,
-            state.revision, undoQualityRevision).also { it.nextWordStarted = state.composing?.typedWord?.isNotEmpty() == true }
+            state.revision, undoQualityRevision, refinementAllowed).also { it.nextWordStarted = state.composing?.typedWord?.isNotEmpty() == true }
     }
 
     private fun preparePreviousWordForText(text: String) {
@@ -797,7 +797,7 @@ class TypingSessionController internal constructor(
     }
 
     internal val canRefinePreviousWord: Boolean
-        get() = previousWord?.let { !it.completed && it.withinWindow(nanoTime()) && ownsPreviousWord(it) &&
+        get() = previousWord?.let { it.refinementAllowed && !it.completed && it.withinWindow(nanoTime()) && ownsPreviousWord(it) &&
             refinementThresholds != null && spellingQualification.allows(it.language,
                 io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingSource.MODEL_REFINEMENT) } == true
 
@@ -1099,7 +1099,8 @@ class TypingSessionController internal constructor(
                 undoShownAtNanos = nanoTime()
                 quality.record(QualityEvent.AUTOMATIC_APPLIED)
                 undoQualityRevision = comparedRevision
-                armPreviousWord(word, pending.startedAtNanos)
+                armPreviousWord(word, pending.startedAtNanos,
+                    refinementAllowed = !selection.generation.isCanonicalCaseCorrection())
                 if (boundary.typedWord.isNotEmpty()) state = state.copy(lastAutoEdit = null)
                 resetPersonalContext()
                 publish()
@@ -1201,6 +1202,7 @@ class TypingSessionController internal constructor(
                 undoShownAtNanos = nanoTime()
                 quality.record(QualityEvent.AUTOMATIC_APPLIED)
                 undoQualityRevision = comparedRevision
+                armPreviousWord(word, undoShownAtNanos, refinementAllowed = false)
                 resetPersonalContext()
                 publish()
             } == TypingTextResult.HANDLED
@@ -2155,7 +2157,8 @@ class TypingSessionController internal constructor(
                 undoShownAtNanos = nanoTime()
                 quality.record(QualityEvent.AUTOMATIC_APPLIED)
                 undoQualityRevision = comparedRevision
-                if (boundary == " " && !ranking.usedModel && !canonicalCase) armPreviousWord(word, boundaryStartedAt)
+                if (boundary == " ") armPreviousWord(word, boundaryStartedAt,
+                    refinementAllowed = !ranking.usedModel && !canonicalCase)
                 resetPersonalContext()
                 publish()
             }

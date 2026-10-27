@@ -111,7 +111,7 @@ data class KeyboardSettings(
     val wordBoundarySuggestions: Boolean = false,
     val abbreviations: Boolean = false,
     val phraseReview: Boolean = false,
-    val visibleUndo: Boolean = false,
+    val visibleUndo: Boolean = true,
     val protectedWords: Boolean = false,
     val appProfiles: Boolean = false,
     val collectExamples: Boolean = false,

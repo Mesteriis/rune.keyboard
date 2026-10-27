@@ -8,6 +8,25 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SettingsCodecTest {
+    @Test fun schemaThreeAndFourKeepExistingSmartPreferencesEnabled() {
+        for (schema in listOf(3, 4)) {
+            val settings = SettingsCodec.decode(validSmartValues + (SettingsCodec.KEY_SCHEMA_VERSION to schema))
+            assertEquals(AutocorrectionMode.HIGH_CONFIDENCE, settings.autocorrectionMode)
+            assertTrue(settings.mechanicalPunctuation && settings.candidateStrip && settings.doubleSpacePeriod)
+            assertEquals(ContextualPunctuationMode.SUGGESTIONS, settings.contextualPunctuationMode)
+        }
+    }
+
+    @Test fun freshAndSchemaFourUndoDefaultsPreserveSchemaThreeAndExplicitChoices() {
+        assertTrue(SettingsCodec.decode(emptyMap()).visibleUndo)
+        assertTrue(SettingsCodec.decode(mapOf(SettingsCodec.KEY_SCHEMA_VERSION to 4)).visibleUndo)
+        assertFalse(SettingsCodec.decode(mapOf(SettingsCodec.KEY_SCHEMA_VERSION to 3)).visibleUndo)
+        for (schema in listOf(3, 4)) for (enabled in listOf(false, true)) {
+            val raw = mapOf(SettingsCodec.KEY_SCHEMA_VERSION to schema, SettingsCodec.KEY_VISIBLE_UNDO to enabled)
+            assertEquals(enabled, SettingsCodec.decode(raw).visibleUndo)
+        }
+    }
+
     @Test fun manualCandidateExpansionDefaultsOffAndRequiresExplicitSupportedBoolean() {
         val key = SettingsCodec.KEY_MANUAL_CANDIDATE_EXPANSION
         assertFalse(KeyboardSettings.DEFAULT.manualCandidateExpansion)
@@ -45,16 +64,16 @@ class SettingsCodecTest {
             (SettingsCodec.KEY_SCHEMA_VERSION to SettingsCodec.SCHEMA_VERSION + 1))))
     }
 
-    @Test fun `all six typing tools toggle independently and default off`() {
+    @Test fun `five optional tools default off and visible undo stays independently configurable`() {
         val keys = listOf(SettingsCodec.KEY_QUALITY_METRICS, SettingsCodec.KEY_SHADOW_COMPARISON,
             SettingsCodec.KEY_WORD_BOUNDARY_SUGGESTIONS, SettingsCodec.KEY_ABBREVIATIONS,
             SettingsCodec.KEY_PHRASE_REVIEW, SettingsCodec.KEY_VISIBLE_UNDO)
         fun values(s: KeyboardSettings) = listOf(s.qualityMetrics, s.shadowComparison,
             s.wordBoundarySuggestions, s.abbreviations, s.phraseReview, s.visibleUndo)
-        assertEquals(List(6) { false }, values(SettingsCodec.decode(emptyMap())))
+        assertEquals(List(6) { it == 5 }, values(SettingsCodec.decode(emptyMap())))
         for ((index, key) in keys.withIndex()) {
-            assertEquals(List(6) { it == index }, values(SettingsCodec.decode(mapOf(key to true))))
-            assertEquals(List(6) { false }, values(SettingsCodec.decode(mapOf(key to "true"))))
+            assertEquals(List(6) { it == index || it == 5 }, values(SettingsCodec.decode(mapOf(key to true))))
+            assertEquals(List(6) { it == 5 && index != 5 }, values(SettingsCodec.decode(mapOf(key to "true"))))
             assertEquals(List(6) { false }, values(SettingsCodec.decode(mapOf(key to true,
                 SettingsCodec.KEY_SCHEMA_VERSION to 999))))
         }
@@ -298,7 +317,7 @@ class SettingsCodecTest {
 
     @Test
     fun `unsupported or malformed schema cannot enable smart typing but preserves ordinary settings`() {
-        for (schema in listOf(null, "3", 3L, true, 0, -1, 4, Int.MAX_VALUE)) {
+        for (schema in listOf(null, "3", 3L, true, 0, -1, 5, Int.MAX_VALUE)) {
             val result = SettingsCodec.decode(validSmartValues + mapOf(SettingsCodec.KEY_SCHEMA_VERSION to schema,
                 SettingsCodec.KEY_THEME to "DARK", SettingsCodec.KEY_NUMBER_ROW to true))
             assertOff(result)

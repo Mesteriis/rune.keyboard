@@ -344,6 +344,22 @@ class CandidateStripInstrumentedTest {
     }
 
     @Test
+    fun originalUndoAndCorrectionKeepTheirOrderAndUndoAction() = onMain {
+        val keyboard = keyboard(instrumentation.targetContext)
+        val undo = CandidateUiItem.Undo("previous:fixture", "teh")
+        val selected = mutableListOf<String>()
+        keyboard.setOnCandidateSelectedListener(selected::add)
+        keyboard.updateCandidates(SmartTypingViewState(true, listOf(original, undo, correction)))
+        val strip = keyboard.getChildAt(0) as ViewGroup
+        assertEquals(3, strip.childCount)
+        assertEquals(keyboard.context.getString(R.string.candidate_original, original.text), strip.getChildAt(0).contentDescription)
+        assertEquals(keyboard.context.getString(R.string.candidate_undo, undo.text), strip.getChildAt(1).contentDescription)
+        assertEquals(keyboard.context.getString(R.string.candidate_correction, correction.text), strip.getChildAt(2).contentDescription)
+        assertTrue(strip.getChildAt(1).performClick())
+        assertEquals(listOf(undo.id), selected)
+    }
+
+    @Test
     fun textToolsAndUndoExposeTheirActionAndCannotSurviveHiddenStrip() = onMain {
         val keyboard = keyboard(instrumentation.targetContext)
         val chosen = mutableListOf<String>()

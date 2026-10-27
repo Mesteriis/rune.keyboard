@@ -29,6 +29,10 @@ projections before/after (excluding host timings).
 U7 is verified in `docs/acceptance/2026-10-27-u7-mode-and-undo-copy.md`: accurate
 EN/RU source and Undo help, preserved 95% labels, four settings/setup/live-input/
 accessibility instrumentation checks and debug lint/builds pass.
+U1 has local acceptance in `docs/acceptance/2026-10-27-u1-visible-undo-local.md`:
+schema-4 migration and next-word model/canonical Undo, 1,174 JVM tests, eight
+emulator instrumentation scenarios and unchanged 12,012-row historical boundary/
+Undo/admission replay. Physical Fold acceptance is still required; U1 stays open.
 Other cards remain open until their complete evidence is established.
 
 ## Acceptance inventory
@@ -39,7 +43,7 @@ Other cards remain open until their complete evidence is established.
 | A2 | Word-bounded qualified prefix window, boundary-byte compatibility, hysteresis and empty-prefix suppression; native KV reuse; frozen replay parity; long-context qualification and Fold latency/deadline measurements. | Open |
 | A3 | Fresh short-word holdout including lowercase names; zero new false changes and predefined useful gains; parity on other sources; Fold typo/name cases. | Open |
 | A4 | Category-level period/colon controls with source/asset/corpus hashes and exit codes; Fold protected abbreviation, useful correction and exact Undo. | Open |
-| U1 | Visible Undo default with compatible schema migration and explicit preference retention; model/canonical Undo survives next character without new refinement; replay and device coverage. | Open |
+| U1 | Visible Undo default with compatible schema migration and explicit preference retention; model/canonical Undo survives next character without new refinement; replay and device coverage. | In progress: local acceptance verified; physical Fold pending |
 | U2 | Token-scoped mechanical protection, exact refusal reasons and command/marker controls; Undo with zero reads; zero new correct/protected false changes. | Open |
 | U3 | NPL incognito policy; composing/corrections with zero content reads; no mutation of six personal/diagnostic stores; JVM, instrumentation and replay. | Open |
 | U4 | Reproduce shifted/changed composing ownership first; correct final text and finish behavior in simulator/qa_editor; preserve ownership safeguards; regression replay. | Open |

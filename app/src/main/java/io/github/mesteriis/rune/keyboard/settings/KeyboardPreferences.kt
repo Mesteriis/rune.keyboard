@@ -146,7 +146,7 @@ class KeyboardPreferences internal constructor(private val preferences: SharedPr
         val raw = preferences.all
         val editor = preferences.edit()
         if (!SettingsCodec.isFutureSchema(raw)) {
-            // Normalize known values before stamping 3 in the same transaction. In particular,
+            // Normalize known values before stamping the current schema in the same transaction. In particular,
             // an unrelated writer must not turn a malformed/absent schema-3 value into a default.
             val settings = SettingsCodec.decode(raw)
             editor.putString(SettingsCodec.KEY_AUTOCORRECTION_MODE, settings.autocorrectionMode.name)
@@ -154,6 +154,7 @@ class KeyboardPreferences internal constructor(private val preferences: SharedPr
                 .putString(SettingsCodec.KEY_CONTEXTUAL_PUNCTUATION_MODE, settings.contextualPunctuationMode.name)
                 .putBoolean(SettingsCodec.KEY_CANDIDATE_STRIP, settings.candidateStrip)
                 .putBoolean(SettingsCodec.KEY_DOUBLE_SPACE_PERIOD, settings.doubleSpacePeriod)
+                .putBoolean(SettingsCodec.KEY_VISIBLE_UNDO, settings.visibleUndo)
                 .putInt(SettingsCodec.KEY_SCHEMA_VERSION, SettingsCodec.SCHEMA_VERSION)
         }
         // Explicit choice wins over migration. For a future schema, persist just this key while

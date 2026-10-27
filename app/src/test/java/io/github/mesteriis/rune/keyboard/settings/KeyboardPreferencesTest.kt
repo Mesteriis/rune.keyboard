@@ -12,6 +12,19 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class KeyboardPreferencesTest {
+    @Test fun schemaThreeUndoChoiceIsPersistedBeforeAnUnrelatedWriterUpgradesToFour() {
+        for (choice in listOf(null, false, true)) {
+            val initial = mutableMapOf<String, Any?>(SettingsCodec.KEY_SCHEMA_VERSION to 3)
+            if (choice != null) initial[SettingsCodec.KEY_VISIBLE_UNDO] = choice
+            val source = FakeSharedPreferences(initial)
+            val facade = KeyboardPreferences(source)
+            facade.writeNumberRow(true)
+            assertEquals(4, source.all[SettingsCodec.KEY_SCHEMA_VERSION])
+            assertEquals(choice ?: false, source.all[SettingsCodec.KEY_VISIBLE_UNDO])
+            assertEquals(choice ?: false, facade.readSettings().visibleUndo)
+        }
+    }
+
     private val store = FakeSharedPreferences()
     private val preferences = KeyboardPreferences(store)
 
@@ -140,7 +153,7 @@ class KeyboardPreferencesTest {
     @Test
     fun `reading fresh legacy malformed and future preferences never persists`() {
         for (initial in listOf(emptyMap(), mapOf(SettingsCodec.KEY_SCHEMA_VERSION to 2),
-            mapOf(SettingsCodec.KEY_SCHEMA_VERSION to "broken"), mapOf(SettingsCodec.KEY_SCHEMA_VERSION to 4))) {
+            mapOf(SettingsCodec.KEY_SCHEMA_VERSION to "broken"), mapOf(SettingsCodec.KEY_SCHEMA_VERSION to 5))) {
             val source = FakeSharedPreferences(initial)
             val facade = KeyboardPreferences(source)
             repeat(3) { facade.readSettings(); facade.readLanguage() }
@@ -169,7 +182,7 @@ class KeyboardPreferencesTest {
             val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> observed.add(facade.readSettings()) }
             facade.registerListener(listener)
             write(facade)
-            assertEquals(3, source.all[SettingsCodec.KEY_SCHEMA_VERSION])
+            assertEquals(SettingsCodec.SCHEMA_VERSION, source.all[SettingsCodec.KEY_SCHEMA_VERSION])
             assertEquals(setOf("preserve"), source.all["future_metadata"])
             assertTrue(source.all.containsKey(SettingsCodec.KEY_DOUBLE_SPACE_PERIOD))
             assertTrue(observed.isNotEmpty())
@@ -216,7 +229,7 @@ class KeyboardPreferencesTest {
         facade.writeLanguage(KeyboardLanguage.SPANISH)
         facade.writeTheme(ThemePreference.DARK)
         val result = facade.readSettings()
-        assertEquals(3, source.all[SettingsCodec.KEY_SCHEMA_VERSION])
+        assertEquals(SettingsCodec.SCHEMA_VERSION, source.all[SettingsCodec.KEY_SCHEMA_VERSION])
         assertEquals(AutocorrectionMode.OFF, result.autocorrectionMode)
         assertFalse(result.mechanicalPunctuation || result.candidateStrip || result.doubleSpacePeriod)
         assertEquals(ContextualPunctuationMode.OFF, result.contextualPunctuationMode)
@@ -239,13 +252,13 @@ class KeyboardPreferencesTest {
     }
 
     @Test
-    fun `malformed schema repairs to three safely and an explicit choice wins over normalization`() {
+    fun `malformed schema repairs to the current version safely and an explicit choice wins over normalization`() {
         for (marker in listOf(null, "3", 3L, 0, -1)) {
             val source = FakeSharedPreferences(mapOf(SettingsCodec.KEY_SCHEMA_VERSION to marker,
                 "future_metadata" to "preserve", SettingsCodec.KEY_MECHANICAL_PUNCTUATION to true))
             val facade = KeyboardPreferences(source)
             facade.writeCandidateStrip(true)
-            assertEquals(3, source.all[SettingsCodec.KEY_SCHEMA_VERSION])
+            assertEquals(SettingsCodec.SCHEMA_VERSION, source.all[SettingsCodec.KEY_SCHEMA_VERSION])
             assertEquals("preserve", source.all["future_metadata"])
             val result = facade.readSettings()
             assertTrue(result.candidateStrip)
@@ -257,7 +270,7 @@ class KeyboardPreferencesTest {
 
     @Test
     fun `future schema preserves marker data and explicit stored choices while effective smart typing stays off`() {
-        for (version in listOf(4, Int.MAX_VALUE)) {
+        for (version in listOf(5, Int.MAX_VALUE)) {
             val source = FakeSharedPreferences(mapOf(SettingsCodec.KEY_SCHEMA_VERSION to version,
                 "future_metadata" to setOf("preserve"), SettingsCodec.KEY_AUTOCORRECTION_MODE to "FUTURE_MODE",
                 SettingsCodec.KEY_MECHANICAL_PUNCTUATION to true))
@@ -329,7 +342,7 @@ class KeyboardPreferencesTest {
         assertEquals(null, failure.get())
         assertEquals(ThemePreference.DARK, first.readSettings().theme)
         assertFalse(first.readSettings().mechanicalPunctuation)
-        assertEquals(3, source.all[SettingsCodec.KEY_SCHEMA_VERSION])
+        assertEquals(SettingsCodec.SCHEMA_VERSION, source.all[SettingsCodec.KEY_SCHEMA_VERSION])
     }
 
     private class FakeSharedPreferences(initial: Map<String, Any?> = emptyMap()) : SharedPreferences {

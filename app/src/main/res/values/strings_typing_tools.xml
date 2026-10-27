@@ -18,5 +18,5 @@
     <string name="settings_phrase_review">Review completed phrases</string>
     <string name="settings_phrase_review_summary">After a sentence-ending mark, offer supported Russian agreement and comma fixes. Apply by tapping.</string>
     <string name="settings_visible_undo">Show an undo button</string>
-    <string name="settings_visible_undo_summary">Show Restore after autocorrection. For Russian, it can restore the previous word while you type the next.</string>
+    <string name="settings_visible_undo_summary">Show Restore for up to 8 seconds after autocorrection, including while you start the next word.</string>
 </resources>

@@ -17,6 +17,59 @@ import org.junit.Test
 
 /** Real owner/executor with an independent editor document. Synthetic quality admission only. */
 class CorrectionBoundaryTest {
+    @Test fun `model ready and late corrections retain next word Undo but never refinement authority`() {
+        for (late in listOf(false, true)) {
+            val f = Fixture(modelOnly = true, refinement = true, refinementQualified = true)
+            f.controller.configureFeatures(DiagnosticFeature.VISIBLE_UNDO.bit, DiagnosticFeature.VISIBLE_UNDO.bit)
+            val input = if (late) f.pendingSpace() else {
+                f.raw("helllo"); f.publish("hello"); f.controller.beginModelRanking(1)!!
+            }
+            val reply = ScoringReply(input.token, ScoringCode.OK, 0,
+                listOf(NumericScore(0, -20.0, 1), NumericScore(1, -1.0, 1)))
+            if (late) assertTrue(f.controller.acceptSpaceCorrection(reply, f.execute))
+            else { assertTrue(f.controller.acceptModelRanking(reply)); f.type(" ") }
+            assertEquals("hello ", f.document)
+            f.raw("w")
+            assertFalse(f.controller.canRefinePreviousWord)
+            assertNull(f.controller.beginPreviousWordRefinement(2))
+            val undo = f.controller.candidateViewState.candidates.filterIsInstance<
+                io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem.Undo>().single()
+            assertEquals(TypingTextResult.HANDLED, f.controller.selectCandidate(undo.id, f.execute))
+            assertEquals("helllo w", f.document)
+        }
+    }
+
+    @Test fun `late canonical replies do not open a new automatic correction source`() {
+        val f = Fixture(qualified = true, refinement = true)
+        f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+        f.controller.configureFeatures(DiagnosticFeature.VISIBLE_UNDO.bit, DiagnosticFeature.VISIBLE_UNDO.bit)
+        f.raw("москва")
+        val reply = f.pendingCanonicalSpace("Москва")
+        assertFalse(f.controller.acceptLocalSpaceCorrection(reply, f.execute))
+        assertEquals("москва ", f.document)
+        f.raw("д")
+        assertFalse(f.controller.canRefinePreviousWord)
+        assertNull(f.controller.beginPreviousWordRefinement(2))
+        assertTrue(f.controller.candidateViewState.candidates.none { it is
+            io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem.Undo })
+        assertEquals("москва д", f.document)
+    }
+
+    @Test fun `canonical correction retains next word Undo without refinement authority`() {
+        val f = Fixture(qualified = true, refinement = true)
+        f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+        f.controller.configureFeatures(DiagnosticFeature.VISIBLE_UNDO.bit, DiagnosticFeature.VISIBLE_UNDO.bit)
+        f.raw("москва"); f.publishCanonical("Москва", unambiguous = true)
+        f.type(" "); assertEquals("Москва ", f.document)
+        f.raw("д")
+        assertFalse(f.controller.canRefinePreviousWord)
+        assertNull(f.controller.beginPreviousWordRefinement(1))
+        val undo = f.controller.candidateViewState.candidates.filterIsInstance<
+            io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem.Undo>().single()
+        assertEquals(TypingTextResult.HANDLED, f.controller.selectCandidate(undo.id, f.execute))
+        assertEquals("москва д", f.document)
+    }
+
     @Test fun `long editor session learns phrases and inserts continuation only after current tap`() {
         val f = Fixture()
         val language = KeyboardLanguage.ENGLISH
@@ -1728,10 +1781,11 @@ class CorrectionBoundaryTest {
     }
 
     private class Fixture(qualified: Boolean? = true, modelOnly: Boolean = false, initial: String = "", refinement: Boolean = false,
-        rescueQualified: Boolean? = null, wordContextQualified: Boolean? = null, grammarRevisionQualified: Boolean? = null, nounCaseQualified: Boolean? = null) {
+        refinementQualified: Boolean? = null, rescueQualified: Boolean? = null, wordContextQualified: Boolean? = null, grammarRevisionQualified: Boolean? = null, nounCaseQualified: Boolean? = null) {
         var now = 0L
         val controller = TypingSessionController(jvmGraphemes, qualified?.let { allowed ->
-            SpellingQualification { _, model -> if (model == SpellingSource.NOUN_CASE_REVISION && nounCaseQualified != null)
+            SpellingQualification { _, model -> if (model == SpellingSource.MODEL_REFINEMENT && refinementQualified != null)
+                refinementQualified else if (model == SpellingSource.NOUN_CASE_REVISION && nounCaseQualified != null)
                 nounCaseQualified else if (model == SpellingSource.INFINITIVE_REVISION && grammarRevisionQualified != null)
                 grammarRevisionQualified else if (model == SpellingSource.WORD_CONTEXT && wordContextQualified != null)
                 wordContextQualified else if (model == SpellingSource.JOINT_RESCUE && rescueQualified != null)
@@ -1851,14 +1905,22 @@ class CorrectionBoundaryTest {
                 request.requestId, result.copy(completion = completion))))
         }
         fun publishCanonical(word: String, unambiguous: Boolean, eligible: Boolean = unambiguous) {
+            assertTrue(controller.acceptCandidates(canonicalReply(word, unambiguous, eligible)))
+        }
+        fun pendingCanonicalSpace(word: String): LocalCandidateReply {
+            val reply = canonicalReply(word, true, true)
+            controller.retainCandidateAcrossSpace { type(" ") }
+            return reply
+        }
+        private fun canonicalReply(word: String, unambiguous: Boolean, eligible: Boolean): LocalCandidateReply {
             val request = controller.beginCandidateRequest(++requestId, keyboard.language)!!
             val item = GeneratedCandidate(word, word, TokenUnicode.folded(word), keyboard.language,
                 false, 4, 1, 0, EditFeatures(0.0, 0, 0.0), 0, CasePattern.TITLE,
                 GeneratedCandidateKind.CANONICAL_CASE, canonicalCaseUnambiguous = unambiguous,
                 canonicalCaseAutoEligible = eligible)
-            assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision,
+            return LocalCandidateReply(request.sessionId, request.revision,
                 request.requestId, CandidateGeneration(request.token, listOf(item),
-                    CandidateCompletion.VALID_WORD, true, null, 1, 0))))
+                    CandidateCompletion.VALID_WORD, true, null, 1, 0))
         }
     }
 }

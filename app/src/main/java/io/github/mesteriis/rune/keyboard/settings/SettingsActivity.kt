@@ -160,6 +160,8 @@ class SettingsActivity : ThemedActivity() {
             selected = settings.autocorrectionMode,
             summary = autocorrectionSummary(),
         ) { preferences.writeAutocorrectionMode(it) }
+        addToggleRow(R.string.settings_visible_undo, R.string.settings_visible_undo_summary,
+            settings.visibleUndo) { preferences.writeVisibleUndo(it) }
         addToggleRow(
             titleRes = R.string.settings_mechanical_punctuation,
             summaryRes = R.string.settings_mechanical_punctuation_summary,
@@ -207,8 +209,6 @@ class SettingsActivity : ThemedActivity() {
         }
         addToggleRow(R.string.settings_phrase_review, R.string.settings_phrase_review_summary,
             settings.phraseReview) { preferences.writePhraseReview(it) }
-        addToggleRow(R.string.settings_visible_undo, R.string.settings_visible_undo_summary,
-            settings.visibleUndo) { preferences.writeVisibleUndo(it) }
         addToggleRow(R.string.settings_protected_words, R.string.settings_protected_words_summary,
             settings.protectedWords) { preferences.writeProtectedWords(it) }
         addNavigationRow(R.string.controls_words_title, getString(R.string.controls_words_intro)) {

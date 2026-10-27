@@ -6,10 +6,11 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
  * Translates the stored preference map into an immutable [KeyboardSettings] snapshot.
  * Ordinary display settings retain their historical defaults. Smart Typing values fail closed
  * when malformed; absent legacy values migrate to defaults, absent schema-3 values fail closed.
+ * Schema 4 defaults visible Undo on; migrating schema 3 preserves its missing/explicit off value.
  * Unsupported schemas cannot enable Smart Typing. Decoding never persists or reads model state.
  */
 object SettingsCodec {
-    const val SCHEMA_VERSION = 3
+    const val SCHEMA_VERSION = 4
 
     const val KEY_SCHEMA_VERSION = "schema_version"
     const val KEY_LANGUAGE = "language"
@@ -75,7 +76,7 @@ object SettingsCodec {
         val defaults = KeyboardSettings.DEFAULT
         val schema = raw[KEY_SCHEMA_VERSION] as? Int
         val legacy = !raw.containsKey(KEY_SCHEMA_VERSION) || schema == 1 || schema == 2
-        val supported = legacy || schema == SCHEMA_VERSION
+        val supported = legacy || schema == 3 || schema == SCHEMA_VERSION
         val enabledLanguages = decodeLanguages(raw[KEY_LANGUAGES_ENABLED] as? String)
         val heightPresets = SizeBucket.entries.associateWith { bucket ->
             enumOrDefault(raw[heightKey(bucket)] as? String, HeightPreset.NORMAL)
@@ -113,7 +114,8 @@ object SettingsCodec {
             wordBoundarySuggestions = supported && strictBoolean(raw, KEY_WORD_BOUNDARY_SUGGESTIONS, false),
             abbreviations = supported && strictBoolean(raw, KEY_ABBREVIATIONS, false),
             phraseReview = supported && strictBoolean(raw, KEY_PHRASE_REVIEW, false),
-            visibleUndo = supported && strictBoolean(raw, KEY_VISIBLE_UNDO, false),
+            visibleUndo = supported && strictBoolean(raw, KEY_VISIBLE_UNDO,
+                (legacy || schema == SCHEMA_VERSION) && defaults.visibleUndo),
             protectedWords = supported && strictBoolean(raw, KEY_PROTECTED_WORDS, false),
             appProfiles = supported && strictBoolean(raw, KEY_APP_PROFILES, false),
             collectExamples = supported && strictBoolean(raw, KEY_COLLECT_EXAMPLES, false),

@@ -10,6 +10,7 @@ internal class PreviousWordRefinementTicket(
     val spaceStartedAtNanos: Long,
     var revision: Long,
     val qualityRevision: Long?,
+    val refinementAllowed: Boolean = true,
 ) {
     var request: ScoringInput? = null
     var completed = false
