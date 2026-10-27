@@ -119,7 +119,7 @@ and CI instrumentation therefore requires no model and does not report a model
 test as skipped or passed. Direct `adb am instrument` does not inherit Gradle's
 runner arguments: pass the filter explicitly.
 
-The optional test uses the actual public `LlamaLocalModelRuntime` on Android. Its
+The optional test uses the actual public `LlamaLocalModelRuntime` on Android. It performs an actual model self-test before candidate scoring and emits only numeric self-test timing fields. Its
 only model input is the test application's private
 `filesDir/qualification-model.gguf`. Size 396704416 bytes and SHA-256
 `7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4` are checked before

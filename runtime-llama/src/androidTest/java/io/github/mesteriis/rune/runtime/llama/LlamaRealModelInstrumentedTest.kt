@@ -38,6 +38,12 @@ class LlamaRealModelInstrumentedTest {
             assertEquals(ModelLoadResult.Failure(RuntimeErrorCode.CANCELLED),
                 runtime.load(model, isCancelled = cancelledLoad::get))
             assertLoaded(runtime.load(model, isCancelled = { false }))
+            val selfTest = runtime.selfTest()
+            assertTrue("Real model self-test failed", selfTest is ModelSelfTestResult.Success)
+            selfTest as ModelSelfTestResult.Success
+            assertTrue(selfTest.promptMillis >= 0 && selfTest.firstTokenMillis >= 0)
+            metrics.putLong("selfTestPromptMillis", selfTest.promptMillis)
+            metrics.putLong("selfTestFirstTokenMillis", selfTest.firstTokenMillis)
             for (request in requests) {
                 val first = assertSuccess(request, runtime.scoreCandidates(request, isCancelled = { false }))
                 val repeated = assertSuccess(request, runtime.scoreCandidates(request, isCancelled = { false }))
