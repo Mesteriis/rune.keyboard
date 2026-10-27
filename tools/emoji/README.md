@@ -46,7 +46,10 @@ Font checks use the panel's Paint.hasGlyph, limited to the selected category and
 unsupported results. Recent committed entries are deduplicated, capped at 32 and
 kept only in that palette instance's RAM. The service records a recent only after
 an accepted editor commit. Incognito hides and does not add recents. Native font
-support on API 26, opening/startup budgets and Fold acceptance remain open.
+support is verified on the pinned API 26 emulator (1,545 accepted and 353 hidden
+entries), across all nine categories and three languages. The 50 ms preview
+opening budget failed its first sample on a clean AVD; opening/startup/PSS and
+physical Fold acceptance remain open. See the u9-emoji-api26 acceptance receipt.
 
 To restore a missing archive from its exact pins, or verify a restored copy:
 

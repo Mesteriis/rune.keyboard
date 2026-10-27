@@ -39,7 +39,8 @@ Captured on a Samsung Galaxy Z Fold7 cover screen. System bars and the edge-pane
 The development emoji panel opens from Symbols, with multilingual category/item
 names and RAM-only recents. Appearance also offers an optional Emoji key on the
 letters layout, off by default. Font support depends on the device; skin-tone selection
-is a later stage. API 26 and physical Fold acceptance remain outstanding.
+is a later stage. API 26 font/native checks pass; the first-open performance
+budget, cold-start measurements and physical Fold acceptance remain outstanding.
 
 Glide typing, split/one-handed layouts and voice input are not implemented yet.
 
