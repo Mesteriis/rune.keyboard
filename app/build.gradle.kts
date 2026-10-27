@@ -13,6 +13,10 @@ plugins {
 evaluationDependsOn(":runtime-llama")
 val runtimeAndroid = project(":runtime-llama").extensions.getByType<com.android.build.api.dsl.LibraryExtension>()
 
+// Explicit debug-only application identity for isolated native qualification.
+val nativeQualification = providers.gradleProperty("runeNativeQualification").orElse("false").get()
+require(nativeQualification in setOf("true", "false")) { "runeNativeQualification must be true or false" }
+
 val keystorePropertiesFile = rootProject.file("keystore.properties")
 val keystoreProperties = Properties().apply {
     if (keystorePropertiesFile.exists()) {
@@ -56,6 +60,9 @@ android {
     }
 
     buildTypes {
+        getByName("debug") {
+            if (nativeQualification == "true") applicationIdSuffix = ".qualification"
+        }
         release {
             signingConfig = signingConfigs.findByName("release")
             isMinifyEnabled = true

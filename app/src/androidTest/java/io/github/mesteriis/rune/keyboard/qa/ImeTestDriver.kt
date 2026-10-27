@@ -41,6 +41,9 @@ class ImeTestDriver {
     private var previousPreferences: Map<String, *> = emptyMap<String, Any?>()
 
     fun setUp() {
+        check(targetContext.packageName == PACKAGE_NAME) {
+            "IME QA driver requires the default Rune package"
+        }
         // API 26's uncompressed tree can retain hidden, non-important container nodes.
         // Query the same important-node hierarchy exposed to screen readers on that API.
         if (android.os.Build.VERSION.SDK_INT == 26) device.setCompressedLayoutHierarchy(true)

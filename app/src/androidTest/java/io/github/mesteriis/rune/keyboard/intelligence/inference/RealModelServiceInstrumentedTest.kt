@@ -34,9 +34,40 @@ class RealModelServiceInstrumentedTest {
     @Test(timeout = 180_000) fun exactInstalledModelPreparesAndScoresThroughPrivateBinder() {
         assumeTrue("Explicit installed-model service probe only",
             InstrumentationRegistry.getArguments().getString("runeRealService") == "true")
+        if (InstrumentationRegistry.getArguments().getString("runePrepareQualificationModel") == "true") {
+            prepareIsolatedQualificationModel()
+        }
         // A hidden/background app is deliberately suspended by the production memory policy.
         // Keep an actual foreground owner for this active-session probe; never bypass that policy.
         ActivityScenario.launch(SettingsActivity::class.java).use { exerciseService() }
+    }
+
+    private fun prepareIsolatedQualificationModel() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        check(context.packageName == "io.github.mesteriis.rune.keyboard.qualification") {
+            "Model staging is restricted to the isolated qualification application"
+        }
+        val directory = context.filesDir.canonicalFile
+        val source = File(directory, "qualification-model.gguf")
+        check(source.canonicalFile.parentFile == directory && source.isFile) {
+            "Private qualification model is missing or outside the fixture"
+        }
+        val root = File(context.noBackupFilesDir, "model-delivery")
+        val active = ModelOperationGate(root).withReadLock { ActiveModelResolver(root).resolve() }
+        if (active == null) {
+            val descriptor = io.github.mesteriis.rune.keyboard.intelligence.delivery.EmbeddedModelDescriptor.load(context)
+            // The production importer verifies complete size/SHA/GGUF before publication.
+            io.github.mesteriis.rune.keyboard.intelligence.delivery.ModelDeliveryManager(context, descriptor)
+                .importDocument(android.net.Uri.fromFile(source))
+            ModelOperationGate(root).withLock {
+                io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationCoordinator(context, descriptor).use {
+                    check(it.resumeOrActivate(
+                        io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryJournal(),
+                    )) { "Real runtime activation/self-test failed" }
+                }
+            }
+        }
+        // exerciseService independently verifies the actual active file again.
     }
 
     private fun exerciseService() {
