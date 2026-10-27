@@ -37,6 +37,7 @@ data class CandidateOwnerState(
     val modelRuntimeQualified: Boolean = true,
     val contextualPunctuationEnabled: Boolean = false,
     val contextualModelReady: Boolean = false,
+    val editorAllowsSuggestions: Boolean = true,
 ) {
     val baseEligible: Boolean
         get() = editorAllowsSmartTyping && inputViewActive && layer == KeyboardLayer.LETTERS && !hasSelection
@@ -45,25 +46,25 @@ data class CandidateOwnerState(
     val canExpandManualCandidates: Boolean
         get() = showsCandidates && spellingEnabled && manualCandidateExpansion && language == KeyboardLanguage.RUSSIAN
     val showsCandidates: Boolean
-        get() = baseEligible && candidateStripEnabled
+        get() = baseEligible && editorAllowsSuggestions && candidateStripEnabled
     private val automaticMode: Boolean
         get() = autocorrectionMode == AutocorrectionMode.HIGH_CONFIDENCE
     /** Retrieval serves visible suggestions and either qualified automatic branch. */
     val canRequestSpelling: Boolean
-        get() = baseEligible && spellingEnabled && (candidateStripEnabled ||
+        get() = baseEligible && editorAllowsSuggestions && spellingEnabled && (candidateStripEnabled ||
             automaticMode && (deterministicAutoReplaceQualified ||
                 modelAutoReplaceQualified && modelRuntimeQualified))
     /** A hidden strip and deterministic-only qualification must not bind the model process. */
     val canRequestModelSpelling: Boolean
-        get() = modelRuntimeQualified && baseEligible && spellingEnabled &&
+        get() = modelRuntimeQualified && baseEligible && editorAllowsSuggestions && spellingEnabled &&
             (candidateStripEnabled || automaticMode && modelAutoReplaceQualified)
     val canRequestContextual: Boolean
-        get() = modelRuntimeQualified && baseEligible && candidateStripEnabled &&
+        get() = modelRuntimeQualified && baseEligible && editorAllowsSuggestions && candidateStripEnabled &&
             contextualPunctuationEnabled && contextualModelReady
     val canRequestCandidateWork: Boolean
         get() = canRequestSpelling || canRequestContextual
     val canActivateAnyModelCandidate: Boolean
-        get() = modelRuntimeQualified && (canRequestModelSpelling ||
+        get() = modelRuntimeQualified && editorAllowsSuggestions && (canRequestModelSpelling ||
             baseEligible && candidateStripEnabled && contextualPunctuationEnabled)
 }
 

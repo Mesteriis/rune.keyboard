@@ -85,6 +85,7 @@ class TypingSessionController internal constructor(
     private var configuredFeatures = 0
     private var effectiveFeatures = 0
     private var typingProfile = 0
+    private var editorAllowsSuggestions = false
     fun setTypingTools(value: TypingTools) { tools = value; clearCandidates() }
     private fun invalidateQualityComparison() {
         quality.invalidatePending()
@@ -387,7 +388,7 @@ class TypingSessionController internal constructor(
         }
 
     val canRequestCandidates: Boolean
-        get() = ownsCandidateComposition && !state.originalSelected &&
+        get() = editorAllowsSuggestions && ownsCandidateComposition && !state.originalSelected &&
             candidateSelection?.manual != true &&
             !ProtectedTokenPolicy.isProtected(state.composing!!.typedWord)
 
@@ -1619,6 +1620,7 @@ class TypingSessionController internal constructor(
 
     fun startSession(editor: EditorContext, selectionStart: Int, selectionEnd: Int, diagnosticsFresh: Boolean = true) {
         endSession()
+        editorAllowsSuggestions = editor.editorAllowsSuggestions
         val enabled = editor.supportsSmartTyping &&
             selectionStart >= 0 && selectionEnd >= 0
         this.selectionStart = selectionStart
@@ -1631,7 +1633,8 @@ class TypingSessionController internal constructor(
         )
         try { diagnostics.startSession(state.sessionId, enabled, diagnosticsFresh) } catch (_: Throwable) { }
         diagnosticSegmentClosed = !enabled || !diagnosticsFresh
-        diagnose(DiagnosticKind.SESSION, DiagnosticReason.START)
+        diagnose(DiagnosticKind.SESSION, if (editorAllowsSuggestions || !editor.supportsSmartTyping)
+            DiagnosticReason.START else DiagnosticReason.EDITOR_SUGGESTIONS_DISABLED)
     }
 
     fun typeText(text: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
@@ -2068,6 +2071,7 @@ class TypingSessionController internal constructor(
         val boundaryStartedAt = nanoTime()
         val closesComposition = boundary.isEmpty() || boundary == "\n"
         if (!closesComposition && (boundary.length != 1 || boundary[0] !in PENDING_BOUNDARY)) return TypingTextResult.BYPASS
+        if (!editorAllowsSuggestions) return boundaryBypass(DiagnosticReason.EDITOR_SUGGESTIONS_DISABLED)
         if (mode != AutocorrectionMode.HIGH_CONFIDENCE ||
             (!closesComposition && (boundary.length != 1 || boundary[0] !in PENDING_BOUNDARY)) ||
             policy.inputPolicy != InputPolicy.NORMAL ||
@@ -2293,6 +2297,7 @@ class TypingSessionController internal constructor(
     }
 
     fun endSession() {
+        editorAllowsSuggestions = false
         invalidateQualityComparison()
         resetPersonalContext()
         closeDiagnosticsAdmission()

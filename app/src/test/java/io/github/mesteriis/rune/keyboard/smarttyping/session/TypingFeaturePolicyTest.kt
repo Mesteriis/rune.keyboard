@@ -7,6 +7,20 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class TypingFeaturePolicyTest {
+    @Test fun editorSuppressionDisablesEveryCandidateAndLearningFeatureWithMechanicsRetained() {
+        val suppressed = owner.copy(editorAllowsSuggestions = false)
+        assertTrue(suppressed.baseEligible)
+        val flags = effective(suppressed)
+        assertEquals(DiagnosticFeature.MECHANICAL_PUNCTUATION.bit or DiagnosticFeature.APP_PROFILES.bit, flags)
+        for (mode in io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode.entries) {
+            for (strip in listOf(false, true)) {
+                val state = suppressed.copy(autocorrectionMode = mode, candidateStripEnabled = strip)
+                assertFalse(state.showsCandidates || state.canExpandManualCandidates || state.canRequestSpelling ||
+                    state.canRequestModelSpelling || state.canRequestContextual || state.canActivateAnyModelCandidate)
+            }
+        }
+    }
+
     private val owner = CandidateOwnerState(true, true, KeyboardLayer.LETTERS, KeyboardLanguage.RUSSIAN,
         false, deterministicAutoReplaceQualified = true, modelAutoReplaceQualified = true,
         contextualPunctuationEnabled = true, contextualModelReady = true, manualCandidateExpansion = true)

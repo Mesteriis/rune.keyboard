@@ -8,6 +8,33 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class EditorContextTest {
+    @Test fun noSuggestionsPreservesComposingMechanicsButAutoCorrectCannotOverrideIt() {
+        for (extra in listOf(0, InputType.TYPE_TEXT_FLAG_AUTO_CORRECT)) {
+            val editor = EditorContext.from(InputType.TYPE_CLASS_TEXT or
+                InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS or extra, EditorInfo.IME_ACTION_SEARCH)
+            assertEquals(EditorMode.TEXT, editor.mode)
+            assertTrue(editor.supportsSmartTyping && editor.supportsDoubleSpacePeriod)
+            assertFalse(editor.editorAllowsSuggestions)
+        }
+        val plain = EditorContext.from(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_AUTO_CORRECT, 0)
+        assertTrue(plain.editorAllowsSuggestions)
+        assertFalse(EditorContext.from(InputType.TYPE_CLASS_NUMBER or
+            InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS, 0).noSuggestions)
+    }
+
+    @Test fun applicationCompletionAndFilterDisableSmartTypingEvenWithAutoCorrect() {
+        for (type in listOf(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE,
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_FILTER)) {
+            for (extra in listOf(0, InputType.TYPE_TEXT_FLAG_AUTO_CORRECT,
+                InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)) {
+                val editor = EditorContext.from(type or extra, EditorInfo.IME_ACTION_SEARCH)
+                assertFalse(editor.supportsSmartTyping)
+                assertFalse(editor.supportsAutomaticCapitalization)
+                assertFalse(editor.supportsDoubleSpacePeriod)
+            }
+        }
+    }
+
     @Test
     fun `no personalized learning forbids capitalization and double space reads`() {
         val context = EditorContext.from(

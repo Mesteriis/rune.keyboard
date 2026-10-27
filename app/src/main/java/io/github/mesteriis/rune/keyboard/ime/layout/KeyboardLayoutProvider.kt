@@ -21,6 +21,7 @@ class KeyboardLayoutProvider {
         EditorMode.TEXT,
         EditorMode.EMAIL,
         EditorMode.URI,
+        EditorMode.APPLICATION_COMPLETION,
         -> when (state.layer) {
             KeyboardLayer.SYMBOLS -> symbolsLayout(state, editorContext)
             KeyboardLayer.SYMBOLS_ALT -> symbolsAltLayout(state, editorContext)

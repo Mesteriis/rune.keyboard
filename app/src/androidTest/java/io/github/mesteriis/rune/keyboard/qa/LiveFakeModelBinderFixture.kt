@@ -13,6 +13,8 @@ import android.os.Process
 import android.os.RemoteException
 import android.os.SystemClock
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import io.github.mesteriis.rune.keyboard.settings.SettingsCodec
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
@@ -608,7 +610,7 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
 
     /** Real editor metadata is the only policy input. Counts are deltas after the positive session. */
     fun verifyNonNormalEditor(mode: String, expectedMode: EditorMode, expectedPolicy: InputPolicy, publicText: String) {
-        require(mode in setOf("password", "private", "email", "url", "number", "phone", "date_time"))
+        require(mode in setOf("password", "private", "email", "url", "number", "phone", "date_time", "autocomplete", "filter"))
         hide()
         requireNotNull(control).awaitIdle()
         driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
@@ -657,6 +659,85 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
             SystemClock.sleep(25)
         } while (SystemClock.uptimeMillis() < deadline)
         assertEquals("Idle non-normal editor changed", final, awaitNonNormalText(mode, publicText))
+    }
+
+    fun verifyApplicationCompletionSearch(mode: String) {
+        require(mode in setOf("autocomplete", "filter"))
+        verifyNonNormalEditor(mode, EditorMode.APPLICATION_COMPLETION, InputPolicy.NORMAL, "helllo")
+        val before = modelActivity()
+        submitPublicSearch()
+        assertEquals(before, modelActivity())
+    }
+
+    fun verifyNoSuggestionsComposingSearchAndMechanics() {
+        hide(); requireNotNull(control).awaitIdle()
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = true, doubleSpace = true, contextual = ContextualPunctuationMode.SUGGESTIONS)
+        val preferences = context.getSharedPreferences(ImeTestDriver.PREFERENCES_NAME, Context.MODE_PRIVATE)
+        check(preferences.edit().putBoolean(SettingsCodec.KEY_PERSONAL_LEARNING, true)
+            .putBoolean(SettingsCodec.KEY_TOUCH_PERSONALIZATION, true)
+            .putBoolean(SettingsCodec.KEY_PHRASE_SUGGESTIONS, true)
+            .putBoolean(SettingsCodec.KEY_COLLECT_EXAMPLES, true)
+            .putBoolean(SettingsCodec.KEY_TYPO_PATTERNS, true).commit())
+        instrumentation.waitForIdleSync()
+        val before = modelActivity()
+        driver.launchComposingQa("no_suggestions")
+        await("NO_SUGGESTIONS editor not active") { onMain {
+            val editor = field(requireNotNull(service), "editorContext") as EditorContext
+            editor.noSuggestions && requireNotNull(owner).invoke().inputViewActive
+        } }
+        fun assertSuppressed() {
+            assertResident()
+            onMain {
+                val editor = field(requireNotNull(service), "editorContext") as EditorContext
+                assertTrue(editor.supportsSmartTyping && editor.supportsDoubleSpacePeriod)
+                assertFalse(editor.editorAllowsSuggestions)
+                val facts = requireNotNull(owner).invoke()
+                assertTrue(facts.baseEligible)
+                assertFalse(facts.editorAllowsSuggestions || facts.showsCandidates || facts.canRequestCandidateWork ||
+                    facts.canActivateAnyModelCandidate)
+                assertTrue(requireNotNull(controller).state.enabled)
+                assertFalse(requireNotNull(controller).canRequestCandidates)
+                val settings = field(requireNotNull(service), "settings") as KeyboardSettings
+                assertTrue(settings.personalLearning && settings.touchPersonalization && settings.phraseSuggestions &&
+                    settings.collectExamples && settings.typoPatterns)
+                val personalization = requireNotNull(field(requireNotNull(service), "personalization"))
+                for (flag in listOf("learningEnabled", "touchEnabled", "phrasesEnabled"))
+                    assertEquals("Suppressed editor enabled $flag", false, field(personalization, flag))
+                assertFalse(requireNotNull(client).available || requireNotNull(readiness).active)
+            }
+            assertStripVisible(false)
+            assertEquals(before, modelActivity())
+        }
+        "helllo".forEachIndexed { index, key ->
+            driver.tapKey(key.toString())
+            editor("helllo".take(index + 1), index + 1, 0, index + 1)
+            assertSuppressed()
+        }
+        val deadline = SystemClock.uptimeMillis() + 2 * ModelCandidateCoordinator.PAUSE_MILLIS
+        do { assertSuppressed(); SystemClock.sleep(25) } while (SystemClock.uptimeMillis() < deadline)
+        submitPublicSearch()
+        assertSuppressed()
+        // A fresh editor proves mechanics remain enabled independently of candidate work.
+        hide(); driver.launchComposingQa("no_suggestions")
+        "helllo".forEach { driver.tapKey(it.toString()) }
+        editor("helllo", 6, 0, 6)
+        driver.doubleTap(checkNotNull(driver.device.findObject(By.desc(context.getString(R.string.key_space)))))
+        await("NO_SUGGESTIONS lost double-space mechanics") { snapshot().text == "helllo. " }
+        assertSuppressed()
+    }
+
+    private fun submitPublicSearch() {
+        val original = snapshot()
+        assertEquals("helllo", original.text)
+        driver.tapEnter(R.string.key_search)
+        await("Actual SEARCH action did not reach the remote editor unchanged") {
+            val result = snapshot()
+            result.text == "helllo" && result.stats["actions"] == 1 &&
+                result.stats["lastAction"] == EditorInfo.IME_ACTION_SEARCH && result.stats["searchOriginal"] == 1 &&
+                result.stats["start"] == -1 && result.stats["end"] == -1
+        }
+        noPayloadReads(snapshot())
     }
 
     private fun awaitNonNormalText(mode: String, expected: String): EditorSnapshot {

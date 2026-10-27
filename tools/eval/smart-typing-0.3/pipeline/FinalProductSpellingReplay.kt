@@ -594,8 +594,8 @@ object FinalProductSpellingReplay {
                 result["hostStageNanos"] = stageTimings
                 if (mode == "recovery") {
                     val all = (fullGeneration.alternatives + fullGeneration.compactAlternatives + fullGeneration.neighborRecovery.alternatives).distinctBy { it.canonicalKey }
-                    val sourceRare = rareWords.lookup(TokenUnicode.folded(typed))
                     result["recoveryAdmission"] = fullGeneration.neighborRecovery.alternatives.associate { candidate ->
+                        val sourceRare = rareWords.lookup(TokenUnicode.folded(typed))
                         candidate.text to (sourceRare.available && !sourceRare.present &&
                             admissionGuard.evaluate(fullGeneration.copy(alternatives = all, localSearch = LocalSearchEvidence.NONE), candidate).allowed)
                     }
@@ -619,8 +619,8 @@ object FinalProductSpellingReplay {
                     result["jointTargetKnown"] = fullGeneration.jointSearch.alternatives.associate { proposal ->
                         proposal.canonicalKey to morphology.lookup(language, proposal.terminalKey).present
                     }
-                    val originalMorphology = morphology.lookup(language, TokenUnicode.folded(typed))
                     result["rightContextSourceCertificates"] = fullGeneration.jointSearch.alternatives.associate { proposal ->
+                        val originalMorphology = morphology.lookup(language, TokenUnicode.folded(typed))
                         val publicOriginal = PublicOriginalProtection.evaluate(fullGeneration, proposal, rareWords)
                         val target = morphology.lookup(proposal.language, proposal.terminalKey)
                         proposal.text to mapOf(
@@ -654,11 +654,14 @@ object FinalProductSpellingReplay {
                 val manualSearch = generator.generateManualPool(typed, language, baselineGeneration, enabled = true)
                 stageTimings["manualSearch"] = System.nanoTime() - manualStarted
                 result["manualSearchGeneration"] = manualSearch?.let(::candidate)
-                val localDecision = LocalCorrectionPolicy.decide(fullGeneration, language)?.canonicalKey
+                // Protected full inputs are still replayed through the controller below. The
+                // source-only policy observer accepts lexical tokens, not arbitrary editor text.
+                val localDecision = if (fullGeneration.protectedReason == null)
+                    LocalCorrectionPolicy.decide(fullGeneration, language)?.canonicalKey else null
                 result["localDecision"] = localDecision
                 result["compactPolicyCandidate"] = experiments.compactAutomaticCandidate(
                     prefix, fullGeneration, language)?.terminalKey
-                val sourceMorphology = if (language == KeyboardLanguage.RUSSIAN)
+                val sourceMorphology = if (language == KeyboardLanguage.RUSSIAN && fullGeneration.protectedReason == null)
                     morphology.lookup(language, TokenUnicode.folded(typed)) else null
                 result["compactSourceMorphology"] = sourceMorphology?.let {
                     mapOf("available" to it.available, "present" to it.present)

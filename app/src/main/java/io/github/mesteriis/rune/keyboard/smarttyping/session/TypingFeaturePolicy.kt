@@ -8,6 +8,8 @@ object TypingFeaturePolicy {
     fun effective(configured: Int, owner: CandidateOwnerState, dictionaryReady: Boolean,
         abbreviationReady: Boolean, personalReady: Boolean, touchReady: Boolean, qualityReady: Boolean, controlsReady: Boolean = true, learningReady: Boolean = true, learnedReady: Boolean = false, contextReady: Boolean = false, tapReady: Boolean = false): Int {
         if (!owner.baseEligible) return 0
+        if (!owner.editorAllowsSuggestions) return configured and
+            (DiagnosticFeature.MECHANICAL_PUNCTUATION.bit or DiagnosticFeature.APP_PROFILES.bit)
         var result = configured and DiagnosticFeature.MASK
         fun exclude(feature: DiagnosticFeature) { result = result and feature.bit.inv() }
         if (!owner.showsCandidates) {

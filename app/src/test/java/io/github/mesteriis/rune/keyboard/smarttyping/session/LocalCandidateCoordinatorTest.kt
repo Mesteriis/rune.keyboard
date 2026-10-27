@@ -41,6 +41,55 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class LocalCandidateCoordinatorTest {
+    @Test fun `suppressed owner never loads dictionaries or activates model work`() {
+        Harness(withModel = true, qualified = true).use { h ->
+            h.owner = h.owner.copy(editorAllowsSuggestions = false, contextualPunctuationEnabled = true,
+                contextualModelReady = true, modelAutoReplaceQualified = true, deterministicAutoReplaceQualified = true)
+            h.coordinator.warmCurrentLanguage()
+            h.type("helo"); h.pause.fire()
+            assertEquals(0, h.routeRequests)
+            assertTrue(h.model.requests.isEmpty())
+            assertFalse(h.coordinator.viewState.enabled)
+            assertTrue(h.labels().isEmpty())
+        }
+    }
+
+    @Test fun `no suggestions search preserves the last word and explains the refusal`() {
+        Harness(qualified = true).use { h ->
+            val events = mutableListOf<DiagnosticEvent>()
+            h.controller.setDiagnostics(object : TypingDiagnostics {
+                override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                override fun invalidate() = Unit
+                override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { events += event }
+            })
+            h.controller.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT or
+                InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS, EditorInfo.IME_ACTION_SEARCH), 0, 0)
+            h.type("helo")
+            val policy = MechanicalPunctuationPolicy(InputPolicy.NORMAL, EditorMode.TEXT, false, true, true)
+            val beforeAction = h.commands.size
+            assertEquals(TypingTextResult.HANDLED, h.controller.prepareEditorAction(policy,
+                KeyboardState(KeyboardLanguage.ENGLISH), AutocorrectionMode.HIGH_CONFIDENCE, h.execute))
+            assertEquals("helo", h.controller.state.contextText)
+            assertNull(h.controller.state.composing)
+            assertTrue(events.any { it.kind == DiagnosticKind.BOUNDARY && it.reason == DiagnosticReason.EDITOR_SUGGESTIONS_DISABLED })
+            assertEquals(listOf(TypingEdit.FinishComposingText), h.commands.drop(beforeAction))
+        }
+    }
+
+    @Test fun `no suggestions metadata forbids candidate requests while composing remains active`() {
+        Harness(withModel = true, qualified = true).use { h ->
+            h.controller.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT or
+                InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS, EditorInfo.IME_ACTION_SEARCH), 0, 0)
+            h.type("helo")
+            assertTrue(h.controller.state.enabled)
+            assertEquals("helo", h.controller.state.composing?.typedWord)
+            assertFalse(h.controller.canRequestCandidates)
+            assertEquals(0, h.routeRequests)
+            h.pause.fire()
+            assertTrue(h.model.requests.isEmpty())
+        }
+    }
+
     @Test fun `coordinator candidate requests preserve backed retype until completion or explicit invalidation`() {
         for (invalidate in listOf(false, true)) Harness(qualified = true).use { h ->
             h.configure(AutocorrectionMode.SUGGESTIONS, true)

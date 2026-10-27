@@ -665,6 +665,7 @@ class RuneInputMethodService : InputMethodService() {
 
     private fun candidateOwnerState() = CandidateOwnerState(
         editorAllowsSmartTyping = editorContext.supportsSmartTyping,
+        editorAllowsSuggestions = editorContext.editorAllowsSuggestions,
         inputViewActive = inputViewActive,
         layer = state.layer,
         language = state.language,
@@ -681,7 +682,7 @@ class RuneInputMethodService : InputMethodService() {
 
     private fun updatePersonalizationPolicy() {
         if (!::personalization.isInitialized) return
-        val eligible = inputViewActive && editorContext.supportsSmartTyping && !hasSelection &&
+        val eligible = inputViewActive && editorContext.editorAllowsSuggestions && !hasSelection &&
             state.layer == KeyboardLayer.LETTERS
         val visible = eligible && settings.candidateStrip
         typingTools.boundariesEnabled = visible && settings.wordBoundarySuggestions
@@ -714,7 +715,7 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     private fun dynamicTouchStamp(): Long {
-        val enabled = inputViewActive && editorContext.supportsSmartTyping && !hasSelection &&
+        val enabled = inputViewActive && editorContext.editorAllowsSuggestions && !hasSelection &&
             state.layer == KeyboardLayer.LETTERS && settings.dynamicTouch && personalResources.experiments.tapReady
         return dynamicTouchContext.update(typingSession.state.sessionId, typingSession.state.revision,
             state.language, if (enabled) typingSession.experimentalInput() else null, enabled, settings.dynamicTouchApply)

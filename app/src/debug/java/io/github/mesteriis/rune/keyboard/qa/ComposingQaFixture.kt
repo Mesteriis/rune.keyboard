@@ -31,6 +31,7 @@ internal class ComposingQaFixture(context: Context, mode: String) {
         "before" to 0, "after" to 0, "selected" to 0, "extracted" to 0, "caps" to 0,
         "surrounding" to 0, "snapshot" to 0, "callbacks" to 0,
         "keyDown" to 0, "keyUp" to 0, "deleteKeyDown" to 0,
+        "actions" to 0, "lastAction" to 0, "searchOriginal" to 0,
     )
     private val status = TextView(context).apply {
         id = R.id.qa_composing_stats
@@ -46,9 +47,14 @@ internal class ComposingQaFixture(context: Context, mode: String) {
             "number" -> InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
             "phone" -> InputType.TYPE_CLASS_PHONE
             "date_time" -> InputType.TYPE_CLASS_DATETIME
+            "no_suggestions" -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS or
+                InputType.TYPE_TEXT_FLAG_AUTO_CORRECT
+            "autocomplete" -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE
+            "filter" -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_FILTER
             else -> InputType.TYPE_CLASS_TEXT
         }
-        imeOptions = EditorInfo.IME_ACTION_DONE or
+        imeOptions = (if (mode in setOf("no_suggestions", "autocomplete", "filter"))
+            EditorInfo.IME_ACTION_SEARCH else EditorInfo.IME_ACTION_DONE) or
             if (mode == "private") EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING else 0
         isSingleLine = true
         importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
@@ -90,6 +96,14 @@ internal class ComposingQaFixture(context: Context, mode: String) {
     }
 
     init {
+        if (mode in setOf("no_suggestions", "autocomplete", "filter")) editor.setOnEditorActionListener { _, action, _ ->
+            counts["actions"] = counts.getValue("actions") + 1
+            counts["lastAction"] = action
+            // Fixed public control only; arbitrary editor text is never exported by stats.
+            counts["searchOriginal"] = if (editor.text.toString() == "helllo") 1 else 0
+            publish()
+            true
+        }
         editor.onChange = ::publish
         editor.onCall = { name ->
             counts[name] = counts.getValue(name) + 1

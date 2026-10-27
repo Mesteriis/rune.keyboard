@@ -10,6 +10,7 @@ enum class EditorMode {
     NUMBER,
     PHONE,
     DATE_TIME,
+    APPLICATION_COMPLETION,
 }
 
 /**
@@ -44,6 +45,14 @@ data class EditorContext(
     val supportsSmartTyping: Boolean
         get() = mode == EditorMode.TEXT && inputPolicy == InputPolicy.NORMAL && !requiresRawKeyEvents
 
+    /** Keep owned composing/mechanics in NO_SUGGESTIONS, but never candidate work or learning. */
+    val editorAllowsSuggestions: Boolean
+        get() = supportsSmartTyping && !noSuggestions
+
+    val noSuggestions: Boolean
+        get() = inputType and InputType.TYPE_MASK_CLASS == InputType.TYPE_CLASS_TEXT &&
+            inputType and InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS != 0
+
     /**
      * Double space may transform a Rune-owned suffix only in NORMAL plain text, never
      * sensitive/raw input. The typing controller additionally verifies ownership without reads.
@@ -74,7 +83,9 @@ data class EditorContext(
                     InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS,
                     -> EditorMode.EMAIL
                     InputType.TYPE_TEXT_VARIATION_URI -> EditorMode.URI
-                    else -> EditorMode.TEXT
+                    InputType.TYPE_TEXT_VARIATION_FILTER -> EditorMode.APPLICATION_COMPLETION
+                    else -> if (inputType and InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE != 0)
+                        EditorMode.APPLICATION_COMPLETION else EditorMode.TEXT
                 }
                 else -> EditorMode.TEXT
             }
