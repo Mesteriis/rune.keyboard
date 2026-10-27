@@ -48,7 +48,7 @@ def preflight(rows,task,lexical,controls,profile='new-sentences'):
             except ValueError:errors.add('source-article-schema')
         if language=='ru':
             mapped=row|dict(expectedSpelling=target)
-            axes=('article','sentence','context','family') if task!='protected' else ('context',)
+            axes=('article','sentence','context','family') if task!='protected' else ('article','sentence','context') if 'article' in row else ('context',)
             for axis in axes:
                 try:lex_keys[axis].update(keys_for([mapped],axis))
                 except ValueError:errors.add('lexical-'+axis+'-schema')
@@ -90,7 +90,7 @@ def prepare(rows_path,manifest_path,output,task,lexical_path,controls_path,profi
     report['builderSha256']=sha(Path(__file__))
     report['builderBindings']={name:sha(Path(__file__).with_name(name)) for name in (
         'public_corpus_preparation_v1.py','control_ledger.py','holdout_ledger.py',
-        'conversation_split_checks.py','recover_legacy_families.py')}
+        'conversation_split_checks.py','recover_legacy_families.py','source_identities.py')}
     if report['status']!='READY_TO_FREEZE':return report
     # Exclusion success would still require independent source/label/cohort/model qualification.
     output.mkdir(parents=True,exist_ok=False)

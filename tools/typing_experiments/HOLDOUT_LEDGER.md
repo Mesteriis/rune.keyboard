@@ -191,3 +191,20 @@ all are dictionary-supported in these pools, so their four lexical axes are
 complete. This does not complete global history coverage. The exact original
 collectors are archived without executing their model/file-writing top levels.
 Their remaining runtime/dependent inputs are not claimed reproducible here.
+
+Public Tatoeba source identities now require sourceRepository=tatoeba,
+language=ru and article=tatoeba:<positive decimal sentence ID>. Bare Tatoeba
+strings still fail the legacy Wikipedia schema. Sentence keys use sentenceHash
+in a separate full-normalized-sentence namespace; they never alias right-context
+window hashes. Existing Wikipedia keys are byte-compatible. Source-only entries
+have explicit historical-source-exclusion scope (article + sentence only), not
+invented target-family/context axes. Full target corpora retain all four axes.
+
+`import_tatoeba_history.py --base LEDGER --output NEW_DIRECTORY` imports five
+pinned public conversational corpus groups and the complete preprocessed CC0
+sentence splits. It verifies compressed sources, source IDs, full-sentence hashes
+and actual prefix captures. Native numeric family IDs are replaced only with
+pinned dictionary-supported candidate analyses. Prepared train and the explicitly
+promoted prior holdout receive supervised family addenda. Source-backed protected
+proposals are checked against sentence IDs/hashes by both-registry preparation;
+authored controls need no invented source sentence.

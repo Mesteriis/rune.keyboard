@@ -58,3 +58,11 @@ hashes. This is still separate from label/cohort/model acceptance. Current check
 prove blocked publication and both-registry enforcement, including a real
 punctuation article missing from lexical history, real supervised family exposure,
 a protected fixture, and an explicitly artificial unseen-identity coverage probe.
+
+RU Tatoeba proposals must explicitly supply sourceRepository=tatoeba,
+article=tatoeba:<ID> and sentenceHash. Their source-sentence/full-text namespaces
+are separate from Wikipedia IDs and source-window contextHash. These typed
+identities are checked by both registries. Source-backed protected proposals
+also undergo lexical source ID/full-sentence checks; authored controls without
+source identities retain the authored-control route. No origin is guessed from
+a numeric ID or a bare Tatoeba-prefixed string.

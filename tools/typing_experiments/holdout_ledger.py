@@ -13,11 +13,12 @@ import re
 import unicodedata
 
 from conversation_split_checks import target_context_key
+from source_identities import tatoeba_identity
 
 SCHEMA = 1
 KEY_SCHEMA = 'rune-public-exclusions-v1'
 KINDS = ('article', 'family', 'sentence', 'context')
-USAGES = ('supervised', 'disclosed', 'reserved', 'historical-exclusion', 'historical-family-exclusion')
+USAGES = ('supervised', 'disclosed', 'reserved', 'historical-exclusion', 'historical-family-exclusion', 'historical-source-exclusion')
 _HASH = re.compile(r'[0-9a-f]{64}\Z')
 
 
@@ -40,6 +41,9 @@ def keys_for(rows, kind):
         if not isinstance(row, dict):
             raise ValueError('LEDGER_ROW_SCHEMA')
         if kind == 'article':
+            sentence=tatoeba_identity(row)
+            if sentence is not None:
+                result.add(_digest(kind,sentence));continue
             article = row.get('article')
             if (not isinstance(article, str) or not 1 <= len(article) <= 20
                     or not article.isascii() or not article.isdecimal()):
@@ -52,10 +56,11 @@ def keys_for(rows, kind):
             for family in families:
                 result.add(_digest(kind, ['pymorph-lemma-ru', _text(family)]))
         elif kind == 'sentence':
-            value = row.get('contextHash')
+            sentence=tatoeba_identity(row)
+            value = row.get('sentenceHash') if sentence is not None else row.get('contextHash')
             if not isinstance(value, str) or not _HASH.fullmatch(value):
                 raise ValueError('LEDGER_SENTENCE_SCHEMA')
-            result.add(_digest(kind, ['right-context-source-hash-v1', value]))
+            result.add(_digest(kind, ['tatoeba-full-sentence-normalized-v1' if sentence is not None else 'right-context-source-hash-v1', value]))
         else:
             # Same typo-independent normalization as the existing split guard.
             prefix, target = target_context_key(row)
@@ -98,6 +103,8 @@ def validate_ledger(ledger):
         if entry['usage'] in ('supervised', 'historical-family-exclusion'):
             if set(keys) != {'family'} or missing:
                 raise ValueError('LEDGER_SUPERVISED_FAMILY_SCOPE')
+        elif entry['usage']=='historical-source-exclusion':
+            if set(keys)!={'article','sentence'} or missing:raise ValueError('LEDGER_SOURCE_SCOPE')
         elif set(keys) | set(missing) != set(KINDS):
             raise ValueError('LEDGER_ENTRY_AXES_UNDECLARED')
         for values in keys.values():

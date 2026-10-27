@@ -57,6 +57,12 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         self.assertEqual(7,len(entries));self.assertEqual(1204,sum(e['rowCount'] for e in entries))
         self.assertTrue(all(not e['missingAxes'] and set(e['keys'])=={'article','sentence','context','family'} for e in entries))
 
+    def test_tatoeba_source_sentence_and_promoted_training_families_are_persisted(self):
+        row=dict(sourceRepository='tatoeba',language='ru',article='tatoeba:11122358',sentenceHash='26454da27d2d82877e728be5c9611a8342d63a3e6f302f116d749cb1c28a2542')
+        with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:article'):assert_disjoint([row],self.ledger,kinds=('article',))
+        entries={e['id']:e for e in self.ledger['entries'] if e['id'].startswith('public-tatoeba-history-')}
+        self.assertEqual(15,len(entries));self.assertEqual('supervised',entries['public-tatoeba-history-promoted-followon-holdout-families']['usage'])
+
     def test_historical_overlap_disclosure_matches_recorded_keys(self):
         scope={f'public-spelling-v{v}' for v in range(7,13)}|{'public-legacy-spelling-v6'}|{
             'public-early-ru-'+name for name in ('qualification-v2','compact-v3','compact-v4')}

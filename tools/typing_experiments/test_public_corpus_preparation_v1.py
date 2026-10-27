@@ -68,5 +68,15 @@ class PreparationGateTest(unittest.TestCase):
         invalid=controls();invalid['coverageComplete']=True
         with self.assertRaisesRegex(ValueError,'CONTROL_LEDGER_SCHEMA'):self.report(candidate(article='123'),controls=invalid)
 
+    def test_tatoeba_source_namespace_and_source_backed_protected_rows_are_checked(self):
+        row=candidate(sourceRepository='tatoeba',article='tatoeba:123',sentenceHash='b'*64)
+        result=self.report(row)
+        self.assertEqual(0,result['lexicalOverlaps']['article']);self.assertEqual([],result['identityErrors'])
+        lex=ledger(False);lex['entries'].append(dict(id='tt',usage='historical-source-exclusion',bindings={'source':'a'*64},
+            keys={axis:sorted(keys_for([row],axis)) for axis in ('article','sentence')},missingAxes=[]))
+        row.update(cohort='protected',noAuto=True,expectedCandidate=0,candidates=[' '+row['typed']])
+        result=self.report(row,task='protected',lexical=lex)
+        self.assertEqual(1,result['lexicalOverlaps']['article']);self.assertEqual(1,result['lexicalOverlaps']['sentence'])
+
 
 if __name__=='__main__':unittest.main()

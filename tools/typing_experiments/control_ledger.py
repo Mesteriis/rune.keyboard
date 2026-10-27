@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import re
 import unicodedata
+from source_identities import tatoeba_identity
 
 SCHEMA='rune-public-control-exclusions-v1'
 KINDS=('punctuation','protected')
@@ -31,6 +32,9 @@ def key_for(row,kind):
 
 def article_key(row):
     if not isinstance(row,dict) or row.get('language') not in LANGUAGES:raise ValueError('CONTROL_ARTICLE_SCOPE')
+    sentence=tatoeba_identity(row)
+    if sentence is not None:
+        return hashlib.sha256(json.dumps([SCHEMA,'source-sentence',*sentence],separators=(',',':')).encode()).hexdigest()
     article=row.get('article')
     if not isinstance(article,str) or not 1<=len(article)<=20 or not article.isascii() or not article.isdecimal():
         raise ValueError('CONTROL_ARTICLE_ID')
