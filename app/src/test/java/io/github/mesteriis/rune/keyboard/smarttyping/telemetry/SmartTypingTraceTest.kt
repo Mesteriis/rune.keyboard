@@ -17,6 +17,11 @@ class SmartTypingTraceTest {
                 "Rune#correctionCommit",
                 "Rune#correctionUndo",
                 "Rune#punctuationRule",
+                "Rune#resourcePrepare",
+                "Rune#dictionaryLoad",
+                "Rune#dictionaryReady",
+                "Rune#contextualAssetsLoad",
+                "Rune#contextualReady",
             ),
             SmartTypingTraceSection.entries.map { it.sectionName },
         )

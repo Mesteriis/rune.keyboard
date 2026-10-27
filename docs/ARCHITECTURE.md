@@ -397,6 +397,16 @@ read-only mmap непосредственно подписанного APK. Mani
 буферы не допускаются в этот путь. Тесты отдельно фиксируют отсутствие гарантии
 полного хеша у `openPackaged`; квалификация и replay сохраняют `validate`.
 
+RU morphology/rare и экспериментальные rank/context/grammar ассеты запрашиваются
+только при наличии русского в `enabledLanguages`. Получение общего
+`ExperimentModels` само по себе не запускает I/O. Process singleton держит сильную
+ссылку на listener языковой настройки: включение RU запускает оба фоновых loader
+без пересоздания сервиса; повторные переключения не запускают их заново.
+Отключение RU после начала загрузки не отменяет её и не выгружает уже опубликованные
+immutable mappings. Подписка `whenReady` остаётся ожидающей при отложенном RU и
+закрывается владельцем; после запрошенной загрузки completion приходит и при
+недоступных ассетах. Флаги допуска автозамены и личного обучения независимы.
+
 `CandidateGenerator` выполняет общие protection, normalization и routed exact
 membership проверки. Затем отдельный полный проход собирает весь набор на расстоянии
 одной операции до ограничения ширины интерфейса. Его завершённость и счётчики
@@ -526,4 +536,4 @@ Pinned JNI runtime загружает candidate с отключённым logger
 - повтор удаления отменяется на `UP`, `CANCEL`, уходе пальца и detach View; жестовое состояние возвращается в `Idle` через общий `cancelActiveTouches`;
 - R8 и resource shrinking включены для release.
 
-Build type `profile` повторяет release minification/shrinking, подписывается debug-ключом, имеет отдельный application ID suffix, остаётся `debuggable=false` и разрешает shell profiling через `<profileable>`. Perfetto-секции используют закрытый константный словарь: `Rune#composeUpdate`, `Rune#candidateGenerate`, `Rune#candidateRank`, `Rune#modelRequest`, `Rune#modelResult`, `Rune#candidateRender`, `Rune#correctionCommit`, `Rune#correctionUndo` и `Rune#punctuationRule`. Имена не получают текст, IDs, язык, editor package или путь модели. Аллокации снимаются отдельно на debuggable debug build.
+Build type `profile` повторяет release minification/shrinking, подписывается debug-ключом, имеет отдельный application ID suffix, остаётся `debuggable=false` и разрешает shell profiling через `<profileable>`. Perfetto-секции используют закрытый константный словарь: `Rune#composeUpdate`, `Rune#candidateGenerate`, `Rune#candidateRank`, `Rune#modelRequest`, `Rune#modelResult`, `Rune#candidateRender`, `Rune#correctionCommit`, `Rune#correctionUndo`, `Rune#punctuationRule`, `Rune#resourcePrepare`, `Rune#dictionaryLoad`, `Rune#dictionaryReady`, `Rune#contextualAssetsLoad` и `Rune#contextualReady`. Ready-маркеры испускаются только после успешной публикации соответствующего ресурса; load-секции закрываются и при отказе. Имена не получают текст, IDs, язык, editor package или путь модели. Аллокации снимаются отдельно на debuggable debug build.

@@ -11,6 +11,11 @@ enum class SmartTypingTraceSection(val sectionName: String) {
     CORRECTION_COMMIT("Rune#correctionCommit"),
     CORRECTION_UNDO("Rune#correctionUndo"),
     PUNCTUATION_RULE("Rune#punctuationRule"),
+    RESOURCE_PREPARE("Rune#resourcePrepare"),
+    DICTIONARY_LOAD("Rune#dictionaryLoad"),
+    DICTIONARY_READY("Rune#dictionaryReady"),
+    CONTEXTUAL_ASSETS_LOAD("Rune#contextualAssetsLoad"),
+    CONTEXTUAL_READY("Rune#contextualReady"),
 }
 
 /** Android supplies the trace sink at the composition root; host tests use the no-op default. */

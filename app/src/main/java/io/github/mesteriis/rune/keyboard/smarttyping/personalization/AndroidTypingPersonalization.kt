@@ -1,6 +1,12 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.personalization
 
 import android.content.Context
+import android.content.SharedPreferences
+import android.os.Trace
+import io.github.mesteriis.rune.keyboard.settings.KeyboardPreferences
+import io.github.mesteriis.rune.keyboard.settings.SettingsCodec
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceSection
+import java.util.concurrent.atomic.AtomicBoolean
 import io.github.mesteriis.rune.keyboard.smarttyping.experiments.AndroidExperimentResources
 import io.github.mesteriis.rune.keyboard.smarttyping.experiments.ExperimentModels
 import io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionChoice
@@ -34,18 +40,48 @@ class PersonalTypingResources private constructor(context: Context) {
         private set
     val personal = PersonalTypingStore.get(context) { word, language -> lexicon.lookup(language, word).present }
     val touch = TouchCalibrationStore.get(context)
-    val experiments: ExperimentModels = AndroidExperimentResources.get(context)
+    val experiments: ExperimentModels = AndroidExperimentResources.get()
     val controls = TypingControlStore.get(context)
     val learning = LearningStore.get(context) { word, language -> lexicon.lookup(language, word).present }
 
+    private val application = context.applicationContext
+    private val preferences = KeyboardPreferences(application)
+    private val russianStarted = AtomicBoolean(false)
+    // Process singleton: keep this listener strongly referenced for its whole lifetime.
+    private val languageListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == null || key == SettingsCodec.KEY_LANGUAGES_ENABLED) loadRussianIfEnabled()
+    }
+
     init {
-        val assets = context.applicationContext.assets
-        Thread({
-            lexicon = AndroidMorphologyLexiconLoader.load(assets)
-            rareWords = AndroidRareWordLexiconLoader.load(assets)
-            dictionaryLoaded = lexicon.lookup(KeyboardLanguage.RUSSIAN, "слово").available &&
-                rareWords.lookup("кармен").available
-        }, "rune-morphology-load").apply { isDaemon = true }.start()
+        preferences.registerListener(languageListener)
+        loadRussianIfEnabled()
+    }
+
+    private fun loadRussianIfEnabled() {
+        Trace.beginSection(SmartTypingTraceSection.RESOURCE_PREPARE.sectionName)
+        try {
+            if (KeyboardLanguage.RUSSIAN !in preferences.readSettings().enabledLanguages ||
+                !russianStarted.compareAndSet(false, true)) return
+            AndroidExperimentResources.loadRussian(application)
+            val assets = application.assets
+            Thread({
+                Trace.beginSection(SmartTypingTraceSection.DICTIONARY_LOAD.sectionName)
+                try {
+                    lexicon = AndroidMorphologyLexiconLoader.load(assets)
+                    rareWords = AndroidRareWordLexiconLoader.load(assets)
+                    dictionaryLoaded = lexicon.lookup(KeyboardLanguage.RUSSIAN, "слово").available &&
+                        rareWords.lookup("кармен").available
+                    if (dictionaryLoaded) {
+                        Trace.beginSection(SmartTypingTraceSection.DICTIONARY_READY.sectionName)
+                        Trace.endSection()
+                    }
+                } finally {
+                    Trace.endSection()
+                }
+            }, "rune-morphology-load").apply { isDaemon = true }.start()
+        } finally {
+            Trace.endSection()
+        }
     }
 
     companion object {
