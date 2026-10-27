@@ -12,6 +12,12 @@ Q6. The latest Q6 receipt is
 source-only tests pass, the lexical ledger has 121 entries, and global coverage
 is explicitly incomplete. Four natural/side descendants now have verified public
 captures and variant/filter lineage, adding 640 historical family exclusions.
+A later source-preservation receipt,
+`docs/acceptance/2026-10-27-late-training-source-closure-evidence.json`, binds
+56 declared source paths across 17 late training/selection receipts (52 distinct
+source payloads). All 208 source-only tests pass. This establishes direct source
+identities, not transitive dependency coverage or model execution; ledger
+coverage remains incomplete with 121 lexical entries.
 Q9's source/JVM acceptance is verified in
 `docs/acceptance/2026-10-27-q9-frozen-asset-identity.md` (nine new identity/mutation
 tests; full app suite: 1,153 tests, no failures/errors/skips). U12's model and
@@ -77,7 +83,9 @@ Other cards remain open until their complete evidence is established.
   Instrumental, left-sequence, oblique, combined v11/v12 and residual group
   reuse through v14 are source/data-audited in the auxiliary-authored-history
   receipt; model execution and complete model-driver provenance are not
-  established by it.
+  established by it. The late-source archive now preserves the direct declared
+  source bytes for training v4–v8 and residual v9–v14; transitive dependencies,
+  historical execution and feature/model parity still need separate evidence.
   Frozen natural/side descendants are now source-capture and variant/filter
   audited; all 19 currently present right-context corpus manifests are bound.
   This scoped inventory does not establish selection or model parity.

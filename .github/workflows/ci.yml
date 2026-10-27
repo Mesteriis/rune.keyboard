@@ -47,6 +47,8 @@ jobs:
           python3 -m unittest discover -s tools/typing_experiments -p test_audit_applied_authored_history.py
           python3 -m unittest discover -s tools/typing_experiments -p test_audit_auxiliary_authored_history.py
           python3 -m unittest discover -s tools/typing_experiments -p test_audit_frozen_context_descendants.py
+          python3 tools/typing_experiments/audit_late_source_closure.py
+          python3 -m unittest discover -s tools/typing_experiments -p test_audit_late_source_closure.py
           python3 -m unittest discover -s tools/typing_experiments -p test_right_context_training_exclusion.py
           python3 -m unittest discover -s tools/typing_experiments -p test_right_context_sentence_audit.py
       - uses: actions/setup-java@v4

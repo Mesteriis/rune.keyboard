@@ -1,0 +1,641 @@
+{
+  "purpose": "DECLARED_LATE_TRAINING_SOURCE_BYTES_ONLY",
+  "receipts": {
+    "build/right-context-applied-residual-v10-20261027/plan.json": {
+      "sha256": "9f58c762cada44974b62e4e22b736d3edf447f36e3ecd28108b7d849b96c20ec",
+      "sources": {
+        "build/right-context-applied-residual-v10-20261027/train.py": "00e5428f4c44c20a3800b3b353499b00ddca443379a7de2db20fef601ac9683f",
+        "build/right-context-applied-v10-v2-20261027/prepare.py": "cf6502fd69c52de3ab4b0a2b25bcd45f5053857c4a1978e30f23d54d5744ec6c",
+        "build/right-context-applied-v10-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-applied-v10-v2-20261027/vectorize.py": "66ac0e2df7ee03249ccab767fa5a772b30f0ef24084642d22a05c3549839b6cc",
+        "build/right-context-residual-v9-20261027/train.py": "d6ccbaf281689ee373301482870ee0386c2a27bb2d681e73e2c21ea280d89de2",
+        "build/right-context-training-v5-20261027/train.py": "53f9615d6f5aa10ed75c46920c551e1edee02054d30c2269b2454dffa672c7db",
+        "build/right-context-training-v6-20261027/train.py": "d13526c080876cbacb758fdc13910c1f83558878b9ca451904fbc03c9a4596e8",
+        "build/right-context-training-v7-20261027/prepare.py": "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b",
+        "build/right-context-training-v7-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-training-v7-20261027/train.py": "fdb207e0a92faad07b4944984e848a36f882f820102b6f5c1801180f57c2bf6e",
+        "build/right-context-training-v8-20261027/train.py": "6f5d31e1f68cf8e5984e6c2ebb94195aa4b29c2649b4a5550eb2adba005f26ff",
+        "tools/typing_experiments/grammar_context_features.py": "cce373e0964311fa9baf55edf7b2512b1c82fe4273d86de6c651716ad6f90574",
+        "tools/typing_experiments/grammar_contrast_corpus.py": "eeb289a4572eda11889a7180200d9b94894411bddd6ad97a92578b5bdb8f402f",
+        "tools/typing_experiments/neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+        "tools/typing_experiments/rank_refinement.py": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6",
+        "tools/typing_experiments/residual_tree_batch.py": "2f3439d827f6646fcec89889197c671216ed16b89e7db620c6268fe82f8137eb",
+        "tools/typing_experiments/right_context_applied_corpus.py": "602890657811a39c17ce01e1557a01b6aa124bb0c1f6a1886131f6a79fa835d9",
+        "tools/typing_experiments/right_context_applied_features.py": "0207f2013564b4e0cb736a984ce89074ee292a0861d1223090bc1d80ff8f81bb",
+        "tools/typing_experiments/right_context_applied_ranker.py": "a63945547264cad8d841ba69a5d8aad89b5162495521eca6c4c253379cbecf5f",
+        "tools/typing_experiments/right_context_continuation_corpus.py": "b63ee2e7ac879cde13cec65c957bd6edcbe0b2dab66de346778738d85a49a968",
+        "tools/typing_experiments/right_context_continuation_features.py": "80c7799ecc81aa9894aac63117383a53a0595f76194b0fb6ad3edad52afb8ee8",
+        "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+        "tools/typing_experiments/right_context_other_part_corpus.py": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24",
+        "tools/typing_experiments/right_context_residual_ranker.py": "a181ec241fa5452baebbe4d60229c77cb7a974f8831676c6bd31da753ccb3418",
+        "tools/typing_experiments/right_context_revision_features.py": "3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c",
+        "tools/typing_experiments/train.py": "e2f42c479bd0859b669e9ab9b1a2e7b388ff755019469089a7140c24ee87b705",
+        "tools/typing_experiments/word_context_features.py": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef"
+      }
+    },
+    "build/right-context-left-role-residual-v11-20261027/plan.json": {
+      "sha256": "40704bdee8c84446bae7bfcf6d930f2cd4862f7191dc14855e94a3959d783893",
+      "sources": {
+        "build/right-context-applied-v10-v2-20261027/prepare.py": "cf6502fd69c52de3ab4b0a2b25bcd45f5053857c4a1978e30f23d54d5744ec6c",
+        "build/right-context-applied-v10-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-instrumental-v2-20261027/prepare.py": "6c8302be34d57de689e6430f997a002c2cbbdd5dc1a55628778d699ac1fa3b2e",
+        "build/right-context-instrumental-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-left-role-residual-v11-20261027/train.py": "88e23b1273fa13980f20aae5b23b08ccb04de78bea7f603406882d3671b3e866",
+        "build/right-context-left-role-v11-inputs-20261027/vectorize.py": "7acf203c59848537a9bda2d6fb382a5410f38347734998475b2d1157bab735a9",
+        "build/right-context-left-sequence-v1-v2-20261027/prepare.py": "ec0a6349a5c99805e3274b01c631bd0aa7009000f37a914a958f79535cbfa14c",
+        "build/right-context-left-sequence-v1-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-residual-v9-20261027/train.py": "d6ccbaf281689ee373301482870ee0386c2a27bb2d681e73e2c21ea280d89de2",
+        "build/right-context-training-v5-20261027/train.py": "53f9615d6f5aa10ed75c46920c551e1edee02054d30c2269b2454dffa672c7db",
+        "build/right-context-training-v6-20261027/train.py": "d13526c080876cbacb758fdc13910c1f83558878b9ca451904fbc03c9a4596e8",
+        "build/right-context-training-v7-20261027/prepare.py": "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b",
+        "build/right-context-training-v7-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-training-v7-20261027/train.py": "fdb207e0a92faad07b4944984e848a36f882f820102b6f5c1801180f57c2bf6e",
+        "build/right-context-training-v8-20261027/train.py": "6f5d31e1f68cf8e5984e6c2ebb94195aa4b29c2649b4a5550eb2adba005f26ff",
+        "tools/typing_experiments/grammar_context_features.py": "cce373e0964311fa9baf55edf7b2512b1c82fe4273d86de6c651716ad6f90574",
+        "tools/typing_experiments/grammar_contrast_corpus.py": "eeb289a4572eda11889a7180200d9b94894411bddd6ad97a92578b5bdb8f402f",
+        "tools/typing_experiments/neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+        "tools/typing_experiments/prepare_refinement.py": "d2d84c3f328771fd0b9908a9216ee428eb2877079c8dacb481c42a0dafe11bab",
+        "tools/typing_experiments/prepare_word_ranking.py": "e213566e8f22f619a372f09c2c91866f93d8029d5db8666f783318285df74240",
+        "tools/typing_experiments/rank_refinement.py": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6",
+        "tools/typing_experiments/residual_tree_batch.py": "2f3439d827f6646fcec89889197c671216ed16b89e7db620c6268fe82f8137eb",
+        "tools/typing_experiments/right_context_applied_corpus.py": "602890657811a39c17ce01e1557a01b6aa124bb0c1f6a1886131f6a79fa835d9",
+        "tools/typing_experiments/right_context_applied_features.py": "0207f2013564b4e0cb736a984ce89074ee292a0861d1223090bc1d80ff8f81bb",
+        "tools/typing_experiments/right_context_continuation_corpus.py": "b63ee2e7ac879cde13cec65c957bd6edcbe0b2dab66de346778738d85a49a968",
+        "tools/typing_experiments/right_context_continuation_features.py": "80c7799ecc81aa9894aac63117383a53a0595f76194b0fb6ad3edad52afb8ee8",
+        "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+        "tools/typing_experiments/right_context_instrumental_corpus.py": "d760e08e2fd222ab26f4b36debec0f9b845a89c1b4a60eef28a5d4647d99ab32",
+        "tools/typing_experiments/right_context_left_role_ranker.py": "1d8e20d3ec4e4e87209d0b52111fb7788cf601e321bb1f379b3041e1d8448e4b",
+        "tools/typing_experiments/right_context_left_sequence_corpus.py": "99aeb5d9e2118e54aec84c3575d07a30866eba38354cf598204f762237c608ff",
+        "tools/typing_experiments/right_context_left_sequence_features.py": "62f49430e9ba042207bb352f7cf6b810472b8c07f30e143f2c40a984c3e4abd9",
+        "tools/typing_experiments/right_context_other_part_corpus.py": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24",
+        "tools/typing_experiments/right_context_residual_ranker.py": "a181ec241fa5452baebbe4d60229c77cb7a974f8831676c6bd31da753ccb3418",
+        "tools/typing_experiments/right_context_revision_features.py": "3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c",
+        "tools/typing_experiments/train.py": "e2f42c479bd0859b669e9ab9b1a2e7b388ff755019469089a7140c24ee87b705",
+        "tools/typing_experiments/word_context_features.py": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef"
+      }
+    },
+    "build/right-context-oblique-residual-v12-20261027/plan.json": {
+      "sha256": "5843213f94660eeaf13a73304d1a9c98a5809b5c86e5ea82bdd9d52272f58e8d",
+      "sources": {
+        "build/right-context-applied-v10-v2-20261027/prepare.py": "cf6502fd69c52de3ab4b0a2b25bcd45f5053857c4a1978e30f23d54d5744ec6c",
+        "build/right-context-applied-v10-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-instrumental-v2-20261027/prepare.py": "6c8302be34d57de689e6430f997a002c2cbbdd5dc1a55628778d699ac1fa3b2e",
+        "build/right-context-instrumental-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-left-sequence-v1-v2-20261027/prepare.py": "ec0a6349a5c99805e3274b01c631bd0aa7009000f37a914a958f79535cbfa14c",
+        "build/right-context-left-sequence-v1-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-oblique-residual-v12-20261027/train.py": "7604582f337f8ff1d6bcddd292d77226cbbbe54a04bd9bdcd309ece9f95a0275",
+        "build/right-context-oblique-v1-20261027/prepare.py": "9ce00a00fe49583bca8ed2218f3dae9158fcef88d234bdb31e223755309e7875",
+        "build/right-context-oblique-v1-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-oblique-v12-inputs-20261027/vectorize.py": "fc5512461ede2a945a001e3c2df78a9d23246e8e44d84f54f87019963fb9517b",
+        "build/right-context-residual-v9-20261027/train.py": "d6ccbaf281689ee373301482870ee0386c2a27bb2d681e73e2c21ea280d89de2",
+        "build/right-context-training-v5-20261027/train.py": "53f9615d6f5aa10ed75c46920c551e1edee02054d30c2269b2454dffa672c7db",
+        "build/right-context-training-v6-20261027/train.py": "d13526c080876cbacb758fdc13910c1f83558878b9ca451904fbc03c9a4596e8",
+        "build/right-context-training-v7-20261027/prepare.py": "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b",
+        "build/right-context-training-v7-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-training-v7-20261027/train.py": "fdb207e0a92faad07b4944984e848a36f882f820102b6f5c1801180f57c2bf6e",
+        "build/right-context-training-v8-20261027/train.py": "6f5d31e1f68cf8e5984e6c2ebb94195aa4b29c2649b4a5550eb2adba005f26ff",
+        "tools/typing_experiments/grammar_context_features.py": "cce373e0964311fa9baf55edf7b2512b1c82fe4273d86de6c651716ad6f90574",
+        "tools/typing_experiments/grammar_contrast_corpus.py": "eeb289a4572eda11889a7180200d9b94894411bddd6ad97a92578b5bdb8f402f",
+        "tools/typing_experiments/neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+        "tools/typing_experiments/prepare_refinement.py": "d2d84c3f328771fd0b9908a9216ee428eb2877079c8dacb481c42a0dafe11bab",
+        "tools/typing_experiments/prepare_word_ranking.py": "e213566e8f22f619a372f09c2c91866f93d8029d5db8666f783318285df74240",
+        "tools/typing_experiments/rank_refinement.py": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6",
+        "tools/typing_experiments/residual_tree_batch.py": "2f3439d827f6646fcec89889197c671216ed16b89e7db620c6268fe82f8137eb",
+        "tools/typing_experiments/right_context_applied_corpus.py": "602890657811a39c17ce01e1557a01b6aa124bb0c1f6a1886131f6a79fa835d9",
+        "tools/typing_experiments/right_context_applied_features.py": "0207f2013564b4e0cb736a984ce89074ee292a0861d1223090bc1d80ff8f81bb",
+        "tools/typing_experiments/right_context_continuation_corpus.py": "b63ee2e7ac879cde13cec65c957bd6edcbe0b2dab66de346778738d85a49a968",
+        "tools/typing_experiments/right_context_continuation_features.py": "80c7799ecc81aa9894aac63117383a53a0595f76194b0fb6ad3edad52afb8ee8",
+        "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+        "tools/typing_experiments/right_context_instrumental_corpus.py": "d760e08e2fd222ab26f4b36debec0f9b845a89c1b4a60eef28a5d4647d99ab32",
+        "tools/typing_experiments/right_context_left_role_ranker.py": "1d8e20d3ec4e4e87209d0b52111fb7788cf601e321bb1f379b3041e1d8448e4b",
+        "tools/typing_experiments/right_context_left_sequence_corpus.py": "99aeb5d9e2118e54aec84c3575d07a30866eba38354cf598204f762237c608ff",
+        "tools/typing_experiments/right_context_left_sequence_features.py": "62f49430e9ba042207bb352f7cf6b810472b8c07f30e143f2c40a984c3e4abd9",
+        "tools/typing_experiments/right_context_oblique_corpus.py": "b8a011560a662b77322d7eba0e5ae1263e82b091b6eea758c159e8ab7c176077",
+        "tools/typing_experiments/right_context_other_part_corpus.py": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24",
+        "tools/typing_experiments/right_context_residual_ranker.py": "a181ec241fa5452baebbe4d60229c77cb7a974f8831676c6bd31da753ccb3418",
+        "tools/typing_experiments/right_context_revision_features.py": "3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c",
+        "tools/typing_experiments/train.py": "e2f42c479bd0859b669e9ab9b1a2e7b388ff755019469089a7140c24ee87b705",
+        "tools/typing_experiments/word_context_features.py": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef"
+      }
+    },
+    "build/right-context-residual-v9-20261027/plan.json": {
+      "sha256": "5fea5113c58dbc7c1cab08320af3f514ebf577e5b28db2d7d345ac075c0ace81",
+      "sources": {
+        "build/right-context-residual-v9-20261027/train.py": "d6ccbaf281689ee373301482870ee0386c2a27bb2d681e73e2c21ea280d89de2",
+        "build/right-context-training-v5-20261027/train.py": "53f9615d6f5aa10ed75c46920c551e1edee02054d30c2269b2454dffa672c7db",
+        "build/right-context-training-v6-20261027/train.py": "d13526c080876cbacb758fdc13910c1f83558878b9ca451904fbc03c9a4596e8",
+        "build/right-context-training-v7-20261027/prepare.py": "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b",
+        "build/right-context-training-v7-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-training-v7-20261027/train.py": "fdb207e0a92faad07b4944984e848a36f882f820102b6f5c1801180f57c2bf6e",
+        "build/right-context-training-v8-20261027/train.py": "6f5d31e1f68cf8e5984e6c2ebb94195aa4b29c2649b4a5550eb2adba005f26ff",
+        "tools/typing_experiments/grammar_context_features.py": "cce373e0964311fa9baf55edf7b2512b1c82fe4273d86de6c651716ad6f90574",
+        "tools/typing_experiments/neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+        "tools/typing_experiments/rank_refinement.py": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6",
+        "tools/typing_experiments/residual_tree_batch.py": "2f3439d827f6646fcec89889197c671216ed16b89e7db620c6268fe82f8137eb",
+        "tools/typing_experiments/right_context_continuation_corpus.py": "b63ee2e7ac879cde13cec65c957bd6edcbe0b2dab66de346778738d85a49a968",
+        "tools/typing_experiments/right_context_continuation_features.py": "80c7799ecc81aa9894aac63117383a53a0595f76194b0fb6ad3edad52afb8ee8",
+        "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+        "tools/typing_experiments/right_context_other_part_corpus.py": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24",
+        "tools/typing_experiments/right_context_residual_ranker.py": "a181ec241fa5452baebbe4d60229c77cb7a974f8831676c6bd31da753ccb3418",
+        "tools/typing_experiments/right_context_revision_features.py": "3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c",
+        "tools/typing_experiments/train.py": "e2f42c479bd0859b669e9ab9b1a2e7b388ff755019469089a7140c24ee87b705",
+        "tools/typing_experiments/word_context_features.py": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef"
+      }
+    },
+    "build/right-context-residual-v9-20261027/selection.json": {
+      "sha256": "e90d1336e6d7dc4447a9de49564df6512d033ccb736474752e015eea29dbc179",
+      "sources": {
+        "build/right-context-training-v7-20261027/prepare.py": "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b",
+        "build/right-context-training-v7-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "tools/typing_experiments/right_context_continuation_corpus.py": "b63ee2e7ac879cde13cec65c957bd6edcbe0b2dab66de346778738d85a49a968",
+        "tools/typing_experiments/right_context_continuation_features.py": "80c7799ecc81aa9894aac63117383a53a0595f76194b0fb6ad3edad52afb8ee8",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c"
+      }
+    },
+    "build/right-context-signature-residual-v14-20261027/plan.json": {
+      "sha256": "6d5ee58f8989f1bf23650bdbf25395945170c9edcca05b61d11fcdf68ac14f11",
+      "sources": {
+        "build/right-context-applied-v10-v2-20261027/prepare.py": "cf6502fd69c52de3ab4b0a2b25bcd45f5053857c4a1978e30f23d54d5744ec6c",
+        "build/right-context-applied-v10-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-instrumental-v2-20261027/prepare.py": "6c8302be34d57de689e6430f997a002c2cbbdd5dc1a55628778d699ac1fa3b2e",
+        "build/right-context-instrumental-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-left-sequence-v1-v2-20261027/prepare.py": "ec0a6349a5c99805e3274b01c631bd0aa7009000f37a914a958f79535cbfa14c",
+        "build/right-context-left-sequence-v1-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-oblique-v1-20261027/prepare.py": "9ce00a00fe49583bca8ed2218f3dae9158fcef88d234bdb31e223755309e7875",
+        "build/right-context-oblique-v1-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-oblique-v12-inputs-20261027/vectorize.py": "fc5512461ede2a945a001e3c2df78a9d23246e8e44d84f54f87019963fb9517b",
+        "build/right-context-residual-v9-20261027/train.py": "d6ccbaf281689ee373301482870ee0386c2a27bb2d681e73e2c21ea280d89de2",
+        "build/right-context-signature-residual-v14-20261027/prepare-weights.py": "156ac04b2e4285bd46c9766398333881a4275e42ee1942dfe1812e0e4923a1d2",
+        "build/right-context-signature-residual-v14-20261027/train.py": "6ddf5a339a69c3a89e760a203e3fef409958f79c0f99dfc8b4b50eac6667ba07",
+        "build/right-context-training-v5-20261027/train.py": "53f9615d6f5aa10ed75c46920c551e1edee02054d30c2269b2454dffa672c7db",
+        "build/right-context-training-v6-20261027/train.py": "d13526c080876cbacb758fdc13910c1f83558878b9ca451904fbc03c9a4596e8",
+        "build/right-context-training-v7-20261027/prepare.py": "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b",
+        "build/right-context-training-v7-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-training-v7-20261027/train.py": "fdb207e0a92faad07b4944984e848a36f882f820102b6f5c1801180f57c2bf6e",
+        "build/right-context-training-v8-20261027/train.py": "6f5d31e1f68cf8e5984e6c2ebb94195aa4b29c2649b4a5550eb2adba005f26ff",
+        "tools/typing_experiments/grammar_context_features.py": "cce373e0964311fa9baf55edf7b2512b1c82fe4273d86de6c651716ad6f90574",
+        "tools/typing_experiments/grammar_contrast_corpus.py": "eeb289a4572eda11889a7180200d9b94894411bddd6ad97a92578b5bdb8f402f",
+        "tools/typing_experiments/neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+        "tools/typing_experiments/prepare_refinement.py": "d2d84c3f328771fd0b9908a9216ee428eb2877079c8dacb481c42a0dafe11bab",
+        "tools/typing_experiments/prepare_word_ranking.py": "e213566e8f22f619a372f09c2c91866f93d8029d5db8666f783318285df74240",
+        "tools/typing_experiments/rank_refinement.py": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6",
+        "tools/typing_experiments/residual_tree_batch.py": "2f3439d827f6646fcec89889197c671216ed16b89e7db620c6268fe82f8137eb",
+        "tools/typing_experiments/right_context_applied_corpus.py": "602890657811a39c17ce01e1557a01b6aa124bb0c1f6a1886131f6a79fa835d9",
+        "tools/typing_experiments/right_context_applied_features.py": "0207f2013564b4e0cb736a984ce89074ee292a0861d1223090bc1d80ff8f81bb",
+        "tools/typing_experiments/right_context_continuation_corpus.py": "b63ee2e7ac879cde13cec65c957bd6edcbe0b2dab66de346778738d85a49a968",
+        "tools/typing_experiments/right_context_continuation_features.py": "80c7799ecc81aa9894aac63117383a53a0595f76194b0fb6ad3edad52afb8ee8",
+        "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+        "tools/typing_experiments/right_context_instrumental_corpus.py": "d760e08e2fd222ab26f4b36debec0f9b845a89c1b4a60eef28a5d4647d99ab32",
+        "tools/typing_experiments/right_context_left_role_ranker.py": "1d8e20d3ec4e4e87209d0b52111fb7788cf601e321bb1f379b3041e1d8448e4b",
+        "tools/typing_experiments/right_context_left_sequence_corpus.py": "99aeb5d9e2118e54aec84c3575d07a30866eba38354cf598204f762237c608ff",
+        "tools/typing_experiments/right_context_left_sequence_features.py": "62f49430e9ba042207bb352f7cf6b810472b8c07f30e143f2c40a984c3e4abd9",
+        "tools/typing_experiments/right_context_oblique_corpus.py": "b8a011560a662b77322d7eba0e5ae1263e82b091b6eea758c159e8ab7c176077",
+        "tools/typing_experiments/right_context_other_part_corpus.py": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24",
+        "tools/typing_experiments/right_context_residual_ranker.py": "a181ec241fa5452baebbe4d60229c77cb7a974f8831676c6bd31da753ccb3418",
+        "tools/typing_experiments/right_context_revision_features.py": "3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_signature_weights.py": "e0f40fedf47d5df7d48107e1a0f4b32fe2434c536dc7cbfcb0838b168e64acb3",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c",
+        "tools/typing_experiments/right_context_training_weights.py": "7186293be807ca89ac527293145e9dd27b53a8abcbfdb723012643ee54bcc25a",
+        "tools/typing_experiments/train.py": "e2f42c479bd0859b669e9ab9b1a2e7b388ff755019469089a7140c24ee87b705",
+        "tools/typing_experiments/word_context_features.py": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef"
+      }
+    },
+    "build/right-context-symmetric-residual-v13-20261027/plan.json": {
+      "sha256": "ae1669f45827f932c25512090380efb6c94ed1345575cb250e7ef4e54ba7dc4d",
+      "sources": {
+        "build/right-context-applied-v10-v2-20261027/prepare.py": "cf6502fd69c52de3ab4b0a2b25bcd45f5053857c4a1978e30f23d54d5744ec6c",
+        "build/right-context-applied-v10-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-instrumental-v2-20261027/prepare.py": "6c8302be34d57de689e6430f997a002c2cbbdd5dc1a55628778d699ac1fa3b2e",
+        "build/right-context-instrumental-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-left-sequence-v1-v2-20261027/prepare.py": "ec0a6349a5c99805e3274b01c631bd0aa7009000f37a914a958f79535cbfa14c",
+        "build/right-context-left-sequence-v1-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-oblique-v1-20261027/prepare.py": "9ce00a00fe49583bca8ed2218f3dae9158fcef88d234bdb31e223755309e7875",
+        "build/right-context-oblique-v1-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-oblique-v12-inputs-20261027/vectorize.py": "fc5512461ede2a945a001e3c2df78a9d23246e8e44d84f54f87019963fb9517b",
+        "build/right-context-residual-v9-20261027/train.py": "d6ccbaf281689ee373301482870ee0386c2a27bb2d681e73e2c21ea280d89de2",
+        "build/right-context-symmetric-residual-v13-20261027/prepare-weights.py": "c1943883fd2a5d0f0f7b95ca8ba54e71c9b613f894771ec8f15bd1635554470a",
+        "build/right-context-symmetric-residual-v13-20261027/train.py": "dbf56bbf9148c4ae5384b6dcd4583b6cc72c5a2b58dbaa7ec248e2605e09ed0a",
+        "build/right-context-training-v5-20261027/train.py": "53f9615d6f5aa10ed75c46920c551e1edee02054d30c2269b2454dffa672c7db",
+        "build/right-context-training-v6-20261027/train.py": "d13526c080876cbacb758fdc13910c1f83558878b9ca451904fbc03c9a4596e8",
+        "build/right-context-training-v7-20261027/prepare.py": "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b",
+        "build/right-context-training-v7-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-training-v7-20261027/train.py": "fdb207e0a92faad07b4944984e848a36f882f820102b6f5c1801180f57c2bf6e",
+        "build/right-context-training-v8-20261027/train.py": "6f5d31e1f68cf8e5984e6c2ebb94195aa4b29c2649b4a5550eb2adba005f26ff",
+        "tools/typing_experiments/grammar_context_features.py": "cce373e0964311fa9baf55edf7b2512b1c82fe4273d86de6c651716ad6f90574",
+        "tools/typing_experiments/grammar_contrast_corpus.py": "eeb289a4572eda11889a7180200d9b94894411bddd6ad97a92578b5bdb8f402f",
+        "tools/typing_experiments/neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+        "tools/typing_experiments/prepare_refinement.py": "d2d84c3f328771fd0b9908a9216ee428eb2877079c8dacb481c42a0dafe11bab",
+        "tools/typing_experiments/prepare_word_ranking.py": "e213566e8f22f619a372f09c2c91866f93d8029d5db8666f783318285df74240",
+        "tools/typing_experiments/rank_refinement.py": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6",
+        "tools/typing_experiments/residual_tree_batch.py": "2f3439d827f6646fcec89889197c671216ed16b89e7db620c6268fe82f8137eb",
+        "tools/typing_experiments/right_context_applied_corpus.py": "602890657811a39c17ce01e1557a01b6aa124bb0c1f6a1886131f6a79fa835d9",
+        "tools/typing_experiments/right_context_applied_features.py": "0207f2013564b4e0cb736a984ce89074ee292a0861d1223090bc1d80ff8f81bb",
+        "tools/typing_experiments/right_context_continuation_corpus.py": "b63ee2e7ac879cde13cec65c957bd6edcbe0b2dab66de346778738d85a49a968",
+        "tools/typing_experiments/right_context_continuation_features.py": "80c7799ecc81aa9894aac63117383a53a0595f76194b0fb6ad3edad52afb8ee8",
+        "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+        "tools/typing_experiments/right_context_instrumental_corpus.py": "d760e08e2fd222ab26f4b36debec0f9b845a89c1b4a60eef28a5d4647d99ab32",
+        "tools/typing_experiments/right_context_left_role_ranker.py": "1d8e20d3ec4e4e87209d0b52111fb7788cf601e321bb1f379b3041e1d8448e4b",
+        "tools/typing_experiments/right_context_left_sequence_corpus.py": "99aeb5d9e2118e54aec84c3575d07a30866eba38354cf598204f762237c608ff",
+        "tools/typing_experiments/right_context_left_sequence_features.py": "62f49430e9ba042207bb352f7cf6b810472b8c07f30e143f2c40a984c3e4abd9",
+        "tools/typing_experiments/right_context_oblique_corpus.py": "b8a011560a662b77322d7eba0e5ae1263e82b091b6eea758c159e8ab7c176077",
+        "tools/typing_experiments/right_context_other_part_corpus.py": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24",
+        "tools/typing_experiments/right_context_residual_ranker.py": "a181ec241fa5452baebbe4d60229c77cb7a974f8831676c6bd31da753ccb3418",
+        "tools/typing_experiments/right_context_revision_features.py": "3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c",
+        "tools/typing_experiments/right_context_training_weights.py": "7186293be807ca89ac527293145e9dd27b53a8abcbfdb723012643ee54bcc25a",
+        "tools/typing_experiments/train.py": "e2f42c479bd0859b669e9ab9b1a2e7b388ff755019469089a7140c24ee87b705",
+        "tools/typing_experiments/word_context_features.py": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef"
+      }
+    },
+    "build/right-context-training-v4-20261027/plan.json": {
+      "sha256": "4d2a9db1ec40aeb7da947389a71fb6c07bfb8c93ffb726c05d2898bfab08d828",
+      "sources": {
+        "build/right-context-training-v4-20261027/train.py": "1b99227da9f2aa6b358fb00e4055157da3aecf3f7ac7e1405dc11bfcc1f2d357",
+        "tools/typing_experiments/grammar_context_features.py": "cce373e0964311fa9baf55edf7b2512b1c82fe4273d86de6c651716ad6f90574",
+        "tools/typing_experiments/neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+        "tools/typing_experiments/rank_refinement.py": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6",
+        "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+        "tools/typing_experiments/right_context_revision_features.py": "3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c",
+        "tools/typing_experiments/train.py": "e2f42c479bd0859b669e9ab9b1a2e7b388ff755019469089a7140c24ee87b705",
+        "tools/typing_experiments/word_context_features.py": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef"
+      }
+    },
+    "build/right-context-training-v4-20261027/selection.json": {
+      "sha256": "245cebeacd07dff402fbfb155a302c5ac5cefd9620d096da99804e949da65408",
+      "sources": {
+        "build/right-context-training-v4-20261027/select_training_groups.py": "231fa5793279280aa17b1726ca648bba03a39c600906fabf4b262340f480b000",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c"
+      }
+    },
+    "build/right-context-training-v5-20261027/plan.json": {
+      "sha256": "0857553222ddbbec38f6a12ad6dea4fa2452098b85d5c1f84ec283d68fe504e1",
+      "sources": {
+        "build/right-context-training-v5-20261027/train.py": "53f9615d6f5aa10ed75c46920c551e1edee02054d30c2269b2454dffa672c7db",
+        "tools/typing_experiments/grammar_context_features.py": "cce373e0964311fa9baf55edf7b2512b1c82fe4273d86de6c651716ad6f90574",
+        "tools/typing_experiments/neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+        "tools/typing_experiments/rank_refinement.py": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6",
+        "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+        "tools/typing_experiments/right_context_other_part_corpus.py": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24",
+        "tools/typing_experiments/right_context_revision_features.py": "3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c",
+        "tools/typing_experiments/train.py": "e2f42c479bd0859b669e9ab9b1a2e7b388ff755019469089a7140c24ee87b705",
+        "tools/typing_experiments/word_context_features.py": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef"
+      }
+    },
+    "build/right-context-training-v5-20261027/selection.json": {
+      "sha256": "539cefc6a733117876ed498237d7985ca77c67fc2782b45cb4d122877de57c3a",
+      "sources": {
+        "build/right-context-training-v5-20261027/select_training_groups.py": "aea3410c33f7b93935b28babf687bc32716c230f7a2f02fa7ae8d1ba07d8313c",
+        "tools/typing_experiments/right_context_other_part_corpus.py": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c"
+      }
+    },
+    "build/right-context-training-v6-20261027/plan.json": {
+      "sha256": "1e8b070a63922f0919e344c1d51ac29d9543d03ea9ab4ff667cd341bd68b83fd",
+      "sources": {
+        "build/right-context-training-v5-20261027/train.py": "53f9615d6f5aa10ed75c46920c551e1edee02054d30c2269b2454dffa672c7db",
+        "build/right-context-training-v6-20261027/train.py": "d13526c080876cbacb758fdc13910c1f83558878b9ca451904fbc03c9a4596e8",
+        "tools/typing_experiments/grammar_context_features.py": "cce373e0964311fa9baf55edf7b2512b1c82fe4273d86de6c651716ad6f90574",
+        "tools/typing_experiments/neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+        "tools/typing_experiments/rank_refinement.py": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6",
+        "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+        "tools/typing_experiments/right_context_other_part_corpus.py": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24",
+        "tools/typing_experiments/right_context_revision_features.py": "3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c",
+        "tools/typing_experiments/train.py": "e2f42c479bd0859b669e9ab9b1a2e7b388ff755019469089a7140c24ee87b705",
+        "tools/typing_experiments/word_context_features.py": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef"
+      }
+    },
+    "build/right-context-training-v6-20261027/selection.json": {
+      "sha256": "539cefc6a733117876ed498237d7985ca77c67fc2782b45cb4d122877de57c3a",
+      "sources": {
+        "build/right-context-training-v5-20261027/select_training_groups.py": "aea3410c33f7b93935b28babf687bc32716c230f7a2f02fa7ae8d1ba07d8313c",
+        "tools/typing_experiments/right_context_other_part_corpus.py": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c"
+      }
+    },
+    "build/right-context-training-v7-20261027/plan.json": {
+      "sha256": "a9f1f70ef34c4d37acdd083aebc1871a45573d75e266455f04029b5e0059c20c",
+      "sources": {
+        "build/right-context-training-v5-20261027/train.py": "53f9615d6f5aa10ed75c46920c551e1edee02054d30c2269b2454dffa672c7db",
+        "build/right-context-training-v6-20261027/train.py": "d13526c080876cbacb758fdc13910c1f83558878b9ca451904fbc03c9a4596e8",
+        "build/right-context-training-v7-20261027/prepare.py": "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b",
+        "build/right-context-training-v7-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-training-v7-20261027/train.py": "fdb207e0a92faad07b4944984e848a36f882f820102b6f5c1801180f57c2bf6e",
+        "tools/typing_experiments/grammar_context_features.py": "cce373e0964311fa9baf55edf7b2512b1c82fe4273d86de6c651716ad6f90574",
+        "tools/typing_experiments/neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+        "tools/typing_experiments/rank_refinement.py": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6",
+        "tools/typing_experiments/right_context_continuation_corpus.py": "b63ee2e7ac879cde13cec65c957bd6edcbe0b2dab66de346778738d85a49a968",
+        "tools/typing_experiments/right_context_continuation_features.py": "80c7799ecc81aa9894aac63117383a53a0595f76194b0fb6ad3edad52afb8ee8",
+        "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+        "tools/typing_experiments/right_context_other_part_corpus.py": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24",
+        "tools/typing_experiments/right_context_revision_features.py": "3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c",
+        "tools/typing_experiments/train.py": "e2f42c479bd0859b669e9ab9b1a2e7b388ff755019469089a7140c24ee87b705",
+        "tools/typing_experiments/word_context_features.py": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef"
+      }
+    },
+    "build/right-context-training-v7-20261027/selection.json": {
+      "sha256": "e90d1336e6d7dc4447a9de49564df6512d033ccb736474752e015eea29dbc179",
+      "sources": {
+        "build/right-context-training-v7-20261027/prepare.py": "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b",
+        "build/right-context-training-v7-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "tools/typing_experiments/right_context_continuation_corpus.py": "b63ee2e7ac879cde13cec65c957bd6edcbe0b2dab66de346778738d85a49a968",
+        "tools/typing_experiments/right_context_continuation_features.py": "80c7799ecc81aa9894aac63117383a53a0595f76194b0fb6ad3edad52afb8ee8",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c"
+      }
+    },
+    "build/right-context-training-v8-20261027/plan.json": {
+      "sha256": "51710ee2a77371a444cfd5d55db0eeff2e7aaf12bf499045210ec47ea5b27914",
+      "sources": {
+        "build/right-context-training-v5-20261027/train.py": "53f9615d6f5aa10ed75c46920c551e1edee02054d30c2269b2454dffa672c7db",
+        "build/right-context-training-v6-20261027/train.py": "d13526c080876cbacb758fdc13910c1f83558878b9ca451904fbc03c9a4596e8",
+        "build/right-context-training-v7-20261027/prepare.py": "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b",
+        "build/right-context-training-v7-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "build/right-context-training-v7-20261027/train.py": "fdb207e0a92faad07b4944984e848a36f882f820102b6f5c1801180f57c2bf6e",
+        "build/right-context-training-v8-20261027/train.py": "6f5d31e1f68cf8e5984e6c2ebb94195aa4b29c2649b4a5550eb2adba005f26ff",
+        "tools/typing_experiments/grammar_context_features.py": "cce373e0964311fa9baf55edf7b2512b1c82fe4273d86de6c651716ad6f90574",
+        "tools/typing_experiments/neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+        "tools/typing_experiments/rank_refinement.py": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6",
+        "tools/typing_experiments/right_context_continuation_corpus.py": "b63ee2e7ac879cde13cec65c957bd6edcbe0b2dab66de346778738d85a49a968",
+        "tools/typing_experiments/right_context_continuation_features.py": "80c7799ecc81aa9894aac63117383a53a0595f76194b0fb6ad3edad52afb8ee8",
+        "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+        "tools/typing_experiments/right_context_other_part_corpus.py": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24",
+        "tools/typing_experiments/right_context_revision_features.py": "3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd",
+        "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+        "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c",
+        "tools/typing_experiments/train.py": "e2f42c479bd0859b669e9ab9b1a2e7b388ff755019469089a7140c24ee87b705",
+        "tools/typing_experiments/word_context_features.py": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef"
+      }
+    },
+    "build/right-context-training-v8-20261027/selection.json": {
+      "sha256": "e90d1336e6d7dc4447a9de49564df6512d033ccb736474752e015eea29dbc179",
+      "sources": {
+        "build/right-context-training-v7-20261027/prepare.py": "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b",
+        "build/right-context-training-v7-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+        "tools/typing_experiments/right_context_continuation_corpus.py": "b63ee2e7ac879cde13cec65c957bd6edcbe0b2dab66de346778738d85a49a968",
+        "tools/typing_experiments/right_context_continuation_features.py": "80c7799ecc81aa9894aac63117383a53a0595f76194b0fb6ad3edad52afb8ee8",
+        "tools/typing_experiments/right_context_training_groups.py": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c"
+      }
+    }
+  },
+  "schema": 1,
+  "sources": {
+    "build/right-context-applied-residual-v10-20261027/train.py": {
+      "file": "train_00e5428f4c44c20a.py",
+      "sha256": "00e5428f4c44c20a3800b3b353499b00ddca443379a7de2db20fef601ac9683f"
+    },
+    "build/right-context-applied-v10-v2-20261027/prepare.py": {
+      "file": "prepare_cf6502fd69c52de3.py",
+      "sha256": "cf6502fd69c52de3ab4b0a2b25bcd45f5053857c4a1978e30f23d54d5744ec6c"
+    },
+    "build/right-context-applied-v10-v2-20261027/select_training_groups.py": {
+      "file": "select_training_groups_fc5a92dd47cb5f5f.py",
+      "sha256": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617"
+    },
+    "build/right-context-applied-v10-v2-20261027/vectorize.py": {
+      "file": "vectorize_66ac0e2df7ee0324.py",
+      "sha256": "66ac0e2df7ee03249ccab767fa5a772b30f0ef24084642d22a05c3549839b6cc"
+    },
+    "build/right-context-instrumental-v2-20261027/prepare.py": {
+      "file": "prepare_6c8302be34d57de6.py",
+      "sha256": "6c8302be34d57de689e6430f997a002c2cbbdd5dc1a55628778d699ac1fa3b2e"
+    },
+    "build/right-context-instrumental-v2-20261027/select_training_groups.py": {
+      "file": "select_training_groups_fc5a92dd47cb5f5f.py",
+      "sha256": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617"
+    },
+    "build/right-context-left-role-residual-v11-20261027/train.py": {
+      "file": "train_88e23b1273fa1398.py",
+      "sha256": "88e23b1273fa13980f20aae5b23b08ccb04de78bea7f603406882d3671b3e866"
+    },
+    "build/right-context-left-role-v11-inputs-20261027/vectorize.py": {
+      "file": "vectorize_7acf203c59848537.py",
+      "sha256": "7acf203c59848537a9bda2d6fb382a5410f38347734998475b2d1157bab735a9"
+    },
+    "build/right-context-left-sequence-v1-v2-20261027/prepare.py": {
+      "file": "prepare_ec0a6349a5c99805.py",
+      "sha256": "ec0a6349a5c99805e3274b01c631bd0aa7009000f37a914a958f79535cbfa14c"
+    },
+    "build/right-context-left-sequence-v1-v2-20261027/select_training_groups.py": {
+      "file": "select_training_groups_fc5a92dd47cb5f5f.py",
+      "sha256": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617"
+    },
+    "build/right-context-oblique-residual-v12-20261027/train.py": {
+      "file": "train_7604582f337f8ff1.py",
+      "sha256": "7604582f337f8ff1d6bcddd292d77226cbbbe54a04bd9bdcd309ece9f95a0275"
+    },
+    "build/right-context-oblique-v1-20261027/prepare.py": {
+      "file": "prepare_9ce00a00fe49583b.py",
+      "sha256": "9ce00a00fe49583bca8ed2218f3dae9158fcef88d234bdb31e223755309e7875"
+    },
+    "build/right-context-oblique-v1-20261027/select_training_groups.py": {
+      "file": "select_training_groups_fc5a92dd47cb5f5f.py",
+      "sha256": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617"
+    },
+    "build/right-context-oblique-v12-inputs-20261027/vectorize.py": {
+      "file": "vectorize_fc5512461ede2a94.py",
+      "sha256": "fc5512461ede2a945a001e3c2df78a9d23246e8e44d84f54f87019963fb9517b"
+    },
+    "build/right-context-residual-v9-20261027/train.py": {
+      "file": "train_d6ccbaf281689ee3.py",
+      "sha256": "d6ccbaf281689ee373301482870ee0386c2a27bb2d681e73e2c21ea280d89de2"
+    },
+    "build/right-context-signature-residual-v14-20261027/prepare-weights.py": {
+      "file": "prepare_weights_156ac04b2e4285bd.py",
+      "sha256": "156ac04b2e4285bd46c9766398333881a4275e42ee1942dfe1812e0e4923a1d2"
+    },
+    "build/right-context-signature-residual-v14-20261027/train.py": {
+      "file": "train_6ddf5a339a69c3a8.py",
+      "sha256": "6ddf5a339a69c3a89e760a203e3fef409958f79c0f99dfc8b4b50eac6667ba07"
+    },
+    "build/right-context-symmetric-residual-v13-20261027/prepare-weights.py": {
+      "file": "prepare_weights_c1943883fd2a5d0f.py",
+      "sha256": "c1943883fd2a5d0f0f7b95ca8ba54e71c9b613f894771ec8f15bd1635554470a"
+    },
+    "build/right-context-symmetric-residual-v13-20261027/train.py": {
+      "file": "train_dbf56bbf9148c4ae.py",
+      "sha256": "dbf56bbf9148c4ae5384b6dcd4583b6cc72c5a2b58dbaa7ec248e2605e09ed0a"
+    },
+    "build/right-context-training-v4-20261027/select_training_groups.py": {
+      "file": "select_training_groups_231fa5793279280a.py",
+      "sha256": "231fa5793279280aa17b1726ca648bba03a39c600906fabf4b262340f480b000"
+    },
+    "build/right-context-training-v4-20261027/train.py": {
+      "file": "train_1b99227da9f2aa6b.py",
+      "sha256": "1b99227da9f2aa6b358fb00e4055157da3aecf3f7ac7e1405dc11bfcc1f2d357"
+    },
+    "build/right-context-training-v5-20261027/select_training_groups.py": {
+      "file": "select_training_groups_aea3410c33f7b939.py",
+      "sha256": "aea3410c33f7b93935b28babf687bc32716c230f7a2f02fa7ae8d1ba07d8313c"
+    },
+    "build/right-context-training-v5-20261027/train.py": {
+      "file": "train_53f9615d6f5aa10e.py",
+      "sha256": "53f9615d6f5aa10ed75c46920c551e1edee02054d30c2269b2454dffa672c7db"
+    },
+    "build/right-context-training-v6-20261027/train.py": {
+      "file": "train_d13526c080876cba.py",
+      "sha256": "d13526c080876cbacb758fdc13910c1f83558878b9ca451904fbc03c9a4596e8"
+    },
+    "build/right-context-training-v7-20261027/prepare.py": {
+      "file": "prepare_557b57f7362d04d7.py",
+      "sha256": "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b"
+    },
+    "build/right-context-training-v7-20261027/select_training_groups.py": {
+      "file": "select_training_groups_fc5a92dd47cb5f5f.py",
+      "sha256": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617"
+    },
+    "build/right-context-training-v7-20261027/train.py": {
+      "file": "train_fdb207e0a92faad0.py",
+      "sha256": "fdb207e0a92faad07b4944984e848a36f882f820102b6f5c1801180f57c2bf6e"
+    },
+    "build/right-context-training-v8-20261027/train.py": {
+      "file": "train_6f5d31e1f68cf8e5.py",
+      "sha256": "6f5d31e1f68cf8e5984e6c2ebb94195aa4b29c2649b4a5550eb2adba005f26ff"
+    },
+    "tools/typing_experiments/grammar_context_features.py": {
+      "file": "grammar_context_features_cce373e0964311fa.py",
+      "sha256": "cce373e0964311fa9baf55edf7b2512b1c82fe4273d86de6c651716ad6f90574"
+    },
+    "tools/typing_experiments/grammar_contrast_corpus.py": {
+      "file": "grammar_contrast_corpus_eeb289a4572eda11.py",
+      "sha256": "eeb289a4572eda11889a7180200d9b94894411bddd6ad97a92578b5bdb8f402f"
+    },
+    "tools/typing_experiments/neural_refinement.py": {
+      "file": "neural_refinement_690ed0d94009f832.py",
+      "sha256": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1"
+    },
+    "tools/typing_experiments/prepare_refinement.py": {
+      "file": "prepare_refinement_d2d84c3f328771fd.py",
+      "sha256": "d2d84c3f328771fd0b9908a9216ee428eb2877079c8dacb481c42a0dafe11bab"
+    },
+    "tools/typing_experiments/prepare_word_ranking.py": {
+      "file": "prepare_word_ranking_e213566e8f22f619.py",
+      "sha256": "e213566e8f22f619a372f09c2c91866f93d8029d5db8666f783318285df74240"
+    },
+    "tools/typing_experiments/rank_refinement.py": {
+      "file": "rank_refinement_e5317839f8c3c02c.py",
+      "sha256": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6"
+    },
+    "tools/typing_experiments/residual_tree_batch.py": {
+      "file": "residual_tree_batch_2f3439d827f6646f.py",
+      "sha256": "2f3439d827f6646fcec89889197c671216ed16b89e7db620c6268fe82f8137eb"
+    },
+    "tools/typing_experiments/right_context_applied_corpus.py": {
+      "file": "right_context_applied_corpus_602890657811a39c.py",
+      "sha256": "602890657811a39c17ce01e1557a01b6aa124bb0c1f6a1886131f6a79fa835d9"
+    },
+    "tools/typing_experiments/right_context_applied_features.py": {
+      "file": "right_context_applied_features_0207f2013564b4e0.py",
+      "sha256": "0207f2013564b4e0cb736a984ce89074ee292a0861d1223090bc1d80ff8f81bb"
+    },
+    "tools/typing_experiments/right_context_applied_ranker.py": {
+      "file": "right_context_applied_ranker_a63945547264cad8.py",
+      "sha256": "a63945547264cad8d841ba69a5d8aad89b5162495521eca6c4c253379cbecf5f"
+    },
+    "tools/typing_experiments/right_context_continuation_corpus.py": {
+      "file": "right_context_continuation_corpus_b63ee2e7ac879cde.py",
+      "sha256": "b63ee2e7ac879cde13cec65c957bd6edcbe0b2dab66de346778738d85a49a968"
+    },
+    "tools/typing_experiments/right_context_continuation_features.py": {
+      "file": "right_context_continuation_features_80c7799ecc81aa98.py",
+      "sha256": "80c7799ecc81aa9894aac63117383a53a0595f76194b0fb6ad3edad52afb8ee8"
+    },
+    "tools/typing_experiments/right_context_grammar_features.py": {
+      "file": "right_context_grammar_features_5195bb9507623a8e.py",
+      "sha256": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363"
+    },
+    "tools/typing_experiments/right_context_instrumental_corpus.py": {
+      "file": "right_context_instrumental_corpus_d760e08e2fd222ab.py",
+      "sha256": "d760e08e2fd222ab26f4b36debec0f9b845a89c1b4a60eef28a5d4647d99ab32"
+    },
+    "tools/typing_experiments/right_context_left_role_ranker.py": {
+      "file": "right_context_left_role_ranker_1d8e20d3ec4e4e87.py",
+      "sha256": "1d8e20d3ec4e4e87209d0b52111fb7788cf601e321bb1f379b3041e1d8448e4b"
+    },
+    "tools/typing_experiments/right_context_left_sequence_corpus.py": {
+      "file": "right_context_left_sequence_corpus_99aeb5d9e2118e54.py",
+      "sha256": "99aeb5d9e2118e54aec84c3575d07a30866eba38354cf598204f762237c608ff"
+    },
+    "tools/typing_experiments/right_context_left_sequence_features.py": {
+      "file": "right_context_left_sequence_features_62f49430e9ba0422.py",
+      "sha256": "62f49430e9ba042207bb352f7cf6b810472b8c07f30e143f2c40a984c3e4abd9"
+    },
+    "tools/typing_experiments/right_context_oblique_corpus.py": {
+      "file": "right_context_oblique_corpus_b8a011560a662b77.py",
+      "sha256": "b8a011560a662b77322d7eba0e5ae1263e82b091b6eea758c159e8ab7c176077"
+    },
+    "tools/typing_experiments/right_context_other_part_corpus.py": {
+      "file": "right_context_other_part_corpus_dfdf3e0f0275be62.py",
+      "sha256": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24"
+    },
+    "tools/typing_experiments/right_context_residual_ranker.py": {
+      "file": "right_context_residual_ranker_a181ec241fa5452b.py",
+      "sha256": "a181ec241fa5452baebbe4d60229c77cb7a974f8831676c6bd31da753ccb3418"
+    },
+    "tools/typing_experiments/right_context_revision_features.py": {
+      "file": "right_context_revision_features_3169a63758cca4aa.py",
+      "sha256": "3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd"
+    },
+    "tools/typing_experiments/right_context_role_corpus.py": {
+      "file": "right_context_role_corpus_6c98af64d142d216.py",
+      "sha256": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5"
+    },
+    "tools/typing_experiments/right_context_role_features.py": {
+      "file": "right_context_role_features_181fff1a36ee769d.py",
+      "sha256": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc"
+    },
+    "tools/typing_experiments/right_context_signature_weights.py": {
+      "file": "right_context_signature_weights_e0f40fedf47d5df7.py",
+      "sha256": "e0f40fedf47d5df7d48107e1a0f4b32fe2434c536dc7cbfcb0838b168e64acb3"
+    },
+    "tools/typing_experiments/right_context_training_groups.py": {
+      "file": "right_context_training_groups_3f59f7cbab6e32b8.py",
+      "sha256": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c"
+    },
+    "tools/typing_experiments/right_context_training_weights.py": {
+      "file": "right_context_training_weights_7186293be807ca89.py",
+      "sha256": "7186293be807ca89ac527293145e9dd27b53a8abcbfdb723012643ee54bcc25a"
+    },
+    "tools/typing_experiments/train.py": {
+      "file": "train_e2f42c479bd0859b.py",
+      "sha256": "e2f42c479bd0859b669e9ab9b1a2e7b388ff755019469089a7140c24ee87b705"
+    },
+    "tools/typing_experiments/word_context_features.py": {
+      "file": "word_context_features_32b61c606a034dce.py",
+      "sha256": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef"
+    }
+  }
+}
