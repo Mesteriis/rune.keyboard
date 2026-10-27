@@ -53,7 +53,7 @@ class RealModelServiceInstrumentedTest {
             "Private qualification model is missing or outside the fixture"
         }
         val root = File(context.noBackupFilesDir, "model-delivery")
-        val active = ModelOperationGate(root).withReadLock { ActiveModelResolver(root).resolve() }
+        val active = ModelOperationGate(root).withLock { ActiveModelResolver(root).resolve() }
         if (active == null) {
             val descriptor = io.github.mesteriis.rune.keyboard.intelligence.delivery.EmbeddedModelDescriptor.load(context)
             // The production importer verifies complete size/SHA/GGUF before publication.
