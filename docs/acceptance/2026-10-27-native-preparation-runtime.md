@@ -124,3 +124,15 @@ merge preserves all 13 existing dirty tracked files and 98 untracked paths;
 their private preservation hashes are not published. Device connections, model
 locations, settings snapshots, raw backups and diagnostics stay in ignored local
 storage. All phone operations used ADB, with Fold access coordinated and released.
+
+After integration, the validated development debug APK (0.4.2/code 8) was installed
+on Fold with the same certificate and private pre-update backup. Its installed
+bytes were verified. Four final real-touch input tests pass all 15 cases:
+first-letter preservation after extra Backspaces, reviewed corrections/unchanged
+words, exact Backspace/visible Undo with the next word, and 50/100/150 ms typing.
+All six editor-payload read counters stay zero. Keyboard preferences, three
+secure IME settings, the inspected personal stores and the existing model-store
+checksums are unchanged. Four journal snapshots were collected privately. No
+app data clear or uninstall occurred. Fold was released to the other chats; no
+phone command remains active or deferred. This installed development update is
+not a new public version or signed-release acceptance.

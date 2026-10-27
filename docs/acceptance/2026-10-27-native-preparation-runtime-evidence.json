@@ -956,9 +956,78 @@
       "path": "build/review-native-candidate-20261027/fold/exact-model.log",
       "bytes": 1321,
       "sha256": "f67e35318a9dd8a0c858561c9e40692cd50648cc13600adaab2b49b87618dab8"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/fold-update/instrumentation.log",
+      "bytes": 8238,
+      "sha256": "03b6de2cce8622160d843046b5dc950a05e0824874edd61b564e4383cd59d0c5"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/fold-update/app-install.log",
+      "bytes": 36,
+      "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/fold-update/tests-install.log",
+      "bytes": 36,
+      "sha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
     }
   ],
-  "phoneUpdate": false,
+  "phoneUpdate": {
+    "installed": true,
+    "variant": "debug development build",
+    "sourceCommit": "013c3efadfb2039b8f615d8aae5d3cff6b7a3241",
+    "installation": {
+      "installed": true,
+      "versionCode": 8,
+      "versionName": "0.4.2",
+      "sameCertificate": true,
+      "backupSaved": true,
+      "backupEntries": 3,
+      "backupBytes": 4832768,
+      "appBytesVerified": true,
+      "artifacts": {
+        "app": {
+          "bytes": 183124297,
+          "sha256": "21fe9ac32110a736466d4c432a469e2799ad6ee8814976307db6749370b42592"
+        },
+        "tests": {
+          "bytes": 1647248,
+          "sha256": "d96fe90690ded31055e39afab4620b3bda59af4dd63b163a324449b104847f6d"
+        }
+      },
+      "existingModelStore": true,
+      "dataClearOrUninstall": false,
+      "runtimeBuildId": "d48f6df2ed03cd11d3182abe453fb3a5bd126aea92f2bc06ab747b201f84565f"
+    },
+    "finalTyping": {
+      "exitCode": 0,
+      "junitOk": true,
+      "failureMarker": false,
+      "skippedMarker": false,
+      "matchedCases": 15,
+      "journalSnapshots": 4,
+      "methods": [
+        "freshReviewedCorrectionsAtTwoPacesWithExactUndo",
+        "extraBackspacesInEmptyFieldKeepTheWholeNextWord",
+        "correctionPreviewAndUndoPreserveNextWord",
+        "rapidShortWordCorrectionAtThreePacesKeepsFollowingWords"
+      ],
+      "elapsedSeconds": 95.18476049997844
+    },
+    "restoration": {
+      "keyboardPreferencesRestored": true,
+      "protectedStoresUnchanged": true,
+      "protectedFilesBefore": 1,
+      "protectedFilesAfter": 1,
+      "secureImeSettingsRestored": true,
+      "modelStoreUnchanged": true,
+      "journalSnapshotsRetrieved": 4,
+      "rawJournalsPrivate": true
+    },
+    "foldReleasedToOtherChats": true,
+    "phoneCommandsPending": false
+  },
   "published": false,
   "outstanding": [
     "Next versioned F-Droid recipe and independent build-server/source-tarball/final binary scan/distribution acceptance.",
