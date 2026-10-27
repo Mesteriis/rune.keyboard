@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "sources": {
+    "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65": {
+      "file": "qualification_v2_2cbcb2508ef66b32.py",
+      "originalPath": "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py"
+    },
+    "ed9928d64d80911c0182e03446d710a60abb990cb5fb1cff30730443db773225": {
+      "file": "qualification_v2_ed9928d64d80911c.py",
+      "originalPath": "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py"
+    }
+  }
+}

@@ -1,0 +1,293 @@
+{
+  "androidBuild": false,
+  "bootstrapLedgerSha256": "cead20d51939a948d0a1f3d85b80e4de0fd1562a43097312e34a823be514ea49",
+  "coverageComplete": false,
+  "deviceActions": false,
+  "finalRuns": [
+    {
+      "exitCode": 0,
+      "version": 7
+    },
+    {
+      "exitCode": 0,
+      "version": 8
+    },
+    {
+      "exitCode": 0,
+      "version": 9
+    },
+    {
+      "exitCode": 0,
+      "version": 10
+    },
+    {
+      "exitCode": 0,
+      "version": 11
+    },
+    {
+      "exitCode": 0,
+      "version": 12
+    }
+  ],
+  "historicalArticleOverlap": {
+    "entries": {
+      "public-right-context-available-v6-calibration": 97,
+      "public-right-context-available-v6-holdout": 115
+    },
+    "historicalArticles": 9505,
+    "note": "Existing corpora and scores are unchanged; these corpora cannot certify article-disjoint freshness.",
+    "status": "NOT_INDEPENDENT_OF_HISTORICAL_SPELLING"
+  },
+  "isolatedChecks": [
+    {
+      "command": [
+        "python3",
+        "holdout_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "log": "build/holdout-ledger-recovery-20261027/isolated-0.log",
+      "logSha256": "7593021da98041173c1f6f071d1c047d00ba7bd33933f59e157458640dfe4c33"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*holdout_ledger.py"
+      ],
+      "exitCode": 0,
+      "log": "build/holdout-ledger-recovery-20261027/isolated-1.log",
+      "logSha256": "504334941e35e2e567be725b9db1a42454796ff1d7cd85c60f2ef44f81abe8b9"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_conversation_split_checks.py"
+      ],
+      "exitCode": 0,
+      "log": "build/holdout-ledger-recovery-20261027/isolated-2.log",
+      "logSha256": "e6ec182765cd965f2837d8eeaef5a64af48a104f245cd1a0b7281559194c57c1"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_legacy_holdout_*.py"
+      ],
+      "exitCode": 0,
+      "log": "build/holdout-ledger-recovery-20261027/isolated-3.log",
+      "logSha256": "82f73b7d31ec97aeccbbafc9010eeab3c8220fb6ade75955854be5e7e4a88692"
+    }
+  ],
+  "ledgerSha256": "1c7f95036373e1ecfba6b895c5c4918d541678b619bf31eba5778cf4b4b0da9d",
+  "modelCalls": 0,
+  "previousKeysAndBindingsPreserved": true,
+  "purpose": "HISTORICAL_PUBLIC_SOURCE_RECOVERY_NOT_MODEL_QUALIFICATION",
+  "receipts": [
+    {
+      "allRowsRecovered": true,
+      "corpusManifestSha256": "dec91ada74a0da141d988837a09cf7b4c58249fdf4d2903c3c270b497da147d8",
+      "corpusRows": 1700,
+      "corpusSha256": "5e9e82177edf943be83ea1dd256e0631044124ed5342444793d9cf31caf451ac",
+      "identitiesSha256": "daed903d6dca9cacf934e1feaa348082fdfc838bfa7b88b322078f572c520f7c",
+      "matchedOccurrences": 1729,
+      "missingRows": [],
+      "modelCalls": 0,
+      "projection": "right-context-source-hash-v1: whole-article 256-char prefix input / 128-char suffix",
+      "purpose": "HISTORICAL_PUBLIC_IDENTITY_RECOVERY_NOT_MODEL_EVALUATION",
+      "pyarrowVersion": "25.0.1",
+      "recoveredRows": 1700,
+      "recoverySourceSha256": "96e865488bea430a0472cee2ca20f94d50b7ce804e9cb6eb34b366dab5f67531",
+      "rowsInMultipleOccurrences": 17,
+      "source": {
+        "bytes": 196511972,
+        "license": "CC BY-SA 3.0 and GFDL",
+        "path": "20231101.ru/train/0012.parquet",
+        "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+        "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+        "sha256": "21e33d8a7a0d068e573db688f5816a22fd690bf699dee958373f9b9e957921ad"
+      },
+      "sourceArticlesScanned": 92622,
+      "sourceGeneratorSha256": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+      "uniqueArticles": 1569,
+      "version": 7
+    },
+    {
+      "allRowsRecovered": true,
+      "corpusManifestSha256": "9507beb5c09fb164099ee06fb161c44f302b7e3f50e2609ca1f49c7e369374fc",
+      "corpusRows": 1700,
+      "corpusSha256": "4db31b8283e50ce3130714c5af870df563c90b18cbe2e7e2457c3b8470571538",
+      "identitiesSha256": "c749623ae5ba6b8d6e3306257643ed0086daa9f7e450720dc33dd44327505073",
+      "matchedOccurrences": 1720,
+      "missingRows": [],
+      "modelCalls": 0,
+      "projection": "right-context-source-hash-v1: whole-article 256-char prefix input / 128-char suffix",
+      "purpose": "HISTORICAL_PUBLIC_IDENTITY_RECOVERY_NOT_MODEL_EVALUATION",
+      "pyarrowVersion": "25.0.1",
+      "recoveredRows": 1700,
+      "recoverySourceSha256": "96e865488bea430a0472cee2ca20f94d50b7ce804e9cb6eb34b366dab5f67531",
+      "rowsInMultipleOccurrences": 15,
+      "source": {
+        "bytes": 205965652,
+        "license": "CC BY-SA 3.0 and GFDL",
+        "path": "20231101.ru/train/0013.parquet",
+        "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+        "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+        "sha256": "475666c0d80153ab9a76adca42db8afd18fc16c87804e3de0532ffc1309b2d0c"
+      },
+      "sourceArticlesScanned": 92622,
+      "sourceGeneratorSha256": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+      "uniqueArticles": 1562,
+      "version": 8
+    },
+    {
+      "allRowsRecovered": true,
+      "corpusManifestSha256": "7cd3ade786d859dda2df28b3d2f1e2badc24716daaa665cece742d2656b2118c",
+      "corpusRows": 1700,
+      "corpusSha256": "9dfee85583cade8ec3b968be7ba275ff33d00081427faef95ca6ad0442252c6a",
+      "identitiesSha256": "0b4caac2ec68d6e0df2e6ebd400edafc67736f7f07a994958cd4491a33262f53",
+      "matchedOccurrences": 1717,
+      "missingRows": [],
+      "modelCalls": 0,
+      "projection": "right-context-source-hash-v1: whole-article 256-char prefix input / 128-char suffix",
+      "purpose": "HISTORICAL_PUBLIC_IDENTITY_RECOVERY_NOT_MODEL_EVALUATION",
+      "pyarrowVersion": "25.0.1",
+      "recoveredRows": 1700,
+      "recoverySourceSha256": "96e865488bea430a0472cee2ca20f94d50b7ce804e9cb6eb34b366dab5f67531",
+      "rowsInMultipleOccurrences": 7,
+      "source": {
+        "bytes": 214902777,
+        "license": "CC BY-SA 3.0 and GFDL",
+        "path": "20231101.ru/train/0014.parquet",
+        "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+        "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+        "sha256": "d2ad352beecb92765110e57e8ee9409f4ffe03ff9e4b6ec0640840dec748db18"
+      },
+      "sourceArticlesScanned": 92622,
+      "sourceGeneratorSha256": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+      "uniqueArticles": 1576,
+      "version": 9
+    },
+    {
+      "allRowsRecovered": true,
+      "corpusManifestSha256": "da4de280ef2f469565551ba83e8f158d05a6ba2b2e825a45637cdf0d0ef084c6",
+      "corpusRows": 1700,
+      "corpusSha256": "6640f42600fcd7a3f5d79e4d47aa0cb7debbda778901c1b369ea5a7c4bd77133",
+      "identitiesSha256": "93502a6103b76889d7e9d5fb02eeb4db5d2bf142c3075c0ff28681b58197fa81",
+      "matchedOccurrences": 1711,
+      "missingRows": [],
+      "modelCalls": 0,
+      "projection": "right-context-source-hash-v1: whole-article 256-char prefix input / 128-char suffix",
+      "purpose": "HISTORICAL_PUBLIC_IDENTITY_RECOVERY_NOT_MODEL_EVALUATION",
+      "pyarrowVersion": "25.0.1",
+      "recoveredRows": 1700,
+      "recoverySourceSha256": "96e865488bea430a0472cee2ca20f94d50b7ce804e9cb6eb34b366dab5f67531",
+      "rowsInMultipleOccurrences": 7,
+      "source": {
+        "bytes": 219480494,
+        "license": "CC BY-SA 3.0 and GFDL",
+        "path": "20231101.ru/train/0015.parquet",
+        "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+        "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+        "sha256": "dc248873a3cc80b857f11a0320cfaa889da803eabf09351f1ba8abbf9348eda0"
+      },
+      "sourceArticlesScanned": 92622,
+      "sourceGeneratorSha256": "ed9928d64d80911c0182e03446d710a60abb990cb5fb1cff30730443db773225",
+      "uniqueArticles": 1583,
+      "version": 10
+    },
+    {
+      "allRowsRecovered": true,
+      "corpusManifestSha256": "625467e0a08339ceda9df9e41fde533bb3b6ddc5edfa20affbe1f1d1fb47138d",
+      "corpusRows": 1700,
+      "corpusSha256": "855fe3bf10aa1346817a03006487af5858cced660d14524964b51257b13a5d84",
+      "identitiesSha256": "c5dbdd14aac0df4bc5059a0195113e83c726734f7cc07247684415929bd64fc6",
+      "matchedOccurrences": 1734,
+      "missingRows": [],
+      "modelCalls": 0,
+      "projection": "right-context-source-hash-v1: whole-article 256-char prefix input / 128-char suffix",
+      "purpose": "HISTORICAL_PUBLIC_IDENTITY_RECOVERY_NOT_MODEL_EVALUATION",
+      "pyarrowVersion": "25.0.1",
+      "recoveredRows": 1700,
+      "recoverySourceSha256": "96e865488bea430a0472cee2ca20f94d50b7ce804e9cb6eb34b366dab5f67531",
+      "rowsInMultipleOccurrences": 15,
+      "source": {
+        "bytes": 229151965,
+        "license": "CC BY-SA 3.0 and GFDL",
+        "path": "20231101.ru/train/0016.parquet",
+        "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+        "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+        "sha256": "0e2d2100e924ebedb057a37e789fec861fe2b78787c912c266e36eadd8d2e0a7"
+      },
+      "sourceArticlesScanned": 92622,
+      "sourceGeneratorSha256": "ed9928d64d80911c0182e03446d710a60abb990cb5fb1cff30730443db773225",
+      "uniqueArticles": 1610,
+      "version": 11
+    },
+    {
+      "allRowsRecovered": true,
+      "corpusManifestSha256": "b755fb65c73cf764782759cc7eea62bdaafe8882c7156af52aee990bc2b3fce2",
+      "corpusRows": 1700,
+      "corpusSha256": "95c0f40915241ef72e5bc7bcc1dd484e5aafcee691b32cb31d1e983b012d8fa2",
+      "identitiesSha256": "22a3ab3bf8620a8f567e5713b204c44d9c1bc5ff564d3af6dc9becd1714db16c",
+      "matchedOccurrences": 1731,
+      "missingRows": [],
+      "modelCalls": 0,
+      "projection": "right-context-source-hash-v1: whole-article 256-char prefix input / 128-char suffix",
+      "purpose": "HISTORICAL_PUBLIC_IDENTITY_RECOVERY_NOT_MODEL_EVALUATION",
+      "pyarrowVersion": "25.0.1",
+      "recoveredRows": 1700,
+      "recoverySourceSha256": "96e865488bea430a0472cee2ca20f94d50b7ce804e9cb6eb34b366dab5f67531",
+      "rowsInMultipleOccurrences": 11,
+      "source": {
+        "bytes": 210166516,
+        "license": "CC BY-SA 3.0 and GFDL",
+        "path": "20231101.ru/train/0017.parquet",
+        "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+        "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+        "sha256": "1a5c96dfda452e7725229760347e781b46f88ccd5df4196a5c1a9d46b51b1a65"
+      },
+      "sourceArticlesScanned": 92622,
+      "sourceGeneratorSha256": "ed9928d64d80911c0182e03446d710a60abb990cb5fb1cff30730443db773225",
+      "uniqueArticles": 1605,
+      "version": 12
+    }
+  ],
+  "remaining": [
+    "Canonical legacy families",
+    "Other public corpus histories",
+    "Remaining historical toolchain bindings",
+    "Versioned builder and replay integration"
+  ],
+  "repeatIdentityFilesByteIdentical": true,
+  "sourceBindings": {
+    ".github/workflows/ci.yml": "1dad7ea2bc1dcdcb37d736b428bf5493356588d28804af4f460c1471681a8fba",
+    "tools/typing_experiments/frozen_sources/manifest.json": "50f21ae47085bf793f535748d7e3c2383f23f947e55df9bfbd6356d500fb18ae",
+    "tools/typing_experiments/frozen_sources/qualification_v2_2cbcb2508ef66b32.py": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+    "tools/typing_experiments/frozen_sources/qualification_v2_ed9928d64d80911c.py": "ed9928d64d80911c0182e03446d710a60abb990cb5fb1cff30730443db773225",
+    "tools/typing_experiments/merge_legacy_holdout_recovery.py": "7ee12a42c2f6e7f9782586d58266fb63ac787a525cccee98e4966f94860ec6d1",
+    "tools/typing_experiments/recover_legacy_holdout.py": "96e865488bea430a0472cee2ca20f94d50b7ce804e9cb6eb34b366dab5f67531",
+    "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+    "tools/typing_experiments/right_context_sentence_audit.py": "73b7965af2aaceaea6b2fc591405c45a721b6b8b6b9b77e943afe51012d5a231",
+    "tools/typing_experiments/test_legacy_holdout_merge.py": "39d32fb92fd5f0fb472782ec820f6b4d790fe2b1ab5d8e49df03ac9d97fec970",
+    "tools/typing_experiments/test_legacy_holdout_recovery.py": "131a59a867cb958adeb37ec5f1a51a05ad387f53a660e26d4c3215c610810ee5",
+    "tools/typing_experiments/test_public_holdout_ledger.py": "388332f1b694c4753967119fa3959416d79f66468c5813a44fc6078dd36868cd"
+  },
+  "unitTests": 28
+}

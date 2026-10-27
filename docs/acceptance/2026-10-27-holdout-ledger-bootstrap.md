@@ -1,5 +1,9 @@
 # Review Q6, first migration: durable exclusion keys
 
+Historical bootstrap receipt. The subsequent [source recovery](2026-10-27-legacy-holdout-recovery.md)
+adds article/window identities and discloses historical overlap in current v6
+corpora. Counts and missing axes below describe the original bootstrap only.
+
 The first ledger snapshot and its dependency-free checker are now tracked.
 This is a verified bootstrap, **not completion of Q6** or fresh-data qualification.
 Historical coverage remains explicitly incomplete and blocks freshness approval.

@@ -9,12 +9,19 @@ The importer uses Python 3.11+ and the standard library only.
 The initial snapshot contains six historical Wikipedia spelling corpora v7–v12,
 the current right-context calibration and reserved holdout, and 42 supervised
 right-context families. Historical spelling rows provide typo-independent
-context/target identity, but lack article IDs and do not certify their family
-strings as Pymorph lemmas. Their missing axes are recorded explicitly.
+context/target identity. A separate verified recovery now adds all matching
+article IDs and current source-window hashes; legacy family strings still do
+not certify Pymorph lemmas. Their missing family axis is recorded explicitly.
+
+The recovery found 9,505 historical articles. They overlap 97 articles in the
+current v6 calibration and 115 in its reserved holdout. These corpora cannot
+certify independence from historical spelling articles. Existing rows and scores
+are unchanged; reserved still means unscored, not independently fresh. The
+ledger records this finding in `historicalArticleOverlap`.
 
 **Coverage is incomplete.** Known overlap is rejected as `LEDGER_OVERLAP`.
 An otherwise disjoint freshness check fails as `LEDGER_INCOMPLETE` until historical
-article/sentence/family recovery and remaining corpus imports are finished.
+canonical-family recovery and remaining corpus imports are finished.
 `--validate-only` verifies schema and reports coverage; it does not certify fresh
 qualification data. Ordinary CI runs this validation and dependency-free tests.
 
@@ -22,6 +29,7 @@ qualification data. Ordinary CI runs this validation and dependency-free tests.
 python3 tools/typing_experiments/holdout_ledger.py --validate-only
 python3 -m unittest discover -s tools/typing_experiments -p 'test_*holdout_ledger.py'
 python3 -m unittest discover -s tools/typing_experiments -p test_conversation_split_checks.py
+python3 -m unittest discover -s tools/typing_experiments -p 'test_legacy_holdout_*.py'
 ```
 
 Future public Wikipedia sentence corpora use the same standardized row fields
@@ -54,10 +62,33 @@ Java, a model or a phone. A rebuild does not replay models or inspect holdout
 predictions. Reserved holdout stays reserved; inclusion in an exclusion ledger
 does not mean it has been scored.
 
+That command rebuilds the **bootstrap**, not the enriched current ledger. Then
+recover v7 through v12 from their pinned public Parquet files, always supplying
+the bootstrap explicitly (rather than requiring earlier recovery receipts):
+
+```sh
+python3 tools/typing_experiments/recover_legacy_holdout.py --version 7 \
+  --parquet build/typing-ranker-v2/ru-0012.parquet \
+  --ledger build/rebuilt-ledger.json --output build/recovery/v7
+# Repeat for versions 8..12: shard number is version + 5, output v8..v12.
+python3 tools/typing_experiments/merge_legacy_holdout_recovery.py \
+  --base build/rebuilt-ledger.json --recovery-root build/recovery \
+  --output build/enriched-ledger.json
+```
+
+Scanning requires PyArrow and the original public source files; unit tests do
+not. The archived selector bytes are hash-checked before loading. The old
+selection hash omits article ID, so every matching article and occurrence is
+retained. Recovery verifies selector parity, all row identities and exact input
+hashes without calling models. Source-window keys use the current 256-character
+prefix input / 128-character suffix projection, not a full-sentence identity.
+Article exclusions cover the entire source article. The merge only adds keys
+and preserves previous source bindings; it cannot certify complete coverage.
+
 Remaining work is listed in the snapshot's `coverage.pending`. Recover historical
-article/selection identities from pinned public data and existing receipts;
+canonical family identities from pinned public data and existing receipts;
 do not invent missing IDs or relabel legacy word families as canonical lemmas.
-Preserve original generator bytes for each recorded SHA before introducing
+Preserve remaining original generator bytes before introducing
 versioned replacements. Import other joint/context/conversation public histories
 with source-specific adapters and verified privacy/provenance, then wire the
 complete registry into new preparation entry points. Do not mark Q6 complete
