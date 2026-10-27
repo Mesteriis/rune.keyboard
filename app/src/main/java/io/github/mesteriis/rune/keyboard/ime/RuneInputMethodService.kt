@@ -667,7 +667,7 @@ class RuneInputMethodService : InputMethodService() {
             layoutProvider.layoutFor(
                 state = state,
                 editorContext = editorContext,
-                options = LayoutOptions(showNumberRow = settings.numberRow, keyFlicks = settings.keyFlicks),
+                options = LayoutOptions(showNumberRow = settings.numberRow, keyFlicks = settings.keyFlicks, emojiKey = settings.emojiKey),
             )
         }
         view.render(layout, state)

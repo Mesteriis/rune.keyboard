@@ -1,0 +1,4 @@
+<resources>
+  <string name="settings_emoji_key">Клавиша эмодзи</string>
+  <string name="settings_emoji_key_summary">Показывать клавишу эмодзи рядом с пробелом в буквенной раскладке. При выключении эмодзи остаются в символах.</string>
+</resources>

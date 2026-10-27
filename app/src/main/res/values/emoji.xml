@@ -1,0 +1,4 @@
+<resources>
+  <string name="settings_emoji_key">Emoji key</string>
+  <string name="settings_emoji_key_summary">Show an emoji key next to the space bar on the letters layout. Emoji remain available from Symbols when this is off.</string>
+</resources>

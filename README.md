@@ -37,7 +37,8 @@ Captured on a Samsung Galaxy Z Fold7 cover screen. System bars and the edge-pane
 - **Optional local model:** explicitly download or import Rune Text for additional candidate scoring. Ordinary typing and dictionaries work without it.
 
 The development emoji panel opens from Symbols, with multilingual category/item
-names and RAM-only recents. Font support depends on the device; skin-tone selection
+names and RAM-only recents. Appearance also offers an optional Emoji key on the
+letters layout, off by default. Font support depends on the device; skin-tone selection
 is a later stage. API 26 and physical Fold acceptance remain outstanding.
 
 Glide typing, split/one-handed layouts and voice input are not implemented yet.

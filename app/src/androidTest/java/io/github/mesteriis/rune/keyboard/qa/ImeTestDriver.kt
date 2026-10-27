@@ -190,7 +190,8 @@ class ImeTestDriver {
         check("Status: ok" in launched) { "QA launch did not succeed: $launched" }
         awaitQaActivity()
         waitForKeyboard()
-        switchLanguageUntil(language.compactLabel)
+        // Numeric layouts have neither language-specific letters nor a swipeable space bar.
+        if (mode !in setOf("number", "phone", "date_time")) switchLanguageUntil(language.compactLabel)
         instrumentation.waitForIdleSync()
         device.waitForIdle()
     }

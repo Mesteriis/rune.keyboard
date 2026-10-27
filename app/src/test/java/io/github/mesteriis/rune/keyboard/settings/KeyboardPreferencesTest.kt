@@ -28,6 +28,20 @@ class KeyboardPreferencesTest {
     private val store = FakeSharedPreferences()
     private val preferences = KeyboardPreferences(store)
 
+    @Test fun emojiKeyRoundTripsAndRebuildsWithoutEnablingAnyTypingFeature() {
+        val before = preferences.readSettings()
+        assertFalse(before.emojiKey)
+        preferences.writeEmojiKey(true)
+        val after = KeyboardPreferences(store).readSettings()
+        assertEquals(before.copy(emojiKey = true), after)
+        assertTrue(before.affectsKeyboardView(after))
+        preferences.disableAdditionalTyping()
+        assertTrue(preferences.readSettings().emojiKey)
+        assertTrue(AdditionalFeatures.entries.all { !it.value.get(preferences.readSettings()) })
+        preferences.writeEmojiKey(false)
+        assertFalse(KeyboardPreferences(store).readSettings().emojiKey)
+    }
+
     @Test
     fun `keyboard themes persist independently of app theme and typing settings`() {
         preferences.writeTheme(ThemePreference.LIGHT)
@@ -382,6 +396,7 @@ class KeyboardPreferencesTest {
         val facade = KeyboardPreferences(source)
         AdditionalFeatures.entries.forEach { facade.writeAdditionalFeature(it.key, true) }
         facade.writeNumberRow(true)
+        facade.writeEmojiKey(true)
         facade.writeAutocorrectionMode(AutocorrectionMode.SUGGESTIONS)
         val before = source.all
         var notifications = 0

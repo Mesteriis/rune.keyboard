@@ -1,8 +1,9 @@
 # Offline emoji catalog
 
 This is the data foundation for the review's U9 panel, with a Kotlin reader and
-lazy palette state connected to a framework GridView. Full performance/device
-acceptance and the optional letters-row key remain outstanding.
+lazy palette state connected to a framework GridView. The optional letters-row
+key is an Appearance preference, off by default; Symbols always retains its entry
+in allowed editors. Full performance/device acceptance remains outstanding.
 
 The palette contains 1,898 fully-qualified Emoji 15.1 sequences in nine Unicode
 source groups, retaining source/CLDR order. Skin-tone variants (1,875 entries) and

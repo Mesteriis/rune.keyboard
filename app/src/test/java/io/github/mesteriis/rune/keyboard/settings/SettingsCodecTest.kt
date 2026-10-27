@@ -8,6 +8,18 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SettingsCodecTest {
+    @Test fun emojiKeyIsAnIndependentDefaultOffPresentationPreference() {
+        assertFalse(KeyboardSettings.DEFAULT.emojiKey)
+        assertFalse(SettingsCodec.decode(emptyMap()).emojiKey)
+        for (raw in listOf(null, false, "true", 1))
+            assertFalse(SettingsCodec.decode(mapOf(SettingsCodec.KEY_EMOJI_KEY to raw)).emojiKey)
+        for (schema in listOf(null, 1, 2, 3, 4, 999)) {
+            val raw = if (schema == null) emptyMap() else mapOf(SettingsCodec.KEY_SCHEMA_VERSION to schema)
+            val before = SettingsCodec.decode(raw)
+            assertEquals(before.copy(emojiKey = true), SettingsCodec.decode(raw + (SettingsCodec.KEY_EMOJI_KEY to true)))
+        }
+    }
+
     @Test fun schemaThreeAndFourKeepExistingSmartPreferencesEnabled() {
         for (schema in listOf(3, 4)) {
             val settings = SettingsCodec.decode(validSmartValues + (SettingsCodec.KEY_SCHEMA_VERSION to schema))

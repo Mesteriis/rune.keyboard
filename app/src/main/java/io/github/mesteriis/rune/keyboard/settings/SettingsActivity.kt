@@ -276,6 +276,8 @@ class SettingsActivity : ThemedActivity() {
         ) { enabled ->
             preferences.writeNumberRow(enabled)
         }
+        addToggleRow(R.string.settings_emoji_key, R.string.settings_emoji_key_summary,
+            settings.emojiKey) { preferences.writeEmojiKey(it) }
         addHeightRow(
             titleRes = R.string.settings_height_cover,
             portrait = SizeBucket.COVER_PORTRAIT,

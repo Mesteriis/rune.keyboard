@@ -103,7 +103,7 @@ class KeyboardLayoutProvider {
             }
             rows += padToWeight(composed, rowWeight)
         }
-        rows += bottomRow(state, editorContext).map { key ->
+        rows += bottomRow(state, editorContext, showEmojiKey = options.emojiKey).map { key ->
             if (options.keyFlicks && key.label in listOf(",", ".")) {
                 val symbol = if (key.label == ",") "!" else "?"
                 key.copy(flickDown = KeyAlternate(symbol, KeyboardAction.CommitText(symbol)))
@@ -198,6 +198,7 @@ class KeyboardLayoutProvider {
         state: KeyboardState,
         editorContext: EditorContext,
         includeModeKey: Boolean = true,
+        showEmojiKey: Boolean = false,
     ): List<KeySpec> {
         val punctuation = when (editorContext.mode) {
             EditorMode.EMAIL -> "@"
@@ -208,7 +209,7 @@ class KeyboardLayoutProvider {
         val punctuationKey = symbolKey(punctuation, state.language, weight = PUNCTUATION_WEIGHT)
         val periodKey = symbolKey(".", state.language, weight = PUNCTUATION_WEIGHT)
         val enterKey = enterKey(editorContext)
-        val emoji = if (state.layer in setOf(KeyboardLayer.SYMBOLS, KeyboardLayer.SYMBOLS_ALT) && editorContext.allowsEmojiPanel)
+        val emoji = if ((showEmojiKey || state.layer in setOf(KeyboardLayer.SYMBOLS, KeyboardLayer.SYMBOLS_ALT)) && editorContext.allowsEmojiPanel)
             KeySpec("☺", KeyboardAction.OpenEmoji, 0.9f, KeyStyle.ACTION,
                 accessibilityLabel = editText(state.language, "Emoji", "Эмодзи", "Emojis")) else null
         val spaceWeight = BOTTOM_ROW_WEIGHT -

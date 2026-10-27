@@ -17,6 +17,35 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class KeyboardLayoutProviderTest {
+    @Test fun optionalLettersEmojiKeyUsesOnlyPointNineUnitsAndNeverBypassesEditorPolicy() {
+        for (language in KeyboardLanguage.entries) for (numberRow in listOf(false, true)) {
+            val state = KeyboardState(language)
+            val options = LayoutOptions(showNumberRow = numberRow, emojiKey = true)
+            val on = provider.layoutFor(state, textEditor, options)
+            val off = provider.layoutFor(state, textEditor, options.copy(emojiKey = false))
+            assertEquals(off.rows.dropLast(1), on.rows.dropLast(1))
+            val row = on.rows.last()
+            assertEquals(1, row.count { it.action == KeyboardAction.OpenEmoji })
+            assertEquals(4.75f, row.single { it.action == KeyboardAction.Space }.weight, 0.001f)
+            assertEquals(5.65f, off.rows.last().single { it.action == KeyboardAction.Space }.weight, 0.001f)
+            assertEquals(10f, row.sumOf { it.weight.toDouble() }.toFloat(), 0.001f)
+        }
+        for (type in listOf(InputType.TYPE_NULL, InputType.TYPE_CLASS_NUMBER, InputType.TYPE_CLASS_PHONE,
+            InputType.TYPE_CLASS_DATETIME, InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+            val editor = EditorContext.from(type, 0)
+            for (layer in KeyboardLayer.entries) {
+                val layout = provider.layoutFor(KeyboardState(KeyboardLanguage.ENGLISH, layer = layer), editor,
+                    LayoutOptions(emojiKey = true))
+                assertTrue(!layout.emojiPanel)
+                assertTrue(layout.rows.flatten().none { it.action == KeyboardAction.OpenEmoji })
+            }
+        }
+        for (layer in listOf(KeyboardLayer.SYMBOLS, KeyboardLayer.SYMBOLS_ALT, KeyboardLayer.EDITING, KeyboardLayer.EMOJI)) {
+            val state = KeyboardState(KeyboardLanguage.ENGLISH, layer = layer)
+            assertEquals(provider.layoutFor(state, textEditor), provider.layoutFor(state, textEditor, LayoutOptions(emojiKey = true)))
+        }
+    }
+
     @Test fun emojiEntryAndPanelRespectEditorPolicyAndKeepBalancedBottomRows() {
         for (language in KeyboardLanguage.entries) {
             val base = KeyboardState(language)

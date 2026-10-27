@@ -135,7 +135,7 @@ class SetupActivity : ThemedActivity() {
             // The shell owns system insets; an embedded preview is not a docked IME window.
             setOnApplyWindowInsetsListener { _, insets -> insets }
         }
-        fun render() { keyboard.render(layouts.layoutFor(state, editor, LayoutOptions(showNumberRow = settings.numberRow, keyFlicks = settings.keyFlicks)), state) }
+        fun render() { keyboard.render(layouts.layoutFor(state, editor, LayoutOptions(showNumberRow = settings.numberRow, keyFlicks = settings.keyFlicks, emojiKey = settings.emojiKey)), state) }
         keyboard.setOnActionListener { action ->
             sample.requestFocus()
             state = PreviewEditor.apply(sample, state, action, editor)

@@ -49,6 +49,10 @@ class KeyboardPreferences internal constructor(private val preferences: SharedPr
         edit { putBoolean(SettingsCodec.KEY_NUMBER_ROW, enabled) }
     }
 
+    fun writeEmojiKey(enabled: Boolean) {
+        edit { putBoolean(SettingsCodec.KEY_EMOJI_KEY, enabled) }
+    }
+
     fun writeTheme(theme: ThemePreference) {
         edit { putString(SettingsCodec.KEY_THEME, theme.name) }
     }

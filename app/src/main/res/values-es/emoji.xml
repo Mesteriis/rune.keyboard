@@ -1,0 +1,4 @@
+<resources>
+  <string name="settings_emoji_key">Tecla de emojis</string>
+  <string name="settings_emoji_key_summary">Mostrar una tecla de emojis junto a la barra espaciadora en el teclado de letras. Los emojis siguen disponibles desde Símbolos al desactivarla.</string>
+</resources>

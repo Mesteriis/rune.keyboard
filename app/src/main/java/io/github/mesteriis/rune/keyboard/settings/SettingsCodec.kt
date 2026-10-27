@@ -18,6 +18,7 @@ object SettingsCodec {
     const val KEY_LANGUAGE_STARTING = "language_starting"
     const val KEY_KEY_GAP = "key_gap"
     const val KEY_NUMBER_ROW = "number_row"
+    const val KEY_EMOJI_KEY = "emoji_key"
     const val KEY_THEME = "theme"
     const val KEY_KEY_FLICKS = "key_flicks"
     const val KEY_KEYBOARD_THEME = "keyboard_theme"
@@ -90,6 +91,7 @@ object SettingsCodec {
             heightPresets = heightPresets,
             keyGap = enumOrDefault(raw[KEY_KEY_GAP] as? String, defaults.keyGap),
             numberRow = raw[KEY_NUMBER_ROW] as? Boolean ?: defaults.numberRow,
+            emojiKey = raw[KEY_EMOJI_KEY] as? Boolean ?: defaults.emojiKey,
             theme = enumOrDefault(raw[KEY_THEME] as? String, defaults.theme),
             keyboardTheme = enumOrDefault(raw[KEY_KEYBOARD_THEME] as? String, defaults.keyboardTheme),
             hapticMode = enumOrDefault(raw[KEY_HAPTIC_MODE] as? String, defaults.hapticMode),

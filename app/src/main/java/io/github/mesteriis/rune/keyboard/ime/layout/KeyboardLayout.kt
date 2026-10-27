@@ -51,7 +51,7 @@ data class KeyboardLayout(val rows: List<List<KeySpec>>, val emojiPanel: Boolean
 }
 
 /** Presentation options that never participate in a state transition. */
-data class LayoutOptions(val showNumberRow: Boolean = false, val keyFlicks: Boolean = true) {
+data class LayoutOptions(val showNumberRow: Boolean = false, val keyFlicks: Boolean = true, val emojiKey: Boolean = false) {
     companion object {
         val DEFAULT = LayoutOptions()
     }

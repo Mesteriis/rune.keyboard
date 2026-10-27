@@ -121,6 +121,7 @@ data class KeyboardSettings(
     val dynamicTouch: Boolean = false,
     val dynamicTouchApply: Boolean = false,
     val manualCandidateExpansion: Boolean = false,
+    val emojiKey: Boolean = false,
 
 ) {
     init {
@@ -135,6 +136,7 @@ data class KeyboardSettings(
             keyboardTheme != other.keyboardTheme ||
             keyGap != other.keyGap ||
             numberRow != other.numberRow ||
+            emojiKey != other.emojiKey ||
             keyPreview != other.keyPreview ||
             keyFlicks != other.keyFlicks ||
             heightPresets != other.heightPresets
