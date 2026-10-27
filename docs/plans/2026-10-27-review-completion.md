@@ -10,7 +10,10 @@ The incoming-review triage and its diagnostics-fixture repair are recorded in
 Q6. The latest Q6 receipt is
 `docs/acceptance/2026-10-27-auxiliary-authored-history-evidence.json`: 189 local
 source-only tests pass, the lexical ledger has 113 entries, and global coverage
-is explicitly incomplete. No A/U/Q card is marked fully verified by this map.
+is explicitly incomplete. Q9's source/JVM acceptance is verified in
+`docs/acceptance/2026-10-27-q9-frozen-asset-identity.md` (nine new identity/mutation
+tests; full app suite: 1,153 tests, no failures/errors/skips). Other cards remain
+open until their complete acceptance evidence is established.
 
 ## Acceptance inventory
 
@@ -46,7 +49,7 @@ is explicitly incomplete. No A/U/Q card is marked fully verified by this map.
 | Q6 | Durable consumed-data registries and shared overlap gates; historical hash/provenance recovery; independent natural qualification with exclusions surviving removal of build/; acceptance receipt binding. | In progress |
 | Q7 | Current-product replay in CI with two identical projection hashes; threshold mutation fails with row diff; renewed baseline and measured job cost. | Open |
 | Q8 | Editor-deviation simulator with predefined outcomes; qa_editor profiles and APP-001…005 compatibility/continued-correction measurements on Fold under existing device/privacy rules. | Open |
-| Q9 | JVM identity tests for uncovered frozen assets and policy constants/thresholds; byte/constant mutation failures naming the artifact; included in the JVM CI gate. | Open |
+| Q9 | JVM identity tests for uncovered frozen assets and policy constants/thresholds; byte/constant mutation failures naming the artifact; included in the JVM CI gate. | Verified locally; receipt above |
 
 ## Q6 outstanding evidence
 

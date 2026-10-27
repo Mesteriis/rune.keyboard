@@ -1,0 +1,173 @@
+{
+  "artifacts": {
+    "build/review-q9-20261027/full-jvm-tests.log": {
+      "sha256": "a216b9aa06ddb4119fc953760d67f9c281ba3c56e6378488f2f84d5aee9a5fd2"
+    },
+    "build/review-q9-20261027/targeted-tests.log": {
+      "sha256": "62282942189957620899bfaa2b600346ffe63d3e93cb5636532e75adfed184c3"
+    }
+  },
+  "assets": {
+    "ru-context.bin": {
+      "bytes": 81848,
+      "sha256": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b"
+    },
+    "ru-context.gram": {
+      "bytes": 39593067,
+      "sha256": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b"
+    },
+    "ru-contextual-policy.json": {
+      "bytes": 668,
+      "sha256": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6"
+    },
+    "ru-contextual-ranker.bin": {
+      "bytes": 22036,
+      "sha256": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0"
+    },
+    "ru-conversation.ctx": {
+      "bytes": 2083526,
+      "sha256": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6"
+    },
+    "ru-infinitive-revision-policy.json": {
+      "bytes": 899,
+      "sha256": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595"
+    },
+    "ru-infinitive-revision-ranker.bin": {
+      "bytes": 22036,
+      "sha256": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd"
+    },
+    "ru-joint-ranker.bin": {
+      "bytes": 22036,
+      "sha256": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb"
+    },
+    "ru-joint-rescue-policy.json": {
+      "bytes": 1314,
+      "sha256": "ebdb0e83f3c4ed3476f5b317e31619415ca020d9703cd3d6900b9e8ac5c4701d"
+    },
+    "ru-joint-rescue-ranker.bin": {
+      "bytes": 39444,
+      "sha256": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168"
+    },
+    "ru-neighbor-ranker.bin": {
+      "bytes": 22036,
+      "sha256": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20"
+    },
+    "ru-noun-case-policy.json": {
+      "bytes": 920,
+      "sha256": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d"
+    },
+    "ru-noun-case-ranker.bin": {
+      "bytes": 22036,
+      "sha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42"
+    },
+    "ru-ranker-auto-v1.bin": {
+      "bytes": 22036,
+      "sha256": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd"
+    },
+    "ru-ranker.bin": {
+      "bytes": 22036,
+      "sha256": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec"
+    },
+    "ru-ranking-context.bin": {
+      "bytes": 320216,
+      "sha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50"
+    },
+    "ru-wiki.ctx": {
+      "bytes": 14912091,
+      "sha256": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b"
+    }
+  },
+  "checks": [
+    {
+      "command": [
+        "./gradlew",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "*FrozenAssetIdentityTest",
+        "--console=plain"
+      ],
+      "exitCode": 0,
+      "stage": "initial identity and mutation checks",
+      "tests": 8
+    },
+    {
+      "command": [
+        "./gradlew",
+        ":app:testDebugUnitTest",
+        "--console=plain"
+      ],
+      "errors": 0,
+      "exitCode": 0,
+      "failures": 0,
+      "skipped": 0,
+      "suites": 123,
+      "tests": 1153
+    }
+  ],
+  "ciUnitTaskConfigured": true,
+  "currentFingerprintChecks": 6,
+  "deviceReadinessValidated": false,
+  "identityTestCases": [
+    "currentFingerprintsStillMatchTheirIndependentAdmissionPins",
+    "orphanedAndMissingRuntimeAssetsAreRejected",
+    "everyFrozenRuntimeAssetHasExactlyOnePinAndMatchesItsBytes",
+    "changingPolicyJsonFieldsIsRejectedIndependentlyOfItsFileHash",
+    "changedHashOrSizeConstantsAreRejectedWithTheAssetName",
+    "aChangedByteInATemporaryAssetIsRejectedWithItsName",
+    "everyFrozenPolicyMatchesItsRuntimeModelAndThresholds",
+    "duplicatePolicyFieldsCannotMaskThresholdDrift",
+    "changingAnyPolicyModelOrThresholdConstantIsRejected"
+  ],
+  "identityTests": 9,
+  "mutationEvidence": {
+    "allFourPolicyExpectedPinsAndJsonFieldsRejected": true,
+    "alteredExpectedPinsInjectedIntoSameVerifier": true,
+    "changedSizeAndHashExpectedPinsRejected": true,
+    "duplicatePolicyFieldsRejected": true,
+    "orphanAndMissingAssetsRejected": true,
+    "rejectionsNameAsset": true,
+    "temporaryByteFlip": "ru-neighbor-ranker.bin",
+    "trackedRuntimeConstantsEdited": false
+  },
+  "packagedApkValidated": false,
+  "policyFields": {
+    "ru-contextual-policy.json": {
+      "minimumMargin": 0.038424043936311734,
+      "minimumScore": -0.10238100540254857,
+      "modelSha256": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0"
+    },
+    "ru-infinitive-revision-policy.json": {
+      "minimumMargin": 0.004802324582884099,
+      "minimumScore": 0.41741117881683354,
+      "modelSha256": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd"
+    },
+    "ru-joint-rescue-policy.json": {
+      "minimumMargin": 0.632436045368692,
+      "minimumScore": 0.46357352954758124,
+      "modelSha256": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168"
+    },
+    "ru-noun-case-policy.json": {
+      "minimumMargin": 0.05342739426456289,
+      "minimumScore": 0.6485549857424353,
+      "modelSha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42"
+    }
+  },
+  "purpose": "Q9_SOURCE_TREE_FROZEN_ASSET_IDENTITY_NOT_APK_QUALIFICATION",
+  "remoteCiRun": false,
+  "rescuePolicySizeNote": "No runtime POLICY_BYTES constant exists; test-only observed size 1314 accompanies the runtime SHA pin.",
+  "sourceBindings": {
+    ".github/workflows/ci.yml": "953e9ed5f378d6dda17487ac212d23dab4991bdeb5ba709a6c30977afa575aeb",
+    "app/build.gradle.kts": "d6df54ce421e8d2d23935d668802bc73682b13bffaae9a392b2823412cb1cb51",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ContextualQualification.kt": "b6900050ec487e8ccb92eb2e177900bd48190e7d3bb82f9d0337b97da07a48d7",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/InfinitiveRevisionQualification.kt": "e5c54f713ef37d0420d580723969d5d16605fc5a2d69d9cc7619f0c7593d3a9e",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointQualification.kt": "0365f0df915381ba9fcb538275f9db7b9413f277cfadde9eb3f3ab27bc0a24d6",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointRescueQualification.kt": "b49be5277ecf4ee64cde8672a0eac67043b99b2c9e64819f179f04e4a898827a",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/NounCaseRevisionQualification.kt": "6f369b885e00ccb01a1da0c5470666e281e4ef41de5f2e4b90c01c64764cd559",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/RecoveryQualification.kt": "7cfb75351cfc6cc53a2f4b36ebb891581ab795f0f307a09673a1d4ad94ebfad6",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenContextualAssets.kt": "0ea0dd297b7444c0f05622ad123ba085483775fd163ca9dcab682b360156d28f",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt": "ff4e3cc8b0f67da2295e375b129518100fa8b2b981f32ed490e6e38daa01fd34",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenInfinitiveRevisionAssets.kt": "275677a907ee5a7bc39b530ce1e06ecffc8344afcbe6851d3d4db4bf4bbf6bcb",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenNounCaseAssets.kt": "eaa6044f2e4daa39386861ffdacb5babc72dea9df85316d8ced62ce1966099b2",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenAssetIdentityTest.kt": "84d4607314832283018212b9921fdc31f19330c0b65b7f369041221be1aa7fb7"
+  }
+}
