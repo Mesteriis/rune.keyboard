@@ -1,0 +1,267 @@
+{
+  "schema": 1,
+  "purpose": "EXPERIMENTAL_RESIDUAL_RANKING_NOT_ACTIVATION",
+  "frozenComposite": {
+    "modelSha256": "475e685bdf5eb080703684e4a651eb8184b2b838d3e29f82426789446ebbb9b0",
+    "modelBytes": 78888,
+    "baseModelSha256": "dfdc98954e702b3787118cb88ecd3268b25b4b1f498b45777872dc4c4c977594",
+    "residualModelSha256": "e414d54c09cde0d2598b7a3116733b30e6a90398517f98f8ddcb46c420aa41be",
+    "featureCount": 202,
+    "residualFeatureCount": 56,
+    "trainingGroups": 30512,
+    "candidateRows": 428865
+  },
+  "checks": {
+    "scalarTests": 136,
+    "batchTests": 5,
+    "testProcessesExitZero": 2,
+    "trainingProcessExitZero": true,
+    "numericReferenceProcessExitZero": true,
+    "diagnosticProcessesExitZero": 2
+  },
+  "numericParity": {
+    "purpose": "NUMERIC_PARITY_NOT_QUALITY",
+    "realTrainingCandidateVectors": 494,
+    "distinctSplits": 101,
+    "splitProbes": 404,
+    "rawMaxAbsoluteDifference": 0.0,
+    "boundedMaxAbsoluteDifference": 0.0,
+    "batchMaxAbsoluteDifference": 0.0,
+    "allExact": true
+  },
+  "diagnostics": {
+    "v6": {
+      "statistics": {
+        "scoredPools": 743,
+        "scoredPrefixes": 1756
+      },
+      "firstUnthresholdedActions": {
+        "hard_other_part_negative": {
+          "wrong": 10
+        },
+        "agreement_role_negative": {
+          "wrong": 42,
+          "correct": 4
+        },
+        "matched_copula_positive": {
+          "correct": 52
+        },
+        "direct_subject_positive": {
+          "correct": 120
+        }
+      },
+      "diagnosticFitPassed": false,
+      "diagnosticPolicy": null
+    },
+    "v8": {
+      "statistics": {
+        "scoredPools": 743,
+        "scoredPrefixes": 1756
+      },
+      "firstUnthresholdedActions": {
+        "hard_other_part_negative": {
+          "wrong": 22
+        },
+        "agreement_role_negative": {
+          "correct": 46,
+          "wrong": 13
+        },
+        "matched_copula_positive": {
+          "correct": 40
+        },
+        "direct_subject_positive": {
+          "correct": 53,
+          "wrong": 1
+        }
+      },
+      "diagnosticFitPassed": false,
+      "diagnosticPolicy": null
+    },
+    "v9": {
+      "statistics": {
+        "scoredPools": 743,
+        "scoredPrefixes": 1756
+      },
+      "firstUnthresholdedActions": {
+        "hard_other_part_negative": {
+          "wrong": 9
+        },
+        "agreement_role_negative": {
+          "correct": 46,
+          "wrong": 9
+        },
+        "matched_copula_positive": {
+          "correct": 52,
+          "wrong": 1
+        },
+        "direct_subject_positive": {
+          "correct": 43,
+          "wrong": 1
+        }
+      },
+      "diagnosticFitPassed": false,
+      "diagnosticPolicy": null
+    }
+  },
+  "copulaBaseComparison": {
+    "beforeCorrect": 52,
+    "afterCorrect": 52,
+    "lost": 6,
+    "lossReason:RANKER_RETAINS_PREVIOUS": 6,
+    "gained": 6,
+    "gainReason:RANKER_RETAINS_PREVIOUS": 6
+  },
+  "copulaPriorFitComparison": {
+    "beforeCorrect": 40,
+    "afterCorrect": 52,
+    "gained": 22,
+    "gainReason:RANKER_RETAINS_PREVIOUS": 22,
+    "lost": 10,
+    "lossReason:RANKER_RETAINS_PREVIOUS": 10
+  },
+  "previous22CopulaLossesRecovered": 21,
+  "rawPipeline": {
+    "purpose": "UNTHRESHOLDED_POSITIVE_MARGIN_DIAGNOSTIC_NOT_DEPLOYABLE_POLICY",
+    "metrics": {
+      "v6": {
+        "newCorrect": 176,
+        "newWrong": 52,
+        "priorCorrectLosses": 4,
+        "controlChanges": 0,
+        "installedCorrectLosses": 4,
+        "installedCorrectGains": 176,
+        "netCorrectVsInstalled": 172,
+        "acquisitions": 181,
+        "revisions": 47,
+        "firstBoundaryActions": {
+          "1": 98,
+          "2": 34,
+          "6": 11,
+          "5": 13,
+          "4": 17,
+          "3": 30,
+          "7": 13,
+          "8": 12
+        },
+        "precision": 0.7719298245614035,
+        "zeroMarginSteps": 0
+      },
+      "v8": {
+        "newCorrect": 138,
+        "newWrong": 36,
+        "priorCorrectLosses": 8,
+        "controlChanges": 0,
+        "installedCorrectLosses": 8,
+        "installedCorrectGains": 138,
+        "netCorrectVsInstalled": 130,
+        "acquisitions": 123,
+        "revisions": 51,
+        "firstBoundaryActions": {
+          "1": 121,
+          "8": 2,
+          "2": 26,
+          "4": 3,
+          "3": 8,
+          "6": 4,
+          "5": 5,
+          "7": 5
+        },
+        "precision": 0.7931034482758621,
+        "zeroMarginSteps": 2
+      },
+      "v9": {
+        "newCorrect": 141,
+        "newWrong": 20,
+        "priorCorrectLosses": 4,
+        "controlChanges": 0,
+        "installedCorrectLosses": 4,
+        "installedCorrectGains": 141,
+        "netCorrectVsInstalled": 137,
+        "acquisitions": 132,
+        "revisions": 29,
+        "firstBoundaryActions": {
+          "1": 126,
+          "2": 14,
+          "6": 3,
+          "5": 4,
+          "7": 3,
+          "3": 8,
+          "4": 2,
+          "8": 1
+        },
+        "precision": 0.8757763975155279,
+        "zeroMarginSteps": 0
+      }
+    }
+  },
+  "wrongTransitions": {
+    "v6": {
+      "beforeWrong": 52,
+      "afterWrong": 20,
+      "removedWrong": 36,
+      "introducedWrong": 4,
+      "sharedWrong": 16
+    },
+    "v8": {
+      "beforeWrong": 36,
+      "afterWrong": 20,
+      "removedWrong": 22,
+      "introducedWrong": 6,
+      "sharedWrong": 14
+    }
+  },
+  "installedAssetsUnchanged": true,
+  "holdoutRead": false,
+  "productionQualified": false,
+  "apkBuilt": false,
+  "apkInstalled": false,
+  "files": {
+    "tools/typing_experiments/right_context_residual_ranker.py": "a181ec241fa5452baebbe4d60229c77cb7a974f8831676c6bd31da753ccb3418",
+    "tools/typing_experiments/residual_tree_batch.py": "2f3439d827f6646fcec89889197c671216ed16b89e7db620c6268fe82f8137eb",
+    "tools/typing_experiments/test_right_context_residual_ranker.py": "8041bdc72fc5e69431615345937d8a6502b9f145f821fd9b1c008803062be40b",
+    "tools/typing_experiments/test_residual_tree_batch.py": "5ca78c9e1949caef2d8686da313c52277f19766404a6e0eb935ef78b17d395d1",
+    "build/right-context-residual-v9-20261027/train.py": "d6ccbaf281689ee373301482870ee0386c2a27bb2d681e73e2c21ea280d89de2",
+    "build/right-context-residual-v9-20261027/train.log": "adb98f0d644a66bb5e94d071561f7b551e2d89c556da4939be37a106394d6b92",
+    "build/right-context-residual-v9-20261027/plan.json": "5fea5113c58dbc7c1cab08320af3f514ebf577e5b28db2d7d345ac075c0ace81",
+    "build/right-context-residual-v9-20261027/frozen-model.json": "6359fe121eb43d24ae99d2793dd62e4eb54e6317e0a5ea1389da35508e74f958",
+    "build/right-context-residual-v9-20261027/composite.json": "475e685bdf5eb080703684e4a651eb8184b2b838d3e29f82426789446ebbb9b0",
+    "build/right-context-residual-v9-20261027/base-ranker.bin": "dfdc98954e702b3787118cb88ecd3268b25b4b1f498b45777872dc4c4c977594",
+    "build/right-context-residual-v9-20261027/residual-ranker.bin": "e414d54c09cde0d2598b7a3116733b30e6a90398517f98f8ddcb46c420aa41be",
+    "build/right-context-residual-v9-20261027/residual-ranker.json": "9a65c6ff904147f46b8871aee1cd9368b861238b5cc0c233d5a0bd1135e98efc",
+    "build/right-context-residual-v9-20261027/groups.jsonl": "87fdbe762a514671209e92146dbe92b3249e2f9f95d3a095a09438b4c0ac2e62",
+    "build/right-context-residual-v9-20261027/train-vectors.npz": "726989608f08c7a92f54415d2b47c4b300c7be36636a7e1bbbdbbb10c452e69a",
+    "build/right-context-residual-v9-20261027/train-group-weights.npy": "7cf7915e0dd075177c7fcf7aba3ea6221529456071125780633b0284bc94d241",
+    "build/right-context-residual-v9-20261027/baseline-raw-scores.npy": "6482bee2b1c25b4ca3316fc4acfb601a82a5d0b57d34519eb07bf92a4f0e56db",
+    "build/right-context-residual-v9-20261027/pool-baseline.npy": "05204d72d68b213470ee217a594a3843d5146a4f0bc2000a51a3b016875f7cfe",
+    "build/right-context-residual-v9-20261027/training-diagnostic.json": "02127465d6280258d119c1da71cd6d301f646634db2cf4df5e990b8e252bf4c0",
+    "build/right-context-residual-v9-20261027/reference-parity.py": "be24cf3c87071e904e13eccfd9e4f33a69d6097af3f34a9296800e7fd0d21cc7",
+    "build/right-context-residual-v9-20261027/reference-parity.log": "d43763d58f97bb1d4252d9143759e58f6019157c043fd04915206a81e4cda315",
+    "build/right-context-residual-v9-20261027/reference-parity.json": "ff0b8a00110d8882f586796f84a6a3e68a7364a0fb2abf5b83b6f0f1bd95d5eb",
+    "build/right-context-residual-v9-20261027/python-tests.log": "ddc2496b3696660d3e8e6c541b1bcb9e6d25f80817f77a3d7d82b17903cd63e3",
+    "build/right-context-residual-v9-20261027/batch-tests.log": "74c81a5169712655f19d7e9bf3a77a9a516a5a118f38a706c5b32aa1ae6dc05b",
+    "build/right-context-v6-source3-traced-20261027/score.py": "0d1e7c16d5cecc16a98ba65b6ee70a549074ecf24e66308e101f8d8cdafcc631",
+    "build/right-context-v6-source3-traced-20261027/score.log": "e9707a08c4e72f89bc0b4ff2d346b4195b15fa73fc39f87526df09c2a25a7af4",
+    "build/right-context-v6-source3-traced-20261027/scoring-plan.json": "4ec84dc90c39f8de6c548dd443a9bf440a239b2c217e02c207a14c5ee0c529fb",
+    "build/right-context-v6-source3-traced-20261027/calibration-paths.json": "63e1a99f7f2c2036c7f486275308f3557658b0424a30fab007f7a8dfec5c0c57",
+    "build/right-context-v6-source3-traced-20261027/decision-traces.json": "aeabb75a722b71040f99bd91f7dd80f6ff5581e2462b202cf9081e5fea7a70a5",
+    "build/right-context-v6-source3-traced-20261027/calibration-result.json": "567c4d5380859da5204335122dcbc4b7dc57b3b1aa4f79f1b7e4ffb5d6cefacd",
+    "build/right-context-v8-source3-traced-20261027/score.py": "ed45aaefdbdc783ff24a496cb185a39d309eafba0147854071057367294b9043",
+    "build/right-context-v8-source3-traced-20261027/score.log": "695ce5f281e6cdf21c3bab13006416938bb2be4606dfc9daace1fc62702deec3",
+    "build/right-context-v8-source3-traced-20261027/scoring-plan.json": "b66c8bfb5b5ca8fea74a2c81579c9ab9ea2bd190c4cad19ac45328319a786861",
+    "build/right-context-v8-source3-traced-20261027/calibration-paths.json": "dabc8fd313e5c921cf373c842bcc529bc1325d9d992279c7d5b3e2b6d0cd5fe4",
+    "build/right-context-v8-source3-traced-20261027/decision-traces.json": "505164b5e682173ecf4664bb678321ca7dcaff919605f9e749ef9d20fa4e0f07",
+    "build/right-context-v8-source3-traced-20261027/calibration-result.json": "43567fedfab5d5b0323fe57f17cd3f661280939dee888952fdb066115de37140",
+    "build/right-context-v9-source3-traced-20261027/score.py": "94bee3555a10877bfe7ae84c9dd8b49239b714280918d387e4f2bfacfd5a0712",
+    "build/right-context-v9-source3-traced-20261027/score.log": "d6eb533b7752316bcc50bb6e7829c02516280d8c18defdda1a45280d04d33759",
+    "build/right-context-v9-source3-traced-20261027/scoring-plan.json": "b226672b8df9eefe8103a67416b3acd48d2c3764b3e13baacf149f06644a7776",
+    "build/right-context-v9-source3-traced-20261027/calibration-paths.json": "7309a779531d250a95f17f736944d9551518b872dade1a63a46796eae61a0c57",
+    "build/right-context-v9-source3-traced-20261027/decision-traces.json": "b714174671f4380c61661fabcbace8cc9a6d740f341ef10f461b50a47ff5cb36",
+    "build/right-context-v9-source3-traced-20261027/calibration-result.json": "6606eba122cd0eb6524aa30f688c4e2510f153fafcd076b82aa21a7ba44718f5",
+    "build/right-context-v9-source3-traced-20261027/compare.py": "ada0406251b622815ffe81879591042ee4c4cb0c064b339caf013cbb1a34b82f",
+    "build/right-context-v9-source3-traced-20261027/comparison.log": "2b3577edf391e98e9e43e649470477971748a590d410410771a3c2cb89d3af68",
+    "build/right-context-v9-source3-traced-20261027/comparison.json": "dce4cf2a3010c654dcb98fbc8944291102aa2c73f5513ba5f7ee9dd7972dbc10",
+    "build/right-context-v9-source3-traced-20261027/raw-pipeline-metrics.json": "ecfba66dcb827eca8a62f2c2b5ba5cf3c4c1fea80112775371639d4a2d3a0e83",
+    "build/right-context-v9-source3-traced-20261027/prior-correct-losses.json": "77184e85c60ef0587f499753defd30615e04232a07863ce9c917d37e5fd6ccdc",
+    "build/right-context-v9-source3-traced-20261027/wrong-transitions.json": "bdc3099259e597750cd1ec3394b2453693cd37086cf4d58acb9922747789d214"
+  }
+}
