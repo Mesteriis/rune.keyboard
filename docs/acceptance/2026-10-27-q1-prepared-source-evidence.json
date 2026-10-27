@@ -1,0 +1,225 @@
+{
+  "card": "Q1",
+  "status": "partial: exact prepared-source checkpoint and qualification bridge verified; local F-Droid assembly still fails native pristine guard",
+  "implementationCommits": [
+    "9a366a9dcad1601738bd6eb70325a59f3dbf38f9",
+    "b8ca50f4bd96eb2fb6b6a1c8b4930851f16f498f"
+  ],
+  "sources": [
+    {
+      "path": "tools/release_source_check.py",
+      "bytes": 3251,
+      "sha256": "79a6a6a997a6af6e1b59c44c0e4654a28bad9cbda3a16217d354d88db1d8ef8c"
+    },
+    {
+      "path": "tools/fdroid_prepared_source.py",
+      "bytes": 7706,
+      "sha256": "d2422e83f1f1c228ebc7da60c062accf45d9a3929fe02a52cc439501405e2103"
+    },
+    {
+      "path": "tools/test_fdroid_prepared_source.py",
+      "bytes": 8841,
+      "sha256": "c2611984aa2ae1a3f663cb6f9ad62b5e4a807cb2c77fb179edf0f6d5f69b9f21"
+    },
+    {
+      "path": "tools/qualification_artifacts.py",
+      "bytes": 4144,
+      "sha256": "247f94ef585475b7a454a17767d2552028285daf682f9b5f9fd48fc3590b91a7"
+    },
+    {
+      "path": "tools/test_qualification_prepared_source.py",
+      "bytes": 3435,
+      "sha256": "a8d9be6cae9878306ca91c1b3dc11f0c26c04cb0dbd43318080c729262419c32"
+    },
+    {
+      "path": "fdroid/prepared-source-policy.json",
+      "bytes": 1463,
+      "sha256": "1ec40933cd55792fad73db85099649706bae033b2d1570770863481137815df4"
+    },
+    {
+      "path": "app/build.gradle.kts",
+      "bytes": 17386,
+      "sha256": "60dcafdef79afe84c8cfa5920f763afbdad672872f3bf8873e26efdc6bc9fd1f"
+    }
+  ],
+  "initialRealPreparation": {
+    "fdroidserver": "2.4.5",
+    "sourceCommit": "1b0a000852b4cb17d0ae07cb6067e4ebc5171cb5",
+    "prebuildOmitted": "SDK acquisition only; installed toolchain reused",
+    "changes": [
+      {
+        "status": " M",
+        "path": "app/build.gradle.kts",
+        "beforeSha256": "dd44001c566b0c66125e7d51c702933dfc23421c0302bdcd9a42998dfd92a567",
+        "afterSha256": "8ca168de32e18b62611649dff4941c4dd404a37d989d1794e96193d87df9a237"
+      }
+    ]
+  },
+  "tests": {
+    "sourceAndQualificationBridge": 27,
+    "sourceAndQualificationBridgeExitCode": 0,
+    "fingerprint": 1,
+    "fingerprintExitCode": 0,
+    "previousFixtureCleanupFailure": {
+      "tests": 22,
+      "failures": 1,
+      "explanation": "Fixture combined two Git index-flag clearing options; corrected to separate operations."
+    }
+  },
+  "firstLocalBuild": {
+    "passed": false,
+    "errorType": "BuildException",
+    "sourceCommit": "9a366a9dcad1601738bd6eb70325a59f3dbf38f9",
+    "elapsedSeconds": 7.612073875032365,
+    "fdroidserver": "2.4.5",
+    "scan": {
+      "fatal": 0,
+      "warnings": [
+        [
+          "gzip file archive",
+          "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+        ],
+        [
+          "executable binary, possibly code",
+          "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+        ]
+      ],
+      "errors": []
+    },
+    "prebuildOmitted": "SDK acquisition only; installed CMake reused",
+    "sourceTarballCreated": false,
+    "binaryScannerRun": false,
+    "buildServerRun": false,
+    "localBuildFunction": "fdroidserver.build.build_local",
+    "gradleOffline": true,
+    "existingDependencyCache": true
+  },
+  "finalLocalBuild": {
+    "passed": false,
+    "errorType": "BuildException",
+    "sourceCommit": "b8ca50f4bd96eb2fb6b6a1c8b4930851f16f498f",
+    "elapsedSeconds": 16.288033707998693,
+    "fdroidserver": "2.4.5",
+    "scan": {
+      "fatal": 0,
+      "warnings": [
+        [
+          "gzip file archive",
+          "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+        ],
+        [
+          "executable binary, possibly code",
+          "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+        ]
+      ],
+      "errors": []
+    },
+    "prebuildOmitted": "SDK acquisition only; installed CMake reused",
+    "sourceTarballCreated": false,
+    "binaryScannerRun": false,
+    "buildServerRun": false,
+    "localBuildFunction": "fdroidserver.build.build_local",
+    "gradleOffline": true,
+    "existingDependencyCache": true
+  },
+  "runtimeBuildId": "356dc78ec8b156462d8384ca14f0e20ff831c66b83c38831f40edfd6bd645613",
+  "failureAnalysis": {
+    "first": "qualification_artifacts.py rejected the two removed example wrappers; explicit globally verified exception added, with independent refusal of compiled submodule edits.",
+    "remaining": "PrepareLlamaSource.cmake:15 requires pristine submodule and rejects the same scanner deletions. This file participates in runtimeBuildId; changing it requires renewed runtime identity and qualification."
+  },
+  "buildServerRun": false,
+  "nextVersionedRecipeAdded": false,
+  "published": false,
+  "phoneRun": false,
+  "sourceTarballExportSupported": false,
+  "outstanding": [
+    "Integrate the native source guard under a renewed runtime identity and qualification; retain rejection of compiled C/C++ edits.",
+    "Repeat the complete local prepared-source assembly through a final artifact, privacy/native/size and model smoke gates.",
+    "Prepare a separate next versioned recipe, isolated build-server and distribution evidence.",
+    "Preserve the separate unresolved U16 source-path audit and device/model acceptance requirements."
+  ],
+  "checkpointProbes": [
+    {
+      "label": "prepared-checkpoint-positive",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "markerFound": true,
+      "configurationCacheReused": false
+    },
+    {
+      "label": "default-checkpoint-negative",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "markerFound": true,
+      "configurationCacheReused": false
+    },
+    {
+      "label": "prepared-checkpoint-dirty-negative",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "markerFound": true,
+      "configurationCacheReused": true
+    },
+    {
+      "label": "prepared-checkpoint-restored",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "markerFound": true,
+      "configurationCacheReused": true
+    },
+    {
+      "label": "prepared-qualification",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "markerFound": true,
+      "configurationCacheReused": false
+    }
+  ],
+  "privateLogBindings": [
+    {
+      "path": "build/review-q1-prepared-source-20261027/fdroid-host.log",
+      "bytes": 37401,
+      "sha256": "71de45c9433cdb55af3a0a6deff9b39eaa9464a5ccbfa84bd10101ecaef3bf9c"
+    },
+    {
+      "path": "build/review-q1-prepared-source-20261027/fdroid-host.log-failed-qualification",
+      "bytes": 12051,
+      "sha256": "4ac38b907c65c1f7a989e66f329e910e2da442b15c6ea2b4c151338c5f5ac40d"
+    },
+    {
+      "path": "build/review-q1-prepared-source-20261027/unit-qualification.log",
+      "bytes": 4987,
+      "sha256": "bf53141b591f58d139ce696cd61417c11887040df790c41ce498ce8fd68b5e82"
+    },
+    {
+      "path": "build/review-q1-prepared-source-20261027/unit-fingerprint.log",
+      "bytes": 266,
+      "sha256": "08727aec528b25a17777a236a95057f30c72a9e39964ba1bd07f19a18c9cbec8"
+    },
+    {
+      "path": "build/review-q1-prepared-source-20261027/prepared-checkpoint-positive.log",
+      "bytes": 8530,
+      "sha256": "5441eadc4f791719f94ec26cec3555176e9b8d739bfc51c50bef9d9e09b8fcb0"
+    },
+    {
+      "path": "build/review-q1-prepared-source-20261027/default-checkpoint-negative.log",
+      "bytes": 209,
+      "sha256": "badf6817ece408c2c7ba618cc746bb0274ede9941b8bbd9f6d0f0c4ae5b55178"
+    },
+    {
+      "path": "build/review-q1-prepared-source-20261027/prepared-checkpoint-dirty-negative.log",
+      "bytes": 2058,
+      "sha256": "7f59c06c567d71f1715dcd6e9eabfb31e66a6bc193dfcd06e7d4b1f69fc92c49"
+    },
+    {
+      "path": "build/review-q1-prepared-source-20261027/prepared-checkpoint-restored.log",
+      "bytes": 561,
+      "sha256": "474f5969013924d8f61e7dd6e4ddebacd284c3995fdee6806cb4e6c28131e114"
+    },
+    {
+      "path": "build/review-q1-prepared-source-20261027/prepared-qualification.log",
+      "bytes": 107,
+      "sha256": "9aaede5ebdafde480685bde73e4d358debda215b3475a0fea6cf27bdc032bd9a"
+    }
+  ]
+}

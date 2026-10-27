@@ -100,6 +100,14 @@ policy describes it. Compiled C/C++ changes still cannot retain the old runtime
 build identity. Ordinary qualification verification keeps its clean-submodule
 requirement.
 
+The [prepared-source receipt](acceptance/2026-10-27-q1-prepared-source.md) records
+27 guard/bridge tests and real local `fdroidserver.build.build_local` execution.
+The source scan has zero fatal findings and the two known warnings; qualification
+metadata and the prepared checkpoint pass. Full assembly still fails the native
+`PrepareLlamaSource.cmake` pristine check on the two removed example wrappers.
+That file is part of the runtime fingerprint. Its integration needs renewed
+runtime identity/qualification; this mode is not yet a passing distribution recipe.
+
 Refresh the fixed hashes deliberately when the app build script or any listed
 original changes. Use the actual pinned fdroidserver signing transformation to
 obtain the replacement hash, then repeat preparation/scanning/build validation
