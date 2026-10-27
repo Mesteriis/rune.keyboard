@@ -43,7 +43,7 @@ class TypingToolsInstrumentedTest {
         writes.forEach { it(false) }
         try {
             for (index in titles.indices) {
-                val page = SettingsPage.forRow(R.string.settings_section_tools, titles[index])
+                val page = checkNotNull(AdditionalFeatures.forTitle(titles[index])).page
                 ActivityScenario.launch<SettingsActivity>(SettingsActivity.intent(context, page)).use { scenario ->
                     scenario.onActivity { activity ->
                         val title = descendants(activity.window.decorView).filterIsInstance<TextView>()

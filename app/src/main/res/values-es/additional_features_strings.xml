@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_experiments">Experimentos</string>
+    <string name="menu_experiments_summary">Experimentos de entrada opcionales solo para ruso y controles de funciones adicionales.</string>
+</resources>

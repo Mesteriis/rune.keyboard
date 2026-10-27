@@ -345,6 +345,81 @@ class KeyboardPreferencesTest {
         assertEquals(SettingsCodec.SCHEMA_VERSION, source.all[SettingsCodec.KEY_SCHEMA_VERSION])
     }
 
+    @Test fun additionalRegistryCoversExactlyTheEighteenPersistedSettings() {
+        val expected = mapOf(
+            "personal_learning" to "personalLearning", "touch_personalization" to "touchPersonalization",
+            "phrase_suggestions" to "phraseSuggestions", "quality_metrics" to "qualityMetrics",
+            "shadow_comparison" to "shadowComparison", "word_boundary_suggestions" to "wordBoundarySuggestions",
+            "abbreviations" to "abbreviations", "phrase_review" to "phraseReview", "visible_undo" to "visibleUndo",
+            "protected_words" to "protectedWords", "app_profiles" to "appProfiles",
+            "collect_examples" to "collectExamples", "typo_patterns" to "typoPatterns",
+            "learned_ranking" to "learnedRanking", "compact_context" to "compactContext",
+            "dynamic_touch" to "dynamicTouch", "dynamic_touch_apply" to "dynamicTouchApply",
+            "manual_candidate_expansion" to "manualCandidateExpansion",
+        )
+        val registry = AdditionalFeatures.entries
+        assertEquals(18, registry.size)
+        assertEquals(18, registry.map { it.title }.toSet().size)
+        assertEquals(expected, registry.associate { it.key to it.value.name })
+        // Verify actual codec wiring, rather than trusting the property names in the registry.
+        val disabled = expected.keys.associateWith { false } + (SettingsCodec.KEY_SCHEMA_VERSION to 4)
+        val base = SettingsCodec.decode(disabled)
+        for (feature in registry) {
+            val decoded = SettingsCodec.decode(disabled + (feature.key to true))
+            assertTrue(feature.value.get(decoded))
+            val changedFields = KeyboardSettings::class.java.declaredFields.filter { field ->
+                !java.lang.reflect.Modifier.isStatic(field.modifiers) && field.type == Boolean::class.javaPrimitiveType
+            }.filter { field ->
+                field.isAccessible = true
+                field.getBoolean(base) != field.getBoolean(decoded)
+            }.map { it.name }
+            assertEquals(listOf(expected.getValue(feature.key)), changedFields)
+        }
+    }
+
+    @Test fun disableAllUsesRegistryInOneTransactionAndPreservesOtherPreferences() {
+        val source = FakeSharedPreferences(mapOf("future_metadata" to "keep"))
+        val facade = KeyboardPreferences(source)
+        AdditionalFeatures.entries.forEach { facade.writeAdditionalFeature(it.key, true) }
+        facade.writeNumberRow(true)
+        facade.writeAutocorrectionMode(AutocorrectionMode.SUGGESTIONS)
+        val before = source.all
+        var notifications = 0
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
+            notifications++
+            assertTrue(AdditionalFeatures.entries.all { source.all[it.key] == false })
+        }
+        facade.registerListener(listener)
+        facade.disableAdditionalTyping()
+        facade.unregisterListener(listener)
+        assertTrue(notifications >= 18)
+        val expected = before.toMutableMap().apply { AdditionalFeatures.entries.forEach { put(it.key, false) } }
+        assertEquals(expected, source.all)
+        assertTrue(AdditionalFeatures.entries.all { !it.value.get(facade.readSettings()) })
+    }
+
+    @Test fun additionalFeatureWriterRejectsUnknownAndCoreKeysWithoutWriting() {
+        val before = store.all
+        for (key in listOf("future_switch", SettingsCodec.KEY_CANDIDATE_STRIP, SettingsCodec.KEY_SCHEMA_VERSION)) {
+            assertThrows(NoSuchElementException::class.java) { preferences.writeAdditionalFeature(key, true) }
+            assertEquals(before, store.all)
+        }
+    }
+
+    @Test fun additionalFeaturePagesAreRegistryOwnedAndStableNamesRoundTrip() {
+        for (feature in AdditionalFeatures.entries) {
+            assertEquals(feature.page, SettingsPage.forRow(0, feature.title))
+            assertEquals(feature.page, SettingsPage.forRow(io.github.mesteriis.rune.keyboard.R.string.settings_section_tools, feature.title))
+        }
+        val experiments = AdditionalFeatures.entries.filter { it.page == SettingsPage.EXPERIMENTS }
+        assertEquals(setOf("wordBoundarySuggestions", "phraseReview", "learnedRanking", "compactContext",
+            "dynamicTouch", "dynamicTouchApply", "manualCandidateExpansion"), experiments.map { it.value.name }.toSet())
+        for (page in SettingsPage.entries) assertEquals(page, SettingsPage.fromName(page.name))
+        assertEquals(SettingsPage.EXPERIMENTS, SettingsPage.forRow(0, io.github.mesteriis.rune.keyboard.R.string.controls_disable_all))
+        assertEquals(SettingsPage.APPEARANCE, SettingsPage.fromName("APPEARANCE"))
+        assertEquals(SettingsPage.TYPING, SettingsPage.fromName("TYPING"))
+    }
+
     private class FakeSharedPreferences(initial: Map<String, Any?> = emptyMap()) : SharedPreferences {
         private val values = initial.toMutableMap()
         private val listeners = mutableSetOf<SharedPreferences.OnSharedPreferenceChangeListener>()

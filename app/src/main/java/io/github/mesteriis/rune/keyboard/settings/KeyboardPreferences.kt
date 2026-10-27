@@ -100,16 +100,16 @@ class KeyboardPreferences internal constructor(private val preferences: SharedPr
     fun writePhraseReview(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_PHRASE_REVIEW, enabled) } }
     fun writeVisibleUndo(enabled: Boolean) { edit { putBoolean(SettingsCodec.KEY_VISIBLE_UNDO, enabled) } }
 
+    /** Only registry-owned optional keys are accepted; migration remains one atomic transaction. */
+    fun writeAdditionalFeature(key: String, enabled: Boolean) {
+        val feature = AdditionalFeatures.forKey(key)
+        edit { putBoolean(feature.key, enabled) }
+    }
+
     /** One preference transaction: observers never see a partially disabled feature set. */
     fun disableAdditionalTyping() {
         edit {
-            listOf(SettingsCodec.KEY_PERSONAL_LEARNING, SettingsCodec.KEY_TOUCH_PERSONALIZATION,
-                SettingsCodec.KEY_PHRASE_SUGGESTIONS, SettingsCodec.KEY_QUALITY_METRICS,
-                SettingsCodec.KEY_SHADOW_COMPARISON, SettingsCodec.KEY_WORD_BOUNDARY_SUGGESTIONS,
-                SettingsCodec.KEY_ABBREVIATIONS, SettingsCodec.KEY_PHRASE_REVIEW, SettingsCodec.KEY_VISIBLE_UNDO,
-                SettingsCodec.KEY_PROTECTED_WORDS, SettingsCodec.KEY_APP_PROFILES,
-                SettingsCodec.KEY_COLLECT_EXAMPLES, SettingsCodec.KEY_TYPO_PATTERNS,
-                SettingsCodec.KEY_LEARNED_RANKING, SettingsCodec.KEY_COMPACT_CONTEXT, SettingsCodec.KEY_DYNAMIC_TOUCH, SettingsCodec.KEY_DYNAMIC_TOUCH_APPLY, SettingsCodec.KEY_MANUAL_CANDIDATE_EXPANSION).forEach { putBoolean(it, false) }
+            AdditionalFeatures.entries.forEach { putBoolean(it.key, false) }
         }
     }
 

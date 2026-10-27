@@ -88,6 +88,38 @@ class AppMenuInstrumentedTest {
         } finally { preferences.writeNumberRow(before.numberRow) }
     }
 
+    @Test fun experimentSearchRetainsDestinationAndQueryAcrossRecreationAndBack() {
+        for (feature in AdditionalFeatures.entries.filter { it.page == SettingsPage.EXPERIMENTS }) {
+            ActivityScenario.launch(SettingsActivity::class.java).use { scenario ->
+                scenario.onActivity { activity ->
+                    val label = activity.getString(feature.title)
+                    activity.findViewById<EditText>(R.id.menu_search).setText(label)
+                    val result = descendants(activity.window.decorView).filterIsInstance<TextView>().single {
+                        it !is EditText && it.text.toString() == label
+                    }
+                    assertTrue(clickableParent(result).performClick())
+                    assertEquals(activity.getString(R.string.menu_experiments), activity.findViewById<TextView>(R.id.menu_detail_title).text)
+                    assertNotNull(activity.findViewById<LinearLayout>(R.id.settings_container).findViewWithTag<View>(feature.title))
+                }
+                awaitVisibleTarget(scenario, feature.title)
+                scenario.recreate()
+                awaitVisibleTarget(scenario, feature.title)
+                scenario.onActivity { activity ->
+                    assertEquals(activity.getString(R.string.menu_experiments), activity.findViewById<TextView>(R.id.menu_detail_title).text)
+                    assertNotNull(activity.findViewById<LinearLayout>(R.id.settings_container).findViewWithTag<View>(feature.title))
+                    assertTrue(activity.findViewById<View>(R.id.menu_back).performClick())
+                    assertEquals(activity.getString(feature.title), activity.findViewById<EditText>(R.id.menu_search).text.toString())
+                }
+            }
+        }
+        ActivityScenario.launch<SettingsActivity>(SettingsActivity.intent(context, SettingsPage.EXPERIMENTS)).use { scenario ->
+            scenario.onActivity { activity ->
+                assertEquals(activity.getString(R.string.menu_experiments), activity.findViewById<TextView>(R.id.menu_detail_title).text)
+                assertNotNull(activity.findViewById<LinearLayout>(R.id.settings_container).findViewWithTag<View>(R.string.controls_disable_all))
+            }
+        }
+    }
+
     @Test fun previewDeletesWholeUnicodeCodePointAndReplacesSelections() {
         instrumentation.runOnMainSync {
             val field = EditText(context).apply { setText("A😀"); setSelection(3) }
@@ -115,6 +147,20 @@ class AppMenuInstrumentedTest {
                 assertTrue(title.width > 0)
             }
         }
+    }
+
+    private fun awaitVisibleTarget(scenario: ActivityScenario<SettingsActivity>, title: Int) {
+        val deadline = android.os.SystemClock.uptimeMillis() + 3_000
+        do {
+            var visible = false
+            scenario.onActivity { activity ->
+                val row = activity.findViewById<LinearLayout>(R.id.settings_container).findViewWithTag<View>(title)
+                visible = row != null && row.getGlobalVisibleRect(android.graphics.Rect())
+            }
+            if (visible) return
+            android.os.SystemClock.sleep(50)
+        } while (android.os.SystemClock.uptimeMillis() < deadline)
+        fail("Requested settings row was not scrolled into view")
     }
 
     private fun clickableParent(view: View): View = if (view.isClickable) view else clickableParent(view.parent as View)

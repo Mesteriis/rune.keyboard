@@ -1,0 +1,113 @@
+{
+  "card": "U6",
+  "status": "in progress; registry and experiment destination slice verified locally",
+  "baseCommit": "7179a279f7366c003caf3c31376c703f60f1af3d",
+  "sourceBindings": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/AdditionalFeature.kt": "cd7f539b61beb63dfefdc57d498689a2227ac1c693e39ade31755a8afc3cb3a5",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardPreferences.kt": "97383afc2273167916ddc4a163068ac9260b615812ece90177be2f9795f17767",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SettingsActivity.kt": "a6cb1fa9b4c57d5d55e4c4d1ae7ea067096224159c0eb09ce47aabeccc07b5ef",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SettingsPage.kt": "500ccd74df235ff4e9b87fe8c1e829c05e569c322838708efdd3b7f5ceffa8a6",
+    "app/src/main/res/values/additional_features_strings.xml": "2ecd9a5bb4f57980b1f754dd13632f3d04322597cd65a36307a3604a78b21e86",
+    "app/src/main/res/values-ru/additional_features_strings.xml": "97f7ba795cdc1f001ef4f490796aeb1b745b66ee5ca91b5b99bc3c921c215996",
+    "app/src/main/res/values-es/additional_features_strings.xml": "72ddf8ab01f1cbb929bbb9b239880739f1b42ef019bb697d83aeb92377d676b2",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/settings/KeyboardPreferencesTest.kt": "9e749538f7c610ba35ef0a661f011f149ada8b577fdd1334fbb53a93d4323bc1",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/AppMenuInstrumentedTest.kt": "62fa707bf44230321e222b99c6ccc4e00dd2f228d0d6ae6665077398713f3caa",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/tools/TypingToolsInstrumentedTest.kt": "07c1c59dff6a21b584bf354bcfa1a660fab7b1af5881b84a78bf9977bd37aeb8"
+  },
+  "artifacts": {
+    "app": {
+      "sha256": "305e510758ba72afdd08f5c91ebe5fb0ad677922b81e3f0b81ce3ed1b5242a47",
+      "bytes": 345266252
+    },
+    "tests": {
+      "sha256": "991829eeb4f4acc9ed180a6a8447674b5ff0a6a703d2ad0ecae6beeade4bca45",
+      "bytes": 1792619
+    }
+  },
+  "jvm": {
+    "tests": 1199,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "newTests": 4
+  },
+  "checks": [
+    {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:testDebugUnitTest",
+        ":app:imeIntelligenceBoundary",
+        ":app:privacyGateRelease",
+        ":app:lintDebug",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:lintDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "instrumentation": [
+    {
+      "classNames": [
+        "AppMenuInstrumentedTest",
+        "TypingToolsInstrumentedTest"
+      ],
+      "tests": 8,
+      "failures": 0,
+      "skipped": 0,
+      "log": "menu-and-controls-device.log",
+      "phase": "initial navigation test and unchanged production"
+    },
+    {
+      "method": "AppMenuInstrumentedTest#experimentSearchRetainsDestinationAndQueryAcrossRecreationAndBack",
+      "tests": 1,
+      "failures": 0,
+      "skipped": 0,
+      "log": "navigation-visible-device.log",
+      "phase": "final strengthened row visibility assertions"
+    }
+  ],
+  "priorReplayIdentity": {
+    "receipt": "docs/acceptance/2026-10-27-u5-confirmed-words-evidence.json",
+    "sourceCount": 88,
+    "assetCount": 18,
+    "allMatch": true,
+    "newReplayExecuted": false
+  },
+  "environment": {
+    "androidApi": "36",
+    "abi": "arm64-v8a",
+    "isolatedTaskOwnedAvd": true,
+    "testsCompleted": true,
+    "emulatorStopped": true,
+    "avdDeleted": true,
+    "physicalDeviceAccess": false
+  },
+  "logBindings": {
+    "checks.log": "915f6924908987f7dc5e4686f3e84158edd71416bd200296f390a1f12a5e18d4",
+    "checks-result.json": "c117d868eba8f3c58ac49656d2cfab082116ca1644b4d79b7ad44a3e290d984b",
+    "navigation-visibility-build.log": "7a1e5f32669fcb946f85186e88e6ee5f94653d6eab2c9703c50cf9a429e23a38",
+    "navigation-visibility-build-result.json": "54b47974e249dfcd7f49ce63bc584c6ce38126955b7469914294b26e6ca0f5f5",
+    "menu-and-controls-device.log": "c481a3e371adef586a413c48209122b4e535c13ff18e22821c399a45352d0600",
+    "navigation-visible-device.log": "3f218d8317666500ca0e688883dade7b1290ba5cee0bb61c2341bf632fbc31b3",
+    "install-app.log": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7",
+    "install-tests.log": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7",
+    "cleanup.json": "a130d8f35985e1287e01a1b6ab8455e1f62dc7d6a9efaeb77fd72cc749664a45",
+    "avd-delete.log": "5641d5c57efc18e423e5e72c2b84db7693abc64b6e72eaba2bcbd7ff8d46957f"
+  },
+  "limitations": [
+    "Dependencies, RU badge and Switch remain next U6 slice",
+    "Manual TalkBack and 02-settings screenshot outstanding",
+    "No physical Fold access or deployment",
+    "Prior replay identity does not establish new accuracy or performance"
+  ]
+}

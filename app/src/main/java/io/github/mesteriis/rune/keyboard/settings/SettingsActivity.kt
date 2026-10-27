@@ -160,8 +160,7 @@ class SettingsActivity : ThemedActivity() {
             selected = settings.autocorrectionMode,
             summary = autocorrectionSummary(),
         ) { preferences.writeAutocorrectionMode(it) }
-        addToggleRow(R.string.settings_visible_undo, R.string.settings_visible_undo_summary,
-            settings.visibleUndo) { preferences.writeVisibleUndo(it) }
+        addAdditionalFeature(SettingsCodec.KEY_VISIBLE_UNDO)
         addToggleRow(
             titleRes = R.string.settings_mechanical_punctuation,
             summaryRes = R.string.settings_mechanical_punctuation_summary,
@@ -193,56 +192,39 @@ class SettingsActivity : ThemedActivity() {
             syncLearningJob()
             reload()
         }
-        addToggleRow(R.string.settings_quality_metrics, R.string.settings_quality_metrics_summary,
-            settings.qualityMetrics) { preferences.writeQualityMetrics(it) }
-        addToggleRow(R.string.settings_shadow_comparison, R.string.settings_shadow_comparison_summary,
-            settings.shadowComparison) { preferences.writeShadowComparison(it) }
+        addAdditionalFeature(SettingsCodec.KEY_QUALITY_METRICS)
+        addAdditionalFeature(SettingsCodec.KEY_SHADOW_COMPARISON)
         addNavigationRow(R.string.quality_dashboard_title, getString(R.string.settings_quality_dashboard_summary)) {
             startActivity(Intent(this, io.github.mesteriis.rune.keyboard.settings.quality.QualityDashboardActivity::class.java))
         }
-        addToggleRow(R.string.settings_word_boundaries, R.string.settings_word_boundaries_summary,
-            settings.wordBoundarySuggestions) { preferences.writeWordBoundarySuggestions(it) }
-        addToggleRow(R.string.settings_abbreviations, R.string.settings_abbreviations_summary,
-            settings.abbreviations) { preferences.writeAbbreviations(it) }
+        addAdditionalFeature(SettingsCodec.KEY_WORD_BOUNDARY_SUGGESTIONS)
+        addAdditionalFeature(SettingsCodec.KEY_ABBREVIATIONS)
         addNavigationRow(R.string.abbreviations_title, getString(R.string.settings_abbreviations_manage_summary)) {
             startActivity(Intent(this, AbbreviationSettingsActivity::class.java))
         }
-        addToggleRow(R.string.settings_phrase_review, R.string.settings_phrase_review_summary,
-            settings.phraseReview) { preferences.writePhraseReview(it) }
-        addToggleRow(R.string.settings_protected_words, R.string.settings_protected_words_summary,
-            settings.protectedWords) { preferences.writeProtectedWords(it) }
+        addAdditionalFeature(SettingsCodec.KEY_PHRASE_REVIEW)
+        addAdditionalFeature(SettingsCodec.KEY_PROTECTED_WORDS)
         addNavigationRow(R.string.controls_words_title, getString(R.string.controls_words_intro)) {
             startActivity(Intent(this, ProtectedWordsActivity::class.java))
         }
-        addToggleRow(R.string.settings_app_profiles, R.string.settings_app_profiles_summary,
-            settings.appProfiles) { preferences.writeAppProfiles(it) }
+        addAdditionalFeature(SettingsCodec.KEY_APP_PROFILES)
         addNavigationRow(R.string.controls_apps_title, getString(R.string.controls_apps_intro)) {
             startActivity(Intent(this, AppProfilesActivity::class.java))
         }
-        addToggleRow(R.string.settings_collect_examples, R.string.settings_collect_examples_summary,
-            settings.collectExamples) { preferences.writeCollectExamples(it); syncLearningJob() }
-        addToggleRow(R.string.settings_learned_ranking, R.string.settings_learned_ranking_summary,
-            settings.learnedRanking) { preferences.writeLearnedRanking(it) }
-        addToggleRow(R.string.settings_compact_context, R.string.settings_compact_context_summary,
-            settings.compactContext) { preferences.writeCompactContext(it) }
-        addToggleRow(R.string.settings_dynamic_touch, R.string.settings_dynamic_touch_summary,
-            settings.dynamicTouch) { preferences.writeDynamicTouch(it) }
-        addToggleRow(R.string.settings_dynamic_touch_apply, R.string.settings_dynamic_touch_apply_summary,
-            settings.dynamicTouchApply) { preferences.writeDynamicTouchApply(it) }
-        addToggleRow(R.string.settings_typo_patterns, R.string.settings_typo_patterns_summary,
-            settings.typoPatterns) { preferences.writeTypoPatterns(it); syncLearningJob() }
+        addAdditionalFeature(SettingsCodec.KEY_COLLECT_EXAMPLES)
+        addAdditionalFeature(SettingsCodec.KEY_LEARNED_RANKING)
+        addAdditionalFeature(SettingsCodec.KEY_COMPACT_CONTEXT)
+        addAdditionalFeature(SettingsCodec.KEY_DYNAMIC_TOUCH)
+        addAdditionalFeature(SettingsCodec.KEY_DYNAMIC_TOUCH_APPLY)
+        addAdditionalFeature(SettingsCodec.KEY_TYPO_PATTERNS)
         addNavigationRow(R.string.learning_title, getString(R.string.settings_collect_examples_summary)) {
             startActivity(Intent(this, LearningLabActivity::class.java))
         }
-        addToggleRow(R.string.settings_manual_candidate_expansion, R.string.settings_manual_candidate_expansion_summary,
-            settings.manualCandidateExpansion) { preferences.writeManualCandidateExpansion(it) }
+        addAdditionalFeature(SettingsCodec.KEY_MANUAL_CANDIDATE_EXPANSION)
         addSection(R.string.settings_section_personal)
-        addToggleRow(R.string.settings_personal_learning, R.string.settings_personal_learning_summary,
-            settings.personalLearning) { preferences.writePersonalLearning(it) }
-        addToggleRow(R.string.settings_touch_personalization, R.string.settings_touch_personalization_summary,
-            settings.touchPersonalization) { preferences.writeTouchPersonalization(it) }
-        addToggleRow(R.string.settings_phrase_suggestions, R.string.settings_phrase_suggestions_summary,
-            settings.phraseSuggestions) { preferences.writePhraseSuggestions(it) }
+        addAdditionalFeature(SettingsCodec.KEY_PERSONAL_LEARNING)
+        addAdditionalFeature(SettingsCodec.KEY_TOUCH_PERSONALIZATION)
+        addAdditionalFeature(SettingsCodec.KEY_PHRASE_SUGGESTIONS)
         addNavigationRow(R.string.confirmed_words_title, getString(R.string.confirmed_words_intro)) {
             startActivity(Intent(this, ConfirmedWordsActivity::class.java))
         }
@@ -554,6 +536,16 @@ class SettingsActivity : ThemedActivity() {
         val row = newRow(getString(titleRes), summary)
         row.setOnClickListener { onClick() }
         record(row, titleRes)
+    }
+
+    private fun addAdditionalFeature(key: String) {
+        val feature = AdditionalFeatures.forKey(key)
+        addToggleRow(feature.title, feature.summary, feature.value.get(settings)) { enabled ->
+            preferences.writeAdditionalFeature(feature.key, enabled)
+            if (feature.key == SettingsCodec.KEY_COLLECT_EXAMPLES || feature.key == SettingsCodec.KEY_TYPO_PATTERNS) {
+                syncLearningJob()
+            }
+        }
     }
 
     private fun addToggleRow(
