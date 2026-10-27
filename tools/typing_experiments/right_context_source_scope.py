@@ -6,17 +6,18 @@ The caller must compare the original and the whole complete retrieved pool.
 """
 import math
 import re
-from right_context_grammar_features import FEATURE_NAMES, RightContextGrammarFeatures
+from right_context_grammar_features import FEATURE_NAMES
+from right_context_subject_evidence import ReliableRightContextGrammarFeatures
 
 _WORD = re.compile('[а-яёА-ЯЁ]{3,32}\\Z')
 
 
 class RightContextSourceScope:
-    VERSION = 1
+    VERSION = 2
 
     def __init__(self, lexicon):
         self.lexicon = lexicon
-        self.features = RightContextGrammarFeatures(lexicon)
+        self.features = ReliableRightContextGrammarFeatures(lexicon)
 
     def precondition_refusal(self, *, right_context, original, previous, generation,
                              joint_search, previous_owned, original_selected):

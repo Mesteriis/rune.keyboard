@@ -1,0 +1,153 @@
+{
+  "stage": "v5-other-part-training-source-v2-cue-fix-calibration-not-qualified",
+  "modelSha256": "44327fbfc294b7568292702ab8b43f8d3a0c951458f5c5bc1fc89ca065e1b16b",
+  "sourceVersion": 2,
+  "training": {
+    "groups": 9094,
+    "candidateRows": 134459,
+    "counts": {
+      "unknown_originalGroups": 4251,
+      "unknown_originalTargetFirst": 4077,
+      "correct_originalGroups": 1531,
+      "correct_originalTargetFirst": 1531,
+      "insufficient_right_evidenceGroups": 3312,
+      "insufficient_right_evidenceTargetFirst": 3304
+    },
+    "scalarVsCatBoostMaxAbsoluteDifference": 3.751398214291157e-08,
+    "trainingOnly": true
+  },
+  "freshCorpusCounts": {
+    "calibration": {
+      "rows": 5800,
+      "contexts": 1240,
+      "groups": {
+        "hard_other_part_negative": 400,
+        "agreement_role_negative": 40,
+        "direct_subject_positive": 400,
+        "ordinary_other_part_negative": 400
+      },
+      "families": 665,
+      "controls": 3320,
+      "unfinishedControls": 1240
+    },
+    "holdout": {
+      "rows": 5776,
+      "contexts": 1235,
+      "groups": {
+        "hard_other_part_negative": 400,
+        "agreement_role_negative": 36,
+        "direct_subject_positive": 400,
+        "ordinary_other_part_negative": 399
+      },
+      "families": 693,
+      "controls": 3306,
+      "unfinishedControls": 1235
+    }
+  },
+  "sourceV1Calibration": {
+    "calibrationFitPassed": false,
+    "statistics": {
+      "scoredPools": 1144,
+      "scoredPrefixes": 3917
+    },
+    "refusals": {
+      "UNCHANGED": 3018,
+      "ORIGINAL_PROTECTED": 6811,
+      "PREVIOUS_OWNERSHIP_UNPROVEN": 4082,
+      "INVALID_RETRIEVED_POOL": 30,
+      "INVALID_PROPOSAL_METADATA": 160,
+      "PROPOSAL_NOT_UNAMBIGUOUS_SHORT_PREDICATE": 58,
+      "SEARCH_INCOMPLETE": 120,
+      "INPUT_OR_PREFIX_CHANGED": 228,
+      "TARGET_NOT_UNAMBIGUOUSLY_KNOWN": 95,
+      "CONTRADICTORY_RIGHT_NUMBER_CUE": 4,
+      "INVALID_WORD_INPUT": 14,
+      "CONTRADICTORY_RIGHT_GENDER_CUE": 1
+    },
+    "candidatePolicy": null,
+    "independentHoldoutEvaluated": false,
+    "productionQualified": false
+  },
+  "sourceV2Calibration": {
+    "calibrationFitPassed": false,
+    "statistics": {
+      "scoredPools": 472,
+      "scoredPrefixes": 1388
+    },
+    "refusals": {
+      "UNCHANGED": 1113,
+      "ORIGINAL_PROTECTED": 6811,
+      "PREVIOUS_OWNERSHIP_UNPROVEN": 4082,
+      "NO_COMPLETED_RIGHT_CUE": 2529,
+      "INVALID_RETRIEVED_POOL": 30,
+      "INVALID_PROPOSAL_METADATA": 66,
+      "SEARCH_INCOMPLETE": 120,
+      "INPUT_OR_PREFIX_CHANGED": 228,
+      "TARGET_NOT_UNAMBIGUOUSLY_KNOWN": 19,
+      "CONTRADICTORY_RIGHT_NUMBER_CUE": 4,
+      "PROPOSAL_NOT_UNAMBIGUOUS_SHORT_PREDICATE": 24,
+      "INVALID_WORD_INPUT": 14,
+      "CONTRADICTORY_RIGHT_GENDER_CUE": 1
+    },
+    "candidatePolicy": null,
+    "independentHoldoutEvaluated": false,
+    "productionQualified": false
+  },
+  "reliableGoldCoverageUpperBound": 23,
+  "coverageAuditIsNotPolicy": true,
+  "frozenModelFeatureDefinitionsChanged": false,
+  "independentHoldoutEvaluated": false,
+  "productionQualified": false,
+  "applicationInstalled": false,
+  "sourceV1SnapshotCommit": "af2fff2",
+  "checks": {
+    "focusedPythonTests": {
+      "count": 85,
+      "outcome": "PASS"
+    },
+    "trainingReplay": {
+      "queries": 1007,
+      "outcome": "PASS"
+    },
+    "freshBaselineReplay": {
+      "rows": 5800,
+      "outcome": "PASS"
+    },
+    "exportedScalarParity": "PASS",
+    "matchedCorpusAvailability": "FAIL: 25/20 contexts instead of 400/400; holdout 19 families instead of 20",
+    "androidBuild": "NOT_RUN",
+    "deviceAcceptance": "NOT_RUN"
+  },
+  "bindings": {
+    "build/right-context-training-v5-20261027/frozen-model.json": "fe2b970f686058436465902275bcb5106f61a9835310a77f9b95f021e024054f",
+    "build/right-context-training-v5-20261027/plan.json": "0857553222ddbbec38f6a12ad6dea4fa2452098b85d5c1f84ec283d68fe504e1",
+    "build/right-context-training-v5-20261027/corpus/manifest.json": "ab7a8da1297e05fe6b6fd4d6d02a0a628c567e012e7daef752ff25b8e307c702",
+    "build/right-context-training-v5-20261027/selection.json": "539cefc6a733117876ed498237d7985ca77c67fc2782b45cb4d122877de57c3a",
+    "build/right-context-training-v5-20261027/training-diagnostic.json": "bb42d871af5f0dd64b4ee6ce42455d72f4465d0b914a8dca875bb83c6a221540",
+    "build/right-context-training-v5-20261027/scenario-audit.json": "d51ecc34431f5a04155c654e2fc381bbc39f2b2bda3fcd5486461ec31735bb25",
+    "build/right-context-training-v5-20261027/source-scope-v1.snapshot.py": "a2711dec680f0de01c33469e2444d5e252aabd12a6167efbc0288a92360d70d5",
+    "build/right-context-training-v5-20261027/python-final-tests.log": "e2d1eace65b4478c73b2325ac7c52c62ede370acce48fc26084ac9a9e79857a9",
+    "build/right-context-training-v5-20261027/production-pools/receipt.json": "b47c6caf57f5a2e3d01f1bd34d54826694e650adcccedbff3658af6a764c80d4",
+    "build/right-context-fresh-side-v5-20261027/corpus/manifest.json": "e99d69c161e645479c557ef169facb55740572953258ae39325779ee2a6b2504",
+    "build/right-context-fresh-side-v5-20261027/plan.json": "1d27c2c87c7da4dfa30b231e3384ecb191da9231c34b32775b304e693093701f",
+    "build/right-context-fresh-side-v5-20261027/baseline-calibration/receipt.json": "dabc0a6a8b54b14203920bf58760d5903f9b1a9003b62ce7db9c627f68c2d241",
+    "build/right-context-fresh-calibration-v5-20261027/scoring-plan.json": "c3ae82337b517a32dffdc5f7ad2e4a5e8c0478f2b6d114de4a85e08c4fc79832",
+    "build/right-context-fresh-calibration-v5-20261027/calibration-result.json": "5a9feb66e1e02789d50ef93a9446be7a232317af78f0e17ab041032433ed77a0",
+    "build/right-context-fresh-calibration-v5-20261027/coverage-audit.json": "96abd212272e30eab92f98389df8fb8a71645962be24f043e4f57f6002f9f131",
+    "build/right-context-reliable-source-v5-20261027/scoring-plan.json": "c86bfb52fcedf3089a59477d0b21fb5530f64befe9a40a1ae969984e69e2ccc6",
+    "build/right-context-reliable-source-v5-20261027/calibration-result.json": "3b9958812b4165faeba73efd713653e35d826bf5bfd7aaeebb505d078e6aa7f1",
+    "build/right-context-reliable-source-v5-20261027/coverage-audit.json": "b4fafd2db9d3fe82eac47634a56b0bee1f2d164d9666204dbdcbf3de785a448f",
+    "build/right-context-reliable-source-v5-20261027/dictionary-audit.json": "d1464c7b03dea8ce256348ad1bfb0c838e11901aec3a7fb79c11bcac322d4ddc",
+    "build/right-context-fresh-matched-v5-20261027/availability.json": "83e5637e7fdc84f911d985e5c2a62bf0a761050bb06f5ba5c5ed5935fc76af64",
+    "build/right-context-fresh-matched-v5-20261027/plan.json": "64dc2bcf7040afd33108de0881951752f246486570cdc44d92a161a87f96d4ab",
+    "build/right-context-reliable-side-v5-20261027/prepare.py": "bcedc46c4e063b6af7dbba43b521a32eee230ea69186bfcab21c33303151fecd",
+    "build/right-context-reliable-side-v5-20261027/plan.json": "112bcc0f629de72b9e6c3f2e8e3c4d2b1ff1254c78e61a8ce2e614412b8eb644",
+    "tools/typing_experiments/right_context_other_part_corpus.py": "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24",
+    "tools/typing_experiments/test_right_context_other_part_corpus.py": "7efbd2e4ebc74e496cdde862b2ca7205fdcae75aef1fd0baf8941a9fb77d54d6",
+    "tools/typing_experiments/right_context_training_exclusion.py": "188bb9508f6733a58ea461bb7769af498334502980331ebce36cbb9e8fe58247",
+    "tools/typing_experiments/test_right_context_training_exclusion.py": "5f98bb0677a6379b830e8b796e769d2e04b90e77d9027eedd44022e97cc873e5",
+    "tools/typing_experiments/right_context_subject_evidence.py": "353d2f7b9451923045bd7c97cb8c905198c30683539914e82f603b70352e1a4d",
+    "tools/typing_experiments/test_right_context_subject_evidence.py": "3e0d1dbfeb844d662a1864f7a7b8b7d3fe674b320c49350953d53e9645e5f1ef",
+    "tools/typing_experiments/right_context_source_scope.py": "b5ed4364b40e246cea1cebc77d4d6af39836a2d80cb0e79694bf406bbb5550c1"
+  }
+}
