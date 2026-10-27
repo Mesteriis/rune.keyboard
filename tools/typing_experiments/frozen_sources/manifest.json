@@ -1,9 +1,17 @@
 {
   "schema": 1,
   "sources": {
+    "05a8f53610b0f9dc4b3cfd55ffa236c30f3fbfe87118218cd6c7a8df6c8f2e2f": {
+      "file": "natural_collector_05a8f53610b0f9dc.py",
+      "originalPath": "build/right-context-wiki0015-20261027/collect.py"
+    },
     "14ceb1c0cbe8b20e9d12db83d5983999a97fff0e1e1b080409c65ed4f7d65fa0": {
       "file": "qualification_v3_source_lock_14ceb1c0cbe8b20e.json",
       "originalPath": "tools/eval/smart-typing-0.3/qualification-v3/source-lock.json"
+    },
+    "22e4e2bfd2cd46337b4ddcb7fbd30f4c265fbcab2c72bb32dfbfd6a1e6303eee": {
+      "file": "natural_collector_22e4e2bfd2cd4633.py",
+      "originalPath": "build/right-context-wiki0014-20261027/collect.py"
     },
     "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65": {
       "file": "qualification_v2_2cbcb2508ef66b32.py",
@@ -29,9 +37,17 @@
       "file": "prepare_joint_followup_964b7c6505cf5b3a.py",
       "originalPath": "tools/typing_experiments/prepare_joint_followup.py"
     },
+    "af8ca660679d2d70ac6b9eb45ca62f69f264f445c415f55afcd7cef4489fc619": {
+      "file": "natural_collector_af8ca660679d2d70.py",
+      "originalPath": "build/right-context-wiki0013-20261027/collect.py"
+    },
     "b9cc4859e08021f851711bcabff12d329d6219312d3d988157b9716a1af574b6": {
       "file": "prepare_joint_followup_b9cc4859e08021f8.py",
       "originalPath": "tools/typing_experiments/prepare_joint_followup.py"
+    },
+    "ba32729d021b40cead0700f7d8ba1b56d7d0422d4042d4540c189db3ada6cb0f": {
+      "file": "natural_collector_ba32729d021b40ce.py",
+      "originalPath": "build/right-context-wiki0012-20261027/collect.py"
     },
     "cfa5777d2a2ac53ffb339aa56b34d57c4a4a6a0ec1a712b1867b857d85043728": {
       "file": "prepare_joint_correction_cfa5777d2a2ac53f.py",
@@ -41,9 +57,21 @@
       "file": "qualification_v2_source_lock_e3ad381de42a6ac0.json",
       "originalPath": "tools/eval/smart-typing-0.3/qualification-v2/source-lock.json"
     },
+    "e44a0e180658170ea33617846aeab2c6d0a66177f8e6d5bce43b91e7dfd14c6e": {
+      "file": "natural_collector_e44a0e180658170e.py",
+      "originalPath": "build/right-context-wiki0017-20261027/collect.py"
+    },
     "ed9928d64d80911c0182e03446d710a60abb990cb5fb1cff30730443db773225": {
       "file": "qualification_v2_ed9928d64d80911c.py",
       "originalPath": "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py"
+    },
+    "f0e7696dbcca03c1896c54f1f36862042e2412e057f224980af9a21b5092ede2": {
+      "file": "natural_collector_f0e7696dbcca03c1.py",
+      "originalPath": "build/right-context-wikipedia-20261027/collect.py"
+    },
+    "f84bdc1a990bd422c2d0a1edf52510a63c1905269244345930128323febb801e": {
+      "file": "natural_collector_f84bdc1a990bd422.py",
+      "originalPath": "build/right-context-wiki0016-20261027/collect.py"
     }
   }
 }

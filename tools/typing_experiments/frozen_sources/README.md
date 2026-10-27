@@ -45,3 +45,9 @@ Exact qualification source-lock JSON files v2-v4 are preserved as well. Their
 manifest hashes, original paths, seeds, article selection rules and RU Parquet
 bindings are checked before early source recovery. Restoration used matching
 Git blobs; no source-lock field was rewritten to fit the current environment.
+
+Seven original public-context availability collectors are archived at the exact
+hashes in the frozen natural-pool plan. They are evidence only: do not execute
+their top levels from this directory. They refer to old model/input paths and
+write original plans. The history importer verifies output source captures
+without invoking their models or interpreting their scores.

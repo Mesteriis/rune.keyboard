@@ -35,6 +35,7 @@ jobs:
           python3 -m unittest discover -s tools/typing_experiments -p test_public_corpus_preparation_v1.py
           python3 -m unittest discover -s tools/typing_experiments -p test_prepare_public_spelling_v1.py
           python3 -m unittest discover -s tools/typing_experiments -p test_prepare_public_controls_v1.py
+          python3 -m unittest discover -s tools/typing_experiments -p test_import_natural_context_history.py
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

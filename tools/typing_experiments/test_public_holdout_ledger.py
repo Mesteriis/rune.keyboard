@@ -52,6 +52,11 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:article'):
             assert_disjoint([dict(article='4027525')],self.ledger,kinds=('article',))
 
+    def test_all_verified_natural_context_pools_survive_without_original_files(self):
+        entries=[e for e in self.ledger['entries'] if e['id'].startswith('public-natural-context-pool-')]
+        self.assertEqual(7,len(entries));self.assertEqual(1204,sum(e['rowCount'] for e in entries))
+        self.assertTrue(all(not e['missingAxes'] and set(e['keys'])=={'article','sentence','context','family'} for e in entries))
+
     def test_historical_overlap_disclosure_matches_recorded_keys(self):
         scope={f'public-spelling-v{v}' for v in range(7,13)}|{'public-legacy-spelling-v6'}|{
             'public-early-ru-'+name for name in ('qualification-v2','compact-v3','compact-v4')}

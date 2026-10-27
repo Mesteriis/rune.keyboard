@@ -182,3 +182,12 @@ together, including language-qualified punctuation articles. See
 [PUBLIC_CORPUS_PREPARATION_V1.md](PUBLIC_CORPUS_PREPARATION_V1.md). The old hash-bound
 builders remain unchanged. Current incomplete coverage rejects final publication;
 source/label/model qualification is separate.
+
+`import_natural_context_history.py` adds the seven pinned historical public
+Wikipedia availability pools (1,204 contexts). Every prefix/target/right-context
+capture is checked against its original Parquet article, and source-window
+hashes are recomputed. Both target and rival dictionary analyses are excluded;
+all are dictionary-supported in these pools, so their four lexical axes are
+complete. This does not complete global history coverage. The exact original
+collectors are archived without executing their model/file-writing top levels.
+Their remaining runtime/dependent inputs are not claimed reproducible here.
