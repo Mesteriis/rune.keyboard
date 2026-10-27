@@ -93,6 +93,13 @@ flags are refused. It does not stash, restore wrappers, edit Git metadata or
 accept an arbitrary dirty checkout. The property selects a reviewed source
 transformation; it is not proof that a particular service performed it.
 
+The qualification verifier also requires this global checkpoint before accepting
+the two example-wrapper deletions inside llama.cpp. Its separate fixed runtime
+check refuses every other submodule delta, even if a future committed preparation
+policy describes it. Compiled C/C++ changes still cannot retain the old runtime
+build identity. Ordinary qualification verification keeps its clean-submodule
+requirement.
+
 Refresh the fixed hashes deliberately when the app build script or any listed
 original changes. Use the actual pinned fdroidserver signing transformation to
 obtain the replacement hash, then repeat preparation/scanning/build validation

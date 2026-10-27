@@ -254,6 +254,7 @@ val qualificationArtifacts = tasks.register<Exec>("qualificationArtifacts") {
     group = "verification"
     workingDir(rootProject.projectDir)
     commandLine("python3", rootProject.file("tools/qualification_artifacts.py"))
+    providers.gradleProperty("runePreparedSource").orNull?.let { args("--prepared-source", it) }
 }
 tasks.named("preBuild").configure { dependsOn(qualificationArtifacts) }
 
@@ -291,7 +292,8 @@ val releaseSourceCheckTests = tasks.register<Exec>("releaseSourceCheckTests") {
     group = "verification"
     workingDir(rootProject.projectDir)
     inputs.files(rootProject.file("tools/release_source_check.py"), rootProject.file("tools/test_release_source_check.py"),
-        rootProject.file("tools/fdroid_prepared_source.py"), rootProject.file("tools/test_fdroid_prepared_source.py"))
+        rootProject.file("tools/fdroid_prepared_source.py"), rootProject.file("tools/test_fdroid_prepared_source.py"),
+        rootProject.file("tools/qualification_artifacts.py"), rootProject.file("tools/test_qualification_prepared_source.py"))
     commandLine("python3", "-m", "unittest", "discover", "-s", "tools", "-p", "test_*source*.py")
 }
 
