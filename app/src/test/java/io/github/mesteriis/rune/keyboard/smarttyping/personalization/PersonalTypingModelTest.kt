@@ -83,6 +83,50 @@ class PersonalTypingModelTest {
         assertFalse(model.protectsOriginal("z".repeat(49), en))
     }
 
+    @Test fun `long owned prefixes still accumulate and suggest their trailing phrase`() {
+        val model = model()
+        val prefix = "world ".repeat(120) + "see you "
+        repeat(2) { model.recordPhrase(prefix, "soon", en) }
+        assertTrue(model.suggestions(prefix, en).isEmpty())
+        model.recordPhrase(prefix, "soon", en)
+        assertEquals(listOf("soon"), model.suggestions(prefix, en).map { it.text })
+        assertEquals(3, model.snapshot().phrases.single { it.prefix == "see you" }.support)
+        assertTrue(model.snapshot().confirmed.isEmpty())
+        assertTrue(model.snapshot().feedback.isEmpty())
+    }
+
+    @Test fun `window clipping cannot turn a word fragment into phrase context`() {
+        val model = model()
+        repeat(3) { model.recordPhrase("see", "you soon", en) }
+        val before = model.snapshot()
+        val clippedWord = "x".repeat(32) + "see" + " ".repeat(PersonalTypingModel.MAX_CONTEXT_CHARS - 3)
+        assertTrue(model.suggestions(clippedWord, en).isEmpty())
+        repeat(3) { model.recordPhrase(clippedWord, "soon", en) }
+        assertEquals(before, model.snapshot())
+        assertTrue(PersonalTypingModel.contextWords("x".repeat(513)).isEmpty())
+    }
+
+    @Test fun `a real word boundary at the window start preserves the complete word`() {
+        val model = model()
+        val prefix = "world ".repeat(100) + "see" + " ".repeat(PersonalTypingModel.MAX_CONTEXT_CHARS - 3)
+        repeat(3) { model.recordPhrase(prefix, "you", en) }
+        assertEquals(listOf("you"), model.suggestions(prefix, en).map { it.text })
+    }
+
+    @Test fun `long context keeps sentence message and invalid target protections`() {
+        val model = model()
+        val prefix = "world ".repeat(120)
+        repeat(3) { model.recordPhrase(prefix + "hello. see you", "soon", en) }
+        assertEquals(listOf("soon"), model.suggestions(prefix + "see you ", en).map { it.text })
+        for (boundary in listOf(".", "\n", "\t", "@", "7", "😀")) {
+            assertTrue(model.suggestions(prefix + "see you" + boundary + " ", en).isEmpty())
+            val before = model.snapshot()
+            repeat(3) { model.recordPhrase(prefix + "see you" + boundary, "soon", en) }
+            assertEquals(before, model.snapshot())
+        }
+        assertTrue(model.suggestions(prefix + "see you ", ru).isEmpty())
+    }
+
     @Test fun `full rejection table fails closed for new pairs until reset`() {
         val model = model()
         repeat(PersonalTypingModel.MAX_FEEDBACK + 1) {

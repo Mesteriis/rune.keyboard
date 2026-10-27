@@ -1,0 +1,163 @@
+{
+  "artifactBindings": {
+    "build/review-u12-20261027/after-summary.json": "e2f67638d169150495298a7ae58b06ef6bb5e159ce6404a66b9119c3cb5cfb02",
+    "build/review-u12-20261027/after.log": "5f40cb29bb8002ea15c9ac3fdc4c3874ba34ec0f632e208d2cd12a4944b0143d",
+    "build/review-u12-20261027/before-summary.json": "1d19ef77c04d85e12de4f121a1522b94aa34598506cb1188d198e02c3f81832b",
+    "build/review-u12-20261027/before.log": "5497e811bd913490f9d357ff5092c76d35e1a54c4d34f9bcc0ea2c6525ba96ec",
+    "build/review-u12-20261027/integration.log": "58b1c30f219654f7d8fde6806b4399f9d87c6c2e100e9d91774d945b863d7163"
+  },
+  "baseCommit": "8780b5379f7dd1b98b39d050e470141817769419",
+  "changedRuntimeScope": "PersonalTypingModel.contextWords only",
+  "checks": [
+    {
+      "command": [
+        "./gradlew",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "*PersonalTypingModelTest",
+        "--tests",
+        "*TypingSessionControllerTest",
+        "--tests",
+        "*CorrectionBoundaryTest",
+        "--console=plain"
+      ],
+      "exitCode": 1,
+      "phase": "before implementation",
+      "summary": {
+        "exitCode": 1,
+        "suites": [
+          {
+            "errors": 0,
+            "failedTests": [
+              "long editor session learns phrases and inserts continuation only after current tap"
+            ],
+            "failures": 1,
+            "name": "io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest",
+            "skipped": 0,
+            "tests": 98
+          },
+          {
+            "errors": 0,
+            "failedTests": [
+              "long owned prefixes still accumulate and suggest their trailing phrase",
+              "long context keeps sentence message and invalid target protections",
+              "a real word boundary at the window start preserves the complete word"
+            ],
+            "failures": 3,
+            "name": "io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingModelTest",
+            "skipped": 0,
+            "tests": 11
+          },
+          {
+            "errors": 0,
+            "failedTests": [
+              "phrase learning and continuations survive rolling long session context"
+            ],
+            "failures": 1,
+            "name": "io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest",
+            "skipped": 0,
+            "tests": 56
+          }
+        ]
+      }
+    },
+    {
+      "command": [
+        "./gradlew",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "*PersonalTypingModelTest",
+        "--tests",
+        "*TypingSessionControllerTest",
+        "--tests",
+        "*CorrectionBoundaryTest",
+        "--console=plain"
+      ],
+      "exitCode": 0,
+      "phase": "after implementation",
+      "summary": {
+        "exitCode": 0,
+        "suites": [
+          {
+            "errors": 0,
+            "failures": 0,
+            "name": "io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest",
+            "skipped": 0,
+            "tests": 98
+          },
+          {
+            "errors": 0,
+            "failures": 0,
+            "name": "io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingModelTest",
+            "skipped": 0,
+            "tests": 11
+          },
+          {
+            "errors": 0,
+            "failures": 0,
+            "name": "io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest",
+            "skipped": 0,
+            "tests": 56
+          }
+        ]
+      }
+    },
+    {
+      "boundaryFixtures": {
+        "negative": 17,
+        "positive": 6
+      },
+      "command": [
+        "./gradlew",
+        ":app:testDebugUnitTest",
+        ":app:imeIntelligenceBoundary",
+        ":app:privacyGateRelease",
+        "--console=plain"
+      ],
+      "diagnosticsPackaging": [
+        "debug",
+        "release"
+      ],
+      "errors": 0,
+      "exitCode": 0,
+      "failures": 0,
+      "jvmSuites": 123,
+      "privacyGateRelease": true,
+      "scoringDependencyBoundary": [
+        "debug",
+        "release",
+        "profile"
+      ],
+      "skipped": 0,
+      "tests": 1159
+    }
+  ],
+  "deviceInstallPerformed": false,
+  "newTests": 6,
+  "previousModelSha256": "e245dfec3b31e8ced9d97394d844cff34d593ea15d2361c5eda181835ff3913c",
+  "purpose": "U12_PERSONAL_PHRASE_OWNED_CONTEXT_TAIL_FIX",
+  "regressionCases": [
+    "long prefix learning reaches support three",
+    "complete word at a real window boundary survives",
+    "clipped leading word cannot become phrase context",
+    "513 letters without a boundary remain invalid",
+    "message punctuation symbol digit and language protections",
+    "rolling owned session beyond 1024 ASCII characters",
+    "independent editor exact text and explicit continuation tap with no content reads"
+  ],
+  "releaseArtifact": {
+    "bytes": 278320533,
+    "path": "app/build/outputs/apk/release/app-release.apk",
+    "sha256": "890295b29425e45744e326fb0d7a622835f0d1261bb3d8da520f4995360b3c8e"
+  },
+  "remoteCiRun": false,
+  "sourceBindings": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/AndroidTypingPersonalization.kt": "0d9ec12d15e907eb74a02bfac32e39003f4539cf7cfe4ca79f2f3654f299f9b7",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/PersonalTypingModel.kt": "91bd0b1354f011b538669ec85c65eae3a79a006f28339e734e73f62e08f6cbb3",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "ccdd98ff727e4449d63e301bf4f6414a42fe29e0f36ef9ea1b10c20917b64bc3",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/PersonalTypingModelTest.kt": "b8ded9c72febb459e35d48dc2adbec5f75fc3863ab72a45614f38e6e2fc0dcb3",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/CorrectionBoundaryTest.kt": "295085d57f8260787cad64e33a84e0d5cbb0dce01d9188aa7589d7c82b9a9d8e",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionControllerTest.kt": "90411cbba1e7bef27a04c767546d98368cfcf8e0ba4f4dfee8d24be0cd06556a"
+  }
+}

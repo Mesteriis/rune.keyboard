@@ -162,10 +162,17 @@ class PersonalTypingModel(
         }
 
         internal fun contextWords(value: String): List<String> {
-            if (value.length > MAX_CONTEXT_CHARS) return emptyList()
+            val start = (value.length - MAX_CONTEXT_CHARS).coerceAtLeast(0)
+            var bounded = value.substring(start)
+            // A clipped leading word must not become a new context word.
+            if (start > 0 && value[start - 1].isLetter() && bounded.first().isLetter()) {
+                val boundary = bounded.indexOfFirst { !it.isLetter() }
+                if (boundary < 0) return emptyList()
+                bounded = bounded.substring(boundary)
+            }
             // Every punctuation/symbol/control/digit is a boundary, including newline/message separators.
-            val boundary = value.indexOfLast { !it.isLetter() && it != ' ' }
-            val tail = value.substring(boundary + 1).trim(' ')
+            val boundary = bounded.indexOfLast { !it.isLetter() && it != ' ' }
+            val tail = bounded.substring(boundary + 1).trim(' ')
             if (tail.isEmpty()) return emptyList()
             return tail.split(' ').filter(String::isNotEmpty).takeLast(2).map {
                 normalizeWord(it) ?: return emptyList()

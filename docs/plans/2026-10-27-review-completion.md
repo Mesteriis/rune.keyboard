@@ -12,8 +12,11 @@ Q6. The latest Q6 receipt is
 source-only tests pass, the lexical ledger has 113 entries, and global coverage
 is explicitly incomplete. Q9's source/JVM acceptance is verified in
 `docs/acceptance/2026-10-27-q9-frozen-asset-identity.md` (nine new identity/mutation
-tests; full app suite: 1,153 tests, no failures/errors/skips). Other cards remain
-open until their complete acceptance evidence is established.
+tests; full app suite: 1,153 tests, no failures/errors/skips). U12's model and
+controller acceptance is verified in
+`docs/acceptance/2026-10-27-u12-personal-context-tail.md` (old-code reproduction,
+six new regressions, all 1,159 app JVM tests and boundary/release privacy gates
+pass). Other cards remain open until their complete evidence is established.
 
 ## Acceptance inventory
 
@@ -34,7 +37,7 @@ open until their complete acceptance evidence is established.
 | U9 | Emoji panel and row layout; context boundary, ZWJ/flag/modifier insertion and deletion; accessibility, opening/startup budgets, Fold displays and API 26 font. | Open |
 | U10 | NO_SUGGESTIONS/AUTO_COMPLETE/FILTER combinations; hidden strip and no correction/model calls; unchanged search submission and frozen replay. | Open |
 | U11 | Explicit experimental model status; separately calibrated in-process EN ranker; fresh family/article-separated holdout, protected forms, exact Undo, model comparison and device budgets. | Open |
-| U12 | Tail-based personal phrase context with partial-token protection; >512-character session continuation and accumulated phrases. | Open |
+| U12 | Tail-based personal phrase context with partial-token protection; >512-character session continuation and accumulated phrases. | Verified locally; receipt above |
 | U13 | Reproduce charging/screen-off retry without forced Doze; policy tests; observed promotion in the night window on emulator. | Open |
 | U14 | Measure expanded-strip utility first; view limits and touch invalidation; first-two replay parity, stable Fold layout and API 26 accessibility. | Open |
 | U15 | Mode-key alternatives and voice command handling; popup/picker/TalkBack; Fold with/without voice IME; privacy regression. | Open |

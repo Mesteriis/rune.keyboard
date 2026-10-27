@@ -3,6 +3,12 @@ package io.github.mesteriis.rune.keyboard.smarttyping.session
 import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
+import io.github.mesteriis.rune.keyboard.ime.model.EditorMode
+import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
+import io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingModel
+import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -13,6 +19,35 @@ class TypingSessionControllerTest {
     private val controller = TypingSessionController(jvmGraphemes)
     private val edits = mutableListOf<TypingEdit>()
     private val execute: (TypingEdit) -> Boolean = { edits.add(it); true }
+
+    @Test fun `phrase learning and continuations survive rolling long session context`() {
+        val language = KeyboardLanguage.ENGLISH
+        val model = PersonalTypingModel { word, lang -> lang == language && word in setOf("world", "see", "you", "soon") }
+        var longestCommittedPrefix = 0
+        controller.setPersonalization(object : TypingPersonalization {
+            override fun committed(prefix: String, word: String, retypedFrom: String?, language: KeyboardLanguage) {
+                longestCommittedPrefix = maxOf(longestCommittedPrefix, prefix.length)
+                model.recordPhrase(prefix, word, language)
+            }
+            override fun continuations(context: String, language: KeyboardLanguage) = model.suggestions(context, language).map { it.text }
+        }, language)
+        start()
+        val session = controller.state.sessionId
+        val policy = MechanicalPunctuationPolicy(InputPolicy.NORMAL, EditorMode.TEXT, false, false, false)
+        fun type(word: String) {
+            assertEquals(TypingTextResult.HANDLED, controller.typeText(word, policy, KeyboardState(language), execute = execute))
+        }
+        repeat(200) { type("world"); type(" ") }
+        repeat(3) { for (word in listOf("see", "you", "soon")) { type(word); type(" ") } }
+        type("see"); type(" "); type("you"); type(" ")
+        assertEquals(session, controller.state.sessionId)
+        assertTrue(controller.state.enabled)
+        assertTrue(longestCommittedPrefix > PersonalTypingModel.MAX_CONTEXT_CHARS)
+        assertTrue(controller.state.contextText.length > PersonalTypingModel.MAX_CONTEXT_CHARS)
+        assertTrue(controller.state.contextText.length <= 1_024)
+        assertEquals(3, model.snapshot().phrases.single { it.prefix == "see you" && it.continuation == "soon" }.support)
+        assertEquals(listOf("soon"), controller.candidateViewState.candidates.map { it.text })
+    }
 
     @Test
     fun `original candidate selection is scoped to current session and revision without editor writes`() {

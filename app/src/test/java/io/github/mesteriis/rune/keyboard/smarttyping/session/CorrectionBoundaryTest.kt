@@ -10,12 +10,39 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.*
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.*
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature
+import io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingModel
 import java.lang.reflect.Proxy
 import org.junit.Assert.*
 import org.junit.Test
 
 /** Real owner/executor with an independent editor document. Synthetic quality admission only. */
 class CorrectionBoundaryTest {
+    @Test fun `long editor session learns phrases and inserts continuation only after current tap`() {
+        val f = Fixture()
+        val language = KeyboardLanguage.ENGLISH
+        val model = PersonalTypingModel { word, lang -> lang == language && word in setOf("world", "see", "you", "soon") }
+        f.controller.setPersonalization(object : TypingPersonalization {
+            override fun committed(prefix: String, word: String, retypedFrom: String?, language: KeyboardLanguage) =
+                model.recordPhrase(prefix, word, language)
+            override fun continuations(context: String, language: KeyboardLanguage) = model.suggestions(context, language).map { it.text }
+        }, language)
+        val session = f.controller.state.sessionId
+        repeat(100) { f.type("world"); f.type(" ") }
+        repeat(3) { for (word in listOf("see", "you", "soon")) { f.type(word); f.type(" ") } }
+        f.type("see"); f.type(" "); f.type("you"); f.type(" ")
+        val before = "world ".repeat(100) + "see you soon ".repeat(3) + "see you "
+        assertEquals(before, f.document)
+        assertEquals(session, f.controller.state.sessionId)
+        assertTrue(f.controller.state.enabled)
+        assertTrue(f.controller.state.contextText.length > PersonalTypingModel.MAX_CONTEXT_CHARS)
+        val continuation = f.controller.candidateViewState.candidates.single()
+        assertEquals("soon", continuation.text)
+        assertEquals(TypingTextResult.HANDLED, f.controller.selectCandidate(continuation.id, f.execute))
+        assertEquals(before + "soon ", f.document)
+        assertEquals(4, model.snapshot().phrases.single { it.prefix == "see you" && it.continuation == "soon" }.support)
+        assertFalse(f.calls.any { it.startsWith("get") })
+    }
+
     @Test fun `noun case revision needs its own qualification and admission and keeps exact undo`() {
         for (qualified in listOf(false, true)) for (admitted in listOf(false, true)) {
             val f = Fixture(nounCaseQualified = qualified)
