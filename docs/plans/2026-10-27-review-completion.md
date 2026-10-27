@@ -45,6 +45,7 @@ U4 is verified locally in `docs/acceptance/2026-10-27-u4-reported-span-cleanup.m
 U5 is verified locally in `docs/acceptance/2026-10-27-u5-confirmed-words.md`: confirmed-word list/filter/removal, preserved pair/phrase evidence, capacity/error messages, 1,195 JVM tests, five guarded emulator scenarios including process restart and write-failure retry, and unchanged 12,000-row ordinary replay.
 U6 has a verified registry/experiment-page slice in `docs/acceptance/2026-10-27-u6-settings-registry.md`: 18 shared feature definitions, atomic disable-all coverage, 1,199 JVM tests and eight emulator menu/tool scenarios plus a strengthened visible-target rerun. That first slice left dependencies, Switch, manual TalkBack and screenshot acceptance for the follow-up below.
 The second U6 slice is in `docs/acceptance/2026-10-27-u6-switch-dependencies.md`: dependency states and RU badge, framework Switch with native node semantics, 1,202 JVM tests, 25 distinct emulator scenarios in bounded groups and updated Russian screenshots. Manual TalkBack is still required; U6 remains in progress.
+U8 has selection-protocol evidence in `docs/acceptance/2026-10-27-u8-selection-prototype.md`: flags-only Shift fails to extend in the actual EditText, explicit Shift pairs extend/select across emoji and release, and three final emulator tests prove six zero payload-read counters. This is a test-only prototype; production editing behavior and the remaining U8 acceptance are not implemented.
 Other cards remain open until their complete evidence is established.
 
 ## Acceptance inventory
@@ -62,7 +63,7 @@ Other cards remain open until their complete evidence is established.
 | U5 | Visible confirmed-word list and individual deletion; preserve pair rejections; phrase validation, capacity and restart persistence; privacy/user documentation. | Verified locally; receipt above |
 | U6 | Settings registry, dependencies and Switch controls; registry/disable-list completeness; search/recreate/back, accessibility and updated screenshot/guide. | In progress: registry, dependencies, native Switch, screenshot and automated acceptance verified; manual TalkBack pending |
 | U7 | Accurate mode/source and arrow/Undo descriptions; settings instrumentation, EN/RU lint and synchronized user/architecture text. | Verified locally; receipt above |
-| U8 | Editing commands/layer with zero text reads; clipboard test setup; foreign-text boundary isolation; EditText/WebView/Compose and TalkBack. | Open |
+| U8 | Editing commands/layer with zero text reads; clipboard test setup; foreign-text boundary isolation; EditText/WebView/Compose and TalkBack. | In progress: cross-process EditText selection prototype verified; editing UI/commands, boundary and compatibility acceptance outstanding |
 | U9 | Emoji panel and row layout; context boundary, ZWJ/flag/modifier insertion and deletion; accessibility, opening/startup budgets, Fold displays and API 26 font. | Open |
 | U10 | NO_SUGGESTIONS/AUTO_COMPLETE/FILTER combinations; hidden strip and no correction/model calls; unchanged search submission and frozen replay. | Verified locally; receipt above |
 | U11 | Explicit experimental model status; separately calibrated in-process EN ranker; fresh family/article-separated holdout, protected forms, exact Undo, model comparison and device budgets. | Open |

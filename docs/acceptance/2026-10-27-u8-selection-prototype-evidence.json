@@ -1,0 +1,173 @@
+{
+  "card": "U8",
+  "status": "in progress; selection prototype verified, product editing not implemented",
+  "baseCommit": "a444f78b3784062d42316290d5a8f2c9efd98a45",
+  "sourceBindings": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/EditingSelectionPrototypeInstrumentedTest.kt": "f16e679deda45741f17cb562929596f8385e905c88c44df683aca1e4beb81d62",
+    "app/src/debug/java/io/github/mesteriis/rune/keyboard/qa/ComposingQaFixture.kt": "8cbcccb77d15d966faa899a617095e9d399c906f63aa8f2dcc9989499b0df78f",
+    "app/src/debug/AndroidManifest.xml": "2ad6f1a9232c9d4ef294d13053509730164e6ea76aadf1e82821be635676f6ba",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt": "da8d3f0c33b44cafa7cbaf487b1bf38cb76f286ecef4211501c1eee6b209c0da",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/KeyboardInstanceAssertions.kt": "c34e8612e3f641ab36b110f5066a8d99ca7f0d632cbdf73a0728d281424a5381"
+  },
+  "artifacts": {
+    "app": {
+      "sha256": "13f929c359e0f71b3d2672ccfc15f42faf9d86fac65003579d09d299a46752e7",
+      "bytes": 345266252
+    },
+    "tests": {
+      "sha256": "2dd56bf9760bf5ff023d92971b3f92ac800bc6540041b7dc3b7296cf02f760a6",
+      "bytes": 1802518
+    }
+  },
+  "productionApkIdenticalToU6": true,
+  "productionSourceChanges": false,
+  "checks": [
+    {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:imeIntelligenceBoundary",
+        ":app:privacyGateRelease",
+        ":app:lintDebug",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:imeIntelligenceBoundary",
+        ":app:privacyGateRelease",
+        ":app:lintDebug",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:imeIntelligenceBoundary",
+        ":app:privacyGateRelease",
+        ":app:lintDebug",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:imeIntelligenceBoundary",
+        ":app:privacyGateRelease",
+        ":app:lintDebug",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "instrumentation": [
+    {
+      "phase": "initial exploratory fixture",
+      "hostExitCode": 0,
+      "expectedTests": 3,
+      "successfulTests": 0,
+      "passed": false,
+      "hostTimeout": false,
+      "failures": 3,
+      "log": "selection-protocols-device.log",
+      "observations": [
+        "Flags-only arrow moved caret to 2,2 instead of selecting",
+        "Explicit Shift protocols reached selection/release assertions, then saw snapshot=1 after ACTION_SET_TEXT setup"
+      ]
+    },
+    {
+      "phase": "final explicit negative control and zero-read commit-seeded fixture",
+      "hostExitCode": 0,
+      "expectedTests": 3,
+      "successfulTests": 3,
+      "passed": true,
+      "hostTimeout": false,
+      "failures": 0,
+      "skipped": 0,
+      "log": "commit-seeded-selection-device.log"
+    }
+  ],
+  "numericProtocolTraces": [
+    {
+      "protocol": "explicit-shift-with-meta-emoji",
+      "keyDown": 4,
+      "keyUp": 4,
+      "payloadReads": 0,
+      "finalSelection": [
+        4,
+        4
+      ],
+      "length": 4
+    },
+    {
+      "protocol": "meta-only-negative-control",
+      "keyDown": 3,
+      "keyUp": 3,
+      "payloadReads": 0,
+      "finalSelection": [
+        3,
+        3
+      ],
+      "length": 4
+    },
+    {
+      "protocol": "explicit-shift-zero-meta",
+      "keyDown": 4,
+      "keyUp": 4,
+      "payloadReads": 0,
+      "finalSelection": [
+        4,
+        4
+      ],
+      "length": 4
+    }
+  ],
+  "environment": {
+    "androidApi": "36",
+    "abi": "arm64-v8a",
+    "isolatedTaskOwnedAvd": true,
+    "testsCompleted": true,
+    "emulatorStopped": true,
+    "avdDeleted": true,
+    "physicalDeviceAccess": false
+  },
+  "logBindings": {
+    "prototype-build.log": "53d7b49b0adfdc4ca5d2a61195e5bad64d7345729bb86757a1ca09cee73993c4",
+    "prototype-build-result.json": "a81859fceee8e2ae9cb594219973128b9065bd6615a6c7324d1d16d7a69f0e79",
+    "prototype-final-build.log": "b6d2f0e3dc9634a7af79500a185563c5a894c4423903ca3ee8433b284c7c7edc",
+    "prototype-final-build-result.json": "a81859fceee8e2ae9cb594219973128b9065bd6615a6c7324d1d16d7a69f0e79",
+    "prototype-trace-build.log": "1f8dcc48d5ee22191f487777318e1ada95083dbd54098c660e141b1de6293a46",
+    "prototype-trace-build-result.json": "a81859fceee8e2ae9cb594219973128b9065bd6615a6c7324d1d16d7a69f0e79",
+    "prototype-commit-seed-build.log": "02d23c68c08ed5040fc6cf891f1bc0a3aa5dda206b578a3736c2f852255d68e0",
+    "prototype-commit-seed-build-result.json": "a81859fceee8e2ae9cb594219973128b9065bd6615a6c7324d1d16d7a69f0e79",
+    "selection-protocols-device.log": "adb3e510a1bad830ace65ceea467c7701af7026a5f6fe420758fae58dce63148",
+    "selection-protocols-device-result.json": "eddf20dd06d8aa3703c1a8b7ad7b69e055304b85f42b1af153328e9ba2ec0ed8",
+    "commit-seeded-selection-device.log": "1212be97768b7c0073aa6875887b51e697faf83ae787a705b708e6f44e78b724",
+    "commit-seeded-selection-device-result.json": "6d5ecfec5c4072c7468fdfa527ccc0a87f17123b343dc367887fe2734a3e094b",
+    "install-commit-seed-app.log": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7",
+    "install-commit-seed-tests.log": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7",
+    "cleanup.json": "a130d8f35985e1287e01a1b6ab8455e1f62dc7d6a9efaeb77fd72cc749664a45"
+  },
+  "documentationBindings": {
+    "docs/acceptance/2026-10-27-u8-selection-prototype.md": "292b73ab7ef457594bbf10fd8ece1e02d9614cfbb69692b21e85f4609e5bd850",
+    "docs/plans/2026-10-27-review-completion.md": "fb928c5b1267fe9b770a6e5a9b26c53dc27915c3e9ba8b7aa20117c386e1173f"
+  },
+  "limitations": [
+    "Android 36 arm64 EditText only; no Fold/WebView/Compose/TalkBack proof",
+    "No production editing commands, panel, popup, clipboard or cut/paste ownership path implemented",
+    "Six payload counters asserted before and after, not a global proof of all framework traffic",
+    "Earlier preparation snapshot observation retained; no product privacy defect inferred",
+    "No fresh full-JVM or product-replay execution; production APK is byte-identical to the U6 artifact"
+  ]
+}
