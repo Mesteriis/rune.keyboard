@@ -5,6 +5,7 @@ import io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutor
 import io.github.mesteriis.rune.keyboard.ime.model.*
 import io.github.mesteriis.rune.keyboard.settings.*
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.*
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.*
 import java.lang.reflect.Proxy
 import org.junit.Assert.*
 import org.junit.Test
@@ -13,6 +14,71 @@ import org.junit.Test
 class MechanicalTypingSessionTest {
     private val editor = EditorContext.from(1, 0)
     private val enabled = MechanicalPunctuationPolicy(InputPolicy.NORMAL, EditorMode.TEXT, false, true, false)
+
+    @Test fun `selected mechanical refusals at punctuation leave the independent editor unchanged`() {
+        val cases = listOf(
+            Triple("git --stat ", ",", DiagnosticReason.PROTECTED_LINE),
+            Triple("@word ", ",", DiagnosticReason.PROTECTED_TOKEN),
+            Triple("word.", ".", DiagnosticReason.PROTECTED_PUNCTUATION),
+            Triple("3 ", " ", DiagnosticReason.DOUBLE_SPACE_INELIGIBLE),
+            Triple("word ", ",", DiagnosticReason.TRUNCATED_CONTEXT),
+        )
+        for ((before, next, expected) in cases) {
+            val initialCaret = if (expected == DiagnosticReason.TRUNCATED_CONTEXT) 7 else 0
+            val f = Fixture(initialCaret)
+            val gesture = expected == DiagnosticReason.DOUBLE_SPACE_INELIGIBLE
+            f.policy = enabled.copy(doubleSpaceEnabled = gesture)
+            f.rawSequence(before)
+            val events = observe(f)
+            assertEquals(TypingTextResult.HANDLED, f.type(next, gesture))
+            assertEquals(expected.name, "x".repeat(initialCaret) + before + next, f.document)
+            assertEquals(0, f.reads)
+            assertNull(f.controller.state.lastAutoEdit)
+            val refusal = events.single { it.first.kind == DiagnosticKind.MECHANICAL }
+            assertEquals(expected, refusal.first.reason)
+            assertEquals(DiagnosticSource.MECHANICAL, refusal.first.source)
+            assertFalse(refusal.second)
+        }
+    }
+
+    @Test fun `protected line letters and ordinary prose do not fill mechanical diagnostics`() {
+        val command = Fixture(); command.rawSequence("git -x ")
+        val commandEvents = observe(command)
+        val letters = "abcdefghijklmnopqrstuvxyz"
+        letters.forEach { assertEquals(TypingTextResult.HANDLED, command.type(it.toString())) }
+        assertEquals("git -x " + letters, command.document)
+        assertTrue(commandEvents.none { it.first.kind == DiagnosticKind.MECHANICAL })
+        assertEquals(0, command.reads)
+        val prose = Fixture()
+        val proseEvents = observe(prose)
+        val text = "ordinary words ".repeat(30)
+        text.forEach { assertEquals(TypingTextResult.HANDLED, prose.type(it.toString())) }
+        assertEquals(text, prose.document)
+        assertTrue(proseEvents.none { it.first.kind == DiagnosticKind.MECHANICAL })
+        assertEquals(0, prose.reads)
+    }
+
+    @Test fun `ambiguity on letter input remains silent while preserving the original text`() {
+        for (before in listOf("word.", "word:")) {
+            val f = Fixture(); f.rawSequence(before)
+            val events = observe(f)
+            assertEquals(TypingTextResult.HANDLED, f.type("n"))
+            assertEquals(before + "n", f.document)
+            assertTrue(events.none { it.first.kind == DiagnosticKind.MECHANICAL })
+            assertNull(f.controller.state.lastAutoEdit)
+            assertEquals(0, f.reads)
+        }
+    }
+
+    private fun observe(f: Fixture): MutableList<Pair<DiagnosticEvent, Boolean>> {
+        val events = mutableListOf<Pair<DiagnosticEvent, Boolean>>()
+        f.controller.setDiagnostics(object : TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+            override fun invalidate() = Unit
+            override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { events += event to (text != null) }
+        })
+        return events
+    }
 
     @Test fun `later word in hyphenated prose has one mechanical undo without editor reads`() {
         val f = Fixture(); f.rawSequence("кто-то пришёл "); f.calls.clear()

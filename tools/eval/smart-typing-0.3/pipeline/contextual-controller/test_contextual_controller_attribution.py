@@ -225,6 +225,27 @@ class AdditionalGuardTest(unittest.TestCase):
                             {path.name for path in sources})
             self.assertTrue(all(p.is_file() for p in sources))
             self.assertIn(self.tool.HERE/'ContextualControllerAttribution.kt',sources)
+            self.assertIn(self.tool.REPO/'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/MechanicalRefusalDiagnostics.kt',sources)
+            self.assertIn(self.tool.REPO/'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedAssetDigest.kt',sources)
+            current=json.loads(self.tool.PRODUCT_SOURCE_MANIFEST.read_text())['sources']
+            self.assertTrue({(self.tool.REPO/p).resolve() for p in current} <= set(sources))
+
+    def test_compile_manifest_rejects_unversioned_duplicate_or_out_of_scope_sources(self):
+        source='app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt'
+        cases=[([], 'PRODUCT_SOURCE_MANIFEST'),
+               ({'schemaVersion':2,'sources':[source]}, 'PRODUCT_SOURCE_MANIFEST'),
+               ({'schemaVersion':1,'sources':[]}, 'PRODUCT_SOURCE_MANIFEST'),
+               ({'schemaVersion':1,'sources':[None]}, 'PRODUCT_SOURCE_MANIFEST'),
+               ({'schemaVersion':1,'sources':['../outside.kt']}, 'PRODUCT_SOURCE_MANIFEST'),
+               ({'schemaVersion':1,'sources':[str(self.tool.REPO/source)]}, 'PRODUCT_SOURCE_MANIFEST'),
+               ({'schemaVersion':1,'sources':[source,source]}, 'PRODUCT_SOURCE_MANIFEST_PATHS')]
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest=Path(temporary)/'sources.json'
+            for value, reason in cases:
+                manifest.write_text(json.dumps(value))
+                with self.subTest(value=value), mock.patch.object(self.tool,'PRODUCT_SOURCE_MANIFEST',manifest):
+                    with self.assertRaisesRegex(ValueError,reason):
+                        self.tool.compile_inputs('java','cache',Path(temporary)/'android.jar')
 
     def test_host_schema_cannot_silently_drop_or_add_a_field(self):
         for row in [{'scope':self.tool.SCOPE}, {'schemaVersion':1,'unexpected':True}]:

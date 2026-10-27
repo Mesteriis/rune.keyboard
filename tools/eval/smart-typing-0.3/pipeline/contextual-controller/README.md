@@ -15,6 +15,17 @@ This isolated host tool attributes all unchanged v5 source-boundary examples thr
 
 Host commands require `--java` (pinned JDK 17), `--gradle-cache` (existing cache only), `--android-jar` and `--output` (fresh directory under repository build). The compiler is pinned by the existing contextual toolchain manifest. Compilation and execution use two processors and a 768 MiB heap. Prepare additionally requires `--corpus`, `--export`, `--calibration`, `--holdout`, `--config` and `--protocol`. The strict corpus loader requires its recorded Python/pyarrow runtime; the tool does not install dependencies or access the network. Existing output directories are refused, including partial failures. Keep a failed directory and choose a fresh sibling on retry.
 
+The compiler source closure combines the legacy host list with the current
+versioned `../final_product_replay_sources.json` and explicit diagnostics/coordinator
+sources. The product manifest itself is bound in runtime receipts. This keeps
+current controller dependencies in the compilation; archived commands remain
+historical evidence. A changed closure requires a fresh preparation. The pinned
+cache check still requires exactly one JAR per declared artifact/version. If an
+ambient cache contains extra JARs, provide an existing isolated view of the exact
+SHA-256-verified pinned files; the tool does not resolve, download or substitute
+other dependencies.
+
+
 The final-target-ready protocol uses current `KeyboardSettings.DEFAULT`, current qualification, a NORMAL editor, one active language and per-code-point commands with acknowledged composing selections. No prior-word candidate callback is delivered, and no double-space gesture is asserted. The target word receives actual packaged generation. Actual spelling requests and canonical suggestions retain precedence and receive no contextual scores. The model transport is a captured-request host seam; readiness is explicitly ready, pause scheduling is deterministic, and no actual model service or Android `InputConnection` is claimed. Grapheme behavior uses JDK 17 `BreakIterator`. This measures conditional content outcomes for a ready final target, not asynchronous device availability, wall-clock latency, IME rendering, frame timing, or physical key delivery. No source labels enter the JVM. There is no corpus editing, threshold fitting, new qualification, or model call in this tool.
 
 The output includes old engine decisions beside current routing/action results, exact changed-row IDs, all seven decision counts, original unused response/error identities, input-edit ledgers and exact rate denominators. Unrepresentable replies also prevent a complete result. A refused or unattempted offered tap cannot produce a clean functional completion. Native duration is preserved unchanged in response evidence; the host callback field alone truncates toward zero to a `Long`, without waiting. The result does not reinterpret a manual punctuation tap as an automatic edit or automatic Undo.

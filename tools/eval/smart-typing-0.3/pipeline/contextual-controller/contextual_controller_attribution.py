@@ -18,6 +18,7 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 PIPELINE = HERE.parent
 REPO = HERE.parents[4]
+PRODUCT_SOURCE_MANIFEST = PIPELINE/'final_product_replay_sources.json'
 sys.path.insert(0, str(PIPELINE))
 import contextual_quality as cq
 
@@ -291,7 +292,16 @@ def asset_paths():
 
 
 def compile_inputs(java,cache,android):
-    sources=[REPO/p for p in COMPILE_SOURCES]
+    manifest=json.loads(PRODUCT_SOURCE_MANIFEST.read_text())
+    require(isinstance(manifest,dict),'PRODUCT_SOURCE_MANIFEST')
+    paths=manifest.get('sources')
+    require(manifest.get('schemaVersion')==1 and isinstance(paths,list) and paths and
+            all(isinstance(p,str) and p and not Path(p).is_absolute() and '..' not in Path(p).parts for p in paths),
+            'PRODUCT_SOURCE_MANIFEST')
+    current=[(REPO/p).resolve(strict=True) for p in paths]
+    require(len(set(current))==len(current) and all(p.is_relative_to(REPO) for p in current),
+            'PRODUCT_SOURCE_MANIFEST_PATHS')
+    sources=[REPO/p for p in COMPILE_SOURCES]+current
     prod=REPO/'app/src/main/java/io/github/mesteriis/rune/keyboard'
     sources += [prod/p for p in ['smarttyping/diagnostics/TypingDiagnostics.kt',
         'smarttyping/session/LocalCandidateCoordinator.kt','smarttyping/session/ModelCandidateCoordinator.kt',
@@ -315,7 +325,7 @@ def bind_runtime(java,android,sources,jars,include_archive=True):
     validate_runtime_error_codes(ERROR_SOURCE.read_text())
     home=Path(java).resolve().parent.parent
     runtime=[home/p for p in ('bin/java','release','lib/modules','lib/libjli.dylib','lib/server/libjvm.dylib')]
-    files=[*sources,*jars,*runtime,Path(android),ERROR_SOURCE,*asset_paths(),cq.TOOLCHAIN_MANIFEST,
+    files=[*sources,*jars,*runtime,Path(android),ERROR_SOURCE,*asset_paths(),cq.TOOLCHAIN_MANIFEST,PRODUCT_SOURCE_MANIFEST,
            *[HERE/p for p in ('contextual_controller_attribution.py','test_contextual_controller_attribution.py','README.md')],
            Path(sys.executable).resolve(),PIPELINE/'export_calibration.py',PIPELINE/'score_product_holdout.py',
            PIPELINE/'test_contextual_v5_adapter.py',PIPELINE/'contextual_quality.py',cq.shared.REPO/'tools/eval/smart-typing-0.3/evaluate.py']

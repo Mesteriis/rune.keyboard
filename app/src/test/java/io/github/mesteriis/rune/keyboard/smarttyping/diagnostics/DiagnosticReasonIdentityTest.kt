@@ -70,7 +70,9 @@ class DiagnosticReasonIdentityTest {
             "EDITOR_SUGGESTIONS_DISABLED"
         )
         assertEquals(frozen, DiagnosticReason.entries.take(frozen.size).map { it.name })
-        assertEquals(listOf("TARGET_UNKNOWN", "RIVAL_UNKNOWN", "LOCAL_SEARCH_EMPTY", "PERSONAL_VETO", "PROTECTED_WORD"),
+        assertEquals(listOf("TARGET_UNKNOWN", "RIVAL_UNKNOWN", "LOCAL_SEARCH_EMPTY", "PERSONAL_VETO", "PROTECTED_WORD",
+            "PROTECTED_TOKEN", "PROTECTED_PUNCTUATION", "PROTECTED_LINE", "AMBIGUOUS_DOT", "AMBIGUOUS_COLON",
+            "DOUBLE_SPACE_INELIGIBLE", "TRUNCATED_CONTEXT", "OWNERSHIP_MISMATCH"),
             DiagnosticReason.entries.drop(frozen.size).map { it.name })
     }
 

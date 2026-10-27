@@ -22,6 +22,20 @@ class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
         self.assertEqual(reasons * 5, [e['reason'] for e in report['refusalEvents']])
         self.assertEqual([], report['outcomes'])
 
+    def test_mechanical_refusals_survive_without_claiming_an_automatic_edit(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
+        flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)
+        reasons = ['PROTECTED_TOKEN', 'PROTECTED_PUNCTUATION', 'PROTECTED_LINE',
+                   'AMBIGUOUS_DOT', 'AMBIGUOUS_COLON', 'DOUBLE_SPACE_INELIGIBLE',
+                   'TRUNCATED_CONTEXT', 'OWNERSHIP_MISMATCH']
+        common = dict(schema=8, session=1, source='MECHANICAL', kind='MECHANICAL',
+                      features=flags, effectiveFeatures=flags, typingProfile=0, correctionId=0,
+                      localCompletion='NONE', localInspectedStates=0, localVerifiedTerminals=0,
+                      recoveryCompletion='NONE', recoveryInspectedStates=0, recoveryVerifiedTerminals=0)
+        report = analyze_events([dict(common, reason=reason, revision=i) for i, reason in enumerate(reasons, 1)])
+        self.assertEqual(reasons, [e['reason'] for e in report['refusalEvents']])
+        self.assertEqual([], report['outcomes'])
+
     def test_candidate_rejections_are_metadata_without_fabricating_editor_outcomes(self):
         from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
         flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)

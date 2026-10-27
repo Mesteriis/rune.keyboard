@@ -2026,10 +2026,19 @@ class TypingSessionController internal constructor(
         execute: (TypingEdit) -> Boolean,
     ): TypingTextResult {
         val owned = punctuationEvidence() ?: return TypingTextResult.BYPASS
-        val plan = trace.section(SmartTypingTraceSection.PUNCTUATION_RULE) {
+        val planned = trace.section(SmartTypingTraceSection.PUNCTUATION_RULE) {
             MechanicalPunctuationPlanner.plan(owned, action, policy)
-        } as? MechanicalPunctuationPlan.Replace
-            ?: return TypingTextResult.BYPASS
+        }
+        val plan = when (planned) {
+            is MechanicalPunctuationPlan.Replace -> planned
+            is MechanicalPunctuationPlan.Unchanged -> {
+                io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.MechanicalRefusalDiagnostics
+                    .reason(action, planned.reason)?.let {
+                        diagnose(DiagnosticKind.MECHANICAL, it, source = DiagnosticSource.MECHANICAL, text = null)
+                    }
+                return TypingTextResult.BYPASS
+            }
+        }
         var rendered = plan.replacementComposing
         plan.sentenceCapsForNewTextAt?.takeIf { keyboard.layer == KeyboardLayer.LETTERS }?.let { offset ->
             val end = offset + Character.charCount(rendered.codePointAt(offset))
