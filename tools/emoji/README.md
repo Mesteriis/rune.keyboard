@@ -38,10 +38,17 @@ This adds no network operation to a build or to keyboard startup.
 320,000-byte input, preserving complete glyph strings and all three names. It
 closes the supplied stream on success and failure. Duplicate/unknown groups,
 duplicate sequences, missing names, control characters and malformed rows refuse
-the whole catalog. A single delimiter/control scan reuses six field slots;
+the whole catalog. A single delimiter/control scan reuses six field-offset pairs;
 whole-file line lists, per-row split lists and repeated blank scans are avoided.
 ISO controls and Unicode whitespace are covered independently in JVM regression
 tests, and every parsed field is compared with the original packaged TSV.
+Every row is validated before returning the catalog. Entry objects and their three
+localized name strings are created on the first access to that category, once,
+with synchronized publication; reading category counts does not materialize them.
+The shared decoded TSV and category offsets remain reachable while a category is
+unopened. This changes allocation timing, with no measured PSS claim. A successful
+recent-commit lookup still scans categories in source order and can materialize
+preceding groups; category-switch/commit latency remains to be profiled.
 Build-time source/hash verification remains the provenance
 gate; the reader is not a substitute for it.
 
@@ -61,6 +68,10 @@ Profiling identifies catalog load/parse as the largest measured phase. The
 optimized parser's three-clean-AVD preview series still has one late first open;
 the 50 ms gate remains failed. See the u9-emoji-parser acceptance receipt for
 all samples, scope and unchanged ordinary replay identities.
+The deferred-name follow-up retains full upfront validation. Its three-clean-AVD
+series has all 12 handlers below 50 ms, but four draw-start observations above it;
+there is no demonstrated opening-speed improvement or passed performance gate.
+See the u9-emoji-deferred receipt for all samples and scheduler-profile limits.
 
 To restore a missing archive from its exact pins, or verify a restored copy:
 

@@ -7,6 +7,48 @@ import java.io.ByteArrayInputStream
 import java.io.File
 
 class EmojiCatalogTest {
+    @Test fun `category count and invalid indices do not decode names and valid accesses share a snapshot`() {
+        var calls = 0
+        val entry = EmojiEntry("😀", EmojiNames("one", "один", "uno"))
+        val entries = DeferredEmojiEntries(2) { calls++; listOf(entry, entry.copy(glyph = "😃")) }
+        assertEquals(2, entries.size)
+        assertEquals(0, calls)
+        for (index in listOf(-1, 2)) assertThrows(IndexOutOfBoundsException::class.java) { entries[index] }
+        assertEquals(0, calls)
+        assertSame(entry, entries[0])
+        assertEquals("😃", entries[1].glyph)
+        assertSame(entry, entries[0])
+        assertEquals(1, calls)
+        assertThrows(IllegalArgumentException::class.java) { DeferredEmojiEntries(0) { emptyList() } }
+        assertThrows(IllegalArgumentException::class.java) { DeferredEmojiEntries(1) { emptyList() }[0] }
+    }
+
+    @Test fun `concurrent category readers decode once and observe the same immutable entry`() {
+        val calls = java.util.concurrent.atomic.AtomicInteger()
+        val entries = DeferredEmojiEntries(1) {
+            calls.incrementAndGet()
+            listOf(EmojiEntry("😀", EmojiNames("one", "один", "uno")))
+        }
+        val start = java.util.concurrent.CountDownLatch(1)
+        val pool = java.util.concurrent.Executors.newFixedThreadPool(2)
+        try {
+            val futures = List(2) { pool.submit<EmojiEntry> { start.await(); entries[0] } }
+            start.countDown()
+            assertSame(futures[0].get(5, java.util.concurrent.TimeUnit.SECONDS), futures[1].get(5, java.util.concurrent.TimeUnit.SECONDS))
+            assertEquals(1, calls.get())
+        } finally { pool.shutdownNow() }
+    }
+
+    @Test fun `invalid unvisited category names are refused during read before any lazy access`() {
+        val rows = fixture.trimEnd('\n').split('\n')
+        val group = "G\tflags\t🏁\tFlags\tФлаги\tBanderas\n"
+        for (bad in listOf("", " ", "bad\u0085name", "bad\u2028name")) {
+            val tail = "E\tflags\t🇪🇸\tflag Spain\t${bad}\tbandera España\n"
+            val text = rows.take(2).joinToString("\n", postfix = "\n") + group + rows.last() + "\n" + tail
+            assertThrows(IllegalArgumentException::class.java) { read(text) }
+        }
+    }
+
     @Test fun `all ISO controls line separators and Unicode blank fields are refused`() {
         val controls = (0..0xFFFF).filter { Character.isISOControl(it) }.map { it.toChar() } + listOf('\u2028', '\u2029')
         val rows = fixture.trimEnd('\n').split('\n')

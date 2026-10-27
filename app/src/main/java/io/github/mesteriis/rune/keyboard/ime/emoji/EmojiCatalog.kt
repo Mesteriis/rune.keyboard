@@ -22,6 +22,23 @@ internal data class EmojiCategory(
     val entries: List<EmojiEntry>,
 )
 
+/** Count and invalid-index checks need no names; successful access decodes one category once. */
+internal class DeferredEmojiEntries(
+    override val size: Int,
+    decode: () -> List<EmojiEntry>,
+) : AbstractList<EmojiEntry>() {
+    private val values by lazy {
+        decode().also { require(it.size == size) { "Emoji category count mismatch" } }
+    }
+
+    init { require(size > 0) }
+
+    override fun get(index: Int): EmojiEntry {
+        if (index !in 0 until size) throw IndexOutOfBoundsException("Emoji entry index out of range")
+        return values[index]
+    }
+}
+
 /** Packaged, build-verified data. Parsing preserves sequence bytes and source order. */
 internal class EmojiCatalog private constructor(val categories: List<EmojiCategory>) {
     companion object {
@@ -49,12 +66,12 @@ internal class EmojiCatalog private constructor(val categories: List<EmojiCatego
             require(text.endsWith('\n')) { "Emoji catalog must end with LF" }
             require(text.startsWith(HEADER)) { "Unknown emoji catalog schema" }
             val categories = linkedMapOf<String, EmojiCategory>()
-            val entries = linkedMapOf<String, MutableList<EmojiEntry>>()
+            val entries = linkedMapOf<String, MutableList<EntrySource>>()
             val seenGlyphs = hashSetOf<String>()
             var readingEntries = false
             // Scan delimiters and validate controls/blank fields once. Reuse six field slots;
             // no whole-file line list, per-row split lists or repeated Unicode blank scans.
-            val fields = arrayOfNulls<String>(6)
+            val fields = IntArray(12)
             var fieldStart = HEADER.length
             var column = 0
             var nonBlank = false
@@ -68,29 +85,33 @@ internal class EmojiCatalog private constructor(val categories: List<EmojiCatego
                     cursor++
                     continue
                 }
-                require(column < fields.size && nonBlank) { "Invalid emoji catalog field" }
-                fields[column++] = text.substring(fieldStart, cursor)
+                require(column < 6 && nonBlank) { "Invalid emoji catalog field" }
+                fields[column * 2] = fieldStart
+                fields[column * 2 + 1] = cursor
+                column++
                 fieldStart = ++cursor
                 nonBlank = false
                 if (char == '\t') continue
-                require(column == fields.size) { "Invalid emoji catalog row" }
+                require(column == 6) { "Invalid emoji catalog row" }
                 column = 0
-                val kind = fields[0]!!
-                val id = fields[1]!!
-                val glyph = fields[2]!!
+                require(fields[1] - fields[0] == 1) { "Invalid emoji catalog row type" }
+                val kind = text[fields[0]]
+                val id = text.substring(fields[2], fields[3])
+                val glyph = text.substring(fields[4], fields[5])
                 require(id.all { it in 'a'..'z' }) { "Invalid emoji category ID" }
-                val names = EmojiNames(fields[3]!!, fields[4]!!, fields[5]!!)
                 when (kind) {
-                    "G" -> {
+                    'G' -> {
                         require(!readingEntries && id !in categories) { "Duplicate or late emoji category" }
                         entries[id] = mutableListOf()
-                        categories[id] = EmojiCategory(id, glyph, names, emptyList())
+                        categories[id] = EmojiCategory(id, glyph, EmojiNames(
+                            text.substring(fields[6], fields[7]), text.substring(fields[8], fields[9]),
+                            text.substring(fields[10], fields[11])), emptyList())
                     }
-                    "E" -> {
+                    'E' -> {
                         readingEntries = true
                         val group = requireNotNull(entries[id]) { "Unknown emoji category" }
                         require(seenGlyphs.add(glyph)) { "Duplicate emoji sequence" }
-                        group.add(EmojiEntry(glyph, names))
+                        group.add(EntrySource(glyph, fields[6], fields[7], fields[8], fields[9], fields[10], fields[11]))
                     }
                     else -> throw IllegalArgumentException("Unknown emoji catalog row type")
                 }
@@ -99,7 +120,17 @@ internal class EmojiCatalog private constructor(val categories: List<EmojiCatego
             require(categories.isNotEmpty() && entries.values.all { it.isNotEmpty() }) {
                 "Empty emoji category or catalog"
             }
-            return EmojiCatalog(categories.map { (id, category) -> category.copy(entries = entries.getValue(id).toList()) })
+            return EmojiCatalog(categories.map { (id, category) ->
+                val sources = entries.getValue(id).toList()
+                category.copy(entries = DeferredEmojiEntries(sources.size) {
+                    sources.map { source -> EmojiEntry(source.glyph, EmojiNames(
+                        text.substring(source.enStart, source.enEnd), text.substring(source.ruStart, source.ruEnd),
+                        text.substring(source.esStart, source.esEnd))) }
+                })
+            })
         }
+
+        private data class EntrySource(val glyph: String, val enStart: Int, val enEnd: Int,
+            val ruStart: Int, val ruEnd: Int, val esStart: Int, val esEnd: Int)
     }
 }

@@ -9,6 +9,7 @@ import android.widget.GridView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import io.github.mesteriis.rune.keyboard.R
+import io.github.mesteriis.rune.keyboard.ime.RuneTrace
 import io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProvider
 import io.github.mesteriis.rune.keyboard.ime.layout.LayoutOptions
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
@@ -29,6 +30,7 @@ class EmojiOpeningMeasurementInstrumentedTest {
     @Test fun measureFreshPaletteHandlerAndFirstDrawStart() {
         check(Build.HARDWARE in setOf("ranchu", "goldfish"))
         val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val traceClick = InstrumentationRegistry.getArguments().getString("runeEmojiTrace") == "true"
         ActivityScenario.launch(SetupActivity::class.java).use { scenario ->
             repeat(4) { sample ->
                 lateinit var keyboard: RuneKeyboardView
@@ -74,7 +76,8 @@ class EmojiOpeningMeasurementInstrumentedTest {
                         keyboard.viewTreeObserver.addOnDrawListener(drawListener)
                         val key = descendants(keyboard).single { it.contentDescription == "Emoji" }
                         start.set(System.nanoTime())
-                        assertTrue(key.performClick())
+                        if (traceClick) RuneTrace.section("Rune#emojiMeasuredClick") { assertTrue(key.performClick()) }
+                        else assertTrue(key.performClick())
                         handler.set(System.nanoTime() - start.get())
                     }
                 }

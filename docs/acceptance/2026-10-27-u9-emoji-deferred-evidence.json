@@ -1,0 +1,736 @@
+{
+  "card": "U9",
+  "status": "partial; per-category materialization verified, preview performance gate FAILED; no speedup established",
+  "baseCommit": "59c42438196575c71ead648494c8f4317f72929c",
+  "sources": [
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/emoji/EmojiCatalog.kt",
+      "bytes": 6505,
+      "sha256": "5ab0b36a2acf9a6341a1b5bd5ffd1c4e2687a3f4240f0a8213ff2135ae21269e"
+    },
+    {
+      "path": "app/src/test/java/io/github/mesteriis/rune/keyboard/ime/emoji/EmojiCatalogTest.kt",
+      "bytes": 10631,
+      "sha256": "d756b500b7481ce3116e72d901474061af168d0d15535d73c3e3ac54ab03f312"
+    },
+    {
+      "path": "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/EmojiOpeningMeasurementInstrumentedTest.kt",
+      "bytes": 6897,
+      "sha256": "8bde6de668d40dbeec7e589713d36746adad646de0f5450f97ce826f564a84fa"
+    },
+    {
+      "path": "tools/emoji/README.md",
+      "bytes": 6103,
+      "sha256": "d9654a2b9cab3c74bb568c8522f36c18c5bd0e9156538a3ba38d6e76fe35e5ab"
+    },
+    {
+      "path": "docs/plans/2026-10-27-review-completion.md",
+      "bytes": 17509,
+      "sha256": "85668fc25a6dee7dd38964aedcbfea19fbf33aa06ead770b1ab39065ac69ea4a"
+    }
+  ],
+  "jvm": {
+    "tests": 1254,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "sourceTests": 15,
+  "build": {
+    "result": {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:emojiCatalogTests",
+        ":app:testDebugUnitTest",
+        ":app:imeIntelligenceBoundary",
+        ":app:privacyGateRelease",
+        ":app:lintDebug",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "exitCode": 0
+    },
+    "log": {
+      "path": "build/review-u9-deferred-20261027/deferred-final-build.log",
+      "bytes": 13660,
+      "sha256": "cf4c7bc4c1593ef2c41eba7498267594299a006c19d534666b342ce3a4440478"
+    }
+  },
+  "functional": {
+    "result": {
+      "hostExitCode": 0,
+      "expectedTests": 7,
+      "successfulTests": 7,
+      "passed": true,
+      "hostTimeout": false
+    },
+    "log": {
+      "path": "build/review-u9-deferred-20261027/accept-valid-0/native-functional.log",
+      "bytes": 5694,
+      "sha256": "27b8133493b2d5a671de8cfc9e6da2f9be5b2620a8842eb05c320c900f42b2d7"
+    }
+  },
+  "acceptance": {
+    "plan": {
+      "series": 3,
+      "palettesPerSeries": 4,
+      "budgetNanos": 50000000,
+      "traceEnabled": false,
+      "mainApkSha256": "3a2f869672b8a88b437138ea9a84eab4b70a41a82cdefdc8486acec4e0d37a43",
+      "testApkSha256": "195a3a975dadf451a8704660068c153c400fb6df194036da23fa7013b794651d",
+      "scope": "Three clean API26 AVDs, all 12 samples count. Functional suite runs after timing on series zero; no retry after budget failure."
+    },
+    "series": [
+      {
+        "series": 0,
+        "samples": [
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 0,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 38073291,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 47211333,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 1,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 16025083,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 19484125,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 2,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 9421792,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 15543500,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 3,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 8200625,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 16385791,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          }
+        ]
+      },
+      {
+        "series": 1,
+        "samples": [
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 0,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 44103417,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 56894625,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": false,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 1,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 16631125,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 31328750,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 2,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 33244792,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 40499584,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 3,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 17401209,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 20996959,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          }
+        ]
+      },
+      {
+        "series": 2,
+        "samples": [
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 0,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 49973083,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 60400875,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": false,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 1,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 17770875,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 30993500,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": true,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 2,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 34910459,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 52981917,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": false,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          },
+          {
+            "emoji_measurement_width_px": 958,
+            "emoji_measurement_sample": 3,
+            "emoji_budget_nanos": 50000000,
+            "emoji_handler_nanos": 32938333,
+            "emoji_measurement_density_dpi": 420,
+            "emoji_first_draw_start_nanos": 50229833,
+            "emoji_measurement_api": 26,
+            "emoji_draw_start_budget_pass": false,
+            "emoji_handler_budget_pass": true,
+            "emoji_measurement_height_px": 526,
+            "emoji_measurement_font_scale": 1.0
+          }
+        ]
+      }
+    ],
+    "performancePass": false
+  },
+  "seriesProof": [
+    {
+      "series": 0,
+      "result": {
+        "hostExitCode": 0,
+        "expectedTests": 1,
+        "successfulTests": 1,
+        "passed": true,
+        "hostTimeout": false
+      },
+      "log": {
+        "path": "build/review-u9-deferred-20261027/accept-valid-0/native-opening.log",
+        "bytes": 3426,
+        "sha256": "c86236ff25fe1e6c7ffcea505ed5f6607a37e4552066479466ff07204ec47e68"
+      },
+      "cleanup": {
+        "androidApi": "26",
+        "abi": "arm64-v8a",
+        "isolatedTaskOwnedAvd": true,
+        "testsCompleted": true,
+        "emulatorStopped": true,
+        "avdDeleted": true,
+        "physicalDeviceAccess": false
+      }
+    },
+    {
+      "series": 1,
+      "result": {
+        "hostExitCode": 0,
+        "expectedTests": 1,
+        "successfulTests": 1,
+        "passed": true,
+        "hostTimeout": false
+      },
+      "log": {
+        "path": "build/review-u9-deferred-20261027/accept-valid-1/native-opening.log",
+        "bytes": 3429,
+        "sha256": "0a2c30ca24191a7c1f1ecc9d4975534cdf7fcb2562bd7d528bbe44ef87872323"
+      },
+      "cleanup": {
+        "androidApi": "26",
+        "abi": "arm64-v8a",
+        "isolatedTaskOwnedAvd": true,
+        "testsCompleted": true,
+        "emulatorStopped": true,
+        "avdDeleted": true,
+        "physicalDeviceAccess": false
+      }
+    },
+    {
+      "series": 2,
+      "result": {
+        "hostExitCode": 0,
+        "expectedTests": 1,
+        "successfulTests": 1,
+        "passed": true,
+        "hostTimeout": false
+      },
+      "log": {
+        "path": "build/review-u9-deferred-20261027/accept-valid-2/native-opening.log",
+        "bytes": 3431,
+        "sha256": "45009ae9bec9cf8797164c77788606465c3c60d4181eb448e374b985ad4fa29b"
+      },
+      "cleanup": {
+        "androidApi": "26",
+        "abi": "arm64-v8a",
+        "isolatedTaskOwnedAvd": true,
+        "testsCompleted": true,
+        "emulatorStopped": true,
+        "avdDeleted": true,
+        "physicalDeviceAccess": false
+      }
+    }
+  ],
+  "profiling": {
+    "baselineCommit": "59c42438196575c71ead648494c8f4317f72929c",
+    "profiles": [
+      {
+        "summary": {
+          "profilingOnly": true,
+          "samples": [
+            {
+              "sample": 0,
+              "click": {
+                "wallMs": 29.825,
+                "scheduled_runningMs": 21.708,
+                "runnableMs": 0.479,
+                "blocked_or_sleepingMs": 7.638,
+                "uncoveredMs": 0.0
+              },
+              "phases": {
+                "Rune#emojiConstruct": {
+                  "wallMs": 2.233,
+                  "scheduled_runningMs": 1.784,
+                  "runnableMs": 0.028,
+                  "blocked_or_sleepingMs": 0.421,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiCatalogRead": {
+                  "wallMs": 12.966,
+                  "scheduled_runningMs": 11.348,
+                  "runnableMs": 0.013,
+                  "blocked_or_sleepingMs": 1.605,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiTabs": {
+                  "wallMs": 15.62,
+                  "scheduled_runningMs": 13.667,
+                  "runnableMs": 0.306,
+                  "blocked_or_sleepingMs": 1.647,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiGlyphFilter": {
+                  "wallMs": 7.765,
+                  "scheduled_runningMs": 2.381,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 5.384,
+                  "uncoveredMs": 0.0
+                }
+              }
+            },
+            {
+              "sample": 1,
+              "click": {
+                "wallMs": 37.225,
+                "scheduled_runningMs": 20.053,
+                "runnableMs": 12.571,
+                "blocked_or_sleepingMs": 4.601,
+                "uncoveredMs": 0.0
+              },
+              "phases": {
+                "Rune#emojiConstruct": {
+                  "wallMs": 6.74,
+                  "scheduled_runningMs": 2.39,
+                  "runnableMs": 3.983,
+                  "blocked_or_sleepingMs": 0.367,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiCatalogRead": {
+                  "wallMs": 18.853,
+                  "scheduled_runningMs": 10.923,
+                  "runnableMs": 3.959,
+                  "blocked_or_sleepingMs": 3.971,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiTabs": {
+                  "wallMs": 22.298,
+                  "scheduled_runningMs": 12.997,
+                  "runnableMs": 5.33,
+                  "blocked_or_sleepingMs": 3.971,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiGlyphFilter": {
+                  "wallMs": 0.573,
+                  "scheduled_runningMs": 0.573,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 0.0,
+                  "uncoveredMs": 0.0
+                }
+              }
+            },
+            {
+              "sample": 2,
+              "click": {
+                "wallMs": 12.662,
+                "scheduled_runningMs": 8.548,
+                "runnableMs": 3.269,
+                "blocked_or_sleepingMs": 0.845,
+                "uncoveredMs": 0.0
+              },
+              "phases": {
+                "Rune#emojiConstruct": {
+                  "wallMs": 1.695,
+                  "scheduled_runningMs": 1.189,
+                  "runnableMs": 0.288,
+                  "blocked_or_sleepingMs": 0.218,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiCatalogRead": {
+                  "wallMs": 5.27,
+                  "scheduled_runningMs": 3.172,
+                  "runnableMs": 1.852,
+                  "blocked_or_sleepingMs": 0.246,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiTabs": {
+                  "wallMs": 6.206,
+                  "scheduled_runningMs": 4.081,
+                  "runnableMs": 1.879,
+                  "blocked_or_sleepingMs": 0.246,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiGlyphFilter": {
+                  "wallMs": 0.113,
+                  "scheduled_runningMs": 0.113,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 0.0,
+                  "uncoveredMs": 0.0
+                }
+              }
+            },
+            {
+              "sample": 3,
+              "click": {
+                "wallMs": 9.263,
+                "scheduled_runningMs": 6.735,
+                "runnableMs": 0.17,
+                "blocked_or_sleepingMs": 2.358,
+                "uncoveredMs": 0.0
+              },
+              "phases": {
+                "Rune#emojiConstruct": {
+                  "wallMs": 1.145,
+                  "scheduled_runningMs": 0.787,
+                  "runnableMs": 0.069,
+                  "blocked_or_sleepingMs": 0.289,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiCatalogRead": {
+                  "wallMs": 5.386,
+                  "scheduled_runningMs": 3.311,
+                  "runnableMs": 0.101,
+                  "blocked_or_sleepingMs": 1.974,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiTabs": {
+                  "wallMs": 5.885,
+                  "scheduled_runningMs": 3.81,
+                  "runnableMs": 0.101,
+                  "blocked_or_sleepingMs": 1.974,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiGlyphFilter": {
+                  "wallMs": 0.118,
+                  "scheduled_runningMs": 0.118,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 0.0,
+                  "uncoveredMs": 0.0
+                }
+              }
+            }
+          ]
+        },
+        "rawPrivateTrace": {
+          "path": "build/review-u9-cold-sched-20261027/trace-0/app-view.atrace",
+          "bytes": 12126502,
+          "sha256": "102d3bb0fcd42d2f0f9726bebc5bbc0f532032e6540d1f77bc3135218fc09167"
+        },
+        "cleanup": {
+          "androidApi": "26",
+          "abi": "arm64-v8a",
+          "isolatedTaskOwnedAvd": true,
+          "testsCompleted": true,
+          "emulatorStopped": true,
+          "avdDeleted": true,
+          "physicalDeviceAccess": false
+        }
+      },
+      {
+        "summary": {
+          "profilingOnly": true,
+          "samples": [
+            {
+              "sample": 0,
+              "click": {
+                "wallMs": 32.85,
+                "scheduled_runningMs": 21.946,
+                "runnableMs": 2.981,
+                "blocked_or_sleepingMs": 7.923,
+                "uncoveredMs": 0.0
+              },
+              "phases": {
+                "Rune#emojiConstruct": {
+                  "wallMs": 6.05,
+                  "scheduled_runningMs": 4.145,
+                  "runnableMs": 0.226,
+                  "blocked_or_sleepingMs": 1.679,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiCatalogRead": {
+                  "wallMs": 13.181,
+                  "scheduled_runningMs": 9.088,
+                  "runnableMs": 2.372,
+                  "blocked_or_sleepingMs": 1.721,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiTabs": {
+                  "wallMs": 15.601,
+                  "scheduled_runningMs": 11.3,
+                  "runnableMs": 2.443,
+                  "blocked_or_sleepingMs": 1.858,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiGlyphFilter": {
+                  "wallMs": 6.825,
+                  "scheduled_runningMs": 2.404,
+                  "runnableMs": 0.078,
+                  "blocked_or_sleepingMs": 4.343,
+                  "uncoveredMs": 0.0
+                }
+              }
+            },
+            {
+              "sample": 1,
+              "click": {
+                "wallMs": 13.685,
+                "scheduled_runningMs": 10.504,
+                "runnableMs": 0.82,
+                "blocked_or_sleepingMs": 2.361,
+                "uncoveredMs": 0.0
+              },
+              "phases": {
+                "Rune#emojiConstruct": {
+                  "wallMs": 1.021,
+                  "scheduled_runningMs": 0.899,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 0.122,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiCatalogRead": {
+                  "wallMs": 6.034,
+                  "scheduled_runningMs": 4.411,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 1.623,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiTabs": {
+                  "wallMs": 6.943,
+                  "scheduled_runningMs": 5.32,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 1.623,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiGlyphFilter": {
+                  "wallMs": 0.72,
+                  "scheduled_runningMs": 0.72,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 0.0,
+                  "uncoveredMs": 0.0
+                }
+              }
+            },
+            {
+              "sample": 2,
+              "click": {
+                "wallMs": 10.098,
+                "scheduled_runningMs": 6.732,
+                "runnableMs": 0.0,
+                "blocked_or_sleepingMs": 3.366,
+                "uncoveredMs": 0.0
+              },
+              "phases": {
+                "Rune#emojiConstruct": {
+                  "wallMs": 0.915,
+                  "scheduled_runningMs": 0.816,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 0.099,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiCatalogRead": {
+                  "wallMs": 5.649,
+                  "scheduled_runningMs": 3.353,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 2.296,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiTabs": {
+                  "wallMs": 6.367,
+                  "scheduled_runningMs": 4.032,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 2.335,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiGlyphFilter": {
+                  "wallMs": 0.385,
+                  "scheduled_runningMs": 0.144,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 0.241,
+                  "uncoveredMs": 0.0
+                }
+              }
+            },
+            {
+              "sample": 3,
+              "click": {
+                "wallMs": 6.634,
+                "scheduled_runningMs": 5.834,
+                "runnableMs": 0.142,
+                "blocked_or_sleepingMs": 0.658,
+                "uncoveredMs": 0.0
+              },
+              "phases": {
+                "Rune#emojiConstruct": {
+                  "wallMs": 1.058,
+                  "scheduled_runningMs": 0.785,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 0.273,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiCatalogRead": {
+                  "wallMs": 2.975,
+                  "scheduled_runningMs": 2.925,
+                  "runnableMs": 0.05,
+                  "blocked_or_sleepingMs": 0.0,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiTabs": {
+                  "wallMs": 3.554,
+                  "scheduled_runningMs": 3.412,
+                  "runnableMs": 0.142,
+                  "blocked_or_sleepingMs": 0.0,
+                  "uncoveredMs": 0.0
+                },
+                "Rune#emojiGlyphFilter": {
+                  "wallMs": 0.085,
+                  "scheduled_runningMs": 0.085,
+                  "runnableMs": 0.0,
+                  "blocked_or_sleepingMs": 0.0,
+                  "uncoveredMs": 0.0
+                }
+              }
+            }
+          ]
+        },
+        "rawPrivateTrace": {
+          "path": "build/review-u9-cold-sched-20261027/trace-1/app-view.atrace",
+          "bytes": 3868076,
+          "sha256": "288f6f99644e832f7439046b13ba00db8a6613a38114445e6c16243288231a94"
+        },
+        "cleanup": {
+          "androidApi": "26",
+          "abi": "arm64-v8a",
+          "isolatedTaskOwnedAvd": true,
+          "testsCompleted": true,
+          "emulatorStopped": true,
+          "avdDeleted": true,
+          "physicalDeviceAccess": false
+        }
+      }
+    ],
+    "note": "Two fresh API26 AVD profiles of the single-pass baseline with optional measured-click trace enabled. No prior 54ms outlier reproduced. scheduled_running includes interrupts and is not true thread CPU time. Tabs includes catalog; do not add spans. Profiling only, not qualification of the deferred candidate."
+  },
+  "replayReuse": {
+    "basis": {
+      "path": "docs/acceptance/2026-10-27-u9-emoji-key-evidence.json",
+      "bytes": 94590,
+      "sha256": "fc5b5504856747f2479c5a6857ce56730324aba404a8f4e7ee71ae040e1f4ec1"
+    },
+    "sourcesVerified": 88,
+    "assetsVerified": 18,
+    "driverSha256": "bf63b2ddf9b8eebe62f2110fd9b00d8a8cc03f708d43bb670100e800a7a57618",
+    "priorComparison": {
+      "rows": 12000,
+      "identical": true,
+      "excludedFields": [
+        "hostStageNanos",
+        "fullTokenGenerationNanos"
+      ],
+      "projectionSha256": "33c3a96fed5b3322601f6b7a0307e3a4b62bfbc9bc7650b82bf644a1afffd8a3",
+      "baselineSha256": "02da96da1a2fb520db6d6c22bbc1e8da9d4adb6ad7a4b271184fed762b2662a3",
+      "candidateSha256": "20b19ccf73732e94edbe2c4079ac4551fd1398b853263afe394ab079ae66014e"
+    },
+    "note": "No fresh replay: exact harness sources/assets/driver verified unchanged. Existing EN volume/precision and ES false-change limitations remain."
+  },
+  "phone": {
+    "connected": false,
+    "diagnosticCode": "TRANSPORT_FAILURE",
+    "uiRead": false,
+    "updated": false
+  },
+  "outstanding": [
+    "Preview draw-start 50ms gate failed in four observations; no speedup established",
+    "Cold IME/PSS, release and actual presented frame budgets",
+    "Category-switch and recent-commit scan latency",
+    "Modifier insertion",
+    "Fold both displays and manual TalkBack"
+  ]
+}
