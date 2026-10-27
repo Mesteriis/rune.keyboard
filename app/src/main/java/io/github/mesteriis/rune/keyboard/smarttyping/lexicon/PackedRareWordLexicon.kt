@@ -3,7 +3,6 @@ package io.github.mesteriis.rune.keyboard.smarttyping.lexicon
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.TokenUnicode
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.security.MessageDigest
 
 /** Front-coded exact lookup with no resident per-word objects and no query cache. */
 class PackedRareWordLexicon private constructor(
@@ -82,25 +81,7 @@ class PackedRareWordLexicon private constructor(
             val bytes = source.asReadOnlyBuffer().order(ByteOrder.LITTLE_ENDIAN)
             val size = bytes.limit()
             check(size in (HEADER_BYTES + 40)..MAX_ASSET_BYTES)
-            val digest = MessageDigest.getInstance("SHA-256")
-            val entire = MessageDigest.getInstance("SHA-256")
-            val scratch = ByteArray(16 * 1024)
-            var cursor = 0
-            while (cursor < size - 32) {
-                check(!Thread.currentThread().isInterrupted)
-                val width = minOf(scratch.size, size - 32 - cursor)
-                bytes.position(cursor); bytes.get(scratch, 0, width)
-                digest.update(scratch, 0, width); entire.update(scratch, 0, width)
-                cursor += width
-            }
-            val trailer = ByteArray(32)
-            bytes.position(size - 32); bytes.get(trailer)
-            check(MessageDigest.isEqual(trailer, digest.digest()))
-            entire.update(trailer)
-            if (expectedSha256 != null) {
-                val actual = entire.digest().joinToString("") { "%02x".format(it.toInt() and 255) }
-                check(actual == expectedSha256)
-            }
+            PackedAssetDigest.verify(bytes, expectedSha256)
             check((0..7).map { bytes.get(it).toInt().toChar() }.joinToString("") == "RUNERAR1")
             check(bytes.getInt(8) == BLOCK_SIZE)
             val count = bytes.getInt(12)
