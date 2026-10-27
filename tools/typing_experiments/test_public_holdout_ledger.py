@@ -28,6 +28,12 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'LEDGER_OVERLAP:family'):
             assert_disjoint([dict(families=['жара'])], self.ledger, kinds=('family',))
 
+    def test_ranker_text_article_and_training_family_are_persisted(self):
+        with self.assertRaisesRegex(ValueError, 'LEDGER_OVERLAP:article'):
+            assert_disjoint([dict(article='3069606')], self.ledger, kinds=('article',))
+        with self.assertRaisesRegex(ValueError, 'LEDGER_OVERLAP:family'):
+            assert_disjoint([dict(families=['ранний'])], self.ledger, kinds=('family',), usages=('supervised',))
+
     def test_historical_overlap_disclosure_matches_recorded_keys(self):
         historical = {key for e in self.ledger['entries'] if e['id'].startswith('public-spelling-v')
                       for key in e['keys']['article']}

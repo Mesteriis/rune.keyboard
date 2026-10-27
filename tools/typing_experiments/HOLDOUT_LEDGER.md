@@ -113,3 +113,13 @@ its receipt hashes installed package code/data. Reading the resulting exclusion
 keys and running the unit tests requires only the standard library. The importer
 rejects changed corpus bindings, missing targets, duplicate row IDs and repeated
 addendum import; it does not update old rows or clear pending coverage.
+
+The pinned `typing-ranker-v2/data` history is imported with
+`import_ranker_history.py --base LEDGER --output NEW_DIRECTORY`. It verifies its
+fixed manifest hash, every row/text file and the original public Parquet hash.
+All 1,158 declared text-partition articles are excluded, including articles with
+no selected typo row. The 7,500 target rows are checked against partition/article
+metadata. Dictionary-supported training target families are `supervised`;
+dev/test families remain historical. The single unknown training target keeps
+its parent family axis pending. Source-window/context recovery remains pending;
+full-article exclusions already block new sentences from these sources.
