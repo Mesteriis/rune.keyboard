@@ -9,6 +9,10 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+// Reuse the runtime's pinned NDK without changing its qualified build recipe.
+evaluationDependsOn(":runtime-llama")
+val runtimeAndroid = project(":runtime-llama").extensions.getByType<com.android.build.api.dsl.LibraryExtension>()
+
 val keystorePropertiesFile = rootProject.file("keystore.properties")
 val keystoreProperties = Properties().apply {
     if (keystorePropertiesFile.exists()) {
@@ -19,6 +23,7 @@ val keystoreProperties = Properties().apply {
 android {
     namespace = "io.github.mesteriis.rune.keyboard"
     compileSdk = 37
+    ndkVersion = runtimeAndroid.ndkVersion
     buildFeatures { aidl = true }
 
     androidResources {

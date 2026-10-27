@@ -28,9 +28,19 @@ Fill `storeFile`, `storePassword`, `keyAlias` and `keyPassword` locally. Restric
   forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate
 
 tools/verify-native-runtime.sh app/build/outputs/apk/release/app-release.apk
+tools/verify-native-runtime.sh app/build/outputs/apk/release/app-release.apk --require-no-local-paths
 ```
 
-The privacy gates check permissions, cleartext/backup, logging, source dependency boundaries and the absence of debug recorders from release/profile before and after shrinking. Native checks cover both packaged ABIs. CI's unsigned build uses `app-release-unsigned.apk` for the APK check.
+The privacy gates check permissions, cleartext/backup, logging, source dependency boundaries and the absence of debug recorders from release/profile before and after shrinking. Native checks inspect all four libraries in both packaged ABIs, reject DWARF/static symbol sections and require exact bytes from the runtime's stripped outputs. The app reuses the runtime module's pinned NDK for packaging. CI's unsigned build uses `app-release-unsigned.apk` for the APK check.
+
+The separate `--require-no-local-paths` audit also rejects `/Users/` and `/home/`
+strings. It currently fails on source-location literals retained in runtime
+`.rodata`; stripping debug sections does not remove those literals. This remains
+an open U16 release requirement. Do not interpret the ordinary native gate or
+the 180,129,837-byte local release candidate as full release acceptance. Fixing
+the compiler source-location recipe requires renewed runtime identity and
+qualification evidence; do not rewrite packaged strings or qualification pins.
+Unstripped build outputs stay local for symbolization and must not be published.
 
 4. Run the GitHub Actions API 26/API 37 instrumentation matrix for the release commit. Inspect actual job conclusions before claiming it passed.
 5. Exercise changed UI and typing flows on a disposable emulator and/or an explicitly selected test device. A signed release smoke test should cover launch, onboarding, offline input and settings. Never clear a personal device's data to resolve a signature mismatch.

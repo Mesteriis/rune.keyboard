@@ -122,7 +122,9 @@ jobs:
       - name: Build, lint, and verify privacy
         run: ./gradlew lint assembleDebug assembleRelease assembleProfile privacyGateRelease privacyGateProfile imeIntelligenceBoundary forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate
       - name: Verify packaged native ABI boundary
-        run: tools/verify-native-runtime.sh app/build/outputs/apk/release/app-release-unsigned.apk
+        run: |
+          python3 -m unittest discover -s tools -p test_verify_packaged_native.py -v
+          tools/verify-native-runtime.sh app/build/outputs/apk/release/app-release-unsigned.apk
       - name: Stage installable artifacts
         run: |
           mkdir -p app/build/ci-artifacts

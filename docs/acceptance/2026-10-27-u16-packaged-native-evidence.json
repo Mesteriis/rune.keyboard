@@ -1,0 +1,315 @@
+{
+  "cards": [
+    "U16",
+    "Q1"
+  ],
+  "status": "partial; packaged native strip/byte parity verified, strict source-path audit FAILED; device/model/release checks open",
+  "baseCommit": "1a4b4dd377976b96cf136572d5d8d69f84305ad0",
+  "sources": [
+    {
+      "path": "app/build.gradle.kts",
+      "bytes": 14141,
+      "sha256": "daf48cd1b4affae8dc82a3c99e66383e09794c10c0fde3d64d1fc9a7f704df99"
+    },
+    {
+      "path": "tools/verify-native-runtime.sh",
+      "bytes": 4679,
+      "sha256": "4bb3471a71160125d1251b85c1e55167b297e11ad48c0c216b067797ba009622"
+    },
+    {
+      "path": "tools/verify_packaged_native.py",
+      "bytes": 3957,
+      "sha256": "ad55a2ffd0f9f89ef381d79af30c6fa95084e1de28b9840c5c7fc0318323f9e4"
+    },
+    {
+      "path": "tools/test_verify_packaged_native.py",
+      "bytes": 6426,
+      "sha256": "15c616399fad40aaf7a36b41c3ebdc106027f324b02cdb8f74898ea6997c3fde"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 13466,
+      "sha256": "92c373a2d2ae174c89f494a3bc7b11a6c266afd6b2415a160c0d097ae7ab11b0"
+    },
+    {
+      "path": "app/src/debug/res/layout/view_settings_section.xml",
+      "bytes": 542,
+      "sha256": "225c3217be52ea56bdfe7a462430d38eb3032e35e2b6c1d6599ed0197aa8669b"
+    },
+    {
+      "path": "docs/RELEASE.md",
+      "bytes": 4266,
+      "sha256": "15e4d23b6c3aa956dcff13a1f771f1c422e6f0445a13dcfacaff55a5c35e72c8"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 1978,
+      "sha256": "9f546fd59a7cee4e7a0a75ff9ad9b7a2ce5f3ce5f44ce6bf3d221b11d0af1e36"
+    },
+    {
+      "path": "docs/plans/2026-10-27-review-completion.md",
+      "bytes": 18002,
+      "sha256": "c542f1e3d9aa82c1dc976416b7b6fa86cdd24ed3031f3ec0b7a2985dd3649dd2"
+    }
+  ],
+  "candidate": {
+    "apkBytes": 180129837,
+    "apkSha256": "cf9a51d5b65a4f359b2616d330b65b25d61e39e849fdd717c576e5a73dc8f71c",
+    "libraries": [
+      {
+        "entry": "lib/arm64-v8a/libc++_shared.so",
+        "bytes": 1374336,
+        "sha256": "c4c2fe5cbcb1fba0003a31fc7ab29a9bb12df6cc187ec45a806462540e83d93b"
+      },
+      {
+        "entry": "lib/arm64-v8a/librune_llama.so",
+        "bytes": 3413008,
+        "sha256": "654ec2ca1d419d9158d62dfdd808ab4ff0ec692060ae299ae6e301dcbae02dc5"
+      },
+      {
+        "entry": "lib/x86_64/libc++_shared.so",
+        "bytes": 1337488,
+        "sha256": "683a1c7cd2f6829fd40bf805739166c5fce35235bf60d2c4e4a95e9f65a342ef"
+      },
+      {
+        "entry": "lib/x86_64/librune_llama.so",
+        "bytes": 3859104,
+        "sha256": "50878810f036fa9f33a0c9a6417006bb525943b7d6f2268baded2f2fc5f78ec9"
+      }
+    ]
+  },
+  "baseline": {
+    "apkBytes": 278395385,
+    "apkSha256": "d05b62535552fdce303c1cf7a46d78a1d197fef7b41cf8c1b32be1ca2cce2e05",
+    "nativeBytes": 108236792,
+    "sourceBinding": "Unknown historical build; not a controlled same-source APK baseline"
+  },
+  "finalBuild": {
+    "result": {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:assembleRelease",
+        ":app:assembleProfile",
+        ":app:privacyGateRelease",
+        ":app:privacyGateProfile",
+        ":app:lintDebug",
+        ":app:lintRelease",
+        ":runtime-llama:nativeSymbolGate"
+      ],
+      "exitCode": 0
+    },
+    "log": {
+      "path": "build/review-u16-20261027/final-build.log",
+      "bytes": 16344,
+      "sha256": "e1ae9e9d2b42efbf3a2c15e3ad3d07f32047f498de631e059becf5418643acb2"
+    }
+  },
+  "checks": [
+    {
+      "name": "packaged-gate",
+      "result": {
+        "exitCode": 0,
+        "expectedExitCode": 0
+      },
+      "log": {
+        "path": "build/review-u16-20261027/packaged-gate.log",
+        "bytes": 591,
+        "sha256": "97c2a73d87c4a4a6c60a960ca4b73e04acd956fd66ca211686ad0ad806cbd9ca"
+      }
+    },
+    {
+      "name": "old-apk-negative",
+      "result": {
+        "exitCode": 1,
+        "expectedExitCode": 1
+      },
+      "log": {
+        "path": "build/review-u16-20261027/old-apk-negative.log",
+        "bytes": 51,
+        "sha256": "5b8186c85f82190ce9ef011893b2b51c2a28975bc8bddd64689fda1a103f821f"
+      }
+    },
+    {
+      "name": "qualification",
+      "result": {
+        "exitCode": 0,
+        "expectedExitCode": 0
+      },
+      "log": {
+        "path": "build/review-u16-20261027/qualification.log",
+        "bytes": 107,
+        "sha256": "9aaede5ebdafde480685bde73e4d358debda215b3475a0fea6cf27bdc032bd9a"
+      }
+    },
+    {
+      "name": "gate-tests",
+      "result": {
+        "exitCode": 0,
+        "expectedExitCode": 0
+      },
+      "log": {
+        "path": "build/review-u16-20261027/gate-tests.log",
+        "bytes": 1442,
+        "sha256": "d6e20b0bf16ee93972ea30480e5fac17cb0a7fedae2e6dce8444cc48d1cd5716"
+      }
+    },
+    {
+      "name": "path-audit",
+      "result": {
+        "exitCode": 1,
+        "passed": false,
+        "reason": "NATIVE_LOCAL_SOURCE_PATH"
+      },
+      "log": {
+        "path": "build/review-u16-20261027/path-audit.log",
+        "bytes": 54,
+        "sha256": "5e27bd1b2db1e7be0cabc30889a029e55d6d18bf9b78036e5ad4e6d6e31a1f38"
+      }
+    }
+  ],
+  "unstrippedSingleLibraryNegatives": [
+    {
+      "result": {
+        "mutatedEntry": "lib/arm64-v8a/libc++_shared.so",
+        "exitCode": 1,
+        "rejected": true,
+        "reason": "NATIVE_DEBUG_SECTIONS"
+      },
+      "log": {
+        "path": "build/review-u16-20261027/negative-0.log",
+        "bytes": 51,
+        "sha256": "5b8186c85f82190ce9ef011893b2b51c2a28975bc8bddd64689fda1a103f821f"
+      }
+    },
+    {
+      "result": {
+        "mutatedEntry": "lib/arm64-v8a/librune_llama.so",
+        "exitCode": 1,
+        "rejected": true,
+        "reason": "NATIVE_DEBUG_SECTIONS"
+      },
+      "log": {
+        "path": "build/review-u16-20261027/negative-1.log",
+        "bytes": 51,
+        "sha256": "5b8186c85f82190ce9ef011893b2b51c2a28975bc8bddd64689fda1a103f821f"
+      }
+    },
+    {
+      "result": {
+        "mutatedEntry": "lib/x86_64/libc++_shared.so",
+        "exitCode": 1,
+        "rejected": true,
+        "reason": "NATIVE_DEBUG_SECTIONS"
+      },
+      "log": {
+        "path": "build/review-u16-20261027/negative-2.log",
+        "bytes": 51,
+        "sha256": "5b8186c85f82190ce9ef011893b2b51c2a28975bc8bddd64689fda1a103f821f"
+      }
+    },
+    {
+      "result": {
+        "mutatedEntry": "lib/x86_64/librune_llama.so",
+        "exitCode": 1,
+        "rejected": true,
+        "reason": "NATIVE_DEBUG_SECTIONS"
+      },
+      "log": {
+        "path": "build/review-u16-20261027/negative-3.log",
+        "bytes": 51,
+        "sha256": "5b8186c85f82190ce9ef011893b2b51c2a28975bc8bddd64689fda1a103f821f"
+      }
+    }
+  ],
+  "pathAudit": {
+    "passed": false,
+    "counts": [
+      {
+        "entry": "lib/arm64-v8a/libc++_shared.so",
+        "pathBearingStrings": 0
+      },
+      {
+        "entry": "lib/arm64-v8a/librune_llama.so",
+        "pathBearingStrings": 161
+      },
+      {
+        "entry": "lib/x86_64/libc++_shared.so",
+        "pathBearingStrings": 0
+      },
+      {
+        "entry": "lib/x86_64/librune_llama.so",
+        "pathBearingStrings": 161
+      }
+    ],
+    "scope": "Only fixed counts/codes published; raw local path strings are not exported. Ordinary strip gate is distinct from strict path audit."
+  },
+  "priorLintFailure": {
+    "result": {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:assembleProfile",
+        ":app:privacyGateProfile",
+        ":app:lintRelease"
+      ],
+      "exitCode": 1
+    },
+    "log": {
+      "path": "build/review-u16-20261027/profile-lint-build.log",
+      "bytes": 13446,
+      "sha256": "0b4023fc9ea4dadde6aa57a23a6fef90a63d3c17e3339cbefcf36fe69a9e04f3"
+    },
+    "cause": "view_settings_section layout used only by debug diagnostics but declared in main resources; moved unchanged to debug source set"
+  },
+  "runtimeBuildId": "356dc78ec8b156462d8384ca14f0e20ff831c66b83c38831f40edfd6bd645613",
+  "replayReuse": {
+    "basis": {
+      "path": "docs/acceptance/2026-10-27-u9-emoji-key-evidence.json",
+      "bytes": 94590,
+      "sha256": "fc5b5504856747f2479c5a6857ce56730324aba404a8f4e7ee71ae040e1f4ec1"
+    },
+    "sourcesVerified": 88,
+    "assetsVerified": 18,
+    "driverSha256": "bf63b2ddf9b8eebe62f2110fd9b00d8a8cc03f708d43bb670100e800a7a57618",
+    "note": "No fresh ordinary replay; current harness sources/assets/driver unchanged; this is not native-model release smoke or renewed qualification"
+  },
+  "localUnstrippedSymbolization": [
+    {
+      "abi": "arm64-v8a",
+      "name": "libc++_shared.so",
+      "bytes": 9290184,
+      "sha256": "0c52cfab2df0d957d8b346a2bdc5ae8d71feca2591924d77e1cd724d5bf74352"
+    },
+    {
+      "abi": "arm64-v8a",
+      "name": "librune_llama.so",
+      "bytes": 45084920,
+      "sha256": "08d6207da11124e543ed136d8fcab855c3c0df72844ea26ab9ed61da5661906c"
+    },
+    {
+      "abi": "x86_64",
+      "name": "libc++_shared.so",
+      "bytes": 9015544,
+      "sha256": "e28cb9e0f456caf8498d0e8562b3ac3f73bf78c07555a52b5602396f240abec3"
+    },
+    {
+      "abi": "x86_64",
+      "name": "librune_llama.so",
+      "bytes": 44846144,
+      "sha256": "2169fc3949328a399c6a3f239cab891e394499d1d6e4b1404fe8222dc96ae4b7"
+    }
+  ],
+  "nativeModelSmoke": false,
+  "phoneRun": false,
+  "phoneUpdate": false,
+  "published": false,
+  "outstanding": [
+    "Source-location literals remain in .rodata; strict path audit fails",
+    "Runtime-recipe change requires new fingerprint and qualification; no pins or ELF strings rewritten",
+    "Release model loading/self-test/scoring on Fold and API26/37",
+    "Q1 footprint budgets, distribution and clean-source release requirements"
+  ]
+}

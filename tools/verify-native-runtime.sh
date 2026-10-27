@@ -65,8 +65,18 @@ if len(entries) != len(expected) or dict(entries) != expected or sorted(external
 PYCODE
 
 apk=${1:-}
+[[ $# -le 2 && ( $# -lt 2 || "$2" == "--require-no-local-paths" ) ]] || {
+  echo "Usage: verify-native-runtime.sh [APK [--require-no-local-paths]]" >&2; exit 1;
+}
 if [[ -n "$apk" ]]; then
   [[ -f "$apk" ]] || { echo "APK does not exist: $apk" >&2; exit 1; }
+  packaged_args=("$repo_root/tools/verify_packaged_native.py" "$apk"
+    --stripped "$repo_root/runtime-llama/build/intermediates/stripped_native_libs/release"
+    --readelf "$readelf_bin")
+  if [[ "${2:-}" == "--require-no-local-paths" ]]; then
+    packaged_args+=(--require-no-local-paths)
+  fi
+  python3 "${packaged_args[@]}"
   apk_entries=$(unzip -Z1 "$apk")
   abis=$(sed -n 's#^lib/\([^/]*\)/.*#\1#p' <<<"$apk_entries" | sort -u)
   [[ "$abis" == $'arm64-v8a\nx86_64' ]] || {

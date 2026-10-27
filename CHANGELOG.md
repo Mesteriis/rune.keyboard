@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Strip packaged native libraries with the runtime's pinned NDK and verify all
+  four APK libraries against stripped build outputs. The local universal release
+  candidate is 180,129,837 bytes, with 9,983,936 bytes of native libraries;
+  source-location literals and device/model release acceptance remain open.
+
 ## 0.4.2 — 2026-09-16
 
 - Ordinary letters are no longer dropped when a small upward finger drift rejects a secondary-symbol flick while the contact remains inside the key.
