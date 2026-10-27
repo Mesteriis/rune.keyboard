@@ -1,0 +1,271 @@
+{
+  "schema": 1,
+  "purpose": "APPLIED_ROLE_FIT_REJECTED_AND_AGREEMENT_EVIDENCE_GUARD",
+  "model": {
+    "modelSha256": "7c80ce024fbed668ba45ae0333388845693534fb422b9841d93159b2f849e5d1",
+    "modelBytes": 78888,
+    "featureCount": 221,
+    "residualFeatureCount": 75,
+    "trainingGroups": 32024,
+    "candidateRows": 445321,
+    "baseModelSha256": "dfdc98954e702b3787118cb88ecd3268b25b4b1f498b45777872dc4c4c977594",
+    "residualModelSha256": "a233f59996bfa6036cf512a5ca8afa0b1289f06971f82ce3d8f2bafd658fac62"
+  },
+  "tests": {
+    "rightContextTests": 162,
+    "newProfileBatchTests": 2,
+    "legacyBatchTests": 5,
+    "allExitZero": true
+  },
+  "numericParity": {
+    "purpose": "NUMERIC_PARITY_NOT_QUALITY",
+    "realTrainingCandidateVectors": 510,
+    "distinctSplits": 107,
+    "splitProbes": 428,
+    "rawMaxAbsoluteDifference": 0.0,
+    "boundedMaxAbsoluteDifference": 0.0,
+    "batchMaxAbsoluteDifference": 0.0,
+    "allExact": true
+  },
+  "diagnostics": {
+    "v9-source4": {
+      "statistics": {
+        "scoredPools": 739,
+        "scoredPrefixes": 1752
+      },
+      "firstUnthresholdedActions": {
+        "hard_other_part_negative": {
+          "wrong": 8
+        },
+        "agreement_role_negative": {
+          "correct": 46,
+          "wrong": 9
+        },
+        "matched_copula_positive": {
+          "correct": 52,
+          "wrong": 1
+        },
+        "direct_subject_positive": {
+          "correct": 43,
+          "wrong": 1
+        }
+      },
+      "diagnosticFitPassed": false,
+      "diagnosticPolicy": null
+    },
+    "v9-source5": {
+      "statistics": {
+        "scoredPools": 739,
+        "scoredPrefixes": 1752
+      },
+      "firstUnthresholdedActions": {
+        "hard_other_part_negative": {
+          "wrong": 8
+        },
+        "agreement_role_negative": {
+          "correct": 46,
+          "wrong": 9
+        },
+        "matched_copula_positive": {
+          "correct": 52
+        },
+        "direct_subject_positive": {
+          "correct": 43,
+          "wrong": 1
+        }
+      },
+      "diagnosticFitPassed": false,
+      "diagnosticPolicy": null
+    },
+    "v10-source4": {
+      "statistics": {
+        "scoredPools": 739,
+        "scoredPrefixes": 1752
+      },
+      "firstUnthresholdedActions": {
+        "hard_other_part_negative": {
+          "wrong": 9
+        },
+        "agreement_role_negative": {
+          "correct": 42,
+          "wrong": 9
+        },
+        "matched_copula_positive": {
+          "correct": 48,
+          "wrong": 1
+        },
+        "direct_subject_positive": {
+          "correct": 50
+        }
+      },
+      "diagnosticFitPassed": false,
+      "diagnosticPolicy": null
+    },
+    "v10-source5": {
+      "statistics": {
+        "scoredPools": 739,
+        "scoredPrefixes": 1752
+      },
+      "firstUnthresholdedActions": {
+        "hard_other_part_negative": {
+          "wrong": 9
+        },
+        "agreement_role_negative": {
+          "correct": 42,
+          "wrong": 9
+        },
+        "matched_copula_positive": {
+          "correct": 48
+        },
+        "direct_subject_positive": {
+          "correct": 50
+        }
+      },
+      "diagnosticFitPassed": false,
+      "diagnosticPolicy": null
+    }
+  },
+  "guardComparison": {
+    "v9": {
+      "scoredPrefixes": 1752,
+      "identicalRankedDecisions": true,
+      "newVetoes": 7,
+      "changedAcceptedPaths": [
+        "available-v6-calibration-004200"
+      ],
+      "rawPositiveMarginMetrics": {
+        "newCorrect": 141,
+        "newWrong": 18,
+        "priorCorrectLosses": 2,
+        "controlChanges": 0,
+        "installedCorrectLosses": 2,
+        "installedCorrectGains": 141,
+        "netCorrectVsInstalled": 139,
+        "acquisitions": 132,
+        "revisions": 27,
+        "firstBoundaryActions": {
+          "1": 125,
+          "2": 13,
+          "6": 3,
+          "5": 4,
+          "7": 3,
+          "3": 8,
+          "4": 2,
+          "8": 1
+        },
+        "precision": 0.8867924528301887
+      }
+    },
+    "v10": {
+      "scoredPrefixes": 1752,
+      "identicalRankedDecisions": true,
+      "newVetoes": 8,
+      "changedAcceptedPaths": [
+        "available-v6-calibration-004200"
+      ],
+      "rawPositiveMarginMetrics": {
+        "newCorrect": 140,
+        "newWrong": 18,
+        "priorCorrectLosses": 3,
+        "controlChanges": 0,
+        "installedCorrectLosses": 3,
+        "installedCorrectGains": 140,
+        "netCorrectVsInstalled": 137,
+        "acquisitions": 128,
+        "revisions": 30,
+        "firstBoundaryActions": {
+          "1": 128,
+          "6": 3,
+          "5": 2,
+          "7": 2,
+          "3": 7,
+          "4": 3,
+          "2": 10,
+          "8": 3
+        },
+        "precision": 0.8860759493670886
+      }
+    }
+  },
+  "exposureAudit": {
+    "purpose": "AUTHORED_TRAINING_EXPOSURE_AUDIT_NOT_QUALITY",
+    "candidateRows": 445321,
+    "leftNonFixedCopulaFiniteCandidateRows": 0,
+    "appliedNounWithAdjacentLeftCopulaCandidateRows": 1287,
+    "noNewModelFit": true
+  },
+  "pureNounExposure": {
+    "pureNounWithAdjacentLeftCopulaGroups": 0,
+    "pureNounWithAdjacentLeftCopulaCandidateRows": 0,
+    "pureInstrumentalNounWithAdjacentLeftCopulaGroups": 0
+  },
+  "pairedIntentAudit": {
+    "oppositeIntentPairs": 564
+  },
+  "newWeightsSelected": false,
+  "installedAssetsUnchanged": true,
+  "holdoutRead": false,
+  "productionQualified": false,
+  "apkBuilt": false,
+  "apkInstalled": false,
+  "files": {
+    "tools/typing_experiments/right_context_applied_ranker.py": "a63945547264cad8d841ba69a5d8aad89b5162495521eca6c4c253379cbecf5f",
+    "tools/typing_experiments/test_right_context_applied_ranker.py": "395e87553d867575e5235275396e4d81aa5f6141a16950ecf9296abe33ce9764",
+    "tools/typing_experiments/test_applied_tree_batch.py": "4e886cd2c2e8f9ec6b0317979149207c08157e5e69b2fbde3613b0cd825f962d",
+    "tools/typing_experiments/right_context_agreement_delta_source.py": "3bdcc8c167c37b121f7c360952e63ff96d34c36715e8d5a8f02afd96adcc19e6",
+    "tools/typing_experiments/test_right_context_agreement_delta_source.py": "8f774f5f21bfb8f585f196233ad0abe3dbccd5c8699fb44ac4da8bf5a6deba83",
+    "build/right-context-applied-residual-v10-20261027/train.py": "00e5428f4c44c20a3800b3b353499b00ddca443379a7de2db20fef601ac9683f",
+    "build/right-context-applied-residual-v10-20261027/train.log": "5bfe89f998f7a37346a67077d00824e89c7da40ba582b6bfd010f08be4d4fab9",
+    "build/right-context-applied-residual-v10-20261027/plan.json": "9f58c762cada44974b62e4e22b736d3edf447f36e3ecd28108b7d849b96c20ec",
+    "build/right-context-applied-residual-v10-20261027/frozen-model.json": "3198077bbcd62e1d711e99d81bb8710d689389d35d7d559613c315dcb55bf0f1",
+    "build/right-context-applied-residual-v10-20261027/composite.json": "7c80ce024fbed668ba45ae0333388845693534fb422b9841d93159b2f849e5d1",
+    "build/right-context-applied-residual-v10-20261027/base-ranker.bin": "dfdc98954e702b3787118cb88ecd3268b25b4b1f498b45777872dc4c4c977594",
+    "build/right-context-applied-residual-v10-20261027/residual-ranker.bin": "a233f59996bfa6036cf512a5ca8afa0b1289f06971f82ce3d8f2bafd658fac62",
+    "build/right-context-applied-residual-v10-20261027/residual-ranker.json": "1c75877dc9a4086148f8ed8f6dc581f9c52196aa4fbefda96d972c6d903673e8",
+    "build/right-context-applied-residual-v10-20261027/groups.jsonl": "686877ec73f2392eef9754fc4d2b9a958fc542b79a2d415bcdb11798d2f7db31",
+    "build/right-context-applied-residual-v10-20261027/train-vectors.npz": "c53e2809351e8c03b45d8051d56f1f68be2d4da39e3fd44b8932f1052afbc438",
+    "build/right-context-applied-residual-v10-20261027/train-group-weights.npy": "5444ba03cfc79918a0a092516941dff2ba72027888f8db5dadf34a48e09a094c",
+    "build/right-context-applied-residual-v10-20261027/baseline-raw-scores.npy": "7ee0ae165f55cc7196c1b6ef901dcc3ec9c282280029e65fc8efd4495787f2f7",
+    "build/right-context-applied-residual-v10-20261027/training-diagnostic.json": "874a48af372d217875013cc1dcf46ff5cafd7add0a50205076bd9008fa6ecd62",
+    "build/right-context-applied-residual-v10-20261027/reference-parity.py": "fbe25891a9bc116c651baca3b34a88d0f7e43999a771a873ade655098199fc47",
+    "build/right-context-applied-residual-v10-20261027/reference-parity.log": "df334eea921889da3a713c97841b7b80212f56e9a0c39f55929b2d2e045fdfec",
+    "build/right-context-applied-residual-v10-20261027/reference-parity.json": "954fcfb8b74421823e251210240cd1ec2163bdd363681239667d4519349c501b",
+    "build/right-context-applied-residual-v10-20261027/python-tests-final.log": "14b6c1b39902d27a78085b6b531ab69b100b2f858c3694789147714d52ec4261",
+    "build/right-context-applied-residual-v10-20261027/applied-batch-tests.log": "455a234a903f02c7d36882c9b036acc1ee7cca1176404082cfe9897ae40211f7",
+    "build/right-context-applied-residual-v10-20261027/legacy-batch-tests.log": "adc92d4f6d7886db32a2a4e7fbbc1e31eb4309e39ab5350407813ec754a1a4e5",
+    "build/right-context-applied-residual-v10-20261027/audit-role-information.py": "d41a2e98eeb6d5712e4993d56dd76684eb3131b3e555c4aef539c7c7dec85447",
+    "build/right-context-applied-residual-v10-20261027/role-information-audit.json": "682b67cbe90896fd21d603d18479d812363a37355f1de3469530aaa91a55bfa2",
+    "build/right-context-applied-residual-v10-20261027/training-exposure-audit.json": "b54b8f36a5ae8a3f3f0fda51365ab3bf1542ec527b80bbcc12fbfa3b639439ab",
+    "build/right-context-applied-residual-v10-20261027/pure-noun-exposure-audit.json": "b3de1d9723c7bfa5388699a592f0aca68573c603597cd4f1e9dc72d114e78cbb",
+    "build/right-context-v9-source4-traced-20261027/score.py": "e151771382c28c322b00363684d46ffd172955076aa957348f4163e8637793ee",
+    "build/right-context-v9-source4-traced-20261027/score.log": "1cd087e422955597cdbc271bf6b25e0d923601f06d329ca3b5d2a872ee641c84",
+    "build/right-context-v9-source4-traced-20261027/scoring-plan.json": "60af64352556ed9c0f73021ab9bc8426697f86b901c797325dd63a2d9a087827",
+    "build/right-context-v9-source4-traced-20261027/calibration-paths.json": "14fe67a69b369ce0005d81e4107b46b7b7d954462b212434ba5336c116cb47cc",
+    "build/right-context-v9-source4-traced-20261027/decision-traces.json": "80188ee1f986e633dde82887009a6c2d0e5c7252faafeb66f8efbb80d8d08082",
+    "build/right-context-v9-source4-traced-20261027/calibration-result.json": "24049768b36517d9dd28b269eddd763520d1ffe4d15ced543625e0279d4e6654",
+    "build/right-context-v9-source5-traced-20261027/score.py": "72d2d4e565a7bbb5c517ea8ecc09eb2af225d74064439f0429f2da2348c70337",
+    "build/right-context-v9-source5-traced-20261027/score.log": "b7a5d46c010d186c0010d6908fd788f35a32846163c6a67aae219f5dfff4babf",
+    "build/right-context-v9-source5-traced-20261027/scoring-plan.json": "c5aff3acb7189f58db55a661b365daca9f7691978f09b66f3ea375151ba85b0d",
+    "build/right-context-v9-source5-traced-20261027/calibration-paths.json": "1299c4b66ad2396d26f221abfd054c228fd49d5982ee62aff7b78e58699bf34d",
+    "build/right-context-v9-source5-traced-20261027/decision-traces.json": "6ac57c4342fa77a32fc80a2b61fd269ef46300a23d1f5d95a252ad2200794f35",
+    "build/right-context-v9-source5-traced-20261027/calibration-result.json": "1a7b32808e18b35baf0a8644940bc0726bb12772ef6c7aaaf00e2d0811dbdc2b",
+    "build/right-context-v10-source4-traced-20261027/score.py": "3ad989fffd6f2a1212ba59bff92e3ce134b6166a88de53fafdf3e5e2c9c45a95",
+    "build/right-context-v10-source4-traced-20261027/score.log": "c30da3b7418b07eddc15fd15f5c3db31180747c7a51246addc4bf74f37b8ad2d",
+    "build/right-context-v10-source4-traced-20261027/scoring-plan.json": "e15e7b38819469ea7edc283014c1d38509ccc778c85c07cdb966d0f49affe527",
+    "build/right-context-v10-source4-traced-20261027/calibration-paths.json": "1e74540eff4c698c7e4d4f0bc7fb08275a5e1c9f0b21c7fcf5089c63d0d933c6",
+    "build/right-context-v10-source4-traced-20261027/decision-traces.json": "f25d4adcd9ea95ba9bdb814aa51d5670e988b63554c95925814e58871b1bf899",
+    "build/right-context-v10-source4-traced-20261027/calibration-result.json": "839629d464588cd7049327f503ff6e8afbbc14b7914c2011be651e1b87fea294",
+    "build/right-context-v10-source5-traced-20261027/score.py": "1ae88645528e40ee6b87ee1a28741c0bf86e34b1bf9f5812adc8a74ffe006c82",
+    "build/right-context-v10-source5-traced-20261027/score.log": "438b57aa78fc6a0fa5991716ae12e644a7247f73aa39454967f7e03053c63016",
+    "build/right-context-v10-source5-traced-20261027/scoring-plan.json": "f99c24e8461551e8ad481fca7b3a631863c803b37de487910a746ddbd41d036e",
+    "build/right-context-v10-source5-traced-20261027/calibration-paths.json": "d98a2a544b2e974d50d3d00584f7e848d75d4e006aee31f821411508dc7bb706",
+    "build/right-context-v10-source5-traced-20261027/decision-traces.json": "6f68190878d887347cfe5e6bf8307f2fb677fedf132a79f5032f0f40467c382d",
+    "build/right-context-v10-source5-traced-20261027/calibration-result.json": "f0b1278408277e12f9c8dbefed123a4246c7546fe3d3b75b00e99006df8f735c",
+    "build/right-context-v10-source5-traced-20261027/compare.py": "0ee0bd5078ed05b1438b180f02ef510c3c0b00981c11921d08f3695455254887",
+    "build/right-context-v10-source5-traced-20261027/comparison.json": "dd2c624d401ba40fd29dbc7b9b6ec61b8790b48121374a76bbc6ca63056479aa",
+    "build/right-context-v10-source5-traced-20261027/audit-agreement-delta.py": "4dda1a4d7d5128de7b753ec44e63c09d9bb8807667df101f856fabaa6a97e875",
+    "build/right-context-v10-source5-traced-20261027/agreement-delta-audit.json": "63bc0bc8477793ac855267a046bdc8d637701e5c580d48fcb9fe818d2b147888",
+    "build/right-context-v10-source5-traced-20261027/agreement-delta-audit.log": "45bbae7748671b992cfa11f6bf39bdbb6106111ba9d0712d3245729537a59cdc",
+    "build/right-context-v10-source4-traced-20261027/prior-correct-losses.json": "04722c42a953c2e820b014fcf3be5056dba21b757c90d95bbd594bc6e39be63a"
+  }
+}

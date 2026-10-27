@@ -1,5 +1,8 @@
 # Initial evidence and applied-word role learning inputs
 
+The subsequent [75-field fit and its rejection](2026-10-27-right-context-applied-role-fit.md)
+record the next stage; the unfitted status below describes this earlier preparation.
+
 Source-v4 removes an experimental letter-name cue that caused a correct Rune
 replacement to be overwritten before `Н.`. New soft applied-word features and
 authored role contrasts prepare the next learning stage. Model weights and the
