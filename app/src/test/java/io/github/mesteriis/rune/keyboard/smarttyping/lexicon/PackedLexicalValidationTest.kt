@@ -136,6 +136,24 @@ class PackedLexicalValidationTest {
         }
     }
 
+    @Test fun packagedPublicationLeavesBodyLazyAndRejectsMalformedAnchorsOnAccess() {
+        for (rare in listOf(false, true)) {
+            val fixture = fixture(rare)
+            val bytes = fixture.bytes.copyOf().apply { this[fixture.offsets[32]] = 1 }
+            if (rare) {
+                val index = PackedRareWordLexicon.openPackaged(buffer(bytes), bytes.size.toLong())
+                assertNotSame(RareWordLexicon.UNAVAILABLE, index)
+                assertFalse(index.lookup(keys[0]).available)
+            } else {
+                val index = PackedMorphologyLexicon.openPackaged(buffer(bytes), bytes.size.toLong())
+                assertNotSame(MorphologyLexicon.UNAVAILABLE, index)
+                assertFalse(index.lookup(KeyboardLanguage.RUSSIAN, keys[0]).available)
+            }
+            val resealed = sealed(bytes.copyOf(bytes.size - 32))
+            assertFalse(reader(resealed, rare, false)(keys[0]).available)
+        }
+    }
+
     @Test fun packagedPathDoesNotPretendToAuthenticateBodyOrTrailer() {
         for (rare in listOf(false, true)) {
             val fixture = fixture(rare)

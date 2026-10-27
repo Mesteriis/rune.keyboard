@@ -1,0 +1,1925 @@
+{
+  "schemaVersion": 1,
+  "reviewCard": "U17",
+  "status": "Verified locally for the complete requested U17 scope",
+  "parentCommit": "49740ae381907c320a4a3a35f5b2d480f9a539b9",
+  "sources": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/PackedContextIndex.kt": "11130810ac502a7d2f819f59bdc904fd9fd566fedb9eeb070a6b1a3a88b8f523",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedMorphologyLexicon.kt": "b55b88ff49ecd95be416082b457176f9e7a68ba30baafd971ed60078206caf3f",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedRareWordLexicon.kt": "5122e2ef9e5571b293cf410c781c8499a10a62300d0cfeaea122d3b58880d88a",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/PackedContextIndexTest.kt": "be75af77fdd204fe4c9ca75b1952206e8bbf3df79c7b0df0f7e2978bb3962722",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexicalValidationTest.kt": "a3dc78378d8dcbcebf04429c47db4904065090a1428b51bc8861d8b21b689bf3",
+    "docs/ARCHITECTURE.md": "a925dcfde643b8972a6080b3d3e852cf7c01f6b2f039c38f1d6715cf741b70bc"
+  },
+  "baselineProfile": {
+    "sourceCommit": "dcba8acfe4b0ec08e790ecff2c7a273a7f32b01d",
+    "traceOnlyPatchSha256": "41c74ff3645642570c6e14011cf7437e7e49cc096d21318736c4344ed593953d",
+    "bytes": 180100293,
+    "sha256": "34c1b6052fffbbca1f33b8b3d63d264bee70ee0a252eada844f6f4a3be2461b3"
+  },
+  "candidateProfile": {
+    "parentCommit": "49740ae381907c320a4a3a35f5b2d480f9a539b9",
+    "modifiedReaderSources": {
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedMorphologyLexicon.kt": "b55b88ff49ecd95be416082b457176f9e7a68ba30baafd971ed60078206caf3f",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedRareWordLexicon.kt": "5122e2ef9e5571b293cf410c781c8499a10a62300d0cfeaea122d3b58880d88a",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/PackedContextIndex.kt": "11130810ac502a7d2f819f59bdc904fd9fd566fedb9eeb070a6b1a3a88b8f523"
+    },
+    "bytes": 180100293,
+    "sha256": "ccdac06eff19e82bb9be9713d6d092006c8b9b32f8ffca19ce0c374088b81078"
+  },
+  "baselineTracePatch": "docs/performance/2026-10-27-u17-baseline-trace.patch",
+  "baselineTracePatchSha256": "3da83e0c8a32c92792e4f26bb7d6f634cb00ae01937f04cbda666426d903a715",
+  "traceProcessor": {
+    "versionLogSha256": "69d155e2f171931db3a67a906693b78f550018e66e5b42e4749fb73350fa2044",
+    "version": "Perfetto v58.2-add693d8b",
+    "nativeBinary": {
+      "arch": "mac-arm64",
+      "file_name": "trace_processor_shell",
+      "file_size": 13597976,
+      "url": "https://commondatastorage.googleapis.com/perfetto-luci-artifacts/v58.2/mac-arm64/trace_processor_shell",
+      "sha256": "d29864d1ba3b36855527bb1b0ca3aa7f703cdce338b9680bb922c5c151b358fa",
+      "platform": "darwin",
+      "machine": [
+        "arm64"
+      ]
+    },
+    "wrapper": {
+      "url": "https://get.perfetto.dev/trace_processor",
+      "wrapperSha256": "9f255d16d56e6bf10a29dc53b103c81a4a185dabcc1fa45eb2ff022315817d8c",
+      "bytes": 10698
+    }
+  },
+  "profiles": {
+    "samples": 40,
+    "groups": [
+      {
+        "device": "fold",
+        "variant": "baseline",
+        "russianEnabled": true,
+        "samples": 5,
+        "metrics": {
+          "totalPssKiB": {
+            "median": 349491,
+            "min": 349459,
+            "max": 349515
+          },
+          "apkMmapPssKiB": {
+            "median": 86371,
+            "min": 86370,
+            "max": 86371
+          },
+          "dictionaryReadyMs": {
+            "median": 113.424739,
+            "min": 107.643698,
+            "max": 120.504948
+          },
+          "contextualReadyMs": {
+            "median": 547.216354,
+            "min": 542.275833,
+            "max": 576.054583
+          },
+          "dictionaryLoadMs": {
+            "median": 52.240677,
+            "min": 46.932448,
+            "max": 58.926354
+          },
+          "contextualAssetsLoadMs": {
+            "median": 488.241198,
+            "min": 474.976823,
+            "max": 520.099739
+          }
+        }
+      },
+      {
+        "device": "fold",
+        "variant": "baseline",
+        "russianEnabled": false,
+        "samples": 5,
+        "metrics": {
+          "totalPssKiB": {
+            "median": 349237,
+            "min": 349204,
+            "max": 349303
+          },
+          "apkMmapPssKiB": {
+            "median": 86465,
+            "min": 86465,
+            "max": 86465
+          },
+          "dictionaryReadyMs": {
+            "median": 105.273646,
+            "min": 103.7975,
+            "max": 108.316719
+          },
+          "contextualReadyMs": {
+            "median": 550.885261,
+            "min": 538.869791,
+            "max": 552.726198
+          },
+          "dictionaryLoadMs": {
+            "median": 46.703334,
+            "min": 43.259791,
+            "max": 49.809271
+          },
+          "contextualAssetsLoadMs": {
+            "median": 489.605885,
+            "min": 482.267812,
+            "max": 495.582604
+          }
+        }
+      },
+      {
+        "device": "fold",
+        "variant": "candidate",
+        "russianEnabled": true,
+        "samples": 5,
+        "metrics": {
+          "totalPssKiB": {
+            "median": 34297,
+            "min": 34282,
+            "max": 34367
+          },
+          "apkMmapPssKiB": {
+            "median": 1721,
+            "min": 1709,
+            "max": 1733
+          },
+          "dictionaryReadyMs": {
+            "median": 61.609844,
+            "min": 59.516979,
+            "max": 81.537344
+          },
+          "contextualReadyMs": {
+            "median": 67.679115,
+            "min": 66.334844,
+            "max": 88.083489
+          },
+          "dictionaryLoadMs": {
+            "median": 4.29375,
+            "min": 4.07099,
+            "max": 4.996823
+          },
+          "contextualAssetsLoadMs": {
+            "median": 11.579687,
+            "min": 11.187812,
+            "max": 11.617969
+          }
+        }
+      },
+      {
+        "device": "fold",
+        "variant": "candidate",
+        "russianEnabled": false,
+        "samples": 5,
+        "metrics": {
+          "totalPssKiB": {
+            "median": 30252,
+            "min": 29956,
+            "max": 30387
+          },
+          "apkMmapPssKiB": {
+            "median": 221,
+            "min": 221,
+            "max": 221
+          }
+        }
+      },
+      {
+        "device": "api26",
+        "variant": "baseline",
+        "russianEnabled": true,
+        "samples": 5,
+        "metrics": {
+          "totalPssKiB": {
+            "median": 103474,
+            "min": 102659,
+            "max": 104057
+          },
+          "apkMmapPssKiB": {
+            "median": 86651,
+            "min": 86644,
+            "max": 86651
+          },
+          "dictionaryReadyMs": {
+            "median": 73.112,
+            "min": 70.698,
+            "max": 75.21
+          },
+          "contextualReadyMs": {
+            "median": 414.838,
+            "min": 391.454,
+            "max": 428.395
+          },
+          "dictionaryLoadMs": {
+            "median": 45.801,
+            "min": 42.949,
+            "max": 53.289
+          },
+          "contextualAssetsLoadMs": {
+            "median": 389.439,
+            "min": 370.236,
+            "max": 404.296
+          }
+        }
+      },
+      {
+        "device": "api26",
+        "variant": "baseline",
+        "russianEnabled": false,
+        "samples": 5,
+        "metrics": {
+          "totalPssKiB": {
+            "median": 104171,
+            "min": 102073,
+            "max": 104715
+          },
+          "apkMmapPssKiB": {
+            "median": 86839,
+            "min": 86839,
+            "max": 86845
+          },
+          "dictionaryReadyMs": {
+            "median": 66.133,
+            "min": 64.636,
+            "max": 74.404
+          },
+          "contextualReadyMs": {
+            "median": 417.483,
+            "min": 390.148,
+            "max": 433.201
+          },
+          "dictionaryLoadMs": {
+            "median": 45.909,
+            "min": 41.381,
+            "max": 48.391
+          },
+          "contextualAssetsLoadMs": {
+            "median": 393.739,
+            "min": 369.907,
+            "max": 404.522
+          }
+        }
+      },
+      {
+        "device": "api26",
+        "variant": "candidate",
+        "russianEnabled": true,
+        "samples": 5,
+        "metrics": {
+          "totalPssKiB": {
+            "median": 19340,
+            "min": 19069,
+            "max": 19477
+          },
+          "apkMmapPssKiB": {
+            "median": 2372,
+            "min": 2344,
+            "max": 2448
+          },
+          "dictionaryReadyMs": {
+            "median": 27.48,
+            "min": 25.634,
+            "max": 39.473
+          },
+          "contextualReadyMs": {
+            "median": 35.147,
+            "min": 31.265,
+            "max": 42.613
+          },
+          "dictionaryLoadMs": {
+            "median": 9.396,
+            "min": 4.811,
+            "max": 16.764
+          },
+          "contextualAssetsLoadMs": {
+            "median": 14.869,
+            "min": 11.446,
+            "max": 18.456
+          }
+        }
+      },
+      {
+        "device": "api26",
+        "variant": "candidate",
+        "russianEnabled": false,
+        "samples": 5,
+        "metrics": {
+          "totalPssKiB": {
+            "median": 15291,
+            "min": 15164,
+            "max": 15399
+          },
+          "apkMmapPssKiB": {
+            "median": 709,
+            "min": 709,
+            "max": 709
+          }
+        }
+      }
+    ],
+    "pssSnapshot": "approximately 5 seconds after IME selection",
+    "timeOrigin": "Start proc: io.github.mesteriis.rune.keyboard.profile",
+    "processCold": true,
+    "fileCacheCold": false,
+    "aotCommand": "cmd package compile -m speed -f",
+    "traceProcessor": "Perfetto v58.2-add693d8b",
+    "privateState": "Task-owned profile package, no downloaded GGUF or imported personal profile"
+  },
+  "deviceSamples": {
+    "fold": {
+      "rows": [
+        {
+          "device": "fold",
+          "variant": "baseline",
+          "russianEnabled": true,
+          "index": 1,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 349493,
+          "traceSha256": "a9b783c0ca371c76ff9260b2ef6f8e58082242adc8fc919d960c3a9c81d81b61",
+          "memorySha256": "4026c7d696e474457c173aa1aba23caf98fe094210c2f2a47c6fb9ad2dbb0f10",
+          "slicesSha256": "3f83778fac002da8fb18267657b92340cdac539fe6b1dc7e0463ab217acc4314",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86371,
+          "dictionaryReadyMs": 120.504948,
+          "contextualReadyMs": 547.216354,
+          "dictionaryLoadMs": 46.932448,
+          "contextualAssetsLoadMs": 474.976823
+        },
+        {
+          "device": "fold",
+          "variant": "baseline",
+          "russianEnabled": true,
+          "index": 2,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 349491,
+          "traceSha256": "dd2b5bf7807d18e6b0da552c45fa145d61b988e7182726429944aae7914a0659",
+          "memorySha256": "58460eb78dc6be8785f0ef60a38b987f7553fc41d3fa8057547e3da5b49f33c3",
+          "slicesSha256": "baa339126b80f8b0069977d08a5f51b125359e21c409a04e57bd45cd504394f8",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86371,
+          "dictionaryReadyMs": 113.424739,
+          "contextualReadyMs": 542.275833,
+          "dictionaryLoadMs": 52.240677,
+          "contextualAssetsLoadMs": 482.559167
+        },
+        {
+          "device": "fold",
+          "variant": "baseline",
+          "russianEnabled": true,
+          "index": 3,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 349459,
+          "traceSha256": "7b7f2dcbd26fcd68ff35e86d766be60777c15c2fab8b2e7bbbf6ddbf46784da1",
+          "memorySha256": "a142cc441fbdb316a7369202e5ab86a68a2c57bfda6ce68d262dfae36399b7d7",
+          "slicesSha256": "391b1e00f9c7670a5bba68513cdb97711406d76816b7a6c887121716d95aaece",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86370,
+          "dictionaryReadyMs": 107.643698,
+          "contextualReadyMs": 542.87276,
+          "dictionaryLoadMs": 51.598854,
+          "contextualAssetsLoadMs": 488.241198
+        },
+        {
+          "device": "fold",
+          "variant": "baseline",
+          "russianEnabled": true,
+          "index": 4,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 349490,
+          "traceSha256": "0cd88e53387e8b56eafa77feda3ec1b1af0de015cd24bd2384f5f2c143cd3182",
+          "memorySha256": "af63ecb6e5a732903ad29f2207064f4117b46d1f7f15f9e0ac1b38f1210026a6",
+          "slicesSha256": "6a7183c8d39e5324e6a0e066f6877043524d229d25f89e90758f3f6aa88a1171",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86370,
+          "dictionaryReadyMs": 115.704479,
+          "contextualReadyMs": 572.984792,
+          "dictionaryLoadMs": 58.926354,
+          "contextualAssetsLoadMs": 517.538906
+        },
+        {
+          "device": "fold",
+          "variant": "baseline",
+          "russianEnabled": true,
+          "index": 5,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 349515,
+          "traceSha256": "88434262b345c707b95deda1ed45754231c9432382bbb38471379a71273e7da5",
+          "memorySha256": "3f1935f6a4ddb7d310d3ce4fe98a3341f05e96d726e324cedc9c1188be3aa450",
+          "slicesSha256": "af174c9977f4008d7a1d70a0e47d090d7790f9e8bf6061ac75ff5fa6e41664eb",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86371,
+          "dictionaryReadyMs": 110.100885,
+          "contextualReadyMs": 576.054583,
+          "dictionaryLoadMs": 52.764844,
+          "contextualAssetsLoadMs": 520.099739
+        },
+        {
+          "device": "fold",
+          "variant": "candidate",
+          "russianEnabled": true,
+          "index": 1,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 34282,
+          "traceSha256": "567acec31886ff278e07891258af12d1f8429bd91c00eda313f0200c6bb77ce5",
+          "memorySha256": "435aabf2c09e3cc0fed2ba2947f5c2e42e2227405d65334f8e6238cd30c1c84d",
+          "slicesSha256": "4ff302dd970c232c596797d6e8ff921d398d3ba1b6cc7d63a90cf991b46e0fa2",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 1733,
+          "dictionaryReadyMs": 61.061146,
+          "contextualReadyMs": 67.679115,
+          "dictionaryLoadMs": 4.29375,
+          "contextualAssetsLoadMs": 11.579687
+        },
+        {
+          "device": "fold",
+          "variant": "candidate",
+          "russianEnabled": true,
+          "index": 2,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 34367,
+          "traceSha256": "ec970660abfef89fc687a9478300a4a68a4ae3f3353c46d6981bb3f4edf5ff28",
+          "memorySha256": "ed79de98cf33f9286b5d58de4666335907af6b6ca119aa357968c292b65ce0e7",
+          "slicesSha256": "f1f5c43840cd90a32e401d6be3d8a271400af2b978403bcc3c9ad03efe4e2922",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 1709,
+          "dictionaryReadyMs": 81.537344,
+          "contextualReadyMs": 88.083489,
+          "dictionaryLoadMs": 4.345625,
+          "contextualAssetsLoadMs": 11.605
+        },
+        {
+          "device": "fold",
+          "variant": "candidate",
+          "russianEnabled": true,
+          "index": 3,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 34301,
+          "traceSha256": "c06f0509e9a1b479a360b7572ec9715a9873bffb44c2a95032660937261d3d20",
+          "memorySha256": "0345b76806ccd3c77d5993feec25d3bb0f41e34e9434c1ab2504d1510e572025",
+          "slicesSha256": "d2d3d8e4280518e5c2ba66f8af2f94d1f85e55296f33e5d971ff56c5f1f5d127",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 1731,
+          "dictionaryReadyMs": 61.609844,
+          "contextualReadyMs": 67.206979,
+          "dictionaryLoadMs": 4.996823,
+          "contextualAssetsLoadMs": 11.187812
+        },
+        {
+          "device": "fold",
+          "variant": "candidate",
+          "russianEnabled": true,
+          "index": 4,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 34288,
+          "traceSha256": "61110fa73eef5c41c1a191cc5c54c51faf1e30c1bafd24f710bc6a34b38570ab",
+          "memorySha256": "f659333df8a4173fb52b020d3d1ee1ec124eaf90818085cf45e01830c510a13a",
+          "slicesSha256": "2b68de1ed2e6336b3ae8c2776ffb82bee382f0baba58e512089f665e2b8adc01",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 1721,
+          "dictionaryReadyMs": 59.516979,
+          "contextualReadyMs": 66.334844,
+          "dictionaryLoadMs": 4.07099,
+          "contextualAssetsLoadMs": 11.617969
+        },
+        {
+          "device": "fold",
+          "variant": "candidate",
+          "russianEnabled": true,
+          "index": 5,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 34297,
+          "traceSha256": "a47b2b5a369628a1a9d64c699160c35c130fc729f57668c3d5b7560ac455833c",
+          "memorySha256": "0bcb2d28e461ce8233a822fc2b6c173b90b6d6d8cfdb59e7321968e57729ca7d",
+          "slicesSha256": "0274b013daf4a21f8a1d918bd920e384885c0dbc3ed76df18d6777966d4a7d1e",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 1709,
+          "dictionaryReadyMs": 65.418281,
+          "contextualReadyMs": 71.845469,
+          "dictionaryLoadMs": 4.188593,
+          "contextualAssetsLoadMs": 11.434375
+        },
+        {
+          "device": "fold",
+          "variant": "candidate",
+          "russianEnabled": false,
+          "index": 1,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 29956,
+          "traceSha256": "3cc0b512c4d904d629aa83608bb9251efe4858a2f0ec4d14021017719252e393",
+          "memorySha256": "913792e78424dcbee89fb01af1ec80dc69950b8a72aa32b764f2b45bb5b1776b",
+          "slicesSha256": "93cf8e4d4c4fe654b9891c2d68c15da67e37e370814bcdecd6ce0da5be6e989c",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 221
+        },
+        {
+          "device": "fold",
+          "variant": "candidate",
+          "russianEnabled": false,
+          "index": 2,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 30110,
+          "traceSha256": "5c957996ff86555bb18e1ca8a71cee68f065fd76bf44c4747f76a7878aaae62a",
+          "memorySha256": "38d38afd16d6391b7cd331d12d4c71bfe92a00f31711fdbcb82608c73586e54e",
+          "slicesSha256": "5031dd863557c25e390501b68500c5cb534eb6568549da52307d08ec501b9c39",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 221
+        },
+        {
+          "device": "fold",
+          "variant": "candidate",
+          "russianEnabled": false,
+          "index": 3,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 30329,
+          "traceSha256": "254a1b282a4fe95768b3100a36c52a69cb5607afb13c8bbc6152033779ca5448",
+          "memorySha256": "0fdcfe1ff351bcc555224bdff05b17c80eb7185abdce8e274aa0fa66aa2e06d9",
+          "slicesSha256": "a4171f3057e6f4d4065d442554eac17f355d8d78a9a3ca0401c5d17dc1fb0276",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 221
+        },
+        {
+          "device": "fold",
+          "variant": "candidate",
+          "russianEnabled": false,
+          "index": 4,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 30387,
+          "traceSha256": "4823cf1c4a7a3146a10773f5443437c766e27f6762c5c8f42e3a226238b05253",
+          "memorySha256": "43b1a58d0b95add5a9ae756d99f8b3e96c42be25832633092012aa7a662f1938",
+          "slicesSha256": "440995e70bdeac667b8e51a6722a3458fe8ac837e5d1c9cb870dc7d6eb7a31d3",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 221
+        },
+        {
+          "device": "fold",
+          "variant": "candidate",
+          "russianEnabled": false,
+          "index": 5,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 30252,
+          "traceSha256": "b2fc37ef7ccea93ae1212e3215f6f097efb53a29187c52defed94ed19dadc7bb",
+          "memorySha256": "50e1545bb1b6b5bb25c893051765f6710c08c374b89ac6e5107f137912c8230a",
+          "slicesSha256": "913e9addee114866a526a8c93e6a76993d36a12ba18951f1a0cf26fc25cc4ec0",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 221
+        },
+        {
+          "device": "fold",
+          "variant": "baseline",
+          "russianEnabled": false,
+          "index": 1,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 349225,
+          "traceSha256": "a6822804fe7ed76b9d6db80f8e7eda90ebead2fb300cee30fdae0c54f28eccba",
+          "memorySha256": "fd5523542bbabb87cf1332be637d8026d8e499b89fbd13c0180a81eb06ac3441",
+          "slicesSha256": "a4ecafdc90f61a031d146237233288c22f50e38a4d7f12806039b42ad120a8c8",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86465,
+          "dictionaryReadyMs": 107.662448,
+          "contextualReadyMs": 550.885261,
+          "dictionaryLoadMs": 43.259791,
+          "contextualAssetsLoadMs": 488.013854
+        },
+        {
+          "device": "fold",
+          "variant": "baseline",
+          "russianEnabled": false,
+          "index": 2,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 349237,
+          "traceSha256": "93ae52842894d5de72f31727e0768fbea78115758864dc07a764a3daf95a9d7e",
+          "memorySha256": "2433839f573925692a88164be67fcd82bb79a00742606ae4d15ab522ee7ae658",
+          "slicesSha256": "dcc92d4a8090d4010c21b8b1ed09c9caafa2917179485aca3b8fb94bfe50555e",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86465,
+          "dictionaryReadyMs": 105.023698,
+          "contextualReadyMs": 538.869791,
+          "dictionaryLoadMs": 46.955781,
+          "contextualAssetsLoadMs": 482.267812
+        },
+        {
+          "device": "fold",
+          "variant": "baseline",
+          "russianEnabled": false,
+          "index": 3,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 349303,
+          "traceSha256": "eacf5e85c8ccfa3cbebac125f3078e5b829e6a1b26109eab2888d9f8ab7cdcec",
+          "memorySha256": "1a129e91812caf41e325b095e0274756116c3076ad195a16949aa6c7ad551fad",
+          "slicesSha256": "bbc7ea8bbac3d86b6b298bfd0e80bade68689c63949e9869ef8daedc44380d09",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86465,
+          "dictionaryReadyMs": 108.316719,
+          "contextualReadyMs": 551.462708,
+          "dictionaryLoadMs": 49.809271,
+          "contextualAssetsLoadMs": 494.379739
+        },
+        {
+          "device": "fold",
+          "variant": "baseline",
+          "russianEnabled": false,
+          "index": 4,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 349204,
+          "traceSha256": "d32f7574873fb8d6a992a9984e21dd1201e7ef5e248ee7c6568ef6d76df31508",
+          "memorySha256": "41823e5843ca78c74232dcd3e4af9cdb11640a40bb3848c0460f4ee430fb3071",
+          "slicesSha256": "5dd284bff4a522532cdff5484e10266076722e51da9f3ad7053434b4474061aa",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86465,
+          "dictionaryReadyMs": 105.273646,
+          "contextualReadyMs": 552.726198,
+          "dictionaryLoadMs": 46.703334,
+          "contextualAssetsLoadMs": 495.582604
+        },
+        {
+          "device": "fold",
+          "variant": "baseline",
+          "russianEnabled": false,
+          "index": 5,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 349274,
+          "traceSha256": "45d6464cfe77025688923d07ee30a6eff98463ae3d7fbc6c63dbeb5d829bcf88",
+          "memorySha256": "2ca2cb10553dc9e85b475e8e3d1bc0db3e40faa6febd7a8844cb2ba9442ab976",
+          "slicesSha256": "b82f0663ac4d357bd837f9701da6069de7da8615b0b4594d950ac78a8505ac29",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86465,
+          "dictionaryReadyMs": 103.7975,
+          "contextualReadyMs": 545.348542,
+          "dictionaryLoadMs": 46.505469,
+          "contextualAssetsLoadMs": 489.605885
+        }
+      ],
+      "restore": {
+        "imeSettingsPreserved": true,
+        "pendingDeviceCommands": false
+      },
+      "runLogSha256": "13b741ee5c33b7715115f78e620ee7f0441def43f2434a6cf89d355251d84490"
+    },
+    "api26": {
+      "rows": [
+        {
+          "device": "api26",
+          "variant": "baseline",
+          "russianEnabled": true,
+          "index": 1,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 103724,
+          "traceSha256": "636b9016c4107df1aebc6fb4e955210f51f30825a4df93a578b04f2ed435420b",
+          "memorySha256": "f4a26efc157db33c3c516db50d57c8130c6a954088a2004820e37f7c9d6927da",
+          "slicesSha256": "5446158e8d4d148599f21b6cde0bcc1d49189582d1a559bb54df2813414041ac",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86644,
+          "dictionaryReadyMs": 73.344,
+          "contextualReadyMs": 406.357,
+          "dictionaryLoadMs": 53.289,
+          "contextualAssetsLoadMs": 385.93
+        },
+        {
+          "device": "api26",
+          "variant": "baseline",
+          "russianEnabled": true,
+          "index": 2,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 103474,
+          "traceSha256": "fad8f5e129631345d2c11b131855e4806c7cea869939c33dd7625c91ba878474",
+          "memorySha256": "699e5ddd55768fea204b82b3d7ad95df6042f362e1a19ec252c2364fd05af5bb",
+          "slicesSha256": "9dc0ae3b8f5082c393b600c86e9a6c8c14778b1e63fcab3e73f208b22e0ac739",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86651,
+          "dictionaryReadyMs": 70.698,
+          "contextualReadyMs": 428.395,
+          "dictionaryLoadMs": 42.949,
+          "contextualAssetsLoadMs": 404.296
+        },
+        {
+          "device": "api26",
+          "variant": "baseline",
+          "russianEnabled": true,
+          "index": 3,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 104057,
+          "traceSha256": "2627fe0709ce89d04ae3c7daee703bee50d433d36f519270b7a546ef606ecf5e",
+          "memorySha256": "0d74b815863e22e56faa6ed5f139fda3766852dfd14e902fe6186ff1d5c3f622",
+          "slicesSha256": "7cdc587984ba48e93c2b472cca579b2247d33497152ab5421cfb457695b9994e",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86644,
+          "dictionaryReadyMs": 75.21,
+          "contextualReadyMs": 419.017,
+          "dictionaryLoadMs": 48.527,
+          "contextualAssetsLoadMs": 397.169
+        },
+        {
+          "device": "api26",
+          "variant": "baseline",
+          "russianEnabled": true,
+          "index": 4,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 102905,
+          "traceSha256": "46bad9267b0066b259330290c10d4d83bfdea4422f2bfe206100c56a38cee457",
+          "memorySha256": "e8aa195babfbec3e4ba8b7d51a211894acf04614b12dc435e0e815565791791d",
+          "slicesSha256": "40644a80221a9ce7ba9869eac44192e60907d4c4365a1d8c44074f77238fdac1",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86651,
+          "dictionaryReadyMs": 71.684,
+          "contextualReadyMs": 391.454,
+          "dictionaryLoadMs": 45.801,
+          "contextualAssetsLoadMs": 370.236
+        },
+        {
+          "device": "api26",
+          "variant": "baseline",
+          "russianEnabled": true,
+          "index": 5,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 102659,
+          "traceSha256": "8ef9b2ba029951328315d83870f625458df8bfede17e4677b9a80c9819158882",
+          "memorySha256": "05055b5df79626371fcde3282f29411839ee44b9b679fdc1c58847b9881c51b2",
+          "slicesSha256": "cce326a52b2c8f898dc31d0e9c1dcaffd0b4ec4b0ce59c01384a688111486ee7",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86651,
+          "dictionaryReadyMs": 73.112,
+          "contextualReadyMs": 414.838,
+          "dictionaryLoadMs": 45.165,
+          "contextualAssetsLoadMs": 389.439
+        },
+        {
+          "device": "api26",
+          "variant": "candidate",
+          "russianEnabled": true,
+          "index": 1,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 19069,
+          "traceSha256": "24b274d0d73802bec9cd5c811f1a34ab55dcf867ba6c76110a7e662adefccac0",
+          "memorySha256": "a1ed6ccad39674ffd01fb09bbf9d48add59200a7520f93d3c3fce5b80e01b03e",
+          "slicesSha256": "c550a9c55d0836d5c2f2eaf4ed22a10143f06353312d90a67c4c812f55676bce",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 2388,
+          "dictionaryReadyMs": 27.48,
+          "contextualReadyMs": 35.147,
+          "dictionaryLoadMs": 4.811,
+          "contextualAssetsLoadMs": 11.446
+        },
+        {
+          "device": "api26",
+          "variant": "candidate",
+          "russianEnabled": true,
+          "index": 2,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 19312,
+          "traceSha256": "8e31e3f3f7b820ef214f220f3970e40915c235409d0a13790dc5665aed9a2550",
+          "memorySha256": "d43ea4cc66c6c2e976c2186ffc967b78a3b7e9c1d65a1dc5e9551e4e086bf635",
+          "slicesSha256": "8a1ec6fdbc309470fe7086281d737af89a24cfc9c8f90996074230fc2dedf916",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 2352,
+          "dictionaryReadyMs": 37.407,
+          "contextualReadyMs": 42.613,
+          "dictionaryLoadMs": 9.766,
+          "contextualAssetsLoadMs": 14.869
+        },
+        {
+          "device": "api26",
+          "variant": "candidate",
+          "russianEnabled": true,
+          "index": 3,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 19344,
+          "traceSha256": "3cd5e3ad145135db83dee582df17942b671d3a9244eae498d496b043bece0a5a",
+          "memorySha256": "a9e58c952d7d9b8a5d143c32ceedcd68788a9b1f1faa85cbe6a75168da5ff23f",
+          "slicesSha256": "b79ba679e38eb8b0eab8bb56febf8f6f417ae7de3dcd6a3d442a68e1cf4b1915",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 2344,
+          "dictionaryReadyMs": 25.634,
+          "contextualReadyMs": 31.265,
+          "dictionaryLoadMs": 7.297,
+          "contextualAssetsLoadMs": 13.57
+        },
+        {
+          "device": "api26",
+          "variant": "candidate",
+          "russianEnabled": true,
+          "index": 4,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 19340,
+          "traceSha256": "2eea152d9f881956a97913527740d5bdc4b5fde0a935a8c6c52f51552c8c4bdc",
+          "memorySha256": "674148024fbc771139217ea726a4a5d65bb7e1bd5b6d1d0526eae4196cf59fce",
+          "slicesSha256": "c366e4c73dde2b6225df1df17075d13df3841f1e5605ac32c13f8dd42fd51af5",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 2372,
+          "dictionaryReadyMs": 39.473,
+          "contextualReadyMs": 41.556,
+          "dictionaryLoadMs": 16.764,
+          "contextualAssetsLoadMs": 18.456
+        },
+        {
+          "device": "api26",
+          "variant": "candidate",
+          "russianEnabled": true,
+          "index": 5,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 19477,
+          "traceSha256": "8680cedaed5fbd752ca8fd6a50744b2d032e4372269db7a4ddaa36f45e1836b7",
+          "memorySha256": "6b9782a28961ddb96abacf72b7b6ebe497896207c5182956652d844574bc8b6f",
+          "slicesSha256": "745aa3fea03983a2ce6479f4fe760d7af1033a2bc4366673e2c5650e3eae84aa",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 2448,
+          "dictionaryReadyMs": 25.836,
+          "contextualReadyMs": 32.996,
+          "dictionaryLoadMs": 9.396,
+          "contextualAssetsLoadMs": 16.495
+        },
+        {
+          "device": "api26",
+          "variant": "candidate",
+          "russianEnabled": false,
+          "index": 1,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 15399,
+          "traceSha256": "97de2223be2894f4225360f51c4a3916ef8b02a0626e29e22517122d8d9ded86",
+          "memorySha256": "ca97dcff4a25dfd0f04476b7d26a7dcbb7e5f578360c2b3e1251fb3db898c705",
+          "slicesSha256": "1129e78434caeb3f7caef76a30ce0ba69186a74a6e9ff696eccb9f885b179552",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 709
+        },
+        {
+          "device": "api26",
+          "variant": "candidate",
+          "russianEnabled": false,
+          "index": 2,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 15164,
+          "traceSha256": "b2e9579448e8583d9d4adabb140ffc05bf04bde9aed745d8667090f1407cd6f0",
+          "memorySha256": "b9dc6f4d49c552cb3508f073da270c7b91277c6d2c548e326b86110b903330ac",
+          "slicesSha256": "40547626a1fd805060bbcda17fb5fa62d1b96db139c4159c333bf7fd8440a7c0",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 709
+        },
+        {
+          "device": "api26",
+          "variant": "candidate",
+          "russianEnabled": false,
+          "index": 3,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 15291,
+          "traceSha256": "857a50d38327e97011ee60cb13bf887a09d45f7d6f306e4deb6b1849ac4df20d",
+          "memorySha256": "cfd6a97aee45d16cf671db6a969d0144359385d01dc8a0c0af99e150e2d70630",
+          "slicesSha256": "45609b3d15160c0b46c39b1ad99e25d0c33a76d1cf4847acc903f2255fa9e1e3",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 709
+        },
+        {
+          "device": "api26",
+          "variant": "candidate",
+          "russianEnabled": false,
+          "index": 4,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 15281,
+          "traceSha256": "f3398beb09c5bf1727d712d2d6f819c2c5dde7d193de49e87e2eb6e109a69cbd",
+          "memorySha256": "674d33e6622e2349bd0d04ef7f4094a79ad0c6803c1dbc52fc6ee323f2065c47",
+          "slicesSha256": "5e97c1451aaa6de3e0174d0ca651f3a1b8771190942affd47d0682ba0a307581",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 709
+        },
+        {
+          "device": "api26",
+          "variant": "candidate",
+          "russianEnabled": false,
+          "index": 5,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 15317,
+          "traceSha256": "101008909bd02083bed51b580dce6007c2275af14007b298e89b82e3db574faa",
+          "memorySha256": "21d62be46ed024752e38f8443debdc778d9d463370ce5d13999af7263c296551",
+          "slicesSha256": "46a76ab19852ebb51248f1325f5ff7f43e42c48dc574170b3c93c49eb2058222",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 709
+        },
+        {
+          "device": "api26",
+          "variant": "baseline",
+          "russianEnabled": false,
+          "index": 1,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 104715,
+          "traceSha256": "a5340b603bf18a9d7fbca35bbd4dfbf13ee5e91fc12c48363e0105ec0de193ff",
+          "memorySha256": "fd380e98478a3b4c6a203ab2c8c8e844bcc080010ac0c8c8dbcc6524dd53e087",
+          "slicesSha256": "13ada8bb090ae24ed38fd9ebad026dfd6ec37e14bc1d972b78ca90f44ffb146d",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86845,
+          "dictionaryReadyMs": 65.959,
+          "contextualReadyMs": 390.148,
+          "dictionaryLoadMs": 43.899,
+          "contextualAssetsLoadMs": 369.907
+        },
+        {
+          "device": "api26",
+          "variant": "baseline",
+          "russianEnabled": false,
+          "index": 2,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 104362,
+          "traceSha256": "31b4693db4d269869f692ceacbee2ca257fc0002b9d693e1f67b5173af2ae97f",
+          "memorySha256": "887114e2b03335b898b3d998488edf6ec8117745ce551e54828a081546924df7",
+          "slicesSha256": "4ce4fec4714fc4b6e4cb3db90c4f51d6ff3a0aad6c06a4241453881c7f27dc01",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86845,
+          "dictionaryReadyMs": 74.404,
+          "contextualReadyMs": 417.483,
+          "dictionaryLoadMs": 48.391,
+          "contextualAssetsLoadMs": 393.739
+        },
+        {
+          "device": "api26",
+          "variant": "baseline",
+          "russianEnabled": false,
+          "index": 3,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 104171,
+          "traceSha256": "fed6130a16d14895817b1b8bafc34952412e559e42e7acd3e1ac1600138891b9",
+          "memorySha256": "dd2550bbc24f5b339a1f4b00e24a5d0fd189ce3b1b1ddc0ee01ceba80ef21fb0",
+          "slicesSha256": "451a04b81930a0119af0e7cc27150105224791081a731c29b6019017f0e07bfc",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86839,
+          "dictionaryReadyMs": 66.133,
+          "contextualReadyMs": 407.794,
+          "dictionaryLoadMs": 41.381,
+          "contextualAssetsLoadMs": 386.723
+        },
+        {
+          "device": "api26",
+          "variant": "baseline",
+          "russianEnabled": false,
+          "index": 4,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 103819,
+          "traceSha256": "f21db8a0c8aa8517afac92ef55524d575f8e753324213c03046cd935cca5358f",
+          "memorySha256": "3ef154d58d45fc9d2156750dfc0cb8e251274a96d8eaa97590a888a37d480d6c",
+          "slicesSha256": "1d72ed3a665a1d3461615f22150123c1bc95a13d937420f6f25516fc978ca75b",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86839,
+          "dictionaryReadyMs": 64.636,
+          "contextualReadyMs": 417.744,
+          "dictionaryLoadMs": 45.909,
+          "contextualAssetsLoadMs": 398.269
+        },
+        {
+          "device": "api26",
+          "variant": "baseline",
+          "russianEnabled": false,
+          "index": 5,
+          "processCold": true,
+          "fileCacheCold": false,
+          "aot": "speed",
+          "totalPssKiB": 102073,
+          "traceSha256": "6d2471d12a261aec6370c10e570f479c4c98ffe813a504c3cbb993e15cc5f6ce",
+          "memorySha256": "32f7219ec03a32a01f98dc810a86d97433361f4636866d254a3e17f6ee126011",
+          "slicesSha256": "82b7b6f4a81a72e2c02e51ac9b1c64220a4881f0539c1ff9930fea06406439ea",
+          "coldProcessMarkerCount": 1,
+          "apkMmapPssKiB": 86839,
+          "dictionaryReadyMs": 73.817,
+          "contextualReadyMs": 433.201,
+          "dictionaryLoadMs": 47.106,
+          "contextualAssetsLoadMs": 404.522
+        }
+      ],
+      "restore": {
+        "imeSettingsPreserved": true,
+        "pendingDeviceCommands": false
+      },
+      "runLogSha256": "0306cba7ecbdff541aa7f7c984e0ee72a758e6a7445364ecc7195fc98ceab4c0"
+    }
+  },
+  "traceImporterStats": {
+    "traces": 40,
+    "nonzeroErrorOrDataLossStats": 0,
+    "perTraceStats": [
+      {
+        "device": "fold",
+        "sample": "baseline-en-1",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "baseline-en-2",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "baseline-en-3",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "baseline-en-4",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "baseline-en-5",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "baseline-ru-1",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "baseline-ru-2",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "baseline-ru-3",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "baseline-ru-4",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "baseline-ru-5",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "candidate-en-1",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "candidate-en-2",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "candidate-en-3",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "candidate-en-4",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "candidate-en-5",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "candidate-ru-1",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "candidate-ru-2",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "candidate-ru-3",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "candidate-ru-4",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "fold",
+        "sample": "candidate-ru-5",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "baseline-en-1",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "baseline-en-2",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "baseline-en-3",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "baseline-en-4",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "baseline-en-5",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "baseline-ru-1",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "baseline-ru-2",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "baseline-ru-3",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "baseline-ru-4",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "baseline-ru-5",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "candidate-en-1",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "candidate-en-2",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "candidate-en-3",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "candidate-en-4",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "candidate-en-5",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "candidate-ru-1",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "candidate-ru-2",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "candidate-ru-3",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "candidate-ru-4",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      },
+      {
+        "device": "api26",
+        "sample": "candidate-ru-5",
+        "stats": [],
+        "csvSha256": "eb524f001e3194fa45f7e2911c3e9c0f76c5f7bf54448d19405596567b010b35"
+      }
+    ]
+  },
+  "jvm": {
+    "tests": 1277,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exitCode": 0
+  },
+  "profileBuildAndPrivacy": {
+    "baselineExitCode": 0,
+    "candidateExitCode": 0,
+    "candidateIncludesJvmAndDebugLint": true
+  },
+  "assets": {
+    "count": 69,
+    "baselineCandidateAndReplayIdentical": true,
+    "identities": {
+      "assets/emoji/LICENSE.txt": "12466a91eed5ab0ae7288c4f4425e3e1907c3532686ecacc5a49b51c1ab428c9",
+      "assets/emoji/catalog-manifest.json": "4356d6f833c88c91ccdf1fffd5e07a2d1fc221548e8040f9e240eff1e591f09f",
+      "assets/emoji/catalog-v1.tsv": "254dad131a86038378e3356c4a8b434fa215a695315adc109d7ff8f9d6f1a1c8",
+      "assets/model/rune-text-0.1.json": "2c8e0aa785731d2f61f30cf1a93dafd3706739e088727c7c1c2fc2dd671e80fc",
+      "assets/smarttyping/experiments/NOTICE.md": "4edf631dcf6d6ae464eb68de061843387c134d6a9620a9705a966480980da696",
+      "assets/smarttyping/experiments/contextual-provenance.json": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435",
+      "assets/smarttyping/experiments/contextual-tatoeba-attribution.json": "f81b27066cee38a2f2a14c2766e9cceae399d3c7590bca7b63e4d782fd18dd44",
+      "assets/smarttyping/experiments/infinitive-revision-provenance.json": "a20fe5c9981e857dda6823fb5aeffb56c365556a6e38542250a714ea3aa20fca",
+      "assets/smarttyping/experiments/joint-correction-provenance.json": "7b42d0a46dd754d32903f73dabcefa7eea462f5c6cba1e886a06008bd22cf5e7",
+      "assets/smarttyping/experiments/joint-rescue-provenance.json": "4700fab35c3d9ea83457920187ae41ea88c7a95220325401cf13d83bcd83fcdb",
+      "assets/smarttyping/experiments/neighbor-recovery-provenance.json": "f988fea3f6d96f68ad0394e5a4ded6e067dec8fb305d561415cdc77c4440e4ce",
+      "assets/smarttyping/experiments/noun-case-provenance.json": "a9b1760a0b462a68ff38264be9ae13a9dac9ebf5840cf606778b32c1d2910235",
+      "assets/smarttyping/experiments/provenance.json": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4",
+      "assets/smarttyping/experiments/ru-context.bin": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
+      "assets/smarttyping/experiments/ru-context.gram": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b",
+      "assets/smarttyping/experiments/ru-contextual-policy.json": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6",
+      "assets/smarttyping/experiments/ru-contextual-ranker.bin": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+      "assets/smarttyping/experiments/ru-conversation.ctx": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6",
+      "assets/smarttyping/experiments/ru-infinitive-revision-policy.json": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595",
+      "assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+      "assets/smarttyping/experiments/ru-joint-ranker.bin": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+      "assets/smarttyping/experiments/ru-joint-rescue-policy.json": "ebdb0e83f3c4ed3476f5b317e31619415ca020d9703cd3d6900b9e8ac5c4701d",
+      "assets/smarttyping/experiments/ru-joint-rescue-ranker.bin": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+      "assets/smarttyping/experiments/ru-neighbor-ranker.bin": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+      "assets/smarttyping/experiments/ru-noun-case-policy.json": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+      "assets/smarttyping/experiments/ru-noun-case-ranker.bin": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+      "assets/smarttyping/experiments/ru-ranker-auto-v1.bin": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+      "assets/smarttyping/experiments/ru-ranker.bin": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+      "assets/smarttyping/experiments/ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+      "assets/smarttyping/experiments/ru-wiki.ctx": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b",
+      "assets/smarttyping/lexicon/case/en.case": "2d5ba3c807ef8c66be5222b01c3cd0f98645a891c12b6356827ea58544725a34",
+      "assets/smarttyping/lexicon/case/es.case": "52614678597416daf63763bb1f34015097d97ab974d9aa951b0221a67105a6fa",
+      "assets/smarttyping/lexicon/case/ru.case": "845144afb06ae7881f0db2f577f340694b8c7dfa5fee9685563ec4852939c81b",
+      "assets/smarttyping/lexicon/en.trie": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc",
+      "assets/smarttyping/lexicon/en.trie.lengths": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4",
+      "assets/smarttyping/lexicon/es.trie": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681",
+      "assets/smarttyping/lexicon/es.trie.lengths": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78",
+      "assets/smarttyping/lexicon/frequency/en.ranks": "a8786c4d9fa1d7522e8c9d068679e3c61e32ee49dc3ca34898ccbd0fd19f4c6f",
+      "assets/smarttyping/lexicon/frequency/es.ranks": "5fb3e5cca1493e1aebb64f2960ac823fe50ee189c222a9df952b622ebd3cf613",
+      "assets/smarttyping/lexicon/frequency/ru.ranks": "09cb1675723b66703e76f871b621068df6c0677b4c17b71e6a68fe2c8d3f328b",
+      "assets/smarttyping/lexicon/notices/CC-BY-SA-4.0.txt": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5",
+      "assets/smarttyping/lexicon/notices/ES-LICENSE.md": "2b70fd5cb8d3b34cc6ae322c969557a2270b99017594addb2531ef5ffd9e1b17",
+      "assets/smarttyping/lexicon/notices/ES-MPL-1.1.txt": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f",
+      "assets/smarttyping/lexicon/notices/ES-README.txt": "0b5c39a863ecb61f5c5631ec1cd977667ef9bda6da6f90e80e9fc0edcbfadd97",
+      "assets/smarttyping/lexicon/notices/FrequencyWords-README.md": "a92fcc50e27f7b2d5860ec1c1ce794dc4c892d945bfa4c8c3136cdfd213ee710",
+      "assets/smarttyping/lexicon/notices/FrequencyWords-code-MIT.txt": "e08d916cc953f85f7dfa0df530f6d7931f14ce804d053602662d8649b5fac829",
+      "assets/smarttyping/lexicon/notices/Hunspell-AUTHORS.txt": "a0f915313286a6e359ffb3e6586adb445849a79f2e9f0380fae14365fc064519",
+      "assets/smarttyping/lexicon/notices/Hunspell-COPYING.LESSER.txt": "7c6699c75f87b52bdc542db26d6b1b92892577cda46e20eceb79e2790a1c291b",
+      "assets/smarttyping/lexicon/notices/Hunspell-COPYING.MPL.txt": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f",
+      "assets/smarttyping/lexicon/notices/Hunspell-COPYING.txt": "640d90f6ee401241ff62834d0d1b33f83049e99b8bfdfa04ed1b0a1635dde3e7",
+      "assets/smarttyping/lexicon/notices/Hunspell-license.hunspell.txt": "3f7ddd07c296edbfe0a47c7bcc82038ad347a2c4f672345b24f95c624db68513",
+      "assets/smarttyping/lexicon/notices/Hunspell-license.myspell.txt": "dcda061adeed22b26f276c01ec374f930789ae0d684e5aa8f8be309dd680ff20",
+      "assets/smarttyping/lexicon/notices/OpenCorpora-CC-BY-SA-3.0.txt": "8495757dbe4b92f9ae8e9a3a3139d0ac88c1e8a770bb5a0bd44f1935805a1ddf",
+      "assets/smarttyping/lexicon/notices/RU-Lebedev.txt": "262af2f6ad70a61e5ee1332ff44fa8ee50edca819cf33207d8ad6ba6a0c9be52",
+      "assets/smarttyping/lexicon/notices/SCOWL-Copyright.txt": "283326a422e29c510e2ba6805518c418ce3c35ed1fadc3eec83d2da4f6c5a055",
+      "assets/smarttyping/lexicon/provenance/PACKAGED_LEXICONS.md": "649ee304c20c4f38d8580de61920ad3f3ec804ed0ab836d4a14368ed51bb0d14",
+      "assets/smarttyping/lexicon/provenance/canonical-case-manifest.json": "ad31b3f21a3ad8cecb33641bfb829adef287bb80b1afa0cd5096cc73cc9d85f8",
+      "assets/smarttyping/lexicon/provenance/frozen-output-manifest.json": "ec26c80edd28f2b42008a844c8b0ce83c11759386ccc9de591cb038a7a4f3c48",
+      "assets/smarttyping/lexicon/provenance/morphology-manifest.json": "85424f944e6649f74e1eea76ffda905a452da3f36c03672eb526bf3ca686abc3",
+      "assets/smarttyping/lexicon/provenance/packed-asset-manifest.json": "7ce207ab7d05b8800a1d8921f6e55fe81f429f8158bf8ebcebf581cbee7255f0",
+      "assets/smarttyping/lexicon/provenance/packed-source-provenance.json": "cdeb58ab232f635141c1827751dfe828a79c6d14af17c4227814751baf370edc",
+      "assets/smarttyping/lexicon/provenance/rare-word-manifest.json": "a2514cd65b9af132f6f0bbb523fa15a2d543efae0c993a9949b8b0c2b1e425ab",
+      "assets/smarttyping/lexicon/provenance/source-lock.json": "28750e183ef99ea33da58b20036e2f0dcb3f7e1f76e8528c21074ac7d6615b70",
+      "assets/smarttyping/lexicon/ru.morph": "c1707864a8fbc805aa98bc8307be99f2c9904eec5cc27d26a5220e001d88d28b",
+      "assets/smarttyping/lexicon/ru.rare": "434b462d4edb0165946568dfdf2a6729ff8b2590fead1fe815d3912817837b6e",
+      "assets/smarttyping/lexicon/ru.trie": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b",
+      "assets/smarttyping/lexicon/ru.trie.lengths": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c",
+      "assets/third_party_notices/Rune-LICENSE.txt": "f0915c2be02336fa738948bad811afceaf7849c1708608fa877328066d6e0d51",
+      "assets/third_party_notices/llama.cpp-LICENSE.txt": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d"
+    }
+  },
+  "nativeProfileLibraries": {
+    "baselineAndCandidateIdentical": true,
+    "libraries": {
+      "lib/arm64-v8a/libc++_shared.so": {
+        "bytes": 1374336,
+        "sha256": "c4c2fe5cbcb1fba0003a31fc7ab29a9bb12df6cc187ec45a806462540e83d93b"
+      },
+      "lib/arm64-v8a/librune_llama.so": {
+        "bytes": 3399312,
+        "sha256": "fb7b9cf2e7ce89813237bb95ba2296c05454bc0327dc4eb451f1a6872b901803"
+      },
+      "lib/x86_64/libc++_shared.so": {
+        "bytes": 1337488,
+        "sha256": "683a1c7cd2f6829fd40bf805739166c5fce35235bf60d2c4e4a95e9f65a342ef"
+      },
+      "lib/x86_64/librune_llama.so": {
+        "bytes": 3845904,
+        "sha256": "f1c35ea7d53d786917e5766c4edb29fecfcbf5da2c2e416cd76bff6a855e7583"
+      }
+    }
+  },
+  "replay": {
+    "rowsPerRun": 12000,
+    "freshRuns": 2,
+    "identical": true,
+    "excludedFields": [
+      "hostStageNanos",
+      "fullTokenGenerationNanos"
+    ],
+    "projectionSha256": "33c3a96fed5b3322601f6b7a0307e3a4b62bfbc9bc7650b82bf644a1afffd8a3",
+    "referenceReceiptSha256": "c6d3e1ec09499d96ddb7cb41d4ffd4d78f5ccbb685f20510c9f0de6b4a14b86e",
+    "referenceObservationsSha256": "205d576435a59e7d1d11fc0c8cd88e9f7e8ec97e598ba70fb7aa8037e3d28b22",
+    "newQualificationClaim": false,
+    "nativeInferenceRun": false
+  },
+  "replayBindings": [
+    {
+      "sourceManifestSha256": "bd28844e32b87221105490841e3054fe103992c1a4232f8d4456f9aef823ceda",
+      "harnessSha256": "343adb21156ecc294d20b3b82c9f14c97d1fc7ee84fffcc455c2c4cdaa1ce377",
+      "toolchainManifestSha256": "d67311d36b24fd1cf028b447888c47e393df3b4cab9b9a09b38db43ec9c57006",
+      "javaBinarySha256": "4ac51957da9d64cc468d4ce67fc2f53644edc5585f8c4c92ce08ea30ee71db8a",
+      "androidStubSha256": "bf1b4387cc7ca94fc6ef684f040d9d16fbf16248e181819f020736ea2053f177",
+      "compilerJars": {
+        "kotlin-compiler-embeddable-2.2.10.jar": "79628fd5d64b4692a62f98962baab00e9076a37e2cffd6ace33cd0b7be7d1cdf",
+        "kotlin-stdlib-2.2.10.jar": "9c67cc79efd6b9215b49d2a4308f5f3433537376c7c88e89bdd6729bd096e61a",
+        "annotations-13.0.jar": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478",
+        "kotlin-reflect-2.2.10.jar": "c48db4f8cd1bfd67f72d59255065fb41bfda43ca2942dac4d9deb897aa126ba4",
+        "kotlinx-coroutines-core-jvm-1.8.0.jar": "9860906a1937490bf5f3b06d2f0e10ef451e65b95b269f22daf68a3d1f5065c5"
+      },
+      "label": "strict",
+      "packagedReadersAfterFullValidation": false,
+      "exitCode": 0,
+      "mode": "noun-case-production",
+      "driverSha256": "bf63b2ddf9b8eebe62f2110fd9b00d8a8cc03f708d43bb670100e800a7a57618",
+      "inputSha256": "b828dc8c5f57e5996a0a88442297c004b4939dadd74f15d9b101dadc8618e415",
+      "sources": {
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt": "1512e71ecee29f6c7ca048b57e0896f9d07924f2434500b2d41cf00a8ab9cd1c",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt": "d0f7c7fef144c3fdead339b25ebf019447bb4c2f3555a8ea16fc5c60deb39601",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt": "ba16592636c94c8cb7eaccf9b97036d8301508c30a1b63f1eec317837a9ee4a7",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt": "085f7e03aa3ed8f1387ead50e7928137b23da706ae01ee64e3726939efd67de8",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt": "17a84a259cc1f91fbd85585f79a26237bffabf3a53072703b20b2ccf69fac501",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt": "585d3ca38dc9750bee4bee580c81350ad037fd836b5a049a3f862c545e3545da",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/LocalCorrectionPolicy.kt": "5f89598f4094936e9bdfd7bb54770301cb05e4ae87f47f1b003f53bfb36677d5",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt": "67c0b3215c6183239632ce521c7d7d16f64cda01caeb1421eb31791b35085c9b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CommonConfusions.kt": "dd9483f2c12d7025218c98166b5116f349799c5eec36dbe3be96f6251c45533e",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/AutoCorrectionAdmissionGuard.kt": "adb24f2482668a78a5e2eea8c0f3c384dae7c07ee5129e59bca521aa3ca91f16",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/QualificationArtifacts.kt": "dc554c02e83fa735189bdea7a9cbd860a6a567cc82a14ba445ff04df768ff2e4",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt": "a09415532f5448d3ea489604fef4ee26ba5ddd845176a31e3481a94a801519a0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt": "ec68fc1d939897a92d7767f25790ddb38e1f3fa14213d27689ba0dd59646f900",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "4d830724cc66f967f7c7736efedd540da9f5e27892d1f09cb753dabaa592e684",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt": "0d59152024c64263cf7d1d178cd353446ab0c0a1bea79ee3b8f55ec4fe788d54",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt": "2e6e581663e6634dc1f4a596c6ff59d661c5c83ee03e58182113a62e1a9ca369",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt": "c3342a3c2badc48ec245a6650731ef3b1c03dec9daa5bc967eb9ce57d72b6bbe",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt": "30589c408a785ca0a876d68a485f55e1e81201954e27756556468aa480b451e0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/MorphologyLexicon.kt": "b434dc8dc1f349bc7d02a97069406ba93d73f4b9946136d74b56351a3bd65f56",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenMorphologyLexicon.kt": "5236dec0a5a269c5221768db95ef10a5e767a58c8182d4c36cf39013b15bd8da",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedAssetDigest.kt": "b8917f5cea307a2e137915f56fa975bc8f816e5541323c8fcb2de114386a2b72",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedMorphologyLexicon.kt": "b55b88ff49ecd95be416082b457176f9e7a68ba30baafd971ed60078206caf3f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/RareWordLexicon.kt": "ef56fc34c05e0a20850a190494d36d3a666e425cad0bfdd9e7e42a6a96c763a0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenRareWordLexicon.kt": "1eae0a01c794eb4137944555b97b4b2744c1ac00ddbf1d0538a40854a21f6afb",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedRareWordLexicon.kt": "5122e2ef9e5571b293cf410c781c8499a10a62300d0cfeaea122d3b58880d88a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PublicCandidateAugmenter.kt": "609963fc8d8cad6a4288f331331a972ffc1fa74a93eb816a134cf3c5bad5aa5a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "8beec23daa67098ea82c485d070ed8b5282e941dbfdabb940ffc050f8bede342",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ExperimentalTypingInput.kt": "6b7cc32436be42ad595c9a6248365a2f1251c416fb01eddbc264787c9e590311",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingPersonalization.kt": "9f94f415c91270fee3469ebdc7ad6901d3a7a63b10c414bd53f1bd6c1bd9bec0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingTools.kt": "65fe8dc9371ecdc469961ecc83307c7bea81cbb3dee1db29571982fc30fc01e2",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt": "932beb08c75059b820be5787bccf186f10c20d6689f808f20cf130d3797eecd1",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt": "94706877b77cf0ab1ec6ddaa2469708d85d3fd6167054abbccd65fd7efaa5968",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt": "9ed741a1131dbdec9e5e1f30851055e49fad720c641945a4c353858cfb59c31b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt": "5068584153b5916788005a259cdd27a1adcd65bda0ff3f1182aa43604a64ca84",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt": "c135de144aa16f24fc559b79558e8588ecd68f12178ca5b27285b0ef17c38b00",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticFeatures.kt": "7e945dd7057ac5d30b4d237a315fe59b23ba5de3c806a94a825b6fb3a199afd5",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ExperimentModels.kt": "e73e385587595a9a89199176eb461b95866c2b8d6c986a09936100c65f8c6359",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/CompactAutoCorrectionPolicy.kt": "90170cedd685a3f90ce13032af493b6a87fe75dce8a6e230388ae29529d40c86",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt": "ff4e3cc8b0f67da2295e375b129518100fa8b2b981f32ed490e6e38daa01fd34",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ObliviousTreeRanker.kt": "5ad360481b4db761bc539f5af6ebe7d0c9a0e858060b50c99b5422d2317794e1",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/RankFeatures.kt": "210c81129bfe7b50ac2802a5afb401cb1e700a1eb68f88138b63d48a755de484",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRecorder.kt": "ce29500364b27a6979dae9b1762a3dc22d5894eddcc1ea6cc2731a79fdb13b41",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/NeighborRecoverySearch.kt": "0c30517b0f59e4d2d1b4927c5e654d22d190119d059af6cdcfbe059309032b55",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/RecoveryQualification.kt": "7cfb75351cfc6cc53a2f4b36ebb891581ab795f0f307a09673a1d4ad94ebfad6",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NeighborRecoveryPolicy.kt": "5758babf28e12cd3dbfe06870d07902b3ed6be0004707bdb5d66b61e786cc93d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/PreviousWordRefinementTicket.kt": "18131a6304706599068fe7485a6a7addd95e3388172e0b7bd1cc518eb5f2b203",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/JointCorrectionPolicy.kt": "1a30c167af91a9241a18f964419f060617448082cb035c954fc08926088ffc6f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointQualification.kt": "0365f0df915381ba9fcb538275f9db7b9413f277cfadde9eb3f3ab27bc0a24d6",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointRescueQualification.kt": "b49be5277ecf4ee64cde8672a0eac67043b99b2c9e64819f179f04e4a898827a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/JointRescuePolicy.kt": "78018a90cded762b08cda7aa29c389b8699ebd712a454833adbd66be787ead58",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/WordContextPolicy.kt": "df123d3e57e801b7a086c66c0d325a170450ef2ce1317b3bfd7b7fca7fcc580a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WordContextQualification.kt": "37b7cfb22a2c32e0188cc961c7bfb133405bd20c03a3afa4ee1c32325ff4428f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/PackedContextIndex.kt": "11130810ac502a7d2f819f59bdc904fd9fd566fedb9eeb070a6b1a3a88b8f523",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextFeatureData.kt": "907be2ce3b8e73cc7967ebf94afe20be133878208c9c9773a82828d1db50da97",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/GrammaticalContextFeatures.kt": "f0aea36776f3000c619fb160780c05d50ac0309fdeb28bbeeed5ea22d2e910ca",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualRanker.kt": "95387d0f4fed4f45530935c13f1f2b87890f6513a503f2909f9a764ec434ec4f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/InfinitiveRevisionScope.kt": "b2c9ca204b8ab0cb4d97364298c41fa2c0d9ec02453af38576dcf9cb9979faa8",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NounCaseRevisionScope.kt": "37a50bbd3a4cd3d6c89b9aa9d655ffd87a94199d904841a17c856155db6471a1",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenContextualAssets.kt": "0ea0dd297b7444c0f05622ad123ba085483775fd163ca9dcab682b360156d28f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualCorrectionPolicy.kt": "a7946c3907fa8e1986b9077e54e61e5d485cb2e35b2380356e2553b5a7c74a8f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ContextualQualification.kt": "b6900050ec487e8ccb92eb2e177900bd48190e7d3bb82f9d0337b97da07a48d7",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenInfinitiveRevisionAssets.kt": "275677a907ee5a7bc39b530ce1e06ecffc8344afcbe6851d3d4db4bf4bbf6bcb",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/InfinitiveRevisionPolicy.kt": "5c1bc1979191ed404f2c5d906df1b6e62b3907e2824fc4b3e5055ee11664950d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/InfinitiveRevisionQualification.kt": "e5c54f713ef37d0420d580723969d5d16605fc5a2d69d9cc7619f0c7593d3a9e",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenNounCaseAssets.kt": "eaa6044f2e4daa39386861ffdacb5babc72dea9df85316d8ced62ce1966099b2",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NounCaseRevisionPolicy.kt": "cf3210f119e456e49c94dc7a8c28735f86dd2cb2d488c5f4232a5d9405853313",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/NounCaseRevisionQualification.kt": "6f369b885e00ccb01a1da0c5470666e281e4ef41de5f2e4b90c01c64764cd559",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt": "6cdfdc20a9c2b117dab5b7abae4cd4d64e6ee817d7966c29f064f5147bf3533b",
+        "tools/eval/smart-typing-0.3/pipeline/FinalProductSpellingReplay.kt": "343adb21156ecc294d20b3b82c9f14c97d1fc7ee84fffcc455c2c4cdaa1ce377"
+      },
+      "assets": {
+        "app/src/main/assets/emoji/LICENSE.txt": "12466a91eed5ab0ae7288c4f4425e3e1907c3532686ecacc5a49b51c1ab428c9",
+        "app/src/main/assets/emoji/catalog-manifest.json": "4356d6f833c88c91ccdf1fffd5e07a2d1fc221548e8040f9e240eff1e591f09f",
+        "app/src/main/assets/emoji/catalog-v1.tsv": "254dad131a86038378e3356c4a8b434fa215a695315adc109d7ff8f9d6f1a1c8",
+        "app/src/main/assets/model/rune-text-0.1.json": "2c8e0aa785731d2f61f30cf1a93dafd3706739e088727c7c1c2fc2dd671e80fc",
+        "app/src/main/assets/smarttyping/experiments/NOTICE.md": "4edf631dcf6d6ae464eb68de061843387c134d6a9620a9705a966480980da696",
+        "app/src/main/assets/smarttyping/experiments/contextual-provenance.json": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435",
+        "app/src/main/assets/smarttyping/experiments/contextual-tatoeba-attribution.json": "f81b27066cee38a2f2a14c2766e9cceae399d3c7590bca7b63e4d782fd18dd44",
+        "app/src/main/assets/smarttyping/experiments/infinitive-revision-provenance.json": "a20fe5c9981e857dda6823fb5aeffb56c365556a6e38542250a714ea3aa20fca",
+        "app/src/main/assets/smarttyping/experiments/joint-correction-provenance.json": "7b42d0a46dd754d32903f73dabcefa7eea462f5c6cba1e886a06008bd22cf5e7",
+        "app/src/main/assets/smarttyping/experiments/joint-rescue-provenance.json": "4700fab35c3d9ea83457920187ae41ea88c7a95220325401cf13d83bcd83fcdb",
+        "app/src/main/assets/smarttyping/experiments/neighbor-recovery-provenance.json": "f988fea3f6d96f68ad0394e5a4ded6e067dec8fb305d561415cdc77c4440e4ce",
+        "app/src/main/assets/smarttyping/experiments/noun-case-provenance.json": "a9b1760a0b462a68ff38264be9ae13a9dac9ebf5840cf606778b32c1d2910235",
+        "app/src/main/assets/smarttyping/experiments/provenance.json": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4",
+        "app/src/main/assets/smarttyping/experiments/ru-context.bin": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
+        "app/src/main/assets/smarttyping/experiments/ru-context.gram": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b",
+        "app/src/main/assets/smarttyping/experiments/ru-contextual-policy.json": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6",
+        "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+        "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6",
+        "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-policy.json": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595",
+        "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+        "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+        "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-policy.json": "ebdb0e83f3c4ed3476f5b317e31619415ca020d9703cd3d6900b9e8ac5c4701d",
+        "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+        "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+        "app/src/main/assets/smarttyping/experiments/ru-noun-case-policy.json": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+        "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+        "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+        "app/src/main/assets/smarttyping/experiments/ru-ranker.bin": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+        "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+        "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b",
+        "app/src/main/assets/smarttyping/lexicon/case/en.case": "2d5ba3c807ef8c66be5222b01c3cd0f98645a891c12b6356827ea58544725a34",
+        "app/src/main/assets/smarttyping/lexicon/case/es.case": "52614678597416daf63763bb1f34015097d97ab974d9aa951b0221a67105a6fa",
+        "app/src/main/assets/smarttyping/lexicon/case/ru.case": "845144afb06ae7881f0db2f577f340694b8c7dfa5fee9685563ec4852939c81b",
+        "app/src/main/assets/smarttyping/lexicon/en.trie": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc",
+        "app/src/main/assets/smarttyping/lexicon/en.trie.lengths": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4",
+        "app/src/main/assets/smarttyping/lexicon/es.trie": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681",
+        "app/src/main/assets/smarttyping/lexicon/es.trie.lengths": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78",
+        "app/src/main/assets/smarttyping/lexicon/frequency/en.ranks": "a8786c4d9fa1d7522e8c9d068679e3c61e32ee49dc3ca34898ccbd0fd19f4c6f",
+        "app/src/main/assets/smarttyping/lexicon/frequency/es.ranks": "5fb3e5cca1493e1aebb64f2960ac823fe50ee189c222a9df952b622ebd3cf613",
+        "app/src/main/assets/smarttyping/lexicon/frequency/ru.ranks": "09cb1675723b66703e76f871b621068df6c0677b4c17b71e6a68fe2c8d3f328b",
+        "app/src/main/assets/smarttyping/lexicon/notices/CC-BY-SA-4.0.txt": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5",
+        "app/src/main/assets/smarttyping/lexicon/notices/ES-LICENSE.md": "2b70fd5cb8d3b34cc6ae322c969557a2270b99017594addb2531ef5ffd9e1b17",
+        "app/src/main/assets/smarttyping/lexicon/notices/ES-MPL-1.1.txt": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f",
+        "app/src/main/assets/smarttyping/lexicon/notices/ES-README.txt": "0b5c39a863ecb61f5c5631ec1cd977667ef9bda6da6f90e80e9fc0edcbfadd97",
+        "app/src/main/assets/smarttyping/lexicon/notices/FrequencyWords-README.md": "a92fcc50e27f7b2d5860ec1c1ce794dc4c892d945bfa4c8c3136cdfd213ee710",
+        "app/src/main/assets/smarttyping/lexicon/notices/FrequencyWords-code-MIT.txt": "e08d916cc953f85f7dfa0df530f6d7931f14ce804d053602662d8649b5fac829",
+        "app/src/main/assets/smarttyping/lexicon/notices/Hunspell-AUTHORS.txt": "a0f915313286a6e359ffb3e6586adb445849a79f2e9f0380fae14365fc064519",
+        "app/src/main/assets/smarttyping/lexicon/notices/Hunspell-COPYING.LESSER.txt": "7c6699c75f87b52bdc542db26d6b1b92892577cda46e20eceb79e2790a1c291b",
+        "app/src/main/assets/smarttyping/lexicon/notices/Hunspell-COPYING.MPL.txt": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f",
+        "app/src/main/assets/smarttyping/lexicon/notices/Hunspell-COPYING.txt": "640d90f6ee401241ff62834d0d1b33f83049e99b8bfdfa04ed1b0a1635dde3e7",
+        "app/src/main/assets/smarttyping/lexicon/notices/Hunspell-license.hunspell.txt": "3f7ddd07c296edbfe0a47c7bcc82038ad347a2c4f672345b24f95c624db68513",
+        "app/src/main/assets/smarttyping/lexicon/notices/Hunspell-license.myspell.txt": "dcda061adeed22b26f276c01ec374f930789ae0d684e5aa8f8be309dd680ff20",
+        "app/src/main/assets/smarttyping/lexicon/notices/OpenCorpora-CC-BY-SA-3.0.txt": "8495757dbe4b92f9ae8e9a3a3139d0ac88c1e8a770bb5a0bd44f1935805a1ddf",
+        "app/src/main/assets/smarttyping/lexicon/notices/RU-Lebedev.txt": "262af2f6ad70a61e5ee1332ff44fa8ee50edca819cf33207d8ad6ba6a0c9be52",
+        "app/src/main/assets/smarttyping/lexicon/notices/SCOWL-Copyright.txt": "283326a422e29c510e2ba6805518c418ce3c35ed1fadc3eec83d2da4f6c5a055",
+        "app/src/main/assets/smarttyping/lexicon/provenance/PACKAGED_LEXICONS.md": "649ee304c20c4f38d8580de61920ad3f3ec804ed0ab836d4a14368ed51bb0d14",
+        "app/src/main/assets/smarttyping/lexicon/provenance/canonical-case-manifest.json": "ad31b3f21a3ad8cecb33641bfb829adef287bb80b1afa0cd5096cc73cc9d85f8",
+        "app/src/main/assets/smarttyping/lexicon/provenance/frozen-output-manifest.json": "ec26c80edd28f2b42008a844c8b0ce83c11759386ccc9de591cb038a7a4f3c48",
+        "app/src/main/assets/smarttyping/lexicon/provenance/morphology-manifest.json": "85424f944e6649f74e1eea76ffda905a452da3f36c03672eb526bf3ca686abc3",
+        "app/src/main/assets/smarttyping/lexicon/provenance/packed-asset-manifest.json": "7ce207ab7d05b8800a1d8921f6e55fe81f429f8158bf8ebcebf581cbee7255f0",
+        "app/src/main/assets/smarttyping/lexicon/provenance/packed-source-provenance.json": "cdeb58ab232f635141c1827751dfe828a79c6d14af17c4227814751baf370edc",
+        "app/src/main/assets/smarttyping/lexicon/provenance/rare-word-manifest.json": "a2514cd65b9af132f6f0bbb523fa15a2d543efae0c993a9949b8b0c2b1e425ab",
+        "app/src/main/assets/smarttyping/lexicon/provenance/source-lock.json": "28750e183ef99ea33da58b20036e2f0dcb3f7e1f76e8528c21074ac7d6615b70",
+        "app/src/main/assets/smarttyping/lexicon/ru.morph": "c1707864a8fbc805aa98bc8307be99f2c9904eec5cc27d26a5220e001d88d28b",
+        "app/src/main/assets/smarttyping/lexicon/ru.rare": "434b462d4edb0165946568dfdf2a6729ff8b2590fead1fe815d3912817837b6e",
+        "app/src/main/assets/smarttyping/lexicon/ru.trie": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b",
+        "app/src/main/assets/smarttyping/lexicon/ru.trie.lengths": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c",
+        "app/src/main/assets/third_party_notices/Rune-LICENSE.txt": "f0915c2be02336fa738948bad811afceaf7849c1708608fa877328066d6e0d51",
+        "app/src/main/assets/third_party_notices/llama.cpp-LICENSE.txt": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d"
+      },
+      "jarSha256": "851c3f6b234e003113e4f0880a68762aef224456c332be4c218c178acdeb1fc3",
+      "observationsSha256": "4e8909ebffe812be0f53b474b78e4032266b608fff5954d0135340b109b77eb6",
+      "elapsedSeconds": 23.69002312491648
+    },
+    {
+      "sourceManifestSha256": "bd28844e32b87221105490841e3054fe103992c1a4232f8d4456f9aef823ceda",
+      "harnessSha256": "343adb21156ecc294d20b3b82c9f14c97d1fc7ee84fffcc455c2c4cdaa1ce377",
+      "toolchainManifestSha256": "d67311d36b24fd1cf028b447888c47e393df3b4cab9b9a09b38db43ec9c57006",
+      "javaBinarySha256": "4ac51957da9d64cc468d4ce67fc2f53644edc5585f8c4c92ce08ea30ee71db8a",
+      "androidStubSha256": "bf1b4387cc7ca94fc6ef684f040d9d16fbf16248e181819f020736ea2053f177",
+      "compilerJars": {
+        "kotlin-compiler-embeddable-2.2.10.jar": "79628fd5d64b4692a62f98962baab00e9076a37e2cffd6ace33cd0b7be7d1cdf",
+        "kotlin-stdlib-2.2.10.jar": "9c67cc79efd6b9215b49d2a4308f5f3433537376c7c88e89bdd6729bd096e61a",
+        "annotations-13.0.jar": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478",
+        "kotlin-reflect-2.2.10.jar": "c48db4f8cd1bfd67f72d59255065fb41bfda43ca2942dac4d9deb897aa126ba4",
+        "kotlinx-coroutines-core-jvm-1.8.0.jar": "9860906a1937490bf5f3b06d2f0e10ef451e65b95b269f22daf68a3d1f5065c5"
+      },
+      "label": "packaged",
+      "packagedReadersAfterFullValidation": true,
+      "exitCode": 0,
+      "mode": "noun-case-production",
+      "driverSha256": "bf63b2ddf9b8eebe62f2110fd9b00d8a8cc03f708d43bb670100e800a7a57618",
+      "inputSha256": "b828dc8c5f57e5996a0a88442297c004b4939dadd74f15d9b101dadc8618e415",
+      "sources": {
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt": "1512e71ecee29f6c7ca048b57e0896f9d07924f2434500b2d41cf00a8ab9cd1c",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt": "d0f7c7fef144c3fdead339b25ebf019447bb4c2f3555a8ea16fc5c60deb39601",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt": "ba16592636c94c8cb7eaccf9b97036d8301508c30a1b63f1eec317837a9ee4a7",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt": "085f7e03aa3ed8f1387ead50e7928137b23da706ae01ee64e3726939efd67de8",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt": "17a84a259cc1f91fbd85585f79a26237bffabf3a53072703b20b2ccf69fac501",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt": "585d3ca38dc9750bee4bee580c81350ad037fd836b5a049a3f862c545e3545da",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/LocalCorrectionPolicy.kt": "5f89598f4094936e9bdfd7bb54770301cb05e4ae87f47f1b003f53bfb36677d5",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt": "67c0b3215c6183239632ce521c7d7d16f64cda01caeb1421eb31791b35085c9b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CommonConfusions.kt": "dd9483f2c12d7025218c98166b5116f349799c5eec36dbe3be96f6251c45533e",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/AutoCorrectionAdmissionGuard.kt": "adb24f2482668a78a5e2eea8c0f3c384dae7c07ee5129e59bca521aa3ca91f16",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/QualificationArtifacts.kt": "dc554c02e83fa735189bdea7a9cbd860a6a567cc82a14ba445ff04df768ff2e4",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt": "a09415532f5448d3ea489604fef4ee26ba5ddd845176a31e3481a94a801519a0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt": "ec68fc1d939897a92d7767f25790ddb38e1f3fa14213d27689ba0dd59646f900",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "4d830724cc66f967f7c7736efedd540da9f5e27892d1f09cb753dabaa592e684",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt": "0d59152024c64263cf7d1d178cd353446ab0c0a1bea79ee3b8f55ec4fe788d54",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt": "2e6e581663e6634dc1f4a596c6ff59d661c5c83ee03e58182113a62e1a9ca369",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt": "c3342a3c2badc48ec245a6650731ef3b1c03dec9daa5bc967eb9ce57d72b6bbe",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt": "30589c408a785ca0a876d68a485f55e1e81201954e27756556468aa480b451e0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/MorphologyLexicon.kt": "b434dc8dc1f349bc7d02a97069406ba93d73f4b9946136d74b56351a3bd65f56",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenMorphologyLexicon.kt": "5236dec0a5a269c5221768db95ef10a5e767a58c8182d4c36cf39013b15bd8da",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedAssetDigest.kt": "b8917f5cea307a2e137915f56fa975bc8f816e5541323c8fcb2de114386a2b72",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedMorphologyLexicon.kt": "b55b88ff49ecd95be416082b457176f9e7a68ba30baafd971ed60078206caf3f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/RareWordLexicon.kt": "ef56fc34c05e0a20850a190494d36d3a666e425cad0bfdd9e7e42a6a96c763a0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenRareWordLexicon.kt": "1eae0a01c794eb4137944555b97b4b2744c1ac00ddbf1d0538a40854a21f6afb",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedRareWordLexicon.kt": "5122e2ef9e5571b293cf410c781c8499a10a62300d0cfeaea122d3b58880d88a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PublicCandidateAugmenter.kt": "609963fc8d8cad6a4288f331331a972ffc1fa74a93eb816a134cf3c5bad5aa5a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "8beec23daa67098ea82c485d070ed8b5282e941dbfdabb940ffc050f8bede342",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ExperimentalTypingInput.kt": "6b7cc32436be42ad595c9a6248365a2f1251c416fb01eddbc264787c9e590311",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingPersonalization.kt": "9f94f415c91270fee3469ebdc7ad6901d3a7a63b10c414bd53f1bd6c1bd9bec0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingTools.kt": "65fe8dc9371ecdc469961ecc83307c7bea81cbb3dee1db29571982fc30fc01e2",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt": "932beb08c75059b820be5787bccf186f10c20d6689f808f20cf130d3797eecd1",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt": "94706877b77cf0ab1ec6ddaa2469708d85d3fd6167054abbccd65fd7efaa5968",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt": "9ed741a1131dbdec9e5e1f30851055e49fad720c641945a4c353858cfb59c31b",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt": "5068584153b5916788005a259cdd27a1adcd65bda0ff3f1182aa43604a64ca84",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt": "c135de144aa16f24fc559b79558e8588ecd68f12178ca5b27285b0ef17c38b00",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticFeatures.kt": "7e945dd7057ac5d30b4d237a315fe59b23ba5de3c806a94a825b6fb3a199afd5",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ExperimentModels.kt": "e73e385587595a9a89199176eb461b95866c2b8d6c986a09936100c65f8c6359",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/CompactAutoCorrectionPolicy.kt": "90170cedd685a3f90ce13032af493b6a87fe75dce8a6e230388ae29529d40c86",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt": "ff4e3cc8b0f67da2295e375b129518100fa8b2b981f32ed490e6e38daa01fd34",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ObliviousTreeRanker.kt": "5ad360481b4db761bc539f5af6ebe7d0c9a0e858060b50c99b5422d2317794e1",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/RankFeatures.kt": "210c81129bfe7b50ac2802a5afb401cb1e700a1eb68f88138b63d48a755de484",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRecorder.kt": "ce29500364b27a6979dae9b1762a3dc22d5894eddcc1ea6cc2731a79fdb13b41",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/NeighborRecoverySearch.kt": "0c30517b0f59e4d2d1b4927c5e654d22d190119d059af6cdcfbe059309032b55",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/RecoveryQualification.kt": "7cfb75351cfc6cc53a2f4b36ebb891581ab795f0f307a09673a1d4ad94ebfad6",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NeighborRecoveryPolicy.kt": "5758babf28e12cd3dbfe06870d07902b3ed6be0004707bdb5d66b61e786cc93d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/PreviousWordRefinementTicket.kt": "18131a6304706599068fe7485a6a7addd95e3388172e0b7bd1cc518eb5f2b203",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/JointCorrectionPolicy.kt": "1a30c167af91a9241a18f964419f060617448082cb035c954fc08926088ffc6f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointQualification.kt": "0365f0df915381ba9fcb538275f9db7b9413f277cfadde9eb3f3ab27bc0a24d6",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointRescueQualification.kt": "b49be5277ecf4ee64cde8672a0eac67043b99b2c9e64819f179f04e4a898827a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/JointRescuePolicy.kt": "78018a90cded762b08cda7aa29c389b8699ebd712a454833adbd66be787ead58",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/WordContextPolicy.kt": "df123d3e57e801b7a086c66c0d325a170450ef2ce1317b3bfd7b7fca7fcc580a",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WordContextQualification.kt": "37b7cfb22a2c32e0188cc961c7bfb133405bd20c03a3afa4ee1c32325ff4428f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/PackedContextIndex.kt": "11130810ac502a7d2f819f59bdc904fd9fd566fedb9eeb070a6b1a3a88b8f523",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextFeatureData.kt": "907be2ce3b8e73cc7967ebf94afe20be133878208c9c9773a82828d1db50da97",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/GrammaticalContextFeatures.kt": "f0aea36776f3000c619fb160780c05d50ac0309fdeb28bbeeed5ea22d2e910ca",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualRanker.kt": "95387d0f4fed4f45530935c13f1f2b87890f6513a503f2909f9a764ec434ec4f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/InfinitiveRevisionScope.kt": "b2c9ca204b8ab0cb4d97364298c41fa2c0d9ec02453af38576dcf9cb9979faa8",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NounCaseRevisionScope.kt": "37a50bbd3a4cd3d6c89b9aa9d655ffd87a94199d904841a17c856155db6471a1",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenContextualAssets.kt": "0ea0dd297b7444c0f05622ad123ba085483775fd163ca9dcab682b360156d28f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualCorrectionPolicy.kt": "a7946c3907fa8e1986b9077e54e61e5d485cb2e35b2380356e2553b5a7c74a8f",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ContextualQualification.kt": "b6900050ec487e8ccb92eb2e177900bd48190e7d3bb82f9d0337b97da07a48d7",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenInfinitiveRevisionAssets.kt": "275677a907ee5a7bc39b530ce1e06ecffc8344afcbe6851d3d4db4bf4bbf6bcb",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/InfinitiveRevisionPolicy.kt": "5c1bc1979191ed404f2c5d906df1b6e62b3907e2824fc4b3e5055ee11664950d",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/InfinitiveRevisionQualification.kt": "e5c54f713ef37d0420d580723969d5d16605fc5a2d69d9cc7619f0c7593d3a9e",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenNounCaseAssets.kt": "eaa6044f2e4daa39386861ffdacb5babc72dea9df85316d8ced62ce1966099b2",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NounCaseRevisionPolicy.kt": "cf3210f119e456e49c94dc7a8c28735f86dd2cb2d488c5f4232a5d9405853313",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/NounCaseRevisionQualification.kt": "6f369b885e00ccb01a1da0c5470666e281e4ef41de5f2e4b90c01c64764cd559",
+        "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt": "6cdfdc20a9c2b117dab5b7abae4cd4d64e6ee817d7966c29f064f5147bf3533b",
+        "tools/eval/smart-typing-0.3/pipeline/FinalProductSpellingReplay.kt": "343adb21156ecc294d20b3b82c9f14c97d1fc7ee84fffcc455c2c4cdaa1ce377"
+      },
+      "assets": {
+        "app/src/main/assets/emoji/LICENSE.txt": "12466a91eed5ab0ae7288c4f4425e3e1907c3532686ecacc5a49b51c1ab428c9",
+        "app/src/main/assets/emoji/catalog-manifest.json": "4356d6f833c88c91ccdf1fffd5e07a2d1fc221548e8040f9e240eff1e591f09f",
+        "app/src/main/assets/emoji/catalog-v1.tsv": "254dad131a86038378e3356c4a8b434fa215a695315adc109d7ff8f9d6f1a1c8",
+        "app/src/main/assets/model/rune-text-0.1.json": "2c8e0aa785731d2f61f30cf1a93dafd3706739e088727c7c1c2fc2dd671e80fc",
+        "app/src/main/assets/smarttyping/experiments/NOTICE.md": "4edf631dcf6d6ae464eb68de061843387c134d6a9620a9705a966480980da696",
+        "app/src/main/assets/smarttyping/experiments/contextual-provenance.json": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435",
+        "app/src/main/assets/smarttyping/experiments/contextual-tatoeba-attribution.json": "f81b27066cee38a2f2a14c2766e9cceae399d3c7590bca7b63e4d782fd18dd44",
+        "app/src/main/assets/smarttyping/experiments/infinitive-revision-provenance.json": "a20fe5c9981e857dda6823fb5aeffb56c365556a6e38542250a714ea3aa20fca",
+        "app/src/main/assets/smarttyping/experiments/joint-correction-provenance.json": "7b42d0a46dd754d32903f73dabcefa7eea462f5c6cba1e886a06008bd22cf5e7",
+        "app/src/main/assets/smarttyping/experiments/joint-rescue-provenance.json": "4700fab35c3d9ea83457920187ae41ea88c7a95220325401cf13d83bcd83fcdb",
+        "app/src/main/assets/smarttyping/experiments/neighbor-recovery-provenance.json": "f988fea3f6d96f68ad0394e5a4ded6e067dec8fb305d561415cdc77c4440e4ce",
+        "app/src/main/assets/smarttyping/experiments/noun-case-provenance.json": "a9b1760a0b462a68ff38264be9ae13a9dac9ebf5840cf606778b32c1d2910235",
+        "app/src/main/assets/smarttyping/experiments/provenance.json": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4",
+        "app/src/main/assets/smarttyping/experiments/ru-context.bin": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
+        "app/src/main/assets/smarttyping/experiments/ru-context.gram": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b",
+        "app/src/main/assets/smarttyping/experiments/ru-contextual-policy.json": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6",
+        "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+        "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6",
+        "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-policy.json": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595",
+        "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+        "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+        "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-policy.json": "ebdb0e83f3c4ed3476f5b317e31619415ca020d9703cd3d6900b9e8ac5c4701d",
+        "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+        "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+        "app/src/main/assets/smarttyping/experiments/ru-noun-case-policy.json": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+        "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+        "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+        "app/src/main/assets/smarttyping/experiments/ru-ranker.bin": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+        "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+        "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b",
+        "app/src/main/assets/smarttyping/lexicon/case/en.case": "2d5ba3c807ef8c66be5222b01c3cd0f98645a891c12b6356827ea58544725a34",
+        "app/src/main/assets/smarttyping/lexicon/case/es.case": "52614678597416daf63763bb1f34015097d97ab974d9aa951b0221a67105a6fa",
+        "app/src/main/assets/smarttyping/lexicon/case/ru.case": "845144afb06ae7881f0db2f577f340694b8c7dfa5fee9685563ec4852939c81b",
+        "app/src/main/assets/smarttyping/lexicon/en.trie": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc",
+        "app/src/main/assets/smarttyping/lexicon/en.trie.lengths": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4",
+        "app/src/main/assets/smarttyping/lexicon/es.trie": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681",
+        "app/src/main/assets/smarttyping/lexicon/es.trie.lengths": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78",
+        "app/src/main/assets/smarttyping/lexicon/frequency/en.ranks": "a8786c4d9fa1d7522e8c9d068679e3c61e32ee49dc3ca34898ccbd0fd19f4c6f",
+        "app/src/main/assets/smarttyping/lexicon/frequency/es.ranks": "5fb3e5cca1493e1aebb64f2960ac823fe50ee189c222a9df952b622ebd3cf613",
+        "app/src/main/assets/smarttyping/lexicon/frequency/ru.ranks": "09cb1675723b66703e76f871b621068df6c0677b4c17b71e6a68fe2c8d3f328b",
+        "app/src/main/assets/smarttyping/lexicon/notices/CC-BY-SA-4.0.txt": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5",
+        "app/src/main/assets/smarttyping/lexicon/notices/ES-LICENSE.md": "2b70fd5cb8d3b34cc6ae322c969557a2270b99017594addb2531ef5ffd9e1b17",
+        "app/src/main/assets/smarttyping/lexicon/notices/ES-MPL-1.1.txt": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f",
+        "app/src/main/assets/smarttyping/lexicon/notices/ES-README.txt": "0b5c39a863ecb61f5c5631ec1cd977667ef9bda6da6f90e80e9fc0edcbfadd97",
+        "app/src/main/assets/smarttyping/lexicon/notices/FrequencyWords-README.md": "a92fcc50e27f7b2d5860ec1c1ce794dc4c892d945bfa4c8c3136cdfd213ee710",
+        "app/src/main/assets/smarttyping/lexicon/notices/FrequencyWords-code-MIT.txt": "e08d916cc953f85f7dfa0df530f6d7931f14ce804d053602662d8649b5fac829",
+        "app/src/main/assets/smarttyping/lexicon/notices/Hunspell-AUTHORS.txt": "a0f915313286a6e359ffb3e6586adb445849a79f2e9f0380fae14365fc064519",
+        "app/src/main/assets/smarttyping/lexicon/notices/Hunspell-COPYING.LESSER.txt": "7c6699c75f87b52bdc542db26d6b1b92892577cda46e20eceb79e2790a1c291b",
+        "app/src/main/assets/smarttyping/lexicon/notices/Hunspell-COPYING.MPL.txt": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f",
+        "app/src/main/assets/smarttyping/lexicon/notices/Hunspell-COPYING.txt": "640d90f6ee401241ff62834d0d1b33f83049e99b8bfdfa04ed1b0a1635dde3e7",
+        "app/src/main/assets/smarttyping/lexicon/notices/Hunspell-license.hunspell.txt": "3f7ddd07c296edbfe0a47c7bcc82038ad347a2c4f672345b24f95c624db68513",
+        "app/src/main/assets/smarttyping/lexicon/notices/Hunspell-license.myspell.txt": "dcda061adeed22b26f276c01ec374f930789ae0d684e5aa8f8be309dd680ff20",
+        "app/src/main/assets/smarttyping/lexicon/notices/OpenCorpora-CC-BY-SA-3.0.txt": "8495757dbe4b92f9ae8e9a3a3139d0ac88c1e8a770bb5a0bd44f1935805a1ddf",
+        "app/src/main/assets/smarttyping/lexicon/notices/RU-Lebedev.txt": "262af2f6ad70a61e5ee1332ff44fa8ee50edca819cf33207d8ad6ba6a0c9be52",
+        "app/src/main/assets/smarttyping/lexicon/notices/SCOWL-Copyright.txt": "283326a422e29c510e2ba6805518c418ce3c35ed1fadc3eec83d2da4f6c5a055",
+        "app/src/main/assets/smarttyping/lexicon/provenance/PACKAGED_LEXICONS.md": "649ee304c20c4f38d8580de61920ad3f3ec804ed0ab836d4a14368ed51bb0d14",
+        "app/src/main/assets/smarttyping/lexicon/provenance/canonical-case-manifest.json": "ad31b3f21a3ad8cecb33641bfb829adef287bb80b1afa0cd5096cc73cc9d85f8",
+        "app/src/main/assets/smarttyping/lexicon/provenance/frozen-output-manifest.json": "ec26c80edd28f2b42008a844c8b0ce83c11759386ccc9de591cb038a7a4f3c48",
+        "app/src/main/assets/smarttyping/lexicon/provenance/morphology-manifest.json": "85424f944e6649f74e1eea76ffda905a452da3f36c03672eb526bf3ca686abc3",
+        "app/src/main/assets/smarttyping/lexicon/provenance/packed-asset-manifest.json": "7ce207ab7d05b8800a1d8921f6e55fe81f429f8158bf8ebcebf581cbee7255f0",
+        "app/src/main/assets/smarttyping/lexicon/provenance/packed-source-provenance.json": "cdeb58ab232f635141c1827751dfe828a79c6d14af17c4227814751baf370edc",
+        "app/src/main/assets/smarttyping/lexicon/provenance/rare-word-manifest.json": "a2514cd65b9af132f6f0bbb523fa15a2d543efae0c993a9949b8b0c2b1e425ab",
+        "app/src/main/assets/smarttyping/lexicon/provenance/source-lock.json": "28750e183ef99ea33da58b20036e2f0dcb3f7e1f76e8528c21074ac7d6615b70",
+        "app/src/main/assets/smarttyping/lexicon/ru.morph": "c1707864a8fbc805aa98bc8307be99f2c9904eec5cc27d26a5220e001d88d28b",
+        "app/src/main/assets/smarttyping/lexicon/ru.rare": "434b462d4edb0165946568dfdf2a6729ff8b2590fead1fe815d3912817837b6e",
+        "app/src/main/assets/smarttyping/lexicon/ru.trie": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b",
+        "app/src/main/assets/smarttyping/lexicon/ru.trie.lengths": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c",
+        "app/src/main/assets/third_party_notices/Rune-LICENSE.txt": "f0915c2be02336fa738948bad811afceaf7849c1708608fa877328066d6e0d51",
+        "app/src/main/assets/third_party_notices/llama.cpp-LICENSE.txt": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d"
+      },
+      "jarSha256": "851c3f6b234e003113e4f0880a68762aef224456c332be4c218c178acdeb1fc3",
+      "observationsSha256": "88e482f37753d5241648d7018262a4c921e45f078849a2a6249c9a3b8cdb8eec",
+      "elapsedSeconds": 23.739627291914076
+    }
+  ],
+  "ownerFoldUpdate": {
+    "versionCode": 8,
+    "versionName": "0.4.2",
+    "sameCertificate": true,
+    "backupSaved": true,
+    "installedAppBytesVerified": true,
+    "dataClearOrUninstall": false,
+    "artifacts": {
+      "app": {
+        "bytes": 183124297,
+        "sha256": "14c5f9b1a3eb1aa32298750c0fa3c00c9a97f3618ec3087fdda70b9d7cf3408c"
+      },
+      "tests": {
+        "bytes": 1650400,
+        "sha256": "faac98502b27936ee433b18de1f43eeca3b9775bca7567a8f2ee1791f243b13f"
+      }
+    },
+    "runtimeBuildId": "d48f6df2ed03cd11d3182abe453fb3a5bd126aea92f2bc06ab747b201f84565f",
+    "typing": {
+      "exitCode": 0,
+      "junitOk": true,
+      "failureMarker": false,
+      "skippedMarker": false,
+      "matchedCases": 15,
+      "journalSnapshots": 4,
+      "methods": [
+        "freshReviewedCorrectionsAtTwoPacesWithExactUndo",
+        "extraBackspacesInEmptyFieldKeepTheWholeNextWord",
+        "correctionPreviewAndUndoPreserveNextWord",
+        "rapidShortWordCorrectionAtThreePacesKeepsFollowingWords"
+      ],
+      "elapsedSeconds": 93.85145179182291
+    },
+    "restoration": {
+      "keyboardPreferencesRestored": true,
+      "protectedStoresUnchanged": true,
+      "protectedFilesBefore": 1,
+      "protectedFilesAfter": 1,
+      "secureImeSettingsRestored": true,
+      "modelStoreUnchanged": true,
+      "journalSnapshotsRetrieved": 4,
+      "rawJournalsPrivate": true
+    },
+    "privateJournalArchivesPublished": false
+  },
+  "cleanup": {
+    "foldTemporaryPackages": {
+      "profileAppRemoved": true,
+      "qaHostRemoved": true,
+      "imeSettingsPreserved": true,
+      "allProfileCapturesTerminal": true
+    },
+    "api26": {
+      "emulatorStopped": true,
+      "taskAvdDeleted": true
+    },
+    "baselineSource": {
+      "baselineTracePatchSaved": true,
+      "patchSha256": "41c74ff3645642570c6e14011cf7437e7e49cc096d21318736c4344ed593953d",
+      "taskCloneClean": true,
+      "baselineCommit": "dcba8acfe4b0ec08e790ecff2c7a273a7f32b01d"
+    },
+    "phoneWindowReleased": true,
+    "activeOrDeferredDeviceCommands": false
+  },
+  "ownerChangesPreserved": {
+    "trackedFiles": 13,
+    "untrackedPaths": 98
+  },
+  "scopeLimits": [
+    "Five samples per device/version/language condition",
+    "Process-cold repeated IME starts after installation/configuration; filesystem cache not dropped",
+    "PSS sampled approximately five seconds after IME selection, including free/dirty heap pages",
+    "No population percentile, cold-storage, live-object heap, keypress latency or battery claim",
+    "Ordinary replay parity only; existing EN/ES quality limitations remain",
+    "The entire 31-card review remains active"
+  ],
+  "retainedEarlierAttempts": {
+    "intermediateSettingsProbe": {
+      "purpose": "Discovery of eager anchor page touching, excluded from paired IME series"
+    },
+    "firstFoldPerfettoProbe": {
+      "exitCode": 1,
+      "reason": "Output path permission error; corrected to standard perfetto-traces path, no root/permission changes",
+      "imeSettingsRestored": true
+    },
+    "firstPhoneInventory": {
+      "reason": "Work-profile permission output; repeated for user 0 with package-line validation before profile installation"
+    },
+    "commitWhitespaceCheck": {
+      "exitCode": 2,
+      "logSha256": "1cf28ddcc7d10eda89696a1870360bdd5f08cd45873208b1ead3c2463cdb03ba",
+      "reason": "Trailing blank context in the reproduction patch; normalized and source equivalence verified"
+    }
+  },
+  "performanceProtocol": "docs/performance/2026-10-27-u17-protocol.md",
+  "performanceProtocolSha256": "0b14e007bd2d689e14dbe49c49eaca48f842915bb8abe4368485f95d5cfa3740",
+  "privateMeasurementDriverSha256": "78dbde494a7fc3b53275cb2627a4bf7b96f67b248894c02e499207a94c5f2007",
+  "sourceIdentityChecks": {
+    "compiledSourcesAndAll69AssetsStillMatch": true,
+    "profileNativeLibrariesIdentical": true,
+    "updatedOwnerApkContainsNewResourceLifecycleAndValidationCode": true
+  },
+  "finalBoundaryGate": {
+    "command": [
+      "python3",
+      "tools/verify-scoring-boundaries.py"
+    ],
+    "exitCode": 0,
+    "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "baselineReproductionPatch": {
+    "format": "One trailing empty context line removed with matching hunk counts",
+    "gitApplyCheckPassed": true,
+    "appliedSourceDiffExactlyEqualsMeasuredSourceDiff": true,
+    "baselineCloneRestoredClean": true
+  }
+}

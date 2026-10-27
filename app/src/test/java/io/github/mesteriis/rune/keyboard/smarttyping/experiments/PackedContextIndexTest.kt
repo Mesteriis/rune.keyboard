@@ -86,11 +86,9 @@ class PackedContextIndexTest {
         assertNull(open(fixture(listOf("а" to byteArrayOf(1, 0, 0, 0), "а" to byteArrayOf(2, 0, 0, 0)))))
     }
 
-    @Test fun packagedPathRejectsMalformedHeadersBlocksAnchorsAndViews() {
+    @Test fun packagedPathRejectsMalformedHeadersBlocksAndViews() {
         val bytes = fixture((0..64).map { "слово%03d".format(it) to byteArrayOf(1, 0, 0, 0) })
         val source = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
-        val start = source.getInt(20)
-        val secondBlock = start + source.getInt(28)
         val edits: List<(ByteArray) -> Unit> = listOf(
             { it[0] = 0 },
             { ByteBuffer.wrap(it).order(ByteOrder.LITTLE_ENDIAN).putInt(8, 31) },
@@ -99,14 +97,29 @@ class PackedContextIndexTest {
             { ByteBuffer.wrap(it).order(ByteOrder.LITTLE_ENDIAN).putInt(20, Int.MAX_VALUE) },
             { ByteBuffer.wrap(it).order(ByteOrder.LITTLE_ENDIAN).putInt(24, -1) },
             { ByteBuffer.wrap(it).order(ByteOrder.LITTLE_ENDIAN).putInt(28, Int.MAX_VALUE) },
-            { it[secondBlock] = 1 }, { it[secondBlock + 1] = 0 },
-            { it[secondBlock + 2] = -1; it[secondBlock + 3] = -1 },
         )
         edits.forEachIndexed { i, edit -> assertNull("mutation $i", packaged(bytes.copyOf().also(edit))) }
         assertNull(packaged(bytes, ByteBuffer.wrap(bytes)))
         assertNull(packaged(bytes, source.asReadOnlyBuffer().apply { position(1) }))
         assertNull(packaged(bytes, source.asReadOnlyBuffer().apply { limit(bytes.size - 1) }))
         assertNull(packaged(bytes, size = bytes.size.toLong() + 1))
+    }
+
+    @Test fun packagedPublicationLeavesBodyLazyAndRejectsMalformedAnchorsOnAccess() {
+        val bytes = fixture((0..64).map { "слово%03d".format(it) to byteArrayOf(1, 0, 0, 0) })
+        val source = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
+        val secondBlock = source.getInt(20) + source.getInt(28)
+        val edits: List<(ByteArray) -> Unit> = listOf(
+            { it[secondBlock] = 1 }, { it[secondBlock + 1] = 0 },
+            { it[secondBlock + 2] = -1; it[secondBlock + 3] = -1 },
+        )
+        for (edit in edits) {
+            val changed = bytes.copyOf().also(edit)
+            val index = packaged(changed)!!
+            // The binary search probes block one first; its malformed anchor is unavailable.
+            assertNull(index.payload("слово000"))
+            assertNull(open(sealed(changed.copyOf(changed.size - 32))))
+        }
     }
 
     @Test fun packagedLookupRefusesCorruptRecordsAndPayloadsBeforeReturningBytes() {

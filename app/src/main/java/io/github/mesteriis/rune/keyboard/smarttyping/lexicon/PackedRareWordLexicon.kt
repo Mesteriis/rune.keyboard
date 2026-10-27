@@ -148,18 +148,11 @@ class PackedRareWordLexicon private constructor(
                 val offset = bytes.getInt(HEADER_BYTES + 4 * block)
                 check(offset > last && offset <= size - 32 - dataOffset)
                 if (block == 0) check(offset == 0)
+                else check(offset - last >= minOf(BLOCK_SIZE, count - (block - 1) * BLOCK_SIZE) * 7)
                 last = offset
             }
             check(last == size - 32 - dataOffset)
-            val result = PackedRareWordLexicon(bytes, count, blocks, dataOffset)
-            val word = ByteArray(MAX_WORD_BYTES)
-            for (block in 0 until blocks) {
-                check(!Thread.currentThread().isInterrupted)
-                val offset = dataOffset + bytes.getInt(HEADER_BYTES + 4 * block)
-                val end = dataOffset + bytes.getInt(HEADER_BYTES + 4 * (block + 1))
-                result.readWord(offset, end, word, 0)
-            }
-            return result
+            return PackedRareWordLexicon(bytes, count, blocks, dataOffset)
         }
     }
 }

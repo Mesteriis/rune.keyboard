@@ -152,17 +152,11 @@ internal class PackedContextIndex private constructor(
                 val offset = bytes.getInt(HEADER + 4 * block)
                 require(offset > previousOffset && offset <= size - 32 - start)
                 if (block == 0) require(offset == 0)
+                else require(offset - previousOffset >= minOf(BLOCK, count - (block - 1) * BLOCK) * 6)
                 previousOffset = offset
             }
             require(previousOffset == size - 32 - start)
-            val result = PackedContextIndex(bytes, count, blocks, start, validPayload)
-            for (block in 0 until blocks) {
-                check(!Thread.currentThread().isInterrupted)
-                val offset = start + bytes.getInt(HEADER + 4 * block)
-                val end = start + bytes.getInt(HEADER + 4 * (block + 1))
-                result.record(offset, end, 0)
-            }
-            return result
+            return PackedContextIndex(bytes, count, blocks, start, validPayload)
         }
 
         private inline fun compare(left: Int, right: Int, byte: (Int, Boolean) -> Int): Int {

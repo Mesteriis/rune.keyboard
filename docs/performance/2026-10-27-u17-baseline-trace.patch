@@ -1,0 +1,58 @@
+diff --git a/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/AndroidExperimentResources.kt b/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/AndroidExperimentResources.kt
+index 0a3d92d..ad1792a 100644
+--- a/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/AndroidExperimentResources.kt
++++ b/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/AndroidExperimentResources.kt
+@@ -25,6 +25,7 @@ object AndroidExperimentResources {
+         val assets = context.applicationContext.assets
+         val executor = Executors.newSingleThreadExecutor { task -> Thread(task, "rune-experiment-assets") }
+         executor.execute {
++            android.os.Trace.beginSection("Rune#contextualAssetsLoad")
+             try {
+                 fun asset(name: String, size: Int, hash: String): ByteArray? = try {
+                     assets.open("smarttyping/experiments/$name").use { input ->
+@@ -71,6 +72,10 @@ object AndroidExperimentResources {
+                         ?.let { AndroidContextualRankerLoader.load(assets, it) }
+                         ?.let(models::loadContextualRanker)
+                 }
++                if (models.contextualReady) {
++                    android.os.Trace.beginSection("Rune#contextualReady")
++                    android.os.Trace.endSection()
++                }
+                 if (models.contextualReady && asset("ru-infinitive-revision-policy.json",
+                         FrozenInfinitiveRevisionAssets.POLICY_BYTES, FrozenInfinitiveRevisionAssets.POLICY_SHA256) != null) {
+                     asset("ru-infinitive-revision-ranker.bin", FrozenInfinitiveRevisionAssets.MODEL_BYTES,
+@@ -82,6 +87,7 @@ object AndroidExperimentResources {
+                         FrozenNounCaseAssets.MODEL_SHA256)?.let(models::loadNounCaseRanker)
+                 }
+             } finally {
++                android.os.Trace.endSection()
+                 val pending = synchronized(lock) {
+                     finished = true
+                     callbacks.toList().also { callbacks.clear() }
+diff --git a/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/AndroidTypingPersonalization.kt b/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/AndroidTypingPersonalization.kt
+index 063589b..29626cc 100644
+--- a/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/AndroidTypingPersonalization.kt
++++ b/app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/AndroidTypingPersonalization.kt
+@@ -41,9 +41,18 @@ class PersonalTypingResources private constructor(context: Context) {
+     init {
+         val assets = context.applicationContext.assets
+         Thread({
+-            lexicon = AndroidMorphologyLexiconLoader.load(assets)
+-            rareWords = AndroidRareWordLexiconLoader.load(assets)
+-            dictionaryLoaded = lexicon.lookup(KeyboardLanguage.RUSSIAN, "слово").available &&
+-                rareWords.lookup("кармен").available
++            android.os.Trace.beginSection("Rune#dictionaryLoad")
++            try {
++                lexicon = AndroidMorphologyLexiconLoader.load(assets)
++                rareWords = AndroidRareWordLexiconLoader.load(assets)
++                dictionaryLoaded = lexicon.lookup(KeyboardLanguage.RUSSIAN, "слово").available &&
++                    rareWords.lookup("кармен").available
++                if (dictionaryLoaded) {
++                    android.os.Trace.beginSection("Rune#dictionaryReady")
++                    android.os.Trace.endSection()
++                }
++            } finally {
++                android.os.Trace.endSection()
++            }
+         }, "rune-morphology-load").apply { isDaemon = true }.start()
+     }
