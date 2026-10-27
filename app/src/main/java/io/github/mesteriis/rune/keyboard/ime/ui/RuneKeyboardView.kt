@@ -384,7 +384,7 @@ internal class RuneKeyboardView(
         view.text = spec.label
         view.gravity = Gravity.CENTER
         view.includeFontPadding = false
-        view.maxLines = 1
+        view.maxLines = if (spec.action is KeyboardAction.ContextMenu || spec.action == KeyboardAction.ToggleSelection) 2 else 1
         view.minWidth = 0
         view.setPadding(0, 0, 0, 0)
         view.setTextColor(if (spec.style == KeyStyle.SPACE) {
@@ -411,7 +411,8 @@ internal class RuneKeyboardView(
             view.keyIcon = keyIconResource(spec, state)?.let { context.getDrawable(it)?.mutate() }
         }
         view.background = appearance.keyBackground(spec, metrics.keyGapPx, metrics.keyHeightPx)
-        view.isSelected = spec.action == KeyboardAction.Shift && state.shiftMode != ShiftMode.OFF
+        view.isSelected = spec.action == KeyboardAction.Shift && state.shiftMode != ShiftMode.OFF ||
+            spec.action == KeyboardAction.ToggleSelection && state.selectionMode
         view.contentDescription = contentDescriptionFor(spec, state)
         view.importantForAccessibility = if (spec.style == KeyStyle.SPACER) {
             IMPORTANT_FOR_ACCESSIBILITY_NO
@@ -497,6 +498,11 @@ internal class RuneKeyboardView(
                     R.string.key_fewer_symbols
                 },
             )
+            KeyboardAction.OpenEditing,
+            KeyboardAction.ToggleSelection,
+            is KeyboardAction.Navigate,
+            is KeyboardAction.ContextMenu,
+            -> spec.accessibilityLabel ?: spec.label
             KeyboardAction.HideKeyboard -> context.getString(R.string.key_hide_keyboard)
             KeyboardAction.NextInputMethod -> context.getString(R.string.key_next_keyboard)
             is KeyboardAction.SwitchLanguage -> context.getString(R.string.key_language)

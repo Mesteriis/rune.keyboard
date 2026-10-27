@@ -38,6 +38,19 @@ object KeyboardReducer {
                 state = base,
                 command = resolveEnterCommand(editorContext),
             )
+            KeyboardAction.OpenEditing -> KeyboardTransition(
+                if (editorContext.inputPolicy != InputPolicy.SENSITIVE && editorContext.mode !in setOf(
+                    EditorMode.NUMBER, EditorMode.PHONE, EditorMode.DATE_TIME)) base.openEditing() else base)
+            KeyboardAction.ToggleSelection -> KeyboardTransition(
+                if (base.layer == KeyboardLayer.EDITING && editorContext.inputPolicy != InputPolicy.SENSITIVE)
+                    base.copy(selectionMode = !base.selectionMode) else base)
+            is KeyboardAction.Navigate -> KeyboardTransition(base,
+                if (base.layer == KeyboardLayer.EDITING && editorContext.inputPolicy != InputPolicy.SENSITIVE &&
+                    (editorContext.isMultiLine || action.direction !in setOf(CursorDirection.UP, CursorDirection.DOWN)))
+                    EditorCommand.NavigateCursor(action.direction, base.selectionMode) else null)
+            is KeyboardAction.ContextMenu -> KeyboardTransition(base.copy(selectionMode = false),
+                if (base.layer == KeyboardLayer.EDITING && editorContext.inputPolicy != InputPolicy.SENSITIVE &&
+                    !editorContext.requiresRawKeyEvents) EditorCommand.ContextMenu(action.action) else null)
             KeyboardAction.Shift -> KeyboardTransition(base.onShiftPressed(nowMillis))
             KeyboardAction.CursorModeStarted -> KeyboardTransition(base)
             KeyboardAction.ToggleSymbols -> KeyboardTransition(base.toggleSymbols())

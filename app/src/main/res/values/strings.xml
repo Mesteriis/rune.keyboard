@@ -26,7 +26,7 @@
   <string name="setup_try_number_hint">Number</string>
   <string name="setup_settings_button">Open Rune settings</string>
   <string name="setup_privacy_title">Private by default</string>
-  <string name="setup_privacy_description">Network access is used only after you explicitly download the optional local model. Typed text is never sent. Rune has no telemetry, ads, input history, or clipboard access.</string>
+  <string name="setup_privacy_description">Network access is used only after you explicitly download the optional local model. Typed text is never sent. Rune has no telemetry, ads, or input history. Rune does not read the clipboard; the editor handles Copy, Cut and Paste.</string>
   <string name="setup_mvp_note">Rune offers word suggestions and mechanical punctuation. A ready optional local model can order spelling and contextual punctuation suggestions using text typed with Rune. Automatic replacement stays quality-gated.</string>
 
   <string name="key_shift">Shift</string>
@@ -86,7 +86,7 @@
   <string name="settings_theme">App theme</string>
   <string name="settings_haptic">Haptic feedback</string>
   <string name="settings_sound">Keypress sound</string>
-  <string name="settings_privacy_summary">Network access is used only for an explicit model download. Typed text is never sent. No analytics, input logging, or clipboard access. Settings are excluded from system backup.</string>
+  <string name="settings_privacy_summary">Network access is used only for an explicit model download. Typed text is never sent. No analytics or input logging. Rune does not read the clipboard; the editor handles Copy, Cut and Paste. Settings are excluded from system backup.</string>
   <string name="settings_version">Version</string>
   <string name="settings_setup_guide">Setup guide</string>
   <string name="settings_local_intelligence">Local intelligence</string>

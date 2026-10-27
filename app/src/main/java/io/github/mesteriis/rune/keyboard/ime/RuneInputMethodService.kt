@@ -21,9 +21,11 @@ import io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProvider
 import io.github.mesteriis.rune.keyboard.ime.layout.LayoutOptions
 import io.github.mesteriis.rune.keyboard.ime.model.EditorCommand
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
+import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLayer
+import io.github.mesteriis.rune.keyboard.ime.model.ExternalEditContinuity
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducer
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardSessionPolicy
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
@@ -92,6 +94,7 @@ class RuneInputMethodService : InputMethodService() {
     private var selectedLanguage = KeyboardLanguage.ENGLISH
     private var hasSelection = false
     private val typingSession = TypingSessionController(RuneTrace)
+    private val externalEditContinuity = ExternalEditContinuity()
     private lateinit var personalResources: PersonalTypingResources
     private lateinit var personalization: AndroidTypingPersonalization
     private lateinit var typingTools: AndroidTypingTools
@@ -220,6 +223,8 @@ class RuneInputMethodService : InputMethodService() {
         candidates.invalidate()
         super.onStartInput(attribute, restarting)
         val editorInfo = attribute ?: EditorInfo()
+        externalEditContinuity.observe(typingSession.state.enabled, typingSession.requiresExternalWordBoundary)
+        val requireExternalBoundary = externalEditContinuity.onStart(editorInfo.packageName, editorInfo.fieldId, restarting)
         editorContext = EditorContext.from(editorInfo)
         activePackage = editorInfo.packageName
         resolveTypingProfile()
@@ -232,7 +237,7 @@ class RuneInputMethodService : InputMethodService() {
         // the framework restart flag used by typing or diagnostics admission.
         typingSession.configureFeatures(DiagnosticFeatures.configured(globalSettings), 0, activeProfile.code)
         typingSession.startSession(editorContext, editorInfo.initialSelStart, editorInfo.initialSelEnd,
-            diagnosticsFresh = !restarting)
+            diagnosticsFresh = !restarting, requireExternalBoundary = requireExternalBoundary)
         state = visualContinuity.onStartInput(
             previous = state,
             restarting = restarting,
@@ -244,6 +249,8 @@ class RuneInputMethodService : InputMethodService() {
             configuration = configurationSize(resources.configuration),
             nowMillis = SystemClock.uptimeMillis(),
         )
+        if (editorContext.inputPolicy == InputPolicy.SENSITIVE && state.layer == KeyboardLayer.EDITING)
+            state = state.toggleSymbols()
         selectedLanguage = state.language
         renderCandidates()
     }
@@ -286,11 +293,13 @@ class RuneInputMethodService : InputMethodService() {
             newSelStart, newSelEnd, candidatesStart, candidatesEnd, ::executeTypingEdit,
         )
         if (externalChange) candidates.invalidate()
+        externalEditContinuity.observe(typingSession.state.enabled, typingSession.requiresExternalWordBoundary)
         renderCandidates()
         refreshAutomaticCapitalization()
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
+        externalEditContinuity.observe(typingSession.state.enabled, typingSession.requiresExternalWordBoundary)
         keyboardView?.cancelActiveTouches()
         inputViewActive = false
         candidates.invalidate()
@@ -306,6 +315,7 @@ class RuneInputMethodService : InputMethodService() {
      * continue, independently of the old typing session which always ends here.
      */
     override fun onFinishInput() {
+        externalEditContinuity.observe(typingSession.state.enabled, typingSession.requiresExternalWordBoundary)
         typingSession.closeDiagnosticsAdmission()
         dynamicTouchContext.reset()
         keyboardView?.cancelActiveTouches()
@@ -352,7 +362,18 @@ class RuneInputMethodService : InputMethodService() {
             )
             val ownedEnter = action == KeyboardAction.Enter && editorContext.supportsSmartTyping &&
                 (transition.command == EditorCommand.InsertNewline || transition.command is EditorCommand.PerformEditorAction)
-            if (!ownedEnter && invalidatesTyping(action)) {
+            val leavingEditing = previousState.layer == KeyboardLayer.EDITING && action == KeyboardAction.ToggleSymbols
+            val editingCursor = previousState.layer == KeyboardLayer.EDITING &&
+                (action is KeyboardAction.MoveCursor || action == KeyboardAction.CursorModeStarted)
+            val externalEdit = action == KeyboardAction.OpenEditing && transition.state.layer == KeyboardLayer.EDITING ||
+                transition.command is EditorCommand.NavigateCursor || transition.command is EditorCommand.ContextMenu || editingCursor
+            if (externalEdit) {
+                candidates.invalidate()
+                val await = transition.command is EditorCommand.NavigateCursor || transition.command is EditorCommand.ContextMenu ||
+                    action is KeyboardAction.MoveCursor
+                if (!typingSession.prepareExternalEdit(await, ::executeTypingEdit)) return@section
+                externalEditContinuity.arm()
+            } else if (!leavingEditing && !ownedEnter && invalidatesTyping(action)) {
                 candidates.invalidate()
                 if (action is KeyboardAction.MoveCursor || action == KeyboardAction.Enter) {
                     typingSession.awaitEditorSelection(::executeTypingEdit)
@@ -361,6 +382,7 @@ class RuneInputMethodService : InputMethodService() {
                 }
             }
             state = transition.state
+            if (externalEdit || leavingEditing) updatePersonalizationPolicy()
             if (action is KeyboardAction.SwitchLanguage || action == KeyboardAction.ToggleSymbols ||
                 action == KeyboardAction.ToggleSymbolsPage) {
                 typingSession.reopenDiagnosticsForLetters(inputViewActive && editorContext.supportsSmartTyping &&
@@ -381,6 +403,7 @@ class RuneInputMethodService : InputMethodService() {
 
             val outcome = transition.command?.let { executeTypingOrEditorCommand(it, previousState) }
                 ?: CommandOutcome.NO_COMMAND
+            externalEditContinuity.observe(typingSession.state.enabled, typingSession.requiresExternalWordBoundary)
             if (outcome == CommandOutcome.DELIVERED && typingSession.sentenceCapitalizationPending) {
                 // The gesture consumed this action. Prime the next key from the post-action state.
                 state = state.withAutomaticCapitalization(editorContext.supportsAutomaticCapitalization &&
@@ -529,6 +552,8 @@ class RuneInputMethodService : InputMethodService() {
         EditorCommand.InsertNewline,
         EditorCommand.ConvertPrecedingSpaceToPeriod,
         -> true
+        is EditorCommand.ContextMenu -> command.action == io.github.mesteriis.rune.keyboard.ime.model.EditorContextAction.CUT ||
+            command.action == io.github.mesteriis.rune.keyboard.ime.model.EditorContextAction.PASTE
         else -> false
     }
 
@@ -801,7 +826,7 @@ class RuneInputMethodService : InputMethodService() {
         outcome: CommandOutcome,
     ) {
         // Cursor mode emits a step per movement; the space key gives one buzz when it engages.
-        if (action is KeyboardAction.MoveCursor || action == KeyboardAction.CursorModeStarted) return
+        if (action is KeyboardAction.MoveCursor || action is KeyboardAction.Navigate || action == KeyboardAction.CursorModeStarted) return
         val view = keyboardView ?: return
         if (!FeedbackPolicy.shouldProvide(stateChanged, outcome)) return
         feedbackController.provide(

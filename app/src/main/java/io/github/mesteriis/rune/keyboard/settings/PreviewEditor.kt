@@ -1,6 +1,8 @@
 package io.github.mesteriis.rune.keyboard.settings
 
 import android.os.SystemClock
+import android.view.inputmethod.EditorInfo
+import io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutor
 import android.widget.EditText
 import io.github.mesteriis.rune.keyboard.ime.model.EditorCommand
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
@@ -32,6 +34,12 @@ internal object PreviewEditor {
                     else Character.codePointCount(text, 0, start)
                 val steps = command.steps.coerceIn(-available, available)
                 field.setSelection(Character.offsetByCodePoints(text, if (steps > 0) end else start, steps))
+            }
+            is EditorCommand.NavigateCursor, is EditorCommand.ContextMenu -> {
+                field.requestFocus()
+                field.onCreateInputConnection(EditorInfo())?.let { connection ->
+                    EditorCommandExecutor.execute(command, connection, start != end, false, context.inputPolicy)
+                }
             }
             EditorCommand.ConvertPrecedingSpaceToPeriod -> insert(" ")
             // The preview owns no external editor, IME picker, or composing session.

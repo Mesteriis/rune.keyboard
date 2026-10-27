@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.TextView
 import io.github.mesteriis.rune.keyboard.ime.gesture.BackspaceRepeatSchedule
 import io.github.mesteriis.rune.keyboard.ime.layout.KeySpec
+import io.github.mesteriis.rune.keyboard.ime.model.CursorDirection
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
 
 /** Every key view must be able to abandon an in-flight gesture on demand (REL-006). */
@@ -102,7 +103,7 @@ internal class KeyboardKeyView @JvmOverloads constructor(
             if (!armed || !repeatable) return
             performClick()
             repeatCount++
-            postDelayed(this, BackspaceRepeatSchedule.intervalMillis(repeatCount))
+            postDelayed(this, repeatIntervalMillis())
         }
     }
 
@@ -113,7 +114,7 @@ internal class KeyboardKeyView @JvmOverloads constructor(
             longPressTriggered = true
             performClick()
             repeatCount = 1
-            postDelayed(repeatRunnable, BackspaceRepeatSchedule.intervalMillis(repeatCount))
+            postDelayed(repeatRunnable, repeatIntervalMillis())
         } else if (currentSpec != null && currentSpec.longPressAlternates.isNotEmpty()) {
             alternatesActive = popupHost?.onKeyLongPress(this, currentSpec) ?: false
             longPressTriggered = if (alternatesActive) true else performLongClick()
@@ -138,7 +139,9 @@ internal class KeyboardKeyView @JvmOverloads constructor(
     ) {
         cancelPendingActions()
         this.spec = spec
-        this.repeatable = spec.action == KeyboardAction.Delete
+        val action = spec.action
+        this.repeatable = action == KeyboardAction.Delete || action is KeyboardAction.Navigate &&
+            action.direction in setOf(CursorDirection.LEFT, CursorDirection.RIGHT, CursorDirection.UP, CursorDirection.DOWN)
         this.actionListener = actionListener
         this.touchStateListener = touchStateListener
         this.popupHost = popupHost
@@ -150,6 +153,9 @@ internal class KeyboardKeyView @JvmOverloads constructor(
         isClickable = spec.action != null
         isLongClickable = spec.longPressAlternates.isNotEmpty() || repeatable
     }
+
+    private fun repeatIntervalMillis(): Long = if (spec?.action == KeyboardAction.Delete)
+        BackspaceRepeatSchedule.intervalMillis(repeatCount) else 75L
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (!isEnabled) return false
@@ -285,6 +291,14 @@ internal class KeyboardKeyView @JvmOverloads constructor(
 
     override fun onInitializeAccessibilityNodeInfo(info: AccessibilityNodeInfo) {
         super.onInitializeAccessibilityNodeInfo(info)
+        if (spec?.action == KeyboardAction.ToggleSelection) {
+            info.isCheckable = true
+            info.isChecked = isSelected
+        }
+        spec?.longPressAlternates?.firstOrNull()?.takeIf { it.action == KeyboardAction.OpenEditing }?.let {
+            if (isEnabled) info.addAction(AccessibilityNodeInfo.AccessibilityAction(
+                AccessibilityNodeInfo.ACTION_LONG_CLICK, it.label))
+        }
         spec?.flickDown?.let { alternate ->
             if (isEnabled) info.addAction(AccessibilityNodeInfo.AccessibilityAction(
                 R.id.action_key_flick, context.getString(R.string.key_flick_action, alternate.label),

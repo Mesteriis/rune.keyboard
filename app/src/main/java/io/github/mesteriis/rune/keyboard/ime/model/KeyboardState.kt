@@ -21,6 +21,7 @@ enum class KeyboardLayer {
     LETTERS,
     SYMBOLS,
     SYMBOLS_ALT,
+    EDITING,
 }
 
 enum class ShiftMode {
@@ -39,6 +40,7 @@ data class KeyboardState(
     val layer: KeyboardLayer = KeyboardLayer.LETTERS,
     val shiftMode: ShiftMode = ShiftMode.OFF,
     val doubleSpacePeriodEnabled: Boolean = true,
+    val selectionMode: Boolean = false,
     private val lastShiftTapAtMillis: Long? = null,
     // Explicit manual OFF survives automatic refresh until the next text action or real boundary.
     private val automaticCapitalizationSuppressed: Boolean = false,
@@ -75,6 +77,7 @@ data class KeyboardState(
     }
 
     fun afterTextCommitted(): KeyboardState = copy(
+        selectionMode = false,
         shiftMode = if (shiftMode == ShiftMode.AUTO || shiftMode == ShiftMode.ONCE) ShiftMode.OFF else shiftMode,
         lastShiftTapAtMillis = null,
         automaticCapitalizationSuppressed = false,
@@ -93,6 +96,7 @@ data class KeyboardState(
     }
 
     fun toggleSymbols(): KeyboardState = copy(
+        selectionMode = false,
         layer = if (layer == KeyboardLayer.LETTERS) KeyboardLayer.SYMBOLS else KeyboardLayer.LETTERS,
         shiftMode = ShiftMode.OFF,
         lastShiftTapAtMillis = null,
@@ -102,8 +106,11 @@ data class KeyboardState(
     fun toggleSymbolsPage(): KeyboardState = when (layer) {
         KeyboardLayer.SYMBOLS -> copy(layer = KeyboardLayer.SYMBOLS_ALT, automaticCapitalizationSuppressed = false)
         KeyboardLayer.SYMBOLS_ALT -> copy(layer = KeyboardLayer.SYMBOLS, automaticCapitalizationSuppressed = false)
-        KeyboardLayer.LETTERS -> this
+        KeyboardLayer.LETTERS, KeyboardLayer.EDITING -> this
     }
+
+    fun openEditing(): KeyboardState = copy(layer = KeyboardLayer.EDITING, selectionMode = false,
+        shiftMode = ShiftMode.OFF, lastShiftTapAtMillis = null, automaticCapitalizationSuppressed = false)
 
     fun switchLanguage(direction: LanguageDirection): KeyboardState {
         val currentIndex = enabledLanguages.indexOf(language)
@@ -119,6 +126,7 @@ data class KeyboardState(
 
     fun useLanguage(language: KeyboardLanguage): KeyboardState = copy(
         language = language,
+        selectionMode = false,
         layer = KeyboardLayer.LETTERS,
         shiftMode = ShiftMode.OFF,
         lastShiftTapAtMillis = null,
@@ -130,6 +138,7 @@ data class KeyboardState(
         val coercedLanguage = if (language in languages) language else languages.first()
         return copy(
             language = coercedLanguage,
+            selectionMode = selectionMode && coercedLanguage == language,
             enabledLanguages = languages,
             layer = if (coercedLanguage == language) layer else KeyboardLayer.LETTERS,
             automaticCapitalizationSuppressed = coercedLanguage == language && automaticCapitalizationSuppressed,

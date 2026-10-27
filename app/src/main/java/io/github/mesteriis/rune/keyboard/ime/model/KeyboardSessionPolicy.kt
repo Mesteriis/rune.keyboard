@@ -20,7 +20,7 @@ object KeyboardSessionPolicy {
         if (restarting) {
             return previous
                 .withEnabledLanguages(settings.enabledLanguages)
-                .copy(doubleSpacePeriodEnabled = settings.doubleSpacePeriod)
+                .copy(doubleSpacePeriodEnabled = settings.doubleSpacePeriod, selectionMode = false)
         }
         return KeyboardState.initial(
             language = resolveStartLanguage(settings, lastUsedLanguage),

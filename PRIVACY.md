@@ -14,7 +14,7 @@ Settings, user-added words, abbreviations, protected words and data from enabled
 
 Model scoring uses bounded input context in memory and a separate private process. It does not create a chat history. Protected fields and unsupported editor contexts have stricter restrictions; the key popup is suppressed in password fields.
 
-Android application backup and cleartext traffic are disabled in the manifest. Rune does not provide clipboard reading or a clipboard history.
+Android application backup and cleartext traffic are disabled in the manifest. The keyboard does not read clipboard contents or maintain a clipboard history. Copy, Cut and Paste controls delegate Android context-menu commands to the focused editor through InputConnection.performContextMenuAction. The editor performs the operation; a dispatch acknowledgement does not prove that it completed. Rune does not fetch editor text to implement these commands.
 
 ## Diagnostics and exports
 

@@ -1023,6 +1023,22 @@ class TypingSessionControllerTest {
         assertEquals("", controller.state.contextText)
     }
 
+    @Test fun `a metadata-approved restart re-arms only the external boundary guard`() {
+        start()
+        controller.typeText("old", execute)
+        controller.prepareExternalEdit(false, execute)
+        controller.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, 0), 12, 12,
+            requireExternalBoundary = true)
+        assertTrue(controller.requiresExternalWordBoundary)
+        controller.typeText("tail", execute)
+        assertNull(controller.state.composing)
+        assertEquals("", controller.state.contextText)
+        controller.typeText(" ", execute)
+        assertFalse(controller.requiresExternalWordBoundary)
+        controller.typeText("next", execute)
+        assertEquals(" next", controller.state.contextText)
+    }
+
     private fun pendingSpace(prefix: String, initialCaret: Int = 0) {
         start(initialCaret)
         controller.typeText(prefix, execute)

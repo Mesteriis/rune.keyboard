@@ -364,6 +364,7 @@ class TypingSessionController internal constructor(
     private var awaitingEditorSelection = false
     private var plainWordUntilBoundary = false
     private var externalWordBoundaryRequired = false
+    val requiresExternalWordBoundary: Boolean get() = externalWordBoundaryRequired
     private var editorEditDepth = 0
     private var candidateEpoch = 0L
     private var lastCandidateRequestId = -1L
@@ -1623,11 +1624,13 @@ class TypingSessionController internal constructor(
             state.sessionId == value.token.sessionId && state.revision == value.token.revision &&
             state.composing?.leadingBoundary == " " && ownsCandidateComposition
 
-    fun startSession(editor: EditorContext, selectionStart: Int, selectionEnd: Int, diagnosticsFresh: Boolean = true) {
+    fun startSession(editor: EditorContext, selectionStart: Int, selectionEnd: Int, diagnosticsFresh: Boolean = true,
+        requireExternalBoundary: Boolean = false) {
         endSession()
         editorAllowsSuggestions = editor.editorAllowsSuggestions
         val enabled = editor.supportsSmartTyping &&
             selectionStart >= 0 && selectionEnd >= 0
+        externalWordBoundaryRequired = enabled && requireExternalBoundary
         this.selectionStart = selectionStart
         this.selectionEnd = selectionEnd
         context = if (enabled) SessionTextContext(graphemes) else null

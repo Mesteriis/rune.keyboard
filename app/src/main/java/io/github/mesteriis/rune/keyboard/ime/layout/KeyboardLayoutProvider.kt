@@ -1,6 +1,9 @@
 package io.github.mesteriis.rune.keyboard.ime.layout
 
 import android.view.inputmethod.EditorInfo
+import io.github.mesteriis.rune.keyboard.ime.model.CursorDirection
+import io.github.mesteriis.rune.keyboard.ime.model.EditorContextAction
+import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
 import io.github.mesteriis.rune.keyboard.ime.model.EditorMode
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
@@ -26,7 +29,43 @@ class KeyboardLayoutProvider {
             KeyboardLayer.SYMBOLS -> symbolsLayout(state, editorContext)
             KeyboardLayer.SYMBOLS_ALT -> symbolsAltLayout(state, editorContext)
             KeyboardLayer.LETTERS -> lettersLayout(state, editorContext, options)
+            KeyboardLayer.EDITING -> if (editorContext.inputPolicy == InputPolicy.SENSITIVE)
+                lettersLayout(state, editorContext, options) else editingLayout(state, editorContext)
         }
+    }
+
+    private fun editText(language: KeyboardLanguage, en: String, ru: String, es: String): String = when (language) {
+        KeyboardLanguage.ENGLISH -> en
+        KeyboardLanguage.RUSSIAN -> ru
+        KeyboardLanguage.SPANISH -> es
+    }
+
+    private fun editingLayout(state: KeyboardState, editor: EditorContext): KeyboardLayout {
+        val language = state.language
+        fun label(en: String, ru: String, es: String) = editText(language, en, ru, es)
+        fun key(text: String, action: KeyboardAction, weight: Float = 2.5f, description: String = text) =
+            KeySpec(text, action, weight, KeyStyle.ACTION, accessibilityLabel = description)
+        fun arrow(text: String, direction: CursorDirection, description: String) =
+            key(text, KeyboardAction.Navigate(direction), description = description)
+        val vertical = if (editor.isMultiLine) listOf(
+            arrow("↑", CursorDirection.UP, label("Move up", "Курсор вверх", "Mover arriba")),
+            arrow("↓", CursorDirection.DOWN, label("Move down", "Курсор вниз", "Mover abajo"))) else null
+        val select = key(if (state.selectionMode) label("Select ✓", "Выделять ✓", "Seleccionar ✓")
+            else label("Select", "Выделять", "Seleccionar"), KeyboardAction.ToggleSelection, 5f,
+            if (state.selectionMode) label("Selection on", "Выделение включено", "Selección activada")
+            else label("Selection off", "Выделение выключено", "Selección desactivada"))
+        val menu = if (editor.requiresRawKeyEvents) listOf(KeySpec.spacer(10f)) else listOf(
+            key(label("Select all", "Выделить всё", "Seleccionar todo"), KeyboardAction.ContextMenu(EditorContextAction.SELECT_ALL)),
+            key(label("Copy", "Копировать", "Copiar"), KeyboardAction.ContextMenu(EditorContextAction.COPY)),
+            key(label("Cut", "Вырезать", "Cortar"), KeyboardAction.ContextMenu(EditorContextAction.CUT)),
+            key(label("Paste", "Вставить", "Pegar"), KeyboardAction.ContextMenu(EditorContextAction.PASTE)))
+        return KeyboardLayout(listOf(
+            listOf(arrow("Home", CursorDirection.HOME, label("Line start", "Начало строки", "Inicio de línea")),
+                arrow("←", CursorDirection.LEFT, label("Move left", "Курсор влево", "Mover izquierda")),
+                arrow("→", CursorDirection.RIGHT, label("Move right", "Курсор вправо", "Mover derecha")),
+                arrow("End", CursorDirection.END, label("Line end", "Конец строки", "Fin de línea"))),
+            listOf(vertical?.get(0) ?: KeySpec.spacer(2.5f), select, vertical?.get(1) ?: KeySpec.spacer(2.5f)),
+            menu, bottomRow(state, editor, includeModeKey = false)))
     }
 
     private fun lettersLayout(
@@ -154,7 +193,7 @@ class KeyboardLayoutProvider {
             EditorMode.URI -> "/"
             else -> ","
         }
-        val modeKey = if (includeModeKey) symbolsKey() else lettersKey()
+        val modeKey = if (includeModeKey) symbolsKey(state.language, editorContext) else lettersKey()
         val punctuationKey = symbolKey(punctuation, state.language, weight = PUNCTUATION_WEIGHT)
         val periodKey = symbolKey(".", state.language, weight = PUNCTUATION_WEIGHT)
         val enterKey = enterKey(editorContext)
@@ -246,11 +285,13 @@ class KeyboardLayoutProvider {
         style = KeyStyle.ACTION,
     )
 
-    private fun symbolsKey(): KeySpec = KeySpec(
+    private fun symbolsKey(language: KeyboardLanguage, editor: EditorContext): KeySpec = KeySpec(
         label = SYMBOLS_LABEL,
         action = KeyboardAction.ToggleSymbols,
         weight = MODE_KEY_WEIGHT,
         style = KeyStyle.ACTION,
+        longPressAlternates = if (editor.inputPolicy == InputPolicy.SENSITIVE) emptyList() else
+            listOf(KeyAlternate(editText(language, "Edit", "Правка", "Editar"), KeyboardAction.OpenEditing)),
     )
 
     private fun lettersKey(): KeySpec = KeySpec(

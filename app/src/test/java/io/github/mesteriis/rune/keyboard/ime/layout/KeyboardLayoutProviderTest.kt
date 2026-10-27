@@ -4,6 +4,9 @@ import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
+import io.github.mesteriis.rune.keyboard.ime.model.CursorDirection
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLayer
+import io.github.mesteriis.rune.keyboard.ime.model.EditorContextAction
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
 import io.github.mesteriis.rune.keyboard.ime.model.ShiftMode
@@ -14,6 +17,35 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class KeyboardLayoutProviderTest {
+    @Test fun editingPanelKeepsFourRowsAndProvidesOnlyAllowedCommands() {
+        for (language in KeyboardLanguage.entries) for (multi in listOf(false, true)) {
+            val editor = EditorContext.from(InputType.TYPE_CLASS_TEXT, 0).copy(isMultiLine = multi)
+            val layout = provider.layoutFor(KeyboardState(language).openEditing(), editor)
+            assertEquals(4, layout.rows.size)
+            layout.rows.forEach { assertEquals(10f, it.sumOf { key -> key.weight.toDouble() }.toFloat(), 0.001f) }
+            val actions = layout.rows.flatten().mapNotNull { it.action }
+            assertTrue(actions.containsAll(EditorContextAction.entries.map { KeyboardAction.ContextMenu(it) }))
+            assertTrue(actions.contains(KeyboardAction.ToggleSelection))
+            assertEquals(multi, actions.contains(KeyboardAction.Navigate(CursorDirection.UP)))
+            assertEquals(multi, actions.contains(KeyboardAction.Navigate(CursorDirection.DOWN)))
+            assertTrue(layout.rows.flatten().filter { it.action is KeyboardAction.ContextMenu }.all { !it.accessibilityLabel.isNullOrBlank() })
+        }
+        val raw = provider.layoutFor(KeyboardState(KeyboardLanguage.ENGLISH).openEditing(), EditorContext.from(InputType.TYPE_NULL, 0))
+        assertTrue(raw.rows.flatten().none { it.action is KeyboardAction.ContextMenu })
+        val secret = EditorContext.from(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD, 0)
+        assertTrue(provider.layoutFor(KeyboardState(KeyboardLanguage.ENGLISH).openEditing(), secret).rows.flatten().none {
+            it.action is KeyboardAction.Navigate || it.action is KeyboardAction.ContextMenu })
+    }
+
+    @Test fun modeKeyTapIsUnchangedAndItsOnlyLongPressAlternateOpensEditing() {
+        for (language in KeyboardLanguage.entries) {
+            val key = provider.layoutFor(KeyboardState(language), textEditor).rows.flatten().single {
+                it.action == KeyboardAction.ToggleSymbols }
+            assertEquals(listOf(KeyboardAction.OpenEditing), key.longPressAlternates.map { it.action })
+            assertTrue(key.longPressAlternates.single().label.isNotBlank())
+        }
+    }
+
     private val provider = KeyboardLayoutProvider()
     private val textEditor = EditorContext.from(InputType.TYPE_CLASS_TEXT, EditorInfo.IME_ACTION_NONE)
 

@@ -31,7 +31,7 @@ internal class ComposingQaFixture(context: Context, mode: String) {
         "before" to 0, "after" to 0, "selected" to 0, "extracted" to 0, "caps" to 0,
         "surrounding" to 0, "snapshot" to 0, "callbacks" to 0,
         "keyDown" to 0, "keyUp" to 0, "deleteKeyDown" to 0,
-        "actions" to 0, "lastAction" to 0, "searchOriginal" to 0,
+        "actions" to 0, "lastAction" to 0, "searchOriginal" to 0, "contextMenu" to 0,
     )
     private val status = TextView(context).apply {
         id = R.id.qa_composing_stats
@@ -193,6 +193,13 @@ internal class ComposingQaFixture(context: Context, mode: String) {
         private val mode: String,
         protected val count: (String) -> Unit,
     ) : InputConnectionWrapper(target, false) {
+        override fun performContextMenuAction(id: Int): Boolean {
+            // TextView can coalesce selection callbacks during a native menu edit. Publish the
+            // actual numeric state after dispatch without synthesizing an IME acknowledgement.
+            count("contextMenu")
+            return super.performContextMenuAction(id)
+        }
+
         override fun sendKeyEvent(event: KeyEvent): Boolean {
             when (event.action) {
                 KeyEvent.ACTION_DOWN -> {

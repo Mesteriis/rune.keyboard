@@ -23,7 +23,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
-/** Test-only caller of the new guard; production editing actions are not wired yet. */
+/** Isolated guard coverage; public panel wiring is covered by EditingPanelInstrumentedTest. */
 class ForeignEditBoundaryInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val context get() = instrumentation.targetContext

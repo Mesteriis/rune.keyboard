@@ -5,9 +5,49 @@ import android.view.inputmethod.EditorInfo
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNull
 import org.junit.Test
 
 class KeyboardReducerTest {
+    @Test fun editingEntryClearsManualShiftAndSelectionIsExplicitlyScoped() {
+        val editor = EditorContext.from(android.text.InputType.TYPE_CLASS_TEXT, 0)
+        val before = KeyboardState(KeyboardLanguage.ENGLISH, shiftMode = ShiftMode.LOCKED)
+        val entered = KeyboardReducer.reduce(before, KeyboardAction.OpenEditing, editor, 0).state
+        assertEquals(KeyboardLayer.EDITING, entered.layer)
+        assertEquals(ShiftMode.OFF, entered.shiftMode)
+        val selecting = KeyboardReducer.reduce(entered, KeyboardAction.ToggleSelection, editor, 0).state
+        assertTrue(selecting.selectionMode)
+        val moved = KeyboardReducer.reduce(selecting, KeyboardAction.Navigate(CursorDirection.LEFT), editor, 0)
+        assertEquals(EditorCommand.NavigateCursor(CursorDirection.LEFT, true), moved.command)
+        assertEquals(selecting, moved.state)
+        val exit = KeyboardReducer.reduce(selecting, KeyboardAction.ToggleSymbols, editor, 0).state
+        assertEquals(KeyboardLayer.LETTERS, exit.layer)
+        assertFalse(exit.selectionMode)
+        assertFalse(selecting.afterTextCommitted().selectionMode)
+        assertFalse(selecting.useLanguage(KeyboardLanguage.RUSSIAN).selectionMode)
+    }
+
+    @Test fun editingReducerRefusesSingleLineVerticalRawMenusAndSensitiveEntry() {
+        val single = EditorContext.from(android.text.InputType.TYPE_CLASS_TEXT, 0)
+        val state = KeyboardState(KeyboardLanguage.ENGLISH).openEditing()
+        for (direction in listOf(CursorDirection.UP, CursorDirection.DOWN)) {
+            assertNull(KeyboardReducer.reduce(state, KeyboardAction.Navigate(direction), single, 0).command)
+            assertEquals(EditorCommand.NavigateCursor(direction), KeyboardReducer.reduce(state,
+                KeyboardAction.Navigate(direction), single.copy(isMultiLine = true), 0).command)
+        }
+        for (action in EditorContextAction.entries) {
+            assertNull(KeyboardReducer.reduce(state, KeyboardAction.ContextMenu(action),
+                EditorContext.from(android.text.InputType.TYPE_NULL, 0), 0).command)
+            assertEquals(EditorCommand.ContextMenu(action), KeyboardReducer.reduce(state,
+                KeyboardAction.ContextMenu(action), single, 0).command)
+        }
+        val secret = EditorContext.from(android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD, 0)
+        val before = KeyboardState(KeyboardLanguage.ENGLISH)
+        assertEquals(before, KeyboardReducer.reduce(before, KeyboardAction.OpenEditing, secret, 0).state)
+        assertNull(KeyboardReducer.reduce(state, KeyboardAction.Navigate(CursorDirection.LEFT), secret, 0).command)
+        assertNull(KeyboardReducer.reduce(before, KeyboardAction.Navigate(CursorDirection.LEFT), single, 0).command)
+    }
+
     @Test
     fun `incognito session routes deletion through the ordinary editor command`() {
         val context = EditorContext.from(
