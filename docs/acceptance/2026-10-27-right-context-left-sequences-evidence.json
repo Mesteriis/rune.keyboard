@@ -1,0 +1,35 @@
+{
+  "purpose": "HOST_INPUT_PREPARATION_NOT_QUALIFIED_MODEL",
+  "featureCount": 242,
+  "rows": 2268,
+  "queries": 570,
+  "families": 24,
+  "selectedGroups": 2268,
+  "candidateRows": 24684,
+  "jointGroups": 1692,
+  "manualRetentionControls": 576,
+  "pythonTestsPassed": 171,
+  "modelTrained": false,
+  "androidChanged": false,
+  "qualityGatesPassed": false,
+  "sourceHashes": {
+    "tools/typing_experiments/right_context_left_sequence_features.py": "62f49430e9ba042207bb352f7cf6b810472b8c07f30e143f2c40a984c3e4abd9",
+    "tools/typing_experiments/right_context_left_sequence_corpus.py": "99aeb5d9e2118e54aec84c3575d07a30866eba38354cf598204f762237c608ff",
+    "tools/typing_experiments/test_right_context_left_sequence_features.py": "abfee6d9909d46844babe9f60b5e24dc6715d696c2935c4fff817e4fbdde038a",
+    "tools/typing_experiments/test_right_context_left_sequence_corpus.py": "c40cfe8d9cffb965b91b9ed7654acb1c835e01dc8d8a379196203504e6616cd2"
+  },
+  "artifactHashes": {
+    "build/right-context-left-sequence-v1-v2-20261027/prepare.py": "ec0a6349a5c99805e3274b01c631bd0aa7009000f37a914a958f79535cbfa14c",
+    "build/right-context-left-sequence-v1-v2-20261027/replay.py": "c31c0fe6ec2ab3dbf75373c1be0c82f76b8f03b82d0dac34e1a51bf195ddff90",
+    "build/right-context-left-sequence-v1-v2-20261027/select_training_groups.py": "fc5a92dd47cb5f5f6de976817bf9c0bdc3fbbeb2628cfb893663a5e1fb16b617",
+    "build/right-context-left-sequence-v1-v2-20261027/audit.py": "8c9ca83426c0b39794b6163d6f5772aa632b291f99841e7c1a496300b8ca2ff5",
+    "build/right-context-left-sequence-v1-v2-20261027/corpus/manifest.json": "ea90634a5ec5bdaa241d7b94324502bc0823c2485291f296ad71ca570574c359",
+    "build/right-context-left-sequence-v1-v2-20261027/corpus/train.jsonl": "daed1a7b5e9d0d61c59bae3a63b052cc02feb8de059305fbf7bf2e699fcf94aa",
+    "build/right-context-left-sequence-v1-v2-20261027/production-pools/receipt.json": "52e98ed6fa8ffc880449159de17e7431b151971c0b9a933d521d966de398bdea",
+    "build/right-context-left-sequence-v1-v2-20261027/production-pools/observations.jsonl": "ce320d609ba8dc8eecb1ae712b84288b06a8c34764a559df8da5bd98902854e4",
+    "build/right-context-left-sequence-v1-v2-20261027/selection.json": "65e0cd37befced1626f54911a688ceff015a56e683b274816076f244e79ab172",
+    "build/right-context-left-sequence-v1-v2-20261027/groups.jsonl": "d16a0da69d26394f248c5652233848bdfbb1ac0a23fc3ac02e994cf716c9fe16",
+    "build/right-context-left-sequence-v1-v2-20261027/exposure-audit.json": "01b3730d69ea55f6941d36bbf42a6a48bb86c8f84e238e2fc94ee5dc3db9966b",
+    "build/right-context-left-sequence-v1-v2-20261027/tests.log": "4c34fb24df2aaca942b01406560335e716ec9109e38a0dd43feaec9d7253eb27"
+  }
+}
