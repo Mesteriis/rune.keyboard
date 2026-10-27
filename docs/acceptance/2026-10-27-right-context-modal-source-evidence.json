@@ -1,0 +1,35 @@
+{
+  "purpose": "HOST_MODAL_CONFLICT_SOURCE_NOT_DEPLOYMENT",
+  "sourceVersion": 6,
+  "modelSha256": "8fdbd315a7db9238ef4feb2cf98b58db835beb23ea136c5f7400f9639f5e3365",
+  "modelWeightsUnchanged": true,
+  "scoresOrderingMarginsExact": true,
+  "scoredPrefixes": 1752,
+  "newVetoes": 1,
+  "lostCorrectPaths": 0,
+  "pythonTestsPassed": 194,
+  "newCorrect": 136,
+  "newWrong": 9,
+  "priorCorrectLosses": 0,
+  "controlChanges": 0,
+  "rawProposalPrecision": 0.9379310344827586,
+  "qualityGatePassed": false,
+  "fullCohortGatePassed": false,
+  "holdoutScored": false,
+  "androidChanged": false,
+  "sourceHashes": {
+    "tools/typing_experiments/right_context_modal_source.py": "23813df99b2e78562f9fd8fc9e429be20be7d33b43db6214845df2dac145d2f9",
+    "tools/typing_experiments/test_right_context_modal_source.py": "e7cf407752420912de2eaaddbce2b62fdd38a2d12bc9cc4f3ae9e9b0bd00b5cb"
+  },
+  "artifactHashes": {
+    "build/right-context-v14-source6-traced-20261027/score.py": "759dc85286f311eadbbad34aafd6b43ff454940f47261ecbc3eda7b09f02775b",
+    "build/right-context-v14-source6-traced-20261027/score.log": "28f6ad4bc8be27803f0374ad1c8270bc0c8e419b4ce4ffd201fb25f452a4cf9a",
+    "build/right-context-v14-source6-traced-20261027/scoring-plan.json": "6e0758da369685526b2cabda4c6f0cba72d8d64fe23f1099fd15218e63fa168f",
+    "build/right-context-v14-source6-traced-20261027/calibration-result.json": "9a1091a2c022abb3ed6d286a73a0c42df23f6695c161097f96fa59b9129035cf",
+    "build/right-context-v14-source6-traced-20261027/calibration-paths.json": "18b27fd9e9753417d64fecbf30623b5d49261edacdf7c2e8fe4c9802e1af9600",
+    "build/right-context-v14-source6-traced-20261027/decision-traces.json": "a537d0dd67eb213229e77cbaed608571b589acbdd57c7defba99344bc48c8fe0",
+    "build/right-context-v14-source6-traced-20261027/audit-modal.py": "3f29e21d792fd3335dd56c7848f5a850e879d56e12c34a0196aa202625eac007",
+    "build/right-context-v14-source6-traced-20261027/modal-audit.json": "9c0866e92dcb9cb4688f386095df6513e6c16d627e4462ea08f5daa2211514bf",
+    "build/right-context-v14-source6-traced-20261027/python-tests.log": "16e6fd5e549338595ad5147705206fb1b529c3f168b5fd67bb1ed665964eebab"
+  }
+}
