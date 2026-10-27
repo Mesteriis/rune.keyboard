@@ -9,10 +9,24 @@ function(prepare_rune_llama_source repository_root tokenizer_patch)
     if(NOT code EQUAL 0 OR NOT revision STREQUAL expected_upstream)
         message(FATAL_ERROR "Unexpected llama.cpp source revision")
     endif()
-    execute_process(COMMAND "${GIT_EXECUTABLE}" -C "${upstream}" status --porcelain=v1 --untracked-files=all
-        RESULT_VARIABLE code OUTPUT_VARIABLE dirty ERROR_QUIET)
-    if(NOT code EQUAL 0 OR NOT dirty STREQUAL "")
-        message(FATAL_ERROR "llama.cpp source must be pristine")
+    set(RUNE_PREPARED_SOURCE "" CACHE STRING "Explicit reviewed source preparation mode")
+    if(RUNE_PREPARED_SOURCE STREQUAL "fdroidserver-2.4.5")
+        find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
+        execute_process(COMMAND "${Python3_EXECUTABLE}"
+            "${repository_root}/tools/qualification_artifacts.py" --root "${repository_root}"
+            --prepared-source "${RUNE_PREPARED_SOURCE}"
+            RESULT_VARIABLE code OUTPUT_QUIET ERROR_QUIET)
+        if(NOT code EQUAL 0)
+            message(FATAL_ERROR "Prepared runtime source failed the reviewed checkpoint")
+        endif()
+    elseif(RUNE_PREPARED_SOURCE STREQUAL "")
+        execute_process(COMMAND "${GIT_EXECUTABLE}" -C "${upstream}" status --porcelain=v1 --untracked-files=all
+            RESULT_VARIABLE code OUTPUT_VARIABLE dirty ERROR_QUIET)
+        if(NOT code EQUAL 0 OR NOT dirty STREQUAL "")
+            message(FATAL_ERROR "llama.cpp source must be pristine")
+        endif()
+    else()
+        message(FATAL_ERROR "Unsupported prepared runtime source mode")
     endif()
     execute_process(COMMAND "${GIT_EXECUTABLE}" -C "${repository_root}" ls-tree HEAD runtime-llama/src/main/cpp/llama.cpp
         RESULT_VARIABLE code OUTPUT_VARIABLE gitlink OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET)
@@ -34,6 +48,11 @@ function(prepare_rune_llama_source repository_root tokenizer_patch)
     file(REMOVE_RECURSE "${source}")
     file(MAKE_DIRECTORY "${source}")
     file(ARCHIVE_EXTRACT INPUT "${archive}" DESTINATION "${source}")
+    # Example wrappers are not compiler inputs. Do not reintroduce the scanner's
+    # deleted binaries into the private generated source tree in either mode.
+    file(REMOVE "${source}/examples/llama.android/gradlew"
+        "${source}/examples/llama.android/gradle/wrapper/gradle-wrapper.jar"
+        "${archive}")
     execute_process(COMMAND "${CMAKE_COMMAND}" -E env "GIT_CEILING_DIRECTORIES=${CMAKE_CURRENT_BINARY_DIR}"
         "${GIT_EXECUTABLE}" -C "${source}" apply --check "${tokenizer_patch}"
         RESULT_VARIABLE code OUTPUT_QUIET ERROR_QUIET)

@@ -2,6 +2,11 @@ plugins {
     id("com.android.library")
 }
 
+val preparedSource = providers.gradleProperty("runePreparedSource").orNull
+require(preparedSource == null || preparedSource == "fdroidserver-2.4.5") {
+    "Unsupported prepared source mode"
+}
+
 val runtimeTestBuildType = providers.gradleProperty("runeRuntimeTestBuildType").orElse("debug").get()
 require(runtimeTestBuildType in setOf("debug", "release")) {
     "runeRuntimeTestBuildType must be debug or release"
@@ -29,6 +34,7 @@ android {
                     "-DANDROID_PLATFORM=android-26",
                     "-DANDROID_STL=c++_shared",
                 )
+                preparedSource?.let { arguments += "-DRUNE_PREPARED_SOURCE=$it" }
                 cppFlags += listOf("-std=c++17", "-fexceptions", "-frtti")
             }
         }
