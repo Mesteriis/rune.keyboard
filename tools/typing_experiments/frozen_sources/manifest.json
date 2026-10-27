@@ -5,6 +5,10 @@
       "file": "qualification_v2_2cbcb2508ef66b32.py",
       "originalPath": "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py"
     },
+    "956436a1fbd708706bddb3bad44c1fdf7bff838ef95a8c06911008148590fe01": {
+      "file": "prepare_external_spelling_holdout_956436a1fbd70870.py",
+      "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout.py"
+    },
     "964b7c6505cf5b3a0d766563e29ff750b3db70638302267db9c0318ffa05aef8": {
       "file": "prepare_joint_followup_964b7c6505cf5b3a.py",
       "originalPath": "tools/typing_experiments/prepare_joint_followup.py"

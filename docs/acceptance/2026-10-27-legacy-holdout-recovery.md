@@ -1,5 +1,8 @@
 # Review Q6: recover historical public source identities
 
+Historical v7-v12 receipt. The subsequent [v6 import](2026-10-27-spelling-v6-history.md)
+expands the article-overlap totals; counts below retain their original scope.
+
 The six historical spelling corpora v7–v12 now have durable source-article and
 source-window exclusions in addition to their original context/target keys.
 This completes that recovery slice, **not Q6 or fresh-data qualification**.

@@ -13,11 +13,13 @@ context/target identity. A separate verified recovery now adds all matching
 article IDs and current source-window hashes; legacy family strings still do
 not certify Pymorph lemmas. Their missing family axis is recorded explicitly.
 
-The recovery found 9,505 historical articles. They overlap 97 articles in the
-current v6 calibration and 115 in its reserved holdout. These corpora cannot
-certify independence from historical spelling articles. Existing rows and scores
-are unchanged; reserved still means unscored, not independently fresh. The
-ledger records this finding in `historicalArticleOverlap`.
+The v7-v12 recovery found 9,505 historical articles. The subsequent v6 import
+adds 1,583 articles, for 11,088 across v6-v12. Together they overlap 122 articles
+in the current v6 calibration and 131 in its reserved holdout. These corpora
+cannot certify independence from historical spelling articles. The earlier
+97/115 counts describe v7-v12 only. Existing rows and scores are unchanged;
+reserved means unscored, not independently fresh. The ledger records this
+finding and its exact corpus scope in `historicalArticleOverlap`.
 
 **Coverage is incomplete.** Known overlap is rejected as `LEDGER_OVERLAP`.
 An otherwise disjoint freshness check fails as `LEDGER_INCOMPLETE` until historical
@@ -134,3 +136,13 @@ target/context exclusion; all dictionary target analyses are retained separately
 The training family addendum is supervised; calibration/holdout addenda are
 historical because those sets have already been used. No scoring is performed.
 The importer requires PyArrow plus pinned morphology; its unit tests do not.
+
+`import_spelling_v6.py --base LEDGER --output build/NEW_DIRECTORY` recovers the
+older public spelling-v6 corpus from its pinned manifest/source and archived
+original selector. It retains all matching source articles/occurrences, projected
+windows, contexts and dictionary-supported families. The separate v6 prepare
+builder is also archived at its original hash. Existing entries remain unchanged;
+the historical spelling overlap summary is expanded to v6-v12. The 110 unknown
+v6 lexical targets remain pending. Use `audit_family_coverage.py --ledger LEDGER
+--output NEW_RECEIPT` to distinguish lexical dictionary gaps from exact protected
+control construction; this audit never guesses lemmas or changes the ledger.

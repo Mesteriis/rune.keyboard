@@ -27,3 +27,9 @@ removes the later v3 article/extra-corpus exclusions and verifies both the v3
 input hash and v1 output hash from the original manifest. See
 `restore_frozen_followup.py`. These sources still depend on other historical
 helpers/runtime/files; preservation does not claim complete corpus reproduction.
+
+The original spelling-v6 preparation helper is preserved at
+`956436a1fbd708706bddb3bad44c1fdf7bff838ef95a8c06911008148590fe01`.
+Its bytes match the original v6 manifest. The v6 history importer verifies this
+archive but calls only the previously archived qualification selector helpers;
+it does not execute the relocated prepare helper or claim a full corpus rebuild.
