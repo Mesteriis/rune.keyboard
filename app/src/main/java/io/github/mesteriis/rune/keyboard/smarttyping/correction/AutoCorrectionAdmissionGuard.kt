@@ -9,6 +9,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon
 
 enum class AutomaticAdmissionRefusal {
     MORPHOLOGY_UNAVAILABLE, ORIGINAL_VALID, WINNER_AMBIGUOUS, RIVAL_OTHER_LEMMA, NOT_QUALIFIED,
+    TARGET_UNKNOWN, RIVAL_UNKNOWN, RESOURCE_UNAVAILABLE,
 }
 data class AutomaticAdmissionDecision(
     val allowed: Boolean,
@@ -46,7 +47,7 @@ class AutoCorrectionAdmissionGuard(private val lexicon: MorphologyLexicon) {
             return AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.MORPHOLOGY_UNAVAILABLE)
         if (original.present) return AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.ORIGINAL_VALID)
         return if (target.present) AutomaticAdmissionDecision(true)
-        else AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.WINNER_AMBIGUOUS)
+        else AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.TARGET_UNKNOWN)
     }
     fun allows(generation: CandidateGeneration, candidate: GeneratedCandidate): Boolean =
         evaluate(generation, candidate).allowed
@@ -116,7 +117,9 @@ class AutoCorrectionAdmissionGuard(private val lexicon: MorphologyLexicon) {
         val lemma = winner.lemmaId
         if (!winner.available)
             return AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.MORPHOLOGY_UNAVAILABLE)
-        if (!winner.present || lemma == null)
+        if (!winner.present)
+            return AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.TARGET_UNKNOWN)
+        if (lemma == null)
             return AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.WINNER_AMBIGUOUS)
         val cost = candidate.editFeatures.editCost
         if (!cost.isFinite() || cost < 0)
@@ -133,7 +136,7 @@ class AutoCorrectionAdmissionGuard(private val lexicon: MorphologyLexicon) {
             if (!evidence.available)
                 return AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.MORPHOLOGY_UNAVAILABLE)
             if (!evidence.present || evidence.lemmaId == null)
-                return AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.WINNER_AMBIGUOUS)
+                return AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.RIVAL_UNKNOWN)
             if (evidence.lemmaId != lemma && (candidate.text !in modelCompared || other.text !in modelCompared))
                 return AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.RIVAL_OTHER_LEMMA)
         }
@@ -170,7 +173,7 @@ object PublicOriginalProtection {
             ?: return AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
         val source = rareWords.lookup(TokenUnicode.folded(original))
         return when {
-            !source.available -> AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.MORPHOLOGY_UNAVAILABLE)
+            !source.available -> AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE)
             source.present -> AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.ORIGINAL_VALID)
             else -> AutomaticAdmissionDecision(true)
         }

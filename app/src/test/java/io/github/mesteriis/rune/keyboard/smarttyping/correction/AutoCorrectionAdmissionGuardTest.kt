@@ -172,9 +172,10 @@ class AutoCorrectionAdmissionGuardTest {
         }
         assertEquals(AutomaticAdmissionRefusal.ORIGINAL_VALID,
             PublicOriginalProtection.evaluate(input, winner, present).refusal)
-        assertEquals(AutomaticAdmissionRefusal.MORPHOLOGY_UNAVAILABLE,
-            PublicOriginalProtection.evaluate(input, winner,
-                io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon.UNAVAILABLE).refusal)
+        val unavailable = PublicOriginalProtection.evaluate(input, winner,
+            io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon.UNAVAILABLE)
+        assertFalse(unavailable.allowed)
+        assertEquals(AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE, unavailable.refusal)
         assertTrue(PublicOriginalProtection.evaluate(input, winner, absent).allowed)
         // Passing this veto never replaces the existing morphology/qualification policy.
         assertFalse(AutoCorrectionAdmissionGuard(MorphologyLexicon.UNAVAILABLE).evaluate(input, winner).allowed)
@@ -214,22 +215,78 @@ class AutoCorrectionAdmissionGuardTest {
         assertEquals(AutomaticAdmissionRefusal.NOT_QUALIFIED, rejected.refusal)
     }
 
-    @Test fun `explained admission is decision equivalent and reports only observed evidence`() {
+    @Test fun `explained admission reports observed evidence for explicit allowed outcomes`() {
         val winner = candidate("нужен")
         val rival = candidate("нужно", 1.25)
         val input = generation("нужнн", listOf(winner, rival))
         val unavailable = AutoCorrectionAdmissionGuard(MorphologyLexicon.UNAVAILABLE)
-        assertEquals(unavailable.allows(input, winner), unavailable.evaluate(input, winner).allowed)
+        assertFalse(unavailable.evaluate(input, winner).allowed)
         assertEquals(AutomaticAdmissionRefusal.MORPHOLOGY_UNAVAILABLE,
             unavailable.evaluate(input, winner).refusal)
 
         val competing = guard("нужен" to 1, "нужно" to 2)
-        assertEquals(competing.allows(input, winner), competing.evaluate(input, winner).allowed)
+        assertFalse(competing.evaluate(input, winner).allowed)
         assertEquals(AutomaticAdmissionRefusal.RIVAL_OTHER_LEMMA,
             competing.evaluate(input, winner).refusal)
 
         val admitted = guard("нужен" to 1, "нужно" to 1).evaluate(input, winner)
         assertTrue(admitted.allowed)
         assertNull(admitted.refusal)
+    }
+
+    @Test fun missingTargetAndMissingRivalAnalysisHaveDifferentRefusals() {
+        val winner = candidate("слово")
+        val input = generation("словоо", listOf(winner))
+        val missing = guard().evaluate(input, winner)
+        assertFalse(missing.allowed)
+        assertEquals(AutomaticAdmissionRefusal.TARGET_UNKNOWN, missing.refusal)
+        val ambiguous = guard("слово" to null).evaluate(input, winner)
+        assertFalse(ambiguous.allowed)
+        assertEquals(AutomaticAdmissionRefusal.WINNER_AMBIGUOUS, ambiguous.refusal)
+        val rivalInput = generation("словоо", listOf(winner, candidate("слова")))
+        for (admission in listOf(guard("слово" to 1), guard("слово" to 1, "слова" to null))) {
+            val result = admission.evaluate(rivalInput, winner)
+            assertFalse(result.allowed)
+            assertEquals(AutomaticAdmissionRefusal.RIVAL_UNKNOWN, result.refusal)
+        }
+    }
+
+    @Test fun jointAmbiguousWinnerExceptionMatchesIndependentEvidenceTable() {
+        val absent = MorphologyMembership.ABSENT
+        val unavailable = MorphologyMembership.UNAVAILABLE
+        val ambiguous = MorphologyMembership(true, true)
+        val knownWinner = MorphologyMembership(true, true, 11)
+        val knownRival = MorphologyMembership(true, true, 22)
+        var cases = 0
+        for (original in listOf(absent, unavailable, ambiguous)) {
+            for (target in listOf(absent, unavailable, ambiguous, knownWinner)) {
+                for (rival in listOf(null, absent, unavailable, ambiguous, knownRival)) {
+                    for (qualified in listOf(false, true)) {
+                        val winner = candidate("стола")
+                        val candidates = if (rival == null) listOf(winner) else listOf(winner, candidate("стила"))
+                        val input = generation("стлла", candidates).copy(jointEvaluated = true,
+                            jointSearch = LocalSearchEvidence(CandidateCompletion.COMPLETE, candidates, 10, candidates.size))
+                        val admission = AutoCorrectionAdmissionGuard(MorphologyLexicon { _, word -> when (word) {
+                            "стлла" -> original
+                            "стола" -> target
+                            "стила" -> rival ?: absent
+                            else -> absent
+                        } })
+                        // An absent original, known winner, and resolved compared rivals pass;
+                        // only the separately qualified singleton may lack a winner lemma.
+                        val expected = original == absent && when (target) {
+                            knownWinner -> rival == null || rival == knownRival
+                            ambiguous -> qualified && rival == null
+                            else -> false
+                        }
+                        assertEquals("original=$original target=$target rival=$rival qualified=$qualified",
+                            expected, admission.evaluateJoint(input, winner, qualified).allowed)
+                        cases++
+                    }
+                }
+            }
+        }
+        assertEquals(120, cases)
+        assertEquals(1, AutoCorrectionAdmissionGuard.VERSION)
     }
 }

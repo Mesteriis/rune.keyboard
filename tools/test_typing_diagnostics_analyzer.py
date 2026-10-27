@@ -7,7 +7,8 @@ class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
     def test_joint_refusals_survive_as_metadata_without_editor_text(self):
         from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
         flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)
-        reasons = ['RARE_ORIGINAL', 'RESOURCE_UNAVAILABLE', 'SCORE_TOO_LOW',
+        reasons = ['TARGET_UNKNOWN', 'RIVAL_UNKNOWN', 'LOCAL_SEARCH_EMPTY',
+                   'RARE_ORIGINAL', 'RESOURCE_UNAVAILABLE', 'SCORE_TOO_LOW',
                    'ORIGINAL_PREFERRED', 'REPLACEMENT_VETOED', 'INSUFFICIENT_MARGIN',
                    'UNCHANGED', 'PREVIOUS_NOT_UNAMBIGUOUS_FINITE', 'PROPOSAL_NOT_UNAMBIGUOUS_INFINITIVE',
                    'LEMMA_UNAVAILABLE', 'DIFFERENT_LEMMA', 'NO_INFINITIVE_CUE',

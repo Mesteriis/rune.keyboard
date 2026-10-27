@@ -302,7 +302,8 @@ class TypingSessionController internal constructor(
         LocalCorrectionRefusal.TOO_SHORT -> DiagnosticReason.TOO_SHORT
         LocalCorrectionRefusal.WINNER_AMBIGUOUS -> DiagnosticReason.WINNER_AMBIGUOUS
         LocalCorrectionRefusal.INSUFFICIENT_MARGIN -> DiagnosticReason.INSUFFICIENT_MARGIN
-        LocalCorrectionRefusal.NO_CANDIDATES, LocalCorrectionRefusal.NOT_QUALIFIED, null ->
+        LocalCorrectionRefusal.NO_CANDIDATES -> DiagnosticReason.LOCAL_SEARCH_EMPTY
+        LocalCorrectionRefusal.NOT_QUALIFIED, null ->
             DiagnosticReason.NOT_QUALIFIED
     }
 
@@ -311,6 +312,9 @@ class TypingSessionController internal constructor(
         AutomaticAdmissionRefusal.ORIGINAL_VALID -> DiagnosticReason.ORIGINAL_VALID
         AutomaticAdmissionRefusal.WINNER_AMBIGUOUS -> DiagnosticReason.WINNER_AMBIGUOUS
         AutomaticAdmissionRefusal.RIVAL_OTHER_LEMMA -> DiagnosticReason.RIVAL_OTHER_LEMMA
+        AutomaticAdmissionRefusal.TARGET_UNKNOWN -> DiagnosticReason.TARGET_UNKNOWN
+        AutomaticAdmissionRefusal.RIVAL_UNKNOWN -> DiagnosticReason.RIVAL_UNKNOWN
+        AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE -> DiagnosticReason.RESOURCE_UNAVAILABLE
         AutomaticAdmissionRefusal.NOT_QUALIFIED, null -> DiagnosticReason.NOT_QUALIFIED
     }
     private fun rankingRejected(reason: DiagnosticReason, reply: ScoringReply, count: Int = 0,
