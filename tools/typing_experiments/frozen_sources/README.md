@@ -51,3 +51,11 @@ hashes in the frozen natural-pool plan. They are evidence only: do not execute
 their top levels from this directory. They refer to old model/input paths and
 write original plans. The history importer verifies output source captures
 without invoking their models or interpreting their scores.
+
+Four original natural/side preparation scripts are archived for the frozen
+natural, side, fresh-side-v4 and fresh-side-v5 corpora. Their exact hashes and
+original paths are pinned by `audit_frozen_context_descendants.py` and the archive
+catalogue. Do not execute their top levels from this directory: they reference
+historical models/inputs and write old output locations. The audit verifies
+public captures, inherited natural-pool fields, variants and v5 filtering without
+running those operations or claiming selection/model parity.

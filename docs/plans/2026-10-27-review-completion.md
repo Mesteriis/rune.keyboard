@@ -8,9 +8,11 @@ covers the whole item; passing a narrower check closes only that check.
 The incoming-review triage and its diagnostics-fixture repair are recorded in
 `docs/acceptance/2026-10-27-review-triage.md`. Subsequent work has concentrated on
 Q6. The latest Q6 receipt is
-`docs/acceptance/2026-10-27-auxiliary-authored-history-evidence.json`: 189 local
-source-only tests pass, the lexical ledger has 113 entries, and global coverage
-is explicitly incomplete. Q9's source/JVM acceptance is verified in
+`docs/acceptance/2026-10-27-frozen-context-descendants-evidence.json`: 202 local
+source-only tests pass, the lexical ledger has 121 entries, and global coverage
+is explicitly incomplete. Four natural/side descendants now have verified public
+captures and variant/filter lineage, adding 640 historical family exclusions.
+Q9's source/JVM acceptance is verified in
 `docs/acceptance/2026-10-27-q9-frozen-asset-identity.md` (nine new identity/mutation
 tests; full app suite: 1,153 tests, no failures/errors/skips). U12's model and
 controller acceptance is verified in
@@ -62,8 +64,12 @@ Other cards remain open until their complete evidence is established.
 
 - Finish the remaining historical qualification/training provenance inventory.
   Instrumental, left-sequence, oblique, combined v11/v12 and residual group
-  reuse through v14 are now source/data-audited in the latest receipt; model
-  execution and complete model-driver provenance are not established by it.
+  reuse through v14 are source/data-audited in the auxiliary-authored-history
+  receipt; model execution and complete model-driver provenance are not
+  established by it.
+  Frozen natural/side descendants are now source-capture and variant/filter
+  audited; all 19 currently present right-context corpus manifests are bound.
+  This scoped inventory does not establish selection or model parity.
 - Keep unsupported lexical surfaces quarantined until canonical-family evidence
   exists. Prediction-only analyses do not establish canonical lemmas.
 - Recover or explicitly resolve the historical role-feature source at hash

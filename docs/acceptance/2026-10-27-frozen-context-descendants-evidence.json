@@ -1,0 +1,342 @@
+{
+  "artifactBindings": {
+    "build/frozen-descendants-20261027/baseline-ledger.json": "b560acddaf2655936b3052507dd29b27517e5691582ed5f1f501251c39b34f5a",
+    "build/frozen-descendants-20261027/final-audit.log": "02b999d5bb79f1a87b9fc7b12c4640e3cac2dfc451efd0cecab8d3b52496984a",
+    "build/frozen-descendants-20261027/final-recovery/receipt.json": "2b09999248b16c29bbd97b33cb7dd605131e822f53e6bce2472b8e517d8d4c52",
+    "build/frozen-descendants-20261027/initial-source-only-checks.json": "307ba96887440f6acdd8813fd422c02b51b68805a4e5a404e74eef9b1af2d467",
+    "build/frozen-descendants-20261027/pre-import-regression.log": "331f7e71b9c730fa9d0f84ac811b2985704f4ec180c8274dea5018240b8ae900",
+    "build/frozen-descendants-20261027/run-source-only.py": "0eabf62492decb2a83723d528540dc1e1c39f19284761677fe41f56bd3f4fc2b",
+    "build/frozen-descendants-20261027/source-only-checks.json": "09d4687bf7b7d7d352d085af70d57a71a76c57430929276a7ca6ddd39a4be9ac"
+  },
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "holdout_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"freshnessCoverageComplete\": false, \"entries\": 121}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "control_ledger.py",
+        "--validate-only"
+      ],
+      "exitCode": 0,
+      "output": "{\"schemaValid\": true, \"coverageComplete\": false, \"entries\": 18}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_*.py"
+      ],
+      "exitCode": 0,
+      "output": "..........................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 202 tests in 14.630s\n\nOK\n"
+    }
+  ],
+  "earlierChecks": [
+    {
+      "check": "new durable-entry regression before ledger import",
+      "exitCode": 1,
+      "failures": 1,
+      "tests": 23
+    },
+    {
+      "check": "initial isolated suite",
+      "exitCode": 1,
+      "failures": 1,
+      "reason": "New CLI test used new-sentences instead of the required new-families profile; test corrected without changing policy.",
+      "tests": 192
+    }
+  ],
+  "entries": 121,
+  "execution": {
+    "command": [
+      "build/typing-ranker-v2-venv/bin/python",
+      "tools/typing_experiments/audit_frozen_context_descendants.py",
+      "--base",
+      "build/frozen-descendants-20261027/baseline-ledger.json",
+      "--output",
+      "build/frozen-descendants-20261027/final-recovery"
+    ],
+    "exitCode": 0
+  },
+  "globalCoverageUnchanged": true,
+  "historicalFamiliesProfile": "new-families; new-sentences keeps existing supervised/prepared-only family exclusions",
+  "ledgerSha256": "96308acab5936001fc29f33a571041e0ae406e597f957bf5fd31b3ae8385e37b",
+  "manifestInventory": {
+    "allCurrentBytesBound": true,
+    "count": 19,
+    "fullHistoryComplete": false,
+    "pattern": "build/right-context*/corpus/manifest.json"
+  },
+  "newArchives": {
+    "7d2b6254024680f4bee6fe91848ac7221242ef50ccfcd755481e5a18c02be3a0": {
+      "file": "prepare_7d2b6254024680f4.py",
+      "originalPath": "build/right-context-natural-frozen-20261027/freeze.py"
+    },
+    "838fb68a8c4b90efbe0a68433afb6395b4b91fd311b8ea3fd4bc92ba0b369615": {
+      "file": "prepare_838fb68a8c4b90ef.py",
+      "originalPath": "build/right-context-fresh-side-v5-20261027/prepare.py"
+    },
+    "a108a87b00fca32165eedc11fcfbec1fa95da9665a21a156b6f440e83abb55e4": {
+      "file": "prepare_a108a87b00fca321.py",
+      "originalPath": "build/right-context-side-20261027/prepare.py"
+    },
+    "e13b6201fcfa97dccdff17f22cf3891d44f850c79719f9ba79e85df02f7e354c": {
+      "file": "prepare_e13b6201fcfa97dc.py",
+      "originalPath": "build/right-context-fresh-side-v4-20261027/prepare.py"
+    }
+  },
+  "newEntries": 8,
+  "newKeys": {
+    "article": 4779,
+    "context": 15000,
+    "family": 640,
+    "sentence": 5008
+  },
+  "previousEntriesUnchanged": true,
+  "priorArchiveCataloguePreserved": true,
+  "priorEntries": 113,
+  "purpose": "FROZEN_CONTEXT_DESCENDANT_HISTORY_NOT_QUALIFICATION",
+  "receipt": {
+    "allPublicSourceCapturesVerified": true,
+    "bindings": {
+      "build/joint-correction-20261025/0020.parquet": "fc1e2edc58fa27085d36c32c38922d7904077d9cdac05719efbcefa3faeea240",
+      "build/right-context-fresh-side-v4-20261027/corpus/calibration.jsonl": "1a556778163d73b3bacac576bd50abe0d51a5c9173206bc97107601736f74962",
+      "build/right-context-fresh-side-v4-20261027/corpus/calibration.tsv": "ac78020a9dc235e1c251fb65a3ced2bbb946b5f36837464471e22140c3f36366",
+      "build/right-context-fresh-side-v4-20261027/corpus/holdout.jsonl": "f4c584069ce54bfe63f1cc11b1680fb43d167a6c378acfdcb47a1733307dfef6",
+      "build/right-context-fresh-side-v4-20261027/corpus/holdout.tsv": "c570d3564aa0405bfc07ede63a3ec8fdf129a2c04b3178b61fd6dbe3d4d93fb0",
+      "build/right-context-fresh-side-v4-20261027/corpus/manifest.json": "62eb452779ca787bab3f5df2957fffefccf19f3ecd534395d5d0efebfcdfca47",
+      "build/right-context-fresh-side-v4-20261027/plan.json": "f47f1bd191b64c0cc62d8afa6056b0fff7e06e6ca15001cfb44fad2fa67d56ef",
+      "build/right-context-fresh-side-v5-20261027/corpus/calibration.jsonl": "1a556778163d73b3bacac576bd50abe0d51a5c9173206bc97107601736f74962",
+      "build/right-context-fresh-side-v5-20261027/corpus/calibration.tsv": "ac78020a9dc235e1c251fb65a3ced2bbb946b5f36837464471e22140c3f36366",
+      "build/right-context-fresh-side-v5-20261027/corpus/holdout.jsonl": "451c595a48d179e0d73e29c444424d7f4bd0b2aaf643d6e3d8ec0a2882e64439",
+      "build/right-context-fresh-side-v5-20261027/corpus/holdout.tsv": "de85748d8a0d691544cab9c1b3cae12b409800e0b27581cd16cd05545c0a26f1",
+      "build/right-context-fresh-side-v5-20261027/corpus/manifest.json": "e99d69c161e645479c557ef169facb55740572953258ae39325779ee2a6b2504",
+      "build/right-context-fresh-side-v5-20261027/plan.json": "1d27c2c87c7da4dfa30b231e3384ecb191da9231c34b32775b304e693093701f",
+      "build/right-context-natural-frozen-20261027/corpus/calibration.jsonl": "ed88066300f08322c3c85d7a0eb0f93d4e6887578b9edc8aee8620727de0927c",
+      "build/right-context-natural-frozen-20261027/corpus/calibration.tsv": "3728513d2bdfb033474cf9b39cc662bbe47d13d5cbf66fff7b5f720e8f554d46",
+      "build/right-context-natural-frozen-20261027/corpus/holdout.jsonl": "1d2f913750a5f2cf7c2d0fd2c306194fd12a60bd5be74ae63e1f100bb6822142",
+      "build/right-context-natural-frozen-20261027/corpus/holdout.tsv": "e28323b75dc57e6daf8b437686dd3fe764e448220728aede87f9d9f62a5cb997",
+      "build/right-context-natural-frozen-20261027/corpus/manifest.json": "7ed0a1f09bf39a73659c66ba21243de92ea39bdf7bd49ac75f9e2aed759662aa",
+      "build/right-context-natural-frozen-20261027/plan.json": "a744b5afbb92fc655037fa6ace8890d4f40a10d7f37b02527c2b00c2c1141e89",
+      "build/right-context-side-20261027/corpus/calibration.jsonl": "3c1ef49d7da414a7cf1cbfbf40cad58d54848b2b3be48ccba35bb701efa2102f",
+      "build/right-context-side-20261027/corpus/calibration.tsv": "1d3cc7492e1d93affc57c20225c57c2c78097f24a9329bba3e82f8fbb08de2d0",
+      "build/right-context-side-20261027/corpus/holdout.jsonl": "df5f7ddc46510ec088708388b2764e3c4e5ccee72eedf0ff9f71cc97652bfb92",
+      "build/right-context-side-20261027/corpus/holdout.tsv": "753a0670e75d14db7b18e4de8cbdce9050860f0ea7742524736903fbabfc5b31",
+      "build/right-context-side-20261027/corpus/manifest.json": "67d6d51f20af739c27ee8526796ae3f7c6331a4ed990861a14b587a39a8685fd",
+      "build/right-context-side-20261027/plan.json": "263e382b58e82a9a317d23d8ea30e4fdb7c0debfe1933eb1c41ff337e47369a9",
+      "build/right-context-training-v5-20261027/corpus/manifest.json": "ab7a8da1297e05fe6b6fd4d6d02a0a628c567e012e7daef752ff25b8e307c702",
+      "build/right-context-wiki0012-20261027/contexts.unqualified.jsonl": "eba87a3e13a7c9830d1ab2da7807a5a9d33ce0c234f301c2246c2485a14b65b5",
+      "build/right-context-wiki0013-20261027/contexts.unqualified.jsonl": "5fa172acbda5f18401cac5a19e95cb2419eb533a585a8038918edc683006a11a",
+      "build/right-context-wiki0014-20261027/contexts.unqualified.jsonl": "f329fc0e10d0f554da28b9179c72c2354cf7efb5efe1a104137e01cf780ff20b",
+      "build/right-context-wiki0015-20261027/contexts.unqualified.jsonl": "dd7865867feeeabfcc964cec969dc8db173b99a741c29194dbddced3ebb0b1ca",
+      "build/right-context-wiki0016-20261027/contexts.unqualified.jsonl": "f7437b600368003fccb6ac5b000375a85051df4b55ed18d683a2263d1ffa7d61",
+      "build/right-context-wiki0017-20261027/contexts.unqualified.jsonl": "e99544b5ebf52afc25d90909f1f06fdd9028a123bb586f395ee2edcb1e479295",
+      "build/right-context-wikipedia-20261027/contexts.unqualified.jsonl": "8bd9174fa380086274373855190ebf217da23248075b20a35bf39c8a715597a7",
+      "build/typing-ranker-v2/ru-0012.parquet": "21e33d8a7a0d068e573db688f5816a22fd690bf699dee958373f9b9e957921ad",
+      "build/typing-ranker-v2/ru-0013.parquet": "475666c0d80153ab9a76adca42db8afd18fc16c87804e3de0532ffc1309b2d0c",
+      "build/typing-ranker-v2/ru-0014.parquet": "d2ad352beecb92765110e57e8ee9409f4ffe03ff9e4b6ec0640840dec748db18",
+      "build/typing-ranker-v2/ru-0015.parquet": "dc248873a3cc80b857f11a0320cfaa889da803eabf09351f1ba8abbf9348eda0",
+      "build/typing-ranker-v2/ru-0016.parquet": "0e2d2100e924ebedb057a37e789fec861fe2b78787c912c266e36eadd8d2e0a7",
+      "build/typing-ranker-v2/ru-0017.parquet": "1a5c96dfda452e7725229760347e781b46f88ccd5df4196a5c1a9d46b51b1a65",
+      "tools/morphology/ranker.py": "66a4004867f68b04942cf08975641523d0bd40f82d57bed82b6b14eb93035c3d",
+      "tools/typing_experiments/audit_frozen_context_descendants.py": "d44af60dd2a1c56277f270ea9975ee6ddbdac22ddbe0c46c021a038bb08acb31",
+      "tools/typing_experiments/frozen_sources/prepare_7d2b6254024680f4.py": "7d2b6254024680f4bee6fe91848ac7221242ef50ccfcd755481e5a18c02be3a0",
+      "tools/typing_experiments/frozen_sources/prepare_838fb68a8c4b90ef.py": "838fb68a8c4b90efbe0a68433afb6395b4b91fd311b8ea3fd4bc92ba0b369615",
+      "tools/typing_experiments/frozen_sources/prepare_a108a87b00fca321.py": "a108a87b00fca32165eedc11fcfbec1fa95da9665a21a156b6f440e83abb55e4",
+      "tools/typing_experiments/frozen_sources/prepare_e13b6201fcfa97dc.py": "e13b6201fcfa97dccdff17f22cf3891d44f850c79719f9ba79e85df02f7e354c",
+      "tools/typing_experiments/import_natural_context_history.py": "f31cae5b34b866668e7ec32cca07dab6a813fffadef145ce9815a0284b20f68b",
+      "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+      "tools/typing_experiments/right_context_training_exclusion.py": "188bb9508f6733a58ea461bb7769af498334502980331ebce36cbb9e8fe58247"
+    },
+    "counts": {
+      "fresh-side-v4-calibration": {
+        "contexts": 1240,
+        "dictionaryFamilies": 665,
+        "rows": 5800,
+        "unresolved": []
+      },
+      "fresh-side-v4-holdout": {
+        "contexts": 1236,
+        "dictionaryFamilies": 694,
+        "rows": 5780,
+        "unresolved": []
+      },
+      "fresh-side-v5-calibration": {
+        "contexts": 1240,
+        "dictionaryFamilies": 665,
+        "rows": 5800,
+        "unresolved": []
+      },
+      "fresh-side-v5-holdout": {
+        "contexts": 1235,
+        "dictionaryFamilies": 693,
+        "rows": 5776,
+        "unresolved": []
+      },
+      "natural-frozen-calibration": {
+        "contexts": 400,
+        "dictionaryFamilies": 129,
+        "rows": 1600,
+        "unresolved": []
+      },
+      "natural-frozen-holdout": {
+        "contexts": 400,
+        "dictionaryFamilies": 157,
+        "rows": 1600,
+        "unresolved": []
+      },
+      "side-calibration": {
+        "contexts": 1290,
+        "dictionaryFamilies": 639,
+        "rows": 6050,
+        "unresolved": []
+      },
+      "side-holdout": {
+        "contexts": 1242,
+        "dictionaryFamilies": 590,
+        "rows": 5810,
+        "unresolved": []
+      }
+    },
+    "dictionary": {
+      "dictionaryOnly": true,
+      "packages": {
+        "dawg2-python": {
+          "files": {
+            "dawg2_python-0.9.0.dist-info/INSTALLER": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508",
+            "dawg2_python-0.9.0.dist-info/LICENSE": "2e5e7d32243cec7f102512b909db245c1c83b56823ec2b5fa1020cbe4fc7c3f0",
+            "dawg2_python-0.9.0.dist-info/METADATA": "371d6b3c0f2dd0c875203524eb27694ec1d1863ebb4d76776d567599df6d6916",
+            "dawg2_python-0.9.0.dist-info/RECORD": "81685f3206d7a1b51eacb4f9b8da6353635a0d8a914a01ef74489bb8f20345ca",
+            "dawg2_python-0.9.0.dist-info/REQUESTED": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "dawg2_python-0.9.0.dist-info/WHEEL": "5db7990de4d629cd70ec2488cab7b968c0d4ffe3e8851c1341c7989e2b086186",
+            "dawg_python/__init__.py": "d85763e4d34f8abe3f72c676f1efb1229b14ed2eb8727ccd0ead991f23a3a613",
+            "dawg_python/dawgs.py": "4744fbadc8fb2d582094975174998197d4d9373b3bdd6bd862fbbd05fe537d43",
+            "dawg_python/units.py": "4915ef70373cc1df87aec869a0488fc8f1b37c282f199faa9dfae511e942c755",
+            "dawg_python/wrapper.py": "431a0d52db3112dae6e7fb728f6568e0727cd5dc8c5445bac5d2322efe085d60"
+          },
+          "version": "0.9.0"
+        },
+        "pymorphy3": {
+          "files": {
+            "pymorphy3-2.0.6.dist-info/INSTALLER": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508",
+            "pymorphy3-2.0.6.dist-info/METADATA": "cc267706d693da98ae515135f310e668335869e59d515cd139abe75eebe15651",
+            "pymorphy3-2.0.6.dist-info/RECORD": "91cf616cc9d6d5b9399bdca916de9b2bbeeb2bccb8eb47b3ca6b4b3174c4d909",
+            "pymorphy3-2.0.6.dist-info/REQUESTED": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "pymorphy3-2.0.6.dist-info/WHEEL": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b",
+            "pymorphy3-2.0.6.dist-info/entry_points.txt": "d949fedc8f7a7635885e2f259d4cafadc0d1333733bf412c794eb1ab58ed0699",
+            "pymorphy3-2.0.6.dist-info/licenses/AUTHORS.rst": "f7a8a2a9dddde7f12dff43afc914ac2feb3ad3d9de2842d7505ed2f60e6e2131",
+            "pymorphy3-2.0.6.dist-info/licenses/LICENSE.txt": "a5e6ddb3af783a02eacc848cbe309cc0940b4859ac653e9b1a2e21a4fea22552",
+            "pymorphy3-2.0.6.dist-info/top_level.txt": "7fe89543e7087fc5a101d670e74a73e94a2deba5a2f5f917693980001744e86b",
+            "pymorphy3/__init__.py": "7b9b7979c8a0b4070f0efe573dfde25b2aa12a71b3b7ed3c2b184acfb1c17c88",
+            "pymorphy3/analyzer.py": "9e2afb24caf5d59ee97ffa006ddbbf18c6792c45d9ca9294aacc14dfc7acd3c3",
+            "pymorphy3/cli.py": "859db3c0760996ae74187fc6fb1dc7dcc40fb3966e7d329d50c44038e9495c34",
+            "pymorphy3/dawg.py": "6c8b8b9d5cb88bb5eacd7e67bc63bfaa3b6cf0051791f606d153ee2ff3915bdd",
+            "pymorphy3/lang/__init__.py": "abe9c76aec383c264b2f0103a24037534795dd878acd5adc7e83056dcfbb124d",
+            "pymorphy3/lang/ru/__init__.py": "034d25a6750a83eab7cbf6fe70dde3285f6eae41931a36f6633fe019cf5608bb",
+            "pymorphy3/lang/ru/config.py": "50bd297aa5d122961f7da54dc85be9bc8aea7f14c6bc75da7aaa573e264072a4",
+            "pymorphy3/lang/uk/__init__.py": "034d25a6750a83eab7cbf6fe70dde3285f6eae41931a36f6633fe019cf5608bb",
+            "pymorphy3/lang/uk/_prefixes.py": "035afd56a5a2e3e0a6b56b128547375355049bdd4714edebc132a560eb514499",
+            "pymorphy3/lang/uk/config.py": "d7eb090fb86c8b0dc0329d39bd11ebbd6cb1e5701803185e5308db94e91735b2",
+            "pymorphy3/opencorpora_dict/__init__.py": "f109e628d2e3b51d4bcab70feeb7548026e99a578bd07b2327565b61847005a4",
+            "pymorphy3/opencorpora_dict/compile.py": "fded937c9ea0795bd7c0472573a3aa7f5864cd51508b69f6946ca079055b26e2",
+            "pymorphy3/opencorpora_dict/parse.py": "89928ec1b3556335d0605a2988d2113363100bc9ab8d31a2addc3179549da54a",
+            "pymorphy3/opencorpora_dict/preprocess.py": "1d656e15f3f7f01ae7ab2ec2ae53a1d6e988387aef249c09943edae1e9de7ff4",
+            "pymorphy3/opencorpora_dict/probability.py": "5cee8ccd06200aeeb03ca2df85299933655cdd6aa79796c49f2340a06d42b48e",
+            "pymorphy3/opencorpora_dict/storage.py": "170175053bcff3e1d8f1c12cdcff39b956268b41f1cc9d224bae0ae87c65d76f",
+            "pymorphy3/opencorpora_dict/wrapper.py": "f7d70cb26c3870a08d0d8034bd9b12c25f0eee7e0720f0cb1b3450ae437acace",
+            "pymorphy3/shapes.py": "56e97c412c0c389abb5bb927a19a69b58388555b4a9caa996dfde236eefa1f40",
+            "pymorphy3/tagset.py": "481a15aee31d8040dd14cf85ada652def573435febccff04e2ea04d879d8cf54",
+            "pymorphy3/tokenizers.py": "40519d78d22a4e92ed148929a8886761b24bc1dd47b5e7141c2179bd9e46710d",
+            "pymorphy3/units/__init__.py": "b90f2178b361ac9373bd83a2bfc48de67c2e10b622ec46197eaf1b3ac4f575d3",
+            "pymorphy3/units/abbreviations.py": "f6628a000f159ea6b68f7d33213496386b614efd5d8415f153968ea4d14cff5b",
+            "pymorphy3/units/base.py": "e7f11370e476cbfbddfa0136427421008896f25eca224001682b0ea4113763b7",
+            "pymorphy3/units/by_analogy.py": "200fc60772fff48b61f42c100c25712f4bd33a1d37700a0a0b213b1990bdfe4c",
+            "pymorphy3/units/by_hyphen.py": "3c5c79a4b79e284f46a7d068e6956a7964712e1ea69d038f3defe0b02de2d82f",
+            "pymorphy3/units/by_lookup.py": "0450d751668fdf6581871ec479264529f13fbd6b2242fa372978f1b1eff6c3df",
+            "pymorphy3/units/by_shape.py": "95b9365df1249c466effcc2cc7469f27854202b314120ab1ed7e97d476fa98f2",
+            "pymorphy3/units/unkn.py": "1a4589a260a59fd6609a1ada82b905d6309fceb62b4fba6c53072ab6166148f2",
+            "pymorphy3/units/utils.py": "55ff8d0def907a207181fc4d44d5277e054653280ac5a247e2d8dc35ba577b7f",
+            "pymorphy3/utils.py": "e764848a471065ad9b3969cf1705897fd09a9c949faa0177f46101a82fbd8b20",
+            "pymorphy3/version.py": "e18c5fb7f30d3adc101b9f266696bc7a83345c11daf153644cf1fdfe2d200da3"
+          },
+          "version": "2.0.6"
+        },
+        "pymorphy3-dicts-ru": {
+          "files": {
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/INSTALLER": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508",
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/METADATA": "07512674d15bbe2d92b97c5f185a73ee31623165c1e4c48eb40c3f51a530e17d",
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/RECORD": "7b2c59ad80c65673065fe962cb50f92bc77c566b3f16bb94a8b14377305aadcc",
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/REQUESTED": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/WHEEL": "cfd8f4c406bf26650a3299b3ef62b464600b48cfe7fb04159866e5797c765478",
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/entry_points.txt": "0414fd734ef74e19844dc8de3793add7b0391b35aef7212850eebfdfd7c69685",
+            "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/top_level.txt": "86cd89be956f6b419c9642b10e801b50040186fb42ebf38074b3a1568c072e67",
+            "pymorphy3_dicts_ru/__init__.py": "a03fca8c0a7e6536b3032ccffbc58441945265a2b6e71aa98f5fac9d70f7bc0b",
+            "pymorphy3_dicts_ru/data/grammemes.json": "0c2dae69cf15c3cdd9b92c7bce2273b2f1ca0f806228a01de0fe3f24145337fb",
+            "pymorphy3_dicts_ru/data/gramtab-opencorpora-ext.json": "07ba6280d93ade73563289edac1a8fff4ce2388a813d0f47d32431cfaae84d90",
+            "pymorphy3_dicts_ru/data/gramtab-opencorpora-int.json": "1a72703ac84c16572deee6a92779a322b59763cbc336021433d52c33160fa05b",
+            "pymorphy3_dicts_ru/data/meta.json": "0c16fa06946dbda7db6df209128004f5edb36f9d8bdf48e5efff6045ec21a2fd",
+            "pymorphy3_dicts_ru/data/p_t_given_w.intdawg": "000a4d34ff42c44c65aca33ebcae689c77455a9a244145881b28fd8b8b7ea21e",
+            "pymorphy3_dicts_ru/data/paradigms.array": "dfc465558f1a2760bbde6fa89f0447a5c93896da429efe658fe2f0638954758b",
+            "pymorphy3_dicts_ru/data/prediction-suffixes-0.dawg": "85f38ab5a14566b7b22b8bfb5a63118992013f45757bf60ef1e5e937a92f1aae",
+            "pymorphy3_dicts_ru/data/prediction-suffixes-1.dawg": "31ddaef03712c6168488241be17ce59afa0f4c465e1ba7bf3a5bf095f2053b5f",
+            "pymorphy3_dicts_ru/data/prediction-suffixes-2.dawg": "4e6d6e687031b89e5e7035647570f69d28528e7df123210cc994b8aea36c85fd",
+            "pymorphy3_dicts_ru/data/suffixes.json": "c827ccc32b85e42c3edab8ac235bf91fdbc392e94455ad139da06fb1babcdb74",
+            "pymorphy3_dicts_ru/data/words.dawg": "ae4381a9d6e4e636309ac1a242e480a9470a05723f6673d5fcc3fcf293aa8a9e",
+            "pymorphy3_dicts_ru/version.py": "c2dc3477678f331101613c71e7d497a3f46a25e973cb3d0043ed91dc98114fe1"
+          },
+          "version": "2.4.417150.4580142"
+        }
+      },
+      "schemaVersion": 1
+    },
+    "filtered": {
+      "calibration": {
+        "excludedContextHashes": [],
+        "excludedContexts": 0,
+        "excludedRows": 0,
+        "keptRows": 5800,
+        "originalRows": 5800
+      },
+      "holdout": {
+        "excludedContextHashes": [
+          "231214a2f72cbf167050947b7c6983580bf006ab347a69844d98d6fc38f2defa"
+        ],
+        "excludedContexts": 1,
+        "excludedRows": 4,
+        "keptRows": 5776,
+        "originalRows": 5780
+      }
+    },
+    "globalCoverageComplete": false,
+    "modelCalls": 0,
+    "naturalPoolAncestryVerified": true,
+    "preparationScriptsExecuted": false,
+    "purpose": "HISTORICAL_PUBLIC_VARIANTS_AND_FILTER_LINEAGE_NOT_QUALIFICATION",
+    "selectionAlgorithmsReproduced": false,
+    "sourceBindings": {
+      "tools/morphology/ranker.py": "66a4004867f68b04942cf08975641523d0bd40f82d57bed82b6b14eb93035c3d",
+      "tools/typing_experiments/audit_frozen_context_descendants.py": "d44af60dd2a1c56277f270ea9975ee6ddbdac22ddbe0c46c021a038bb08acb31",
+      "tools/typing_experiments/import_natural_context_history.py": "f31cae5b34b866668e7ec32cca07dab6a813fffadef145ce9815a0284b20f68b",
+      "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363",
+      "tools/typing_experiments/right_context_training_exclusion.py": "188bb9508f6733a58ea461bb7769af498334502980331ebce36cbb9e8fe58247"
+    }
+  },
+  "testSourceBindings": {
+    ".github/workflows/ci.yml": "9df47420c29244ee8b455dd82502ead6d4fa8510df884a899a446129c298df87",
+    "tools/typing_experiments/test_audit_frozen_context_descendants.py": "eb88a2c9264b6365c1f4ab6707c564d3295971868b61f060980028091bc1c2ad",
+    "tools/typing_experiments/test_prepare_public_spelling_v1.py": "8fc84d5a8773526b7f2b0d99e233d1b0b8b21ab5fbfc90a0d368fc3957f45935",
+    "tools/typing_experiments/test_public_holdout_ledger.py": "d8d64d99dc0984b41ff8ee4c78112c61ff004ba64e27117a9144569f9721a237"
+  },
+  "unitTests": 202
+}

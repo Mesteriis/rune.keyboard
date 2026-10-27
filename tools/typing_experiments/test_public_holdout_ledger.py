@@ -143,6 +143,15 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         self.assertEqual(122, disclosure['entries']['public-right-context-available-v6-calibration'])
         self.assertEqual(131, disclosure['entries']['public-right-context-available-v6-holdout'])
 
+    def test_frozen_natural_and_side_descendants_survive_without_original_data(self):
+        entries=[e for e in self.ledger['entries'] if e['id'].startswith('public-frozen-context-descendant-')]
+        self.assertEqual(8,len(entries));self.assertEqual(38216,sum(e['rowCount'] for e in entries))
+        self.assertTrue(all(not e['missingAxes'] for e in entries))
+        with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:family'):
+            assert_disjoint([dict(families=['елена'])],self.ledger,kinds=('family',))
+        with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:article'):
+            assert_disjoint([dict(article='7139678')],self.ledger,kinds=('article',))
+
 
 if __name__ == '__main__':
     unittest.main()

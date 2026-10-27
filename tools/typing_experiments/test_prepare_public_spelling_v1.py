@@ -92,5 +92,12 @@ class SpellingBuilderTest(unittest.TestCase):
             self.assertNotEqual(0,result.returncode);self.assertIn('PREPARATION_PROPOSAL_BINDING',result.stderr)
             self.assertFalse((Path(folder)/'output').exists())
 
+    def test_side_descendant_dictionary_family_blocks_the_real_builder(self):
+        with tempfile.TemporaryDirectory() as folder:
+            result=run_builder(folder,'prepare_public_spelling_v1.py',[candidate(typed='елены',expectedSpelling='елены',families=['елена'])],extra=('--profile','new-families'))
+            self.assertEqual(2,result.returncode,result.stderr);report=json.loads(result.stdout)
+            self.assertEqual('BLOCKED_OVERLAP',report['status']);self.assertEqual(1,report['lexicalOverlaps']['family'])
+            self.assertFalse((Path(folder)/'output').exists())
+
 
 if __name__=='__main__':unittest.main()
