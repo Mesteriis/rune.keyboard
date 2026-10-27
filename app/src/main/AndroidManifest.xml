@@ -32,6 +32,7 @@
         android:label="@string/settings_title" />
 
     <activity android:name=".settings.LearningLabActivity" android:exported="false" android:label="@string/learning_title" />
+    <activity android:name=".settings.ConfirmedWordsActivity" android:exported="false" android:label="@string/confirmed_words_title" />
     <activity android:name=".settings.ProtectedWordsActivity" android:exported="false" android:label="@string/controls_words_title" />
     <activity android:name=".settings.AppProfilesActivity" android:exported="false" android:label="@string/controls_apps_title" />
     <activity android:name=".settings.quality.QualityDashboardActivity" android:exported="false"

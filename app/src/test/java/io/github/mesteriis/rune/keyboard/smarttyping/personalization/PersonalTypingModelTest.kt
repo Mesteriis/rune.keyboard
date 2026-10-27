@@ -65,6 +65,60 @@ class PersonalTypingModelTest {
         assertTrue(model.suggestions("x".repeat(513), en).isEmpty())
     }
 
+    @Test fun `full confirmation table reports refusal and accepts an existing word`() {
+        val model = PersonalTypingModel { _, _ -> false }
+        repeat(PersonalTypingModel.MAX_CONFIRMED) { model.recordConfirmedWord("approved" + alphabetic(it), en) }
+        val before = model.snapshot()
+        assertEquals(false, model.recordConfirmedWord("overflow", en))
+        assertEquals(before, model.snapshot())
+        assertEquals(true, model.recordConfirmedWord(before.confirmed.first().word, en))
+        PersonalTypingCodec.validate(model.snapshot())
+    }
+
+    @Test fun `removing a confirmation releases only its language and preserves pair rejections`() {
+        val model = PersonalTypingModel { _, _ -> false }
+        assertTrue(model.recordConfirmedWord("custom", en))
+        assertTrue(model.recordConfirmedWord("custom", ru))
+        model.recordRejected("custom", "other", en)
+        val before = model.snapshot()
+        assertTrue(model.removeConfirmedWord("CUSTOM", en))
+        assertFalse(model.protectsOriginal("custom", en))
+        assertTrue(model.protectsOriginal("custom", ru))
+        assertTrue(model.rejects("custom", "other", en))
+        assertEquals(before.feedback, model.snapshot().feedback)
+        assertFalse(model.removeConfirmedWord("custom", en))
+        val restored = PersonalTypingModel { _, _ -> false }
+        restored.restore(PersonalTypingCodec.decode(PersonalTypingCodec.encode(model.snapshot())))
+        assertFalse(restored.protectsOriginal("custom", en))
+        assertTrue(restored.rejects("custom", "other", en))
+    }
+
+    @Test fun `removal stops phrase approval from unknown word without deleting phrase evidence`() {
+        val model = PersonalTypingModel { word, _ -> word == "hello" }
+        model.recordConfirmedWord("custom", en)
+        repeat(PersonalTypingModel.MIN_PHRASE_SUPPORT) { model.recordPhrase("hello", "custom", en) }
+        assertEquals(listOf("custom"), model.suggestions("hello ", en).map { it.text })
+        val phrases = model.snapshot().phrases
+        assertTrue(model.removeConfirmedWord("custom", en))
+        assertTrue(model.suggestions("hello ", en).isEmpty())
+        assertEquals(phrases, model.snapshot().phrases)
+        model.restore(PersonalTypingCodec.decode(PersonalTypingCodec.encode(model.snapshot())))
+        assertTrue(model.suggestions("hello ", en).isEmpty())
+    }
+
+    @Test fun `removal frees capacity and rejects invalid unknown removals without mutations`() {
+        val model = PersonalTypingModel { _, _ -> true }
+        repeat(PersonalTypingModel.MAX_CONFIRMED) { model.recordConfirmedWord("approved" + alphabetic(it), en) }
+        assertFalse(model.recordConfirmedWord("overflow", en))
+        assertTrue(model.removeConfirmedWord("approved" + alphabetic(0), en))
+        assertTrue(model.recordConfirmedWord("overflow", en))
+        val snapshot = model.snapshot()
+        assertFalse(model.removeConfirmedWord("bad word", en))
+        assertFalse(model.removeConfirmedWord("unknown", en))
+        assertEquals(snapshot, model.snapshot())
+        PersonalTypingCodec.validate(snapshot)
+    }
+
     @Test fun `memory tables word sizes and counts stay bounded`() {
         val model = PersonalTypingModel { _, _ -> true }
         for (index in 0..1500) {

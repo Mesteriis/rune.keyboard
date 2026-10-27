@@ -1,0 +1,14 @@
+<resources>
+    <string name="confirmed_words_title">Palabras confirmadas</string>
+    <string name="confirmed_words_intro">Se usan con el aprendizaje personal activo e incluyen palabras del diccionario. Toca para quitar la confirmación; se conservan los otros vetos.</string>
+    <string name="confirmed_words_filter">Filtrar por palabra o idioma</string>
+    <string name="confirmed_words_count">Mostradas: %1$d · Total: %2$d/%3$d</string>
+    <string name="confirmed_words_unavailable">No se pudieron leer las palabras confirmadas. Los datos guardados no se han borrado.</string>
+    <string name="confirmed_words_remove_confirm">¿Quitar esta confirmación para %1$s? Se conservan los demás vetos de corrección.</string>
+    <string name="confirmed_words_remove_description">Quitar la confirmación de %1$s (%2$s)</string>
+    <string name="confirmed_words_save_failed">No se pudo guardar la eliminación. La palabra puede volver al reiniciar. ¿Reintentar?</string>
+    <string name="confirmed_words_retry">Reintentar eliminación</string>
+    <string name="confirmed_words_full">La lista de palabras confirmadas está llena (%1$d). Elimina una entrada para añadir otra.</string>
+    <string name="controls_invalid_or_full">Entrada no válida o se ha alcanzado el límite de la lista (%1$d).</string>
+    <string name="controls_io_failure">No se pudo guardar. Inténtalo de nuevo.</string>
+</resources>

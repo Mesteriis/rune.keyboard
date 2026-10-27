@@ -50,8 +50,13 @@ abstract class TypingControlsActivity : ThemedActivity() {
         runOnUiThread {
             if (isFinishing || isDestroyed) return@runOnUiThread
             busy = false; render()
-            Toast.makeText(this, if (result == TypingControlStore.Result.SAVED) R.string.controls_saved else R.string.controls_save_failed,
-                Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, when (result) {
+                TypingControlStore.Result.SAVED -> getString(R.string.controls_saved)
+                TypingControlStore.Result.INVALID_OR_FULL -> getString(R.string.controls_invalid_or_full,
+                    if (isWords) TypingControlModel.MAX_WORDS else TypingControlModel.MAX_APPS)
+                TypingControlStore.Result.NOT_READY -> getString(R.string.controls_loading)
+                TypingControlStore.Result.IO_FAILURE -> getString(R.string.controls_io_failure)
+            }, Toast.LENGTH_SHORT).show()
         }
     }
     protected fun row(title: String, summary: String, onClick: () -> Unit) {

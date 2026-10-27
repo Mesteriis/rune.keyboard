@@ -134,7 +134,14 @@ class RuneInputMethodService : InputMethodService() {
             doubleSpacePeriodEnabled = settings.doubleSpacePeriod,
         )
         personalResources = PersonalTypingResources.get(this)
-        personalization = AndroidTypingPersonalization(personalResources)
+        personalization = AndroidTypingPersonalization(personalResources) {
+            Handler(Looper.getMainLooper()).post {
+                if (!serviceDestroyed) android.widget.Toast.makeText(this,
+                    getString(R.string.confirmed_words_full,
+                        io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingModel.MAX_CONFIRMED),
+                    android.widget.Toast.LENGTH_SHORT).show()
+            }
+        }
         typingSession.setPersonalization(personalization, state.language)
         abbreviationStore = AbbreviationStore.get(this)
         qualityStore = QualityStore.get(this)
@@ -659,7 +666,13 @@ class RuneInputMethodService : InputMethodService() {
             if (result == TypingControlStore.Result.SAVED) keyboardPreferences.notifyTypingControlsChanged()
             Handler(Looper.getMainLooper()).post {
                 if (!serviceDestroyed) android.widget.Toast.makeText(this,
-                    if (result == TypingControlStore.Result.SAVED) R.string.controls_saved else R.string.controls_save_failed,
+                    when (result) {
+                        TypingControlStore.Result.SAVED -> getString(R.string.controls_saved)
+                        TypingControlStore.Result.INVALID_OR_FULL -> getString(R.string.controls_invalid_or_full,
+                            io.github.mesteriis.rune.keyboard.smarttyping.controls.TypingControlModel.MAX_WORDS)
+                        TypingControlStore.Result.NOT_READY -> getString(R.string.controls_loading)
+                        TypingControlStore.Result.IO_FAILURE -> getString(R.string.controls_io_failure)
+                    },
                     android.widget.Toast.LENGTH_SHORT).show()
             }
         }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/confirmed_words_root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:focusableInTouchMode="true" android:padding="@dimen/setup_page_padding">
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/confirmed_words_intro" android:textColor="@color/setup_text_secondary" android:textSize="15sp" />
+    <EditText android:id="@+id/confirmed_words_filter" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:minHeight="48dp" android:layout_marginTop="12dp" android:hint="@string/confirmed_words_filter"
+        android:inputType="text|textNoSuggestions" android:singleLine="true" android:importantForAutofill="noExcludeDescendants" />
+    <TextView android:id="@+id/confirmed_words_status" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="12dp" android:textColor="@color/setup_text_secondary" android:accessibilityLiveRegion="polite" />
+    <ListView android:id="@+id/confirmed_words_entries" android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:divider="@null" android:layout_marginTop="8dp" />
+</LinearLayout>

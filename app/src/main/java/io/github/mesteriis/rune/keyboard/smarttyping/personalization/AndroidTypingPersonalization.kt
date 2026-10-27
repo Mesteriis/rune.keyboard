@@ -57,13 +57,17 @@ class PersonalTypingResources private constructor(context: Context) {
 }
 
 /** Synchronous bounded decisions; stores do their disk work on their own worker threads. */
-class AndroidTypingPersonalization(private val resources: PersonalTypingResources) : TypingPersonalization {
+class AndroidTypingPersonalization(
+    private val resources: PersonalTypingResources,
+    private val onConfirmationFull: () -> Unit = {},
+) : TypingPersonalization {
     var learningEnabled = false
     var touchEnabled = false
     var phrasesEnabled = false
     var protectionEnabled = false
     var learnedRankingEnabled = false
     var compactContextEnabled = false
+    private var confirmationFullReported = false
     private val retypeDistance = WeightedDamerauLevenshtein(EditCostProfile.UNIT)
     private val ready get() = learningEnabled && resources.personal.isReady
 
@@ -345,7 +349,9 @@ class AndroidTypingPersonalization(private val resources: PersonalTypingResource
 
     override fun accepted(original: String, replacement: String, language: KeyboardLanguage) {
         resources.learning.accepted(original, replacement, language)
-        if (ready) resources.personal.update { it.recordAccepted(original, replacement, language) }
+        if (ready) resources.personal.update { model ->
+            confirmWithCapacityNotice(model, replacement, language) { model.recordAccepted(original, replacement, language) }
+        }
         confirmTouch(original, replacement)
     }
 
@@ -357,8 +363,22 @@ class AndroidTypingPersonalization(private val resources: PersonalTypingResource
 
     override fun confirmed(word: String, language: KeyboardLanguage) {
         resources.learning.confirmed(word, language)
-        if (ready) resources.personal.update { it.recordConfirmedWord(word, language) }
+        if (ready) resources.personal.update { model ->
+            confirmWithCapacityNotice(model, word, language) { model.recordConfirmedWord(word, language) }
+        }
         confirmTouch(word, word)
+    }
+
+    /** One notice per full-table episode, never from rendering or ordinary phrase observations. */
+    private fun confirmWithCapacityNotice(model: PersonalTypingModel, word: String, language: KeyboardLanguage,
+        change: () -> Unit) {
+        if (model.snapshot().confirmed.size < PersonalTypingModel.MAX_CONFIRMED) confirmationFullReported = false
+        change()
+        if (!confirmationFullReported && PersonalTypingModel.normalizeWord(word) != null &&
+            !model.protectsOriginal(word, language) && model.snapshot().confirmed.size >= PersonalTypingModel.MAX_CONFIRMED) {
+            confirmationFullReported = true
+            onConfirmationFull()
+        }
     }
 
     private fun confirmTouch(original: String, replacement: String) {
@@ -375,7 +395,9 @@ class AndroidTypingPersonalization(private val resources: PersonalTypingResource
             if (retypedFrom != null && retypedFrom.length in 3..48 && word.length in 3..48 &&
                 resources.lexicon.lookup(language, word).present &&
                 retypeDistance.features(retypedFrom, word, language).editCost in 0.25..2.0) {
-                model.recordManualRetype(retypedFrom, word, language)
+                confirmWithCapacityNotice(model, word, language) {
+                    model.recordManualRetype(retypedFrom, word, language)
+                }
             }
             model.recordPhrase(prefix, word, language)
         }

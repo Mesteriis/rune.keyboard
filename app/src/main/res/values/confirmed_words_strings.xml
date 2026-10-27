@@ -1,0 +1,14 @@
+<resources>
+    <string name="confirmed_words_title">Confirmed words</string>
+    <string name="confirmed_words_intro">Used when personal learning is on, including dictionary words. Tap to remove a confirmation; other correction vetoes stay.</string>
+    <string name="confirmed_words_filter">Filter by word or language</string>
+    <string name="confirmed_words_count">Shown: %1$d · Total: %2$d/%3$d</string>
+    <string name="confirmed_words_unavailable">Could not read confirmed words. Saved data has not been cleared.</string>
+    <string name="confirmed_words_remove_confirm">Remove this confirmation for %1$s? Other correction vetoes remain.</string>
+    <string name="confirmed_words_remove_description">Remove confirmation for %1$s (%2$s)</string>
+    <string name="confirmed_words_save_failed">Could not save removal. The word may return after restarting. Retry?</string>
+    <string name="confirmed_words_retry">Retry removal</string>
+    <string name="confirmed_words_full">Confirmed words list is full (%1$d). Remove an entry to add another.</string>
+    <string name="controls_invalid_or_full">Invalid entry or this list has reached its limit (%1$d).</string>
+    <string name="controls_io_failure">Could not save. Try again.</string>
+</resources>

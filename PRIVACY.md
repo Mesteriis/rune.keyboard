@@ -22,6 +22,6 @@ Release builds exclude the debug typing recorder and its settings UI. Debug buil
 
 ## Delete data
 
-Use the relevant dictionary/learning controls to remove data from those features. The model settings screen can remove an installed model. Clearing Rune's Android app storage or uninstalling the app removes its private local data; exported files remain wherever you saved them.
+Use the relevant dictionary/learning controls to remove data from those features. In Dictionary and learning → Personalization → Confirmed words, you can filter the local confirmation list and remove one word for one language. This removes only that confirmation: correction-pair rejections, phrase evidence and the separate protected-word list are retained. Removing a non-dictionary confirmation can stop it from validating personal phrase suggestions. Use Reset personal data to clear the rest of that personal profile. If saving a removal fails, the screen reports the failure and offers a retry; an unsaved removal may return after restarting. The model settings screen can remove an installed model. Clearing Rune's Android app storage or uninstalling the app removes its private local data; exported files remain wherever you saved them.
 
 For bugs, use [GitHub Issues](https://github.com/Mesteriis/rune.keyboard/issues) with synthetic text and redacted screenshots. Do not post sensitive typing data.

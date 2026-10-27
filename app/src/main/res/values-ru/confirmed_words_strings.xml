@@ -1,0 +1,14 @@
+<resources>
+    <string name="confirmed_words_title">Подтверждённые слова</string>
+    <string name="confirmed_words_intro">Подтверждения действуют при обучении и включают словарные слова. Нажмите, чтобы снять подтверждение; другие запреты останутся.</string>
+    <string name="confirmed_words_filter">Фильтр по слову или языку</string>
+    <string name="confirmed_words_count">Показано: %1$d · Всего: %2$d/%3$d</string>
+    <string name="confirmed_words_unavailable">Не удалось прочитать подтверждённые слова. Сохранённые данные не очищены.</string>
+    <string name="confirmed_words_remove_confirm">Снять это подтверждение для языка «%1$s»? Остальные запреты на замены сохранятся.</string>
+    <string name="confirmed_words_remove_description">Снять подтверждение слова %1$s (%2$s)</string>
+    <string name="confirmed_words_save_failed">Не удалось сохранить удаление. Слово может вернуться после перезапуска. Повторить?</string>
+    <string name="confirmed_words_retry">Повторить удаление</string>
+    <string name="confirmed_words_full">Список подтверждённых слов заполнен (%1$d). Удалите запись, чтобы добавить другую.</string>
+    <string name="controls_invalid_or_full">Неверная запись или достигнут лимит списка (%1$d).</string>
+    <string name="controls_io_failure">Не удалось сохранить. Повторите попытку.</string>
+</resources>

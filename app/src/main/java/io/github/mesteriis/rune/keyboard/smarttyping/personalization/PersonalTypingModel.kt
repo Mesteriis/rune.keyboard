@@ -36,10 +36,18 @@ class PersonalTypingModel(
         feedback[key] = PersonalFeedback(language, key.original, key.replacement, old?.accepted ?: 0, true)
     }
 
-    @Synchronized fun recordConfirmedWord(word: String, language: KeyboardLanguage) {
-        val normalized = normalizeWord(word) ?: return
-        if (confirmed.size < MAX_CONFIRMED) confirmed.add(PersonalWord(language, normalized))
+    @Synchronized fun recordConfirmedWord(word: String, language: KeyboardLanguage): Boolean {
+        val normalized = normalizeWord(word) ?: return false
+        val entry = PersonalWord(language, normalized)
+        if (entry in confirmed) return true
+        if (confirmed.size >= MAX_CONFIRMED) return false
+        confirmed.add(entry)
+        return true
     }
+
+    /** Remove only this confirmation, preserving correction-pair rejections and phrase evidence. */
+    @Synchronized fun removeConfirmedWord(word: String, language: KeyboardLanguage): Boolean =
+        normalizeWord(word)?.let { confirmed.remove(PersonalWord(language, it)) } == true
 
     @Synchronized fun rejects(original: String, replacement: String, language: KeyboardLanguage): Boolean {
         val key = feedbackKey(original, replacement, language) ?: return false

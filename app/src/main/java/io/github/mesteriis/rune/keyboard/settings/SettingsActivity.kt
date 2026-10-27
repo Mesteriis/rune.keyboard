@@ -243,6 +243,9 @@ class SettingsActivity : ThemedActivity() {
             settings.touchPersonalization) { preferences.writeTouchPersonalization(it) }
         addToggleRow(R.string.settings_phrase_suggestions, R.string.settings_phrase_suggestions_summary,
             settings.phraseSuggestions) { preferences.writePhraseSuggestions(it) }
+        addNavigationRow(R.string.confirmed_words_title, getString(R.string.confirmed_words_intro)) {
+            startActivity(Intent(this, ConfirmedWordsActivity::class.java))
+        }
         addNavigationRow(R.string.settings_import_phrases, getString(R.string.settings_import_phrases_summary)) {
             val resources = PersonalTypingResources.get(this)
             if (!resources.dictionaryLoaded || !resources.personal.isReady) {

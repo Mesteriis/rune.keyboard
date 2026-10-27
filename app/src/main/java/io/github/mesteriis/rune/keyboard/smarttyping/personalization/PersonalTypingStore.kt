@@ -62,6 +62,26 @@ class PersonalTypingStore private constructor(context: Context, val model: Perso
         true
     }
 
+    fun whenReady(onReady: () -> Unit) { worker.execute(onReady) }
+
+    /** Serial, idempotent removal; callback reports durable save, not merely the RAM edit.
+     * On an IO failure the in-memory intent remains applied; callers must offer an explicit retry.
+     */
+    fun removeConfirmedWord(entry: PersonalWord, onComplete: (Boolean) -> Unit) {
+        val requestedGeneration = synchronized(lock) { generation }
+        worker.execute {
+            val admitted = synchronized(lock) {
+                if (!isReady || generation != requestedGeneration ||
+                    PersonalTypingModel.normalizeWord(entry.word) == null) false else {
+                    model.removeConfirmedWord(entry.word, entry.language)
+                    lastWriteSucceeded = null
+                    true
+                }
+            }
+            onComplete(admitted && writeCurrent())
+        }
+    }
+
     /** Stops in-flight imports from repopulating the model; reset is durable when callback is true. */
     fun reset(onComplete: (Boolean) -> Unit = {}) {
         synchronized(lock) {
