@@ -1,0 +1,376 @@
+{
+  "card": "Q1",
+  "status": "partial; historical source pins/tag restored and historical lint/source scan verified; current-source acceptance remains open",
+  "baseCommit": "0f24f2e3acccee652b102035189b792867ab2cd5",
+  "sources": [
+    {
+      "path": "fdroid/io.github.mesteriis.rune.keyboard.yml",
+      "bytes": 1832,
+      "sha256": "65e79511e784e4a912fb2fe9f2730dd706c6a93ab1ba4685d20f1e4623b2ffbc"
+    },
+    {
+      "path": "docs/FDROID.md",
+      "bytes": 4568,
+      "sha256": "c1d3ffcc7e0739e4727bc1762efa10cb489758327201241a556c962e7d7e9f5e"
+    },
+    {
+      "path": "docs/plans/2026-10-27-review-completion.md",
+      "bytes": 18164,
+      "sha256": "33a6ba44aa187184262375d264edf54fd2d594dbbbd9576ce90c8c1d6d88aa8a"
+    }
+  ],
+  "tag": {
+    "tag": "v0.4.2",
+    "targetCommit": "d332c0e25739305cf53d2b8a312eb157103db9ff",
+    "tagObject": "4a147abe3fc67ce7da6868e9dea1d37b9a474f57",
+    "annotated": true,
+    "pushed": false,
+    "publicReleaseCreated": false
+  },
+  "remoteTagCheck": {
+    "exitCode": 0,
+    "rows": []
+  },
+  "historicalLint": {
+    "result": {
+      "exitCode": 0
+    },
+    "log": {
+      "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-fdroid-20261027/historical-lint.log",
+      "bytes": 111,
+      "sha256": "f634d71180ece8363f56ee19352a3acfa3e927fa9c7da92ffeb2d5cc7f9688ec"
+    }
+  },
+  "historicalScan": {
+    "fdroidserver": "2.4.5",
+    "sourceLabel": "historical",
+    "recipeSha256": "65e79511e784e4a912fb2fe9f2730dd706c6a93ab1ba4685d20f1e4623b2ffbc",
+    "buildVersionCode": 8,
+    "fatal": 0,
+    "infos": [
+      [
+        "Removing gradlew at gradlew",
+        "gradlew"
+      ],
+      [
+        "Removing gradlew.bat at gradlew.bat",
+        "gradlew.bat"
+      ],
+      [
+        "Removing binary at tools/typing_experiments/baseline/ru-ranker.bin",
+        "tools/typing_experiments/baseline/ru-ranker.bin"
+      ],
+      [
+        "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-context.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-context.bin"
+      ],
+      [
+        "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-ranker.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-ranker.bin"
+      ],
+      [
+        "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin"
+      ],
+      [
+        "Removing gradle-wrapper.jar at gradle/wrapper/gradle-wrapper.jar",
+        "gradle/wrapper/gradle-wrapper.jar"
+      ],
+      [
+        "Removing gradlew at runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradlew",
+        "runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradlew"
+      ],
+      [
+        "Removing gradle-wrapper.jar at runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradle/wrapper/gradle-wrapper.jar",
+        "runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradle/wrapper/gradle-wrapper.jar"
+      ]
+    ],
+    "warnings": [
+      [
+        "gzip file archive",
+        "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+      ],
+      [
+        "executable binary, possibly code",
+        "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+      ]
+    ],
+    "errors": [],
+    "errGradlePatterns": 114,
+    "signatureMode": "unmodified package SUSS defaults; network blocked",
+    "sussDefaultsSha256": "c262fb68063777dad15ff701b07bbb1b3a9c9e19aa623a0ddea524ff0a5c3a33",
+    "scannerModuleSha256": "4de525a85ba519a41838cf1ed7e70184d0b9df782da8a6c82c6dea5234adf7e1",
+    "disposableSnapshotRemoved": true
+  },
+  "currentWithHistoricalExceptions": {
+    "fdroidserver": "2.4.5",
+    "sourceLabel": "current",
+    "recipeSha256": "842eb618110835fd1a733b41e480f1b0a17826f5395970ec0cfc169a901d60a9",
+    "buildVersionCode": 8,
+    "fatal": 8,
+    "infos": [
+      [
+        "Removing gradlew at gradlew",
+        "gradlew"
+      ],
+      [
+        "Removing gradlew.bat at gradlew.bat",
+        "gradlew.bat"
+      ],
+      [
+        "Removing binary at tools/typing_experiments/baseline/ru-ranker.bin",
+        "tools/typing_experiments/baseline/ru-ranker.bin"
+      ],
+      [
+        "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-context.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-context.bin"
+      ],
+      [
+        "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-ranker.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-ranker.bin"
+      ],
+      [
+        "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin"
+      ],
+      [
+        "Removing gradle-wrapper.jar at gradle/wrapper/gradle-wrapper.jar",
+        "gradle/wrapper/gradle-wrapper.jar"
+      ],
+      [
+        "Removing gradlew at runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradlew",
+        "runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradlew"
+      ],
+      [
+        "Removing gradle-wrapper.jar at runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradle/wrapper/gradle-wrapper.jar",
+        "runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradle/wrapper/gradle-wrapper.jar"
+      ]
+    ],
+    "warnings": [
+      [
+        "binary",
+        "app/src/test/resources/reliable-subject-parity/grammar.bin"
+      ],
+      [
+        "binary",
+        "app/src/test/resources/context-feature-parity/grammar.bin"
+      ],
+      [
+        "binary",
+        "app/src/test/resources/context-feature-parity/wiki.bin"
+      ],
+      [
+        "binary",
+        "app/src/test/resources/context-feature-parity/conversation.bin"
+      ],
+      [
+        "binary",
+        "app/src/test/resources/right-context-feature-parity/grammar.bin"
+      ],
+      [
+        "gzip file archive",
+        "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+      ],
+      [
+        "binary",
+        "app/src/test/resources/right-context-model-parity/model.bin"
+      ],
+      [
+        "binary",
+        "app/src/test/resources/right-context-role-parity/grammar.bin"
+      ],
+      [
+        "binary",
+        "app/src/test/resources/right-context-role-parity/past.bin"
+      ],
+      [
+        "executable binary, possibly code",
+        "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+      ]
+    ],
+    "errors": [
+      [
+        "ZIP file archive",
+        "tools/emoji/sources/unicode-15.1-cldr-44.1.zip"
+      ],
+      [
+        "binary",
+        "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin"
+      ],
+      [
+        "binary",
+        "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin"
+      ],
+      [
+        "binary",
+        "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin"
+      ],
+      [
+        "binary",
+        "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin"
+      ],
+      [
+        "binary",
+        "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin"
+      ],
+      [
+        "binary",
+        "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin"
+      ],
+      [
+        "binary",
+        "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin"
+      ]
+    ],
+    "errGradlePatterns": 114,
+    "signatureMode": "unmodified package SUSS defaults; network blocked",
+    "sussDefaultsSha256": "c262fb68063777dad15ff701b07bbb1b3a9c9e19aa623a0ddea524ff0a5c3a33",
+    "scannerModuleSha256": "4de525a85ba519a41838cf1ed7e70184d0b9df782da8a6c82c6dea5234adf7e1",
+    "disposableSnapshotRemoved": true
+  },
+  "archives": [
+    {
+      "label": "current",
+      "part": "root",
+      "commit": "0f24f2e3acccee652b102035189b792867ab2cd5",
+      "bytes": 260280320,
+      "sha256": "7a9b32ab9565dc046ee975aaf65ffd42fa0c9dd8d0f2e34878b380011acde842"
+    },
+    {
+      "label": "current",
+      "part": "llama",
+      "commit": "36b10154383b60eb15baac2c7a40d2a5f784faa7",
+      "bytes": 170209280,
+      "sha256": "c02d37e6ecb9828f75f9c2233f78d2bf37a6c8a4d6cc112dee86e9b573781a84"
+    },
+    {
+      "label": "historical",
+      "part": "root",
+      "commit": "d332c0e25739305cf53d2b8a312eb157103db9ff",
+      "bytes": 144005120,
+      "sha256": "8382f015438fdbeac532b670f1497e78b34659710715a6e6f95c10513fc96203"
+    },
+    {
+      "label": "historical",
+      "part": "llama",
+      "commit": "36b10154383b60eb15baac2c7a40d2a5f784faa7",
+      "bytes": 170209280,
+      "sha256": "c02d37e6ecb9828f75f9c2233f78d2bf37a6c8a4d6cc112dee86e9b573781a84"
+    }
+  ],
+  "categoryCatalogue": {
+    "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/config/categories.yml",
+    "sha256": "edf68d8d70073fe52a52c6a33f490399ce9dc884acff3a761a3a1e34acf9d541",
+    "bytes": 11231
+  },
+  "categoryIcons": [
+    {
+      "name": "category_connectivity.png",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/config/category_connectivity.png",
+      "bytes": 21698,
+      "sha256": "cc7007b9f3df00b4c29b24c2f0e14a8524ffdada7ba7e829d5f0e0b03362f746"
+    },
+    {
+      "name": "category_development.png",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/config/category_development.png",
+      "bytes": 7518,
+      "sha256": "2b6616bbb2c161c10e4128f3f6ccebc4a77387589ff24607ccd3c5d4ab3d185c"
+    },
+    {
+      "name": "category_graphics.png",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/config/category_graphics.png",
+      "bytes": 17192,
+      "sha256": "4a53db204bfc5d0bc0b25692e1f8219ce284db68ff75a476f86cf90c9114abf3"
+    },
+    {
+      "name": "category_internet.png",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/config/category_internet.png",
+      "bytes": 21698,
+      "sha256": "cc7007b9f3df00b4c29b24c2f0e14a8524ffdada7ba7e829d5f0e0b03362f746"
+    },
+    {
+      "name": "category_navigation.png",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/config/category_navigation.png",
+      "bytes": 6423,
+      "sha256": "a9619672b1af86015a7951cddbe127781b2097ed142461fd090d10a2bbb4f62c"
+    },
+    {
+      "name": "category_reading.png",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/config/category_reading.png",
+      "bytes": 5649,
+      "sha256": "3e63a8fbb13c6d762248e55a44bb60e9a58587bffd73acab2a18a5c4c3354320"
+    },
+    {
+      "name": "category_science_education.png",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/config/category_science_education.png",
+      "bytes": 17656,
+      "sha256": "5ce82acfa30118f73ec414ad8a71e22f65d126076a949b482eeba5e1203950f9"
+    },
+    {
+      "name": "category_security.png",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/config/category_security.png",
+      "bytes": 3556,
+      "sha256": "538a2db9bf87278ebe794ba3fa7ac0c0cecdd903eba415f2c653e1754500bfb6"
+    },
+    {
+      "name": "category_system.png",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/config/category_system.png",
+      "bytes": 5959,
+      "sha256": "4262e341991d80bc735be6b853742e9bb38a0b36325206abf9567beec88355bf"
+    },
+    {
+      "name": "category_theming.png",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/config/category_theming.png",
+      "bytes": 39095,
+      "sha256": "39df08e558bf70227333b9de30bcab84794978064d7866205046d486ab40c800"
+    },
+    {
+      "name": "category_writing.png",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/config/category_writing.png",
+      "bytes": 25285,
+      "sha256": "a2fbb024c25825d74fb2d7c3f87ae084fe99cfe2fa2453b8eed34ba6dba42ab7"
+    }
+  ],
+  "tool": {
+    "fdroidserver": "2.4.5",
+    "puremagic": "2.2.0",
+    "scannerSha256": "4de525a85ba519a41838cf1ed7e70184d0b9df782da8a6c82c6dea5234adf7e1",
+    "metadataParserSha256": "fad92373c5ecb2e4c2d5c692c603fbf83609337b301cbba2fb4b0ab9d0047e0e"
+  },
+  "setupFailures": {
+    "scans": {
+      "attempts": 2,
+      "exitCodes": [
+        1,
+        1
+      ],
+      "scannerCompleted": false,
+      "cause": "Private harness used generic YAML 1.1 loader: unquoted yes became bool. Use fdroidserver official metadata parser instead; no recipe/source mutation."
+    },
+    "harness": {
+      "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-fdroid-20261027/scan-yaml11-failed.py",
+      "bytes": 2022,
+      "sha256": "13f1ee5f73d0996a4f81946b8ff85c88c4e97b0cacbc09795b02ac01301d01b9"
+    },
+    "lint": {
+      "exitCode": 1
+    },
+    "lintLog": {
+      "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-fdroid-20261027/historical-lint-setup-failed.log",
+      "bytes": 1970,
+      "sha256": "2d77aa02d9f551c17090e928714b3ab80590510dd62f4bad8833fe38659441e0"
+    }
+  },
+  "workingRepositoryScanned": false,
+  "buildServerRun": false,
+  "published": false,
+  "phoneRun": false,
+  "outstanding": [
+    "Current-source data/exception inventory and actual source scan",
+    "Clean-source release enforcement",
+    "Remote tag publication/new release version decisions",
+    "Isolated F-Droid build-server and official inclusion",
+    "U16 strict path audit and release/model/device smoke",
+    "Separate Q6 provenance audit"
+  ]
+}

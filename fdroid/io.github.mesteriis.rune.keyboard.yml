@@ -14,7 +14,7 @@ Repo: https://github.com/Mesteriis/rune.keyboard.git
 Builds:
   - versionName: 0.4.1
     versionCode: 7
-    commit: v0.4.1
+    commit: f3802d53c6b26dae45a5faed8eb2210c2a0571bd
     subdir: app
     submodules: true
     gradle:
@@ -32,7 +32,7 @@ Builds:
 
   - versionName: 0.4.2
     versionCode: 8
-    commit: v0.4.2
+    commit: d332c0e25739305cf53d2b8a312eb157103db9ff
     subdir: app
     submodules: true
     gradle:
