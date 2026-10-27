@@ -75,7 +75,7 @@ class TypingControlsInstrumentedTest {
         })
         try {
             writes.forEach { it(true) }
-            ActivityScenario.launch<SettingsActivity>(SettingsActivity.intent(context, SettingsPage.ADVANCED)).use { scenario ->
+            ActivityScenario.launch<SettingsActivity>(SettingsActivity.intent(context, SettingsPage.EXPERIMENTS)).use { scenario ->
                 scenario.onActivity { activity ->
                     val title = descendants(activity.window.decorView).filterIsInstance<TextView>()
                         .single { it.id == R.id.row_title && it.text.toString() == activity.getString(R.string.controls_disable_all) }
@@ -99,14 +99,14 @@ class TypingControlsInstrumentedTest {
         val before = prefs.readSettings().manualCandidateExpansion
         prefs.writeManualCandidateExpansion(false)
         try {
-            ActivityScenario.launch<SettingsActivity>(SettingsActivity.intent(context, SettingsPage.TYPING)).use { scenario ->
+            ActivityScenario.launch<SettingsActivity>(SettingsActivity.intent(context, SettingsPage.EXPERIMENTS)).use { scenario ->
                 fun toggle(expected: Boolean) {
                     scenario.onActivity { activity ->
                         val title = descendants(activity.window.decorView).filterIsInstance<TextView>()
                             .single { it.id == R.id.row_title &&
                                 it.text.toString() == activity.getString(R.string.settings_manual_candidate_expansion) }
                         val row = title.parent.parent as View
-                        assertEquals(expected, row.findViewById<android.widget.CheckBox>(R.id.row_checkbox).isChecked)
+                        assertEquals(expected, row.findViewById<android.widget.Switch>(R.id.row_checkbox).isChecked)
                         assertTrue(row.performClick())
                     }
                     assertEquals(!expected, prefs.readSettings().manualCandidateExpansion)

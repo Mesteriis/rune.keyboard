@@ -2,4 +2,10 @@
 <resources>
     <string name="menu_experiments">Experiments</string>
     <string name="menu_experiments_summary">Optional Russian-only input experiments and additional feature controls.</string>
+    <string name="feature_experiment_ru">Experiment · RU</string>
+    <string name="feature_requires_russian">Enable Russian in Languages to use this feature.</string>
+    <string name="feature_requires_candidate_strip">Enable the candidate strip to use this feature.</string>
+    <string name="feature_requires_dynamic_touch">Enable the touch-area experiment first.</string>
+    <string name="learning_night_enabled">Night checks are enabled when the device meets the night, charging and safety conditions.</string>
+    <string name="learning_night_requires_features">Night checks require both example collection and typo-pattern learning. Manual checks and reset remain available.</string>
 </resources>

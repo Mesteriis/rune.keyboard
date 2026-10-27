@@ -1,0 +1,438 @@
+{
+  "card": "U6",
+  "status": "in progress; manual TalkBack pending",
+  "baseCommit": "e06082bdc69605efc0fadec9071981af2f57b94d",
+  "sourceBindings": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/AdditionalFeature.kt": "4541ef3654079df12b2daf51119abc488e2fa9602daa91f94089ac8b603d51c0",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SettingsActivity.kt": "4488e19136aeff79cb7b687e0d7d014b6fb2772b4db1f2ef54fbaff413602811",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SettingsToggleRow.kt": "be9d8b9971f0671f541c35bb52f3db26aca0d038c0ca51c5758ad1e69b8dee20",
+    "app/src/debug/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticsSettingsContribution.kt": "e39888a3cabbde7be8fce535240b29664d26ba85778dec7d74eb07f915007941",
+    "app/src/main/res/layout/view_settings_row.xml": "82ac89bb36abb015b7c5814cd69057f05d35ab3e6179809ec47b6203eae411a4",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/settings/KeyboardPreferencesTest.kt": "b8a0b85402abb7fe5f31a254f0d58564b89081335061884f4ef01c7dbef2a3ef",
+    "app/src/main/res/values/additional_features_strings.xml": "aa0acedaf433a8c6da5debb23dc5b3b5141390510850c6f5c609a72a241e268a",
+    "app/src/main/res/values-ru/additional_features_strings.xml": "587507df75040d4ed7e3265728f9de443d4ce78d9f3ec4ff52b1b6d06284d97c",
+    "app/src/main/res/values-es/additional_features_strings.xml": "9b0cb5963d73853dd9d665a792f0e6bfeb297ed4e653e287f71c3a211a58fb10",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SettingsDependenciesInstrumentedTest.kt": "bdce59c7f8f52ddb509ab685b2e9c4b59e79bbe9fa6bd4964c9682087765d419",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/AppMenuInstrumentedTest.kt": "2afa254366e3812ca59568e500882eec73e4dedcdc092cb224e614425b7d20a6",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/UndoContinuityInstrumentedTest.kt": "413f8f8b2379f737a8379743f234378f719b176829f40b5ac913008d183d990b",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/TypingDiagnosticsInstrumentedTest.kt": "8d2a35cfd330136ad1b59e29237281a264a0e9aaae1707fe78ea0a2bbcda7426",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/tools/TypingToolsInstrumentedTest.kt": "051acabdd33797450ddc56b5f5b7f4aa6e3181f506ade1035ae79ff0a08c5774",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/tools/TypingControlsInstrumentedTest.kt": "91ed7f90cf4b03ce1c89c1d3179f7ece68f55f5f991829a4cb25c67f6b6b2252"
+  },
+  "artifacts": {
+    "app": {
+      "sha256": "13f929c359e0f71b3d2672ccfc15f42faf9d86fac65003579d09d299a46752e7",
+      "bytes": 345266252
+    },
+    "tests": {
+      "sha256": "85b841705363fd990207499044edbc39951b4cbe7c33c2a32ca1818a229a7b86",
+      "bytes": 1799667
+    }
+  },
+  "settingsRunArtifacts": {
+    "app": {
+      "sha256": "13f929c359e0f71b3d2672ccfc15f42faf9d86fac65003579d09d299a46752e7",
+      "bytes": 345266252
+    },
+    "tests": {
+      "sha256": "b9f6039d2283df463e362e9996897f53e978756d7ef34d739b1ad17752dda19e",
+      "bytes": 1799676
+    }
+  },
+  "unchangedSettingsTestSourceBindings": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/SettingsDependenciesInstrumentedTest.kt": "bdce59c7f8f52ddb509ab685b2e9c4b59e79bbe9fa6bd4964c9682087765d419",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/AppMenuInstrumentedTest.kt": "2afa254366e3812ca59568e500882eec73e4dedcdc092cb224e614425b7d20a6",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/UndoContinuityInstrumentedTest.kt": "413f8f8b2379f737a8379743f234378f719b176829f40b5ac913008d183d990b",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/tools/TypingToolsInstrumentedTest.kt": "051acabdd33797450ddc56b5f5b7f4aa6e3181f506ade1035ae79ff0a08c5774",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/tools/TypingControlsInstrumentedTest.kt": "91ed7f90cf4b03ce1c89c1d3179f7ece68f55f5f991829a4cb25c67f6b6b2252"
+  },
+  "jvm": {
+    "tests": 1202,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "jvmReportBindings": {
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.RightContextRevisionFeaturesTest.xml": "a921bbede5875a47c5f9ece84d20b13fd4acec30a8eba32e2f65b45a9ccb1a28",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest.xml": "56ef1f61ca17dc4587128a4bc63a15b2f64a3d85319df0e80a91fa69edb92337",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionPolicyTest.xml": "098a4129a70ebcba5afdbef478297fb90e9210b26d230246fcb7004be1e5118d",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.layout.KeyFlickLayoutTest.xml": "2c65ee216e209b55a5d6068fc9afd2ee8f8a704b90029cf30284f1349a8aaf2f",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.gesture.BackspaceRepeatScheduleTest.xml": "dddfbea180cd3edfc287b63f9f12aab80d08a8f72b74ae4ca8647ccc6705fe5b",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualRankerTest.xml": "183fb53c0409f3227f01d534bbd01bfae74465665b47db283358df8a6df55c97",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.ModelOperationGateTest.xml": "0e43e8a057a7bf8704cd4f0be0da6e76c1d4aff4912b63859a2ef1fcb1ce6894",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsStorageTest.xml": "0505ff4ef202945d22c5531bb6854c0918d5109c0c70ea32bb7a562bea19a205",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.OrthographyPoliciesTest.xml": "b3baea7cb06fa358e40a3a47e06bc95f3aa7e003aa5ac47ac9430ba1e13dadff",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.model.ModelSnapshotTest.xml": "8ea546b30b363279373374cd2b240b30ad10b09ebfa532e29afc91cbac175754",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryStateCodecTest.xml": "fcc77af04085965706db8ae0126f4012fee23ee86ab9941458a74819b35e0d50",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.JointQualificationTest.xml": "88733164fad7bf97ac9ce521bd345ed69806482242272968259a393c0d3820c3",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningModelTest.xml": "602a649151f5b5899e0b29c69e562f84bf2f9158ad8002188eb0192239cff5b3",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceTest.xml": "c984f9e9211e92303bab2fbf4fa8c220df2ada70350663688c2a6c4bae9be44d",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.SizeBucketTest.xml": "5819afff033a3f4642335b2faba97af014018f2bbe2ff9cd4b4951156abe6ad1",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationTransactionTest.xml": "a4e8ca81120e562ee8be1c8135a1cf4171a0c05c2f0c698a91e45f48713b58ee",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PublicCandidateAugmenterTest.xml": "78cea39e1904910bc353fb7774332616a85f54182c5faadaef03080a84de6eb6",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.CompactAutoCorrectionPolicyTest.xml": "ca4637c5d6e1d5235ac1c0151b4b5edf9f5f281678ab4ba1463340c451b313d3",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest.xml": "c6306310faae5c29bbe7191403ded8161923471ad9f421729e18e4cba6fb738a",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.editor.ComposingEditorCommandsTest.xml": "8fc003563b5267956094ab29724b193297a65f14dc71e558f0b5a837191213a0",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest.xml": "6f254796a34d8955c608609a7e71ed8236ff857588f6c118470de0390dbb44ff",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest.xml": "168f7002ad604c8b707ca194cabc63e1f1cd2b1cede0c8ed231a291339c2b9ac",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.InfinitiveRevisionPolicyTest.xml": "4d3f32d5e88efec1351b4d6ccdf5eada6186b23d94a183df784a8edbe31dc26f",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.runtime.ActivationRotationTest.xml": "5eb0e95c97fea4ea5f44b9179691485caf19fe8abb1b50be98b8e582c73b2aa2",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningStoreTest.xml": "1310e097e0e61133dc21064db0bccaa9be8b60ce93ea006266574d62edfa2f7f",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest.xml": "a69ca37ee4f81d11e42ac17cf1a419afa70677c0fc3a7d13b1ddf5b1fde62ed4",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.runtime.ActiveModelPointerCodecTest.xml": "40e780d6dd82bbdce8668ba0fdbb10469acd9e097026d12b6019adffa2e5f9a4",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.ContextualAvailabilityTest.xml": "8d1a59f2f24372fca5a3cd58ac571fb8fede2f6b4404dabc3ffa47a909cd83ad",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest.xml": "dede56af35eabe7a1fd9c7028074d63e5590576f84fce5cc486e3546c206798b",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.RightContextRoleFeaturesTest.xml": "4f325d489cb074aff5bfc353483a0800112c34b31038cf2a02644bf441f478b8",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.CandidateInstallerTest.xml": "a831d6b5c50e16e1cbe602ad76ab17f5c40c5063b89ff303b4520561d5e792a4",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.readiness.ActiveModelReadinessTest.xml": "9c440f8a39377398d3b4f08071c4854a66cd0a918a719a383d81e53156730d6b",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.client.ModelDemandTest.xml": "68e2e8e13f44fd846aacaad1df9e86a7edb7c56b0bded677c391f9bbb0e8036d",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.model.MechanicalCapitalizationStateTest.xml": "b2948c4d6469481ab65107d0cc8d4a30dc3f5943b8cd4e7e73e40ebb85634748",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest.xml": "051c15e2d9002bbe9d51b4df2ad97d8fd73a136f32f0e90be6c531dbf9b0251c",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest.xml": "0cb250cf0ae0adf10772f07d0d53e7cdb37660ed4a9f0adf31c1f2da749787ae",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest.xml": "46dc5064aacbfbb66b3f538f46da40be7a045c9ef8de8bad782c1b3382b87aa0",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningCodecTest.xml": "a9b49d61a7283a95f90e7b29c8a01e2cc0535aaaf4585fbfcef0dc57f85ad679",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsViewStateTest.xml": "a9088f0ed8a6e7bf3f6f17bab9eea3263d8c58f272752a2bdfe04fc8b2457079",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.PackedContextIndexTest.xml": "8c9c8135956d2ab8dcce77c0c895163ba45d81d9c0288049b19debb9adc5e66a",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorOracleTest.xml": "d115c3455d24175b5d9ce32d6363636f62a4478c00becfdc35581131f747e454",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.TypingFeaturePolicyTest.xml": "0c9769659353d59b73c76544f9368c0d01a71634a32b0de601e4b2908ef26776",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyOwnerTest.xml": "584a838c835be0391d442ebe1c69f62e80078daef4678672a34dfa3065090465",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.model.KeyboardSessionPolicyTest.xml": "ffa18c52ae6632acd12dbc03bfda037742068eec4c2ab1d2d0c08db228b9a7b0",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.layout.LongPressAlternatesTest.xml": "612f5e483d812da429db7fabcf05cb0584bd4d7a92a9acff9447c9eb7e299c20",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringInfrastructureTest.xml": "85d40fb6476f0ed76291c04aa462285a961c6f50cb10adbab47343870c3fbb54",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityRepositoryTest.xml": "8972ed06916737005a01fe689a6230ab4165632cef6fb6ae02b3a9206a5593ef",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.inference.ModelPreparationWorkerTest.xml": "f78b6db4a6eea3a860fab1089dbb99696c12ddd63b0ef8ad5237cbe2eed8e9a4",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationEngineTest.xml": "31e14c766eccb2138f127c083ef13a73851ee75eed1106d460d503a656c1b9d1",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.model.ConfigurationVisualContinuityTest.xml": "a2edb8d131b25619a33c4739f8bd96cf2ab50c3705b611e17a0545e8e6eab42d",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.NounCaseRevisionScopeTest.xml": "3198c41f1be2268e8fb2bc3ab84ef8dc18616ed212ac84f94732825f9835c0ee",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.SessionTextContextTest.xml": "503ec223347005dbc3e768e77a1cd9415dcab627179f8859ad51236ec5f35f0b",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.ModelFilesCleanerTest.xml": "ef8a9e65ffd9a896bc2fdb021c7bc6a3a4c5503941cd8d6bd902c74a9a079623",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryReconcilerTest.xml": "f5651429e2d5415571852d1f5d19c4e826d456c425865df89882b813110365f2",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest.xml": "7be4d28bb9c1ea907ee10c3ab98298570b4311126d61275f476c375c4a822ab5",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.controls.TypingControlModelTest.xml": "7116dfc6411b2320aab676efd24a50ece82ea0db4c4b2bb3111688247da99e50",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.StorageRequirementTest.xml": "0ac41dd136cd09ff9dc47ad1d2c1b93aab9e05c26f8e387ac3c6aa170359535a",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.ExperimentModelsTest.xml": "e2d6157fe8ae9f3270c45466a3ad9c8bdb76e9083dc1270a13bc63f81278fff3",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningEvaluatorTest.xml": "527315a3cd4d1b2669fd6c662cf484d88c891cf8aa51906d0e819773f8039089",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest.xml": "db206b36090b894c25d3ff14a9086e8732bd9e3c14aaa3cc0f16e2a5d738f2a9",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest.xml": "c39acc12a3e4c697c41b7b7a691f053803df3fd55a82de8d2811a51ce628e254",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedRareWordLexiconTest.xml": "2d14846cc3190e967590ee1519b3219215ab4525aa4cc0637e12896c3cd4d3a3",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedCandidateLexiconTest.xml": "3ca2f2b59b809f90668616df7f59a5c0ad457d6b8686153e00e1589f2479ac37",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.client.LatestReplyGuardTest.xml": "c7e5dcfe569278b60406a9eb631a49ba5e896bc479375255d6dd8999eb9bf871",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsTerminalTest.xml": "f275fb511ebfb9a6d416a6c9599c653af5e6729d0b46f7c1b801dcc1bfa89eb2",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsHooksTest.xml": "2bd8c0d7e58b87e2834a85d8c0f131219ad6c2c71c72950b2cf24000ec255d8e",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.editor.DoubleSpacePeriodTest.xml": "34ee2db8fac50809dbcd3704b799422bbcf7334a70f1f8526a3507d21a03686b",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.InfinitiveRevisionScopeTest.xml": "dbee9a3f111684c4bab8082baa6822257371e1b9d4d2b5172c7d051c28972bf7",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.KeyboardMetricsTest.xml": "341feaf0ccd041faf70d7463e611e4d3dfab34ba53c0549a3eb95d76709e6ceb",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedMorphologyLexiconTest.xml": "d587d932e77ff9ea059ae5aa49d1a1890fc20f6235e6e0c7900046ca19467630",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.NeighborRecoverySearchTest.xml": "f0048b41304879e2c2258afa3b291cd975316c3b5c4f6f93ccfef4b90be02114",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest.xml": "0f3f73d84b429e42aae17fdecc21ad7627df5e055ed29285cf7bc29d8dfbc516",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest.xml": "5ca66b11c7e61b29fd00ac4d1952465ef089357556269d05c7ca8cdb35b6fae5",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest.xml": "36bddbe83098b530bef0de7e1d0f2dde414c05b9e2e13f70be2e85d23dc230eb",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest.xml": "077bb21a2c9f0908f1d6e35d4c20ae48d81347e1499560fc22bc69a744f069a1",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.VerifiedStreamCopierTest.xml": "d7ed6881c859e049eed7f85ce7c6f863edbd09d7a5b8abdb26b88aa576a46358",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest.xml": "75e0235a5442bb60936aea48bf1f20c6a3643b8936eee6a498d8ec2ed4b65187",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.ui.SafeInsetPolicyTest.xml": "8426e574f98da7710749827ffc4125294cc2306f6121ec47e53c3b7dadf3eb80",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.RightContextGrammarFeaturesTest.xml": "af548d014ffadbf3c0de273d4b9d171786b8ac0312141ba4673adbd4b8d61a48",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.CandidateRankerTest.xml": "78309ebb551920c8a4536d95d1e76b338ae6df788fc45182eb946af84de4a92d",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingModelTest.xml": "ad4c070affe69d4b6b96c662477a88ddaa732bc2f2df50598fc5e2102074d592",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshteinTest.xml": "286ebf76329d1a83965560afb988269f996865bc274403d96b381908645a3134",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.WordContextQualificationTest.xml": "2ee30ecb99294fad19900c38f0428b6623a8e734af81055e728e625e4fe75336",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.SettingsSearchTest.xml": "010dc6699a2d326a8e164cbff023e6de9633900ebdb78a1f98181c82f25b094b",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.IncognitoDiagnosticsTest.xml": "fbafa31c6a8ffd29971da659280203cf95e92fc69be358a9367c0cdac3260bfc",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryQualificationTest.xml": "0ad307e1be21cbf2cd3a92ab4efcd289fe9d79f21bcacf2170a5152f2cc06785",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.abbreviations.AbbreviationCodecTest.xml": "a24c7ba2ae4a3b11551054ea6629e20aaec9a54e1116eb6b1c6af0e0325e12c7",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconValidationTest.xml": "a506767bb21d3de7ff0e99593c8deb437c59401017bcb1d8793b3c61fc70ca46",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.model.ModelManifestParserTest.xml": "9454928ce1a67c35262c5a8652465f31ab61e2acfa31c704bf63e1e610b7350f",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityModelTest.xml": "a2eae8e6f81d4668c2e1ff2d925912b5238c3814fe0625c99260670f26112ff1",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.ModelFileExporterTest.xml": "a802bb5ffee748664446f6ab716dbe518f98585ff63411196a4200f77fe4b27d",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.readiness.DiskModelReadinessProbeTest.xml": "f7b5de9e586ea776988462304d341ae27787a5ee6222dd295333dd2d986d4a1e",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.layout.MechanicalPunctuationAccessTest.xml": "ed40f89853c16fa794f62fc0179e4cab29ec8763f36328d6c2d5f99257cfe5e2",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewStateTest.xml": "b41f00ef97c7b2c9a3001ef6bb9903ebca765bce1e83ced2759a66768fb08bca",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CanonicalCaseDataTest.xml": "7715169b8f8a839f38c2e3cb49e7135f1599669f6edcd70f1b8be590592d02a2",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.gesture.KeyFlickGestureTest.xml": "2273155bd3f2c34e15750088bfb667e4ee152e61c1134cc9eac19de75d0c764b",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest.xml": "a66d82813926a4c64d160c42fd09c58b4606d34ee80fef636f202f7fe9efea55",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.QualificationArtifactsTest.xml": "f245262d96bcb7d402dbc918294f5cde80ce18a81305478db8a9fb7d51186eda",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingCodecTest.xml": "a0fce664fcea7554e93ccda209ee7ac4b54f4d01901d89f0eb49c50eb5f82bf4",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.touch.TouchCalibrationModelTest.xml": "e43d2292054c3cf4f7f32b61bfca91419ce86ad5398b6e4fa161623ded039d9a",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.AutoCorrectionAdmissionGuardTest.xml": "0b47c2c7293a818a2a5d67a329b4220aa3e2979a439ad66c90e097a2d275666a",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.texttools.TextToolPoliciesTest.xml": "5c7a18dc30adf92e937967668fbfc3f394696cd5208523c179d4737dc31f8183",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningJobPolicyTest.xml": "2d077cf27c297b7df8ace4412c6aec59c751ebbbc6c41d706e78294b183fec6a",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CommonConfusionsTest.xml": "2253c086fca03db847f8f0d88e9096ca180f50d4214483edec6f04ecdc04c3f7",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest.xml": "24d9c9a52a5f143129e245412d514ec4f44a0978245e2fab7f1b3adfbc4973a0",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.model.OperationStateMapperTest.xml": "8b7449b1f86aef696821e8b98a5718ab8e72923b2fd538e7404c945ecc73e15a",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.ui.PopupGeometryTest.xml": "efe4af4cf8d6dea0b1b8f69dea2e4a535cae72ae571fbe3d26880efc970a5e22",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.feedback.FeedbackPolicyTest.xml": "e9fb2f3f6e85ecbf517b044e8ddee39d5a3d16329486f8070e578a5cb78bafe7",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.ReliableRightContextGrammarFeaturesTest.xml": "6c9dc0a833328428f85944779c6e8c7b9be3e95c7569a0d4bb6c2a3696cc9ace",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.NounCaseRevisionPolicyTest.xml": "fe8d971a19ba3cc8c77d5de97c9e4aa9c1366bb89ca7e73b64a9cf6fb9dc88bb",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.JointRescueQualificationTest.xml": "73da6f8814f666aeec9002a41db3b6c1efe028e0354c997b7bdf4ed59d50f6d4",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.touch.DynamicTouchContextTest.xml": "86da018c87c89189676818b210794c2bdaa4f34671d8ff15bb5a33f1319fadf1",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.touch.DynamicTouchResolverTest.xml": "c6024f2c2be9e5118c19edc2514c8fc68c93915397619a13fbc5aeaa84df2a86",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.ThemeOverrideTest.xml": "12febf5f651ec94b5ee192b17bcab520f005e1d078e54d87cb27a5ce32ec234a",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualCorrectionPolicyTest.xml": "989f035d7308b26cb493f4eefb88fa24e3939dc045f6639dae53247392cd8bca",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest.xml": "eb5347adbc1ddb662e972ad420b1c4dd8a6bcc41ea34e1aae41d9a2639274c72",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextFeatureParityTest.xml": "4e269453d2195471ce3025efe41a20a110f9fd9820d64c8a2fb87e2f7b05e43d",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest.xml": "dae2a6f3a7dda70c384271733dca4e1a5a6ef2bf6ba97514cc44598cdf2ec21e",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.model.EditorContextTest.xml": "3f517a02d373937bf104bc500c2da4dc6ffb83be05270a7e8945e45cdcc118f5",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.LocalCorrectionPolicyTest.xml": "97147b5600004ab8503b46c0be15a5226196401b8ef057c53b919144f14fd473",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.WordContextPolicyTest.xml": "c4f2c0b4bfde3ea4a0a9f6f6624884bbb4dfb0f5b6012e0429049757df75ea02",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.abbreviations.AbbreviationModelTest.xml": "d774328fa0decfbdf41a70b73a9634649b895a3b37cd0ba498f43fed7d0904a9",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.FrozenAssetIdentityTest.xml": "e551634383cfa5c3454f3bcd74fd30b8a9ccbacf7357292b2c079e8456625b8b",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.GgufMetadataReaderTest.xml": "1cdbf96df9de28be9fd96ac1f061638bddd1e548019756c03ccdf8ba56749b91"
+  },
+  "checks": [
+    {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:testDebugUnitTest",
+        ":app:imeIntelligenceBoundary",
+        ":app:privacyGateRelease",
+        ":app:lintDebug",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:lintDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:lintDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:lintDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "instrumentation": [
+    {
+      "log": "menu-dependencies-device.log",
+      "tests": 12,
+      "failures": 0
+    },
+    {
+      "log": "migrated-consent-controls-device.log",
+      "tests": 8,
+      "failures": 0
+    },
+    {
+      "log": "final-settings-device.log",
+      "tests": 20,
+      "failures": 1,
+      "reason": "Scope dialog absent after coordinate click; root cause unproven; assertions retained under native accessibility activation and separate real-touch coverage added"
+    },
+    {
+      "log": "extended-run-timeout.json",
+      "tests": null,
+      "passed": false,
+      "hostTimeout": true,
+      "reason": "240s host observation timeout, partial stdout unavailable; later target-process absence observed; not a pass"
+    },
+    {
+      "log": "final-consent-native-device.log",
+      "tests": 2,
+      "failures": 0
+    },
+    {
+      "log": "final-diagnostic-behavior-device.log",
+      "tests": 4,
+      "failures": 1,
+      "reason": "Coordinate navigation left settings active and delete control was absent; screenshot/tree retained; navigation now uses native accessibility action"
+    },
+    {
+      "hostExitCode": 0,
+      "expectedTests": 19,
+      "successfulTests": 19,
+      "passed": true,
+      "hostTimeout": false,
+      "log": "final-settings-touch-device.log",
+      "final": true
+    },
+    {
+      "hostExitCode": 0,
+      "expectedTests": 6,
+      "successfulTests": 6,
+      "passed": true,
+      "hostTimeout": false,
+      "log": "final-all-diagnostics-device.log",
+      "final": true
+    }
+  ],
+  "distinctFinalMethods": [
+    [
+      "io.github.mesteriis.rune.keyboard.qa.AppMenuInstrumentedTest",
+      "detailHeaderRespectsStatusBarInsets"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.AppMenuInstrumentedTest",
+      "experimentSearchRetainsDestinationAndQueryAcrossRecreationAndBack"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.AppMenuInstrumentedTest",
+      "homeThemeChoicesPersistAndPreviewEditsOnlyTheSample"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.AppMenuInstrumentedTest",
+      "previewDeletesWholeUnicodeCodePointAndReplacesSelections"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.AppMenuInstrumentedTest",
+      "searchOpensMatchingControlAndBackRestoresQuery"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.SettingsDependenciesInstrumentedTest",
+      "everyRussianExperimentSharesTheBadgeAndLanguageDependency"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.SettingsDependenciesInstrumentedTest",
+      "hiddenStripDisablesDisplayFeatureWithoutClearingItsStoredValue"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.SettingsDependenciesInstrumentedTest",
+      "nativeSwitchAndLabelRespondToObservedTouchBounds"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.SettingsDependenciesInstrumentedTest",
+      "nativeSwitchHasOneNamedCheckableTargetAndBothClickPathsPersist"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.SettingsDependenciesInstrumentedTest",
+      "touchApplyRequiresShadowAndNightStatusRequiresBothLearningOptions"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "actualCandidateDecisionUndoAndSensitiveExclusionsReachSeparateStreams"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "consentStartsWithFreshRuneInputAndDisableStopsTextOnly"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "managementDeleteDisablesBothAndRemovesManagedLogs"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "recreationDuringSecondConfirmationLeavesTextOff"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "returningToLettersAndSwitchingLanguageOpenFreshSegmentsWithoutRefocus"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.TypingDiagnosticsInstrumentedTest",
+      "twoConfirmationsCancelIndependentlyAndSwitchesRemainIndependent"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.qa.UndoContinuityInstrumentedTest",
+      "schemaThreeMigrationPreservesOffAndUndoLivesInSmartTyping"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.smarttyping.tools.TypingControlsInstrumentedTest",
+      "disableAllIsAtomicAndKeepsProtectedWordsAndProfileAssignments"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.smarttyping.tools.TypingControlsInstrumentedTest",
+      "learningLabRecreatesAndEvaluatesShippedLexiconOnFrozenHoldout"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.smarttyping.tools.TypingControlsInstrumentedTest",
+      "manualExpansionTogglePersistsAcrossSettingsRecreation"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.smarttyping.tools.TypingControlsInstrumentedTest",
+      "profileManagerShowsAssignedAppAndItsPreset"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.smarttyping.tools.TypingControlsInstrumentedTest",
+      "protectedWordVetoIsDurableAndIndependentOfGeneralLearning"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.smarttyping.tools.TypingToolsInstrumentedTest",
+      "abbreviationSaveIsDurableAndShownInManager"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.smarttyping.tools.TypingToolsInstrumentedTest",
+      "fourteenControlsPersistIndependentlyThroughRecreation"
+    ],
+    [
+      "io.github.mesteriis.rune.keyboard.smarttyping.tools.TypingToolsInstrumentedTest",
+      "qualityDashboardShowsNumericEventsAndResetClearsDisk"
+    ]
+  ],
+  "priorReplayIdentity": {
+    "receipt": "docs/acceptance/2026-10-27-u5-confirmed-words-evidence.json",
+    "sourceCount": 88,
+    "assetCount": 18,
+    "allMatch": true,
+    "newReplayExecuted": false
+  },
+  "environment": {
+    "androidApi": "36",
+    "abi": "arm64-v8a",
+    "isolatedTaskOwnedAvd": true,
+    "testsCompleted": true,
+    "emulatorStopped": true,
+    "avdDeleted": true,
+    "physicalDeviceAccess": false
+  },
+  "logBindings": {
+    "checks.log": "386e75fc1dc45890b21fed414b0978408051f8ae814c036912857d374c28f305",
+    "checks-result.json": "c117d868eba8f3c58ac49656d2cfab082116ca1644b4d79b7ad44a3e290d984b",
+    "updated-settings-tests-build.log": "c9b48ff9ad5f2228f5adcfd44104f9c22fc11b9ce420a1b6c9d4b60078347f99",
+    "updated-settings-tests-build-result.json": "54b47974e249dfcd7f49ce63bc584c6ce38126955b7469914294b26e6ca0f5f5",
+    "native-action-tests-build.log": "213f667ad8638e341c294d385c7a7ff1491f6c208c4a92a1ed164d87fdb7ffe1",
+    "native-action-tests-build-result.json": "54b47974e249dfcd7f49ce63bc584c6ce38126955b7469914294b26e6ca0f5f5",
+    "navigation-action-tests-build.log": "5dfa3b9da995fa2afec1cf4b1721cd6e9a52212937ae007c35ab7be670f59e68",
+    "navigation-action-tests-build-result.json": "54b47974e249dfcd7f49ce63bc584c6ce38126955b7469914294b26e6ca0f5f5",
+    "final-consent-native-device.log": "f9d96f9b017225de8a721e948efb0ce15a850b183584565edbfd720da007c81c",
+    "final-consent-native-device-result.json": "0bb0fab83d791af68f33fb7320b9aad44d76fbe5fa29ab7dfb9c7cc3e91d8e87",
+    "final-diagnostic-behavior-device.log": "0de3f5ac249a77b655fa5f11f42b1bc914aa411a53def016b9c8cd0ea9d56ecb",
+    "final-diagnostic-behavior-device-result.json": "89bccb0bc61d89016f711f070e33f005dbe6d34da35332ecd29d3b69f198cd26",
+    "settings-run-artifacts.json": "a5357ed304fe91d3d8c96a510651726b805651e5b0031df37ab50b8a2f00553d",
+    "settings-run-test-source-bindings.json": "ddf69e096cc84c9a354ca373fc004b03aa2aa371d40148dbaf1bb3fdf8c928bf",
+    "menu-dependencies-device.log": "d41b33d7ee36200bb0924a6d77890f594017eb3d1b61325f950585a6a787a235",
+    "migrated-consent-controls-device.log": "a051cc426a2f603b6a1d5e6f91edba92b096e2aaff59ff557d8cdc31509ca1f9",
+    "final-settings-device.log": "54b02eadbd2ffb98c5b9777264f9fb15b96eddf17966e47ed42a764189b4b68a",
+    "extended-run-timeout.json": "3a668e5f2095bac2186ca31ae6fc9e2aa98cfba8c0237e7ebc6903b0a3c47e9c",
+    "screenshot-state.json": "336103f9254d4396d0497afdbbd84142fc626f84fc0fda4cfcefb03ff90f55ba",
+    "cleanup.json": "a130d8f35985e1287e01a1b6ab8455e1f62dc7d6a9efaeb77fd72cc749664a45",
+    "final-settings-touch-device.log": "1d2301a1642c77c8e1413f822805eca6d5f6546e33e7fb2b61b488e4575dd945",
+    "final-settings-touch-device-result.json": "9c14ffa645e2fd11cfb2d9efe10174a46097073492697c54102239b3cd6e038e",
+    "final-all-diagnostics-device.log": "b8705fd1ae2c1dac494c737e9bd9ea3e6945588a471e731c57712c7d3c0885cc",
+    "final-all-diagnostics-device-result.json": "b98d4e14a01ea1b487c65874aca0e30716a4f9194a1e4c1573bd00ba0cdcebd8"
+  },
+  "screenshots": {
+    "fastlane/metadata/android/ru-RU/images/phoneScreenshots/02-settings.png": "2959ad582c52c8dd90873892e40b0b62e7413318130ff31ce6d38fd8257b9266",
+    "docs/acceptance/images/2026-10-27-u6-experiments.png": "b0a0591e5e3a664ad4a58afd38b55ca2da32b2412e886c3225fe662add4bb9cc"
+  },
+  "committedDocumentationBindings": {
+    "docs/acceptance/2026-10-27-u6-switch-dependencies.md": "79cd80fe90c9f4833e9ebaffe8a5db83f8cca34aad6900a6034f342b1afd2e5b",
+    "docs/plans/2026-10-27-review-completion.md": "590c5574fc37bc30cb939d2283db183b24760fdec0d60de0f52cd758f1c8cb11",
+    "docs/USER_GUIDE.ru.md": "3bc4d2930a267bdeb6085c367c832e457a8936ad63681f2dd4ea0a6a2e9e3cc0"
+  },
+  "limitations": [
+    "Manual TalkBack not performed; native-node tests are not a replacement",
+    "No physical Fold access, update or API-26 acceptance",
+    "Earlier coordinate-injection failures retained and not claimed causally fixed",
+    "Extended 25-case observation timed out; no pass inferred and no partial stdout recovered",
+    "Screenshots show synthetic post-test preferences, not fresh defaults",
+    "Prior replay identity is not a new replay, accuracy or performance measurement"
+  ]
+}

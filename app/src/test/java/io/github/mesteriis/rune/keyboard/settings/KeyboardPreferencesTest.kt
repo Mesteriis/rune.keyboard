@@ -420,6 +420,49 @@ class KeyboardPreferencesTest {
         assertEquals(SettingsPage.TYPING, SettingsPage.fromName("TYPING"))
     }
 
+    @Test fun candidateDisplayDependenciesMatchSettingsWithoutClearingSavedChoices() {
+        val hidden = KeyboardSettings.DEFAULT.copy(candidateStrip = false)
+        val display = setOf("phraseSuggestions", "wordBoundarySuggestions", "abbreviations", "phraseReview",
+            "visibleUndo", "learnedRanking", "compactContext", "manualCandidateExpansion")
+        for (feature in AdditionalFeatures.entries) {
+            val reason = feature.unavailableReason(hidden)
+            if (feature.value.name in display) assertEquals(io.github.mesteriis.rune.keyboard.R.string.feature_requires_candidate_strip, reason)
+            else if (feature.value.name != "dynamicTouchApply") assertEquals(null, reason)
+        }
+        val source = FakeSharedPreferences(mapOf(SettingsCodec.KEY_SCHEMA_VERSION to 4,
+            SettingsCodec.KEY_CANDIDATE_STRIP to false, SettingsCodec.KEY_LEARNED_RANKING to true))
+        val facade = KeyboardPreferences(source)
+        val before = source.all
+        val feature = AdditionalFeatures.forKey(SettingsCodec.KEY_LEARNED_RANKING)
+        assertTrue(feature.value.get(facade.readSettings()))
+        assertEquals(io.github.mesteriis.rune.keyboard.R.string.feature_requires_candidate_strip, feature.unavailableReason(facade.readSettings()))
+        assertEquals(before, source.all)
+        facade.writeCandidateStrip(true)
+        assertEquals(null, feature.unavailableReason(facade.readSettings()))
+        assertTrue(feature.value.get(facade.readSettings()))
+    }
+
+    @Test fun russianExperimentsRequireAnEnabledRussianLanguageAndApplyRequiresShadow() {
+        val english = KeyboardSettings.DEFAULT.copy(enabledLanguages = listOf(KeyboardLanguage.ENGLISH), candidateStrip = true)
+        for (feature in AdditionalFeatures.entries) {
+            if (feature.russianOnly) assertEquals(io.github.mesteriis.rune.keyboard.R.string.feature_requires_russian, feature.unavailableReason(english))
+            else assertEquals(null, feature.unavailableReason(english))
+        }
+        val apply = AdditionalFeatures.forKey(SettingsCodec.KEY_DYNAMIC_TOUCH_APPLY)
+        assertEquals(io.github.mesteriis.rune.keyboard.R.string.feature_requires_dynamic_touch, apply.unavailableReason(KeyboardSettings.DEFAULT))
+        assertEquals(null, apply.unavailableReason(KeyboardSettings.DEFAULT.copy(dynamicTouch = true, candidateStrip = false)))
+    }
+
+    @Test fun collectionAndPatternLearningRemainIndependentForAllLanguages() {
+        for (language in KeyboardLanguage.entries) for (collect in listOf(false, true)) for (patterns in listOf(false, true)) {
+            val settings = KeyboardSettings.DEFAULT.copy(enabledLanguages = listOf(language), candidateStrip = false,
+                collectExamples = collect, typoPatterns = patterns)
+            for (key in listOf(SettingsCodec.KEY_COLLECT_EXAMPLES, SettingsCodec.KEY_TYPO_PATTERNS)) {
+                assertEquals(null, AdditionalFeatures.forKey(key).unavailableReason(settings))
+            }
+        }
+    }
+
     private class FakeSharedPreferences(initial: Map<String, Any?> = emptyMap()) : SharedPreferences {
         private val values = initial.toMutableMap()
         private val listeners = mutableSetOf<SharedPreferences.OnSharedPreferenceChangeListener>()

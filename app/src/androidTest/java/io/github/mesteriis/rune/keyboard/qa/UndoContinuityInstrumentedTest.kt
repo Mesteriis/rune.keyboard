@@ -3,7 +3,7 @@ package io.github.mesteriis.rune.keyboard.qa
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
+import android.widget.Switch
 import android.widget.TextView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -82,16 +82,16 @@ class UndoContinuityInstrumentedTest : ImeTestBase() {
                 fun index(id: Int) = labels.indexOfFirst { it.equals(activity.getString(id), ignoreCase = true) }
                 val smart = index(R.string.settings_section_smart_typing)
                 val undo = index(R.string.settings_visible_undo)
-                val tools = index(R.string.settings_section_tools)
-                assertTrue(smart >= 0 && undo > smart && tools > undo)
+                val mechanics = index(R.string.settings_mechanical_punctuation)
+                assertTrue(smart >= 0 && undo > smart && mechanics > undo)
                 val row = activity.window.decorView.findViewWithTag<View>(R.string.settings_visible_undo)
-                assertFalse(row.findViewById<CheckBox>(R.id.row_checkbox).isChecked)
+                assertFalse(row.findViewById<Switch>(R.id.row_checkbox).isChecked)
                 assertTrue(row.performClick())
             }
             scenario.recreate()
             scenario.onActivity { activity ->
                 val row = activity.window.decorView.findViewWithTag<View>(R.string.settings_visible_undo)
-                assertTrue(row.findViewById<CheckBox>(R.id.row_checkbox).isChecked)
+                assertTrue(row.findViewById<Switch>(R.id.row_checkbox).isChecked)
                 assertTrue(preferences.readSettings().visibleUndo)
                 assertTrue(row.performClick())
                 assertFalse(preferences.readSettings().visibleUndo)

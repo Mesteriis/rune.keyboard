@@ -2,7 +2,7 @@ package io.github.mesteriis.rune.keyboard.qa
 
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
+import android.widget.Switch
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -75,7 +75,7 @@ class AppMenuInstrumentedTest {
                 scenario.recreate()
                 scenario.onActivity { activity ->
                     val row = activity.findViewById<LinearLayout>(R.id.settings_container).findViewWithTag<View>(R.string.settings_number_row)
-                    assertEquals(!before.numberRow, row.findViewById<CheckBox>(R.id.row_checkbox).isChecked)
+                    assertEquals(!before.numberRow, row.findViewById<Switch>(R.id.row_checkbox).isChecked)
                     activity.findViewById<View>(R.id.menu_back).performClick()
                     val search = activity.findViewById<EditText>(R.id.menu_search)
                     assertEquals(activity.getString(R.string.settings_number_row), search.text.toString())

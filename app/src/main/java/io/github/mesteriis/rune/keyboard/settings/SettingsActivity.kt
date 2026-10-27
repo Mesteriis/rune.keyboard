@@ -10,7 +10,6 @@ import android.view.inputmethod.InputMethodManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -217,7 +216,9 @@ class SettingsActivity : ThemedActivity() {
         addAdditionalFeature(SettingsCodec.KEY_DYNAMIC_TOUCH)
         addAdditionalFeature(SettingsCodec.KEY_DYNAMIC_TOUCH_APPLY)
         addAdditionalFeature(SettingsCodec.KEY_TYPO_PATTERNS)
-        addNavigationRow(R.string.learning_title, getString(R.string.settings_collect_examples_summary)) {
+        val nightStatus = if (settings.collectExamples && settings.typoPatterns) R.string.learning_night_enabled
+            else R.string.learning_night_requires_features
+        addNavigationRow(R.string.learning_title, getString(R.string.settings_collect_examples_summary) + "\n" + getString(nightStatus)) {
             startActivity(Intent(this, LearningLabActivity::class.java))
         }
         addAdditionalFeature(SettingsCodec.KEY_MANUAL_CANDIDATE_EXPANSION)
@@ -540,7 +541,10 @@ class SettingsActivity : ThemedActivity() {
 
     private fun addAdditionalFeature(key: String) {
         val feature = AdditionalFeatures.forKey(key)
-        addToggleRow(feature.title, feature.summary, feature.value.get(settings)) { enabled ->
+        addToggleRow(feature.title, feature.summary, feature.value.get(settings),
+            enabled = feature.unavailableReason(settings) == null,
+            unavailableReason = feature.unavailableReason(settings),
+            experimentalRussian = feature.russianOnly) { enabled ->
             preferences.writeAdditionalFeature(feature.key, enabled)
             if (feature.key == SettingsCodec.KEY_COLLECT_EXAMPLES || feature.key == SettingsCodec.KEY_TYPO_PATTERNS) {
                 syncLearningJob()
@@ -552,18 +556,24 @@ class SettingsActivity : ThemedActivity() {
         titleRes: Int,
         summaryRes: Int,
         checked: Boolean,
+        enabled: Boolean = true,
+        unavailableReason: Int? = null,
+        experimentalRussian: Boolean = false,
         onChanged: (Boolean) -> Unit,
     ) {
-        val row = newRow(getString(titleRes), getString(summaryRes))
-        val checkBox = row.findViewById<CheckBox>(R.id.row_checkbox)
-        checkBox.visibility = View.VISIBLE
-        checkBox.isChecked = checked
-        row.setOnClickListener {
-            val updated = !checkBox.isChecked
-            checkBox.isChecked = updated
-            onChanged(updated)
-            reload()
+        val summary = listOfNotNull(getString(summaryRes), unavailableReason?.let(::getString)).joinToString("\n")
+        val row = newRow(getString(titleRes), summary)
+        if (experimentalRussian) row.findViewById<TextView>(R.id.row_badge).apply {
+            setText(R.string.feature_experiment_ru)
+            visibility = View.VISIBLE
         }
+        row.setOnClickListener {
+            if (row.isEnabled) {
+                onChanged(!checked)
+                reload()
+            }
+        }
+        SettingsToggleRow.bind(row, checked, enabled)
         record(row, titleRes)
     }
 

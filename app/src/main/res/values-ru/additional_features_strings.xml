@@ -2,4 +2,10 @@
 <resources>
     <string name="menu_experiments">Эксперименты</string>
     <string name="menu_experiments_summary">Необязательные эксперименты ввода для русского языка и управление дополнительными функциями.</string>
+    <string name="feature_experiment_ru">Эксперимент · RU</string>
+    <string name="feature_requires_russian">Для этой функции включите русский язык в разделе «Языки».</string>
+    <string name="feature_requires_candidate_strip">Для этой функции включите строку подсказок.</string>
+    <string name="feature_requires_dynamic_touch">Сначала включите эксперимент с областями нажатия.</string>
+    <string name="learning_night_enabled">Ночные проверки включены и запускаются при соблюдении условий ночного окна, зарядки и безопасности.</string>
+    <string name="learning_night_requires_features">Для ночных проверок включите сохранение примеров и обучение типам опечаток. Ручная проверка и сброс остаются доступны.</string>
 </resources>

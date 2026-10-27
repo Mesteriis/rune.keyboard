@@ -2,4 +2,10 @@
 <resources>
     <string name="menu_experiments">Experimentos</string>
     <string name="menu_experiments_summary">Experimentos de entrada opcionales solo para ruso y controles de funciones adicionales.</string>
+    <string name="feature_experiment_ru">Experimento · RU</string>
+    <string name="feature_requires_russian">Activa ruso en Idiomas para usar esta función.</string>
+    <string name="feature_requires_candidate_strip">Activa la barra de sugerencias para usar esta función.</string>
+    <string name="feature_requires_dynamic_touch">Activa primero el experimento de zonas de pulsación.</string>
+    <string name="learning_night_enabled">Las comprobaciones nocturnas están habilitadas cuando se cumplen las condiciones nocturnas, de carga y seguridad.</string>
+    <string name="learning_night_requires_features">Las comprobaciones nocturnas requieren recopilar ejemplos y aprender patrones de errores. La comprobación manual y el restablecimiento siguen disponibles.</string>
 </resources>

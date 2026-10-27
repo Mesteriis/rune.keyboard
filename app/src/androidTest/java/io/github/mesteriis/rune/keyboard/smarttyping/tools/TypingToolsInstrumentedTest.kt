@@ -3,7 +3,7 @@ package io.github.mesteriis.rune.keyboard.smarttyping.tools
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.CheckBox
+import android.widget.Switch
 import android.widget.TextView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
@@ -49,7 +49,7 @@ class TypingToolsInstrumentedTest {
                         val title = descendants(activity.window.decorView).filterIsInstance<TextView>()
                             .single { it.id == R.id.row_title && it.text.toString() == activity.getString(titles[index]) }
                         val row = title.parent.parent as View
-                        assertFalse(row.findViewById<CheckBox>(R.id.row_checkbox).isChecked)
+                        assertFalse(row.findViewById<Switch>(R.id.row_checkbox).isChecked)
                         assertTrue(row.performClick())
                     }
                     assertEquals(titles.indices.map { it <= index }, flags(prefs.readSettings()))
@@ -57,7 +57,7 @@ class TypingToolsInstrumentedTest {
                     scenario.onActivity { activity ->
                         val title = descendants(activity.window.decorView).filterIsInstance<TextView>()
                             .single { it.id == R.id.row_title && it.text.toString() == activity.getString(titles[index]) }
-                        assertTrue((title.parent.parent as View).findViewById<CheckBox>(R.id.row_checkbox).isChecked)
+                        assertTrue((title.parent.parent as View).findViewById<Switch>(R.id.row_checkbox).isChecked)
                     }
                 }
             }

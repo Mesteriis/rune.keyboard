@@ -5,7 +5,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.CheckBox
+import io.github.mesteriis.rune.keyboard.settings.SettingsToggleRow
 import android.widget.LinearLayout
 import android.widget.TextView
 import io.github.mesteriis.rune.keyboard.R
@@ -99,10 +99,9 @@ internal class DiagnosticsSettingsContribution(private val activity: Activity, c
     }
     private fun refresh() {
         for ((row, enabled) in listOf(metadata to confirmed.metadata, text to confirmed.text)) {
-            row.isEnabled = !busy && !closed
-            row.findViewById<CheckBox>(R.id.row_checkbox).apply { visibility = View.VISIBLE; isChecked = enabled }
             row.findViewById<TextView>(R.id.row_summary).setText(if (busy) busyMessage else
                 if (row === metadata) R.string.diagnostics_metadata_summary else R.string.diagnostics_text_summary)
+            SettingsToggleRow.bind(row, enabled, !busy && !closed)
         }
     }
     override fun close() {

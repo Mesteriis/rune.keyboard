@@ -57,7 +57,7 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
 
     @Test fun twoConfirmationsCancelIndependentlyAndSwitchesRemainIndependent() {
         driver.launchSettings()
-        row("diagnostics_text_toggle").click(); dialog("diagnostics_scope_title")
+        clickRow("diagnostics_text_toggle"); dialog("diagnostics_scope_title")
         assertFalse(recorder.preferences.text)
         driver.device.pressBack(); settle(); assertFalse(recorder.preferences.text)
         clickRow("diagnostics_text_toggle"); dialog("diagnostics_scope_title"); positive()
@@ -65,10 +65,10 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         button("button2").click(); settle(); assertFalse(recorder.preferences.text)
         enableTextThroughDialogs()
         assertFalse(recorder.preferences.metadata)
-        row("diagnostics_text_toggle").click(); awaitPreference(text = false)
+        clickRow("diagnostics_text_toggle"); awaitPreference(text = false)
         clickRow("diagnostics_metadata_toggle"); awaitPreference(metadata = true)
         assertFalse(recorder.preferences.text)
-        row("diagnostics_metadata_toggle").click(); awaitPreference(metadata = false)
+        clickRow("diagnostics_metadata_toggle"); awaitPreference(metadata = false)
     }
 
     @Test fun recreationDuringSecondConfirmationLeavesTextOff() {
@@ -130,7 +130,7 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         assertTrue(metadata.isNotBlank()); assertMetadataVocabulary(metadata)
         assertFalse(metadata.contains("aftercanary")); noReadback()
 
-        driver.launchSettings(); row("diagnostics_text_toggle").click(); awaitPreference(text = false)
+        driver.launchSettings(); clickRow("diagnostics_text_toggle"); awaitPreference(text = false)
         val stoppedText = snapshot(DiagnosticStream.TEXT)
         val metadataBefore = snapshot(DiagnosticStream.METADATA)
         driver.launchComposingQa(); type("disabledcanary"); space()
@@ -196,7 +196,7 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         clickRow("diagnostics_metadata_toggle"); awaitPreference(metadata = true)
         driver.launchComposingQa(); type("deletecanary"); space()
         assertTrue(snapshot(DiagnosticStream.TEXT).isNotBlank())
-        driver.launchSettings(); row("diagnostics_manage").click()
+        driver.launchSettings(); clickRow("diagnostics_manage")
         checkNotNull(driver.device.wait(Until.findObject(By.res(ImeTestDriver.PACKAGE_NAME,
             "diagnostics_delete")), ImeTestDriver.WAIT_MILLIS)).click()
         awaitPreference(text = false, metadata = false); operation(recorder::barrier)
@@ -236,14 +236,17 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         awaitPreference(text = true)
     }
     private fun clickRow(id: String) {
-        row(id) // Scroll and wait for the enabled real row before invoking its actual click listener.
+        row(id) // Scroll and wait for the named native accessibility target.
         instrumentation.runOnMainSync {
             val activity = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED)
                 .filterIsInstance<SettingsActivity>().single()
             val resource = context.resources.getIdentifier(id, "id", context.packageName)
             val view = activity.findViewById<android.view.View>(resource)
             assertTrue(view.isShown && view.isEnabled)
-            assertTrue(view.performClick())
+            val toggle = view.findViewById<android.widget.Switch>(R.id.row_checkbox)
+            val target = if (toggle != null && toggle.visibility == android.view.View.VISIBLE) toggle else view
+            assertTrue(target.isShown && target.isEnabled)
+            assertTrue(target.performAccessibilityAction(android.view.accessibility.AccessibilityNodeInfo.ACTION_CLICK, null))
         }
     }
 
@@ -252,14 +255,29 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
             driver.shell("am start -W -f 0x24000000 -n ${ImeTestDriver.PACKAGE_NAME}/.settings.SettingsActivity --es settings_page ADVANCED")
             instrumentation.waitForIdleSync()
         }
-        if (!driver.device.hasObject(By.res(ImeTestDriver.PACKAGE_NAME, id))) {
+        val toggleTitle = when (id) {
+            "diagnostics_metadata_toggle" -> R.string.diagnostics_metadata_title
+            "diagnostics_text_toggle" -> R.string.diagnostics_text_title
+            else -> null
+        }
+        // The native Switch is the single accessibility target; the row keeps its View ID.
+        val resource = if (toggleTitle == null) id else "row_checkbox"
+        val description = toggleTitle?.let { context.getString(it) + "\n" }
+        val selector = By.res(ImeTestDriver.PACKAGE_NAME, resource).let { match ->
+            if (description == null) match else match.descStartsWith(description)
+        }
+        if (!driver.device.hasObject(selector)) {
             assertTrue("Settings root not visible", driver.device.wait(Until.hasObject(
                 By.res(ImeTestDriver.PACKAGE_NAME, "settings_scroll")), ImeTestDriver.WAIT_MILLIS))
             @Suppress("DEPRECATION")
             UiScrollable(UiSelector().resourceId("${ImeTestDriver.PACKAGE_NAME}:id/settings_scroll"))
-                .apply { setAsVerticalList(); scrollIntoView(UiSelector().resourceId("${ImeTestDriver.PACKAGE_NAME}:id/$id")) }
+                .apply {
+                    setAsVerticalList()
+                    val match = UiSelector().resourceId("${ImeTestDriver.PACKAGE_NAME}:id/$resource")
+                    scrollIntoView(if (description == null) match else match.descriptionStartsWith(description))
+                }
         }
-        return checkNotNull(driver.device.wait(Until.findObject(By.res(ImeTestDriver.PACKAGE_NAME, id).enabled(true)), ImeTestDriver.WAIT_MILLIS))
+        return checkNotNull(driver.device.wait(Until.findObject(selector.enabled(true)), ImeTestDriver.WAIT_MILLIS))
     }
     private fun dialog(name: String) {
         val id = context.resources.getIdentifier(name, "string", context.packageName)
