@@ -27,9 +27,28 @@ separately. :app:testDebugUnitTest still completes successfully in this dirty
 checkout without executing the release checkpoint. No Android/runtime source or
 asset changed in this step.
 
-A positive full release build from a separate clean checkout is pending at this
-implementation commit. It must be bound to its exact source revision and final
-artifact before that acceptance is claimed.
+The positive build now passes from an independent local clone of implementation
+commit ea94b15, with its recorded submodule initialized. No local signing file was
+copied; the retained output is an unsigned release APK, 180,133,309 bytes. Before
+and after the build the checkpoint reports zero status entries and one initialized
+matching submodule. assembleRelease, apkFootprint, privacyGateRelease and the
+runtime native symbol gate pass. The build uses the existing offline dependency
+cache; this is a clean Git checkout build, not a cache-free/hermetic build.
+
+The actual packaged-native gate and qualification metadata verifier also pass;
+runtimeBuildId remains 356dc78ec8b156462d8384ca14f0e20ff831c66b83c38831f40edfd6bd645613.
+All 69 source assets match the retained APK exactly. The strict local-source-path
+audit still fails with NATIVE_LOCAL_SOURCE_PATH on this newly built artifact.
+Native-model/device smoke remains unrun.
+
+A controlled edit to CHANGELOG.md in the isolated checkout then repeats the same
+Gradle command with configuration-cache reuse. The live checkpoint fails with
+RELEASE_SOURCE_DIRTY and the unsigned APK hash stays unchanged. The saved original
+file bytes are restored in finally; a subsequent checkpoint passes again. The
+original dirty working repository is untouched. The first clone initialization
+check correctly refused an unregistered submodule even though object checkout had
+completed; explicit registration in that clone fixed its metadata before building.
+That initial failure and the successful before/after checks are retained.
 
 This is Git source-state validation, not a hermetic build, qualification, signing
 or publication certificate. Ignored SDK/signing/build files remain ignored by Git.

@@ -1,7 +1,8 @@
 {
   "card": "Q1",
-  "status": "partial; live Git checkpoint and dirty-source rejection verified; clean-checkout release and prepared-source lifecycle pending",
-  "baseCommit": "4bda6ce20711fcd76e0a3d3a2da3a3094b5a72f4",
+  "status": "partial; live Git checkpoint, dirty/cache refusal and clean independent checkout release verified; prepared-source/distribution/device requirements open",
+  "buildSourceCommit": "ea94b15f40e6f0f2433a10ead4c972ea25fd77cf",
+  "recordCommitBeforeReceiptUpdate": "ea94b15f40e6f0f2433a10ead4c972ea25fd77cf",
   "sources": [
     {
       "path": "tools/release_source_check.py",
@@ -25,12 +26,12 @@
     },
     {
       "path": "docs/plans/2026-10-27-review-completion.md",
-      "bytes": 18363,
-      "sha256": "cfb3e739c7e15ea2109b5b7e2d4db372f75b57b3101c020b010ab17be8b1de8d"
+      "bytes": 18389,
+      "sha256": "669f219fedb79f95fc559a91a864c6556372ca1493492de9a0fee1a96f7ef9f6"
     }
   ],
   "tests": 8,
-  "dirtyRelease": {
+  "dirtyMainRelease": {
     "result": {
       "command": [
         "./gradlew",
@@ -63,32 +64,570 @@
       "sha256": "8fb976dc602a89a48196b3991b36086f6b34f8adf7054363018ea6cf298f3e31"
     }
   },
-  "initialGradleSetupFailure": {
+  "cleanBuild": {
     "result": {
       "command": [
         "./gradlew",
         "--offline",
-        ":app:assembleRelease"
+        "--max-workers=2",
+        ":app:assembleRelease",
+        ":app:apkFootprint",
+        ":app:privacyGateRelease",
+        ":runtime-llama:nativeSymbolGate"
       ],
-      "exitCode": 1,
-      "releaseArtifactUnchanged": true,
-      "sourceDirtyRefusal": false
+      "exitCode": 0,
+      "sourceCommit": "ea94b15f40e6f0f2433a10ead4c972ea25fd77cf",
+      "elapsedSeconds": 114.669
     },
     "log": {
-      "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/dirty-release.log",
-      "bytes": 619,
-      "sha256": "3e74e18a3401ac8047645332781e4b3df31b212674399009620f5ab095597f3a"
+      "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/clean-build.log",
+      "bytes": 11995,
+      "sha256": "ad63a21fc77c25a6cbf51fa5c9433c4eb02e2317bf2073da924b2b9a12a15949"
     },
-    "cause": "Variant preReleaseBuild task is registered later by AGP; switched to lazy task matching before verifying real dirty refusal"
+    "checkoutKind": "independent local clone",
+    "signingFilesCopied": false,
+    "dependencyMode": "offline existing cache; no hermetic/no-cache claim"
   },
-  "cleanCheckoutReleaseBuild": false,
+  "artifact": {
+    "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/clean-release-unsigned.apk",
+    "bytes": 180133309,
+    "sha256": "bb52e5c9b8a0aaf13d162a51efcdef1bcb0b6757a4ec914e9634e428cc554dc1"
+  },
+  "footprint": {
+    "apkBytes": 180133309,
+    "apkSha256": "bb52e5c9b8a0aaf13d162a51efcdef1bcb0b6757a4ec914e9634e428cc554dc1",
+    "budgetSha256": "dfde1a40cd838d4571fde32b2602a2c5b8ce0aeccc390c4e1e436dfb9e009a58",
+    "categories": {
+      "dex": {
+        "compressedBytes": 366064,
+        "entries": 1,
+        "uncompressedBytes": 741796
+      },
+      "experiments": {
+        "compressedBytes": 57119336,
+        "entries": 26,
+        "uncompressedBytes": 57767890
+      },
+      "lexicon": {
+        "compressedBytes": 108938732,
+        "entries": 37,
+        "uncompressedBytes": 109877695
+      },
+      "lib": {
+        "compressedBytes": 9999072,
+        "entries": 4,
+        "uncompressedBytes": 9999072
+      },
+      "other": {
+        "compressedBytes": 159007,
+        "entries": 18,
+        "uncompressedBytes": 305759
+      },
+      "res": {
+        "compressedBytes": 3510436,
+        "entries": 43,
+        "uncompressedBytes": 3541197
+      }
+    },
+    "compressedBytes": 180092647,
+    "containerBytes": 40662,
+    "nativeByAbi": {
+      "arm64-v8a": 4794912,
+      "x86_64": 5204160
+    },
+    "passed": true,
+    "schema": 1,
+    "uncompressedBytes": 182233409,
+    "violations": []
+  },
+  "packagedAssets": {
+    "passed": true,
+    "assets": 69,
+    "bindings": [
+      {
+        "entry": "assets/emoji/LICENSE.txt",
+        "bytes": 2089,
+        "sha256": "12466a91eed5ab0ae7288c4f4425e3e1907c3532686ecacc5a49b51c1ab428c9"
+      },
+      {
+        "entry": "assets/emoji/catalog-manifest.json",
+        "bytes": 1856,
+        "sha256": "4356d6f833c88c91ccdf1fffd5e07a2d1fc221548e8040f9e240eff1e591f09f"
+      },
+      {
+        "entry": "assets/emoji/catalog-v1.tsv",
+        "bytes": 142268,
+        "sha256": "254dad131a86038378e3356c4a8b434fa215a695315adc109d7ff8f9d6f1a1c8"
+      },
+      {
+        "entry": "assets/model/rune-text-0.1.json",
+        "bytes": 462,
+        "sha256": "2c8e0aa785731d2f61f30cf1a93dafd3706739e088727c7c1c2fc2dd671e80fc"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/NOTICE.md",
+        "bytes": 3826,
+        "sha256": "4edf631dcf6d6ae464eb68de061843387c134d6a9620a9705a966480980da696"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/contextual-provenance.json",
+        "bytes": 3211,
+        "sha256": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/contextual-tatoeba-attribution.json",
+        "bytes": 547241,
+        "sha256": "f81b27066cee38a2f2a14c2766e9cceae399d3c7590bca7b63e4d782fd18dd44"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/infinitive-revision-provenance.json",
+        "bytes": 1011,
+        "sha256": "a20fe5c9981e857dda6823fb5aeffb56c365556a6e38542250a714ea3aa20fca"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/joint-correction-provenance.json",
+        "bytes": 4940,
+        "sha256": "7b42d0a46dd754d32903f73dabcefa7eea462f5c6cba1e886a06008bd22cf5e7"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/joint-rescue-provenance.json",
+        "bytes": 5437,
+        "sha256": "4700fab35c3d9ea83457920187ae41ea88c7a95220325401cf13d83bcd83fcdb"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/neighbor-recovery-provenance.json",
+        "bytes": 4927,
+        "sha256": "f988fea3f6d96f68ad0394e5a4ded6e067dec8fb305d561415cdc77c4440e4ce"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/noun-case-provenance.json",
+        "bytes": 949,
+        "sha256": "a9b1760a0b462a68ff38264be9ae13a9dac9ebf5840cf606778b32c1d2910235"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/provenance.json",
+        "bytes": 8103,
+        "sha256": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-context.bin",
+        "bytes": 81848,
+        "sha256": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-context.gram",
+        "bytes": 39593067,
+        "sha256": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-contextual-policy.json",
+        "bytes": 668,
+        "sha256": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-contextual-ranker.bin",
+        "bytes": 22036,
+        "sha256": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-conversation.ctx",
+        "bytes": 2083526,
+        "sha256": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-infinitive-revision-policy.json",
+        "bytes": 899,
+        "sha256": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin",
+        "bytes": 22036,
+        "sha256": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-joint-ranker.bin",
+        "bytes": 22036,
+        "sha256": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-joint-rescue-policy.json",
+        "bytes": 1314,
+        "sha256": "ebdb0e83f3c4ed3476f5b317e31619415ca020d9703cd3d6900b9e8ac5c4701d"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-joint-rescue-ranker.bin",
+        "bytes": 39444,
+        "sha256": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-neighbor-ranker.bin",
+        "bytes": 22036,
+        "sha256": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-noun-case-policy.json",
+        "bytes": 920,
+        "sha256": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-noun-case-ranker.bin",
+        "bytes": 22036,
+        "sha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-ranker-auto-v1.bin",
+        "bytes": 22036,
+        "sha256": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-ranker.bin",
+        "bytes": 22036,
+        "sha256": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-ranking-context.bin",
+        "bytes": 320216,
+        "sha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50"
+      },
+      {
+        "entry": "assets/smarttyping/experiments/ru-wiki.ctx",
+        "bytes": 14912091,
+        "sha256": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/case/en.case",
+        "bytes": 457101,
+        "sha256": "2d5ba3c807ef8c66be5222b01c3cd0f98645a891c12b6356827ea58544725a34"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/case/es.case",
+        "bytes": 26687,
+        "sha256": "52614678597416daf63763bb1f34015097d97ab974d9aa951b0221a67105a6fa"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/case/ru.case",
+        "bytes": 672062,
+        "sha256": "845144afb06ae7881f0db2f577f340694b8c7dfa5fee9685563ec4852939c81b"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/en.trie",
+        "bytes": 4358176,
+        "sha256": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/en.trie.lengths",
+        "bytes": 544786,
+        "sha256": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/es.trie",
+        "bytes": 20015680,
+        "sha256": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/es.trie.lengths",
+        "bytes": 2501974,
+        "sha256": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/frequency/en.ranks",
+        "bytes": 485040,
+        "sha256": "a8786c4d9fa1d7522e8c9d068679e3c61e32ee49dc3ca34898ccbd0fd19f4c6f"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/frequency/es.ranks",
+        "bytes": 2673088,
+        "sha256": "5fb3e5cca1493e1aebb64f2960ac823fe50ee189c222a9df952b622ebd3cf613"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/frequency/ru.ranks",
+        "bytes": 5746232,
+        "sha256": "09cb1675723b66703e76f871b621068df6c0677b4c17b71e6a68fe2c8d3f328b"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/CC-BY-SA-4.0.txt",
+        "bytes": 20138,
+        "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/ES-LICENSE.md",
+        "bytes": 991,
+        "sha256": "2b70fd5cb8d3b34cc6ae322c969557a2270b99017594addb2531ef5ffd9e1b17"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/ES-MPL-1.1.txt",
+        "bytes": 25755,
+        "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/ES-README.txt",
+        "bytes": 2615,
+        "sha256": "0b5c39a863ecb61f5c5631ec1cd977667ef9bda6da6f90e80e9fc0edcbfadd97"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/FrequencyWords-README.md",
+        "bytes": 913,
+        "sha256": "a92fcc50e27f7b2d5860ec1c1ce794dc4c892d945bfa4c8c3136cdfd213ee710"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/FrequencyWords-code-MIT.txt",
+        "bytes": 1068,
+        "sha256": "e08d916cc953f85f7dfa0df530f6d7931f14ce804d053602662d8649b5fac829"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/Hunspell-AUTHORS.txt",
+        "bytes": 759,
+        "sha256": "a0f915313286a6e359ffb3e6586adb445849a79f2e9f0380fae14365fc064519"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/Hunspell-COPYING.LESSER.txt",
+        "bytes": 26531,
+        "sha256": "7c6699c75f87b52bdc542db26d6b1b92892577cda46e20eceb79e2790a1c291b"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/Hunspell-COPYING.MPL.txt",
+        "bytes": 25755,
+        "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/Hunspell-COPYING.txt",
+        "bytes": 18093,
+        "sha256": "640d90f6ee401241ff62834d0d1b33f83049e99b8bfdfa04ed1b0a1635dde3e7"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/Hunspell-license.hunspell.txt",
+        "bytes": 1973,
+        "sha256": "3f7ddd07c296edbfe0a47c7bcc82038ad347a2c4f672345b24f95c624db68513"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/Hunspell-license.myspell.txt",
+        "bytes": 2912,
+        "sha256": "dcda061adeed22b26f276c01ec374f930789ae0d684e5aa8f8be309dd680ff20"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/OpenCorpora-CC-BY-SA-3.0.txt",
+        "bytes": 1567,
+        "sha256": "8495757dbe4b92f9ae8e9a3a3139d0ac88c1e8a770bb5a0bd44f1935805a1ddf"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/RU-Lebedev.txt",
+        "bytes": 1886,
+        "sha256": "262af2f6ad70a61e5ee1332ff44fa8ee50edca819cf33207d8ad6ba6a0c9be52"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/notices/SCOWL-Copyright.txt",
+        "bytes": 11758,
+        "sha256": "283326a422e29c510e2ba6805518c418ce3c35ed1fadc3eec83d2da4f6c5a055"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/provenance/PACKAGED_LEXICONS.md",
+        "bytes": 5201,
+        "sha256": "649ee304c20c4f38d8580de61920ad3f3ec804ed0ab836d4a14368ed51bb0d14"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/provenance/canonical-case-manifest.json",
+        "bytes": 1508,
+        "sha256": "ad31b3f21a3ad8cecb33641bfb829adef287bb80b1afa0cd5096cc73cc9d85f8"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/provenance/frozen-output-manifest.json",
+        "bytes": 10313,
+        "sha256": "ec26c80edd28f2b42008a844c8b0ce83c11759386ccc9de591cb038a7a4f3c48"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/provenance/morphology-manifest.json",
+        "bytes": 9428,
+        "sha256": "85424f944e6649f74e1eea76ffda905a452da3f36c03672eb526bf3ca686abc3"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/provenance/packed-asset-manifest.json",
+        "bytes": 11463,
+        "sha256": "7ce207ab7d05b8800a1d8921f6e55fe81f429f8158bf8ebcebf581cbee7255f0"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/provenance/packed-source-provenance.json",
+        "bytes": 2751,
+        "sha256": "cdeb58ab232f635141c1827751dfe828a79c6d14af17c4227814751baf370edc"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/provenance/rare-word-manifest.json",
+        "bytes": 550,
+        "sha256": "a2514cd65b9af132f6f0bbb523fa15a2d543efae0c993a9949b8b0c2b1e425ab"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/provenance/source-lock.json",
+        "bytes": 6412,
+        "sha256": "28750e183ef99ea33da58b20036e2f0dcb3f7e1f76e8528c21074ac7d6615b70"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/ru.morph",
+        "bytes": 28591430,
+        "sha256": "c1707864a8fbc805aa98bc8307be99f2c9904eec5cc27d26a5220e001d88d28b"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/ru.rare",
+        "bytes": 3009479,
+        "sha256": "434b462d4edb0165946568dfdf2a6729ff8b2590fead1fe815d3912817837b6e"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/ru.trie",
+        "bytes": 36093872,
+        "sha256": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b"
+      },
+      {
+        "entry": "assets/smarttyping/lexicon/ru.trie.lengths",
+        "bytes": 4511748,
+        "sha256": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c"
+      },
+      {
+        "entry": "assets/third_party_notices/Rune-LICENSE.txt",
+        "bytes": 1097,
+        "sha256": "f0915c2be02336fa738948bad811afceaf7849c1708608fa877328066d6e0d51"
+      },
+      {
+        "entry": "assets/third_party_notices/llama.cpp-LICENSE.txt",
+        "bytes": 1078,
+        "sha256": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "clean-before",
+      "result": {
+        "exitCode": 0
+      },
+      "log": {
+        "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/clean-before.log",
+        "bytes": 121,
+        "sha256": "6ce0cc655da58faa7bfb0ec098da0019f0b2bbd6a27a5a9812c619ef128b6349"
+      }
+    },
+    {
+      "name": "clean-after",
+      "result": {
+        "exitCode": 0
+      },
+      "log": {
+        "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/clean-after.log",
+        "bytes": 121,
+        "sha256": "6ce0cc655da58faa7bfb0ec098da0019f0b2bbd6a27a5a9812c619ef128b6349"
+      }
+    },
+    {
+      "name": "clean-after-cache",
+      "result": {
+        "exitCode": 0
+      },
+      "log": {
+        "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/clean-after-cache.log",
+        "bytes": 121,
+        "sha256": "6ce0cc655da58faa7bfb0ec098da0019f0b2bbd6a27a5a9812c619ef128b6349"
+      }
+    },
+    {
+      "name": "clean-native",
+      "result": {
+        "exitCode": 0
+      },
+      "log": {
+        "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/clean-native.log",
+        "bytes": 591,
+        "sha256": "945a7ba68325cdffbd7a00dcc1c949bd02e69f7b35ca7473b77b0afce8ccffbf"
+      }
+    },
+    {
+      "name": "clean-qualification",
+      "result": {
+        "exitCode": 0
+      },
+      "log": {
+        "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/clean-qualification.log",
+        "bytes": 107,
+        "sha256": "9aaede5ebdafde480685bde73e4d358debda215b3475a0fea6cf27bdc032bd9a"
+      }
+    },
+    {
+      "name": "clean-strict-path",
+      "result": {
+        "exitCode": 1,
+        "passed": false,
+        "reason": "NATIVE_LOCAL_SOURCE_PATH"
+      },
+      "log": {
+        "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/clean-strict-path.log",
+        "bytes": 54,
+        "sha256": "5e27bd1b2db1e7be0cabc30889a029e55d6d18bf9b78036e5ad4e6d6e31a1f38"
+      }
+    }
+  ],
+  "cacheRefusal": {
+    "result": {
+      "command": [
+        "./gradlew",
+        "--offline",
+        "--max-workers=2",
+        ":app:assembleRelease",
+        ":app:apkFootprint",
+        ":app:privacyGateRelease",
+        ":runtime-llama:nativeSymbolGate"
+      ],
+      "exitCode": 1,
+      "sourceDirtyRefusal": true,
+      "configurationCacheReused": true,
+      "apkUnchanged": true
+    },
+    "log": {
+      "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/cache-dirty.log",
+      "bytes": 8227,
+      "sha256": "f24e3a44a8771b900a34c72003056ba7fbf6f347ecf8ff2d386255aafdb76a08"
+    },
+    "syntheticChangeRestored": true
+  },
+  "setupFailures": [
+    {
+      "name": "AGP registration timing",
+      "result": {
+        "command": [
+          "./gradlew",
+          "--offline",
+          ":app:assembleRelease"
+        ],
+        "exitCode": 1,
+        "releaseArtifactUnchanged": true,
+        "sourceDirtyRefusal": false
+      },
+      "log": {
+        "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/dirty-release.log",
+        "bytes": 619,
+        "sha256": "3e74e18a3401ac8047645332781e4b3df31b212674399009620f5ab095597f3a"
+      }
+    },
+    {
+      "name": "Local URL override did not persist submodule registration",
+      "result": {
+        "exitCode": 1
+      },
+      "log": {
+        "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/clean-before-initialization-failed.log",
+        "bytes": 220,
+        "sha256": "1a604f390f67fb9211f5c65be36f9f1c1f84850dfb2d6fc9288fd4142524dbb0"
+      },
+      "repairResult": {
+        "exitCode": 0
+      }
+    }
+  ],
+  "ordinaryReplayRun": false,
+  "nativeModelSmoke": false,
   "preparedSourceAcceptance": false,
   "phoneRun": false,
   "phoneUpdate": false,
   "published": false,
   "outstanding": [
-    "Positive build from a clean independent checkout",
-    "F-Droid prepared-source lifecycle and next versioned recipe",
-    "Distribution/build-server/device/model and U16 source-path acceptance"
+    "F-Droid pre-prepare source checkpoint and verified preparation lifecycle",
+    "Next versioned recipe/distribution and isolated build-server acceptance",
+    "U16 strict path audit FAILED on this fresh artifact",
+    "Release/model/device smoke on required emulator APIs and Fold"
   ]
 }
