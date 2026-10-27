@@ -1,5 +1,6 @@
 package io.github.mesteriis.rune.keyboard.qa
 
+import android.content.ContextWrapper
 import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.ime.emoji.EmojiEntry
+import io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import org.junit.After
 import org.junit.Assert.*
@@ -74,6 +77,37 @@ class EmojiPanelInstrumentedTest {
         noPayloadReads()
     }
 
+    @Test fun modifierCommitTextIsLiteralAcrossBinderAndDeletesAsOneGrapheme() {
+        "teh".forEach { driver.tapKey(it.toString()) }
+        openPanel()
+        // Tone selection is a separate UI stage. Exercise the existing service action
+        // boundary with fixed synthetic Unicode sequences, without changing the catalog.
+        for (glyph in listOf("👍🏽", "🧑🏽‍💻")) {
+            val before = payloadReads()
+            val keyboard = keyboardSnapshot().keyboard
+            var result: Result<Unit>? = null
+            instrumentation.runOnMainSync {
+                result = runCatching {
+                    var owner = keyboard.rootView.context
+                    while (owner is ContextWrapper && owner !is RuneInputMethodService) {
+                        val next = owner.baseContext
+                        check(next !== owner)
+                        owner = next
+                    }
+                    val service = checkNotNull(owner as? RuneInputMethodService)
+                    val action = RuneInputMethodService::class.java.getDeclaredMethod("handleAction", KeyboardAction::class.java)
+                    action.isAccessible = true
+                    action.invoke(service, KeyboardAction.CommitText(glyph))
+                }
+            }
+            checkNotNull(result).getOrThrow()
+            driver.awaitFieldText("qa_composing_text", "teh$glyph")
+            assertEquals("Isolated insertion must not read editor payload", before, payloadReads())
+            driver.tapKeyByDescription(context.getString(R.string.key_delete))
+            driver.awaitFieldText("qa_composing_text", "teh")
+        }
+    }
+
     private fun openPanel() {
         driver.tapKeyByDescription(context.getString(R.string.key_symbols))
         driver.tapKeyByDescription("Emoji")
@@ -135,9 +169,14 @@ class EmojiPanelInstrumentedTest {
     private fun descendants(view: View): List<View> = listOf(view) + if (view is ViewGroup)
         (0 until view.childCount).flatMap { descendants(view.getChildAt(it)) } else emptyList()
 
-    private fun noPayloadReads() {
+    private fun payloadReads(): Map<String, Int> {
         val counts = checkNotNull(driver.device.findObject(By.res(context.packageName, "qa_composing_stats"))).text
             .orEmpty().split(' ').associate { val (key, value) = it.split('='); key to value.toInt() }
+        return counts.filterKeys { it in setOf("before", "after", "selected", "extracted", "surrounding", "snapshot") }
+    }
+
+    private fun noPayloadReads() {
+        val counts = payloadReads()
         for (name in listOf("before", "after", "selected", "extracted", "surrounding", "snapshot"))
             assertEquals("Unexpected payload read: $name", 0, counts.getValue(name))
     }

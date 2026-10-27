@@ -1,0 +1,104 @@
+{
+  "card": "U9",
+  "status": "partial; modifier insertion/deletion contract verified on API26; other U9 acceptance open",
+  "baseCommit": "3443a95461aa92e8ac20fdca3c5f1aa288d6a9e8",
+  "sources": [
+    {
+      "path": "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/EmojiPanelInstrumentedTest.kt",
+      "bytes": 8891,
+      "sha256": "ce0bf471fb4914c9f72a6aa7917300a3db423d57d380bf8b702ad38c4740a72e"
+    }
+  ],
+  "apkAndTestBindings": {
+    "app/build/outputs/apk/debug/app-debug.apk": "3a2f869672b8a88b437138ea9a84eab4b70a41a82cdefdc8486acec4e0d37a43",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "106a64edd2d248a52572a33209010beb46028a416ce79ab04f4a0164cf965bda",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/EmojiPanelInstrumentedTest.kt": "ce0bf471fb4914c9f72a6aa7917300a3db423d57d380bf8b702ad38c4740a72e"
+  },
+  "build": {
+    "command": [
+      "./gradlew",
+      "--offline",
+      ":app:assembleDebug",
+      ":app:assembleDebugAndroidTest"
+    ],
+    "exitCode": 0
+  },
+  "buildLog": {
+    "path": "build/review-u9-modifier-repaired-20261027/modifier-build.log",
+    "bytes": 6186,
+    "sha256": "aad86b263bf2302de63be84fcdb899f6f1dee09dd4f6b9c9c8cf720b0ace4b5b"
+  },
+  "native": {
+    "result": {
+      "hostExitCode": 0,
+      "expectedTests": 9,
+      "successfulTests": 9,
+      "passed": true,
+      "hostTimeout": false
+    },
+    "log": {
+      "path": "build/review-u9-modifier-repaired-20261027/native-modifier.log",
+      "bytes": 6589,
+      "sha256": "7898270e6dbdf21920cdecc41be0401bba8f88f9485f6963be97d9eb2b9b6cd8"
+    },
+    "cleanup": {
+      "androidApi": "26",
+      "abi": "arm64-v8a",
+      "isolatedTaskOwnedAvd": true,
+      "testsCompleted": true,
+      "emulatorStopped": true,
+      "avdDeleted": true,
+      "physicalDeviceAccess": false
+    }
+  },
+  "priorFailedAttempt": {
+    "result": {
+      "hostExitCode": 0,
+      "expectedTests": 9,
+      "successfulTests": 8,
+      "passed": false,
+      "hostTimeout": false
+    },
+    "log": {
+      "path": "build/review-u9-modifier-20261027/native-modifier.log",
+      "bytes": 9861,
+      "sha256": "8ff5bc5dab0adc0961b08a38a6c1586b5e0d07cdb815f6ffc21519fd674b9b07"
+    },
+    "bindings": {
+      "app/build/outputs/apk/debug/app-debug.apk": "3a2f869672b8a88b437138ea9a84eab4b70a41a82cdefdc8486acec4e0d37a43",
+      "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "2ac894f3af32a54af62bd5d4aed3ac45f1426acbb2784e21612b72324d4d5231",
+      "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/EmojiPanelInstrumentedTest.kt": "ee15e60881c17a53317060fbad2313f2385118542bed892e751b2b04d5bdd747"
+    },
+    "cleanup": {
+      "androidApi": "26",
+      "abi": "arm64-v8a",
+      "isolatedTaskOwnedAvd": true,
+      "testsCompleted": true,
+      "emulatorStopped": true,
+      "avdDeleted": true,
+      "physicalDeviceAccess": false
+    },
+    "cause": "Test searched the keyboard themed context instead of the root IME window context; failed before dispatch. Corrected test-only lookup, then rebuilt and reran the entire nine-case suite on a new clean AVD."
+  },
+  "scope": {
+    "api": 26,
+    "abi": "arm64-v8a",
+    "realImeAndEditorBinder": true,
+    "modifierAction": "Direct synthetic CommitText dispatch at the existing service handleAction entrance while native emoji layer is open; no tone selector UI claim",
+    "sequences": [
+      "👍🏽",
+      "🧑🏽‍💻"
+    ],
+    "expected": "Uncorrected teh prefix, exact full sequence appended, insertion payload-read counters unchanged, one actual Delete key restores prefix",
+    "productionCodeChanged": false,
+    "phoneRun": false,
+    "phoneUpdate": false
+  },
+  "outstanding": [
+    "50ms preview gate remains failed: u9-emoji-deferred receipt",
+    "Cold IME/PSS, release and presented-frame budgets",
+    "Category-switch/recent lookup latency",
+    "Physical Fold both displays",
+    "Manual TalkBack; tone-selector UI is explicitly a separate review stage"
+  ]
+}
