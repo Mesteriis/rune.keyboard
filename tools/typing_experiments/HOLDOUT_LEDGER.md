@@ -208,3 +208,13 @@ pinned dictionary-supported candidate analyses. Prepared train and the explicitl
 promoted prior holdout receive supervised family addenda. Source-backed protected
 proposals are checked against sentence IDs/hashes by both-registry preparation;
 authored controls need no invented source sentence.
+
+`quarantine_unknown_families.py` audits remaining dictionary-unsupported public
+lexical targets and adds optional unsupportedSurfaceKeys to their original parent
+entries. These keys identify exact NFC/casefolded RU word forms, not guessed
+lemmas or inflection families. All 1,402 unsupported row targets (1,357 distinct
+surfaces) currently invoke predictive analyzer units. Predictor methods are
+recorded diagnostically; their normal forms are never imported. Existing family
+axes remain missing and global coverage remains incomplete. New preparation checks
+both typed/expected surfaces, so a claimed new canonical family cannot hide direct
+reuse of a quarantined target. Other inflections are not claimed covered.

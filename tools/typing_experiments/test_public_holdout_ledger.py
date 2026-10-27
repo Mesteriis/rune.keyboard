@@ -63,6 +63,11 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         entries={e['id']:e for e in self.ledger['entries'] if e['id'].startswith('public-tatoeba-history-')}
         self.assertEqual(15,len(entries));self.assertEqual('supervised',entries['public-tatoeba-history-promoted-followon-holdout-families']['usage'])
 
+    def test_unsupported_surface_exclusions_do_not_clear_unproven_families(self):
+        entries=[e for e in self.ledger['entries'] if 'unsupportedSurfaceKeys' in e]
+        self.assertEqual(11,len(entries));self.assertEqual(1357,len({k for e in entries for k in e['unsupportedSurfaceKeys']}))
+        self.assertTrue(all('family' in e['missingAxes'] for e in entries));self.assertFalse(self.ledger['coverage']['complete'])
+
     def test_historical_overlap_disclosure_matches_recorded_keys(self):
         scope={f'public-spelling-v{v}' for v in range(7,13)}|{'public-legacy-spelling-v6'}|{
             'public-early-ru-'+name for name in ('qualification-v2','compact-v3','compact-v4')}

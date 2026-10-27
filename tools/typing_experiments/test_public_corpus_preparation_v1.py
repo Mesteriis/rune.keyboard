@@ -4,6 +4,7 @@ from control_ledger import SCHEMA,key_for,article_key
 from holdout_ledger import keys_for
 from public_corpus_preparation_v1 import preflight
 from test_holdout_ledger import ledger
+from source_identities import unsupported_surface_key
 
 
 def candidate(**changes):
@@ -21,6 +22,11 @@ def controls():
 
 
 class PreparationGateTest(unittest.TestCase):
+    def test_unsupported_surface_cannot_be_hidden_by_a_claimed_canonical_family(self):
+        lex=ledger(False);lex['entries'][0]['unsupportedSurfaceKeys']=[unsupported_surface_key('дарси')]
+        result=self.report(candidate(typed='ДАРСИ',expectedSpelling='дарси',families=['fixture-only-family']),lexical=lex)
+        self.assertEqual('BLOCKED_OVERLAP',result['status']);self.assertEqual(1,result['unsupportedTargetOverlaps'])
+
     def report(self,row=None,task='spelling',**changes):
         args=dict(rows=[row or candidate()],task=task,lexical=ledger(False),controls=controls())|changes
         return preflight(**args)

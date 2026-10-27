@@ -1,12 +1,22 @@
 import unittest
 from control_ledger import article_key
 from holdout_ledger import KEY_SCHEMA,keys_for,validate_ledger
+from source_identities import unsupported_surface_key
 
 
 def tt(**changes):return dict(sourceRepository='tatoeba',language='ru',article='tatoeba:123',sentenceHash='a'*64)|changes
 
 
 class SourceIdentityTest(unittest.TestCase):
+    def test_unsupported_surfaces_fold_case_and_nfc_without_guessing_families(self):
+        self.assertEqual(unsupported_surface_key('ДАРСИ'),unsupported_surface_key('дарси'))
+        self.assertEqual(unsupported_surface_key('е\u0308лка'),unsupported_surface_key('ёлка'))
+        self.assertNotEqual(unsupported_surface_key('съемка'),unsupported_surface_key('съёмка'))
+        self.assertIsNone(unsupported_surface_key('@дарси'));self.assertIsNone(unsupported_surface_key('дарси','en'))
+        from test_holdout_ledger import ledger
+        value=ledger(False);value['entries'][0]['unsupportedSurfaceKeys']=['bad']
+        with self.assertRaisesRegex(ValueError,'UNSUPPORTED_SURFACES'):validate_ledger(value)
+
     def test_tatoeba_and_wikipedia_numeric_ids_do_not_alias(self):
         self.assertNotEqual(keys_for([tt()],'article'),keys_for([dict(article='123')],'article'))
         self.assertEqual(keys_for([tt()],'article'),keys_for([tt(article='tatoeba:00123')],'article'))

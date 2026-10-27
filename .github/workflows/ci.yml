@@ -38,6 +38,7 @@ jobs:
           python3 -m unittest discover -s tools/typing_experiments -p test_import_natural_context_history.py
           python3 -m unittest discover -s tools/typing_experiments -p test_source_identities.py
           python3 -m unittest discover -s tools/typing_experiments -p test_import_tatoeba_history.py
+          python3 -m unittest discover -s tools/typing_experiments -p test_quarantine_unknown_families.py
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

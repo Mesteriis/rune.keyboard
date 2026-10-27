@@ -1,4 +1,18 @@
 """Explicit public source identity namespaces; no implicit Wikipedia/Tatoeba alias."""
+import hashlib
+import json
+import re
+import unicodedata
+
+
+def unsupported_surface_key(value,language='ru'):
+    """Exact unsupported RU word surface only; never a guessed lemma/family."""
+    if language!='ru' or not isinstance(value,str):return None
+    value=unicodedata.normalize('NFC',value).casefold()
+    if not re.fullmatch('[а-яё]{1,32}',value):return None
+    return hashlib.sha256(json.dumps(['rune-unsupported-surface-v1','ru',value],ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
+
+
 def tatoeba_identity(row):
     source=row.get('sourceRepository')
     if source in (None,'wikimedia/wikipedia'):return None

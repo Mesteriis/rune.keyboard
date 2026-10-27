@@ -112,6 +112,10 @@ def validate_ledger(ledger):
                     any(not isinstance(v, str) or not _HASH.fullmatch(v) for v in values)
                     or values != sorted(set(values))):
                 raise ValueError('LEDGER_ENTRY_KEYS')
+        if 'unsupportedSurfaceKeys' in entry:
+            values=entry['unsupportedSurfaceKeys']
+            if (not isinstance(values,list) or not values or any(not isinstance(v,str) or not _HASH.fullmatch(v) for v in values)
+                    or values!=sorted(set(values))):raise ValueError('LEDGER_UNSUPPORTED_SURFACES')
     return ledger
 
 

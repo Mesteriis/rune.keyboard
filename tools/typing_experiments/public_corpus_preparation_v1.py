@@ -11,6 +11,7 @@ from pathlib import Path
 import control_ledger as control
 from holdout_ledger import keys_for,load_ledger,validate_ledger
 from recover_legacy_families import sha
+from source_identities import unsupported_surface_key
 
 TASKS=('spelling','punctuation','protected')
 
@@ -21,7 +22,7 @@ def preflight(rows,task,lexical,controls,profile='new-sentences'):
     if not isinstance(rows,list) or not rows:raise ValueError('PREPARATION_EMPTY_ROWS')
     lexical_overlap={k:0 for k in ('article','sentence','context','family')}
     control_overlap={k:0 for k in ('article','punctuation','protected')}
-    errors=set();seen=set();lex_keys={k:set() for k in lexical_overlap};control_keys={k:set() for k in control_overlap}
+    errors=set();seen=set();lex_keys={k:set() for k in lexical_overlap};control_keys={k:set() for k in control_overlap};surface_keys=set()
     unsupported=set()
     for row in rows:
         if not isinstance(row,dict):errors.add('row-schema');continue
@@ -29,6 +30,9 @@ def preflight(rows,task,lexical,controls,profile='new-sentences'):
         else:seen.add(row['id'])
         language=row.get('language');target=row.get('currentWord') if task=='punctuation' else row.get('expectedSpelling',row.get('typed'))
         typed=row.get('typed',target)
+        for token in (typed,target):
+            surface=unsupported_surface_key(token,language)
+            if surface is not None:surface_keys.add(surface)
         if task=='spelling' and language!='ru':errors.add('unsupported-spelling-language')
         if task=='protected' and (row.get('noAuto') is not True or row.get('cohort')!='protected'
                 or type(row.get('expectedCandidate')) is not int or row['expectedCandidate']!=0
@@ -64,10 +68,11 @@ def preflight(rows,task,lexical,controls,profile='new-sentences'):
     control_overlap['article']=len(control_keys['article']&articles)
     punctuation=[e for e in controls['entries'] if e['kind']=='punctuation']
     article_coverage=bool(punctuation) and all(e.get('articleKeys') for e in punctuation)
-    overlap=any(lexical_overlap.values()) or any(control_overlap.values())
+    unsupported_targets=len(surface_keys & {k for entry in lexical['entries'] for k in entry.get('unsupportedSurfaceKeys',[])})
+    overlap=any(lexical_overlap.values()) or any(control_overlap.values()) or bool(unsupported_targets)
     complete=lexical['coverage']['complete'] and controls['coverageComplete'] and article_coverage and not unsupported
     status='BLOCKED_OVERLAP' if overlap else 'BLOCKED_IDENTITIES' if errors else 'BLOCKED_COVERAGE' if not complete else 'READY_TO_FREEZE'
-    return dict(status=status,task=task,profile=profile,rows=len(rows),lexicalOverlaps=lexical_overlap,controlOverlaps=control_overlap,
+    return dict(status=status,task=task,profile=profile,rows=len(rows),lexicalOverlaps=lexical_overlap,controlOverlaps=control_overlap,unsupportedTargetOverlaps=unsupported_targets,
         identityErrors=sorted(errors),unsupportedLexicalLanguages=sorted(unsupported),
         lexicalCoverageComplete=lexical['coverage']['complete'],controlCoverageComplete=controls['coverageComplete'],
         controlArticleCoverage=article_coverage,modelQualityQualified=False,sourceLabelsQualified=False)

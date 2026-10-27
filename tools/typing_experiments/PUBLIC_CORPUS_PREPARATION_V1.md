@@ -66,3 +66,9 @@ identities are checked by both registries. Source-backed protected proposals
 also undergo lexical source ID/full-sentence checks; authored controls without
 source identities retain the authored-control route. No origin is guessed from
 a numeric ID or a bare Tatoeba-prefixed string.
+
+Preflight additionally checks both typed and expected unsupported RU surface
+keys. This prevents direct reuse of historically unsupported targets even if a
+proposal claims a different canonical family. It does not invent a lemma or
+certify that unseen inflections are covered. Exact surface quarantine supplements
+rather than resolves missing canonical-family coverage.
