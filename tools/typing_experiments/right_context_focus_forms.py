@@ -8,6 +8,19 @@ import re
 from grammar_contrast_corpus import shared_variants, one_edit_cost
 
 
+def source_surface_refusal(surface, normalized_word):
+    """Require an actual lowercase source token before making an adjective label.
+
+    A normalized dictionary form cannot establish the role of a capitalized
+    proper-name homograph. Such tokens need a separately reviewed cohort.
+    """
+    if not isinstance(surface, str) or not re.fullmatch('[а-яё]{3,20}', surface):
+        return 'SOURCE_SURFACE_NOT_PLAIN_LOWERCASE'
+    if surface != normalized_word:
+        return 'SOURCE_SURFACE_CHANGED'
+    return None
+
+
 def predicate_contrast(word, lexicon, paradigm):
     if not isinstance(word, str) or not re.fullmatch('[а-яё]{3,20}', word):
         return None

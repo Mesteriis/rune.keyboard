@@ -1,0 +1,130 @@
+{
+  "stage": "experimental-v4-training-completed-coverage-qualification-failed",
+  "modelSha256": "3e4769ed8ccd60814b485e5b2b08d6794665669693d733308a70146c03e4b3f9",
+  "features": 178,
+  "training": {
+    "groups": 8286,
+    "candidateRows": 118635,
+    "counts": {
+      "unknown_originalGroups": 3771,
+      "unknown_originalTargetFirst": 3747,
+      "correct_originalGroups": 1323,
+      "correct_originalTargetFirst": 1323,
+      "insufficient_right_evidenceGroups": 3192,
+      "insufficient_right_evidenceTargetFirst": 3192
+    },
+    "scalarVsCatBoostMaxAbsoluteDifference": 5.37608273454282e-08,
+    "trainingOnly": true
+  },
+  "calibration": {
+    "calibrationFitPassed": false,
+    "policy": null,
+    "perCohort": null,
+    "independentHoldoutEvaluated": false,
+    "productionQualified": false
+  },
+  "volumeDiagnostic": {
+    "diagnosticOnly": true,
+    "qualificationStillFailed": true,
+    "policy": {
+      "minimumScore": 0.6533313662927991,
+      "minimumMargin": 0.005363189167076787,
+      "calibrationMetrics": {
+        "newCorrect": 62,
+        "newWrong": 0,
+        "priorCorrectLosses": 0,
+        "controlChanges": 0,
+        "installedCorrectLosses": 0,
+        "installedCorrectGains": 62,
+        "netCorrectVsInstalled": 62,
+        "acquisitions": 58,
+        "revisions": 4,
+        "firstBoundaryActions": {
+          "1": 62
+        },
+        "precision": 1.0
+      }
+    },
+    "perCohort": {
+      "matched": {
+        "newCorrect": 57,
+        "newWrong": 0,
+        "priorCorrectLosses": 0,
+        "controlChanges": 0,
+        "installedCorrectLosses": 0,
+        "installedCorrectGains": 57,
+        "netCorrectVsInstalled": 57,
+        "acquisitions": 53,
+        "revisions": 4,
+        "firstBoundaryActions": {
+          "1": 57
+        },
+        "precision": 1.0
+      },
+      "side": {
+        "newCorrect": 5,
+        "newWrong": 0,
+        "priorCorrectLosses": 0,
+        "controlChanges": 0,
+        "installedCorrectLosses": 0,
+        "installedCorrectGains": 5,
+        "netCorrectVsInstalled": 5,
+        "acquisitions": 5,
+        "revisions": 0,
+        "firstBoundaryActions": {
+          "1": 5
+        },
+        "precision": 1.0
+      }
+    },
+    "independentHoldoutEvaluated": false,
+    "productionQualified": false
+  },
+  "independentHoldoutEvaluated": false,
+  "productionQualified": false,
+  "applicationInstalled": false,
+  "previousDisclosedHoldoutUsedForTraining": false,
+  "checks": {
+    "focusedPythonTests": {
+      "count": 73,
+      "outcome": "PASS"
+    },
+    "exportedScalarParity": "PASS",
+    "candidateReplay": {
+      "queries": 802,
+      "outcome": "PASS"
+    },
+    "firstTrainingAttempt": "FAILED: standard-library module shadowing",
+    "trainingRetry": "PASS after helper rename",
+    "androidBuild": "NOT_RUN",
+    "newFeatureKotlinParity": "NOT_RUN",
+    "deviceAcceptance": "NOT_RUN"
+  },
+  "bindings": {
+    "build/right-context-training-v4-20261027/frozen-model.json": "f98ebe251ae5a62a3fb47b163988dcf7e378cd2e78ea19dd6604f17edbdfe9b0",
+    "build/right-context-training-v4-20261027/plan.json": "4d2a9db1ec40aeb7da947389a71fb6c07bfb8c93ffb726c05d2898bfab08d828",
+    "build/right-context-training-v4-20261027/corpus/manifest.json": "e5340775e4e31d5fed8a61c120d3b0001184ad7d3717e7eb26e21debb119271d",
+    "build/right-context-training-v4-20261027/selection.json": "245cebeacd07dff402fbfb155a302c5ac5cefd9620d096da99804e949da65408",
+    "build/right-context-training-v4-20261027/queries.tsv": "e55a8fce78808d141146d55bb96f9178ad3cbeeb7c7004c05410d3ff5fe75c26",
+    "build/right-context-training-v4-20261027/production-pools/receipt.json": "756c40b53b061063b703276d8cb314367da8c14839f5cc14535946d84218bffe",
+    "build/right-context-training-v4-20261027/training-diagnostic.json": "90dfa2f20d2193bb1b86059c462ba50835c6b281b5033dbb0374a13d2e3aaa3c",
+    "build/right-context-training-v4-20261027/python-tests.log": "95656734d1af829d5b15df410bc4685a618f3dbe3c025a8b91083a4327fcff61",
+    "build/right-context-training-v4-20261027/other-part-training-feasibility.json": "a54fa092c1831ee8eda5e34fdf3177bc1a8d4802e99e3555b2b12c1b8216822b",
+    "build/right-context-training-v4-20261027/selection-script-relocation.json": "52b0e274fe26e23ee0795e38d830387b535bd50ac8ae2a24703dfa357ea31cc5",
+    "build/right-context-v4-disclosed-regression-20261027/plan.json": "373f68a627093724945e362676d1a330860fc14502a2f75b258167a182c1fdf3",
+    "build/right-context-v4-calibration-20261027/calibration-result.json": "b75faddd21773e86ec3354bdeca096e4c8f1f8a46930f9ec8e8f506f5b42af35",
+    "build/right-context-v4-calibration-20261027/volume-diagnostic.json": "3b03c3765920daff517bce8810ad0eac7e850ac7ce3c8c5e9ac175faec7cbce8",
+    "build/right-context-fresh-side-v4-20261027/prepare.py": "e13b6201fcfa97dccdff17f22cf3891d44f850c79719f9ba79e85df02f7e354c",
+    "build/right-context-fresh-side-v4-20261027/plan.json": "f47f1bd191b64c0cc62d8afa6056b0fff7e06e6ca15001cfb44fad2fa67d56ef",
+    "build/right-context-v4-disclosed-regression-20261027/matched/regression-result.json": "6f8d5569248b7da2973077004bff2413ba1851d4efa90560ed49f38dc3c5b0d9",
+    "build/right-context-v4-calibration-20261027/matched/regression-paths.json": "8b7b39b3a4a6dcaeaffbd657f380d86e7ff8baebdf369ac11c768961156940d9",
+    "build/right-context-v4-disclosed-regression-20261027/side/regression-result.json": "6a6d689e61e1540e46d49faf5e769ca0c699869de2fce64c1d7fcbc5ec57c38c",
+    "build/right-context-v4-calibration-20261027/side/regression-paths.json": "6f20ba3ca05aa353420827a6dcc60d102b95c5a3cc021589f308c2dee0f5d51d",
+    "tools/typing_experiments/right_context_role_features.py": "181fff1a36ee769db22269d54de9a00efb58155520d5fa3d793ef217dfcdfadc",
+    "tools/typing_experiments/right_context_role_corpus.py": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+    "tools/typing_experiments/test_right_context_role_features.py": "4f42f395c4ae3736a0ee26c474b86816b199ad764b705546825a79fc1903afb7",
+    "tools/typing_experiments/test_right_context_role_corpus.py": "b3ba695859154ee7e6267375ee2f16eaf3b9622035fe606eb76ec48711085a10",
+    "tools/typing_experiments/right_context_focus_forms.py": "07f701bb4fc6215a1b870c96d308aed51f7b0b42b47a5db5a76f6da3517dd4f4",
+    "tools/typing_experiments/test_right_context_focus_forms.py": "d5baa08fede98153fc8be63a3aecb81a92a399348f344fdaee81acc88f4f37a6"
+  }
+}

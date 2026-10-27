@@ -1,6 +1,6 @@
 from types import SimpleNamespace
 import unittest
-from right_context_focus_forms import predicate_contrast
+from right_context_focus_forms import predicate_contrast,source_surface_refusal
 
 
 def tag(number,gender=None,lemma='пример',pos='ADJS'):
@@ -15,6 +15,12 @@ class Dictionary:
 
 
 class FocusFormsTest(unittest.TestCase):
+    def test_natural_source_labels_cannot_hide_capitalization_or_token_changes(self):
+        self.assertIsNone(source_surface_refusal('готова','готова'))
+        for surface in ['Готова','ГОТОВА','готова_имя','готова-тест','готова ','']:
+            self.assertIsNotNone(source_surface_refusal(surface,surface.lower()))
+        self.assertEqual('SOURCE_SURFACE_CHANGED',source_surface_refusal('готова','готовы'))
+
     def test_paradigm_is_rechecked_and_corruptions_are_unknown_shared_one_edit(self):
         dictionary=Dictionary()
         for source in ['готов','готова','готовы']:
