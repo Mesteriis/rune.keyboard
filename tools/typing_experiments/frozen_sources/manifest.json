@@ -5,9 +5,17 @@
       "file": "qualification_v2_2cbcb2508ef66b32.py",
       "originalPath": "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py"
     },
+    "60cb1cdf671dcc0781d47225d225eebc178392f7b616a7ae77d084e4906126a7": {
+      "file": "qualification_v3_60cb1cdf671dcc07.py",
+      "originalPath": "tools/eval/smart-typing-0.3/qualification-v3/generate_corpus.py"
+    },
     "956436a1fbd708706bddb3bad44c1fdf7bff838ef95a8c06911008148590fe01": {
       "file": "prepare_external_spelling_holdout_956436a1fbd70870.py",
       "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout.py"
+    },
+    "9615bc8033760257bc384ece09d67f6b92e0b7541e144ea6ec746a2f4cc06de4": {
+      "file": "qualification_v4_9615bc8033760257.py",
+      "originalPath": "tools/eval/smart-typing-0.3/qualification-v4/generate_corpus.py"
     },
     "964b7c6505cf5b3a0d766563e29ff750b3db70638302267db9c0318ffa05aef8": {
       "file": "prepare_joint_followup_964b7c6505cf5b3a.py",

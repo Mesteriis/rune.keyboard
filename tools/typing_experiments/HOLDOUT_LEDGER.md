@@ -146,3 +146,12 @@ the historical spelling overlap summary is expanded to v6-v12. The 110 unknown
 v6 lexical targets remain pending. Use `audit_family_coverage.py --ledger LEDGER
 --output NEW_RECEIPT` to distinguish lexical dictionary gaps from exact protected
 control construction; this audit never guesses lemmas or changes the ledger.
+
+`import_early_ru_history.py --base LEDGER --output NEW_DIRECTORY` imports only
+RU spelling components of qualification-v2 and compact-v3/v4. Each contributes
+3,400 persisted target/context identities plus partial dictionary family addenda.
+Pinned manifests, RU row files and public Parquet hashes are verified. Exact
+original qualification generators v2/v3/v4 are archived and checked, not executed.
+The v3/v4 sources were recovered from local Git at their original manifest hashes.
+Article/window recovery, punctuation/protected-token components and other languages
+remain pending. EN/ES cannot be silently imported into the current RU namespaces.

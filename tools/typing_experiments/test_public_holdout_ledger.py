@@ -42,6 +42,12 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'LEDGER_OVERLAP:article'):
             assert_disjoint([dict(article='5011218')], self.ledger, kinds=('article',))
 
+    def test_early_qualification_context_is_blocked_without_original_inputs(self):
+        row=dict(prefix='В ходе работы над направлением могут быть созданы: биопротезы с прямым нервным',
+                 expectedSpelling='управлением',typed='инаяопечатка')
+        with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:context'):
+            assert_disjoint([row],self.ledger,kinds=('context',))
+
     def test_historical_overlap_disclosure_matches_recorded_keys(self):
         historical = {key for e in self.ledger['entries']
                       if e['id'].startswith('public-spelling-v') or e['id']=='public-legacy-spelling-v6'

@@ -33,3 +33,10 @@ The original spelling-v6 preparation helper is preserved at
 Its bytes match the original v6 manifest. The v6 history importer verifies this
 archive but calls only the previously archived qualification selector helpers;
 it does not execute the relocated prepare helper or claim a full corpus rebuild.
+
+The original qualification-v3 and v4 generators were recovered from local Git:
+`60cb1cdf671dcc0781d47225d225eebc178392f7b616a7ae77d084e4906126a7`
+and `9615bc8033760257bc384ece09d67f6b92e0b7541e144ea6ec746a2f4cc06de4`.
+Their bytes match the early compact corpus manifests. The early-RU importer
+checks these snapshots but does not execute them. The archives' dependent
+helper/evaluation/source-lock/runtime bindings still need separate preservation.
