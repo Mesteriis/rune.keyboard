@@ -1,0 +1,111 @@
+{
+  "status": "Physical debug regression slice passed; complete review acceptance remains open",
+  "sourceCommitAtRun": "3d33b2cdb50ad2102c7202d94e9e2de5757b9077",
+  "transport": "adb; explicit owner instruction",
+  "device": {
+    "model": "SM-F966B",
+    "api": 37,
+    "physical": true
+  },
+  "installation": {
+    "applicationId": "io.github.mesteriis.rune.keyboard",
+    "versionName": "0.4.2",
+    "versionCode": 8,
+    "replacePreservingData": true,
+    "sameCertificateAsPrevious": true,
+    "installedAppBytesVerified": true,
+    "artifacts": {
+      "app": {
+        "sha256": "4f5faf9acacc2b2d4b926de82676924934d419e802eac9f101e0589c290d9fc8",
+        "bytes": 345568732
+      },
+      "tests": {
+        "sha256": "106a64edd2d248a52572a33209010beb46028a416ce79ab04f4a0164cf965bda",
+        "bytes": 1843500
+      }
+    }
+  },
+  "sources": [
+    {
+      "path": "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/FoldAutocorrectionInstrumentedTest.kt",
+      "bytes": 42623,
+      "sha256": "5a5c354a7ba2deef3ff34c3a57d36f9ef497739701d85f381012d820a85e01c6"
+    },
+    {
+      "path": "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt",
+      "bytes": 39287,
+      "sha256": "11cefcc150cec1c1b0bd9f033dcd53590c99894c4d4172cfaf12bfa671b01b69"
+    },
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SettingsCodec.kt",
+      "bytes": 9437,
+      "sha256": "5e4fac87e2b479f877d326763cc9e77a8767c04b4cc4e71a4b4fe1897c09d3b2"
+    }
+  ],
+  "instrumentation": {
+    "runner": "androidx.test.runner.AndroidJUnitRunner",
+    "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+    "arguments": {
+      "allowPhysicalDevice": "true"
+    },
+    "freshReviewed": {
+      "exitCode": 0,
+      "installedApkVerified": true,
+      "junitOk": true,
+      "matchedCases": 8,
+      "failureMarker": false,
+      "journalSnapshot": true
+    },
+    "followup": {
+      "methods": [
+        "extraBackspacesInEmptyFieldKeepTheWholeNextWord",
+        "correctionPreviewAndUndoPreserveNextWord",
+        "rapidShortWordCorrectionAtThreePacesKeepsFollowingWords"
+      ],
+      "exitCode": 0,
+      "junitOk": true,
+      "matchedCases": 7,
+      "failureMarker": false,
+      "journalSnapshots": 3
+    },
+    "tests": 4,
+    "reportedPublicCases": 15,
+    "skipped": 0,
+    "failures": 0
+  },
+  "restoration": {
+    "keyboardPreferencesRestored": true,
+    "protectedStoresUnchanged": true,
+    "protectedStoreFilesBefore": 1,
+    "protectedStoreFilesAfter": 1,
+    "secureImeSettingsRestored": true,
+    "secureSettingEquality": {
+      "default_input_method": true,
+      "enabled_input_methods": true,
+      "show_ime_with_hard_keyboard": true
+    },
+    "journalSnapshotsRetrieved": 4
+  },
+  "privacy": {
+    "ownerBackupPrivate": true,
+    "rawJournalsPrivate": true,
+    "diagnosticsConsentChanged": false,
+    "syntheticFeedbackDisabledDuringTests": true,
+    "editorPayloadReadCountersAssertedZero": true,
+    "noAppDataClearOrUninstall": true
+  },
+  "coordination": {
+    "auraAcknowledgedWindow": true,
+    "androidMcpChatAcknowledgedWindow": true,
+    "bothNotifiedReleased": true,
+    "phoneCommandsPending": false
+  },
+  "limitations": [
+    "Debug APK; not a release or downloaded-model smoke.",
+    "Existing fixed public regression phrases; no fresh quality qualification claim.",
+    "One physical Fold configuration; no rotation, display, TalkBack or emoji performance acceptance.",
+    "Visible Undo exercised for one spelling path; ready/late model and canonical physical paths remain open.",
+    "Protected-store comparison covers the inspected known personal-store paths; only one persisted file was present before and after.",
+    "Original review cards remain open wherever their other acceptance criteria are not met."
+  ]
+}

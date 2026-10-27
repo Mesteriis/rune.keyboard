@@ -5,6 +5,13 @@ their acceptance checks and release/reproducibility work remain in scope.
 This map records required proof. An item stays open until current evidence
 covers the whole item; passing a narrower check closes only that check.
 
+The owner-directed ADB Fold slice is recorded in
+`docs/acceptance/2026-10-27-fold-adb-regression.md`: the updated debug build is
+installed, four physical instrumentation tests pass with 15 public cases,
+first-letter/Backspace and one next-word visible Undo path pass, and settings and
+inspected personal stores are preserved. This does not close U1's other physical
+source paths, U8/U9's broader device criteria, or release/model acceptance.
+
 The incoming-review triage and its diagnostics-fixture repair are recorded in
 `docs/acceptance/2026-10-27-review-triage.md`. Subsequent work has concentrated on
 Q6. The latest Q6 receipt is
