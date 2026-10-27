@@ -40,6 +40,8 @@ REFUSAL_REASONS = frozenset((
     "PERSONAL_VETO", "PROTECTED_WORD",
 ))
 
+CANDIDATE_REJECTION_REASONS = frozenset(("INVALID", "LIMIT", "STALE", "STALE_REVISION"))
+
 
 def _integer(value, field):
     if isinstance(value, bool) or not isinstance(value, int):
@@ -264,7 +266,8 @@ def analyze_events(events, ground_truth=None):
     for event in events:
         schema, kind, reason, session, revision = _event_fields(event)
         schemas.add(schema)
-        if schema >= 7 and reason in REFUSAL_REASONS:
+        if schema >= 7 and (reason in REFUSAL_REASONS or
+                            kind == "CANDIDATES" and reason in CANDIDATE_REJECTION_REASONS):
             refusal_events.append({"kind": kind, "reason": reason, "session": session,
                 "revision": revision, "source": event.get("source", "NONE"),
                 "requestId": event.get("requestId", 0), "operationId": event.get("operationId", 0)})

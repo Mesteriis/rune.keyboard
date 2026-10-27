@@ -469,13 +469,22 @@ class TypingSessionController internal constructor(
             localCompletion = DiagnosticCompletion.valueOf(generation.localSearch.completion.name),
             localInspectedStates = generation.localSearch.inspectedStates,
             localVerifiedTerminals = generation.localSearch.verifiedTerminals, text = null)
-        if (state.sessionId != stamp.sessionId || state.revision != stamp.revision ||
-            !canRequestCandidates || generation.original != state.composing?.typedWord ||
-            generation.completion == CandidateCompletion.CANCELLED ||
+        val rejection = when {
+            state.sessionId != stamp.sessionId || state.revision != stamp.revision || !canRequestCandidates -> DiagnosticReason.STALE
+            generation.original != state.composing?.typedWord -> DiagnosticReason.INVALID
+            generation.completion == CandidateCompletion.CANCELLED -> DiagnosticReason.CANCELLED
             generation.alternatives.size > CandidateGenerator.MAX_ALTERNATIVES ||
-            generation.inspectedStates !in 0..CandidateSearchControl.MAX_STATES ||
-            generation.verifiedTerminals !in 0..CandidateSearchControl.MAX_VERIFIED
-        ) return false
+                generation.inspectedStates !in 0..CandidateSearchControl.MAX_STATES ||
+                generation.verifiedTerminals !in 0..CandidateSearchControl.MAX_VERIFIED -> DiagnosticReason.LIMIT
+            else -> null
+        }
+        if (rejection != null) {
+            // CANCELLED is already the response event above; other failures need their exact cause.
+            if (rejection != DiagnosticReason.CANCELLED) diagnose(DiagnosticKind.CANDIDATES, rejection,
+                session = reply.sessionId, revision = reply.revision, source = DiagnosticSource.LOCAL_POLICY,
+                requestId = reply.requestId, completion = DiagnosticCompletion.valueOf(generation.completion.name), text = null)
+            return false
+        }
 
         val selection = candidateSelection(generation, stamp.language, stamp.requestId) ?: return false
         val manual = validatedManualAlternatives(generation, reply.manualGeneration, stamp.language, stamp.requestId)
@@ -550,8 +559,17 @@ class TypingSessionController internal constructor(
     private fun candidateSelection(generation: CandidateGeneration, language: KeyboardLanguage,
         requestId: Long, precedingContext: String? = null, recordDecision: Boolean = true,
         diagnosticSession: Long = state.sessionId, diagnosticRevision: Long = state.revision): CandidateSelection? {
-        if (generation.jointSearch.alternatives.size > 64) return null
-        val baseline = baselineCandidateSelection(generation, language, requestId, precedingContext) ?: return null
+        fun rejected(reason: DiagnosticReason): CandidateSelection? {
+            if (recordDecision) diagnose(DiagnosticKind.CANDIDATES, reason,
+                session = diagnosticSession, revision = diagnosticRevision,
+                source = DiagnosticSource.LOCAL_POLICY, requestId = requestId,
+                completion = DiagnosticCompletion.valueOf(generation.completion.name), text = null)
+            return null
+        }
+        if (generation.jointSearch.alternatives.size > 64) return rejected(DiagnosticReason.LIMIT)
+        val baseline = baselineCandidateSelection(generation, language, requestId, precedingContext) {
+            rejected(it)
+        } ?: return null
         if (language != KeyboardLanguage.RUSSIAN || generation.isValidWord || generation.protectedReason != null ||
             generation.isCanonicalCaseCorrection() || CommonConfusions.preferredId(generation, language) > 0) return baseline
         val prefix = precedingContext?.takeLast(128) ?: context?.text?.takeIf { it.endsWith(baseline.original) }
@@ -606,7 +624,7 @@ class TypingSessionController internal constructor(
             evaluation.rescueRefusal?.let { DiagnosticReason.valueOf(it.name) }
                 ?: evaluation.rescueAdmissionRefusal?.diagnosticReason() ?: jointReason)
         val winner = choice?.candidate
-        if (winner != null && generation.jointSearch.alternatives.none { it == winner }) return null
+        if (winner != null && generation.jointSearch.alternatives.none { it == winner }) return rejected(DiagnosticReason.INVALID)
         val alternatives = if (winner == null) baseline.alternatives else
             (listOf(winner) + baseline.alternatives.filter { it.canonicalKey != winner.canonicalKey })
                 .take(CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES)
@@ -620,19 +638,23 @@ class TypingSessionController internal constructor(
     }
 
     private fun baselineCandidateSelection(generation: CandidateGeneration, language: KeyboardLanguage,
-        requestId: Long, precedingContext: String? = null): CandidateSelection? {
+        requestId: Long, precedingContext: String?, onRejected: (DiagnosticReason) -> Unit): CandidateSelection? {
+        fun rejected(reason: DiagnosticReason): CandidateSelection? {
+            onRejected(reason)
+            return null
+        }
         val suggests = generation.completion == CandidateCompletion.COMPLETE ||
             generation.completion == CandidateCompletion.STATES_EXHAUSTED ||
             generation.completion == CandidateCompletion.VERIFIED_EXHAUSTED
         val canonicalCaseOnly = generation.alternatives.isNotEmpty() &&
             generation.alternatives.all { it.kind == GeneratedCandidateKind.CANONICAL_CASE }
         if ((!suggests || generation.isValidWord || generation.protectedReason != null) &&
-            generation.alternatives.isNotEmpty() && !(generation.isValidWord && canonicalCaseOnly)) return null
-        val original = generation.original ?: return null
+            generation.alternatives.isNotEmpty() && !(generation.isValidWord && canonicalCaseOnly)) return rejected(DiagnosticReason.INVALID)
+        val original = generation.original ?: return rejected(DiagnosticReason.INVALID)
         val local = generation.localSearch
         if (local.alternatives.size > 64 || generation.compactAlternatives.size > 64 ||
             local.inspectedStates !in 0..CandidateSearchControl.MAX_STATES ||
-            local.verifiedTerminals !in 0..CandidateSearchControl.MAX_VERIFIED) return null
+            local.verifiedTerminals !in 0..CandidateSearchControl.MAX_VERIFIED) return rejected(DiagnosticReason.LIMIT)
         val localDecision = LocalCorrectionPolicy.decide(generation, language)
         val ownedContext = precedingContext?.takeLast(128) ?: context?.text?.takeIf { it.endsWith(original) }
             ?.dropLast(original.length)?.takeLast(128).orEmpty()
@@ -662,7 +684,7 @@ class TypingSessionController internal constructor(
                 canonicalCase && (canonicalCaseCount > 1 || originalCase != CasePattern.LOWER ||
                     CasePattern.analyze(candidate.text) != CasePattern.TITLE ||
                     TokenUnicode.folded(candidate.text) != TokenUnicode.folded(original)) ||
-                !canonicalCase && !seen.add(TokenUnicode.folded(candidate.text))) return null
+                !canonicalCase && !seen.add(TokenUnicode.folded(candidate.text))) return rejected(DiagnosticReason.INVALID)
         }
         val snapshot = generation.copy(alternatives = alternatives)
         val commonId = CommonConfusions.preferredId(snapshot, language)

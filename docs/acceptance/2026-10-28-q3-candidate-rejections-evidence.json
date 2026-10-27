@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "card": "Q3",
+  "completeCard": false,
+  "parentCommit": "05fdae9",
+  "scope": "Rejected candidate response diagnostics only; original gates, order, consumption and null selection remain unchanged",
+  "checks": {
+    "jvm": {
+      "tests": 1291,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lintDebugExitCode": 0,
+    "analyzerTests": {
+      "tests": 30,
+      "exitCode": 0
+    },
+    "scoringBoundaryExitCode": 0,
+    "invalidAndLimitSnapshots": 19,
+    "inclusiveLimitCases": 2,
+    "redProbe": {
+      "baseline": "05fdae9",
+      "baselineControllerSha256": "6e795ade56ade15e4370e02e90401261dd459ad36482f900dcef07666a010062",
+      "candidateControllerSha256": "28787d6f553c9abb2c517c366056d28a2859dc441001d1db3551fff3eb9082c1",
+      "exitCode": 1,
+      "failures": [
+        {
+          "test": "invalid and over-limit snapshots report the actual rejection without publication or editor writes",
+          "message": "java.lang.AssertionError: missing original expected:<INVALID> but was:<NONE>"
+        },
+        {
+          "test": "response rechecks ownership after the initial diagnostic callback",
+          "message": "java.lang.AssertionError: expected:<STALE> but was:<NONE>"
+        },
+        {
+          "test": "out of pool joint winner reports invalid rather than publishing a foreign candidate",
+          "message": "java.lang.AssertionError: expected:<INVALID> but was:<NONE>"
+        }
+      ]
+    }
+  },
+  "sources": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "28787d6f553c9abb2c517c366056d28a2859dc441001d1db3551fff3eb9082c1",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingCandidateSelectionTest.kt": "14f493abda6002bc25645498e39fcf1a69c93764bda040e72eb113dd50715359",
+    "tools/typing_diagnostics_analyzer.py": "0c1999b5cb2c73b6cc13f7eef4f10fb1d2d8178d18d249f3bbc9aba5af4775ec",
+    "tools/test_typing_diagnostics_analyzer.py": "ba7d14986c26d08c4fae2f02eead5bb7184840674f4e77b110bcfdae13e69479"
+  },
+  "privateArtifactHashes": {
+    "verified-jvm-lint.log": "617c9538ff32e08e817a1252630bfb72a2182078489f78b7ed9db9a64d7d61ec",
+    "final-jvm-lint-with-limits.log": "9ca724001c3062fed648b91cfa661cb4f135ea365f8f344b1e62678253e1cf68",
+    "analyzer-tests.log": "9e6ab18ec395d55fc7df079f87c6b6c1f9788fba627887914f057e3f76f0e1c4",
+    "boundaries.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "red.log": "fee3fc0107d94ce0c85148175af64aed80eba0a5f5170e447e37e1d449e3e793",
+    "red_probe.py": "c821e2e0eb354a8d8931f4dd178bfb6ce9ccd95f46fa0c39b8feaf79520612db",
+    "fixture-failed-final-jvm-lint.log": "a51776309e094235b94c0c09ea333ffe5ee67a2e17809db4a791a2347540ff99"
+  },
+  "fixtureRepair": "One preliminary fixture invalidated its own request by switching personalization after registration; order corrected, raw failed log retained",
+  "diagnosticSchema": 8,
+  "newNumericCodes": false,
+  "limitations": [
+    "Full 12012/1676/1600 source-bound replay deferred to Q3 integration; previous replay is not claimed to bind this controller",
+    "Mechanical refusal events, editor metadata/schema 9 and actual BOUNDARY journal stress accounting remain open",
+    "No device build installed in this slice"
+  ]
+}

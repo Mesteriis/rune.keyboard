@@ -65,6 +65,168 @@ class TypingCandidateSelectionTest {
         assertEquals(1, edits.size)
     }
 
+    @Test fun `invalid and over-limit snapshots report the actual rejection without publication or editor writes`() {
+        val valid = reply(LocalCandidateRequest(1, 1, 1, "helo", KeyboardLanguage.ENGLISH, true), "hello").generation
+        val item = valid.alternatives.single()
+        val local = io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalSearchEvidence(
+            CandidateCompletion.COMPLETE, listOf(item), 1, 1)
+        val cases = listOf(
+            "missing original" to (DiagnosticReason.INVALID to valid.copy(original = null)),
+            "wrong original" to (DiagnosticReason.INVALID to valid.copy(original = "other")),
+            "failed with candidates" to (DiagnosticReason.INVALID to valid.copy(completion = CandidateCompletion.READER_FAILURE)),
+            "valid word with ordinary candidate" to (DiagnosticReason.INVALID to valid.copy(isValidWord = true)),
+            "duplicate candidate" to (DiagnosticReason.INVALID to valid.copy(alternatives = listOf(item, item))),
+            "protected candidate" to (DiagnosticReason.INVALID to valid.copy(alternatives = listOf(item.copy(text = "https://example.org")))),
+            "wrong canonical identity" to (DiagnosticReason.INVALID to valid.copy(alternatives = listOf(item.copy(
+                text = "Other", kind = GeneratedCandidateKind.CANONICAL_CASE)))),
+            "main alternatives" to (DiagnosticReason.LIMIT to valid.copy(alternatives = List(CandidateGenerator.MAX_ALTERNATIVES + 1) { item })),
+            "local alternatives" to (DiagnosticReason.LIMIT to valid.copy(localSearch = local.copy(alternatives = List(65) { item }))),
+            "compact alternatives" to (DiagnosticReason.LIMIT to valid.copy(compactAlternatives = List(65) { item })),
+            "joint alternatives" to (DiagnosticReason.LIMIT to valid.copy(jointSearch = local.copy(alternatives = List(65) { item }))),
+            "negative states" to (DiagnosticReason.LIMIT to valid.copy(inspectedStates = -1)),
+            "too many states" to (DiagnosticReason.LIMIT to valid.copy(inspectedStates = CandidateSearchControl.MAX_STATES + 1)),
+            "negative terminals" to (DiagnosticReason.LIMIT to valid.copy(verifiedTerminals = -1)),
+            "too many terminals" to (DiagnosticReason.LIMIT to valid.copy(verifiedTerminals = CandidateSearchControl.MAX_VERIFIED + 1)),
+            "negative local states" to (DiagnosticReason.LIMIT to valid.copy(localSearch = local.copy(inspectedStates = -1))),
+            "too many local states" to (DiagnosticReason.LIMIT to valid.copy(localSearch = local.copy(inspectedStates = CandidateSearchControl.MAX_STATES + 1))),
+            "negative local terminals" to (DiagnosticReason.LIMIT to valid.copy(localSearch = local.copy(verifiedTerminals = -1))),
+            "too many local terminals" to (DiagnosticReason.LIMIT to valid.copy(localSearch = local.copy(verifiedTerminals = CandidateSearchControl.MAX_VERIFIED + 1))),
+        )
+        val events = mutableListOf<Pair<DiagnosticEvent, Boolean>>()
+        controller.setDiagnostics(object : TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+            override fun invalidate() = Unit
+            override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { events += event to (text != null) }
+        })
+        for ((name, pair) in cases) {
+            val (reason, generation) = pair
+            start("helo")
+            val request = request()
+            val result = LocalCandidateReply(request.sessionId, request.revision, request.requestId, generation)
+            val before = controller.state
+            val writes = edits.size
+            events.clear()
+            assertFalse(name, controller.acceptCandidates(result))
+            assertEquals(name, before, controller.state)
+            assertEquals(name, writes, edits.size)
+            assertEquals(name, listOf("helo"), labels())
+            val rejected = events.last { it.first.kind == DiagnosticKind.CANDIDATES }
+            assertEquals(name, reason, rejected.first.reason)
+            assertEquals(request.requestId, rejected.first.requestId)
+            assertEquals(request.sessionId, rejected.first.session)
+            assertEquals(request.revision, rejected.first.revision)
+            assertFalse(name, rejected.second)
+            assertFalse(events.any { it.first.reason == DiagnosticReason.ACCEPTED })
+            // A matching response is consumed even when its data is invalid.
+            assertFalse(controller.acceptCandidates(reply(request, "hello")))
+            assertEquals(DiagnosticReason.STALE, events.last().first.reason)
+        }
+    }
+
+    @Test fun `inclusive search limits keep accepting the same candidate snapshot`() {
+        for (upper in listOf(false, true)) {
+            start("helo")
+            val request = request()
+            val raw = reply(request, "hello")
+            val generation = raw.generation
+            val local = io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalSearchEvidence(
+                CandidateCompletion.COMPLETE, if (upper) List(64) { generation.alternatives.single() } else emptyList(),
+                if (upper) CandidateSearchControl.MAX_STATES else 0,
+                if (upper) CandidateSearchControl.MAX_VERIFIED else 0)
+            val before = controller.state
+            val writes = edits.size
+            assertTrue(controller.acceptCandidates(raw.copy(generation = generation.copy(
+                inspectedStates = local.inspectedStates, verifiedTerminals = local.verifiedTerminals,
+                localSearch = local, compactAlternatives = local.alternatives, jointSearch = local))))
+            assertEquals(before, controller.state)
+            assertEquals(writes, edits.size)
+            assertEquals(listOf("helo", "hello"), labels())
+        }
+    }
+
+    @Test fun `cancelled response has one cancellation event and never publishes candidates`() {
+        start("helo")
+        val request = request()
+        val events = mutableListOf<DiagnosticEvent>()
+        controller.setDiagnostics(object : TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+            override fun invalidate() = Unit
+            override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { events += event }
+        })
+        val response = reply(request, "hello")
+        assertFalse(controller.acceptCandidates(response.copy(generation = response.generation.copy(completion = CandidateCompletion.CANCELLED))))
+        assertEquals(listOf(DiagnosticReason.CANCELLED), events.filter { it.kind == DiagnosticKind.CANDIDATES }.map { it.reason })
+        assertEquals(listOf("helo"), labels())
+    }
+
+    @Test fun `response rechecks ownership after the initial diagnostic callback`() {
+        start("helo")
+        val request = request()
+        val events = mutableListOf<DiagnosticEvent>()
+        var reenter = true
+        controller.setDiagnostics(object : TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+            override fun invalidate() = Unit
+            override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) {
+                events += event
+                if (reenter && event.kind == DiagnosticKind.CANDIDATES && event.reason == DiagnosticReason.NONE) {
+                    reenter = false
+                    controller.typeText("x", execute)
+                }
+            }
+        })
+        assertFalse(controller.acceptCandidates(reply(request, "hello")))
+        assertEquals("helox", controller.state.composing!!.typedWord)
+        assertEquals(listOf("helox"), labels())
+        assertEquals(DiagnosticReason.STALE, events.last { it.kind == DiagnosticKind.CANDIDATES }.reason)
+        assertFalse(events.any { it.kind == DiagnosticKind.CANDIDATES && it.reason == DiagnosticReason.ACCEPTED })
+    }
+
+    @Test fun `out of pool joint winner reports invalid rather than publishing a foreign candidate`() {
+        start("мала")
+        val events = mutableListOf<DiagnosticEvent>()
+        controller.setDiagnostics(object : TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+            override fun invalidate() = Unit
+            override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { events += event }
+        })
+        controller.setPersonalization(object : TypingPersonalization {
+            override fun jointAutomaticEvaluation(context: String, generation: CandidateGeneration,
+                language: KeyboardLanguage, baselineWord: String?) =
+                io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionEvaluation(
+                    io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionChoice(
+                        generation.alternatives.single().copy(text = "other")))
+        }, KeyboardLanguage.RUSSIAN)
+        val request = controller.beginCandidateRequest(++requestId, KeyboardLanguage.RUSSIAN)!!
+        val raw = reply(request, "мама")
+        val generation = raw.generation.copy(alternatives = raw.generation.alternatives.map { it.copy(language = KeyboardLanguage.RUSSIAN) })
+        val before = controller.state
+        val writes = edits.size
+        assertFalse(controller.acceptCandidates(raw.copy(generation = generation)))
+        assertEquals(before, controller.state)
+        assertEquals(writes, edits.size)
+        assertEquals(listOf("мала"), labels())
+        assertEquals(DiagnosticReason.INVALID, events.last { it.kind == DiagnosticKind.CANDIDATES }.reason)
+    }
+
+    @Test fun `malformed display-only pool does not report a rejection of the accepted primary response`() {
+        start("мала")
+        val request = controller.beginCandidateRequest(++requestId, KeyboardLanguage.RUSSIAN)!!
+        val raw = reply(request, "мама")
+        val primary = raw.generation.copy(alternatives = raw.generation.alternatives.map { it.copy(language = KeyboardLanguage.RUSSIAN) })
+        val events = mutableListOf<DiagnosticEvent>()
+        controller.setDiagnostics(object : TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+            override fun invalidate() = Unit
+            override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { events += event }
+        })
+        assertTrue(controller.acceptCandidates(raw.copy(generation = primary,
+            manualGeneration = primary.copy(alternatives = primary.alternatives + primary.alternatives))))
+        assertEquals(listOf("мала", "мама"), labels())
+        assertEquals(listOf(DiagnosticReason.NONE, DiagnosticReason.ACCEPTED),
+            events.filter { it.kind == DiagnosticKind.CANDIDATES }.map { it.reason })
+    }
+
     @Test fun `projection keeps source original and calibrated alternatives without editing`() {
         start("helo")
         val before = controller.state

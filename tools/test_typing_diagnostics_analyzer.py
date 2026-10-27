@@ -22,6 +22,24 @@ class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
         self.assertEqual(reasons * 5, [e['reason'] for e in report['refusalEvents']])
         self.assertEqual([], report['outcomes'])
 
+    def test_candidate_rejections_are_metadata_without_fabricating_editor_outcomes(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
+        flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)
+        common = dict(schema=8, session=1, revision=2, source='LOCAL_POLICY',
+                      features=flags, effectiveFeatures=flags, typingProfile=0, correctionId=0,
+                      localCompletion='NONE', localInspectedStates=0, localVerifiedTerminals=0,
+                      recoveryCompletion='NONE', recoveryInspectedStates=0, recoveryVerifiedTerminals=0)
+        reasons = ['INVALID', 'LIMIT', 'STALE', 'STALE_REVISION']
+        events = [dict(common, kind='CANDIDATES', reason=reason, requestId=i)
+                  for i, reason in enumerate(reasons, 1)]
+        events += [dict(common, kind='CANDIDATES', reason='NONE'),
+                   dict(common, kind='CANDIDATES', reason='ACCEPTED'),
+                   dict(common, kind='RANKING', reason='INVALID')]
+        report = analyze_events(events)
+        self.assertEqual(reasons, [e['reason'] for e in report['refusalEvents']])
+        self.assertEqual([1, 2, 3, 4], [e['requestId'] for e in report['refusalEvents']])
+        self.assertEqual([], report['outcomes'])
+
     def test_schema_eight_metadata_undo_requires_exact_editor_response_and_never_invents_text(self):
         from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
         flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)
