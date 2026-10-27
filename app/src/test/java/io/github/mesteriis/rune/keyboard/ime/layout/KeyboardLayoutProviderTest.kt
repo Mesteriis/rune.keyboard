@@ -17,6 +17,35 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class KeyboardLayoutProviderTest {
+    @Test fun emojiEntryAndPanelRespectEditorPolicyAndKeepBalancedBottomRows() {
+        for (language in KeyboardLanguage.entries) {
+            val base = KeyboardState(language)
+            val letters = provider.layoutFor(base, textEditor)
+            assertTrue(letters.rows.flatten().none { it.action == KeyboardAction.OpenEmoji })
+            assertEquals(5.65f, letters.rows.last().single { it.action == KeyboardAction.Space }.weight, 0.001f)
+            for (layer in listOf(KeyboardLayer.SYMBOLS, KeyboardLayer.SYMBOLS_ALT)) {
+                val bottom = provider.layoutFor(base.copy(layer = layer), textEditor).rows.last()
+                assertEquals(1, bottom.count { it.action == KeyboardAction.OpenEmoji })
+                assertEquals(4.75f, bottom.single { it.action == KeyboardAction.Space }.weight, 0.001f)
+                assertEquals(10f, bottom.sumOf { it.weight.toDouble() }.toFloat(), 0.001f)
+            }
+            val panel = provider.layoutFor(base.copy(layer = KeyboardLayer.EMOJI), textEditor)
+            assertTrue(panel.emojiPanel)
+            assertEquals(10f, panel.rows.single().sumOf { it.weight.toDouble() }.toFloat(), 0.001f)
+            assertTrue(panel.rows.single().map { it.action }.containsAll(listOf(
+                KeyboardAction.ToggleSymbols, KeyboardAction.Delete, KeyboardAction.Space, KeyboardAction.Enter)))
+        }
+        for (type in listOf(InputType.TYPE_NULL, InputType.TYPE_CLASS_NUMBER, InputType.TYPE_CLASS_PHONE,
+            InputType.TYPE_CLASS_DATETIME, InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+            val editor = EditorContext.from(type, 0)
+            for (layer in KeyboardLayer.entries) {
+                val layout = provider.layoutFor(KeyboardState(KeyboardLanguage.ENGLISH, layer = layer), editor)
+                assertTrue(!layout.emojiPanel)
+                assertTrue(layout.rows.flatten().none { it.action == KeyboardAction.OpenEmoji })
+            }
+        }
+    }
+
     @Test fun editingPanelKeepsFourRowsAndProvidesOnlyAllowedCommands() {
         for (language in KeyboardLanguage.entries) for (multi in listOf(false, true)) {
             val editor = EditorContext.from(InputType.TYPE_CLASS_TEXT, 0).copy(isMultiLine = multi)

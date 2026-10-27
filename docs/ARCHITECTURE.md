@@ -80,6 +80,19 @@ QWEN2 pre-split и BPE loops. Runtime отклоняет неподдержив�
 
 Платформенные `android.inputmethodservice.Keyboard` и `KeyboardView` не используются: они deprecated с API 29. View-подход выбран вместо Canvas, чтобы каждая клавиша сразу имела корректную focus/click/long-click семантику TalkBack без отдельного виртуального accessibility tree.
 
+Emoji-панель — отдельный слой `EMOJI`: framework GridView/BaseAdapter переиспользует
+TextView с CLDR contentDescription. Каталог загружается только при открытии панели,
+Paint.hasGlyph кэшируется для посещённых категорий. Категории и сетка занимают три
+высоты ряда, нижние ABC/Delete/Space/Enter — четвёртую; видимость полосы кандидатов
+по-прежнему определяется typing policy. Недавние — максимум 32 принятые вставки в
+RAM конкретного view, без диска; в INCOGNITO они скрыты и не пополняются. SENSITIVE,
+raw-key и цифровые поля запрещают вход. Палитра завершает owned composition без
+автозамены и вставляет полный glyph через CommitText, обнуляя контекст для следующих
+ranking/revision/learning. Неизвестная внешняя граница слова при этом не снимается.
+После принятой вставки хранится только числовая позиция delimiter: она разрешает
+исправление следующего целого слова, не возвращая прежний контекст. Курсорный
+переход, invalidate, конец сессии и удаление вне owned-контекста снимают эту отметку.
+
 ## Приватный inference process
 
 `ModelInferenceService` работает в `:model_runtime`: `exported=false`, без

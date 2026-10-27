@@ -56,6 +56,7 @@ internal class RuneKeyboardView(
     private var previewEnabled = true
     private var inputPolicy = InputPolicy.NORMAL
     private var popupController: KeyPopupController? = null
+    private var emojiPanel: EmojiPanelView? = null
     private val keyboardPadding = resources.getDimensionPixelSize(R.dimen.keyboard_padding)
     private val candidateStrip = CandidateStripView(context, appearance)
     private val keysContainer = LinearLayout(context).apply {
@@ -182,8 +183,19 @@ internal class RuneKeyboardView(
             popupController?.dismissAll()
             letterKeys.clear()
             keysContainer.removeAllViews()
+            if (layout.emojiPanel) {
+                val panel = emojiPanel ?: EmojiPanelView(context, metrics.keyHeightPx, appearance) {
+                    actionListener?.invoke(it)
+                }.also { emojiPanel = it }
+                panel.render(state.language, inputPolicy == InputPolicy.NORMAL)
+                keysContainer.addView(panel, LayoutParams(LayoutParams.MATCH_PARENT, metrics.keyHeightPx * 3))
+            }
             layout.rows.forEach { rowSpecs -> keysContainer.addView(createRow(rowSpecs, state)) }
         }
+    }
+
+    fun recordEmojiCommitted(glyph: String) {
+        emojiPanel?.recordCommitted(glyph)
     }
 
     fun cancelActiveTouches() {
@@ -499,6 +511,7 @@ internal class RuneKeyboardView(
                 },
             )
             KeyboardAction.OpenEditing,
+            KeyboardAction.OpenEmoji,
             KeyboardAction.ToggleSelection,
             is KeyboardAction.Navigate,
             is KeyboardAction.ContextMenu,

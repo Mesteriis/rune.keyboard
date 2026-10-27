@@ -52,6 +52,10 @@ data class EditorContext(
     val supportsAutomaticCapitalization: Boolean
         get() = supportsSmartTyping
 
+    val allowsEmojiPanel: Boolean
+        get() = inputPolicy != InputPolicy.SENSITIVE && !requiresRawKeyEvents &&
+            mode !in setOf(EditorMode.NUMBER, EditorMode.PHONE, EditorMode.DATE_TIME)
+
     val supportsSmartTyping: Boolean
         get() = mode == EditorMode.TEXT && inputPolicy.allowsOwnedComposition && !requiresRawKeyEvents
 

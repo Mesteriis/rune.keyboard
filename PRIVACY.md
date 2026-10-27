@@ -16,6 +16,12 @@ Model scoring uses bounded input context in memory and a separate private proces
 
 Android application backup and cleartext traffic are disabled in the manifest. The keyboard does not read clipboard contents or maintain a clipboard history. Copy, Cut and Paste controls delegate Android context-menu commands to the focused editor through InputConnection.performContextMenuAction. The editor performs the operation; a dispatch acknowledgement does not prove that it completed. Rune does not fetch editor text to implement these commands.
 
+The emoji panel uses packaged Unicode/CLDR data and the device font, without a
+network request. Up to 32 recent accepted emoji insertions are kept only in the
+keyboard view's memory, with no disk persistence. Incognito hides recents and
+does not add to them; sensitive, raw-key and numeric fields have no emoji panel.
+Emoji insertion finishes composing literally and clears ranking/revision context.
+
 New input sessions do not adopt unknown preceding editor text. When the numeric selection starts after the beginning of the field, Rune commits the adjacent suffix literally until new Rune whitespace establishes a word boundary. This decision uses cursor offsets, not editor-text reads or retained text from another session.
 
 ## Diagnostics and exports

@@ -17,6 +17,42 @@ import org.junit.Test
 
 /** Real owner/executor with an independent editor document. Synthetic quality admission only. */
 class CorrectionBoundaryTest {
+    @Test fun `accepted palette boundary allows whole next word without retaining previous context`() {
+        val f = Fixture()
+        f.raw("teh")
+        assertEquals(TypingTextResult.HANDLED, f.controller.typeIsolatedText("😀", f.execute))
+        assertEquals("teh😀", f.document)
+        assertEquals("", f.controller.state.contextText)
+        f.raw("teh"); f.publishCommon("the")
+        assertNotNull(f.controller.spaceReplacementCandidateId(KeyboardLanguage.ENGLISH))
+        f.type(" ")
+        assertEquals("teh😀the ", f.document)
+        assertTrue(f.calls.none { it.startsWith("get") })
+    }
+
+    @Test fun `palette boundary proof is revoked by invalidation external cursor or deletion outside context`() {
+        for (cause in listOf("invalidate", "cursor", "delete")) {
+            val f = Fixture()
+            f.synchronous = true
+            f.raw("old")
+            assertEquals(TypingTextResult.HANDLED, f.controller.typeIsolatedText("😀", f.execute))
+            when (cause) {
+                "invalidate" -> f.controller.invalidate(f.execute)
+                "cursor" -> { f.controller.updateSelection(1, 1, -1, -1, f.execute); f.caret = 1 }
+                "delete" -> {
+                    assertEquals(TypingTextResult.BYPASS, f.controller.deletePrevious(f.execute))
+                    // The service delegates this deletion to the editor, then receives its actual caret.
+                    f.document = "old"; f.caret = 3
+                    f.controller.updateSelection(3, 3, -1, -1, f.execute)
+                }
+            }
+            f.raw("teh")
+            assertTrue("Fresh candidate ownership after $cause", f.controller.canRequestCandidates)
+            f.publishCommon("the")
+            assertNull(f.controller.spaceReplacementCandidateId(KeyboardLanguage.ENGLISH))
+        }
+    }
+
     @Test fun `model ready and late corrections retain next word Undo but never refinement authority`() {
         for (late in listOf(false, true)) {
             val f = Fixture(modelOnly = true, refinement = true, refinementQualified = true)

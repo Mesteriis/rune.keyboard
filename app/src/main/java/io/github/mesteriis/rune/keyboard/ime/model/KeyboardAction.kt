@@ -24,6 +24,7 @@ sealed interface KeyboardAction {
     data class Navigate(val direction: CursorDirection) : KeyboardAction
     data class ContextMenu(val action: EditorContextAction) : KeyboardAction
     data object OpenEditing : KeyboardAction
+    data object OpenEmoji : KeyboardAction
     data object ToggleSelection : KeyboardAction
 
     data object Shift : KeyboardAction

@@ -43,7 +43,7 @@ data class KeySpec(
     }
 }
 
-data class KeyboardLayout(val rows: List<List<KeySpec>>) {
+data class KeyboardLayout(val rows: List<List<KeySpec>>, val emojiPanel: Boolean = false) {
     init {
         require(rows.isNotEmpty()) { "Keyboard must contain rows" }
         require(rows.none { it.isEmpty() }) { "Keyboard rows must not be empty" }

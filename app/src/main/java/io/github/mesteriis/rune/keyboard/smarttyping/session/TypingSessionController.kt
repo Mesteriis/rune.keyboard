@@ -355,6 +355,8 @@ class TypingSessionController internal constructor(
         private set
 
     private var context: SessionTextContext? = null
+    // Numeric proof of the known palette delimiter; never a synthetic context character.
+    private var isolatedBoundaryCaret: Int? = null
     private var selectionStart = -1
     private var selectionEnd = -1
     private var composingStart = -1
@@ -1717,6 +1719,7 @@ class TypingSessionController internal constructor(
     }
 
     fun deletePrevious(execute: (TypingEdit) -> Boolean): TypingTextResult {
+        if (context?.text.isNullOrEmpty()) isolatedBoundaryCaret = null
         // A verified deletion within the next word ends model refinement, but preserves root Undo.
         previousWord = previousWord?.takeIf { ownsPreviousWord(it) &&
             state.composing?.typedWord?.isNotEmpty() == true }?.also {
@@ -1852,6 +1855,7 @@ class TypingSessionController internal constructor(
 
     /** Cursor/layer/language boundaries can explicitly discard context without editor reads. */
     fun invalidate(execute: (TypingEdit) -> Boolean): Boolean {
+        isolatedBoundaryCaret = null
         invalidateQualityComparison()
         resetPersonalContext()
         closeDiagnosticsAdmission()
@@ -1861,6 +1865,18 @@ class TypingSessionController internal constructor(
         context?.clear()
         publish()
         return finished
+    }
+
+    /** Palette insertion is literal and cannot join ranking, revisions or learning across emoji. */
+    fun typeIsolatedText(text: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
+        if (!state.enabled || text.isEmpty()) return TypingTextResult.BYPASS
+        if (awaitingEditorSelection || !invalidate(execute)) return TypingTextResult.REJECTED
+        val result = commitPlain(text, execute)
+        context?.clear()
+        if (result == TypingTextResult.HANDLED && !externalWordBoundaryRequired)
+            isolatedBoundaryCaret = selectionStart
+        publish()
+        return result
     }
 
     /** Before a legacy mutation whose resulting caret is unknown, wait for its actual callback. */
@@ -1967,9 +1983,10 @@ class TypingSessionController internal constructor(
         val minimum = if (count > 256) before.offsetByCodePoints(0, count - 256) else 0
         val start = if (minimum == 0) 0 else graphemes.boundaries(before).first { it >= minimum }
         if (start > before.length - live.orEmpty().length) return null
-        // A cut through a word is not evidence of a whole word. Only document start or an
-        // actually retained Rune whitespace immediately before the slice establishes this flag.
-        val tokenBoundary = if (start == 0) selectionStart.toLong() - before.length == 0L
+        // A cut through a word is not evidence of a whole word. Document start, a retained
+        // Rune whitespace or the exact accepted palette boundary establishes this flag.
+        val contextStart = selectionStart.toLong() - before.length
+        val tokenBoundary = if (start == 0) contextStart == 0L || contextStart == isolatedBoundaryCaret?.toLong()
             else before[start - 1].isWhitespace()
         return OwnedPunctuationSuffix(before.substring(start), live, tokenBoundary, state.sessionId, state.revision)
     }
@@ -2157,6 +2174,7 @@ class TypingSessionController internal constructor(
         val owned = punctuationEvidence() ?: return boundaryBypass(DiagnosticReason.OWNERSHIP_REJECTED)
         // A composing fragment after '@', '/', '.', a code operator, or an unknown editor
         // prefix is not proof of a whole ordinary token. Only Rune whitespace/document start
+        // or the exact accepted palette delimiter
         // establishes the boundary; never read the editor to manufacture that evidence.
         val tokenStart = owned.text.indexOfLast { it.isWhitespace() } + 1
         if (tokenStart == 0 && !owned.startsAtTokenBoundary ||
@@ -2324,6 +2342,7 @@ class TypingSessionController internal constructor(
         closeDiagnosticsAdmission()
         clearCandidates()
         context?.clear()
+        isolatedBoundaryCaret = null
         expectedSelections.clear()
         expectedEditorSelection = null
         lastAcknowledgedSelection = null
@@ -2352,6 +2371,7 @@ class TypingSessionController internal constructor(
     }
 
     fun endSession() {
+        isolatedBoundaryCaret = null
         diagnosticsPermitted = false
         editorAllowsSuggestions = false
         invalidateQualityComparison()
@@ -2471,6 +2491,7 @@ class TypingSessionController internal constructor(
     }
 
     private fun disableSession() {
+        isolatedBoundaryCaret = null
         invalidateQualityComparison()
         resetPersonalContext()
         closeDiagnosticsAdmission()

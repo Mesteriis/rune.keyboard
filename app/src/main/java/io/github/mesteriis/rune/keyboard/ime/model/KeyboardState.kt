@@ -22,6 +22,7 @@ enum class KeyboardLayer {
     SYMBOLS,
     SYMBOLS_ALT,
     EDITING,
+    EMOJI,
 }
 
 enum class ShiftMode {
@@ -106,7 +107,7 @@ data class KeyboardState(
     fun toggleSymbolsPage(): KeyboardState = when (layer) {
         KeyboardLayer.SYMBOLS -> copy(layer = KeyboardLayer.SYMBOLS_ALT, automaticCapitalizationSuppressed = false)
         KeyboardLayer.SYMBOLS_ALT -> copy(layer = KeyboardLayer.SYMBOLS, automaticCapitalizationSuppressed = false)
-        KeyboardLayer.LETTERS, KeyboardLayer.EDITING -> this
+        KeyboardLayer.LETTERS, KeyboardLayer.EDITING, KeyboardLayer.EMOJI -> this
     }
 
     fun openEditing(): KeyboardState = copy(layer = KeyboardLayer.EDITING, selectionMode = false,

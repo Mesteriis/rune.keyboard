@@ -36,7 +36,11 @@ Captured on a Samsung Galaxy Z Fold7 cover screen. System bars and the edge-pane
 - **Searchable settings:** a live keyboard preview, quick theme choices and grouped controls.
 - **Optional local model:** explicitly download or import Rune Text for additional candidate scoring. Ordinary typing and dictionaries work without it.
 
-Glide typing, an emoji panel, split/one-handed layouts and voice input are not implemented yet.
+The development emoji panel opens from Symbols, with multilingual category/item
+names and RAM-only recents. Font support depends on the device; skin-tone selection
+is a later stage. API 26 and physical Fold acceptance remain outstanding.
+
+Glide typing, split/one-handed layouts and voice input are not implemented yet.
 
 ## Install
 

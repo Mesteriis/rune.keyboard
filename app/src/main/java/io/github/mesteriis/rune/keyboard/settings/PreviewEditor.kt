@@ -4,6 +4,7 @@ import android.os.SystemClock
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutor
+import io.github.mesteriis.rune.keyboard.ime.editor.GraphemeDeletion
 import android.widget.EditText
 import io.github.mesteriis.rune.keyboard.ime.model.EditorCommand
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
@@ -26,7 +27,7 @@ internal object PreviewEditor {
             is EditorCommand.CommitText -> insert(command.value)
             EditorCommand.InsertNewline -> insert("\n")
             EditorCommand.DeletePreviousCodePoint -> {
-                val from = if (start == end && start > 0) Character.offsetByCodePoints(text, start, -1) else start
+                val from = if (start == end && start > 0) GraphemeDeletion.previousBoundary(text.substring(0, start)) else start
                 text.delete(from, end)
                 field.setSelection(from)
             }

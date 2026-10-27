@@ -41,6 +41,8 @@ object KeyboardReducer {
             KeyboardAction.OpenEditing -> KeyboardTransition(
                 if (editorContext.inputPolicy != InputPolicy.SENSITIVE && editorContext.mode !in setOf(
                     EditorMode.NUMBER, EditorMode.PHONE, EditorMode.DATE_TIME)) base.openEditing() else base)
+            KeyboardAction.OpenEmoji -> KeyboardTransition(if (editorContext.allowsEmojiPanel)
+                base.openEditing().copy(layer = KeyboardLayer.EMOJI) else base)
             KeyboardAction.ToggleSelection -> KeyboardTransition(
                 if (base.layer == KeyboardLayer.EDITING && editorContext.inputPolicy != InputPolicy.SENSITIVE)
                     base.copy(selectionMode = !base.selectionMode) else base)

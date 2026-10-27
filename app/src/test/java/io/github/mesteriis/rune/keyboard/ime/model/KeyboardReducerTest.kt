@@ -9,6 +9,24 @@ import org.junit.Assert.assertNull
 import org.junit.Test
 
 class KeyboardReducerTest {
+    @Test fun emojiEntryIsGuardedAndCommitsAnExactSequenceWithoutChangingItsLayer() {
+        val editor = EditorContext.from(InputType.TYPE_CLASS_TEXT, 0)
+        val before = KeyboardState(KeyboardLanguage.ENGLISH, shiftMode = ShiftMode.LOCKED, selectionMode = true)
+        val entered = KeyboardReducer.reduce(before, KeyboardAction.OpenEmoji, editor, 0)
+        assertEquals(KeyboardLayer.EMOJI, entered.state.layer)
+        assertEquals(ShiftMode.OFF, entered.state.shiftMode)
+        assertFalse(entered.state.selectionMode)
+        assertNull(entered.command)
+        val inserted = KeyboardReducer.reduce(entered.state, KeyboardAction.CommitText("👩‍💻"), editor, 0)
+        assertEquals(EditorCommand.CommitText("👩‍💻"), inserted.command)
+        assertEquals(KeyboardLayer.EMOJI, inserted.state.layer)
+        assertEquals(KeyboardLayer.LETTERS, KeyboardReducer.reduce(inserted.state, KeyboardAction.ToggleSymbols, editor, 0).state.layer)
+        for (type in listOf(InputType.TYPE_NULL, InputType.TYPE_CLASS_NUMBER, InputType.TYPE_CLASS_PHONE,
+            InputType.TYPE_CLASS_DATETIME, InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+            assertEquals(before, KeyboardReducer.reduce(before, KeyboardAction.OpenEmoji, EditorContext.from(type, 0), 0).state)
+        }
+    }
+
     @Test fun editingEntryClearsManualShiftAndSelectionIsExplicitlyScoped() {
         val editor = EditorContext.from(android.text.InputType.TYPE_CLASS_TEXT, 0)
         val before = KeyboardState(KeyboardLanguage.ENGLISH, shiftMode = ShiftMode.LOCKED)

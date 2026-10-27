@@ -31,6 +31,8 @@ class KeyboardLayoutProvider {
             KeyboardLayer.LETTERS -> lettersLayout(state, editorContext, options)
             KeyboardLayer.EDITING -> if (editorContext.inputPolicy == InputPolicy.SENSITIVE)
                 lettersLayout(state, editorContext, options) else editingLayout(state, editorContext)
+            KeyboardLayer.EMOJI -> if (editorContext.allowsEmojiPanel) emojiLayout(state, editorContext)
+                else lettersLayout(state, editorContext, options)
         }
     }
 
@@ -66,6 +68,15 @@ class KeyboardLayoutProvider {
                 arrow("End", CursorDirection.END, label("Line end", "Конец строки", "Fin de línea"))),
             listOf(vertical?.get(0) ?: KeySpec.spacer(2.5f), select, vertical?.get(1) ?: KeySpec.spacer(2.5f)),
             menu, bottomRow(state, editor, includeModeKey = false)))
+    }
+
+    private fun emojiLayout(state: KeyboardState, editor: EditorContext): KeyboardLayout {
+        val mode = lettersKey()
+        val delete = deleteKey()
+        val enter = enterKey(editor)
+        val space = spaceKey(state.language, BOTTOM_ROW_WEIGHT - mode.weight - delete.weight - enter.weight)
+        // The native category strip and scrolling grid occupy the preceding three row heights.
+        return KeyboardLayout(listOf(listOf(mode, delete, space, enter)), emojiPanel = true)
     }
 
     private fun lettersLayout(
@@ -180,8 +191,8 @@ class KeyboardLayoutProvider {
     )
 
     /**
-     * The bottom row keeps identical proportions on every layer and in every language so keys do
-     * not jump when the layer or the language changes.
+     * Ordinary bottom rows share proportions across languages. Symbols add a 0.9-unit emoji
+     * entry when allowed; the space bar supplies that width without changing the row total.
      */
     private fun bottomRow(
         state: KeyboardState,
@@ -197,11 +208,15 @@ class KeyboardLayoutProvider {
         val punctuationKey = symbolKey(punctuation, state.language, weight = PUNCTUATION_WEIGHT)
         val periodKey = symbolKey(".", state.language, weight = PUNCTUATION_WEIGHT)
         val enterKey = enterKey(editorContext)
+        val emoji = if (state.layer in setOf(KeyboardLayer.SYMBOLS, KeyboardLayer.SYMBOLS_ALT) && editorContext.allowsEmojiPanel)
+            KeySpec("☺", KeyboardAction.OpenEmoji, 0.9f, KeyStyle.ACTION,
+                accessibilityLabel = editText(state.language, "Emoji", "Эмодзи", "Emojis")) else null
         val spaceWeight = BOTTOM_ROW_WEIGHT -
-            (modeKey.weight + punctuationKey.weight + periodKey.weight + enterKey.weight)
-        return listOf(
+            (modeKey.weight + punctuationKey.weight + periodKey.weight + enterKey.weight + (emoji?.weight ?: 0f))
+        return listOfNotNull(
             modeKey,
             punctuationKey,
+            emoji,
             spaceKey(state.language, spaceWeight),
             periodKey,
             enterKey,

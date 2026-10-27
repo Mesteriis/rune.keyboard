@@ -364,6 +364,7 @@ class RuneInputMethodService : InputMethodService() {
             val ownedEnter = action == KeyboardAction.Enter && editorContext.supportsSmartTyping &&
                 (transition.command == EditorCommand.InsertNewline || transition.command is EditorCommand.PerformEditorAction)
             val leavingEditing = previousState.layer == KeyboardLayer.EDITING && action == KeyboardAction.ToggleSymbols
+            val leavingEmoji = previousState.layer == KeyboardLayer.EMOJI && action == KeyboardAction.ToggleSymbols
             val editingCursor = previousState.layer == KeyboardLayer.EDITING &&
                 (action is KeyboardAction.MoveCursor || action == KeyboardAction.CursorModeStarted)
             val externalEdit = action == KeyboardAction.OpenEditing && transition.state.layer == KeyboardLayer.EDITING ||
@@ -374,16 +375,17 @@ class RuneInputMethodService : InputMethodService() {
                     action is KeyboardAction.MoveCursor
                 if (!typingSession.prepareExternalEdit(await, ::executeTypingEdit)) return@section
                 externalEditContinuity.arm()
-            } else if (!leavingEditing && !ownedEnter && invalidatesTyping(action)) {
+            } else if (!leavingEditing && !leavingEmoji && !ownedEnter && invalidatesTyping(action)) {
                 candidates.invalidate()
                 if (action is KeyboardAction.MoveCursor || action == KeyboardAction.Enter) {
                     typingSession.awaitEditorSelection(::executeTypingEdit)
                 } else {
-                    typingSession.invalidate(::executeTypingEdit)
+                    val finished = typingSession.invalidate(::executeTypingEdit)
+                    if (action == KeyboardAction.OpenEmoji && !finished) return@section
                 }
             }
             state = transition.state
-            if (externalEdit || leavingEditing) updatePersonalizationPolicy()
+            if (externalEdit || leavingEditing || action == KeyboardAction.OpenEmoji) updatePersonalizationPolicy()
             if (action is KeyboardAction.SwitchLanguage || action == KeyboardAction.ToggleSymbols ||
                 action == KeyboardAction.ToggleSymbolsPage) {
                 typingSession.reopenDiagnosticsForLetters(inputViewActive && editorContext.supportsSmartTyping &&
@@ -404,6 +406,8 @@ class RuneInputMethodService : InputMethodService() {
 
             val outcome = transition.command?.let { executeTypingOrEditorCommand(it, previousState) }
                 ?: CommandOutcome.NO_COMMAND
+            if (outcome == CommandOutcome.DELIVERED && previousState.layer == KeyboardLayer.EMOJI && editorContext.inputPolicy == InputPolicy.NORMAL &&
+                action is KeyboardAction.CommitText) keyboardView?.recordEmojiCommitted(action.value)
             externalEditContinuity.observe(typingSession.state.enabled, typingSession.requiresExternalWordBoundary)
             if (outcome == CommandOutcome.DELIVERED && typingSession.sentenceCapitalizationPending) {
                 // The gesture consumed this action. Prime the next key from the post-action state.
@@ -425,6 +429,7 @@ class RuneInputMethodService : InputMethodService() {
         KeyboardAction.Enter,
         KeyboardAction.ToggleSymbols,
         KeyboardAction.ToggleSymbolsPage,
+        KeyboardAction.OpenEmoji,
         KeyboardAction.CursorModeStarted,
         KeyboardAction.HideKeyboard,
         KeyboardAction.NextInputMethod,
@@ -470,9 +475,10 @@ class RuneInputMethodService : InputMethodService() {
             candidates.edit(spaceCorrection = if (command is EditorCommand.CommitText && command.value == " ")
                 ::executeTypingEdit else null) {
                 when (command) {
-                    is EditorCommand.CommitText -> typingSession.typeText(command.value, punctuation, beforeAction,
-                        autocorrectionMode = settings.autocorrectionMode,
-                        execute = ::executeTypingEdit)
+                    is EditorCommand.CommitText -> if (beforeAction.layer == KeyboardLayer.EMOJI && command.value != " ")
+                        typingSession.typeIsolatedText(command.value, ::executeTypingEdit)
+                    else typingSession.typeText(command.value, punctuation, beforeAction,
+                        autocorrectionMode = settings.autocorrectionMode, execute = ::executeTypingEdit)
                     EditorCommand.DeletePreviousCodePoint -> typingSession.deletePrevious(::executeTypingEdit)
                     EditorCommand.ConvertPrecedingSpaceToPeriod -> typingSession.typeText(" ", punctuation,
                         beforeAction, doubleSpaceGesture = true, autocorrectionMode = settings.autocorrectionMode,

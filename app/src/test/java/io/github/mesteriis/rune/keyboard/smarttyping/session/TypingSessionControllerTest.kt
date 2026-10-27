@@ -16,6 +16,46 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class TypingSessionControllerTest {
+    @Test fun `palette insertion clears ranking context and candidates without completing a learned word`() {
+        val committed = mutableListOf<String>()
+        controller.setPersonalization(object : TypingPersonalization {
+            override fun committed(prefix: String, word: String, retypedFrom: String?, language: KeyboardLanguage) {
+                committed.add(word)
+            }
+        }, KeyboardLanguage.ENGLISH)
+        start()
+        controller.typeText("teh", execute)
+        assertEquals(TypingTextResult.HANDLED, controller.typeIsolatedText("👩‍💻", execute))
+        assertEquals(listOf(TypingEdit.SetComposingText("teh"), TypingEdit.FinishComposingText,
+            TypingEdit.CommitText("👩‍💻")), edits)
+        assertEquals("", controller.state.contextText)
+        assertNull(controller.state.composing)
+        assertNull(controller.state.lastAutoEdit)
+        assertTrue(controller.candidateViewState.candidates.isEmpty())
+        assertTrue(committed.isEmpty())
+        controller.typeText("next", execute)
+        assertEquals("next", controller.state.contextText)
+        assertEquals("next", controller.state.composing?.typedWord)
+    }
+
+    @Test fun `palette insertion stops if finishing composition is refused`() {
+        start()
+        controller.typeText("word", execute)
+        val attempted = mutableListOf<TypingEdit>()
+        assertEquals(TypingTextResult.REJECTED, controller.typeIsolatedText("🇪🇸") { attempted.add(it); false })
+        assertEquals(listOf(TypingEdit.FinishComposingText), attempted)
+    }
+
+    @Test fun `palette insertion does not remove the unknown external word fence`() {
+        start()
+        assertTrue(controller.prepareExternalEdit(false, execute))
+        assertEquals(TypingTextResult.HANDLED, controller.typeIsolatedText("😀", execute))
+        assertTrue(controller.requiresExternalWordBoundary)
+        controller.typeText("teh", execute)
+        assertEquals(TypingEdit.CommitText("teh"), edits.last())
+        assertEquals("", controller.state.contextText)
+    }
+
     private val controller = TypingSessionController(jvmGraphemes)
     private val edits = mutableListOf<TypingEdit>()
     private val execute: (TypingEdit) -> Boolean = { edits.add(it); true }
