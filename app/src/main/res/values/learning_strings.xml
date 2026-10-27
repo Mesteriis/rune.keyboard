@@ -1,6 +1,6 @@
 <resources>
     <string name="learning_title">Learning lab</string>
-    <string name="learning_scope">Optional local learning from explicit choices only. Up to 512 distinct records are kept outside backups. Disabling collection stops new examples; Reset removes saved examples and patterns. A fixed fifth of expected words is reserved for testing and never trains patterns. New patterns remain inactive until they improve that holdout without a single regression; the previous active policy is retained and restored if later canary evidence is worse. With example collection and typo learning enabled, this check runs locally from 01:00–05:00 only while charging, idle, thermally safe, and not low on battery or storage. Results compare local suggestions on normalized words, excluding model, touch and exact-pair personalization; this is not automatic editing accuracy. Small or empty samples do not establish accuracy.</string>
+    <string name="learning_scope">Optional local learning from explicit choices only. Up to 512 distinct records are kept outside backups. Disabling collection stops new examples; Reset removes saved examples and patterns. A fixed fifth of expected words is reserved for testing and never trains patterns. New patterns remain inactive until they improve that holdout without a single regression; the previous active policy is retained and restored if later canary evidence is worse. With example collection and typo learning enabled, this check runs locally from 01:00–05:00 only while charging with the screen off, thermally safe, and not low on battery or storage. Results compare local suggestions on normalized words, excluding model, touch and exact-pair personalization; this is not automatic editing accuracy. Small or empty samples do not establish accuracy.</string>
     <string name="learning_run">Run local evaluation</string>
     <string name="learning_reset">Reset examples and patterns</string>
     <string name="learning_resetting">Resetting…</string>
@@ -17,4 +17,14 @@
     <string name="learning_promotion_approved">Candidate passed and is now active. The previous policy is available for rollback.</string>
     <string name="learning_promotion_refused">Candidate was not activated; the current policy remains active.</string>
     <string name="learning_promotion_failed">Candidate passed evaluation but could not be committed. The current policy remains active.</string>
+    <string name="learning_progress_format">Eligible holdout: %1$d / %2$d\nCorrection examples: %3$d / %4$d\nUnchanged-word controls: %5$d / %6$d\n%7$s</string>
+    <string name="learning_samples_ready">Enough samples for validation. Patterns activate only after a successful full check.</string>
+    <string name="learning_samples_needed">More eligible holdout examples are needed before activation.</string>
+    <string name="learning_reason_cancelled">Validation was cancelled.</string>
+    <string name="learning_reason_unchanged">There are no new patterns to activate.</string>
+    <string name="learning_reason_incomplete">Validation could not evaluate every eligible example.</string>
+    <string name="learning_reason_regression">New mistakes appeared in the evaluated suggestions.</string>
+    <string name="learning_reason_identity">Some unchanged words lost their original suggestion.</string>
+    <string name="learning_reason_no_gain">The evaluated suggestions showed no net improvement.</string>
+    <string name="learning_result_with_reasons">%1$s\n%2$s</string>
 </resources>

@@ -7,6 +7,27 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class LearningEvaluatorTest {
+    @Test fun progressUsesTheSameVetoAndConflictFilteringAsReplay() {
+        val word = words.first { LearningModel.holdout(en, it) }
+        val model = LearningModel().apply { configure(true, true, true) }
+        model.record(word, word, en, FeedbackSource.CONFIRMED)
+        model.record(word + "z", word, en, FeedbackSource.ACCEPTED)
+        model.record(word + "y", word, en, FeedbackSource.ACCEPTED)
+        assertEquals(LearningHoldoutProgress(3, 2, 1), LearningEvaluator.holdoutProgress(model.snapshot()))
+        model.record(word + "z", word, en, FeedbackSource.REJECTED)
+        assertEquals(LearningHoldoutProgress(2, 1, 1), LearningEvaluator.holdoutProgress(model.snapshot()))
+        model.record(word + "y", "different", en, FeedbackSource.ACCEPTED)
+        assertEquals(LearningHoldoutProgress(1, 0, 1), LearningEvaluator.holdoutProgress(model.snapshot()))
+    }
+
+    @Test fun sampleProgressRequiresAllThreeIndependentMinimums() {
+        assertFalse(LearningHoldoutProgress(19, 14, 5).hasMinimumSamples)
+        assertFalse(LearningHoldoutProgress(20, 9, 11).hasMinimumSamples)
+        assertFalse(LearningHoldoutProgress(20, 16, 4).hasMinimumSamples)
+        assertTrue(LearningHoldoutProgress(20, 15, 5).hasMinimumSamples)
+        assertFalse(LearningEvaluator.holdoutProgress(LearningSnapshot()).hasMinimumSamples)
+    }
+
     private val en = KeyboardLanguage.ENGLISH
     private val words = listOf("cat", "dog", "bird", "apple", "tree", "blue", "green", "table", "word", "house")
     private fun result(original: String, alternatives: List<GeneratedCandidate> = emptyList(), completion: CandidateCompletion = CandidateCompletion.COMPLETE) =

@@ -3,6 +3,7 @@
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/learning_scope" android:textSize="16sp" />
         <TextView android:id="@+id/learning_status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:textSize="16sp" android:accessibilityLiveRegion="polite" />
+        <TextView android:id="@+id/learning_progress" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:textSize="16sp" android:accessibilityLiveRegion="polite" />
         <Button android:id="@+id/learning_run" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="@string/learning_run" />
         <TextView android:id="@+id/learning_results" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="16sp" android:accessibilityLiveRegion="polite" />
         <Button android:id="@+id/learning_reset" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="@string/learning_reset" />

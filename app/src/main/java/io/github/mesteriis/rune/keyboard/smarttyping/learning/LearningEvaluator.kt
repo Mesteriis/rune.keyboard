@@ -20,8 +20,27 @@ data class LearningPromotionDecision(
     val reasons: List<String>,
 )
 
+/** Eligible sample counts before replay; enough samples do not establish quality. */
+data class LearningHoldoutProgress(val examples: Int, val corrections: Int, val identities: Int) {
+    val hasMinimumSamples get() = examples >= LearningEvaluator.MINIMUM_HOLDOUT &&
+        corrections >= LearningEvaluator.MINIMUM_CORRECTIONS && identities >= LearningEvaluator.MINIMUM_IDENTITIES
+}
+
 /** Local top-suggestion replay only. Frozen training evidence never includes held-out expected words. */
 object LearningEvaluator {
+    fun holdoutProgress(snapshot: LearningSnapshot): LearningHoldoutProgress {
+        val rows = holdoutRows(snapshot)
+        val identities = rows.count { it.original == it.expected }
+        return LearningHoldoutProgress(rows.size, rows.size - identities, identities)
+    }
+
+    private fun holdoutRows(snapshot: LearningSnapshot): List<LearningEvidence> {
+        val conflict = snapshot.evidence.groupBy { it.language to it.originalHash }.filterValues { rows ->
+            rows.any { it.source == FeedbackSource.REJECTED || it.conflicted } || rows.map { it.expectedHash }.distinct().size > 1
+        }.keys
+        return snapshot.examples.filter { it.holdout && it.source != FeedbackSource.REJECTED && (it.language to it.originalHash) !in conflict }
+    }
+
     /** Stable ties preserve the local generator order, matching the live preference ordering. */
     fun rerank(snapshot: LearningSnapshot, original: String, language: KeyboardLanguage,
         alternatives: List<GeneratedCandidate>): List<GeneratedCandidate> =
@@ -48,10 +67,7 @@ object LearningEvaluator {
         learnedPolicy: LearningPatternPolicy,
         generate: (String, KeyboardLanguage) -> CandidateGeneration,
         cancelled: () -> Boolean): LearningEvaluation {
-        val conflict = snapshot.evidence.groupBy { it.language to it.originalHash }.filterValues { rows ->
-            rows.any { it.source == FeedbackSource.REJECTED || it.conflicted } || rows.map { it.expectedHash }.distinct().size > 1
-        }.keys
-        val rows = snapshot.examples.filter { it.holdout && it.source != FeedbackSource.REJECTED && (it.language to it.originalHash) !in conflict }
+        val rows = holdoutRows(snapshot)
         var evaluated = 0; var unavailable = 0; var missing = 0; var baseline = 0; var learned = 0
         var identities = 0; var preserved = 0; var learnedPreserved = 0; var policy = 0
         var improvements = 0; var regressions = 0; var stopped = false

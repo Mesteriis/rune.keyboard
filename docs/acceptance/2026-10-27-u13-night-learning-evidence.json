@@ -1,0 +1,149 @@
+{
+  "artifacts": {
+    "build/review-u13-20261027/baseline-app.apk": {
+      "bytes": 345114413,
+      "sha256": "6b9fdc0d6fe9ffcd2fafae2651cbde556718fcb7fe2750c68c3a7e4e93e65d8a"
+    },
+    "build/review-u13-20261027/baseline-fixture-tests.apk": {
+      "bytes": 1766527,
+      "sha256": "58d23037d18f9398d51587b5539f444a5893ad09c303ee505c4320e358ec26a9"
+    },
+    "build/review-u13-20261027/final-app.apk": {
+      "bytes": 345240141,
+      "sha256": "ea86249587de01ba0e971cf149a248dff6a9427176c4ea8bdf669207a6d9fdc8"
+    },
+    "build/review-u13-20261027/final-tests.apk": {
+      "bytes": 1766527,
+      "sha256": "dd46ab0ccb06b78d8bfd39959e7080fe7c8c02e83b3b6d4ae5a98283f1e23b24"
+    }
+  },
+  "baseline": {
+    "apkInstallationPerformed": false,
+    "bootUnchanged": true,
+    "currentJobFailureCount": 1,
+    "dozeForced": false,
+    "expected": "blocked",
+    "observations": {
+      "activeChanged": false,
+      "activeMatchesCandidate": false,
+      "charging": true,
+      "deepIdle": false,
+      "finished": true,
+      "night": true,
+      "observerReady": true,
+      "promotingObserved": false,
+      "rollbackMatchesPrevious": false,
+      "screenOff": true,
+      "storeReady": true
+    },
+    "runnerPassed": true
+  },
+  "baselineRevision": "fe2c663",
+  "checks": [
+    {
+      "command": [
+        "./gradlew",
+        ":app:testDebugUnitTest",
+        ":app:imeIntelligenceBoundary",
+        ":app:privacyGateRelease",
+        ":app:lintDebug",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        "--console=plain"
+      ],
+      "exitCode": 0,
+      "logSha256": "0c63692922d88f59241f258456e681e2df6a617ded62735a77719a765895a260"
+    }
+  ],
+  "cleanup": {
+    "ownEmulatorStopped": true,
+    "ownFreshAvdDeleted": true,
+    "physicalDevicesTouched": false
+  },
+  "final": {
+    "apkInstallationPerformed": false,
+    "bootUnchanged": true,
+    "currentJobFailureCount": null,
+    "dozeForced": false,
+    "expected": "promoted",
+    "observations": {
+      "activeChanged": true,
+      "activeMatchesCandidate": true,
+      "charging": true,
+      "deepIdle": false,
+      "finished": true,
+      "night": true,
+      "observerReady": true,
+      "promotingObserved": true,
+      "rollbackMatchesPrevious": true,
+      "screenOff": true,
+      "storeReady": true
+    },
+    "runnerPassed": true
+  },
+  "initialLintFailure": {
+    "issue": "SetTextI18n",
+    "logSha256": "03d89599159ccab67a51f471d4e652ccdcefe66816547fb9c7d758d81583123d",
+    "resolvedBy": "Localized summary/reasons resource; final lint and final binary UI check pass."
+  },
+  "instrumentation": [
+    {
+      "logSha256": "2c6d23fc0e8b22129c5959c3547600a3e541db6c61faaf7ff85214a17da76c35",
+      "name": "final-lab-progress",
+      "passed": true,
+      "tests": 1
+    },
+    {
+      "logSha256": "55a448571b41eeebb2191fd3f2321898e7ad46e2b75cc5292be9edf251a00f31",
+      "name": "final-scheduler-constraints",
+      "passed": true,
+      "tests": 1
+    }
+  ],
+  "jvm": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 1162
+  },
+  "limitations": [
+    "JobScheduler run -f exercises independent runtime guards; not natural multi-night scheduling.",
+    "Synthetic declared public-word fixture establishes execution and persistence, not independent quality.",
+    "Physical Fold and API 26 were not tested."
+  ],
+  "preparationFailures": [
+    {
+      "log": "baseline-seed.log",
+      "outcome": "INSUFFICIENT_USABLE_TARGETS_BEFORE_VOCABULARY_EXPANSION",
+      "sha256": "011b32dedbf30e71ac62fec4090d5aabfd5d24567b04c4c217ecc6b67a93c8aa"
+    },
+    {
+      "log": "probe-seed.log",
+      "outcome": "INSUFFICIENT_USABLE_TARGETS_BEFORE_VOCABULARY_EXPANSION",
+      "sha256": "d3c880ce6be87b91d958f644aac9d6618608830c721a91be14fece5af9abc90d"
+    }
+  ],
+  "purpose": "U13_NIGHT_WORKER_FUNCTIONAL_ACCEPTANCE_NOT_MODEL_QUALITY",
+  "seed": {
+    "heldOut": 20,
+    "improvements": 8,
+    "promotionApproved": true,
+    "regressions": 0,
+    "seeded": true
+  },
+  "sourceBindings": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/learning/LearningLabProgressInstrumentedTest.kt": "56b4046f264cfa5dd465c07aa8de10eb92d871b511082f097ee8576bbf3790f3",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/learning/LearningNightJobFixtureInstrumentedTest.kt": "b8a306cffe24368074d96849a0497d6c5d2eb371aa415468c441ff490dd3c120",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/LearningLabActivity.kt": "62e9d9dc9add699799344a6471ce26e60ecadce2229c4de650fec67abc367a0d",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/learning/LearningEvaluationJobService.kt": "10770ab90946c302fa19a5183ed11e19994c780b156e26e3ddfbab156448c9b3",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/learning/LearningEvaluator.kt": "463178af7621762a5afdecdc4bfb9bbd16a55f81b7c5aa9f8f819082f6e5747c",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/learning/LearningJobPolicy.kt": "a16648ceaa7323f00d91509b102c8036f5efae69218e77f01c1cebebd2fae439",
+    "app/src/main/res/layout/activity_learning_lab.xml": "ee3f8b6a3102a6475e1019bde87a7327b57c335ae932163b5a0ab18cc589b2ae",
+    "app/src/main/res/values-ru/learning_strings.xml": "368d2ecd58a965381457f727518803beebc31532263c7e0be4b568f267a3a31d",
+    "app/src/main/res/values/learning_strings.xml": "f100c030be46ac74b9004665cbaf039de0cefa7aa10946de542e039bb1ad3806",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/learning/LearningEvaluatorTest.kt": "cd7046c72f5dfffce27aae34f1bb242ad696b73a3208b3e5ee86d6fbc24d6dd6",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/learning/LearningJobPolicyTest.kt": "e6b9b675efa322b445b28163a3d1a3d0fe51fcee7ee5c82ab94bec5ede613834",
+    "tools/qa/review-night-learning.py": "ee1de814c0642657e09a5c75bcdb4c03e088f5a27f073f46e4538f358cb19a88"
+  },
+  "updatePreservedFixture": true
+}

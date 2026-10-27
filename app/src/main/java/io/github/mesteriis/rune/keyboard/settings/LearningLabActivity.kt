@@ -8,6 +8,7 @@ import android.widget.TextView
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.smarttyping.learning.AndroidLearningEvaluation
 import io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningEvaluation
+import io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningEvaluator
 import io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningStore
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
@@ -61,6 +62,12 @@ class LearningLabActivity : ThemedActivity() {
         findViewById<TextView>(R.id.learning_status).text = getString(R.string.learning_status_format,
             getString(if (store.lastWriteSucceeded == false) R.string.learning_failed else status), snapshot.examples.size, snapshot.examples.count { !it.holdout }, snapshot.examples.count { it.holdout },
             snapshot.evidence.size, snapshot.counts().values.sum())
+        val progress = LearningEvaluator.holdoutProgress(snapshot)
+        findViewById<TextView>(R.id.learning_progress).text = getString(R.string.learning_progress_format,
+            progress.examples, LearningEvaluator.MINIMUM_HOLDOUT,
+            progress.corrections, LearningEvaluator.MINIMUM_CORRECTIONS,
+            progress.identities, LearningEvaluator.MINIMUM_IDENTITIES,
+            getString(if (progress.hasMinimumSamples) R.string.learning_samples_ready else R.string.learning_samples_needed))
         findViewById<Button>(R.id.learning_run).isEnabled = store.isReady && running == null
     }
     private fun evaluate() {
@@ -96,7 +103,18 @@ class LearningLabActivity : ThemedActivity() {
             result.learnedPreserved, result.identities, result.policyMatches, result.evaluated,
             result.evaluated - result.identities)
         val comparison = getString(R.string.learning_comparison_format, result.improvements, result.regressions)
-        findViewById<TextView>(R.id.learning_results).text =
-            getString(R.string.learning_result_with_decision, metrics, comparison, getString(outcome))
+        val summary = getString(R.string.learning_result_with_decision, metrics, comparison, getString(outcome))
+        val reasons = result.promotion.reasons.map { reason -> getString(when (reason) {
+                    "CANCELLED" -> R.string.learning_reason_cancelled
+                    "CANDIDATE_UNCHANGED" -> R.string.learning_reason_unchanged
+                    "INSUFFICIENT_HOLDOUT" -> R.string.learning_samples_needed
+                    "INCOMPLETE_EVALUATION" -> R.string.learning_reason_incomplete
+                    "NEW_REGRESSION" -> R.string.learning_reason_regression
+                    "IDENTITY_REGRESSION" -> R.string.learning_reason_identity
+                    "NO_NET_IMPROVEMENT" -> R.string.learning_reason_no_gain
+                    else -> R.string.learning_reason_incomplete
+                }) }.distinct().joinToString(separator = "\n")
+        findViewById<TextView>(R.id.learning_results).text = if (reasons.isEmpty()) summary
+            else getString(R.string.learning_result_with_reasons, summary, reasons)
     }
 }

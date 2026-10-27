@@ -13,7 +13,7 @@ internal object LearningJobPolicy {
     data class RuntimeConditions(
         val enabled: Boolean,
         val night: Boolean,
-        val idle: Boolean,
+        val screenOff: Boolean,
         val thermallySafe: Boolean,
         val charging: Boolean,
         val batteryNotLow: Boolean,
@@ -21,7 +21,7 @@ internal object LearningJobPolicy {
     )
 
     fun allowsRun(conditions: RuntimeConditions): Boolean = conditions.run {
-        enabled && night && idle && thermallySafe && charging && batteryNotLow && storageNotLow
+        enabled && night && screenOff && thermallySafe && charging && batteryNotLow && storageNotLow
     }
 
     fun delayUntilNight(now: ZonedDateTime, allowCurrentWindow: Boolean): Long {

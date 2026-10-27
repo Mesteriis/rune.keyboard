@@ -16,7 +16,11 @@ tests; full app suite: 1,153 tests, no failures/errors/skips). U12's model and
 controller acceptance is verified in
 `docs/acceptance/2026-10-27-u12-personal-context-tail.md` (old-code reproduction,
 six new regressions, all 1,159 app JVM tests and boundary/release privacy gates
-pass). Other cards remain open until their complete evidence is established.
+pass). U13's night worker acceptance is verified in
+`docs/acceptance/2026-10-27-u13-night-learning.md` (old APK retry, actual fixed
+worker PROMOTING and durable rotation on a disposable emulator, 1,162 JVM tests,
+UI/scheduler instrumentation, lint and release privacy/boundary gates pass).
+Other cards remain open until their complete evidence is established.
 
 ## Acceptance inventory
 
@@ -38,7 +42,7 @@ pass). Other cards remain open until their complete evidence is established.
 | U10 | NO_SUGGESTIONS/AUTO_COMPLETE/FILTER combinations; hidden strip and no correction/model calls; unchanged search submission and frozen replay. | Open |
 | U11 | Explicit experimental model status; separately calibrated in-process EN ranker; fresh family/article-separated holdout, protected forms, exact Undo, model comparison and device budgets. | Open |
 | U12 | Tail-based personal phrase context with partial-token protection; >512-character session continuation and accumulated phrases. | Verified locally; receipt above |
-| U13 | Reproduce charging/screen-off retry without forced Doze; policy tests; observed promotion in the night window on emulator. | Open |
+| U13 | Reproduce charging/screen-off retry without forced Doze; policy tests; observed promotion in the night window on emulator. | Verified locally; receipt above |
 | U14 | Measure expanded-strip utility first; view limits and touch invalidation; first-two replay parity, stable Fold layout and API 26 accessibility. | Open |
 | U15 | Mode-key alternatives and voice command handling; popup/picker/TalkBack; Fold with/without voice IME; privacy regression. | Open |
 | U16 | Packaged native symbols stripped, text/rodata parity, no local source paths, unchanged runtime build identity; negative gate and release/model/scoring smoke on required devices/APIs. | Open |

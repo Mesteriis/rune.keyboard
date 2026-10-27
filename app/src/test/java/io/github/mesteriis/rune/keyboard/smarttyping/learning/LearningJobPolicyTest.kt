@@ -36,10 +36,18 @@ class LearningJobPolicyTest {
         val ready = LearningJobPolicy.RuntimeConditions(true, true, true, true, true, true, true)
         assertTrue(LearningJobPolicy.allowsRun(ready))
         val failures = listOf(
-            ready.copy(enabled = false), ready.copy(night = false), ready.copy(idle = false),
+            ready.copy(enabled = false), ready.copy(night = false), ready.copy(screenOff = false),
             ready.copy(thermallySafe = false), ready.copy(charging = false),
             ready.copy(batteryNotLow = false), ready.copy(storageNotLow = false),
         )
         assertTrue(failures.all { !LearningJobPolicy.allowsRun(it) })
+    }
+
+    @Test fun `charging with a noninteractive screen is sufficient without requiring Doze`() {
+        val conditions = LearningJobPolicy.RuntimeConditions(enabled = true, night = true,
+            screenOff = true, thermallySafe = true, charging = true, batteryNotLow = true, storageNotLow = true)
+        assertTrue(LearningJobPolicy.allowsRun(conditions))
+        assertFalse(LearningJobPolicy.allowsRun(conditions.copy(screenOff = false)))
+        assertFalse(LearningJobPolicy.allowsRun(conditions.copy(charging = false)))
     }
 }

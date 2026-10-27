@@ -156,7 +156,8 @@ class LearningEvaluationJobService : JobService() {
         return LearningJobPolicy.allowsRun(LearningJobPolicy.RuntimeConditions(
             enabled = learningEnabled(),
             night = LearningJobPolicy.isNight(ZonedDateTime.now()),
-            idle = power.isDeviceIdleMode,
+            // Scheduler idleness is separate from deep Doze, which charging inhibits.
+            screenOff = !power.isInteractive,
             thermallySafe = thermallySafe(power),
             charging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                 status == BatteryManager.BATTERY_STATUS_FULL,
