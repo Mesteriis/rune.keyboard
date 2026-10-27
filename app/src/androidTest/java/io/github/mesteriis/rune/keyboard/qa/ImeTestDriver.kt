@@ -39,8 +39,10 @@ class ImeTestDriver {
     private var runeWasEnabled = false
     private var previousHardKeyboardSetting = "0"
     private var previousPreferences: Map<String, *> = emptyMap<String, Any?>()
+    private var ownerStateCaptured = false
 
     fun setUp() {
+        check(!ownerStateCaptured) { "IME QA driver already owns a settings snapshot" }
         check(targetContext.packageName == PACKAGE_NAME) {
             "IME QA driver requires the default Rune package"
         }
@@ -53,6 +55,7 @@ class ImeTestDriver {
         previousHardKeyboardSetting = shell("settings get secure show_ime_with_hard_keyboard")
         val preferences = targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
         previousPreferences = HashMap(preferences.all)
+        ownerStateCaptured = true
         shell("settings put secure show_ime_with_hard_keyboard 1")
         shell("ime enable $IME_COMPONENT")
         // `ime set` is a no-op when Rune was already selected by a preceding non-UI fixture.
@@ -64,6 +67,7 @@ class ImeTestDriver {
     }
 
     fun tearDown() {
+        if (!ownerStateCaptured) return
         // An interrupted run must not navigate another active app away from its task.
         if (device.currentPackageName == PACKAGE_NAME) device.pressHome()
         restorePreferences()
@@ -80,6 +84,7 @@ class ImeTestDriver {
         val hardKeyboardSetting = previousHardKeyboardSetting.takeUnless { it.isBlank() || it == "null" } ?: "0"
         shell("settings put secure show_ime_with_hard_keyboard $hardKeyboardSetting")
         if (android.os.Build.VERSION.SDK_INT == 26) device.setCompressedLayoutHierarchy(false)
+        ownerStateCaptured = false
     }
 
     /** Deterministic temporary QA settings; tearDown restores the full pre-test raw map. */
