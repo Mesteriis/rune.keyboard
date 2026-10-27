@@ -42,13 +42,17 @@ tools/verify-native-runtime.sh app/build/outputs/apk/release/app-release.apk --r
 The privacy gates check permissions, cleartext/backup, logging, source dependency boundaries and the absence of debug recorders from release/profile before and after shrinking. Native checks inspect all four libraries in both packaged ABIs, reject DWARF/static symbol sections and require exact bytes from the runtime's stripped outputs. The app reuses the runtime module's pinned NDK for packaging. CI's unsigned build uses `app-release-unsigned.apk` for the APK check.
 
 The separate `--require-no-local-paths` audit also rejects `/Users/` and `/home/`
-strings. It currently fails on source-location literals retained in runtime
-`.rodata`; stripping debug sections does not remove those literals. This remains
-an open U16 release requirement. Do not interpret the ordinary native gate or
-the 180,129,837-byte local release candidate as full release acceptance. Fixing
-the compiler source-location recipe requires renewed runtime identity and
-qualification evidence; do not rewrite packaged strings or qualification pins.
-Unstripped build outputs stay local for symbolization and must not be published.
+strings. Source/build prefix maps now remove those literals during compilation;
+the strict gate passes the current two-ABI APK. This recipe change has a new
+runtime identity and exact-model execution qualification on Fold and ARM64
+API 26/37, including 16 KiB pages, real self-test/scoring, release-native payload
+identity and production Binder/duty/idle checks. The initial strip-only checkpoint
+kept the old identity; the separate path-normalization change is requalified in
+the [native receipt](acceptance/2026-10-27-native-preparation-runtime.md).
+No model weights, policy thresholds or scoring arithmetic changed. This is not
+whole-release, independent x86_64 device or unplugged battery acceptance.
+Unstripped outputs remain private for symbolization; their source prefixes are
+`rune-source` and `rune-build`. Never publish them or patch packaged ELF strings.
 
 `apkFootprint` selects the single release output from AGP metadata, so signed and
 unsigned filenames work without stale-file globs. It records the APK and budget
@@ -81,10 +85,13 @@ Update and submit the [build recipe and metadata](FDROID.md). Official inclusion
 
 ### Prepared source distributions
 
-The Git checkpoint requires a real repository and rejects missing Git metadata,
-uninitialized modules and dirty prepared trees. F-Droid source preparation removes
-tracked wrappers and scandelete files. Existing historical recipes use source
-commits from before this gate. A future recipe needs a verified lifecycle for
-checking clean source before preparation and binding permitted preparation effects;
-that integration has not been established. Do not infer source-export/F-Droid
-build-server acceptance from a clean normal checkout build.
+The Git checkpoint requires a real repository and matching initialized modules.
+F-Droid's explicit prepared-source mode accepts only the committed exact signing
+scrub and six deletions; other edits remain refused. Its native source guard uses
+the same complete checkpoint plus an independent two-wrapper-only submodule check.
+See [F-Droid instructions](FDROID.md) for the pre-prepare init guards and property.
+The real local `build_local` run now succeeds and produces the same unsigned APK
+as the normal checkout under the same host/toolchain/cache. Source tarball and
+final binary scanning were not run; missing-Git exports, an independent build
+server, a next versioned recipe and publication remain separate requirements.
+Historical recipes keep their original immutable source commits.

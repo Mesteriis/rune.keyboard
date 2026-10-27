@@ -57,7 +57,7 @@ The unreleased review build measures **180.1 MB** for the universal release APK,
 including **10.0 MB** of native libraries (decimal units). `./gradlew :app:apkFootprint`
 checks a 183 MB APK budget and separate unpacked/component/ABI limits; its JSON
 report is in `app/build/reports/apk-footprint/release.json`. See the
-[measurement and remaining release checks](docs/acceptance/2026-10-27-q1-apk-footprint.md).
+[current native measurements and remaining release checks](docs/acceptance/2026-10-27-native-preparation-runtime.md).
 
 Keep the same distribution/signing key when updating. Development debug builds and the public release use different keys; Android will not install one over the other. Export anything you need before choosing to remove an older debug installation.
 

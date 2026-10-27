@@ -1,0 +1,978 @@
+{
+  "cards": [
+    "U16",
+    "Q1"
+  ],
+  "status": "native packaging/source-path/exact-model execution scope verified; complete review, distribution and whole-release acceptance remain open",
+  "implementationBaseCommit": "4a1d86e8e808351df5fc4cf0f2f1f053959fc2a3",
+  "mergedImplementationCommit": "013c3efadfb2039b8f615d8aae5d3cff6b7a3241",
+  "qualifiedSourceCommit": "c0234a5479ac5c6ed54306b85365fb78b98f7c8a",
+  "sources": [
+    {
+      "path": "app/build.gradle.kts",
+      "bytes": 17798,
+      "sha256": "dd08a0ae26fb5587fe4cf780f0afb180a488d929664c2e849c2f77b0d524ab81"
+    },
+    {
+      "path": "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/intelligence/inference/RealModelServiceInstrumentedTest.kt",
+      "bytes": 13054,
+      "sha256": "0aae80d7acc3368e7eb008fde3b2c9c6ec781a080eb96738aae4180769cb006b"
+    },
+    {
+      "path": "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt",
+      "bytes": 39658,
+      "sha256": "1b389b53f74fb1878921c2ca7e561adeb418ab2b223fdaac8e1848a645f7f2a3"
+    },
+    {
+      "path": "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/QualificationPackageSafetyInstrumentedTest.kt",
+      "bytes": 2311,
+      "sha256": "eeecdd6669cbc4347ce58491a28c732fc80f2c9409026b562d62e1a80777e1ed"
+    },
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt",
+      "bytes": 3408,
+      "sha256": "085f7e03aa3ed8f1387ead50e7928137b23da706ae01ee64e3726939efd67de8"
+    },
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt",
+      "bytes": 1075,
+      "sha256": "a09415532f5448d3ea489604fef4ee26ba5ddd845176a31e3481a94a801519a0"
+    },
+    {
+      "path": "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/QualificationArtifactsTest.kt",
+      "bytes": 4083,
+      "sha256": "1323ebf4607dbdcb2e3b4b46b7217baa8e09e7641b516f4b3792de3a7c4e9099"
+    },
+    {
+      "path": "fdroid/prepared-source-policy.json",
+      "bytes": 1463,
+      "sha256": "28a2136c6adec3d2077674c358059ed850c1e6e16b8353cf9d502d987b74d4d2"
+    },
+    {
+      "path": "runtime-llama/build.gradle.kts",
+      "bytes": 2306,
+      "sha256": "5aa2eb1d5433e2adb1cf914fefe296a28ae654e6929fb550462cee3f1535d24c"
+    },
+    {
+      "path": "runtime-llama/src/androidTest/AndroidManifest.xml",
+      "bytes": 434,
+      "sha256": "420a2243293c19b6a29d740216803ec16c464d39ddfdeadc3f9234bde1c63d1f"
+    },
+    {
+      "path": "runtime-llama/src/androidTest/java/io/github/mesteriis/rune/runtime/llama/LlamaRealModelInstrumentedTest.kt",
+      "bytes": 10753,
+      "sha256": "d86bf907abd535227689a6b9cfdb51417374507594d420b96b4795052597b349"
+    },
+    {
+      "path": "runtime-llama/src/main/cpp/CMakeLists.txt",
+      "bytes": 2860,
+      "sha256": "a04724538dbb313233ea5f4f1dad6458ba0096fe0e9ec72f66819fa6daf091d9"
+    },
+    {
+      "path": "runtime-llama/src/main/cpp/PrepareLlamaSource.cmake",
+      "bytes": 4339,
+      "sha256": "4b344c121fd5886114da31dae09aabd714d88edd0bf0134c5633e7f1bc298120"
+    },
+    {
+      "path": "tools/fdroid_prepared_source.py",
+      "bytes": 7706,
+      "sha256": "d2422e83f1f1c228ebc7da60c062accf45d9a3929fe02a52cc439501405e2103"
+    },
+    {
+      "path": "tools/qualification_artifacts.py",
+      "bytes": 4144,
+      "sha256": "247f94ef585475b7a454a17767d2552028285daf682f9b5f9fd48fc3590b91a7"
+    },
+    {
+      "path": "tools/release_source_check.py",
+      "bytes": 3251,
+      "sha256": "79a6a6a997a6af6e1b59c44c0e4654a28bad9cbda3a16217d354d88db1d8ef8c"
+    },
+    {
+      "path": "tools/test-native-scoring/README.md",
+      "bytes": 11718,
+      "sha256": "03c4bccb13590e29334613f98d452801864f109783eab747b5b3d7379dd7cef6"
+    },
+    {
+      "path": "tools/test-native-scoring/runtime-benchmark/README.md",
+      "bytes": 12674,
+      "sha256": "c2a785bef86da82765733235a4b905a652dfc5cc7c26911d4a71ee8eb6bf931f"
+    },
+    {
+      "path": "tools/test-native-scoring/test_prepared_native_source.py",
+      "bytes": 8041,
+      "sha256": "6b544adc9f91ba470d8edb741ecd617c2ba9701d4f9f82cd0727c7c4c0799aa2"
+    }
+  ],
+  "runtime": {
+    "previousStripOnlyBuildId": "356dc78ec8b156462d8384ca14f0e20ff831c66b83c38831f40edfd6bd645613",
+    "newBuildId": "d48f6df2ed03cd11d3182abe453fb3a5bd126aea92f2bc06ab747b201f84565f",
+    "unqualifiedPrototypeRejectedByModelGate": "eaa4f6afb974821ae76d454de9b156a4f1d017d89b941fbdc31cb4d1403f22c1",
+    "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+    "modelBytes": 396704416,
+    "modelWeightsChanged": false,
+    "scoringArithmeticChanged": false,
+    "qualityThresholdsChanged": false,
+    "runtimeApi": 1,
+    "spellingPolicyVersion": 1
+  },
+  "packaging": {
+    "appBytes": 180096157,
+    "appSha256": "cfcb1e1989a5dab4447066a31ca2812ebd78c7f78e75b608d38818107291a785",
+    "nativeBytes": 9957040,
+    "allFourNativeLibrariesEqual": true,
+    "native": [
+      {
+        "entry": "lib/arm64-v8a/libc++_shared.so",
+        "bytes": 1374336,
+        "equal": true,
+        "normalSha256": "c4c2fe5cbcb1fba0003a31fc7ab29a9bb12df6cc187ec45a806462540e83d93b",
+        "preparedSha256": "c4c2fe5cbcb1fba0003a31fc7ab29a9bb12df6cc187ec45a806462540e83d93b"
+      },
+      {
+        "entry": "lib/arm64-v8a/librune_llama.so",
+        "bytes": 3399312,
+        "equal": true,
+        "normalSha256": "fb7b9cf2e7ce89813237bb95ba2296c05454bc0327dc4eb451f1a6872b901803",
+        "preparedSha256": "fb7b9cf2e7ce89813237bb95ba2296c05454bc0327dc4eb451f1a6872b901803"
+      },
+      {
+        "entry": "lib/x86_64/libc++_shared.so",
+        "bytes": 1337488,
+        "equal": true,
+        "normalSha256": "683a1c7cd2f6829fd40bf805739166c5fce35235bf60d2c4e4a95e9f65a342ef",
+        "preparedSha256": "683a1c7cd2f6829fd40bf805739166c5fce35235bf60d2c4e4a95e9f65a342ef"
+      },
+      {
+        "entry": "lib/x86_64/librune_llama.so",
+        "bytes": 3845904,
+        "equal": true,
+        "normalSha256": "f1c35ea7d53d786917e5766c4edb29fecfcbf5da2c2e416cd76bff6a855e7583",
+        "preparedSha256": "f1c35ea7d53d786917e5766c4edb29fecfcbf5da2c2e416cd76bff6a855e7583"
+      }
+    ],
+    "assetsEqualSource": 69,
+    "preparedAppBytes": 180096157,
+    "preparedAppSha256": "cfcb1e1989a5dab4447066a31ca2812ebd78c7f78e75b608d38818107291a785"
+  },
+  "strictNativeGate": {
+    "passed": true,
+    "strictGateExitCode": 0,
+    "runtimeBuildId": "d48f6df2ed03cd11d3182abe453fb3a5bd126aea92f2bc06ab747b201f84565f",
+    "modelQualificationChanged": false,
+    "appApk": {
+      "bytes": 180096157,
+      "sha256": "cfcb1e1989a5dab4447066a31ca2812ebd78c7f78e75b608d38818107291a785"
+    },
+    "testApk": {
+      "bytes": 11312148,
+      "sha256": "29414147a2f63c7d53b13fa54b573a4af98b014bc074b523f45cf1b08fe69dae"
+    },
+    "native": [
+      {
+        "entry": "lib/arm64-v8a/libc++_shared.so",
+        "bytes": 1374336,
+        "sha256": "c4c2fe5cbcb1fba0003a31fc7ab29a9bb12df6cc187ec45a806462540e83d93b",
+        "testApkEqual": true,
+        "localPrefixes": 0,
+        "generatedDirectoryNames": 0
+      },
+      {
+        "entry": "lib/arm64-v8a/librune_llama.so",
+        "bytes": 3399312,
+        "sha256": "fb7b9cf2e7ce89813237bb95ba2296c05454bc0327dc4eb451f1a6872b901803",
+        "testApkEqual": true,
+        "localPrefixes": 0,
+        "generatedDirectoryNames": 0
+      },
+      {
+        "entry": "lib/x86_64/libc++_shared.so",
+        "bytes": 1337488,
+        "sha256": "683a1c7cd2f6829fd40bf805739166c5fce35235bf60d2c4e4a95e9f65a342ef",
+        "testApkEqual": true,
+        "localPrefixes": 0,
+        "generatedDirectoryNames": 0
+      },
+      {
+        "entry": "lib/x86_64/librune_llama.so",
+        "bytes": 3845904,
+        "sha256": "f1c35ea7d53d786917e5766c4edb29fecfcbf5da2c2e416cd76bff6a855e7583",
+        "testApkEqual": true,
+        "localPrefixes": 0,
+        "generatedDirectoryNames": 0
+      }
+    ]
+  },
+  "unstrippedPrivateSymbolization": {
+    "retainedLocally": true,
+    "libraries": [
+      {
+        "abi": "arm64-v8a",
+        "library": "librune_llama.so",
+        "unstrippedBytes": 44876376,
+        "unstrippedSha256": "91f18785fd73cade48436b082392242c3ada409b4b42c65b80a3aadb657ec272",
+        "textAndRodataEqualPackaged": true,
+        "sections": {
+          "text": "25f726ab72ea6ccf35004cc1222ca5bbab6bab1824823cf85bb13001118ded53",
+          "rodata": "2de0a7c93112e0d3f932171463616021e159a15686c0eedd2f40e566947e715e"
+        }
+      },
+      {
+        "abi": "arm64-v8a",
+        "library": "libc++_shared.so",
+        "unstrippedBytes": 9290184,
+        "unstrippedSha256": "0c52cfab2df0d957d8b346a2bdc5ae8d71feca2591924d77e1cd724d5bf74352",
+        "textAndRodataEqualPackaged": true,
+        "sections": {
+          "text": "77aa5f922c3c26bbf0a27c8735449ba9796df664b17ccfd3308876255c54cd88",
+          "rodata": "c12064f4ed851c11b49bc059d35809b17f1a791918b80752ecd71f84983d0643"
+        }
+      },
+      {
+        "abi": "x86_64",
+        "library": "librune_llama.so",
+        "unstrippedBytes": 44645208,
+        "unstrippedSha256": "530ad07194ee81956dd09d4738721cd86b7c6f33ad2d62949b1aa2692139db98",
+        "textAndRodataEqualPackaged": true,
+        "sections": {
+          "text": "0917e4f585237b11254d9dde74626fd72efdd3f87fe290384a5099574d029421",
+          "rodata": "ae61f7831ad98fd8beef333844e60ab335ccc3fd5fc0591b6f5246e471356ed4"
+        }
+      },
+      {
+        "abi": "x86_64",
+        "library": "libc++_shared.so",
+        "unstrippedBytes": 9015544,
+        "unstrippedSha256": "e28cb9e0f456caf8498d0e8562b3ac3f73bf78c07555a52b5602396f240abec3",
+        "textAndRodataEqualPackaged": true,
+        "sections": {
+          "text": "9731663c0f4f6ed4ede32614c8304a4bed83b180d7fb9d85c584814a9b2f4ad4",
+          "rodata": "1db21d313ef30cdf8349cb1677b7159ca9e0c2958b679214874ece84e4519c1d"
+        }
+      }
+    ]
+  },
+  "localReproducibility": {
+    "wholeApkEqual": true,
+    "sameHostToolchainAndDependencyCache": true,
+    "independentBuildServer": false,
+    "cacheFreeBuild": false
+  },
+  "checks": {
+    "jvm": {
+      "tests": 1254,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "integration": {
+      "command": [
+        "./gradlew",
+        "--offline",
+        "--max-workers=2",
+        ":app:testDebugUnitTest",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:assembleRelease",
+        ":app:assembleProfile",
+        ":app:privacyGateRelease",
+        ":app:privacyGateProfile",
+        ":app:lintDebug",
+        ":app:lintRelease",
+        ":app:imeIntelligenceBoundary",
+        ":app:forbiddenRuntimeDependencies",
+        ":runtime-llama:nativeSymbolGate",
+        ":app:apkFootprint"
+      ],
+      "exitCode": 0,
+      "sourceCommit": "c0234a5479ac5c6ed54306b85365fb78b98f7c8a",
+      "elapsedSeconds": 87.82374266698025
+    },
+    "hostExactModel": {
+      "tests": 7,
+      "skipped": 0,
+      "steps": [
+        {
+          "label": "configure",
+          "exitCode": 0,
+          "elapsedSeconds": 2.080771667184308
+        },
+        {
+          "label": "build",
+          "exitCode": 0,
+          "elapsedSeconds": 41.536725874990225
+        },
+        {
+          "label": "ctest",
+          "exitCode": 0,
+          "elapsedSeconds": 8.10964662511833
+        }
+      ]
+    },
+    "nativePython": {
+      "tests": 12,
+      "skipped": 0,
+      "exitCode": 0,
+      "elapsedSeconds": 10.351824208861217
+    },
+    "sourceCheckpointAndQualificationBridgeTests": 27,
+    "deviceRuntime": [
+      {
+        "target": "api26",
+        "abi": "arm64-v8a",
+        "api": 26,
+        "pageBytes": null,
+        "tests": 7,
+        "skipped": 0,
+        "exactModelVerified": true,
+        "installedApkVerified": true,
+        "metrics": {
+          "numtests": 1,
+          "current": 1,
+          "scoredCandidates": 27,
+          "selfTestPromptMillis": 28,
+          "selfTestFirstTokenMillis": 28,
+          "successfulRequests": 9,
+          "cancellationRaceCancelled": 1,
+          "preCancelledRequests": 2,
+          "qualificationDurationMillis": 785,
+          "cancellationRaceSucceeded": 0
+        }
+      },
+      {
+        "target": "api37",
+        "abi": "arm64-v8a",
+        "api": 37,
+        "pageBytes": 16384,
+        "tests": 7,
+        "skipped": 0,
+        "exactModelVerified": true,
+        "installedApkVerified": true,
+        "metrics": {
+          "current": 1,
+          "numtests": 1,
+          "cancellationRaceCancelled": 1,
+          "cancellationRaceSucceeded": 0,
+          "preCancelledRequests": 2,
+          "qualificationDurationMillis": 970,
+          "scoredCandidates": 27,
+          "selfTestFirstTokenMillis": 30,
+          "selfTestPromptMillis": 30,
+          "successfulRequests": 9
+        }
+      },
+      {
+        "target": "fold",
+        "abi": "arm64-v8a",
+        "api": 37,
+        "pageBytes": null,
+        "tests": 7,
+        "skipped": 0,
+        "exactModelVerified": true,
+        "installedApkVerified": true,
+        "metrics": {
+          "current": 1,
+          "numtests": 1,
+          "cancellationRaceCancelled": 1,
+          "cancellationRaceSucceeded": 0,
+          "preCancelledRequests": 2,
+          "qualificationDurationMillis": 2082,
+          "scoredCandidates": 27,
+          "selfTestFirstTokenMillis": 88,
+          "selfTestPromptMillis": 88,
+          "successfulRequests": 9
+        }
+      }
+    ],
+    "imeSafety": {
+      "results": [
+        {
+          "label": "red",
+          "junitOk": false,
+          "expected": false,
+          "ownerImeChanged": true,
+          "ownerDisabled": true,
+          "testApkSha256": "2513555b9453e60fbff965ae6d75288a281f3ad01705c5d1ff58730fd9af92f6"
+        },
+        {
+          "label": "green",
+          "junitOk": true,
+          "expected": true,
+          "ownerImeChanged": false,
+          "ownerDisabled": false,
+          "testApkSha256": "92e5b3dc4633c42e1b3883e667434d0a72b44c0e1d3b0463f9b3af2424896c02"
+        }
+      ],
+      "oldDriverSha256": "5e56ee8fd689e41ea34428bb9d55b05f0b59bdb1b8a17cacb08fa0f4637183a4",
+      "fixedDriverSha256": "1b389b53f74fb1878921c2ca7e561adeb418ab2b223fdaac8e1848a645f7f2a3",
+      "greenOwnerStateUnchanged": true,
+      "physicalDeviceTouched": false,
+      "fixturePrimaryImePresent": true,
+      "hostRestoreQuotingFailurePreserved": true,
+      "initialNoOwnerRedShowsPreferenceLoss": true
+    }
+  },
+  "foldReleaseNativeBenchmark": {
+    "pilotMeasuredRequests": 27,
+    "fullMeasuredRequests": 180,
+    "repeatsPerConfiguration": 20,
+    "build": 1,
+    "matchedRelease": true,
+    "fourCandidates": [
+      {
+        "language": "en",
+        "requests": 20,
+        "wallP50Millis": 29.289687,
+        "wallP95Millis": 57.841406,
+        "wallMaxMillis": 78.433438
+      },
+      {
+        "language": "ru",
+        "requests": 20,
+        "wallP50Millis": 158.322448,
+        "wallP95Millis": 249.013906,
+        "wallMaxMillis": 305.219166
+      },
+      {
+        "language": "es",
+        "requests": 20,
+        "wallP50Millis": 107.398906,
+        "wallP95Millis": 135.727812,
+        "wallMaxMillis": 174.951407
+      }
+    ],
+    "cancellation": {
+      "attempts": 3,
+      "cancelled": 3,
+      "completion_races": 0,
+      "completed_before_signal": 0,
+      "signal_to_end_ns": {
+        "count": 3,
+        "available_count": 3,
+        "missing_count": 0,
+        "p50": 1027812,
+        "p95": 1057031,
+        "max": 1057031
+      },
+      "metrics": {
+        "wall_ns": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 11413073,
+          "p95": 11437864,
+          "max": 11437864
+        },
+        "process_cpu_ms": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 27,
+          "p95": 30,
+          "max": 30
+        },
+        "native_duration_ms": {
+          "count": 3,
+          "available_count": 0,
+          "missing_count": 3,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "pss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 507441152,
+          "p95": 507494400,
+          "max": 507494400
+        },
+        "rss_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 586891264,
+          "p95": 586952704,
+          "max": 586952704
+        },
+        "native_heap_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 134849328,
+          "p95": 134856080,
+          "max": 134856080
+        },
+        "java_heap_used_bytes": {
+          "count": 3,
+          "available_count": 3,
+          "missing_count": 0,
+          "p50": 12059360,
+          "p95": 12153568,
+          "max": 12153568
+        }
+      }
+    },
+    "lifecycle": [
+      {
+        "operation": 0,
+        "metrics": {
+          "wall_ns": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 4070260,
+            "p95": 4070260,
+            "max": 4070260
+          },
+          "process_cpu_ms": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 7,
+            "p95": 7,
+            "max": 7
+          },
+          "native_duration_ms": {
+            "count": 1,
+            "available_count": 0,
+            "missing_count": 1,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pss_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 35251200,
+            "p95": 35251200,
+            "max": 35251200
+          },
+          "rss_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 113643520,
+            "p95": 113643520,
+            "max": 113643520
+          },
+          "native_heap_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 7214336,
+            "p95": 7214336,
+            "max": 7214336
+          },
+          "java_heap_used_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 9216736,
+            "p95": 9216736,
+            "max": 9216736
+          }
+        }
+      },
+      {
+        "operation": 1,
+        "metrics": {
+          "wall_ns": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 350654843,
+            "p95": 350654843,
+            "max": 350654843
+          },
+          "process_cpu_ms": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 346,
+            "p95": 346,
+            "max": 346
+          },
+          "native_duration_ms": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 349,
+            "p95": 349,
+            "max": 349
+          },
+          "pss_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 474607616,
+            "p95": 474607616,
+            "max": 474607616
+          },
+          "rss_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 552992768,
+            "p95": 552992768,
+            "max": 552992768
+          },
+          "native_heap_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 46632608,
+            "p95": 46632608,
+            "max": 46632608
+          },
+          "java_heap_used_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 9343712,
+            "p95": 9343712,
+            "max": 9343712
+          }
+        }
+      },
+      {
+        "operation": 2,
+        "metrics": {
+          "wall_ns": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 87819375,
+            "p95": 87819375,
+            "max": 87819375
+          },
+          "process_cpu_ms": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 86,
+            "p95": 86,
+            "max": 86
+          },
+          "native_duration_ms": {
+            "count": 1,
+            "available_count": 0,
+            "missing_count": 1,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pss_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 71335936,
+            "p95": 71335936,
+            "max": 71335936
+          },
+          "rss_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 150794240,
+            "p95": 150794240,
+            "max": 150794240
+          },
+          "native_heap_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 10226704,
+            "p95": 10226704,
+            "max": 10226704
+          },
+          "java_heap_used_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 12260064,
+            "p95": 12260064,
+            "max": 12260064
+          }
+        }
+      },
+      {
+        "operation": 3,
+        "metrics": {
+          "wall_ns": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 408906,
+            "p95": 408906,
+            "max": 408906
+          },
+          "process_cpu_ms": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 1,
+            "p95": 1,
+            "max": 1
+          },
+          "native_duration_ms": {
+            "count": 1,
+            "available_count": 0,
+            "missing_count": 1,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pss_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 71278592,
+            "p95": 71278592,
+            "max": 71278592
+          },
+          "rss_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 150740992,
+            "p95": 150740992,
+            "max": 150740992
+          },
+          "native_heap_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 10223328,
+            "p95": 10223328,
+            "max": 10223328
+          },
+          "java_heap_used_bytes": {
+            "count": 1,
+            "available_count": 1,
+            "missing_count": 0,
+            "p50": 12346080,
+            "p95": 12346080,
+            "max": 12346080
+          }
+        }
+      }
+    ],
+    "totalWallNanos": 36017624986,
+    "totalProcessCpuMillis": 102331,
+    "coldFilesystemMeasurement": false,
+    "populationPercentileClaim": false
+  },
+  "foldProductionService": {
+    "exitCode": 0,
+    "junitOk": true,
+    "failureMarker": false,
+    "elapsedSeconds": 143.23316033300944,
+    "applicationId": "io.github.mesteriis.rune.keyboard.qualification",
+    "productionInstallerAndActivationUsed": true,
+    "metrics": {
+      "current": 1,
+      "numtests": 1,
+      "serviceFirstNativeMillis": 175,
+      "serviceFirstWallMillis": 549,
+      "serviceImmediateCode": 3,
+      "serviceSuccessfulRequests": 2,
+      "serviceWarmNativeMillis": 145,
+      "serviceWarmWallMillis": 160,
+      "dutyCompleted": 15,
+      "dutyCreditBoundCpuMillis": 16000,
+      "dutyDenied": 105,
+      "dutyElapsedMillis": 60001,
+      "dutyProcessCpuMillis": 8080,
+      "beforeUnloadRssBytes": 576401408,
+      "idleElapsedMillis": 65004,
+      "idleProcessCpuMillis": 70,
+      "loadedRssBytes": 576401408,
+      "unloadedRssBytes": 147075072
+    }
+  },
+  "foldServiceIsolationCleanup": {
+    "taskCreatedApplicationRemoved": true,
+    "taskCreatedInstrumentationRemoved": true,
+    "defaultImeUnchanged": true,
+    "primaryRunePackageTouched": false
+  },
+  "fdroid": {
+    "passed": true,
+    "sourceCommit": "c0234a5479ac5c6ed54306b85365fb78b98f7c8a",
+    "elapsedSeconds": 57.75843562488444,
+    "fdroidserver": "2.4.5",
+    "scan": {
+      "fatal": 0,
+      "warnings": [
+        [
+          "gzip file archive",
+          "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+        ],
+        [
+          "executable binary, possibly code",
+          "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+        ]
+      ],
+      "errors": []
+    },
+    "prebuildOmitted": "SDK acquisition only; installed CMake reused",
+    "sourceTarballCreated": false,
+    "binaryScannerRun": false,
+    "buildServerRun": false,
+    "localBuildFunction": "fdroidserver.build.build_local",
+    "gradleOffline": true,
+    "existingDependencyCache": true
+  },
+  "historicalProductReplay": {
+    "rows": 12000,
+    "identical": true,
+    "excludedFields": [
+      "hostStageNanos",
+      "fullTokenGenerationNanos"
+    ],
+    "projectionSha256": "33c3a96fed5b3322601f6b7a0307e3a4b62bfbc9bc7650b82bf644a1afffd8a3",
+    "newQualificationClaim": false,
+    "nativeInferenceRun": false,
+    "driverSha256": "bf63b2ddf9b8eebe62f2110fd9b00d8a8cc03f708d43bb670100e800a7a57618",
+    "inputSha256": "b828dc8c5f57e5996a0a88442297c004b4939dadd74f15d9b101dadc8618e415",
+    "sourceFileCounts": [
+      88,
+      87
+    ],
+    "assetBindingCounts": [
+      18,
+      18
+    ],
+    "driverFromOwnerWorkingTree": true,
+    "modelInferenceExecuted": false,
+    "existingQualityFailuresResolved": false
+  },
+  "preservation": {
+    "fastForwarded": true,
+    "mainCommit": "013c3efadfb2039b8f615d8aae5d3cff6b7a3241",
+    "candidateChanges": 16,
+    "ownerDirtyFilesPreserved": 13,
+    "ownerUntrackedPathsPreserved": 98
+  },
+  "privateLogBindings": [
+    {
+      "path": "build/review-native-candidate-20261027/integration.log",
+      "bytes": 18589,
+      "sha256": "befac916f6cec15e465ef2f62a6b9c47806848a9990c2032fb2bd1e1eae40e5a"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/final-host-configure.log",
+      "bytes": 726,
+      "sha256": "523b2a9558d9c9048285ac969aff094a386a686a5114da6c6d52d9e6769b2610"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/final-host-build.log",
+      "bytes": 17443,
+      "sha256": "9ee8140aaee8ba9d14ae29db3ce407292b06df30c7e5e2839bd726d917b990b0"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/final-host-ctest.log",
+      "bytes": 7626,
+      "sha256": "e5cf4f79771566ae6e09da902f6e6de8dc3bc0cad10c4106167734e12ecdeb7f"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/native-python-final.log",
+      "bytes": 2060,
+      "sha256": "375ba39fe0bcee4f6c0cb8d9d56376bd8934a24831e0fa211eaa66df8b45552d"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/strict-packaged-native.log",
+      "bytes": 591,
+      "sha256": "be27d1e255c3d445a98ea773c41f7c3263163db366483c887c5ae88237b78226"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/fdroid-host.log",
+      "bytes": 893,
+      "sha256": "258b8312d1cb2b362dc6c0b81c92eda4da9a7176eb95278ef1c2c9a8285192db"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/default-debug-final.log",
+      "bytes": 7712,
+      "sha256": "f47d3f97df23966c01812d9ef3e876a1203125f9209701aead7fc77077b4a900"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/ime-safety-red.log",
+      "bytes": 4146,
+      "sha256": "9c5b6547c04738cb5e6a19190786a9325f9ae8b4e6576f26124aa1682cdc2790"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/ime-safety-green.log",
+      "bytes": 927,
+      "sha256": "4f0dcc2883ee7c1bfd57e5f1da6691b310f5adad8595a84971737ae1c4cb53da"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/ime-safety-red-no-owner.log",
+      "bytes": 2736,
+      "sha256": "eb8e4d711fdf0d64bfb9bfa7eedcf2f7ca83c53ff5222c10306e4659248f8660"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/fold/service-instrumentation.log",
+      "bytes": 1829,
+      "sha256": "00f3ae414aae781380fd50b24984d08d4bc638baa8e425878d1fb53d5ba8d575"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/fold/benchmark-pilot-raw.log",
+      "bytes": 7875,
+      "sha256": "0afcc66cbfed8c66d9aa9ebff43a35cd1ba1fa96fddc68963b205e3af561b472"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/fold/benchmark-full-raw.log",
+      "bytes": 30251,
+      "sha256": "cdff4f11afb032e1ac23c9c40a664416e7f7c7f783029b0ed3855e6a1d7b4c77"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/api26/ordinary.log",
+      "bytes": 4464,
+      "sha256": "6b60f86afa42bc36e29d0bb5bab7383499798b2dbed7270556575849d0bc1247"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/api26/exact-model.log",
+      "bytes": 1320,
+      "sha256": "a28751b9d219ddf8a11cf4eab3c7a8ca6bb838e0987e88f39758f11ef3b95a82"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/api37/ordinary.log",
+      "bytes": 4465,
+      "sha256": "1d2dd2ef346bcf649c91f85056befdcee44abb2e0ede00a12e26ccada36afa01"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/api37/exact-model.log",
+      "bytes": 1320,
+      "sha256": "f53282085b18b385f648a05e5a275917eca7136970bd9c7d42a590aa5ea6fde7"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/fold/ordinary.log",
+      "bytes": 4465,
+      "sha256": "2edcdd423bb0c14aedd72a0cdb4395c5bddc7740c37e6e07217aecdcdf97401a"
+    },
+    {
+      "path": "build/review-native-candidate-20261027/fold/exact-model.log",
+      "bytes": 1321,
+      "sha256": "f67e35318a9dd8a0c858561c9e40692cd50648cc13600adaab2b49b87618dab8"
+    }
+  ],
+  "phoneUpdate": false,
+  "published": false,
+  "outstanding": [
+    "Next versioned F-Droid recipe and independent build-server/source-tarball/final binary scan/distribution acceptance.",
+    "Whole signed-release onboarding/offline typing/settings smoke; x86_64 execution/remote CI matrix and unplugged battery acceptance.",
+    "Other original review cards, including historical provenance and quality gates, remain open."
+  ],
+  "scopeNotes": [
+    "The initial strip-only step retained the old runtime identity. Source/build normalization is a separately renewed and qualified backend.",
+    "All runtime execution targets here were ARM64. Both packaged ABIs pass ELF/byte/section gates.",
+    "Native benchmark and service are fixed public synthetic workloads, not new typing-quality calibration.",
+    "The release-native instrumentation application is debuggable for private run-as staging; all four library bytes match the actual release APK.",
+    "The service test uses its own .qualification application, real importer/activation/native self-test and production Binder/duty/idle worker.",
+    "Its packages were absent before installation and were removed after testing; no default Rune store was used.",
+    "The failed initial safety host restore did not quote subtype separators. A seeded, owned-emulator red/green run proved the old driver disables its owner IME and the fixed driver preserves it.",
+    "No Android MCP phone call was used. Fold access was coordinated and released."
+  ]
+}

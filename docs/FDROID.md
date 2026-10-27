@@ -12,7 +12,7 @@ The repository records [packaging request #4406](https://gitlab.com/fdroid/rfp/-
 - Current review changes remain unreleased. The historical 0.4.2 recipe retains the three exceptions applicable to its original source, without reassigning that version to current HEAD.
 - Build: Gradle release, `app` subdirectory, recursive submodules; JDK 17, SDK 37, NDK 29.0.14206865 and CMake 3.31.6.
 
-No signing secrets are required to compile the source. Without the ignored local `keystore.properties`, Gradle produces an unsigned release APK. F-Droid can sign its independently built APK. That signing identity is different from the upstream GitHub release unless reproducible upstream signing is separately configured and verified. Byte-for-byte reproducibility has not yet been established.
+No signing secrets are required to compile the source. Without the ignored local `keystore.properties`, Gradle produces an unsigned release APK. F-Droid can sign its independently built APK. That signing identity is different from the upstream GitHub release unless reproducible upstream signing is separately configured and verified. Local normal/prepared builds now have matching whole-APK hashes under the same host/toolchain/cache; independent build-server reproducibility remains unverified (see the native receipt below).
 
 ## Asset review
 
@@ -100,13 +100,19 @@ policy describes it. Compiled C/C++ changes still cannot retain the old runtime
 build identity. Ordinary qualification verification keeps its clean-submodule
 requirement.
 
-The [prepared-source receipt](acceptance/2026-10-27-q1-prepared-source.md) records
-27 guard/bridge tests and real local `fdroidserver.build.build_local` execution.
-The source scan has zero fatal findings and the two known warnings; qualification
-metadata and the prepared checkpoint pass. Full assembly still fails the native
-`PrepareLlamaSource.cmake` pristine check on the two removed example wrappers.
-That file is part of the runtime fingerprint. Its integration needs renewed
-runtime identity/qualification; this mode is not yet a passing distribution recipe.
+The earlier [prepared-source receipt](acceptance/2026-10-27-q1-prepared-source.md)
+records the two native integration refusals. The current
+[native preparation/runtime receipt](acceptance/2026-10-27-native-preparation-runtime.md)
+resolves them: CMake uses the full source checkpoint and the independent
+wrapper-only runtime check. Its source/build prefix maps remove local paths and
+AGP directory hashes. The new runtime identity has exact-model execution
+qualification; the model gate was retained closed until that evidence existed.
+Actual local `fdroidserver.build.build_local` now passes with zero fatal source
+findings and the same two known warnings. Its complete unsigned APK equals the
+normal build byte for byte (180,096,157 bytes) on this host/toolchain/cache.
+The SDK-acquisition-only prebuild was omitted because the pinned CMake was already
+installed; source tarball creation and final binary scanning were disabled. This
+is not an independent build-server or next-version distribution acceptance.
 
 Refresh the fixed hashes deliberately when the app build script or any listed
 original changes. Use the actual pinned fdroidserver signing transformation to

@@ -2,15 +2,25 @@
 
 ## Unreleased
 
+- Normalize native source/build paths at compilation and verify the exact F-Droid
+  preparation delta without restoring removed wrappers. The renewed runtime is
+  qualified with the exact model on Fold and ARM64 API 26/37 (16 KiB on API 37),
+  including real self-test/scoring and production Binder/duty/idle checks.
+  Normal and locally F-Droid-prepared unsigned APKs match byte for byte at
+  180,096,157 bytes, including 9,957,040 bytes of native libraries. This uses the
+  same host/toolchain/cache; independent build-server/distribution acceptance
+  remains open. Isolated debug qualification uses its own application/storage;
+  rejected IME test setup can no longer alter the owner IME during cleanup.
+
 - Add the release `apkFootprint` gate with a 183,000,000-byte universal APK limit,
   a 185,000,000-byte unpacked limit and per-component/native-ABI budgets derived
   from the stripped review build. Budget changes require a reviewed source commit
   and a CHANGELOG entry; oversized compressed assets are rejected too.
 
 - Strip packaged native libraries with the runtime's pinned NDK and verify all
-  four APK libraries against stripped build outputs. The local universal release
-  candidate is 180,129,837 bytes, with 9,983,936 bytes of native libraries;
-  source-location literals and device/model release acceptance remain open.
+  four APK libraries against stripped build outputs. The initial strip-only
+  checkpoint preserved the existing runtime identity; the later source-path
+  recipe above has its own renewed identity and execution qualification.
 
 ## 0.4.2 — 2026-09-16
 

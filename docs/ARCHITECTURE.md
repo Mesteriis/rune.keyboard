@@ -69,8 +69,16 @@ Scoring получает 1–8 продолжений с уникальными 
 возвращаются только IDs, суммы log probability, counts, timing и stable error.
 Нулевой divergent span отклоняет весь набор. EOS не добавляется.
 
-CMake архивирует чистый pinned llama.cpp в build directory и применяет туда
-проверенный patch; gitlink не меняется. Новый совместимый tokenizer API имеет
+CMake архивирует pinned llama.cpp в build directory и применяет туда
+проверенный patch; gitlink не меняется. Обычный режим требует pristine submodule.
+Явный режим `fdroidserver-2.4.5` сначала проверяет полный точный delta подготовки
+и независимо допускает в submodule только удаление двух example-wrapper файлов.
+Эти wrappers и промежуточный tar не сохраняются в generated source. Compile-time
+file/debug prefix maps дают стабильные `rune-source`/`rune-build` имена вместо
+локального checkout и AGP build-directory hash. Это отдельное изменение рецепта:
+runtime ID обновлён и переквалифицирован; подробности в
+[native receipt](acceptance/2026-10-27-native-preparation-runtime.md).
+Новый совместимый tokenizer API имеет
 callback/user-data на вызов и проверяет отмену внутри Unicode preparation,
 QWEN2 pre-split и BPE loops. Runtime отклоняет неподдерживаемые tokenizer types.
 Отдельный request cancellation predicate проверяется после сброса native flag
