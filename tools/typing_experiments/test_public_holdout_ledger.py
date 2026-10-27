@@ -34,6 +34,10 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'LEDGER_OVERLAP:family'):
             assert_disjoint([dict(families=['ранний'])], self.ledger, kinds=('family',), usages=('supervised',))
 
+    def test_joint_history_article_is_blocked_without_the_original_corpus(self):
+        with self.assertRaisesRegex(ValueError, 'LEDGER_OVERLAP:article'):
+            assert_disjoint([dict(article='5045254')], self.ledger, kinds=('article',))
+
     def test_historical_overlap_disclosure_matches_recorded_keys(self):
         historical = {key for e in self.ledger['entries'] if e['id'].startswith('public-spelling-v')
                       for key in e['keys']['article']}

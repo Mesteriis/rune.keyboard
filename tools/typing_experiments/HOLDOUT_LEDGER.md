@@ -123,3 +123,14 @@ metadata. Dictionary-supported training target families are `supervised`;
 dev/test families remain historical. The single unknown training target keeps
 its parent family axis pending. Source-window/context recovery remains pending;
 full-article exclusions already block new sentences from these sources.
+
+`import_joint_history.py --base LEDGER --output NEW_DIRECTORY` imports the
+original public joint corpus and both preserved follow-up corpora. It pins all
+three manifests and four public Parquet hashes, verifies every row-file hash,
+and checks article membership against the source Parquet ID column. Source locks
+must identify the pinned Wikipedia revision. Native numeric family IDs are
+never used as Pymorph lemmas. All typo variants contribute the same normalized
+target/context exclusion; all dictionary target analyses are retained separately.
+The training family addendum is supervised; calibration/holdout addenda are
+historical because those sets have already been used. No scoring is performed.
+The importer requires PyArrow plus pinned morphology; its unit tests do not.
