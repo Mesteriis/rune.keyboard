@@ -1,0 +1,81 @@
+{
+  "card": "U9",
+  "status": "partial; reader and palette state only",
+  "baseCommit": "192336f3aa06de70762c66c18f91817cb6d620b1",
+  "sources": [
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/emoji/EmojiCatalog.kt",
+      "bytes": 4041,
+      "sha256": "905ffb1d953e8f1611dd329fea58473a92896c6186b5cf42dfdf74765283b3cb"
+    },
+    {
+      "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/emoji/EmojiPalette.kt",
+      "bytes": 1413,
+      "sha256": "b7064cba037c3cbbfc959a4a46268cadfcf1c8ea499a93bdf4407f7f3a94b410"
+    },
+    {
+      "path": "app/src/test/java/io/github/mesteriis/rune/keyboard/ime/emoji/EmojiCatalogTest.kt",
+      "bytes": 6175,
+      "sha256": "f27901563cb0bf377d90d68c2a550a084a96b223d190bc991cbd9c088669cdb5"
+    },
+    {
+      "path": "app/src/main/assets/emoji/catalog-v1.tsv",
+      "bytes": 142268,
+      "sha256": "254dad131a86038378e3356c4a8b434fa215a695315adc109d7ff8f9d6f1a1c8"
+    }
+  ],
+  "checks": [
+    {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:testDebugUnitTest",
+        "--tests",
+        "*EmojiCatalogTest"
+      ],
+      "exitCode": 0,
+      "log": {
+        "path": "build/review-u9-reader-20261027/reader-targeted.log",
+        "bytes": 2735,
+        "sha256": "864fa61d97b28142801a1591d837f59354f14cb22166c31c25e7907fcbe4eadc"
+      }
+    },
+    {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:emojiCatalogTests",
+        ":app:testDebugUnitTest",
+        ":app:imeIntelligenceBoundary",
+        ":app:privacyGateRelease",
+        ":app:lintDebug",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ],
+      "exitCode": 0,
+      "log": {
+        "path": "build/review-u9-reader-20261027/reader-final-build.log",
+        "bytes": 13638,
+        "sha256": "7b1dd4df92c6c10c6556283a6834e715d21bc055264412539f29209290999669"
+      }
+    }
+  ],
+  "jvm": {
+    "tests": 1239,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "sourceTests": 15,
+  "newReaderTests": 9,
+  "deviceRun": false,
+  "phoneUpdate": false,
+  "runtimeIntegration": false,
+  "ordinaryReplay": "Not rerun: no existing typing/controller/model source or asset changed; new classes have no production caller yet.",
+  "limitations": [
+    "GridView, actual Paint.hasGlyph, Symbols entry and optional key not connected",
+    "Editor context/revision boundary and commit-success recents wiring pending",
+    "Native sequence insertion/deletion, accessibility and performance pending",
+    "API 26 and Fold acceptance pending"
+  ]
+}

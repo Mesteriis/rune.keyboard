@@ -1,8 +1,8 @@
 # Offline emoji catalog
 
-This is the data foundation for the review's U9 panel. The panel, glyph filtering,
-recents, editor integration and native/performance/device acceptance are not yet
-implemented by this data slice.
+This is the data foundation for the review's U9 panel, with a Kotlin reader and
+lazy palette state. The panel, actual font filtering, UI recents, editor integration
+and native/performance/device acceptance remain outstanding.
 
 The palette contains 1,898 fully-qualified Emoji 15.1 sequences in nine Unicode
 source groups, retaining source/CLDR order. Skin-tone variants (1,875 entries) and
@@ -32,6 +32,20 @@ and control characters. The catalog has a 320,000-byte budget (currently 142,268
 The Gradle `:app:emojiCatalogCheck` runs before preBuild for every variant;
 `:app:emojiCatalogTests` joins the standard check task.
 This adds no network operation to a build or to keyboard startup.
+
+`ime/emoji/EmojiCatalog.kt` reads this schema with strict UTF-8 and a bounded
+320,000-byte input, preserving complete glyph strings and all three names. It
+closes the supplied stream on success and failure. Duplicate/unknown groups,
+duplicate sequences, missing names, control characters and malformed rows refuse
+the whole catalog. Build-time source/hash verification remains the provenance
+gate; the reader is not a substitute for it.
+
+`EmojiPalette` provides view-owned lazy catalog state for the future GridView.
+Font checks are injected, limited to the selected category and cached including
+unsupported results. Recent committed entries are deduplicated, capped at 32 and
+kept only in that palette instance's RAM. The UI must supply `Paint.hasGlyph` and
+record a recent only after an accepted editor commit. These classes are not yet
+connected to the keyboard; native font, startup and insertion claims remain open.
 
 To restore a missing archive from its exact pins, or verify a restored copy:
 
