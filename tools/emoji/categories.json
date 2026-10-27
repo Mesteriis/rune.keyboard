@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "labelOrigin": "English group titles from emoji-test; Russian/Spanish category captions authored by Rune. Item names are CLDR tts.",
+  "groups": [
+    {
+      "id": "smileys",
+      "sourceGroup": "Smileys & Emotion",
+      "icon": "😀",
+      "names": {
+        "en": "Smileys & Emotion",
+        "ru": "Смайлы и эмоции",
+        "es": "Emoticonos y emociones"
+      }
+    },
+    {
+      "id": "people",
+      "sourceGroup": "People & Body",
+      "icon": "👋",
+      "names": {
+        "en": "People & Body",
+        "ru": "Люди и тело",
+        "es": "Personas y cuerpo"
+      }
+    },
+    {
+      "id": "animals",
+      "sourceGroup": "Animals & Nature",
+      "icon": "🐾",
+      "names": {
+        "en": "Animals & Nature",
+        "ru": "Животные и природа",
+        "es": "Animales y naturaleza"
+      }
+    },
+    {
+      "id": "food",
+      "sourceGroup": "Food & Drink",
+      "icon": "🍎",
+      "names": {
+        "en": "Food & Drink",
+        "ru": "Еда и напитки",
+        "es": "Comida y bebida"
+      }
+    },
+    {
+      "id": "travel",
+      "sourceGroup": "Travel & Places",
+      "icon": "🚗",
+      "names": {
+        "en": "Travel & Places",
+        "ru": "Путешествия и места",
+        "es": "Viajes y lugares"
+      }
+    },
+    {
+      "id": "activities",
+      "sourceGroup": "Activities",
+      "icon": "⚽",
+      "names": {
+        "en": "Activities",
+        "ru": "Занятия",
+        "es": "Actividades"
+      }
+    },
+    {
+      "id": "objects",
+      "sourceGroup": "Objects",
+      "icon": "💡",
+      "names": {
+        "en": "Objects",
+        "ru": "Предметы",
+        "es": "Objetos"
+      }
+    },
+    {
+      "id": "symbols",
+      "sourceGroup": "Symbols",
+      "icon": "🔣",
+      "names": {
+        "en": "Symbols",
+        "ru": "Символы",
+        "es": "Símbolos"
+      }
+    },
+    {
+      "id": "flags",
+      "sourceGroup": "Flags",
+      "icon": "🏁",
+      "names": {
+        "en": "Flags",
+        "ru": "Флаги",
+        "es": "Banderas"
+      }
+    }
+  ]
+}

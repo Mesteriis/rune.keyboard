@@ -7,6 +7,7 @@ The root MIT License applies to Rune's original code and documentation. It does 
 | llama.cpp | [MIT](runtime-llama/src/main/cpp/llama.cpp/LICENSE) | Pinned [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp) submodule; local JNI adapter and restricted build configuration |
 | Material keyboard icons | [Apache-2.0](artwork/keyboard-icons/LICENSE) | [Source URLs and conversion notes](artwork/keyboard-icons/README.md) |
 | Material menu icons | [Apache-2.0](artwork/menu-icons/README.md) | Source vectors converted to Android resources |
+| Emoji palette data and localized item names | [Unicode License V3](app/src/main/assets/emoji/LICENSE.txt) | Unicode Emoji 15.1 and CLDR 44.1, with pinned [sources and generator](tools/emoji/README.md); fully-qualified entries without skin-tone variants, RU/EN/ES CLDR names, Rune-authored category captions |
 | English dictionary | [SCOWL copyright and component notices](app/src/main/assets/smarttyping/lexicon/notices/SCOWL-Copyright.txt) | Normalized and packed dictionary; includes the original WordNet/UKACD notices |
 | Spanish dictionary | [Selected MPL-1.1 option](app/src/main/assets/smarttyping/lexicon/notices/ES-MPL-1.1.txt) | LibreOffice Spanish dictionary, normalized and packed; [attribution](app/src/main/assets/smarttyping/lexicon/notices/ES-README.txt) |
 | Russian dictionary | [Alexander I. Lebedev terms](app/src/main/assets/smarttyping/lexicon/notices/RU-Lebedev.txt) | LibreOffice Russian dictionary, normalized and packed |

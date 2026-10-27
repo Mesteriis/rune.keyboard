@@ -235,6 +235,27 @@ val qualificationArtifacts = tasks.register<Exec>("qualificationArtifacts") {
 }
 tasks.named("preBuild").configure { dependsOn(qualificationArtifacts) }
 
+val emojiCatalogCheck = tasks.register<Exec>("emojiCatalogCheck") {
+    group = "verification"
+    description = "Verifies the packaged emoji catalog against its offline pinned Unicode/CLDR sources."
+    workingDir(rootProject.projectDir)
+    inputs.files(rootProject.file("tools/emoji/generate_catalog.py"),
+        rootProject.file("tools/emoji/source-manifest.json"), rootProject.file("tools/emoji/categories.json"))
+    inputs.dir(rootProject.file("tools/emoji/sources"))
+    inputs.dir(layout.projectDirectory.dir("src/main/assets/emoji"))
+    commandLine("python3", rootProject.file("tools/emoji/generate_catalog.py"), "--check")
+}
+tasks.named("preBuild").configure { dependsOn(emojiCatalogCheck) }
+
+val emojiCatalogTests = tasks.register<Exec>("emojiCatalogTests") {
+    group = "verification"
+    description = "Tests emoji source integrity, localization and offline reproducibility."
+    workingDir(rootProject.projectDir)
+    inputs.dir(rootProject.file("tools/emoji"))
+    commandLine("python3", "-m", "unittest", "discover", "-s", "tools/emoji", "-p", "test_*.py")
+}
+tasks.named("check").configure { dependsOn(emojiCatalogTests) }
+
 androidComponents {
     onVariants(selector().all()) { variant ->
         val name = variant.name.replaceFirstChar(Char::uppercaseChar)

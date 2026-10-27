@@ -1,0 +1,517 @@
+{
+  "baseCommit": "807bb211b1345b5330f6a1b873df836225222edf",
+  "card": "U9",
+  "catalogManifest": {
+    "categoriesSha256": "d11bd61feb7a6ab9bb9875a20f3f81752eeaec04bbb6598f9ae29afab424ec30",
+    "categoryNames": "Rune-authored UI captions; source group ordering is Unicode",
+    "cldrVersion": "44.1",
+    "emojiVersion": "15.1",
+    "entries": 1898,
+    "files": {
+      "LICENSE.txt": {
+        "bytes": 2089,
+        "sha256": "12466a91eed5ab0ae7288c4f4425e3e1907c3532686ecacc5a49b51c1ab428c9"
+      },
+      "catalog-v1.tsv": {
+        "bytes": 142268,
+        "sha256": "254dad131a86038378e3356c4a8b434fa215a695315adc109d7ff8f9d6f1a1c8"
+      }
+    },
+    "generatorSha256": "09d04dd67c4261d46948416a6ba38f9ed196d352931a6fed19194ad8bd67fdeb",
+    "groups": [
+      {
+        "entries": 168,
+        "id": "smileys"
+      },
+      {
+        "entries": 385,
+        "id": "people"
+      },
+      {
+        "entries": 153,
+        "id": "animals"
+      },
+      {
+        "entries": 135,
+        "id": "food"
+      },
+      {
+        "entries": 218,
+        "id": "travel"
+      },
+      {
+        "entries": 85,
+        "id": "activities"
+      },
+      {
+        "entries": 262,
+        "id": "objects"
+      },
+      {
+        "entries": 223,
+        "id": "symbols"
+      },
+      {
+        "entries": 269,
+        "id": "flags"
+      }
+    ],
+    "itemNames": "CLDR tts; exact key or removal of U+FE0F only; no language fallback",
+    "lookupCounts": {
+      "en": {
+        "exact": 1533,
+        "withoutVariationSelector": 365
+      },
+      "es": {
+        "exact": 1533,
+        "withoutVariationSelector": 365
+      },
+      "ru": {
+        "exact": 1533,
+        "withoutVariationSelector": 365
+      }
+    },
+    "omittedSkinToneEntries": 1875,
+    "schema": 1,
+    "sourceArchiveSha256": "e2b699e5ab858313365b95227f08097360d371b980fb684d984524645c6bebc0",
+    "sourceManifestSha256": "d6c9458d0ef1ced105c12da7fb2b29d605901bb61be820c398998f0949027b0c",
+    "statusCounts": {
+      "component": 9,
+      "fully-qualified": 3773,
+      "minimally-qualified": 1009,
+      "unqualified": 243
+    }
+  },
+  "integration": {
+    "command": [
+      "./gradlew",
+      "--offline",
+      ":app:emojiCatalogTests",
+      ":app:testDebugUnitTest",
+      ":app:imeIntelligenceBoundary",
+      ":app:privacyGateRelease",
+      ":app:lintDebug",
+      ":app:assembleDebug",
+      ":app:assembleDebugAndroidTest"
+    ],
+    "exitCode": 0
+  },
+  "limitations": [
+    "Data foundation only: no GridView/panel integration, glyph support cache, recents, bottom-row option or emoji context behavior is implemented by this slice.",
+    "No native device, API 26 font, Fold, accessibility traversal, first-open or startup budget measurements were run.",
+    "Skin-tone variants are excluded, not presented as supported panel choices.",
+    "RU/ES category captions are Rune-authored UI translations; item names are CLDR, not model/training data.",
+    "First source-test failure had a wrong expected RU label. The actual failed test log is retained; its child process exit was unavailable because the initial shell appended cat. No successful-test claim is derived from that shell exit.",
+    "Prior ordinary replay is reused, not rerun. Existing EN precision/volume and ES aggregate false-change limitations remain; this is not full release qualification."
+  ],
+  "logBindings": {
+    "catalog-build.log": "54963ff7a9ca47fef0536d0347eadce139e5f58702f6ce2905d4f6d19e6c632f",
+    "catalog-final-build.log": "2f375973a062a6fc3c64f1cfed73af7a28fd9fed1be477245775206733d4880d",
+    "negative-gradle-gate.log": "543af3e1e6e71047aab8c3f1486c70b6ab9cc6070915222e0e18081fbcf7bb9b",
+    "source-tests-attempt1.log": "54589eff4506a00e95b7bce37bdd7dfd7d6e4b31f6473ad6bb5d8e60d914b600",
+    "source-tests.log": "25c6756fe9c56374408501d76aef27d961e17dc24872f7e27bc7d9a54c7ff2e3"
+  },
+  "negativeGate": {
+    "assetRestored": true,
+    "command": [
+      "./gradlew",
+      "--offline",
+      ":app:preBuild"
+    ],
+    "exitCode": 1,
+    "expectedFailureObserved": true,
+    "restoredSha256": "254dad131a86038378e3356c4a8b434fa215a695315adc109d7ff8f9d6f1a1c8"
+  },
+  "ordinaryReplayReuse": {
+    "basis": "Only static UI assets, developer tools and Gradle verification wiring changed; all 88 ordinary harness sources, 18 scoring/runtime assets and the driver match. This does not verify the unimplemented emoji UI.",
+    "newExecution": false,
+    "reference": "docs/acceptance/2026-10-27-u8-public-panel-evidence.json",
+    "referenceSha256": "040a13a6c5b5822aeed534d8b43086430bd19c89c61160149d16cea5e3e1b568",
+    "verifiedCurrentBindings": {
+      "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker.bin": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+      "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+      "app/src/main/assets/smarttyping/lexicon/case/en.case": "2d5ba3c807ef8c66be5222b01c3cd0f98645a891c12b6356827ea58544725a34",
+      "app/src/main/assets/smarttyping/lexicon/case/es.case": "52614678597416daf63763bb1f34015097d97ab974d9aa951b0221a67105a6fa",
+      "app/src/main/assets/smarttyping/lexicon/case/ru.case": "845144afb06ae7881f0db2f577f340694b8c7dfa5fee9685563ec4852939c81b",
+      "app/src/main/assets/smarttyping/lexicon/en.trie": "2c81c9b4d317f802567297aecaee18927c756175b8f42bca7d01227bbfefbebc",
+      "app/src/main/assets/smarttyping/lexicon/en.trie.lengths": "4f6c863c6a5bb88a077eff6cc108fd793a1dc8a681d2729941102d0e2d297ea4",
+      "app/src/main/assets/smarttyping/lexicon/es.trie": "7adab4a85ab5d4fbb378fb4e9c351dba51b17b4ff2ffec27ee24225a7a6d9681",
+      "app/src/main/assets/smarttyping/lexicon/es.trie.lengths": "ce04ddffa33bc624a95cbbc50f955b1590aabf83a25b2c0d1a2dee7f2555fb78",
+      "app/src/main/assets/smarttyping/lexicon/frequency/en.ranks": "a8786c4d9fa1d7522e8c9d068679e3c61e32ee49dc3ca34898ccbd0fd19f4c6f",
+      "app/src/main/assets/smarttyping/lexicon/frequency/es.ranks": "5fb3e5cca1493e1aebb64f2960ac823fe50ee189c222a9df952b622ebd3cf613",
+      "app/src/main/assets/smarttyping/lexicon/frequency/ru.ranks": "09cb1675723b66703e76f871b621068df6c0677b4c17b71e6a68fe2c8d3f328b",
+      "app/src/main/assets/smarttyping/lexicon/ru.morph": "c1707864a8fbc805aa98bc8307be99f2c9904eec5cc27d26a5220e001d88d28b",
+      "app/src/main/assets/smarttyping/lexicon/ru.rare": "434b462d4edb0165946568dfdf2a6729ff8b2590fead1fe815d3912817837b6e",
+      "app/src/main/assets/smarttyping/lexicon/ru.trie": "e96318206391f23d54384e4602f52c2cb31b16ed36a35657fbe467593183a82b",
+      "app/src/main/assets/smarttyping/lexicon/ru.trie.lengths": "b4fefb604d0ed4a181dc93e57c8d2417a0e929d3fa1512117d91d825ab60c69c",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/editor/DoubleSpacePeriod.kt": "56a174918ae9bba68ee5815dc8614bbade04de52ae6072b3a29dab7ade171242",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/EditorContext.kt": "1728aad737d3b13e12c351ecc4e87b2f59632e818eeb3457b9dacb9dcc2fc609",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/model/KeyboardState.kt": "1c456ba7e768fcac0cf0d86a995eee8147331f5ab7a6b9a8fc17a44af98fc251",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt": "5a47dc7db1ffe75e84d799cbbafd614abb27cf2238dad13ad6122cd0ec48bb6c",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt": "9b94b991dcd53407fd53c3fce529eb83736326c3dcf924c6d1a2e62856373312",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/AutoCorrectionAdmissionGuard.kt": "adb24f2482668a78a5e2eea8c0f3c384dae7c07ee5129e59bca521aa3ca91f16",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt": "585d3ca38dc9750bee4bee580c81350ad037fd836b5a049a3f862c545e3545da",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CandidateRanker.kt": "17a84a259cc1f91fbd85585f79a26237bffabf3a53072703b20b2ccf69fac501",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CasePattern.kt": "13c1fd71eea00398ddac7c709a39d40284e5efda5a778a7b1bbee91a13cfddc3",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CommonConfusions.kt": "dd9483f2c12d7025218c98166b5116f349799c5eec36dbe3be96f6251c45533e",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ContextualQualification.kt": "b6900050ec487e8ccb92eb2e177900bd48190e7d3bb82f9d0337b97da07a48d7",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/InfinitiveRevisionQualification.kt": "e5c54f713ef37d0420d580723969d5d16605fc5a2d69d9cc7619f0c7593d3a9e",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointQualification.kt": "0365f0df915381ba9fcb538275f9db7b9413f277cfadde9eb3f3ab27bc0a24d6",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointRescueQualification.kt": "b49be5277ecf4ee64cde8672a0eac67043b99b2c9e64819f179f04e4a898827a",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/KeyboardDistance.kt": "124fa6beca5faf7da22b90224805759f352161f6d108cb0cdbda7ca44776021b",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/LocalCorrectionPolicy.kt": "5f89598f4094936e9bdfd7bb54770301cb05e4ae87f47f1b003f53bfb36677d5",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ModelRuntimeQualification.kt": "680370e00056a9c4fde479cd0efb371e520b4ed1ec1a33381fb5fc20318056fe",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/NounCaseRevisionQualification.kt": "6f369b885e00ccb01a1da0c5470666e281e4ef41de5f2e4b90c01c64764cd559",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/ProtectedTokenPolicy.kt": "3e9966fac61e8b843d78eea086cbf0d41e21f4d24bad34b4653a5e2a63d7085b",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/QualificationArtifacts.kt": "dc554c02e83fa735189bdea7a9cbd860a6a567cc82a14ba445ff04df768ff2e4",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/RecoveryQualification.kt": "7cfb75351cfc6cc53a2f4b36ebb891581ab795f0f307a09673a1d4ad94ebfad6",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt": "67c0b3215c6183239632ce521c7d7d16f64cda01caeb1421eb31791b35085c9b",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/TokenUnicode.kt": "c0995d7a3fe08be9b783e475c113623f4e494263797f52becbd6ef1d92ca0815",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WeightedDamerauLevenshtein.kt": "8fcc080f7f3b307098b416af04b85238a1e6b5ca1b39bcf774381c715e89ce98",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WordContextQualification.kt": "37b7cfb22a2c32e0188cc961c7bfb133405bd20c03a3afa4ee1c32325ff4428f",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticFeatures.kt": "7e945dd7057ac5d30b4d237a315fe59b23ba5de3c806a94a825b6fb3a199afd5",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt": "6cdfdc20a9c2b117dab5b7abae4cd4d64e6ee817d7966c29f064f5147bf3533b",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/CompactAutoCorrectionPolicy.kt": "90170cedd685a3f90ce13032af493b6a87fe75dce8a6e230388ae29529d40c86",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextFeatureData.kt": "3b49f40802fb4bcd6e4854d157fb41d5c5e23c4edf7dae47e8b5fee65176aabb",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualCorrectionPolicy.kt": "a7946c3907fa8e1986b9077e54e61e5d485cb2e35b2380356e2553b5a7c74a8f",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualRanker.kt": "95387d0f4fed4f45530935c13f1f2b87890f6513a503f2909f9a764ec434ec4f",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ExperimentModels.kt": "e73e385587595a9a89199176eb461b95866c2b8d6c986a09936100c65f8c6359",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenContextualAssets.kt": "0ea0dd297b7444c0f05622ad123ba085483775fd163ca9dcab682b360156d28f",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt": "ff4e3cc8b0f67da2295e375b129518100fa8b2b981f32ed490e6e38daa01fd34",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenInfinitiveRevisionAssets.kt": "275677a907ee5a7bc39b530ce1e06ecffc8344afcbe6851d3d4db4bf4bbf6bcb",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenNounCaseAssets.kt": "eaa6044f2e4daa39386861ffdacb5babc72dea9df85316d8ced62ce1966099b2",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/GrammaticalContextFeatures.kt": "f0aea36776f3000c619fb160780c05d50ac0309fdeb28bbeeed5ea22d2e910ca",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/InfinitiveRevisionPolicy.kt": "5c1bc1979191ed404f2c5d906df1b6e62b3907e2824fc4b3e5055ee11664950d",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/InfinitiveRevisionScope.kt": "b2c9ca204b8ab0cb4d97364298c41fa2c0d9ec02453af38576dcf9cb9979faa8",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/JointCorrectionPolicy.kt": "1a30c167af91a9241a18f964419f060617448082cb035c954fc08926088ffc6f",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/JointRescuePolicy.kt": "78018a90cded762b08cda7aa29c389b8699ebd712a454833adbd66be787ead58",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NeighborRecoveryPolicy.kt": "5758babf28e12cd3dbfe06870d07902b3ed6be0004707bdb5d66b61e786cc93d",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NounCaseRevisionPolicy.kt": "cf3210f119e456e49c94dc7a8c28735f86dd2cb2d488c5f4232a5d9405853313",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/NounCaseRevisionScope.kt": "37a50bbd3a4cd3d6c89b9aa9d655ffd87a94199d904841a17c856155db6471a1",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ObliviousTreeRanker.kt": "5ad360481b4db761bc539f5af6ebe7d0c9a0e858060b50c99b5422d2317794e1",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/PackedContextIndex.kt": "935a93ced12dcec88c5b2fcbf9a0a8d44af04b875e592b0b9f199cf97541f9f8",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/RankFeatures.kt": "210c81129bfe7b50ac2802a5afb401cb1e700a1eb68f88138b63d48a755de484",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/WordContextPolicy.kt": "df123d3e57e801b7a086c66c0d325a170450ef2ce1317b3bfd7b7fca7fcc580a",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "4d830724cc66f967f7c7736efedd540da9f5e27892d1f09cb753dabaa592e684",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateLexicon.kt": "ec68fc1d939897a92d7767f25790ddb38e1f3fa14213d27689ba0dd59646f900",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseData.kt": "c3342a3c2badc48ec245a6650731ef3b1c03dec9daa5bc967eb9ce57d72b6bbe",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CanonicalCaseLexicon.kt": "6062d3893142532788da2c9dbe7e10e73fe89458c52b6ae3eb457ed0af5224a7",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenCanonicalCaseLexicons.kt": "c91f59e87db8e1f013ee3eca7142240699e39f6bc555b83deb345fa50a0b5cf9",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenMorphologyLexicon.kt": "5236dec0a5a269c5221768db95ef10a5e767a58c8182d4c36cf39013b15bd8da",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenPackedLexicons.kt": "75afb6402749420f3ffe77af90b4c12a62704ed0978efc0a9d5431588803fbfa",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenRareWordLexicon.kt": "1eae0a01c794eb4137944555b97b4b2744c1ac00ddbf1d0538a40854a21f6afb",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LanguageRouter.kt": "0d55e399cca44556b5f87f8f0c0de531da6570ff1adcaeed3f7d653fca448127",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/LocalCandidateWorker.kt": "30589c408a785ca0a876d68a485f55e1e81201954e27756556468aa480b451e0",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/MorphologyLexicon.kt": "b434dc8dc1f349bc7d02a97069406ba93d73f4b9946136d74b56351a3bd65f56",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/NeighborRecoverySearch.kt": "0c30517b0f59e4d2d1b4927c5e654d22d190119d059af6cdcfbe059309032b55",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt": "0d59152024c64263cf7d1d178cd353446ab0c0a1bea79ee3b8f55ec4fe788d54",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconData.kt": "2e6e581663e6634dc1f4a596c6ff59d661c5c83ee03e58182113a62e1a9ca369",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedLexiconManifest.kt": "fc77882b7dbd596b1da5dc63519383b35d646efc34d6f664983b4dff884abfa2",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedMorphologyLexicon.kt": "479e39b7d3c895a1e3d64607d560de5953a58df94480d7d17ca8140e1f7fde87",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedRareWordLexicon.kt": "82fcba321650482df5a01f92ac71775e70e49967707c57f558e1c9d619a98cc3",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedTopSeven.kt": "f82ac6e546a6ee7484eb325bbc5ec9b08b0ca47d631ad0c06d2b00f80417e828",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PrefixDistance.kt": "f8f0933f8055fe5d87ccdb262622afd39923f38db432d75920fc881a47ec1a6d",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PublicCandidateAugmenter.kt": "609963fc8d8cad6a4288f331331a972ffc1fa74a93eb816a134cf3c5bad5aa5a",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/RareWordLexicon.kt": "ef56fc34c05e0a20850a190494d36d3a666e425cad0bfdd9e7e42a6a96c763a0",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/TopCandidateSelection.kt": "40e896bc36ee002c796ea9c5ab7a2776b5f77b7a605eb76515eadbce37de762d",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationEngine.kt": "c9d6a470b277f9e26b3c3ebb2167d1ee596740e966fa49a2c4a114c5f8a4150c",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/ContextualPunctuationPolicy.kt": "0d035a4c2a5fb74d55b800aca2d80b8f76597c5b469ea957579abbbd5d8e27e4",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlan.kt": "932beb08c75059b820be5787bccf186f10c20d6689f808f20cf130d3797eecd1",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalPunctuationPlanner.kt": "94706877b77cf0ab1ec6ddaa2469708d85d3fd6167054abbccd65fd7efaa5968",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRecorder.kt": "ce29500364b27a6979dae9b1762a3dc22d5894eddcc1ea6cc2731a79fdb13b41",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ComposingSegment.kt": "239ff57007f60db5e9cd40236614f0e4f3de879cf45ea6ea73051f2d2778ac75",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ExperimentalTypingInput.kt": "6b7cc32436be42ad595c9a6248365a2f1251c416fb01eddbc264787c9e590311",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/PreviousWordRefinementTicket.kt": "18131a6304706599068fe7485a6a7addd95e3388172e0b7bd1cc518eb5f2b203",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt": "8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingPersonalization.kt": "9f94f415c91270fee3469ebdc7ad6901d3a7a63b10c414bd53f1bd6c1bd9bec0",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "3cfe7a9716a4286a11c627d92c5e01cbc3e0347a8e0f6e4b7f2f66b3d459ea46",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionState.kt": "84eb758caa0757af626e3b8e8b30bc5543e568f4163309071c6fc48004a72ca8",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingTools.kt": "65fe8dc9371ecdc469961ecc83307c7bea81cbb3dee1db29571982fc30fc01e2",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt": "f1b109026a01df4993c1c4d99d668c78b7e54e38cf13434c0f9e603833ecb4a0",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt": "bca5697c00c39eba55be74b7accb25b9c573c49dbd065a1a38e5b03f8e78218c",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/CandidateUiItem.kt": "9ed741a1131dbdec9e5e1f30851055e49fad720c641945a4c353858cfb59c31b",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt": "5068584153b5916788005a259cdd27a1adcd65bda0ff3f1182aa43604a64ca84",
+      "tools/eval/smart-typing-0.3/pipeline/FinalProductSpellingReplay.kt": "be0a8d8b0c255016e44dda9f8c8c74efe63741924413168f809e81947dd3cf95",
+      "tools/eval/smart-typing-0.3/pipeline/final_product_replay.py": "bf63b2ddf9b8eebe62f2110fd9b00d8a8cc03f708d43bb670100e800a7a57618"
+    }
+  },
+  "packages": {
+    "debug": {
+      "bytes": 345413913,
+      "compressedEmojiBytes": 52061,
+      "emojiAssets": {
+        "LICENSE.txt": {
+          "bytes": 2089,
+          "compressedBytes": 1121,
+          "sha256": "12466a91eed5ab0ae7288c4f4425e3e1907c3532686ecacc5a49b51c1ab428c9"
+        },
+        "catalog-manifest.json": {
+          "bytes": 1856,
+          "compressedBytes": 832,
+          "sha256": "4356d6f833c88c91ccdf1fffd5e07a2d1fc221548e8040f9e240eff1e591f09f"
+        },
+        "catalog-v1.tsv": {
+          "bytes": 142268,
+          "compressedBytes": 50108,
+          "sha256": "254dad131a86038378e3356c4a8b434fa215a695315adc109d7ff8f9d6f1a1c8"
+        }
+      },
+      "sha256": "27d5c076d2b1618364dc74edd62027778f76801502edf4cc3c773c1d123ae109"
+    },
+    "release": {
+      "bytes": 278378261,
+      "compressedEmojiBytes": 45365,
+      "emojiAssets": {
+        "LICENSE.txt": {
+          "bytes": 2089,
+          "compressedBytes": 1084,
+          "sha256": "12466a91eed5ab0ae7288c4f4425e3e1907c3532686ecacc5a49b51c1ab428c9"
+        },
+        "catalog-manifest.json": {
+          "bytes": 1856,
+          "compressedBytes": 801,
+          "sha256": "4356d6f833c88c91ccdf1fffd5e07a2d1fc221548e8040f9e240eff1e591f09f"
+        },
+        "catalog-v1.tsv": {
+          "bytes": 142268,
+          "compressedBytes": 43480,
+          "sha256": "254dad131a86038378e3356c4a8b434fa215a695315adc109d7ff8f9d6f1a1c8"
+        }
+      },
+      "sha256": "e782424b53250db1cb9ea662ba5dc994184c2b00080da86abe4f30824d3fd1e2"
+    }
+  },
+  "sourceBindings": {
+    "THIRD_PARTY_NOTICES.md": "46c2bd4b231430c3cd84afff77c162ed15c72aea553f0d70c2403238d827f0e1",
+    "app/build.gradle.kts": "bf509675dc4c36b8491618bee9ce647b0e6e913c217233c39051dd2c0ff83675",
+    "app/src/main/assets/emoji/LICENSE.txt": "12466a91eed5ab0ae7288c4f4425e3e1907c3532686ecacc5a49b51c1ab428c9",
+    "app/src/main/assets/emoji/catalog-manifest.json": "4356d6f833c88c91ccdf1fffd5e07a2d1fc221548e8040f9e240eff1e591f09f",
+    "app/src/main/assets/emoji/catalog-v1.tsv": "254dad131a86038378e3356c4a8b434fa215a695315adc109d7ff8f9d6f1a1c8",
+    "tools/emoji/README.md": "21305e4f07db9789601128a3b0d45f98405d7ad4009c41c44e4d4d00427365a4",
+    "tools/emoji/categories.json": "d11bd61feb7a6ab9bb9875a20f3f81752eeaec04bbb6598f9ae29afab424ec30",
+    "tools/emoji/fetch_sources.py": "5fae3d44be1d464f036ceb3a0b4b939ab5d1ad3ace81f95dcb2f01629a115cec",
+    "tools/emoji/generate_catalog.py": "09d04dd67c4261d46948416a6ba38f9ed196d352931a6fed19194ad8bd67fdeb",
+    "tools/emoji/source-manifest.json": "d6c9458d0ef1ced105c12da7fb2b29d605901bb61be820c398998f0949027b0c",
+    "tools/emoji/sources/unicode-15.1-cldr-44.1.zip": "e2b699e5ab858313365b95227f08097360d371b980fb684d984524645c6bebc0",
+    "tools/emoji/test_generate_catalog.py": "2563726111408a7e01bf736a2072bf12aa90f4fd5418b745efed7a8fc256ab20"
+  },
+  "sourceManifest": {
+    "archive": {
+      "bytes": 4269918,
+      "file": "sources/unicode-15.1-cldr-44.1.zip",
+      "method": "ZIP_STORED",
+      "sha256": "e2b699e5ab858313365b95227f08097360d371b980fb684d984524645c6bebc0"
+    },
+    "cldrCommit": "e0981e5ad4dae80cf95729035e4c326a850ce429",
+    "cldrReleaseTag": "44.1.0",
+    "cldrVersion": "44.1",
+    "emojiVersion": "15.1",
+    "members": {
+      "LICENSE.txt": {
+        "bytes": 1995,
+        "sha256": "907d4254fb50c09e8a3a7612439b4e4944e4b8b64b08e4568b042bc3b9dfd28b",
+        "url": "https://raw.githubusercontent.com/unicode-org/cldr-json/e0981e5ad4dae80cf95729035e4c326a850ce429/LICENSE"
+      },
+      "annotations-en.json": {
+        "bytes": 358701,
+        "sha256": "bfd8b9556a286dee0566f43f2f09c118c3080eae3b4386331528b08fbef119c2",
+        "url": "https://raw.githubusercontent.com/unicode-org/cldr-json/e0981e5ad4dae80cf95729035e4c326a850ce429/cldr-json/cldr-annotations-full/annotations/en/annotations.json"
+      },
+      "annotations-es.json": {
+        "bytes": 395029,
+        "sha256": "de39a6c41a6d438aca0e4c699a8cbd530278c3c71a130fa61e862538b16e8eb4",
+        "url": "https://raw.githubusercontent.com/unicode-org/cldr-json/e0981e5ad4dae80cf95729035e4c326a850ce429/cldr-json/cldr-annotations-full/annotations/es/annotations.json"
+      },
+      "annotations-ru.json": {
+        "bytes": 503678,
+        "sha256": "b0d588a61b6a0cdc657ffc7daa8a457b41db24d94d03e3d701f8f01e902ef548",
+        "url": "https://raw.githubusercontent.com/unicode-org/cldr-json/e0981e5ad4dae80cf95729035e4c326a850ce429/cldr-json/cldr-annotations-full/annotations/ru/annotations.json"
+      },
+      "derived-en.json": {
+        "bytes": 656111,
+        "sha256": "df3d0ab1060bca116be8a9f7592942d8f0ffe09f0267074bdaefc1bac9bf9811",
+        "url": "https://raw.githubusercontent.com/unicode-org/cldr-json/e0981e5ad4dae80cf95729035e4c326a850ce429/cldr-json/cldr-annotations-derived-full/annotationsDerived/en/annotations.json"
+      },
+      "derived-es.json": {
+        "bytes": 740467,
+        "sha256": "9d01cbec3727a67dc3fad313e8f8e9ff636509d128e0e107f82402228fa8ebb5",
+        "url": "https://raw.githubusercontent.com/unicode-org/cldr-json/e0981e5ad4dae80cf95729035e4c326a850ce429/cldr-json/cldr-annotations-derived-full/annotationsDerived/es/annotations.json"
+      },
+      "derived-ru.json": {
+        "bytes": 973648,
+        "sha256": "3c6e814c4e2986d234b62400647070d468d21ba4475d854c7aedd149595a9f04",
+        "url": "https://raw.githubusercontent.com/unicode-org/cldr-json/e0981e5ad4dae80cf95729035e4c326a850ce429/cldr-json/cldr-annotations-derived-full/annotationsDerived/ru/annotations.json"
+      },
+      "emoji-test.txt": {
+        "bytes": 639405,
+        "sha256": "d876ee249aa28eaa76cfa6dfaa702847a8d13b062aa488d465d0395ee8137ed9",
+        "url": "https://www.unicode.org/Public/emoji/15.1/emoji-test.txt"
+      }
+    },
+    "schema": 1
+  },
+  "sourceRestore": {
+    "bytes": 4269918,
+    "identicalToTrackedArchive": true,
+    "sha256": "e2b699e5ab858313365b95227f08097360d371b980fb684d984524645c6bebc0"
+  },
+  "sourceTestCount": 15,
+  "sourceTestFailedAttempt": {
+    "failures": 1,
+    "logShowsFailure": true,
+    "note": "Initial shell invocation appended cat after unittest; child exit was not retained. Failed test log is preserved and is not a pass.",
+    "originalTestExitCode": null,
+    "shellExitCode": 0,
+    "tests": 15
+  },
+  "sourceTests": {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/emoji",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "exitCode": 0
+  },
+  "status": "in progress; data/generator/build-gate slice verified; no panel/runtime/native/device acceptance yet",
+  "unitResultBindings": {
+    "TEST-io.github.mesteriis.rune.keyboard.ime.editor.ComposingEditorCommandsTest.xml": "dd1da7b1d00a1e6a7341072c92415d5b61b6f8bdd7b6ceb0b83229de8ff8ad1e",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.editor.DoubleSpacePeriodTest.xml": "30e11d939c10c151d66b769b3f3d3531b3ec80263c73d6ff6b404d1ad37db293",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutorTest.xml": "fe5e4a028508732de88373e166af22b57a6163a5a7bc1818cab2902ec72bc4dd",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.feedback.FeedbackPolicyTest.xml": "586c051b639818522f5ab6e6e91d10a1c43cfe8e2cd6643b6442c16d85a60eb4",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.gesture.BackspaceRepeatScheduleTest.xml": "779cba5575c5a8e57ae161e77e1b6ca225638b473d34889b3cfbfb0967bce08a",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.gesture.KeyFlickGestureTest.xml": "379d2e9c1d776677a3ccba597340e1ee3fb5c30ce3ea5aae1eebcdb803ff16c3",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.gesture.SpaceGestureDetectorTest.xml": "1430e3b36012b72b70e8b12a231492859ce3056e719efe1390fce88a0065a380",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.layout.KeyFlickLayoutTest.xml": "f2e9e85e867342bcc94bb30ca013439c15f7673abcdd6e66ddd29821ef5c783f",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.layout.KeyboardLayoutProviderTest.xml": "da0ec8d3cee0bacdd14c56d450464e4db12fc523ffbdcb0b9d2bc7976a9e9ea3",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.layout.LongPressAlternatesTest.xml": "b328019e030730f464e5e1e5004d1d323e4e287383bf4be12978f2628bbd8be9",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.layout.MechanicalPunctuationAccessTest.xml": "48389a426ae7618f503d861871831824f40ab61b38426a119ba648fae111b79f",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.model.ConfigurationVisualContinuityTest.xml": "efd30dea8af11a096b3ba4209af5cb1e6923cfcdb803d3253fc5466c9a032bab",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.model.EditorContextTest.xml": "a44f4e751a511eb6e7ced32b74f5922d82640eeea814ebe81f365542a7a4c8ce",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.model.ExternalEditContinuityTest.xml": "d8a76f549f8d19b01a4acf53872c9cdcb28d336c7532fccc1a45fa3e0e51600e",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.model.KeyboardReducerTest.xml": "8ea43ef508e26d20b69d71ce62a286a0762034a27c4a2772825aa5a1bc11acb2",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.model.KeyboardSessionPolicyTest.xml": "4fb9da47062dbb5784651a330ab32353fc7e2db9b76b51f36b2f91092f0cc1f6",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.model.KeyboardStateTest.xml": "9367f8a9a817bad5928034644945df60e3fce5e2cb5105b3fb7339a86c9082d6",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.model.MechanicalCapitalizationStateTest.xml": "9ba4bfed4d3b734c2552ef07f8c1e8a0e75ccbf3d4d0a185e8a2ffdf1e079a84",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.ui.PopupGeometryTest.xml": "9bc8530ebb3f0576da9d0fa0641e91912c46187a357d836077520e3271ce6edc",
+    "TEST-io.github.mesteriis.rune.keyboard.ime.ui.SafeInsetPolicyTest.xml": "eaa876d96194e4c2a02f9c1c84ee57936f1a159da3a1483a32a16ddef613994a",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.client.LatestReplyGuardTest.xml": "d72bd2428860d5478ba3e9b743c32878e441c99ae967d8a824c835453a1137f6",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.client.ModelDemandTest.xml": "fe528a9a1790fb2d8db61156bee01f4f0bf12530b24aad78467756bfd464b5a9",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.CandidateInstallerTest.xml": "1d6b1bc174f0905cc6dcb158ce45fd3e34c658e06922c646d4490dd2bb530774",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryReconcilerTest.xml": "67ac4d90d9ecd6406a6c0387844fd71575637e8b050efa31e86e1df682a40dfa",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.DeliveryStateCodecTest.xml": "94445e0f458ed5ab68bafe453e52a4af1f6f96f8d33d731374bcf2197bc8390d",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.GgufMetadataReaderTest.xml": "03c7eee82a29f20d2789a25c623e6a2b84e7f1e632f81a65ad40f33c27de1b50",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.ModelFileExporterTest.xml": "28f164d13e0f58043d20c2523afe29bcb9d4494ca56881c904d0bdb957b995f2",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.ModelFilesCleanerTest.xml": "f1ee544978bbd11a301a33e7ab98f1b303c79627f45505e33eaf0e5c9c884331",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.ModelOperationGateTest.xml": "3246326348fdc41573888cd67bbf1377cee12dc6e28d48facd2198480dad7019",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.StorageRequirementTest.xml": "68105568fdd9d7fba149c94ad1f1e8903a59161c576004b509ad0545833cc6ce",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.delivery.VerifiedStreamCopierTest.xml": "f7a7dd423c74141dc9c286212f6243ab94d8f4ae61ff03973a62f99b530670fd",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyOwnerTest.xml": "efc23cded0dfab0c4654e5cb13422290f06cd8ee566ad2bd087802f1d682aa0f",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyTraceTest.xml": "b6ecadea12985cac8780d29de3b2865a2e066c64ee736a1d7b36ebe5dfc3774a",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.inference.ModelDutyWorkerTest.xml": "0f3eddbb59558f42233d02cba3e36ff422424593fc83b5fa49fffba6af9b4985",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.inference.ModelPreparationWorkerTest.xml": "125bab379ef83ea8792a0c375031718dcbc9c3944403029ce8a520833f65f159",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.inference.ScoringInfrastructureTest.xml": "8fd294914399f104fd32cdea4ffd52cd585875471ebc803ae538f35e79a5f7f2",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.model.ModelManifestParserTest.xml": "7857b5bf9d20e9ed29ff25253d6ce5db8c6183e5ee1d87a99223bc70d38b9343",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.model.ModelSnapshotTest.xml": "e30f740ac0fa2aa8195445b82407b1bc75fe4fa163805b8ece717a674f41a8f5",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.model.OperationStateMapperTest.xml": "95f4672c06f52eaef7ddd307ea308bec8a998a41436e9ac7f6f3ac77417e4804",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.readiness.ActiveModelReadinessTest.xml": "0ce2df299771dda6b0fec49b3d8df6d2baf483dc220bd4c17963b6955a884d92",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.readiness.DiskModelReadinessProbeTest.xml": "fb9169732b573f1de0e9204b8342a9989680eca252c1a85e12837453e5d82085",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.runtime.ActivationRotationTest.xml": "d8b1499754f733c3b1e6f74eb13ff9eeb580ae3d968c8daf082f395c3a2e1a26",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.runtime.ActiveModelPointerCodecTest.xml": "f61b8490dc38d16ff372fa3436b6e89203450b8a1323fd0f7bee5fe08cd5af7d",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.runtime.ModelActivationTransactionTest.xml": "5e476b9ccde1671640d10a38b3d1b99192a4f2cde185fc4680275127455f4673",
+    "TEST-io.github.mesteriis.rune.keyboard.intelligence.ui.ModelSettingsViewStateTest.xml": "e88a01c9afb76c46a4562a9b24876828d0b99f6827a5e0f45083808f9ac32b93",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.ContextualAvailabilityTest.xml": "d58dafe310e0a95c086e37e3c44b71f09e5a6839f91bd7a47c9f9157c73cd3aa",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.KeyboardMetricsTest.xml": "32a101d08178a7b77e8205f34399a37733590fff7a7be59b52a31779d4a27ea2",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.KeyboardPreferencesTest.xml": "2d57c6745de35213867b6c54f55078fc64368eca2120ab90861b3ad2a4dbd524",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.SettingsCodecTest.xml": "eb53e03421370e20c2325540315071037476eca39f6d6b150f654335f923452a",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.SettingsSearchTest.xml": "b947876eca0f719f48c3b1a1f29515cc92fb78b36b732960824150f18f0fa2f9",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.SizeBucketTest.xml": "ee03a85716e5b5e7bc04e9863426f0ea004bcecfbb80465c24e5186599702774",
+    "TEST-io.github.mesteriis.rune.keyboard.settings.ThemeOverrideTest.xml": "900559d99fcc55bac20b702cccb50094ad33c422efa861830ac12a7956036c45",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.abbreviations.AbbreviationCodecTest.xml": "c49f58cb7428540659de43e652b16bb678c9d8f2ef1970bfb7a96e9867233255",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.abbreviations.AbbreviationModelTest.xml": "e0eee9fc01ab56aa8314630848f249ad04cdc3a85dc5f821a3a5f83a1bb312bb",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.controls.TypingControlModelTest.xml": "2a104b693b055c928cee8e8dae917076476ecf7fb4232fe433acbfa5262b8017",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.AutoCorrectionAdmissionGuardTest.xml": "9891d566c32cbd2c71bbd4fa78f63364a3406b545e2e6b9dc2d2aee88ade2bc4",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.CandidateRankerTest.xml": "076c6817191e22606d008abe974b5d1adcca52ed9858b58fcb0697cddde3fb47",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.JointQualificationTest.xml": "dc2ed151feb359cc78afbbe9d2918dd49003a6b123658cdba8900ba4c2a68421",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.JointRescueQualificationTest.xml": "cb94cbc11120df8ab77b6c5f4a2240fec281ca287d445061e7718cbed835bf06",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.LocalCorrectionPolicyTest.xml": "bfcbe659aa8051be5d7c8ec9094282200952bb5cce3c8db35f2054bb0ba28051",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.OrthographyPoliciesTest.xml": "f9a7389aa64da1b1e8f3243def031372c0ca5f09f8eb2479cb5121d514afc30e",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.QualificationArtifactsTest.xml": "1e2183b5d7809bd840f6d921e24b157762f6fd344a97f5310dbcb866ad2fc6b5",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryQualificationTest.xml": "0dd02fe940a5611e6f4f366ac235e99a7a480ef88fe222e379b4f12d249f4518",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshteinTest.xml": "0856f827ad0e2bc5680cfcf308df2a0f2790f2783bbba01732064b93e946e1a5",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.correction.WordContextQualificationTest.xml": "77098ed3d4137adf38194caa36beb5b321b354eeb35bf7282f382ec9001957b2",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorderTest.xml": "b9b1a8f72150982ab1c2ce20262eee7a8de73300d03154d927336d87a50dee2f",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsStorageTest.xml": "eef3774f8744e2eee87d38876cd3b2c4a3d6a03dfc32e566f12839a2955e4569",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsTerminalTest.xml": "c96993538c8e3ad182354199820e31c080794ac9ef7c0896787069fb36eb35fd",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.IncognitoDiagnosticsTest.xml": "55c9d821a5bca2d80f7635c3c52c854ddb24f6d8b4906ab87f96a1500599f3f1",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsHooksTest.xml": "d0a23308a6d85b1f55a792523fede5f73c064ed7545759213c84fc0a8899d9a1",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.CompactAutoCorrectionPolicyTest.xml": "0500265f1e3afc39061e4ce483137599c6a056d8b5e8422845049176a693c630",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextFeatureParityTest.xml": "aa5793f026d6351c78ad21e4a7783abf23cb453d95f82047e10b7a5607ecb1f1",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualCorrectionPolicyTest.xml": "bff349f2d454953a4c831d153ed8b2c7d66b612d920bdceb6aebc34a00554f29",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualRankerTest.xml": "54a118a587aaa60ac108954d64e114d20eb603bf4a2bed449b370851cc142413",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.ExperimentModelsTest.xml": "9d864cad4ebe26296791f69ba07babb3f12d18017af5983adc2808b47a7eafa5",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.FrozenAssetIdentityTest.xml": "7d575422fa42263a67f64e74300fe2d1356d6e30cf58607d73c77567b472373d",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.InfinitiveRevisionPolicyTest.xml": "e4cf1b9cb3795f11a4769c87053a85da4e4112da2a7a2732988a2f08e4f662e7",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.InfinitiveRevisionScopeTest.xml": "8428fb763f6c140d9fe81a9622a9b05d18561846e80909af60338c8412d6030c",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionPolicyTest.xml": "02faf0a85f8d30d5b2b2bf6c891a9eb01d6c25dde81dec6f45d45dc4a8c54a71",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.NounCaseRevisionPolicyTest.xml": "847949822a18e9939d0103d2c468810d588c239ff7d54416c2e26d2b6b653f97",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.NounCaseRevisionScopeTest.xml": "5be20e88bfe0c1c0f80c4fcf11b58c2ca069c07cfa0509d9c1d042c1069cae68",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.PackedContextIndexTest.xml": "f5272ce9ac95eda0fe27d2aab14bbfec76a095c5c4f27d8923c62ec993d3ba59",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.ReliableRightContextGrammarFeaturesTest.xml": "114a7f799652cc96568c40de6b3ecfd9440013f006234b8891387b328ddf9ed1",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.RightContextGrammarFeaturesTest.xml": "551073038e5af1ac457a71489f7c3a6b320510c854ab6fda4027dc95c676b30b",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.RightContextRevisionFeaturesTest.xml": "5dd130d884991c90bc6f2fef15f1e2fe6086ddf9a645b9f0b681d97d94aae9be",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.RightContextRoleFeaturesTest.xml": "02df7b93ef6f74a1d13d22cf6d6c4e6007a198e914cdc5f784da1a018dc31067",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.experiments.WordContextPolicyTest.xml": "a2251c2f43daa352004573b444d68309d2ba46da19c89fe906fb13747b446836",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningCodecTest.xml": "064175b3746ab5f6c7c755e9b4982d3654c1b92f786b2736e351f5b807d423b6",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningEvaluatorTest.xml": "846f0bbbc1140c9605e868f8ac6641dc957f94e42032dcadeb5fb697e079276d",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningJobPolicyTest.xml": "d98dcc9f6dab6dc88b3211af8c6300187357619bb3bb10764712ce06c95cfe76",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningModelTest.xml": "c9d1820ec4765e7573521ef24e26bf588fa4cd0a2261681f3fa1e5f4acd85ebd",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningStoreTest.xml": "3cc72b2b334fea7c254e0c319fa92a2feff04daffbd7ff48c7e488ec94636617",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorOracleTest.xml": "009262b9cd27c2bdb49f519ba6e466672ec2353d788688001ddafddedbd21e24",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest.xml": "3cb6f51c97c91c52d1a9da69dc7d7bb465eee7544ce534679a7be20b196e8e3e",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CanonicalCaseDataTest.xml": "0546bebfa71f76aabba4c1c3dfd4d9b9d1a0765bb19834205d4d28c95e6a063e",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CommonConfusionsTest.xml": "939ad1bff584e1eb60458333bbda1c77e3b7992d1e233515577a8a43c41c95eb",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LazyPackedLexiconsTest.xml": "5ca42149c1e194fd829f5c1e02b6ed17b7418a8040d8c82fbc10ca06696e25f6",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateWorkerTest.xml": "5b78bf7cc787c7f0d6a60b5ba75e60b75ea6b66fd44a6bc81d50bcecda7fd38e",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.NeighborRecoverySearchTest.xml": "93e7bd23dd91dd2b27f3e2b85bd8ee41bbc8b4f0018cc67bad9c073f555d28ec",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedCandidateLexiconTest.xml": "8eb1cdb5dfbb983c17cdb22443500e4863b5eb5924ff8ba71eee95e85189d165",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedLexiconValidationTest.xml": "1ce0c1f556f75f62a843fb469b525e15305cdfc33589f8eeec2f1206a7c666d9",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedMorphologyLexiconTest.xml": "7b2651d3ee5a144da7f6af5d130847677bfb8de674dabab7ef6aa8a603716c1c",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedRareWordLexiconTest.xml": "13fe2882c7b552d31ec8845fa90b52bb96c9fb6c35ed5dc7035749fed500453d",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PackedTopSevenTest.xml": "d16df0927cdd3d1bb3dca10eacc35dfaaa004503f19417c4a465a43a764c00a7",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.lexicon.PublicCandidateAugmenterTest.xml": "4b534823e2f898560ebd4091234cbc4e8d1116322297afe088b54a17b03b0b22",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingCodecTest.xml": "7f8f69fea08feb8523b9e2ad710954a1eac8b61a8a299fac0819cef3ec5e05c8",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingModelTest.xml": "24bf95358f6ede286b8d794ae7343880eafb58aedefcda38b28fed4931d433e8",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationEngineTest.xml": "84c776c1bb311fbfcd040d45b9fd30dfb2394229bf989679a9a53e94155c915b",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.punctuation.ContextualPunctuationPolicyTest.xml": "23cec58f3dfc9e44062051cadefcda9e8d9c7cfd1df5d68f4bdf1ef180863bbc",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPlannerTest.xml": "0cdaa776a73beffd4be4522fca7000b84150aee7c729edf2f71e3d2c53cc6362",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityModelTest.xml": "bbd0688cd2d97b0cf2a6d4bca06b4b1825e690a4ea2d84090ece9ac2573d1b8a",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityRepositoryTest.xml": "101a93609f6d1dfb31e12f869b3fe6aafe747d9d708c800bd3b6f2fc9bef1b09",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest.xml": "e0f543665ea8d3f77f675415c7e6deabb2dfe3254d3967c30a0feb60d7502cbd",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.LocalCandidateCoordinatorTest.xml": "ef2cd57945f4c70b566f776a257ae104abc1d46d33a1c002207b063390c1b3cb",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.MechanicalTypingSessionTest.xml": "b0d74bb29e796d1335a79e3aff1cbef26acd18af485f6d610cb8c706eaec2eeb",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.SessionTextContextTest.xml": "00bc8eb9f5d00d48dac9920f1bf77122e7682ee5c898ec6293f9efe26fa79a2a",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.TypingCandidateSelectionTest.xml": "f579cf3f35cbd27918f277d87fdbcd6eb1ea83f51e66b52b1cc2a050f8c89755",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.TypingFeaturePolicyTest.xml": "24866504c552cd96d4dc5a3fcb840e4b0489a4daca7a90469e452e8eb01f88e0",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionControllerTest.xml": "a55336a14513658f4d9196dc327bbc649fb12d46c4227114ae014a24356a6652",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceTest.xml": "d329bdf48a9e0780756412b8b64517b62aa574200896d924245419ee40cce512",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.texttools.TextToolPoliciesTest.xml": "48501b932739e94321ee3243275640a7e7dc95ade604944f93e7132597b7f862",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.touch.DynamicTouchContextTest.xml": "ff18394180e931e4beaf4386489beee07807cd215a93857b8ec901df6ac6350a",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.touch.DynamicTouchResolverTest.xml": "276cee06d81eb1f8da675ade73b2065c3fd51d87e533dbeaee8086505e49bc67",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.touch.TouchCalibrationModelTest.xml": "0fce4291c41909fd40f3a87cafb78c045b19f35db6388791f697633c8c41026a",
+    "TEST-io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewStateTest.xml": "33eb03463d7113b8f62d23ffe2e83ff231a0f248c24eb5f08a5be9ec95945c1d"
+  },
+  "unitTests": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 1230
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "categoriesSha256": "d11bd61feb7a6ab9bb9875a20f3f81752eeaec04bbb6598f9ae29afab424ec30",
+  "categoryNames": "Rune-authored UI captions; source group ordering is Unicode",
+  "cldrVersion": "44.1",
+  "emojiVersion": "15.1",
+  "entries": 1898,
+  "files": {
+    "LICENSE.txt": {
+      "bytes": 2089,
+      "sha256": "12466a91eed5ab0ae7288c4f4425e3e1907c3532686ecacc5a49b51c1ab428c9"
+    },
+    "catalog-v1.tsv": {
+      "bytes": 142268,
+      "sha256": "254dad131a86038378e3356c4a8b434fa215a695315adc109d7ff8f9d6f1a1c8"
+    }
+  },
+  "generatorSha256": "09d04dd67c4261d46948416a6ba38f9ed196d352931a6fed19194ad8bd67fdeb",
+  "groups": [
+    {
+      "entries": 168,
+      "id": "smileys"
+    },
+    {
+      "entries": 385,
+      "id": "people"
+    },
+    {
+      "entries": 153,
+      "id": "animals"
+    },
+    {
+      "entries": 135,
+      "id": "food"
+    },
+    {
+      "entries": 218,
+      "id": "travel"
+    },
+    {
+      "entries": 85,
+      "id": "activities"
+    },
+    {
+      "entries": 262,
+      "id": "objects"
+    },
+    {
+      "entries": 223,
+      "id": "symbols"
+    },
+    {
+      "entries": 269,
+      "id": "flags"
+    }
+  ],
+  "itemNames": "CLDR tts; exact key or removal of U+FE0F only; no language fallback",
+  "lookupCounts": {
+    "en": {
+      "exact": 1533,
+      "withoutVariationSelector": 365
+    },
+    "es": {
+      "exact": 1533,
+      "withoutVariationSelector": 365
+    },
+    "ru": {
+      "exact": 1533,
+      "withoutVariationSelector": 365
+    }
+  },
+  "omittedSkinToneEntries": 1875,
+  "schema": 1,
+  "sourceArchiveSha256": "e2b699e5ab858313365b95227f08097360d371b980fb684d984524645c6bebc0",
+  "sourceManifestSha256": "d6c9458d0ef1ced105c12da7fb2b29d605901bb61be820c398998f0949027b0c",
+  "statusCounts": {
+    "component": 9,
+    "fully-qualified": 3773,
+    "minimally-qualified": 1009,
+    "unqualified": 243
+  }
+}
