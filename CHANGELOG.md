@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add the release `apkFootprint` gate with a 183,000,000-byte universal APK limit,
+  a 185,000,000-byte unpacked limit and per-component/native-ABI budgets derived
+  from the stripped review build. Budget changes require a reviewed source commit
+  and a CHANGELOG entry; oversized compressed assets are rejected too.
+
 - Strip packaged native libraries with the runtime's pinned NDK and verify all
   four APK libraries against stripped build outputs. The local universal release
   candidate is 180,129,837 bytes, with 9,983,936 bytes of native libraries;

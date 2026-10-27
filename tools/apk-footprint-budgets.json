@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "baseline": {
+    "commit": "551fcdfec359a7b01257a866cd4bb021bc277685",
+    "apkSha256": "cf9a51d5b65a4f359b2616d330b65b25d61e39e849fdd717c576e5a73dc8f71c",
+    "apkBytes": 180129837
+  },
+  "maxApkBytes": 183000000,
+  "maxUncompressedBytes": 185000000,
+  "maxContainerBytes": 1000000,
+  "categories": {
+    "lib": 10500000,
+    "lexicon": 111000000,
+    "experiments": 59000000,
+    "res": 4000000,
+    "dex": 1000000,
+    "other": 500000
+  },
+  "nativeByAbi": {
+    "arm64-v8a": 5000000,
+    "x86_64": 5500000
+  }
+}

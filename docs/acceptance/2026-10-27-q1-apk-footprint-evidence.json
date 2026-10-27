@@ -1,0 +1,337 @@
+{
+  "card": "Q1",
+  "status": "partial; APK/component/native ABI budgets and oversized rejection verified; release/distribution/device requirements remain open",
+  "baseCommit": "551fcdfec359a7b01257a866cd4bb021bc277685",
+  "sources": [
+    {
+      "path": "tools/apk_footprint.py",
+      "bytes": 8873,
+      "sha256": "780a04c2dd7a1f7b50f07ff919dddbd49504928bbe7983599c78ac73720301ca"
+    },
+    {
+      "path": "tools/test_apk_footprint.py",
+      "bytes": 10662,
+      "sha256": "b93cfd960d0847456c856e92cd64b7585c611c5bff11a95ea611d6ce9bb7a4a9"
+    },
+    {
+      "path": "tools/apk-footprint-budgets.json",
+      "bytes": 536,
+      "sha256": "dfde1a40cd838d4571fde32b2602a2c5b8ce0aeccc390c4e1e436dfb9e009a58"
+    },
+    {
+      "path": "app/build.gradle.kts",
+      "bytes": 16004,
+      "sha256": "1bfe6d15999967efc6a576c9b6b748b8426c66acb23a94a30552b81209135d8f"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 13779,
+      "sha256": "9897751004d4885503a29c934a20ce47ffbc9e2f07e792423c58b94ff6a9113d"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8328,
+      "sha256": "98009905b89239a79659525bb3ef189dbac27e001b948af9258da5bdce171ffe"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 2296,
+      "sha256": "800e4713f0c2316a0c1adf030f23ffbd024044033bac21b999e57506ced29e4b"
+    },
+    {
+      "path": "docs/RELEASE.md",
+      "bytes": 5237,
+      "sha256": "eb89d7c366273d6ab065abce85b1a89105af4cb6066d013dcb2318492d42ce2a"
+    },
+    {
+      "path": "docs/plans/2026-10-27-review-completion.md",
+      "bytes": 18044,
+      "sha256": "dac354aff62faeb09709f595dd4f54cfa1c8d331395c969d11d3809ccb616543"
+    }
+  ],
+  "budgets": {
+    "schema": 1,
+    "baseline": {
+      "commit": "551fcdfec359a7b01257a866cd4bb021bc277685",
+      "apkSha256": "cf9a51d5b65a4f359b2616d330b65b25d61e39e849fdd717c576e5a73dc8f71c",
+      "apkBytes": 180129837
+    },
+    "maxApkBytes": 183000000,
+    "maxUncompressedBytes": 185000000,
+    "maxContainerBytes": 1000000,
+    "categories": {
+      "lib": 10500000,
+      "lexicon": 111000000,
+      "experiments": 59000000,
+      "res": 4000000,
+      "dex": 1000000,
+      "other": 500000
+    },
+    "nativeByAbi": {
+      "arm64-v8a": 5000000,
+      "x86_64": 5500000
+    }
+  },
+  "measurement": {
+    "apkBytes": 180129837,
+    "apkSha256": "18178f767e91f17f6c36f0e2289477b0928876a9f26724aa351f3bcc4f9a7b19",
+    "budgetSha256": "dfde1a40cd838d4571fde32b2602a2c5b8ce0aeccc390c4e1e436dfb9e009a58",
+    "categories": {
+      "dex": {
+        "compressedBytes": 366064,
+        "entries": 1,
+        "uncompressedBytes": 741796
+      },
+      "experiments": {
+        "compressedBytes": 57119336,
+        "entries": 26,
+        "uncompressedBytes": 57767890
+      },
+      "lexicon": {
+        "compressedBytes": 108938732,
+        "entries": 37,
+        "uncompressedBytes": 109877695
+      },
+      "lib": {
+        "compressedBytes": 9983936,
+        "entries": 4,
+        "uncompressedBytes": 9983936
+      },
+      "other": {
+        "compressedBytes": 159007,
+        "entries": 18,
+        "uncompressedBytes": 305759
+      },
+      "res": {
+        "compressedBytes": 3510436,
+        "entries": 43,
+        "uncompressedBytes": 3541197
+      }
+    },
+    "compressedBytes": 180077511,
+    "containerBytes": 52326,
+    "nativeByAbi": {
+      "arm64-v8a": 4787344,
+      "x86_64": 5196592
+    },
+    "passed": true,
+    "schema": 1,
+    "uncompressedBytes": 182218273,
+    "violations": []
+  },
+  "baselineBasis": {
+    "path": "docs/acceptance/2026-10-27-u16-packaged-native-evidence.json",
+    "bytes": 9647,
+    "sha256": "69c3127cae4e4ea2edbd39a319b517dc6b36829093ebb6ed83b89e64ca719137"
+  },
+  "baselineNote": "Budget basis is the prior SHA-bound release artifact. Current APK hash is separate; no bit-reproducible APK or clean-source release claim.",
+  "gradle": {
+    "result": {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:apkFootprint",
+        ":app:privacyGateRelease"
+      ],
+      "exitCode": 0
+    },
+    "log": {
+      "path": "build/review-q1-footprint-20261027/footprint-final-v2.log",
+      "bytes": 10019,
+      "sha256": "d1be1dc85e375a9626f919f56e266881155acf76a3cb9a28ab3b302c8dac16c4"
+    },
+    "tests": 11
+  },
+  "fixtureBasis": {
+    "sourceApkSha256": "18178f767e91f17f6c36f0e2289477b0928876a9f26724aa351f3bcc4f9a7b19",
+    "extraUncompressedBytes": 60000000,
+    "extraMember": "assets/smarttyping/experiments/footprint-growth.bin",
+    "compression": "ZIP_DEFLATED"
+  },
+  "negativeChecks": [
+    {
+      "name": "growth-negative",
+      "result": {
+        "exitCode": 1,
+        "passed": false
+      },
+      "report": {
+        "apkBytes": 180154951,
+        "apkSha256": "ed13d930b344bc9ed4df40b938a1e429684aeb61a28415b4509112b214cc86fa",
+        "budgetSha256": "dfde1a40cd838d4571fde32b2602a2c5b8ce0aeccc390c4e1e436dfb9e009a58",
+        "categories": {
+          "dex": {
+            "compressedBytes": 366064,
+            "entries": 1,
+            "uncompressedBytes": 741796
+          },
+          "experiments": {
+            "compressedBytes": 57177668,
+            "entries": 27,
+            "uncompressedBytes": 117767890
+          },
+          "lexicon": {
+            "compressedBytes": 108938732,
+            "entries": 37,
+            "uncompressedBytes": 109877695
+          },
+          "lib": {
+            "compressedBytes": 9983936,
+            "entries": 4,
+            "uncompressedBytes": 9983936
+          },
+          "other": {
+            "compressedBytes": 159014,
+            "entries": 18,
+            "uncompressedBytes": 305759
+          },
+          "res": {
+            "compressedBytes": 3510491,
+            "entries": 43,
+            "uncompressedBytes": 3541197
+          }
+        },
+        "compressedBytes": 180135905,
+        "containerBytes": 19046,
+        "nativeByAbi": {
+          "arm64-v8a": 4787344,
+          "x86_64": 5196592
+        },
+        "passed": false,
+        "schema": 1,
+        "uncompressedBytes": 242218273,
+        "violations": [
+          "UNCOMPRESSED_TOTAL",
+          "CATEGORY_EXPERIMENTS"
+        ]
+      },
+      "log": {
+        "path": "build/review-q1-footprint-20261027/growth-negative.log",
+        "bytes": 476,
+        "sha256": "6860a3b8eaad3ad5d462d8b5a72a1b516c099e229138ddd254eb3f74b0c47f23"
+      }
+    },
+    {
+      "name": "unstripped-negative",
+      "result": {
+        "exitCode": 1,
+        "passed": false
+      },
+      "report": {
+        "apkBytes": 278395385,
+        "apkSha256": "d05b62535552fdce303c1cf7a46d78a1d197fef7b41cf8c1b32be1ca2cce2e05",
+        "budgetSha256": "dfde1a40cd838d4571fde32b2602a2c5b8ce0aeccc390c4e1e436dfb9e009a58",
+        "categories": {
+          "dex": {
+            "compressedBytes": 366064,
+            "entries": 1,
+            "uncompressedBytes": 741796
+          },
+          "experiments": {
+            "compressedBytes": 57119336,
+            "entries": 26,
+            "uncompressedBytes": 57767890
+          },
+          "lexicon": {
+            "compressedBytes": 108938732,
+            "entries": 37,
+            "uncompressedBytes": 109877695
+          },
+          "lib": {
+            "compressedBytes": 108236792,
+            "entries": 4,
+            "uncompressedBytes": 108236792
+          },
+          "other": {
+            "compressedBytes": 159050,
+            "entries": 18,
+            "uncompressedBytes": 305803
+          },
+          "res": {
+            "compressedBytes": 3510436,
+            "entries": 43,
+            "uncompressedBytes": 3541197
+          }
+        },
+        "compressedBytes": 278330410,
+        "containerBytes": 64975,
+        "nativeByAbi": {
+          "arm64-v8a": 54375104,
+          "x86_64": 53861688
+        },
+        "passed": false,
+        "schema": 1,
+        "uncompressedBytes": 280471173,
+        "violations": [
+          "APK_TOTAL",
+          "UNCOMPRESSED_TOTAL",
+          "CATEGORY_LIB",
+          "NATIVE_arm64-v8a",
+          "NATIVE_x86_64"
+        ]
+      },
+      "log": {
+        "path": "build/review-q1-footprint-20261027/unstripped-negative.log",
+        "bytes": 514,
+        "sha256": "5a6084a9513eb98d6831a3929ae1ddf51f6d9680b365fb5f8145e5ef68cfbec5"
+      }
+    }
+  ],
+  "nativeCheck": {
+    "result": {
+      "command": [
+        "bash",
+        "tools/verify-native-runtime.sh",
+        "app/build/outputs/apk/release/app-release.apk"
+      ],
+      "exitCode": 0
+    },
+    "log": {
+      "path": "build/review-q1-footprint-20261027/native.log",
+      "bytes": 591,
+      "sha256": "97c2a73d87c4a4a6c60a960ca4b73e04acd956fd66ca211686ad0ad806cbd9ca"
+    },
+    "allFourNativePayloadsEqualPriorReceipt": true,
+    "strictPathAuditReuse": "U16 strict source-path audit remains FAILED on these identical native bytes"
+  },
+  "qualificationCheck": {
+    "result": {
+      "command": [
+        "python3",
+        "tools/qualification_artifacts.py"
+      ],
+      "exitCode": 0
+    },
+    "log": {
+      "path": "build/review-q1-footprint-20261027/qualification.log",
+      "bytes": 107,
+      "sha256": "9aaede5ebdafde480685bde73e4d358debda215b3475a0fea6cf27bdc032bd9a"
+    }
+  },
+  "replayReuse": {
+    "basis": {
+      "path": "docs/acceptance/2026-10-27-u9-emoji-key-evidence.json",
+      "bytes": 94590,
+      "sha256": "fc5b5504856747f2479c5a6857ce56730324aba404a8f4e7ee71ae040e1f4ec1"
+    },
+    "sourcesVerified": 88,
+    "assetsVerified": 18,
+    "driverSha256": "bf63b2ddf9b8eebe62f2110fd9b00d8a8cc03f708d43bb670100e800a7a57618",
+    "note": "No fresh ordinary replay; all bound sources/assets/driver remain identical"
+  },
+  "ci": {
+    "configured": true,
+    "remoteRun": false,
+    "uploadsReportsAndBudgets": true
+  },
+  "arm64Scope": "Measured native bytes within universal APK only; no ARM64-only APK/distribution built",
+  "phoneRun": false,
+  "phoneUpdate": false,
+  "published": false,
+  "outstanding": [
+    "Clean-source release enforcement",
+    "F-Droid and distribution evidence",
+    "Release model-load/self-test/scoring and typing smoke on physical Fold and required emulator APIs",
+    "U16 source-location data literals still fail strict path audit"
+  ]
+}

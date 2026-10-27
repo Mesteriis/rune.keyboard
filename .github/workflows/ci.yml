@@ -120,7 +120,7 @@ jobs:
           sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
           yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" "ndk;29.0.14206865" "cmake;3.31.6" >/dev/null
       - name: Build, lint, and verify privacy
-        run: ./gradlew lint assembleDebug assembleRelease assembleProfile privacyGateRelease privacyGateProfile imeIntelligenceBoundary forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate
+        run: ./gradlew lint assembleDebug assembleRelease assembleProfile privacyGateRelease privacyGateProfile imeIntelligenceBoundary forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate :app:apkFootprint
       - name: Verify packaged native ABI boundary
         run: |
           python3 -m unittest discover -s tools -p test_verify_packaged_native.py -v
@@ -130,6 +130,15 @@ jobs:
           mkdir -p app/build/ci-artifacts
           cp app/build/outputs/apk/debug/app-debug.apk app/build/ci-artifacts/rune-debug.apk
           cp app/build/outputs/apk/release/app-release-unsigned.apk app/build/ci-artifacts/rune-release-unsigned.apk
+      - name: Upload APK footprint
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-footprint
+          if-no-files-found: warn
+          path: |
+            app/build/reports/apk-footprint/release.json
+            tools/apk-footprint-budgets.json
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:

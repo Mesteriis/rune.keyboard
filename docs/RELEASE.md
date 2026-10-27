@@ -25,7 +25,7 @@ Fill `storeFile`, `storePassword`, `keyAlias` and `keyPassword` locally. Restric
 ```sh
 ./gradlew testDebugUnitTest lint assembleDebug assembleRelease assembleProfile \
   privacyGateRelease privacyGateProfile imeIntelligenceBoundary \
-  forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate
+  forbiddenRuntimeDependencies :runtime-llama:nativeSymbolGate :app:apkFootprint
 
 tools/verify-native-runtime.sh app/build/outputs/apk/release/app-release.apk
 tools/verify-native-runtime.sh app/build/outputs/apk/release/app-release.apk --require-no-local-paths
@@ -41,6 +41,19 @@ the 180,129,837-byte local release candidate as full release acceptance. Fixing
 the compiler source-location recipe requires renewed runtime identity and
 qualification evidence; do not rewrite packaged strings or qualification pins.
 Unstripped build outputs stay local for symbolization and must not be published.
+
+`apkFootprint` selects the single release output from AGP metadata, so signed and
+unsigned filenames work without stale-file globs. It records the APK and budget
+SHA-256, ZIP payload/unpacked sizes, container overhead and lib/lexicon/experiments/
+res/dex/other breakdown. The checked-in limits live in
+`tools/apk-footprint-budgets.json`: 183,000,000 bytes for the universal APK and
+185,000,000 unpacked, plus component and native-ABI limits. Native limits are
+5,000,000 bytes for arm64-v8a and 5,500,000 for x86_64; no separate ARM64-only APK
+size is claimed. Change limits only in a reviewed commit with a CHANGELOG entry,
+a fresh measured basis and an explanation of growth. The task never raises them.
+The report at `app/build/reports/apk-footprint/release.json` contains `passed=false`
+and fixed violation codes on budget failure. Structural errors exit nonzero and
+remove an older report. CI uploads the report/budget file even on a failed check.
 
 4. Run the GitHub Actions API 26/API 37 instrumentation matrix for the release commit. Inspect actual job conclusions before claiming it passed.
 5. Exercise changed UI and typing flows on a disposable emulator and/or an explicitly selected test device. A signed release smoke test should cover launch, onboarding, offline input and settings. Never clear a personal device's data to resolve a signature mismatch.

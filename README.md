@@ -53,6 +53,12 @@ Glide typing, split/one-handed layouts and voice input are not implemented yet.
 
 Requires **Android 8.0 (API 26) or newer**, with a **64-bit ARM or x86 processor** (`arm64-v8a` / `x86_64`). The APK contains both architectures.
 
+The unreleased review build measures **180.1 MB** for the universal release APK,
+including **10.0 MB** of native libraries (decimal units). `./gradlew :app:apkFootprint`
+checks a 183 MB APK budget and separate unpacked/component/ABI limits; its JSON
+report is in `app/build/reports/apk-footprint/release.json`. See the
+[measurement and remaining release checks](docs/acceptance/2026-10-27-q1-apk-footprint.md).
+
 Keep the same distribution/signing key when updating. Development debug builds and the public release use different keys; Android will not install one over the other. Export anything you need before choosing to remove an older debug installation.
 
 **F-Droid:** packaging metadata and store descriptions are maintained in this repository. See [F-Droid submission and build notes](docs/FDROID.md) for the current status; an official listing is subject to F-Droid review.

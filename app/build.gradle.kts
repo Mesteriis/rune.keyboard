@@ -196,6 +196,23 @@ abstract class TypingDiagnosticsPackagingTask : DefaultTask() {
     }
 }
 
+abstract class ApkFootprintTask : DefaultTask() {
+    @get:InputDirectory abstract val apkDirectory: DirectoryProperty
+    @get:InputFile abstract val verifier: RegularFileProperty
+    @get:InputFile abstract val budgets: RegularFileProperty
+    @get:OutputFile abstract val report: RegularFileProperty
+    @get:Inject abstract val execOperations: ExecOperations
+
+    @TaskAction fun verify() {
+        execOperations.exec {
+            commandLine("python3", verifier.get().asFile.absolutePath,
+                "--apk-dir", apkDirectory.get().asFile.absolutePath,
+                "--budgets", budgets.get().asFile.absolutePath,
+                "--report", report.get().asFile.absolutePath)
+        }.assertNormalExitValue()
+    }
+}
+
 val typingDiagnosticsBoundaryFixtures = tasks.register<Exec>("typingDiagnosticsBoundaryFixtures") {
     group = "verification"
     inputs.files(rootProject.file("tools/test_typing_diagnostics_boundary.py"),
@@ -261,6 +278,15 @@ val emojiCatalogTests = tasks.register<Exec>("emojiCatalogTests") {
 }
 tasks.named("check").configure { dependsOn(emojiCatalogTests) }
 
+val apkFootprintTests = tasks.register<Exec>("apkFootprintTests") {
+    group = "verification"
+    description = "Tests APK byte budgets, compression-resistant limits and report failures."
+    workingDir(rootProject.projectDir)
+    inputs.files(rootProject.file("tools/apk_footprint.py"), rootProject.file("tools/test_apk_footprint.py"),
+        rootProject.file("tools/apk-footprint-budgets.json"))
+    commandLine("python3", "-m", "unittest", "discover", "-s", "tools", "-p", "test_apk_footprint.py")
+}
+
 androidComponents {
     onVariants(selector().all()) { variant ->
         val name = variant.name.replaceFirstChar(Char::uppercaseChar)
@@ -279,6 +305,16 @@ androidComponents {
     }
     onVariants(selector().withBuildType("release")) { variant ->
         registerPrivacyGate(variant)
+        val footprint = tasks.register<ApkFootprintTask>("apkFootprint") {
+            group = "verification"
+            description = "Verifies the final release APK against reviewed byte budgets."
+            apkDirectory.set(variant.artifacts.get(SingleArtifact.APK))
+            verifier.set(rootProject.file("tools/apk_footprint.py"))
+            budgets.set(rootProject.file("tools/apk-footprint-budgets.json"))
+            report.set(layout.buildDirectory.file("reports/apk-footprint/release.json"))
+            dependsOn(apkFootprintTests)
+        }
+        tasks.named("check").configure { dependsOn(footprint) }
     }
     onVariants(selector().withBuildType("profile")) { variant ->
         registerPrivacyGate(variant)
