@@ -1,0 +1,28 @@
+{
+  "purpose": "SELECTIVE_REVIEW_TRIAGE_AND_BOUNDARY_FIX",
+  "fixtureFixCommit": "e6b655539599b8009288aaec9055aa2db01fbd70",
+  "originalCommittedFixtureFailureReproduced": true,
+  "workingBoundaryTestsPassed": 25,
+  "gradleDiagnosticsTestsPassed": 64,
+  "gradleImeIntelligenceBoundaryPassed": true,
+  "cleanTrackedSnapshotDiagnosticsTestsPassed": 64,
+  "cleanTrackedSnapshotSourceBoundaryPassed": true,
+  "fullCleanAndroidBuildRun": false,
+  "fullJvmSuiteRun": false,
+  "androidRuntimeChanged": false,
+  "deviceTestsRun": false,
+  "sourceHashes": {
+    "tools/test_typing_diagnostics_boundary.py": "042eb212b195d49b386ca1bddd911e69e80581f682761ebfdbc75696be34ac2e",
+    "tools/verify-scoring-boundaries.py": "9affd84a4e1f07bf70a71b0848bb6374e2bac1ac82dd65072941b96d0149a756"
+  },
+  "artifactHashes": {
+    "build/review-triage-20261027/committed-fixture.log": "e45f8a4b6300e7763bb59ba101eef263939714cb1c404c093aba0e6ed06de669",
+    "build/review-triage-20261027/fixture-reproduction.json": "b5b9d1dc746c45b363832106d0a252046e79f00fc2fd400c92d009939b51b380",
+    "build/review-triage-20261027/working-fixture-tests.log": "ff477b827676657eaaf3291dbda10f526c8e3f539098ca0333b72cdf1df58b40",
+    "build/review-triage-20261027/scoring-boundary.log": "53b528157f25b6df2a4a410231e60e7b3605dd9e0bcccad0ccef5f856e7ec62f",
+    "build/review-triage-20261027/gradle-boundary.log": "34498b3934b85f1dd37b9913a59d569cea4873567fd4219a7f859c34b708be43",
+    "build/review-triage-20261027/clean-snapshot-evidence.json": "6a3bcf31396a165b79e49cb9332874466fce6969cc565451587965bb17592a58",
+    "build/review-triage-20261027/clean-snapshot-fixtures.log": "7cbe8c62e8631359f83ca879b8b07f9b9edf51dd0b4d1312e186b96510bb35a5",
+    "build/review-triage-20261027/clean-snapshot-boundary.log": "53b528157f25b6df2a4a410231e60e7b3605dd9e0bcccad0ccef5f856e7ec62f"
+  }
+}
