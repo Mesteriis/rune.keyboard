@@ -48,7 +48,10 @@ class QualificationArtifactsTest {
         val current = QualificationArtifacts.model()
         assertTrue(ModelRuntimeQualification.allows(current))
         listOf(current.copy(modelSha256 = "0".repeat(64)), current.copy(runtimeApi = 999),
-            current.copy(runtimeBuildId = "other"), current.copy(spellingPolicyVersion = 999),
+            current.copy(runtimeBuildId = "other"),
+            current.copy(runtimeBuildId = "356dc78ec8b156462d8384ca14f0e20ff831c66b83c38831f40edfd6bd645613"),
+            current.copy(runtimeBuildId = "eaa4f6afb974821ae76d454de9b156a4f1d017d89b941fbdc31cb4d1403f22c1"),
+            current.copy(spellingPolicyVersion = 999),
             current.copy(lexicons = emptyMap())).forEach { assertFalse(ModelRuntimeQualification.allows(it)) }
         KeyboardLanguage.entries.forEach { language ->
             assertFalse(ModelRuntimeQualification.allows(current.copy(
