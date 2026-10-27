@@ -23,7 +23,7 @@ object MechanicalPunctuationPlanner {
         ) return keep(UnchangedPunctuationReason.INVALID_BOUNDS)
         val composing = owned.composingText.orEmpty()
         if (!owned.text.endsWith(composing)) return keep(UnchangedPunctuationReason.OWNERSHIP_MISMATCH)
-        if (protectedLine(owned.text + incoming)) return keep(UnchangedPunctuationReason.PROTECTED_TOKEN)
+        if (protectedLine(owned.text + incoming)) return keep(UnchangedPunctuationReason.PROTECTED_LINE)
 
         // Gesture priority is independent of the mechanical cleanup toggle, as in the reducer.
         if (action == PunctuationAction.DoubleSpaceGesture && policy.doubleSpaceEnabled) {
@@ -189,18 +189,12 @@ object MechanicalPunctuationPlanner {
     private fun isMark(cp: Int) = Character.getType(cp) in MARK_TYPES
 
     private fun protectedLine(text: String): Boolean {
-        var offset = text.lastIndexOf('\n') + 1
-        // A standalone dot can be a command's current-directory argument or literal output.
-        // Keep its separator as soon as the dot is typed, including inside quoted-in-prose
-        // command fragments. Waiting for a later slash/flag would already have damaged it.
-        if (DOT_ARGUMENT.containsMatchIn(text.substring(offset))) return true
-        while (offset < text.length) {
-            val cp = text.codePointAt(offset)
-            if (!Character.isLetterOrDigit(cp) && !isMark(cp) && cp != ' '.code &&
-                (cp > Char.MAX_VALUE.code || cp.toChar() !in PUNCTUATION)) return true
-            offset += Character.charCount(cp)
-        }
-        return false
+        val line = text.substring(text.lastIndexOf('\n') + 1)
+        // Keep explicit code/command context intact. Prose symbols protect their own
+        // token via ordinaryFailure(), not every ordinary word later in the line.
+        // A standalone command dot must retain its separator as soon as it is typed.
+        return DOT_ARGUMENT.containsMatchIn(line) || CLI_FLAG.containsMatchIn(line) ||
+            line.any { it in CODE_MARKERS } || "::" in line
     }
 
     private fun bounded(text: String, maxCodePoints: Int): Boolean {
@@ -220,6 +214,8 @@ object MechanicalPunctuationPlanner {
     private fun keep(reason: UnchangedPunctuationReason) = MechanicalPunctuationPlan.Unchanged(reason)
     private val PUNCTUATION = setOf(',', '.', '?', '!', ':', ';')
     private val SENTENCE_END = setOf('.', '?', '!')
+    private val CODE_MARKERS = setOf('=', '{', '}', '`', '$', '\\', '|', '<', '>', '/')
+    private val CLI_FLAG = Regex("(?:^|\\s)--?\\p{L}")
     private val DOT_ARGUMENT = Regex("(?:^|\\s)(?:cd|cp|mv|rm|ls|du|stat|find|chmod|chown|git|rg|grep|echo|printf) +\\.(?=$|[\\s.])")
     private val MARK_TYPES = setOf(Character.NON_SPACING_MARK.toInt(), Character.COMBINING_SPACING_MARK.toInt(), Character.ENCLOSING_MARK.toInt())
 }

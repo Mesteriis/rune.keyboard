@@ -16,6 +16,40 @@ class MechanicalPunctuationPlannerTest {
     private fun replacement(result: MechanicalPunctuationPlan) = result as MechanicalPunctuationPlan.Replace
     private fun reason(result: MechanicalPunctuationPlan) = (result as MechanicalPunctuationPlan.Unchanged).reason
 
+    @Test fun `prose symbols in an earlier token do not block punctuation on ordinary words`() {
+        for (prefix in listOf("¿Cómo ", "¡Hola ", "кто-то ", "don't ", "«цитата» ",
+            "“quote” ", "слово – ", "слово — ", "👩🏽‍💻 ")) {
+            val edit = replacement(plan(prefix + "estás ", ",", " "))
+            assertEquals(MechanicalEditKind.SPACE_BEFORE, edit.kind)
+            assertEquals(",", edit.replacementComposing)
+            assertEquals(" ,", edit.undoOriginal)
+        }
+    }
+
+    @Test fun `hyphenated prose allows all existing mechanics on a later ordinary word`() {
+        val prefix = "кто-то "
+        val beforeComma = replacement(plan(prefix + "пришёл ", ",", " "))
+        assertEquals(MechanicalEditKind.SPACE_BEFORE, beforeComma.kind)
+        val afterComma = replacement(plan(prefix + "пришёл,", "домой", ","))
+        assertEquals(", домой", afterComma.replacementComposing)
+        assertEquals(MechanicalEditKind.SPACE_AFTER, afterComma.kind)
+        val duplicate = replacement(plan(prefix + "пришёл,", ",", ","))
+        assertEquals(MechanicalEditKind.DUPLICATE_PUNCTUATION, duplicate.kind)
+        val spaces = replacement(plan(prefix + "пришёл ", " ", " "))
+        assertEquals(MechanicalEditKind.REPEATED_SPACE, spaces.kind)
+        val caps = replacement(plan(prefix + "пришёл. ", "домой", ". "))
+        assertEquals(MechanicalEditKind.SENTENCE_CASE, caps.kind)
+        assertEquals(2, caps.sentenceCapsForNewTextAt)
+    }
+
+    @Test fun `double space remains available after ordinary word in hyphenated prose`() {
+        val edit = replacement(MechanicalPunctuationPlanner.plan(owned("кто-то пришёл ", " "),
+            PunctuationAction.DoubleSpaceGesture, policy.copy(doubleSpaceEnabled = true)))
+        assertEquals(MechanicalEditKind.DOUBLE_SPACE_PERIOD, edit.kind)
+        assertEquals(". ", edit.replacementComposing)
+        assertEquals(" ", edit.undoOriginal)
+    }
+
     @Test fun `space before punctuation edits only pending span and consumes punctuation once`() {
         for (punctuation in listOf(",", ".", "?", "!", ":", ";")) {
             val edit = replacement(plan("Привет ", punctuation, " "))
@@ -126,9 +160,9 @@ class MechanicalPunctuationPlannerTest {
         for (prefix in listOf("", "The reference lists ", "В справочнике найдено ", "La referencia indica ")) {
             for (command in listOf("find", "cd", "ls", "du", "stat", "cp", "mv", "rm", "chmod", "chown", "git", "rg", "grep", "echo", "printf")) {
                 val before = "$prefix$command "
-                assertEquals(UnchangedPunctuationReason.PROTECTED_TOKEN, reason(plan(before, ".", " ")))
-                assertTrue(plan("$before.", " ", " .") is MechanicalPunctuationPlan.Unchanged)
-                assertTrue(plan("$before. ", "w", " . ") is MechanicalPunctuationPlan.Unchanged)
+                assertEquals(UnchangedPunctuationReason.PROTECTED_LINE, reason(plan(before, ".", " ")))
+                assertEquals(UnchangedPunctuationReason.PROTECTED_LINE, reason(plan("$before.", " ", " .")))
+                assertEquals(UnchangedPunctuationReason.PROTECTED_LINE, reason(plan("$before. ", "w", " . ")))
             }
         }
         // A different word and a non-dot boundary retain ordinary punctuation behavior.
@@ -137,12 +171,44 @@ class MechanicalPunctuationPlannerTest {
         assertEquals(MechanicalEditKind.SPACE_BEFORE, replacement(plan("find .\nhello ", ".", " ")).kind)
     }
 
-    @Test fun `ellipsis expressive punctuation quotes brackets and emoji are preserved`() {
+    @Test fun `ellipsis expressive punctuation quotes brackets and emoji have exact refusal reasons`() {
         for ((before, next) in listOf("word." to ".", "word.." to ".", "word..." to "next",
-            "word?!" to "next", "word!?" to "next", "word!" to "!", "word?" to "?",
-            "[word " to ",", "word] " to ",", "«word " to ",", "word» " to ",",
-            "word 👩🏽‍💻 " to ",", "word \u00A0" to ",", "word\t" to ",")) {
-            assertTrue(plan(before, next) is MechanicalPunctuationPlan.Unchanged)
+            "word?!" to "next", "word!?" to "next", "word!" to "!", "word?" to "?")) {
+            assertEquals(UnchangedPunctuationReason.PROTECTED_PUNCTUATION, reason(plan(before, next)))
+        }
+        for (before in listOf("[word ", "word] ", "«word ", "word» ", "word 👩🏽‍💻 ",
+            "foo-bar ", "don't ", "¿Cómo ", "¡Hola ", "some_id ", "@word ")) {
+            assertEquals(before, UnchangedPunctuationReason.PROTECTED_TOKEN, reason(plan(before, ",")))
+        }
+        for (before in listOf("word \u00A0", "word\t")) {
+            assertEquals(UnchangedPunctuationReason.NO_CHANGE, reason(plan(before, ",")))
+        }
+    }
+
+    @Test fun `code markers and flags protect current line before every mechanic including gesture`() {
+        for (code in listOf("x = value", "{ value", "value }", "`value`", "$" + "value", "x\\value",
+            "x | value", "x < value", "x > value", "x / value", "// value", "x::value",
+            "ls -la", "grep -i foo", "git commit -m fix", "--verbose value", "-flag value", "cmd --флаг value")) {
+            for (prefix in listOf("", "справка ")) {
+                val line = prefix + code
+                for ((before, next) in listOf(line + " " to ",", line + " " to " ",
+                    line + "," to ",", line + "," to "word", line + ". " to "word")) {
+                    assertEquals(before, UnchangedPunctuationReason.PROTECTED_LINE, reason(plan(before, next)))
+                }
+                assertEquals(UnchangedPunctuationReason.PROTECTED_LINE, reason(MechanicalPunctuationPlanner.plan(
+                    owned(line + " "), PunctuationAction.DoubleSpaceGesture, policy.copy(doubleSpaceEnabled = true))))
+                // The earlier line does not poison a later ordinary line.
+                assertEquals(MechanicalEditKind.SPACE_BEFORE, replacement(plan(line + "\nhello ", ",", " ")).kind)
+            }
+        }
+    }
+
+    @Test fun `double space still refuses numbers abbreviations newline and protected token fragments`() {
+        for (before in listOf("3 ", "3.14 ", "Dr. ", "т. д. ", "word\n ", "кто-то ", "don't ", "«word ")) {
+            val expected = if (before in listOf("кто-то ", "don't ", "«word "))
+                UnchangedPunctuationReason.PROTECTED_TOKEN else UnchangedPunctuationReason.DOUBLE_SPACE_INELIGIBLE
+            assertEquals(before, expected, reason(MechanicalPunctuationPlanner.plan(owned(before),
+                PunctuationAction.DoubleSpaceGesture, policy.copy(doubleSpaceEnabled = true))))
         }
     }
 

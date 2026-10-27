@@ -14,6 +14,30 @@ class MechanicalTypingSessionTest {
     private val editor = EditorContext.from(1, 0)
     private val enabled = MechanicalPunctuationPolicy(InputPolicy.NORMAL, EditorMode.TEXT, false, true, false)
 
+    @Test fun `later word in hyphenated prose has one mechanical undo without editor reads`() {
+        val f = Fixture(); f.rawSequence("кто-то пришёл "); f.calls.clear()
+        f.type(",")
+        assertEquals("кто-то пришёл,", f.document)
+        assertEquals(listOf("set"), f.calls)
+        assertNotNull(f.controller.state.lastAutoEdit)
+        f.calls.clear(); f.undo()
+        assertEquals("кто-то пришёл ,", f.document)
+        assertEquals(listOf("set"), f.calls)
+        assertNull(f.controller.state.lastAutoEdit)
+        assertEquals(0, f.reads)
+    }
+
+    @Test fun `hyphenated prose double space has exact undo without editor reads`() {
+        val f = Fixture(); f.policy = enabled.copy(doubleSpaceEnabled = true)
+        f.rawSequence("кто-то пришёл "); f.calls.clear()
+        f.type(" ", gesture = true)
+        assertEquals("кто-то пришёл. ", f.document)
+        assertEquals(listOf("set"), f.calls)
+        f.undo(); assertEquals("кто-то пришёл ", f.document)
+        assertNull(f.controller.state.lastAutoEdit)
+        assertEquals(0, f.reads)
+    }
+
     @Test fun `punctuation retains only boundary after committing old word`() {
         for (mark in listOf(",", ".", "?", "!", ":", ";")) {
             val f = Fixture(); f.type("hello"); f.calls.clear(); f.type(mark)
