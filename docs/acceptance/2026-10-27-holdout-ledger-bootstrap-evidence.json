@@ -1,0 +1,38 @@
+{
+  "purpose": "Q6_BOOTSTRAP_NOT_COMPLETE_FRESHNESS_QUALIFICATION",
+  "entries": 9,
+  "identityDigests": 26973,
+  "coverageComplete": false,
+  "ledgerTestsPassed": 11,
+  "normalizationTestsPassed": 4,
+  "noBuildChecksPassed": true,
+  "unseenRowsBlockedByIncompleteCoverage": true,
+  "deterministicPython311And314Snapshot": true,
+  "remoteCiRun": false,
+  "modelsOrThresholdsChanged": false,
+  "androidChanged": false,
+  "sourceHashes": {
+    ".github/workflows/ci.yml": "451945039af572379be92764059be10b5e8f6ef251b21522cc943cdc05cf8014",
+    ".gitignore": "10b5cb8619ad08dd7ca7983fa278074cd97df0846655b77683bc08b522f2d057",
+    "tools/typing_experiments/holdout_ledger.py": "6fed97ce29ec44ef47a879e177db1ce16413ea6ffbaaadc78226c1d09ab07197",
+    "tools/typing_experiments/snapshot_public_holdout_ledger.py": "e79cb54e8c0c60f9638ceb1392dfd5d0782b3d735f69a82796176f6c42339e21",
+    "tools/typing_experiments/test_holdout_ledger.py": "6311a294a9af048abe2761af9fef6dda5612d2cb3d763c61a00242ff6a329efc",
+    "tools/typing_experiments/test_public_holdout_ledger.py": "ee877a6c949c415be1de18a474d6931a4bca75552636c0bdb76e64bd8d698fe3",
+    "tools/typing_experiments/conversation_split_checks.py": "373879a4483989d8adb7f1831265ee0803502fb25660a202a6898ed74c613683",
+    "tools/typing_experiments/test_conversation_split_checks.py": "0a6734fced344955f509b55424981f84096da482a124f2f35d96a3cd95cde0a8",
+    "tools/typing_experiments/holdout-ledger.json": "cead20d51939a948d0a1f3d85b80e4de0fd1562a43097312e34a823be514ea49"
+  },
+  "artifactHashes": {
+    "build/holdout-ledger-bootstrap-20261027/ledger-tests.log": "285548ee2c5894b533d61549ebb7b09239f29358db6fae5224ef4b70ba619da0",
+    "build/holdout-ledger-bootstrap-20261027/normalization-tests.log": "e6ec182765cd965f2837d8eeaef5a64af48a104f245cd1a0b7281559194c57c1",
+    "build/holdout-ledger-bootstrap-20261027/incomplete-check.log": "17c95317aed233151ced6a3c4febf5e2ddfa70c0eea7470d0e1b61ff37596f48",
+    "build/holdout-ledger-bootstrap-20261027/bootstrap-audit.json": "907728d612b56fc9fb2522a6b3db308637b184e37cdb98fa210d62571a6169ec",
+    "build/holdout-ledger-bootstrap-20261027/ci-reproduction.json": "ce1f8c56c1923ddba9441e661de76ea836cb77fbb0b73d1136c13fc56f8ed4e7",
+    "build/holdout-ledger-bootstrap-20261027/ci-command-0.log": "7593021da98041173c1f6f071d1c047d00ba7bd33933f59e157458640dfe4c33",
+    "build/holdout-ledger-bootstrap-20261027/ci-command-1.log": "61988d78c60ae612493a548ef74fdce802e5c3da8bc271acf721571288d8621b",
+    "build/holdout-ledger-bootstrap-20261027/ci-command-2.log": "e6ec182765cd965f2837d8eeaef5a64af48a104f245cd1a0b7281559194c57c1",
+    "build/holdout-ledger-bootstrap-20261027/rebuilt-ledger.json": "cead20d51939a948d0a1f3d85b80e4de0fd1562a43097312e34a823be514ea49",
+    "build/holdout-ledger-bootstrap-20261027/python311-ledger.json": "cead20d51939a948d0a1f3d85b80e4de0fd1562a43097312e34a823be514ea49",
+    "build/holdout-ledger-bootstrap-20261027/verify-bootstrap.py": "61a3eb2a39a877a42763ff2b985e33cbe1cb2ca9580835ced51249da08ef7c0f"
+  }
+}

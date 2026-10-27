@@ -11,6 +11,7 @@ keystore.properties
 *.keystore
 captures/
 .DS_Store
+__pycache__/
 
 # Generated Smart Typing evidence lives outside the source tree. The dated acceptance reports
 # summarize the verified final outcomes without committing intermediate raw logs or build copies.
