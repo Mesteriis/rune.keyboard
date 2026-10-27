@@ -874,6 +874,155 @@ class TypingSessionControllerTest {
         }
     }
 
+    @Test fun `external edit suffix cannot be adopted before a Rune whitespace boundary`() {
+        start(4)
+        assertTrue(controller.prepareExternalEdit(true, execute))
+        assertTrue(selection(10, 10, -1, -1))
+        edits.clear()
+        assertEquals(TypingTextResult.HANDLED, controller.typeText("teh", execute))
+        assertNull(controller.state.composing)
+        assertEquals("", controller.state.contextText)
+        assertEquals(listOf(TypingEdit.CommitText("teh")), edits)
+    }
+
+    @Test fun `external suffix stays opaque through delayed callbacks and layer invalidation`() {
+        start()
+        controller.typeText("old", execute)
+        assertTrue(controller.prepareExternalEdit(true, execute))
+        assertFalse(selection(3, 3, 0, 3))
+        assertFalse(selection(3, 3, -1, -1))
+        assertEquals(TypingTextResult.BYPASS, controller.typeText("x", execute))
+        assertTrue(selection(10, 10, -1, -1))
+        controller.typeText("part", execute)
+        assertFalse(selection(14, 14, -1, -1))
+        assertTrue(controller.invalidate(execute))
+        controller.typeText("-tail", execute)
+        assertNull(controller.state.composing)
+        assertEquals("", controller.state.contextText)
+        controller.typeText(" ", execute)
+        assertEquals(ComposingSegment(" "), controller.state.composing)
+        assertEquals(" ", controller.state.contextText)
+        controller.typeText("next", execute)
+        assertEquals(ComposingSegment(" ", "next"), controller.state.composing)
+        assertEquals(" next", controller.state.contextText)
+    }
+
+    @Test fun `external edit entry without caret movement does not wait or adopt the adjacent word`() {
+        start()
+        controller.typeText("old", execute)
+        assertTrue(controller.prepareExternalEdit(false, execute))
+        assertFalse(selection(3, 3, -1, -1))
+        edits.clear()
+        assertEquals(TypingTextResult.HANDLED, controller.typeText("tail", execute))
+        assertEquals(listOf(TypingEdit.CommitText("tail")), edits)
+        assertNull(controller.state.composing)
+        assertEquals("", controller.state.contextText)
+    }
+
+    @Test fun `external suffix bypasses mechanics and learning until a Rune space owns a new word`() {
+        val learned = mutableListOf<Pair<String, String>>()
+        controller.setPersonalization(object : TypingPersonalization {
+            override fun committed(prefix: String, word: String, retypedFrom: String?, language: KeyboardLanguage) {
+                learned += prefix to word
+            }
+        }, KeyboardLanguage.ENGLISH)
+        start(8)
+        assertTrue(controller.prepareExternalEdit(false, execute))
+        val policy = MechanicalPunctuationPolicy(InputPolicy.NORMAL, EditorMode.TEXT, false, true, true)
+        val keyboard = KeyboardState(KeyboardLanguage.ENGLISH)
+        fun type(text: String, double: Boolean = false) = controller.typeText(text, policy, keyboard,
+            doubleSpaceGesture = double, execute = execute)
+        type("teh")
+        type(".")
+        assertNull(controller.state.composing)
+        assertEquals("", controller.state.contextText)
+        assertEquals(emptyList<Pair<String, String>>(), learned)
+        type(" ")
+        type(" ", double = true)
+        assertTrue(controller.state.contextText.all(Char::isWhitespace))
+        assertFalse(controller.state.contextText.contains('.'))
+        type("next")
+        type(" ")
+        assertEquals(listOf("next"), learned.map { it.second })
+        assertTrue(learned.single().first.all(Char::isWhitespace))
+        assertFalse(controller.state.contextText.contains("teh"))
+    }
+
+    @Test fun `external newline establishes only its own whitespace context`() {
+        start(5)
+        assertTrue(controller.prepareExternalEdit(false, execute))
+        controller.typeText("unknown\n", execute)
+        assertNull(controller.state.composing)
+        assertEquals("\n", controller.state.contextText)
+        controller.typeText("next", execute)
+        assertEquals("next", controller.state.composing?.typedWord)
+        assertEquals("\nnext", controller.state.contextText)
+    }
+
+    @Test fun `external boundary requirement ends with the old session`() {
+        start(5)
+        assertTrue(controller.prepareExternalEdit(false, execute))
+        controller.typeText("unowned", execute)
+        start()
+        controller.typeText("fresh", execute)
+        assertEquals("fresh", controller.state.composing?.typedWord)
+        assertEquals("fresh", controller.state.contextText)
+    }
+
+    @Test fun `old external preparation cannot clear a newer session caret wait or arm its barrier`() {
+        start()
+        controller.typeText("old", execute)
+        val session = controller.state.sessionId
+        val reenter: (TypingEdit) -> Boolean = { edit ->
+            if (edit == TypingEdit.FinishComposingText) {
+                start()
+                assertTrue(controller.awaitEditorSelection(execute))
+            }
+            true
+        }
+        assertFalse(controller.prepareExternalEdit(true, reenter))
+        assertTrue(controller.state.sessionId > session)
+        assertEquals(TypingTextResult.BYPASS, controller.typeText("x", execute))
+        assertTrue(selection(1, 1, -1, -1))
+        controller.typeText("fresh", execute)
+        assertEquals("fresh", controller.state.composing?.typedWord)
+    }
+
+    @Test fun `refused owned finish cannot arm or dispatch an external edit`() {
+        start()
+        controller.typeText("old", execute)
+        val attempted = mutableListOf<TypingEdit>()
+        assertFalse(controller.prepareExternalEdit(true) { attempted += it; false })
+        assertEquals(listOf(TypingEdit.FinishComposingText), attempted)
+        assertFalse(controller.state.enabled)
+        assertEquals(TypingTextResult.BYPASS, controller.typeText("suffix", execute))
+    }
+
+    @Test fun `external edit preparation drops sentence capitalization from an old owned boundary`() {
+        pendingSpace("word")
+        assertEquals(TypingTextResult.HANDLED, controller.doubleSpace(execute))
+        assertTrue(controller.sentenceCapitalizationPending)
+        assertTrue(controller.prepareExternalEdit(false, execute))
+        assertFalse(controller.sentenceCapitalizationPending)
+    }
+
+    @Test fun `failed outer preparation cannot cancel a reentrant wait in the same session`() {
+        start()
+        controller.typeText("old", execute)
+        val session = controller.state.sessionId
+        val reenter: (TypingEdit) -> Boolean = { edit ->
+            if (edit == TypingEdit.FinishComposingText) assertTrue(controller.prepareExternalEdit(true, execute))
+            true
+        }
+        assertFalse(controller.prepareExternalEdit(true, reenter))
+        assertEquals(session, controller.state.sessionId)
+        assertEquals(TypingTextResult.BYPASS, controller.typeText("x", execute))
+        assertTrue(selection(1, 1, -1, -1))
+        assertEquals(TypingTextResult.HANDLED, controller.typeText("suffix", execute))
+        assertNull(controller.state.composing)
+        assertEquals("", controller.state.contextText)
+    }
+
     private fun pendingSpace(prefix: String, initialCaret: Int = 0) {
         start(initialCaret)
         controller.typeText(prefix, execute)

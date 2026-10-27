@@ -363,6 +363,7 @@ class TypingSessionController internal constructor(
     private var lastAcknowledgedSelection: EditorSelection? = null
     private var awaitingEditorSelection = false
     private var plainWordUntilBoundary = false
+    private var externalWordBoundaryRequired = false
     private var editorEditDepth = 0
     private var candidateEpoch = 0L
     private var lastCandidateRequestId = -1L
@@ -1643,6 +1644,10 @@ class TypingSessionController internal constructor(
     }
 
     fun typeText(text: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
+        if (externalWordBoundaryRequired) {
+            if (!state.enabled || awaitingEditorSelection || text.isEmpty()) return TypingTextResult.BYPASS
+            return typeExternalSuffix(text, execute)
+        }
         if (text.isNotEmpty()) {
             preparePreviousWordForText(text)
             if (retypedQualityRevision == null) invalidateQualityComparison()
@@ -1672,6 +1677,31 @@ class TypingSessionController internal constructor(
         }
         if (!finishOwnedComposition(execute, true)) return TypingTextResult.REJECTED
         return commitPlain(text, execute)
+    }
+
+    /** Until Rune inserts whitespace, appended text may still belong to an unknown editor word. */
+    private fun typeExternalSuffix(text: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
+        val start = minOf(selectionStart, selectionEnd)
+        val caret = start.toLong() + text.length
+        if (start < 0 || caret > Int.MAX_VALUE) return TypingTextResult.BYPASS
+        val space = text == " "
+        val expected = EditorSelection(caret.toInt(), caret.toInt(), if (space) start else -1,
+            if (space) caret.toInt() else -1)
+        val edit = if (space) TypingEdit.SetComposingText(text) else TypingEdit.CommitText(text)
+        return applyEdit(edit, expected, execute) {
+            context?.clear()
+            if (space) {
+                // Only this newly inserted delimiter is owned; never adopt the preceding suffix.
+                externalWordBoundaryRequired = false
+                composingStart = start
+                state = state.copy(composing = ComposingSegment(leadingBoundary = " "), originalSelected = false)
+                context?.append(" ")
+            } else if (text.last().isWhitespace()) {
+                externalWordBoundaryRequired = false
+                context?.append(text.takeLastWhile(Char::isWhitespace))
+            }
+            publish()
+        }
     }
 
     private fun commitPlain(text: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
@@ -1832,8 +1862,19 @@ class TypingSessionController internal constructor(
 
     /** Before a legacy mutation whose resulting caret is unknown, wait for its actual callback. */
     fun awaitEditorSelection(execute: (TypingEdit) -> Boolean): Boolean {
+        val session = state.sessionId
         val finished = invalidate(execute)
-        awaitingEditorSelection = state.enabled && finished
+        if (state.sessionId != session || !finished) return false
+        awaitingEditorSelection = state.enabled
+        return true
+    }
+
+    /** Disown an editor-resolved operation; its adjacent word stays opaque until Rune whitespace. */
+    fun prepareExternalEdit(awaitSelection: Boolean, execute: (TypingEdit) -> Boolean): Boolean {
+        val session = state.sessionId
+        val finished = if (awaitSelection) awaitEditorSelection(execute) else invalidate(execute)
+        if (state.sessionId != session) return false
+        if (finished && state.enabled) externalWordBoundaryRequired = true
         return finished
     }
 
@@ -1846,6 +1887,7 @@ class TypingSessionController internal constructor(
         autocorrectionMode: AutocorrectionMode = AutocorrectionMode.OFF,
         execute: (TypingEdit) -> Boolean,
     ): TypingTextResult {
+        if (externalWordBoundaryRequired) return typeText(text, execute)
         if (text.isNotEmpty()) preparePreviousWordForText(text)
         val correction = applyBoundaryCorrection(text, policy, keyboard, autocorrectionMode, execute)
         if (correction != TypingTextResult.BYPASS) return correction
@@ -1912,7 +1954,7 @@ class TypingSessionController internal constructor(
 
     private fun punctuationEvidence(): OwnedPunctuationSuffix? {
         if (!state.enabled || awaitingEditorSelection || editorEditDepth != 0 ||
-            selectionStart < 0 || selectionStart != selectionEnd || plainWordUntilBoundary
+            selectionStart < 0 || selectionStart != selectionEnd || plainWordUntilBoundary || externalWordBoundaryRequired
         ) return null
         val before = context?.text ?: return null
         val live = state.composing?.text
@@ -2321,6 +2363,7 @@ class TypingSessionController internal constructor(
         lastAcknowledgedSelection = null
         awaitingEditorSelection = false
         plainWordUntilBoundary = false
+        externalWordBoundaryRequired = false
         selectionStart = -1
         selectionEnd = -1
         composingStart = -1
@@ -2437,6 +2480,7 @@ class TypingSessionController internal constructor(
         lastAcknowledgedSelection = null
         awaitingEditorSelection = false
         plainWordUntilBoundary = false
+        externalWordBoundaryRequired = false
         composingStart = -1
         state = state.copy(
             composing = null,
