@@ -1,0 +1,865 @@
+{
+  "card": "Q1",
+  "status": "partial; current-data inventory and guarded source overlay verified; next distribution recipe/build/device gates open",
+  "baseCommit": "4278bca4f0490af0735b0bc80616114d5ecc8dd1",
+  "sources": [
+    {
+      "path": "fdroid/review-data-policy.json",
+      "bytes": 9879,
+      "sha256": "5befbfcae2faa4dd13be5abfc2c3ba090194a294c674633915da89a8b74b59df"
+    },
+    {
+      "path": "tools/fdroid_data_policy.py",
+      "bytes": 5478,
+      "sha256": "f2629a1037f269fe86bb5112b8c2559ec635bafb4048703377f4b6a107543f02"
+    },
+    {
+      "path": "tools/test_fdroid_data_policy.py",
+      "bytes": 5183,
+      "sha256": "b6716c00e016ec9b6b362440b92d5293a23c9a3db5929c3df2c92cdaefdae900"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 13976,
+      "sha256": "f4bf39b53c72d3779e111bfaa2fd55210cb35b1513cb8bddcb83f55416ca1436"
+    },
+    {
+      "path": "docs/FDROID.md",
+      "bytes": 6559,
+      "sha256": "ff42e2d70e12db6cb912d940161710a7c3157abfe2674de073b8c5308870bbab"
+    },
+    {
+      "path": "docs/plans/2026-10-27-review-completion.md",
+      "bytes": 18259,
+      "sha256": "a7352d84e07e221d0c3b0ecab977931c8a37d8e0e4753bcc8706a8432632f3ae"
+    }
+  ],
+  "policy": {
+    "schema": 1,
+    "sourceCommit": "4278bca4f0490af0735b0bc80616114d5ecc8dd1",
+    "scannerVersion": "2.4.5",
+    "entries": [
+      {
+        "path": "app/src/main/assets/smarttyping/experiments/ru-context.bin",
+        "bytes": 81848,
+        "sha256": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
+        "action": "ignore",
+        "provenance": "app/src/main/assets/smarttyping/experiments/provenance.json",
+        "provenanceSha256": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4"
+      },
+      {
+        "path": "app/src/main/assets/smarttyping/experiments/ru-context.gram",
+        "bytes": 39593067,
+        "sha256": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b",
+        "action": "inventory",
+        "provenance": "app/src/main/assets/smarttyping/experiments/contextual-provenance.json",
+        "provenanceSha256": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435"
+      },
+      {
+        "path": "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin",
+        "bytes": 22036,
+        "sha256": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+        "action": "ignore",
+        "provenance": "app/src/main/assets/smarttyping/experiments/contextual-provenance.json",
+        "provenanceSha256": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435"
+      },
+      {
+        "path": "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx",
+        "bytes": 2083526,
+        "sha256": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6",
+        "action": "inventory",
+        "provenance": "app/src/main/assets/smarttyping/experiments/contextual-provenance.json",
+        "provenanceSha256": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435"
+      },
+      {
+        "path": "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin",
+        "bytes": 22036,
+        "sha256": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+        "action": "ignore",
+        "provenance": "app/src/main/assets/smarttyping/experiments/infinitive-revision-provenance.json",
+        "provenanceSha256": "a20fe5c9981e857dda6823fb5aeffb56c365556a6e38542250a714ea3aa20fca"
+      },
+      {
+        "path": "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin",
+        "bytes": 22036,
+        "sha256": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+        "action": "ignore",
+        "provenance": "app/src/main/assets/smarttyping/experiments/joint-correction-provenance.json",
+        "provenanceSha256": "7b42d0a46dd754d32903f73dabcefa7eea462f5c6cba1e886a06008bd22cf5e7"
+      },
+      {
+        "path": "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin",
+        "bytes": 39444,
+        "sha256": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+        "action": "ignore",
+        "provenance": "app/src/main/assets/smarttyping/experiments/joint-rescue-provenance.json",
+        "provenanceSha256": "4700fab35c3d9ea83457920187ae41ea88c7a95220325401cf13d83bcd83fcdb"
+      },
+      {
+        "path": "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin",
+        "bytes": 22036,
+        "sha256": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+        "action": "ignore",
+        "provenance": "app/src/main/assets/smarttyping/experiments/neighbor-recovery-provenance.json",
+        "provenanceSha256": "f988fea3f6d96f68ad0394e5a4ded6e067dec8fb305d561415cdc77c4440e4ce"
+      },
+      {
+        "path": "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin",
+        "bytes": 22036,
+        "sha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+        "action": "ignore",
+        "provenance": "app/src/main/assets/smarttyping/experiments/noun-case-provenance.json",
+        "provenanceSha256": "a9b1760a0b462a68ff38264be9ae13a9dac9ebf5840cf606778b32c1d2910235"
+      },
+      {
+        "path": "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin",
+        "bytes": 22036,
+        "sha256": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+        "action": "ignore",
+        "provenance": "app/src/main/assets/smarttyping/experiments/provenance.json",
+        "provenanceSha256": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4"
+      },
+      {
+        "path": "app/src/main/assets/smarttyping/experiments/ru-ranker.bin",
+        "bytes": 22036,
+        "sha256": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+        "action": "ignore",
+        "provenance": "app/src/main/assets/smarttyping/experiments/provenance.json",
+        "provenanceSha256": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4"
+      },
+      {
+        "path": "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin",
+        "bytes": 320216,
+        "sha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+        "action": "ignore",
+        "provenance": "app/src/main/assets/smarttyping/experiments/provenance.json",
+        "provenanceSha256": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4"
+      },
+      {
+        "path": "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx",
+        "bytes": 14912091,
+        "sha256": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b",
+        "action": "inventory",
+        "provenance": "app/src/main/assets/smarttyping/experiments/contextual-provenance.json",
+        "provenanceSha256": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435"
+      },
+      {
+        "path": "app/src/test/resources/context-feature-parity/conversation.bin",
+        "bytes": 436,
+        "sha256": "e4d96de7d277c1ebf72307c9afc0bc3c18c188fb35e1c7c0ba0ef9844647d6c5",
+        "action": "ignore",
+        "provenance": "app/src/test/resources/context-feature-parity/provenance.json",
+        "provenanceSha256": "1d0749d5ecf74eb2519ea56d60cb9ee007a352d6e53ac46decc9466b0ef399bd"
+      },
+      {
+        "path": "app/src/test/resources/context-feature-parity/grammar.bin",
+        "bytes": 1074,
+        "sha256": "756c9de27e8d4f541a52652b2daa287ca13edd581d2def03e07b4973967ee5ec",
+        "action": "ignore",
+        "provenance": "app/src/test/resources/context-feature-parity/provenance.json",
+        "provenanceSha256": "1d0749d5ecf74eb2519ea56d60cb9ee007a352d6e53ac46decc9466b0ef399bd"
+      },
+      {
+        "path": "app/src/test/resources/context-feature-parity/wiki.bin",
+        "bytes": 498,
+        "sha256": "f39b31a34a6bd3191b42a724002457626a862492855728a5d21bc6bd10df1b6a",
+        "action": "ignore",
+        "provenance": "app/src/test/resources/context-feature-parity/provenance.json",
+        "provenanceSha256": "1d0749d5ecf74eb2519ea56d60cb9ee007a352d6e53ac46decc9466b0ef399bd"
+      },
+      {
+        "path": "app/src/test/resources/reliable-subject-parity/grammar.bin",
+        "bytes": 1225,
+        "sha256": "5ef6b2168b743d499d5db7b6accc53fddb4968d7043484db9c6646fcb87425c8",
+        "action": "ignore",
+        "provenance": "app/src/test/resources/reliable-subject-parity/provenance.json",
+        "provenanceSha256": "78ebdb6a71c79d2d583764ce2814c1af655895346f4a85df83ca4a37a13c1931"
+      },
+      {
+        "path": "app/src/test/resources/right-context-feature-parity/grammar.bin",
+        "bytes": 982,
+        "sha256": "13119badeada644a5ab33a4a7e44b21ee98a11fca6fae884f4d0e49f4f258de8",
+        "action": "ignore",
+        "provenance": "app/src/test/resources/right-context-feature-parity/provenance.json",
+        "provenanceSha256": "852d6e28ccacc8ad43eb0757f438f08d6d3e575ffff58c63d7284166b011213a"
+      },
+      {
+        "path": "app/src/test/resources/right-context-model-parity/model.bin",
+        "bytes": 39444,
+        "sha256": "dfdc98954e702b3787118cb88ecd3268b25b4b1f498b45777872dc4c4c977594",
+        "action": "ignore",
+        "provenance": "app/src/test/resources/right-context-model-parity/provenance.json",
+        "provenanceSha256": "35d3ede693037c5d4895b17007f3ec465f9ea5a555c2277a9c98d64fa9c7c01c"
+      },
+      {
+        "path": "app/src/test/resources/right-context-role-parity/full-past.gram",
+        "bytes": 1542125,
+        "sha256": "11ecbb8b95f428a2d39cf44462ef0e8126a3a0a57c395760ddc25817dc6a380d",
+        "action": "inventory",
+        "provenance": "app/src/test/resources/right-context-role-parity/full-past-provenance.json",
+        "provenanceSha256": "ffad5c0600a729a555d0f649200efea0346d8e6c0d58ebff17f0874e2a92158b"
+      },
+      {
+        "path": "app/src/test/resources/right-context-role-parity/grammar.bin",
+        "bytes": 661,
+        "sha256": "0a59c7b4b1bcfbec36e06abc62094d2c4a4cdf66f7b917ab9a75b469ef24ae42",
+        "action": "ignore",
+        "provenance": "app/src/test/resources/right-context-role-parity/provenance.json",
+        "provenanceSha256": "e9b86b23281335d1284e438855a66832dde352d231bd68279f63c17fec45997e"
+      },
+      {
+        "path": "app/src/test/resources/right-context-role-parity/past.bin",
+        "bytes": 148,
+        "sha256": "72850671e9629a105dffba9b61d65914a268259d2f110c62d3509f7839ac566a",
+        "action": "ignore",
+        "provenance": "app/src/test/resources/right-context-role-parity/provenance.json",
+        "provenanceSha256": "e9b86b23281335d1284e438855a66832dde352d231bd68279f63c17fec45997e"
+      },
+      {
+        "path": "tools/emoji/sources/unicode-15.1-cldr-44.1.zip",
+        "bytes": 4269918,
+        "sha256": "e2b699e5ab858313365b95227f08097360d371b980fb684d984524645c6bebc0",
+        "action": "ignore",
+        "provenance": "tools/emoji/source-manifest.json",
+        "provenanceSha256": "d6c9458d0ef1ced105c12da7fb2b29d605901bb61be820c398998f0949027b0c"
+      },
+      {
+        "path": "tools/typing_experiments/baseline/ru-ranker.bin",
+        "bytes": 7756,
+        "sha256": "bc7542fa35ab615718ee636bd530868441101a4cb89d86aef26b3af1038d8c43",
+        "action": "delete",
+        "provenance": "app/src/main/assets/smarttyping/experiments/provenance.json",
+        "provenanceSha256": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "data-policy",
+      "result": {
+        "command": [
+          "python3",
+          "tools/fdroid_data_policy.py"
+        ],
+        "exitCode": 0
+      },
+      "log": {
+        "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-fdroid-20261027/data-policy-final.log",
+        "bytes": 1860,
+        "sha256": "77f470cd512e8f298e08586beceed053c93e1cbd3b67b8866befcd5c78b6a07f"
+      }
+    },
+    {
+      "name": "data-tests",
+      "result": {
+        "command": [
+          "python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools",
+          "-p",
+          "test_fdroid_data_policy.py",
+          "-v"
+        ],
+        "exitCode": 0
+      },
+      "log": {
+        "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-fdroid-20261027/data-tests-final.log",
+        "bytes": 1276,
+        "sha256": "959143c09327565b3d8df2a0c989f1f88f8749b11ca7f644525d59903465dfe4"
+      }
+    },
+    {
+      "name": "emoji-source",
+      "result": {
+        "command": [
+          "python3",
+          "tools/emoji/generate_catalog.py",
+          "--check"
+        ],
+        "exitCode": 0
+      },
+      "log": {
+        "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-fdroid-20261027/emoji-source-final.log",
+        "bytes": 40,
+        "sha256": "2d6dd8041be77e41e3e28e63353faf2b2e86441523d9cb30b45c5642953b0887"
+      }
+    }
+  ],
+  "sourceArchives": [
+    {
+      "label": "current",
+      "part": "root",
+      "commit": "4278bca4f0490af0735b0bc80616114d5ecc8dd1",
+      "bytes": 260290560,
+      "sha256": "2c352b0999f152925b27b0216600d7ea298da798150dc526c0a648021ab5a7f7"
+    },
+    {
+      "label": "current",
+      "part": "llama",
+      "commit": "36b10154383b60eb15baac2c7a40d2a5f784faa7",
+      "bytes": 170209280,
+      "sha256": "c02d37e6ecb9828f75f9c2233f78d2bf37a6c8a4d6cc112dee86e9b573781a84"
+    },
+    {
+      "label": "historical",
+      "part": "root",
+      "commit": "d332c0e25739305cf53d2b8a312eb157103db9ff",
+      "bytes": 144005120,
+      "sha256": "8382f015438fdbeac532b670f1497e78b34659710715a6e6f95c10513fc96203"
+    },
+    {
+      "label": "historical",
+      "part": "llama",
+      "commit": "36b10154383b60eb15baac2c7a40d2a5f784faa7",
+      "bytes": 170209280,
+      "sha256": "c02d37e6ecb9828f75f9c2233f78d2bf37a6c8a4d6cc112dee86e9b573781a84"
+    }
+  ],
+  "fullSourceOverlay": {
+    "result": {
+      "mode": "positive",
+      "passed": true,
+      "sourceCommit": "4278bca4f0490af0735b0bc80616114d5ecc8dd1",
+      "policySha256": "5befbfcae2faa4dd13be5abfc2c3ba090194a294c674633915da89a8b74b59df",
+      "dataEntries": 24,
+      "scanignore": [
+        "app/src/main/assets/smarttyping/experiments/ru-context.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-ranker.bin",
+        "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin",
+        "app/src/test/resources/context-feature-parity/conversation.bin",
+        "app/src/test/resources/context-feature-parity/grammar.bin",
+        "app/src/test/resources/context-feature-parity/wiki.bin",
+        "app/src/test/resources/reliable-subject-parity/grammar.bin",
+        "app/src/test/resources/right-context-feature-parity/grammar.bin",
+        "app/src/test/resources/right-context-model-parity/model.bin",
+        "app/src/test/resources/right-context-role-parity/grammar.bin",
+        "app/src/test/resources/right-context-role-parity/past.bin",
+        "tools/emoji/sources/unicode-15.1-cldr-44.1.zip"
+      ],
+      "scandelete": [
+        "tools/typing_experiments/baseline/ru-ranker.bin"
+      ],
+      "inventoryOnly": [
+        "app/src/main/assets/smarttyping/experiments/ru-context.gram",
+        "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx",
+        "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx",
+        "app/src/test/resources/right-context-role-parity/full-past.gram"
+      ],
+      "guardError": null,
+      "scannerFatal": 0,
+      "warnings": [
+        [
+          "gzip file archive",
+          "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+        ],
+        [
+          "executable binary, possibly code",
+          "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+        ]
+      ],
+      "errors": [],
+      "infos": [
+        [
+          "Removing gradlew at gradlew",
+          "gradlew"
+        ],
+        [
+          "Removing gradlew.bat at gradlew.bat",
+          "gradlew.bat"
+        ],
+        [
+          "Removing binary at tools/typing_experiments/baseline/ru-ranker.bin",
+          "tools/typing_experiments/baseline/ru-ranker.bin"
+        ],
+        [
+          "Ignoring ZIP file archive at tools/emoji/sources/unicode-15.1-cldr-44.1.zip",
+          "tools/emoji/sources/unicode-15.1-cldr-44.1.zip"
+        ],
+        [
+          "Ignoring binary at app/src/test/resources/reliable-subject-parity/grammar.bin",
+          "app/src/test/resources/reliable-subject-parity/grammar.bin"
+        ],
+        [
+          "Ignoring binary at app/src/test/resources/context-feature-parity/grammar.bin",
+          "app/src/test/resources/context-feature-parity/grammar.bin"
+        ],
+        [
+          "Ignoring binary at app/src/test/resources/context-feature-parity/wiki.bin",
+          "app/src/test/resources/context-feature-parity/wiki.bin"
+        ],
+        [
+          "Ignoring binary at app/src/test/resources/context-feature-parity/conversation.bin",
+          "app/src/test/resources/context-feature-parity/conversation.bin"
+        ],
+        [
+          "Ignoring binary at app/src/test/resources/right-context-feature-parity/grammar.bin",
+          "app/src/test/resources/right-context-feature-parity/grammar.bin"
+        ],
+        [
+          "Ignoring binary at app/src/test/resources/right-context-model-parity/model.bin",
+          "app/src/test/resources/right-context-model-parity/model.bin"
+        ],
+        [
+          "Ignoring binary at app/src/test/resources/right-context-role-parity/grammar.bin",
+          "app/src/test/resources/right-context-role-parity/grammar.bin"
+        ],
+        [
+          "Ignoring binary at app/src/test/resources/right-context-role-parity/past.bin",
+          "app/src/test/resources/right-context-role-parity/past.bin"
+        ],
+        [
+          "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin"
+        ],
+        [
+          "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-context.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-context.bin"
+        ],
+        [
+          "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin"
+        ],
+        [
+          "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin"
+        ],
+        [
+          "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin"
+        ],
+        [
+          "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin"
+        ],
+        [
+          "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-ranker.bin"
+        ],
+        [
+          "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin"
+        ],
+        [
+          "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin"
+        ],
+        [
+          "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin"
+        ],
+        [
+          "Removing gradle-wrapper.jar at gradle/wrapper/gradle-wrapper.jar",
+          "gradle/wrapper/gradle-wrapper.jar"
+        ],
+        [
+          "Removing gradlew at runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradlew",
+          "runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradlew"
+        ],
+        [
+          "Removing gradle-wrapper.jar at runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradle/wrapper/gradle-wrapper.jar",
+          "runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradle/wrapper/gradle-wrapper.jar"
+        ]
+      ],
+      "extraMember": null,
+      "fdroidserver": "2.4.5",
+      "sussDefaultsSha256": "c262fb68063777dad15ff701b07bbb1b3a9c9e19aa623a0ddea524ff0a5c3a33",
+      "errGradlePatterns": 114,
+      "networkBlocked": true,
+      "disposableCopy": true,
+      "buildServerRun": false
+    },
+    "observedHostExitCode": 0,
+    "structuredResult": {
+      "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-fdroid-20261027/positive-result.json",
+      "bytes": 6707,
+      "sha256": "e46dfb4523a04175c177d39ec49efc2982c4a2ee2988800f16b75bd207185bfb"
+    }
+  },
+  "negativeChecks": [
+    {
+      "result": {
+        "mode": "unknown-negative",
+        "passed": false,
+        "sourceCommit": "4278bca4f0490af0735b0bc80616114d5ecc8dd1",
+        "policySha256": "5befbfcae2faa4dd13be5abfc2c3ba090194a294c674633915da89a8b74b59df",
+        "dataEntries": 24,
+        "scanignore": [
+          "app/src/main/assets/smarttyping/experiments/ru-context.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin",
+          "app/src/test/resources/context-feature-parity/conversation.bin",
+          "app/src/test/resources/context-feature-parity/grammar.bin",
+          "app/src/test/resources/context-feature-parity/wiki.bin",
+          "app/src/test/resources/reliable-subject-parity/grammar.bin",
+          "app/src/test/resources/right-context-feature-parity/grammar.bin",
+          "app/src/test/resources/right-context-model-parity/model.bin",
+          "app/src/test/resources/right-context-role-parity/grammar.bin",
+          "app/src/test/resources/right-context-role-parity/past.bin",
+          "tools/emoji/sources/unicode-15.1-cldr-44.1.zip"
+        ],
+        "scandelete": [
+          "tools/typing_experiments/baseline/ru-ranker.bin"
+        ],
+        "inventoryOnly": [
+          "app/src/main/assets/smarttyping/experiments/ru-context.gram",
+          "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx",
+          "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx",
+          "app/src/test/resources/right-context-role-parity/full-past.gram"
+        ],
+        "guardError": "UNREVIEWED_OR_STALE_DATA_SET",
+        "scannerFatal": 1,
+        "warnings": [
+          [
+            "gzip file archive",
+            "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+          ],
+          [
+            "executable binary, possibly code",
+            "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+          ]
+        ],
+        "errors": [
+          [
+            "binary",
+            "app/src/main/assets/smarttyping/experiments/unreviewed.bin"
+          ]
+        ],
+        "infos": [
+          [
+            "Removing gradlew at gradlew",
+            "gradlew"
+          ],
+          [
+            "Removing gradlew.bat at gradlew.bat",
+            "gradlew.bat"
+          ],
+          [
+            "Removing binary at tools/typing_experiments/baseline/ru-ranker.bin",
+            "tools/typing_experiments/baseline/ru-ranker.bin"
+          ],
+          [
+            "Ignoring ZIP file archive at tools/emoji/sources/unicode-15.1-cldr-44.1.zip",
+            "tools/emoji/sources/unicode-15.1-cldr-44.1.zip"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/reliable-subject-parity/grammar.bin",
+            "app/src/test/resources/reliable-subject-parity/grammar.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/context-feature-parity/grammar.bin",
+            "app/src/test/resources/context-feature-parity/grammar.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/context-feature-parity/wiki.bin",
+            "app/src/test/resources/context-feature-parity/wiki.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/context-feature-parity/conversation.bin",
+            "app/src/test/resources/context-feature-parity/conversation.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/right-context-feature-parity/grammar.bin",
+            "app/src/test/resources/right-context-feature-parity/grammar.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/right-context-model-parity/model.bin",
+            "app/src/test/resources/right-context-model-parity/model.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/right-context-role-parity/grammar.bin",
+            "app/src/test/resources/right-context-role-parity/grammar.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/right-context-role-parity/past.bin",
+            "app/src/test/resources/right-context-role-parity/past.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-context.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-context.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-ranker.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin"
+          ],
+          [
+            "Removing gradle-wrapper.jar at gradle/wrapper/gradle-wrapper.jar",
+            "gradle/wrapper/gradle-wrapper.jar"
+          ],
+          [
+            "Removing gradlew at runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradlew",
+            "runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradlew"
+          ],
+          [
+            "Removing gradle-wrapper.jar at runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradle/wrapper/gradle-wrapper.jar",
+            "runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradle/wrapper/gradle-wrapper.jar"
+          ]
+        ],
+        "extraMember": "app/src/main/assets/smarttyping/experiments/unreviewed.bin",
+        "fdroidserver": "2.4.5",
+        "sussDefaultsSha256": "c262fb68063777dad15ff701b07bbb1b3a9c9e19aa623a0ddea524ff0a5c3a33",
+        "errGradlePatterns": 114,
+        "networkBlocked": true,
+        "disposableCopy": true,
+        "buildServerRun": false
+      },
+      "observedHostExitCode": 1,
+      "structuredResult": {
+        "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-fdroid-20261027/unknown-negative-result.json",
+        "bytes": 6896,
+        "sha256": "e19d4648837b8d4ad3a28a20fda2bdc7781f73fed5dab82c746828eb55fba2ec"
+      }
+    },
+    {
+      "result": {
+        "mode": "prefix-negative",
+        "passed": false,
+        "sourceCommit": "4278bca4f0490af0735b0bc80616114d5ecc8dd1",
+        "policySha256": "5befbfcae2faa4dd13be5abfc2c3ba090194a294c674633915da89a8b74b59df",
+        "dataEntries": 24,
+        "scanignore": [
+          "app/src/main/assets/smarttyping/experiments/ru-context.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-ranker.bin",
+          "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin",
+          "app/src/test/resources/context-feature-parity/conversation.bin",
+          "app/src/test/resources/context-feature-parity/grammar.bin",
+          "app/src/test/resources/context-feature-parity/wiki.bin",
+          "app/src/test/resources/reliable-subject-parity/grammar.bin",
+          "app/src/test/resources/right-context-feature-parity/grammar.bin",
+          "app/src/test/resources/right-context-model-parity/model.bin",
+          "app/src/test/resources/right-context-role-parity/grammar.bin",
+          "app/src/test/resources/right-context-role-parity/past.bin",
+          "tools/emoji/sources/unicode-15.1-cldr-44.1.zip"
+        ],
+        "scandelete": [
+          "tools/typing_experiments/baseline/ru-ranker.bin"
+        ],
+        "inventoryOnly": [
+          "app/src/main/assets/smarttyping/experiments/ru-context.gram",
+          "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx",
+          "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx",
+          "app/src/test/resources/right-context-role-parity/full-past.gram"
+        ],
+        "guardError": "SCANNER_PREFIX_COLLISION",
+        "scannerFatal": 0,
+        "warnings": [
+          [
+            "gzip file archive",
+            "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+          ],
+          [
+            "executable binary, possibly code",
+            "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+          ]
+        ],
+        "errors": [],
+        "infos": [
+          [
+            "Removing gradlew at gradlew",
+            "gradlew"
+          ],
+          [
+            "Removing gradlew.bat at gradlew.bat",
+            "gradlew.bat"
+          ],
+          [
+            "Removing binary at tools/typing_experiments/baseline/ru-ranker.bin",
+            "tools/typing_experiments/baseline/ru-ranker.bin"
+          ],
+          [
+            "Ignoring ZIP file archive at tools/emoji/sources/unicode-15.1-cldr-44.1.zip",
+            "tools/emoji/sources/unicode-15.1-cldr-44.1.zip"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/reliable-subject-parity/grammar.bin",
+            "app/src/test/resources/reliable-subject-parity/grammar.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/context-feature-parity/grammar.bin",
+            "app/src/test/resources/context-feature-parity/grammar.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/context-feature-parity/wiki.bin",
+            "app/src/test/resources/context-feature-parity/wiki.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/context-feature-parity/conversation.bin",
+            "app/src/test/resources/context-feature-parity/conversation.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/right-context-feature-parity/grammar.bin",
+            "app/src/test/resources/right-context-feature-parity/grammar.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/right-context-model-parity/model.bin",
+            "app/src/test/resources/right-context-model-parity/model.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/right-context-role-parity/grammar.bin",
+            "app/src/test/resources/right-context-role-parity/grammar.bin"
+          ],
+          [
+            "Ignoring binary at app/src/test/resources/right-context-role-parity/past.bin",
+            "app/src/test/resources/right-context-role-parity/past.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-context.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-context.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin"
+          ],
+          [
+            "Ignoring shared library at app/src/main/assets/smarttyping/experiments/ru-ranker.bin.injected.so",
+            "app/src/main/assets/smarttyping/experiments/ru-ranker.bin.injected.so"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-ranker.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin"
+          ],
+          [
+            "Ignoring binary at app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin",
+            "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin"
+          ],
+          [
+            "Removing gradle-wrapper.jar at gradle/wrapper/gradle-wrapper.jar",
+            "gradle/wrapper/gradle-wrapper.jar"
+          ],
+          [
+            "Removing gradlew at runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradlew",
+            "runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradlew"
+          ],
+          [
+            "Removing gradle-wrapper.jar at runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradle/wrapper/gradle-wrapper.jar",
+            "runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradle/wrapper/gradle-wrapper.jar"
+          ]
+        ],
+        "extraMember": "app/src/main/assets/smarttyping/experiments/ru-ranker.bin.injected.so",
+        "fdroidserver": "2.4.5",
+        "sussDefaultsSha256": "c262fb68063777dad15ff701b07bbb1b3a9c9e19aa623a0ddea524ff0a5c3a33",
+        "errGradlePatterns": 114,
+        "networkBlocked": true,
+        "disposableCopy": true,
+        "buildServerRun": false
+      },
+      "observedHostExitCode": 1,
+      "structuredResult": {
+        "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-fdroid-20261027/prefix-negative-result.json",
+        "bytes": 7001,
+        "sha256": "04f436934f34ffb5947032676ef3b556734cf05926c39d74212e73f57b2d2733"
+      }
+    }
+  ],
+  "scanner": {
+    "fdroidserver": "2.4.5",
+    "puremagic": "2.2.0",
+    "moduleSha256": "4de525a85ba519a41838cf1ed7e70184d0b9df782da8a6c82c6dea5234adf7e1",
+    "signatureMode": "Unmodified package SUSS defaults; cache directory empty; network blocked",
+    "sussDefaultsSha256": "c262fb68063777dad15ff701b07bbb1b3a9c9e19aa623a0ddea524ff0a5c3a33"
+  },
+  "replayReuse": {
+    "basis": {
+      "path": "docs/acceptance/2026-10-27-u9-emoji-key-evidence.json",
+      "bytes": 94590,
+      "sha256": "fc5b5504856747f2479c5a6857ce56730324aba404a8f4e7ee71ae040e1f4ec1"
+    },
+    "sourcesVerified": 88,
+    "assetsVerified": 18,
+    "driverSha256": "bf63b2ddf9b8eebe62f2110fd9b00d8a8cc03f708d43bb670100e800a7a57618",
+    "note": "No fresh ordinary replay; all bound source/asset/driver identities match"
+  },
+  "ciConfigured": true,
+  "remoteCiRun": false,
+  "workingRepositoryScanned": false,
+  "buildServerRun": false,
+  "phoneRun": false,
+  "phoneUpdate": false,
+  "published": false,
+  "outstanding": [
+    "Next versioned release recipe incorporating review overlay",
+    "Clean-source release enforcement",
+    "Remote tags/distribution, isolated F-Droid build-server acceptance",
+    "Release model/device smoke; U16 strict path audit",
+    "Q6 unresolved historical provenance; declared provenance bindings are not authorship proof"
+  ]
+}

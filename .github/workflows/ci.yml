@@ -12,6 +12,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
+      - name: Verify exact F-Droid review data exceptions
+        run: |
+          python3 tools/fdroid_data_policy.py
+          python3 -m unittest discover -s tools -p test_fdroid_data_policy.py
       - name: Verify durable public corpus exclusions
         run: |
           python3 tools/typing_experiments/holdout_ledger.py --validate-only

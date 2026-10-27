@@ -18,9 +18,45 @@ No signing secrets are required to compile the source. Without the ignored local
 
 The native runtime is built from the pinned llama.cpp source submodule, not shipped as a prebuilt library. The Gradle wrapper is checked in. The dependency repositories are Google Maven, Maven Central and the Gradle plugin portal.
 
-Packed dictionaries, morphology, frequency data and small experimental weights are committed data assets. Their formats, licenses, source revisions, transformations and hashes are documented in [packaged lexicon provenance](../app/src/main/assets/smarttyping/lexicon/provenance/PACKAGED_LEXICONS.md), [morphology](../tools/morphology/README.md) and [typing experiments](../tools/typing_experiments/README.md). They are not executable downloads. The historical 0.4.1/0.4.2 recipes have exact scanner exceptions for their three numeric model data files, with their declared provenance retained. Later review assets need a separate current-source inventory before a new release recipe is prepared. The unused training baseline is removed from the F-Droid build tree. There is no blanket binary scanner exclusion.
+Packed dictionaries, morphology, frequency data and small experimental weights are committed data assets. Their formats, licenses, source revisions, transformations and hashes are documented in [packaged lexicon provenance](../app/src/main/assets/smarttyping/lexicon/provenance/PACKAGED_LEXICONS.md), [morphology](../tools/morphology/README.md) and [typing experiments](../tools/typing_experiments/README.md). They are not executable downloads. The historical 0.4.1/0.4.2 recipes have exact scanner exceptions for their three numeric model data files, with their declared provenance retained. Later review assets are inventoried in the separate review-data policy below; a new versioned release recipe still needs to be prepared. The unused training baseline is removed from the F-Droid build tree. There is no blanket binary scanner exclusion.
 
 The optional large Rune Text model is not bundled. Its download is explicit, pinned to a full source revision and checked by size/SHA-256. Typing works without it. Its source and notices are linked from [Rune Text documentation](../tools/model/rune-text-0.1/README.md).
+
+## Current review data overlay
+
+[review-data-policy.json](../fdroid/review-data-policy.json) binds 24 exact data
+files and their declared provenance JSON bytes. Its three actions are:
+
+- Nineteen literal scanignore paths: ten shipped numeric .bin files, eight numeric
+  test .bin fixtures and the verified Unicode/CLDR source-data ZIP.
+- Four inventory-only .ctx/.gram indexes. fdroidserver 2.4.5 does not flag them;
+  adding unused scanignore entries would itself fail its source scan.
+- One exact scandelete path for the existing unused training baseline.
+
+Run before F-Droid source preparation, on the original checkout:
+
+```sh
+python3 tools/fdroid_data_policy.py
+python3 -m unittest discover -s tools -p test_fdroid_data_policy.py -v
+```
+
+CI runs this standard-library data check. It refuses changed bytes/provenance
+bindings, extra or missing indexed data, symlinks and scanner filename-prefix
+collisions. Upstream 2.4.5 resolves literal exceptions then uses prefix matching;
+a sibling such as ru-ranker.bin.injected.so can inherit a native suppression.
+The additional check rejects that case. It is a data-policy check, not a source
+scanner or proof of training authorship. Q6 provenance questions remain open.
+
+Apply the emitted scanignore/scandelete lists to a future build entry with its
+own release version/source pin, preserving existing historical entries. The
+review overlay was tested against immutable snapshot 4278bca and its pinned
+submodule: zero fatal findings and the same two documented warnings. An unrelated
+prebuilt native library fails both checks; a prefix-lookalike library fails the
+additional guard even when the native scanner returns zero. All scans used
+private disposable source copies and pinned package SUSS defaults with network
+blocked. See the [data-overlay receipt](acceptance/2026-10-27-q1-fdroid-data.md).
+No new distribution recipe, isolated build-server success or public release is
+established by this overlay.
 
 ## Submission and validation
 
