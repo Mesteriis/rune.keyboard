@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.experiments
 
 import java.nio.ByteBuffer
+import java.io.File
 import java.util.Base64
 import java.util.Properties
 import org.junit.Assert.*
@@ -44,5 +45,26 @@ class ContextFeatureParityTest {
         val hashes = hashes()
         assertNull(GrammarFeatureDictionary.open(ByteBuffer.wrap(resource("wiki.bin")), hashes.getProperty("wiki")))
         assertNull(WordPairFeatures.open(ByteBuffer.wrap(resource("grammar.bin")), hashes.getProperty("grammar")))
+    }
+
+    @Test fun realGrammarPackagedAndStrictReadersMatchPythonFeatureVectors() {
+        val bytes = File("src/main/assets/smarttyping/experiments/ru-context.gram").readBytes()
+        assertEquals(FrozenContextualAssets.GRAMMAR_BYTES, bytes.size.toLong())
+        val strict = GrammarFeatureDictionary.validate(ByteBuffer.wrap(bytes), FrozenContextualAssets.GRAMMAR_SHA256)!!
+        val packaged = GrammarFeatureDictionary.openPackaged(ByteBuffer.wrap(bytes).asReadOnlyBuffer(),
+            FrozenContextualAssets.GRAMMAR_BYTES)!!
+        val strictFeatures = GrammaticalContextFeatures(strict)
+        val packagedFeatures = GrammaticalContextFeatures(packaged)
+        var count = 0
+        for (line in resource("vectors.tsv").toString(Charsets.UTF_8).lineSequence().filter { it.isNotEmpty() }) {
+            val parts = line.split('\t')
+            val context = text(parts[0]); val candidate = text(parts[2])
+            assertEquals(candidate, strict.analyses(candidate), packaged.analyses(candidate))
+            val actual = packagedFeatures.extract(context, candidate)
+            assertArrayEquals(strictFeatures.extract(context, candidate), actual, 0.0)
+            assertArrayEquals(parts[3].split(',').map(String::toDouble).toDoubleArray(), actual, 1e-12)
+            count++
+        }
+        assertEquals(49, count)
     }
 }

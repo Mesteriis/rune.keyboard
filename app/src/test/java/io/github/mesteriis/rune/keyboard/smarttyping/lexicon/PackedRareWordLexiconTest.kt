@@ -30,4 +30,17 @@ class PackedRareWordLexiconTest {
         }
         assertFalse(lexicon.lookup("кармен").available)
     }
+
+    @Test fun `real packaged lookup matches fully validated membership`() {
+        val file = File("src/main/assets/${FrozenRareWordLexicon.ASSET_PATH}")
+        FileInputStream(file).use {
+            val mapping = it.channel.map(FileChannel.MapMode.READ_ONLY, 0, file.length())
+            val strict = PackedRareWordLexicon.validate(mapping, FrozenRareWordLexicon.ASSET_SHA256)
+            val packaged = PackedRareWordLexicon.openPackaged(mapping, FrozenRareWordLexicon.ASSET_BYTES)
+            for (key in listOf("кармен", "мигеля", "Сесил", "совсемнеслово")) {
+                assertTrue(strict.lookup(key).available)
+                assertEquals(key, strict.lookup(key), packaged.lookup(key))
+            }
+        }
+    }
 }

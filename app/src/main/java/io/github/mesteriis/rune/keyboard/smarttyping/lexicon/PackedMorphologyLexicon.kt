@@ -29,7 +29,8 @@ class PackedMorphologyLexicon private constructor(
             while (low <= high) {
                 val middle = (low + high).ushr(1)
                 val offset = dataOffset + bytes.getInt(HEADER_BYTES + 4 * middle)
-                val length = readWord(offset, word, 0).first
+                val end = dataOffset + bytes.getInt(HEADER_BYTES + 4 * (middle + 1))
+                val length = readWord(offset, end, word, 0).first
                 if (compare(word, length, query) <= 0) {
                     selected = middle
                     low = middle + 1
@@ -40,7 +41,7 @@ class PackedMorphologyLexicon private constructor(
             val end = dataOffset + bytes.getInt(HEADER_BYTES + 4 * (selected + 1))
             var length = 0
             repeat(minOf(BLOCK_SIZE, count - selected * BLOCK_SIZE)) {
-                val decoded = readWord(offset, word, length)
+                val decoded = readWord(offset, end, word, length)
                 length = decoded.first
                 val next = decoded.second
                 check(next <= end)
@@ -63,20 +64,47 @@ class PackedMorphologyLexicon private constructor(
         }
     }
 
-    private fun readWord(offset: Int, word: ByteArray, previousLength: Int): Pair<Int, Int> {
+    private fun readWord(offset: Int, end: Int, word: ByteArray, previousLength: Int): Pair<Int, Int> {
+        check(offset >= dataOffset && end <= bytes.limit() - 32 && offset + 6 < end)
         val prefix = bytes.get(offset).toInt() and 255
         val suffix = bytes.get(offset + 1).toInt() and 255
         check(prefix <= previousLength && suffix > 0 && prefix + suffix <= MAX_WORD_BYTES)
+        check(offset + 6 + suffix <= end)
+        check(bytes.getInt(offset + 2) >= 0)
         for (i in 0 until suffix) word[prefix + i] = bytes.get(offset + 6 + i)
         return Pair(prefix + suffix, offset + 6 + suffix)
     }
 
-    private fun compare(word: ByteArray, length: Int, query: ByteArray): Int {
-        for (i in 0 until minOf(length, query.size)) {
+    private fun validateRecords() {
+        val previous = ByteArray(MAX_WORD_BYTES)
+        val word = ByteArray(MAX_WORD_BYTES)
+        var previousLength = 0
+        var visited = 0
+        for (block in 0 until blocks) {
+            check(!Thread.currentThread().isInterrupted)
+            var offset = dataOffset + bytes.getInt(HEADER_BYTES + 4 * block)
+            val end = dataOffset + bytes.getInt(HEADER_BYTES + 4 * (block + 1))
+            var length = 0
+            repeat(minOf(BLOCK_SIZE, count - visited)) {
+                val decoded = readWord(offset, end, word, length)
+                length = decoded.first
+                if (visited > 0) check(compare(previous, previousLength, word, length) < 0)
+                word.copyInto(previous, 0, 0, length)
+                previousLength = length
+                visited++
+                offset = decoded.second
+            }
+            check(offset == end)
+        }
+        check(visited == count)
+    }
+
+    private fun compare(word: ByteArray, length: Int, query: ByteArray, queryLength: Int = query.size): Int {
+        for (i in 0 until minOf(length, queryLength)) {
             val result = (word[i].toInt() and 255) - (query[i].toInt() and 255)
             if (result != 0) return result
         }
-        return length - query.size
+        return length - queryLength
     }
 
     companion object {
@@ -85,13 +113,36 @@ class PackedMorphologyLexicon private constructor(
         private const val HEADER_BYTES = 24
         private const val MAX_WORD_BYTES = 64
 
-        /** Worker-only checksum validation; shares immutable mapped pages, bounded 16 KiB scratch. */
-        fun open(source: ByteBuffer, expectedSha256: String? = null): MorphologyLexicon = try {
+        /** Strict compatibility entry point; qualification/replay must use full validation. */
+        fun open(source: ByteBuffer, expectedSha256: String? = null): MorphologyLexicon =
+            validate(source, expectedSha256)
+
+        /** Worker-only full identity, record ordering, block-boundary and payload validation. */
+        fun validate(source: ByteBuffer, expectedSha256: String? = null): MorphologyLexicon = try {
             val bytes = source.asReadOnlyBuffer().order(ByteOrder.LITTLE_ENDIAN)
-            bytes.position(0)
+            check(bytes.limit() in (HEADER_BYTES + 40)..MAX_ASSET_BYTES)
+            PackedAssetDigest.verify(bytes, expectedSha256)
+            headers(bytes).also { it.validateRecords() }
+        } catch (_: Exception) {
+            MorphologyLexicon.UNAVAILABLE
+        }
+
+        /**
+         * Only immutable, full mappings of signed APK assets, with the frozen packaged size.
+         * No body SHA/record walk here: [validate] retains exhaustive qualification checks.
+         */
+        internal fun openPackaged(source: ByteBuffer, expectedBytes: Long): MorphologyLexicon = try {
+            check(source.isReadOnly && source.position() == 0 && source.limit() == source.capacity())
+            check(source.limit().toLong() == expectedBytes)
+            headers(source.asReadOnlyBuffer().order(ByteOrder.LITTLE_ENDIAN))
+        } catch (_: Exception) {
+            MorphologyLexicon.UNAVAILABLE
+        }
+
+        private fun headers(bytes: ByteBuffer): PackedMorphologyLexicon {
+            check(!Thread.currentThread().isInterrupted)
             val size = bytes.limit()
             check(size in (HEADER_BYTES + 40)..MAX_ASSET_BYTES)
-            PackedAssetDigest.verify(bytes, expectedSha256)
             check((0..7).map { bytes.get(it).toInt().toChar() }.joinToString("") == "RUNEMRF1")
             check(bytes.getInt(8) == BLOCK_SIZE)
             val count = bytes.getInt(12)
@@ -105,13 +156,18 @@ class PackedMorphologyLexicon private constructor(
                 val offset = bytes.getInt(HEADER_BYTES + 4 * block)
                 check(offset > last && offset <= size - 32 - dataOffset)
                 if (block == 0) check(offset == 0)
-                if (block < blocks) check(bytes.get(dataOffset + offset).toInt() == 0)
                 last = offset
             }
             check(last == size - 32 - dataOffset)
-            PackedMorphologyLexicon(bytes, count, blocks, dataOffset)
-        } catch (_: Exception) {
-            MorphologyLexicon.UNAVAILABLE
+            val result = PackedMorphologyLexicon(bytes, count, blocks, dataOffset)
+            val word = ByteArray(MAX_WORD_BYTES)
+            for (block in 0 until blocks) {
+                check(!Thread.currentThread().isInterrupted)
+                val offset = dataOffset + bytes.getInt(HEADER_BYTES + 4 * block)
+                val end = dataOffset + bytes.getInt(HEADER_BYTES + 4 * (block + 1))
+                result.readWord(offset, end, word, 0)
+            }
+            return result
         }
     }
 }

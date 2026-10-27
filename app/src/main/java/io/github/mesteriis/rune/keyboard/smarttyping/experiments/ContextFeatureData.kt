@@ -30,15 +30,21 @@ internal class WordPairFeatures private constructor(private val index: PackedCon
     companion object {
         private val PREVIOUS = Regex("(?:^|[\\p{javaWhitespace}\\p{Zs}\\u0085])([а-яё]{1,20})[\\p{javaWhitespace}\\p{Zs}\\u0085]*$")
         private val SCALE = ln(10001.0)
-        fun open(bytes: ByteBuffer, hash: String): WordPairFeatures? =
-            PackedContextIndex.open(bytes, "RUCNTX01", hash) { source, offset, length ->
-                if (length != 16) false else {
-                    val count = source.getInt(offset)
-                    val documents = source.getInt(offset + 4)
-                    count > 0 && documents in 1..count && source.getInt(offset + 8) >= count &&
-                        source.getInt(offset + 12) >= count
-                }
-            }?.let(::WordPairFeatures)
+        fun open(bytes: ByteBuffer, hash: String): WordPairFeatures? = validate(bytes, hash)
+
+        fun validate(bytes: ByteBuffer, hash: String): WordPairFeatures? =
+            PackedContextIndex.validate(bytes, "RUCNTX01", hash, ::validPayload)?.let(::WordPairFeatures)
+
+        fun openPackaged(bytes: ByteBuffer, expectedBytes: Long): WordPairFeatures? =
+            PackedContextIndex.openPackaged(bytes, "RUCNTX01", expectedBytes, ::validPayload)?.let(::WordPairFeatures)
+
+        private fun validPayload(source: ByteBuffer, offset: Int, length: Int): Boolean {
+            if (length != 16) return false
+            val count = source.getInt(offset)
+            val documents = source.getInt(offset + 4)
+            return count > 0 && documents in 1..count && source.getInt(offset + 8) >= count &&
+                source.getInt(offset + 12) >= count
+        }
     }
 }
 
@@ -71,16 +77,22 @@ internal class GrammarFeatureDictionary private constructor(private val index: P
             NUMBERS[(code ushr 8) and 3], GENDERS[(code ushr 10) and 3], PERSONS[(code ushr 12) and 3],
             code and (1 shl 14) != 0, code and (1 shl 15) != 0)
 
-        fun open(bytes: ByteBuffer, hash: String): GrammarFeatureDictionary? =
-            PackedContextIndex.open(bytes, "RUGRM001", hash) { source, offset, length ->
-                if (length < 4) false else {
-                    val ambiguity = source.get(offset).toInt() and 255
-                    val count = source.get(offset + 1).toInt() and 255
-                    ambiguity in 1..8 && count > 0 && length == 2 + 2 * count && (0 until count).all {
-                        val code = source.getShort(offset + 2 + 2 * it).toInt() and 65535
-                        (code and 31) < POS.size && ((code ushr 8) and 3) < NUMBERS.size
-                    }
-                }
-            }?.let(::GrammarFeatureDictionary)
+        fun open(bytes: ByteBuffer, hash: String): GrammarFeatureDictionary? = validate(bytes, hash)
+
+        fun validate(bytes: ByteBuffer, hash: String): GrammarFeatureDictionary? =
+            PackedContextIndex.validate(bytes, "RUGRM001", hash, ::validPayload)?.let(::GrammarFeatureDictionary)
+
+        fun openPackaged(bytes: ByteBuffer, expectedBytes: Long): GrammarFeatureDictionary? =
+            PackedContextIndex.openPackaged(bytes, "RUGRM001", expectedBytes, ::validPayload)?.let(::GrammarFeatureDictionary)
+
+        private fun validPayload(source: ByteBuffer, offset: Int, length: Int): Boolean {
+            if (length < 4) return false
+            val ambiguity = source.get(offset).toInt() and 255
+            val count = source.get(offset + 1).toInt() and 255
+            return ambiguity in 1..8 && count > 0 && length == 2 + 2 * count && (0 until count).all {
+                val code = source.getShort(offset + 2 + 2 * it).toInt() and 65535
+                (code and 31) < POS.size && ((code ushr 8) and 3) < NUMBERS.size
+            }
+        }
     }
 }

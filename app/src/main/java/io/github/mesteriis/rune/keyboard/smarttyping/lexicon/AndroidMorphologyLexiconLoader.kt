@@ -14,8 +14,8 @@ object AndroidMorphologyLexiconLoader {
             return MorphologyLexicon.UNAVAILABLE
         return try {
             assets.openFd(ASSET_PATH).use { descriptor ->
-                PackedMorphologyLexicon.open(
-                    AndroidPackedLexiconLoader.mapDescriptor(descriptor, ASSET_BYTES), ASSET_SHA256)
+                PackedMorphologyLexicon.openPackaged(
+                    AndroidPackedLexiconLoader.mapDescriptor(descriptor, ASSET_BYTES), ASSET_BYTES)
             }
         } catch (_: Exception) {
             MorphologyLexicon.UNAVAILABLE

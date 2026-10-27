@@ -9,8 +9,8 @@ object AndroidRareWordLexiconLoader {
             return RareWordLexicon.UNAVAILABLE
         return try {
             assets.openFd(FrozenRareWordLexicon.ASSET_PATH).use { descriptor ->
-                PackedRareWordLexicon.open(AndroidPackedLexiconLoader.mapDescriptor(
-                    descriptor, FrozenRareWordLexicon.ASSET_BYTES), FrozenRareWordLexicon.ASSET_SHA256)
+                PackedRareWordLexicon.openPackaged(AndroidPackedLexiconLoader.mapDescriptor(
+                    descriptor, FrozenRareWordLexicon.ASSET_BYTES), FrozenRareWordLexicon.ASSET_BYTES)
             }
         } catch (_: Exception) {
             RareWordLexicon.UNAVAILABLE

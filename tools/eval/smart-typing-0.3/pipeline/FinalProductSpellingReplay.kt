@@ -374,6 +374,10 @@ object FinalProductSpellingReplay {
 
     @JvmStatic fun main(args: Array<String>) {
         check(args.size in 4..5)
+        // Explicit parity probe only: full validation always precedes opening packaged readers.
+        val packagedReaders = System.getProperty("rune.replay.packagedAssets", "false").also {
+            check(it == "true" || it == "false")
+        }.toBoolean()
         val mode = args[2]
         val nounCaseMode = mode == "noun-case-production"
         val infinitiveMode = mode == "infinitive-revision-production" || nounCaseMode
@@ -431,12 +435,18 @@ object FinalProductSpellingReplay {
         }
         val morphologyFile = File(assets, FrozenMorphologyLexicon.ASSET_PATH)
         check(morphologyFile.length() == FrozenMorphologyLexicon.ASSET_BYTES) { "MORPHOLOGY_SIZE" }
-        val morphology = PackedMorphologyLexicon.open(
+        val validatedMorphology = PackedMorphologyLexicon.validate(
             mapping(morphologyFile), FrozenMorphologyLexicon.ASSET_SHA256)
+        check(validatedMorphology.lookup(KeyboardLanguage.RUSSIAN, "слово").available) { "MORPHOLOGY_VALIDATION" }
+        val morphology = if (packagedReaders) PackedMorphologyLexicon.openPackaged(
+            mapping(morphologyFile), FrozenMorphologyLexicon.ASSET_BYTES) else validatedMorphology
         check(morphology.lookup(KeyboardLanguage.RUSSIAN, "слово").available) { "MORPHOLOGY_NOT_READY" }
         val rareFile = File(assets, FrozenRareWordLexicon.ASSET_PATH)
         check(rareFile.length() == FrozenRareWordLexicon.ASSET_BYTES) { "RARE_WORDS_SIZE" }
-        val rareWords = PackedRareWordLexicon.open(mapping(rareFile), FrozenRareWordLexicon.ASSET_SHA256)
+        val validatedRareWords = PackedRareWordLexicon.validate(mapping(rareFile), FrozenRareWordLexicon.ASSET_SHA256)
+        check(validatedRareWords.lookup("кармен").available) { "RARE_WORDS_VALIDATION" }
+        val rareWords = if (packagedReaders) PackedRareWordLexicon.openPackaged(
+            mapping(rareFile), FrozenRareWordLexicon.ASSET_BYTES) else validatedRareWords
         check(rareWords.lookup("кармен").available) { "RARE_WORDS_NOT_READY" }
         val generator = CandidateGenerator(PackedCandidateLexicon(handles),
             CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES,
@@ -482,15 +492,22 @@ object FinalProductSpellingReplay {
                 }
             }
             experimentAsset("ru-contextual-policy.json", frozen.POLICY_BYTES, frozen.POLICY_SHA256)
-            val wiki = io.github.mesteriis.rune.keyboard.smarttyping.experiments.WordPairFeatures.open(
+            val validatedWiki = io.github.mesteriis.rune.keyboard.smarttyping.experiments.WordPairFeatures.validate(
                 mapped("ru-wiki.ctx", frozen.WIKI_BYTES), frozen.WIKI_SHA256)!!
-            val conversation = io.github.mesteriis.rune.keyboard.smarttyping.experiments.WordPairFeatures.open(
+            val wiki = if (packagedReaders) io.github.mesteriis.rune.keyboard.smarttyping.experiments.WordPairFeatures.openPackaged(
+                mapped("ru-wiki.ctx", frozen.WIKI_BYTES), frozen.WIKI_BYTES)!! else validatedWiki
+            val validatedConversation = io.github.mesteriis.rune.keyboard.smarttyping.experiments.WordPairFeatures.validate(
                 mapped("ru-conversation.ctx", frozen.CONVERSATION_BYTES), frozen.CONVERSATION_SHA256)!!
-            val grammar = io.github.mesteriis.rune.keyboard.smarttyping.experiments.GrammarFeatureDictionary.open(
+            val conversation = if (packagedReaders) io.github.mesteriis.rune.keyboard.smarttyping.experiments.WordPairFeatures.openPackaged(
+                mapped("ru-conversation.ctx", frozen.CONVERSATION_BYTES), frozen.CONVERSATION_BYTES)!! else validatedConversation
+            val validatedGrammar = io.github.mesteriis.rune.keyboard.smarttyping.experiments.GrammarFeatureDictionary.validate(
                 mapped("ru-context.gram", frozen.GRAMMAR_BYTES), frozen.GRAMMAR_SHA256)!!
+            val grammar = if (packagedReaders) io.github.mesteriis.rune.keyboard.smarttyping.experiments.GrammarFeatureDictionary.openPackaged(
+                mapped("ru-context.gram", frozen.GRAMMAR_BYTES), frozen.GRAMMAR_BYTES)!! else validatedGrammar
             experiments.loadContextualRanker(io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualRanker.create(
                 experimentAsset("ru-contextual-ranker.bin", frozen.MODEL_BYTES, frozen.MODEL_SHA256), wiki, conversation, grammar)!!)
             check(experiments.contextualReady)
+            if (packagedReaders) System.err.println("PACKAGED_READERS_AFTER_FULL_VALIDATION")
             if (infinitiveMode) {
                 val revision = io.github.mesteriis.rune.keyboard.smarttyping.experiments.FrozenInfinitiveRevisionAssets
                 experimentAsset("ru-infinitive-revision-policy.json", revision.POLICY_BYTES, revision.POLICY_SHA256)

@@ -12,12 +12,12 @@ internal object AndroidContextualRankerLoader {
             fun mapped(name: String, size: Long) = assets.openFd("smarttyping/experiments/$name").use {
                 AndroidPackedLexiconLoader.mapDescriptor(it, size)
             }
-            val wiki = WordPairFeatures.open(mapped("ru-wiki.ctx", FrozenContextualAssets.WIKI_BYTES),
-                FrozenContextualAssets.WIKI_SHA256) ?: return null
-            val conversation = WordPairFeatures.open(mapped("ru-conversation.ctx", FrozenContextualAssets.CONVERSATION_BYTES),
-                FrozenContextualAssets.CONVERSATION_SHA256) ?: return null
-            val dictionary = GrammarFeatureDictionary.open(mapped("ru-context.gram", FrozenContextualAssets.GRAMMAR_BYTES),
-                FrozenContextualAssets.GRAMMAR_SHA256) ?: return null
+            val wiki = WordPairFeatures.openPackaged(mapped("ru-wiki.ctx", FrozenContextualAssets.WIKI_BYTES),
+                FrozenContextualAssets.WIKI_BYTES) ?: return null
+            val conversation = WordPairFeatures.openPackaged(mapped("ru-conversation.ctx", FrozenContextualAssets.CONVERSATION_BYTES),
+                FrozenContextualAssets.CONVERSATION_BYTES) ?: return null
+            val dictionary = GrammarFeatureDictionary.openPackaged(mapped("ru-context.gram", FrozenContextualAssets.GRAMMAR_BYTES),
+                FrozenContextualAssets.GRAMMAR_BYTES) ?: return null
             ContextualRanker.create(modelBytes, wiki, conversation, dictionary)
         } catch (_: Exception) { null }
     }

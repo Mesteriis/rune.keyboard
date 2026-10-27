@@ -86,4 +86,17 @@ class PackedMorphologyLexiconTest {
             Thread.interrupted()
         }
     }
+
+    @Test fun `real packaged lookup matches fully validated membership`() {
+        val file = File("src/main/assets/${FrozenMorphologyLexicon.ASSET_PATH}")
+        FileInputStream(file).use {
+            val mapping = it.channel.map(FileChannel.MapMode.READ_ONLY, 0, file.length())
+            val strict = PackedMorphologyLexicon.validate(mapping, FrozenMorphologyLexicon.ASSET_SHA256)
+            val packaged = PackedMorphologyLexicon.openPackaged(mapping, FrozenMorphologyLexicon.ASSET_BYTES)
+            for (key in listOf("почтений", "Почтений", "нужен", "слово", "домой", "поговорим", "новый", "нужнн", "яяяя")) {
+                assertTrue(strict.lookup(russian, key).available)
+                assertEquals(key, strict.lookup(russian, key), packaged.lookup(russian, key))
+            }
+        }
+    }
 }

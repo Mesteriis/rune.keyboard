@@ -29,8 +29,9 @@ class FrozenWordPairAssetsTest {
             val bytes = bytes(asset)
             assertEquals(asset.size, bytes.size.toLong())
             assertEquals(asset.hash, hash(bytes))
-            val index = PackedContextIndex.open(ByteBuffer.wrap(bytes), "RUCNTX01", asset.hash) { _, _, n -> n == 16 }!!
-            val features = WordPairFeatures.open(ByteBuffer.wrap(bytes), asset.hash)!!
+            val index = PackedContextIndex.validate(ByteBuffer.wrap(bytes), "RUCNTX01", asset.hash) { _, _, n -> n == 16 }!!
+            val strict = WordPairFeatures.validate(ByteBuffer.wrap(bytes), asset.hash)!!
+            val features = WordPairFeatures.openPackaged(ByteBuffer.wrap(bytes).asReadOnlyBuffer(), asset.size)!!
             for ((i, pair) in pairs.withIndex()) {
                 val counts = asset.counts[i]
                 val payload = ByteBuffer.wrap(index.payload("${pair.first}\u0000${pair.second}")!!).order(ByteOrder.LITTLE_ENDIAN)
@@ -42,6 +43,8 @@ class FrozenWordPairAssetsTest {
                     counts[0].toDouble() / (1.0 + counts[3]), 0.0, 1.0,
                 )
                 assertArrayEquals(asset.name, expected, features.extract("${pair.first} ", pair.second, pair.second), 0.0)
+                assertArrayEquals(asset.name, strict.extract("${pair.first} ", pair.second, pair.second),
+                    features.extract("${pair.first} ", pair.second, pair.second), 0.0)
             }
             assertArrayEquals(DoubleArray(6), features.extract("я ", "несуществующееслово", "несуществующееслово"), 0.0)
         }
