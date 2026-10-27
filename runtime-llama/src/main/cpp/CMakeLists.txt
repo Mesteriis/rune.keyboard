@@ -24,7 +24,9 @@ get_filename_component(RUNE_SOURCE_ROOT "${CMAKE_CURRENT_LIST_DIR}/../../../.." 
 # Stable source names in __FILE__ and DWARF; never embed the host checkout path.
 # Apply before every runtime/ggml/scoring target is created.
 add_compile_options("-ffile-prefix-map=${RUNE_SOURCE_ROOT}=rune-source"
-    "-fdebug-prefix-map=${RUNE_SOURCE_ROOT}=rune-source")
+    "-fdebug-prefix-map=${RUNE_SOURCE_ROOT}=rune-source"
+    "-ffile-prefix-map=${CMAKE_CURRENT_BINARY_DIR}=rune-build"
+    "-fdebug-prefix-map=${CMAKE_CURRENT_BINARY_DIR}=rune-build")
 include("${CMAKE_CURRENT_LIST_DIR}/PrepareLlamaSource.cmake")
 prepare_rune_llama_source("${RUNE_SOURCE_ROOT}" "${CMAKE_CURRENT_LIST_DIR}/patches/tokenizer-abort.patch")
 add_subdirectory("${RUNE_LLAMA_SOURCE}" "llama" EXCLUDE_FROM_ALL)

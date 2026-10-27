@@ -7,7 +7,7 @@ import java.nio.charset.CodingErrorAction
 object QualifiedModelArtifact {
     const val MODEL_SHA256 = "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4"
     const val RUNTIME_API = 1
-    const val RUNTIME_BUILD_ID = "eaa4f6afb974821ae76d454de9b156a4f1d017d89b941fbdc31cb4d1403f22c1"
+    const val RUNTIME_BUILD_ID = "d48f6df2ed03cd11d3182abe453fb3a5bd126aea92f2bc06ab747b201f84565f"
     fun accepts(sha256: String, runtimeApi: Int): Boolean =
         sha256 == MODEL_SHA256 && runtimeApi == RUNTIME_API
 }
