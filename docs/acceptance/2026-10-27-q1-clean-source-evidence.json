@@ -1,0 +1,94 @@
+{
+  "card": "Q1",
+  "status": "partial; live Git checkpoint and dirty-source rejection verified; clean-checkout release and prepared-source lifecycle pending",
+  "baseCommit": "4bda6ce20711fcd76e0a3d3a2da3a3094b5a72f4",
+  "sources": [
+    {
+      "path": "tools/release_source_check.py",
+      "bytes": 3014,
+      "sha256": "28ebb40be4591dbcacacb57794556b94ed7d43ca2b1e29946198d88ee2d7800a"
+    },
+    {
+      "path": "tools/test_release_source_check.py",
+      "bytes": 5827,
+      "sha256": "41dbfadd7ccfb16170e6e397a47a7af329cc20d137dc2b4d3d371fefaa4a6849"
+    },
+    {
+      "path": "app/build.gradle.kts",
+      "bytes": 16958,
+      "sha256": "dd44001c566b0c66125e7d51c702933dfc23421c0302bdcd9a42998dfd92a567"
+    },
+    {
+      "path": "docs/RELEASE.md",
+      "bytes": 6472,
+      "sha256": "8decbb23f0b5be2ce013a23e246d26abe755fea545213936fbb0fa3e503ad43f"
+    },
+    {
+      "path": "docs/plans/2026-10-27-review-completion.md",
+      "bytes": 18363,
+      "sha256": "cfb3e739c7e15ea2109b5b7e2d4db372f75b57b3101c020b010ab17be8b1de8d"
+    }
+  ],
+  "tests": 8,
+  "dirtyRelease": {
+    "result": {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:assembleRelease"
+      ],
+      "exitCode": 1,
+      "releaseArtifactUnchanged": true,
+      "sourceDirtyRefusal": true
+    },
+    "log": {
+      "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/dirty-release-final-v2.log",
+      "bytes": 3969,
+      "sha256": "175cd3e212bca8939a71d6afa74fa5aa98a9158296a2c46d4861a8228e64d165"
+    }
+  },
+  "debugUnit": {
+    "result": {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:testDebugUnitTest"
+      ],
+      "exitCode": 0,
+      "sourceCheckRan": false
+    },
+    "log": {
+      "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/debug-unit.log",
+      "bytes": 2804,
+      "sha256": "8fb976dc602a89a48196b3991b36086f6b34f8adf7054363018ea6cf298f3e31"
+    }
+  },
+  "initialGradleSetupFailure": {
+    "result": {
+      "command": [
+        "./gradlew",
+        "--offline",
+        ":app:assembleRelease"
+      ],
+      "exitCode": 1,
+      "releaseArtifactUnchanged": true,
+      "sourceDirtyRefusal": false
+    },
+    "log": {
+      "path": "/Users/avm/projects/Personal/rune-keyboard/build/review-q1-clean-source-20261027/dirty-release.log",
+      "bytes": 619,
+      "sha256": "3e74e18a3401ac8047645332781e4b3df31b212674399009620f5ab095597f3a"
+    },
+    "cause": "Variant preReleaseBuild task is registered later by AGP; switched to lazy task matching before verifying real dirty refusal"
+  },
+  "cleanCheckoutReleaseBuild": false,
+  "preparedSourceAcceptance": false,
+  "phoneRun": false,
+  "phoneUpdate": false,
+  "published": false,
+  "outstanding": [
+    "Positive build from a clean independent checkout",
+    "F-Droid prepared-source lifecycle and next versioned recipe",
+    "Distribution/build-server/device/model and U16 source-path acceptance"
+  ]
+}

@@ -287,6 +287,23 @@ val apkFootprintTests = tasks.register<Exec>("apkFootprintTests") {
     commandLine("python3", "-m", "unittest", "discover", "-s", "tools", "-p", "test_apk_footprint.py")
 }
 
+val releaseSourceCheckTests = tasks.register<Exec>("releaseSourceCheckTests") {
+    group = "verification"
+    workingDir(rootProject.projectDir)
+    inputs.files(rootProject.file("tools/release_source_check.py"), rootProject.file("tools/test_release_source_check.py"))
+    commandLine("python3", "-m", "unittest", "discover", "-s", "tools", "-p", "test_release_source_check.py")
+}
+
+val releaseSourceCheck = tasks.register<Exec>("releaseSourceCheck") {
+    group = "verification"
+    description = "Requires a clean committed Git checkout before assembling the app release APK."
+    workingDir(rootProject.projectDir)
+    dependsOn(releaseSourceCheckTests)
+    // No outputs: every invocation must query live Git state, including cache reuse.
+    commandLine("python3", rootProject.file("tools/release_source_check.py"), "--root", rootProject.projectDir)
+}
+tasks.matching { it.name == "preReleaseBuild" }.configureEach { dependsOn(releaseSourceCheck) }
+
 androidComponents {
     onVariants(selector().all()) { variant ->
         val name = variant.name.replaceFirstChar(Char::uppercaseChar)

@@ -20,7 +20,15 @@ Fill `storeFile`, `storePassword`, `keyAlias` and `keyPassword` locally. Restric
 
 1. Increase `versionName` and `versionCode` in `app/build.gradle.kts`.
 2. Update `CHANGELOG.md`, the F-Droid recipe and Fastlane changelogs named with the version code.
-3. Run:
+3. Commit the reviewed source and check the repository state before building.
+   The app's `preReleaseBuild` now depends on `releaseSourceCheck`: live
+   `git status --porcelain=v1 -z --untracked-files=all --ignore-submodules=none`
+   must be empty, HEAD must exist and every recursive submodule must be initialized
+   at its recorded commit. The check runs on every invocation, including Gradle
+   configuration-cache reuse. It prints commit/count/reason metadata without
+   filenames and does not alter the checkout. Ignored local signing/SDK/build files
+   retain normal Git semantics; this is a VCS checkpoint, not hermetic-build or
+   qualification proof. Run:
 
 ```sh
 ./gradlew testDebugUnitTest lint assembleDebug assembleRelease assembleProfile \
@@ -70,3 +78,13 @@ The upstream release and a development debug build use different signing keys. A
 ## F-Droid
 
 Update and submit the [build recipe and metadata](FDROID.md). Official inclusion requires maintainer acceptance and an independent build; creating a GitHub release does not automatically publish to F-Droid.
+
+### Prepared source distributions
+
+The Git checkpoint requires a real repository and rejects missing Git metadata,
+uninitialized modules and dirty prepared trees. F-Droid source preparation removes
+tracked wrappers and scandelete files. Existing historical recipes use source
+commits from before this gate. A future recipe needs a verified lifecycle for
+checking clean source before preparation and binding permitted preparation effects;
+that integration has not been established. Do not infer source-export/F-Droid
+build-server acceptance from a clean normal checkout build.
