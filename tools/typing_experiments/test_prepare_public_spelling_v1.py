@@ -65,6 +65,13 @@ class SpellingBuilderTest(unittest.TestCase):
                 self.assertEqual('BLOCKED_OVERLAP',report['status']);self.assertEqual(1,report['lexicalOverlaps']['family'])
                 self.assertFalse((Path(folder)/'output').exists())
 
+    def test_late_template_adverb_reading_is_blocked_in_default_profile(self):
+        with tempfile.TemporaryDirectory() as folder:
+            result=run_builder(folder,'prepare_public_spelling_v1.py',[candidate(typed='полезно',expectedSpelling='полезно',families=['полезно'])])
+            self.assertEqual(2,result.returncode,result.stderr);report=json.loads(result.stdout)
+            self.assertEqual('BLOCKED_OVERLAP',report['status']);self.assertEqual(1,report['lexicalOverlaps']['family'])
+            self.assertFalse((Path(folder)/'output').exists())
+
     def test_changed_proposal_bytes_cannot_reuse_a_frozen_manifest(self):
         with tempfile.TemporaryDirectory() as folder:
             result=run_builder(folder,'prepare_public_spelling_v1.py',[candidate()],bad_hash=True)

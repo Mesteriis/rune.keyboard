@@ -1,6 +1,10 @@
 {
   "schema": 1,
   "sources": {
+    "014565007f55eb0e0063b0e1a51bafcd392c07cbb8dad76e4eebf9c9e363f2cb": {
+      "file": "prepare_014565007f55eb0e.py",
+      "originalPath": "build/right-context-training-v4-20261027/prepare.py"
+    },
     "05a8f53610b0f9dc4b3cfd55ffa236c30f3fbfe87118218cd6c7a8df6c8f2e2f": {
       "file": "natural_collector_05a8f53610b0f9dc.py",
       "originalPath": "build/right-context-wiki0015-20261027/collect.py"
@@ -8,6 +12,10 @@
     "14ceb1c0cbe8b20e9d12db83d5983999a97fff0e1e1b080409c65ed4f7d65fa0": {
       "file": "qualification_v3_source_lock_14ceb1c0cbe8b20e.json",
       "originalPath": "tools/eval/smart-typing-0.3/qualification-v3/source-lock.json"
+    },
+    "174499d4873263d8ae4b8b9d95b59df9302eb849841fac4d44af7e3ac4699f92": {
+      "file": "prepare_174499d4873263d8.py",
+      "originalPath": "build/right-context-training-v5-20261027/prepare.py"
     },
     "22e4e2bfd2cd46337b4ddcb7fbd30f4c265fbcab2c72bb32dfbfd6a1e6303eee": {
       "file": "natural_collector_22e4e2bfd2cd4633.py",
@@ -25,9 +33,17 @@
       "file": "qualification_v4_source_lock_3f86e8b384c094e7.json",
       "originalPath": "tools/eval/smart-typing-0.3/qualification-v4/source-lock.json"
     },
+    "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b": {
+      "file": "prepare_557b57f7362d04d7.py",
+      "originalPath": "build/right-context-training-v7-20261027/prepare.py"
+    },
     "60cb1cdf671dcc0781d47225d225eebc178392f7b616a7ae77d084e4906126a7": {
       "file": "qualification_v3_60cb1cdf671dcc07.py",
       "originalPath": "tools/eval/smart-typing-0.3/qualification-v3/generate_corpus.py"
+    },
+    "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5": {
+      "file": "right_context_role_corpus_6c98af64d142d216.py",
+      "originalPath": "tools/typing_experiments/right_context_role_corpus.py"
     },
     "956436a1fbd708706bddb3bad44c1fdf7bff838ef95a8c06911008148590fe01": {
       "file": "prepare_external_spelling_holdout_956436a1fbd70870.py",
@@ -44,6 +60,10 @@
     "af8ca660679d2d70ac6b9eb45ca62f69f264f445c415f55afcd7cef4489fc619": {
       "file": "natural_collector_af8ca660679d2d70.py",
       "originalPath": "build/right-context-wiki0013-20261027/collect.py"
+    },
+    "b63ee2e7ac879cde13cec65c957bd6edcbe0b2dab66de346778738d85a49a968": {
+      "file": "right_context_continuation_corpus_b63ee2e7ac879cde.py",
+      "originalPath": "tools/typing_experiments/right_context_continuation_corpus.py"
     },
     "b9cc4859e08021f851711bcabff12d329d6219312d3d988157b9716a1af574b6": {
       "file": "prepare_joint_followup_b9cc4859e08021f8.py",
@@ -64,6 +84,10 @@
     "d6cd17951bd19e11115f515c09eb4eed9442644132f870a43450137eb65a5456": {
       "file": "right_context_contrast_d6cd17951bd19e11.py",
       "originalPath": "tools/typing_experiments/right_context_contrast_corpus.py"
+    },
+    "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24": {
+      "file": "right_context_other_part_corpus_dfdf3e0f0275be62.py",
+      "originalPath": "tools/typing_experiments/right_context_other_part_corpus.py"
     },
     "e3ad381de42a6ac08defd3bad7486789ea15329742e19448b39bf4ebaed795ed": {
       "file": "qualification_v2_source_lock_e3ad381de42a6ac0.json",
