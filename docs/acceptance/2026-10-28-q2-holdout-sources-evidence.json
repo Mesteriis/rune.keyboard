@@ -1,0 +1,300 @@
+{
+  "checks": [
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_export_external_spelling_replay.py",
+        "-v"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_export_external_spelling_replay_v7.py",
+        "-v"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_export_external_spelling_replay_v8.py",
+        "-v"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_fresh_spelling_holdout.py",
+        "-v"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_fresh_spelling_replay.py",
+        "-v"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_prepare_external_spelling_holdout_v11.py",
+        "-v"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_prepare_external_spelling_holdout_v12.py",
+        "-v"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_prepare_external_spelling_holdout_v7.py",
+        "-v"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_prepare_external_spelling_holdout_v8.py",
+        "-v"
+      ]
+    }
+  ],
+  "cliChecks": [
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "tools/typing_experiments/export_external_spelling_replay.py",
+        "--help"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "tools/typing_experiments/export_external_spelling_replay_v10.py",
+        "--help"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "tools/typing_experiments/export_external_spelling_replay_v11.py",
+        "--help"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "tools/typing_experiments/export_external_spelling_replay_v12.py",
+        "--help"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "tools/typing_experiments/export_external_spelling_replay_v7.py",
+        "--help"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "tools/typing_experiments/export_external_spelling_replay_v8.py",
+        "--help"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "tools/typing_experiments/export_external_spelling_replay_v9.py",
+        "--help"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v10.py",
+        "--help"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v11.py",
+        "--help"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v12.py",
+        "--help"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v7.py",
+        "--help"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v8.py",
+        "--help"
+      ]
+    },
+    {
+      "actualInvocationRetainedInLocalRawReceipt": true,
+      "exitCode": 0,
+      "portableCommand": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v9.py",
+        "--help"
+      ]
+    }
+  ],
+  "crossVersionChecks": {
+    "exitCode": 0,
+    "pythonVersions": [
+      "3.12.14",
+      "3.14.6"
+    ],
+    "tests": 3
+  },
+  "freshQualificationEstablished": false,
+  "interpreterVersion": "3.12.14",
+  "modelExecutionEstablished": false,
+  "originalChecksSha256": "8f22036d24b71d4f2cbe8a95373cf3b494fd56ac492b1212dcfd8c02edf1bb93",
+  "originalCliChecksSha256": "a65e82a4a16ab7f96e414ccb8484fe8f578a7600320280eee4347086d8a0c639",
+  "purpose": "Q2_HISTORICAL_HOLDOUT_SOURCE_PRESERVATION_NOT_FRESH_QUALIFICATION",
+  "sourceBase": "cd03349",
+  "sourceBindings": {
+    "tools/typing_experiments/export_external_spelling_replay.py": "d5e0211f14b2fc9317354439331feb5fa275571f8880c148444553a81e17a90b",
+    "tools/typing_experiments/export_external_spelling_replay_v10.py": "b8b4113149bded4188dacfc982b860052277df05c953a778f461d40e74b78568",
+    "tools/typing_experiments/export_external_spelling_replay_v11.py": "b86d69e32b8d5e163f4f4bceacedb460a9a7132b7510c389d435e1391b55dcb7",
+    "tools/typing_experiments/export_external_spelling_replay_v12.py": "d1af389b7e10ddcfb29016a1d27699d781c5976255b9f63eeb03c023a78328c4",
+    "tools/typing_experiments/export_external_spelling_replay_v7.py": "0e367ff0dd639c5167031fb9f19c5621e2441de20fa1d8ecab51c42834469dfd",
+    "tools/typing_experiments/export_external_spelling_replay_v8.py": "c0cf233da228df2febe33dab346b45585b348cbae5f0a527153e15b9fc1839e4",
+    "tools/typing_experiments/export_external_spelling_replay_v9.py": "1b483b73710506f289fe9d960a3a1b71279a7e2e7e2c98d66c20699ab0c7874d",
+    "tools/typing_experiments/fresh_spelling_holdout.py": "a5fe5e58e2801996d62c293b89dec1aae64ac0356e070260cbacf5357feaf25f",
+    "tools/typing_experiments/fresh_spelling_replay.py": "1dbdecfe5a34d0eec86b8bb996316740d77bba5ac0102668dca7adfdee1aa18f",
+    "tools/typing_experiments/prepare_external_spelling_holdout_v10.py": "9053f06179ed782a72c4378cb8dc49c4da265820b1d3142bc3a0d94d21cb0cb8",
+    "tools/typing_experiments/prepare_external_spelling_holdout_v11.py": "cca6f8c7e7ed1f2b0a161136b7471c516cea582c6397f01182189ac9a5e4cce4",
+    "tools/typing_experiments/prepare_external_spelling_holdout_v12.py": "13df18f3a72ccc6ae8a79ffd34e67579dc706ff26fdc6cb4096f91ebfbeb216f",
+    "tools/typing_experiments/prepare_external_spelling_holdout_v7.py": "fbc88fc175dd0407df287faa7cb3c6257fa181a271ffb03cbf6221a812b68a9b",
+    "tools/typing_experiments/prepare_external_spelling_holdout_v8.py": "4b5710d76e16faf1a06c316af1b7f45045d8a7d3187ad7da456572e380564fe6",
+    "tools/typing_experiments/prepare_external_spelling_holdout_v9.py": "54f2abfb8d9634b381f8b19e7897f652ebff5e40d2423386a0cba1ac4060e874",
+    "tools/typing_experiments/test_export_external_spelling_replay.py": "fac81844b01969af1fd0175ee2dbe49e95d9d4df9b0477084e9d25cb17f4985a",
+    "tools/typing_experiments/test_export_external_spelling_replay_v7.py": "6bb6de846ab18f514f4ec5dc2c71889c28d8bc0b2ad254d507ffc266ef66918b",
+    "tools/typing_experiments/test_export_external_spelling_replay_v8.py": "0e46cddf21982098c0f46c1825a92db554d1b97f7b2c1ce58237704ab7ad35fa",
+    "tools/typing_experiments/test_fresh_spelling_holdout.py": "47ee4ef64fd06ade49d4bb53abf7809a935305e7251435e5529b503d4a1fe57d",
+    "tools/typing_experiments/test_fresh_spelling_replay.py": "53db0a23b5387bc2f1ab9e0b2285b11b88314603917e4d11004bb61b62cb3e05",
+    "tools/typing_experiments/test_prepare_external_spelling_holdout_v11.py": "5110bb547f8eb6369d07ef0d4a3a86bd0837c0dc45bc66dda78ea54e26810ec3",
+    "tools/typing_experiments/test_prepare_external_spelling_holdout_v12.py": "28ed8efbe4321af9eed65869ea8d5ee0271c47977e881a810394de78ab57ed84",
+    "tools/typing_experiments/test_prepare_external_spelling_holdout_v7.py": "120c52dd00869a5fcb89faf337cb762ea6c823ea37c0346957c79cf02dc00425",
+    "tools/typing_experiments/test_prepare_external_spelling_holdout_v8.py": "0bc315a7e8cbca81a5fb3f33d5cedaf742cf745225cb9a6effd8792e5125f7ab"
+  },
+  "transitiveDependencyCoverageEstablished": false
+}

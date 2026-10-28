@@ -93,3 +93,14 @@ historical source identities. The frozen neighbor tool is reconstructed with its
 exact original SHA-256; its earlier corpus-builder source remains unrecovered. See [the source and gap record](../../docs/acceptance/2026-10-28-q2-joint-neighbor-sources.md).
 These historical builders still require their pinned inputs and consumed-data
 exclusions; source preservation does not grant fresh qualification or promotion.
+
+
+## Historical holdout tools retained (2026-10-28 review)
+
+The v6-v12 label-isolated replay tools, v7-v12 preparers and shared helpers are
+versioned with their original tests and cross-version source/routing checks.
+See [the source acceptance](../../docs/acceptance/2026-10-28-q2-holdout-sources.md).
+These already disclosed corpora remain historical regression data. A filename
+containing fresh or independent does not establish a fresh qualification set.
+Use explicit pinned inputs and an explicit --java path for replay; complete
+consumed-data and historical dependency closure remain required.
