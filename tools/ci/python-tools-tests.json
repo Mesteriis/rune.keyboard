@@ -12,6 +12,7 @@
       "tools/typing_experiments/test_audit_applied_authored_history.py",
       "tools/typing_experiments/test_audit_authored_training_history.py",
       "tools/typing_experiments/test_audit_auxiliary_authored_history.py",
+      "tools/typing_experiments/test_audit_disclosed_fixtures.py",
       "tools/typing_experiments/test_audit_family_coverage.py",
       "tools/typing_experiments/test_audit_frozen_context_descendants.py",
       "tools/typing_experiments/test_audit_late_authored_history.py",
@@ -20,6 +21,7 @@
       "tools/typing_experiments/test_contextual_assets.py",
       "tools/typing_experiments/test_contextual_policy_calibration.py",
       "tools/typing_experiments/test_control_ledger.py",
+      "tools/typing_experiments/test_conversation_acceptance.py",
       "tools/typing_experiments/test_conversation_split_checks.py",
       "tools/typing_experiments/test_evaluate_product_compact_policy.py",
       "tools/typing_experiments/test_export_external_spelling_replay.py",
@@ -47,6 +49,7 @@
       "tools/typing_experiments/test_legacy_family_recovery.py",
       "tools/typing_experiments/test_legacy_holdout_merge.py",
       "tools/typing_experiments/test_legacy_holdout_recovery.py",
+      "tools/typing_experiments/test_local_spelling_stress.py",
       "tools/typing_experiments/test_merge_early_ru_sources.py",
       "tools/typing_experiments/test_neighbor_recovery.py",
       "tools/typing_experiments/test_neighbor_refinement.py",
@@ -110,6 +113,7 @@
       "tools/typing_experiments/test_right_context_training_groups.py",
       "tools/typing_experiments/test_right_context_training_weights.py",
       "tools/typing_experiments/test_source_identities.py",
+      "tools/typing_experiments/test_typing_quality_slices.py",
       "tools/typing_experiments/test_word_context_features.py"
     ],
     "scientific": [

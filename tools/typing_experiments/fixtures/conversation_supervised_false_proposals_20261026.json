@@ -1,0 +1,69 @@
+{
+  "purpose": "REGRESSION_ONLY_NOT_TRAINING",
+  "modelSha256": "1040c487f945f15d1898088f6d7337f83350da20a9c1629dbfd1129330aef22c",
+  "frozenPolicySha256": "193352bedfe7bb4f4357446c6469965b8d1ea29d62d2afdbbcd2be135c6f7e94",
+  "sourceUrl": "https://downloads.tatoeba.org/exports/per_language/rus/rus_sentences_detailed.tsv.bz2",
+  "sourceLicense": "CC-BY-2.0-FR; sentence context omitted, contributor and sentence references retained",
+  "cases": [
+    {
+      "id": "supervised-final-audit-004789",
+      "typed": "фотографие",
+      "expectedSpelling": "фотографию",
+      "rejectedProposal": "фотографией",
+      "sourceSentence": "tatoeba:8611832",
+      "sourceSentenceUrl": "https://tatoeba.org/en/sentences/show/8611832",
+      "sourceContributor": "marafon",
+      "contextSha256": "7df973270e98641d77616b04053784fe51b2e68e221a0912fb20776a15b99e2c",
+      "intendedTargetWasRetrieved": true,
+      "sameLemmaAsProposal": true
+    },
+    {
+      "id": "supervised-final-audit-007529",
+      "typed": "злищься",
+      "expectedSpelling": "злиться",
+      "rejectedProposal": "злишься",
+      "sourceSentence": "tatoeba:6706737",
+      "sourceSentenceUrl": "https://tatoeba.org/en/sentences/show/6706737",
+      "sourceContributor": "odexed",
+      "contextSha256": "796c1536578e58ac02c50234aeed2b1afa50771ecf672ad817ecfeed3f087836",
+      "intendedTargetWasRetrieved": true,
+      "sameLemmaAsProposal": true
+    },
+    {
+      "id": "supervised-final-audit-007709",
+      "typed": "научищься",
+      "expectedSpelling": "научиться",
+      "rejectedProposal": "научишься",
+      "sourceSentence": "tatoeba:3094274",
+      "sourceSentenceUrl": "https://tatoeba.org/en/sentences/show/3094274",
+      "sourceContributor": "marafon",
+      "contextSha256": "70a08f4bbf16994a0a052eec217cf4b75c24c222c618018dc0b68c6549a4ea10",
+      "intendedTargetWasRetrieved": true,
+      "sameLemmaAsProposal": true
+    },
+    {
+      "id": "supervised-final-audit-008977",
+      "typed": "заплатищь",
+      "expectedSpelling": "заплатить",
+      "rejectedProposal": "заплатишь",
+      "sourceSentence": "tatoeba:5699760",
+      "sourceSentenceUrl": "https://tatoeba.org/en/sentences/show/5699760",
+      "sourceContributor": "marafon",
+      "contextSha256": "99a8fb3b992f0610f0204e60ab3fe6c7e1e6ee02a1cea7666d969afee51ce628",
+      "intendedTargetWasRetrieved": true,
+      "sameLemmaAsProposal": true
+    },
+    {
+      "id": "supervised-final-audit-014304",
+      "typed": "виновн",
+      "expectedSpelling": "виновны",
+      "rejectedProposal": "виновен",
+      "sourceSentence": "tatoeba:1873299",
+      "sourceSentenceUrl": "https://tatoeba.org/en/sentences/show/1873299",
+      "sourceContributor": "soweli_Elepanto",
+      "contextSha256": "225fbba907b9fddb8995bfb1f511de74586cb529910d03ae85847e0b2ee96d9f",
+      "intendedTargetWasRetrieved": true,
+      "sameLemmaAsProposal": true
+    }
+  ]
+}

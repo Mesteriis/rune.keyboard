@@ -1,0 +1,114 @@
+{
+  "fixtureAudit": {
+    "canonicalFamilyCoverageEstablished": false,
+    "cases": 5,
+    "fixtureSha256": {
+      "context_ranker_regressions_20261026.jsonl": "e34c64edfd6f80a0594a8d362c5ce028ab8f1f2dd3f548c35cf7591835a94b68",
+      "conversation_supervised_false_proposals_20261026.json": "ea5978c5ac9436087d19427bd5fea0bfbcd4c7460c3800f60484eeb0ea46d7a9"
+    },
+    "freshQualificationEstablished": false,
+    "historicalBindings": {
+      "build/context-feature-ranker-20261026/conversation-corpus/holdout.jsonl": "0d16f7543b5e2265ef27cf9aead4c468d3110006fb5ac4c5f52301b89cf35fbb",
+      "build/context-feature-ranker-20261026/conversation-corpus/manifest.json": "76a1d12473bcd31e3d093537eb8a52dfd88332b8043927b9f1a1986a6b7ee541",
+      "build/context-feature-ranker-20261026/rus_sentences_CC0.tsv.bz2": "982264e0857d2574ada9d1c07897e816ab9c4a8fb139f05320b5836f53d4d7ed",
+      "build/context-feature-ranker-20261026/tatoeba-source-lock.json": "850a865909accd5680c0e7ddb522efb05b5dc6addc6e3f2e96d2d3be899cbeff",
+      "build/conversation-supervised-20261026/experimental-ranker.bin": "1040c487f945f15d1898088f6d7337f83350da20a9c1629dbfd1129330aef22c",
+      "build/conversation-supervised-20261026/followon-corpus-v2/holdout.jsonl": "c7edc9896263c92b050d176931249503afef8ff3506b10bc110fc9ca4c2f1a63",
+      "build/conversation-supervised-20261026/followon-corpus-v2/manifest.json": "9509ec8aef83b0c3bc311b8a482ae2fdd5e673a618cd2fe335faf65c3df7507b",
+      "build/conversation-supervised-20261026/followon-proposals.json": "9cef24206200afe52e812bf31243f071995d32340a3497becaecee76c3626a2a",
+      "build/conversation-supervised-20261026/frozen-policy.json": "193352bedfe7bb4f4357446c6469965b8d1ea29d62d2afdbbcd2be135c6f7e94",
+      "build/conversation-supervised-20261026/rus_sentences_detailed.tsv.bz2": "3993a545d85db1e60a9423c0165a909c0d52beba85070883adf93cf5abe3db5f"
+    },
+    "historicalSourcesVerified": true,
+    "ledgerSha256": "820c9ac188cc4b8a48f0ef573c13c296b8758c69a8d34d736ba9753ab1c8c9cc",
+    "modelExecutionEstablished": false,
+    "purpose": "DISCLOSED_FIXTURE_SOURCE_AND_EXCLUSION_AUDIT",
+    "registryCoverage": {
+      "cc0_article": 34,
+      "cc0_context": 34,
+      "cc0_sentence": 34,
+      "detailed_article": 5
+    },
+    "rows": 35
+  },
+  "helperChecks": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_conversation_acceptance.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_local_spelling_stress.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_typing_quality_slices.py",
+        "-v"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "historicalModelMetricsReexecuted": false,
+  "historicalReports": {
+    "docs/acceptance/2026-10-26-context-feature-ranking.md": {
+      "integration": "Original body retained byte-for-byte; separate historical-scope notice added",
+      "originalSha256": "765b762cbd5063e89e993bd6be72b6c0f5cbd732f1147222e88ce470f23734c7"
+    },
+    "docs/acceptance/2026-10-26-conversation-ranking-95.md": {
+      "integration": "Original body retained byte-for-byte; separate historical-scope notice added",
+      "originalSha256": "ac5d10eb6f06b46d7e42ae3452763d5daf3e58b445cc25d3c995616e4384dec4"
+    },
+    "docs/acceptance/2026-10-26-supervised-conversation-ranking.md": {
+      "integration": "Original body retained byte-for-byte; separate historical-scope notice added",
+      "originalSha256": "48e0b3c09338a991fd0c42e775e7ad367971fbd6f90d04fc86094aa3bdb89ead"
+    }
+  },
+  "newTrainingOrModelQualification": false,
+  "originalHelpersUnchanged": {
+    "tools/typing_experiments/conversation_acceptance.py": "e53c0cf67f76df72113fe8b5c7700b6d394b4470fe7fad7bc40a791c7cf7b1ba",
+    "tools/typing_experiments/local_spelling_stress.py": "e432b51a0b9b30edd5c702129556404788b5a874e00f0aaaf6a914281f490440",
+    "tools/typing_experiments/test_conversation_acceptance.py": "99a2511982b9b62716861edfa1973f42d9770da32743ceadf7361c6abe4e73f1",
+    "tools/typing_experiments/test_local_spelling_stress.py": "ccb0d5c669a87936ed4abeb3b40bc32897d5a6c2c93b3d21e554ab3dc11b5ec8",
+    "tools/typing_experiments/test_typing_quality_slices.py": "78a606779e16a2018d0e2a966a7a609c34b1dcde66c5b78adb4f75abb04a5e95",
+    "tools/typing_experiments/typing_quality_slices.py": "468153fb53d78eff61117499eb149c427acac25a206ff6d0e1bec88829d5fb20"
+  },
+  "purpose": "Q2_DIAGNOSTIC_TOOLS_AND_DISCLOSED_FIXTURE_SOURCE_ACCEPTANCE",
+  "sourceBase": "2d59c74",
+  "sourceBindings": {
+    "tools/typing_experiments/audit_disclosed_fixtures.py": "77e7ea643115c4083249136ed1c2b79073f4e34ab8177b2ba7f2eeba70eed134",
+    "tools/typing_experiments/conversation_acceptance.py": "e53c0cf67f76df72113fe8b5c7700b6d394b4470fe7fad7bc40a791c7cf7b1ba",
+    "tools/typing_experiments/local_spelling_stress.py": "e432b51a0b9b30edd5c702129556404788b5a874e00f0aaaf6a914281f490440",
+    "tools/typing_experiments/test_audit_disclosed_fixtures.py": "58cb19580416d669ff2a75e146491d930086efcd398a7fea1af32bb4ff9b7820",
+    "tools/typing_experiments/test_conversation_acceptance.py": "99a2511982b9b62716861edfa1973f42d9770da32743ceadf7361c6abe4e73f1",
+    "tools/typing_experiments/test_local_spelling_stress.py": "ccb0d5c669a87936ed4abeb3b40bc32897d5a6c2c93b3d21e554ab3dc11b5ec8",
+    "tools/typing_experiments/test_typing_quality_slices.py": "78a606779e16a2018d0e2a966a7a609c34b1dcde66c5b78adb4f75abb04a5e95",
+    "tools/typing_experiments/typing_quality_slices.py": "468153fb53d78eff61117499eb149c427acac25a206ff6d0e1bec88829d5fb20"
+  }
+}

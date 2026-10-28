@@ -104,3 +104,15 @@ These already disclosed corpora remain historical regression data. A filename
 containing fresh or independent does not establish a fresh qualification set.
 Use explicit pinned inputs and an explicit --java path for replay; complete
 consumed-data and historical dependency closure remain required.
+
+
+## Disclosed diagnostics and source fixtures (2026-10-28 review)
+
+The descriptive slice/stress helpers and explicit offline proposal-ratio gate
+are versioned with their original tests. Retained 35-row CC0 regressions and five
+detailed-source proposal references have [source and exclusion acceptance](../../docs/acceptance/2026-10-28-q2-disclosure-tools.md).
+Run `python3 tools/typing_experiments/audit_disclosed_fixtures.py` for tracked-byte
+and known-exclusion checks; add `--historical-root .` only when the original
+hash-pinned local public source inputs are present. Neither mode scores models
+or certifies fresh qualification. The documented five-case training exception
+remains scoped to the recorded original corpus.
