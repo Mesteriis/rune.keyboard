@@ -40,6 +40,8 @@
             android:text="@string/quality_shadow_note" android:textColor="@color/setup_text_secondary" android:textSize="15sp" />
         <TextView android:id="@+id/quality_shadow" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="8dp" android:lineSpacingExtra="8dp" android:textColor="@color/setup_text_primary" android:textSize="16sp" />
+        <LinearLayout android:id="@+id/quality_debug_actions" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical" />
         <Button android:id="@+id/quality_refresh" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:minHeight="48dp" android:layout_marginTop="24dp" android:text="@string/quality_refresh" />
         <Button android:id="@+id/quality_reset" android:layout_width="match_parent" android:layout_height="wrap_content"

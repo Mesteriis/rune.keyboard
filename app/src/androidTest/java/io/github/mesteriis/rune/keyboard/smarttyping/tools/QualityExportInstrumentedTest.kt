@@ -9,6 +9,8 @@ import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.settings.quality.QualityExportActivity
+import io.github.mesteriis.rune.keyboard.settings.quality.QualityDashboardActivity
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsActivity
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.*
 import org.junit.Assert.*
 import org.junit.Test
@@ -17,6 +19,26 @@ import java.util.concurrent.TimeUnit
 
 /** Real local SAF provider on the disposable emulator only; never resets owner statistics. */
 class QualityExportInstrumentedTest {
+    @Test fun qualityDashboardOwnsNumericExportNavigation() {
+        check(android.os.Build.HARDWARE in setOf("ranchu", "goldfish"))
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        check(InstrumentationRegistry.getArguments().getString("runeOwnedEmulator") == "q8-editor")
+        val context = instrumentation.targetContext
+        val device = UiDevice.getInstance(instrumentation)
+        ActivityScenario.launch(DiagnosticsActivity::class.java).use { scenario ->
+            scenario.onActivity {
+                assertNull(it.findViewById<Button>(R.id.quality_export_manage))
+                assertNotNull(it.findViewById<Button>(R.id.diagnostics_export_metadata))
+            }
+        }
+        ActivityScenario.launch(QualityDashboardActivity::class.java).use { scenario ->
+            scenario.onActivity { assertTrue(it.findViewById<Button>(R.id.quality_export_manage).performClick()) }
+            assertTrue(device.wait(Until.hasObject(By.res(context.packageName, "quality_export_choose")), 10000))
+            device.pressBack()
+            assertTrue(device.wait(Until.hasObject(By.res(context.packageName, "quality_status")), 10000))
+        }
+    }
+
     // This system-picker fixture was verified on API 26. It does not assert API 37 picker layout.
     @SdkSuppress(maxSdkVersion = 26)
     @Test fun realDocumentPickerCancelAndSaveExportOnlyNumericSnapshot() {

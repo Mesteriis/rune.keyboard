@@ -35,6 +35,7 @@ class QualityDashboardActivity : ThemedActivity() {
         setTitle(R.string.quality_dashboard_title)
         applySystemBarInsets(findViewById(R.id.quality_scroll))
         store = QualityStore.get(this)
+        QualityDashboardExtras.contribute(this, findViewById(R.id.quality_debug_actions))
         findViewById<Button>(R.id.quality_refresh).setOnClickListener { render() }
         findViewById<Button>(R.id.quality_reset).setOnClickListener {
             store.reset { success ->

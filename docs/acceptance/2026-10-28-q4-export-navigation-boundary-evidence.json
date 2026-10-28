@@ -1,0 +1,93 @@
+{
+  "baseCommit": "fc6833ffd573cd56b1fa0cdf0587c236f226a0cf",
+  "boundary": {
+    "negativeFixtures": 17,
+    "passed": true,
+    "positiveFixtures": 6,
+    "skips": 0,
+    "unitTests": 69,
+    "variants": [
+      "debug",
+      "release",
+      "profile"
+    ]
+  },
+  "build": {
+    "elapsedSeconds": 28.204684374999943,
+    "exitCode": 0
+  },
+  "card": "Q4",
+  "failedNativeAttempt": {
+    "api": 26,
+    "apkSha256": {
+      "debug": "b08af83a649a19ae347ccb56962fefc36629ea4d520dbab247a63bc1b8753b04",
+      "test": "c112e66238b50a671b7e1ca33d8e8e2d1844fe5969e12f38effa37168ddba32b"
+    },
+    "completed": 0,
+    "elapsedSeconds": 13.668999666999753,
+    "exitCode": 0,
+    "logSha256": "39d2c9959cb29394ad81925043b2d2466c3273416d24f4e4c804e1db5c5e8a7d",
+    "method": "io.github.mesteriis.rune.keyboard.smarttyping.tools.QualityExportInstrumentedTest#qualityDashboardOwnsNumericExportNavigation",
+    "ownedEmulatorVerified": true,
+    "passed": false,
+    "skips": 0,
+    "tests": 1
+  },
+  "initialCombinedIntegration": {
+    "elapsedSeconds": 10.704714665999745,
+    "exitCode": 1
+  },
+  "initialCombinedIntegrationReason": "RELEASE_SOURCE_DIRTY; no exemption introduced",
+  "limits": [
+    "Q8 candidate is present in the tested worktree; no clean commit-only APK claim.",
+    "Navigation-only API26 native check; no new document export/save/reset claim.",
+    "Q4 two real weeks, Fold and whole release remain outstanding."
+  ],
+  "logs": {
+    "boundary-fixed.log": "53b528157f25b6df2a4a410231e60e7b3605dd9e0bcccad0ccef5f856e7ec62f",
+    "boundary-tests.log": "4bf83f275a3f2355697bb43c13bd19604ee429a333ecadf12a3aa9ed4211072f",
+    "debug-build.log": "b6f289cc36395c15910ffbbf7ea3f685ff73bfa96883ede149b6020bb4f66817",
+    "native-test-rebuild.log": "7e749fc8cfb6178b71de967977654c626bf3a61a3a0bba0410efcd77ba2f3e7b",
+    "route-final.py": "cd4552dbedf38245b791f7c86c330e9ec57ef6c23bb92e51de2ddf7eb0d04149",
+    "route-instrumentation.log": "39d2c9959cb29394ad81925043b2d2466c3273416d24f4e4c804e1db5c5e8a7d",
+    "route.py": "0d14287bd7af672d0a381d040171c2017c05f23930aea79b4c10c12adcb16ef9"
+  },
+  "native": {
+    "api": 26,
+    "apkSha256": {
+      "debug": "b08af83a649a19ae347ccb56962fefc36629ea4d520dbab247a63bc1b8753b04",
+      "test": "7570228807aacf4b88d1b046b8c407f838a3e32fe21175746630b1860292cc2d"
+    },
+    "completed": 1,
+    "elapsedSeconds": 3.337158541000008,
+    "exitCode": 0,
+    "logSha256": "d9238a85d6f3b061d7e77ca99dbf919b000f9ecaabaa3867a942d834c2fb4f7e",
+    "method": "io.github.mesteriis.rune.keyboard.smarttyping.tools.QualityExportInstrumentedTest#qualityDashboardOwnsNumericExportNavigation",
+    "ownedEmulatorVerified": true,
+    "passed": true,
+    "skips": 0,
+    "tests": 1
+  },
+  "nativeFinalLogSha256": "d9238a85d6f3b061d7e77ca99dbf919b000f9ecaabaa3867a942d834c2fb4f7e",
+  "preexistingBoundaryErrors": [
+    "app/src/debug/java/io/github/mesteriis/rune/keyboard/settings/quality/QualityExportActivity.kt: diagnostics SAF output outside exact debug activity",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityStore.kt: diagnostics filesystem outside exact debug storage",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityStore.kt: diagnostics persistence outside exact debug storage"
+  ],
+  "schema": 1,
+  "separateQ8Candidate": {
+    "path": "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt",
+    "sha256": "8ab2f91df2597bc34d4dcac3e2731d23bf6a11c0224df5be42a9d4562d1dac73"
+  },
+  "sourceBindings": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/tools/QualityExportInstrumentedTest.kt": "aad93b29a22d03a71706b05fe2d09594ea4f0ff3939959c37b62a889aedf2f3e",
+    "app/src/debug/java/io/github/mesteriis/rune/keyboard/settings/quality/QualityDashboardExtras.kt": "5e41ffd9a3a07e1fdcf2f7fcaa939fd9426e4f48bc08a9b71684b8a9346218e6",
+    "app/src/debug/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticsActivity.kt": "9e239dc6d92a7ea0602d30bce2216c508ad66c4d4415712faf17c6f98123a744",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/quality/QualityDashboardActivity.kt": "f50e019d277527dea92452e6cf2bd2695740606afbec5f3b24154893597ac14d",
+    "app/src/main/res/layout/activity_quality_dashboard.xml": "884b42c73f0222b58ccfaf35b94b9d83fdbcb2e0a5e831909b0c8abbd1129663",
+    "app/src/profile/java/io/github/mesteriis/rune/keyboard/settings/quality/QualityDashboardExtras.kt": "abfcde68b80327bc8a35162dcb1b2eb6468cd83fbec5fd697ed0206e2c032ec8",
+    "app/src/release/java/io/github/mesteriis/rune/keyboard/settings/quality/QualityDashboardExtras.kt": "abfcde68b80327bc8a35162dcb1b2eb6468cd83fbec5fd697ed0206e2c032ec8"
+  },
+  "status": "debug numeric navigation and strict boundary verified; clean release and owner-use period remain separately required",
+  "unchangedScannerSha256": "ef0d4d048ae74c15207f4911f1f9ca3d1d103d04f7ec1418a2a762b74adb77ec"
+}
