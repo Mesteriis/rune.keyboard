@@ -21,7 +21,53 @@
     "elapsedSeconds": 83.44704124999998,
     "exitCode": 0
   },
-  "cleanReleasePrivacy": "pending clean-checkout integration; dirty-source guard refusal retained",
+  "cleanReleasePrivacy": {
+    "artifacts": {
+      "debug": {
+        "applicationId": "io.github.mesteriis.rune.keyboard",
+        "bytes": 183147533,
+        "file": "app-debug.apk",
+        "sha256": "392e328df3986d8e0dab4cabc81a81a63468e16ba7dfdf7913fa444d6bddb853",
+        "versionCode": 8
+      },
+      "profile": {
+        "applicationId": "io.github.mesteriis.rune.keyboard.profile",
+        "bytes": 180105313,
+        "file": "app-profile.apk",
+        "sha256": "e5794d665ce3b5e4c24cc528d7900f63f861d62bad83ca46a1883ae0e2825ae0",
+        "versionCode": 8
+      },
+      "release": {
+        "applicationId": "io.github.mesteriis.rune.keyboard",
+        "bytes": 180101177,
+        "file": "app-release-unsigned.apk",
+        "sha256": "99158ac903ed7d66746893f917a96e3daa8796f7b22edae07e2ebb5fefafb188",
+        "versionCode": 8
+      }
+    },
+    "cleanAfter": true,
+    "cleanBefore": true,
+    "controllerSha256": "8ab2f91df2597bc34d4dcac3e2731d23bf6a11c0224df5be42a9d4562d1dac73",
+    "elapsedSeconds": 103.18139187499946,
+    "exitCode": 0,
+    "logs": {
+      "clean-release.log": "ff05122d71d14c65c6c86e7f9fdc65a85b8e6cfba7d9449565dcc86b31d6317e",
+      "clean-release.py": "4b60aaf3cd2f06cf87f12d515bd82a4f195ab61356b590399878549acdd0acbd",
+      "clean-source-after.log": "934a49fdb68f1124751a6cf296a373a5a8088bd2bc335dc7fb68977d97d717f6",
+      "clean-source-before.log": "934a49fdb68f1124751a6cf296a373a5a8088bd2bc335dc7fb68977d97d717f6"
+    },
+    "offline": true,
+    "signingMaterialCopied": false,
+    "sourceAfter": {
+      "commit": "e2c49c49e2f5dec6f444f97673baf51262737f91",
+      "passed": true,
+      "schema": 1,
+      "statusEntries": 0,
+      "submodules": 1
+    },
+    "sourceCommit": "e2c49c49e2f5dec6f444f97673baf51262737f91",
+    "sourceGuardUnchanged": true
+  },
   "cleanup": {
     "foldTouched": false,
     "taskAvdDeleted": true,

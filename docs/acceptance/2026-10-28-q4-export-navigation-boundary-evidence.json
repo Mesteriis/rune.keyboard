@@ -89,5 +89,13 @@
     "app/src/release/java/io/github/mesteriis/rune/keyboard/settings/quality/QualityDashboardExtras.kt": "abfcde68b80327bc8a35162dcb1b2eb6468cd83fbec5fd697ed0206e2c032ec8"
   },
   "status": "debug numeric navigation and strict boundary verified; clean release and owner-use period remain separately required",
+  "subsequentCleanIntegration": {
+    "cleanAfter": true,
+    "cleanBefore": true,
+    "exitCode": 0,
+    "receipt": "2026-10-28-q8-editor-simulator-evidence.json",
+    "releaseAndProfilePrivacyPassed": true,
+    "sourceCommit": "e2c49c49e2f5dec6f444f97673baf51262737f91"
+  },
   "unchangedScannerSha256": "ef0d4d048ae74c15207f4911f1f9ca3d1d103d04f7ec1418a2a762b74adb77ec"
 }

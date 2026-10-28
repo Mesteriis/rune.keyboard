@@ -51,8 +51,11 @@ traces from qa_editor/WebView and third-party editors remain required.
   with an API26 native UI check. That check is not a native callback-profile test.
 - Initial combined integration failures are retained: the pre-existing numeric
   export dependency closure, then the expected strict dirty-source refusal for
-  the release build. Clean-source release/privacy acceptance remains a separate
-  integration check. No exemption was added to either guard.
+  the release build. A fresh tracked-clean checkout of committed source e2c49c4
+  then passed `imeIntelligenceBoundary`, `privacyGateRelease` and
+  `privacyGateProfile` offline, including actual debug/release/profile packaging.
+  Git was clean before and after; signing material was not copied. All three
+  APK hashes are recorded. No exemption was added to either guard.
 - The task-owned API26 emulator was stopped and deleted. Fold was not used.
 
 The [machine receipt](2026-10-28-q8-editor-simulator-evidence.json) binds the

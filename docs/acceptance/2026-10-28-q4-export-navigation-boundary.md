@@ -37,3 +37,8 @@ See [receipt](2026-10-28-q4-export-navigation-boundary-evidence.json) and
 [user instructions](../quality-metrics-debug-export.md). Q4's two actual weeks
 of ordinary owner use remain outstanding. No Fold, owner clipboard, publication
 or new model training was involved.
+
+Subsequent offline integration on committed source e2c49c4 passes the strict
+architecture and release/profile privacy/packaging gates from a clean checkout.
+The [Q8 receipt](2026-10-28-q8-editor-simulator-evidence.json) binds that source
+and all three APKs. This supplements the worktree-native navigation check above.
