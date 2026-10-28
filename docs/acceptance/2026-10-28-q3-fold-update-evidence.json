@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "cards": [
+    "Q3",
+    "Q1"
+  ],
+  "completeCards": false,
+  "testedCommit": "92eb5421364a7223b82ba436a3cb92843c2395f4",
+  "device": {
+    "model": "SM-F966B",
+    "api": 37,
+    "physical": true,
+    "transport": "ADB",
+    "serialDisclosed": false
+  },
+  "installation": {
+    "installed": true,
+    "versionCode": 8,
+    "versionName": "0.4.2",
+    "sameCertificate": true,
+    "backupSaved": true,
+    "backupEntries": 3,
+    "backupBytes": 4868096,
+    "appBytesVerified": true,
+    "artifacts": {
+      "app": {
+        "bytes": 183363523,
+        "sha256": "ea43b7408d85c1c845685f84597afc3ae6dff9e74ccbec468d3727ca7b9b7665"
+      },
+      "tests": {
+        "bytes": 1662324,
+        "sha256": "fbbb533dfc0fc92a761cde22c932fdf2e6e96696d879769f76c7852a70a3394f"
+      }
+    },
+    "existingModelStore": true,
+    "dataClearOrUninstall": false,
+    "runtimeBuildId": "d48f6df2ed03cd11d3182abe453fb3a5bd126aea92f2bc06ab747b201f84565f"
+  },
+  "instrumentation": {
+    "exitCode": 0,
+    "junitOk": true,
+    "failureMarker": false,
+    "skippedMarker": false,
+    "matchedCases": 15,
+    "journalSnapshots": 4,
+    "methods": [
+      "freshReviewedCorrectionsAtTwoPacesWithExactUndo",
+      "extraBackspacesInEmptyFieldKeepTheWholeNextWord",
+      "correctionPreviewAndUndoPreserveNextWord",
+      "rapidShortWordCorrectionAtThreePacesKeepsFollowingWords"
+    ],
+    "elapsedSeconds": 63.97886774991639
+  },
+  "restoration": {
+    "keyboardPreferencesRestored": true,
+    "protectedStoresUnchanged": true,
+    "protectedFilesBefore": 1,
+    "protectedFilesAfter": 1,
+    "secureImeSettingsRestored": true,
+    "modelStoreUnchanged": true,
+    "journalSnapshotsRetrieved": 4,
+    "rawJournalsPrivate": true
+  },
+  "journalAnalysis": {
+    "streams": [
+      {
+        "method": "freshReviewedCorrectionsAtTwoPacesWithExactUndo",
+        "stream": "metadata.jsonl",
+        "rows": 499,
+        "schemaRows": {
+          "9": 499
+        },
+        "sha256": "6903c8c24a2e1ac50cb6d8f71f21677f17c7fcaece6f07dfe9c8bfa4cf3924a3",
+        "analyzerAccepted": false,
+        "allSchema9EditorTypesBounded": true,
+        "schema9EditorTypes": [
+          1
+        ]
+      },
+      {
+        "method": "freshReviewedCorrectionsAtTwoPacesWithExactUndo",
+        "stream": "text.jsonl",
+        "rows": 2489,
+        "schemaRows": {
+          "8": 1670,
+          "9": 819
+        },
+        "sha256": "3dd9629780b82ab82487502b22eaa4b71250fe3233b59bbedde33e29850c50d4",
+        "analyzerAccepted": true,
+        "allSchema9EditorTypesBounded": true,
+        "schema9EditorTypes": [
+          1
+        ]
+      },
+      {
+        "method": "rapidShortWordCorrectionAtThreePacesKeepsFollowingWords",
+        "stream": "metadata.jsonl",
+        "rows": 584,
+        "schemaRows": {
+          "9": 584
+        },
+        "sha256": "e1577cd502344388bf55ac4e6b78185b1fc9e6726e1b77f9de09a5d8a992f257",
+        "analyzerAccepted": false,
+        "allSchema9EditorTypesBounded": true,
+        "schema9EditorTypes": [
+          1
+        ]
+      },
+      {
+        "method": "rapidShortWordCorrectionAtThreePacesKeepsFollowingWords",
+        "stream": "text.jsonl",
+        "rows": 2260,
+        "schemaRows": {
+          "8": 1037,
+          "9": 1223
+        },
+        "sha256": "a3371d2d3bb89eb204de1afa4c6ea9e5cc998656b25a74b197ecf7449ab23ee7",
+        "analyzerAccepted": true,
+        "allSchema9EditorTypesBounded": true,
+        "schema9EditorTypes": [
+          1
+        ]
+      },
+      {
+        "method": "extraBackspacesInEmptyFieldKeepTheWholeNextWord",
+        "stream": "metadata.jsonl",
+        "rows": 602,
+        "schemaRows": {
+          "9": 602
+        },
+        "sha256": "5e866352d78ef92714f8f58906ed53868da11e93617f2b9e52bbe04aba6fab92",
+        "analyzerAccepted": false,
+        "allSchema9EditorTypesBounded": true,
+        "schema9EditorTypes": [
+          1
+        ]
+      },
+      {
+        "method": "extraBackspacesInEmptyFieldKeepTheWholeNextWord",
+        "stream": "text.jsonl",
+        "rows": 2437,
+        "schemaRows": {
+          "8": 1037,
+          "9": 1400
+        },
+        "sha256": "dddf3243cdcaa60d566d94107c3b4db4b9d987cb02f0690e0cb82c1fa9d8f8b9",
+        "analyzerAccepted": true,
+        "allSchema9EditorTypesBounded": true,
+        "schema9EditorTypes": [
+          1
+        ]
+      },
+      {
+        "method": "correctionPreviewAndUndoPreserveNextWord",
+        "stream": "metadata.jsonl",
+        "rows": 567,
+        "schemaRows": {
+          "9": 567
+        },
+        "sha256": "c2a490a1d6b78bcc33f6462a57fbc2da44ad65971885ccd6e0fdc989209df4cf",
+        "analyzerAccepted": false,
+        "allSchema9EditorTypesBounded": true,
+        "schema9EditorTypes": [
+          1
+        ]
+      },
+      {
+        "method": "correctionPreviewAndUndoPreserveNextWord",
+        "stream": "text.jsonl",
+        "rows": 1928,
+        "schemaRows": {
+          "8": 404,
+          "9": 1524
+        },
+        "sha256": "a967ac0eda0ac122248224b14b81eb415c9a1c4c6b70806f655341a3897aefad",
+        "analyzerAccepted": true,
+        "allSchema9EditorTypesBounded": true,
+        "schema9EditorTypes": [
+          1
+        ]
+      }
+    ],
+    "snapshotsMayShareEarlierRows": true,
+    "accuracyMetric": false,
+    "initialAllRowsSchema9Assertion": "failed: retained pre-update schema8 text rows; analyzer accepts mixed schema8/9; only schema9 requires editorType",
+    "analyzerSha256": "fce1fd355bffc8a017b1029d4a50dc39262d66e11d13df5e521238eee7c806bd"
+  },
+  "releaseCheck": {
+    "commit": "92eb5421364a7223b82ba436a3cb92843c2395f4",
+    "cleanTrackedSource": true,
+    "tasks": [
+      ":app:privacyGateRelease",
+      ":app:apkFootprint"
+    ],
+    "exitCode": 0,
+    "logs": {
+      "build/review-q1-clean-source-20261027/q3-release-check.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "build/review-q1-clean-source-20261027/q3-release-check.log": "018e0d3efed48d890c2f98709cf57f2f18e36e3924b221425679aab15cf88296"
+    },
+    "independentFdroidServerProof": false,
+    "apks": {
+      "app-release-unsigned.apk": {
+        "bytes": 180096157,
+        "sha256": "935a7c7ce9673726f8032787e4845f2c86ce6751c8ec3d71b71bb90424829899"
+      }
+    }
+  },
+  "privateEvidenceSha256": {
+    "build/review-q3-schema9-20261028/release-result.json": "73211c0adba21191200b59804253926157316debfd584771dc111a9643ecd924",
+    "build/review-q3-schema9-20261028/fold-update/install-result.json": "0c5095345b997a8b19ed62cc4373a3a80da65acb6617fc2fe10306c5e3bfd3e9",
+    "build/review-q3-schema9-20261028/fold-update/instrumentation-result.json": "58506b8adff37e26e6a6214a92762c612f45c7db20fd60219682e786aedc929b",
+    "build/review-q3-schema9-20261028/fold-update/instrumentation.log": "2b06216a7174243fb3d1df5013b785adfa06b320459fc549283e212363d8af79",
+    "build/review-q3-schema9-20261028/fold-update/restoration-result.json": "bea0aa1f5ff1f07f4863a32a44b9e6225f3f19481b7e9e18a33f583dd472f752",
+    "build/review-q3-schema9-20261028/fold-update/journal-analysis.json": "f433c9057e45a65681480fc9ef94dbc070a1d26844b7a00b9df72905d11d1429",
+    "build/review-q3-schema9-20261028/fold-update/journals.tar": "ece262270b435f62be8d82d9c34fb57fcbfe98b10b71d70efa2b8e3718d388e9"
+  },
+  "queueReleasedTo": [
+    "AURA",
+    "Android MCP"
+  ],
+  "limitations": [
+    "Q3 Android adapter resource-readiness audit remains open",
+    "15 scripted public cases are not natural owner-use or unseen-data qualification",
+    "Snapshot rows overlap and include retained pre-update schema8 text",
+    "No public release, push, or independent F-Droid build-server proof"
+  ]
+}
