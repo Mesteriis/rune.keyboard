@@ -99,6 +99,915 @@
       "exitCode": 0
     }
   ],
+  "cleanCheckoutValidation": {
+    "additionalChecks": {
+      "assetNotice": "PASS",
+      "ciYaml": "PASS",
+      "pipelinePromotionTests": 5,
+      "provenanceSourceTests": 12
+    },
+    "hostedCiExecuted": false,
+    "initialFailure": "Three original scientific modules lacked historical data because the bootstrap step was omitted. Original failure logs retained; no source repair was needed.",
+    "preparation": "python tools/ci/historical_data_fixtures.py --install-build build",
+    "preparedBytes": 9896304,
+    "preparedFiles": 15,
+    "runs": [
+      {
+        "modules": [
+          {
+            "exitCode": 0,
+            "path": "tools/morphology/test_evaluate.py",
+            "skipped": [],
+            "tests": 9,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/morphology/test_export_android_profile.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/morphology/test_export_dictionary.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/morphology/test_personal_holdout.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/morphology/test_ranker.py",
+            "skipped": [],
+            "tests": 18,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/morphology/test_telegram_style.py",
+            "skipped": [],
+            "tests": 21,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/test_qualification_artifacts.py",
+            "skipped": [],
+            "tests": 1,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_audit_applied_authored_history.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_audit_authored_training_history.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_audit_auxiliary_authored_history.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_audit_family_coverage.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_audit_frozen_context_descendants.py",
+            "skipped": [],
+            "tests": 8,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_audit_late_authored_history.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_audit_late_source_closure.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_audit_unmanifested_conversation.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_contextual_assets.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_contextual_policy_calibration.py",
+            "skipped": [],
+            "tests": 9,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_control_ledger.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_conversation_split_checks.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_evaluate_product_compact_policy.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_grammar_context_features.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_grammar_contrast_corpus.py",
+            "skipped": [],
+            "tests": 7,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_grammar_focus_forms.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_grammar_revision_calibration.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_grammar_revision_scope.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_grammar_training_groups.py",
+            "skipped": [],
+            "tests": 7,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_holdout_ledger.py",
+            "skipped": [],
+            "tests": 9,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_import_control_components.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_import_early_ru_history.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_import_joint_history.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_import_legacy_context_history.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_import_natural_context_history.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_import_ranker_history.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_import_spelling_v6.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_import_tatoeba_history.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_legacy_family_recovery.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_legacy_holdout_merge.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_legacy_holdout_recovery.py",
+            "skipped": [],
+            "tests": 7,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_merge_early_ru_sources.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_noun_case_contrast_corpus.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_noun_case_focus_forms.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_noun_case_revision_scope.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_pack_rare_word_lexicon.py",
+            "skipped": [],
+            "tests": 1,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_past_context_assets.py",
+            "skipped": [],
+            "tests": 2,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_prepare_public_controls_v1.py",
+            "skipped": [],
+            "tests": 2,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_prepare_public_spelling_v1.py",
+            "skipped": [],
+            "tests": 11,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_public_control_ledger.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_public_corpus_preparation_v1.py",
+            "skipped": [],
+            "tests": 11,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_public_holdout_ledger.py",
+            "skipped": [],
+            "tests": 23,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_quarantine_unknown_families.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_rare_word_supplement.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_recover_early_ru_sources.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_recover_punctuation_articles.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_recover_ranker_sources.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_restore_frozen_followup.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_agreement_delta_source.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_applied_corpus.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_applied_features.py",
+            "skipped": [],
+            "tests": 8,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_applied_ranker.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_continuation_calibration.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_continuation_corpus.py",
+            "skipped": [],
+            "tests": 7,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_continuation_features.py",
+            "skipped": [],
+            "tests": 11,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_continuation_source.py",
+            "skipped": [],
+            "tests": 9,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_contrast_corpus.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_corpus_separation.py",
+            "skipped": [],
+            "tests": 2,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_focus_forms.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_grammar_features.py",
+            "skipped": [],
+            "tests": 10,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_input_audit.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_instrumental_corpus.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_left_role_ranker.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_left_sequence_corpus.py",
+            "skipped": [],
+            "tests": 2,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_left_sequence_features.py",
+            "skipped": [],
+            "tests": 7,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_modal_source.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_oblique_corpus.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_other_part_corpus.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_prior_evidence.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_residual_ranker.py",
+            "skipped": [],
+            "tests": 7,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_revision_features.py",
+            "skipped": [],
+            "tests": 2,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_revision_scope.py",
+            "skipped": [],
+            "tests": 7,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_role_corpus.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_role_features.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_sentence_audit.py",
+            "skipped": [],
+            "tests": 7,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_sentence_selection.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_side_forms.py",
+            "skipped": [],
+            "tests": 2,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_signature_weights.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_source_calibration.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_source_scope.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_subject_evidence.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_surface_source.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_timeline_calibration.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_training_exclusion.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_training_groups.py",
+            "skipped": [],
+            "tests": 7,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_right_context_training_weights.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_source_identities.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_word_context_features.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          }
+        ],
+        "name": "clean-stdlib",
+        "receiptSha256": "bdc03977d0680236429b62d77795d955ac766b809642e70cc4828d83c3a9797c",
+        "status": "PASS"
+      },
+      {
+        "modules": [
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_abstaining_ranker.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_applied_tree_batch.py",
+            "skipped": [],
+            "tests": 2,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_augmented_abstaining_ranker.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 1,
+            "path": "tools/typing_experiments/test_epoch_evaluation.py",
+            "skipped": [],
+            "tests": 2,
+            "timedOut": false
+          },
+          {
+            "exitCode": 1,
+            "path": "tools/typing_experiments/test_extra_epochs.py",
+            "skipped": [],
+            "tests": 7,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_left_role_tree_batch.py",
+            "skipped": [],
+            "tests": 2,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_models.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 1,
+            "path": "tools/typing_experiments/test_neural_refinement.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_refinement.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_refreeze_augmented_margin.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_residual_tree_batch.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_retrieval.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_word_ranking.py",
+            "skipped": [
+              {
+                "reason": "MLX environment required",
+                "test": "test_word_ranking.WordRankingTests.test_mlx_loss_parity_initialization_and_finite_gradient"
+              }
+            ],
+            "tests": 7,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_word_ranking_data.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          }
+        ],
+        "name": "clean-scientific",
+        "receiptSha256": "a7df865a70ea1a1b0c3221e06678a97d83c58b323724b72a6a35dc2e3bb3725a",
+        "status": "FAIL"
+      },
+      {
+        "modules": [
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_abstaining_ranker.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_applied_tree_batch.py",
+            "skipped": [],
+            "tests": 2,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_augmented_abstaining_ranker.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_epoch_evaluation.py",
+            "skipped": [],
+            "tests": 2,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_extra_epochs.py",
+            "skipped": [],
+            "tests": 7,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_left_role_tree_batch.py",
+            "skipped": [],
+            "tests": 2,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_models.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_neural_refinement.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_refinement.py",
+            "skipped": [],
+            "tests": 4,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_refreeze_augmented_margin.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_residual_tree_batch.py",
+            "skipped": [],
+            "tests": 5,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_retrieval.py",
+            "skipped": [],
+            "tests": 6,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_word_ranking.py",
+            "skipped": [
+              {
+                "reason": "MLX environment required",
+                "test": "test_word_ranking.WordRankingTests.test_mlx_loss_parity_initialization_and_finite_gradient"
+              }
+            ],
+            "tests": 7,
+            "timedOut": false
+          },
+          {
+            "exitCode": 0,
+            "path": "tools/typing_experiments/test_word_ranking_data.py",
+            "skipped": [],
+            "tests": 3,
+            "timedOut": false
+          }
+        ],
+        "name": "clean-scientific-prepared",
+        "receiptSha256": "ec7acb64ad6c9f4ab6e836a2e93a289936e39fee35cf341a9b6bade7f76dfd5c",
+        "status": "PASS"
+      }
+    ],
+    "sourceCommit": "ddd86b4592c846192b543a35f31965b15179e905",
+    "trackedTreeCleanBeforeAndAfter": true
+  },
   "cliChecks": [
     {
       "command": [

@@ -37,3 +37,20 @@ Only the new source-status paragraph is staged in the experiment README; its
 older pending owner additions remain unchanged and uncommitted. No product
 Kotlin, asset, policy bytes or Android install changed in this slice. Hosted CI
 has not been run.
+
+## Clean-checkout integration validation
+
+The exact source commit `ddd86b4` passes the isolated versioned runners in the
+existing clean validation clone: 95 stdlib modules / 531 tests, no skips;
+14 scientific modules / 54 tests, one explicit MLX-environment skip, no failures
+or errors. MLX execution belongs to its separately pinned backend job and was
+not repeated here. The first scientific attempt failed three modules because
+the required historical-data install step had been omitted. Its failure
+receipt/logs are retained; after the same verified 15-file / 9,896,304-byte
+preparation used in CI, the complete scientific profile passes. No source was
+changed to hide these failures.
+
+In that clone the 12 provenance regressions and five pipeline promotion tests
+also pass, the exact asset NOTICE/data-policy gate passes, and CI YAML parses.
+The clone's tracked tree is clean before and after validation. These local
+results do not assert a hosted CI execution or fresh training qualification.
