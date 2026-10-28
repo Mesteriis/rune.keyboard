@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "card": "Q4",
+  "completeCard": false,
+  "parentCommit": "63ae1f2",
+  "scope": "Numeric source/outcome table, model timing buckets, v1/v2 to v3 codec migration and repository forwarding",
+  "sourceCount": 14,
+  "outcomeCount": 4,
+  "sourceCounters": 56,
+  "modelResponseBuckets": 5,
+  "codecVersion": 3,
+  "codecMaxBytes": 2048,
+  "maxCount": 1000000000000,
+  "minimumApplicationsForUndoFraction": 100,
+  "jvm": {
+    "tests": 1313,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "qualityJvm": {
+    "tests": 31,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "debugLintProfilePrivacyAndAndroidTestBuildExit": 0,
+  "sourceSha256": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRecorder.kt": "a584e63b750fb64340b41baa8b90dbed0d815fd8cda886f5b97a5bf9aafe24f7",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityModel.kt": "21a4cbf61acf0f5a6abb4f8af3f8a762cda5b85e2c0dbafa72d594f390f8ef2c",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRepository.kt": "d4a752265850de3d826461d9cd308ba74527bf1f68d2649ccdaec531f122fbc8",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityStore.kt": "1f5f171c688b75190162976e75131952d56f52482aec6e2d40c200352b49831f",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityModelTest.kt": "6c5299a008e65a4b6869b7e547c9903bc54e13367d3bd4e4c923c714dd016042",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualitySourceModelTest.kt": "eedda65270bff156b5e871b45dbbea2c3306b005cb1ec626f2adeba9f28ad53c",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRepositoryTest.kt": "131f4e9980e20678a0e707b667b12e2973e4e582a69684a63bb378665d0c4e18",
+    "docs/quality-source-counters.md": "5de1d60af5b8970473ec6cd5600bc6d45a0431b306624f34a6823e0249e050e1"
+  },
+  "privateEvidenceSha256": {
+    "build/review-q4-counters-20261028/integration-checks.log": "3d5af51dae16323f64ca4f0f8f0a86ec654fe9d220ad215e67a8f40e301b0721",
+    "build/review-q4-counters-20261028/integration-checks.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "build/review-q4-counters-20261028/quality-tests.log": "04cf02f46275b110a22e358efe2f5e83ef0991fe19bc6678f4d1259e051e0617",
+    "build/review-q4-counters-20261028/quality-tests.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "build/review-q4-counters-20261028/foundation-jvm-results.tar": "24ede8234b83a880bcd6b85fdaff44f736500c13dce09b0c42c3a53e9a0f2b22"
+  },
+  "remaining": [
+    "controller source/outcome hooks and acknowledged Undo identity",
+    "model elapsedMillis integration",
+    "dashboard counts/reset instrumentation and debug-only export",
+    "model unavailable copy including CPU limit",
+    "source-bound replay and final release/device checks",
+    "real two-week owner-use observations and acceptance report"
+  ],
+  "wholeReviewComplete": false,
+  "deviceInstalledThisSlice": false,
+  "newAccuracyOrAdmissionClaim": false
+}

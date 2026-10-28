@@ -6,6 +6,15 @@ enum class QualityEvent {
     WORD_BOUNDARY_PICKED, ABBREVIATION_PICKED, PHRASE_REVIEW_PICKED, MANUAL_RETYPE,
 }
 
+/** Fixed persisted dimensions of RUNE_QUALITY_3; changing their order requires a codec migration. */
+enum class AutomaticQualitySource {
+    COMMON_CONFUSION, GENERAL_LOCAL, COMPACT_PUBLIC, NEIGHBOR_RECOVERY,
+    JOINT_SHORT, JOINT_LONG, JOINT_RESCUE, WORD_CONTEXT, CONTEXTUAL_RANKER,
+    INFINITIVE_REVISION, NOUN_CASE_REVISION, MODEL, CONTEXTUAL, CANONICAL_CASE,
+}
+
+enum class AutomaticQualityOutcome { APPLIED, EXPLICIT_UNDO, KEPT_ORIGINAL, WINDOW_EXPIRED }
+
 enum class ShadowResult {
     AGREEMENT, DISAGREEMENT, EXPLICIT_PRIMARY, EXPLICIT_EXPERIMENTAL, EXPLICIT_BOTH, EXPLICIT_NEITHER,
 }
@@ -14,6 +23,10 @@ enum class ShadowResult {
 interface QualityRecorder {
     fun configure(metricsEnabled: Boolean, shadowEnabled: Boolean, eligible: Boolean) = Unit
     fun record(event: QualityEvent) = Unit
+    /** Numeric source accounting only; callers retain all admission and editor ownership checks. */
+    fun recordAutomatic(source: AutomaticQualitySource, outcome: AutomaticQualityOutcome) = Unit
+    /** Engine-reported response time, separate from candidate request latency. */
+    fun modelResponseMillis(durationMillis: Long) = Unit
     /** Candidate computation/response time, never advertised as end-to-end keystroke latency. */
     fun candidateResponseNanos(durationNanos: Long) = Unit
     /** Refresh an unlabelled decision at the same revision; count each decision once. */

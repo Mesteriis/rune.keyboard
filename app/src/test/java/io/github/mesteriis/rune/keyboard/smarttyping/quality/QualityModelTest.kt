@@ -157,7 +157,7 @@ class QualityModelTest {
         assertEquals(values.subList(legacyEventCount,
             legacyEventCount + QualityModel.LATENCY_BUCKET_COUNT), decoded.candidateResponseBuckets)
         assertEquals(values.takeLast(ShadowResult.entries.size), decoded.shadow)
-        assertTrue(QualityCodec.encode(decoded).toString(Charsets.US_ASCII).startsWith("RUNE_QUALITY_2\n"))
+        assertTrue(QualityCodec.encode(decoded).toString(Charsets.US_ASCII).startsWith("RUNE_QUALITY_3\n"))
     }
 
     @Test fun `malformed snapshots fail closed and counts saturate`() {

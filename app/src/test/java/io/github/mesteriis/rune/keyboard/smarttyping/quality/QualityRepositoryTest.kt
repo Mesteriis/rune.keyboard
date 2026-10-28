@@ -105,6 +105,57 @@ class QualityRepositoryTest {
         assertEquals(false, repository.lastWriteSucceeded)
     }
 
+    @Test fun `source counters and model latency obey loading coalescing and durable reset`() {
+        val worker = Worker()
+        val storage = Storage()
+        val repository = QualityRepository(storage, worker)
+        repository.configure(true, false, true)
+        repository.recordAutomatic(AutomaticQualitySource.JOINT_SHORT, AutomaticQualityOutcome.APPLIED)
+        repository.modelResponseMillis(250)
+        assertEquals(QualitySnapshot(), repository.snapshot())
+        worker.drain()
+        for (source in AutomaticQualitySource.entries) for (outcome in AutomaticQualityOutcome.entries)
+            repository.recordAutomatic(source, outcome)
+        repository.modelResponseMillis(250)
+        assertEquals(1, worker.tasks.size)
+        worker.drain()
+        assertEquals(List(56) { 1L }, storage.persisted!!.automaticSources)
+        assertEquals(listOf(0L, 0L, 0L, 1L, 0L), storage.persisted!!.modelResponseBuckets)
+        assertEquals(List(8) { 0L }, storage.persisted!!.events)
+        val restartedWorker = Worker()
+        val restarted = QualityRepository(storage, restartedWorker)
+        restartedWorker.drain()
+        assertEquals(repository.snapshot(), restarted.snapshot())
+        repository.reset()
+        repository.recordAutomatic(AutomaticQualitySource.JOINT_SHORT, AutomaticQualityOutcome.APPLIED)
+        repository.modelResponseMillis(50)
+        worker.drain()
+        assertEquals(QualitySnapshot(), storage.persisted)
+        assertEquals(QualitySnapshot(), repository.snapshot())
+    }
+
+    @Test fun `failed source counter save pauses new numeric collection until a durable reset`() {
+        val worker = Worker()
+        val storage = Storage().apply { writesSucceed = false }
+        val repository = QualityRepository(storage, worker)
+        repository.configure(true, true, true)
+        worker.drain()
+        repository.recordAutomatic(AutomaticQualitySource.MODEL, AutomaticQualityOutcome.APPLIED)
+        worker.drain()
+        assertEquals(QualityRepository.Readiness.FAILED, repository.readiness)
+        repository.recordAutomatic(AutomaticQualitySource.MODEL, AutomaticQualityOutcome.EXPLICIT_UNDO)
+        repository.modelResponseMillis(50)
+        assertEquals(0L, repository.snapshot()[AutomaticQualitySource.MODEL, AutomaticQualityOutcome.EXPLICIT_UNDO])
+        assertEquals(List(5) { 0L }, repository.snapshot().modelResponseBuckets)
+        storage.writesSucceed = true
+        repository.reset()
+        worker.drain()
+        repository.recordAutomatic(AutomaticQualitySource.MODEL, AutomaticQualityOutcome.APPLIED)
+        worker.drain()
+        assertEquals(1L, storage.persisted!![AutomaticQualitySource.MODEL, AutomaticQualityOutcome.APPLIED])
+        assertEquals(0L, storage.persisted!![AutomaticQualitySource.MODEL, AutomaticQualityOutcome.EXPLICIT_UNDO])
+    }
+
     @Test fun `repeated reset cannot accumulate unbounded callbacks`() {
         val worker = Worker()
         val repository = QualityRepository(Storage(), worker)
