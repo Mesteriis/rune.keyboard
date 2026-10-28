@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "card": "Q4",
+  "completeCard": false,
+  "commit": "7073366cc534917fbfe21fd4b45eddb77135c345",
+  "cleanSource": true,
+  "copiedOwnerChanges": false,
+  "tasks": [
+    ":app:privacyGateRelease",
+    ":app:apkFootprint"
+  ],
+  "exitCode": 0,
+  "unsignedReleaseApkBytes": 180100681,
+  "unsignedReleaseApkSha256": "a244b09913a142834fc5a05f8bc118dbe7daaa5a90a746e7b16c91691c31eff0",
+  "logSha256": "ab7a5094cd1d8dbfa6e9a22a328299e26405ace2899194c391773277773af7af",
+  "exitFileSha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+  "ownerTrackedFilesPreserved": 13,
+  "ownerUntrackedPathsPreserved": 98,
+  "ownerInstalled": false,
+  "naturalOwnerUseStarted": false,
+  "independentFdroidServerProof": false,
+  "wholeReviewComplete": false
+}
