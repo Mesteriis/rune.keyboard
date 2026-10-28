@@ -52,8 +52,18 @@ reset/restore and metrics/eligibility transitions revoke it. The ticket contains
 no text, does not retain the recorder/editor and is excluded from persistence.
 Editor behavior never depends on whether a ticket was issued. Model refinement
 remains excluded; CONTEXTUAL is manual-only and supplies no automatic count.
-Kept-original/expired-window hooks, real model-response recording and debug
-export still require integration. Dashboard instrumentation also retains its
-explicit synthetic fixtures and actual reset checks.
+Explicit Original now records a current source proposal once; it does not imply
+that the proposal passed automatic admission. Late local windows record only a
+known preferred source; model windows record an owned pending spelling
+opportunity. Existing 250 ms boundaries are unchanged and covered at 249/250/251.
+Model response time is admitted at actual submission and consumed once for a
+normal or late/discarded reply, with at most eight outstanding numeric identities.
+Only the empty collection-period permission is retained; no input/prefix or word
+fingerprint enters this history. Reset/privacy/recorder changes and shutdown
+revoke it. This bounded sample includes reported refusals, including UNAVAILABLE
+for CPU limits or engine failures; zero refusal duration is not inference time.
+It is not a complete latency distribution. Debug-only export and final owner
+integration still remain. Dashboard instrumentation also retains its synthetic
+fixtures and actual reset checks.
 Upgrade compatibility covers v1/v2 reads by this version; older binaries are not
 claimed to read a v3 file.

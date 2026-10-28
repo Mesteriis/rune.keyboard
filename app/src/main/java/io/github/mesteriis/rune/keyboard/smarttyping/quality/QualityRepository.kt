@@ -47,6 +47,11 @@ class QualityRepository(private val storage: QualityStorage, private val worker:
         return application
     }
     override fun recordAutomaticUndo(application: AutomaticQualityApplication) = update { recordAutomaticUndo(application) }
+    override fun beginModelResponse(): QualityModelResponse? = synchronized(lock) {
+        if (isReady) model.beginModelResponse() else null
+    }
+    override fun recordModelResponse(response: QualityModelResponse, durationMillis: Long) =
+        update { recordModelResponse(response, durationMillis) }
     override fun modelResponseMillis(durationMillis: Long) = update { modelResponseMillis(durationMillis) }
     override fun candidateResponseNanos(durationNanos: Long) = update { candidateResponseNanos(durationNanos) }
     override fun compare(revision: Long, source: String, primaryChoice: String, experimentalChoice: String) =

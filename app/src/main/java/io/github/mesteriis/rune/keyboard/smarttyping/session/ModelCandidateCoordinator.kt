@@ -8,6 +8,7 @@ import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringReply
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringCode
 import io.github.mesteriis.rune.keyboard.intelligence.ipc.ScoringToken
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalCandidateReply
+import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityModelResponse
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticSource
@@ -49,6 +50,8 @@ class ModelCandidateCoordinator(
     private var diagnosticRequest: ScoringToken? = null
     private var diagnosticScheduled: Pair<Long, Long>? = null
     private var diagnosticSource = DiagnosticSource.MODEL
+    // Numeric identities only. Keep a bounded sample of cancelled requests for their late replies.
+    private val qualityResponses = LinkedHashMap<ScoringToken, QualityModelResponse>()
     internal var onPreviousWordRefined: (() -> Unit)? = null
 
     /** Cached metadata only, independent of transport connectivity and quality qualification. */
@@ -104,7 +107,10 @@ class ModelCandidateCoordinator(
                 pendingKind = kind
                 diagnosticRequest = input.token
                 diagnosticScheduled = null
-                trace.section(SmartTypingTraceSection.MODEL_REQUEST) { client.score(input) }
+                trace.section(SmartTypingTraceSection.MODEL_REQUEST) {
+                    captureQualityResponse(input.token)
+                    client.score(input)
+                }
             }
         }
         timer = task
@@ -158,7 +164,10 @@ class ModelCandidateCoordinator(
         timer = expiry
         scheduler.postDelayed(expiry, controller.previousWordRemainingMillis())
         client.attachSession(controller.state.sessionId, true)
-        trace.section(SmartTypingTraceSection.MODEL_REQUEST) { client.score(input) }
+        trace.section(SmartTypingTraceSection.MODEL_REQUEST) {
+            captureQualityResponse(input.token)
+            client.score(input)
+        }
         return true
     }
 
@@ -191,8 +200,11 @@ class ModelCandidateCoordinator(
             override fun run() {
                 checkOwner()
                 if (timer === this && epoch == editingEpoch) {
-                    diagnosticRequest?.let { controller.recordRequest(DiagnosticReason.DEADLINE_MISSED,
-                        diagnosticSource, it.sessionId, it.revision, it.requestId) }
+                    diagnosticRequest?.let {
+                        recordSpaceExpiry(it)
+                        controller.recordRequest(DiagnosticReason.DEADLINE_MISSED,
+                            diagnosticSource, it.sessionId, it.revision, it.requestId)
+                    }
                     diagnosticRequest = null
                     cancel()
                 }
@@ -227,8 +239,11 @@ class ModelCandidateCoordinator(
             override fun run() {
                 checkOwner()
                 if (timer === this && epoch == currentEpoch) {
-                    diagnosticRequest?.let { controller.recordRequest(DiagnosticReason.DEADLINE_MISSED,
-                        diagnosticSource, it.sessionId, it.revision, it.requestId) }
+                    diagnosticRequest?.let {
+                        recordSpaceExpiry(it)
+                        controller.recordRequest(DiagnosticReason.DEADLINE_MISSED,
+                            diagnosticSource, it.sessionId, it.revision, it.requestId)
+                    }
                     diagnosticRequest = null
                     cancel()
                 }
@@ -236,7 +251,10 @@ class ModelCandidateCoordinator(
         }
         timer = expiry
         scheduler.postDelayed(expiry, SPACE_GRACE_MILLIS - elapsedMillis)
-        trace.section(SmartTypingTraceSection.MODEL_REQUEST) { client.score(input) }
+        trace.section(SmartTypingTraceSection.MODEL_REQUEST) {
+            captureQualityResponse(input.token)
+            client.score(input)
+        }
         return true
     }
 
@@ -252,6 +270,8 @@ class ModelCandidateCoordinator(
     override fun currentCompositionRevision(): Long { checkOwner(); return controller.state.revision }
     override fun onDiscardedReply(reply: ScoringReply) {
         checkOwner()
+        recordQualityResponse(reply)
+        if (spaceExecutor != null && !withinSpaceWindow()) recordSpaceExpiry(reply.token)
         controller.recordScoringReply(reply, DiagnosticReason.STALE)
     }
     override fun isCurrentRequest(token: ScoringToken): Boolean {
@@ -261,15 +281,34 @@ class ModelCandidateCoordinator(
         return if (spaceExecutor != null) withinSpaceWindow() && controller.isCurrentSpaceCorrection(token)
             else isCurrent(kind, token)
     }
+    private fun captureQualityResponse(token: ScoringToken) {
+        val response = controller.beginQualityModelResponse() ?: return
+        qualityResponses[token] = response
+        if (qualityResponses.size > MAX_QUALITY_RESPONSES) qualityResponses.remove(qualityResponses.keys.first())
+    }
+
+    private fun recordQualityResponse(reply: ScoringReply) {
+        val response = qualityResponses.remove(reply.token) ?: return
+        if (!closed && ownerState().baseEligible)
+            controller.recordQualityModelResponse(response, reply.elapsedMillis)
+    }
+
+    private fun recordSpaceExpiry(token: ScoringToken) {
+        if (!closed && pendingKind == RequestKind.SPELLING && pendingOwner == ownerState() && automaticSpaceEligible())
+            controller.recordModelWindowExpired(token)
+    }
+
     override fun onReply(reply: ScoringReply) {
         trace.section(SmartTypingTraceSection.MODEL_RESULT) {
             checkOwner()
+            recordQualityResponse(reply)
             val kind = pendingKind ?: run {
                 controller.recordScoringReply(reply, DiagnosticReason.STALE)
                 return@section
             }
             val executeSpace = spaceExecutor
             if (executeSpace != null && (if (kind == RequestKind.REFINEMENT) !controller.canRefinePreviousWord else !withinSpaceWindow())) {
+                recordSpaceExpiry(reply.token)
                 controller.recordRequest(DiagnosticReason.DEADLINE_MISSED, diagnosticSource,
                     reply.token.sessionId, reply.token.revision, reply.token.requestId)
                 diagnosticRequest = null
@@ -319,9 +358,13 @@ class ModelCandidateCoordinator(
         }
         // A new connection never resubmits an earlier composition.
     }
+    /** Parent shutdown can cancel synchronously before reaching this coordinator's close. */
+    internal fun discardQualityResponseAdmissions() { checkOwner(); qualityResponses.clear() }
+
     override fun close() {
         checkOwner()
         if (closed) return
+        discardQualityResponseAdmissions()
         cancel(); closed = true; client.close(); readiness.close()
     }
     private fun featureEligible() = !closed && ownerState().canActivateAnyModelCandidate && controller.state.enabled
@@ -345,6 +388,7 @@ class ModelCandidateCoordinator(
     private fun checkOwner() = check(Thread.currentThread() === ownerThread) { "Model candidate owner thread required" }
     private enum class RequestKind { SPELLING, CONTEXTUAL, REFINEMENT }
     companion object {
+        internal const val MAX_QUALITY_RESPONSES = 8
         /** Development pause, not a measured latency/energy budget; service CPU duty still applies. */
         const val PAUSE_MILLIS = 400L
         /** UX limit on a late correction, not extra inference duty or a performance claim. */

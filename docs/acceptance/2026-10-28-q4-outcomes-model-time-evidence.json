@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "card": "Q4",
+  "completeCard": false,
+  "parentCommit": "0e6a2f6",
+  "scope": "Explicit original preference, single-observation window expiry and admitted numeric model-response timing",
+  "keptOriginalSemantics": "current preferred proposal, not an automatic-admission/correctness label; manual repetitions and absent proposals excluded",
+  "localWindowSemantics": "first known preferred source result outside its owned existing 250ms window; unknown source not invented",
+  "modelWindowSemantics": "owned qualified pending spelling opportunity, once across timer/direct/discarded callback, independent of eventual scoring admission",
+  "windowBoundaryTestsMillis": [
+    249,
+    250,
+    251
+  ],
+  "windowLiteralChanged": false,
+  "modelTiming": {
+    "originAtActualSubmission": true,
+    "singleUse": true,
+    "noTextInAdmission": true,
+    "numericHistoryMax": 8,
+    "lateCancelledRepliesMayBeSampled": true,
+    "resetPrivacyAndRecorderRevocation": true,
+    "inactiveOwnerExcluded": true,
+    "shutdownRevokesBeforeSynchronousParentCancel": true,
+    "includesUnavailableRefusals": true,
+    "unavailableIncludesCpuLimit": true,
+    "zeroRefusalDurationNotProofOfInference": true,
+    "completeLatencyPopulationClaim": false
+  },
+  "jvm": {
+    "tests": 1335,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "qualityJvm": {
+    "tests": 36,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "android": {
+    "api": 26,
+    "ownedEmulatorVerified": true,
+    "passed": true,
+    "tests": 4,
+    "completed": 4,
+    "skips": 0,
+    "exitCode": 0,
+    "methods": [
+      "actualCorrectionAndUndoCountOnlyAcknowledgedEligibleActions",
+      "qualityDashboardShowsNumericEventsAndResetClearsDisk",
+      "realAtomicQualityStorageMigratesV2AndReadsTheFullV3Payload",
+      "qualitySourceResourceTablesRetainTheirEnglishAndRussianDimensions"
+    ],
+    "apkSha256": {
+      "app/build/outputs/apk/debug/app-debug.apk": "7c1e0aa3e29fd458189bee77031ae377f576153d6b49c09130c3fd2d63c71d23",
+      "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "d061b0a2ba6dfcc8c690b7f348be59374293c8e8d9dbdd6c91b10e18231a9bc5"
+    },
+    "logSha256": "aa38d1cfc6b4b4e01548de9536283f7ebdcd3b08f18e20786b1fc86a0ea96ed4",
+    "elapsedSeconds": 30.504207666032016
+  },
+  "replay": {
+    "rows": 15288,
+    "nonTimingDifferences": 0,
+    "excludedFields": [
+      "fullTokenGenerationNanos",
+      "hostStageNanos"
+    ],
+    "baseline": "Q3 final frozen candidate observations, not a new parent build",
+    "coreSources": 90,
+    "assets": 69,
+    "runs": [
+      {
+        "name": "stress",
+        "rows": 1676,
+        "mode": "joint-production",
+        "inputSha256": "fa400451aaa627aa07ade0ed75d50cffa26f6f3f24727023bb4fae2c199caeea",
+        "baselineObservationsSha256": "bd9526635156c894f963acc6561ae9999527f72722648d81aa7cbe91817c1650",
+        "candidateObservationsPath": "build/review-q4-outcomes-20261028/origin-replay/stress/observations.jsonl",
+        "candidateObservationsSha256": "526c00b6083bc3f4f11f88f6147832cc564f90d7c513c306b96c45ee17f2b11b",
+        "nonTimingDifferences": 0,
+        "boundaryReasons": {
+          "ORIGINAL_VALID": 300,
+          "SERVICE_REFUSED": 76,
+          "SEARCH_INCOMPLETE": 167,
+          "TOO_SHORT": 179,
+          "AUTO_REPLACE": 887,
+          "WINNER_AMBIGUOUS": 38,
+          "NOT_QUALIFIED": 23,
+          "LOCAL_SEARCH_EMPTY": 2,
+          "INELIGIBLE": 4
+        },
+        "exitCode": 0
+      },
+      {
+        "name": "regression",
+        "rows": 12012,
+        "mode": "noun-case-production",
+        "inputSha256": "a9af23fb2eefcfc5921633dde6be862ac5e08e159296188b52d1212da232685c",
+        "baselineObservationsSha256": "ac05c0a04535a068961c17375856a67814d9ce97823d6456cc6bade7ee3aced8",
+        "candidateObservationsPath": "build/review-q4-outcomes-20261028/origin-replay/regression/observations.jsonl",
+        "candidateObservationsSha256": "bf2cd86fb734931d32a242896d8e9e22c64d796de2dc63d1f153f5d0b004e694",
+        "nonTimingDifferences": 0,
+        "boundaryReasons": {
+          "AUTO_REPLACE": 5983,
+          "TOO_SHORT": 485,
+          "ORIGINAL_VALID": 3860,
+          "LOCAL_SEARCH_EMPTY": 296,
+          "WINNER_AMBIGUOUS": 95,
+          "SERVICE_REFUSED": 383,
+          "NOT_QUALIFIED": 40,
+          "SEARCH_INCOMPLETE": 827,
+          "INSUFFICIENT_MARGIN": 20,
+          "OWNERSHIP_REJECTED": 17,
+          "RIVAL_OTHER_LEMMA": 1,
+          "RIVAL_UNKNOWN": 4,
+          "NO_RANKING": 1
+        },
+        "exitCode": 0
+      },
+      {
+        "name": "calibration",
+        "rows": 1600,
+        "mode": "noun-case-production",
+        "inputSha256": "3728513d2bdfb033474cf9b39cc662bbe47d13d5cbf66fff7b5f720e8f554d46",
+        "baselineObservationsSha256": "c6b8f6dc4793572b7456d345bcace66aeadf3c03bef4bc6872c5535c2488325e",
+        "candidateObservationsPath": "build/review-q4-outcomes-20261028/origin-replay/calibration/observations.jsonl",
+        "candidateObservationsSha256": "bb9261f696cddff505265a640b61639c1a9a2b79372be15953791877eb31c31d",
+        "nonTimingDifferences": 0,
+        "boundaryReasons": {
+          "TOO_SHORT": 147,
+          "ORIGINAL_VALID": 1207,
+          "WINNER_AMBIGUOUS": 44,
+          "AUTO_REPLACE": 99,
+          "INSUFFICIENT_MARGIN": 26,
+          "SEARCH_INCOMPLETE": 56,
+          "LOCAL_SEARCH_EMPTY": 15,
+          "SERVICE_REFUSED": 6
+        },
+        "exitCode": 0
+      }
+    ]
+  },
+  "sourcesSha256": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRecorder.kt": "cfbe4fafcf3ed14c65f06da18cffcb219d95caf0012c4727c835e4311e701e1d",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityModel.kt": "402aaeed7926db3d262de3a48267af3028852d117d889fe49b2e83117cd4dd53",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRepository.kt": "413192cd65a338b8d0dc0680bb82453136e22c43cb273a7082060fde0285a60f",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityStore.kt": "431d936cbc4b48848dd24440e85200297a0c3923291cb5a4cf15cedab59bfb89",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "a5b8d7385d1167693bde452654a34df2738b9d0176ce31e8f0429e40d4d8f325",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelCandidateCoordinator.kt": "b5d4ec3bc2080a9ac4d36af2e5b64c053e279644faecb19b6505742a58f37a4b",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt": "8c82defc978e8dfa07d24ab23af8da1fff7f887ed28421fde5d831221e90cc59",
+    "app/src/main/res/values/quality_strings.xml": "6fc65275af212b5cc7da4cabfdde68b60d5a108584400ef2b7166fcac8cc1cc4",
+    "app/src/main/res/values-ru/quality_strings.xml": "3cdfeadca5b82fab413c4d545787e1023d6bf996c059e829216dfedcf2ec3171",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualitySourceModelTest.kt": "190badcff0514a6e9fca850f484366c416d0076ab2e35d71895272a22215bfc4",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRepositoryTest.kt": "7bfc10d83877425f3f5f883d34338827a05c0772799334c4acb259e46544a616",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/CorrectionBoundaryTest.kt": "cf2f86a91a2519aae61d05560e533113ab470b3b3afb6ae5791b3d4ea40fc664",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinatorTest.kt": "4c3f183431c182883329ed8817566f65840ad47d0bfe7a03a7342168dd6ad268",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/QualitySourceImeInstrumentedTest.kt": "cdbf20bddcccbb180f2f22aa58c021d0512f411e44852a9486403b99e55bf424"
+  },
+  "privateEvidenceSha256": {
+    "build/review-q4-outcomes-20261028/outcome-tests.log": "1ea56c702b4e255a7f42508f1d0b54e62c0b63911836e3d5b9f0e18f364121d8",
+    "build/review-q4-outcomes-20261028/outcome-tests.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "build/review-q4-outcomes-20261028/model-time-tests.log": "c9f374b439db6b70e593c1629f99e5698f6c37dab57b0dfebd0611c79fd8dfd5",
+    "build/review-q4-outcomes-20261028/model-time-tests.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "build/review-q4-outcomes-20261028/integration-checks.log": "e3fc7dcfe434117a8ad2db4066944a57c87d436898eb942a87b24d09d3ec84c1",
+    "build/review-q4-outcomes-20261028/integration-checks.exit": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "build/review-q4-outcomes-20261028/integration-fixed.log": "7e41e9f7d49c5c95f282fa150133d287f75a2f12ecbea5e41b430331fc6d3f5a",
+    "build/review-q4-outcomes-20261028/integration-fixed.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "build/review-q4-outcomes-20261028/ime/instrumentation.log": "aa38d1cfc6b4b4e01548de9536283f7ebdcd3b08f18e20786b1fc86a0ea96ed4",
+    "build/review-q4-outcomes-20261028/ime/result.json": "eb200d6908bbc9e9bca66ebd4aaf7bf9fd75c4002ccbed9b9ad80b96ef976eb2",
+    "build/review-q4-outcomes-20261028/jvm-results.tar": "221628a846b668745c5c2b4c51285bf20f467841124c3299b3fa40877ca8177a",
+    "build/review-q4-outcomes-20261028/replay.log": "7ee912cb7e9e38aaf17333b8cd9559bef496589a60f1228f37f958cc2dc5e533",
+    "build/review-q4-outcomes-20261028/replay.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "build/review-q4-outcomes-20261028/origin-replay-bindings.json": "c764dd52b24c8acd4b0b3129c3c4979519c65de40e7726bcad55c91765e7d6e3"
+  },
+  "failureRetained": {
+    "file": "integration-checks.log",
+    "kind": "one failed new synchronous-parent-close timing regression",
+    "repair": "discard only numeric quality admissions before the existing parent cancellation; request/cancel ordering unchanged",
+    "finalFailures": 0
+  },
+  "remaining": [
+    "debug-only numeric export",
+    "clean-source release regression and final owner installation/device integration",
+    "two actual weeks of owner use and acceptance"
+  ],
+  "ownerPhoneModified": false,
+  "observationPeriodStarted": false,
+  "wholeReviewComplete": false
+}

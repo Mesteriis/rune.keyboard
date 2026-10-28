@@ -54,6 +54,20 @@ class QualitySourceImeInstrumentedTest {
             assertEquals(1L, metrics.snapshot()[QualityEvent.AUTOMATIC_APPLIED])
             assertEquals(1L, metrics.snapshot()[QualityEvent.EXPLICIT_UNDO])
 
+            reset(metrics)
+            driver.launchComposingQa()
+            for (key in "teh") driver.tapKey(key.toString())
+            driver.awaitFieldText("qa_composing_text", "teh")
+            assertTrue(driver.device.wait(Until.hasObject(By.desc(context.getString(R.string.candidate_correction, "the"))), 5_000))
+            val original = driver.device.findObject(By.desc(context.getString(R.string.candidate_original, "teh")))
+            assertNotNull(original)
+            original.click()
+            await { metrics.snapshot()[AutomaticQualitySource.COMMON_CONFUSION, AutomaticQualityOutcome.KEPT_ORIGINAL] == 1L }
+            driver.tapKeyByDescription(context.getString(R.string.key_space))
+            driver.awaitFieldText("qa_composing_text", "teh ")
+            assertEquals(1L, metrics.snapshot().automaticSources.sum())
+            assertEquals(0L, metrics.snapshot()[QualityEvent.AUTOMATIC_APPLIED])
+
             // Reset while the editor still owns its correction: Undo must work, but its
             // application belongs to the old collection period and cannot supply a new label.
             reset(metrics)

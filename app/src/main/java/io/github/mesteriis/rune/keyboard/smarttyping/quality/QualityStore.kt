@@ -23,6 +23,9 @@ class QualityStore private constructor(context: Context) : QualityRecorder {
         repository.recordAutomatic(source, outcome)
     override fun recordAutomaticApplication(source: AutomaticQualitySource) = repository.recordAutomaticApplication(source)
     override fun recordAutomaticUndo(application: AutomaticQualityApplication) = repository.recordAutomaticUndo(application)
+    override fun beginModelResponse() = repository.beginModelResponse()
+    override fun recordModelResponse(response: QualityModelResponse, durationMillis: Long) =
+        repository.recordModelResponse(response, durationMillis)
     override fun modelResponseMillis(durationMillis: Long) = repository.modelResponseMillis(durationMillis)
     override fun candidateResponseNanos(durationNanos: Long) = repository.candidateResponseNanos(durationNanos)
     override fun compare(revision: Long, source: String, primaryChoice: String, experimentalChoice: String) =

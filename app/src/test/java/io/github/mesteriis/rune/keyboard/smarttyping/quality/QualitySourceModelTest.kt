@@ -25,9 +25,13 @@ class QualitySourceModelTest {
             methods.getValue("recordAutomaticApplication").parameterTypes.toList())
         assertEquals(listOf(AutomaticQualityApplication::class.java),
             methods.getValue("recordAutomaticUndo").parameterTypes.toList())
+        assertEquals(emptyList<Class<*>>(), methods.getValue("beginModelResponse").parameterTypes.toList())
+        assertEquals(listOf(QualityModelResponse::class.java, java.lang.Long.TYPE),
+            methods.getValue("recordModelResponse").parameterTypes.toList())
+        assertTrue(QualityModelResponse::class.java.declaredFields.none { it.type == String::class.java })
         assertTrue(AutomaticQualityApplication::class.java.declaredFields.none { it.type == String::class.java })
         assertEquals(0, QualityCollectionPeriod::class.java.declaredFields.size)
-        for (name in listOf("recordAutomatic", "modelResponseMillis", "recordAutomaticApplication", "recordAutomaticUndo"))
+        for (name in listOf("recordAutomatic", "modelResponseMillis", "recordAutomaticApplication", "recordAutomaticUndo", "beginModelResponse", "recordModelResponse"))
             assertFalse(methods.getValue(name).parameterTypes.contains(String::class.java))
     }
 
@@ -173,6 +177,33 @@ class QualitySourceModelTest {
         assertFalse(restored.recordAutomaticUndo(application))
         assertEquals(1L, restored.snapshot()[source, AutomaticQualityOutcome.APPLIED])
         assertEquals(0L, restored.snapshot()[source, AutomaticQualityOutcome.EXPLICIT_UNDO])
+    }
+
+    @Test fun modelResponseAdmissionsAreSingleUsePeriodBoundAndNeverInventDurations() {
+        val model = QualityModel()
+        assertNull(model.beginModelResponse())
+        model.configure(true, false, true)
+        val response = model.beginModelResponse()!!
+        assertEquals(List(5) { 0L }, model.snapshot().modelResponseBuckets)
+        val other = QualityModel().apply { configure(true, false, true) }
+        assertFalse(other.recordModelResponse(response, 500))
+        model.configure(true, true, true)
+        assertTrue(model.recordModelResponse(response, 500))
+        assertFalse(model.recordModelResponse(response, 500))
+        assertEquals(listOf(0L, 0L, 0L, 0L, 1L), model.snapshot().modelResponseBuckets)
+        for (cause in listOf("reset", "restore", "metrics", "privacy")) {
+            val pending = model.beginModelResponse()!!
+            when (cause) {
+                "reset" -> model.reset()
+                "restore" -> model.restore(model.snapshot())
+                "metrics" -> { model.configure(false, false, true); model.configure(true, false, true) }
+                else -> { model.configure(true, false, false); model.configure(true, false, true) }
+            }
+            assertFalse(model.recordModelResponse(pending, 250))
+        }
+        val invalid = model.beginModelResponse()!!
+        assertFalse(model.recordModelResponse(invalid, -1))
+        assertFalse(model.recordModelResponse(invalid, 100))
     }
 
     @Test fun malformedV3DimensionsNumbersAndSizeFailClosed() {

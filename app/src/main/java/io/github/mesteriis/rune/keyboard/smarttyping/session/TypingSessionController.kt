@@ -65,6 +65,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityRecorder
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.NoQualityRecorder
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityEvent
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.AutomaticQualitySource
+import io.github.mesteriis.rune.keyboard.smarttyping.quality.AutomaticQualityOutcome
+import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityModelResponse
 
 /**
  * Main-thread session owner. The execution callback returns the editor's actual result; all
@@ -813,6 +815,18 @@ class TypingSessionController internal constructor(
             state.composing?.typedWord == selection.original
     }
 
+    /** Explicitly keeping a source proposal is preference evidence, not an automatic-admission label. */
+    private fun originalQualitySource(): AutomaticQualitySource? {
+        val selection = candidateSelection ?: return null
+        if (selection.manual || state.originalSelected) return null
+        contextualSelection?.takeIf { isCurrentContextualSelection(it) &&
+            it.variant.continuation != state.composing?.text }?.let { return AutomaticQualitySource.CONTEXTUAL }
+        val ranking = selection.ranking ?: return null
+        val candidate = selection.alternatives.getOrNull(ranking.preferredId - 1) ?: return null
+        if (candidate.text == selection.original) return null
+        return automaticQualitySource(selection, ranking)
+    }
+
     /** Attribution from the already selected branch; never re-runs qualification or admission. */
     private fun automaticQualitySource(selection: CandidateSelection, ranking: CalibratedRanking): AutomaticQualitySource {
         val kind = selection.alternatives.getOrNull(ranking.preferredId - 1)?.kind
@@ -1071,6 +1085,19 @@ class TypingSessionController internal constructor(
             state.revision == pending.revisionAfterSpace && ownsSpaceAfter(pending)
     }
 
+    /** Numeric observation only: cancellation/expiry scheduling and editor ownership stay unchanged. */
+    internal fun beginQualityModelResponse(): QualityModelResponse? = quality.beginModelResponse()
+    internal fun recordQualityModelResponse(response: QualityModelResponse, durationMillis: Long) =
+        quality.recordModelResponse(response, durationMillis)
+
+    internal fun recordModelWindowExpired(token: ScoringToken) {
+        if (!isCurrentSpaceCorrection(token)) return
+        val pending = pendingSpaceCorrection ?: return
+        if (pending.qualityExpiryObserved) return
+        pending.qualityExpiryObserved = true
+        quality.recordAutomatic(AutomaticQualitySource.MODEL, AutomaticQualityOutcome.WINDOW_EXPIRED)
+    }
+
     private fun ownsSpaceAfter(pending: SpaceCorrectionStamp): Boolean =
         ownsSpaceAfter(pending.previous, pending.start)
 
@@ -1084,7 +1111,15 @@ class TypingSessionController internal constructor(
     internal fun acceptLocalSpaceCorrection(reply: LocalCandidateReply,
         execute: (TypingEdit) -> Boolean): Boolean {
         val (pending, selection) = localSpaceSelection(reply) ?: return false
-        if (nanoTime() - pending.startedAtNanos !in 0 until 250_000_000L) return false
+        if (nanoTime() - pending.startedAtNanos !in 0 until 250_000_000L) {
+            val ranking = selection.ranking
+            if (!pending.qualityExpiryObserved && ranking != null && ranking.preferredId > 0 &&
+                selection.alternatives.getOrNull(ranking.preferredId - 1) != null) {
+                pending.qualityExpiryObserved = true
+                quality.recordAutomatic(automaticQualitySource(selection, ranking), AutomaticQualityOutcome.WINDOW_EXPIRED)
+            }
+            return false
+        }
         val generation = selection.generation
         val ranking = selection.ranking ?: return false
         val payload = { DiagnosticText(context = pending.contextBefore, original = selection.original,
@@ -1571,10 +1606,12 @@ class TypingSessionController internal constructor(
     fun selectOriginal(candidateId: String): Boolean {
         if (candidateId != originalCandidateId) return false
         val selection = candidateSelection
+        val keptSource = originalQualitySource()
         selection?.let { compareShadow(it) }
         // The old no-editor API cannot restore a manually replaced word. Use selectCandidate.
         if (selection != null && selection.original != state.composing?.typedWord) return false
         quality.record(QualityEvent.KEPT_ORIGINAL)
+        keptSource?.let { quality.recordAutomatic(it, AutomaticQualityOutcome.KEPT_ORIGINAL) }
         quality.explicitChoice(comparedRevision ?: state.revision, state.composing!!.typedWord)
         personalization.confirmed(state.composing!!.typedWord, selection?.language ?: personalLanguage)
         selection?.alternatives?.getOrNull(selection.selectedIndex)?.let {
@@ -1630,6 +1667,7 @@ class TypingSessionController internal constructor(
         val word = if (index == -1) selection.original else selection.displayAlternatives[index].text
         compareShadow(selection)
         val feedbackRevision = comparedRevision ?: state.revision
+        val keptSource = if (index == -1) originalQualitySource() else null
         val next = previous.copy(typedWord = word)
         val caret = composingStart.toLong() + next.text.length
         if (caret > Int.MAX_VALUE || next.text.length > MAX_COMPOSING_UTF16) return TypingTextResult.REJECTED
@@ -1647,6 +1685,7 @@ class TypingSessionController internal constructor(
             state = state.copy(composing = next, originalSelected = state.originalSelected || index == -1)
             candidateSelection = selection.copy(selectedIndex = index, manual = true, jointRefusal = null)
             quality.record(if (index >= 0) QualityEvent.CORRECTION_PICKED else QualityEvent.KEPT_ORIGINAL)
+            keptSource?.let { quality.recordAutomatic(it, AutomaticQualityOutcome.KEPT_ORIGINAL) }
             quality.explicitChoice(feedbackRevision, word)
             if (index >= 0) personalization.accepted(previous.typedWord, word, selection.language)
             else {
@@ -2605,9 +2644,11 @@ class TypingSessionController internal constructor(
 
     private class ModelRankingStamp(val token: ScoringToken, val selection: CandidateSelection)
     private class SpaceCorrectionStamp(val ranking: ModelRankingStamp, val previous: ComposingSegment,
-        val start: Int, val contextBefore: String, var revisionAfterSpace: Long = -1)
+        val start: Int, val contextBefore: String, var revisionAfterSpace: Long = -1,
+        var qualityExpiryObserved: Boolean = false)
     private class LocalSpaceCorrectionStamp(val request: CandidateStamp, val previous: ComposingSegment,
-        val start: Int, val contextBefore: String, var revisionAfterSpace: Long = -1, val startedAtNanos: Long = 0)
+        val start: Int, val contextBefore: String, var revisionAfterSpace: Long = -1, val startedAtNanos: Long = 0,
+        var qualityExpiryObserved: Boolean = false)
     private class ContextualRankingStamp(val token: ScoringToken, val selection: CandidateSelection,
         val variants: List<ContextualPunctuationEngine.Variant>)
     private class ContextualSelection(val token: ScoringToken, val selection: CandidateSelection,

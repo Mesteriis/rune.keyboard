@@ -52,7 +52,7 @@
         <item>Contextual suggestion</item><item>Canonical letter case</item>
     </string-array>
     <string name="quality_model_latency_title">Model response time</string>
-    <string name="quality_model_latency_note">Duration reported by the model engine. Separate from candidate-request time and screen rendering.</string>
+    <string name="quality_model_latency_note">Reported model response time, including refusals. Sample of requests begun with metrics enabled in eligible editors; excludes screen rendering. Unavailable includes CPU limits or engine failures. A zero refusal duration does not mean inference ran.</string>
     <string-array name="quality_model_latency_labels">
         <item>Under 50 ms</item><item>50 to under 100 ms</item><item>100 to under 250 ms</item>
         <item>250 to under 500 ms</item><item>500 ms or more</item>

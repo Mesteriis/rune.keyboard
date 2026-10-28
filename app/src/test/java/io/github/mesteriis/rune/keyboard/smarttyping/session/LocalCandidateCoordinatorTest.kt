@@ -279,6 +279,164 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
+    private fun quality(h: Harness): QualityModel {
+        val metrics = QualityModel().apply { configure(true, false, true) }
+        h.controller.setQualityRecorder(object : QualityRecorder {
+            override fun record(event: QualityEvent) { metrics.record(event) }
+            override fun recordAutomatic(source: AutomaticQualitySource, outcome: AutomaticQualityOutcome) {
+                metrics.recordAutomatic(source, outcome)
+            }
+            override fun recordAutomaticApplication(source: AutomaticQualitySource) = metrics.recordAutomaticApplication(source)
+            override fun recordAutomaticUndo(application: AutomaticQualityApplication) { metrics.recordAutomaticUndo(application) }
+            override fun beginModelResponse() = metrics.beginModelResponse()
+            override fun recordModelResponse(response: QualityModelResponse, durationMillis: Long) {
+                metrics.recordModelResponse(response, durationMillis)
+            }
+        })
+        return metrics
+    }
+
+    @Test fun `model window metrics preserve 249 250 251 boundaries and deduplicate timer and reply`() {
+        for (millis in listOf(249L, 250L, 251L)) for (delivery in listOf("reply", "timer", "discard-then-timer"))
+            Harness(withModel = true, modelOnly = true).use { h ->
+                val metrics = quality(h)
+                h.owner = h.owner.copy(modelAutoReplaceQualified = true)
+                h.type("helos"); h.deliver(); h.space()
+                val input = h.model.requests.single()
+                h.pause.now = millis
+                h.commands.clear()
+                if (millis >= 250 && delivery == "discard-then-timer")
+                    h.model.listener.onDiscardedReply(ScoringReply(input.token, ScoringCode.CANCELLED, 0, emptyList()))
+                if (millis >= 250 && delivery != "reply") h.pause.fire()
+                h.model.reply(input, 1)
+                h.model.reply(input, 1)
+                assertEquals(if (millis < 250) "hellos " else "helos ", h.controller.state.contextText)
+                assertEquals(if (millis < 250) 1 else 0, h.commands.size)
+                assertEquals(if (millis < 250) 1L else 0L,
+                    metrics.snapshot()[AutomaticQualitySource.MODEL, AutomaticQualityOutcome.APPLIED])
+                assertEquals(if (millis >= 250) 1L else 0L,
+                    metrics.snapshot()[AutomaticQualitySource.MODEL, AutomaticQualityOutcome.WINDOW_EXPIRED])
+                assertEquals(1L, metrics.snapshot().automaticSources.sum())
+            }
+    }
+
+    @Test fun `policy loss and cancellation do not become model window expirations`() {
+        for (cause in listOf("cancel", "owner", "private")) Harness(withModel = true, modelOnly = true).use { h ->
+            val metrics = quality(h)
+            h.owner = h.owner.copy(modelAutoReplaceQualified = true)
+            h.type("helos"); h.deliver(); h.space()
+            val input = h.model.requests.single()
+            when (cause) {
+                "cancel" -> h.coordinator.invalidate()
+                "owner" -> h.owner = h.owner.copy(inputViewActive = false)
+                else -> metrics.configure(true, false, false)
+            }
+            h.pause.now = 251
+            h.pause.fire()
+            h.model.reply(input, 1)
+            assertEquals("helos ", h.controller.state.contextText)
+            assertEquals(0L, metrics.snapshot().automaticSources.sum())
+        }
+    }
+
+    @Test fun `reported model duration is sampled once for admitted replies including late and unavailable replies`() {
+        for ((duration, bucket) in listOf(49L to 0, 50L to 1, 99L to 1, 100L to 2, 249L to 2,
+            250L to 3, 499L to 3, 500L to 4)) Harness(withModel = true, modelOnly = true).use { h ->
+            val metrics = quality(h)
+            h.owner = h.owner.copy(modelAutoReplaceQualified = true)
+            h.type("helos"); h.deliver(); h.space()
+            val input = h.model.requests.single()
+            if (duration >= 250) { h.pause.now = duration; h.pause.fire() }
+            h.model.reply(input, 1, duration)
+            h.model.listener.onDiscardedReply(ScoringReply(input.token, ScoringCode.CANCELLED, duration, emptyList()))
+            assertEquals(List(5) { if (it == bucket) 1L else 0L }, metrics.snapshot().modelResponseBuckets)
+            assertEquals(if (duration < 250) "hellos " else "helos ", h.controller.state.contextText)
+        }
+        Harness(withModel = true).use { h ->
+            val metrics = quality(h)
+            h.type("helos"); h.deliver(); h.pause.fire()
+            val input = h.model.requests.single()
+            h.model.listener.onReply(ScoringReply(input.token, ScoringCode.UNAVAILABLE, 0, emptyList()))
+            assertEquals(listOf(1L, 0L, 0L, 0L, 0L), metrics.snapshot().modelResponseBuckets)
+            assertEquals(0L, metrics.snapshot().automaticSources.sum())
+        }
+    }
+
+    @Test fun `model durations cannot cross collection or recorder resets and are absent for unmeasured requests`() {
+        for (cause in listOf("disabled-at-submit", "reset", "privacy", "recorder"))
+            Harness(withModel = true).use { h ->
+                var metrics = quality(h)
+                if (cause == "disabled-at-submit") metrics.configure(false, false, true)
+                h.type("helos"); h.deliver(); h.pause.fire()
+                val input = h.model.requests.single()
+                when (cause) {
+                    "disabled-at-submit" -> metrics.configure(true, false, true)
+                    "reset" -> metrics.reset()
+                    "privacy" -> { metrics.configure(true, false, false); metrics.configure(true, false, true) }
+                    else -> metrics = quality(h)
+                }
+                h.model.reply(input, 1, 500)
+                assertEquals(List(5) { 0L }, metrics.snapshot().modelResponseBuckets)
+            }
+    }
+
+    @Test fun `numeric model reply history is bounded and closing discards its remaining admissions`() {
+        Harness(withModel = true).use { h ->
+            val metrics = quality(h)
+            repeat(9) {
+                h.coordinator.invalidate()
+                h.controller.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, 0), 0, 0)
+                h.type("helos"); h.deliver(); h.pause.fire()
+            }
+            assertEquals(9, h.model.requests.size)
+            val first = h.model.requests.first()
+            h.model.listener.onDiscardedReply(ScoringReply(first.token, ScoringCode.CANCELLED, 500, emptyList()))
+            assertEquals(List(5) { 0L }, metrics.snapshot().modelResponseBuckets)
+            for (input in h.model.requests.drop(1))
+                h.model.listener.onDiscardedReply(ScoringReply(input.token, ScoringCode.CANCELLED, 500, emptyList()))
+            assertEquals(listOf(0L, 0L, 0L, 0L, 8L), metrics.snapshot().modelResponseBuckets)
+            h.coordinator.invalidate()
+            h.controller.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, 0), 0, 0)
+            h.type("helos"); h.deliver(); h.pause.fire()
+            val pending = h.model.requests.last()
+            h.close()
+            h.model.listener.onDiscardedReply(ScoringReply(pending.token, ScoringCode.CANCELLED, 500, emptyList()))
+            assertEquals(8L, metrics.snapshot().modelResponseBuckets.sum())
+        }
+    }
+
+    @Test fun `inactive owner and synchronous close callbacks cannot add model durations`() {
+        for (closing in listOf(false, true)) Harness(withModel = true).use { h ->
+            val metrics = quality(h)
+            h.type("helos"); h.deliver(); h.pause.fire()
+            val input = h.model.requests.single()
+            if (closing) {
+                h.model.onCancel = { h.model.listener.onDiscardedReply(
+                    ScoringReply(input.token, ScoringCode.CANCELLED, 500, emptyList())) }
+                h.close()
+            } else {
+                h.owner = h.owner.copy(inputViewActive = false)
+                h.model.reply(input, 1, 500)
+            }
+            assertEquals(if (closing) "close" else "inactive owner", List(5) { 0L }, metrics.snapshot().modelResponseBuckets)
+        }
+    }
+
+    @Test fun `explicitly keeping an active contextual proposal supplies only contextual preference evidence`() {
+        Harness(withModel = true).use { h ->
+            val metrics = quality(h)
+            val request = h.contextualRequest()
+            h.model.reply(request, 1)
+            assertTrue(h.labels().any { it != "world" })
+            h.commands.clear()
+            assertTrue(h.controller.selectOriginal(h.controller.originalCandidateId!!))
+            assertEquals("hello world", h.controller.state.contextText)
+            assertTrue(h.commands.isEmpty())
+            assertEquals(1L, metrics.snapshot()[AutomaticQualitySource.CONTEXTUAL, AutomaticQualityOutcome.KEPT_ORIGINAL])
+            assertEquals(0L, metrics.snapshot()[AutomaticQualitySource.CONTEXTUAL, AutomaticQualityOutcome.APPLIED])
+        }
+    }
+
     @Test fun `space deadline rejects callback even when its expiry timer has not run`() {
         for (fireTimer in listOf(false, true)) Harness(withModel = true, modelOnly = true).use { h ->
             val records = mutableListOf<DiagnosticEvent>()
@@ -1214,12 +1372,13 @@ class LocalCandidateCoordinatorTest {
         val attachments = mutableListOf<Pair<Long?, Boolean>>()
         var closed = false
         var cancels = 0
+        var onCancel: (() -> Unit)? = null
         override var available = true
         override fun attachSession(sessionId: Long?, effectiveAvailability: Boolean) { attachments += sessionId to effectiveAvailability }
         override fun score(input: ScoringInput) { requests += input }
-        override fun cancel() { cancels++ }
+        override fun cancel() { cancels++; onCancel?.invoke() }
         override fun close() { closed = true }
-        fun reply(input: ScoringInput, winner: Int) = listener.onReply(ScoringReply(input.token, ScoringCode.OK, 0,
+        fun reply(input: ScoringInput, winner: Int, elapsedMillis: Long = 0) = listener.onReply(ScoringReply(input.token, ScoringCode.OK, elapsedMillis,
             input.token.candidateIds.map { NumericScore(it, if (it == winner) -1.0 else -10.0, 1) }))
     }
 

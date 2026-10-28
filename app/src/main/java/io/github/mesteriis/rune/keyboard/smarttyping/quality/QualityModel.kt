@@ -75,6 +75,15 @@ class QualityModel {
         return recordAutomatic(application.source, AutomaticQualityOutcome.EXPLICIT_UNDO)
     }
 
+    fun beginModelResponse(): QualityModelResponse? =
+        if (metricsEnabled && eligible) QualityModelResponse(collectionPeriod) else null
+
+    fun recordModelResponse(response: QualityModelResponse, durationMillis: Long): Boolean {
+        if (response.period !== collectionPeriod || response.consumed) return false
+        response.consumed = true
+        return modelResponseMillis(durationMillis)
+    }
+
     fun modelResponseMillis(durationMillis: Long): Boolean {
         if (!metricsEnabled || !eligible || durationMillis < 0L) return false
         val bucket = MODEL_RESPONSE_UPPER_MILLIS.indexOfFirst { durationMillis < it }

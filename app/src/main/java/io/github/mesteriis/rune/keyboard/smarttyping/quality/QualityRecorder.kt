@@ -27,6 +27,12 @@ class AutomaticQualityApplication internal constructor(
     override fun toString(): String = "AutomaticQualityApplication(redacted)"
 }
 
+/** In-memory permission to measure one numeric reply from the admitted collection period. */
+class QualityModelResponse internal constructor(internal val period: QualityCollectionPeriod) {
+    internal var consumed = false
+    override fun toString(): String = "QualityModelResponse(redacted)"
+}
+
 enum class ShadowResult {
     AGREEMENT, DISAGREEMENT, EXPLICIT_PRIMARY, EXPLICIT_EXPERIMENTAL, EXPLICIT_BOTH, EXPLICIT_NEITHER,
 }
@@ -41,6 +47,8 @@ interface QualityRecorder {
     fun recordAutomaticUndo(application: AutomaticQualityApplication) = Unit
     /** Engine-reported response time, separate from candidate request latency. */
     fun modelResponseMillis(durationMillis: Long) = Unit
+    fun beginModelResponse(): QualityModelResponse? = null
+    fun recordModelResponse(response: QualityModelResponse, durationMillis: Long) = Unit
     /** Candidate computation/response time, never advertised as end-to-end keystroke latency. */
     fun candidateResponseNanos(durationNanos: Long) = Unit
     /** Refresh an unlabelled decision at the same revision; count each decision once. */

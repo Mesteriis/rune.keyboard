@@ -952,6 +952,71 @@ class CorrectionBoundaryTest {
         }
     }
 
+    @Test fun `explicit Original counts the current proposal once without applying it`() {
+        val f = Fixture(); val metrics = quality(f)
+        f.raw("teh"); f.publishCommon("the")
+        val id = f.controller.originalCandidateId!!
+        assertTrue(f.controller.selectOriginal(id))
+        assertEquals("teh", f.document)
+        assertEquals(1L, metrics.snapshot()[AutomaticQualitySource.COMMON_CONFUSION, AutomaticQualityOutcome.KEPT_ORIGINAL])
+        assertFalse(f.controller.selectOriginal(id))
+        assertTrue(f.controller.selectOriginal(f.controller.originalCandidateId!!))
+        f.type(" ")
+        assertEquals("teh ", f.document)
+        assertEquals(1L, metrics.snapshot().automaticSources.sum())
+        assertEquals(0L, metrics.snapshot()[QualityEvent.AUTOMATIC_APPLIED])
+    }
+
+    @Test fun `Original without an active proposal and manual restoration add no source refusal`() {
+        val empty = Fixture(); val emptyMetrics = quality(empty)
+        empty.raw("hello")
+        assertTrue(empty.controller.selectOriginal(empty.controller.originalCandidateId!!))
+        assertEquals(0L, emptyMetrics.snapshot().automaticSources.sum())
+        val manual = Fixture(); val metrics = quality(manual)
+        manual.raw("helllo"); manual.publish("hello")
+        val candidate = manual.controller.candidateViewState.candidates.single { it.text == "hello" }
+        assertEquals(TypingTextResult.HANDLED, manual.controller.selectCandidate(candidate.id, manual.execute))
+        assertEquals(TypingTextResult.HANDLED, manual.controller.selectCandidate(manual.controller.originalCandidateId!!, manual.execute))
+        assertEquals("helllo", manual.document)
+        assertEquals(0L, metrics.snapshot().automaticSources.sum())
+    }
+
+    @Test fun `local expiry at 249 250 and 251 ms records one known source without extending admission`() {
+        for (millis in listOf(249L, 250L, 251L)) {
+            val f = Fixture(qualified = null)
+            f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+            val metrics = quality(f)
+            val reply = f.pendingLocalSpace("зочу", "хочу")
+            f.now = millis * 1_000_000
+            val accepted = f.controller.acceptLocalSpaceCorrection(reply, f.execute)
+            assertEquals(millis < 250, accepted)
+            assertEquals(if (millis < 250) "хочу " else "зочу ", f.document)
+            assertEquals(if (millis < 250) 1L else 0L,
+                metrics.snapshot()[AutomaticQualitySource.COMMON_CONFUSION, AutomaticQualityOutcome.APPLIED])
+            assertEquals(if (millis >= 250) 1L else 0L,
+                metrics.snapshot()[AutomaticQualitySource.COMMON_CONFUSION, AutomaticQualityOutcome.WINDOW_EXPIRED])
+            assertFalse(f.controller.acceptLocalSpaceCorrection(reply, f.execute))
+            assertEquals(1L, metrics.snapshot().automaticSources.sum())
+        }
+    }
+
+    @Test fun `unknown local expiry and collection exclusion do not invent a source label`() {
+        val empty = Fixture(); val emptyMetrics = quality(empty)
+        val none = empty.pendingLocalSpace("abcde", "fghij")
+        empty.now = 250_000_000
+        assertFalse(empty.controller.acceptLocalSpaceCorrection(none, empty.execute))
+        assertEquals(0L, emptyMetrics.snapshot().automaticSources.sum())
+        val excluded = Fixture(qualified = null); excluded.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+        val metrics = quality(excluded)
+        val reply = excluded.pendingLocalSpace("зочу", "хочу")
+        metrics.configure(false, false, true)
+        excluded.now = 251_000_000
+        assertFalse(excluded.controller.acceptLocalSpaceCorrection(reply, excluded.execute))
+        metrics.configure(true, false, true)
+        assertFalse(excluded.controller.acceptLocalSpaceCorrection(reply, excluded.execute))
+        assertEquals(0L, metrics.snapshot().automaticSources.sum())
+    }
+
     private fun quality(f: Fixture): QualityModel {
         val model = QualityModel().apply { configure(true, true, true) }
         f.controller.setQualityRecorder(object : QualityRecorder {

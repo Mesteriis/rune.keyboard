@@ -52,7 +52,7 @@
         <item>Контекстная подсказка</item><item>Регистр букв</item>
     </string-array>
     <string name="quality_model_latency_title">Время ответа модели</string>
-    <string name="quality_model_latency_note">Длительность, сообщённая движком модели. Учитывается отдельно от запроса кандидатов и отрисовки экрана.</string>
+    <string name="quality_model_latency_note">Сообщённое время ответа модели, включая отказы. Выборка запросов, начатых при включённой статистике в обычных полях; без отрисовки экрана. «Недоступно» включает лимит CPU или сбой движка. Нулевая длительность отказа не означает, что выполнялся расчёт.</string>
     <string-array name="quality_model_latency_labels">
         <item>Менее 50 мс</item><item>50–99 мс</item><item>100–249 мс</item>
         <item>250–499 мс</item><item>500 мс и больше</item>

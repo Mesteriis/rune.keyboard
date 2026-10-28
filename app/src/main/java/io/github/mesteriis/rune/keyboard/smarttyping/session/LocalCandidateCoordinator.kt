@@ -247,6 +247,7 @@ class LocalCandidateCoordinator internal constructor(
     override fun close() {
         checkOwner()
         if (closed) return
+        modelRanking?.discardQualityResponseAdmissions()
         cancelCandidates(clearAllowlist = true)
         closed = true
         worker?.close()

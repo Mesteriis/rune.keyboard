@@ -177,6 +177,28 @@ class QualityRepositoryTest {
         assertEquals(QualitySnapshot(), storage.persisted)
     }
 
+    @Test fun `model response admission is content free and needs ready collection without scheduling a save`() {
+        val worker = Worker()
+        val storage = Storage()
+        val repository = QualityRepository(storage, worker)
+        repository.configure(true, false, true)
+        assertNull(repository.beginModelResponse())
+        worker.drain()
+        val response = repository.beginModelResponse()!!
+        assertTrue(worker.tasks.isEmpty())
+        assertEquals(0, storage.writes)
+        repository.recordModelResponse(response, 250)
+        repository.recordModelResponse(response, 250)
+        worker.drain()
+        assertEquals(listOf(0L, 0L, 0L, 1L, 0L), storage.persisted!!.modelResponseBuckets)
+        val old = repository.beginModelResponse()!!
+        repository.reset()
+        worker.drain()
+        repository.recordModelResponse(old, 500)
+        worker.drain()
+        assertEquals(QualitySnapshot(), repository.snapshot())
+    }
+
     @Test fun `repeated reset cannot accumulate unbounded callbacks`() {
         val worker = Worker()
         val repository = QualityRepository(Storage(), worker)
