@@ -72,7 +72,9 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
 
     def test_unsupported_surface_exclusions_do_not_clear_unproven_families(self):
         entries=[e for e in self.ledger['entries'] if 'unsupportedSurfaceKeys' in e]
-        self.assertEqual(11,len(entries));self.assertEqual(1357,len({k for e in entries for k in e['unsupportedSurfaceKeys']}))
+        self.assertEqual(12,len(entries))
+        historical=[e for e in entries if e['id']!='ci-product-replay-v1-ru-contexts']
+        self.assertEqual(11,len(historical));self.assertEqual(1357,len({k for e in historical for k in e['unsupportedSurfaceKeys']}))
         self.assertTrue(all('family' in e['missingAxes'] for e in entries));self.assertFalse(self.ledger['coverage']['complete'])
 
     def test_legacy_context_partitions_are_durable_and_fully_source_verified(self):

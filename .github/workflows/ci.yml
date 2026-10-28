@@ -55,6 +55,9 @@ jobs:
           python3 -m unittest discover -s tools/typing_experiments -p test_audit_late_source_closure.py
           python3 -m unittest discover -s tools/typing_experiments -p test_right_context_training_exclusion.py
           python3 -m unittest discover -s tools/typing_experiments -p test_right_context_sentence_audit.py
+          python3 tools/ci/generate_product_replay_v1.py --check
+          python3 tools/ci/register_product_replay_v1.py --check
+          python3 -m unittest discover -s tools/ci -p test_product_replay_corpus.py
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

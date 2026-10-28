@@ -1,10 +1,12 @@
 import copy
+import gzip
 import json
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 import replay_projection as replay
 
@@ -105,6 +107,19 @@ class ReplayProjectionTest(unittest.TestCase):
             self.assertEqual(['/stateAfterBoundary/allowed'], json.loads(report.read_text())['differences'][0]['paths'])
             self.assertEqual(original, baseline.read_bytes())
             self.assertEqual(2, subprocess.run(command, capture_output=True).returncode)
+
+    def test_gzip_and_plain_have_identical_projection_and_bounded_decoding(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            plain, rows = self.read(root, 'plain.jsonl', [observation()])
+            compressed = root / 'baseline.jsonl.gz'
+            compressed.write_bytes(gzip.compress(plain.read_bytes(), mtime=0))
+            self.assertTrue(replay.compare(rows, replay.read_projection(compressed))['passed'])
+            for setting in ('MAX_LINE_BYTES', 'MAX_TOTAL_BYTES'):
+                with mock.patch.object(replay, setting, 8), self.assertRaisesRegex(ValueError, 'SIZE_LIMIT'):
+                    replay.read_projection(compressed)
+            compressed.write_bytes(b'not gzip')
+            with self.assertRaises(OSError): replay.read_projection(compressed)
 
     def test_canonical_projection_preserves_unicode_newlines_and_json_pointer_escaping(self):
         row = observation(); row['typed'] = 'ещё\n🙂'

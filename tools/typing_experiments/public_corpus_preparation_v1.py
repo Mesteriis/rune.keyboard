@@ -21,7 +21,7 @@ def preflight(rows,task,lexical,controls,profile='new-sentences'):
     if task not in TASKS or profile not in ('new-sentences','new-families'):raise ValueError('PREPARATION_SCOPE')
     if not isinstance(rows,list) or not rows:raise ValueError('PREPARATION_EMPTY_ROWS')
     lexical_overlap={k:0 for k in ('article','sentence','context','family')}
-    control_overlap={k:0 for k in ('article','punctuation','protected')}
+    control_overlap={k:0 for k in ('article','punctuation','protected','regression','surface')}
     errors=set();seen=set();lex_keys={k:set() for k in lexical_overlap};control_keys={k:set() for k in control_overlap};surface_keys=set()
     unsupported=set()
     for row in rows:
@@ -41,6 +41,10 @@ def preflight(rows,task,lexical,controls,profile='new-sentences'):
         if task=='punctuation' and (row.get('task')!='punctuation' or row.get('noAuto') is not True):errors.add('punctuation-label-schema')
         # Both control contexts are checked for every task, including relabeling.
         for token in (typed,target):
+            try:
+                control_keys['surface'].add(control.surface_key(language,token))
+                control_keys['regression'].add(control.key_for(dict(language=language,prefix=row.get('prefix'),typed=token),'regression'))
+            except ValueError:errors.add('control-regression-schema')
             try:control_keys['protected'].add(control.key_for(dict(language=language,prefix=row.get('prefix'),typed=token),'protected'))
             except ValueError:errors.add('control-token-schema')
         try:
@@ -61,9 +65,10 @@ def preflight(rows,task,lexical,controls,profile='new-sentences'):
         blocked={k for e in lexical['entries'] if axis!='family' or profile=='new-families' or e['usage'] in ('supervised','prepared-training-quarantine')
                  for k in e['keys'].get(axis,[])}
         lexical_overlap[axis]=len(proposed&blocked)
-    for kind in ('punctuation','protected'):
+    for kind in ('punctuation','protected','regression'):
         blocked={k for e in controls['entries'] if e['kind']==kind for k in e['keys']}
         control_overlap[kind]=len(control_keys[kind]&blocked)
+    control_overlap['surface']=len(control_keys['surface']&{k for e in controls['entries'] for k in e.get('surfaceKeys',[])})
     articles={k for e in controls['entries'] for k in e.get('articleKeys',[])}
     control_overlap['article']=len(control_keys['article']&articles)
     punctuation=[e for e in controls['entries'] if e['kind']=='punctuation']

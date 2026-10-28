@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "repository": "hermitdave/FrequencyWords",
+  "commit": "525f9b560de45753a5ea01069454e72e9aa541c6",
+  "author": "Hermit Dave",
+  "contentLicense": "CC-BY-SA-4.0",
+  "upstreamCorpus": "OpenSubtitles2018 via OPUS",
+  "readmeUrl": "https://github.com/hermitdave/FrequencyWords/blob/525f9b560de45753a5ea01069454e72e9aa541c6/README.md",
+  "files": {
+    "en": {
+      "file": "sources/en_50k.txt",
+      "sha256": "5351ff405b1126ef555791dd4d9798a48e3e9a501a9fc481a9da957752cfb458",
+      "bytes": 622749,
+      "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/content/2018/en/en_50k.txt"
+    },
+    "es": {
+      "file": "sources/es_50k.txt",
+      "sha256": "dcff3ad4316192f4dc4ff7d26e637c6ff314ef1ca0f3f720c5649018a71056c0",
+      "bytes": 658626,
+      "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/content/2018/es/es_50k.txt"
+    },
+    "ru": {
+      "file": "sources/ru_50k.txt",
+      "sha256": "6095f507cc167488ec66ada5a85ac50433503a08ad24a07c6eabdf54352c4e7f",
+      "bytes": 998861,
+      "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/content/2018/ru/ru_50k.txt"
+    }
+  }
+}

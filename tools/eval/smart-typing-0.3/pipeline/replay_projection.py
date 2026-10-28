@@ -4,10 +4,14 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import gzip
 import json
 import os
 from pathlib import Path
 import sys
+
+MAX_LINE_BYTES = 1024 * 1024
+MAX_TOTAL_BYTES = 256 * 1024 * 1024
 
 TIMING_FIELDS = frozenset({'fullTokenGenerationNanos', 'hostStageNanos'})
 REQUIRED_FIELDS = frozenset({'index', 'id', 'language', 'split', 'prefix', 'typed', 'status',
@@ -33,9 +37,15 @@ def invalid_constant(value):
 
 def read_projection(path):
     rows, identities = [], set()
-    with Path(path).open(encoding='utf-8') as stream:
-        for index, line in enumerate(stream):
-            row = json.loads(line, object_pairs_hook=unique_object, parse_constant=invalid_constant)
+    path = Path(path)
+    opener = gzip.open if path.suffix == '.gz' else open
+    total = 0
+    with opener(path, 'rb') as stream:
+        for index, raw in enumerate(iter(lambda: stream.readline(MAX_LINE_BYTES + 1), b'')):
+            total += len(raw)
+            if len(raw) > MAX_LINE_BYTES or total > MAX_TOTAL_BYTES:
+                raise ValueError('OBSERVATION_SIZE_LIMIT')
+            row = json.loads(raw.decode('utf-8'), object_pairs_hook=unique_object, parse_constant=invalid_constant)
             if not isinstance(row, dict) or not REQUIRED_FIELDS <= row.keys():
                 raise ValueError(f'OBSERVATION_SHAPE:{index + 1}')
             canonical(row)  # Also reject overflowed JSON exponents anywhere in the row.

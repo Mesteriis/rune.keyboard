@@ -8,7 +8,7 @@ import unicodedata
 from source_identities import tatoeba_identity
 
 SCHEMA='rune-public-control-exclusions-v1'
-KINDS=('punctuation','protected')
+KINDS=('punctuation','protected','regression')
 LANGUAGES=('en','ru','es')
 HASH=re.compile('[0-9a-f]{64}\\Z')
 
@@ -28,6 +28,15 @@ def key_for(row,kind):
     else:fields=[text(row.get('prefix')),text(row.get('typed'))]
     payload=[SCHEMA,kind,row['language'],*fields]
     return hashlib.sha256(json.dumps(payload,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
+
+
+def surface_key(language,value):
+    """Disclosed public surface, independent of prefix/case; never a claimed lemma."""
+    if language not in LANGUAGES:raise ValueError('CONTROL_SURFACE_LANGUAGE')
+    value=' '.join(text(value).casefold().split())
+    if not value:raise ValueError('CONTROL_SURFACE_TEXT')
+    return hashlib.sha256(json.dumps([SCHEMA,'disclosed-surface',language,value],
+        ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
 
 
 def article_key(row):
@@ -59,7 +68,14 @@ def validate(ledger):
         if (not isinstance(keys,list) or not keys or len(keys)>entry['rowCount']
                 or any(not isinstance(k,str) or not HASH.fullmatch(k) for k in keys) or keys!=sorted(set(keys))):
             raise ValueError('CONTROL_KEYS')
+        if 'surfaceKeys' in entry:
+            values=entry['surfaceKeys']
+            if (not isinstance(values,list) or not values
+                    or any(not isinstance(k,str) or not HASH.fullmatch(k) for k in values)
+                    or values!=sorted(set(values))):
+                raise ValueError('CONTROL_SURFACE_KEYS')
         if 'articleKeys' in entry:
+
             keys=entry['articleKeys']
             if (not isinstance(keys,list) or not keys or any(not isinstance(k,str) or not HASH.fullmatch(k) for k in keys)
                     or keys!=sorted(set(keys))):raise ValueError('CONTROL_ARTICLE_KEYS')
@@ -75,6 +91,9 @@ def assert_disjoint(rows,ledger,kind):
     keys={key_for(row,kind) for row in rows}
     blocked={k for e in ledger['entries'] if e['kind']==kind for k in e['keys']}
     if keys&blocked:raise ValueError('CONTROL_OVERLAP:'+kind)
+    surfaces={surface_key(row['language'],row.get('currentWord') if kind=='punctuation' else row.get('typed')) for row in rows}
+    if surfaces&{k for entry in ledger['entries'] for k in entry.get('surfaceKeys',[])}:
+        raise ValueError('CONTROL_SURFACE_OVERLAP')
     # A control registry alone never certifies overall corpus freshness.
     raise ValueError('CONTROL_COVERAGE_INCOMPLETE')
 

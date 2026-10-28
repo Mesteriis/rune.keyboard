@@ -1,0 +1,47 @@
+{
+  "buckets": [
+    [
+      2,
+      4
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      9,
+      16
+    ]
+  ],
+  "containsPersonalMessages": false,
+  "contentLicense": "CC-BY-SA-4.0",
+  "contextSemantics": "previous three eligible frequency-list entries; synthetic, not a source sentence",
+  "expectedLabels": false,
+  "files": {
+    "inputs.jsonl": "a1200189645a577b29fd94830c910974ae2356bf2017c20ee09a3ae9152e16db",
+    "origins.jsonl": "62429cc5d9b88c6c19f5fb974d14f79bd5d8660f288e9a53a11c7c5e4e5fbbc5"
+  },
+  "freshHoldout": false,
+  "generatorSha256": "002742d21274e5c52cae14c6fa2b1eebbc6b5bcab931c06be90d60dcc173a75a",
+  "labelsSemantics": "No surface is asserted correct or incorrect; frequency is not linguistic truth.",
+  "languages": {
+    "en": 720,
+    "es": 720,
+    "ru": 720
+  },
+  "modelCalls": 0,
+  "perLengthBucket": 60,
+  "purpose": "DISCLOSED_REGRESSION_NOT_QUALIFICATION",
+  "rows": 2160,
+  "schemaVersion": 1,
+  "selectionSeed": "rune-product-replay-v1",
+  "selectionUsesModelOutput": false,
+  "sourceGroups": 540,
+  "sourceLockSha256": "1676bd1d4b00099a3cb13ea7bdb3e42f15627d262af04d2aa8fefa4b926d11ab",
+  "transformOrder": [
+    "source-surface",
+    "delete-middle-codepoint",
+    "first-unequal-adjacent-swap-or-identity",
+    "uppercase-initial"
+  ]
+}
