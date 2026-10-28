@@ -110,6 +110,132 @@ ranking/revision/learning. Неизвестная внешняя граница 
 явный Boolean сохраняется независимо от typing opt-ins; будущий schema marker
 при записи сохраняет существующую защиту KeyboardPreferences.
 
+## Источники автозамены и диагностические метки
+
+`SpellingSource` в `SpellingQualification.kt` задаёт пространство независимых
+проверок допуска. Таблица сохраняет порядок объявления enum; выполнение
+определяют ветвления контроллера и персонализации, описанные ниже. Наличие
+источника в enum само по себе не разрешает замену: нужны пригодный редактор,
+владение полным токеном, текущая ревизия, готовые ресурсы, проверка исходного
+слова и конкретного кандидата, режим автозамены и qualification этого пути.
+
+<!-- Q2:SpellingSource:begin -->
+| SpellingSource | Назначение и проверка допуска |
+| --- | --- |
+| `COMMON_CONFUSION` | Конечные проверенные исправления `CommonConfusions`; локальный fingerprint `QualificationArtifacts.local()`. |
+| `GENERAL_LOCAL` | Полное локальное окружение расстояния один и `LocalCorrectionPolicy`; текущий общий допуск ограничен RU/ES и точным fingerprint поиска/словарей. |
+| `COMPACT_PUBLIC` | Компактный публичный RU-ранжировщик после отказа общего локального решения; фиксируются веса, контекст, политика и защитные словари. |
+| `MODEL` | Калиброванная оценка кандидатов Rune Text через приватный scoring IPC; для записи необходим `ModelRuntimeQualification.CURRENT`. |
+| `NEIGHBOR_RECOVERY` | Отдельное локальное восстановление соседнего RU-кандидата, полный recovery-поиск и `RecoveryQualification`. |
+| `MODEL_REFINEMENT` | Отдельная модельная дооценка предыдущего слова по ещё принадлежащему Rune ticket; текущий `RecoveryQualification.MODEL_QUALIFIED=false` запрещает этот эксперимент. |
+| `JOINT_SHORT` | Совместная RU-оценка короткого слова; собственная короткая qualification и полное joint-окружение. |
+| `JOINT_LONG` | Совместная RU-оценка длинного слова; отдельный длинный допуск при том же полном окружении. |
+| `JOINT_RESCUE` | Отдельная попытка восстановления длинного слова при отсутствии допущенного совместного/базового исправления; `JointRescueQualification`. |
+| `WORD_CONTEXT` | Конечные контекстные правила `WordContextPolicy`, с проверкой всего предшествующего токена и `WordContextQualification`. |
+| `CONTEXTUAL_PUBLIC` | Статистический локальный RU-ранжировщик `ContextualCorrectionPolicy`; замороженные веса/таблицы и `ContextualQualification`. |
+| `INFINITIVE_REVISION` | Следующий грамматический пересмотр конечной формы в инфинитив, с проверкой леммы/признаков и `InfinitiveRevisionQualification`. |
+| `NOUN_CASE_REVISION` | Последующий пересмотр падежа существительного в пределах `NounCaseRevisionPolicy` и его qualification. |
+<!-- Q2:SpellingSource:end -->
+
+### Порядок выбора, пересмотра и записи
+
+В `TypingSessionController.baselineCandidateSelection` сначала вычисляется общее
+локальное решение. Компактный кандидат запрашивается при его отсутствии;
+neighbor recovery — при отсутствии обоих кандидатов и точного common-confusion
+правила. При формировании базового ranking приоритет следующий:
+
+<!-- Q2:BASELINE_ORDER COMMON_CONFUSION CANONICAL_CASE GENERAL_LOCAL COMPACT_PUBLIC NEIGHBOR_RECOVERY CALIBRATED -->
+
+1. Проверенное точное исправление `CommonConfusions`.
+2. Однозначное восстановление канонического регистра.
+3. Решение `LocalCorrectionPolicy`.
+4. Компактный публичный кандидат.
+5. Кандидат neighbor recovery.
+6. Обычный `CalibratedSpellingPolicy.rank`, если предыдущие ветви не выбраны.
+
+`candidateSelection` возвращает этот baseline сразу для других языков, правильных
+или защищённых исходных слов, канонического регистра и точного common-confusion
+исправления. Для оставшихся RU-случаев `jointAutomaticEvaluation` сначала вызывает
+`legacyJointAutomaticEvaluation`. В нём основная joint-оценка предшествует
+условной rescue-попытке; `withWordContext` может дополнить результат лишь на
+разрешённых ветвях возврата. Явный `JointCorrectionChoice(null)` сохраняет отказ
+от замены. Отсутствие choice может вернуть baseline либо сохранить ожидание
+joint-результата.
+
+<!-- Q2:LEGACY_ORDER JOINT JOINT_RESCUE -->
+
+При готовых contextual/joint-ресурсах и допущенном RU-оригинале вызываются
+последовательно контекстная оценка, инфинитивный и падежный пересмотр. Каждый
+проверяет полноту joint-поиска, получает результат предыдущего шага и может
+сохранить его либо применить
+собственное ограниченное решение/отказ. Проверки редкого и словарного исходного
+слова прерывают эту дополнительную цепочку.
+
+<!-- Q2:CONTEXTUAL_ORDER LEGACY CONTEXTUAL_PUBLIC INFINITIVE_REVISION NOUN_CASE_REVISION -->
+
+Кандидат проходит соответствующий `automaticDecision` повторно перед записью.
+Диспетчеры `allowsAutomatic`/`automaticDecision` проверяют флаги ranking в порядке:
+
+<!-- Q2:ADMISSION_ORDER NOUN_CASE_REVISION INFINITIVE_REVISION CONTEXTUAL_PUBLIC WORD_CONTEXT JOINT_RESCUE JOINT NEIGHBOR_RECOVERY COMPACT_PUBLIC DEFAULT -->
+
+падеж → инфинитив → статистический контекст → конечное контекстное правило →
+rescue → joint → neighbor recovery → compact → обычный персональный/словарный
+admission. `localReplacementEligibility` затем выбирает qualification по флагам
+победившего пути. Канонический регистр имеет отдельную проверку единственного
+кандидата в `boundaryReplacementEligibility`; отдельного `SpellingSource` для
+него нет. Источник с `usedModel` проверяется отдельно как `MODEL`.
+
+`canRequestModelRanking` разрешает обычный модельный запрос при отсутствии
+пригодной локальной замены и joint-решения, для ещё актуального неизвестного
+слова с кандидатами. Дополнительные требования потребителя/режима и готовность
+runtime проверяются до запроса. После пробела локальный ответ и допустимый
+модельный запрос используют оставшуюся часть исходного окна 250 мс. Отдельный
+`MODEL_REFINEMENT` предыдущего слова имеет свой ticket/проверки и сейчас запрещён
+флагом qualification выше; он не является обязательным следующим шагом каскада.
+
+### Словарь DiagnosticSource
+
+`DiagnosticSource` описывает конкретное событие REQUEST/RANKING/BOUNDARY/EDITOR,
+поэтому для одного слова возможны несколько меток. Источник оценки, итоговое
+исправление и подтверждение редактора считаются отдельно. Например, RANKING
+совместной короткой/длинной оценки получает `JOINT`. В синхронном
+`applyBoundaryCorrection` обычная joint-замена без дополнительного флага
+записывается как `LOCAL_POLICY`, а поздний `acceptLocalSpaceCorrection` использует
+для неё `JOINT`. Статистический
+`CONTEXTUAL_PUBLIC` использует `CONTEXTUAL_RANKER`; `CONTEXTUAL` относится к
+отдельному запросу/применению контекстной пунктуации.
+
+<!-- Q2:DiagnosticSource:begin -->
+| DiagnosticSource | События |
+| --- | --- |
+| `NONE` | Событие без отдельного источника: например, session/configuration/input. |
+| `LOCAL_POLICY` | Локальные запросы/результаты, общий локальный допуск и обычная joint-запись без более специального флага. |
+| `MODEL` | Запрос и ответ обычного модельного spelling-ranking, его применение. |
+| `CANONICAL_CASE` | Отдельное восстановление канонического регистра. |
+| `MECHANICAL` | Механическая пунктуация и её фиксированные отказы/операции. |
+| `CONTEXTUAL` | Контекстная пунктуация через отдельный scoring-потребитель и явный выбор. |
+| `NEIGHBOR_RECOVERY` | Оценка/применение локального восстановления соседнего кандидата. |
+| `MODEL_REFINEMENT` | Диагностика отдельной модельной дооценки предыдущего слова, если эксперимент допущен. |
+| `JOINT` | Основная совместная короткая/длинная оценка, её отказ и поздняя joint-запись. |
+| `JOINT_RESCUE` | Дополнительная rescue-оценка, допуск и применение. |
+| `WORD_CONTEXT` | Попытка конечного контекстного правила, её отказ/применение. |
+| `CONTEXTUAL_RANKER` | Локальная статистическая контекстная оценка, её отказ/применение. |
+| `INFINITIVE_REVISION` | Инфинитивный пересмотр, его отказ/применение. |
+| `NOUN_CASE_REVISION` | Падежный пересмотр, его отказ/применение. |
+<!-- Q2:DiagnosticSource:end -->
+
+Технические метки не доказывают запись в редактор: нужен связанный
+`EDITOR_ACCEPTED` для соответствующей операции. Персональные факторы могут менять
+порядок ручных подсказок, но не заменяют qualification. Числовые счётчики качества
+имеют собственное пространство источников и контракт
+[quality-source-counters.md](quality-source-counters.md).
+
+Список enum, перечисленные порядки ветвей и выключенный refinement проверяет
+`python3 tools/check_typing_sources.py`. Эта проверка связывает таблицы и названные
+точки оркестрации с исходниками; текущие правила admission и условия внутри
+каждой политики остаются предметом тестов и квалификации соответствующего пути.
+
+
 ## Приватный inference process
 
 `ModelInferenceService` работает в `:model_runtime`: `exported=false`, без

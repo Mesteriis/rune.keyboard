@@ -1,0 +1,254 @@
+{
+  "schema": 1,
+  "card": "Q2",
+  "status": "source and NOTICE slice verified locally; integration pending; full Q2 remains open",
+  "sourceBase": "9507790e42e8d415e05ab77c2ccd2baf78cd3237",
+  "sourceBindings": {
+    ".github/workflows/ci.yml": "39e16e9859be9c789d7a9382a405bb4148220a84e1b762a40370eaba3b4909ef",
+    "docs/ARCHITECTURE.md": "8b3e9003c393abd4ec896099595438d50f4d1004877ebb86a1917f4dcb3f4cf5",
+    "app/src/main/assets/smarttyping/experiments/NOTICE.md": "efceac6d0dde6e787e3545e6b3de0f87be6950c67b655ee9076869f07580a9ce",
+    "tools/check_typing_sources.py": "a28cf3806d3c171f3b7628d85cdc3fc54e0819125f4c4db980a8a687aa1e4373",
+    "tools/test_typing_sources.py": "d3a5556d8b64b7fd2480350844f00c50e13f6a837ea1930aeb2a081c6d879631",
+    "tools/check_typing_asset_notice.py": "52b3cf8c660ef8ca3b62786b077dc5165988394533d4132a1e999497d0c1108c",
+    "tools/test_typing_asset_notice.py": "c79d56d7d46bee2ee1f2f66375bf3f69d234724b2a3c3451b7108ddcc7f35d34",
+    "tools/check_learning_disclosures.py": "959b478317d37943c788e8b6af589d3d4aba0c632e8986689d3851df3a91b8b6",
+    "tools/fdroid_data_policy.py": "00ea227c3bde163e196b1971ca80c4d4fa183c7e7e068605c347a8fb6438a77e",
+    "fdroid/review-data-policy.json": "4322bbee815a629a4525ca487920bc1c318e83ef30c041fb7727984c73b779e8",
+    "fdroid/io.github.mesteriis.rune.keyboard.yml": "65e79511e784e4a912fb2fe9f2730dd706c6a93ab1ba4685d20f1e4623b2ffbc"
+  },
+  "runtimeSourceBindings": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt": "67c0b3215c6183239632ce521c7d7d16f64cda01caeb1421eb31791b35085c9b",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/QualificationArtifacts.kt": "dc554c02e83fa735189bdea7a9cbd860a6a567cc82a14ba445ff04df768ff2e4",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/RecoveryQualification.kt": "7cfb75351cfc6cc53a2f4b36ebb891581ab795f0f307a09673a1d4ad94ebfad6",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnostics.kt": "ef89c2623d023e0fc412d45bdbd0ef22c7899e3bb539b416dd3fc4fe63a60625",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "8ab2f91df2597bc34d4dcac3e2731d23bf6a11c0224df5be42a9d4562d1dac73",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/AndroidTypingPersonalization.kt": "604847d47e77112b31317dbd30b9ae72963ae496566a627cdfa8f150ce6fef95",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/WordContextPolicy.kt": "df123d3e57e801b7a086c66c0d325a170450ef2ce1317b3bfd7b7fca7fcc580a",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualCorrectionPolicy.kt": "a7946c3907fa8e1986b9077e54e61e5d485cb2e35b2380356e2553b5a7c74a8f"
+  },
+  "namespaceCounts": {
+    "spelling": 13,
+    "diagnostic": 14
+  },
+  "checks": {
+    "sourceTests": 9,
+    "noticeTests": 9,
+    "pythonVersions": [
+      "3.12.14",
+      "3.14.6"
+    ],
+    "directDataPolicyTests": 10,
+    "ciWired": true,
+    "ciWorkflowParses": true,
+    "hostedCiRun": false
+  },
+  "numericAssets": [
+    {
+      "path": "app/src/main/assets/smarttyping/experiments/ru-context.bin",
+      "bytes": 81848,
+      "sha256": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
+      "action": "ignore",
+      "provenance": "app/src/main/assets/smarttyping/experiments/provenance.json",
+      "provenanceSha256": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4"
+    },
+    {
+      "path": "app/src/main/assets/smarttyping/experiments/ru-context.gram",
+      "bytes": 39593067,
+      "sha256": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b",
+      "action": "inventory",
+      "provenance": "app/src/main/assets/smarttyping/experiments/contextual-provenance.json",
+      "provenanceSha256": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435"
+    },
+    {
+      "path": "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin",
+      "bytes": 22036,
+      "sha256": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+      "action": "ignore",
+      "provenance": "app/src/main/assets/smarttyping/experiments/contextual-provenance.json",
+      "provenanceSha256": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435"
+    },
+    {
+      "path": "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx",
+      "bytes": 2083526,
+      "sha256": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6",
+      "action": "inventory",
+      "provenance": "app/src/main/assets/smarttyping/experiments/contextual-provenance.json",
+      "provenanceSha256": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435"
+    },
+    {
+      "path": "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin",
+      "bytes": 22036,
+      "sha256": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+      "action": "ignore",
+      "provenance": "app/src/main/assets/smarttyping/experiments/infinitive-revision-provenance.json",
+      "provenanceSha256": "a20fe5c9981e857dda6823fb5aeffb56c365556a6e38542250a714ea3aa20fca"
+    },
+    {
+      "path": "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin",
+      "bytes": 22036,
+      "sha256": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+      "action": "ignore",
+      "provenance": "app/src/main/assets/smarttyping/experiments/joint-correction-provenance.json",
+      "provenanceSha256": "7b42d0a46dd754d32903f73dabcefa7eea462f5c6cba1e886a06008bd22cf5e7"
+    },
+    {
+      "path": "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin",
+      "bytes": 39444,
+      "sha256": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+      "action": "ignore",
+      "provenance": "app/src/main/assets/smarttyping/experiments/joint-rescue-provenance.json",
+      "provenanceSha256": "4700fab35c3d9ea83457920187ae41ea88c7a95220325401cf13d83bcd83fcdb"
+    },
+    {
+      "path": "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin",
+      "bytes": 22036,
+      "sha256": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+      "action": "ignore",
+      "provenance": "app/src/main/assets/smarttyping/experiments/neighbor-recovery-provenance.json",
+      "provenanceSha256": "f988fea3f6d96f68ad0394e5a4ded6e067dec8fb305d561415cdc77c4440e4ce"
+    },
+    {
+      "path": "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin",
+      "bytes": 22036,
+      "sha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+      "action": "ignore",
+      "provenance": "app/src/main/assets/smarttyping/experiments/noun-case-provenance.json",
+      "provenanceSha256": "a9b1760a0b462a68ff38264be9ae13a9dac9ebf5840cf606778b32c1d2910235"
+    },
+    {
+      "path": "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin",
+      "bytes": 22036,
+      "sha256": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+      "action": "ignore",
+      "provenance": "app/src/main/assets/smarttyping/experiments/provenance.json",
+      "provenanceSha256": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4"
+    },
+    {
+      "path": "app/src/main/assets/smarttyping/experiments/ru-ranker.bin",
+      "bytes": 22036,
+      "sha256": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+      "action": "ignore",
+      "provenance": "app/src/main/assets/smarttyping/experiments/provenance.json",
+      "provenanceSha256": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4"
+    },
+    {
+      "path": "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin",
+      "bytes": 320216,
+      "sha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+      "action": "ignore",
+      "provenance": "app/src/main/assets/smarttyping/experiments/provenance.json",
+      "provenanceSha256": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4"
+    },
+    {
+      "path": "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx",
+      "bytes": 14912091,
+      "sha256": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b",
+      "action": "inventory",
+      "provenance": "app/src/main/assets/smarttyping/experiments/contextual-provenance.json",
+      "provenanceSha256": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435"
+    }
+  ],
+  "dataPolicy": {
+    "entries": 29,
+    "inventoryOnly": [
+      "app/src/main/assets/smarttyping/experiments/ru-context.gram",
+      "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx",
+      "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx",
+      "app/src/test/resources/right-context-role-parity/full-past.gram",
+      "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+    ],
+    "passed": true,
+    "policySha256": "4322bbee815a629a4525ca487920bc1c318e83ef30c041fb7727984c73b779e8",
+    "scandelete": [
+      "tools/ci/historical-data-v1/files.tar.gz",
+      "tools/ci/historical-model-fixtures-v1/files.tar.gz",
+      "tools/ci/product-replay-history-v1/baseline.jsonl.gz",
+      "tools/ci/product-replay-v1/baseline.jsonl.gz",
+      "tools/typing_experiments/baseline/ru-ranker.bin"
+    ],
+    "scanignore": [
+      "app/src/main/assets/smarttyping/experiments/ru-context.bin",
+      "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin",
+      "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin",
+      "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin",
+      "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker.bin",
+      "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin",
+      "app/src/test/resources/context-feature-parity/conversation.bin",
+      "app/src/test/resources/context-feature-parity/grammar.bin",
+      "app/src/test/resources/context-feature-parity/wiki.bin",
+      "app/src/test/resources/reliable-subject-parity/grammar.bin",
+      "app/src/test/resources/right-context-feature-parity/grammar.bin",
+      "app/src/test/resources/right-context-model-parity/model.bin",
+      "app/src/test/resources/right-context-role-parity/grammar.bin",
+      "app/src/test/resources/right-context-role-parity/past.bin",
+      "tools/emoji/sources/unicode-15.1-cldr-44.1.zip"
+    ],
+    "schema": 1
+  },
+  "jvm": {
+    "tests": 1355,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build": {
+    "exitCode": 0,
+    "elapsedSeconds": 18.235104458000933
+  },
+  "replay": [
+    {
+      "profile": "product-replay-ci",
+      "rows": 2160,
+      "projectionSha256": "e2f5b604d83eceb3d75cf75ec69f73e679ab847dfebdbf7ddc408b455c0cb0ea",
+      "boundFiles": 174,
+      "baselineMatches": true,
+      "deterministic": true,
+      "modelCalls": 0,
+      "receiptSha256": "8317b900b2ad84d02a067067619ac4cd6ade184aa2926a66309497e9e02d0c80"
+    },
+    {
+      "profile": "product-replay-ci-historical",
+      "rows": 12000,
+      "projectionSha256": "b7b49f16aed912ea4c80d811c834f059dc1ac47f6b655e9798923651ec47f512",
+      "boundFiles": 177,
+      "baselineMatches": true,
+      "deterministic": true,
+      "modelCalls": 0,
+      "receiptSha256": "2a905b22bb1350a3629daf4f351298360479280a60b3ba4fb76dee6f6148d19b"
+    }
+  ],
+  "replayStatus": {
+    "exitCode": 0,
+    "elapsedSeconds": 81.95299104099831
+  },
+  "ownerPreservation": {
+    "unrelatedOriginalHashes": 4,
+    "pendingGuideHunksPreservedExactly": true,
+    "originalUntrackedPaths": 98,
+    "allOriginalPathsRetained": true
+  },
+  "cleanReleaseProfile": "pending committed-source integration",
+  "sourceScanner": "pending committed-source preparation/scanner",
+  "phoneUpdate": "not performed yet",
+  "logs": {
+    "source-check.log": "2b36f1fd502d58d5dd865be7f912b16e7767ad5dfafb07813a0f47ea84345321",
+    "source-final-tests.log": "9eddeff677329ad9aff4e106a7b1a5c5a89a92820f5fbd59fda55be639c3e79e",
+    "source-final-py312-tests.log": "9eddeff677329ad9aff4e106a7b1a5c5a89a92820f5fbd59fda55be639c3e79e",
+    "notice-tests.log": "a11431b9bc94fd467c1dcbbadb95052e7d1f5f5d5858312a8d4c47aa530396b5",
+    "notice-py312-tests.log": "58d83614a3ed239b1f76d656a4bd475a73e405c49ff1a576ffdd5b7c9e89fb71",
+    "data-policy-tests.log": "29e698fcdaf5ed08b8e28e12c2e471aec871566011768b7aaedb3c8e5a20f22a",
+    "build-final.log": "64eb1df24f245d5b05864a8afd17f3ef2cfe9252b2c4da0c609db0f918fc2736",
+    "replay.log": "34370693a14c24383bfcfec493cc00e09139cfb897fe8d5dc63299e03d214018"
+  },
+  "limits": [
+    "Orchestration markers cover named branch/call orders, not every inner policy condition.",
+    "Declared provenance and filename inventory do not prove complete training lineage or fresh qualification.",
+    "Current review overlay is distinct from frozen historical release recipes; inventory-only data is not blanket scanignore.",
+    "Remaining guide/schema/experiment text and provenance/README closure remain in Q2.",
+    "No runtime, threshold, ranking, model, baseline, version/tag or publication change."
+  ]
+}

@@ -20,3 +20,29 @@ The conversational count table `ru-conversation.ctx` derives only from the offic
 `ru-infinitive-revision-ranker.bin` retains the same source attribution and combined CC BY-SA 3.0 license as the unified contextual model. It reuses its frozen broad training groups and adds Rune-authored grammar contrasts with multiple edit-cost profiles. It is a separate finite-to-infinitive revision component; its policy and provenance are in `ru-infinitive-revision-policy.json` and `infinitive-revision-provenance.json`.
 
 The noun-case revision weights retain the same public context sources and attribution; authored noun contrasts add no third-party training text. See noun-case-provenance.json.
+
+## Explicit packaged numeric-data inventory
+
+The following rows enumerate the current packaged `.bin`, `.gram` and `.ctx`
+files. Attribution and adaptations are described above; the linked provenance
+records contain the declared source identities and frozen asset digests. This
+inventory does not establish complete historical training reproduction or fresh
+qualification; those remain separate acceptance requirements.
+
+<!-- Q2:BinaryNotice:begin -->
+| Asset | Declared attribution/license | Provenance |
+| --- | --- | --- |
+| `ru-context.bin` | Wikipedia-derived numeric context model; CC BY-SA 3.0 as declared above. | `provenance.json` |
+| `ru-context.gram` | OpenCorpora grammatical tags; OpenCorpora 0.92/revision 417150, CC BY-SA 3.0. | `contextual-provenance.json` |
+| `ru-contextual-ranker.bin` | Combined Wikipedia/Tatoeba ranker; CC BY-SA 3.0 with the Tatoeba credits/license retained above. | `contextual-provenance.json` |
+| `ru-conversation.ctx` | Official Russian Tatoeba CC0 training-subset counts; CC0 as declared above. | `contextual-provenance.json` |
+| `ru-infinitive-revision-ranker.bin` | Infinitive revision model; the same combined contextual attribution and CC BY-SA 3.0. | `infinitive-revision-provenance.json` |
+| `ru-joint-ranker.bin` | Wikipedia-derived joint ranker; the same Wikipedia attribution and CC BY-SA 3.0. | `joint-correction-provenance.json` |
+| `ru-joint-rescue-ranker.bin` | Wikipedia-derived rescue ranker; the same Wikipedia attribution and CC BY-SA 3.0. | `joint-rescue-provenance.json` |
+| `ru-neighbor-ranker.bin` | Wikipedia-derived neighbor ranker; the same Wikipedia attribution and CC BY-SA 3.0. | `neighbor-recovery-provenance.json` |
+| `ru-noun-case-ranker.bin` | Noun-case revision model; the same combined contextual attribution and CC BY-SA 3.0. | `noun-case-provenance.json` |
+| `ru-ranker-auto-v1.bin` | Wikipedia-derived frozen numeric ranker; the same Wikipedia attribution and CC BY-SA 3.0. | `provenance.json` |
+| `ru-ranker.bin` | Wikipedia-derived compact spelling ranker; the same Wikipedia attribution and CC BY-SA 3.0. | `provenance.json` |
+| `ru-ranking-context.bin` | Wikipedia-derived context/count table; the same Wikipedia attribution and CC BY-SA 3.0. | `provenance.json` |
+| `ru-wiki.ctx` | Wikipedia-derived context counts; the Wikipedia attribution and CC BY-SA 3.0 above. | `contextual-provenance.json` |
+<!-- Q2:BinaryNotice:end -->
