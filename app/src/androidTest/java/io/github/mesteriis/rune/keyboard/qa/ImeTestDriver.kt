@@ -41,7 +41,7 @@ class ImeTestDriver {
     private var previousPreferences: Map<String, *> = emptyMap<String, Any?>()
     private var ownerStateCaptured = false
 
-    fun setUp() {
+    fun setUp(privateQa: Boolean = false) {
         check(!ownerStateCaptured) { "IME QA driver already owns a settings snapshot" }
         check(targetContext.packageName == PACKAGE_NAME) {
             "IME QA driver requires the default Rune package"
@@ -61,7 +61,7 @@ class ImeTestDriver {
         // `ime set` is a no-op when Rune was already selected by a preceding non-UI fixture.
         // Switch through an enabled fallback so each QA method starts with a new input view.
         restartRuneIme()
-        launchQa()
+        if (privateQa) launchComposingQa(mode = "private") else launchQa()
         waitForKeyboard()
         switchToEnglish()
     }
@@ -127,9 +127,9 @@ class ImeTestDriver {
     }
 
     /** Shared live fixture: explicit settings, then bounded edits while dictionary handles load. */
-    fun prepareLiveCorrection(): UiObject2 {
+    fun prepareLiveCorrection(mode: String = "accept"): UiObject2 {
         configureSmartTyping(AutocorrectionMode.SUGGESTIONS, true, mechanical = false, doubleSpace = false)
-        launchComposingQa()
+        launchComposingQa(mode = mode)
         tapKey("a"); tapKeyByDescription(targetContext.getString(R.string.key_space))
         for (key in listOf("h", "e", "l", "l", "l")) tapKey(key)
         val deadline = SystemClock.uptimeMillis() + 120_000L
@@ -193,7 +193,8 @@ class ImeTestDriver {
 
     fun launchComposingQa(mode: String = "accept", language: KeyboardLanguage = KeyboardLanguage.ENGLISH) {
         require(mode in setOf("accept", "reject", "drop", "private", "raw", "password", "email", "url", "multiline",
-            "number", "phone", "date_time", "no_suggestions", "private_no_suggestions", "autocomplete", "filter"))
+            "number", "phone", "date_time", "no_suggestions", "private_no_suggestions", "autocomplete", "filter",
+            "callback_trace", "selection_then_composition"))
         val launched = shell("am start -W -f 0x10008000 -n $QA_ACTIVITY --es qa_composing_fixture $mode")
         check("Status: ok" in launched) { "QA launch did not succeed: $launched" }
         awaitQaActivity()
@@ -204,15 +205,16 @@ class ImeTestDriver {
         device.waitForIdle()
     }
 
-    fun launchWebViewQa() {
-        val launched = shell("am start -W -f 0x10008000 -n $QA_ACTIVITY --ez qa_webview_fixture true")
+    fun launchWebViewQa(privateInput: Boolean = false) {
+        val launched = shell("am start -W -f 0x10008000 -n $QA_ACTIVITY --ez qa_webview_fixture true" +
+            if (privateInput) " --ez qa_callback_trace true" else "")
         check("Status: ok" in launched) { "Offline WebView QA launch failed" }
         check(device.wait(Until.hasObject(By.res(PACKAGE_NAME, "qa_webview_stats")), WAIT_MILLIS)) {
             "Offline WebView QA surface did not become visible"
         }
         // A browser editor is focused by one real user tap; page load can finish before the
         // Activity window receives focus, so its opportunistic showSoftInput is not readiness.
-        val field = device.wait(Until.findObject(By.clazz("android.widget.EditText")), WAIT_MILLIS)
+        val field = device.wait(Until.findObject(By.pkg(PACKAGE_NAME).clazz("android.widget.EditText")), WAIT_MILLIS)
         checkNotNull(field) { "Offline HTML editor did not become visible" }.click()
         waitForKeyboard()
         switchLanguageUntil("EN")

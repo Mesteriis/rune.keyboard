@@ -28,6 +28,19 @@ JNI = re.compile(r'runtime[-_.]llama|\bexternal\s+fun|System\.load(?:Library)?\s
 DIAGNOSTICS = BASE + 'smarttyping.diagnostics'
 DIAGNOSTIC_PATH = 'app/src/{}/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/'
 DIAGNOSTIC_PROVIDERS = {'TypingDiagnosticsProvider', 'DiagnosticsSettingsProvider'}
+CALLBACK_TRACE_PATH = 'app/src/{}/java/io/github/mesteriis/rune/keyboard/ime/editor/EditorCallbackTrace.kt'
+FINAL_CALLBACK_TRACE = '''package io.github.mesteriis.rune.keyboard.ime.editor
+object EditorCallbackTrace {
+    const val STATIONARY_CURSOR = 1
+    const val COMPOSING_SPAN = 2
+    const val SESSION_DISABLED_EXTERNALLY = 4
+    const val SESSION_ENABLED = 8
+    const val EXTERNAL_CHANGE = 16
+    const val INVALID_SELECTION = 32
+    const val MASK = 63
+    fun record(flags: Int) = Unit
+}
+'''
 DIAGNOSTIC_CONTRACT = DIAGNOSTIC_PATH.format('main') + 'TypingDiagnostics.kt'
 DIAGNOSTIC_FEATURES = DIAGNOSTIC_PATH.format('main') + 'DiagnosticFeatures.kt'
 # Frozen, content-free flag vocabulary and settings mapping; no executable helpers may be added.
@@ -169,6 +182,13 @@ def inspect(sources, variant=None):
             symbols[packages[p]+'.'+name] = p
         imports[p] = re.findall(r'^import\s+([\w.*]+)', text, re.M)
     errors = []
+    trace = declarations.get(BASE + 'ime.editor.EditorCallbackTrace', [])
+    if trace and variant is not None:
+        expected = CALLBACK_TRACE_PATH.format(variant)
+        if trace != [expected]:
+            errors.append('callback trace provider outside exact variant inventory')
+        elif variant != 'debug' and compact(sources[expected]) != compact(FINAL_CALLBACK_TRACE):
+            errors.append('callback trace final provider must be exact no-op')
     for p, text in clean.items():
         if p not in packages: continue
         dependencies = set(imports[p])

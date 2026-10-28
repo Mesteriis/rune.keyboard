@@ -32,6 +32,7 @@ internal class ComposingQaFixture(context: Context, mode: String) {
         "surrounding" to 0, "snapshot" to 0, "callbacks" to 0,
         "keyDown" to 0, "keyUp" to 0, "deleteKeyDown" to 0,
         "actions" to 0, "lastAction" to 0, "searchOriginal" to 0, "contextMenu" to 0,
+        "twoPhaseRequested" to 0, "twoPhaseReleased" to 0,
     )
     private val status = TextView(context).apply {
         id = R.id.qa_composing_stats
@@ -56,7 +57,8 @@ internal class ComposingQaFixture(context: Context, mode: String) {
         }
         imeOptions = (if (mode in setOf("no_suggestions", "private_no_suggestions", "autocomplete", "filter"))
             EditorInfo.IME_ACTION_SEARCH else if (mode == "multiline") EditorInfo.IME_ACTION_NONE else EditorInfo.IME_ACTION_DONE) or
-            if (mode in setOf("private", "private_no_suggestions")) EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING else 0
+            if (mode in setOf("private", "private_no_suggestions", "callback_trace", "selection_then_composition"))
+                EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING else 0
         isSingleLine = mode != "multiline"
         if (mode == "multiline") {
             minLines = 3
@@ -182,12 +184,12 @@ internal class ComposingQaFixture(context: Context, mode: String) {
             }
         }
 
-        fun notifySelection() {
+        fun notifySelection(reportComposition: Boolean = true) {
             onCall?.invoke("callbacks")
             context.getSystemService(InputMethodManager::class.java).updateSelection(
                 this, selectionStart, selectionEnd,
-                BaseInputConnection.getComposingSpanStart(text),
-                BaseInputConnection.getComposingSpanEnd(text),
+                if (reportComposition) BaseInputConnection.getComposingSpanStart(text) else -1,
+                if (reportComposition) BaseInputConnection.getComposingSpanEnd(text) else -1,
             )
             onChange?.invoke()
         }
@@ -199,6 +201,7 @@ internal class ComposingQaFixture(context: Context, mode: String) {
         private val mode: String,
         protected val count: (String) -> Unit,
     ) : InputConnectionWrapper(target, false) {
+        private var twoPhaseScheduled = false
         override fun performContextMenuAction(id: Int): Boolean {
             // TextView can coalesce selection callbacks during a native menu edit. Publish the
             // actual numeric state after dispatch without synthesizing an IME acknowledgement.
@@ -227,7 +230,17 @@ internal class ComposingQaFixture(context: Context, mode: String) {
                 editor.post { editor.notifySelection() }
                 return mode == "drop"
             }
-            return super.setComposingText(text, newCursorPosition)
+            val accepted = super.setComposingText(text, newCursorPosition)
+            if (accepted && mode == "selection_then_composition" && !twoPhaseScheduled) {
+                twoPhaseScheduled = true
+                count("twoPhaseRequested")
+                editor.notifySelection(reportComposition = false)
+                editor.postDelayed({
+                    count("twoPhaseReleased")
+                    editor.notifySelection()
+                }, 100)
+            }
+            return accepted
         }
 
         override fun setComposingRegion(start: Int, end: Int): Boolean {

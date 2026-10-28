@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutor
+import io.github.mesteriis.rune.keyboard.ime.editor.EditorCallbackTrace
 import io.github.mesteriis.rune.keyboard.ime.editor.DeleteMode
 import io.github.mesteriis.rune.keyboard.ime.feedback.CommandOutcome
 import io.github.mesteriis.rune.keyboard.ime.feedback.FeedbackController
@@ -290,9 +291,18 @@ class RuneInputMethodService : InputMethodService() {
             candidatesEnd,
         )
         hasSelection = newSelStart >= 0 && newSelEnd >= 0 && newSelStart != newSelEnd
+        val wasEnabled = typingSession.state.enabled
         val externalChange = typingSession.updateSelection(
             newSelStart, newSelEnd, candidatesStart, candidatesEnd, ::executeTypingEdit,
         )
+        var callback = 0
+        if (oldSelStart == newSelStart && oldSelEnd == newSelEnd) callback = callback or EditorCallbackTrace.STATIONARY_CURSOR
+        if (candidatesStart >= 0 && candidatesEnd >= candidatesStart) callback = callback or EditorCallbackTrace.COMPOSING_SPAN
+        if (externalChange && wasEnabled && !typingSession.state.enabled) callback = callback or EditorCallbackTrace.SESSION_DISABLED_EXTERNALLY
+        if (typingSession.state.enabled) callback = callback or EditorCallbackTrace.SESSION_ENABLED
+        if (externalChange) callback = callback or EditorCallbackTrace.EXTERNAL_CHANGE
+        if (newSelStart < 0 || newSelEnd < 0) callback = callback or EditorCallbackTrace.INVALID_SELECTION
+        if (currentInputEditorInfo?.packageName == packageName) EditorCallbackTrace.record(callback)
         if (externalChange) candidates.invalidate()
         externalEditContinuity.observe(typingSession.state.enabled, typingSession.requiresExternalWordBoundary)
         renderCandidates()

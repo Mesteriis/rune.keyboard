@@ -1,0 +1,250 @@
+{
+  "schema": 1,
+  "scope": "Q8 owned-editor callback calibration; full app matrix remains open",
+  "jvm": {
+    "tests": 1355,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build": {
+    "exitCode": 0,
+    "elapsedSeconds": 5.3655823340004645
+  },
+  "fold": {
+    "api": 37,
+    "physicalFold": true,
+    "tests": 4,
+    "completed": 4,
+    "skips": 0,
+    "passed": true,
+    "exitCode": 0,
+    "apk": {
+      "app": {
+        "sha256": "75cfd2ee5bc61c896103a7596113d4c25bb39464fd9ae8f2d4cb312fdbf1ce24",
+        "bytes": 183509471
+      },
+      "test": {
+        "sha256": "5c77bb22578aa92ec09660a12211b75e9a8eb6ba6915bb3bd765507cc0a3a49c",
+        "bytes": 1977828
+      }
+    },
+    "elapsedSeconds": 79.87393533300019,
+    "logSha256": "90e24b85f4c0dc77194c4de1706d147fb5a0f57f3f50de5bbf415b716cded58f",
+    "failureScreenshots": false,
+    "windowHierarchyCapture": false
+  },
+  "api26": {
+    "api": 26,
+    "tests": 4,
+    "completed": 4,
+    "skips": 0,
+    "exitCode": 0,
+    "passed": true,
+    "elapsedSeconds": 67.3818687920002,
+    "apkSha256": {
+      "app": "75cfd2ee5bc61c896103a7596113d4c25bb39464fd9ae8f2d4cb312fdbf1ce24",
+      "test": "5c77bb22578aa92ec09660a12211b75e9a8eb6ba6915bb3bd765507cc0a3a49c"
+    },
+    "logSha256": "50d14749760e190a3e50ecc88361322dc37627ef037d00657f42241bf422fbca"
+  },
+  "receiverFlags": {
+    "fold": {
+      "splitSelectionThenCompositionPreservesEveryTypedLetter": [
+        10,
+        21,
+        19,
+        1,
+        0,
+        0,
+        0
+      ],
+      "offlineWebViewRecordsAvailabilityAcrossFiveWordsWithoutLosingInput": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "shiftedPrefixCallbackPreservesWordAndFollowingLiteralInput": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        22,
+        1,
+        0
+      ],
+      "noOpRegionCallbackCalibrationPreservesCorrectionAndUndo": [
+        10,
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    "api26": {
+      "splitSelectionThenCompositionPreservesEveryTypedLetter": [
+        10,
+        21,
+        19,
+        1,
+        0,
+        0,
+        0
+      ],
+      "offlineWebViewRecordsAvailabilityAcrossFiveWordsWithoutLosingInput": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "shiftedPrefixCallbackPreservesWordAndFollowingLiteralInput": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        22,
+        1,
+        0
+      ],
+      "noOpRegionCallbackCalibrationPreservesCorrectionAndUndo": [
+        10,
+        10,
+        10,
+        10,
+        10
+      ]
+    }
+  },
+  "flagVocabulary": {
+    "stationaryCursor": 1,
+    "compositionSpan": 2,
+    "sessionDisabledExternally": 4,
+    "sessionEnabled": 8,
+    "externalChange": 16,
+    "invalidSelection": 32
+  },
+  "sourceBindings": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt": "5f57ab3defeb612445cd9e405ba47a13b7087c0024d221be4770dda1238e2fc4",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/EditorCallbackProfilesInstrumentedTest.kt": "50db282f92a0229c3a9301a0c2637c04b2a1044b9b0160a5eda2a079654a9525",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ImeTestDriver.kt": "b8438eb9cea871dbbb48193e928bc5a5a94fbfeab11b2ba3766ab3db266a6fd9",
+    "app/src/debug/java/io/github/mesteriis/rune/keyboard/qa/ComposingQaFixture.kt": "35ef4cdc8e659d0a170d0a0bffb2618afbeef1211978ac0b5e78ac39ac4c63fa",
+    "app/src/debug/java/io/github/mesteriis/rune/keyboard/qa/ImeQaActivity.kt": "0b3ffee58dd989bc7e823294dee59347e840ad734439a68f7e616b48a7a2301d",
+    "app/src/debug/java/io/github/mesteriis/rune/keyboard/qa/WebEditingQaFixture.kt": "32fe40d4bf115a7044ab251b3512131f16b2c110236525439111ed16eee34525",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/ime/editor/EditorCallbackTraceTest.kt": "376d9a90b3dfe67b6b199ecaabf8e36b5aa40b0bba603d5f4e422c360b65e26b",
+    "tools/verify-scoring-boundaries.py": "bb776c0441be069fb8e7b5fa82727908979962a78c741e05fbddbbb8632157b9",
+    "tools/test_typing_diagnostics_callback_trace.py": "93a7ae62d1b0255d17d286eb37520fd3527c48141698a82198ce04b20a7a73f2",
+    "app/src/debug/java/io/github/mesteriis/rune/keyboard/ime/editor/EditorCallbackTrace.kt": "2a48df898cbfa030655f73de7fb277d715e5f725fe51eab5e701f8c76ba7c740",
+    "app/src/release/java/io/github/mesteriis/rune/keyboard/ime/editor/EditorCallbackTrace.kt": "a57315163198cbafd8d12aa832e98b407198635c030f989cde083ce7994999e8",
+    "app/src/profile/java/io/github/mesteriis/rune/keyboard/ime/editor/EditorCallbackTrace.kt": "a57315163198cbafd8d12aa832e98b407198635c030f989cde083ce7994999e8"
+  },
+  "ownerPreservation": {
+    "protectedFiles": 1,
+    "protectedByteIdentical": true,
+    "originalPreferenceFiles": 3,
+    "originalPreferencesSemanticallyEqual": true,
+    "diagnosticsAppendOnly": true,
+    "appendedEventKinds": [
+      {
+        "kind": "SESSION",
+        "reason": "START",
+        "count": 16
+      },
+      {
+        "kind": "CONFIGURATION",
+        "reason": "NONE",
+        "count": 36
+      }
+    ],
+    "modelsByteIdentical": true,
+    "imeSettingsRestored": true,
+    "installedApkMatchesBuild": true,
+    "installedApkSha256": "75cfd2ee5bc61c896103a7596113d4c25bb39464fd9ae8f2d4cb312fdbf1ce24"
+  },
+  "cleanup": {
+    "taskEmulatorStopped": true,
+    "taskAvdDeleted": true,
+    "foldReleasedToBothChats": true
+  },
+  "failuresRetained": {
+    "api26Initial": {
+      "api": 26,
+      "tests": 4,
+      "completed": 1,
+      "skips": 0,
+      "exitCode": 0,
+      "passed": false,
+      "elapsedSeconds": 52.93603141699987,
+      "apkSha256": {
+        "app": "75cfd2ee5bc61c896103a7596113d4c25bb39464fd9ae8f2d4cb312fdbf1ce24",
+        "test": "8209ddbf64b0e4ca2d35c26078c445970005a9be6d8b4461bcab0fb3b60984d4"
+      },
+      "logSha256": "1d43ac4891c4dead3ef9574c870461da19920ca4606ab4a27d6ad636b80f842a"
+    },
+    "foldInitial": {
+      "api": 37,
+      "physicalFold": true,
+      "tests": 4,
+      "completed": 0,
+      "skips": 0,
+      "passed": false,
+      "exitCode": 0,
+      "apk": {
+        "app": {
+          "sha256": "75cfd2ee5bc61c896103a7596113d4c25bb39464fd9ae8f2d4cb312fdbf1ce24",
+          "bytes": 183509471
+        },
+        "test": {
+          "sha256": "01daa280a2023fa8d3ab12a4a229162a7800a11765e12575ea1f9d631600c7cb",
+          "bytes": 1977423
+        }
+      },
+      "elapsedSeconds": 79.79929858299965,
+      "logSha256": "6573852e57aaf91b0a653601f4dd075368bccefdbd3eb475632fec79dd2b1b42",
+      "failureScreenshots": false,
+      "windowHierarchyCapture": false
+    }
+  },
+  "cleanReleaseProfile": "pending clean-checkout source integration",
+  "limits": [
+    "Owned EditText and offline WebView only; APP-001 through APP-005 remains.",
+    "Split callback conservatively disables correction but preserves input.",
+    "No policy, model, admission timing, ranking or Undo authority change.",
+    "Initial lifecycle diagnostic writes retained; no recording consent changed.",
+    "No screenshot, UI hierarchy capture, private-text export or publication."
+  ]
+}

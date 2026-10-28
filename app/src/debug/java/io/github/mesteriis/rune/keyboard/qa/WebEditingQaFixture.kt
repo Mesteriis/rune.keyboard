@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 /** Debug-only offline HTML editor. The bridge publishes numeric selection, never editor text. */
 @SuppressLint("SetJavaScriptEnabled", "SetTextI18n")
-internal class WebEditingQaFixture(private val context: Context) {
+internal class WebEditingQaFixture(private val context: Context, private val privateInput: Boolean = false) {
     private val counts = listOf("connections", "before", "after", "selected", "extracted", "surrounding", "snapshot")
         .associateWith { AtomicInteger() }
     private var start = 0
@@ -38,6 +38,7 @@ internal class WebEditingQaFixture(private val context: Context) {
     private val web = object : WebView(context) {
         override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? {
             val connection = super.onCreateInputConnection(outAttrs) ?: return null
+            if (privateInput) outAttrs.imeOptions = outAttrs.imeOptions or EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING
             count("connections")
             return when {
                 Build.VERSION.SDK_INT >= 33 -> Api33Connection(connection, ::count)

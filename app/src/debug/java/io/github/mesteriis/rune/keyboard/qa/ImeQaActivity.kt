@@ -34,7 +34,7 @@ class ImeQaActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (intent.getBooleanExtra("qa_webview_fixture", false)) {
-            val fixture = WebEditingQaFixture(this)
+            val fixture = WebEditingQaFixture(this, intent.getBooleanExtra("qa_callback_trace", false))
             webEditingFixture = fixture
             setContentView(fixture.content)
             applySystemBarInsets(fixture.content)
