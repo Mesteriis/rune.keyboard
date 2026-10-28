@@ -1,0 +1,326 @@
+{
+  "archivedReceipts": {
+    "tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/joint-corpus-manifest.json": {
+      "origin": "build/joint-correction-20261025/corpus/manifest.json",
+      "sha256": "27c7084f8c739f608da77f617eca1c5ac552ff16b74da05a1a3c3cc888120e3f"
+    },
+    "tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/joint-followup-v2-policy.json": {
+      "origin": "build/joint-correction-20261025/followup-policy-v2/frozen-policy.json",
+      "sha256": "7cd01ab7be0f32cffee0bc58e10981eb8adbb299ae5d238b0ed2a3fcd232f20d"
+    },
+    "tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/joint-original-policy.json": {
+      "origin": "build/joint-correction-20261025/ranker/frozen-policy.json",
+      "sha256": "cdb2c5176504c044fa83567e99fe6956f8e3419d972fb558af0da04ded90410e"
+    },
+    "tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/neighbor-corpus-manifest.json": {
+      "origin": "build/neighbor-recovery-20260926/corpus/manifest.json",
+      "sha256": "2aeaf745c132c869d2560c89f3831f9710d82d34f559083a352eeb99b604060e"
+    },
+    "tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/neighbor-frozen-policy.json": {
+      "origin": "build/neighbor-recovery-20260926/frozen/frozen-policy.json",
+      "sha256": "9014d85e15e530fcdf112561fda4ddd456f9b5ea3c869414e44cfed5547e3cce"
+    }
+  },
+  "baseCommit": "7b1d4da",
+  "checks": [
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_prepare_external_spelling_holdout.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_neighbor_recovery.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_neighbor_refinement.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_train_joint_correction.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_calibrate_joint_source.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_calibrate_joint_followup.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_evaluate_joint_product.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_evaluate_joint_followup.py",
+        "-v"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "cliChecks": [
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/prepare_external_spelling_holdout.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/neighbor_recovery.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/neighbor_refinement.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/neighbor_product_replay.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/neighbor_ambiguous_controls.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/prepare_joint_correction.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/prepare_joint_followup.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/train_joint_correction.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/train_joint_rescue.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/calibrate_joint_source.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/calibrate_joint_followup.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/calibrate_joint_rescue.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/evaluate_joint_product.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/evaluate_joint_followup.py",
+        "--help"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "freshQualificationEstablished": false,
+  "frozenBuilderMatches": [
+    {
+      "archived": "tools/typing_experiments/frozen_sources/prepare_external_spelling_holdout_956436a1fbd70870.py",
+      "sha256": "956436a1fbd708706bddb3bad44c1fdf7bff838ef95a8c06911008148590fe01",
+      "source": "tools/typing_experiments/prepare_external_spelling_holdout.py"
+    },
+    {
+      "archived": "tools/typing_experiments/frozen_sources/prepare_joint_correction_cfa5777d2a2ac53f.py",
+      "sha256": "cfa5777d2a2ac53ffb339aa56b34d57c4a4a6a0ec1a712b1867b857d85043728",
+      "source": "tools/typing_experiments/prepare_joint_correction.py"
+    },
+    {
+      "archived": "tools/typing_experiments/frozen_sources/prepare_joint_followup_b9cc4859e08021f8.py",
+      "sha256": "b9cc4859e08021f851711bcabff12d329d6219312d3d988157b9716a1af574b6",
+      "source": "tools/typing_experiments/prepare_joint_followup.py"
+    }
+  ],
+  "historicalSourceMatches": [
+    {
+      "field": "trainerSha256",
+      "receipt": "tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/joint-original-policy.json",
+      "sha256": "e8b5adf14ac94ae6f54efbc2ad499630d3460dbf007eb76d4b640b9f2422620a",
+      "source": "tools/typing_experiments/train_joint_correction.py"
+    },
+    {
+      "field": "calibratorSha256",
+      "receipt": "tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/joint-followup-v2-policy.json",
+      "sha256": "0320514bf45bfb204ca2a7b83220d5a9effe5bffc56e660a5f5e460b7906a848",
+      "source": "tools/typing_experiments/calibrate_joint_followup.py"
+    }
+  ],
+  "modelExecutionEstablished": false,
+  "purpose": "Q2_JOINT_NEIGHBOR_CURRENT_SOURCE_PRESERVATION_WITH_EXPLICIT_HISTORICAL_GAPS",
+  "sourceBindings": {
+    "tools/typing_experiments/calibrate_joint_followup.py": "0320514bf45bfb204ca2a7b83220d5a9effe5bffc56e660a5f5e460b7906a848",
+    "tools/typing_experiments/calibrate_joint_rescue.py": "03a9638130769de11b38f70794cd2a89a208df8486a00bed38f4a54df31a8cec",
+    "tools/typing_experiments/calibrate_joint_source.py": "1823b5695179fabb782ead950197a5f9d849277e382787b4ca42589fe22b12e1",
+    "tools/typing_experiments/evaluate_joint_followup.py": "60e00f413de1d3c9b7ca8fb549b7d4fd232ee4b7db45a278c2b0ce782cdbe3e1",
+    "tools/typing_experiments/evaluate_joint_product.py": "6a6b141ae434c5f262a2c11fd3b0825fdf6d86c202e10ba2ba6c4af0a074822a",
+    "tools/typing_experiments/neighbor_ambiguous_controls.py": "5e3e0047e683409b0b6f085e078a75415ae613962292b44a48448ae4b941af39",
+    "tools/typing_experiments/neighbor_product_replay.py": "a2745c347c6c9c737952020a7b67fbe503882f305275cd0ed8470bf26f5e6281",
+    "tools/typing_experiments/neighbor_recovery.py": "605ecb9e02a249bd07000174ca1eb7368891bed3075710265ae6c06546b0d0b5",
+    "tools/typing_experiments/neighbor_refinement.py": "350321f37e10967340b3e82046113525cbe556563f903e7aa34f004cf4497c8a",
+    "tools/typing_experiments/prepare_external_spelling_holdout.py": "956436a1fbd708706bddb3bad44c1fdf7bff838ef95a8c06911008148590fe01",
+    "tools/typing_experiments/prepare_joint_correction.py": "cfa5777d2a2ac53ffb339aa56b34d57c4a4a6a0ec1a712b1867b857d85043728",
+    "tools/typing_experiments/prepare_joint_followup.py": "b9cc4859e08021f851711bcabff12d329d6219312d3d988157b9716a1af574b6",
+    "tools/typing_experiments/test_calibrate_joint_followup.py": "97bdab791c8701ed905f8d665f3ee4511c79a7f6ce21d308045f4d590b3d1a84",
+    "tools/typing_experiments/test_calibrate_joint_source.py": "4327eeff53cb9752a268f9780afb9265b1c2a3dd47cdbc9a796558a7cc6deb11",
+    "tools/typing_experiments/test_evaluate_joint_followup.py": "fb803203161e95f7b159d57cf128adb6283e8a21664f8a657b9dfb0184cb72fd",
+    "tools/typing_experiments/test_evaluate_joint_product.py": "0afb19dfbbfb0b9e045b2c56762c6f1f10214eab889c24c3d9a187695d7a1be7",
+    "tools/typing_experiments/test_neighbor_recovery.py": "aa18695660bf36db3d6e667b7bf2499624d541e6d9bf14594e54b9bbbc66dc68",
+    "tools/typing_experiments/test_neighbor_refinement.py": "0c6ad30c8c6fe5bac42051ae747a77f803abf86ba69c331a6af9aeca665bd5c2",
+    "tools/typing_experiments/test_prepare_external_spelling_holdout.py": "5b2f1d465eda440060808b413ee3659cb31d818efbe2b21674de4017b8fab27a",
+    "tools/typing_experiments/test_train_joint_correction.py": "45e8f65ae31fa05213bbb4b6a17024bd4c4a3eae91382765f25f9aea983acf98",
+    "tools/typing_experiments/train_joint_correction.py": "e8b5adf14ac94ae6f54efbc2ad499630d3460dbf007eb76d4b640b9f2422620a",
+    "tools/typing_experiments/train_joint_rescue.py": "be4a7a63516293c4b7c003f580bd8efbfe047d76192b54a7a9439154f1ca432d"
+  },
+  "transitiveDependencyCoverageEstablished": false,
+  "unrecoveredHistoricalSources": [
+    {
+      "expectedSha256": "8d42d7e854ea205e797f9d0d2e41dc1f260a050613c708eb933ef3aebfa856bd",
+      "field": "toolSha256",
+      "receipt": "tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/neighbor-frozen-policy.json",
+      "source": "tools/typing_experiments/neighbor_recovery.py"
+    },
+    {
+      "expectedSha256": "bf2118a0b7d54f10a56d59c73ae77900fbd957c997f8307452b33549769b0323",
+      "field": "generator",
+      "receipt": "tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/neighbor-corpus-manifest.json",
+      "source": "tools/typing_experiments/neighbor_recovery.py"
+    }
+  ]
+}

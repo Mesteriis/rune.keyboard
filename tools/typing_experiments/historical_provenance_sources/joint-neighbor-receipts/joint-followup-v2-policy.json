@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "stage": "frozen-before-independent-holdout",
+  "modelSha256": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+  "contextSha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+  "shortPolicySha256": "36fbdfd7c7c96e580b3d68b7fd6abaec58c0a62aa8302351606acbff15c5f722",
+  "holdoutSha256": "89d816bb3db371fa89161d808efe21ed75ebc4dbdf586d8b0ff3d0134a509eb6",
+  "corpusSha256": "abfb4cdea2657478f7834f4d645339238907bce71de31f13339a1410967f471b",
+  "calibrationExportSha256": "ecd92c00756328798542aed1ce1c22fff8ddb10a0dc2c83e42fc9ca6510a7dff",
+  "thresholds": {
+    "acquisition": {
+      "calibrationPassed": true,
+      "minimumScore": 0.47523928537576743,
+      "minimumMargin": 0.25078671166953415,
+      "metrics": {
+        "replacements": 471,
+        "correct": 469,
+        "wrong": 2,
+        "precision": 0.9957537154989384,
+        "baselineCorrect": 0,
+        "baselineWrong": 0,
+        "baselineCorrectToWrong": 0,
+        "baselineCorrectAbstained": 0,
+        "wrongResolved": 0,
+        "controlChanges": 0,
+        "newCorrect": 469,
+        "newCorrectFamilies": 287
+      }
+    },
+    "retention": {
+      "calibrationPassed": true,
+      "minimumScore": 0.47757815371058715,
+      "minimumMargin": 0.10336967059629464,
+      "metrics": {
+        "replacements": 1858,
+        "correct": 1843,
+        "wrong": 15,
+        "precision": 0.9919268030139935,
+        "baselineCorrect": 1990,
+        "baselineWrong": 37,
+        "baselineCorrectToWrong": 0,
+        "baselineCorrectAbstained": 147,
+        "wrongResolved": 22,
+        "controlChanges": 0,
+        "newCorrect": 0,
+        "newCorrectFamilies": 0
+      }
+    }
+  },
+  "calibratorSha256": "0320514bf45bfb204ca2a7b83220d5a9effe5bffc56e660a5f5e460b7906a848",
+  "protocol": "Fresh article and lemma disjoint splits. Acquisition calibration precision >=99.5%, independent >=99%; retention cannot introduce a third word, resolves >=10 old errors, abstains <=10% of old correct. Full product precision >=99%, net correct cannot fall; controls, correct-to-wrong, prefix and Undo failures must be zero."
+}

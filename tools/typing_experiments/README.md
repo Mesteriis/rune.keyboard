@@ -83,3 +83,13 @@ See [the scoped source acceptance](../../docs/acceptance/2026-10-28-q2-compact-s
 This establishes source availability and bounded test coverage. Historical
 commands still require their pinned data/export receipts; it does not establish
 a new training run, independent holdout or model promotion.
+
+
+## Joint/neighbor source preservation (2026-10-28 review)
+
+Current joint/neighbor source scripts and their eight test modules are versioned.
+The joint trainer/calibrator and three preparation snapshots have matching
+historical source identities; two original neighbor source versions remain
+unrecovered. See [the source and gap record](../../docs/acceptance/2026-10-28-q2-joint-neighbor-sources.md).
+These historical builders still require their pinned inputs and consumed-data
+exclusions; source preservation does not grant fresh qualification or promotion.

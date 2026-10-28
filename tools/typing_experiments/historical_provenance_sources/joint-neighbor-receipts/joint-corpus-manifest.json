@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "seed": "rune-joint-v1-20261025",
+  "sourceBindings": {
+    "build/typing-ranker-v2/ru-0011.parquet": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f",
+    "build/joint-correction-20261025/0018.parquet": "588e30523cfed480151b4bd5c1a7d7211dc03971fee399a3db6af3ad04e42c87",
+    "build/joint-correction-20261025/0019.parquet": "4c3bd676fbeb9d92ae7ed324e99f329de2542f5399cbf39b924529fff944dec6"
+  },
+  "frequency": "6095f507cc167488ec66ada5a85ac50433503a08ad24a07c6eabdf54352c4e7f",
+  "builder": "cfa5777d2a2ac53ffb339aa56b34d57c4a4a6a0ec1a712b1867b857d85043728",
+  "stage": "frozen-before-model-fitting",
+  "files": {
+    "train.jsonl": "a67ee9d103851f8b5c54e4059338a60e1cd5b8776e22440057eb48f07885bab9",
+    "calibration.jsonl": "1234785b62d4ff59ea54b52a7e7fb2ca3214996e0bb173d1c0b355d86015e97a",
+    "holdout.jsonl": "03e32ae46a61dd3c5ee0f84a308b9b2d79bf17f7c18de78442d2284738e8084d"
+  },
+  "counts": {
+    "train": {
+      "rows": 8536,
+      "bands": {
+        "short": 3774,
+        "long": 4762
+      },
+      "families": 660
+    },
+    "calibration": {
+      "rows": 8554,
+      "bands": {
+        "short": 3774,
+        "long": 4780
+      },
+      "families": 660
+    },
+    "holdout": {
+      "rows": 8557,
+      "bands": {
+        "short": 3762,
+        "long": 4795
+      },
+      "families": 660
+    }
+  }
+}

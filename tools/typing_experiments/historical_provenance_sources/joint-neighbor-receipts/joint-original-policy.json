@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "stage": "frozen-before-independent-holdout",
+  "seed": 25102026,
+  "modelSha256": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+  "contextSha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+  "corpusManifestSha256": "27c7084f8c739f608da77f617eca1c5ac552ff16b74da05a1a3c3cc888120e3f",
+  "holdoutSha256": "03e32ae46a61dd3c5ee0f84a308b9b2d79bf17f7c18de78442d2284738e8084d",
+  "thresholds": {
+    "short": {
+      "qualifiedCalibration": true,
+      "minimumScore": -0.1159913845255558,
+      "minimumMargin": 0.24699818316768785,
+      "metrics": {
+        "changes": 120,
+        "newCorrect": 120,
+        "newWrong": 0,
+        "regressions": 0,
+        "correctedWrong": 120,
+        "suppressedWrong": 0,
+        "wrongChanged": 0,
+        "controlChanges": 0,
+        "newCorrectFamilies": 46
+      }
+    },
+    "long": {
+      "qualifiedCalibration": true,
+      "minimumScore": 0.5526915271546093,
+      "minimumMargin": 0.4475581943461431,
+      "metrics": {
+        "changes": 354,
+        "newCorrect": 354,
+        "newWrong": 0,
+        "regressions": 0,
+        "correctedWrong": 354,
+        "suppressedWrong": 0,
+        "wrongChanged": 0,
+        "controlChanges": 0,
+        "newCorrectFamilies": 245
+      }
+    }
+  },
+  "trainingGroups": 5492,
+  "calibrationGroups": 5480,
+  "trainerSha256": "e8b5adf14ac94ae6f54efbc2ad499630d3460dbf007eb76d4b640b9f2422620a",
+  "featureCodeSha256": "e5317839f8c3c02ca711236ca0b5aefa37df0e6bb0c1de017bd366939294f7c6",
+  "contextCodeSha256": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+  "trainExportReceiptSha256": "094685273becdd7bc0e99db31147bbdc806fc6106aeb59abbfb937817348771f",
+  "calibrationExportReceiptSha256": "80459471786a8cdaee70ece0c70794f401a530cc458026e75de1d30d76bc9ecd"
+}

@@ -1,0 +1,14 @@
+{
+  "calibrationReceipt": "21c5c4d34c11b328c72570796d5eca6e9ebc49b28753381581b94cf50ae8c3c0",
+  "contextSha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+  "corpusSha256": "2aeaf745c132c869d2560c89f3831f9710d82d34f559083a352eeb99b604060e",
+  "frozenBeforeHoldout": true,
+  "policy": {
+    "minimumMargin": 0.317066726012393,
+    "minimumScore": 0.5337506772948372
+  },
+  "rankerSha256": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+  "schema": 1,
+  "toolSha256": "8d42d7e854ea205e797f9d0d2e41dc1f260a050613c708eb933ef3aebfa856bd",
+  "trainReceipt": "7974f5263e6dcb1bfb703826e59619d70aa6faab67be205d4e8323fe8e38285f"
+}
