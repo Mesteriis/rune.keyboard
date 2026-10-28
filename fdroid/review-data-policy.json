@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "sourceCommit": "4278bca4f0490af0735b0bc80616114d5ecc8dd1",
+  "sourceCommit": "211e32c8fbe8516181c92c867a951e473122dace",
   "scannerVersion": "2.4.5",
   "entries": [
     {
@@ -194,6 +194,46 @@
       "action": "delete",
       "provenance": "app/src/main/assets/smarttyping/experiments/provenance.json",
       "provenanceSha256": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4"
+    },
+    {
+      "path": "tools/ci/product-replay-v1/baseline.jsonl.gz",
+      "bytes": 1154198,
+      "sha256": "cc63e36f4b95c7328440ff2965dae5ab1432c119df53e14b12a8e264f7ca409b",
+      "action": "delete",
+      "provenance": "tools/ci/product-replay-v1/baseline-manifest.json",
+      "provenanceSha256": "0b17163f8856636393ddbaede8ff7c37c75a76b3c9dad25cefd43cc28b368a24"
+    },
+    {
+      "path": "tools/ci/product-replay-history-v1/baseline.jsonl.gz",
+      "bytes": 5110083,
+      "sha256": "a7dea8d9ead6b235f1b63086f4fb946ab840b6272ae39c254f148ecc5032c5d8",
+      "action": "delete",
+      "provenance": "tools/ci/product-replay-history-v1/baseline-manifest.json",
+      "provenanceSha256": "f50f131614cc51ffbdd1c94398fbc2a03066d04e611540653a1553aae7694dd7"
+    },
+    {
+      "path": "tools/ci/historical-data-v1/files.tar.gz",
+      "bytes": 1849627,
+      "sha256": "8a906500b956cd278a8c3230d584f580b23ff2980831436fc4d8cd4d33d9169c",
+      "action": "delete",
+      "provenance": "tools/ci/historical-data-v1/manifest.json",
+      "provenanceSha256": "75c9076f0b960393f7c555f21b994443a3f67e853edc675730514820068ebf3a"
+    },
+    {
+      "path": "tools/ci/historical-model-fixtures-v1/files.tar.gz",
+      "bytes": 4643389,
+      "sha256": "8c2e7bcf8906651185683220c32ac4a245c576f852416b77a365f1e95ce90ec2",
+      "action": "delete",
+      "provenance": "tools/ci/historical-model-fixtures-v1/manifest.json",
+      "provenanceSha256": "e7e73185d1da72e5b45e79fd0556429c7de0af5a0d5c23d28a5e98b0df5567e1"
+    },
+    {
+      "path": "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz",
+      "bytes": 132448,
+      "sha256": "4b296ca1c97f6e371928841d4d87baeeac3f2e82e872100bfe1bfd010eab83b2",
+      "action": "inventory",
+      "provenance": "app/src/test/resources/smarttyping/ranker/manifest.json",
+      "provenanceSha256": "8861521999a2bea9bbb9ec94d5491e7d1a01292efe6c56f5882a807d29be2609"
     }
   ]
 }

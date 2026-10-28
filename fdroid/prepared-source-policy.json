@@ -37,6 +37,26 @@
       "path": "runtime-llama/src/main/cpp/llama.cpp/examples/llama.android/gradle/wrapper/gradle-wrapper.jar",
       "action": "delete",
       "beforeSha256": "e996d452d2645e70c01c11143ca2d3742734a28da2bf61f25c82bdc288c9e637"
+    },
+    {
+      "path": "tools/ci/product-replay-v1/baseline.jsonl.gz",
+      "action": "delete",
+      "beforeSha256": "cc63e36f4b95c7328440ff2965dae5ab1432c119df53e14b12a8e264f7ca409b"
+    },
+    {
+      "path": "tools/ci/product-replay-history-v1/baseline.jsonl.gz",
+      "action": "delete",
+      "beforeSha256": "a7dea8d9ead6b235f1b63086f4fb946ab840b6272ae39c254f148ecc5032c5d8"
+    },
+    {
+      "path": "tools/ci/historical-data-v1/files.tar.gz",
+      "action": "delete",
+      "beforeSha256": "8a906500b956cd278a8c3230d584f580b23ff2980831436fc4d8cd4d33d9169c"
+    },
+    {
+      "path": "tools/ci/historical-model-fixtures-v1/files.tar.gz",
+      "action": "delete",
+      "beforeSha256": "8c2e7bcf8906651185683220c32ac4a245c576f852416b77a365f1e95ce90ec2"
     }
   ]
 }

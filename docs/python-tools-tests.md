@@ -1,75 +1,66 @@
 # Python tools test inventory
 
-Q7's tracked test scope is defined in `tools/ci/python_tools_tests.py`: all
-`test_*.py` modules directly under `tools/typing_experiments` and
-`tools/morphology`, plus `tools/test_qualification_artifacts.py`.
-`tools/ci/python-tools-tests.json` assigns every tracked module exactly once.
-Adding, removing or renaming a tracked module without updating this inventory
-fails validation. Untracked local experiments are not CI inputs.
+Q7's scope is all tracked `test_*.py` modules directly under
+`tools/typing_experiments` and `tools/morphology`, plus
+`tools/test_qualification_artifacts.py`. The versioned inventory assigns all
+103 modules to runnable jobs: 92 stdlib and 11 scientific modules. The retained
+`historical-artifacts` profile is empty; the runner's own tests require it to
+stay empty. An empty profile cannot produce a successful run.
 
 ```sh
 python tools/ci/python_tools_tests.py --check
-python -m unittest discover -s tools/ci -p test_python_tools_tests.py -v
+python -m unittest discover -s tools/ci -p 'test_*.py' -v
 python tools/ci/python_tools_tests.py --profile stdlib --output build/python-tools-stdlib
 python -m pip install -r tools/typing_experiments/requirements.txt
 python tools/ci/historical_data_fixtures.py --install-build build
+python tools/ci/historical_model_fixtures.py
 python tools/ci/python_tools_tests.py --profile scientific --output build/python-tools-scientific
 ```
 
-Use Python 3.12 and a new output directory. Each test module runs in a separate
-interpreter so generic imports such as `evaluate` and `train` cannot leak across
-modules. PYTHONPATH and PYTHONHOME overrides are removed. Raw stdout/stderr,
-child exit status, test counts and skipped tests remain in the output directory.
-A failure or 240-second module timeout fails the profile; subsequent modules
-still run. An empty suite fails. Existing output directories are never reused.
-The workflow uploads both profiles' receipts and logs, including on failure.
+Use Python 3.12 and fresh output/data directories. Each module runs in a separate
+interpreter; generic imports cannot leak across modules. PYTHONPATH/PYTHONHOME
+are removed. Logs, exact child exits, counts and skips are retained and uploaded.
+Failures, timeouts and empty suites fail; later modules still run. Inventory
+drift or moving modules back into an unwired historical profile fails CI.
 
-Current scope: 92 stdlib modules, eight scientific modules using the existing
-pinned NumPy/CatBoost requirements, and three historical-artifact modules. CI runs
-the first two profiles in separate jobs. The scientific profile retains the
-existing MLX-only test as a reported skip on Ubuntu; MLX gradient parity needs
-its supported Apple environment. Installing CatBoost is not proof of frozen
-model parity. Morphology's stdlib unit tests do not prove live Pymorphy dictionary
-integration.
+## Original historical tests
 
-## Remaining historical gap
+The three formerly artifact-dependent modules now use explicit class-scoped
+resource roots. Their ten original test methods and assertions are unchanged.
+No production validator is modified and no historical test is skipped.
+`historical_test_fixtures.py` delegates to the versioned fixture reader, which:
 
-The scientific job first verifies and restores the original refinement and
-additional-epoch public datasets from `tools/ci/historical-data-v1`. The two
-original manifests and all 15 advertised files are preserved byte for byte.
-The archive is about 1.85 MB, includes article attribution, and is checked
-against the public source lock, original generator hashes and durable exclusions.
-Installation requires fresh dataset directories and preserves other build files.
-The additional-epoch 230-article/1,500-context exposure is now permanently
-registered. Canonical-family and full-source-sentence recovery remains open.
-See [the acceptance receipt](acceptance/2026-10-28-q7-historical-data.md) and the archive's NOTICE.
+- Verifies the fixed archive, original reference CBM/weight identities, public
+  source manifests, per-file hashes, article attribution and durable exclusions.
+- Restores raw rows, observations, reference models and decoded weights unchanged.
+- Creates a fresh temporary source snapshot for each required historical profile.
+  All 71 directly declared project-source versions remain hash-bound; 29 changed
+  versions are archived, and unchanged files are verified in the repository.
+- Rebases only receipt/log/source-map path templates and recomputes their metadata
+  hash edges. External compiler/runtime references remain unavailable metadata;
+  no dummy runtime files are created and no archived code is executed.
+- Removes temporary workspaces and restores resource roots after each class.
 
-Q7 is **incomplete**. The following modules are inventoried but have no runnable
-fresh-checkout CI job yet. They retain their original assertions; no replacement
-models or synthetic datasets have been substituted:
+The word fixture validates all 9,000 original rows and prior data identities.
+Their 8,991 distinct normalized target contexts now have a permanent exclusion
+addendum; the original 4,920-article exclusions remain intact. Canonical families
+and full source sentences remain unproven; Q6 global coverage is still false.
 
-| Module | Original artifacts needed under build/ |
-| --- | --- |
-| test_models.py | morphology-public-export-v3 receipt/data; typing-experiments CatBoost reference and neural parity cases |
-| test_refinement.py | verified-observations and selected pairwise reference/export |
-| test_word_ranking_data.py | typing-word-ranking/data manifest and rows |
+The new archive is 4,643,389 bytes, includes titles/history attribution for all
+4,920 word-corpus articles, and preserves 31 reference/data files (only metadata
+paths and their hash edges are transformed). Core public text attribution and
+original manifests remain in `historical-data-v1`. Archive generation requires
+the original local build and pinned public parquet; normal tests require neither.
+See [the acceptance receipt](acceptance/2026-10-28-q7-portable-model-fixtures.md).
 
-Original candidate exports and model references have been located in the
-nested historical workspace archive. They are not yet available in a fresh
-checkout: receipts contain absolute paths and bind historical generator bytes.
-All 71 directly referenced project source versions have now been recovered;
-29 changed versions are preserved in `historical-model-sources-v1` and the CI
-scientific job audits the complete direct project-source index. External
-runtime execution remains unproven. Original CatBoost references passed local
-full-vector numeric parity (8,555 vectors); this does not substitute for the
-three original test modules. Word-ranking data also reproduced byte for byte,
-and its 4,920 consumed articles now have permanent exclusions. Target contexts,
-canonical families and full source sentences remain pending for that corpus.
-See [the recovery receipt](acceptance/2026-10-28-q7-model-source-recovery.md).
+## Remaining evidence
 
-Recovery must preserve those identities and establish a portable, verified
-source/data/model bundle before wiring the `historical-artifacts` profile into
-CI. Running that profile now fails rather than skipping absent
-files. Updating the inventory cannot turn unresolved history into full coverage.
-Live CatBoost/Pymorphy integration, MLX parity and hosted Ubuntu execution also
-remain separate required evidence. See the review completion plan.
+The Linux scientific job retains one explicit MLX-only gradient-test skip. Its
+supported Apple environment and permanent CI job need separate evidence.
+Morphology's current unit tests do not establish live Pymorphy dictionary
+integration. Full hosted Ubuntu execution also remains unverified. Q7 remains
+in progress; wiring all 103 modules does not resolve those outstanding checks.
+
+F-Droid preparation deletes the four exact host CI gzip archives, verified by
+hash and declared provenance; it does not add a blanket scanner exclusion.
+Run host tests before preparation. See [F-Droid process](FDROID.md).

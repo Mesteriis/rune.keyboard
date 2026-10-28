@@ -10,7 +10,14 @@ import re
 
 REPO = Path(__file__).resolve().parents[1]
 POLICY = REPO / 'fdroid/review-data-policy.json'
-DATA_SUFFIXES = {'.bin', '.ctx', '.gram', '.zip'}
+DATA_SUFFIXES = {'.bin', '.ctx', '.gram', '.zip', '.gz'}
+INVENTORY_ARCHIVES = {'app/src/test/resources/smarttyping/ranker/calibration.tsv.gz'}
+HOST_ARCHIVES = {
+    'tools/ci/product-replay-v1/baseline.jsonl.gz': 'tools/ci/product-replay-v1/baseline-manifest.json',
+    'tools/ci/product-replay-history-v1/baseline.jsonl.gz': 'tools/ci/product-replay-history-v1/baseline-manifest.json',
+    'tools/ci/historical-data-v1/files.tar.gz': 'tools/ci/historical-data-v1/manifest.json',
+    'tools/ci/historical-model-fixtures-v1/files.tar.gz': 'tools/ci/historical-model-fixtures-v1/manifest.json',
+}
 
 
 class DataPolicyError(ValueError):
@@ -58,7 +65,7 @@ def parse_policy(data: bytes) -> dict:
 def check(root: Path, value: dict) -> dict:
     discovered = set()
     for directory in ('app/src/main/assets', 'app/src/test/resources', 'tools/emoji/sources',
-                      'tools/typing_experiments/baseline'):
+                      'tools/typing_experiments/baseline', 'tools/ci'):
         for path in (root / directory).rglob('*'):
             if path.is_file() and path.suffix in DATA_SUFFIXES:
                 discovered.add(path.relative_to(root).as_posix())
@@ -77,13 +84,16 @@ def check(root: Path, value: dict) -> dict:
                     for key in ('sha256', 'provenanceSha256')), 'DATA_ENTRY_IDENTITY')
         require(path.stat().st_size == entry['bytes'] and digest(path) == entry['sha256'], 'DATA_BYTES_DRIFT')
         declared = entry['provenance']
+        if name in HOST_ARCHIVES:
+            require(declared == HOST_ARCHIVES[name], 'INVALID_PROVENANCE_SCOPE')
         require(isinstance(declared, str) and declared.endswith('.json') and
                 (declared.startswith(('app/src/main/assets/', 'app/src/test/resources/')) or
-                 declared == 'tools/emoji/source-manifest.json'), 'INVALID_PROVENANCE_SCOPE')
+                 declared == 'tools/emoji/source-manifest.json' or
+                 HOST_ARCHIVES.get(name) == declared), 'INVALID_PROVENANCE_SCOPE')
         provenance = relative_file(root, declared)
         require(digest(provenance) == entry['provenanceSha256'], 'DECLARED_PROVENANCE_DRIFT')
-        expected = 'delete' if name.startswith('tools/typing_experiments/baseline/') else (
-            'inventory' if path.suffix in {'.ctx', '.gram'} else 'ignore')
+        expected = 'delete' if name.startswith('tools/typing_experiments/baseline/') or name in HOST_ARCHIVES else (
+            'inventory' if path.suffix in {'.ctx', '.gram'} or name in INVENTORY_ARCHIVES else 'ignore')
         require(entry['action'] == expected, 'SCANNER_ACTION_MISMATCH')
         actions[expected].append(name)
         # Upstream 2.4.5 uses startswith after resolving an exact scanignore path.

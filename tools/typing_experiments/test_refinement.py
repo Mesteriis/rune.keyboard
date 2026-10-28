@@ -1,3 +1,5 @@
+from unittest.mock import patch
+from historical_test_fixtures import workspace
 import json
 from pathlib import Path
 import tempfile
@@ -7,6 +9,12 @@ import prepare_refinement as prepare
 import rank_refinement as rank
 
 class RefinementTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        root = cls.enterClassContext(workspace('refinement'))
+        cls.enterClassContext(patch.object(rank, 'ROOT', root))
+
     def test_mutations_are_reproducible_and_never_known_words(self):
         vocabulary={'работать','работа','домой','слово','слова'}
         for word in vocabulary:

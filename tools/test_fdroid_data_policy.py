@@ -1,4 +1,5 @@
 import copy
+import gzip
 import json
 from pathlib import Path
 import tempfile
@@ -71,6 +72,53 @@ class DataPolicyTest(unittest.TestCase):
             with tempfile.TemporaryDirectory() as directory:
                 root, value = self.fixture(directory); value['entries'][0]['provenance'] = name
                 with self.assertRaises(policy.DataPolicyError): policy.check(root, value)
+
+    def test_host_archives_require_exact_paths_provenance_and_deletion(self):
+        for name, declared in policy.HOST_ARCHIVES.items():
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as directory:
+                root, value = self.fixture(directory)
+                path = root / name; path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(gzip.compress(b'host fixture', mtime=0))
+                provenance = root / declared; provenance.write_text('{"hostOnly":true}')
+                row = dict(path=name, bytes=path.stat().st_size, sha256=policy.digest(path), action='delete',
+                           provenance=declared, provenanceSha256=policy.digest(provenance))
+                value['entries'].append(row)
+                self.assertIn(name, policy.check(root, value)['scandelete'])
+                row['action'] = 'ignore'
+                with self.assertRaisesRegex(policy.DataPolicyError, 'SCANNER_ACTION_MISMATCH'):
+                    policy.check(root, value)
+                row['action'] = 'delete'
+                row['provenance'] = 'app/src/main/assets/provenance.json'
+                with self.assertRaisesRegex(policy.DataPolicyError, 'INVALID_PROVENANCE_SCOPE'):
+                    policy.check(root, value)
+                row['provenance'] = declared
+                path.with_name(path.name + '.injected.so').write_bytes(b'unreviewed sibling')
+                with self.assertRaisesRegex(policy.DataPolicyError, 'SCANNER_PREFIX_COLLISION'):
+                    policy.check(root, value)
+
+    def test_unregistered_ci_archive_is_never_implicitly_allowed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, value = self.fixture(directory)
+            path = root / 'tools/ci/unreviewed.gz'; path.parent.mkdir(parents=True)
+            path.write_bytes(gzip.compress(b'unreviewed', mtime=0))
+            with self.assertRaisesRegex(policy.DataPolicyError, 'UNREVIEWED_OR_STALE_DATA_SET'):
+                policy.check(root, value)
+
+    def test_existing_calibration_archive_is_inventory_only(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, value = self.fixture(directory)
+            name = next(iter(policy.INVENTORY_ARCHIVES))
+            path = root / name; path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(gzip.compress(b'calibration fixture', mtime=0))
+            provenance = path.parent / 'manifest.json'; provenance.write_text('{"testOnly":true}')
+            row = dict(path=name, bytes=path.stat().st_size, sha256=policy.digest(path), action='inventory',
+                       provenance=provenance.relative_to(root).as_posix(), provenanceSha256=policy.digest(provenance))
+            value['entries'].append(row)
+            report = policy.check(root, value)
+            self.assertIn(name, report['inventoryOnly']);self.assertNotIn(name, report['scandelete'])
+            row['action'] = 'ignore'
+            with self.assertRaisesRegex(policy.DataPolicyError, 'SCANNER_ACTION_MISMATCH'):
+                policy.check(root, value)
 
     def test_duplicate_json_keys_entries_and_symlinks_refuse(self):
         with self.assertRaisesRegex(policy.DataPolicyError, 'DUPLICATE_POLICY_KEY'):

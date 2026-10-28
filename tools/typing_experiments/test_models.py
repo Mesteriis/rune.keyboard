@@ -1,3 +1,5 @@
+from unittest.mock import patch
+from historical_test_fixtures import workspace
 import json
 import math
 import struct
@@ -27,6 +29,15 @@ def tree_score(blob, features):
     return result*scale+bias
 
 class ModelsTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        root = cls.enterClassContext(workspace('baseline'))
+        cls.enterClassContext(patch.object(train, 'ROOT', root))
+        cls.enterClassContext(patch.object(train, 'CORPUS', root/'tools/eval/smart-typing-0.3/qualification-v2/corpus'))
+        cls.enterClassContext(patch.object(train, 'EXPORT', root/'build/morphology-public-export-v3'))
+        cls.enterClassContext(patch.object(train, 'OUT', root/'build/typing-experiments'))
+
     def test_public_identity_and_split(self):
         rows,_,_=train.load_public()
         fit={r['template'] for r,o in rows if r['split']=='calibration'}

@@ -24,7 +24,7 @@ class PythonToolsTestsTest(unittest.TestCase):
 
     def test_inventory_matches_every_tracked_module(self):
         data = runner.validate()
-        self.assertTrue(data['profiles']['historical-artifacts'])
+        self.assertEqual([], data['profiles']['historical-artifacts'])
         self.assertTrue(data['profiles']['scientific'])
         self.assertTrue(data['profiles']['stdlib'])
 

@@ -31,6 +31,8 @@ jobs:
           python tools/ci/historical_data_fixtures.py --install-build build
           python -m unittest discover -s tools/ci -p test_historical_model_sources.py -v
           python tools/ci/historical_model_sources.py
+          python -m unittest discover -s tools/ci -p test_historical_model_fixtures.py -v
+          python tools/ci/historical_model_fixtures.py
       - name: Run isolated Python tool modules
         run: python tools/ci/python_tools_tests.py --profile "${{ matrix.profile }}" --output "build/python-tools-${{ matrix.profile }}"
       - uses: actions/upload-artifact@v4
@@ -39,9 +41,6 @@ jobs:
           name: python-tools-${{ matrix.profile }}
           path: build/python-tools-${{ matrix.profile }}/
           if-no-files-found: error
-      # Three historical-artifact modules remain inventoried but cannot run in a
-      # fresh checkout until their original datasets/models are restored. Q7
-      # remains incomplete; see docs/python-tools-tests.md.
   unit-tests:
     runs-on: ubuntu-latest
     steps:

@@ -1,3 +1,5 @@
+from unittest.mock import patch
+from historical_test_fixtures import workspace
 import json
 import unittest
 from collections import Counter
@@ -5,6 +7,13 @@ import prepare_word_ranking as p
 import evaluate_word_ranking as e
 
 class WordRankingDataTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        root = cls.enterClassContext(workspace('word'))
+        cls.enterClassContext(patch.object(p, 'ROOT', root))
+        cls.enterClassContext(patch.object(e, 'OUT', root/'build/typing-word-ranking'))
+
     def test_exact_complex_edits_and_reproducible_controls(self):
         self.assertEqual(p.distance('слово','слово'),0)
         self.assertEqual(p.distance('слвоо','слово'),1)

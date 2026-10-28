@@ -24,14 +24,23 @@ The optional large Rune Text model is not bundled. Its download is explicit, pin
 
 ## Current review data overlay
 
-[review-data-policy.json](../fdroid/review-data-policy.json) binds 24 exact data
+[review-data-policy.json](../fdroid/review-data-policy.json) binds 29 exact data
 files and their declared provenance JSON bytes. Its three actions are:
 
 - Nineteen literal scanignore paths: ten shipped numeric .bin files, eight numeric
   test .bin fixtures and the verified Unicode/CLDR source-data ZIP.
-- Four inventory-only .ctx/.gram indexes. fdroidserver 2.4.5 does not flag them;
-  adding unused scanignore entries would itself fail its source scan.
-- One exact scandelete path for the existing unused training baseline.
+- Five inventory-only files: four .ctx/.gram indexes and the existing test
+  calibration gzip. The indexes are unflagged; calibration remains warning-only.
+  No scanner suppression is added for these files.
+- Five exact scandelete paths: the unused training baseline and four host CI
+  archives (two replay baselines, historical data and model fixtures).
+
+The host archive exceptions bind each compressed file to its exact versioned
+manifest and hash. New archives, changed provenance and filename-prefix siblings
+fail the guard. The test calibration archive remains warning-only inventory;
+no broad directory or gzip exclusion is used. The prepared-source policy also
+binds all four host archive deletions. The historical release recipes are retained;
+the next release recipe must apply the current overlay's literal paths.
 
 Run before F-Droid source preparation, on the original checkout:
 

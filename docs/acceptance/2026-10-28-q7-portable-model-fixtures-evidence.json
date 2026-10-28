@@ -1,0 +1,258 @@
+{
+  "archive": {
+    "articleAttributionRows": 4920,
+    "compressedBytes": 4643389,
+    "payloadBytes": 46842719,
+    "rawFiles": 21,
+    "sha256": "8c2e7bcf8906651185683220c32ac4a245c576f852416b77a365f1e95ce90ec2",
+    "templateFiles": 10,
+    "twoGenerationsByteIdentical": true
+  },
+  "candidateBindings": {
+    ".github/workflows/ci.yml": "a5f4ea1c3ef3955c91007f9f05ba55bd7ed85b5b2708e778476c065360549eda",
+    "fdroid/prepared-source-policy.json": "ef0a4000c7da423ab5824b926063c045b09d09fb28671cb5b20ac18ab54e0907",
+    "fdroid/review-data-policy.json": "4322bbee815a629a4525ca487920bc1c318e83ef30c041fb7727984c73b779e8",
+    "tools/ci/generate_historical_model_fixtures.py": "0bac483b1273bd1cd3e1a15c5789dfc1e8c063d4086677b7a509fa6a3c611f77",
+    "tools/ci/historical-model-fixtures-v1/NOTICE.md": "c44b66ea1aa68b71600cb2c0085cd3c38da8773042063d6e3933a6d3b13cb4bd",
+    "tools/ci/historical-model-fixtures-v1/articles.jsonl": "4d792bb9d7e3d68299bbda9434239034e46f5e5d56c6e31b9789cbbc55922ddb",
+    "tools/ci/historical-model-fixtures-v1/files.tar.gz": "8c2e7bcf8906651185683220c32ac4a245c576f852416b77a365f1e95ce90ec2",
+    "tools/ci/historical-model-fixtures-v1/manifest.json": "e7e73185d1da72e5b45e79fd0556429c7de0af5a0d5c23d28a5e98b0df5567e1",
+    "tools/ci/historical_model_fixtures.py": "347f15eb4711092010986d4fbb59684927ec3db47acc35f186dc7ca3208484c8",
+    "tools/ci/python-tools-tests.json": "ede07e821e192fc80ecdf97e34951573c89417d52c0cccf54764e27cd7463035",
+    "tools/ci/test_historical_model_fixtures.py": "b5984a041e11e2a80b996e2da50f94ad1bd23504e9320a701934d10ef24c7329",
+    "tools/ci/test_python_tools_tests.py": "84014549b44e0a2a269cf907443100d3dcd407d50f356d7a07deab0ea803037c",
+    "tools/fdroid_data_policy.py": "00ea227c3bde163e196b1971ca80c4d4fa183c7e7e068605c347a8fb6438a77e",
+    "tools/test_fdroid_data_policy.py": "d2d5b604d618d734e190fc2a235bc48756f3c40fc72843332ecd1c4fbfd48f49",
+    "tools/typing_experiments/historical_test_fixtures.py": "4440a9faebb2fbba967672846732f708ee6f55010d3d409e3375e0967aa79699",
+    "tools/typing_experiments/holdout-ledger.json": "820c9ac188cc4b8a48f0ef573c13c296b8758c69a8d34d736ba9753ab1c8c9cc",
+    "tools/typing_experiments/test_models.py": "9c729a0ca0b80f8bb64782852bf2fa460ebc3a07ea7f385546a45fed736e4b75",
+    "tools/typing_experiments/test_refinement.py": "3ab0c29491481d962f7422f2461bb573f115e511eecb7154d1b516cd5c460006",
+    "tools/typing_experiments/test_word_ranking_data.py": "9e66092c63c063f64e385ffc18616f68feff177f28b41c4a02df6f792bf92b40"
+  },
+  "ciInfrastructureTests": {
+    "exitCode": 0,
+    "logSha256": "1cb894852244739a365ddf3bc583970204046261acb8f87b1bc3d1de0ce823e5",
+    "tests": 35
+  },
+  "earlierAttempts": [
+    "Initial context registration used an incompatible missing-axis scope and was refused by the existing ledger validator.",
+    "A registration check incorrectly assumed 9000 distinct normalized keys; actual 9000 rows map to 8991 keys. No data/assertions were changed.",
+    "An initial ModelsTest setup ran before context registration was installed; it failed with zero tests and its raw log is retained.",
+    "A script attempted to rename an optional logging file that the scanner did not create; all scanner driver outputs/results were retained."
+  ],
+  "fdroidDataPolicyTests": {
+    "exitCode": 0,
+    "logSha256": "edfdf0a9f645b26f0d17f75ddf350018f8e1fc1bda825d71856c904b4795dc13",
+    "tests": 10
+  },
+  "newPermanentContextExclusions": {
+    "distinctNormalizedKeys": 8991,
+    "globalCoverageComplete": false,
+    "priorEntriesPreserved": 125,
+    "sourceRows": 9000
+  },
+  "numericCliRegression": {
+    "exitCode": 0,
+    "receiptSha256": "76eea6987a09b6d35c4ecff1a3bccc754e8d292e4e80956ea6ccad2d38aeb606",
+    "vectors": 8555
+  },
+  "originalTestMethodBodiesUnchanged": {
+    "tools/typing_experiments/test_models.py": 3,
+    "tools/typing_experiments/test_refinement.py": 4,
+    "tools/typing_experiments/test_word_ranking_data.py": 3
+  },
+  "preparedSourceTests": {
+    "exitCode": 0,
+    "logSha256": "f24ba3ede697b5b89daccae07a8867e83e3047228c883172832e451afa62548f",
+    "tests": 15
+  },
+  "profiles": {
+    "scientific": {
+      "exitCode": 0,
+      "modules": 11,
+      "receiptSha256": "70ba228d31a964e3682e6898aa2fcc821122e59a2ee8dc97a28c0af23280ab64",
+      "skipped": [
+        {
+          "reason": "MLX environment required",
+          "test": "test_word_ranking.WordRankingTests.test_mlx_loss_parity_initialization_and_finite_gradient"
+        }
+      ],
+      "tests": 44
+    },
+    "stdlib": {
+      "exitCode": 0,
+      "modules": 92,
+      "receiptSha256": "51cb10b8d1b7cb1869b0a75ef1ee462a17756b17a93e36e7c420abb9db2d6f22",
+      "skipped": [],
+      "tests": 518
+    }
+  },
+  "remaining": [
+    "Supported MLX execution and CI",
+    "Live Pymorphy dictionary integration",
+    "Full hosted Ubuntu execution",
+    "Q6 canonical families/full source sentences and other historical gaps",
+    "Whole-release and independent distribution acceptance"
+  ],
+  "reviewCards": [
+    "Q6",
+    "Q7",
+    "Q1"
+  ],
+  "scannerScenarioExitCodes": {
+    "no-host-deletion": 1,
+    "positive": 0,
+    "prefix-negative": 1
+  },
+  "schemaVersion": 1,
+  "scopeComplete": false,
+  "sourceBase": "211e32c8fbe8516181c92c867a951e473122dace",
+  "sourceScans": {
+    "no-host-deletion": {
+      "combinedPass": false,
+      "dataEntries": 29,
+      "errors": [
+        [
+          "gzip file archive",
+          "tools/ci/historical-data-v1/files.tar.gz"
+        ],
+        [
+          "gzip file archive",
+          "tools/ci/product-replay-v1/baseline.jsonl.gz"
+        ],
+        [
+          "gzip file archive",
+          "tools/ci/historical-model-fixtures-v1/files.tar.gz"
+        ],
+        [
+          "gzip file archive",
+          "tools/ci/product-replay-history-v1/baseline.jsonl.gz"
+        ]
+      ],
+      "fdroidserver": "2.4.5",
+      "guardError": null,
+      "networkBlocked": true,
+      "overlayBindings": {
+        ".github/workflows/ci.yml": "a5f4ea1c3ef3955c91007f9f05ba55bd7ed85b5b2708e778476c065360549eda",
+        "fdroid/prepared-source-policy.json": "ef0a4000c7da423ab5824b926063c045b09d09fb28671cb5b20ac18ab54e0907",
+        "fdroid/review-data-policy.json": "4322bbee815a629a4525ca487920bc1c318e83ef30c041fb7727984c73b779e8",
+        "tools/ci/generate_historical_model_fixtures.py": "0bac483b1273bd1cd3e1a15c5789dfc1e8c063d4086677b7a509fa6a3c611f77",
+        "tools/ci/historical-model-fixtures-v1/NOTICE.md": "c44b66ea1aa68b71600cb2c0085cd3c38da8773042063d6e3933a6d3b13cb4bd",
+        "tools/ci/historical-model-fixtures-v1/articles.jsonl": "4d792bb9d7e3d68299bbda9434239034e46f5e5d56c6e31b9789cbbc55922ddb",
+        "tools/ci/historical-model-fixtures-v1/files.tar.gz": "8c2e7bcf8906651185683220c32ac4a245c576f852416b77a365f1e95ce90ec2",
+        "tools/ci/historical-model-fixtures-v1/manifest.json": "e7e73185d1da72e5b45e79fd0556429c7de0af5a0d5c23d28a5e98b0df5567e1",
+        "tools/ci/historical_model_fixtures.py": "7fabac06844b86a35d26773c661d74423774c07ec36afdf4cd6c02441b2be260",
+        "tools/ci/python-tools-tests.json": "ede07e821e192fc80ecdf97e34951573c89417d52c0cccf54764e27cd7463035",
+        "tools/ci/test_historical_model_fixtures.py": "a58a46bd4268a5499d37da7715ca10e0c3742a31d74a3941832b886e65883d12",
+        "tools/ci/test_python_tools_tests.py": "84014549b44e0a2a269cf907443100d3dcd407d50f356d7a07deab0ea803037c",
+        "tools/fdroid_data_policy.py": "00ea227c3bde163e196b1971ca80c4d4fa183c7e7e068605c347a8fb6438a77e",
+        "tools/test_fdroid_data_policy.py": "d2d5b604d618d734e190fc2a235bc48756f3c40fc72843332ecd1c4fbfd48f49",
+        "tools/typing_experiments/historical_test_fixtures.py": "4440a9faebb2fbba967672846732f708ee6f55010d3d409e3375e0967aa79699",
+        "tools/typing_experiments/holdout-ledger.json": "2eab1bac924374622ace47564d1fcfbf8daeb025a0673e05db6ad2615db92585",
+        "tools/typing_experiments/test_models.py": "9c729a0ca0b80f8bb64782852bf2fa460ebc3a07ea7f385546a45fed736e4b75",
+        "tools/typing_experiments/test_refinement.py": "3ab0c29491481d962f7422f2461bb573f115e511eecb7154d1b516cd5c460006",
+        "tools/typing_experiments/test_word_ranking_data.py": "9e66092c63c063f64e385ffc18616f68feff177f28b41c4a02df6f792bf92b40"
+      },
+      "scannerFatal": 4,
+      "scannerModuleSha256": "4de525a85ba519a41838cf1ed7e70184d0b9df782da8a6c82c6dea5234adf7e1",
+      "sourceBase": "211e32c8fbe8516181c92c867a951e473122dace",
+      "submodule": "36b10154383b60eb15baac2c7a40d2a5f784faa7",
+      "warnings": [
+        [
+          "gzip file archive",
+          "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+        ],
+        [
+          "executable binary, possibly code",
+          "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+        ]
+      ]
+    },
+    "positive": {
+      "combinedPass": true,
+      "dataEntries": 29,
+      "errors": [],
+      "fdroidserver": "2.4.5",
+      "guardError": null,
+      "networkBlocked": true,
+      "overlayBindings": {
+        ".github/workflows/ci.yml": "a5f4ea1c3ef3955c91007f9f05ba55bd7ed85b5b2708e778476c065360549eda",
+        "fdroid/prepared-source-policy.json": "ef0a4000c7da423ab5824b926063c045b09d09fb28671cb5b20ac18ab54e0907",
+        "fdroid/review-data-policy.json": "4322bbee815a629a4525ca487920bc1c318e83ef30c041fb7727984c73b779e8",
+        "tools/ci/generate_historical_model_fixtures.py": "0bac483b1273bd1cd3e1a15c5789dfc1e8c063d4086677b7a509fa6a3c611f77",
+        "tools/ci/historical-model-fixtures-v1/NOTICE.md": "c44b66ea1aa68b71600cb2c0085cd3c38da8773042063d6e3933a6d3b13cb4bd",
+        "tools/ci/historical-model-fixtures-v1/articles.jsonl": "4d792bb9d7e3d68299bbda9434239034e46f5e5d56c6e31b9789cbbc55922ddb",
+        "tools/ci/historical-model-fixtures-v1/files.tar.gz": "8c2e7bcf8906651185683220c32ac4a245c576f852416b77a365f1e95ce90ec2",
+        "tools/ci/historical-model-fixtures-v1/manifest.json": "e7e73185d1da72e5b45e79fd0556429c7de0af5a0d5c23d28a5e98b0df5567e1",
+        "tools/ci/historical_model_fixtures.py": "347f15eb4711092010986d4fbb59684927ec3db47acc35f186dc7ca3208484c8",
+        "tools/ci/python-tools-tests.json": "ede07e821e192fc80ecdf97e34951573c89417d52c0cccf54764e27cd7463035",
+        "tools/ci/test_historical_model_fixtures.py": "b5984a041e11e2a80b996e2da50f94ad1bd23504e9320a701934d10ef24c7329",
+        "tools/ci/test_python_tools_tests.py": "84014549b44e0a2a269cf907443100d3dcd407d50f356d7a07deab0ea803037c",
+        "tools/fdroid_data_policy.py": "00ea227c3bde163e196b1971ca80c4d4fa183c7e7e068605c347a8fb6438a77e",
+        "tools/test_fdroid_data_policy.py": "d2d5b604d618d734e190fc2a235bc48756f3c40fc72843332ecd1c4fbfd48f49",
+        "tools/typing_experiments/historical_test_fixtures.py": "4440a9faebb2fbba967672846732f708ee6f55010d3d409e3375e0967aa79699",
+        "tools/typing_experiments/holdout-ledger.json": "820c9ac188cc4b8a48f0ef573c13c296b8758c69a8d34d736ba9753ab1c8c9cc",
+        "tools/typing_experiments/test_models.py": "9c729a0ca0b80f8bb64782852bf2fa460ebc3a07ea7f385546a45fed736e4b75",
+        "tools/typing_experiments/test_refinement.py": "3ab0c29491481d962f7422f2461bb573f115e511eecb7154d1b516cd5c460006",
+        "tools/typing_experiments/test_word_ranking_data.py": "9e66092c63c063f64e385ffc18616f68feff177f28b41c4a02df6f792bf92b40"
+      },
+      "scannerFatal": 0,
+      "scannerModuleSha256": "4de525a85ba519a41838cf1ed7e70184d0b9df782da8a6c82c6dea5234adf7e1",
+      "sourceBase": "211e32c8fbe8516181c92c867a951e473122dace",
+      "submodule": "36b10154383b60eb15baac2c7a40d2a5f784faa7",
+      "warnings": [
+        [
+          "gzip file archive",
+          "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+        ],
+        [
+          "executable binary, possibly code",
+          "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+        ]
+      ]
+    },
+    "prefix-negative": {
+      "combinedPass": false,
+      "dataEntries": 29,
+      "errors": [],
+      "fdroidserver": "2.4.5",
+      "guardError": "SCANNER_PREFIX_COLLISION",
+      "networkBlocked": true,
+      "overlayBindings": {
+        ".github/workflows/ci.yml": "a5f4ea1c3ef3955c91007f9f05ba55bd7ed85b5b2708e778476c065360549eda",
+        "fdroid/prepared-source-policy.json": "ef0a4000c7da423ab5824b926063c045b09d09fb28671cb5b20ac18ab54e0907",
+        "fdroid/review-data-policy.json": "4322bbee815a629a4525ca487920bc1c318e83ef30c041fb7727984c73b779e8",
+        "tools/ci/generate_historical_model_fixtures.py": "0bac483b1273bd1cd3e1a15c5789dfc1e8c063d4086677b7a509fa6a3c611f77",
+        "tools/ci/historical-model-fixtures-v1/NOTICE.md": "c44b66ea1aa68b71600cb2c0085cd3c38da8773042063d6e3933a6d3b13cb4bd",
+        "tools/ci/historical-model-fixtures-v1/articles.jsonl": "4d792bb9d7e3d68299bbda9434239034e46f5e5d56c6e31b9789cbbc55922ddb",
+        "tools/ci/historical-model-fixtures-v1/files.tar.gz": "8c2e7bcf8906651185683220c32ac4a245c576f852416b77a365f1e95ce90ec2",
+        "tools/ci/historical-model-fixtures-v1/manifest.json": "e7e73185d1da72e5b45e79fd0556429c7de0af5a0d5c23d28a5e98b0df5567e1",
+        "tools/ci/historical_model_fixtures.py": "7fabac06844b86a35d26773c661d74423774c07ec36afdf4cd6c02441b2be260",
+        "tools/ci/python-tools-tests.json": "ede07e821e192fc80ecdf97e34951573c89417d52c0cccf54764e27cd7463035",
+        "tools/ci/test_historical_model_fixtures.py": "a58a46bd4268a5499d37da7715ca10e0c3742a31d74a3941832b886e65883d12",
+        "tools/ci/test_python_tools_tests.py": "84014549b44e0a2a269cf907443100d3dcd407d50f356d7a07deab0ea803037c",
+        "tools/fdroid_data_policy.py": "00ea227c3bde163e196b1971ca80c4d4fa183c7e7e068605c347a8fb6438a77e",
+        "tools/test_fdroid_data_policy.py": "d2d5b604d618d734e190fc2a235bc48756f3c40fc72843332ecd1c4fbfd48f49",
+        "tools/typing_experiments/historical_test_fixtures.py": "4440a9faebb2fbba967672846732f708ee6f55010d3d409e3375e0967aa79699",
+        "tools/typing_experiments/holdout-ledger.json": "2eab1bac924374622ace47564d1fcfbf8daeb025a0673e05db6ad2615db92585",
+        "tools/typing_experiments/test_models.py": "9c729a0ca0b80f8bb64782852bf2fa460ebc3a07ea7f385546a45fed736e4b75",
+        "tools/typing_experiments/test_refinement.py": "3ab0c29491481d962f7422f2461bb573f115e511eecb7154d1b516cd5c460006",
+        "tools/typing_experiments/test_word_ranking_data.py": "9e66092c63c063f64e385ffc18616f68feff177f28b41c4a02df6f792bf92b40"
+      },
+      "scannerFatal": 0,
+      "scannerModuleSha256": "4de525a85ba519a41838cf1ed7e70184d0b9df782da8a6c82c6dea5234adf7e1",
+      "sourceBase": "211e32c8fbe8516181c92c867a951e473122dace",
+      "submodule": "36b10154383b60eb15baac2c7a40d2a5f784faa7",
+      "warnings": [
+        [
+          "gzip file archive",
+          "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+        ],
+        [
+          "executable binary, possibly code",
+          "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+        ]
+      ]
+    }
+  }
+}
