@@ -29,6 +29,8 @@ jobs:
         run: |
           python -m unittest discover -s tools/ci -p test_historical_data_fixtures.py -v
           python tools/ci/historical_data_fixtures.py --install-build build
+          python -m unittest discover -s tools/ci -p test_historical_model_sources.py -v
+          python tools/ci/historical_model_sources.py
       - name: Run isolated Python tool modules
         run: python tools/ci/python_tools_tests.py --profile "${{ matrix.profile }}" --output "build/python-tools-${{ matrix.profile }}"
       - uses: actions/upload-artifact@v4

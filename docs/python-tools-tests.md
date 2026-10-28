@@ -57,6 +57,16 @@ models or synthetic datasets have been substituted:
 Original candidate exports and model references have been located in the
 nested historical workspace archive. They are not yet available in a fresh
 checkout: receipts contain absolute paths and bind historical generator bytes.
+All 71 directly referenced project source versions have now been recovered;
+29 changed versions are preserved in `historical-model-sources-v1` and the CI
+scientific job audits the complete direct project-source index. External
+runtime execution remains unproven. Original CatBoost references passed local
+full-vector numeric parity (8,555 vectors); this does not substitute for the
+three original test modules. Word-ranking data also reproduced byte for byte,
+and its 4,920 consumed articles now have permanent exclusions. Target contexts,
+canonical families and full source sentences remain pending for that corpus.
+See [the recovery receipt](acceptance/2026-10-28-q7-model-source-recovery.md).
+
 Recovery must preserve those identities and establish a portable, verified
 source/data/model bundle before wiring the `historical-artifacts` profile into
 CI. Running that profile now fails rather than skipping absent
