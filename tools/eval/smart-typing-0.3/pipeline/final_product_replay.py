@@ -141,7 +141,18 @@ def asset_paths() -> list[Path]:
                   ASSETS / f"smarttyping/lexicon/{language}.trie.lengths",
                   ASSETS / f"smarttyping/lexicon/frequency/{language}.ranks",
                   ASSETS / f"smarttyping/lexicon/case/{language}.case"]
-    require(len(paths) == 12 and all(path.is_file() for path in paths), "TWELVE_PACKAGED_ASSETS")
+    paths.append(ASSETS / "smarttyping/lexicon/ru.morph")
+    paths.append(ASSETS / "smarttyping/lexicon/ru.rare")
+    require(len(paths) == 14 and all(path.is_file() for path in paths), "FOURTEEN_PACKAGED_ASSETS")
+    return paths
+
+
+def compact_asset_paths() -> list[Path]:
+    paths = [ASSETS / "smarttyping/experiments/ru-ranker.bin",
+             ASSETS / "smarttyping/experiments/ru-ranker-auto-v1.bin",
+             ASSETS / "smarttyping/experiments/ru-ranking-context.bin",
+             ASSETS / "smarttyping/experiments/ru-neighbor-ranker.bin"]
+    require(all(path.is_file() for path in paths), "COMPACT_RANKER_ASSETS")
     return paths
 
 
@@ -167,8 +178,9 @@ def compile_inputs(java: Path) -> tuple[list[Path], list[Path], Path]:
     jars = []
     cache = Path.home() / ".gradle/caches/modules-2/files-2.1"
     for item in manifest["jars"]:
-        found = list((cache / item["group"] / item["artifact"] / item["version"]).glob("*/*.jar"))
-        require(len(found) == 1 and sha256(found[0]) == item["sha256"], "PINNED_KOTLIN_CACHE")
+        found = [path for path in (cache / item["group"] / item["artifact"] / item["version"]).glob("*/*.jar")
+                 if sha256(path) == item["sha256"]]
+        require(len(found) == 1, "PINNED_KOTLIN_CACHE")
         jars.append(found[0])
     version = subprocess.run([str(java), "-version"], capture_output=True, timeout=15, check=True)
     require(b'version "17.' in version.stderr, "JAVA_17_REQUIRED")
@@ -188,7 +200,7 @@ def immutable_bindings(java: Path, sources: list[Path], jars: list[Path], androi
     fixed = [CORPUS / "manifest.json", *(CORPUS / name for name in corpus_manifest["files"]),
              CORPUS / "evaluate.py", Path(__file__), SOURCE_MANIFEST, TOOLCHAIN,
              DETERMINISTIC_CONFIG, COMBINED_CONFIG, RUNNER, MODEL, *java_runtime_files, android,
-             *asset_paths(), *jars, *sources]
+             *asset_paths(), *compact_asset_paths(), *jars, *sources]
     files = {path_key(path): sha256(path) for path in fixed}
     require(files[path_key(RUNNER)] == RUNNER_SHA256, "RUNNER_IDENTITY")
     require(files[path_key(MODEL)] == MODEL_SHA256 and MODEL.stat().st_size == MODEL_BYTES,
@@ -209,6 +221,7 @@ def immutable_bindings(java: Path, sources: list[Path], jars: list[Path], androi
         "rowsSha256": digest(rows),
         "rowIdentitySha256": digest([{"id": row["id"], "split": row["split"]} for row in rows]),
         "assets": {path_key(path): sha256(path) for path in asset_paths()},
+        "compactAssets": {path_key(path): sha256(path) for path in compact_asset_paths()},
         "runner": {"path": path_key(RUNNER), "sha256": RUNNER_SHA256},
         "model": {"path": path_key(MODEL), "bytes": MODEL_BYTES, "sha256": MODEL_SHA256},
         "javaRuntime": java_runtime,

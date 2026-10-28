@@ -38,11 +38,79 @@ def response(identifier="en-calibration-1"):
 
 
 class FinalProductReplayTest(unittest.TestCase):
+    def test_compile_inputs_selects_pinned_bytes_when_source_jar_shares_cache(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            cache = root / '.gradle/caches/modules-2/files-2.1/example/compiler/1/hash'
+            cache.mkdir(parents=True)
+            binary = cache / 'compiler-1.jar'; binary.write_bytes(b'pinned executable')
+            (cache / 'compiler-1-sources.jar').write_bytes(b'unrelated source archive')
+            toolchain = root / 'toolchain.json'
+            toolchain.write_text(json.dumps({'jars': [{'group': 'example', 'artifact': 'compiler',
+                'version': '1', 'sha256': replay.sha256(binary)}]}))
+            android = root / 'platforms/android-37.0/android.jar'
+            android.parent.mkdir(parents=True); android.touch()
+            with mock.patch.object(replay, 'TOOLCHAIN', toolchain), \
+                    mock.patch.object(replay.Path, 'home', return_value=root), \
+                    mock.patch.dict(os.environ, {'ANDROID_HOME': str(root)}), \
+                    mock.patch.object(replay.subprocess, 'run', return_value=SimpleNamespace(stderr=b'version "17.0"')):
+                _, jars, _ = replay.compile_inputs(Path('/synthetic/java'))
+                self.assertEqual([binary], jars)
+                binary.write_bytes(b'drifted executable')
+                with self.assertRaisesRegex(ValueError, 'PINNED_KOTLIN_CACHE'):
+                    replay.compile_inputs(Path('/synthetic/java'))
+
+
     def test_compile_sources_are_versioned_without_ignored_results(self):
         sources = replay.final_product_sources()
         self.assertGreater(len(sources), 20)
         self.assertTrue(all(path.is_file() for path in sources))
         self.assertTrue(all("/results/" not in str(path) for path in sources))
+        relative = {str(path.relative_to(replay.REPO)) for path in sources}
+        self.assertTrue({
+            "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/AutoCorrectionAdmissionGuard.kt",
+            "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticFeatures.kt",
+            "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ExperimentModels.kt",
+            "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt",
+            "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ObliviousTreeRanker.kt",
+            "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/RankFeatures.kt",
+            "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/MorphologyLexicon.kt",
+            "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/FrozenMorphologyLexicon.kt",
+            "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedMorphologyLexicon.kt",
+            "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRecorder.kt",
+            "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ExperimentalTypingInput.kt",
+            "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingPersonalization.kt",
+            "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingTools.kt",
+        }.issubset(relative))
+
+    def test_product_assets_include_morphology_admission_dictionary(self):
+        assets = {str(path.relative_to(replay.ASSETS)) for path in replay.asset_paths()}
+        self.assertIn("smarttyping/lexicon/ru.morph", assets)
+        self.assertIn("smarttyping/lexicon/ru.rare", assets)
+
+    def test_compact_ranker_assets_are_separately_bound(self):
+        assets = {str(path.relative_to(replay.ASSETS)) for path in replay.compact_asset_paths()}
+        self.assertEqual(assets, {
+            "smarttyping/experiments/ru-ranker.bin",
+            "smarttyping/experiments/ru-ranker-auto-v1.bin",
+            "smarttyping/experiments/ru-ranking-context.bin",
+            "smarttyping/experiments/ru-neighbor-ranker.bin",
+        })
+
+    def test_harness_uses_product_morphology_admission(self):
+        source = replay.HARNESS.read_text()
+        self.assertIn("PackedMorphologyLexicon.open", source)
+        self.assertIn("AutoCorrectionAdmissionGuard", source)
+        self.assertIn("controller.setPersonalization", source)
+
+    def test_harness_records_compact_scores_without_changing_product_decision(self):
+        source = replay.HARNESS.read_text()
+        self.assertIn("ExperimentModels", source)
+        self.assertIn('result["compactScores"]', source)
+        self.assertIn('result["compactPolicyCandidate"]', source)
+        self.assertIn('result["fullTokenGenerationNanos"]', source)
+        self.assertIn('"combinedScore"', source)
+        self.assertIn('"strictAdmissionAllowed"', source)
 
     def test_successful_scores_are_controller_deliverable_at_exact_token_boundaries(self):
         for count in (1, 255):

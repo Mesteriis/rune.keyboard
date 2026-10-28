@@ -378,7 +378,9 @@ object FinalProductSpellingReplay {
         val packagedReaders = System.getProperty("rune.replay.packagedAssets", "false").also {
             check(it == "true" || it == "false")
         }.toBoolean()
-        val mode = args[2]
+        // current-product follows the complete released local cascade. Historical mode
+        // names remain available for frozen receipts; external model replies are separate.
+        val mode = if (args[2] == "current-product") "noun-case-production" else args[2]
         val nounCaseMode = mode == "noun-case-production"
         val infinitiveMode = mode == "infinitive-revision-production" || nounCaseMode
         val contextualMode = mode == "contextual-production" || infinitiveMode
