@@ -1,14 +1,18 @@
 # Production candidate calibration export
 
-## General distance-one local policy
+## Historical distance-one local diagnostic
 
-`evaluate_distance_one_policy.py` is the source-bound qualification for the
-general local correction branch. It validates the frozen schema-2 corpus,
+`evaluate_distance_one_policy.py` diagnoses the general local correction branch
+on the already revealed v2 corpus. It validates the frozen corpus files,
 compiles the current production generator, policy and editor controller, and
 replays calibration before holdout with the model explicitly unavailable. The
 holdout gate is independent per language: at least 300 correct replacements of
 distinct target words, precision at least 99%, no protected-token changes, no
-loss of the original suggestion and exact Undo for every automatic edit.
+loss of the original suggestion and exact Undo for every local automatic edit.
+Correctness requires the entire expected editor text, including context. Undo
+compares the text, caret and composing range. Input identity, snapshot flags,
+admission records and UTF-16 edit ranges must agree with the actual snapshots;
+contradictory observations are rejected before counting metrics.
 
 ```sh
 PYTHONDONTWRITEBYTECODE=1 python3 \
@@ -16,12 +20,21 @@ PYTHONDONTWRITEBYTECODE=1 python3 \
   --output build/smart-typing-0.3/local-distance-one-current
 ```
 
-The output directory must be fresh. `report.json`, `observations.jsonl` and
-`evidence.json` bind all compiled sources, corpus files, lexicon/rank/case
-assets, JDK and commands. A language stays disabled unless the current policy,
-search version and all packaged lexicon identities match its qualified
-fingerprint. EN remains disabled for the general branch in 0.3.2; its existing
-versioned common-confusion table and model path remain available.
+The output directory must be fresh under ignored `build/`. `source-freeze.json`
+records sources, corpus files, assets, compiler jars, Android stub, Python and
+the JDK runtime before compilation; all identities are rechecked afterward.
+Schema-2 `report.json` retains those bindings, raw-file hashes and commands.
+`observations.jsonl` and `evidence.jsonl` retain row-level observations/decisions.
+These local receipts include toolchain paths and should remain local.
+
+`historicalHoldoutGatePassed` controls the diagnostic exit status: zero means
+the historical gate passed, one means it failed. `releaseApproved`,
+`productionQualified` and `newUnseenHoldout` are always false. This command does
+not enable a language, update a packaged qualification fingerprint or provide
+a fresh release qualification. `typingChanges` and `editorMismatchChanges`
+separate context edits during input from a candidate's lexical decision.
+
+## Calibration candidate export
 
 This host-only tool runs the current production `CandidateGenerator` and
 `PackedCandidateLexicon`, including membership, protection, language routing,
