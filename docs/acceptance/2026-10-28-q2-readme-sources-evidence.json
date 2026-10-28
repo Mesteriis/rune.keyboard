@@ -81,6 +81,15 @@
     "scope": "MAIN_README_LITERAL_LOCAL_LINKS_AND_PROJECT_PYTHON_SOURCES"
   },
   "baseCommit": "9bf6d64",
+  "cleanCheckoutValidation": {
+    "auditSha256": "ef43da6068db16ddab0d8e22f6af738a27ff2fca29c8ec35e583aa90a37717a9",
+    "guideFacts": "PASS",
+    "sourceAuditMatchesPrimary": true,
+    "sourceCommit": "475d2af",
+    "sourceTests": 13,
+    "trackedTestInventory": "PASS",
+    "trackedTreeCleanBeforeAndAfter": true
+  },
   "hostedCiExecuted": false,
   "productionModelOrDeviceQualification": false,
   "purpose": "Q2_MAIN_README_SOURCE_PRESENCE_NOT_TRANSITIVE_QUALIFICATION",

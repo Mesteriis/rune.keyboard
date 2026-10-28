@@ -33,3 +33,8 @@ two generated Gradle output paths. All thirteen tests pass on Python 3.12.14
 and 3.14.6. Guide-fact and packaged-provenance gates, exact test inventory and CI
 YAML parsing also pass. The wider app/test suite was not repeated for this
 documentation/source-presence slice.
+
+Clean source `475d2af` passes the same source/link audit and all 13 tests. Its
+audit JSON exactly matches the primary checkout. Guide facts and the exact
+113-stdlib / 19-scientific inventory also pass; the clone's tracked tree is
+clean before and after. This is local verification, without hosted CI.
