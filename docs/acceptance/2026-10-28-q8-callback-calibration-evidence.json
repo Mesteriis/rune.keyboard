@@ -239,12 +239,62 @@
       "windowHierarchyCapture": false
     }
   },
-  "cleanReleaseProfile": "pending clean-checkout source integration",
+  "cleanReleaseProfile": {
+    "sourceCommit": "ed275e52f354b536050749d06a6d44ac46f2cc8f",
+    "exitCode": 0,
+    "elapsedSeconds": 14.324564584000655,
+    "cleanBefore": true,
+    "cleanAfter": true,
+    "sourceAfter": {
+      "commit": "ed275e52f354b536050749d06a6d44ac46f2cc8f",
+      "passed": true,
+      "schema": 1,
+      "statusEntries": 0,
+      "submodules": 1
+    },
+    "offline": true,
+    "signingMaterialCopied": false
+  },
   "limits": [
     "Owned EditText and offline WebView only; APP-001 through APP-005 remains.",
     "Split callback conservatively disables correction but preserves input.",
     "No policy, model, admission timing, ranking or Undo authority change.",
     "Initial lifecycle diagnostic writes retained; no recording consent changed.",
     "No screenshot, UI hierarchy capture, private-text export or publication."
-  ]
+  ],
+  "reusedReplayBindingRevalidation": [
+    {
+      "profile": "product-replay-ci",
+      "boundFiles": 174,
+      "allBindingsStillMatch": true,
+      "priorRows": 2160,
+      "priorStatus": "COMPLETE",
+      "priorDeterministic": true,
+      "baselineMatches": true,
+      "priorReceiptSha256": "3a4a64be8cdbbc19cdddf547a23d34c9e7a6fa337e8ad3950f0b2d2b74bd7c3c"
+    },
+    {
+      "profile": "product-replay-ci-historical",
+      "boundFiles": 177,
+      "allBindingsStillMatch": true,
+      "priorRows": 12000,
+      "priorStatus": "COMPLETE",
+      "priorDeterministic": true,
+      "baselineMatches": true,
+      "priorReceiptSha256": "4bb2f81607a3a37033751dfee24a27a1a67f59147c8576ebfe7893381127bbf3"
+    }
+  ],
+  "boundaryUnitTests": {
+    "tests": 72,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "logSha256": "5cbff20b687857db66d9e30184bd12d91379302c29ffed79d1ba5f7553f13c6d"
+  },
+  "workspaceOwnerPreservation": {
+    "unrelatedPendingTrackedFiles": 5,
+    "exactOriginalHashesPreserved": true,
+    "originalUntrackedPaths": 98,
+    "allOriginalPathsRetained": true
+  }
 }

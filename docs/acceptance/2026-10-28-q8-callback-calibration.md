@@ -47,6 +47,29 @@ retained. Full preference maps, personal data, model inventory and IME selection
 are checked separately after final device teardown. The rollback APK and private
 archives remain local, ignored and access-restricted.
 
+## Integration checks
+
+All 1,355 JVM tests and 72 diagnostics-boundary tests pass, with zero skips.
+Debug/test APK compilation and debug lint pass. Source commit `ed275e5` passes
+`imeIntelligenceBoundary privacyGateRelease privacyGateProfile` in a separate
+tracked-clean checkout, offline, with the source-clean guard passing both before
+and after. No signing material was copied.
+
+Both previous replay receipts were revalidated against every bound file: all
+174 and 177 hashes still match. Their 2,160 and 12,000-row deterministic baseline
+results remain applicable to the unchanged replay implementation; this slice did
+not rerun those JVMs or change their baselines.
+
+The Fold has the exact tested debug APK. Its four native tests and all four API
+26 tests pass with zero skips; both produce the same flag sequences. All six
+personal-store snapshots stay unchanged within each final test, and the complete
+post-teardown owner checks preserve original preference values, existing
+protected data/model bytes, original diagnostic bytes and IME settings. The only
+appended diagnostic events are SESSION/CONFIGURATION lifecycle metadata. The
+owned emulator is stopped/deleted and both coordinating chats have been told the
+Fold is free. Five unrelated pending files retain their original hashes; all
+98 original untracked paths remain.
+
 ## Remaining scope
 
 This calibrates owned EditText/WebView profiles on API 26 and Fold, not the full
