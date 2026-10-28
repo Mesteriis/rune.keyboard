@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "card": "Q4",
+  "completeCard": false,
+  "sourceCommit": "9875aee426fbbc6b3591c5b249694572e115d8f5",
+  "scope": "Explicit debug-only numeric SAF export, release verification and owner Fold update",
+  "export": {
+    "codec": "RUNE_QUALITY_3",
+    "numericCounters": 81,
+    "maxBytes": 2048,
+    "automaticUpload": false,
+    "releaseOrProfileExport": false,
+    "manualExistingHistoryWhenMetricsOff": true,
+    "resetRevokesPendingSnapshots": true,
+    "screenCloseCancelsQueuedWrites": true,
+    "alreadyWrittenProviderBytesRetractable": false,
+    "uriAndSinkRemainInDebugUi": true
+  },
+  "jvm": {
+    "tests": 1343,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "qualityJvm": {
+    "tests": 44,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "packagingFixtureTests": 12,
+  "android": {
+    "api": 26,
+    "ownedEmulatorVerified": true,
+    "passed": true,
+    "tests": 5,
+    "completed": 5,
+    "skips": 0,
+    "exitCode": 0,
+    "methods": [
+      "actualCorrectionAndUndoCountOnlyAcknowledgedEligibleActions",
+      "qualityDashboardShowsNumericEventsAndResetClearsDisk",
+      "realAtomicQualityStorageMigratesV2AndReadsTheFullV3Payload",
+      "qualitySourceResourceTablesRetainTheirEnglishAndRussianDimensions",
+      "realDocumentPickerCancelAndSaveExportOnlyNumericSnapshot"
+    ],
+    "apkSha256": {
+      "app/build/outputs/apk/debug/app-debug.apk": "b5cdff68935fb0874563c525b86dd7f9d1b7a49ec7ff6c6066b9a9010094c344",
+      "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "f5028b95b1da724e2ac7bb16d981a451f6456dd7ce40a4029648bedd40ebb47b"
+    },
+    "logSha256": "354f3e18cbc356ca0077b3c46ee4fc0a5ceb96f46d8d0c59b8954378e29b5b9e",
+    "elapsedSeconds": 37.886403041891754
+  },
+  "release": {
+    "sourceCommit": "9875aee426fbbc6b3591c5b249694572e115d8f5",
+    "commands": [
+      ":app:privacyGateRelease",
+      ":app:apkFootprint"
+    ],
+    "exitCode": 0,
+    "apkBytes": 180101101,
+    "apkSha256": "6bf2613cb130cba7095327147c280d0388f94c47615282f2f1e802298784fe16",
+    "logSha256": "113a64d1a8c646d417dad460aa76452aa91a7f25373eabc2a9c174d1c84a8742",
+    "independentBuildserverClaim": false
+  },
+  "profilePrivacyGateExit": 0,
+  "replay": {
+    "freshReplay": false,
+    "priorBindingPath": "build/review-q4-outcomes-20261028/origin-replay-bindings.json",
+    "priorBindingSha256": "c764dd52b24c8acd4b0b3129c3c4979519c65de40e7726bcad55c91765e7d6e3",
+    "selectedSourcesUnchanged": 90,
+    "assetsUnchanged": 69,
+    "reusedRows": 15288,
+    "nonTimingDifferences": 0
+  },
+  "ownerInstall": {
+    "installed": true,
+    "versionCode": 8,
+    "versionName": "0.4.2",
+    "sameCertificate": true,
+    "backupSaved": true,
+    "backupEntries": 3,
+    "backupBytes": 4490752,
+    "appBytesVerified": true,
+    "artifacts": {
+      "app": {
+        "bytes": 183652818,
+        "sha256": "b5cdff68935fb0874563c525b86dd7f9d1b7a49ec7ff6c6066b9a9010094c344"
+      },
+      "tests": {
+        "bytes": 1971761,
+        "sha256": "f5028b95b1da724e2ac7bb16d981a451f6456dd7ce40a4029648bedd40ebb47b"
+      }
+    },
+    "existingModelStore": true,
+    "dataClearOrUninstall": false,
+    "runtimeBuildId": "d48f6df2ed03cd11d3182abe453fb3a5bd126aea92f2bc06ab747b201f84565f"
+  },
+  "physical": {
+    "exitCode": 0,
+    "junitOk": true,
+    "failureMarker": false,
+    "skippedMarker": false,
+    "matchedCases": 15,
+    "journalSnapshots": 4,
+    "methods": [
+      "freshReviewedCorrectionsAtTwoPacesWithExactUndo",
+      "extraBackspacesInEmptyFieldKeepTheWholeNextWord",
+      "correctionPreviewAndUndoPreserveNextWord",
+      "rapidShortWordCorrectionAtThreePacesKeepsFollowingWords"
+    ],
+    "elapsedSeconds": 77.76658058399335
+  },
+  "restoration": {
+    "keyboardPreferencesRestored": true,
+    "protectedStoresUnchanged": true,
+    "protectedFilesBefore": 1,
+    "protectedFilesAfter": 1,
+    "secureImeSettingsRestored": true,
+    "modelStoreUnchanged": true,
+    "journalSnapshotsRetrieved": 4,
+    "rawJournalsPrivate": true,
+    "keyboardPreferencesBeforeInstallPreserved": true
+  },
+  "preservation": {
+    "baselinePath": "build/review-q3-schema9-20261028/owner-changes-preservation-after-schema9.json",
+    "baselineSha256": "cf307b1070f7bb1a0b1e9905228583d436ad776d7a6dc96e5dfc5ce1399cdd9a",
+    "trackedOwnerFilesPreserved": 13,
+    "originalUntrackedPathsPreserved": 98,
+    "indexInitiallyEmpty": true
+  },
+  "ownedEmulatorCleanup": {
+    "emulatorStopped": true,
+    "taskAvdDeleted": true
+  },
+  "failedAttemptsRetained": {
+    "initialGradleTaskSelection": "nonexistent apkFootprintProfile; no checks passed in that attempt",
+    "safFixture": "UiObject2 Save did not advance API26 picker; platform input on live bounds did. Guessed alternate provider URI was denied; test now reads the actual public synthetic file. Unsupported shell builtin caused UiAutomation termination; fixture uses supported individual commands. Final five-method run has zero failures/skips.",
+    "oneAdbPreflightInterrupted": true,
+    "productionExportImplementationChangedDuringFixtureRepairs": false
+  },
+  "nativeInferenceOrTimingRequalificationClaim": false,
+  "actualTwoWeeksOwnerUseProven": false,
+  "remaining": [
+    "Two actual weeks of ordinary owner use and source-sample acceptance report; installation and synthetic tests do not prove this period."
+  ],
+  "rawEvidencePrivate": true,
+  "privateEvidenceBindings": {
+    "build/review-q4-export-20261028/targeted.log": "8cfa5d29a693717d05c7522e807a8c2c2e695579c4dfcd4889dfa5a9ab0c138c",
+    "build/review-q4-export-20261028/integration.log": "1f8c80db154e082d60148d1ec8eab3db956173f3048375391826174628929306",
+    "build/review-q4-export-20261028/integration-fixed.log": "117582c8b437b67ef0cc42aa835800fc3c9ca25618c486ef3538f58ccc5bb361",
+    "build/review-q4-export-20261028/packaging-tests-final.log": "b33e44cf88e6ad877d67cf957adadaeffa6898c6aa968b80da3ffc767b34666d",
+    "build/review-q4-export-20261028/packaging-integration.log": "6af2e58d449f1c974fccd07cb9c64423c6a745a6feb18e1a117331d69098ee4c",
+    "build/review-q4-export-20261028/final-lint.log": "cd3a7e5c11d8885a6087c263008220b187e11892c0830a9f01fe09cd0cbe7470",
+    "build/review-q4-export-20261028/release.log": "113a64d1a8c646d417dad460aa76452aa91a7f25373eabc2a9c174d1c84a8742",
+    "build/review-q4-export-20261028/ime-all/instrumentation.log": "354f3e18cbc356ca0077b3c46ee4fc0a5ceb96f46d8d0c59b8954378e29b5b9e",
+    "build/review-q4-export-20261028/fold-update/instrumentation.log": "d783e57fc3162ff4e9157c2617ef3c6d6c054bd03e15a88e71474315c9f5dee5",
+    "build/review-q4-export-20261028/owner-preservation.json": "41152fb704c8b8fa6a5b522d142fc7f391bc2b90bb426fa49013fed1c9735f5c",
+    "build/review-q4-export-20261028/replay-reuse.json": "436486e472a036489c6178db62c02766cebb1c6da63045224a64ce01eb753c28",
+    "build/review-q4-export-20261028/api26-cleanup/cleanup-result.json": "c323a19839f84831ba2171fa154852fca71cc74125f64a74269786b259635050"
+  }
+}
