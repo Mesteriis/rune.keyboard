@@ -17,6 +17,12 @@ HISTORICAL = {
     ('test_refinement.py', '9a183595c9f52c6a6d6f39d79d6f168369b7a7ae966ecc6b475f1798e2e155d9'):
         SCRIPTS + 'historical_provenance_sources/refinement_test_9a183595c9f52c6a6d6f39d79d6f168369b7a7ae966ecc6b475f1798e2e155d9.py',
 }
+NAMED_DIGESTS = {
+    ASSETS + '/smarttyping/experiments/provenance.json':
+        (('selected', 'scriptSha256'), SCRIPTS + 'augmented_abstaining_ranker.py'),
+    ASSETS + '/smarttyping/lexicon/provenance/rare-word-manifest.json':
+        (('scriptSha256',), SCRIPTS + 'pack_rare_word_lexicon.py'),
+}
 
 
 def file_bytes(root, name, tracked):
@@ -50,6 +56,7 @@ def inspect(root=ROOT, tracked=None):
              and Path(name).name.endswith('provenance.json')}
     names.update(path.relative_to(root).as_posix()
                  for path in (root / ASSETS).rglob('*provenance.json'))
+    names.update(name for name in NAMED_DIGESTS if name in tracked or (root / name).exists())
     for name in sorted(names):
         data = json.loads(file_bytes(root, name, tracked))
         refs = sorted({ref for text in strings(data)
@@ -77,8 +84,21 @@ def inspect(root=ROOT, tracked=None):
             raw = file_bytes(root, qualification['policyPath'], tracked)
             if hashlib.sha256(raw).hexdigest() != qualification.get('policySha256'):
                 raise ValueError('AUTOMATIC_POLICY_IDENTITY')
+        named = []
+        if name in NAMED_DIGESTS:
+            keys, source = NAMED_DIGESTS[name]
+            value = data
+            for key in keys:
+                value = value.get(key) if isinstance(value, dict) else None
+            # Only declared fields are identity claims; missing metadata is a
+            # separate schema/data-policy check, not an inferred source binding.
+            if value is not None:
+                raw = file_bytes(root, source, tracked)
+                if hashlib.sha256(raw).hexdigest() != value:
+                    raise ValueError('NAMED_SOURCE_IDENTITY ' + source)
+                named.append({'path': source, 'sha256': value})
         receipts.append({'provenance': name, 'repositoryPaths': refs,
-                         'trainingScripts': scripts})
+                         'trainingScripts': scripts, 'namedSourceIdentities': named})
     if not receipts:
         raise ValueError('NO_PACKAGED_PROVENANCE')
     return {'scope': 'PACKAGED_EXPLICIT_REPOSITORY_PATHS_AND_TRAINING_SCRIPT_IDENTITIES',

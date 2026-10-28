@@ -1,0 +1,181 @@
+{
+  "checks": [
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_abstaining_ranker.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_augmented_abstaining_ranker.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_refreeze_augmented_margin.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_rare_word_supplement.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_pack_rare_word_lexicon.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/typing_experiments",
+        "-p",
+        "test_evaluate_product_compact_policy.py",
+        "-v"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/eval/smart-typing-0.3/pipeline",
+        "-p",
+        "test_evaluate_compact_autocorrection.py",
+        "-v"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "cliChecks": [
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/abstaining_ranker.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/augmented_abstaining_ranker.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/refreeze_augmented_margin.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/rare_word_supplement.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/pack_rare_word_lexicon.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/typing_experiments/evaluate_product_compact_policy.py",
+        "--help"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "build/review-q7-tools-20261028/scientific-venv/bin/python",
+        "tools/eval/smart-typing-0.3/pipeline/evaluate_compact_autocorrection.py",
+        "--help"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "freshQualificationEstablished": false,
+  "modelExecutionEstablished": false,
+  "purpose": "Q2_COMPACT_SOURCE_RETENTION_NOT_MODEL_QUALIFICATION",
+  "sourceBase": "2d46552",
+  "sourceBindings": {
+    "tools/eval/smart-typing-0.3/pipeline/evaluate_compact_autocorrection.py": "ac57345aabf96a5f3f27b666c11f8479ef0e084b276a4b3fe57da82980941c45",
+    "tools/eval/smart-typing-0.3/pipeline/test_evaluate_compact_autocorrection.py": "02129fde9b29c5deee7a2628f2c10b005910549c325edc57afc510fd72c314e1",
+    "tools/typing_experiments/abstaining_ranker.py": "fdd82fdee4728154f72b1dc1d108bfeb64669ca8d075c80693dde9ad5238714d",
+    "tools/typing_experiments/augmented_abstaining_ranker.py": "653c6bfe61f448d33f6a3672cffa4f296ff9e1632d61b845a0d80870bf67d384",
+    "tools/typing_experiments/compact_auto_cascade_policy.json": "17679935c58c939dd864367a81c9144058f658c5c465eb57d64867c31f43e979",
+    "tools/typing_experiments/evaluate_product_compact_policy.py": "023bb5d49112af03d051073526ea28e978613b71b4778da79be3d9958bec79e7",
+    "tools/typing_experiments/pack_rare_word_lexicon.py": "c9d1b614da298140e59a0755019b7df2dba32c47ca9991b87f87caa842330656",
+    "tools/typing_experiments/rare_word_supplement.py": "3f7419f06d61339a2969b4f00695fb80f15991947718cb8e98c6b2364ca37bb1",
+    "tools/typing_experiments/refreeze_augmented_margin.py": "f223c687de83b87ee2441aeb4071523f94ee3f33a45cdde5d11d663b712b5bc4",
+    "tools/typing_experiments/test_abstaining_ranker.py": "ec66c06b12bb6ad8eb31865cc517795c23163288f36fe69fcbaceeb030addff7",
+    "tools/typing_experiments/test_augmented_abstaining_ranker.py": "1f9174fd938d6cf55ef1f46824388ff927f7c777f49a2aac71724612f3dcb66d",
+    "tools/typing_experiments/test_evaluate_product_compact_policy.py": "dfe16f993fca4def8e74db1d02b3f7b68e116c0b6a249696f93f4b86dd406d33",
+    "tools/typing_experiments/test_pack_rare_word_lexicon.py": "119f4217109e6806df5e6c2845db6875364ced555f66e328995b7134b57d5d6e",
+    "tools/typing_experiments/test_rare_word_supplement.py": "e8dd114a536c9ee26ee8e1dc76f3d3ed9e7717296fb47c8d5a66d7aa2e4356e2",
+    "tools/typing_experiments/test_refreeze_augmented_margin.py": "524b2cede2a031d0a76914a55beb3194967fcbdaa0313b53a2353a2e4dad326f"
+  }
+}

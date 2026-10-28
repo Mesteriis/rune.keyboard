@@ -15,7 +15,7 @@ class PackagedProvenancePathsTest(unittest.TestCase):
         self.tracked = set()
         self.script = gate.SCRIPTS + 'train.py'
         self.policy = gate.SCRIPTS + 'policy.json'
-        self.provenance = gate.ASSETS + '/experiments/provenance.json'
+        self.provenance = gate.ASSETS + '/smarttyping/experiments/provenance.json'
         self.write(self.script, b'# public synthetic training source\n')
         self.write(self.policy, b'{"synthetic":true}\n')
         self.data = {
@@ -77,6 +77,27 @@ class PackagedProvenancePathsTest(unittest.TestCase):
     def test_changed_training_source_is_rejected(self):
         self.write(self.script, b'# changed')
         with self.assertRaisesRegex(ValueError, 'TRAINING_SCRIPT_IDENTITY'):
+            self.inspect()
+
+    def test_selected_ranker_source_digest_is_checked(self):
+        _, source = gate.NAMED_DIGESTS[self.provenance]
+        self.write(source, b'# synthetic ranker source')
+        self.data['selected'] = {'scriptSha256': self.sha(source)}
+        self.save()
+        self.assertEqual(source, self.inspect()['provenanceFiles'][0]
+                         ['namedSourceIdentities'][0]['path'])
+        self.write(source, b'# changed ranker')
+        with self.assertRaisesRegex(ValueError, 'NAMED_SOURCE_IDENTITY'):
+            self.inspect()
+
+    def test_rare_word_manifest_is_checked_outside_provenance_glob(self):
+        name = gate.ASSETS + '/smarttyping/lexicon/provenance/rare-word-manifest.json'
+        _, source = gate.NAMED_DIGESTS[name]
+        self.write(source, b'# synthetic packer')
+        self.write(name, json.dumps({'scriptSha256': self.sha(source)}).encode())
+        self.assertEqual(2, len(self.inspect()['provenanceFiles']))
+        self.write(source, b'# changed packer')
+        with self.assertRaisesRegex(ValueError, 'NAMED_SOURCE_IDENTITY'):
             self.inspect()
 
     def test_traversal_in_explicit_reference_is_rejected(self):

@@ -24,6 +24,9 @@ jobs:
       - name: Verify numeric Chrome fixture and independent DOM gate
         if: matrix.profile == 'stdlib'
         run: python -m unittest discover -s tools/qa/chrome-editor -p 'test_*.py' -v
+      - name: Verify compact calibration and promotion guards
+        if: matrix.profile == 'stdlib'
+        run: python -m unittest discover -s tools/eval/smart-typing-0.3/pipeline -p test_evaluate_compact_autocorrection.py -v
       - name: Check source-bound local-learning privacy disclosures
         if: matrix.profile == 'stdlib'
         run: |

@@ -71,3 +71,15 @@ A further twelve epochs were evaluated with dev-only checkpoint selection and a 
 ## Candidate-level training follow-up
 
 A fixed six-epoch listwise candidate-selection experiment added exact one/two/three-edit public examples and correct-input controls. Dev improved slightly, but the frozen independent test failed promotion gates; bundled models remain unchanged. The main observed limit was missing gold candidates, especially for three-edit examples. See [candidate-training report](../../docs/typing-word-ranking.md) for exact counts, objective, source separation, tests and reproduction.
+
+
+## Compact-source preservation status (2026-10-28 review)
+
+The compact abstaining/augmented ranker, disclosed-error margin refreeze,
+rare-word extractor/packer, compact evaluator and both cascade policy revisions
+are now versioned with their existing tests. The selected augmented script and
+rare-word packer match the exact SHA-256 values in packaged metadata.
+See [the scoped source acceptance](../../docs/acceptance/2026-10-28-q2-compact-sources.md).
+This establishes source availability and bounded test coverage. Historical
+commands still require their pinned data/export receipts; it does not establish
+a new training run, independent holdout or model promotion.
