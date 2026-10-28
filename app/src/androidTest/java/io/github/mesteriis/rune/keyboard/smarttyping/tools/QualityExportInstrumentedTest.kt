@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.tools
 
 import android.widget.Button
+import androidx.test.filters.SdkSuppress
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
@@ -16,6 +17,8 @@ import java.util.concurrent.TimeUnit
 
 /** Real local SAF provider on the disposable emulator only; never resets owner statistics. */
 class QualityExportInstrumentedTest {
+    // This system-picker fixture was verified on API 26. It does not assert API 37 picker layout.
+    @SdkSuppress(maxSdkVersion = 26)
     @Test fun realDocumentPickerCancelAndSaveExportOnlyNumericSnapshot() {
         check(android.os.Build.HARDWARE in setOf("ranchu", "goldfish"))
         val instrumentation = InstrumentationRegistry.getInstrumentation()

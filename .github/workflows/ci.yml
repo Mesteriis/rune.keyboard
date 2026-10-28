@@ -228,7 +228,8 @@ jobs:
             for attempt in $(seq 1 15); do if adb shell ime enable io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService; then break; fi; if [ "$attempt" -eq 15 ]; then exit 1; fi; sleep 2; done
             adb shell ime set io.github.mesteriis.rune.keyboard/.ime.RuneInputMethodService
             adb shell am start -W -n io.github.mesteriis.rune.keyboard/.qa.ImeQaActivity
-            if ! ./gradlew --no-daemon :app:connectedDebugAndroidTest; then python3 tools/ci/report-instrumentation-failures.py || true; exit 1; fi
+            # This runner owns a disposable AVD; numeric/reset fixtures reject missing ownership.
+            if ! ./gradlew --no-daemon :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.runeOwnedEmulator=q4-counters; then python3 tools/ci/report-instrumentation-failures.py || true; exit 1; fi
             ./gradlew --no-daemon :runtime-llama:connectedDebugAndroidTest
       - name: Upload instrumentation results
         if: always()
