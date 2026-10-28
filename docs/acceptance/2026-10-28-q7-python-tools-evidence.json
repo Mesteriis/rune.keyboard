@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "reviewCard": "Q7",
+  "scopeComplete": false,
+  "sourceBase": "ed24b421d9d90d7bd140b64d98ee3957a016d376",
+  "environment": "Local macOS ARM64, isolated Python 3.12.14 environments; not hosted Ubuntu CI",
+  "candidateSources": {
+    "tools/ci/python_tools_tests.py": "1980ddfd2392353117f71171f2b2c59ef3fa278eb30687632e3e0ba6d6d6fdfd",
+    "tools/ci/python_tools_test_child.py": "0a100850a3537d1c3b4dd1de581369ce66400d80f734419c4f48200c8150560a",
+    "tools/ci/test_python_tools_tests.py": "fc4dade38b5284139b728d835732b988fc32209e93f949f89959942cf7f15ec9",
+    "tools/ci/python-tools-tests.json": "07d6c4356924e85ad0daec4fd6014659ee6e6b223d674476779dd41032026465"
+  },
+  "profiles": {
+    "stdlib": {
+      "modules": 92,
+      "tests": 518,
+      "skipped": [],
+      "exitCode": 0,
+      "receiptSha256": "2f83e6f3c303249069ca01c924f281a974648824da59ebd489b65867b99d52e1",
+      "moduleSeconds": 20.90133700449951
+    },
+    "scientific": {
+      "modules": 5,
+      "tests": 22,
+      "skipped": [
+        {
+          "test": "test_word_ranking.WordRankingTests.test_mlx_loss_parity_initialization_and_finite_gradient",
+          "reason": "MLX environment required"
+        }
+      ],
+      "exitCode": 0,
+      "receiptSha256": "62755aa47304373feef96abab493fab54bddbf98aa02022b526cd204d7d65b76",
+      "moduleSeconds": 1.886075750226155
+    }
+  },
+  "historicalArtifacts": {
+    "modules": 6,
+    "tests": 22,
+    "errors": 9,
+    "exitCode": 1,
+    "receiptSha256": "be667bcb9e10c2b56fc2be3a89d316a0340cf76ce21b1028cef09effaf5eded2",
+    "cause": "Original historical input/model files absent; original assertions retained."
+  },
+  "ciInfrastructureTests": {
+    "tests": 17,
+    "exitCode": 0,
+    "logSha256": "7e87e2887a62d08335fa199d5d0119e6b7ed85dcdb72818238453400d76f96ed"
+  },
+  "remaining": [
+    "Six original historical dataset/model fixtures and their provenance",
+    "Live CatBoost/Pymorphy integration evidence",
+    "Apple MLX gradient parity",
+    "Actual hosted Ubuntu workflow execution"
+  ]
+}
