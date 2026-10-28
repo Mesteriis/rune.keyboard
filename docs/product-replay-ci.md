@@ -5,7 +5,7 @@ local spelling cascade through the actual Kotlin controller, without a native
 model, scorer executable, optional Python model packages or platform-specific
 JDK library inventory. Supply an explicit JDK 17 executable; the compiler jars
 are selected by the pinned SHA-256 values in the existing toolchain manifest.
-Run Gradle first to populate the Kotlin 2.2.10 cache and install the Android
+Use Python 3.11 or newer. Run Gradle first to populate the Kotlin 2.2.10 cache and install the Android
 compile SDK. Both Linux and macOS use their own JDK executable; no Homebrew path
 is a default.
 
@@ -49,8 +49,9 @@ cannot pass as deterministic output.
 Files, selected production/observer sources, the Android personalization source,
 all packaged assets, input files, exact compiler jars, JDK executable and Android
 stub are SHA-256 bound before and after execution. Compilation and replay wall
-times are recorded separately. Failure leaves a failed receipt and raw output;
-it is never converted to a successful replay.
+times are recorded separately. Failure leaves a failed receipt and raw output; the original child exit code
+or timeout is retained separately from the driver’s failure exit. It is never
+converted to a successful replay.
 
 The successful `projection.jsonl` is canonical UTF-8 JSONL. To compare with an
 explicit frozen baseline, pass `--baseline path/to/baseline.jsonl`. The command

@@ -8,6 +8,7 @@ from collections import Counter
 import json
 import os
 from pathlib import Path
+import subprocess
 import sys
 import time
 
@@ -122,6 +123,10 @@ def run(args):
         return 0
     except Exception as error:
         receipt.update(status='FAILED', exitCode=1, failureType=type(error).__name__)
+        if isinstance(error, subprocess.CalledProcessError):
+            receipt['subprocessExitCode'] = error.returncode
+        elif isinstance(error, subprocess.TimeoutExpired):
+            receipt['subprocessTimeoutSeconds'] = error.timeout
         raise
     finally:
         os.environ.pop('JAVA_TOOL_OPTIONS', None)

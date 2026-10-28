@@ -1,8 +1,11 @@
 import json
 from pathlib import Path
 import re
+import os
+import subprocess
 import tempfile
 import unittest
+from unittest import mock
 
 import current_product_replay as replay
 
@@ -50,3 +53,30 @@ class CurrentProductReplayTest(unittest.TestCase):
         self.assertEqual(android, host)
         self.assertTrue({'contextualAutomaticDecision', 'grammarRevisionAutomaticDecision',
             'nounCaseAutomaticDecision', 'wordContextAutomaticDecision'} <= android)
+
+
+    def test_failed_compile_preserves_actual_child_exit_or_timeout_in_failed_receipt(self):
+        for error in (subprocess.CalledProcessError(42, ['synthetic-compiler']),
+                      subprocess.TimeoutExpired(['synthetic-compiler'], 7)):
+            with tempfile.TemporaryDirectory() as folder:
+                root = Path(folder).resolve(); java = root / 'java'; java.write_bytes(b'synthetic executable')
+                rows = root / 'rows.jsonl'
+                rows.write_text(json.dumps({'id': 'original', 'split': 'calibration', 'language': 'en',
+                    'prefix': 'go', 'typed': 'home'}) + '\n')
+                args = replay.parser().parse_args(['--java', str(java), '--rows', str(rows),
+                    '--output', str(root / 'build/replay')])
+                with mock.patch.object(replay.harness, 'REPO', root), \
+                     mock.patch.object(replay.harness, 'ASSETS', root / 'assets'), \
+                     mock.patch.object(replay.harness, 'compile_inputs', return_value=([java], [], java)), \
+                     mock.patch.object(replay.harness, 'compile_harness', side_effect=error), \
+                     mock.patch.dict(os.environ, {}, clear=True), self.assertRaises(type(error)):
+                    replay.run(args)
+                receipt = json.loads((args.output / 'receipt.json').read_text())
+                self.assertEqual('FAILED', receipt['status'])
+                self.assertEqual(1, receipt['exitCode'])
+                if isinstance(error, subprocess.CalledProcessError):
+                    self.assertEqual(42, receipt['subprocessExitCode'])
+                    self.assertNotIn('subprocessTimeoutSeconds', receipt)
+                else:
+                    self.assertEqual(7, receipt['subprocessTimeoutSeconds'])
+                    self.assertNotIn('subprocessExitCode', receipt)
