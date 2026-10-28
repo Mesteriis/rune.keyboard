@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 2,
+  "kind": "legacy-first-original-aware-compact-autocorrection-cascade",
+  "ordering": [
+    "qualified-v1",
+    "retrained-v2-on-v1-abstention"
+  ],
+  "contextModelSha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+  "stageWinnerAbstentions": [
+    {
+      "kind": "unresolved-russian-e-eh-minimal-pair",
+      "characters": ["е", "э"],
+      "reason": "The typed deletion cannot distinguish Russian е from э in names and loanwords."
+    }
+  ],
+  "stages": [
+    {
+      "name": "qualified-v1",
+      "rankerSha256": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+      "sourcePolicySha256": "826b7954e838479b94ef5f8fcc3194f4794d40d34bb0bc41ec435a3efdab76c0",
+      "minimumScore": 0.2962572457107321,
+      "minimumMargin": 0.42795266413380256
+    },
+    {
+      "name": "retrained-v2-on-v1-abstention",
+      "rankerSha256": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+      "sourcePolicySha256": "395a48700712a78affa3caae0a0f315f15d3b514f6e2c81c16c80244926c0491",
+      "minimumScore": 0.24258020149114667,
+      "minimumMargin": 0.45231463979111636
+    }
+  ],
+  "promotionRule": {
+    "preserveEveryLegacySelectionExceptExplicitSafetyAbstentions": true,
+    "maximumNewIncorrectChanges": 0,
+    "maximumNewControlChanges": 0,
+    "minimumNewCorrectChanges": 1
+  },
+  "calibrationEvidence": {
+    "source": "wikimedia/wikipedia@a634f78b1c435397c07001e175fa74cc4ad5e775:20231101.ru/train/0016.parquet",
+    "manifestSha256": "625467e0a08339ceda9df9e41fde533bb3b6ddc5edfa20affbe1f1d1fb47138d",
+    "failure": "грйсон -> грейсон; observed target грэйсон"
+  }
+}
