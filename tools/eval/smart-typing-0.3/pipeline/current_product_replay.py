@@ -31,7 +31,12 @@ def load_inputs(paths):
                 if row['language'] not in ('en', 'ru', 'es') or row['split'] not in ('train', 'calibration', 'holdout'):
                     raise ValueError('REPLAY_INPUT_SCOPE')
                 identities.add(row['id'])
-                records.append({key: row[key] for key in INPUT_FIELDS})
+                record = {key: row[key] for key in INPUT_FIELDS}
+                # Historical IDs can embed cohort names. Keep them in host-only metadata;
+                # the controller receives an opaque ordinal, never that incidental label.
+                record['sourceId'] = record['id']
+                record['id'] = f"replay-{len(records):08d}"
+                records.append(record)
     if not records: raise ValueError('REPLAY_INPUT_EMPTY')
     return records
 
@@ -66,7 +71,7 @@ def run(args):
     root.mkdir(parents=True, mode=0o700)
     receipt = {'schemaVersion': 1, 'mode': 'current-product', 'status': 'STARTED',
         'files': before, 'rows': len(rows), 'languages': dict(Counter(row['language'] for row in rows)),
-        'inputFieldsSent': list(INPUT_FIELDS), 'modelCalls': 0,
+        'inputFieldsSent': list(INPUT_FIELDS), 'opaqueControllerIds': True, 'modelCalls': 0,
         'boundaryDiagnostics': True, 'baselineCompared': args.baseline is not None}
     started = time.monotonic()
     try:
@@ -77,6 +82,10 @@ def run(args):
                 stream.write('\t'.join([str(index), encode(row['id']), row['split'], row['language'],
                     encode(row['prefix']), encode(row['typed'])]) + '\n')
         receipt['labelFreeInputsSha256'] = harness.sha256(inputs)
+        identities = root / 'input-identities.jsonl'
+        harness.write_jsonl(identities, [{'index': index, 'id': row['id'], 'sourceId': row['sourceId']}
+            for index, row in enumerate(rows)])
+        receipt['hostOnlyIdentitiesSha256'] = harness.sha256(identities)
         os.environ['JAVA_TOOL_OPTIONS'] = '-Drune.replay.boundaryDiagnostics=true'
         compile_started = time.monotonic()
         jar, _ = harness.compile_harness(root, java, sources, jars, android)

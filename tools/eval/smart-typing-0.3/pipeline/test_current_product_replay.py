@@ -22,7 +22,11 @@ class CurrentProductReplayTest(unittest.TestCase):
             row = {'id': 'en-example', 'split': 'calibration', 'language': 'en', 'prefix': 'go',
                 'typed': 'home', 'expected': 'injected', 'candidates': ['injected'], 'noAuto': True}
             path.write_text(json.dumps(row) + '\n')
-            self.assertEqual([{key: row[key] for key in replay.INPUT_FIELDS}], replay.load_inputs([path]))
+            selected = replay.load_inputs([path])[0]
+            self.assertEqual('replay-00000000', selected['id'])
+            self.assertEqual('en-example', selected['sourceId'])
+            self.assertEqual({key: row[key] for key in ('split', 'language', 'prefix', 'typed')},
+                {key: selected[key] for key in ('split', 'language', 'prefix', 'typed')})
             row['expected'] = 'another injected value'; row['noAuto'] = False
             path.write_text(json.dumps(row) + '\n')
             self.assertEqual('home', replay.load_inputs([path])[0]['typed'])

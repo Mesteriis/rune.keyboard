@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -37,6 +38,7 @@ def read_projection(path):
             row = json.loads(line, object_pairs_hook=unique_object, parse_constant=invalid_constant)
             if not isinstance(row, dict) or not REQUIRED_FIELDS <= row.keys():
                 raise ValueError(f'OBSERVATION_SHAPE:{index + 1}')
+            canonical(row)  # Also reject overflowed JSON exponents anywhere in the row.
             if row['status'] != 'COMPLETE': raise ValueError(f'OBSERVATION_INCOMPLETE:{index + 1}')
             if type(row['index']) is not int or row['index'] != index:
                 raise ValueError(f'OBSERVATION_INDEX:{index + 1}')
@@ -104,6 +106,7 @@ def main(argv=None):
 
 
 if __name__ == '__main__':
+    os.umask(0o077)
     try: sys.exit(main())
     except (ValueError, OSError) as error:
         print(str(error), file=sys.stderr)

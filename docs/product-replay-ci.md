@@ -16,12 +16,14 @@ python3 tools/eval/smart-typing-0.3/pipeline/current_product_replay.py \
   --rows tools/eval/smart-typing-0.3/spelling-en.jsonl \
   --rows tools/eval/smart-typing-0.3/spelling-ru.jsonl \
   --rows tools/eval/smart-typing-0.3/spelling-es.jsonl \
+  --rows tools/eval/smart-typing-0.3/protected-tokens.jsonl \
   --output build/current-product-replay
 ```
 
 Output must be a fresh directory under `build/`. The driver selects only `id`,
-`split`, `language`, `prefix` and `typed` from each input row. Expected labels,
-preselected alternatives and cohorts never enter the Kotlin process. Input
+`split`, `language`, `prefix` and `typed` from each input row. Controller IDs are opaque ordinals because historical IDs may contain cohort
+names; their mapping to original IDs stays in host-only `input-identities.jsonl`.
+Expected-label, alternative and cohort fields never enter the Kotlin process. Input
 identities must be unique and EN/RU/ES scope explicit. These existing historical
 fixtures are regression inputs, not independent fresh qualification. Their
 attribution and licensing remain as described in the source corpus README;

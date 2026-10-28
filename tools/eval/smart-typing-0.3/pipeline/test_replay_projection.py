@@ -85,6 +85,12 @@ class ReplayProjectionTest(unittest.TestCase):
                 path.write_text(value + '\n')
                 with self.assertRaises(ValueError): replay.read_projection(path)
 
+    def test_overflowed_finite_json_literal_is_rejected_before_projection(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'overflow.jsonl'
+            path.write_text(json.dumps(observation())[:-1] + ', "score":1e400}\n')
+            with self.assertRaises(ValueError): replay.read_projection(path)
+
     def test_cli_returns_failure_and_writes_nested_row_diff_without_overwriting_baseline(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder); old = observation(); new = copy.deepcopy(old)
