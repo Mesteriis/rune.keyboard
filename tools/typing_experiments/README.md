@@ -89,7 +89,7 @@ a new training run, independent holdout or model promotion.
 
 Current joint/neighbor source scripts and their eight test modules are versioned.
 The joint trainer/calibrator and three preparation snapshots have matching
-historical source identities; two original neighbor source versions remain
-unrecovered. See [the source and gap record](../../docs/acceptance/2026-10-28-q2-joint-neighbor-sources.md).
+historical source identities. The frozen neighbor tool is reconstructed with its
+exact original SHA-256; its earlier corpus-builder source remains unrecovered. See [the source and gap record](../../docs/acceptance/2026-10-28-q2-joint-neighbor-sources.md).
 These historical builders still require their pinned inputs and consumed-data
 exclusions; source preservation does not grant fresh qualification or promotion.

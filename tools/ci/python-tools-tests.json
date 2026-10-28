@@ -37,6 +37,7 @@
       "tools/typing_experiments/test_import_ranker_history.py",
       "tools/typing_experiments/test_import_spelling_v6.py",
       "tools/typing_experiments/test_import_tatoeba_history.py",
+      "tools/typing_experiments/test_joint_neighbor_source_history.py",
       "tools/typing_experiments/test_legacy_family_recovery.py",
       "tools/typing_experiments/test_legacy_holdout_merge.py",
       "tools/typing_experiments/test_legacy_holdout_recovery.py",

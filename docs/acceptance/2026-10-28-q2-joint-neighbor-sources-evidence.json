@@ -136,6 +136,39 @@
       "exitCode": 0
     }
   ],
+  "cleanCheckoutRuns": {
+    "historicalDataPreparedInPreviousSlice": true,
+    "runs": [
+      {
+        "errors": 0,
+        "failures": 0,
+        "modules": 98,
+        "profile": "clean-stdlib",
+        "receiptSha256": "8a10cbf70d2b1a1107716586d211af22a728d9a09c1cb62056a34a2afa2f952d",
+        "skips": [],
+        "status": "PASS",
+        "tests": 539
+      },
+      {
+        "errors": 0,
+        "failures": 0,
+        "modules": 19,
+        "profile": "clean-scientific",
+        "receiptSha256": "294d5c9bc163e668af8a9906a0e85d87d94dee9916630a1cf7723977c13ca120",
+        "skips": [
+          {
+            "module": "tools/typing_experiments/test_word_ranking.py",
+            "reason": "MLX environment required",
+            "test": "test_word_ranking.WordRankingTests.test_mlx_loss_parity_initialization_and_finite_gradient"
+          }
+        ],
+        "status": "PASS",
+        "tests": 72
+      }
+    ],
+    "sourceCommit": "7595efa",
+    "trackedTreeCleanBefore": true
+  },
   "cliChecks": [
     {
       "command": [
@@ -284,6 +317,17 @@
   ],
   "modelExecutionEstablished": false,
   "purpose": "Q2_JOINT_NEIGHBOR_CURRENT_SOURCE_PRESERVATION_WITH_EXPLICIT_HISTORICAL_GAPS",
+  "recoveredHistoricalSources": [
+    {
+      "archived": "tools/typing_experiments/historical_provenance_sources/neighbor_recovery_8d42d7e854ea205e797f9d0d2e41dc1f260a050613c708eb933ef3aebfa856bd.py",
+      "executed": false,
+      "expectedSha256": "8d42d7e854ea205e797f9d0d2e41dc1f260a050613c708eb933ef3aebfa856bd",
+      "field": "toolSha256",
+      "method": "Reverse four replay-mode changes in current source; accept only exact historical SHA-256 match",
+      "receipt": "tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/neighbor-frozen-policy.json",
+      "source": "tools/typing_experiments/neighbor_recovery.py"
+    }
+  ],
   "sourceBindings": {
     "tools/typing_experiments/calibrate_joint_followup.py": "0320514bf45bfb204ca2a7b83220d5a9effe5bffc56e660a5f5e460b7906a848",
     "tools/typing_experiments/calibrate_joint_rescue.py": "03a9638130769de11b38f70794cd2a89a208df8486a00bed38f4a54df31a8cec",
@@ -310,12 +354,6 @@
   },
   "transitiveDependencyCoverageEstablished": false,
   "unrecoveredHistoricalSources": [
-    {
-      "expectedSha256": "8d42d7e854ea205e797f9d0d2e41dc1f260a050613c708eb933ef3aebfa856bd",
-      "field": "toolSha256",
-      "receipt": "tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/neighbor-frozen-policy.json",
-      "source": "tools/typing_experiments/neighbor_recovery.py"
-    },
     {
       "expectedSha256": "bf2118a0b7d54f10a56d59c73ae77900fbd957c997f8307452b33549769b0323",
       "field": "generator",

@@ -26,12 +26,16 @@ trainer and follow-up v2 calibrator SHA-256 fields match current retained source
 Three preparers match previously retained frozen-source snapshots. None of
 these identity comparisons is a fresh model execution or qualification.
 
-Two historical neighbor source versions remain **unrecovered**: corpus builder
-`bf2118a0b7d54f10a56d59c73ae77900fbd957c997f8307452b33549769b0323`
-and frozen-policy tool
+The original neighbor frozen-policy tool was reconstructed by reversing four
+replay-mode changes in the retained current source. A bounded 16-combination
+check accepted only the complete-file SHA-256 match
 `8d42d7e854ea205e797f9d0d2e41dc1f260a050613c708eb933ef3aebfa856bd`.
-The current neighbor source has a different SHA-256. The original receipts
-preserve this disagreement; current tests cannot prove historical source parity.
+The exact bytes are retained separately and not executed. This is source
+reconstruction verified by its original digest, not a new model reproduction.
+The earlier corpus-builder source
+`bf2118a0b7d54f10a56d59c73ae77900fbd957c997f8307452b33549769b0323`
+remains **unrecovered**. Current tests cannot prove historical corpus generation
+parity.
 Q2 source/dependency closure and Q6 historical/fresh-data qualification remain
 open. Historical preparers do not become approved fresh-qualification builders
 merely by entering Git; global consumed-data exclusions remain required.
@@ -39,3 +43,17 @@ merely by entering Git; global consumed-data exclusions remain required.
 No product source, asset or policy bytes changed. No new Android installation,
 model training or hosted CI run was performed. Only the new source-status
 paragraph is staged in the experiment README; pending owner text is preserved.
+
+Clean source `7595efa` passes 98 stdlib modules / 539 tests with no skips, and
+19 scientific modules / 72 tests with one explicit MLX-environment skip and no
+failures/errors. The validated historical-data bootstrap from the preceding
+slice was present. Exact counts, original-receipt hashes and the remaining
+source gap are recorded in the adjacent evidence.
+
+Four additional source-history integrity tests pass on Python 3.12.14 and 3.14.6.
+They bind all five original receipt payloads, the two joint source references,
+three frozen preparers and the complete reconstructed neighbor tool digest.
+They read source bytes without importing or executing the historical tool.
+The new module is assigned to stdlib CI; the current exact inventory is
+99 stdlib / 19 scientific modules. The full-run counts above bind the preceding
+source commit; these four additional tests were run separately.
