@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "card": "Q4",
+  "completeCard": false,
+  "parentCommit": "04f28d2",
+  "scope": "Localized source/outcome dashboard, 100-application reporting rule, actual reset and real Android AtomicQualityStorage compatibility",
+  "android": {
+    "api": 26,
+    "ownedEmulatorVerified": true,
+    "passed": true,
+    "tests": 3,
+    "completed": 3,
+    "skips": 0,
+    "exitCode": 0,
+    "methods": [
+      "qualityDashboardShowsNumericEventsAndResetClearsDisk",
+      "realAtomicQualityStorageMigratesV2AndReadsTheFullV3Payload",
+      "qualitySourceResourceTablesRetainTheirEnglishAndRussianDimensions"
+    ],
+    "apkSha256": {
+      "app/build/outputs/apk/debug/app-debug.apk": "4cf7aaa92763c212bd0b2db89f7069f3ee5ee317690cac621f116418a76820b4",
+      "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "82eb0e2ad2b6b8f43511af5232a324d0a6d492223ba34b63d447837f57344d14"
+    },
+    "logSha256": "86fa0e969c1986afbe43aaf2ae1ddb2ea521a14bc2abe8eea4f8e097028d5f64",
+    "elapsedSeconds": 0.4814981250092387
+  },
+  "initialFailure": {
+    "kind": "PluralsCandidate lint error",
+    "exitCode": 1,
+    "fix": "put quantity label before counts in both locales; no suppression"
+  },
+  "finalDebugLintAndApkBuildExit": 0,
+  "atomicStoreV3MaximumPayloadBytes": 1149,
+  "sourceSha256": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/quality/QualityDashboardActivity.kt": "d29460fc62f0c72bf87014cf1667477b63b6d76f403b3f4f1c87603ed81ca4ad",
+    "app/src/main/res/layout/activity_quality_dashboard.xml": "8bc73d782ec228e9dcff994538fad124b240119daab29cd82a7e34c885aa918b",
+    "app/src/main/res/values/quality_strings.xml": "1e8511c8e715d80680355b79ce2e5b32cf890dccce3e69d3215a564400d7daad",
+    "app/src/main/res/values-ru/quality_strings.xml": "f5d19eda37819a2a179275539721f6696e532540f8acb56def701a567f7a8927",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/tools/TypingToolsInstrumentedTest.kt": "707ea68f3fa18c9071187c766ad83a7dc86e04992f055c72bd8333275e59b1f1"
+  },
+  "privateEvidenceSha256": {
+    "build/review-q4-counters-20261028/dashboard-build.log": "ee277b746b0e065df420aa58c56cbafb402eaf008f6c8f6406adc0d52c6ff1f0",
+    "build/review-q4-counters-20261028/dashboard-build.exit": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "build/review-q4-counters-20261028/dashboard-fixed-build.log": "a6e72c670a9c07d85c0cc63a09f86d93490825a2ed5867d3852261425fd1b77a",
+    "build/review-q4-counters-20261028/dashboard-fixed-build.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "build/review-q4-counters-20261028/dashboard/instrumentation.log": "86fa0e969c1986afbe43aaf2ae1ddb2ea521a14bc2abe8eea4f8e097028d5f64",
+    "build/review-q4-counters-20261028/dashboard/result.json": "012a95e580784d2f66ff968169e14b7d00207f292b5f7ba58598f6d09da5989d"
+  },
+  "remaining": [
+    "real controller source/outcome and Undo/window attribution",
+    "model elapsedMillis hooks and unavailable/CPU copy",
+    "debug-only export",
+    "source-bound product replay and final release/device integration",
+    "real two-week owner use and acceptance"
+  ],
+  "physicalOwnerPhoneModified": false,
+  "naturalUsePeriodStarted": false,
+  "syntheticCountsOnly": true,
+  "wholeReviewComplete": false
+}

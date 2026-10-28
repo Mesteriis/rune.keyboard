@@ -23,7 +23,7 @@
     <string name="quality_latency_note">Время от запроса вариантов до принятого ответа. Отрисовка экрана не учитывается; это не полная задержка от нажатия клавиши.</string>
     <string-array name="quality_latency_labels">
         <item>Менее 5 мс</item><item>От 5 до 10 мс</item><item>От 10 до 25 мс</item>
-        <item>От 25 до 50 мс</item><item>От 50 до 100 мс</item><item>100 мс и более</item>
+        <item>От 25 до 50 мс</item><item>50–99 мс</item><item>100 мс и более</item>
     </string-array>
     <string name="quality_shadow_title">Теневое сравнение алгоритмов</string>
     <string name="quality_shadow_note">Основной: обычное решение после проверки условий. Экспериментальный: самое сильное явное личное предпочтение, иначе первый вариант рейтинга до проверки условий автоисправления. Набор вариантов общий. Эксперимент не меняет текст. Совпадение не доказывает правильность; ниже учитывается только явный выбор пользователя.</string>
@@ -38,4 +38,23 @@
     <string name="quality_reset">Сбросить все метрики качества</string>
     <string name="quality_reset_done">Метрики качества сброшены на этом устройстве.</string>
     <string name="quality_reset_failed">Не удалось сохранить сброс. Сбор приостановлен; повторите попытку.</string>
+    <string name="quality_sources_title">Автозамены по источникам</string>
+    <string name="quality_sources_note">Счётчики с последнего сброса. Доля явных отмен появляется после 100 применений источника. Отсутствие отмены не доказывает правильность замены. Истёкшее окно — возможность применения, а не принятая замена. Эти наблюдения не меняют работу источников автоматически.</string>
+    <string name="quality_source_counts">%1$s\nПрименено: %2$d · Отменено: %3$d · Оставлен оригинал: %4$d · Окно истекло: %5$d\n%6$s</string>
+    <string name="quality_source_insufficient">Недостаточно данных. Применений: %1$d / %2$d</string>
+    <string name="quality_source_undo_fraction">Доля явных отмен: %1$.1f%%</string>
+    <string name="quality_source_inconsistent">Доля отмен недоступна: счётчики несогласованы</string>
+    <string-array name="quality_source_labels">
+        <item>Частые опечатки</item><item>Общая локальная коррекция</item><item>Компактный публичный ранжировщик</item>
+        <item>Восстановление соседних букв</item><item>Совместный ранжировщик: короткие слова</item><item>Совместный ранжировщик: длинные слова</item>
+        <item>Дополнительный совместный поиск</item><item>Контекст слова</item><item>Контекстный ранжировщик</item>
+        <item>Форма инфинитива</item><item>Падеж существительного</item><item>Языковая модель</item>
+        <item>Контекстная подсказка</item><item>Регистр букв</item>
+    </string-array>
+    <string name="quality_model_latency_title">Время ответа модели</string>
+    <string name="quality_model_latency_note">Длительность, сообщённая движком модели. Учитывается отдельно от запроса кандидатов и отрисовки экрана.</string>
+    <string-array name="quality_model_latency_labels">
+        <item>Менее 50 мс</item><item>50–99 мс</item><item>100–249 мс</item>
+        <item>250–499 мс</item><item>500 мс и больше</item>
+    </string-array>
 </resources>

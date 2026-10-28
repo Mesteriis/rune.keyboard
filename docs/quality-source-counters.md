@@ -44,3 +44,10 @@ estimate. This observational value does not enable/disable a source or alter
 ranking, admission or editor operations. Hooks, dashboard reporting, debug-only
 export and the review's real two-week owner-use acceptance must each retain
 separate integration evidence.
+
+At the source-dashboard checkpoint, storage and dashboard rendering are
+implemented. Real controller/model hooks and debug export are not connected yet;
+ordinary typing does not yet populate the new source/model arrays. The dashboard
+instrumentation seeds explicit synthetic counters and checks the actual reset.
+Upgrade compatibility covers v1/v2 reads by this version; older binaries are not
+claimed to read a v3 file.

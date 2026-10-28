@@ -10,6 +10,9 @@ import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.settings.KeyboardPreferences
 import io.github.mesteriis.rune.keyboard.settings.ThemedActivity
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityEvent
+import io.github.mesteriis.rune.keyboard.smarttyping.quality.AutomaticQualitySource
+import io.github.mesteriis.rune.keyboard.smarttyping.quality.AutomaticQualityOutcome
+import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityModel
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityRepository
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityStore
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.ShadowResult
@@ -78,6 +81,24 @@ class QualityDashboardActivity : ThemedActivity() {
         findViewById<TextView>(R.id.quality_actions).text = QualityEvent.entries.joinToString("\n") {
             getString(R.string.quality_count_format, getString(eventLabels[it.ordinal]), snapshot[it])
         }
+        val sourceLabels = resources.getStringArray(R.array.quality_source_labels)
+        findViewById<TextView>(R.id.quality_sources).text = AutomaticQualitySource.entries.joinToString("\n\n") { source ->
+            val applied = snapshot[source, AutomaticQualityOutcome.APPLIED]
+            val undone = snapshot[source, AutomaticQualityOutcome.EXPLICIT_UNDO]
+            val fraction = snapshot.explicitUndoFraction(source)
+            val observedRate = when {
+                undone > applied -> getString(R.string.quality_source_inconsistent)
+                fraction == null -> getString(R.string.quality_source_insufficient, applied, QualityModel.MIN_SOURCE_APPLICATIONS)
+                else -> getString(R.string.quality_source_undo_fraction, fraction * 100)
+            }
+            getString(R.string.quality_source_counts, sourceLabels[source.ordinal], applied, undone,
+                snapshot[source, AutomaticQualityOutcome.KEPT_ORIGINAL],
+                snapshot[source, AutomaticQualityOutcome.WINDOW_EXPIRED], observedRate)
+        }
+        val modelLabels = resources.getStringArray(R.array.quality_model_latency_labels)
+        findViewById<TextView>(R.id.quality_model_latency).text = snapshot.modelResponseBuckets.mapIndexed { index, count ->
+            getString(R.string.quality_count_format, modelLabels[index], count)
+        }.joinToString("\n")
         val latencyLabels = resources.getStringArray(R.array.quality_latency_labels)
         findViewById<TextView>(R.id.quality_latency).text = snapshot.candidateResponseBuckets.mapIndexed { index, count ->
             getString(R.string.quality_count_format, latencyLabels[index], count)

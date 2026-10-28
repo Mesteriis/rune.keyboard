@@ -17,6 +17,18 @@
         <TextView android:id="@+id/quality_actions" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="8dp" android:lineSpacingExtra="8dp" android:textColor="@color/setup_text_primary" android:textSize="16sp" />
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp"
+            android:text="@string/quality_sources_title" android:textStyle="bold" android:textSize="20sp" android:textColor="@color/setup_text_primary" android:accessibilityHeading="true" tools:targetApi="28" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"
+            android:text="@string/quality_sources_note" android:textColor="@color/setup_text_secondary" android:textSize="15sp" />
+        <TextView android:id="@+id/quality_sources" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" android:lineSpacingExtra="8dp" android:textColor="@color/setup_text_primary" android:textSize="16sp" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp"
+            android:text="@string/quality_model_latency_title" android:textStyle="bold" android:textSize="20sp" android:textColor="@color/setup_text_primary" android:accessibilityHeading="true" tools:targetApi="28" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"
+            android:text="@string/quality_model_latency_note" android:textColor="@color/setup_text_secondary" android:textSize="15sp" />
+        <TextView android:id="@+id/quality_model_latency" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" android:lineSpacingExtra="8dp" android:textColor="@color/setup_text_primary" android:textSize="16sp" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp"
             android:text="@string/quality_latency_title" android:textStyle="bold" android:textSize="20sp" android:textColor="@color/setup_text_primary" android:accessibilityHeading="true" tools:targetApi="28" />
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"
             android:text="@string/quality_latency_note" android:textColor="@color/setup_text_secondary" android:textSize="15sp" />

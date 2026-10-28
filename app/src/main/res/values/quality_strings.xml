@@ -38,4 +38,23 @@
     <string name="quality_reset">Reset all quality totals</string>
     <string name="quality_reset_done">Quality totals reset on this device.</string>
     <string name="quality_reset_failed">Could not save the reset. Collection remains paused; try again.</string>
+    <string name="quality_sources_title">Automatic corrections by source</string>
+    <string name="quality_sources_note">Totals since the last reset. The explicit Undo fraction appears after 100 applications of a source. No Undo does not prove a correction was right. Expired windows are application opportunities, not accepted corrections. These observations do not automatically change any source.</string>
+    <string name="quality_source_counts">%1$s\nApplied: %2$d · Undo: %3$d · Original kept: %4$d · Window expired: %5$d\n%6$s</string>
+    <string name="quality_source_insufficient">Insufficient data. Applications: %1$d / %2$d</string>
+    <string name="quality_source_undo_fraction">Explicit Undo fraction: %1$.1f%%</string>
+    <string name="quality_source_inconsistent">Undo fraction unavailable: inconsistent counters</string>
+    <string-array name="quality_source_labels">
+        <item>Common confusions</item><item>General local correction</item><item>Compact public ranker</item>
+        <item>Neighbor recovery</item><item>Joint ranker: short words</item><item>Joint ranker: long words</item>
+        <item>Joint rescue</item><item>Word context</item><item>Contextual ranker</item>
+        <item>Infinitive revision</item><item>Noun-case revision</item><item>Language model</item>
+        <item>Contextual suggestion</item><item>Canonical letter case</item>
+    </string-array>
+    <string name="quality_model_latency_title">Model response time</string>
+    <string name="quality_model_latency_note">Duration reported by the model engine. Separate from candidate-request time and screen rendering.</string>
+    <string-array name="quality_model_latency_labels">
+        <item>Under 50 ms</item><item>50 to under 100 ms</item><item>100 to under 250 ms</item>
+        <item>250 to under 500 ms</item><item>500 ms or more</item>
+    </string-array>
 </resources>
