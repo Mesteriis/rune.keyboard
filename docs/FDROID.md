@@ -74,7 +74,10 @@ Normal release builds still require a clean committed Git checkout. F-Droid
 changes `app/build.gradle.kts`, build cleanup removes wrapper launchers, and its
 scanner removes wrapper JARs and the declared training baseline. The committed
 [prepared-source policy](../fdroid/prepared-source-policy.json) binds the original
-and resulting bytes of the signing scrub and the original bytes of six deletions.
+and resulting bytes of the signing scrub and the original bytes of ten deletions:
+three root wrapper files, the unused training baseline, two llama.cpp example
+wrapper files and four host CI archives. The archives are deleted by exact path
+and hash; the calibration test gzip remains inventory-only.
 
 A future versioned recipe must run both guards in `init`, before preparation,
 and explicitly select the prepared-source mode for Gradle:

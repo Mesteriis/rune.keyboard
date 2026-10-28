@@ -1,0 +1,164 @@
+{
+  "approvedChanges": 11,
+  "buildServer": false,
+  "card": "Q1",
+  "cleanup": {
+    "approvedFilesRestored": 11,
+    "cleanStatus": true,
+    "executableModesRestored": true,
+    "ignoredBuildCacheRetained": true
+  },
+  "dataEntries": 29,
+  "fdroidserver": "2.4.5",
+  "files": {
+    "fdroid/prepared-source-policy.json": "ef0a4000c7da423ab5824b926063c045b09d09fb28671cb5b20ac18ab54e0907",
+    "fdroid/review-data-policy.json": "4322bbee815a629a4525ca487920bc1c318e83ef30c041fb7727984c73b779e8",
+    "tools/fdroid_data_policy.py": "00ea227c3bde163e196b1971ca80c4d4fa183c7e7e068605c347a8fb6438a77e",
+    "tools/fdroid_prepared_source.py": "d2422e83f1f1c228ebc7da60c062accf45d9a3929fe02a52cc439501405e2103",
+    "tools/qualification_artifacts.py": "247f94ef585475b7a454a17767d2552028285daf682f9b5f9fd48fc3590b91a7",
+    "tools/release_source_check.py": "79a6a6a997a6af6e1b59c44c0e4654a28bad9cbda3a16217d354d88db1d8ef8c"
+  },
+  "fullBuild": false,
+  "gradleProbes": [
+    {
+      "configurationCacheReused": false,
+      "elapsedSeconds": 12.089,
+      "exitCode": 0,
+      "expectedExit": 0,
+      "label": "gradle-positive",
+      "logSha256": "e37c983efa9ec7a26e4c633b198c7045334e424a5f42ff97b745a1ba8c5fb36b",
+      "markerFound": true
+    },
+    {
+      "configurationCacheReused": true,
+      "elapsedSeconds": 7.751,
+      "exitCode": 1,
+      "expectedExit": 1,
+      "label": "gradle-dirty-negative",
+      "logSha256": "eef799b0209660a172e1bf4be73e54a03e38216e7736c0f485ab982d9938761b",
+      "markerFound": true
+    },
+    {
+      "configurationCacheReused": true,
+      "elapsedSeconds": 7.777,
+      "exitCode": 0,
+      "expectedExit": 0,
+      "label": "gradle-restored",
+      "logSha256": "47849c536511327b8e65a7a371a6ceabcad6a4e5674cf7cfba5b79dac5bba2eb",
+      "markerFound": true
+    }
+  ],
+  "launcherCleanup": "exact build_local launcher condition reproduced; build_local and Gradle not run",
+  "limits": [
+    "Actual fdroidserver common.prepare_source and scanner.scan_source executed; build_local launcher-removal condition reproduced separately. This is not a complete build_local execution.",
+    "No final APK, independent build-server, source tarball, binary scanner or distribution acceptance established.",
+    "Existing installed SDK and scanner signature cache reused.",
+    "Historical versioned recipes unchanged."
+  ],
+  "networkBlockedDuringScanner": true,
+  "ownerPreservation": {
+    "allPreserved": true,
+    "paths": 98,
+    "payloadHashes": 13
+  },
+  "prebuildOmitted": "SDK acquisition; installed toolchain reused",
+  "preparerModules": {
+    "build.py": "be294c3d2b0f9c117d768e1d3f107ff83ab8b3e7f3e731dd2c1afa6790627d70",
+    "common.py": "6fbb9e2de16e4bde8d463babad4412603b6ca6f5bd7a749723e3cc089b3d0021",
+    "scanner.py": "4de525a85ba519a41838cf1ed7e70184d0b9df782da8a6c82c6dea5234adf7e1"
+  },
+  "privateEvidence": {
+    "check.py": "be63257aa48bc9c36ee756f7da8dd6d6e0d60df46a1a4f5f95928abf57de3092",
+    "gradle-result.json": "ed712d91008a16d2897c90aec509512c95daa4b9e6ace7d8c2a8e77abfca4b9e",
+    "gradle-run.log": "74554beb6a1a577ad21dcedd3361b3ed4dd6d75de123d3e92f9e8f96d6d8da43",
+    "gradle_probes.py": "d8d09674b593a536a134f243f7f30a856714f5d18b74ba831b46b811c27080d1",
+    "result.json": "84bd143e40c32ec4d75512d16d49227db9d410ea158bc7c6d872efffd387a661",
+    "run.log": "fa33db2edb84a27e6a3ea1c3d9083773257167399aa202098db96e8edf901c40"
+  },
+  "probes": [
+    {
+      "exitCode": 0,
+      "expectedExit": 0,
+      "label": "prepared-positive",
+      "logSha256": "8020527b06f637e8e4aa361421c0d3606c324882715b3c084fc6d4a2713e67c3",
+      "markerFound": true
+    },
+    {
+      "exitCode": 1,
+      "expectedExit": 1,
+      "label": "default-negative",
+      "logSha256": "2b0b6def7ef55e2f8340edc6f811c02b14350ae0037550b45bc24464f9dd84b2",
+      "markerFound": true
+    },
+    {
+      "exitCode": 0,
+      "expectedExit": 0,
+      "label": "qualification-positive",
+      "logSha256": "ec698b1dc9841ae9d8a45aa5e0ece741449b94a10baa8b39fb10d438e8d1d460",
+      "markerFound": true
+    },
+    {
+      "exitCode": 1,
+      "expectedExit": 1,
+      "label": "partial-negative",
+      "logSha256": "83402d372b011dddbc5944fceb7aa44dbffe2945be58aa19d88b0c332820aee2",
+      "markerFound": true
+    },
+    {
+      "exitCode": 1,
+      "expectedExit": 1,
+      "label": "dirty-negative",
+      "logSha256": "0eb069122141f8a0e0111adf7c00baac2290fb52a15eebd38434a8185b91ca40",
+      "markerFound": true
+    },
+    {
+      "exitCode": 1,
+      "expectedExit": 1,
+      "label": "compiled-source-negative",
+      "logSha256": "6dba416f5a386ad1e1509d0367bcdd21752d54b9017632e8d009346f51e00359",
+      "markerFound": true
+    },
+    {
+      "exitCode": 0,
+      "expectedExit": 0,
+      "label": "prepared-restored",
+      "logSha256": "8020527b06f637e8e4aa361421c0d3606c324882715b3c084fc6d4a2713e67c3",
+      "markerFound": true
+    }
+  ],
+  "publications": {
+    "apkBuilt": false,
+    "phoneOperation": false,
+    "push": false,
+    "workflowDispatch": false
+  },
+  "scannerFatal": 0,
+  "schema": 1,
+  "sourceCommit": "069e1c41444590187a4fa03ca8f9d078307a58bf",
+  "sourceTarball": false,
+  "status": "partial; current 11-change prepared checkpoint and Gradle configuration-cache refusal verified",
+  "tests": [
+    {
+      "command": "python3 -m unittest discover -s tools -p 'test_fdroid*py'",
+      "exitCode": 0,
+      "logSha256": "4546ca5891ff4ab75891c31c7bc0544c6c219c0790976a4b95d6ef74628b3c15",
+      "tests": 25
+    },
+    {
+      "command": "python3 -m unittest discover -s tools -p 'test_qualification*py'",
+      "exitCode": 0,
+      "logSha256": "907ea6ffdb870ba317824ca302f036516c4f97ed795bfae061d5db4b9cfb56bb",
+      "tests": 5
+    }
+  ],
+  "warnings": [
+    [
+      "gzip file archive",
+      "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+    ],
+    [
+      "executable binary, possibly code",
+      "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+    ]
+  ]
+}
