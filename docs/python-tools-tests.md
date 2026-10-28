@@ -53,13 +53,33 @@ original manifests remain in `historical-data-v1`. Archive generation requires
 the original local build and pinned public parquet; normal tests require neither.
 See [the acceptance receipt](acceptance/2026-10-28-q7-portable-model-fixtures.md).
 
-## Remaining evidence
+## Required optional backends
 
-The Linux scientific job retains one explicit MLX-only gradient-test skip. Its
-supported Apple environment and permanent CI job need separate evidence.
-Morphology's current unit tests do not establish live Pymorphy dictionary
-integration. Full hosted Ubuntu execution also remains unverified. Q7 remains
-in progress; wiring all 103 modules does not resolve those outstanding checks.
+The Linux scientific job installs the hash-locked Pymorphy closure and runs
+`backend_test_gate.py --backend pymorphy`: five contracts use the real dictionary
+and host ranker. A separate `python-mlx` job uses `macos-26`, Python 3.12 and the
+existing pinned neural requirements, then runs the seven original word-ranking
+cases on CPU. The previously skipped gradient/parity method is mandatory there.
+The Linux suite keeps its explicit platform skip; the Apple job covers it.
+
+The gate rejects absent/wrong dependencies, an unsupported host profile, missing
+mandatory cases, any skips/errors/failures (including expected failures),
+changed inputs and existing output folders. Receipts bind source/model inputs before/after and retain versions,
+exact case IDs, logs and dictionary/parser content hashes. Local clean-source
+runs passed all seven MLX and five real Pymorphy cases without skips; the six
+existing morphology modules also passed all 62 cases in the fresh locked env.
+See [required-backend evidence](acceptance/2026-10-28-q7-required-backends.md).
+
+GitHub's [runner reference](https://docs.github.com/en/actions/reference/runners/github-hosted-runners)
+lists `macos-26` as an ARM64 standard runner. The local run used macOS 27;
+the macOS 26 hosted target has not yet executed. PyPI also publishes MLX 0.32.2
+wheels for macOS 14/15; the gate imposes
+no minimum OS version beyond its explicit Darwin/ARM64 profile. Other OS
+profiles have not been executed in this slice.
+
+Q7 remains in progress: actual hosted Ubuntu/macOS workflow execution is still
+unverified. Local backend results do not certify remote job scheduling or the
+whole workflow.
 
 F-Droid preparation deletes the four exact host CI gzip archives, verified by
 hash and declared provenance; it does not add a blanket scanner exclusion.

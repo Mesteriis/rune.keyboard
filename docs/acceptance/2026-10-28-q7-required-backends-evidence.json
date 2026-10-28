@@ -1,0 +1,238 @@
+{
+  "backends": {
+    "mlx": {
+      "device": "cpu",
+      "ids": [
+        "test_word_ranking.WordRankingTests.test_controls_coverage_and_missing_targets",
+        "test_word_ranking.WordRankingTests.test_exact_shipped_initialization_and_export",
+        "test_word_ranking.WordRankingTests.test_mlx_loss_parity_initialization_and_finite_gradient",
+        "test_word_ranking.WordRankingTests.test_numpy_loss_group_mean_and_terminal_score",
+        "test_word_ranking.WordRankingTests.test_preprocessing_and_runtime_score_numeric_parity",
+        "test_word_ranking.WordRankingTests.test_selection_ties_are_frozen",
+        "test_word_ranking.WordRankingTests.test_train_dev_boundary_rejects_before_any_open"
+      ],
+      "inputBindings": {
+        "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+        "tools/ci/backend_test_gate.py": "7bbfd435b67c5506f40d961f30e2e74eb7b00c2bcc9ebf0e109f07358d80e2aa",
+        "tools/typing_experiments/neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+        "tools/typing_experiments/requirements-neural.txt": "ac6287a06e82d336e6a6f60a5c200f4489e904e7924a5a8b300f5a41b2087c71",
+        "tools/typing_experiments/test_word_ranking.py": "659fc46763d709c50ab08167704c404919c006760fc10ec730db66b3d21dbe35",
+        "tools/typing_experiments/word_ranking.py": "755a48324419cabc34a7bbb160453b486f15f46b1124f2cba79ca70304cde62d"
+      },
+      "logSha256": "e4fbb78b7bfa9a56f26acb2bc0026bfa20ac0cd14e122b250395ff10c54aa65e",
+      "receiptSha256": "ed2795ba20b1dd59709e757eebf6a421bb1f46fc52594ee491471ad615c10751",
+      "skips": 0,
+      "status": "PASS",
+      "tests": 7,
+      "versions": {
+        "mlx": "0.32.2",
+        "mlx-metal": "0.32.2",
+        "numpy": "2.4.6",
+        "pyarrow": "25.0.1"
+      }
+    },
+    "pymorphy": {
+      "device": null,
+      "dictionary": {
+        "dictionaryOnly": true,
+        "packages": {
+          "dawg2-python": {
+            "files": {
+              "dawg2_python-0.9.0.dist-info/INSTALLER": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508",
+              "dawg2_python-0.9.0.dist-info/LICENSE": "2e5e7d32243cec7f102512b909db245c1c83b56823ec2b5fa1020cbe4fc7c3f0",
+              "dawg2_python-0.9.0.dist-info/METADATA": "371d6b3c0f2dd0c875203524eb27694ec1d1863ebb4d76776d567599df6d6916",
+              "dawg2_python-0.9.0.dist-info/RECORD": "dec1233bcdb864dd710d8a8f78fc7311050198139332c77a60f7273107ee1e63",
+              "dawg2_python-0.9.0.dist-info/REQUESTED": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "dawg2_python-0.9.0.dist-info/WHEEL": "5db7990de4d629cd70ec2488cab7b968c0d4ffe3e8851c1341c7989e2b086186",
+              "dawg_python/__init__.py": "d85763e4d34f8abe3f72c676f1efb1229b14ed2eb8727ccd0ead991f23a3a613",
+              "dawg_python/dawgs.py": "4744fbadc8fb2d582094975174998197d4d9373b3bdd6bd862fbbd05fe537d43",
+              "dawg_python/units.py": "4915ef70373cc1df87aec869a0488fc8f1b37c282f199faa9dfae511e942c755",
+              "dawg_python/wrapper.py": "431a0d52db3112dae6e7fb728f6568e0727cd5dc8c5445bac5d2322efe085d60"
+            },
+            "version": "0.9.0"
+          },
+          "pymorphy3": {
+            "files": {
+              "pymorphy3-2.0.6.dist-info/INSTALLER": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508",
+              "pymorphy3-2.0.6.dist-info/METADATA": "cc267706d693da98ae515135f310e668335869e59d515cd139abe75eebe15651",
+              "pymorphy3-2.0.6.dist-info/RECORD": "fa913849ac8ad3ba9339784fe3dfb3c84f5f41abcf20997f0af2f89b569c6a0b",
+              "pymorphy3-2.0.6.dist-info/REQUESTED": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "pymorphy3-2.0.6.dist-info/WHEEL": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b",
+              "pymorphy3-2.0.6.dist-info/entry_points.txt": "d949fedc8f7a7635885e2f259d4cafadc0d1333733bf412c794eb1ab58ed0699",
+              "pymorphy3-2.0.6.dist-info/licenses/AUTHORS.rst": "f7a8a2a9dddde7f12dff43afc914ac2feb3ad3d9de2842d7505ed2f60e6e2131",
+              "pymorphy3-2.0.6.dist-info/licenses/LICENSE.txt": "a5e6ddb3af783a02eacc848cbe309cc0940b4859ac653e9b1a2e21a4fea22552",
+              "pymorphy3-2.0.6.dist-info/top_level.txt": "7fe89543e7087fc5a101d670e74a73e94a2deba5a2f5f917693980001744e86b",
+              "pymorphy3/__init__.py": "7b9b7979c8a0b4070f0efe573dfde25b2aa12a71b3b7ed3c2b184acfb1c17c88",
+              "pymorphy3/analyzer.py": "9e2afb24caf5d59ee97ffa006ddbbf18c6792c45d9ca9294aacc14dfc7acd3c3",
+              "pymorphy3/cli.py": "859db3c0760996ae74187fc6fb1dc7dcc40fb3966e7d329d50c44038e9495c34",
+              "pymorphy3/dawg.py": "6c8b8b9d5cb88bb5eacd7e67bc63bfaa3b6cf0051791f606d153ee2ff3915bdd",
+              "pymorphy3/lang/__init__.py": "abe9c76aec383c264b2f0103a24037534795dd878acd5adc7e83056dcfbb124d",
+              "pymorphy3/lang/ru/__init__.py": "034d25a6750a83eab7cbf6fe70dde3285f6eae41931a36f6633fe019cf5608bb",
+              "pymorphy3/lang/ru/config.py": "50bd297aa5d122961f7da54dc85be9bc8aea7f14c6bc75da7aaa573e264072a4",
+              "pymorphy3/lang/uk/__init__.py": "034d25a6750a83eab7cbf6fe70dde3285f6eae41931a36f6633fe019cf5608bb",
+              "pymorphy3/lang/uk/_prefixes.py": "035afd56a5a2e3e0a6b56b128547375355049bdd4714edebc132a560eb514499",
+              "pymorphy3/lang/uk/config.py": "d7eb090fb86c8b0dc0329d39bd11ebbd6cb1e5701803185e5308db94e91735b2",
+              "pymorphy3/opencorpora_dict/__init__.py": "f109e628d2e3b51d4bcab70feeb7548026e99a578bd07b2327565b61847005a4",
+              "pymorphy3/opencorpora_dict/compile.py": "fded937c9ea0795bd7c0472573a3aa7f5864cd51508b69f6946ca079055b26e2",
+              "pymorphy3/opencorpora_dict/parse.py": "89928ec1b3556335d0605a2988d2113363100bc9ab8d31a2addc3179549da54a",
+              "pymorphy3/opencorpora_dict/preprocess.py": "1d656e15f3f7f01ae7ab2ec2ae53a1d6e988387aef249c09943edae1e9de7ff4",
+              "pymorphy3/opencorpora_dict/probability.py": "5cee8ccd06200aeeb03ca2df85299933655cdd6aa79796c49f2340a06d42b48e",
+              "pymorphy3/opencorpora_dict/storage.py": "170175053bcff3e1d8f1c12cdcff39b956268b41f1cc9d224bae0ae87c65d76f",
+              "pymorphy3/opencorpora_dict/wrapper.py": "f7d70cb26c3870a08d0d8034bd9b12c25f0eee7e0720f0cb1b3450ae437acace",
+              "pymorphy3/shapes.py": "56e97c412c0c389abb5bb927a19a69b58388555b4a9caa996dfde236eefa1f40",
+              "pymorphy3/tagset.py": "481a15aee31d8040dd14cf85ada652def573435febccff04e2ea04d879d8cf54",
+              "pymorphy3/tokenizers.py": "40519d78d22a4e92ed148929a8886761b24bc1dd47b5e7141c2179bd9e46710d",
+              "pymorphy3/units/__init__.py": "b90f2178b361ac9373bd83a2bfc48de67c2e10b622ec46197eaf1b3ac4f575d3",
+              "pymorphy3/units/abbreviations.py": "f6628a000f159ea6b68f7d33213496386b614efd5d8415f153968ea4d14cff5b",
+              "pymorphy3/units/base.py": "e7f11370e476cbfbddfa0136427421008896f25eca224001682b0ea4113763b7",
+              "pymorphy3/units/by_analogy.py": "200fc60772fff48b61f42c100c25712f4bd33a1d37700a0a0b213b1990bdfe4c",
+              "pymorphy3/units/by_hyphen.py": "3c5c79a4b79e284f46a7d068e6956a7964712e1ea69d038f3defe0b02de2d82f",
+              "pymorphy3/units/by_lookup.py": "0450d751668fdf6581871ec479264529f13fbd6b2242fa372978f1b1eff6c3df",
+              "pymorphy3/units/by_shape.py": "95b9365df1249c466effcc2cc7469f27854202b314120ab1ed7e97d476fa98f2",
+              "pymorphy3/units/unkn.py": "1a4589a260a59fd6609a1ada82b905d6309fceb62b4fba6c53072ab6166148f2",
+              "pymorphy3/units/utils.py": "55ff8d0def907a207181fc4d44d5277e054653280ac5a247e2d8dc35ba577b7f",
+              "pymorphy3/utils.py": "e764848a471065ad9b3969cf1705897fd09a9c949faa0177f46101a82fbd8b20",
+              "pymorphy3/version.py": "e18c5fb7f30d3adc101b9f266696bc7a83345c11daf153644cf1fdfe2d200da3"
+            },
+            "version": "2.0.6"
+          },
+          "pymorphy3-dicts-ru": {
+            "files": {
+              "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/INSTALLER": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508",
+              "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/METADATA": "07512674d15bbe2d92b97c5f185a73ee31623165c1e4c48eb40c3f51a530e17d",
+              "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/RECORD": "ebc5011726cf172b54cd644a2b626fdac3e47bacedbc1d07af58f7a17b3a90f5",
+              "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/REQUESTED": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/WHEEL": "cfd8f4c406bf26650a3299b3ef62b464600b48cfe7fb04159866e5797c765478",
+              "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/entry_points.txt": "0414fd734ef74e19844dc8de3793add7b0391b35aef7212850eebfdfd7c69685",
+              "pymorphy3_dicts_ru-2.4.417150.4580142.dist-info/top_level.txt": "86cd89be956f6b419c9642b10e801b50040186fb42ebf38074b3a1568c072e67",
+              "pymorphy3_dicts_ru/__init__.py": "a03fca8c0a7e6536b3032ccffbc58441945265a2b6e71aa98f5fac9d70f7bc0b",
+              "pymorphy3_dicts_ru/data/grammemes.json": "0c2dae69cf15c3cdd9b92c7bce2273b2f1ca0f806228a01de0fe3f24145337fb",
+              "pymorphy3_dicts_ru/data/gramtab-opencorpora-ext.json": "07ba6280d93ade73563289edac1a8fff4ce2388a813d0f47d32431cfaae84d90",
+              "pymorphy3_dicts_ru/data/gramtab-opencorpora-int.json": "1a72703ac84c16572deee6a92779a322b59763cbc336021433d52c33160fa05b",
+              "pymorphy3_dicts_ru/data/meta.json": "0c16fa06946dbda7db6df209128004f5edb36f9d8bdf48e5efff6045ec21a2fd",
+              "pymorphy3_dicts_ru/data/p_t_given_w.intdawg": "000a4d34ff42c44c65aca33ebcae689c77455a9a244145881b28fd8b8b7ea21e",
+              "pymorphy3_dicts_ru/data/paradigms.array": "dfc465558f1a2760bbde6fa89f0447a5c93896da429efe658fe2f0638954758b",
+              "pymorphy3_dicts_ru/data/prediction-suffixes-0.dawg": "85f38ab5a14566b7b22b8bfb5a63118992013f45757bf60ef1e5e937a92f1aae",
+              "pymorphy3_dicts_ru/data/prediction-suffixes-1.dawg": "31ddaef03712c6168488241be17ce59afa0f4c465e1ba7bf3a5bf095f2053b5f",
+              "pymorphy3_dicts_ru/data/prediction-suffixes-2.dawg": "4e6d6e687031b89e5e7035647570f69d28528e7df123210cc994b8aea36c85fd",
+              "pymorphy3_dicts_ru/data/suffixes.json": "c827ccc32b85e42c3edab8ac235bf91fdbc392e94455ad139da06fb1babcdb74",
+              "pymorphy3_dicts_ru/data/words.dawg": "ae4381a9d6e4e636309ac1a242e480a9470a05723f6673d5fcc3fcf293aa8a9e",
+              "pymorphy3_dicts_ru/version.py": "c2dc3477678f331101613c71e7d497a3f46a25e973cb3d0043ed91dc98114fe1"
+            },
+            "version": "2.4.417150.4580142"
+          }
+        },
+        "schemaVersion": 1
+      },
+      "ids": [
+        "backend_cases.LivePymorphyTest.test_case_normalization_and_bounded_live_lookup_cache",
+        "backend_cases.LivePymorphyTest.test_context_decisions_use_real_dictionary_analyses",
+        "backend_cases.LivePymorphyTest.test_dictionary_inflections_and_all_ambiguous_lemmas",
+        "backend_cases.LivePymorphyTest.test_guesses_and_unsupported_tokens_never_become_evidence",
+        "backend_cases.LivePymorphyTest.test_receipt_binds_installed_dictionary_and_code"
+      ],
+      "inputBindings": {
+        "tools/ci/backend_cases.py": "5ddb712231c43fa4c53ba5e3e39f836ff5813e0c670d12e488ca9a7ac4b38d9e",
+        "tools/ci/backend_test_gate.py": "7bbfd435b67c5506f40d961f30e2e74eb7b00c2bcc9ebf0e109f07358d80e2aa",
+        "tools/morphology/ranker.py": "66a4004867f68b04942cf08975641523d0bd40f82d57bed82b6b14eb93035c3d",
+        "tools/morphology/requirements.lock": "09fb048219b2638723131e5962ace4cfa4c50df235032f7ca90ded0e454372a3",
+        "tools/morphology/test_ranker.py": "474809c66f2ceb023bb632ef3495f680423a7c4111ece2f5442c4201cc17da74"
+      },
+      "logSha256": "bb23f9c9c4ab78aff70c85a65c64431267b31fced1a29f83747185e6c051d6f0",
+      "receiptSha256": "ee429e8922204b4f1f23e08d2634e524e2e155e6e75ebe13d92ae5a1a75cd3d5",
+      "skips": 0,
+      "status": "PASS",
+      "tests": 5,
+      "versions": {
+        "dawg2-python": "0.9.0",
+        "pymorphy3": "2.0.6",
+        "pymorphy3-dicts-ru": "2.4.417150.4580142",
+        "setuptools": "84.2.1"
+      }
+    }
+  },
+  "candidateBindings": {
+    ".github/workflows/ci.yml": "c9283357f357be1afbf899f0ee0583f72971a152e58818353fc3df6a31ab0e7f",
+    "tools/ci/backend_cases.py": "5ddb712231c43fa4c53ba5e3e39f836ff5813e0c670d12e488ca9a7ac4b38d9e",
+    "tools/ci/backend_test_gate.py": "7bbfd435b67c5506f40d961f30e2e74eb7b00c2bcc9ebf0e109f07358d80e2aa",
+    "tools/ci/test_backend_test_gate.py": "efd814586261a1e59fe096c51f43d9f1834cceccd337e84c976851ed6e690a6d",
+    "tools/morphology/requirements.lock": "09fb048219b2638723131e5962ace4cfa4c50df235032f7ca90ded0e454372a3"
+  },
+  "cleanTestBase": "29e84b474b565372570232569fe024946c592981",
+  "dataPolicy": {
+    "exitCode": 0,
+    "logSha256": "4dcc4c4b60623518472c77766591327b2860b3c69c859b38379b4f075fd5a63d"
+  },
+  "earlierAttempts": [
+    "Fresh hash-locked morphology installation failed because setuptools>=68.2.2 was not pinned; the following gate correctly reported PackageNotFoundError and no tests. The closure was repaired and reinstalled with hashes.",
+    "The selected macOS 26 wheel was initially misinterpreted as minimum OS support. Primary PyPI release metadata shows macOS 14/15/26 wheels. The minimum-OS constraint was removed; actual local execution was on macOS 27."
+  ],
+  "existingMorphologyTests": {
+    "exitCode": 0,
+    "logSha256": "39041f1648589e527b1fd4d12fb08eef9a7f40c04c8a6c1613416f509253b13b",
+    "modules": 6,
+    "tests": 62
+  },
+  "gateRegressionTests": {
+    "exitCode": 0,
+    "logSha256": "604ee654e6237b2a22e1b0d8292b86400915257750ebbb09782982f47b839534",
+    "tests": 6
+  },
+  "infrastructureTests": {
+    "exitCode": 0,
+    "logSha256": "f795aa5f0111629da341e7da284a3c106cd65747e9f0904c32417512ea620114",
+    "tests": 41
+  },
+  "localEnvironment": {
+    "architecture": "arm64",
+    "osMajor": 27,
+    "python": "3.12.14",
+    "system": "Darwin"
+  },
+  "missingBackendRealRun": {
+    "errorType": "PackageNotFoundError",
+    "exitCode": 1,
+    "receiptSha256": "56c86c796dcb2050447ce3e96a247069651437e31e8d2434af426465536b3349",
+    "status": "FAIL",
+    "testsClaimed": false
+  },
+  "morphologyFreshInstall": {
+    "exitCode": 0,
+    "onlyBinary": true,
+    "reportSha256": "c1bc3933d32e186757b48982960ad41fc1de67d3619e0873f5a0bbfbd25c63a3",
+    "requireHashes": true,
+    "wheels": {
+      "DAWG2-Python": {
+        "version": "0.9.0",
+        "wheelSha256": "4fab6fc097bd176cd783cd8421b757348ea5a460789e53b0f6bb64831380bab5"
+      },
+      "pymorphy3": {
+        "version": "2.0.6",
+        "wheelSha256": "0254317c02ce3ea17e080b7fc9d675e44662b3a5296bae68605b7a41d25b36c3"
+      },
+      "pymorphy3-dicts-ru": {
+        "version": "2.4.417150.4580142",
+        "wheelSha256": "718bac64c73c10c16073a199402657283d9b64c04188b694f6d3e9b0d85440f4"
+      },
+      "setuptools": {
+        "version": "84.2.1",
+        "wheelSha256": "ca140b45d5325a9478f880e351484f62fef15f336462e449ca0c03c873d589c2"
+      }
+    }
+  },
+  "remaining": [
+    "Actual full hosted Ubuntu/macOS workflow execution",
+    "Other review-card acceptance requirements"
+  ],
+  "reviewCard": "Q7",
+  "schemaVersion": 1,
+  "scopeComplete": false,
+  "sourceBase": "29e84b474b565372570232569fe024946c592981",
+  "workflow": {
+    "hostedJobsExecuted": false,
+    "mlxTarget": "macos-26",
+    "python": "3.12",
+    "source": "https://docs.github.com/en/actions/reference/runners/github-hosted-runners",
+    "yaml12ParseExitCode": 0
+  }
+}

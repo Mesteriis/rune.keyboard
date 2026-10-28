@@ -46,16 +46,25 @@ existing production replay toolchain. No dictionary is added to normal Gradle
 builds. From the repository/worktree root:
 
 ```sh
-python3.11 -m venv build/morphology-venv
+python3.12 -m venv build/morphology-venv
 build/morphology-venv/bin/python -m pip install --require-hashes -r tools/morphology/requirements.lock
 PYTHONDONTWRITEBYTECODE=1 build/morphology-venv/bin/python -m unittest discover -s tools/morphology -p 'test_*.py'
 ```
 
 `requirements.lock` pins pure-Python wheels by SHA-256: pymorphy3 2.0.6,
-pymorphy3-dicts-ru 2.4.417150.4580142 and dawg2-python 0.9.0. The dictionary reports
+pymorphy3-dicts-ru 2.4.417150.4580142, dawg2-python 0.9.0 and the required
+setuptools 84.2.1 dependency. The dictionary reports
 OpenCorpora source version 0.92/revision 417150. Experiment receipts additionally
-hash installed package files. Python3.12+ requires a different dependency closure
-and is not the locked environment here.
+hash installed dictionary/parser package files. The complete locked closure is
+now verified in a fresh Python 3.12 environment with `--require-hashes` and
+`--only-binary=:all:`. Earlier Python 3.11 experiment receipts remain historical
+evidence; they are not relabelled as current Python 3.12 runs.
+
+The scientific CI job additionally runs the real dictionary gate:
+`python tools/ci/backend_test_gate.py --backend pymorphy --output build/pymorphy-backend-ci`.
+It checks dictionary-only inflections/ambiguity, unknown-token abstention, real
+context decisions, cache behavior and installed package hashes. Missing/wrong
+dependencies, skipped cases or changed source inputs fail the gate.
 
 Code and linguistic data have separate provenance. pymorphy3 and dawg2-python
 identify their code as MIT. OpenCorpora describes its data under CC BY-SA3.0;
