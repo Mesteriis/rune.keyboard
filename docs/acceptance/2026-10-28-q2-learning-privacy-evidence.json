@@ -130,17 +130,51 @@
     "taskAvdDeleted": true,
     "physicalDeviceUsed": false
   },
-  "cleanReleaseProfile": "pending source commit and clean-checkout integration",
+  "cleanReleaseProfile": {
+    "sourceCommit": "fca587467fb36a3a68c15b9effa922ddaa3063c9",
+    "exitCode": 0,
+    "elapsedSeconds": 13.579154499999277,
+    "cleanBefore": true,
+    "cleanAfter": true,
+    "sourceAfter": {
+      "commit": "fca587467fb36a3a68c15b9effa922ddaa3063c9",
+      "passed": true,
+      "schema": 1,
+      "statusEntries": 0,
+      "submodules": 1
+    },
+    "offline": true,
+    "signingMaterialCopied": false
+  },
   "logs": {
     "build-attached.log": "f89bf64a33181ddc1d235b4fe16eab4c18a8e1447ccc271171de202cc4ab6815",
     "disclosure-sourcebound-tests.log": "522e22d7b38f63b79ce70885c6cf98846e48bf9be82e157e3de592c8ce7739a9",
     "disclosure-sourcebound-py312-tests.log": "584185f96878676593fc968fe583439861d05de473e7d4a66545764e383c5de9",
-    "native-attached/native-emulator.log": "e2d449c3b0ce80c3fb3a94836afbbab49bad1935cfae299a42d674414944d367"
+    "native-attached/native-emulator.log": "e2d449c3b0ce80c3fb3a94836afbbab49bad1935cfae299a42d674414944d367",
+    "clean-release.log": "00e35ce4579082df8490720c01ddf0611027d009efb72e1cee47d4b10cc3e4ac",
+    "clean-source-before.log": "1e3bf0672e49af527ec9939910e91698abb9bd0514e61ada52a414d6d65d38e4",
+    "clean-source-after.log": "1e3bf0672e49af527ec9939910e91698abb9bd0514e61ada52a414d6d65d38e4",
+    "clean-disclosure-check.log": "da3e122ba99af6ce5a02b17790ee570b456b6527b8f4d2f7e42095d9095056be",
+    "clean-disclosure-tests.log": "a9cf940f3e26de68789f01ec3c3c2bc858d20c8b7be55195159d87bd6964045b"
   },
   "limits": [
-    "Only two learning stores audited here; Q2 source cascade/asset notices/provenance/scanner work remains.",
+    "Only two learning stores audited here; Q2 cascade/remaining guide-schema wording/asset notices/provenance/scanner work remains.",
     "Component layout/node evidence on API26; not TalkBack navigation or Fold acceptance.",
     "No storage/default/admission/ranking change, training, release-version change or publication.",
     "Guide source binding uses task-only staged bytes; older owner hunks remain unstaged."
-  ]
+  ],
+  "apkFootprint": {
+    "passed": true,
+    "compressedBytes": 180104897,
+    "unpackedBytes": 182211461
+  },
+  "cleanDisclosureGate": {
+    "passed": true,
+    "tests": 12,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "python": "3.12.14",
+    "ownerGuideHunksAbsent": true
+  }
 }

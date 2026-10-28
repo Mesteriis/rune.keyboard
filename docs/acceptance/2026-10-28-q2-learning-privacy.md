@@ -55,8 +55,14 @@ payload hashes and all 98 original paths are preserved.
 
 ## Integration and remaining Q2 scope
 
-Clean-source release/profile integration is recorded separately in the adjacent
-receipt after the source commit. Q2 stays in progress: complete source-cascade
-ordering, asset NOTICE coverage, provenance/README path closure and current
+Source commit `fca5874` passes the architecture, release/profile privacy and APK
+footprint gates in a separate tracked-clean checkout, offline. Source cleanliness
+passes before and after. The release APK is 180,104,897 bytes compressed and
+182,211,461 bytes unpacked, within the reviewed budgets. No signing material was
+copied. The source disclosure command and all 12 Python tests also pass in that
+clean checkout without the pending owner guide hunks. Exact integration and
+artifact/log identities are in the adjacent receipt. Q2 stays in progress: complete source-cascade
+ordering, remaining feature-count/schema/experiment documentation, asset NOTICE
+coverage, provenance/README path closure and current
 F-Droid scanner-policy acceptance remain. This privacy slice does not establish
 whole-review, source-export or distribution acceptance.
