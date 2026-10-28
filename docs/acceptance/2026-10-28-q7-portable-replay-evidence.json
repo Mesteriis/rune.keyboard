@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "card": "Q7",
+  "completeCard": false,
+  "sourceCommit": "b44cf7ca1b1e6c6bb4956c64de8260d2b3cd5259",
+  "fullBaselineCaptureCommit": "871ee8d",
+  "mode": "current-product",
+  "portableEntryPoint": "tools/eval/smart-typing-0.3/pipeline/current_product_replay.py",
+  "legacyDriverVersioned": true,
+  "explicitJavaRequired": true,
+  "externalModelFileAbsent": true,
+  "externalRunnerAbsent": true,
+  "modelCalls": 0,
+  "javaMajor": 17,
+  "kotlinVersion": "2.2.10",
+  "controllerIdsOpaque": true,
+  "originalIdsHostOnly": true,
+  "declaredInputFields": [
+    "id",
+    "split",
+    "language",
+    "prefix",
+    "typed"
+  ],
+  "pythonTests": {
+    "tests": 120,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "skipReason": "Legacy scored-export delivery test requires FINAL_REPLAY_EXPORT; it is not replaced by this model-free replay."
+  },
+  "sourceContract": {
+    "compiledCoreFiles": 90,
+    "additionalAndroidPersonalizationFile": true,
+    "automaticDecisionCallbacksCompared": 8,
+    "packagedAssets": 69,
+    "allBindingsVerifiedAfterExecution": true
+  },
+  "positive": {
+    "rows": 12000,
+    "languages": {
+      "en": 4000,
+      "es": 4000,
+      "ru": 4000
+    },
+    "driverExitCode": 0,
+    "twoSeparateJvmProcesses": true,
+    "twoPassProjectionSha256": "b7b49f16aed912ea4c80d811c834f059dc1ac47f6b655e9798923651ec47f512",
+    "baselineDifferentRows": 0,
+    "compileSeconds": 8.799935542047024,
+    "firstReplaySeconds": 40.73718983400613,
+    "secondReplaySeconds": 22.070407084189355,
+    "totalSeconds": 82.42477549985051,
+    "freshlyCapturedBaselineSha256": "b7b49f16aed912ea4c80d811c834f059dc1ac47f6b655e9798923651ec47f512",
+    "rawObservationSha256": [
+      "f25581abae702e7681eee183c3c67afe668a083f21d6ed3db1596b627169d2e3",
+      "0ac2371cfced112950a6c2ced80fe845ca88bf9815cadb1dc9d039b52715d45b"
+    ]
+  },
+  "projection": {
+    "excludedTopLevelFields": [
+      "fullTokenGenerationNanos",
+      "hostStageNanos"
+    ],
+    "otherFieldsCompared": true,
+    "booleanNumericTypeDriftFails": true,
+    "rowAndJsonPointerDiff": true,
+    "incompleteMissingDuplicateOrNonfiniteRowsFail": true,
+    "baselineAutomaticallyUpdated": false
+  },
+  "thresholdMutation": {
+    "failedAsRequired": true,
+    "exitCode": 1,
+    "twoMutantPassesDeterministic": true,
+    "differentRows": 535,
+    "comparedRows": 12000,
+    "changedBoundFiles": [
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointQualification.kt"
+    ],
+    "thresholdBefore": 0.24699818316768785,
+    "thresholdAfter": 1000000.0,
+    "sourceSha256Before": "0365f0df915381ba9fcb538275f9db7b9413f277cfadde9eb3f3ab27bc0a24d6",
+    "sourceSha256Mutant": "245a9c85be1c999de98033a4994eb6bdd8f66272a0cb8abb09f8f2529b53d656",
+    "firstChangedPaths": [
+      "/afterBackspace/composingStart",
+      "/afterBoundary/text",
+      "/autoEdit",
+      "/backspaceCommands/1/end",
+      "/backspaceCommands/1/replacedEnd",
+      "/backspaceCommands/1/replacedStart",
+      "/backspaceCommands/1/start",
+      "/backspaceCommands/1/type",
+      "/backspaceCommands/1/value",
+      "/backspaceCommands/2/end",
+      "/backspaceCommands/2/replacedEnd",
+      "/backspaceCommands/2/replacedStart",
+      "/backspaceCommands/2/start",
+      "/backspaceCommands/2/type",
+      "/backspaceCommands/2/value",
+      "/boundaryChangedBeyondInsertedSpace",
+      "/boundaryCommands/0/count",
+      "/boundaryCommands/0/type",
+      "/boundaryCommands/1/replacedStart",
+      "/boundaryCommands/1/type",
+      "/boundaryCommands/1/value",
+      "/boundaryCommands/2",
+      "/boundaryDiagnostics/0/candidateCount",
+      "/boundaryDiagnostics/0/operationId",
+      "/boundaryDiagnostics/0/reason",
+      "/boundaryDiagnostics/0/selectedIndex",
+      "/boundaryDiagnostics/0/source",
+      "/stateAfterBackspace/canRequestCandidates",
+      "/stateAfterBackspace/composingText",
+      "/stateAfterBackspace/leadingBoundary",
+      "/stateAfterBackspace/originalSelected",
+      "/stateAfterBackspace/revision",
+      "/stateAfterBoundary/contextText",
+      "/stateAfterBoundary/revision"
+    ],
+    "policyEffect": "short-source threshold fingerprint no longer qualifies; no replacement admission bypassed"
+  },
+  "mutantRestored": {
+    "restored": true,
+    "cleanCheckout": true,
+    "restoredSourceSha256": "0365f0df915381ba9fcb538275f9db7b9413f277cfadde9eb3f3ab27bc0a24d6"
+  },
+  "ciFixtureBridge": {
+    "commit": "9a30133",
+    "ownedEmulatorArgumentExplicit": true,
+    "physicalHardwareGuardRetained": true,
+    "safSystemUiFixtureMaxSdk": 26,
+    "agpOptionPrefixVerifiedFromInstalled921Bytecode": true,
+    "guardedBuildAndLintExitCode": 0,
+    "remoteCiExecuted": false
+  },
+  "scopeLimits": {
+    "freshQualification": false,
+    "ubuntuPerformanceMeasured": false,
+    "committedPermanentCiBaseline": false,
+    "newLicensedCiInputsWithQ6Exclusions": false,
+    "allToolsPythonJobsIntegrated": false,
+    "phoneTouchedThisSlice": false
+  },
+  "preservation": {
+    "originalTrackedPayloadsUnchanged": 13,
+    "originalPathsRetained": 98,
+    "twoReviewedReplayFilesNowCommitted": true
+  },
+  "failedAttemptsRetained": "The new synthetic child-failure fixture initially used an unresolved macOS temp path; canonicalizing only the test root fixed it. Production output confinement was not weakened. Raw failed and passing logs remain private.",
+  "remaining": [
+    "Freeze licensed label-free CI inputs with attribution and durable Q6 exclusions.",
+    "Commit newly captured baseline separately with acceptance binding.",
+    "Wire the full parity gate and remaining tools Python suites into CI, with heavy dependencies separated.",
+    "Execute and measure the complete Ubuntu CI job; local timings are not Ubuntu evidence."
+  ],
+  "privateEvidenceBindings": {
+    "build/review-q7-portable-20261028/python-tests-passed.log": "7ea69bdeb668d3ffa0da1f5a6136e16b1e78a13629c160a4fe8fd6d5949def99",
+    "build/review-q7-portable-20261028/python-tests-exit-codes.log": "30798698259a663b014c6e5a6c3f5fbf5ba7a671497febe4db499cf45bbc8884",
+    "build/review-q7-portable-20261028/instrumentation-build.log": "efef9360e0f0bc17a5735c7098dda83154ba4da9456e5a50bbef00431e2bff97",
+    "build/review-q7-portable-20261028/agp-project-options.txt": "bebb91cf71b944c88352b3f99f71e7a561d1ef0502610e48ae6b11dfcb1eae7b",
+    "build/review-q7-portable-20261028/clean-final-replay.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/review-q7-portable-20261028/positive-baseline.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/review-q7-portable-20261028/threshold-mutant.log": "2b241d09e11f3a1d65e3c3f4ec684dcb96886e12188edc10ede6b7e6339e52ea",
+    "build/review-q7-portable-20261028/threshold-mutation-result.json": "2adac25ad8de2fd314e4a37d9ae115a12b93aa5f7aecb1c325871357150688ea",
+    "build/review-q7-portable-20261028/mutant-restoration.json": "728c6454ed464463ee6df5668f6f45ed0cd7c0326ef4805f2146b01305451782",
+    "build/review-q1-clean-source-20261027/checkout/build/q7-current-12000-final/receipt.json": "226442ca7694d7a888e6dc7da42cda543547dadb3ee54b361a4cc8bebe852377",
+    "build/review-q1-clean-source-20261027/checkout/build/q7-current-accepted/receipt.json": "f5351dda94ca7b661024927bfea0ef268023b93743ed28941dbb94b4891d17f4",
+    "build/review-q1-clean-source-20261027/checkout/build/q7-current-accepted/determinism.json": "68701cefa3af0a2c671e014a1e799d558a3a56da72188f3e09881948b48ba89a",
+    "build/review-q1-clean-source-20261027/checkout/build/q7-current-accepted/baseline-comparison.json": "68701cefa3af0a2c671e014a1e799d558a3a56da72188f3e09881948b48ba89a",
+    "build/review-q1-clean-source-20261027/checkout/build/q7-threshold-mutant/receipt.json": "5d89561353c979e1aeff09c165c4c6dc4658d81705f5147f91626f9879a5aefe",
+    "build/review-q1-clean-source-20261027/checkout/build/q7-threshold-mutant/baseline-comparison.json": "d31b0a131837fd5fa976998ab156484d5eaf676da1df50bfffb4463eff2b0418"
+  }
+}
