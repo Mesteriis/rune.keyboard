@@ -1,0 +1,452 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "card": "Q3",
+  "localCardAcceptance": true,
+  "wholeReviewComplete": false,
+  "parentCommit": "a95b8e8",
+  "scope": "Separate remaining Android resource-readiness and compact target refusals without changing admission",
+  "admissionGuardVersion": 1,
+  "sources": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/AndroidTypingPersonalization.kt": "604847d47e77112b31317dbd30b9ae72963ae496566a627cdfa8f150ce6fef95",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/PersonalAdmissionInstrumentedTest.kt": "b218ed79a6947eac8c91074a9ac01d33a36c819c5a5b4107e9ff8be15d9501a1",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/AutoCorrectionAdmissionGuardTest.kt": "d6316354356a3962dd3df9e6757b40b08c9897312e91508395ca802ba013ec15",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/PersonalAdmissionPolicyTest.kt": "7f8debbc41d8627d38e21c1f28fcaa0b17da661e862b6894d000088b9912dfc5",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingCandidateSelectionTest.kt": "14f493abda6002bc25645498e39fcf1a69c93764bda040e72eb113dd50715359",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/CorrectionBoundaryTest.kt": "09faf6c741cfe21301fcbeb6b00df7061323048e75bd3756d1a8df722cdafaca",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/MechanicalTypingSessionTest.kt": "64363d44fd3c848a5601c1e5b631fc6a10ec9eee4d481066994b3adc06c14979",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalRefusalDiagnosticsTest.kt": "96631258fbaaa1054b14df59d304d22fa927a78b2f7972a061d3771ea22bb11f",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticReasonIdentityTest.kt": "f3532aae1bc0ef4d193e1310a58e0fcf5437abcb0c1c1eb94647d804418fe3ff",
+    "app/src/testDebug/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnosticsHooksTest.kt": "fa8895487e111e37cb0a39c8f49d2c7637048bc76c0ca9c9a2904354dbbcb9d3",
+    "app/src/testDebug/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticsRecorderTest.kt": "5e56253f7838331dd9aed2da1868bf6abec070f7ec3d63dc454fdc4c07f17535",
+    "app/src/testDebug/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticsTerminalTest.kt": "8586d5aaa8c3743bb4e7801119aa5d490b8328808b8487cac6a8d6b1facbe756",
+    "tools/test_typing_diagnostics_analyzer.py": "22ed6352747b23c5c2af1cdd28ff47c5d318b5ba4c92d2cbd416267a430f3598",
+    "tools/test_typing_diagnostics_boundary.py": "6ad64d10e397bd663391b8f5616e2e6c4437475ce67048e86339cdcdeb49a28b"
+  },
+  "requirementsAudit": [
+    {
+      "requirement": "new admission reasons",
+      "testSource": "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/AutoCorrectionAdmissionGuardTest.kt",
+      "check": "current JVM suite or Python fixtures; real Android fixture separately bound"
+    },
+    {
+      "requirement": "personal and protected vetoes",
+      "testSource": "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/PersonalAdmissionPolicyTest.kt",
+      "check": "current JVM suite or Python fixtures; real Android fixture separately bound"
+    },
+    {
+      "requirement": "candidate LIMIT INVALID STALE",
+      "testSource": "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingCandidateSelectionTest.kt",
+      "check": "current JVM suite or Python fixtures; real Android fixture separately bound"
+    },
+    {
+      "requirement": "local empty and joint precedence",
+      "testSource": "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/CorrectionBoundaryTest.kt",
+      "check": "current JVM suite or Python fixtures; real Android fixture separately bound"
+    },
+    {
+      "requirement": "mechanical selective metadata",
+      "testSource": "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/MechanicalTypingSessionTest.kt",
+      "check": "current JVM suite or Python fixtures; real Android fixture separately bound"
+    },
+    {
+      "requirement": "mechanical action reason table",
+      "testSource": "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalRefusalDiagnosticsTest.kt",
+      "check": "current JVM suite or Python fixtures; real Android fixture separately bound"
+    },
+    {
+      "requirement": "append-only numeric codes",
+      "testSource": "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticReasonIdentityTest.kt",
+      "check": "current JVM suite or Python fixtures; real Android fixture separately bound"
+    },
+    {
+      "requirement": "coarse editor type origin and exclusion",
+      "testSource": "app/src/testDebug/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/TypingDiagnosticsHooksTest.kt",
+      "check": "current JVM suite or Python fixtures; real Android fixture separately bound"
+    },
+    {
+      "requirement": "schema 9 bounded integer encoding",
+      "testSource": "app/src/testDebug/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticsRecorderTest.kt",
+      "check": "current JVM suite or Python fixtures; real Android fixture separately bound"
+    },
+    {
+      "requirement": "private reentrant origin metadata",
+      "testSource": "app/src/testDebug/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticsTerminalTest.kt",
+      "check": "current JVM suite or Python fixtures; real Android fixture separately bound"
+    },
+    {
+      "requirement": "analyzer schemas and refusals",
+      "testSource": "tools/test_typing_diagnostics_analyzer.py",
+      "check": "current JVM suite or Python fixtures; real Android fixture separately bound"
+    },
+    {
+      "requirement": "allowlist and negative payload fixtures",
+      "testSource": "tools/test_typing_diagnostics_boundary.py",
+      "check": "current JVM suite or Python fixtures; real Android fixture separately bound"
+    },
+    {
+      "requirement": "real Android resource table",
+      "testSource": "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/PersonalAdmissionInstrumentedTest.kt",
+      "check": "current JVM suite or Python fixtures; real Android fixture separately bound"
+    }
+  ],
+  "baseline": {
+    "stage": "baseline",
+    "api": 26,
+    "ownedEmulatorVerified": true,
+    "exitCode": 0,
+    "apkBindings": {
+      "app.apk": {
+        "sha256": "ea43b7408d85c1c845685f84597afc3ae6dff9e74ccbec468d3727ca7b9b7665",
+        "bytes": 183363523
+      },
+      "test.apk": {
+        "sha256": "2989c1ee71b7b0a25965f29048925b3d734376e34001f898e612827b4328fdb4",
+        "bytes": 1671831
+      }
+    },
+    "rows": 101,
+    "allowedMismatches": [],
+    "reasonMismatches": [
+      "joint-missing-dictionaryLoaded",
+      "wordContext-missing-dictionaryLoaded",
+      "rescue-missing-dictionaryLoaded",
+      "contextual-missing-dictionaryLoaded",
+      "grammar-missing-dictionaryLoaded",
+      "nounCase-missing-dictionaryLoaded",
+      "joint-missing-jointRanker",
+      "wordContext-missing-jointRanker",
+      "rescue-missing-jointRanker",
+      "contextual-missing-jointRanker",
+      "grammar-missing-jointRanker",
+      "nounCase-missing-jointRanker",
+      "joint-missing-neural",
+      "wordContext-missing-neural",
+      "rescue-missing-neural",
+      "contextual-missing-neural",
+      "contextual-missing-neural-language",
+      "grammar-missing-neural",
+      "grammar-missing-neural-language",
+      "nounCase-missing-neural",
+      "nounCase-missing-neural-language",
+      "rescue-missing-own-model",
+      "contextual-missing-own-model",
+      "contextual-missing-own-model-language",
+      "grammar-missing-own-model",
+      "grammar-missing-own-model-language",
+      "nounCase-missing-own-model",
+      "nounCase-missing-own-model-language",
+      "compact-dictionary",
+      "compact-dictionary-no-pool",
+      "compact-rare",
+      "compact-target-morphology",
+      "compact-target-rare",
+      "compact-target-both",
+      "compact-target-unknown"
+    ],
+    "junitOk": false,
+    "junitFailure": true,
+    "skips": 0,
+    "elapsedSeconds": 0.293828499969095,
+    "logSha256": "24a429f365d5c31ae3d6819c9568fe7baafd0bd70e918a927226def75625bc10"
+  },
+  "candidate": {
+    "stage": "candidate",
+    "api": 26,
+    "ownedEmulatorVerified": true,
+    "exitCode": 0,
+    "apkBindings": {
+      "app.apk": {
+        "sha256": "ff15a546cd3b71c1365677a592b3b0360476314b3c73bb66b6b43e406a2dfa74",
+        "bytes": 183363523
+      },
+      "test.apk": {
+        "sha256": "2989c1ee71b7b0a25965f29048925b3d734376e34001f898e612827b4328fdb4",
+        "bytes": 1671831
+      }
+    },
+    "rows": 101,
+    "allowedMismatches": [],
+    "reasonMismatches": [],
+    "junitOk": true,
+    "junitFailure": false,
+    "skips": 0,
+    "elapsedSeconds": 0.2987300839740783,
+    "logSha256": "75b44d69689b752344dfff87af17c45ccbb6cdb8d1ac420cad9eb32eb6f1c441",
+    "completedTests": 4
+  },
+  "adapterParity": {
+    "rows": 101,
+    "allowedChanges": 0,
+    "refusalChanges": [
+      {
+        "label": "joint-missing-dictionaryLoaded",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "wordContext-missing-dictionaryLoaded",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "rescue-missing-dictionaryLoaded",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "contextual-missing-dictionaryLoaded",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "grammar-missing-dictionaryLoaded",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "nounCase-missing-dictionaryLoaded",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "joint-missing-jointRanker",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "wordContext-missing-jointRanker",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "rescue-missing-jointRanker",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "contextual-missing-jointRanker",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "grammar-missing-jointRanker",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "nounCase-missing-jointRanker",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "joint-missing-neural",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "wordContext-missing-neural",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "rescue-missing-neural",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "contextual-missing-neural",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "contextual-missing-neural-language",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "grammar-missing-neural",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "grammar-missing-neural-language",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "nounCase-missing-neural",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "nounCase-missing-neural-language",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "rescue-missing-own-model",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "contextual-missing-own-model",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "contextual-missing-own-model-language",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "grammar-missing-own-model",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "grammar-missing-own-model-language",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "nounCase-missing-own-model",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "nounCase-missing-own-model-language",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "compact-dictionary",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "compact-dictionary-no-pool",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "compact-rare",
+        "old": "MORPHOLOGY_UNAVAILABLE",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "compact-target-morphology",
+        "old": "NOT_QUALIFIED",
+        "new": "MORPHOLOGY_UNAVAILABLE"
+      },
+      {
+        "label": "compact-target-rare",
+        "old": "NOT_QUALIFIED",
+        "new": "RESOURCE_UNAVAILABLE"
+      },
+      {
+        "label": "compact-target-both",
+        "old": "NOT_QUALIFIED",
+        "new": "MORPHOLOGY_UNAVAILABLE"
+      },
+      {
+        "label": "compact-target-unknown",
+        "old": "NOT_QUALIFIED",
+        "new": "TARGET_UNKNOWN"
+      }
+    ],
+    "allowedTrueBefore": 15,
+    "allowedTrueAfter": 15,
+    "sameTestApk": true
+  },
+  "jvm": {
+    "tests": 1301,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0
+  },
+  "pythonTests": 67,
+  "profilePrivacyAndLintExit": 0,
+  "diagnosticsUi": {
+    "api": 26,
+    "taskEmulatorVerified": true,
+    "tests": 6,
+    "completedTests": 6,
+    "skipped": 0,
+    "passed": true,
+    "exitCode": 0,
+    "apkHashes": {
+      "app/build/outputs/apk/debug/app-debug.apk": "ff15a546cd3b71c1365677a592b3b0360476314b3c73bb66b6b43e406a2dfa74",
+      "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "2989c1ee71b7b0a25965f29048925b3d734376e34001f898e612827b4328fdb4"
+    },
+    "elapsedSeconds": 207.86049445788376,
+    "logSha256": "01608b275aa04ae50dd9d73f03d6dd2c26905f32ec14b66120bc0effa5b3ebea"
+  },
+  "coreReplayReuse": {
+    "priorBindingPath": "build/review-q3-schema9-20261028/complete-replay-bindings.json",
+    "priorBindingSha256": "6401414d671225878c9c524540485b6f9b1d183d2f9c120606452743845795b7",
+    "currentCoreSourcesMatch": 90,
+    "currentAssetsMatch": 69,
+    "adapterIncludedInCoreHost": false,
+    "reusedCompleteRuns": [
+      {
+        "rows": 1676,
+        "name": "stress",
+        "observationsPath": "build/review-q3-schema9-20261028/complete-replay/candidate/stress/observations.jsonl",
+        "observationsSha256": "bd9526635156c894f963acc6561ae9999527f72722648d81aa7cbe91817c1650"
+      },
+      {
+        "rows": 12012,
+        "name": "regression",
+        "observationsPath": "build/review-q3-schema9-20261028/complete-replay/candidate/regression/observations.jsonl",
+        "observationsSha256": "ac05c0a04535a068961c17375856a67814d9ce97823d6456cc6bade7ee3aced8"
+      },
+      {
+        "rows": 1600,
+        "name": "calibration",
+        "observationsPath": "build/review-q3-schema9-20261028/complete-replay/candidate/calibration/observations.jsonl",
+        "observationsSha256": "c6b8f6dc4793572b7456d345bcace66aeadf3c03bef4bc6872c5535c2488325e"
+      }
+    ],
+    "newExecutionThisSlice": false
+  },
+  "packagedDataParity": {
+    "allAssetsAndNativeLibrariesIdentical": true,
+    "entries": 73,
+    "assets": 69,
+    "libraries": 4
+  },
+  "privateEvidenceSha256": {
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/build.log": "31c08b31f93290f99ed42c6d1ddc7da1d796706cbec7b843117ce499ef7b3775",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/build.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/test-build.log": "b0a23f37d4e4acf2e645fd572f9fe74e981f6517465c0f4d5e1134c1578f1c6d",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/test-build.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/integration-checks.log": "a3edcde3996ba773fc30a37673af01ff0aeab58c07a736e4bdc088cd99129c86",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/integration-checks.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/diagnostic-python.log": "2b8563387314313c773ef1492ce25feda8cc34d7047aaa7e4fd79e23f967d202",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/diagnostic-python.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/source-checks.json": "dbcef8c119f7f111afec2c0570638e14dd93a78ff9063e00e36cf9b636c404cc",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/jvm-results.tar": "8a268a66877382d68dd4104ae2518955e624fc488a2bb4e600ab658b84bb0b41",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/baseline/instrumentation.log": "24a429f365d5c31ae3d6819c9568fe7baafd0bd70e918a927226def75625bc10",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/baseline/result.json": "5ebf335f9a62df44275f4ae26acf0facbb47a62f2ed8ca9ea8876b147738615e",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/baseline/rows.json": "b5e8b671f6515152d9be1b704e4263aa430fd91645605a8f9c44b0fc4ef55ff7",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/candidate/instrumentation.log": "75b44d69689b752344dfff87af17c45ccbb6cdb8d1ac420cad9eb32eb6f1c441",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/candidate/result.json": "c478de1aa4545b5e34890210dfeab8da816ea2dee7bbc80e213c6db679516bd2",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/candidate/rows.json": "27249c317596d5cde9e105ecdc2d67abab7fc17de4c812b20b43ebebffadd5e3",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/adapter-parity.json": "0ff245c7efbf67ebfa1c7a42079030927dd73e06e6835bdb2f400ae2db129d50",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/core-replay-reuse.json": "b0c89e61fa56e870ef646f5974169f6fd484176bfdc765fe66ac70a2da9c9ae8",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/packaged-data-parity.json": "4eb292f8fd011e37aa8d092c217349e9f131c059a4f00e691bb03ff903293101",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/diagnostics/instrumentation.log": "01608b275aa04ae50dd9d73f03d6dd2c26905f32ec14b66120bc0effa5b3ebea",
+    "/Users/avm/projects/Personal/rune-keyboard/build/review-q3-resources-20261028/diagnostics/instrumentation-result.json": "82d67cdb8c06323d171ea4304024f2a457d9c576a3d9994ee5185e0bbdca4f1e"
+  },
+  "precedingEvidenceSha256": {
+    "docs/acceptance/2026-10-28-q3-schema9-integration-evidence.json": "d052ce664aeb37dce2ed0e07bb360ed5aece0954bca7ffe56a3fa47d7eb822b8",
+    "docs/acceptance/2026-10-28-q3-fold-update-evidence.json": "c4148a59c15334e4584207b30ca6c1602b9917c8d610ba068cf704921f9f47e2"
+  },
+  "limitations": [
+    "Direct adapter table is synthetic API26 instrumentation, not renewed natural qualification",
+    "Core host excludes Android adapter; prior bound core executions reused, no new execution claimed",
+    "Full review, independent distribution and other A/U/Q cards remain open",
+    "Physical installation of this adapter follow-up recorded separately after execution"
+  ]
+}

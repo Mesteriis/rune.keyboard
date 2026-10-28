@@ -187,9 +187,16 @@ class AndroidTypingPersonalization(
         jointReady(generation, language) && !generation.jointEvaluated
 
     private fun jointReady(generation: CandidateGeneration, language: KeyboardLanguage): Boolean =
-        io.github.mesteriis.rune.keyboard.smarttyping.correction.JointQualification.enabled(
-            language, generation.original?.length ?: 0) && resources.dictionaryLoaded &&
-            resources.experiments.jointReady && resources.experiments.contextReady
+        jointReadinessRefusal(generation, language) == null
+
+    private fun jointReadinessRefusal(generation: CandidateGeneration,
+        language: KeyboardLanguage): AutomaticAdmissionRefusal? {
+        if (!io.github.mesteriis.rune.keyboard.smarttyping.correction.JointQualification.enabled(
+                language, generation.original?.length ?: 0)) return AutomaticAdmissionRefusal.NOT_QUALIFIED
+        if (!resources.dictionaryLoaded || !resources.experiments.jointReady || !resources.experiments.contextReady)
+            return AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE
+        return null
+    }
 
     override fun jointAutomaticChoice(context: String, generation: CandidateGeneration,
         language: KeyboardLanguage, baselineWord: String?):
@@ -220,8 +227,9 @@ class AndroidTypingPersonalization(
 
     override fun nounCaseAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
         language: KeyboardLanguage): AutomaticTypingDecision {
-        if (!resources.experiments.nounCaseReady ||
-            !io.github.mesteriis.rune.keyboard.smarttyping.correction.NounCaseRevisionQualification.enabled(
+        if (!resources.experiments.nounCaseReady)
+            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE)
+        if (!io.github.mesteriis.rune.keyboard.smarttyping.correction.NounCaseRevisionQualification.enabled(
                 language, generation.original?.length ?: 0))
             return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
         return jointAutomaticDecision(generation, candidate, language)
@@ -229,8 +237,9 @@ class AndroidTypingPersonalization(
 
     override fun grammarRevisionAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
         language: KeyboardLanguage): AutomaticTypingDecision {
-        if (!resources.experiments.grammarRevisionReady ||
-            !io.github.mesteriis.rune.keyboard.smarttyping.correction.InfinitiveRevisionQualification.enabled(
+        if (!resources.experiments.grammarRevisionReady)
+            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE)
+        if (!io.github.mesteriis.rune.keyboard.smarttyping.correction.InfinitiveRevisionQualification.enabled(
                 language, generation.original?.length ?: 0))
             return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
         return jointAutomaticDecision(generation, candidate, language)
@@ -238,8 +247,9 @@ class AndroidTypingPersonalization(
 
     override fun contextualAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
         language: KeyboardLanguage): AutomaticTypingDecision {
-        if (!resources.experiments.contextualReady ||
-            !io.github.mesteriis.rune.keyboard.smarttyping.correction.ContextualQualification.enabled(
+        if (!resources.experiments.contextualReady)
+            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE)
+        if (!io.github.mesteriis.rune.keyboard.smarttyping.correction.ContextualQualification.enabled(
                 language, generation.original?.length ?: 0))
             return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
         return jointAutomaticDecision(generation, candidate, language)
@@ -299,9 +309,10 @@ class AndroidTypingPersonalization(
 
     override fun wordContextAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
         language: KeyboardLanguage): AutomaticTypingDecision {
-        if (!io.github.mesteriis.rune.keyboard.smarttyping.correction.WordContextQualification.enabled(language) ||
-            !jointReady(generation, language) ||
-            candidate !in generation.jointSearch.alternatives)
+        if (!io.github.mesteriis.rune.keyboard.smarttyping.correction.WordContextQualification.enabled(language))
+            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+        jointReadinessRefusal(generation, language)?.let { return AutomaticTypingDecision(false, it) }
+        if (candidate !in generation.jointSearch.alternatives)
             return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
         return refinementDecision(generation.copy(alternatives = generation.jointSearch.alternatives),
             candidate.text, language, emptyList(), jointWinner = false, wordContextWinner = true)
@@ -309,9 +320,12 @@ class AndroidTypingPersonalization(
 
     override fun rescueAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
         language: KeyboardLanguage): AutomaticTypingDecision {
-        if (!io.github.mesteriis.rune.keyboard.smarttyping.correction.JointRescueQualification.enabled(language) ||
-            !resources.experiments.rescueReady || !jointReady(generation, language) ||
-            candidate !in generation.jointSearch.alternatives)
+        if (!io.github.mesteriis.rune.keyboard.smarttyping.correction.JointRescueQualification.enabled(language))
+            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+        if (!resources.experiments.rescueReady)
+            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE)
+        jointReadinessRefusal(generation, language)?.let { return AutomaticTypingDecision(false, it) }
+        if (candidate !in generation.jointSearch.alternatives)
             return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
         return refinementDecision(generation.copy(alternatives = generation.jointSearch.alternatives),
             candidate.text, language, emptyList(), jointWinner = false, rescueWinner = true)
@@ -319,7 +333,8 @@ class AndroidTypingPersonalization(
 
     override fun jointAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
         language: KeyboardLanguage): AutomaticTypingDecision {
-        if (!jointReady(generation, language) || !generation.jointEvaluated || !generation.jointSearch.isComplete ||
+        jointReadinessRefusal(generation, language)?.let { return AutomaticTypingDecision(false, it) }
+        if (!generation.jointEvaluated || !generation.jointSearch.isComplete ||
             candidate !in generation.jointSearch.alternatives) return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
         return refinementDecision(generation.copy(alternatives = generation.jointSearch.alternatives), candidate.text,
             language, listOf(generation.original.orEmpty()) + generation.jointSearch.alternatives.map { it.text }, jointWinner = true)
@@ -356,23 +371,31 @@ class AndroidTypingPersonalization(
 
     override fun compactAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
         language: KeyboardLanguage): AutomaticTypingDecision {
-        if (language != KeyboardLanguage.RUSSIAN || !resources.dictionaryLoaded ||
-            generation.compactAlternatives.none { it.canonicalKey == candidate.canonicalKey })
+        if (language != KeyboardLanguage.RUSSIAN)
+            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+        if (!resources.dictionaryLoaded)
+            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE)
+        if (generation.compactAlternatives.none { it.canonicalKey == candidate.canonicalKey })
             return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
         val source = generation.original?.let(io.github.mesteriis.rune.keyboard.smarttyping.correction.TokenUnicode::folded)
             ?: return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
         val morphology = resources.lexicon.lookup(language, source)
         val rare = resources.rareWords.lookup(source)
-        if (!morphology.available || !rare.available)
+        if (!morphology.available)
             return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.MORPHOLOGY_UNAVAILABLE)
+        if (!rare.available)
+            return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE)
         if (morphology.present || rare.present)
             return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.ORIGINAL_VALID)
         if (candidate.kind == io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidateKind.PUBLIC_AUGMENTED) {
             val targetMorphology = resources.lexicon.lookup(language, candidate.terminalKey)
             val targetRare = resources.rareWords.lookup(candidate.terminalKey)
-            if (!targetMorphology.available || !targetRare.available ||
-                (!targetMorphology.present && !targetRare.present))
-                return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.NOT_QUALIFIED)
+            if (!targetMorphology.available)
+                return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.MORPHOLOGY_UNAVAILABLE)
+            if (!targetRare.available)
+                return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE)
+            if (!targetMorphology.present && !targetRare.present)
+                return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.TARGET_UNKNOWN)
         }
         protectedOriginalRefusal(generation.original.orEmpty(), language)?.let {
             return AutomaticTypingDecision(false, it)
