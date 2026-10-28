@@ -1,0 +1,111 @@
+{
+  "archive": {
+    "attributedArticles": 1388,
+    "compressedBytes": 1849627,
+    "files": 15,
+    "uncompressedBytes": 9896304
+  },
+  "candidateBindings": {
+    "tools/ci/historical-data-v1/NOTICE.md": "1b969c38a07e27ea6c827d8ac8a3e8e8d57ac5e1feae50a470578ea65d2a7e82",
+    "tools/ci/historical-data-v1/articles.jsonl": "5c1fbb820a39522a546ab6fd0d3954db8bc677f3a3ce248a813732e40b75a48f",
+    "tools/ci/historical-data-v1/files.tar.gz": "8a906500b956cd278a8c3230d584f580b23ff2980831436fc4d8cd4d33d9169c",
+    "tools/ci/historical-data-v1/manifest.json": "75c9076f0b960393f7c555f21b994443a3f67e853edc675730514820068ebf3a",
+    "tools/ci/historical_data_fixtures.py": "94534a151264fa8b1cd7413aaf03721e0582a08d4a037c5c68f0c6d5f914d5bf",
+    "tools/ci/python-tools-tests.json": "a721274a24f02bbb041b2dbae74780ea99481260268ab37897f732498800351e",
+    "tools/ci/python_tools_test_child.py": "0a100850a3537d1c3b4dd1de581369ce66400d80f734419c4f48200c8150560a",
+    "tools/ci/python_tools_tests.py": "1980ddfd2392353117f71171f2b2c59ef3fa278eb30687632e3e0ba6d6d6fdfd",
+    "tools/ci/test_historical_data_fixtures.py": "968492c171457e608bb00c8a323bfeb918fc157a731368609bb3033728c21b8a",
+    "tools/typing_experiments/holdout-ledger.json": "8631fcdcd142386b0d980ee4216e1b68da00bd996410ac0a12b9ad7624bc4370"
+  },
+  "cleanTestBase": "ed24b421d9d90d7bd140b64d98ee3957a016d376",
+  "dataPolicy": {
+    "exitCode": 0,
+    "fullSourceScanRun": false,
+    "logSha256": "77f470cd512e8f298e08586beceed053c93e1cbd3b67b8866befcd5c78b6a07f"
+  },
+  "earlierAttempts": [
+    "First fixture unit run interrupted (exit 130): redundant whole-ledger validation inside 230-article loop replaced by full key-set equality plus explicit overlap gates; original log retained.",
+    "Initial installer invoked in main working copy refused existing dataset directories. Its following main-tree test run is retained separately and is not clean-checkout evidence."
+  ],
+  "environment": "Local macOS ARM64, isolated Python 3.12.14; hosted Ubuntu not dispatched",
+  "infrastructureTests": {
+    "exitCode": 0,
+    "logSha256": "d818400a88ce0608863744fe0bc20e166afad5bd1f4da018b2c2c413b37f8833",
+    "tests": 24
+  },
+  "newExclusions": {
+    "articles": 230,
+    "contexts": 1500,
+    "entry": "public-extra-epochs-data-history-v1",
+    "globalCoverageComplete": false,
+    "missingAxes": [
+      "family",
+      "sentence"
+    ]
+  },
+  "originalAndReproducedFiles": {
+    "typing-extra-epochs/data/all-rows.jsonl": "a1c956ea3d1e3a537de1ee9e4468834c5ed6215cfff46d8bf249752732bb6b88",
+    "typing-extra-epochs/data/dev-rows.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "typing-extra-epochs/data/dev-text.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "typing-extra-epochs/data/manifest.json": "1d2a8f51d0fe2462b8610cb813d2b4330a41e3e6360a6f993acb00fee6de6361",
+    "typing-extra-epochs/data/test-rows.jsonl": "a1c956ea3d1e3a537de1ee9e4468834c5ed6215cfff46d8bf249752732bb6b88",
+    "typing-extra-epochs/data/test-text.jsonl": "327423761fc747bd09bf0dfc2c41dab78278359b8bbd154306f1eae3edaf69a1",
+    "typing-extra-epochs/data/train-rows.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "typing-extra-epochs/data/train-text.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "typing-refinement/data/dev-rows.jsonl": "a2ddea29d8086a6c1d138e6ef59fc7399145b33b79becc3c0545940ad9ba260b",
+    "typing-refinement/data/dev-text.jsonl": "24e7f1267f099291ffc4ac133cb6ddb613e5a43d6da8450677a9529f1b690666",
+    "typing-refinement/data/manifest.json": "20b32e840b890aab726fabea30c6409fce058d0c9ba3dd64d603aaaa24475ce7",
+    "typing-refinement/data/test-rows.jsonl": "e83eb9b99f2df73a8eae001ebedf1cafbd3fa370b6166ae9548551495c97f204",
+    "typing-refinement/data/test-text.jsonl": "ad67b64ca1c53df54d6569e7fad744efa0201ff4a40f06233199453e4b8f465c",
+    "typing-refinement/data/train-rows.jsonl": "e86df521d3c1a249fe514044a75d20b64259ffb76df6920e3f236ec3f6b5fc64",
+    "typing-refinement/data/train-text.jsonl": "ad2c62e5a8368e944af49fb3f71b2621ab82ce92efbac26e745d4af94f4bcc52"
+  },
+  "profiles": {
+    "scientific": {
+      "exitCode": 0,
+      "modules": 8,
+      "receiptSha256": "59c4402149fa88a4c9558453328a7bf964cc87b8ee94cba2f915ee92e7eec374",
+      "skipped": [
+        {
+          "reason": "MLX environment required",
+          "test": "test_word_ranking.WordRankingTests.test_mlx_loss_parity_initialization_and_finite_gradient"
+        }
+      ],
+      "tests": 34
+    },
+    "stdlib": {
+      "exitCode": 0,
+      "modules": 92,
+      "receiptSha256": "1a89467060c8812cb6bcae35ede60ce87f3dee246b71332219a1ba82f3e6d60a",
+      "skipped": [],
+      "tests": 518
+    }
+  },
+  "publicLedgerTests": {
+    "exitCode": 0,
+    "logSha256": "96aa9af52cc23f9d9eea4c96089cd33b79e838528cb2594b5962b3324745eee0",
+    "tests": 23
+  },
+  "remainingHistorical": {
+    "errors": 6,
+    "exitCode": 1,
+    "modules": 3,
+    "receiptSha256": "f94d9c7a6909ab62be6d7a8f576462473a44179cd31f8b28c0e876e1c46fc68d",
+    "tests": 10
+  },
+  "reproduction": {
+    "archiveFilesByteIdentical": true,
+    "archiveGeneratorExitCode": 0,
+    "extraEpochProducerExitCode": 0,
+    "refinementProducerExitCode": 0,
+    "secondArchiveGeneratorExitCode": 0,
+    "sourceParquetSha256": "39b59952cd92a148b301f4d2b3ae1fb71e4caab987c6abe278f0dbdf0b01bb88"
+  },
+  "reviewCards": [
+    "Q6",
+    "Q7"
+  ],
+  "schemaVersion": 1,
+  "scopeComplete": false,
+  "sourceBase": "1bdb3c523772daab16f450ffea0bb329796cc21f"
+}

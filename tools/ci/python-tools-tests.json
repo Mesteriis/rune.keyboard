@@ -97,16 +97,16 @@
     ],
     "scientific": [
       "tools/typing_experiments/test_applied_tree_batch.py",
+      "tools/typing_experiments/test_epoch_evaluation.py",
+      "tools/typing_experiments/test_extra_epochs.py",
       "tools/typing_experiments/test_left_role_tree_batch.py",
+      "tools/typing_experiments/test_neural_refinement.py",
       "tools/typing_experiments/test_residual_tree_batch.py",
       "tools/typing_experiments/test_retrieval.py",
       "tools/typing_experiments/test_word_ranking.py"
     ],
     "historical-artifacts": [
-      "tools/typing_experiments/test_epoch_evaluation.py",
-      "tools/typing_experiments/test_extra_epochs.py",
       "tools/typing_experiments/test_models.py",
-      "tools/typing_experiments/test_neural_refinement.py",
       "tools/typing_experiments/test_refinement.py",
       "tools/typing_experiments/test_word_ranking_data.py"
     ]
