@@ -42,3 +42,10 @@ No app source, assets or production policy changed. No APK install, training,
 new model execution or hosted CI run was performed. Pending owner additions in
 the main experiment README remain outside this commit; only the new reviewed
 source-status paragraph is integrated.
+
+Clean-checkout integration: exact source `796288e` passes all 113 isolated
+stdlib modules / 588 tests, with zero failures, errors or skips. Its default
+fixture-audit JSON exactly matches the primary checkout. The stress CLI prepare
+smoke emits 1,676 deterministic authored rows and label-free runtime inputs;
+those inputs were not scored. Digests are retained in the adjacent evidence.
+Scientific sources/dependencies were unchanged and that profile was not rerun.

@@ -1,4 +1,25 @@
 {
+  "authoredPreparation": {
+    "files": {
+      "inputs.tsv": "fa400451aaa627aa07ade0ed75d50cffa26f6f3f24727023bb4fae2c199caeea",
+      "rows.jsonl": "9a31473456b9a282319894645434d742e20fd7a02d17903353e6e864b4051d2d"
+    },
+    "purpose": "authored_discovery_not_qualification",
+    "rows": 1676,
+    "schema": 1
+  },
+  "cleanCheckoutRun": {
+    "errors": 0,
+    "failures": 0,
+    "modules": 113,
+    "profile": "stdlib",
+    "receiptSha256": "5da026f0e24a3fb6eef8feeb95a8f41c05df271383639cae7dab0926c54ef9a5",
+    "skips": 0,
+    "sourceCommit": "796288e",
+    "status": "PASS",
+    "tests": 588
+  },
+  "cleanDefaultAuditMatchesPrimary": true,
   "fixtureAudit": {
     "canonicalFamilyCoverageEstablished": false,
     "cases": 5,
