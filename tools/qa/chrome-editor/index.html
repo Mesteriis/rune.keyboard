@@ -1,0 +1,10 @@
+<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rune Q8 local editor</title><h1>Rune Q8 local editor</h1><textarea id="rune-qa" aria-label="Rune Chrome QA" rows="5" autocapitalize="off" autocomplete="on" autocorrect="on" spellcheck="true" style="font:20px monospace;width:90%"></textarea><script>const PROFILE='ordinary';</script><script>
+const editor=document.getElementById('rune-qa');
+function report(){const value=editor.value, words=value.trim().split(' ').filter(Boolean);
+const state={length:value.length,words:words.length,corrections:words.filter(w=>w==='the').length,
+lastCorrected:Number(words.at(-1)==='the'),firstFive:Number(value==='the '.repeat(5)),
+undo:Number(value==='the '.repeat(4)+'teh'),sixth:Number(value==='the '.repeat(4)+'teh the '),
+literalFive:Number(value==='teh '.repeat(5)),literalBackspace:Number(value==='teh '.repeat(4)+'teh')};
+fetch('/rune-q8-metrics/'+PROFILE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(state),cache:'no-store'});}
+for(const event of ['input','compositionend','selectionchange'])document.addEventListener(event,report);
+report();</script>

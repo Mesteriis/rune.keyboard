@@ -1,0 +1,340 @@
+{
+  "schema": 1,
+  "card": "Q8",
+  "status": "partial APP-002 real Chrome textarea acceptance; full matrix remains open",
+  "sourceBindings": {
+    ".github/workflows/ci.yml": "a98e7b05ee9c00f6f3c55ce92c25d380acb9fd5097ab5a072447e44e1b54f0c9",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ChromeEditorCompatibilityInstrumentedTest.kt": "aa1d770d91431df260cd09ea7d93ba63241cd9d46c656f96d1ba0c43169701a5",
+    "tools/qa/chrome-editor/README.md": "6911132c13b04797d654fb6a66b873766f4fb41fe8ca527d99b2cbef5580a729",
+    "tools/qa/chrome-editor/index.html": "444703e5b05664cd62717d1f7db8ffdf790ea95c5f43b1b303d84727c9eaa065",
+    "tools/qa/chrome-editor/no-suggestions.html": "70e8e79252198898bf94e72479d3d7cc852fb631e240815cd1e9926c9167d8b4",
+    "tools/qa/chrome-editor/serve.py": "61528d5b7936fc88b269111421937122db03aecd20c2b0ac265a0d0f9b40d1ef",
+    "tools/qa/chrome-editor/verify.py": "608e29328176520c8c8cd1ecc39341fdf1c9d43b22379148ddac7d8369b5906f",
+    "tools/qa/chrome-editor/test_oracle.py": "508a3ee4678311a89bff4d87d13cbde317a9fac9f09155dacf0e957c7c27cf9a"
+  },
+  "productionUnchangedFromCommit": "ed275e52f354b536050749d06a6d44ac46f2cc8f",
+  "productionScopes": [
+    "app/src/main",
+    "app/src/debug",
+    "app/src/profile",
+    "app/src/release",
+    "app/build.gradle.kts",
+    "build.gradle.kts",
+    "settings.gradle.kts",
+    "gradle",
+    "runtime-llama"
+  ],
+  "build": {
+    "exitCode": 0,
+    "elapsedSeconds": 4.397507042000143
+  },
+  "jvm": {
+    "tests": 1355,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native": {
+    "passed": true,
+    "exitCode": 0,
+    "tests": 2,
+    "elapsedSeconds": 59.40597612499914,
+    "testApkSha256": "645994136b084a1e45ce0888ee1c7b9255b068d0d1cf38d9dec519f8672372d8"
+  },
+  "independentDom": {
+    "nativeTests": 2,
+    "numericOnly": true,
+    "passed": true,
+    "profiles": {
+      "no-suggestions": {
+        "orderedStages": 2,
+        "passed": true,
+        "records": 51
+      },
+      "ordinary": {
+        "orderedStages": 3,
+        "passed": true,
+        "records": 62
+      }
+    }
+  },
+  "numericDomStages": {
+    "ordinary": [
+      {
+        "corrections": 4,
+        "firstFive": 0,
+        "lastCorrected": 0,
+        "length": 19,
+        "literalBackspace": 0,
+        "literalFive": 0,
+        "profile": "ordinary",
+        "sixth": 0,
+        "undo": 1,
+        "words": 5
+      },
+      {
+        "corrections": 5,
+        "firstFive": 1,
+        "lastCorrected": 1,
+        "length": 20,
+        "literalBackspace": 0,
+        "literalFive": 0,
+        "profile": "ordinary",
+        "sixth": 0,
+        "undo": 0,
+        "words": 5
+      },
+      {
+        "corrections": 5,
+        "firstFive": 0,
+        "lastCorrected": 1,
+        "length": 24,
+        "literalBackspace": 0,
+        "literalFive": 0,
+        "profile": "ordinary",
+        "sixth": 1,
+        "undo": 0,
+        "words": 6
+      }
+    ],
+    "no-suggestions": [
+      {
+        "corrections": 0,
+        "firstFive": 0,
+        "lastCorrected": 0,
+        "length": 19,
+        "literalBackspace": 1,
+        "literalFive": 0,
+        "profile": "no-suggestions",
+        "sixth": 0,
+        "undo": 0,
+        "words": 5
+      },
+      {
+        "corrections": 0,
+        "firstFive": 0,
+        "lastCorrected": 0,
+        "length": 20,
+        "literalBackspace": 0,
+        "literalFive": 1,
+        "profile": "no-suggestions",
+        "sixth": 0,
+        "undo": 0,
+        "words": 5
+      }
+    ]
+  },
+  "sessionSnapshots": [
+    {
+      "word": "1",
+      "session_enabled": "true",
+      "suggestions_allowed": "false",
+      "supports_smart_typing": "true",
+      "editor_input_type": "2785441",
+      "editor_ime_options": "301989889"
+    },
+    {
+      "word": "2",
+      "session_enabled": "true",
+      "suggestions_allowed": "false",
+      "supports_smart_typing": "true",
+      "editor_input_type": "2785441",
+      "editor_ime_options": "301989889"
+    },
+    {
+      "word": "3",
+      "session_enabled": "true",
+      "suggestions_allowed": "false",
+      "supports_smart_typing": "true",
+      "editor_input_type": "2785441",
+      "editor_ime_options": "301989889"
+    },
+    {
+      "word": "4",
+      "session_enabled": "true",
+      "suggestions_allowed": "false",
+      "supports_smart_typing": "true",
+      "editor_input_type": "2785441",
+      "editor_ime_options": "301989889"
+    },
+    {
+      "word": "5",
+      "session_enabled": "true",
+      "suggestions_allowed": "false",
+      "supports_smart_typing": "true",
+      "editor_input_type": "2785441",
+      "editor_ime_options": "301989889"
+    },
+    {
+      "word": "1",
+      "session_enabled": "true",
+      "suggestions_allowed": "true",
+      "supports_smart_typing": "true",
+      "editor_input_type": "2261153",
+      "editor_ime_options": "301989889"
+    },
+    {
+      "word": "2",
+      "session_enabled": "true",
+      "suggestions_allowed": "true",
+      "supports_smart_typing": "true",
+      "editor_input_type": "2261153",
+      "editor_ime_options": "301989889"
+    },
+    {
+      "word": "3",
+      "session_enabled": "true",
+      "suggestions_allowed": "true",
+      "supports_smart_typing": "true",
+      "editor_input_type": "2261153",
+      "editor_ime_options": "301989889"
+    },
+    {
+      "word": "4",
+      "session_enabled": "true",
+      "suggestions_allowed": "true",
+      "supports_smart_typing": "true",
+      "editor_input_type": "2261153",
+      "editor_ime_options": "301989889"
+    },
+    {
+      "word": "5",
+      "session_enabled": "true",
+      "suggestions_allowed": "true",
+      "supports_smart_typing": "true",
+      "editor_input_type": "2261153",
+      "editor_ime_options": "301989889"
+    },
+    {
+      "word": "6",
+      "session_enabled": "true",
+      "suggestions_allowed": "true",
+      "supports_smart_typing": "true",
+      "editor_input_type": "2261153",
+      "editor_ime_options": "301989889"
+    }
+  ],
+  "browserIdentity": {
+    "package": "com.android.chrome",
+    "versionName": "156.0.8078.47",
+    "versionCode": 807804704,
+    "api": 37
+  },
+  "browserIdentityReadAfterRun": true,
+  "ownerPreservation": {
+    "protectedFiles": 1,
+    "protectedByteIdentical": true,
+    "originalPreferenceFiles": 4,
+    "originalPreferencesSemanticallyEqual": true,
+    "diagnosticsAppendOnly": false,
+    "appendedEventKinds": [],
+    "modelsByteIdentical": true,
+    "imeSettingsRestored": true,
+    "installedApkMatchesBuild": true,
+    "installedApkSha256": "75cfd2ee5bc61c896103a7596113d4c25bb39464fd9ae8f2d4cb312fdbf1ce24"
+  },
+  "imeOrderRestoration": {
+    "componentAndSubtypeSetsUnchanged": true,
+    "originalSubtypeOrderRestored": true
+  },
+  "diagnosticRotation": {
+    "originalArchivedParts": 8,
+    "currentArchivedParts": 8,
+    "originalBackupSha256": "87113d17a87836b0f721a9a241da744a8d60234f0fabc80eb0713286f646569d",
+    "postRunArchiveSha256": "d63e56239d4e51a3296f9157cb8bf5ebfae970fc58797e2c49527123c40023c9",
+    "originalPartHashesStillPresent": 2,
+    "rotationOccurred": true,
+    "originalPartsPreservedInPrivateBackup": true,
+    "recordingConsentUnchanged": true,
+    "originalPartsRetainedAsCurrentPrefixes": 4
+  },
+  "cleanup": {
+    "taskReverseRemoved": true,
+    "ownedTabsClosedByNativeAssertions": true,
+    "ownerSettingsRestoredByNativeFinally": true,
+    "localServerStopped": true,
+    "foldReleasedToBothChats": true
+  },
+  "checks": {
+    "oraclePython312": {
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0
+    },
+    "oraclePython314": {
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0
+    },
+    "inventory": {
+      "passed": true,
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0
+    },
+    "ciWorkflowParses": true,
+    "hostedCiRun": false
+  },
+  "logs": {
+    "build-dom.log": "ba95a01d6eec1589a36b1d4ca574efadffff32836429d568b9fd5b2acc3453a5",
+    "chrome-dom.log": "0c0ccfe4a8c8bd6c530078bceeea1d6d1476586cbc73d98316d53c2157c40d6a",
+    "dom-receipt.jsonl": "513aa50c6a3eee6f8c249b1cd1262bb5e119fd14a8de4ab4eb129bddc081c9b9",
+    "oracle-tests.log": "9764c3175346a5700822d2d58137e2ff69c201885cf8e64319bb8129cb34d9c3",
+    "oracle-py312-tests.log": "b3341d06481e0c2438e550a4cb508e594796593c647970f776dae9aee7addc82",
+    "inventory-check.log": "13b5ae9025c5d8b432d860d1f44ed8d814648033c4dc01a959d5354a424e0634",
+    "inventory-tests.log": "eceb296f5641085023743a7c42cbe81218006943e14224fafdb492d788c54049"
+  },
+  "failedTrials": {
+    "chrome-result.json": {
+      "passed": false,
+      "exitCode": 0,
+      "tests": 1,
+      "elapsedSeconds": 18.07347729200046,
+      "testApkSha256": "04060f764366636a210c5dcbfd85024ae9a27bab2768491b4784547f587eb9d9"
+    },
+    "chrome-v2-result.json": {
+      "passed": false,
+      "exitCode": 0,
+      "tests": 1,
+      "elapsedSeconds": 35.64114441699985,
+      "testApkSha256": "2e7b29658b82e293307d88304cd44dea11eabf2795ab35df1551b7e3ca991ad8"
+    },
+    "chrome-observed-result.json": {
+      "passed": false,
+      "exitCode": 0,
+      "tests": 1,
+      "elapsedSeconds": 35.62842095799988,
+      "testApkSha256": "cbe1a8dffba3b2e501712066e2934f42ba6d934703797c730398ce87109e63ab"
+    },
+    "chrome-final-result.json": {
+      "passed": false,
+      "exitCode": 0,
+      "tests": 2,
+      "elapsedSeconds": 53.40471304099992,
+      "testApkSha256": "aeaa24a1866b99817c8cb20eeea26a8ca13aff0c51575672cca628ff417972c0"
+    },
+    "chrome-probe-result.json": {
+      "passed": false,
+      "exitCode": 0,
+      "tests": 1,
+      "elapsedSeconds": 32.97985416700067,
+      "testApkSha256": "a0b55b585afd138c8944f17902dd8bb3e3f6d5d6936ec4aa1eda380315411b5c"
+    }
+  },
+  "workspaceOwnerPreservation": {
+    "unrelatedPendingTrackedFiles": 5,
+    "exactOriginalHashesPreserved": true,
+    "originalUntrackedPaths": 98,
+    "allOriginalPathsRetained": true
+  },
+  "limits": [
+    "Existing display configuration only; cover/inner/landscape/fold/unfold and omnibox GO remain.",
+    "Telegram, Gmail and Termux installed but not driven; Samsung Notes absent.",
+    "Rotating diagnostics advanced; all original bytes recoverable in private pre-run archive, not claimed unchanged on device.",
+    "Native success alone cannot prove text outcomes; mandatory independent DOM gate also passes.",
+    "No production change, new app permissions, training, ranking/admission change, sends or publication."
+  ]
+}

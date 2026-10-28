@@ -21,6 +21,9 @@ jobs:
         run: |
           python tools/ci/python_tools_tests.py --check
           python -m unittest discover -s tools/ci -p test_python_tools_tests.py -v
+      - name: Verify numeric Chrome fixture and independent DOM gate
+        if: matrix.profile == 'stdlib'
+        run: python -m unittest discover -s tools/qa/chrome-editor -p 'test_*.py' -v
       - name: Install pinned scientific dependencies
         if: matrix.profile == 'scientific'
         run: |
