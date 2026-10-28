@@ -225,7 +225,7 @@ class AdditionalGuardTest(unittest.TestCase):
                             {path.name for path in sources})
             self.assertTrue(all(p.is_file() for p in sources))
             self.assertIn(self.tool.HERE/'ContextualControllerAttribution.kt',sources)
-            self.assertIn(self.tool.REPO/'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/MechanicalRefusalDiagnostics.kt',sources)
+            self.assertIn(self.tool.REPO/'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalRefusalDiagnostics.kt',sources)
             self.assertIn(self.tool.REPO/'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedAssetDigest.kt',sources)
             current=json.loads(self.tool.PRODUCT_SOURCE_MANIFEST.read_text())['sources']
             self.assertTrue({(self.tool.REPO/p).resolve() for p in current} <= set(sources))

@@ -564,6 +564,21 @@ object FinalProductSpellingReplay {
                     io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryQualification.refinement else
                     io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryThresholds(-1000.0, 0.000001))
                 else TypingSessionController(graphemes)
+            val boundaryDiagnostics = mutableListOf<Map<String, Any?>>()
+            val observeBoundaries = java.lang.Boolean.getBoolean("rune.replay.boundaryDiagnostics")
+            if (observeBoundaries) controller.setDiagnostics(object : io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnostics {
+                override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                override fun invalidate() = Unit
+                override fun record(event: io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticEvent,
+                    text: (() -> io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticText)?) {
+                    if (event.kind == io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind.BOUNDARY)
+                        boundaryDiagnostics += mapOf("reason" to event.reason.name, "source" to event.source.name,
+                            "session" to event.session, "revision" to event.revision,
+                            "candidateCount" to event.candidateCount, "selectedIndex" to event.selectedIndex,
+                            "modelUsed" to event.modelUsed, "operationId" to event.operationId)
+                    // Text is deliberately never requested by this metadata-only observer.
+                }
+            })
             val editor = Editor()
             personalization.reset()
             controller.setPersonalization(personalization, language)
@@ -780,8 +795,10 @@ object FinalProductSpellingReplay {
                             is CandidateUiItem.Undo -> "UNDO"
                         }) })
                 val beforeBoundaryText = editor.text; editor.commands.clear()
+                boundaryDiagnostics.clear()
                 val boundaryStarted = System.nanoTime()
                 result["boundaryResult"] = type(" ").name
+                if (observeBoundaries) result["boundaryDiagnostics"] = boundaryDiagnostics.toList()
                 stageTimings["spaceBoundary"] = System.nanoTime() - boundaryStarted
                 result["afterBoundary"] = editor.snapshot()
                 result["grammarRevisionAttempted"] = personalization.grammarEvaluation?.grammarRevisionAttempted ?: false

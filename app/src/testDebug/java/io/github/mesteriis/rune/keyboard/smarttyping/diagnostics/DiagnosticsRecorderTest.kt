@@ -9,6 +9,21 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class DiagnosticsRecorderTest {
+    @Test fun schemaNineEditorTypeIsBoundedNumericMetadataInBothStreams() {
+        for ((value, expected) in listOf(0 to 0, 1 to 1, 65 to 65, 4095 to 4095,
+            -1 to 0, 4096 to 0, Int.MAX_VALUE to 0)) {
+            val event = DiagnosticEvent(DiagnosticKind.INPUT, DiagnosticReason.NONE, 1, 1, editorType = value)
+            for (encoded in listOf(DiagnosticsEncoding.metadata(event), DiagnosticsEncoding.text(event, DiagnosticText()))) {
+                val line = encoded.decodeToString()
+                assertTrue(line, line.contains("\"schema\":9"))
+                assertTrue(line, line.contains("\"editorType\":$expected,"))
+                assertFalse(line.contains("packageName"))
+                assertFalse(line.contains("imeOptions"))
+                assertFalse(line.contains("inputType"))
+            }
+        }
+    }
+
     @Test fun profileIsFixedNumericMetadataAndIncludesNewFlags() {
         val all = DiagnosticFeature.MASK
         val valid = DiagnosticsEncoding.metadata(DiagnosticEvent(DiagnosticKind.CONFIGURATION, DiagnosticReason.NONE,
@@ -48,7 +63,7 @@ class DiagnosticsRecorderTest {
         }
     }
 
-    @Test fun schemaEightKeepsAutomaticAndManualCandidatesSeparateInConsentedTextOnly() {
+    @Test fun schemaNineKeepsAutomaticAndManualCandidatesSeparateInConsentedTextOnly() {
         val encoded = DiagnosticsEncoding.text(
             DiagnosticEvent(DiagnosticKind.CANDIDATES, DiagnosticReason.ACCEPTED, 1, 2),
             DiagnosticText(candidates = listOf("automatic"), manualCandidates = listOf("manual")),
@@ -56,7 +71,7 @@ class DiagnosticsRecorderTest {
         assertTrue(encoded.contains("\"candidates\":[\"automatic\"]"))
         assertTrue(encoded.contains("\"manualCandidates\":[\"manual\"]"))
     }
-    @Test fun schemaEightMetadataClampsUntrustedNumbersWithoutInvokingText() {
+    @Test fun schemaNineMetadataClampsUntrustedNumbersWithoutInvokingText() {
         val backend = MemoryBackend()
         DiagnosticsRecorder(backend).use { recorder ->
             await(recorder::barrier); await { recorder.setMetadata(true, it) }
@@ -66,7 +81,7 @@ class DiagnosticsRecorderTest {
                 elapsedMs = Long.MAX_VALUE, operationId = Long.MAX_VALUE, requestId = -1)) { error("Metadata copied text") }
             await(recorder::barrier)
             val encoded = backend.records.single().second.decodeToString()
-            for (field in listOf("\"schema\":8", "\"reasonCode\":24", "\"elapsedMs\":60000", "\"scoringCode\":15",
+            for (field in listOf("\"schema\":9", "\"reasonCode\":24", "\"elapsedMs\":60000", "\"scoringCode\":15",
                 "\"operationId\":1000000000", "\"requestId\":0", "\"candidateCount\":8", "\"selectedIndex\":-1")) {
                 assertTrue(encoded, encoded.contains(field))
             }

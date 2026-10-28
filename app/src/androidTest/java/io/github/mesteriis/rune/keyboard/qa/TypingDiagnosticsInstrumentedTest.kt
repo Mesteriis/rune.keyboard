@@ -208,26 +208,50 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
     @Test fun returningToLettersAndSwitchingLanguageOpenFreshSegmentsWithoutRefocus() {
         driver.configureMechanicalPunctuation(mechanical = false, doubleSpace = false)
         driver.launchSettings(); enableTextThroughDialogs()
-        driver.launchComposingQa(); type("beforegap")
-        snapshot(DiagnosticStream.TEXT)
+        val checkpoints = File(context.cacheDir, "diagnostics-segment-checkpoints/${android.os.SystemClock.uptimeMillis()}")
+        assertTrue(checkpoints.mkdirs())
+        fun checkpoint(name: String): List<JSONObject> {
+            val text = snapshot(DiagnosticStream.TEXT)
+            File(checkpoints, "$name.jsonl").writeText(text)
+            return text.lineSequence().filter(String::isNotBlank).map(::JSONObject).toList()
+        }
+        driver.launchComposingQa(); type("beforegap"); awaitEditorLength(9)
+        checkpoint("before")
         driver.tapKeyByDescription(context.getString(R.string.key_symbols))
         assertTrue("Symbols layout must become visible", driver.device.wait(Until.hasObject(
             By.desc(context.getString(R.string.key_letters))), ImeTestDriver.WAIT_MILLIS))
-        driver.tapKey("1")
+        driver.tapKey("1"); awaitEditorLength(10)
         driver.tapKeyByDescription(context.getString(R.string.key_letters))
-        type("aftergap")
-        var rows = snapshot(DiagnosticStream.TEXT).lineSequence().filter(String::isNotBlank).map(::JSONObject).toList()
-        val after = rows.last { it.optString("input") == "p" }
+        type("aftergap"); awaitEditorLength(18)
+        var rows = checkpoint("letters")
+        val after = rows.lastOrNull { it.optString("input") == "p" }
+        assertNotNull("Last Latin input missing; phase snapshot retained in test cache", after)
+        after!!
         assertFalse(after.optString("context").contains("beforegap"))
         assertFalse(after.optString("context").contains("1"))
         val starts = rows.count { it.getString("kind") == "SESSION" && it.getString("reason") == "START" }
         assertTrue("Letters return did not reopen diagnostic segment", starts >= 2)
-        driver.switchToRussian(); type("новый")
-        rows = snapshot(DiagnosticStream.TEXT).lineSequence().filter(String::isNotBlank).map(::JSONObject).toList()
+        driver.switchToRussian(); type("новый"); awaitEditorLength(23)
+        rows = checkpoint("russian")
         assertTrue(rows.count { it.getString("kind") == "SESSION" && it.getString("reason") == "START" } > starts)
-        val russian = rows.last { it.optString("input") == "й" }
+        val russian = rows.lastOrNull { it.optString("input") == "й" }
+        assertNotNull("Last Russian input missing; phase snapshot retained in test cache", russian)
+        russian!!
         assertFalse(russian.optString("context").contains("aftergap"))
         assertTrue(recorder.preferences.text); noReadback()
+    }
+
+    /** Await the editor's numeric acknowledgement before fencing the recorder's worker queue. */
+    private fun awaitEditorLength(expected: Int) {
+        val deadline = android.os.SystemClock.uptimeMillis() + ImeTestDriver.WAIT_MILLIS
+        var actual: Int
+        do {
+            instrumentation.waitForIdleSync()
+            actual = stats().getValue("length")
+            if (actual == expected) break
+            android.os.SystemClock.sleep(25)
+        } while (android.os.SystemClock.uptimeMillis() < deadline)
+        assertEquals("Editor input not acknowledged before diagnostic export", expected, actual)
     }
 
     private fun enableTextThroughDialogs() {
@@ -310,12 +334,13 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         val allowed = setOf("schema", "kind", "reason", "session", "revision", "typingProfile", "features", "effectiveFeatures",
             "candidateCount", "selectedIndex", "modelUsed", "source", "completion", "localCompletion",
             "localInspectedStates", "localVerifiedTerminals", "scoringCode", "elapsedMs", "requestId", "operationId", "reasonCode", "correctionId",
-            "recoveryCompletion", "recoveryInspectedStates", "recoveryVerifiedTerminals")
+            "recoveryCompletion", "recoveryInspectedStates", "recoveryVerifiedTerminals", "editorType")
         val rows = text.lineSequence().filter(String::isNotBlank).map(::JSONObject).toList()
         if (requireRows) assertTrue("Expected metadata rows", rows.isNotEmpty())
         rows.forEach { row ->
             assertEquals(allowed, row.keys().asSequence().toSet())
-            assertInteger(row, "schema", 8L..8L)
+            assertInteger(row, "schema", 9L..9L)
+            assertInteger(row, "editorType", 0L..4095L)
             assertInteger(row, "typingProfile", 0L..2L)
             val configured = row.getJSONObject("features")
             val effective = row.getJSONObject("effectiveFeatures")

@@ -1,5 +1,7 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.session
 
+import android.text.InputType
+
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardState
@@ -86,6 +88,7 @@ class TypingSessionController internal constructor(
     private var effectiveFeatures = 0
     private var typingProfile = 0
     private var editorAllowsSuggestions = false
+    private var diagnosticEditorType = 0
     fun setTypingTools(value: TypingTools) { tools = value; clearCandidates() }
     private fun invalidateQualityComparison() {
         quality.invalidatePending()
@@ -241,7 +244,8 @@ class TypingSessionController internal constructor(
             localCompletion, localInspectedStates, localVerifiedTerminals, configuredFeatures,
             if (state.enabled && !diagnosticSegmentClosed) effectiveFeatures else 0, typingProfile,
             if (reason == DiagnosticReason.AUTO_REPLACE) operation else correctionId,
-            recoveryCompletion, recoveryInspectedStates, recoveryVerifiedTerminals)
+            recoveryCompletion, recoveryInspectedStates, recoveryVerifiedTerminals,
+            editorType = if (session == state.sessionId) diagnosticEditorType else 0)
         if (session == state.sessionId && revision == state.revision) {
             when {
                 kind == DiagnosticKind.REQUEST && reason in listOf(DiagnosticReason.SCHEDULED, DiagnosticReason.SUBMITTED) ->
@@ -327,6 +331,14 @@ class TypingSessionController internal constructor(
             scoringCode = reply.code, elapsedMs = reply.elapsedMillis, requestId = reply.token.requestId, text = text)
         return false
     }
+    private fun boundaryRankingRefusal(selection: CandidateSelection): DiagnosticReason {
+        val reason = selection.jointRefusal ?: selection.ranking?.refusal.diagnosticReason()
+        // Preserve specific joint/model explanations. For a generic non-model refusal,
+        // retain the actual primary local-policy result already observed during retrieval.
+        return if (reason == DiagnosticReason.NOT_QUALIFIED && selection.ranking?.usedModel == false)
+            selection.localRefusal?.diagnosticReason() ?: reason else reason
+    }
+
     private fun boundaryBypass(reason: DiagnosticReason): TypingTextResult {
         val status = diagnosticDecisionStatus?.takeIf { it.first == state.revision }?.second
         val outcome = if (reason in listOf(DiagnosticReason.NO_CANDIDATES, DiagnosticReason.NO_RANKING,
@@ -655,7 +667,8 @@ class TypingSessionController internal constructor(
         if (local.alternatives.size > 64 || generation.compactAlternatives.size > 64 ||
             local.inspectedStates !in 0..CandidateSearchControl.MAX_STATES ||
             local.verifiedTerminals !in 0..CandidateSearchControl.MAX_VERIFIED) return rejected(DiagnosticReason.LIMIT)
-        val localDecision = LocalCorrectionPolicy.decide(generation, language)
+        val localEvaluation = LocalCorrectionPolicy.evaluate(generation, language)
+        val localDecision = localEvaluation.decision
         val ownedContext = precedingContext?.takeLast(128) ?: context?.text?.takeIf { it.endsWith(original) }
             ?.dropLast(original.length)?.takeLast(128).orEmpty()
         val compactWinner = if (localDecision == null)
@@ -713,7 +726,8 @@ class TypingSessionController internal constructor(
         }
         return CandidateSelection(snapshot, language, requestId,
             selectedIndex = (ranking?.preferredId ?: 0) - 1,
-            order = ranking?.candidateIds?.map { it - 1 } ?: alternatives.indices.toList(), ranking = ranking)
+            order = ranking?.candidateIds?.map { it - 1 } ?: alternatives.indices.toList(), ranking = ranking,
+            localRefusal = localEvaluation.refusal)
     }
 
     /** No editor mutation or veto reset. Service calls this when its own policy/route invalidates. */
@@ -1071,7 +1085,7 @@ class TypingSessionController internal constructor(
             return false
         }
         if (ranking.preferredId <= 0) {
-            diagnose(DiagnosticKind.BOUNDARY, selection.jointRefusal ?: ranking.refusal.diagnosticReason(), selection.alternatives.size,
+            diagnose(DiagnosticKind.BOUNDARY, boundaryRankingRefusal(selection), selection.alternatives.size,
                 session = reply.sessionId, revision = reply.revision, source = diagnosticSource,
                 requestId = reply.requestId, text = payload)
             return false
@@ -1658,6 +1672,7 @@ class TypingSessionController internal constructor(
         requireExternalBoundary: Boolean = false) {
         endSession()
         editorAllowsSuggestions = editor.editorAllowsSuggestions
+        diagnosticEditorType = editor.inputType and (InputType.TYPE_MASK_CLASS or InputType.TYPE_MASK_VARIATION)
         val enabled = editor.supportsSmartTyping &&
             selectionStart >= 0 && selectionEnd >= 0
         externalWordBoundaryRequired = enabled && requireExternalBoundary
@@ -2032,7 +2047,7 @@ class TypingSessionController internal constructor(
         val plan = when (planned) {
             is MechanicalPunctuationPlan.Replace -> planned
             is MechanicalPunctuationPlan.Unchanged -> {
-                io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.MechanicalRefusalDiagnostics
+                io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalRefusalDiagnostics
                     .reason(action, planned.reason)?.let {
                         diagnose(DiagnosticKind.MECHANICAL, it, source = DiagnosticSource.MECHANICAL, text = null)
                     }
@@ -2201,7 +2216,7 @@ class TypingSessionController internal constructor(
         fun policyBypass(reason: DiagnosticReason) = boundaryBypass(
             if (pendingModelRanking != null) DiagnosticReason.RESULT_NOT_READY else reason)
         if (selection.language != keyboard.language) return policyBypass(DiagnosticReason.NOT_QUALIFIED)
-        if (ranking.preferredId <= 0) return policyBypass(selection.jointRefusal ?: ranking.refusal.diagnosticReason())
+        if (ranking.preferredId <= 0) return policyBypass(boundaryRankingRefusal(selection))
         if (!eligibility.eligible) return policyBypass(eligibility.refusal.diagnosticReason())
         val automatic = automaticDecision(selection, ranking.preferredId - 1)
         if (!automatic.allowed) return policyBypass(automatic.refusal.diagnosticReason())
@@ -2411,6 +2426,7 @@ class TypingSessionController internal constructor(
         isolatedBoundaryCaret = null
         diagnosticsPermitted = false
         editorAllowsSuggestions = false
+        diagnosticEditorType = 0
         invalidateQualityComparison()
         resetPersonalContext()
         closeDiagnosticsAdmission()
@@ -2479,7 +2495,7 @@ class TypingSessionController internal constructor(
         diagnosticAttempt = null
         val outcome = (attempt ?: DiagnosticEvent(DiagnosticKind.EDITOR, DiagnosticReason.NONE, session, revision,
             operationId = nextDiagnosticOperation(), configuredFeatures = configuredFeatures,
-            effectiveFeatures = if (state.enabled && !diagnosticSegmentClosed) effectiveFeatures else 0, typingProfile = typingProfile)).copy(kind = DiagnosticKind.EDITOR)
+            effectiveFeatures = if (state.enabled && !diagnosticSegmentClosed) effectiveFeatures else 0, typingProfile = typingProfile, editorType = diagnosticEditorType)).copy(kind = DiagnosticKind.EDITOR)
         val admittedDiagnostics = diagnosticsPermitted
         val terminal = if (admittedDiagnostics) try { diagnostics.editorOutcome(outcome) } catch (_: Throwable) { null } else null
         fun complete(accepted: Boolean) {
@@ -2579,6 +2595,7 @@ class TypingSessionController internal constructor(
         val ranking: CalibratedRanking? = null,
         val manualAlternatives: List<GeneratedCandidate> = emptyList(),
         val jointRefusal: DiagnosticReason? = null,
+        val localRefusal: LocalCorrectionRefusal? = null,
     ) {
         val original get() = generation.original!!
         val jointOriginalVeto: DiagnosticReason? get() = jointRefusal?.takeIf {

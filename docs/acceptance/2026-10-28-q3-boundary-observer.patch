@@ -1,0 +1,22 @@
+--- a/tools/eval/smart-typing-0.3/pipeline/FinalProductSpellingReplay.kt
++++ b/tools/eval/smart-typing-0.3/pipeline/FinalProductSpellingReplay.kt
+@@ -566,0 +567,15 @@
++            val boundaryDiagnostics = mutableListOf<Map<String, Any?>>()
++            val observeBoundaries = java.lang.Boolean.getBoolean("rune.replay.boundaryDiagnostics")
++            if (observeBoundaries) controller.setDiagnostics(object : io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnostics {
++                override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
++                override fun invalidate() = Unit
++                override fun record(event: io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticEvent,
++                    text: (() -> io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticText)?) {
++                    if (event.kind == io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind.BOUNDARY)
++                        boundaryDiagnostics += mapOf("reason" to event.reason.name, "source" to event.source.name,
++                            "session" to event.session, "revision" to event.revision,
++                            "candidateCount" to event.candidateCount, "selectedIndex" to event.selectedIndex,
++                            "modelUsed" to event.modelUsed, "operationId" to event.operationId)
++                    // Text is deliberately never requested by this metadata-only observer.
++                }
++            })
+@@ -782,0 +798 @@
++                boundaryDiagnostics.clear()
+@@ -784,0 +801 @@
++                if (observeBoundaries) result["boundaryDiagnostics"] = boundaryDiagnostics.toList()

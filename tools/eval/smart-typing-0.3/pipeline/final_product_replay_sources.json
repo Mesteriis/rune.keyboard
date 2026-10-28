@@ -57,7 +57,7 @@
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/ui/SmartTypingViewState.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/telemetry/SmartTypingTrace.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/DiagnosticFeatures.kt",
-    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/diagnostics/MechanicalRefusalDiagnostics.kt",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/punctuation/MechanicalRefusalDiagnostics.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ExperimentModels.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/CompactAutoCorrectionPolicy.kt",
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt",

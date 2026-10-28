@@ -10,6 +10,11 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.*
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.*
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticEvent
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticText
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnostics
 import io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingModel
 import java.lang.reflect.Proxy
 import org.junit.Assert.*
@@ -931,6 +936,70 @@ class CorrectionBoundaryTest {
             assertNull(f.controller.state.lastAutoEdit)
             assertTrue(f.calls.none { it.startsWith("get") })
         }
+    }
+
+    @Test fun `generic deterministic ranking refusal keeps its observed local reason but model refusal stays authoritative`() {
+        for (completeLocal in listOf(false, true)) for (useModel in listOf(false, true)) {
+            val f = Fixture()
+            val events = mutableListOf<DiagnosticEvent>()
+            f.controller.setDiagnostics(object : TypingDiagnostics {
+                override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                override fun invalidate() = Unit
+                override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { events += event }
+            })
+            f.raw("helllo")
+            val request = f.controller.beginCandidateRequest(1, KeyboardLanguage.ENGLISH)!!
+            val items = listOf("hello", "help", "held", "hero").map { word ->
+                GeneratedCandidate(word, word, word, KeyboardLanguage.ENGLISH, false, 4, 1, 1,
+                    EditFeatures(1.0, 0, 0.0), kotlin.math.abs(word.length - request.token.length), CasePattern.LOWER)
+            }
+            val local = if (completeLocal) LocalSearchEvidence(CandidateCompletion.COMPLETE, emptyList(), 1, 0)
+                else LocalSearchEvidence.NONE
+            assertTrue(f.controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision,
+                request.requestId, CandidateGeneration(request.token, items, CandidateCompletion.COMPLETE,
+                    false, null, 1, 4, local))))
+            if (useModel) {
+                val input = f.controller.beginModelRanking(1)!!
+                assertTrue(f.controller.acceptModelRanking(ScoringReply(input.token, ScoringCode.OK, 0,
+                    input.token.candidateIds.map { NumericScore(it, if (it == 1) -1.0 else -20.0, 1) })))
+            }
+            events.clear()
+            f.type(" ")
+            assertEquals("helllo ", f.document)
+            assertNull(f.controller.state.lastAutoEdit)
+            val expected = when {
+                useModel -> DiagnosticReason.NOT_QUALIFIED
+                completeLocal -> DiagnosticReason.LOCAL_SEARCH_EMPTY
+                else -> DiagnosticReason.SEARCH_INCOMPLETE
+            }
+            assertEquals("completeLocal=$completeLocal useModel=$useModel", expected,
+                events.single { it.kind == DiagnosticKind.BOUNDARY }.reason)
+            assertTrue(f.calls.none { it.startsWith("get") })
+        }
+    }
+
+    @Test fun `specific joint refusal is not replaced by the earlier empty local search`() {
+        val f = Fixture()
+        f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+        f.controller.setPersonalization(object : TypingPersonalization {
+            override fun jointAutomaticEvaluation(context: String, generation: CandidateGeneration,
+                language: KeyboardLanguage, baselineWord: String?) =
+                io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionEvaluation(
+                    refusal = io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionRefusal.RESOURCE_UNAVAILABLE)
+        }, KeyboardLanguage.RUSSIAN)
+        val events = mutableListOf<DiagnosticEvent>()
+        f.controller.setDiagnostics(object : TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+            override fun invalidate() = Unit
+            override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { events += event }
+        })
+        f.raw("словоо")
+        f.publishMany("слово", "слова", "словом", "словах")
+        events.clear()
+        f.type(" ")
+        assertEquals("словоо ", f.document)
+        assertEquals(DiagnosticReason.RESOURCE_UNAVAILABLE, events.single { it.kind == DiagnosticKind.BOUNDARY }.reason)
+        assertNull(f.controller.state.lastAutoEdit)
     }
 
     @Test fun `only acknowledged manual choices train and stale choices never train`() {

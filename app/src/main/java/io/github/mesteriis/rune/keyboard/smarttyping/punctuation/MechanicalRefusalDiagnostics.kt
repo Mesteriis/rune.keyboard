@@ -1,7 +1,6 @@
-package io.github.mesteriis.rune.keyboard.smarttyping.diagnostics
+package io.github.mesteriis.rune.keyboard.smarttyping.punctuation
 
-import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.PunctuationAction
-import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.UnchangedPunctuationReason
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason
 
 /** Only selected refusal metadata at explicit boundary actions; ordinary keys never fill the journal. */
 internal object MechanicalRefusalDiagnostics {

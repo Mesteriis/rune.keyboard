@@ -31,7 +31,7 @@ data class DiagnosticEvent(val kind: DiagnosticKind, val reason: DiagnosticReaso
     val correctionId: Long = 0, val recoveryCompletion: DiagnosticCompletion = DiagnosticCompletion.NONE,
     val recoveryInspectedStates: Int = 0, val recoveryVerifiedTerminals: Int = 0,
     val session: Long, val revision: Long,
-    val configuredFeatures: Int = 0, val effectiveFeatures: Int = 0, val typingProfile: Int = 0)
+    val configuredFeatures: Int = 0, val effectiveFeatures: Int = 0, val typingProfile: Int = 0, val editorType: Int = 0)
 data class DiagnosticText(
     val input: String = "", val context: String = "", val original: String = "",
     val candidates: List<String> = emptyList(), val manualCandidates: List<String> = emptyList(),
@@ -95,7 +95,7 @@ class DiagnosticsBoundaryTest(unittest.TestCase):
                 self.assertIn('feature vocabulary must be exact', self.errors(case, variant))
 
     def test_feature_masks_cannot_carry_text(self):
-        for field in ('configuredFeatures', 'effectiveFeatures', 'typingProfile'):
+        for field in ('configuredFeatures', 'effectiveFeatures', 'typingProfile', 'editorType'):
             case = fixture('debug')
             path = ROOT.format('main') + 'TypingDiagnostics.kt'
             case[path] = case[path].replace('val ' + field + ': Int', 'val ' + field + ': String')
@@ -154,8 +154,8 @@ class DiagnosticsBoundaryTest(unittest.TestCase):
     def test_metadata_body_payload_is_rejected(self):
         case = fixture('debug')
         path = ROOT.format('main') + 'TypingDiagnostics.kt'
-        case[path] = case[path].replace('val typingProfile: Int = 0)',
-            'val typingProfile: Int = 0) { var payload: String = "" }')
+        case[path] = case[path].replace('val editorType: Int = 0)',
+            'val editorType: Int = 0) { var payload: String = "" }')
         self.assertIn('diagnostics metadata field type', self.errors(case))
 
     def test_final_provider_cannot_hide_nested_encoder(self):
@@ -169,8 +169,8 @@ class DiagnosticsBoundaryTest(unittest.TestCase):
                      'fun payload(): String = "input"'):
             case = fixture('debug')
             path = ROOT.format('main') + 'TypingDiagnostics.kt'
-            case[path] = case[path].replace('val typingProfile: Int = 0)',
-                'val typingProfile: Int = 0) { ' + body + ' }')
+            case[path] = case[path].replace('val editorType: Int = 0)',
+                'val editorType: Int = 0) { ' + body + ' }')
             self.assertIn('diagnostics metadata field type', self.errors(case))
 
     def test_contract_cannot_hide_nested_or_duplicate_declaration(self):

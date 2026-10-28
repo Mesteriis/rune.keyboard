@@ -104,6 +104,7 @@ class DiagnosticsTerminalTest {
                 outcomes.forEach { (_, line) ->
                     assertTrue(line.contains("\"session\":$session,"))
                     assertTrue(line.contains("\"revision\":$revision,"))
+                    assertTrue(line.contains("\"editorType\":1,"))
                     assertFalse("Terminal record contains text fields", line.contains("\"input\""))
                     assertFalse(line.contains("\"context\"")); assertFalse(line.contains("\"candidates\""))
                 }

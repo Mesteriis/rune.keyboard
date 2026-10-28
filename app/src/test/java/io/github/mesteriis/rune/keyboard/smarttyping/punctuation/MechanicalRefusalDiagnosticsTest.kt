@@ -1,7 +1,6 @@
-package io.github.mesteriis.rune.keyboard.smarttyping.diagnostics
+package io.github.mesteriis.rune.keyboard.smarttyping.punctuation
 
-import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.PunctuationAction
-import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.UnchangedPunctuationReason
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason
 import org.junit.Assert.*
 import org.junit.Test
 

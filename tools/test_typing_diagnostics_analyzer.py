@@ -22,6 +22,25 @@ class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
         self.assertEqual(reasons * 5, [e['reason'] for e in report['refusalEvents']])
         self.assertEqual([], report['outcomes'])
 
+    def test_schema_nine_editor_type_is_required_bounded_and_preserved_without_fabricating_text(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
+        flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)
+        common = dict(schema=9, session=1, revision=2, source='LOCAL_POLICY', kind='BOUNDARY', reason='PERSONAL_VETO',
+                      features=flags, effectiveFeatures=flags, typingProfile=0, correctionId=0,
+                      localCompletion='NONE', localInspectedStates=0, localVerifiedTerminals=0,
+                      recoveryCompletion='NONE', recoveryInspectedStates=0, recoveryVerifiedTerminals=0)
+        for value in [0, 1, 65, 4095]:
+            report = analyze_events([dict(common, editorType=value)])
+            self.assertEqual(value, report['refusalEvents'][0]['editorType'])
+            self.assertEqual([], report['outcomes'])
+        for value in [None, True, '65', -1, 4096, 1.5]:
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'editorType'):
+                analyze_events([dict(common, editorType=value)])
+        with self.assertRaisesRegex(ValueError, 'editorType'):
+            analyze_events([common])
+        legacy = dict(common, schema=8)
+        self.assertNotIn('editorType', analyze_events([legacy])['refusalEvents'][0])
+
     def test_mechanical_refusals_survive_without_claiming_an_automatic_edit(self):
         from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
         flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)

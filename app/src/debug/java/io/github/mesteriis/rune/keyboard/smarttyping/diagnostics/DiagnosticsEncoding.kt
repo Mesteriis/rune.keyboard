@@ -25,11 +25,12 @@ internal object DiagnosticsEncoding {
         "\"${it.field}\":${mask and it.bit != 0}"
     }
 
-    private fun fields(event: DiagnosticEvent) = "{\"schema\":8,\"kind\":\"${event.kind.name}\"," +
+    private fun fields(event: DiagnosticEvent) = "{\"schema\":9,\"kind\":\"${event.kind.name}\"," +
         "\"reason\":\"${event.reason.name}\",\"session\":${event.session.coerceIn(0, 1_000_000_000)}," +
         "\"reasonCode\":${event.reason.ordinal}," +
         "\"revision\":${event.revision.coerceIn(0, 1_000_000_000)}," +
         "\"typingProfile\":${event.typingProfile.takeIf { it in 0..2 } ?: 0}," +
+        "\"editorType\":${event.editorType.takeIf { it in 0..0xFFF } ?: 0}," +
         "\"features\":${features(event.configuredFeatures)}," +
         "\"effectiveFeatures\":${features(event.effectiveFeatures and event.configuredFeatures)}," +
         "\"candidateCount\":${event.candidateCount.coerceIn(0, 8)}," +

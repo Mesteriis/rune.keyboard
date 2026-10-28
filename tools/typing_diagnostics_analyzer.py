@@ -77,6 +77,9 @@ def _event_fields(event):
             for name, upper in (("localInspectedStates", 8_192), ("localVerifiedTerminals", 64)):
                 if not 0 <= _integer(event.get(name), name) <= upper:
                     raise ValueError(f"{name} outside bounds")
+    if schema >= 9:
+        if not 0 <= _integer(event.get("editorType"), "editorType") <= 0xFFF:
+            raise ValueError("editorType outside bounds")
     if schema >= 8:
         if "reasonCode" in event and not 0 <= _integer(event["reasonCode"], "reasonCode") <= 255:
             raise ValueError("reasonCode outside bounds")
@@ -272,7 +275,8 @@ def analyze_events(events, ground_truth=None):
                             kind == "CANDIDATES" and reason in CANDIDATE_REJECTION_REASONS):
             refusal_events.append({"kind": kind, "reason": reason, "session": session,
                 "revision": revision, "source": event.get("source", "NONE"),
-                "requestId": event.get("requestId", 0), "operationId": event.get("operationId", 0)})
+                "requestId": event.get("requestId", 0), "operationId": event.get("operationId", 0),
+                **({"editorType": event["editorType"]} if schema >= 9 else {})})
         if schema >= 4:
             config = (session, event["features"], event["effectiveFeatures"], event.get("typingProfile") if schema >= 5 else None)
             if config != last_configuration:

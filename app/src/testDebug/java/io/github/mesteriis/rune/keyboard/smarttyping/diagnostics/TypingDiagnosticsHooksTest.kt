@@ -13,6 +13,42 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class TypingDiagnosticsHooksTest {
+    @Test fun editorMetadataDropsFlagsAndUpdatesOnlyForTheCurrentSession() {
+        val observer = Observer()
+        val controller = TypingSessionController(jvmGraphemes)
+        controller.setDiagnostics(observer)
+        val flags = android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE or
+            android.text.InputType.TYPE_TEXT_FLAG_CAP_SENTENCES or android.text.InputType.TYPE_TEXT_FLAG_AUTO_CORRECT
+        for ((type, expected) in listOf(1 to 1, 65 to 65, 97 to 97)) {
+            observer.records.clear()
+            controller.startSession(EditorContext.from(type or flags, 0).copy(customActionLabel = "private-action-sentinel"), 0, 0)
+            controller.recordInput("a")
+            assertEquals(TypingTextResult.HANDLED, controller.typeText("a") { true })
+            assertTrue(observer.events.isNotEmpty())
+            assertTrue(observer.events.any { it.kind == DiagnosticKind.EDITOR })
+            for (event in observer.events) {
+                assertEquals(expected, event.editorType)
+                val metadata = DiagnosticsEncoding.metadata(event).decodeToString()
+                assertTrue(metadata.contains("\"editorType\":$expected,"))
+                assertFalse(metadata.contains("private-action-sentinel"))
+                assertFalse(metadata.contains("packageName"))
+            }
+        }
+    }
+
+    @Test fun staleReplyFromAnotherEditorHasUnknownTypeInsteadOfTheNewEditorsType() {
+        val observer = Observer(); val controller = prepared(observer)
+        val input = controller.beginModelRanking(1)!!
+        controller.startSession(EditorContext.from(65, 0), 0, 0)
+        observer.records.clear()
+        assertFalse(controller.acceptModelRanking(ScoringReply(input.token, ScoringCode.CANCELLED, 0, emptyList())))
+        val stale = observer.events.single { it.kind == DiagnosticKind.RANKING }
+        assertEquals(input.token.sessionId, stale.session)
+        assertEquals(0, stale.editorType)
+        controller.recordInput("a")
+        assertEquals(65, observer.events.last().editorType)
+    }
+
     @Test fun lateJointRefusalKeepsTheOriginalRequestRevisionAndCannotMutateProtectedText() {
         val observer = Observer()
         val controller = TypingSessionController(jvmGraphemes,
@@ -210,11 +246,11 @@ class TypingDiagnosticsHooksTest {
         assertTrue(encoded.contains("\"elapsedMs\":17"))
     }
 
-    @Test fun schemaEightAttributesBothSearchCompletionsAndDecisionSource() {
+    @Test fun schemaNineAttributesBothSearchCompletionsAndDecisionSource() {
         val observer = Observer(); prepared(observer)
         val event = observer.events.last { it.kind == DiagnosticKind.CANDIDATES }
         val encoded = DiagnosticsEncoding.metadata(event).decodeToString()
-        assertTrue(encoded.contains("\"schema\":8"))
+        assertTrue(encoded.contains("\"schema\":9"))
         assertTrue(encoded.contains("\"completion\":\"COMPLETE\""))
         assertTrue(encoded.contains("\"localCompletion\":\"UNAVAILABLE\""))
         assertTrue(encoded.contains("\"source\":\"LOCAL_POLICY\""))

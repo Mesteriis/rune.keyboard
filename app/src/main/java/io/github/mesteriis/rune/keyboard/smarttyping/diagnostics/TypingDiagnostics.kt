@@ -52,6 +52,8 @@ data class DiagnosticEvent(
     val recoveryCompletion: DiagnosticCompletion = DiagnosticCompletion.NONE,
     val recoveryInspectedStates: Int = 0,
     val recoveryVerifiedTerminals: Int = 0,
+    /** Schema 9: class/variation bits only; zero also denotes unknown originating editor. */
+    val editorType: Int = 0,
 )
 
 /** Constructed only inside an admitted lazy callback; no editor read or arbitrary metadata. */
