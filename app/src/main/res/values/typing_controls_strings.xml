@@ -4,9 +4,9 @@
     <string name="settings_app_profiles">Use app profiles</string>
     <string name="settings_app_profiles_summary">Apply a chosen typing profile when switching apps. Learning and collection always follow the main switches.</string>
     <string name="settings_collect_examples">Save confirmed examples</string>
-    <string name="settings_collect_examples_summary">Keep a bounded local set of explicit corrections and confirmed words to test suggestion quality.</string>
+    <string name="settings_collect_examples_summary">Save original/expected words with language, hashes, feedback source, edit type, and training/holdout/conflict flags. Up to 512 records, 512 KiB. Hashes do not encrypt words. Turning this off stops saving new raw words; also turn off typo-pattern learning to stop new hash records. Reset is in Learning lab.</string>
     <string name="settings_typo_patterns">Learn my typo patterns</string>
-    <string name="settings_typo_patterns_summary">Learn recurring edit types from confirmed corrections and use them to order dictionary suggestions. With example saving enabled, inactive candidates are tested overnight while charging and idle; a regression is never activated.</string>
+    <string name="settings_typo_patterns_summary">Learn recurring edit types from confirmed corrections and use them to order dictionary suggestions. With example saving enabled, inactive candidates are tested overnight while charging and idle; a regression is never activated. Language, word hashes, feedback source, edit type and training/holdout/conflict flags are saved even with raw-example collection off. Hashes do not encrypt words. Active and rollback edit-pattern counts are also stored. Turn off both learning-lab switches to stop new evidence; reset in Learning lab removes it.</string>
     <string name="controls_words_title">Protected words</string>
     <string name="controls_words_intro">Words are protected separately for each language. Tap an entry to remove it. Turning protection off keeps the list.</string>
     <string name="controls_apps_title">App profiles</string>

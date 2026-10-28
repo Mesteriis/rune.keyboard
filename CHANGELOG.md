@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- Correct local-learning privacy disclosures in English/Russian consent, the
+  privacy policy and guide: word/phrase fragments, optional raw correction
+  examples, deterministic hashes, bounds, incognito exclusions and separate
+  reset controls are explicit. Disabling raw-example collection can still leave
+  hash-only typo-pattern recording enabled; existing data is kept until reset.
+  This changes copy only, not storage, consent defaults, model policy or release
+  version metadata.
+
 - Normalize native source/build paths at compilation and verify the exact F-Droid
   preparation delta without restoring removed wrappers. The renewed runtime is
   qualified with the exact model on Fold and ARM64 API 26/37 (16 KiB on API 37),

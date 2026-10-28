@@ -24,6 +24,11 @@ jobs:
       - name: Verify numeric Chrome fixture and independent DOM gate
         if: matrix.profile == 'stdlib'
         run: python -m unittest discover -s tools/qa/chrome-editor -p 'test_*.py' -v
+      - name: Check source-bound local-learning privacy disclosures
+        if: matrix.profile == 'stdlib'
+        run: |
+          python tools/check_learning_disclosures.py
+          python -m unittest discover -s tools -p test_learning_disclosures.py -v
       - name: Install pinned scientific dependencies
         if: matrix.profile == 'scientific'
         run: |

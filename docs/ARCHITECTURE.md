@@ -2,7 +2,7 @@
 
 ## Цели
 
-Rune оптимизируется под низкую задержку, предсказуемый lifecycle и минимальную поверхность риска. IME остаётся без сетевого и model-runtime кода. Отдельная подсистема локальной модели использует только системный `DownloadManager`, неперсистентный `JobScheduler` и приватный worker process; Compose, DI, WorkManager, coroutines, HTTP-клиентов, аналитики и базы данных нет.
+Rune оптимизируется под низкую задержку, предсказуемый lifecycle и минимальную поверхность риска. IME остаётся без сетевого и model-runtime кода. Подсистема локальной модели использует системный `DownloadManager`, неперсистентный `JobScheduler` и приватный worker process. Отдельный неперсистентный JobScheduler обслуживает ночную проверку локальных типов опечаток; Compose, DI, WorkManager, coroutines, HTTP-клиентов, аналитики и базы данных нет.
 
 ## Поток ввода
 
@@ -59,7 +59,7 @@ Rune регистрирует один системный subtype на три я
 - `intelligence/inference` — private scoring service, один worker и узкий native adapter;
 - `:runtime-llama` — pinned llama.cpp, opaque JNI handle и CPU-only `load/selfTest/scoreCandidates/cancel/unload`.
 
-Подсистема модели не зависит от `ime/**`. Статический gate разрешает IME только scoring client interface и bounded value contracts; delivery, activation, storage, JNI и network недоступны транзитивно. Runtime предоставляет `load/selfTest/cancel/unload` и bounded `scoreCandidates`; IME ещё не вызывает модель. Общего `generate()` нет.
+Подсистема модели не зависит от `ime/**`. Статический gate разрешает IME только scoring client interface и bounded value contracts; delivery, activation, storage, JNI и network недоступны транзитивно. Runtime предоставляет `load/selfTest/cancel/unload` и bounded `scoreCandidates`; IME вызывает узкий scoring client для допустимых активных потребителей, без доступа к загрузке, активации или JNI. Общего `generate()` нет.
 
 Scoring получает 1–8 продолжений с уникальными числовыми IDs. Kotlin и JNI
 независимо проверяют строгий UTF-8 и byte limits; tokenizer дополнительно
@@ -497,8 +497,10 @@ suggestion и меняет только Rune-owned composing span после я�
 - backup и cleartext traffic отключены;
 - вибрация реализована через `View.performHapticFeedback`, поэтому Rune не просит `android.permission.VIBRATE`; интенсивности выражены платформенными haptic-константами, а не амплитудами;
 - `EditorContext.inputPolicy` (`NORMAL`/`SENSITIVE`/`INCOGNITO`) разделяет owned-композицию, чтение редактора и персонализацию. Пароль всегда `SENSITIVE`. `IME_FLAG_NO_PERSONALIZED_LEARNING` без пароля даёт `INCOGNITO`: допускаются owned-композиция, квалифицированные исправления и механика, но не чтения редактора, персональные подсказки/обучение или диагностика. Popup preview по-прежнему допускается только в `NORMAL`;
-- история ввода на диске, clipboard, аналитика и crash SDK отсутствуют; composing и текущий Rune-owned контекст существуют только в RAM;
+- composing и текущий Rune-owned контекст находятся в RAM. Включённое персональное обучение сохраняет ограниченные слова/фрагменты фраз в `no_backup/personal-typing/profile.bin`; лаборатория — хеши и, при включённом сборе, исходные/ожидаемые слова в `no_backup/learning-lab/learning.bin`. Clipboard history, аналитики и crash SDK нет. Поля, лимиты и независимые команды удаления перечислены в [руководстве](USER_GUIDE.ru.md#локальные-данные-и-согласие).
 - sensitive/raw редакторы не создают composing/context. В incognito Caps работают только после собственной границы Rune, без `getCursorCapsMode`; double-space использует только owned suffix. `NO_SUGGESTIONS` продолжает подавлять candidates и исправления, в том числе вместе с NPL.
+
+Проверка `python3 tools/check_learning_disclosures.py` связывает поля семи сохраняемых структур, восемь лимитов и EN/RU-тексты согласия. Она не заменяет аудит остальных хранилищ или исходников ассетов.
 
 ### Осознанное расширение инварианта чтения текста
 

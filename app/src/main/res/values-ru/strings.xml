@@ -146,7 +146,7 @@
     <string name="candidate_apply_continuation">Вставить продолжение %1$s</string>
     <string name="settings_section_personal">Персонализация</string>
     <string name="settings_personal_learning">Учиться на моих исправлениях</string>
-    <string name="settings_personal_learning_summary">Запоминать выбранные слова и отменённые замены на этом устройстве. Обучение в чувствительных полях выключено.</string>
+    <string name="settings_personal_learning_summary">Сохранять на устройстве подтверждённые слова, пары набранных и выбранных слов с числом подтверждений и запретом замены, а также короткие начала и продолжения фраз с языком и частотой. Фразы собираются при наборе, включая слова без исправлений. До 1 МиБ. Пароли и инкогнито исключены. Выключение сохраняет профиль; «Удалить данные персонализации» удаляет его.</string>
     <string name="settings_touch_personalization">Учитывать мои касания</string>
     <string name="settings_touch_personalization_summary">Учитывать точки нажатий при выборе подсказок. Обучение по подтверждённым словам, отдельно для размеров клавиатуры и языков.</string>
     <string name="settings_phrase_suggestions">Мои продолжения фраз</string>

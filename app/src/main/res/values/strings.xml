@@ -146,7 +146,7 @@
     <string name="candidate_apply_continuation">Insert continuation %1$s</string>
     <string name="settings_section_personal">Personal typing</string>
     <string name="settings_personal_learning">Learn from my corrections</string>
-    <string name="settings_personal_learning_summary">Remember chosen words and rejected replacements on this device. Sensitive fields are excluded.</string>
+    <string name="settings_personal_learning_summary">Save confirmed words, typed/chosen word pairs with acceptance counts and rejection flags, and short phrase prefixes/continuations with language and support counts on this device. Phrases are learned while typing, including words you did not correct. Up to 1 MiB. Password and incognito fields are excluded. Turning this off keeps the profile; Delete personal typing data removes it.</string>
     <string name="settings_touch_personalization">Adapt to my taps</string>
     <string name="settings_touch_personalization_summary">Use confirmed choices to rank suggestions by where you tap. Each keyboard size and language learns separately.</string>
     <string name="settings_phrase_suggestions">Personal phrase suggestions</string>

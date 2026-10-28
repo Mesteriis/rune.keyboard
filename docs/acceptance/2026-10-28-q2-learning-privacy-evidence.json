@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "card": "Q2",
+  "status": "privacy and consent slice locally verified; full Q2 remains open",
+  "sourceBase": "757c755fa9af88bbe4cb8cd0c8060723f0d6136c",
+  "sourceBindings": {
+    ".github/workflows/ci.yml": "5d05630dc76b2b04e42da9bc20b60c89f709679361133041efb3b1d1612bc38f",
+    "CHANGELOG.md": "25394fe181db4f87072044b5ddc45cba77e130342c2a4af68f69af792acceba0",
+    "PRIVACY.md": "c260a2dc2809c89ff263d37954749cd61fc26ccf4dec737ee2fcb64a5b7557b5",
+    "docs/ARCHITECTURE.md": "2677c0858d6856ba7158c1e847bcecb66c0c4f328f1262bb74785b90cb812a13",
+    "docs/USER_GUIDE.ru.md": "c80ef6c2b41b285d77919b710fdef19ab80be38b4e7b9737b4261fec52fb09d2",
+    "tools/check_learning_disclosures.py": "959b478317d37943c788e8b6af589d3d4aba0c632e8986689d3851df3a91b8b6",
+    "tools/test_learning_disclosures.py": "2793c0e0ecde75c5c90c451b1d2aba78fbbaa16b9dc514cfa71e3c0d1c3b67db",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/LearningConsentLayoutInstrumentedTest.kt": "ff8b0751598d6abb65a5a3f9263c184fe71706c95f5531c6aade23abe1bd3d6a",
+    "app/src/main/res/values/strings.xml": "27dc5a906b506edca6eefb5769c47d5fdeca5fa61f5792547c9cfbe46b5f5678",
+    "app/src/main/res/values/typing_controls_strings.xml": "22e6f060e53470dc05d10c30c666376e134a256fc37ee643c2038aaec2b90afc",
+    "app/src/main/res/values/learning_strings.xml": "4784bcf7714c3d90453d3e8ec28a09859c11dc528a95b8c11942fd5261491c49",
+    "app/src/main/res/values-ru/strings.xml": "8ecd8f52438f15c686ae1e64e14a2c615e51c895bd9ef6f32e2ce03a9919d86d",
+    "app/src/main/res/values-ru/typing_controls_strings.xml": "ba49eeefed33a070fdb6eb6628747f199139b41dfdfd34cf01cbe8d844c4445d",
+    "app/src/main/res/values-ru/learning_strings.xml": "092ed01b50676fca0544c631a4f1a325b65632a03d2f5e255aab443de2ab1740"
+  },
+  "persistenceSourceBindings": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/PersonalTypingCodec.kt": "ad484fd2e5305f464afa420d27655e46148b3f9fb2f406522b4211abe65ae5f2",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/PersonalTypingModel.kt": "712283ec8716ac31cec1b7ee4f6c006ebbf9f77dbd7006de642e551e5c625126",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/PersonalTypingStore.kt": "88785ac049082749485488df48371bee7ef9278f5541200d9de24422cd9fd18b",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/AndroidTypingPersonalization.kt": "604847d47e77112b31317dbd30b9ae72963ae496566a627cdfa8f150ce6fef95",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/learning/LearningCodec.kt": "2791e06843d6bfba3fc3444229e732b82071e8b3d52d062f3ed7cb0adaadc93f",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/learning/LearningModel.kt": "dcb6b2e29be714693ef449b1a3eb7f6372d259c6c40b7a35fb3898315eebcd09",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/learning/LearningStore.kt": "18eb2186d99bf00d48b7fa7bffa6466a72b5a13527fb530cf6595f9c49fca876",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt": "5f57ab3defeb612445cd9e405ba47a13b7087c0024d221be4770dda1238e2fc4",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SettingsActivity.kt": "702080322a2f07779b2f78904cbc15e0d591c5f085f330400aef89660f43918d",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SettingsToggleRow.kt": "be9d8b9971f0671f541c35bb52f3db26aca0d038c0ca51c5758ad1e69b8dee20",
+    "app/src/main/res/layout/view_settings_row.xml": "82ac89bb36abb015b7c5814cd69057f05d35ab3e6179809ec47b6203eae411a4"
+  },
+  "checks": {
+    "disclosureRecords": 7,
+    "reviewedWriters": 3,
+    "limits": 8,
+    "python312": {
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0
+    },
+    "python314": {
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0
+    },
+    "ciWired": true,
+    "hostedCiRun": false
+  },
+  "jvm": {
+    "tests": 1355,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build": {
+    "exitCode": 0,
+    "elapsedSeconds": 12.848526292000315
+  },
+  "native": {
+    "api": 26,
+    "tests": 2,
+    "completed": 2,
+    "skips": 0,
+    "exitCode": 0,
+    "passed": true,
+    "elapsedSeconds": 1.8362262080008804,
+    "apkSha256": {
+      "app": "16f02371b34420f58be22b7a5ae465057d1152c0e9b265539db5085fbd2c435e",
+      "test": "b31dc3001300890be3bd7477507550ae60351c5be96a1a611bdb76894c27fea0"
+    },
+    "logSha256": "e2d449c3b0ce80c3fb3a94836afbbab49bad1935cfae299a42d674414944d367"
+  },
+  "nativeCases": {
+    "locales": [
+      "en",
+      "ru"
+    ],
+    "switches": 3,
+    "fontScales": [
+      1.0,
+      1.3
+    ],
+    "widthDp": 320,
+    "attachedRows": 12
+  },
+  "failedNativeAttempts": [
+    {
+      "api": 26,
+      "tests": 2,
+      "completed": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "passed": false,
+      "elapsedSeconds": 0.1864280419995339,
+      "apkSha256": {
+        "app": "5a1b1dd2bde2ebcf81391919ab89135f0919c28516109031e926dd3cc91791f5",
+        "test": "1ef9cbfa0cf36dc741ce28f7e90568197cfc55b04581f6547e1dec980653cf74"
+      },
+      "logSha256": "4d38a3eccc32661f8f069192eb2168ea979e5aca7e39d1e653d6c86d29de6d1e"
+    },
+    {
+      "api": 26,
+      "tests": 2,
+      "completed": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "passed": false,
+      "elapsedSeconds": 0.18662058399968373,
+      "apkSha256": {
+        "app": "5a1b1dd2bde2ebcf81391919ab89135f0919c28516109031e926dd3cc91791f5",
+        "test": "d489c65b39555f9de02eddbc47656e0c665f16fbd5c52164e7962ee099a60e4b"
+      },
+      "logSha256": "2b6a939ac1ac7acfd1f4c5a72f762fc37bc11f979ae4ab5531dafafdd850064e"
+    }
+  ],
+  "ownerPreservation": {
+    "pendingGuideHunksPreservedExactly": true,
+    "pendingGuideHunksExcludedFromCommit": true,
+    "otherPendingPayloadHashesUnchanged": 4,
+    "originalUntrackedPaths": 98,
+    "allOriginalPathsRetained": true
+  },
+  "cleanup": {
+    "taskEmulatorStopped": true,
+    "taskAvdDeleted": true,
+    "physicalDeviceUsed": false
+  },
+  "cleanReleaseProfile": "pending source commit and clean-checkout integration",
+  "logs": {
+    "build-attached.log": "f89bf64a33181ddc1d235b4fe16eab4c18a8e1447ccc271171de202cc4ab6815",
+    "disclosure-sourcebound-tests.log": "522e22d7b38f63b79ce70885c6cf98846e48bf9be82e157e3de592c8ce7739a9",
+    "disclosure-sourcebound-py312-tests.log": "584185f96878676593fc968fe583439861d05de473e7d4a66545764e383c5de9",
+    "native-attached/native-emulator.log": "e2d449c3b0ce80c3fb3a94836afbbab49bad1935cfae299a42d674414944d367"
+  },
+  "limits": [
+    "Only two learning stores audited here; Q2 source cascade/asset notices/provenance/scanner work remains.",
+    "Component layout/node evidence on API26; not TalkBack navigation or Fold acceptance.",
+    "No storage/default/admission/ranking change, training, release-version change or publication.",
+    "Guide source binding uses task-only staged bytes; older owner hunks remain unstaged."
+  ]
+}
