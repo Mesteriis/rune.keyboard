@@ -2,6 +2,7 @@ package io.github.mesteriis.rune.keyboard.smarttyping.session
 
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneration
+import io.github.mesteriis.rune.keyboard.smarttyping.quality.AutomaticQualityApplication
 
 /** One immediate automatic edit of a Rune-owned span; never an editor-wide undo stack. */
 class UndoableTextEdit internal constructor(
@@ -21,6 +22,7 @@ class UndoableTextEdit internal constructor(
 }
 
 internal class UndoCorrectionCandidates(val generation: CandidateGeneration, val language: KeyboardLanguage,
-    val requestId: Long) {
+    val requestId: Long, val qualityApplication: AutomaticQualityApplication? = null) {
+    val qualitySource get() = qualityApplication?.source
     override fun toString(): String = "UndoCorrectionCandidates(redacted)"
 }

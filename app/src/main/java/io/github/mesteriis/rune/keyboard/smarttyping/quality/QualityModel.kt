@@ -36,6 +36,7 @@ class QualityModel {
     private var metricsEnabled = false
     private var shadowEnabled = false
     private var eligible = false
+    private var collectionPeriod = QualityCollectionPeriod()
     private val events = LongArray(QualityEvent.entries.size)
     private val latency = LongArray(LATENCY_BUCKET_COUNT)
     private val shadow = LongArray(ShadowResult.entries.size)
@@ -46,6 +47,8 @@ class QualityModel {
     private var lastComparedRevision: Long? = null
 
     fun configure(metricsEnabled: Boolean, shadowEnabled: Boolean, eligible: Boolean) {
+        if (this.metricsEnabled != metricsEnabled || this.eligible != eligible)
+            collectionPeriod = QualityCollectionPeriod()
         if (this.metricsEnabled != metricsEnabled || this.shadowEnabled != shadowEnabled ||
             this.eligible != eligible || !eligible || !shadowEnabled
         ) invalidatePending()
@@ -61,6 +64,16 @@ class QualityModel {
         if (metricsEnabled && eligible)
             increment(automaticSources, source.ordinal * AutomaticQualityOutcome.entries.size + outcome.ordinal)
         else false
+
+    fun recordAutomaticApplication(source: AutomaticQualitySource): AutomaticQualityApplication? =
+        if (recordAutomatic(source, AutomaticQualityOutcome.APPLIED)) AutomaticQualityApplication(source, collectionPeriod)
+        else null
+
+    fun recordAutomaticUndo(application: AutomaticQualityApplication): Boolean {
+        if (application.period !== collectionPeriod || application.consumed) return false
+        application.consumed = true
+        return recordAutomatic(application.source, AutomaticQualityOutcome.EXPLICIT_UNDO)
+    }
 
     fun modelResponseMillis(durationMillis: Long): Boolean {
         if (!metricsEnabled || !eligible || durationMillis < 0L) return false
@@ -120,6 +133,7 @@ class QualityModel {
         automaticSources.toList(), modelResponse.toList())
 
     fun restore(snapshot: QualitySnapshot) {
+        collectionPeriod = QualityCollectionPeriod()
         snapshot.events.toLongArray().copyInto(events)
         snapshot.candidateResponseBuckets.toLongArray().copyInto(latency)
         snapshot.shadow.toLongArray().copyInto(shadow)

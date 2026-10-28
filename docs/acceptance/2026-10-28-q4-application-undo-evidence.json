@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "card": "Q4",
+  "completeCard": false,
+  "parentCommit": "8dee030",
+  "scope": "Acknowledged per-source automatic applications and exact Undo with counted-application collection origin",
+  "applicationCommitPaths": 3,
+  "undoCommitPaths": 2,
+  "activeAutomaticSourceCohortsTested": 13,
+  "contextualManualOnlyNotCountedAsAutomatic": true,
+  "collectionOrigin": {
+    "inMemoryOnly": true,
+    "containsTypedText": false,
+    "singleUse": true,
+    "recorderBound": true,
+    "revokedBy": [
+      "metrics transition",
+      "eligibility transition",
+      "reset",
+      "restore"
+    ],
+    "shadowTogglePreservesOrigin": true,
+    "applicationMustActuallyIncrement": true
+  },
+  "jvm": {
+    "tests": 1322,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "qualityJvm": {
+    "tests": 34,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "android": {
+    "api": 26,
+    "ownedEmulatorVerified": true,
+    "passed": true,
+    "tests": 4,
+    "completed": 4,
+    "skips": 0,
+    "exitCode": 0,
+    "methods": [
+      "actualCorrectionAndUndoCountOnlyAcknowledgedEligibleActions",
+      "qualityDashboardShowsNumericEventsAndResetClearsDisk",
+      "realAtomicQualityStorageMigratesV2AndReadsTheFullV3Payload",
+      "qualitySourceResourceTablesRetainTheirEnglishAndRussianDimensions"
+    ],
+    "apkSha256": {
+      "app/build/outputs/apk/debug/app-debug.apk": "ab3ccf85fc02c36f803cbcb194584b2ab3074e9aec2cdb0a893f9122f28e6071",
+      "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "5c3d27efe8f264b14209ffcd3ffc6380206eab4f2a38d001e5907007644f4f72"
+    },
+    "logSha256": "bb8ee1ba8fe3761c85746b124a590e32fe2868350ecd83710e5b173d372a4559",
+    "elapsedSeconds": 30.09641308290884
+  },
+  "currentSourceReplay": {
+    "rows": 15288,
+    "excludedFields": [
+      "fullTokenGenerationNanos",
+      "hostStageNanos"
+    ],
+    "nonTimingDifferences": 0,
+    "baseline": "Q3 final frozen candidate observations, not a new parent build",
+    "currentSourceCount": 90,
+    "assetCount": 69,
+    "runs": [
+      {
+        "name": "stress",
+        "rows": 1676,
+        "mode": "joint-production",
+        "inputSha256": "fa400451aaa627aa07ade0ed75d50cffa26f6f3f24727023bb4fae2c199caeea",
+        "baselineObservationsSha256": "bd9526635156c894f963acc6561ae9999527f72722648d81aa7cbe91817c1650",
+        "candidateObservationsPath": "build/review-q4-hooks-20261028/origin-replay/stress/observations.jsonl",
+        "candidateObservationsSha256": "39e4e4e5bf8ab7be1eb77c43f796cf74b73d7bf78eb14b39222c861b949c622f",
+        "nonTimingDifferences": 0,
+        "boundaryReasons": {
+          "ORIGINAL_VALID": 300,
+          "SERVICE_REFUSED": 76,
+          "SEARCH_INCOMPLETE": 167,
+          "TOO_SHORT": 179,
+          "AUTO_REPLACE": 887,
+          "WINNER_AMBIGUOUS": 38,
+          "NOT_QUALIFIED": 23,
+          "LOCAL_SEARCH_EMPTY": 2,
+          "INELIGIBLE": 4
+        },
+        "exitCode": 0
+      },
+      {
+        "name": "regression",
+        "rows": 12012,
+        "mode": "noun-case-production",
+        "inputSha256": "a9af23fb2eefcfc5921633dde6be862ac5e08e159296188b52d1212da232685c",
+        "baselineObservationsSha256": "ac05c0a04535a068961c17375856a67814d9ce97823d6456cc6bade7ee3aced8",
+        "candidateObservationsPath": "build/review-q4-hooks-20261028/origin-replay/regression/observations.jsonl",
+        "candidateObservationsSha256": "38335611cd8c1238f315f03d5c6b441e498100e84408b2312ed90a83f74425ac",
+        "nonTimingDifferences": 0,
+        "boundaryReasons": {
+          "AUTO_REPLACE": 5983,
+          "TOO_SHORT": 485,
+          "ORIGINAL_VALID": 3860,
+          "LOCAL_SEARCH_EMPTY": 296,
+          "WINNER_AMBIGUOUS": 95,
+          "SERVICE_REFUSED": 383,
+          "NOT_QUALIFIED": 40,
+          "SEARCH_INCOMPLETE": 827,
+          "INSUFFICIENT_MARGIN": 20,
+          "OWNERSHIP_REJECTED": 17,
+          "RIVAL_OTHER_LEMMA": 1,
+          "RIVAL_UNKNOWN": 4,
+          "NO_RANKING": 1
+        },
+        "exitCode": 0
+      },
+      {
+        "name": "calibration",
+        "rows": 1600,
+        "mode": "noun-case-production",
+        "inputSha256": "3728513d2bdfb033474cf9b39cc662bbe47d13d5cbf66fff7b5f720e8f554d46",
+        "baselineObservationsSha256": "c6b8f6dc4793572b7456d345bcace66aeadf3c03bef4bc6872c5535c2488325e",
+        "candidateObservationsPath": "build/review-q4-hooks-20261028/origin-replay/calibration/observations.jsonl",
+        "candidateObservationsSha256": "768771120771d1e79267a75e26c200cfd1ceee58ad9a4c04dbdeb47dbd48776d",
+        "nonTimingDifferences": 0,
+        "boundaryReasons": {
+          "TOO_SHORT": 147,
+          "ORIGINAL_VALID": 1207,
+          "WINNER_AMBIGUOUS": 44,
+          "AUTO_REPLACE": 99,
+          "INSUFFICIENT_MARGIN": 26,
+          "SEARCH_INCOMPLETE": 56,
+          "LOCAL_SEARCH_EMPTY": 15,
+          "SERVICE_REFUSED": 6
+        },
+        "exitCode": 0
+      }
+    ]
+  },
+  "sourcesSha256": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRecorder.kt": "23423782b855b258c13e288c8977abdf2a7c160c19c2f4fccf3d4734d939ece6",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityModel.kt": "1ba3d8bd77c63f488179b3f439f6d99e8755a628d2a8a5592f0f7c8da3c8e990",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRepository.kt": "2f0d0ced62a53f83cf2cecb54b51b9543d6ece67ad9a6fb6558db6dda366ef52",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityStore.kt": "27528d4b6009138bc88eb9d99f4b9764e6f8901d2e2c94cd5b3b2b63a4a0a10d",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "384d7287370da94e708e69c3a1fe462db3cd1d1121f35fc6477dbe110f426e7f",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/UndoableTextEdit.kt": "082e20dc9ea0858dd33235521e4cf0324d76b6928c23e3cde430f8af006060d7",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualitySourceModelTest.kt": "30c744fc132ffcc41fcf50ec1c17b860b9c018c14c2192aeb979e9d11f99bb02",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/quality/QualityRepositoryTest.kt": "b5e24edb93419d876ee2a413a76d99f58f2f0316883f7b768c000feaef436d85",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/CorrectionBoundaryTest.kt": "04062d5afa40280cf49b9994262442b7cd24ba2e5ae9e6d9de2169aaab680651",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/QualitySourceImeInstrumentedTest.kt": "0c2f9563b629ff86beae30e8d1136968c199cf49c727ab87271aee6b13e6ba5a"
+  },
+  "privateEvidenceSha256": {
+    "build/review-q4-hooks-20261028/source-tests.log": "1c3374aa8e901975f1466990e7a9ce130f703deacd5c94a0bf9b543a6fb88897",
+    "build/review-q4-hooks-20261028/source-tests.exit": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "build/review-q4-hooks-20261028/source-fixed-tests.log": "79c1af68e800aecea529110a5089f9759265053c820c4a3ef8c018053a43fe73",
+    "build/review-q4-hooks-20261028/source-fixed-tests.exit": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "build/review-q4-hooks-20261028/source-final-tests.log": "abe9a64abf06e57b759c75124a3c2b1a5e7ed70d0d8a296cdec07c9ec0f08f35",
+    "build/review-q4-hooks-20261028/source-final-tests.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "build/review-q4-hooks-20261028/collection-origin-red.log": "0ac137447b48dcc9e9c1f4dbf3365f2df5dfdb81de44e08b3f17873c67ab42ee",
+    "build/review-q4-hooks-20261028/collection-origin-red.exit": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "build/review-q4-hooks-20261028/origin-integration.log": "eb5cda7955ba42b0f2a1f5cf829b6d5bfd2c1d5e1e32c3760cfdfe850c5e2c5d",
+    "build/review-q4-hooks-20261028/origin-integration.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "build/review-q4-hooks-20261028/ime/instrumentation.log": "41865004a1ed61feced41cd110f5d9388efcc41385709cb11789e4e92224a361",
+    "build/review-q4-hooks-20261028/ime/result.json": "7e5d0b5fd3fe1379803db7b431e4b32e107fd6e9d7d33061879d332f0a4fe989",
+    "build/review-q4-hooks-20261028/ime-origin-reset-build.log": "870ee5615dd9d051be25fa8762992c87afb48fdd5c7928848087d388d7f8ab47",
+    "build/review-q4-hooks-20261028/ime-origin-reset-build.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "build/review-q4-hooks-20261028/ime-origin-reset/instrumentation.log": "bb8ee1ba8fe3761c85746b124a590e32fe2868350ecd83710e5b173d372a4559",
+    "build/review-q4-hooks-20261028/ime-origin-reset/result.json": "f25adce7b3cdb4000ff9aaabbc4ac0824772e7333efa7173c0c79d3edd5ce3cc",
+    "build/review-q4-hooks-20261028/origin-jvm-results.tar": "23b0b5828eae07464c4d0a70abcf72e7a601240b184cdec4b67563e8ee1d42c0",
+    "build/review-q4-hooks-20261028/origin-replay.log": "7ee912cb7e9e38aaf17333b8cd9559bef496589a60f1228f37f958cc2dc5e533",
+    "build/review-q4-hooks-20261028/origin-replay.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "build/review-q4-hooks-20261028/origin-replay-bindings.json": "a0965ae51b96c02f2e67907b40f3889a373c4abe8255b970fa51b7ce34706160"
+  },
+  "failuresRetained": [
+    {
+      "file": "source-tests.log",
+      "cause": "new test used an incorrect response-score constructor; fixed using existing winningReply helper"
+    },
+    {
+      "file": "source-fixed-tests.log",
+      "cause": "new general-local fixture length 6 was below the existing qualified RU minimum 7; fixture corrected, policy unchanged"
+    },
+    {
+      "file": "ime/instrumentation.log",
+      "cause": "test searched bare text instead of the existing correction accessibility description for prefixed automatic preview"
+    },
+    {
+      "file": "collection-origin-red.log",
+      "cause": "intentional regression exposes orphan Undo when application was not collected; fixed with owner/period-bound application ticket"
+    }
+  ],
+  "remaining": [
+    "kept-original and expired-window source hooks",
+    "actual model response time and unavailable/CPU copy",
+    "debug-only export",
+    "final release and device integration",
+    "two actual weeks of owner use and acceptance"
+  ],
+  "newNaturalQualificationOrAccuracyClaim": false,
+  "ownerPhoneModified": false,
+  "wholeReviewComplete": false
+}

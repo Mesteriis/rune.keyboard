@@ -156,6 +156,27 @@ class QualityRepositoryTest {
         assertEquals(0L, storage.persisted!![AutomaticQualitySource.MODEL, AutomaticQualityOutcome.EXPLICIT_UNDO])
     }
 
+    @Test fun `application tickets require loaded counted state and do not survive repository reset`() {
+        val worker = Worker()
+        val storage = Storage()
+        val repository = QualityRepository(storage, worker)
+        repository.configure(true, false, true)
+        assertNull(repository.recordAutomaticApplication(AutomaticQualitySource.MODEL))
+        worker.drain()
+        val application = repository.recordAutomaticApplication(AutomaticQualitySource.MODEL)!!
+        repository.recordAutomaticUndo(application)
+        repository.recordAutomaticUndo(application)
+        worker.drain()
+        assertEquals(1L, storage.persisted!![AutomaticQualitySource.MODEL, AutomaticQualityOutcome.APPLIED])
+        assertEquals(1L, storage.persisted!![AutomaticQualitySource.MODEL, AutomaticQualityOutcome.EXPLICIT_UNDO])
+        val old = repository.recordAutomaticApplication(AutomaticQualitySource.MODEL)!!
+        repository.reset()
+        worker.drain()
+        repository.recordAutomaticUndo(old)
+        worker.drain()
+        assertEquals(QualitySnapshot(), storage.persisted)
+    }
+
     @Test fun `repeated reset cannot accumulate unbounded callbacks`() {
         val worker = Worker()
         val repository = QualityRepository(Storage(), worker)

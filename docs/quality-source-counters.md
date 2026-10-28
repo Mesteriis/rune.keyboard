@@ -45,9 +45,15 @@ ranking, admission or editor operations. Hooks, dashboard reporting, debug-only
 export and the review's real two-week owner-use acceptance must each retain
 separate integration evidence.
 
-At the source-dashboard checkpoint, storage and dashboard rendering are
-implemented. Real controller/model hooks and debug export are not connected yet;
-ordinary typing does not yet populate the new source/model arrays. The dashboard
-instrumentation seeds explicit synthetic counters and checks the actual reset.
+Acknowledged automatic application and exact Undo hooks are now connected to
+all existing automatic commit paths. A single-use in-memory application ticket
+binds an actually incremented APPLIED count to its recorder and collection period;
+reset/restore and metrics/eligibility transitions revoke it. The ticket contains
+no text, does not retain the recorder/editor and is excluded from persistence.
+Editor behavior never depends on whether a ticket was issued. Model refinement
+remains excluded; CONTEXTUAL is manual-only and supplies no automatic count.
+Kept-original/expired-window hooks, real model-response recording and debug
+export still require integration. Dashboard instrumentation also retains its
+explicit synthetic fixtures and actual reset checks.
 Upgrade compatibility covers v1/v2 reads by this version; older binaries are not
 claimed to read a v3 file.

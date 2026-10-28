@@ -41,6 +41,12 @@ class QualityRepository(private val storage: QualityStorage, private val worker:
     override fun record(event: QualityEvent) = update { record(event) }
     override fun recordAutomatic(source: AutomaticQualitySource, outcome: AutomaticQualityOutcome) =
         update { recordAutomatic(source, outcome) }
+    override fun recordAutomaticApplication(source: AutomaticQualitySource): AutomaticQualityApplication? {
+        var application: AutomaticQualityApplication? = null
+        update { recordAutomaticApplication(source).also { application = it } != null }
+        return application
+    }
+    override fun recordAutomaticUndo(application: AutomaticQualityApplication) = update { recordAutomaticUndo(application) }
     override fun modelResponseMillis(durationMillis: Long) = update { modelResponseMillis(durationMillis) }
     override fun candidateResponseNanos(durationNanos: Long) = update { candidateResponseNanos(durationNanos) }
     override fun compare(revision: Long, source: String, primaryChoice: String, experimentalChoice: String) =

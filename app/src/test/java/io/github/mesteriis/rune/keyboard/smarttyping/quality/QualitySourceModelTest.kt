@@ -21,7 +21,13 @@ class QualitySourceModelTest {
         assertEquals(listOf(AutomaticQualitySource::class.java, AutomaticQualityOutcome::class.java),
             methods.getValue("recordAutomatic").parameterTypes.toList())
         assertEquals(listOf(java.lang.Long.TYPE), methods.getValue("modelResponseMillis").parameterTypes.toList())
-        for (name in listOf("recordAutomatic", "modelResponseMillis"))
+        assertEquals(listOf(AutomaticQualitySource::class.java),
+            methods.getValue("recordAutomaticApplication").parameterTypes.toList())
+        assertEquals(listOf(AutomaticQualityApplication::class.java),
+            methods.getValue("recordAutomaticUndo").parameterTypes.toList())
+        assertTrue(AutomaticQualityApplication::class.java.declaredFields.none { it.type == String::class.java })
+        assertEquals(0, QualityCollectionPeriod::class.java.declaredFields.size)
+        for (name in listOf("recordAutomatic", "modelResponseMillis", "recordAutomaticApplication", "recordAutomaticUndo"))
             assertFalse(methods.getValue(name).parameterTypes.contains(String::class.java))
     }
 
@@ -130,6 +136,43 @@ class QualitySourceModelTest {
         assertEquals(List(5) { QualityModel.MAX_COUNT }, model.snapshot().modelResponseBuckets)
         model.reset()
         assertEquals(QualitySnapshot(), model.snapshot())
+    }
+
+    @Test fun applicationTicketsAreSingleUseRecorderBoundAndRevokedByCollectionTransitions() {
+        val source = AutomaticQualitySource.JOINT_LONG
+        val a = QualityModel().apply { configure(true, false, true) }
+        val b = QualityModel().apply { configure(true, false, true) }
+        val first = a.recordAutomaticApplication(source)!!
+        assertFalse(b.recordAutomaticUndo(first))
+        a.configure(true, true, true) // Shadow alone does not change source collection.
+        assertTrue(a.recordAutomaticUndo(first))
+        assertFalse(a.recordAutomaticUndo(first))
+        assertEquals(1L, a.snapshot()[source, AutomaticQualityOutcome.EXPLICIT_UNDO])
+        for (cause in listOf("reset", "restore", "disabled", "private")) {
+            val application = a.recordAutomaticApplication(source)!!
+            when (cause) {
+                "reset" -> a.reset()
+                "restore" -> a.restore(a.snapshot())
+                "disabled" -> { a.configure(false, false, true); a.configure(true, false, true) }
+                else -> { a.configure(true, false, false); a.configure(true, false, true) }
+            }
+            assertFalse(a.recordAutomaticUndo(application))
+        }
+    }
+
+    @Test fun noApplicationTicketIsIssuedForExcludedOrSaturatedCountsAndTicketsAreNotPersisted() {
+        val source = AutomaticQualitySource.MODEL
+        val model = QualityModel()
+        assertNull(model.recordAutomaticApplication(source))
+        model.configure(true, false, true)
+        model.restore(QualitySnapshot(automaticSources = List(56) { QualityModel.MAX_COUNT }))
+        assertNull(model.recordAutomaticApplication(source))
+        model.reset()
+        val application = model.recordAutomaticApplication(source)!!
+        val restored = QualityModel().apply { configure(true, false, true); restore(QualityCodec.decode(QualityCodec.encode(model.snapshot()))) }
+        assertFalse(restored.recordAutomaticUndo(application))
+        assertEquals(1L, restored.snapshot()[source, AutomaticQualityOutcome.APPLIED])
+        assertEquals(0L, restored.snapshot()[source, AutomaticQualityOutcome.EXPLICIT_UNDO])
     }
 
     @Test fun malformedV3DimensionsNumbersAndSizeFailClosed() {

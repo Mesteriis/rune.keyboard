@@ -9,6 +9,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.correction.*
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.*
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.*
+import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticEvent
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind
@@ -304,17 +305,22 @@ class CorrectionBoundaryTest {
         }
 
         val accepted = Fixture()
+        val acceptedMetrics = quality(accepted)
         publishCompact(accepted, admitted = true)
         accepted.type(" ")
         assertEquals("кармен ", accepted.document)
+        assertEquals(1L, acceptedMetrics.snapshot()[AutomaticQualitySource.COMPACT_PUBLIC, AutomaticQualityOutcome.APPLIED])
         accepted.undo()
         assertEquals("кармн", accepted.document)
+        assertEquals(1L, acceptedMetrics.snapshot()[AutomaticQualitySource.COMPACT_PUBLIC, AutomaticQualityOutcome.EXPLICIT_UNDO])
 
         val refused = Fixture()
+        val refusedMetrics = quality(refused)
         publishCompact(refused, admitted = false)
         refused.type(" ")
         assertEquals("кармн ", refused.document)
         assertNull(refused.controller.state.lastAutoEdit)
+        assertEquals(0L, refusedMetrics.snapshot().automaticSources.sum())
     }
 
     @Test fun `qualified joint winner outranks legacy choice and original veto cannot launch old model`() {
@@ -771,10 +777,191 @@ class CorrectionBoundaryTest {
     }
 
 
+    @Test fun `source counts follow acknowledged common general and canonical corrections and exact Undo`() {
+        for (source in listOf(AutomaticQualitySource.COMMON_CONFUSION, AutomaticQualitySource.GENERAL_LOCAL,
+            AutomaticQualitySource.CANONICAL_CASE)) {
+            val f = Fixture()
+            val model = quality(f)
+            val original = when (source) {
+                AutomaticQualitySource.COMMON_CONFUSION -> "teh"
+                AutomaticQualitySource.CANONICAL_CASE -> "london"
+                else -> "провкрка"
+            }
+            val target = when (source) {
+                AutomaticQualitySource.COMMON_CONFUSION -> "the"
+                AutomaticQualitySource.CANONICAL_CASE -> "London"
+                else -> "проверка"
+            }
+            if (source == AutomaticQualitySource.GENERAL_LOCAL) f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+            f.raw(original)
+            when (source) {
+                AutomaticQualitySource.COMMON_CONFUSION -> f.publishCommon(target)
+                AutomaticQualitySource.CANONICAL_CASE -> f.publishCanonical(target, true, true)
+                else -> f.publish(target)
+            }
+            assertEquals(0L, model.snapshot().automaticSources.sum())
+            assertEquals(TypingTextResult.HANDLED, f.type(" "))
+            assertEquals("$target ", f.document)
+            assertEquals(source, f.controller.state.lastAutoEdit!!.correction!!.qualitySource)
+            assertEquals(1L, model.snapshot()[source, AutomaticQualityOutcome.APPLIED])
+            assertEquals(1L, model.snapshot().automaticSources.sum())
+            f.undo()
+            assertEquals(original, f.document)
+            assertEquals(1L, model.snapshot()[source, AutomaticQualityOutcome.EXPLICIT_UNDO])
+            f.undo()
+            assertEquals(2L, model.snapshot().automaticSources.sum())
+            assertEquals(1L, model.snapshot()[QualityEvent.AUTOMATIC_APPLIED])
+            assertEquals(1L, model.snapshot()[QualityEvent.EXPLICIT_UNDO])
+        }
+    }
+
+    @Test fun `joint source subtypes use the actual chosen branch rather than the generic parent`() {
+        val cases = listOf(AutomaticQualitySource.JOINT_SHORT, AutomaticQualitySource.JOINT_LONG,
+            AutomaticQualitySource.JOINT_RESCUE, AutomaticQualitySource.WORD_CONTEXT,
+            AutomaticQualitySource.CONTEXTUAL_RANKER, AutomaticQualitySource.INFINITIVE_REVISION,
+            AutomaticQualitySource.NOUN_CASE_REVISION)
+        for (source in cases) {
+            val f = Fixture()
+            f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+            val model = quality(f)
+            val original = if (source == AutomaticQualitySource.JOINT_SHORT) "куа" else "ддмой"
+            val word = if (source == AutomaticQualitySource.JOINT_SHORT) "куда" else "домой"
+            val target = GeneratedCandidate(word, word, word, KeyboardLanguage.RUSSIAN, false, 4, 1, 1,
+                EditFeatures(1.0, 0, 0.0), kotlin.math.abs(word.length - original.length), CasePattern.LOWER)
+            f.controller.setPersonalization(object : TypingPersonalization {
+                override fun jointAutomaticChoice(context: String, generation: CandidateGeneration,
+                    language: KeyboardLanguage, baselineWord: String?) =
+                    io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionChoice(target,
+                        rescue = source == AutomaticQualitySource.JOINT_RESCUE,
+                        wordContext = source == AutomaticQualitySource.WORD_CONTEXT,
+                        contextual = source == AutomaticQualitySource.CONTEXTUAL_RANKER,
+                        grammarRevision = source == AutomaticQualitySource.INFINITIVE_REVISION,
+                        nounCaseRevision = source == AutomaticQualitySource.NOUN_CASE_REVISION)
+                override fun jointAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                    language: KeyboardLanguage) = AutomaticTypingDecision(true)
+                override fun rescueAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                    language: KeyboardLanguage) = AutomaticTypingDecision(true)
+                override fun wordContextAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                    language: KeyboardLanguage) = AutomaticTypingDecision(true)
+                override fun contextualAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                    language: KeyboardLanguage) = AutomaticTypingDecision(true)
+                override fun grammarRevisionAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                    language: KeyboardLanguage) = AutomaticTypingDecision(true)
+                override fun nounCaseAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                    language: KeyboardLanguage) = AutomaticTypingDecision(true)
+            }, KeyboardLanguage.RUSSIAN)
+            f.raw(original)
+            val request = f.controller.beginCandidateRequest(1, KeyboardLanguage.RUSSIAN)!!
+            val pool = LocalSearchEvidence(CandidateCompletion.COMPLETE, listOf(target), 1, 1)
+            assertTrue(f.controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId,
+                CandidateGeneration(original, listOf(target), CandidateCompletion.COMPLETE, false, null, 1, 1,
+                    jointSearch = pool, jointEvaluated = true))))
+            f.type(" ")
+            assertEquals("$word ", f.document)
+            assertEquals(source, f.controller.state.lastAutoEdit!!.correction!!.qualitySource)
+            assertEquals(1L, model.snapshot()[source, AutomaticQualityOutcome.APPLIED])
+            f.undo()
+            assertEquals(original, f.document)
+            assertEquals(1L, model.snapshot()[source, AutomaticQualityOutcome.EXPLICIT_UNDO])
+            assertEquals(2L, model.snapshot().automaticSources.sum())
+        }
+    }
+
+    @Test fun `visible Undo during a later candidate set retains the previous correction source`() {
+        val f = Fixture()
+        f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+        val model = quality(f)
+        val flags = DiagnosticFeature.AUTO_CORRECTION.bit or DiagnosticFeature.VISIBLE_UNDO.bit
+        f.controller.configureFeatures(flags, flags)
+        f.raw("провкрка"); f.publish("проверка"); f.type(" ")
+        f.raw("зочу"); f.publishCommon("хочу")
+        val undo = f.controller.candidateViewState.candidates.filterIsInstance<CandidateUiItem.Undo>().single()
+        assertEquals(TypingTextResult.HANDLED, f.controller.selectCandidate(undo.id, f.execute))
+        assertEquals("провкрка зочу", f.document)
+        assertEquals(1L, model.snapshot()[AutomaticQualitySource.GENERAL_LOCAL, AutomaticQualityOutcome.APPLIED])
+        assertEquals(1L, model.snapshot()[AutomaticQualitySource.GENERAL_LOCAL, AutomaticQualityOutcome.EXPLICIT_UNDO])
+        assertEquals(0L, model.snapshot()[AutomaticQualitySource.COMMON_CONFUSION, AutomaticQualityOutcome.EXPLICIT_UNDO])
+        assertEquals(TypingTextResult.REJECTED, f.controller.selectCandidate(undo.id, f.execute))
+        assertEquals(2L, model.snapshot().automaticSources.sum())
+    }
+
+    @Test fun `late local and late model acknowledgements carry their own source through Undo`() {
+        val local = Fixture(qualified = null)
+        local.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+        val localModel = quality(local)
+        val reply = local.pendingLocalSpace("зочу", "хочу")
+        assertTrue(local.controller.acceptLocalSpaceCorrection(reply, local.execute))
+        assertEquals("хочу ", local.document)
+        assertEquals(1L, localModel.snapshot()[AutomaticQualitySource.COMMON_CONFUSION, AutomaticQualityOutcome.APPLIED])
+        local.undo()
+        assertEquals("зочу", local.document)
+        assertEquals(1L, localModel.snapshot()[AutomaticQualitySource.COMMON_CONFUSION, AutomaticQualityOutcome.EXPLICIT_UNDO])
+        val model = Fixture(modelOnly = true)
+        val metrics = quality(model)
+        val input = model.pendingSpace()
+        assertTrue(model.controller.acceptSpaceCorrection(winningReply(input), model.execute))
+        assertEquals("hello ", model.document)
+        assertEquals(1L, metrics.snapshot()[AutomaticQualitySource.MODEL, AutomaticQualityOutcome.APPLIED])
+        model.undo()
+        assertEquals("helllo", model.document)
+        assertEquals(1L, metrics.snapshot()[AutomaticQualitySource.MODEL, AutomaticQualityOutcome.EXPLICIT_UNDO])
+        assertEquals(2L, metrics.snapshot().automaticSources.sum())
+    }
+
+    @Test fun `refused edits manual choices and excluded metric configurations add no automatic source labels`() {
+        for (failure in listOf("commitText", "setComposingRegion")) {
+            val f = Fixture(); val model = quality(f)
+            f.raw("teh"); f.publishCommon("the"); f.fail = failure
+            assertEquals(TypingTextResult.REJECTED, f.type(" "))
+            assertEquals(0L, model.snapshot().automaticSources.sum())
+        }
+        val manual = Fixture(); val metrics = quality(manual)
+        manual.raw("helllo"); manual.publish("hello")
+        val id = manual.controller.candidateViewState.candidates.single { it.text == "hello" }.id
+        assertEquals(TypingTextResult.HANDLED, manual.controller.selectCandidate(id, manual.execute))
+        assertEquals(0L, metrics.snapshot().automaticSources.sum())
+        manual.type(" ")
+        assertEquals("hello ", manual.document)
+        assertEquals(0L, metrics.snapshot().automaticSources.sum())
+        for (privacy in listOf(false, true)) {
+            val f = Fixture(); val model = quality(f)
+            model.configure(!privacy, false, privacy)
+            f.raw("teh"); f.publishCommon("the"); f.type(" "); f.undo()
+            assertEquals("teh", f.document)
+            assertEquals(0L, model.snapshot().automaticSources.sum())
+        }
+    }
+
+    @Test fun `source Undo cannot cross a collection gap reset or recorder replacement`() {
+        for (cause in listOf("disabled-at-apply", "reset", "recorder", "privacy-transition")) {
+            val f = Fixture()
+            var metrics = quality(f)
+            if (cause == "disabled-at-apply") metrics.configure(false, false, true)
+            f.raw("teh"); f.publishCommon("the"); f.type(" ")
+            assertEquals("the ", f.document)
+            when (cause) {
+                "disabled-at-apply" -> metrics.configure(true, false, true)
+                "reset" -> metrics.reset()
+                "recorder" -> metrics = quality(f)
+                else -> { metrics.configure(true, false, false); metrics.configure(true, false, true) }
+            }
+            f.undo()
+            assertEquals("teh", f.document)
+            assertEquals(cause, 0L, metrics.snapshot()[AutomaticQualitySource.COMMON_CONFUSION,
+                AutomaticQualityOutcome.EXPLICIT_UNDO])
+        }
+    }
+
     private fun quality(f: Fixture): QualityModel {
         val model = QualityModel().apply { configure(true, true, true) }
         f.controller.setQualityRecorder(object : QualityRecorder {
             override fun record(event: QualityEvent) { model.record(event) }
+            override fun recordAutomatic(source: AutomaticQualitySource, outcome: AutomaticQualityOutcome) {
+                model.recordAutomatic(source, outcome)
+            }
+            override fun recordAutomaticApplication(source: AutomaticQualitySource) = model.recordAutomaticApplication(source)
+            override fun recordAutomaticUndo(application: AutomaticQualityApplication) { model.recordAutomaticUndo(application) }
+            override fun modelResponseMillis(durationMillis: Long) { model.modelResponseMillis(durationMillis) }
             override fun compare(revision: Long, source: String, primaryChoice: String, experimentalChoice: String) {
                 model.compare(revision, source, primaryChoice, experimentalChoice)
             }
@@ -1786,6 +1973,7 @@ class CorrectionBoundaryTest {
 
     @Test fun `recovery winner retains recovery evidence when already present in baseline suggestions`() {
         val f = Fixture(); f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+        val metrics = quality(f)
         f.controller.setPersonalization(object : TypingPersonalization {
             override fun recoveryAutomaticCandidate(context: String, generation: CandidateGeneration,
                 language: KeyboardLanguage) = generation.neighborRecovery.alternatives.singleOrNull()
@@ -1803,8 +1991,10 @@ class CorrectionBoundaryTest {
         assertTrue(f.controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId, generation)))
         f.type(" ")
         assertEquals("проверка ", f.document)
+        assertEquals(1L, metrics.snapshot()[AutomaticQualitySource.NEIGHBOR_RECOVERY, AutomaticQualityOutcome.APPLIED])
         f.undo()
         assertEquals("рооверка", f.document)
+        assertEquals(1L, metrics.snapshot()[AutomaticQualitySource.NEIGHBOR_RECOVERY, AutomaticQualityOutcome.EXPLICIT_UNDO])
     }
 
     @Test fun `model refines previous word while preserving live next word and root undo`() {

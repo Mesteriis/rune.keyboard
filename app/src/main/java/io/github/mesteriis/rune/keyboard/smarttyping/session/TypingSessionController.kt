@@ -64,6 +64,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeatu
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityRecorder
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.NoQualityRecorder
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.QualityEvent
+import io.github.mesteriis.rune.keyboard.smarttyping.quality.AutomaticQualitySource
 
 /**
  * Main-thread session owner. The execution callback returns the editor's actual result; all
@@ -812,6 +813,26 @@ class TypingSessionController internal constructor(
             state.composing?.typedWord == selection.original
     }
 
+    /** Attribution from the already selected branch; never re-runs qualification or admission. */
+    private fun automaticQualitySource(selection: CandidateSelection, ranking: CalibratedRanking): AutomaticQualitySource {
+        val kind = selection.alternatives.getOrNull(ranking.preferredId - 1)?.kind
+        return when {
+            kind == GeneratedCandidateKind.CANONICAL_CASE -> AutomaticQualitySource.CANONICAL_CASE
+            ranking.usedModel -> AutomaticQualitySource.MODEL
+            ranking.nounCaseRevision -> AutomaticQualitySource.NOUN_CASE_REVISION
+            ranking.grammarRevision -> AutomaticQualitySource.INFINITIVE_REVISION
+            ranking.contextualPublic -> AutomaticQualitySource.CONTEXTUAL_RANKER
+            ranking.wordContext -> AutomaticQualitySource.WORD_CONTEXT
+            ranking.jointRescue -> AutomaticQualitySource.JOINT_RESCUE
+            ranking.jointPublic -> if (selection.original.length <= 4) AutomaticQualitySource.JOINT_SHORT
+                else AutomaticQualitySource.JOINT_LONG
+            ranking.neighborRecovery -> AutomaticQualitySource.NEIGHBOR_RECOVERY
+            ranking.compactPublic -> AutomaticQualitySource.COMPACT_PUBLIC
+            kind == GeneratedCandidateKind.COMMON_CONFUSION -> AutomaticQualitySource.COMMON_CONFUSION
+            else -> AutomaticQualitySource.GENERAL_LOCAL
+        }
+    }
+
     private fun armPreviousWord(word: String, startedAt: Long, refinementAllowed: Boolean = true) {
         val edit = state.lastAutoEdit ?: return
         if (edit.correction == null || edit.committedStart == null ||
@@ -938,6 +959,7 @@ class TypingSessionController internal constructor(
             if (undo) {
                 previousWord = null
                 quality.record(QualityEvent.EXPLICIT_UNDO)
+                ticket.root.correction?.qualityApplication?.let(quality::recordAutomaticUndo)
                 ticket.qualityRevision?.let { quality.explicitChoice(it, ticket.root.restoreComposition.typedWord) }
                 val priorWord = oldSuffix.removePrefix(ticket.root.restoreComposition.leadingBoundary).removeSuffix(current.text)
                 if (priorWord != ticket.root.restoreComposition.typedWord) personalization.rejected(
@@ -1131,6 +1153,7 @@ class TypingSessionController internal constructor(
             DiagnosticText(context = context?.text.orEmpty(), original = selection.original,
                 candidates = selection.alternatives.map { it.text }, result = rendered)
         }
+        val appliedSource = automaticQualitySource(selection, ranking)
         return trace.section(SmartTypingTraceSection.CORRECTION_COMMIT) {
             applyGuardedBatch(listOf(TypingEdit.SetComposingRegion(pending.start, selectionStart),
                 TypingEdit.CommitText(rendered), TypingEdit.SetComposingRegion(nextStart, caret)),
@@ -1143,7 +1166,8 @@ class TypingSessionController internal constructor(
                 state = state.copy(composing = boundary, originalSelected = false,
                     lastAutoEdit = UndoableTextEdit(pending.previous.text, correctedWord + " ", state.sessionId, state.revision,
                         pending.previous, pending.contextBefore, pending.start, ComposingSegment(leadingBoundary = " "),
-                        UndoCorrectionCandidates(selection.generation, selection.language, selection.requestId)))
+                        UndoCorrectionCandidates(selection.generation, selection.language, selection.requestId,
+                            quality.recordAutomaticApplication(appliedSource))))
                 undoShownAtNanos = nanoTime()
                 quality.record(QualityEvent.AUTOMATIC_APPLIED)
                 undoQualityRevision = comparedRevision
@@ -1237,6 +1261,7 @@ class TypingSessionController internal constructor(
             DiagnosticText(context = context?.text.orEmpty(), original = selection.original,
                 candidates = selection.alternatives.map { it.text }, result = rendered)
         }
+        val appliedSource = automaticQualitySource(selection, ranking)
         return trace.section(SmartTypingTraceSection.CORRECTION_COMMIT) {
             applyGuardedBatch(listOf(TypingEdit.SetComposingRegion(pending.start, selectionStart),
                 TypingEdit.CommitText(rendered), TypingEdit.SetComposingRegion(caret - 1, caret)),
@@ -1246,7 +1271,8 @@ class TypingSessionController internal constructor(
                 state = state.copy(composing = boundary, originalSelected = false,
                     lastAutoEdit = UndoableTextEdit(pending.previous.text, rendered, state.sessionId, state.revision,
                         pending.previous, pending.contextBefore, pending.start, boundary,
-                        UndoCorrectionCandidates(selection.generation, selection.language, selection.requestId)))
+                        UndoCorrectionCandidates(selection.generation, selection.language, selection.requestId,
+                            quality.recordAutomaticApplication(appliedSource))))
                 undoShownAtNanos = nanoTime()
                 quality.record(QualityEvent.AUTOMATIC_APPLIED)
                 undoQualityRevision = comparedRevision
@@ -2263,6 +2289,7 @@ class TypingSessionController internal constructor(
                 else if (ranking.wordContext) DiagnosticSource.WORD_CONTEXT
                 else if (ranking.jointRescue) DiagnosticSource.JOINT_RESCUE
                 else if (ranking.neighborRecovery) DiagnosticSource.NEIGHBOR_RECOVERY else DiagnosticSource.LOCAL_POLICY) { diagnosticText(input = boundary, result = rendered) }
+        val appliedSource = automaticQualitySource(selection, ranking)
         return trace.section(SmartTypingTraceSection.CORRECTION_COMMIT) {
             applyGuardedBatch(edits, expected, execute, additionalGuard = { !ranking.neighborRecovery ||
                 nanoTime() - boundaryStartedAt in 0 until 250_000_000L }) {
@@ -2271,7 +2298,8 @@ class TypingSessionController internal constructor(
                 state = state.copy(composing = next, originalSelected = false,
                     lastAutoEdit = UndoableTextEdit(previous.text, rendered, state.sessionId, state.revision,
                         previous, before, start, next,
-                        UndoCorrectionCandidates(selection.generation, selection.language, selection.requestId)))
+                        UndoCorrectionCandidates(selection.generation, selection.language, selection.requestId,
+                            quality.recordAutomaticApplication(appliedSource))))
                 undoShownAtNanos = nanoTime()
                 quality.record(QualityEvent.AUTOMATIC_APPLIED)
                 undoQualityRevision = comparedRevision
@@ -2307,6 +2335,7 @@ class TypingSessionController internal constructor(
                     val appliedWord = edit.applied.removePrefix(edit.restoreComposition.leadingBoundary)
                         .takeWhile { it.isLetter() }
                     quality.record(QualityEvent.EXPLICIT_UNDO)
+                    saved.qualityApplication?.let(quality::recordAutomaticUndo)
                     undoQualityRevision?.let { quality.explicitChoice(it, edit.restoreComposition.typedWord) }
                     undoQualityRevision = null
                     personalization.rejected(edit.restoreComposition.typedWord, appliedWord, saved.language)

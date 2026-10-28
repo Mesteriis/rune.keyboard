@@ -15,6 +15,18 @@ enum class AutomaticQualitySource {
 
 enum class AutomaticQualityOutcome { APPLIED, EXPLICIT_UNDO, KEPT_ORIGINAL, WINDOW_EXPIRED }
 
+/** Opaque in-memory origin; it never enters a persisted quality snapshot. */
+internal class QualityCollectionPeriod
+
+/** A counted application, tied to one recorder/collection period and consumed at most once. */
+class AutomaticQualityApplication internal constructor(
+    val source: AutomaticQualitySource,
+    internal val period: QualityCollectionPeriod,
+) {
+    internal var consumed = false
+    override fun toString(): String = "AutomaticQualityApplication(redacted)"
+}
+
 enum class ShadowResult {
     AGREEMENT, DISAGREEMENT, EXPLICIT_PRIMARY, EXPLICIT_EXPERIMENTAL, EXPLICIT_BOTH, EXPLICIT_NEITHER,
 }
@@ -25,6 +37,8 @@ interface QualityRecorder {
     fun record(event: QualityEvent) = Unit
     /** Numeric source accounting only; callers retain all admission and editor ownership checks. */
     fun recordAutomatic(source: AutomaticQualitySource, outcome: AutomaticQualityOutcome) = Unit
+    fun recordAutomaticApplication(source: AutomaticQualitySource): AutomaticQualityApplication? = null
+    fun recordAutomaticUndo(application: AutomaticQualityApplication) = Unit
     /** Engine-reported response time, separate from candidate request latency. */
     fun modelResponseMillis(durationMillis: Long) = Unit
     /** Candidate computation/response time, never advertised as end-to-end keystroke latency. */
