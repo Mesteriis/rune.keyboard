@@ -17,6 +17,15 @@ verified file and manifest entry. Complete historical corpus reproduction still
 requires its other original generator/runtime/source bindings; archiving these
 two files does not claim that the entire training toolchain is now preserved.
 
+The original qualification evaluator `ad76b78b...` is now archived as well,
+recovered from a matching local Git blob. The explicit
+`qualification-v2/reproduce_corpus.py` command projects it, the original v2
+generator and source lock into their original directory layout before running
+the generator. The relocated archive files remain unsupported standalone CLI
+entry points. This reproduction requires every original input and compares all
+eight output files byte for byte; it does not execute a scoring model or qualify
+new data. See the [v2 reproduction receipt](../../../docs/acceptance/2026-10-28-q6-v2-reproduction.md).
+
 Two joint builders are also preserved byte for byte: the original joint builder
 `cfa5777d...` and the v3 follow-up builder `b9cc4859...`. These archives preserve
 source evidence only; they are not executed by the history importer and their

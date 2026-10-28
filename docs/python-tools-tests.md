@@ -89,6 +89,12 @@ Raw compiler/generator logs and the source-bound receipt are uploaded alongside
 the JVM results. This checks exporter execution, not unseen correction quality
 or Android behavior. See [export evidence](acceptance/2026-10-28-q7-morphology-export.md).
 
+The JVM job additionally discovers all qualification-v2 tests: mixed-script
+eligibility and historical source/reference identity gates. Full historical
+13,200-row regeneration is a separate command requiring the pinned Wikipedia,
+frequency and training inputs; CI does not download those large inputs for the
+fast tests. See [exact v2 reproduction](../tools/eval/smart-typing-0.3/qualification-v2/README.md).
+
 F-Droid preparation deletes the four exact host CI gzip archives, verified by
 hash and declared provenance; it does not add a blanket scanner exclusion.
 Run host tests before preparation. See [F-Droid process](FDROID.md).

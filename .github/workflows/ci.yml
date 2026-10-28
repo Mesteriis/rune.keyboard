@@ -82,6 +82,7 @@ jobs:
           python3 -m unittest discover -s tools -p test_fdroid_data_policy.py
       - name: Verify durable public corpus exclusions
         run: |
+          python3 -m unittest discover -s tools/eval/smart-typing-0.3/qualification-v2 -p 'test_*.py'
           python3 tools/typing_experiments/holdout_ledger.py --validate-only
           python3 -m unittest discover -s tools/typing_experiments -p 'test_*holdout_ledger.py'
           python3 -m unittest discover -s tools/typing_experiments -p test_conversation_split_checks.py

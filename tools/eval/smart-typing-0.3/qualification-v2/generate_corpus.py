@@ -116,6 +116,13 @@ def spelling_candidates(text: str, language: str, known: set[str], excluded: set
         for ordinal, match in enumerate(WORDS[language].finditer(sentence)):
             if ordinal < 4:
                 continue
+            # A language-specific regex may otherwise split a mixed-script token
+            # (for example Latin C + Cyrillic колько) and label the suffix as a
+            # standalone correct word. Product token policy treats that as one
+            # protected token, so such fragments are invalid qualification rows.
+            if ((match.start() > 0 and sentence[match.start() - 1].isalpha()) or
+                    (match.end() < len(sentence) and sentence[match.end()].isalpha())):
+                continue
             word = match.group().casefold()
             word_family = family(word)
             if word not in known or word_family in excluded:

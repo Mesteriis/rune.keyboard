@@ -1,0 +1,237 @@
+{
+  "card": "Q6",
+  "changedFiles": {
+    ".github/workflows/ci.yml": "1b25fffd7a4036b62a524296ec0179038a4a9d569cf7c83805d0f401ef008148",
+    "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py": "ed9928d64d80911c0182e03446d710a60abb990cb5fb1cff30730443db773225",
+    "tools/eval/smart-typing-0.3/qualification-v2/reproduce_corpus.py": "6d354c2c9b4399fbbc6619806a3cc9c81043cef54c7dc10540b5cdd402e70e96",
+    "tools/eval/smart-typing-0.3/qualification-v2/test_generate_corpus.py": "f69de95af24b733cd72812d37c7db5c0672fd67b3396deaca950f9fcb98fbac2",
+    "tools/eval/smart-typing-0.3/qualification-v2/test_reproduce_corpus.py": "c369121bc8dbe1adf69e2fde89eee37fd101f740bfc0e39d0b4f4bb564ab052f",
+    "tools/typing_experiments/frozen_sources/manifest.json": "90b5533e78af6cf60604d27bdfdc15e1553ab80b9ab2aefe60937cafa39a206f",
+    "tools/typing_experiments/frozen_sources/qualification_evaluator_ad76b78ba9f00f30.py": "ad76b78ba9f00f301465e0f47eb7e96781c44d8bc141a8e1176603bc7f12d5d7"
+  },
+  "ci": {
+    "fullRegenerationInCI": false,
+    "fullV2TestDiscovery": true,
+    "hostedExecution": false,
+    "yamlParsed": true
+  },
+  "frozenCorpusUnchanged": true,
+  "initialReproduction": {
+    "allIdentical": true,
+    "elapsedSeconds": 73.86751870899991,
+    "exitCode": 0,
+    "files": {
+      "manifest.json": {
+        "actualSha256": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+        "expectedSha256": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+        "identical": true
+      },
+      "protected-tokens.jsonl": {
+        "actualSha256": "2f22612079c237ba7ae95266d41e9286f2117b7ade9e7bd83a8c9165c1b6a012",
+        "expectedSha256": "2f22612079c237ba7ae95266d41e9286f2117b7ade9e7bd83a8c9165c1b6a012",
+        "identical": true
+      },
+      "punctuation-en.jsonl": {
+        "actualSha256": "83c08372631d007264685ad43e63d886435a1f26070f494647b1bfe9aaaf96ab",
+        "expectedSha256": "83c08372631d007264685ad43e63d886435a1f26070f494647b1bfe9aaaf96ab",
+        "identical": true
+      },
+      "punctuation-es.jsonl": {
+        "actualSha256": "01094a4539479a903da594259c912026f58fc2cc6ac7ae8705bb3af1d2ba477e",
+        "expectedSha256": "01094a4539479a903da594259c912026f58fc2cc6ac7ae8705bb3af1d2ba477e",
+        "identical": true
+      },
+      "punctuation-ru.jsonl": {
+        "actualSha256": "f141165d9b5e38da5c82cddefcf48449ed56fe7c9a30f875965061fdb95d214e",
+        "expectedSha256": "f141165d9b5e38da5c82cddefcf48449ed56fe7c9a30f875965061fdb95d214e",
+        "identical": true
+      },
+      "spelling-en.jsonl": {
+        "actualSha256": "18a7e047a773f21ad4e8724b35fd7c829c9bfc20a11d082a0a4247f82c628abd",
+        "expectedSha256": "18a7e047a773f21ad4e8724b35fd7c829c9bfc20a11d082a0a4247f82c628abd",
+        "identical": true
+      },
+      "spelling-es.jsonl": {
+        "actualSha256": "ff45d319ed0765de94ad935a43fcc438c3509ca9f674388b41e715918ea6911f",
+        "expectedSha256": "ff45d319ed0765de94ad935a43fcc438c3509ca9f674388b41e715918ea6911f",
+        "identical": true
+      },
+      "spelling-ru.jsonl": {
+        "actualSha256": "d72ac7c4d19ba157f2f1b64eacb7c237d5adb4eaff4be8adf34ed315eb85d145",
+        "expectedSha256": "d72ac7c4d19ba157f2f1b64eacb7c237d5adb4eaff4be8adf34ed315eb85d145",
+        "identical": true
+      }
+    },
+    "inputBindings": {
+      "build/smart-typing-0.3/corpus-inputs/en_50k.txt": "5351ff405b1126ef555791dd4d9798a48e3e9a501a9fc481a9da957752cfb458",
+      "build/smart-typing-0.3/corpus-inputs/es_50k.txt": "dcff3ad4316192f4dc4ff7d26e637c6ff314ef1ca0f3f720c5649018a71056c0",
+      "build/smart-typing-0.3/corpus-inputs/ru_50k.txt": "6095f507cc167488ec66ada5a85ac50433503a08ad24a07c6eabdf54352c4e7f",
+      "build/smart-typing-0.3/model-v02/data-03/manifest.json": "4ec8664624f1218a74702f620fda38f158e8a8506b0b10dff7260f8a5f7724b8",
+      "build/smart-typing-0.3/model-v02/data-03/train.jsonl": "8efaee07d578d42ca764db32e341d892528e84ddcf8a217230bd9fa5ef40fc68",
+      "build/smart-typing-0.3/model-v02/data-03/valid.jsonl": "d39d7018d024d8f763ea49cd76c1602cbc151740de603cb91657b156df690f34",
+      "build/smart-typing-0.3/qualification-v2/wikipedia-20231101/en-0019.parquet": "99c23125b0dd115d68f4a921376880e307bdfcbf3bfd66ae4ed90e853e1dadac",
+      "build/smart-typing-0.3/qualification-v2/wikipedia-20231101/es-0004.parquet": "09fcc5eb122edc35fb507935643995999e01cc286f1968d14a5a71f24d2a7cf8",
+      "build/smart-typing-0.3/qualification-v2/wikipedia-20231101/ru-0009.parquet": "bf3781c558a3a2b8125e567f060895ead704577943832e6047bcc71f202975fd",
+      "tools/eval/smart-typing-0.3/protected-tokens.jsonl": "5a17511f29c7f7c6b763f7d8b48c12819a38357d95654595016406f873e39d84",
+      "tools/eval/smart-typing-0.3/punctuation-en.jsonl": "6fbcf0bab9cdd607d3dd9899fdc3186bee936e2565330c2dc14f4776ca77de7c",
+      "tools/eval/smart-typing-0.3/punctuation-es.jsonl": "cf0e61edc0658ad757448507f0bca45409b4806542301de79fc4e62243b03dd7",
+      "tools/eval/smart-typing-0.3/punctuation-ru.jsonl": "ba355adb7f8553f8976891e448ccb16030ba350916b020595b2c9808e3bc4fdf",
+      "tools/eval/smart-typing-0.3/spelling-en.jsonl": "7808484045e5f9e082e2f68d7b8c2fc7e74b5e7875d041236f6efa6d2ce7929c",
+      "tools/eval/smart-typing-0.3/spelling-es.jsonl": "15d8262790b80846fa9758861f12adb863e79db64dc601b64ffb996a508d249f",
+      "tools/eval/smart-typing-0.3/spelling-ru.jsonl": "a0e44bcd7a5df74c07caa2c181c8354746082737cbd728266d1afd6b10250b69"
+    },
+    "sourceBindings": {
+      "tools/eval/smart-typing-0.3/evaluate.py": "ad76b78ba9f00f301465e0f47eb7e96781c44d8bc141a8e1176603bc7f12d5d7",
+      "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+      "tools/eval/smart-typing-0.3/qualification-v2/source-lock.json": "e3ad381de42a6ac08defd3bad7486789ea15329742e19448b39bf4ebaed795ed"
+    }
+  },
+  "ledgerUnchanged": true,
+  "limits": [
+    "Exact already-revealed v2 historical reproduction, not a fresh holdout.",
+    "No scoring model, new training, policy promotion, APK, phone operation, push or hosted workflow execution.",
+    "Remaining Q6 provenance/family/authorship gaps are not closed by this corpus proof."
+  ],
+  "logs": {
+    "all-v2-tests.log": "a04a0040f24f1cf96f6f92c193a3545ed34128b8d465e12d13766d4634d5d2f3",
+    "baseline-tests.log": "36147fbde27a6e376fce8de170601558f8e3b922b1ef5f96e74a246c05b217a8",
+    "driver.log": "ddbe43d66effc0155a1d8f81f339f3cfb782f9e56022dd96c203724266c234cb",
+    "early-source-tests.log": "6bdff07fdc138a5a5f4194affc0c860a207398c8c95f4ca6da6a15c0bae861b2",
+    "generation.log": "ae8c6fa0133b7cf28d54931be622810d00b20bcf4d52bcce0b8d1c9280c7ac97",
+    "permanent-command.log": "cf8ecfba059140ad873515f2776fcb4a98c844dab84896dfec989c859e1e3ff0",
+    "python312-command.log": "cf8ecfba059140ad873515f2776fcb4a98c844dab84896dfec989c859e1e3ff0",
+    "recovery-tests.log": "55c443882838af1a647fbd8c514e974fa1fc55b0f5546ea5d7e5f0d11fdd0998",
+    "run.py": "fa426b0e6b52624bef43af3c801ee1bd2c0b9f12eb41838aee7955ab9ed0b5b4"
+  },
+  "originalEvaluatorRecovery": {
+    "distinctBlobs": 7,
+    "matches": [
+      {
+        "blob": "5761eeba15dfe72849540b5607ecdc17f7e5dbf8",
+        "commit": "9c6ffd1b5c4edd093d1cf14fcb87c9502295bcbc",
+        "sha256": "ad76b78ba9f00f301465e0f47eb7e96781c44d8bc141a8e1176603bc7f12d5d7"
+      }
+    ],
+    "revisions": 8
+  },
+  "ownerPreservation": {
+    "allPreserved": true,
+    "paths": 98,
+    "payloadHashes": 13
+  },
+  "permanentCommands": {
+    "permanent-command": {
+      "generatorExitCode": 0,
+      "historicalReproductionOnly": true,
+      "inputBindings": {
+        "frequency/en_50k.txt": "5351ff405b1126ef555791dd4d9798a48e3e9a501a9fc481a9da957752cfb458",
+        "frequency/es_50k.txt": "dcff3ad4316192f4dc4ff7d26e637c6ff314ef1ca0f3f720c5649018a71056c0",
+        "frequency/ru_50k.txt": "6095f507cc167488ec66ada5a85ac50433503a08ad24a07c6eabdf54352c4e7f",
+        "oldCorpus/manifest.json": "b70f82f8cb4b1cf6fc811fa1446a7866ba8117828d29a702189da5cd43e42bda",
+        "oldCorpus/protected-tokens.jsonl": "5a17511f29c7f7c6b763f7d8b48c12819a38357d95654595016406f873e39d84",
+        "oldCorpus/punctuation-en.jsonl": "6fbcf0bab9cdd607d3dd9899fdc3186bee936e2565330c2dc14f4776ca77de7c",
+        "oldCorpus/punctuation-es.jsonl": "cf0e61edc0658ad757448507f0bca45409b4806542301de79fc4e62243b03dd7",
+        "oldCorpus/punctuation-ru.jsonl": "ba355adb7f8553f8976891e448ccb16030ba350916b020595b2c9808e3bc4fdf",
+        "oldCorpus/spelling-en.jsonl": "7808484045e5f9e082e2f68d7b8c2fc7e74b5e7875d041236f6efa6d2ce7929c",
+        "oldCorpus/spelling-es.jsonl": "15d8262790b80846fa9758861f12adb863e79db64dc601b64ffb996a508d249f",
+        "oldCorpus/spelling-ru.jsonl": "a0e44bcd7a5df74c07caa2c181c8354746082737cbd728266d1afd6b10250b69",
+        "training/manifest.json": "4ec8664624f1218a74702f620fda38f158e8a8506b0b10dff7260f8a5f7724b8",
+        "training/train.jsonl": "8efaee07d578d42ca764db32e341d892528e84ddcf8a217230bd9fa5ef40fc68",
+        "training/valid.jsonl": "d39d7018d024d8f763ea49cd76c1602cbc151740de603cb91657b156df690f34",
+        "wikipedia/en-0019.parquet": "99c23125b0dd115d68f4a921376880e307bdfcbf3bfd66ae4ed90e853e1dadac",
+        "wikipedia/es-0004.parquet": "09fcc5eb122edc35fb507935643995999e01cc286f1968d14a5a71f24d2a7cf8",
+        "wikipedia/ru-0009.parquet": "bf3781c558a3a2b8125e567f060895ead704577943832e6047bcc71f202975fd"
+      },
+      "logSha256": "ae8c6fa0133b7cf28d54931be622810d00b20bcf4d52bcce0b8d1c9280c7ac97",
+      "outputFiles": {
+        "manifest.json": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+        "protected-tokens.jsonl": "2f22612079c237ba7ae95266d41e9286f2117b7ade9e7bd83a8c9165c1b6a012",
+        "punctuation-en.jsonl": "83c08372631d007264685ad43e63d886435a1f26070f494647b1bfe9aaaf96ab",
+        "punctuation-es.jsonl": "01094a4539479a903da594259c912026f58fc2cc6ac7ae8705bb3af1d2ba477e",
+        "punctuation-ru.jsonl": "f141165d9b5e38da5c82cddefcf48449ed56fe7c9a30f875965061fdb95d214e",
+        "spelling-en.jsonl": "18a7e047a773f21ad4e8724b35fd7c829c9bfc20a11d082a0a4247f82c628abd",
+        "spelling-es.jsonl": "ff45d319ed0765de94ad935a43fcc438c3509ca9f674388b41e715918ea6911f",
+        "spelling-ru.jsonl": "d72ac7c4d19ba157f2f1b64eacb7c237d5adb4eaff4be8adf34ed315eb85d145"
+      },
+      "passed": true,
+      "pyarrow": "25.0.1",
+      "python": "3.11.14",
+      "referenceManifestSha256": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+      "schema": 1,
+      "sourceBindings": {
+        "tools/eval/smart-typing-0.3/evaluate.py": "ad76b78ba9f00f301465e0f47eb7e96781c44d8bc141a8e1176603bc7f12d5d7",
+        "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+        "tools/eval/smart-typing-0.3/qualification-v2/source-lock.json": "e3ad381de42a6ac08defd3bad7486789ea15329742e19448b39bf4ebaed795ed"
+      }
+    },
+    "python312-command": {
+      "generatorExitCode": 0,
+      "historicalReproductionOnly": true,
+      "inputBindings": {
+        "frequency/en_50k.txt": "5351ff405b1126ef555791dd4d9798a48e3e9a501a9fc481a9da957752cfb458",
+        "frequency/es_50k.txt": "dcff3ad4316192f4dc4ff7d26e637c6ff314ef1ca0f3f720c5649018a71056c0",
+        "frequency/ru_50k.txt": "6095f507cc167488ec66ada5a85ac50433503a08ad24a07c6eabdf54352c4e7f",
+        "oldCorpus/manifest.json": "b70f82f8cb4b1cf6fc811fa1446a7866ba8117828d29a702189da5cd43e42bda",
+        "oldCorpus/protected-tokens.jsonl": "5a17511f29c7f7c6b763f7d8b48c12819a38357d95654595016406f873e39d84",
+        "oldCorpus/punctuation-en.jsonl": "6fbcf0bab9cdd607d3dd9899fdc3186bee936e2565330c2dc14f4776ca77de7c",
+        "oldCorpus/punctuation-es.jsonl": "cf0e61edc0658ad757448507f0bca45409b4806542301de79fc4e62243b03dd7",
+        "oldCorpus/punctuation-ru.jsonl": "ba355adb7f8553f8976891e448ccb16030ba350916b020595b2c9808e3bc4fdf",
+        "oldCorpus/spelling-en.jsonl": "7808484045e5f9e082e2f68d7b8c2fc7e74b5e7875d041236f6efa6d2ce7929c",
+        "oldCorpus/spelling-es.jsonl": "15d8262790b80846fa9758861f12adb863e79db64dc601b64ffb996a508d249f",
+        "oldCorpus/spelling-ru.jsonl": "a0e44bcd7a5df74c07caa2c181c8354746082737cbd728266d1afd6b10250b69",
+        "training/manifest.json": "4ec8664624f1218a74702f620fda38f158e8a8506b0b10dff7260f8a5f7724b8",
+        "training/train.jsonl": "8efaee07d578d42ca764db32e341d892528e84ddcf8a217230bd9fa5ef40fc68",
+        "training/valid.jsonl": "d39d7018d024d8f763ea49cd76c1602cbc151740de603cb91657b156df690f34",
+        "wikipedia/en-0019.parquet": "99c23125b0dd115d68f4a921376880e307bdfcbf3bfd66ae4ed90e853e1dadac",
+        "wikipedia/es-0004.parquet": "09fcc5eb122edc35fb507935643995999e01cc286f1968d14a5a71f24d2a7cf8",
+        "wikipedia/ru-0009.parquet": "bf3781c558a3a2b8125e567f060895ead704577943832e6047bcc71f202975fd"
+      },
+      "logSha256": "ae8c6fa0133b7cf28d54931be622810d00b20bcf4d52bcce0b8d1c9280c7ac97",
+      "outputFiles": {
+        "manifest.json": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+        "protected-tokens.jsonl": "2f22612079c237ba7ae95266d41e9286f2117b7ade9e7bd83a8c9165c1b6a012",
+        "punctuation-en.jsonl": "83c08372631d007264685ad43e63d886435a1f26070f494647b1bfe9aaaf96ab",
+        "punctuation-es.jsonl": "01094a4539479a903da594259c912026f58fc2cc6ac7ae8705bb3af1d2ba477e",
+        "punctuation-ru.jsonl": "f141165d9b5e38da5c82cddefcf48449ed56fe7c9a30f875965061fdb95d214e",
+        "spelling-en.jsonl": "18a7e047a773f21ad4e8724b35fd7c829c9bfc20a11d082a0a4247f82c628abd",
+        "spelling-es.jsonl": "ff45d319ed0765de94ad935a43fcc438c3509ca9f674388b41e715918ea6911f",
+        "spelling-ru.jsonl": "d72ac7c4d19ba157f2f1b64eacb7c237d5adb4eaff4be8adf34ed315eb85d145"
+      },
+      "passed": true,
+      "pyarrow": "25.0.1",
+      "python": "3.12.14",
+      "referenceManifestSha256": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+      "schema": 1,
+      "sourceBindings": {
+        "tools/eval/smart-typing-0.3/evaluate.py": "ad76b78ba9f00f301465e0f47eb7e96781c44d8bc141a8e1176603bc7f12d5d7",
+        "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+        "tools/eval/smart-typing-0.3/qualification-v2/source-lock.json": "e3ad381de42a6ac08defd3bad7486789ea15329742e19448b39bf4ebaed795ed"
+      }
+    }
+  },
+  "priorArchiveEntriesPreserved": true,
+  "schema": 1,
+  "sourceBase": "2c62244f7dc4a4018a33820b783abbb77f1c89c7",
+  "status": "full original v2 generation and mixed-script guard verified; global Q6 remains incomplete",
+  "tests": {
+    "baselineGuard": {
+      "exitCode": 1,
+      "failures": 1,
+      "reason": "mixed-script suffix admitted",
+      "tests": 4
+    },
+    "earlySources": {
+      "exitCode": 0,
+      "tests": 4
+    },
+    "legacyRecovery": {
+      "exitCode": 0,
+      "tests": 7
+    },
+    "qualificationV2": {
+      "exitCode": 0,
+      "python": "3.12.14",
+      "tests": 11
+    }
+  }
+}

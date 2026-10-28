@@ -45,6 +45,14 @@ class QualificationCorpusTest(unittest.TestCase):
             CORPUS.keep_bounded(heap, seen, {"selectionHash": identity}, limit=3)
         self.assertEqual({int(entry[1], 16) for entry in heap}, {1, 3, 4})
 
+    def test_spelling_candidates_reject_mixed_script_word_fragments(self):
+        known = {"один", "два", "три", "четыре", "колько", "пять", "сколько"}
+        rows = CORPUS.spelling_candidates(
+            "один два три четыре Cколько пять сколько", "ru", known, set(), 42)
+        words = {row["word"] for row in rows}
+        self.assertNotIn("колько", words)
+        self.assertIn("сколько", words)
+
 
 if __name__ == "__main__":
     unittest.main()
