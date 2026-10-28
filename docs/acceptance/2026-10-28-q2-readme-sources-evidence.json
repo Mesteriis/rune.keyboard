@@ -1,0 +1,115 @@
+{
+  "audit": {
+    "checkedPaths": [
+      ".github/workflows/ci.yml",
+      "CHANGELOG.md",
+      "CONTRIBUTING.md",
+      "LICENSE",
+      "PRIVACY.md",
+      "THIRD_PARTY_NOTICES.md",
+      "app/src/main/assets/smarttyping/experiments/joint-correction-provenance.json",
+      "docs/ACCEPTANCE.md",
+      "docs/ARCHITECTURE.md",
+      "docs/FDROID.md",
+      "docs/RELEASE.md",
+      "docs/USER_GUIDE.ru.md",
+      "docs/acceptance/2026-10-25-joint-short-correction.md",
+      "docs/acceptance/2026-10-26-context-feature-ranking.md",
+      "docs/acceptance/2026-10-26-conversation-ranking-95.md",
+      "docs/acceptance/2026-10-26-grammar-context-ranking.md",
+      "docs/acceptance/2026-10-26-local-spelling-stress.md",
+      "docs/acceptance/2026-10-26-supervised-conversation-ranking.md",
+      "docs/acceptance/2026-10-27-native-preparation-runtime.md",
+      "docs/acceptance/2026-10-28-q2-compact-sources.md",
+      "docs/acceptance/2026-10-28-q2-disclosure-tools.md",
+      "docs/acceptance/2026-10-28-q2-holdout-sources.md",
+      "docs/acceptance/2026-10-28-q2-joint-neighbor-sources.md",
+      "docs/acceptance/2026-10-28-q2-readme-sources.md",
+      "docs/plans/2026-10-27-review-completion.md",
+      "docs/typing-extra-epochs.md",
+      "docs/typing-model-refinement.md",
+      "docs/typing-word-ranking.md",
+      "gradlew",
+      "tools/check_readme_sources.py",
+      "tools/ci/python_tools_tests.py",
+      "tools/model/rune-text-0.2/source-lock.json",
+      "tools/morphology/evaluate.py",
+      "tools/morphology/requirements.lock",
+      "tools/typing_experiments",
+      "tools/typing_experiments/audit_disclosed_fixtures.py",
+      "tools/typing_experiments/calibrate_joint_followup.py",
+      "tools/typing_experiments/calibrate_joint_rescue.py",
+      "tools/typing_experiments/calibrate_joint_source.py",
+      "tools/typing_experiments/conversation_acceptance.py",
+      "tools/typing_experiments/conversation_split_checks.py",
+      "tools/typing_experiments/evaluate_joint_followup.py",
+      "tools/typing_experiments/evaluate_joint_product.py",
+      "tools/typing_experiments/evaluate_refinement.py",
+      "tools/typing_experiments/grammar_context_features.py",
+      "tools/typing_experiments/local_spelling_stress.py",
+      "tools/typing_experiments/neural_refinement.py",
+      "tools/typing_experiments/prepare_joint_correction.py",
+      "tools/typing_experiments/prepare_joint_followup.py",
+      "tools/typing_experiments/prepare_refinement.py",
+      "tools/typing_experiments/promote_refinement.py",
+      "tools/typing_experiments/rank_refinement.py",
+      "tools/typing_experiments/replay_joint_correction.py",
+      "tools/typing_experiments/select_refinement.py",
+      "tools/typing_experiments/split_observations.py",
+      "tools/typing_experiments/test_conversation_split_checks.py",
+      "tools/typing_experiments/test_grammar_context_features.py",
+      "tools/typing_experiments/test_local_spelling_stress.py",
+      "tools/typing_experiments/test_typing_quality_slices.py",
+      "tools/typing_experiments/test_word_context_features.py",
+      "tools/typing_experiments/train.py",
+      "tools/typing_experiments/train_joint_correction.py",
+      "tools/typing_experiments/train_joint_rescue.py",
+      "tools/typing_experiments/typing_quality_slices.py",
+      "tools/typing_experiments/word_context_features.py"
+    ],
+    "commandsExecuted": false,
+    "documents": {
+      "README.md": "359471f148bbcc764d29b5c7b0047d0b5381ffc82a32ee5082f9c31db1ab72f3",
+      "tools/typing_experiments/README.md": "c46bafe17d5ae768e39d3d40e9db0ab1b2e67c9c36f867a4a60336a04c2a7112"
+    },
+    "generatedArtifactPaths": [
+      "app/build/outputs/apk/debug/app-debug.apk",
+      "app/build/reports/apk-footprint/release.json"
+    ],
+    "generatedDataValidated": false,
+    "remoteLinksVerified": false,
+    "scope": "MAIN_README_LITERAL_LOCAL_LINKS_AND_PROJECT_PYTHON_SOURCES"
+  },
+  "baseCommit": "9bf6d64",
+  "hostedCiExecuted": false,
+  "productionModelOrDeviceQualification": false,
+  "purpose": "Q2_MAIN_README_SOURCE_PRESENCE_NOT_TRANSITIVE_QUALIFICATION",
+  "restoredHistoricalReports": {
+    "docs/acceptance/2026-10-25-joint-short-correction.md": {
+      "originalBodyRetained": true,
+      "originalSha256": "63fdef2fd4e3f1e966697880ec3c6bdc819e448b21e6581379adede4503b9502"
+    },
+    "docs/acceptance/2026-10-26-grammar-context-ranking.md": {
+      "originalBodyRetained": true,
+      "originalSha256": "269899e2f88ea6ab8e8086fa5eb10c444d062e51663b39020bdf0e4f7f0a7a23"
+    },
+    "docs/acceptance/2026-10-26-local-spelling-stress.md": {
+      "originalBodyRetained": true,
+      "originalSha256": "8bfa3149b8c5ba49d4848352fe8b22d263b4b7faeac27bcb2b5dab6406cce7c0"
+    }
+  },
+  "sourceBindings": {
+    ".github/workflows/ci.yml": "7c99469de1a170b3826ce1a53215c9478469cabf43487a9b1c69f23a73248e6c",
+    "tools/check_readme_sources.py": "0ceeaea1248f16507f820682a3c6405a43aa4faef724c21c2707f673a6085e94",
+    "tools/test_readme_sources.py": "97f1025258874c32e68634b9a2cc6ea09140b8ee5c9ffebcdbedb62ce1efc02a",
+    "tools/typing_experiments/README.md": "c46bafe17d5ae768e39d3d40e9db0ab1b2e67c9c36f867a4a60336a04c2a7112"
+  },
+  "tests": {
+    "count": 13,
+    "exitCode": 0,
+    "pythonVersions": [
+      "3.12.14",
+      "3.14.6"
+    ]
+  }
+}

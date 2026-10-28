@@ -30,6 +30,11 @@ jobs:
       - name: Verify retained conversational fixtures and known exclusions
         if: matrix.profile == 'stdlib'
         run: python tools/typing_experiments/audit_disclosed_fixtures.py
+      - name: Verify main README local sources and links
+        if: matrix.profile == 'stdlib'
+        run: |
+          python tools/check_readme_sources.py
+          python -m unittest discover -s tools -p test_readme_sources.py -v
       - name: Check source-bound local-learning privacy disclosures
         if: matrix.profile == 'stdlib'
         run: |
