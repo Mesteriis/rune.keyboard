@@ -70,10 +70,26 @@ an existing/unwritable report. CLI raw replay outputs are private by default;
 they can contain supplied corpus text. A baseline update requires its own
 reviewed commit and acceptance link.
 
-This is the portable runner/comparator foundation for Q7. The permanent licensed label-free CI inputs and surface/context Q6 exclusions
-are versioned; unknown canonical families still keep Q6 coverage incomplete.
-The newly captured committed baseline,
-threshold-mutation failure, expanded tools test jobs and measured Ubuntu CI run
-remain separate acceptance work. The existing pipeline test discovery includes
-the runner/comparator unit tests. A host-only run does not establish Ubuntu
-runtime budgets or a remotely executed CI job.
+The CI entry point runs both the permanently licensed v1 inputs and all 12,000
+original versioned spelling/protected rows, each twice with its own lossless
+baseline. The historical profile keeps its original attribution/license scope.
+Both profiles have durable Q6 context/surface disclosures; unknown canonical
+families still keep global coverage incomplete.
+
+```sh
+python3 tools/ci/product_replay_ci.py --java "$JAVA_HOME/bin/java" \
+  --output build/product-replay-ci
+```
+
+Outputs use that fresh path and its `-historical` sibling. The workflow calls the
+same command after Gradle in the unit-test job, and uploads both outputs with
+attribution. Data/baseline checks run before and after actual execution; exit 0
+without a complete, deterministic, matching receipt is rejected. Candidate code
+may change: historical source hashes describe the capture and do not replace
+the behavioral comparator. Baselines are never updated by this command.
+
+The full component and a failing one-threshold mutant were actually verified on
+local Ubuntu 24.04/ARM64 with a prepared pinned compiler cache. See the
+[CI baseline receipt](acceptance/2026-10-28-q7-ci-baseline.md). This is not a hosted
+GitHub workflow run or an Ubuntu x86_64/Gradle/native-build performance claim.
+Remaining tools-test coverage and heavy dependency jobs remain acceptance work.

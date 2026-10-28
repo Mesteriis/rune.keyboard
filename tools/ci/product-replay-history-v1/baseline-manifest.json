@@ -1,0 +1,35 @@
+{
+  "acceptance": "docs/acceptance/2026-10-28-q7-portable-replay.md",
+  "captureTwoPassDeterministic": true,
+  "capturedSourceCommit": "871ee8df7fb94828c4f1c625276d601a3c4bf198",
+  "excludedTopLevelFields": [
+    "fullTokenGenerationNanos",
+    "hostStageNanos"
+  ],
+  "file": "baseline.jsonl.gz",
+  "fileSha256": "a7dea8d9ead6b235f1b63086f4fb946ab840b6272ae39c254f148ecc5032c5d8",
+  "inputBindings": {
+    "tools/eval/smart-typing-0.3/protected-tokens.jsonl": "5a17511f29c7f7c6b763f7d8b48c12819a38357d95654595016406f873e39d84",
+    "tools/eval/smart-typing-0.3/spelling-en.jsonl": "7808484045e5f9e082e2f68d7b8c2fc7e74b5e7875d041236f6efa6d2ce7929c",
+    "tools/eval/smart-typing-0.3/spelling-es.jsonl": "15d8262790b80846fa9758861f12adb863e79db64dc601b64ffb996a508d249f",
+    "tools/eval/smart-typing-0.3/spelling-ru.jsonl": "a0e44bcd7a5df74c07caa2c181c8354746082737cbd728266d1afd6b10250b69"
+  },
+  "inputPaths": [
+    "tools/eval/smart-typing-0.3/spelling-en.jsonl",
+    "tools/eval/smart-typing-0.3/spelling-ru.jsonl",
+    "tools/eval/smart-typing-0.3/spelling-es.jsonl",
+    "tools/eval/smart-typing-0.3/protected-tokens.jsonl"
+  ],
+  "languages": {
+    "en": 4000,
+    "es": 4000,
+    "ru": 4000
+  },
+  "modelCalls": 0,
+  "opaqueControllerIds": true,
+  "projectionSha256": "b7b49f16aed912ea4c80d811c834f059dc1ac47f6b655e9798923651ec47f512",
+  "purpose": "HISTORICAL_DISCLOSED_REGRESSION_NOT_QUALIFICATION",
+  "rows": 12000,
+  "schemaVersion": 1,
+  "sourceManifestSha256": "b70f82f8cb4b1cf6fc811fa1446a7866ba8117828d29a702189da5cd43e42bda"
+}

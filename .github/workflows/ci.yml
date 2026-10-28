@@ -57,7 +57,8 @@ jobs:
           python3 -m unittest discover -s tools/typing_experiments -p test_right_context_sentence_audit.py
           python3 tools/ci/generate_product_replay_v1.py --check
           python3 tools/ci/register_product_replay_v1.py --check
-          python3 -m unittest discover -s tools/ci -p test_product_replay_corpus.py
+          python3 tools/ci/register_historical_replay.py --check
+          python3 -m unittest discover -s tools/ci -p 'test_product_replay*.py'
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -69,6 +70,8 @@ jobs:
           yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" "ndk;29.0.14206865" "cmake;3.31.6" >/dev/null
       - name: Run fresh JVM tests
         run: ./gradlew testDebugUnitTest --rerun-tasks
+      - name: Verify current-product replay against the frozen multilingual baseline
+        run: python3 tools/ci/product_replay_ci.py --java "$JAVA_HOME/bin/java" --output build/product-replay-ci
       - name: Synthetic CPU duty trace contracts and report
         run: |
           python3 -m unittest discover -s tools/qa/smart-typing-0.3/duty-traces -p test_report.py
@@ -110,6 +113,11 @@ jobs:
             app/build/test-results/testDebugUnitTest/**
             app/build/reports/tests/testDebugUnitTest/**
             build/model-duty-trace-ci/**
+            build/product-replay-ci/**
+            build/product-replay-ci-historical/**
+            tools/ci/product-replay-v1/NOTICE.md
+            tools/ci/product-replay-v1/source-lock.json
+            tools/ci/product-replay-history-v1/NOTICE.md
 
   build:
     runs-on: ubuntu-latest

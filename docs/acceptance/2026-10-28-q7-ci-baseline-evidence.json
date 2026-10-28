@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "card": "Q7",
+  "completeCard": false,
+  "corpusFreezeCommit": "3fb4000a3cbdaa9302ee719baa1cd6ab513a8951",
+  "sourceCorpusFrozenBeforeItsFirstReplay": true,
+  "fixedLicensedCorpus": {
+    "rows": 2160,
+    "groups": 540,
+    "languages": {
+      "en": 720,
+      "ru": 720,
+      "es": 720
+    },
+    "contentLicense": "CC-BY-SA-4.0",
+    "fullSourceFilesPinned": 3,
+    "noPrivateMessages": true,
+    "noExpectedLabelsSent": true,
+    "syntheticContextsNotNaturalQualification": true
+  },
+  "originalCorpusRetained": {
+    "rows": 12000,
+    "languages": {
+      "en": 4000,
+      "ru": 4000,
+      "es": 4000
+    },
+    "originalLicensingScopeRetained": true,
+    "baselineFromNewCanonicalCaptureCommit": "871ee8df7fb94828c4f1c625276d601a3c4bf198"
+  },
+  "disclosures": {
+    "newMultilingualRegressionEntries": 6,
+    "newRuContextSurfaceQuarantines": 2,
+    "originalLexicalEntriesPreserved": 121,
+    "lexicalEntriesNow": 123,
+    "canonicalFamiliesProven": false,
+    "globalCoverageComplete": false,
+    "buildIndependentCopiedTreeVerification": true,
+    "caseWhitespacePrefixOrClaimedFamilyCannotHideDisclosedSurface": true
+  },
+  "checks": {
+    "sourceBoundCiCommands": 41,
+    "sourceOnlyUnitTests": 218,
+    "failures": 0,
+    "errors": 0,
+    "ciCorpusAndGateTestsIncluded": 10,
+    "observerPipelineTests": 121,
+    "observerPipelineConditionalSkips": 1,
+    "skipReason": "Legacy scored-export test requires FINAL_REPLAY_EXPORT."
+  },
+  "ci": {
+    "parityStepAfterGradleSameJob": true,
+    "twoSeparateJvmPassesPerProfile": true,
+    "profiles": 2,
+    "totalRowsPerPass": 14160,
+    "outputsUploadedWithAttribution": true,
+    "remainingToolsJobsComplete": false,
+    "hostedWorkflowExecuted": false
+  },
+  "ubuntu": {
+    "userland": "Ubuntu 24.04",
+    "architecture": "linux/arm64",
+    "cpus": 2,
+    "memoryGiB": 4,
+    "componentSeconds": 184.8439764578361,
+    "network": "none",
+    "sourceReadOnly": true,
+    "pinnedGradleCompilerJarBytesReused": true,
+    "gradleOrNativeBuildRunInContainer": false,
+    "coldCacheClaim": false,
+    "sourceUploadedToRemote": false,
+    "baseImageDigest": "eclipse-temurin@sha256:78dde986267ae7cac62fe7ef624c2a5cee2036b6822933d39fd3870618b91526",
+    "profiles": {
+      "licensed": {
+        "rows": 2160,
+        "languages": {
+          "en": 720,
+          "es": 720,
+          "ru": 720
+        },
+        "projectionSha256": "e2f5b604d83eceb3d75cf75ec69f73e679ab847dfebdbf7ddc408b455c0cb0ea",
+        "compileSeconds": 11.623051879927516,
+        "elapsedSeconds": 25.78588097007014,
+        "first": {
+          "elapsedSeconds": 7.200006878003478,
+          "observationsSha256": "1bafaac683dcd3f8d62bc70c76652bf84dc8e7aecdf0f0224af2834815552d2e"
+        },
+        "second": {
+          "elapsedSeconds": 4.9151378779206425,
+          "observationsSha256": "f2c77585b8f08260a2417783e91ec7166f00f60123a58b6c00a4f9038463df11"
+        },
+        "baselineDifferences": 0,
+        "determinismProjectionHashes": [
+          "e2f5b604d83eceb3d75cf75ec69f73e679ab847dfebdbf7ddc408b455c0cb0ea",
+          "e2f5b604d83eceb3d75cf75ec69f73e679ab847dfebdbf7ddc408b455c0cb0ea"
+        ]
+      },
+      "historical": {
+        "rows": 12000,
+        "languages": {
+          "en": 4000,
+          "es": 4000,
+          "ru": 4000
+        },
+        "projectionSha256": "b7b49f16aed912ea4c80d811c834f059dc1ac47f6b655e9798923651ec47f512",
+        "compileSeconds": 11.242089963052422,
+        "elapsedSeconds": 148.4839016920887,
+        "first": {
+          "elapsedSeconds": 96.67731791897677,
+          "observationsSha256": "a8751331856407bdfd7bf2347d36bd78adbff6399772be748e9744d315de3b7e"
+        },
+        "second": {
+          "elapsedSeconds": 25.617154302075505,
+          "observationsSha256": "988724500d3716a526e1eaf39a5f92c81c7145d12f66de3c3795d5f0b56b31af"
+        },
+        "baselineDifferences": 0,
+        "determinismProjectionHashes": [
+          "b7b49f16aed912ea4c80d811c834f059dc1ac47f6b655e9798923651ec47f512",
+          "b7b49f16aed912ea4c80d811c834f059dc1ac47f6b655e9798923651ec47f512"
+        ]
+      }
+    }
+  },
+  "ubuntuMutation": {
+    "gateFailedAsExpected": true,
+    "containerExitCode": 1,
+    "oomKilled": false,
+    "differentRows": 160,
+    "comparedRows": 2160,
+    "changedFiles": [
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/JointQualification.kt"
+    ],
+    "elapsedSeconds": 51.43531075003557,
+    "architecture": "linux/arm64",
+    "mainQualificationSourceUnchanged": true
+  },
+  "sandbox": {
+    "positive": {
+      "network": "none",
+      "memoryBytes": 4294967296,
+      "cpus": 2,
+      "capabilitiesDropped": [
+        "ALL"
+      ],
+      "sourceReadOnly": true,
+      "cacheReadOnly": true,
+      "sdkReadOnly": true,
+      "outputOnlyWritableMount": true,
+      "exitCode": 0,
+      "oomKilled": false
+    },
+    "mutant": {
+      "network": "none",
+      "memoryBytes": 4294967296,
+      "cpus": 2,
+      "capabilitiesDropped": [
+        "ALL"
+      ],
+      "sourceReadOnly": true,
+      "cacheReadOnly": true,
+      "sdkReadOnly": true,
+      "outputOnlyWritableMount": true,
+      "exitCode": 1,
+      "oomKilled": false
+    }
+  },
+  "cleanup": {
+    "taskContainersRemoved": 2,
+    "taskRuntimeImageRemoved": true,
+    "temporarySourceBundlesCacheAndSdkCopiesRemoved": true,
+    "rawOutputsAndDocumentSnapshotsRetained": true,
+    "unrelatedContainersOrImagesRemoved": false
+  },
+  "baselineFiles": {
+    "tools/ci/product-replay-v1/baseline.jsonl.gz": {
+      "bytes": 1154198,
+      "sha256": "cc63e36f4b95c7328440ff2965dae5ab1432c119df53e14b12a8e264f7ca409b"
+    },
+    "tools/ci/product-replay-v1/baseline-manifest.json": {
+      "bytes": 27197,
+      "sha256": "0b17163f8856636393ddbaede8ff7c37c75a76b3c9dad25cefd43cc28b368a24"
+    },
+    "tools/ci/product-replay-history-v1/baseline.jsonl.gz": {
+      "bytes": 5110083,
+      "sha256": "a7dea8d9ead6b235f1b63086f4fb946ab840b6272ae39c254f148ecc5032c5d8"
+    },
+    "tools/ci/product-replay-history-v1/baseline-manifest.json": {
+      "bytes": 1544,
+      "sha256": "f50f131614cc51ffbdd1c94398fbc2a03066d04e611540653a1553aae7694dd7"
+    }
+  },
+  "testedCiSourceSha256": {
+    "tools/ci/product_replay_ci.py": "e145dedee8cb140fc45c90fe232a6357a4719861a41fd1cb54fc72295bd3897c",
+    "tools/ci/register_historical_replay.py": "3538bcf33c6e8f198d73b3333797dae831b95834076c2a42f59bd211ff57998b",
+    ".github/workflows/ci.yml": "88c0e236156446161d797f2aa5db9ce431bb9ffe4c3229c9c14a5fee949998a7"
+  },
+  "productSourceChanged": false,
+  "phoneCommands": 0,
+  "preservation": {
+    "originalTrackedPayloadsUnchanged": 13,
+    "originalPathsRetained": 98
+  },
+  "remaining": [
+    "Complete tracked tools Python test coverage and separate jobs for heavy dependencies.",
+    "Execute the complete hosted Ubuntu workflow; local ARM64 parity component is not hosted x86_64/Gradle/native-build evidence.",
+    "Q6 historical/canonical-family gaps and all other review cards remain independently scoped."
+  ],
+  "privateEvidenceBindings": {
+    "build/review-q7-corpus-20261028/corpus-tests.log": "dbf38d62b049bd50700af510c26abb66091e2b10eab573476c4267b09bdc7cdf",
+    "build/review-q7-corpus-20261028/pipeline-tests.log": "baddb87e68bf8d5ed5c5315375297312740e7f327807d8d26de9d5ea2ee86709",
+    "build/review-q7-corpus-20261028/final-ci-unit-tests.log": "903c096e2fd55faff9f4a38e27c1850414565a850c98e639eb48d7b6434865c9",
+    "build/review-q7-corpus-20261028/final-source-checks.log": "6a837f77861bca2528563d117ed80bd938f050573da1867e33f81b3f4ebea077",
+    "build/review-q7-corpus-20261028/final-source-checks.json": "d234bdeea22842f4636fe427fbbe57272339646b3f11df4a8b68867ac7cb7708",
+    "build/review-q7-corpus-20261028/final-source-inputs.json": "cf29532ea54d745e5450c1ff27f6819efcf8078b40f2ea5622d2d85888c15de4",
+    "build/review-q7-corpus-20261028/capture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/review-q7-corpus-20261028/guarded-main.log": "f2a4eaf12d2140ac9ded06bb4b86769432406a1a061259e2ea00ca4c7469859b",
+    "build/review-q7-corpus-20261028/ubuntu-run.log": "34370693a14c24383bfcfec493cc00e09139cfb897fe8d5dc63299e03d214018",
+    "build/review-q7-corpus-20261028/ubuntu-result.json": "3c489c0c482b1293f2168f18d939b09f0385642d416e6143684f62110a1b15ee",
+    "build/review-q7-corpus-20261028/ubuntu-platform.json": "08a3c2cb3c9ed4f3eed05545262040e285c1d9670706f63d493eb70a05eca683",
+    "build/review-q7-corpus-20261028/ubuntu-source-bindings.json": "417782cff10e264a3f617a2594bc8f693a0c760cd6e0561977d00b5170146eb3",
+    "build/review-q7-corpus-20261028/ubuntu-mutant.log": "8ca8fe75916c26abcc26ae803c3d268a8acc45a4cbaa553f43612801f1bc9ef7",
+    "build/review-q7-corpus-20261028/ubuntu-mutant-result.json": "85f918e4dfec6fb161a9a14fb3c15ed1770f770ea304bf2e2cc73dec4d6398ba",
+    "build/review-q7-corpus-20261028/ubuntu-sandbox-verification.json": "2eb80060d9cc6bc20cb39c7853a6ab5de7c74b6d40457947609a25b731e681bf",
+    "build/review-q7-corpus-20261028/ubuntu-cleanup.json": "07eb215587d0200d4a15f05b42b715b34697b565bd1cb1310fa09da9ea41bd68"
+  },
+  "checkedHostPathMarkersAbsentFromBaselines": true
+}
