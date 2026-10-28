@@ -33,3 +33,9 @@ bf2118a0 remains unrecovered after the bounded history lookup in this slice.
 No app source, asset or policy bytes changed and no Android install, model
 training or hosted CI job ran. Pending owner README additions remain unchanged;
 only the reviewed source-status paragraph is integrated.
+
+Clean-checkout integration: exact source `56a2b89` passes all 109 isolated
+stdlib modules / 558 tests, with zero failures, errors or skips. The original
+raw receipt remains local; its SHA-256 and exact totals are in the evidence JSON.
+Scientific source and dependencies were unchanged by this slice; that profile
+was not rerun. The preceding joint/neighbor receipt records its last actual run.

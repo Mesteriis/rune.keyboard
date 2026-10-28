@@ -136,6 +136,17 @@
       ]
     }
   ],
+  "cleanCheckoutRun": {
+    "errors": 0,
+    "failures": 0,
+    "modules": 109,
+    "profile": "stdlib",
+    "receiptSha256": "e9dc80b72bf46d3935211870fcbe6971119036e832fe6cd3ef3f24dd8ef4db4c",
+    "skips": 0,
+    "sourceCommit": "56a2b89",
+    "status": "PASS",
+    "tests": 558
+  },
   "cliChecks": [
     {
       "actualInvocationRetainedInLocalRawReceipt": true,
