@@ -8,12 +8,23 @@ interface QualityStorage {
     fun write(snapshot: QualitySnapshot): Boolean
 }
 
+internal class QualitySnapshotOrigin
+
+/** Numeric state captured for an explicit export; reset revokes previously captured state. */
+class QualitySnapshotTicket internal constructor(
+    internal val origin: QualitySnapshotOrigin,
+    val snapshot: QualitySnapshot,
+) {
+    override fun toString(): String = "QualitySnapshotTicket"
+}
+
 /** Serial, coalesced persistence. No submitted task captures editor text. */
 class QualityRepository(private val storage: QualityStorage, private val worker: Executor) : QualityRecorder {
     enum class Readiness { LOADING, READY, RESETTING, FAILED }
     private val lock = Any()
     private val model = QualityModel()
     private var generation = 0L
+    private var snapshotOrigin = QualitySnapshotOrigin()
     private var writeScheduled = false
     @Volatile var readiness = Readiness.LOADING
         private set
@@ -60,6 +71,14 @@ class QualityRepository(private val storage: QualityStorage, private val worker:
     override fun invalidatePending() = synchronized(lock) { model.invalidatePending() }
     fun snapshot(): QualitySnapshot = synchronized(lock) { model.snapshot() }
 
+    fun captureSnapshot(): QualitySnapshotTicket? = synchronized(lock) {
+        if (isReady) QualitySnapshotTicket(snapshotOrigin, model.snapshot()) else null
+    }
+
+    fun isSnapshotCurrent(ticket: QualitySnapshotTicket): Boolean = synchronized(lock) {
+        isReady && ticket.origin === snapshotOrigin
+    }
+
     private inline fun update(change: QualityModel.() -> Boolean) {
         synchronized(lock) {
             if (!isReady || !model.change()) return
@@ -93,6 +112,7 @@ class QualityRepository(private val storage: QualityStorage, private val worker:
         val accepted = synchronized(lock) {
             if (readiness == Readiness.RESETTING) false else {
                 generation++
+                snapshotOrigin = QualitySnapshotOrigin()
                 readiness = Readiness.RESETTING
                 lastWriteSucceeded = null
                 model.reset()

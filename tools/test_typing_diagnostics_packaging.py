@@ -37,6 +37,11 @@ class PackagingTest(unittest.TestCase):
             archive.writestr('classes.dex', minimal_dex(name))
         manifest = root / 'AndroidManifest.xml'
         activity = '<activity android:name="' + name + '" android:exported="false" />' if variant == 'debug' else ''
+        if variant == 'debug':
+            export = 'io.github.mesteriis.rune.keyboard.settings.quality.QualityExportActivity'
+            extra = classes / (export.replace('.', '/') + '.class')
+            extra.parent.mkdir(parents=True); extra.write_bytes(b'synthetic inventory entry')
+            activity += '<activity android:name="' + export + '" android:exported="false" />'
         target = '<activity-alias android:name=".PublicAlias" android:targetActivity="' + prefix + 'DiagnosticsActivity" android:exported="true" />' if alias else ''
         manifest.write_text('<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="io.github.mesteriis.rune.keyboard"><application>' + activity + target + '</application></manifest>')
         mapping = root / 'mapping.txt'; mapping.write_text('')
@@ -109,6 +114,38 @@ class PackagingTest(unittest.TestCase):
                     args.manifest.write_text(text)
                     with self.assertRaisesRegex(ValueError, '[Aa]lias'):
                         verify(args)
+
+    def test_debug_quality_export_requires_private_filter_free_activity(self):
+        name = 'io.github.mesteriis.rune.keyboard.settings.quality.QualityExportActivity'
+        original = '<activity android:name="' + name + '" android:exported="false" />'
+        for replacement in ('', original.replace('"false"', '"true"'),
+                            original.replace(' />', '><intent-filter /></activity>')):
+            with tempfile.TemporaryDirectory() as folder:
+                args = self.fixture(Path(folder))
+                args.manifest.write_text(args.manifest.read_text().replace(original, replacement))
+                with self.assertRaises(ValueError): verify(args)
+
+    def test_quality_export_activity_and_worker_cannot_leak_into_final_variants(self):
+        prefix = 'io.github.mesteriis.rune.keyboard.settings.quality.'
+        for variant in ('release', 'profile'):
+            for suffix in ('QualityExportActivity', 'QualitySnapshotExporter$export$1'):
+                original = prefix + suffix
+                for location in ('pre-r8', 'dex', 'manifest', 'alias'):
+                    with tempfile.TemporaryDirectory() as folder:
+                        args = self.fixture(Path(folder), variant)
+                        if location == 'pre-r8':
+                            cls = args.classes[0] / (original.replace('.', '/') + '.class')
+                            cls.parent.mkdir(parents=True); cls.write_bytes(b'synthetic')
+                        elif location == 'dex':
+                            args.mapping.write_text(original + ' -> a.b.C:\n')
+                            with zipfile.ZipFile(args.apk_dir / 'app.apk', 'w') as archive:
+                                archive.writestr('classes.dex', minimal_dex('a.b.C'))
+                        else:
+                            component = ('<activity android:name="' + original + '" />' if location == 'manifest'
+                                else '<activity-alias android:name=".Alias" android:targetActivity="' + original + '" />')
+                            args.manifest.write_text(args.manifest.read_text().replace('</application>', component + '</application>'))
+                        with self.assertRaises(ValueError): verify(args)
+        self.assertEqual([], forbidden_classes({prefix + 'QualityDashboardActivity'}))
 
     def test_truncated_or_invalid_dex_fails_closed(self):
         for content in (b'', b'not a dex', minimal_dex('a.b.C')[:130]):

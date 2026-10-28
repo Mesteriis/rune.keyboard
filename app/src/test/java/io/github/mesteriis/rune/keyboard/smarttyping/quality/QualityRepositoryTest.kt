@@ -210,4 +210,35 @@ class QualityRepositoryTest {
         worker.drain()
         assertEquals(101, completed)
     }
+    @Test fun `snapshot export needs ready state survives stopping collection but never reset or another store`() {
+        val worker = Worker()
+        val storage = Storage()
+        val repository = QualityRepository(storage, worker)
+        assertNull(repository.captureSnapshot())
+        worker.drain()
+        repository.configure(true, false, true)
+        repository.record(QualityEvent.AUTOMATIC_APPLIED)
+        val ticket = repository.captureSnapshot()!!
+        repository.record(QualityEvent.AUTOMATIC_APPLIED)
+        repository.configure(false, false, false)
+        assertTrue(repository.isSnapshotCurrent(ticket))
+        assertEquals(1L, ticket.snapshot[QualityEvent.AUTOMATIC_APPLIED])
+        val other = QualityRepository(Storage(), worker)
+        worker.drain()
+        assertFalse(other.isSnapshotCurrent(ticket))
+        repository.reset()
+        assertFalse(repository.isSnapshotCurrent(ticket))
+        assertNull(repository.captureSnapshot())
+        worker.drain()
+        assertFalse(repository.isSnapshotCurrent(ticket))
+        assertEquals(QualitySnapshot(), repository.captureSnapshot()!!.snapshot)
+        repository.configure(true, false, true)
+        val next = repository.captureSnapshot()!!
+        storage.writesSucceed = false
+        repository.record(QualityEvent.AUTOMATIC_APPLIED)
+        worker.drain()
+        assertFalse(repository.isSnapshotCurrent(next))
+        assertNull(repository.captureSnapshot())
+    }
+
 }

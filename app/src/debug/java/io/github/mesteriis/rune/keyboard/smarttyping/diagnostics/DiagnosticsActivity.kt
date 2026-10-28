@@ -43,6 +43,9 @@ class DiagnosticsActivity : ThemedActivity() {
         }
         button(R.id.diagnostics_export_metadata, R.string.diagnostics_export_metadata) { choose(DiagnosticStream.METADATA) }
         button(R.id.diagnostics_export_text, R.string.diagnostics_export_text) { choose(DiagnosticStream.TEXT) }
+        button(R.id.quality_export_manage, R.string.quality_export_title) {
+            startActivity(Intent(this, io.github.mesteriis.rune.keyboard.settings.quality.QualityExportActivity::class.java))
+        }
         button(R.id.diagnostics_delete, R.string.diagnostics_delete) {
             operation++; deleting = true
             pending = null; activeExport = null; busy = true; render(R.string.diagnostics_deleting)

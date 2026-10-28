@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="quality_export_manage" />
+    <item type="id" name="quality_export_status" />
+    <item type="id" name="quality_export_choose" />
+    <string name="quality_export_title">Export quality statistics</string>
+    <string name="quality_export_description">Only numeric counters are exported, without typed text or word hashes. Choose where to save the file. Your document provider may sync this copy; resetting local statistics does not delete exported files.</string>
+    <string name="quality_export_choose">Save numeric statistics</string>
+    <string name="quality_export_ready">Statistics are ready to export.</string>
+</resources>

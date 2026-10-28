@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quality_export_title">Exportar estadísticas de calidad</string>
+    <string name="quality_export_description">Solo se exportan contadores numéricos, sin texto escrito ni hashes de palabras. Elige dónde guardar el archivo. Tu proveedor de documentos puede sincronizar esta copia; restablecer las estadísticas locales no elimina los archivos exportados.</string>
+    <string name="quality_export_choose">Guardar estadísticas numéricas</string>
+    <string name="quality_export_ready">Las estadísticas están listas para exportar.</string>
+</resources>

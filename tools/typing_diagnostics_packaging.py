@@ -15,6 +15,20 @@ CONTRACTS = {'DiagnosticKind', 'DiagnosticReason', 'DiagnosticSource', 'Diagnost
 # No prefix/wildcard allowance: a nested recorder or a new helper requires review.
 COMPILER_HELPERS = {'DiagnosticFeature$Companion', 'TypingDiagnostics$DefaultImpls',
                     'DiagnosticsSettingsProvider$$ExternalSyntheticLambda0'}
+QUALITY_EXPORT_CLASSES = {
+    'io.github.mesteriis.rune.keyboard.settings.quality.QualityExportActivity',
+    'io.github.mesteriis.rune.keyboard.settings.quality.QualitySnapshotExporter',
+}
+
+
+def is_quality_export(name):
+    return any(name == base or name.startswith(base + '$') for base in QUALITY_EXPORT_CLASSES)
+
+
+def is_debug_component(name):
+    return name.startswith(PREFIX) or is_quality_export(name)
+
+
 ANDROID = '{http://schemas.android.com/apk/res/android}'
 
 
@@ -26,8 +40,8 @@ def parse_mapping(text):
 def forbidden_classes(names, mapping=None):
     mapping = mapping or {}
     originals = {mapping.get(name, name) for name in names}
-    return sorted(name for name in originals if name.startswith(PREFIX) and
-                  name.removeprefix(PREFIX) not in CONTRACTS | COMPILER_HELPERS)
+    return sorted(name for name in originals if is_quality_export(name) or (name.startswith(PREFIX) and
+                  name.removeprefix(PREFIX) not in CONTRACTS | COMPILER_HELPERS))
 
 
 def defined_dex_classes(data):
@@ -93,20 +107,21 @@ def verify(args):
     for element in manifest.iter():
         if element.tag not in ('activity', 'activity-alias', 'service', 'receiver', 'provider'): continue
         name = component_name(element.get(ANDROID + 'name', ''))
-        if element.tag == 'activity-alias' and component_name(
-                element.get(ANDROID + 'targetActivity', '')).startswith(PREFIX):
+        if element.tag == 'activity-alias' and is_debug_component(component_name(
+                element.get(ANDROID + 'targetActivity', ''))):
             raise ValueError('Diagnostics activity alias target forbidden: ' + name)
-        if name.startswith(PREFIX): components.append((name, element))
+        if is_debug_component(name): components.append((name, element))
     apks = sorted(args.apk_dir.glob('*.apk'))
     if not apks: raise ValueError('Final APK artifact missing')
     if args.variant == 'debug':
-        expected = PREFIX + 'DiagnosticsActivity'
-        if expected not in names: raise ValueError('Debug diagnostics activity class missing')
-        if len(components) != 1 or components[0][0] != expected:
+        expected = {PREFIX + 'DiagnosticsActivity',
+                    'io.github.mesteriis.rune.keyboard.settings.quality.QualityExportActivity'}
+        if not expected <= names: raise ValueError('Debug diagnostics activity class missing')
+        if len(components) != len(expected) or {name for name, _ in components} != expected:
             raise ValueError('Unexpected debug diagnostics manifest components')
-        element = components[0][1]
-        if element.get(ANDROID + 'exported') != 'false' or element.find('intent-filter') is not None:
-            raise ValueError('Debug diagnostics must be private without intent filters')
+        for _, element in components:
+            if element.get(ANDROID + 'exported') != 'false' or element.find('intent-filter') is not None:
+                raise ValueError('Debug diagnostics must be private without intent filters')
     else:
         if components: raise ValueError('Diagnostics component packaged in ' + args.variant)
         if args.mapping is None or not args.mapping.is_file():

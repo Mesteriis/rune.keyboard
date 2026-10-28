@@ -62,8 +62,40 @@ Only the empty collection-period permission is retained; no input/prefix or word
 fingerprint enters this history. Reset/privacy/recorder changes and shutdown
 revoke it. This bounded sample includes reported refusals, including UNAVAILABLE
 for CPU limits or engine failures; zero refusal duration is not inference time.
-It is not a complete latency distribution. Debug-only export and final owner
-integration still remain. Dashboard instrumentation also retains its synthetic
+It is not a complete latency distribution. Final owner integration and the
+actual two-week observation period remain separate checks. Dashboard instrumentation also retains its synthetic
 fixtures and actual reset checks.
 Upgrade compatibility covers v1/v2 reads by this version; older binaries are not
 claimed to read a v3 file.
+
+
+## Explicit debug export
+
+In debug builds, **Manage debug logs → Export quality statistics** opens a
+separate numeric export screen. **Save numeric statistics** captures the current
+ready snapshot and opens Android’s document picker (`ACTION_CREATE_DOCUMENT`,
+`text/plain`, suggested filename `rune-quality.txt`). Cancelling the picker does
+not open a sink or change counters. Collection may remain off: existing retained
+numeric history is still available for explicit export.
+
+The file uses the same bounded `RUNE_QUALITY_3` codec as local storage: fixed
+header and 81 decimal counters, at most 2,048 bytes. It contains no typed text,
+candidates, word hashes, editor identities, timestamps or model identifiers.
+Stopping collection does not erase retained history. A local reset immediately
+revokes captured export snapshots, including when the picker is still open.
+Loading, resetting or failed storage cannot issue a snapshot. A different store
+cannot authorize a snapshot captured by another store.
+
+The debug screen owns document URIs, stream access and its serial worker. Those
+capabilities never enter the IME, quality recorder or repository. At most one
+export is admitted by a screen. Payload validation and reset/lifecycle checks run
+before opening a sink and before writing; all opened streams are closed. Closing
+the screen cancels queued writes. A provider error reports failure without retry.
+Reset/cancellation cannot retract bytes already handed to a provider; a failed
+operation can leave an empty or partial document. Exported files may be synced
+by the selected provider and are not deleted by Rune’s local reset.
+
+The export activity is private, has no intent filter and exists only in the
+debug source set. Release/profile packaging checks reject its activity, worker,
+nested classes and aliases in the manifest, pre-R8 classes and mapped final DEX.
+The ordinary numeric dashboard remains available in production builds.

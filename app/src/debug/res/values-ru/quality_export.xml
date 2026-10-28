@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quality_export_title">Экспорт статистики качества</string>
+    <string name="quality_export_description">Экспортируются только числовые счётчики, без введённого текста и хешей слов. Выберите место сохранения файла. Поставщик документов может синхронизировать копию; сброс локальной статистики не удаляет экспортированные файлы.</string>
+    <string name="quality_export_choose">Сохранить числовую статистику</string>
+    <string name="quality_export_ready">Статистика готова к экспорту.</string>
+</resources>

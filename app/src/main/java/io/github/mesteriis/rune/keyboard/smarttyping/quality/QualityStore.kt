@@ -33,6 +33,8 @@ class QualityStore private constructor(context: Context) : QualityRecorder {
     override fun explicitChoice(revision: Long, chosen: String) = repository.explicitChoice(revision, chosen)
     override fun invalidatePending() = repository.invalidatePending()
     fun snapshot(): QualitySnapshot = repository.snapshot()
+    fun captureSnapshot(): QualitySnapshotTicket? = repository.captureSnapshot()
+    fun isSnapshotCurrent(ticket: QualitySnapshotTicket): Boolean = repository.isSnapshotCurrent(ticket)
     fun reset(onComplete: (Boolean) -> Unit = {}) = repository.reset(onComplete)
 
     companion object {

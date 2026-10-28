@@ -3,6 +3,11 @@
 
   <application>
     <activity
+        android:name=".settings.quality.QualityExportActivity"
+        android:exported="false"
+        android:label="@string/quality_export_title"
+        android:theme="@style/Theme.RuneKeyboard.Setup" />
+    <activity
         android:name=".smarttyping.diagnostics.DiagnosticsActivity"
         android:exported="false"
         android:label="@string/diagnostics_manage"
