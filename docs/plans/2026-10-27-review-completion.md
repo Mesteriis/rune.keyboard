@@ -12,12 +12,13 @@ first-letter/Backspace and one next-word visible Undo path pass, and settings an
 inspected personal stores are preserved. This does not close U1's other physical
 source paths, U8/U9's broader device criteria, or release/model acceptance.
 
-The current diagnostics integration at `92eb542` is installed on Fold through
-ADB; `docs/acceptance/2026-10-28-q3-fold-update.md` records four passing physical
-tests / 15 exact scripted cases, retrieved mixed schema 8/9 journals, preserved
-settings and inspected stores/model files, and a successful clean-source release
-privacy/footprint check. This does not close Q3's remaining Android adapter
-resource-readiness audit or Q1's independent distribution acceptance.
+The diagnostics integration and remaining Android resource-refusal audit are
+verified locally for Q3. The current fix `ff40adf` is installed on Fold through
+ADB; `docs/acceptance/2026-10-28-q3-resource-fold-update.md` records four passing
+physical tests / 15 exact scripted cases, retrieved journals, preserved settings
+and inspected stores/model files, a successful clean-source release privacy/
+footprint check, and cleanup of the task emulator. Q1's independent distribution
+acceptance and the other open cards remain outstanding.
 
 The incoming-review triage and its diagnostics-fixture repair are recorded in
 `docs/acceptance/2026-10-27-review-triage.md`. Subsequent work has concentrated on

@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "commit": "ff40adf91ef7de451b54496a172b8e84be73e837",
+  "device": {
+    "model": "SM-F966B",
+    "api": 37,
+    "transport": "ADB",
+    "serialDisclosed": false
+  },
+  "installation": {
+    "installed": true,
+    "versionCode": 8,
+    "versionName": "0.4.2",
+    "sameCertificate": true,
+    "backupSaved": true,
+    "backupEntries": 3,
+    "backupBytes": 4151808,
+    "appBytesVerified": true,
+    "artifacts": {
+      "app": {
+        "bytes": 183363523,
+        "sha256": "ff15a546cd3b71c1365677a592b3b0360476314b3c73bb66b6b43e406a2dfa74"
+      },
+      "tests": {
+        "bytes": 1671831,
+        "sha256": "2989c1ee71b7b0a25965f29048925b3d734376e34001f898e612827b4328fdb4"
+      }
+    },
+    "existingModelStore": true,
+    "dataClearOrUninstall": false,
+    "runtimeBuildId": "d48f6df2ed03cd11d3182abe453fb3a5bd126aea92f2bc06ab747b201f84565f"
+  },
+  "instrumentation": {
+    "exitCode": 0,
+    "junitOk": true,
+    "failureMarker": false,
+    "skippedMarker": false,
+    "matchedCases": 15,
+    "journalSnapshots": 4,
+    "methods": [
+      "freshReviewedCorrectionsAtTwoPacesWithExactUndo",
+      "extraBackspacesInEmptyFieldKeepTheWholeNextWord",
+      "correctionPreviewAndUndoPreserveNextWord",
+      "rapidShortWordCorrectionAtThreePacesKeepsFollowingWords"
+    ],
+    "elapsedSeconds": 86.43142258306034
+  },
+  "restoration": {
+    "keyboardPreferencesRestored": true,
+    "protectedStoresUnchanged": true,
+    "protectedFilesBefore": 1,
+    "protectedFilesAfter": 1,
+    "secureImeSettingsRestored": true,
+    "modelStoreUnchanged": true,
+    "journalSnapshotsRetrieved": 4,
+    "rawJournalsPrivate": true
+  },
+  "journalSnapshotsAccepted": 4,
+  "schema9MetadataStreamsChecked": 4,
+  "snapshotRowsMayOverlap": true,
+  "cleanSourceReleaseCheck": {
+    "commit": "ff40adf91ef7de451b54496a172b8e84be73e837",
+    "cleanSource": true,
+    "tasks": [
+      ":app:privacyGateRelease",
+      ":app:apkFootprint"
+    ],
+    "exitCode": 0,
+    "apkBytes": 180096157,
+    "apkSha256": "b8d5dc29f9456edc5e3f65469b22f2aa7a06fdbd750e2b31971db7daf31817f0",
+    "logSha256": "e998cc8d897e2d45693c6b84eb6a913b2b4166c2c3496d729bbec8e95518c7b6",
+    "independentFdroidServerProof": false
+  },
+  "taskEmulatorCleanup": {
+    "emulatorStopped": true,
+    "taskAvdDeleted": true
+  },
+  "ownerChangesPreserved": {
+    "trackedOwnerFiles": 13,
+    "untrackedOwnerPaths": 98,
+    "allBoundBytesPreserved": true,
+    "noOwnerFilesStaged": true
+  },
+  "queueReleasedTo": [
+    "AURA",
+    "Android MCP"
+  ],
+  "privateEvidenceSha256": {
+    "build/review-q3-resources-20261028/fold-update/install-result.json": "06d56af2f1f378605ee05c8d870df1013e704febe157870654a2e9b0e695819d",
+    "build/review-q3-resources-20261028/fold-update/instrumentation.log": "282d7cfc3c3128e73cf14b54beffe9ce003dd68119cc4657e0ab339d13cdf3ab",
+    "build/review-q3-resources-20261028/fold-update/instrumentation-result.json": "d0952b3fae820015defabc52a39a4f668fc08024fd9443f280f60958defb346f",
+    "build/review-q3-resources-20261028/fold-update/restoration-result.json": "bea0aa1f5ff1f07f4863a32a44b9e6225f3f19481b7e9e18a33f583dd472f752",
+    "build/review-q3-resources-20261028/fold-update/journal-analysis.json": "595aa34119e0d720a0a7b007dcf8d071d54d02258709501d297273101873c252",
+    "build/review-q3-resources-20261028/fold-update/journals.tar": "5371f1335788ae19e4bd3def5d7c2acc485ef5b7c106567f7377742f2766c11a",
+    "build/review-q3-resources-20261028/release-result.json": "e69a67de4a2723104cc531bd25b93f43a6ceca473e1950bb5187987b061b959c",
+    "build/review-q3-resources-20261028/api26-cleanup/cleanup-result.json": "c323a19839f84831ba2171fa154852fca71cc74125f64a74269786b259635050",
+    "build/review-q3-resources-20261028/owner-preservation.json": "d5a04dbb6c32fc64bfd0ee32d139ac889337784a43bc7f9ccff1517f1830ea0b"
+  },
+  "wholeReviewComplete": false,
+  "independentFdroidServerProof": false
+}
