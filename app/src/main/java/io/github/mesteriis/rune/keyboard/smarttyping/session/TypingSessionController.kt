@@ -383,6 +383,7 @@ class TypingSessionController internal constructor(
     private var composingStart = -1
     private val expectedSelections = ArrayDeque<EditorSelection>()
     private var expectedEditorSelection: EditorSelection? = null
+    private var lateCompositionCleanupSession: Long? = null
     private var lastAcknowledgedSelection: EditorSelection? = null
     private var awaitingEditorSelection = false
     private var plainWordUntilBoundary = false
@@ -2436,7 +2437,17 @@ class TypingSessionController internal constructor(
         candidatesEnd: Int,
         execute: (TypingEdit) -> Boolean,
     ): Boolean {
-        if (!state.enabled) return false
+        if (!state.enabled) {
+            if (lateCompositionCleanupSession == state.sessionId && candidatesStart >= 0) {
+                // Some editors publish selection before the new composing span. Ownership was
+                // already revoked; finish that late span once so a plain commit cannot replace
+                // the old word. This grants no text/Undo authority and never enables the session.
+                lateCompositionCleanupSession = null
+                try { execute(TypingEdit.FinishComposingText) } catch (_: RuntimeException) { Unit }
+                return true
+            }
+            return false
+        }
         val session = state.sessionId
         val incoming = EditorSelection(newStart, newEnd, candidatesStart, candidatesEnd)
         if (expectedSelections.contains(incoming)) {
@@ -2486,11 +2497,17 @@ class TypingSessionController internal constructor(
         }
         if (state.sessionId == session && ((hadComposition && !stillOwnsSpan) ||
             (!stillOwnsSpan && candidatesStart >= 0) || newStart < 0 || newEnd < 0)
-        ) disableSession()
+        ) {
+            disableSession()
+            if (hadComposition && candidatesStart < 0 && state.sessionId == session) {
+                lateCompositionCleanupSession = session
+            }
+        }
         return true
     }
 
     fun endSession() {
+        lateCompositionCleanupSession = null
         isolatedBoundaryCaret = null
         diagnosticsPermitted = false
         editorAllowsSuggestions = false
@@ -2612,6 +2629,7 @@ class TypingSessionController internal constructor(
     }
 
     private fun disableSession() {
+        lateCompositionCleanupSession = null
         isolatedBoundaryCaret = null
         invalidateQualityComparison()
         resetPersonalContext()
