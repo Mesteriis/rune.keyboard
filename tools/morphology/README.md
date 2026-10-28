@@ -40,7 +40,7 @@ existing controller; this host ranker does not exercise those paths.
 
 ## Setup
 
-Use an installed Python **3.11** interpreter and JDK17. The exporter also needs the
+Use an installed Python **3.12** interpreter and JDK17. The exporter also needs the
 same `ANDROID_HOME`/`ANDROID_SDK_ROOT` and pinned Kotlin compiler cache used by the
 existing production replay toolchain. No dictionary is added to normal Gradle
 builds. From the repository/worktree root:
@@ -93,6 +93,12 @@ Exports retain raw compiler/generator logs and receipts. A failed child process
 cannot produce a successful receipt. Altered, moved, copied or incomplete inputs
 must not validate against the original export's hashes. Source changes require
 regenerating the export. Use a new output name on each run.
+
+The exporter compiles the production correction/lexicon sources and their pure
+Kotlin experiment-policy dependencies. Android resource loaders and candidate
+workers are excluded from this host-only source set. CI executes the full
+4,000-row export after Gradle has populated the pinned Kotlin compiler cache,
+and uploads the compiler/generator logs and export receipt with the unit results.
 
 ## Personal Telegram data
 

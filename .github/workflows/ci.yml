@@ -136,6 +136,8 @@ jobs:
         run: ./gradlew testDebugUnitTest --rerun-tasks
       - name: Verify current-product replay against the frozen multilingual baseline
         run: python3 tools/ci/product_replay_ci.py --java "$JAVA_HOME/bin/java" --output build/product-replay-ci
+      - name: Compile and export production morphology candidates
+        run: python3 tools/morphology/evaluate.py export --java "$JAVA_HOME/bin/java" --output build/morphology-export-ci
       - name: Synthetic CPU duty trace contracts and report
         run: |
           python3 -m unittest discover -s tools/qa/smart-typing-0.3/duty-traces -p test_report.py
@@ -179,6 +181,7 @@ jobs:
             build/model-duty-trace-ci/**
             build/product-replay-ci/**
             build/product-replay-ci-historical/**
+            build/morphology-export-ci/**
             tools/ci/product-replay-v1/NOTICE.md
             tools/ci/product-replay-v1/source-lock.json
             tools/ci/product-replay-history-v1/NOTICE.md

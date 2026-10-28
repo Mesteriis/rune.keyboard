@@ -2,7 +2,7 @@ import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from evaluate import metrics, validate_rows, verify_observations, verify_export, final_proposal, sha
+from evaluate import candidate_export_source, metrics, validate_rows, verify_observations, verify_export, final_proposal, sha
 from types import SimpleNamespace
 
 
@@ -58,6 +58,15 @@ class EvaluationTest(unittest.TestCase):
     def test_harness_uses_production_width(self):
         source = Path(__file__).with_name('ProductionCandidates.kt').read_text()
         self.assertIn('CandidateGenerator(PackedCandidateLexicon(handles), CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES,',source)
+
+    def test_candidate_export_includes_compact_policy_dependencies_but_not_android_loader(self):
+        root = Path('/repo/app/src/main/java/io/example/smarttyping')
+        for relative in ('experiments/CompactAutoCorrectionPolicy.kt', 'experiments/ExperimentModels.kt',
+                         'experiments/RankFeatures.kt', 'experiments/ObliviousTreeRanker.kt',
+                         'correction/LocalCorrectionPolicy.kt', 'lexicon/CandidateGenerator.kt'):
+            self.assertTrue(candidate_export_source(root / relative), relative)
+        self.assertFalse(candidate_export_source(root / 'experiments/AndroidExperimentResources.kt'))
+        self.assertFalse(candidate_export_source(root / 'lexicon/LocalCandidateWorker.kt'))
 
 
 if __name__ == '__main__': unittest.main()

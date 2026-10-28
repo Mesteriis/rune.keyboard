@@ -154,6 +154,14 @@ def load_replay():
     return module
 
 
+def candidate_export_source(path):
+    value = str(path)
+    return ('/smarttyping/correction/' in value or
+        '/smarttyping/lexicon/' in value and path.name != 'LocalCandidateWorker.kt' or
+        '/smarttyping/experiments/' in value and path.name != 'AndroidExperimentResources.kt' or
+        path.name in ('KeyboardState.kt', 'ScoringContract.kt'))
+
+
 def export(args):
     root = output_directory(args.output)
     if args.rows:
@@ -176,11 +184,7 @@ def export(args):
     java = Path(args.java).resolve(strict=True)
     sources, jars, android = replay.compile_inputs(java)
     # Candidate export does not execute the editor/session/UI replay.
-    sources = [p for p in sources if (
-        '/smarttyping/correction/' in str(p) or
-        '/smarttyping/lexicon/' in str(p) and p.name != 'LocalCandidateWorker.kt' or
-        p.name in ('KeyboardState.kt', 'ScoringContract.kt')
-    )] + [HERE / 'ProductionCandidates.kt']
+    sources = [p for p in sources if candidate_export_source(p)] + [HERE / 'ProductionCandidates.kt']
     source_bindings = bindings([*input_sources, *sources, *jars, android, java, *replay.asset_paths(),
         HERE / 'evaluate.py', PIPELINE / 'final_product_replay.py', replay.SOURCE_MANIFEST, replay.TOOLCHAIN])
     write_json(root / 'source-freeze.json', source_bindings)

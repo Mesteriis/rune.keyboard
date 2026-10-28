@@ -81,6 +81,14 @@ Q7 remains in progress: actual hosted Ubuntu/macOS workflow execution is still
 unverified. Local backend results do not certify remote job scheduling or the
 whole workflow.
 
+The JVM job also executes `tools/morphology/evaluate.py export` after Gradle and
+product replay. This compiles the real host candidate observer, including its
+pure Kotlin experiment-policy dependencies, and exports all 4,000 existing RU
+rows. It receives only token/index inputs; labels and prefixes stay host-side.
+Raw compiler/generator logs and the source-bound receipt are uploaded alongside
+the JVM results. This checks exporter execution, not unseen correction quality
+or Android behavior. See [export evidence](acceptance/2026-10-28-q7-morphology-export.md).
+
 F-Droid preparation deletes the four exact host CI gzip archives, verified by
 hash and declared provenance; it does not add a blanket scanner exclusion.
 Run host tests before preparation. See [F-Droid process](FDROID.md).
