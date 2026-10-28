@@ -1,0 +1,261 @@
+{
+  "jvm": {
+    "tests": 1076,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "buildAndLintPassed": true,
+  "diagnosticsPythonTests": 64,
+  "scoringBoundariesPassed": true,
+  "productionReplay": {
+    "public": {
+      "rows": 4788,
+      "boundaryAndExactUndoUnchanged": true,
+      "passed": true
+    },
+    "holdout": {
+      "rows": 3648,
+      "boundaryAndExactUndoUnchanged": true,
+      "passed": true
+    },
+    "holdout-extra": {
+      "rows": 3576,
+      "boundaryAndExactUndoUnchanged": true,
+      "passed": true
+    }
+  },
+  "authoredProductionProbes": 14,
+  "generalContextExperiment": {
+    "shipped": false,
+    "rejected": true,
+    "calibration": {
+      "stage": "calibration",
+      "passed": true,
+      "newCorrect": 104,
+      "newWrong": 0,
+      "newFamilyKeys": 84,
+      "newPrecision": 1.0,
+      "policySha256": "a816ff2a149770caa4c23afc039ac842ece58e0859bb383f6336c45a52b3da52",
+      "validationPlanSha256": "4aa1e4c04616dff330d3009478438bf06fc1cecedcf20166b8ac3f501536b276",
+      "folds": [
+        {
+          "rows": 3648,
+          "rowsSha256": "e3c8f68b9227ad5dd9d2e56796023f698c3b8d35034e3158258d7d4974ac86c0",
+          "baselineSha256": "0b058d4e4e07b0a11df5cc8c7658478fb32c95dfdc2178eb5480c5fe97d2932f",
+          "productSha256": "955e325229f590a7d14378664027f885c085dea8f29db9995ef15c6159e28377",
+          "newCorrect": 104,
+          "newWrong": 0,
+          "newPrecision": 1.0,
+          "invariantsPassed": true,
+          "metrics": {
+            "short": {
+              "rows": 1112,
+              "typos": 829,
+              "controls": 283,
+              "baselineCorrect": 9,
+              "baselineWrong": 0,
+              "replacements": 61,
+              "correct": 61,
+              "wrong": 0,
+              "newCorrect": 52,
+              "newCorrectFamilies": 42,
+              "baselineCorrectToWrong": 0,
+              "baselineCorrectAbstained": 0,
+              "wrongResolved": 0,
+              "controlChanges": 0,
+              "undoFailures": 0,
+              "prefixChanges": 0,
+              "precision": 1.0,
+              "passed": true
+            },
+            "long": {
+              "rows": 2536,
+              "typos": 1603,
+              "controls": 933,
+              "baselineCorrect": 1268,
+              "baselineWrong": 0,
+              "replacements": 1320,
+              "correct": 1320,
+              "wrong": 0,
+              "newCorrect": 52,
+              "newCorrectFamilies": 46,
+              "baselineCorrectToWrong": 0,
+              "baselineCorrectAbstained": 0,
+              "wrongResolved": 0,
+              "controlChanges": 0,
+              "undoFailures": 0,
+              "prefixChanges": 0,
+              "precision": 1.0,
+              "passed": false
+            }
+          }
+        }
+      ]
+    },
+    "independentValidation": {
+      "stage": "holdout",
+      "passed": false,
+      "newCorrect": 186,
+      "newWrong": 5,
+      "newFamilyKeys": 152,
+      "newPrecision": 0.9738219895287958,
+      "policySha256": "a816ff2a149770caa4c23afc039ac842ece58e0859bb383f6336c45a52b3da52",
+      "validationPlanSha256": "4aa1e4c04616dff330d3009478438bf06fc1cecedcf20166b8ac3f501536b276",
+      "folds": [
+        {
+          "rows": 3648,
+          "rowsSha256": "0b6a3285ecd0b0b624b5d4fb7c4b8734509e38d7fa43f407c613f966673bf994",
+          "baselineSha256": "4ed233d16ea0673261403f68f9a9ca4d222e5a12027b9c2330e47a8e989b7293",
+          "productSha256": "0aee9db7c5e777b149961ad79c327cb64b082b2f381a8018b318b9a7b09f94d8",
+          "newCorrect": 106,
+          "newWrong": 3,
+          "newPrecision": 0.9724770642201835,
+          "invariantsPassed": true,
+          "metrics": {
+            "short": {
+              "rows": 1117,
+              "typos": 828,
+              "controls": 289,
+              "baselineCorrect": 20,
+              "baselineWrong": 0,
+              "replacements": 69,
+              "correct": 67,
+              "wrong": 2,
+              "newCorrect": 47,
+              "newCorrectFamilies": 38,
+              "baselineCorrectToWrong": 0,
+              "baselineCorrectAbstained": 0,
+              "wrongResolved": 0,
+              "controlChanges": 0,
+              "undoFailures": 0,
+              "prefixChanges": 0,
+              "precision": 0.9710144927536232,
+              "passed": false
+            },
+            "long": {
+              "rows": 2531,
+              "typos": 1604,
+              "controls": 927,
+              "baselineCorrect": 1241,
+              "baselineWrong": 6,
+              "replacements": 1307,
+              "correct": 1300,
+              "wrong": 7,
+              "newCorrect": 59,
+              "newCorrectFamilies": 51,
+              "baselineCorrectToWrong": 0,
+              "baselineCorrectAbstained": 0,
+              "wrongResolved": 0,
+              "controlChanges": 0,
+              "undoFailures": 0,
+              "prefixChanges": 0,
+              "precision": 0.9946442234123948,
+              "passed": false
+            }
+          }
+        },
+        {
+          "rows": 3576,
+          "rowsSha256": "d92d645d606b50f2515d57d848ff31ec02daafc9f24266df8fb89d61b083ecdb",
+          "baselineSha256": "da68a63b0848ae3077b953fe80147ef1f440b641d1231b72848f0f2cd14fb1d9",
+          "productSha256": "a83483d17e1518e5e5eb5ccd1eacbb8cd684a8145797984892e93e34a62dc5ad",
+          "newCorrect": 80,
+          "newWrong": 2,
+          "newPrecision": 0.975609756097561,
+          "invariantsPassed": true,
+          "metrics": {
+            "short": {
+              "rows": 1046,
+              "typos": 782,
+              "controls": 264,
+              "baselineCorrect": 31,
+              "baselineWrong": 0,
+              "replacements": 75,
+              "correct": 74,
+              "wrong": 1,
+              "newCorrect": 43,
+              "newCorrectFamilies": 34,
+              "baselineCorrectToWrong": 0,
+              "baselineCorrectAbstained": 0,
+              "wrongResolved": 0,
+              "controlChanges": 0,
+              "undoFailures": 0,
+              "prefixChanges": 0,
+              "precision": 0.9866666666666667,
+              "passed": false
+            },
+            "long": {
+              "rows": 2530,
+              "typos": 1602,
+              "controls": 928,
+              "baselineCorrect": 1230,
+              "baselineWrong": 7,
+              "replacements": 1275,
+              "correct": 1267,
+              "wrong": 8,
+              "newCorrect": 37,
+              "newCorrectFamilies": 35,
+              "baselineCorrectToWrong": 0,
+              "baselineCorrectAbstained": 0,
+              "wrongResolved": 0,
+              "controlChanges": 0,
+              "undoFailures": 0,
+              "prefixChanges": 0,
+              "precision": 0.9937254901960785,
+              "passed": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  "scope": "Two finite reviewed contextual rules and automatic display-order alignment; no general statistical qualification.",
+  "physicalDriverLintPassed": true,
+  "physicalPhraseCadence": "Real touch down/up events with fresh per-phrase key bounds and requested 100 ms pauses; no per-character UiAutomator idle delay.",
+  "reviewedSourceFiles": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/WordContextPolicy.kt": "c27b623c01005dd8cc72f0e7f0e74b99b184066d4002f2e666dcea14559a2752",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/WordContextQualification.kt": "53a9ae422e2cb02bf0da58dcd1bbc338e0b849a3e129ffbfbd0310bb7f7047e2"
+  },
+  "generalContextModelAbsentFromPackagedAssets": true,
+  "productionReplayJarSha256": "cc216b0fa6768a7810d752a0dbd6bac09b83356b2f74d2ccdd0f6d5fa074319f",
+  "fold": {
+    "physicalRegressionTests": 9,
+    "physicalRegressionPassed": 9,
+    "physicalRegressionFailed": 0,
+    "initialFullRunPassed": 7,
+    "initialFullRunFailed": 2,
+    "targetedRepeatedTests": 2,
+    "targetedRepeatPassed": 1,
+    "targetedRepeatFailed": 1,
+    "diagnosticFinalRepeatTests": 1,
+    "diagnosticFinalRepeatPassed": 1,
+    "singleFullRunAllPassed": true,
+    "interruptedFocusedRunForeground": "dev.androidmcp.app",
+    "initialFailures": [
+      "QA counter view unavailable after reshow",
+      "QA editor view unavailable during rescue assertion"
+    ],
+    "contextAssertionTests": 1,
+    "contextCasesAtTwoPaces": 12,
+    "contextTyposWithExactUndo": 6,
+    "correctFormControls": 6,
+    "phraseCount": 15,
+    "phraseExactMatches": 15,
+    "controlChanges": 0,
+    "editorPayloadReadAssertionsPassed": true,
+    "nativeWordContextBoundaryConfirmed": true,
+    "bothReviewedContextRulesConfirmed": true,
+    "preferencesAndFourPersonalStoresPreserved": true,
+    "installedApkMatchesBuilt": true,
+    "apkSha256": "865b1028828a92ac17bb762adbefee2f7e3a6a284e50e6239955fc35c1c9e19c",
+    "runeEnabled": true,
+    "runeSelected": true
+  },
+  "deviceCoordination": "Android MCP explicitly handed Fold to Rune while AURA remained paused; all Rune device commands completed before handback to AURA.",
+  "stage": "complete",
+  "physicalAcceptanceComplete": true,
+  "deviceHandedToAURA": true,
+  "privateArtifactsTracked": false,
+  "authoredDeviceResultsArePopulationAccuracy": false
+}

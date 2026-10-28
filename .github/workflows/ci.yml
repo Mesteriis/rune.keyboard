@@ -17,6 +17,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Initialize pinned documentation submodule
+        if: matrix.profile == 'stdlib'
+        run: git submodule update --init --depth 1 -- runtime-llama/src/main/cpp/llama.cpp
       - name: Validate exhaustive tracked test inventory and runner
         run: |
           python tools/ci/python_tools_tests.py --check
@@ -35,6 +38,11 @@ jobs:
         run: |
           python tools/check_readme_sources.py
           python -m unittest discover -s tools -p test_readme_sources.py -v
+      - name: Verify guide and README local navigation
+        if: matrix.profile == 'stdlib'
+        run: |
+          python tools/check_doc_links.py
+          python -m unittest discover -s tools -p test_doc_links.py -v
       - name: Check source-bound local-learning privacy disclosures
         if: matrix.profile == 'stdlib'
         run: |

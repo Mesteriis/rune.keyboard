@@ -1,0 +1,49 @@
+{
+  "buildLog": "release-checks-v2.log",
+  "unitTests": {
+    "tests": 1068,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "diagnosticTests": {
+    "tests": 64,
+    "result": "PASS"
+  },
+  "lint": "PASS",
+  "scoringBoundaries": "PASS",
+  "privateReplay": {
+    "rows": 5,
+    "boundaryUndoHintsUnchanged": true
+  },
+  "modelSha256": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+  "apkSha256": "cf496475aa0d40c6b20dac75bae13de7023b145d3f3cc033bf3075158ac26bd8",
+  "currentPublicParity": {
+    "changedBoundaryUndoOrHints": 0,
+    "jarSha256": "ad6e5e61f75a21961af49ac29c619de82c8e45a7b4fe1ab04bac7fe5174b9e92",
+    "passed": true,
+    "rows": 4788
+  },
+  "fold": {
+    "fullRun": {
+      "tests": 8,
+      "passed": 7,
+      "failed": 1,
+      "failure": "UI driver could not resolve key \u0442 in final normal-touch case"
+    },
+    "targetedRepeat": {
+      "tests": 1,
+      "passed": 1,
+      "normalTypingCases": 14,
+      "allMatched": true
+    },
+    "ownerPreferencesAndFourStoresPreserved": true,
+    "installedApkSha256": "cf496475aa0d40c6b20dac75bae13de7023b145d3f3cc033bf3075158ac26bd8",
+    "builtApkSha256": "cf496475aa0d40c6b20dac75bae13de7023b145d3f3cc033bf3075158ac26bd8",
+    "runeEnabled": true,
+    "runeSelected": true,
+    "device": "Samsung Fold SM-F966B",
+    "baselineCapturedBeforeFreshField": true
+  },
+  "evidenceScope": "Aggregate public evaluation and synthetic physical tests only; private captures excluded."
+}

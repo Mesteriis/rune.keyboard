@@ -1,0 +1,196 @@
+{
+  "stage": "physical-validation-complete-update-installed",
+  "physicalAcceptanceComplete": true,
+  "installed": true,
+  "jvmTests": 1083,
+  "jvmFailures": 0,
+  "lintPassed": true,
+  "diagnosticsPythonTests": 64,
+  "newCorpus": {
+    "phrases": 24,
+    "typos": 18,
+    "controls": 6,
+    "inputSha256": "f822820b97025ab1948a331fe09cfdc6edd56bc00337a5ef1b5a53442008ba69",
+    "baselineMatched": 15,
+    "updatedMatched": 17,
+    "intendedFirstSuggestionBefore": 17,
+    "intendedFirstSuggestionAfter": 18,
+    "allPriorMatchesRetained": true,
+    "allBackspaceDocumentsRestored": true,
+    "populationAccuracyEstimate": false,
+    "hostReplaysWordBoundariesOnly": true
+  },
+  "priorPublicReplay": {
+    "legacy": {
+      "baselineSha256": "fb8d72e3c0d0239d3b312cc92fb36729c28e4d6e89b0314d61fd6e07628ca197",
+      "boundaryOrUndoChanges": [],
+      "jarSha256": "83846b8e9c69373870553b74dbfe4a3016b38560ca982c1a21c6b08429d1f589",
+      "observationsSha256": "abae1762d90493722712334a82f22e200958e6dbcb3ffe77a489ac4833493104",
+      "rows": 4788,
+      "undoFailures": []
+    },
+    "holdout": {
+      "baselineSha256": "796e052681d4a444feeff649bb93d792733f2d71a8ec66b852eee8be98948115",
+      "boundaryOrUndoChanges": [],
+      "jarSha256": "83846b8e9c69373870553b74dbfe4a3016b38560ca982c1a21c6b08429d1f589",
+      "observationsSha256": "28688a05c4c6929bcb933151952135caff3209965d6cb47e50932f54696cd822",
+      "rows": 3648,
+      "undoFailures": []
+    },
+    "holdout-extra": {
+      "baselineSha256": "211c5b01bb3083dfb13ccabdf8501d4c82c9f5a6804bc1733a73468a9dfcd5a9",
+      "boundaryOrUndoChanges": [],
+      "jarSha256": "83846b8e9c69373870553b74dbfe4a3016b38560ca982c1a21c6b08429d1f589",
+      "observationsSha256": "87111d283c291e2044e26655dac8be2f07766da734691c0d380126951dda6bf9",
+      "rows": 3576,
+      "undoFailures": []
+    }
+  },
+  "phoneQueue": "AURA completed its cycle; Android MCP explicitly handed the exclusive window to Rune. All Rune commands completed before handback.",
+  "sourceReceiptSha256": "fa66eda8e5265835e47d3dd013651b0450445ebb621a83437f3c1be85aafbbee",
+  "apkSha256": "b348bb37f969032f79278686642756a8d2ee330a7482be437f6fb072c946bf31",
+  "physicalPhraseReplay": {
+    "physicalPhraseCount": 24,
+    "baselineMatched": 15,
+    "updatedMatched": 17,
+    "baselineControlChanges": 0,
+    "updatedControlChanges": 0,
+    "changes": [
+      {
+        "typed": "я уже ддмой и жду тебя ",
+        "before": "я уже ддмой и жду тебя ",
+        "after": "я уже домой и жду тебя ",
+        "expected": "я уже домой и жду тебя "
+      },
+      {
+        "typed": "ты можешь позвоеить позже ",
+        "before": "ты можешь позвоеить позже ",
+        "after": "ты можешь позвоеить поз, же ",
+        "expected": "ты можешь позвонить позже "
+      },
+      {
+        "typed": "сейчас всее работает хорошо ",
+        "before": "сейчас всее работает хорошо ",
+        "after": "сейчас все работает хорошо ",
+        "expected": "сейчас все работает хорошо "
+      }
+    ],
+    "priorSuccessRegressions": [],
+    "remaining": [
+      {
+        "typed": "скажи куа идти дальше ",
+        "expected": "скажи куда идти дальше ",
+        "actual": "скажи куа идти дальше "
+      },
+      {
+        "typed": "мы поггорим после встречи ",
+        "expected": "мы поговорим после встречи ",
+        "actual": "мы поггорим после встречи "
+      },
+      {
+        "typed": "мне нуден другой пароль ",
+        "expected": "мне нужен другой пароль ",
+        "actual": "мне нуден другой пароль "
+      },
+      {
+        "typed": "сейчас будкт немного времени ",
+        "expected": "сейчас будет немного времени ",
+        "actual": "сейчас будкт немного времени "
+      },
+      {
+        "typed": "ты можешь позвоеить позже ",
+        "expected": "ты можешь позвонить позже ",
+        "actual": "ты можешь позвоеить поз, же "
+      },
+      {
+        "typed": "я очень рал тебя видеть ",
+        "expected": "я очень рад тебя видеть ",
+        "actual": "я очень рал тебя видеть "
+      },
+      {
+        "typed": "поставь стакан на сттл ",
+        "expected": "поставь стакан на стол ",
+        "actual": "поставь стакан на сттл "
+      }
+    ],
+    "requestedInterKeyPauseMs": 100,
+    "naturalAccuracyEstimate": false
+  },
+  "physicalFinalVerification": {
+    "assertionMethods": 12,
+    "preferencesPreserved": true,
+    "personalStoresPreserved": 4,
+    "selectedImeIsRune": true,
+    "enabledImeIsRune": true,
+    "builtInstalledSha256": "b348bb37f969032f79278686642756a8d2ee330a7482be437f6fb072c946bf31",
+    "finalReinstallAfterAcceptance": true,
+    "perMethodSnapshotsCollected": 12,
+    "createdCacheSnapshotsRemoved": true
+  },
+  "initialNativeSuite": {
+    "methods": 12,
+    "failures": 1,
+    "failedMethod": "reviewedPhraseFixesAtTwoPacesWithExactUndo",
+    "failureRetained": true,
+    "causeResolved": false
+  },
+  "finalNativeSuite": {
+    "methods": 12,
+    "failures": 0,
+    "skips": 0,
+    "perMethodJournalSnapshots": 12,
+    "sameCadenceAndAssertions": true
+  },
+  "focusedUndoRecheck": {
+    "passed": true,
+    "exitCode": 0,
+    "initialSuiteFailureRetained": true
+  },
+  "inputAnomalyRechecks": {
+    "originalObservedExtraInput": ", ",
+    "attempts": [
+      {
+        "actual": "ты можешь позвоеить позже ",
+        "expected": "ты можешь позвонить позже ",
+        "matched": "false",
+        "typed": "ты можешь позвоеить позже ",
+        "extraInputReproduced": false
+      },
+      {
+        "actual": "ты можешь позвоеить позже ",
+        "expected": "ты можешь позвонить позже ",
+        "matched": "false",
+        "typed": "ты можешь позвоеить позже ",
+        "extraInputReproduced": false
+      },
+      {
+        "actual": "ты можешь позвоеить позже ",
+        "expected": "ты можешь позвонить позже ",
+        "matched": "false",
+        "typed": "ты можешь позвоеить позже ",
+        "extraInputReproduced": false
+      }
+    ],
+    "originalFailureRetained": true
+  },
+  "testApkSha256": "2177dedd5e054e3598e837bed45ccbfa7eb5419b7c3b4e2ed9bb106c63695429",
+  "currentHostSourceReceiptSha256": "a7b51d7da932474714e0694011e2cdac4c0a72d4845c19a12ab4ec42d36a7658",
+  "physicalArtifactSha256": {
+    "baseline-results.json": "f89d6a400804f01a793eb2f8f64a296c53b373cbda995f5a25d1d908eae6889e",
+    "updated-results.json": "103334d7ff1962025f89937bf61e862527279cef5363d79fad2286b49c68801a",
+    "physical-comparison.json": "849a8d2a6d8171372037d71b639cba7b607cf5b9b72c0b180940afbd4fc2ec67",
+    "physical-final-verification.json": "43deeedc9cbb55ba5e38ab3ea508b24d240d7ae8c957ffaec2198a6df413da80",
+    "updated-assertions.log": "3d1f28071ad6c18f05174c6e80443061472e8b42c04eac7eba8bb3d0d2c20341",
+    "updated-assertions-with-journals.log": "fa9d15798325a694da2166447dbd331f31e32fc1ef758cb6b684f4498389eb51",
+    "native-rule-proof.json": "634355c5f9b58b79cdf745462f88bf46b90eea3a99221c71320050949d6d2e41",
+    "input-anomaly-rechecks.json": "f52ed5f43df54aa17aa2161b85320b1d151a4d7458c04bb91c42ac34f63c108d",
+    "reviewed-undo-focused-result.json": "97513266c5c88be96bc5ac3aec3387a7da5ad0a7b59cd21ace4ea62532fb734e",
+    "per-test-private-journals.tar": "6399399ce90e36eea0bc220d7820fdfb7cb7a95816391d907e80c7e948a69e98",
+    "final-lint.log": "923122ebe56be581d7e0e0792421b71abe2f39b901a8b14309000867a02d25ea",
+    "journal-observer-build-receipt.json": "0366da49cb4781e88e73bcdf1a2d7ce37d79817c2cb31e41175d1da7c34a1d55",
+    "journal-archive-validation.json": "617c0845dc36dd18dbaacb8d53c40f067258960ca4cb6797f4d086b559b601b4"
+  },
+  "finalLintPassed": true,
+  "phoneWindowReleasedToBothChats": true,
+  "intermittentIssuesResolved": false
+}

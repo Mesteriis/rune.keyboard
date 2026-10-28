@@ -17,7 +17,7 @@ DOCUMENTS = ('README.md', 'tools/typing_experiments/README.md')
 PROJECT_PREFIXES = ('tools/', 'docs/', 'app/', 'runtime-llama/', 'fdroid/', 'build/')
 
 
-def references(text, document):
+def local_links(text, document):
     parent = Path(document).parent
     result = []
     for target in re.findall(r'\[[^\]]*\]\(([^)\n]+)\)', text):
@@ -29,6 +29,23 @@ def references(text, document):
         if parsed.scheme or parsed.netloc or not parsed.path:
             continue
         result.append((parent / unquote(parsed.path)).as_posix())
+    return result
+
+
+def local_path(root, value):
+    root = root.resolve()
+    path = Path(os.path.abspath(root / value))
+    if not path.is_relative_to(root):
+        raise ValueError('README_SOURCE_OUTSIDE_ROOT_OR_SYMLINK')
+    parts = path.relative_to(root).parts
+    if any(root.joinpath(*parts[:i]).is_symlink() for i in range(1, len(parts) + 1)):
+        raise ValueError('README_SOURCE_OUTSIDE_ROOT_OR_SYMLINK')
+    return path
+
+
+def references(text, document):
+    parent = Path(document).parent
+    result = local_links(text, document)
     blocks = re.findall(r'```[^\n]*\n(.*?)```', text, re.S)
     rest = re.sub(r'```[^\n]*\n.*?```', '', text, flags=re.S)
     blocks += re.findall(r'`([^`\n]+)`', rest)
@@ -58,22 +75,13 @@ def inspect(root=ROOT, documents=DOCUMENTS):
     generated = set()
     bindings = {}
 
-    def local_path(value):
-        path = Path(os.path.abspath(root / value))
-        if not path.is_relative_to(root):
-            raise ValueError('README_SOURCE_OUTSIDE_ROOT_OR_SYMLINK')
-        parts = path.relative_to(root).parts
-        if any(root.joinpath(*parts[:i]).is_symlink() for i in range(1, len(parts) + 1)):
-            raise ValueError('README_SOURCE_OUTSIDE_ROOT_OR_SYMLINK')
-        return path
-
     for document in documents:
         if document not in tracked:
             raise ValueError('README_DOCUMENT_UNTRACKED ' + document)
-        raw = local_path(document).read_bytes()
+        raw = local_path(root, document).read_bytes()
         bindings[document] = hashlib.sha256(raw).hexdigest()
         for value in references(raw.decode(), document):
-            path = local_path(value)
+            path = local_path(root, value)
             name = path.relative_to(root).as_posix()
             if name.startswith(('build/', 'app/build/', 'runtime-llama/build/')) and not name.endswith('.py'):
                 generated.add(name)

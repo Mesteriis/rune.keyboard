@@ -1,0 +1,59 @@
+{
+  "unitTests": {
+    "tests": 1069,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "buildAndLint": "PASS",
+  "scoringBoundaryCheck": "PASS",
+  "diagnosticsTests": 64,
+  "diagnosticsPackaging": "debug/release/profile PASS",
+  "publicRegression": {
+    "changedBoundaryUndoHints": 0,
+    "jarSha256": "a3b2e2fbb7be9dc04d2c797fc2b5bd86ffbb07c9afd891e008ecb46d588550a7",
+    "passed": true,
+    "rows": 4788
+  },
+  "apkSha256": "1c1bcc512d55f12ea4b2870f7f4ef3765706b0c0c4963b16c832c4d42218c2bc",
+  "fold": {
+    "baselinePhrases": 15,
+    "baselineMatched": 11,
+    "updatedPhrases": 15,
+    "updatedMatched": 14,
+    "correctControlPhrases": 3,
+    "controlChanges": 0,
+    "physicalFullRun": {
+      "tests": 9,
+      "passed": 8,
+      "failed": 1,
+      "failure": "IME restoration in diagnostic test teardown"
+    },
+    "diagnosticTargetedRepeat": {
+      "tests": 1,
+      "passed": 1,
+      "threeReopenPhasesEachRecordedSixInputs": true
+    },
+    "newFastCorrectionAndExactUndoCases": 6,
+    "newFastRequestedPauseMs": [
+      50,
+      100
+    ],
+    "noEditorPayloadReadAssertions": "PASS",
+    "ownerPreferencesAndFourStoresPreserved": true,
+    "installedApkMatchesBuilt": true,
+    "apkSha256": "1c1bcc512d55f12ea4b2870f7f4ef3765706b0c0c4963b16c832c4d42218c2bc",
+    "runeEnabled": true,
+    "runeSelected": true,
+    "remainingPhraseMisses": [
+      {
+        "typed": "нужен новй пароль ",
+        "expected": "нужен новый пароль ",
+        "actual": "нужен новй пароль "
+      }
+    ],
+    "threeReviewedRulesConfirmedByNativeLogs": true
+  },
+  "phraseScope": "Authored public characterization, not an independent accuracy estimate",
+  "failedAttemptsRetained": true
+}

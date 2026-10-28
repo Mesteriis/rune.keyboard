@@ -1,0 +1,324 @@
+{
+  "baseCommit": "571ee9a",
+  "focusedJvm": [
+    {
+      "errors": 0,
+      "failures": 0,
+      "name": "io.github.mesteriis.rune.keyboard.smarttyping.session.CorrectionBoundaryTest",
+      "skips": 0,
+      "tests": 119
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "name": "io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CommonConfusionsTest",
+      "skips": 0,
+      "tests": 7
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "name": "io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneratorTest",
+      "skips": 0,
+      "tests": 34
+    }
+  ],
+  "focusedJvmLogSha256": "a316ad819935388c8c39cc400dbaa3cec42537c83d44b946f8f6f1e78a6279c5",
+  "historicalArchive": {
+    "docs/acceptance/2026-09-19-autocorrection-coverage.md": {
+      "integratedSha256": "bc914d87871ed675b24e642030f948b4dff76cb40b4675a66f7c6e9af810870c",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "0ebaf355b9d97bd5fb98c5576cc8b74c733afd9a72bf835e1fe83812a12f1dd0"
+    },
+    "docs/acceptance/2026-09-26-ru-neighbor-recovery.md": {
+      "integratedSha256": "0baea8b43c238c1fa0678c48a570fc500d26e1a0129e8678ddea0855894ce501",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "3993ca84357022c9e958da0b2ed4d749c1ccf90ec0874fba297c16badd000224"
+    },
+    "docs/acceptance/2026-10-25-ambiguous-winner-evidence.json": {
+      "integratedSha256": "9fa3ff6384535d3b104f5dbe3923ae211188b8f9e0995a48687e0e9db42f89e3",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBytesRetained": true,
+      "originalSha256": "9fa3ff6384535d3b104f5dbe3923ae211188b8f9e0995a48687e0e9db42f89e3"
+    },
+    "docs/acceptance/2026-10-25-autocorrection-roadmap.md": {
+      "integratedSha256": "344ccad15fd8101eca052d1278359699361014d080a84baf6cc48e6df75b93cb",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "1630aaea785d8842d4b6b180d1fb7d286afb411cbfa609ff0302835ffc81083e"
+    },
+    "docs/acceptance/2026-10-25-first-letter-and-ambiguous-winner.md": {
+      "integratedSha256": "4536d17c0fce04c6b4e361fbe358928f3f82aa768adc53c4d24322bdb34611cf",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "bb02649483bfdef3037f2ca037f9ef5b49525e71720793f90b1fbf3651cff3cb"
+    },
+    "docs/acceptance/2026-10-25-fold-autocorrection.md": {
+      "integratedSha256": "29317463c28d211970bf04f9d3791a7c0e8f0cd8a401a05c02ffde21f16331e1",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "7f2221161eaec419db98341691fba45a429d2440e3071b2e604e0b9280c83be5"
+    },
+    "docs/acceptance/2026-10-25-fold-diagnostics-reopen.md": {
+      "integratedSha256": "a762d1182184116e506c431bf7e2a71dc5ac15e74376bc45afdb74cd47a6b9d0",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "107f27b16691830eb67f75148846ce835eeecf4e356538eec6444a4b4d58bc81"
+    },
+    "docs/acceptance/2026-10-25-fold-phrase-autocorrection-evidence.json": {
+      "integratedSha256": "a7d97fb918bb7122a71f6eeb60dc10f4294e85128c93b0036db02d8a4346cc33",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBytesRetained": true,
+      "originalSha256": "a7d97fb918bb7122a71f6eeb60dc10f4294e85128c93b0036db02d8a4346cc33"
+    },
+    "docs/acceptance/2026-10-25-fold-phrase-autocorrection.md": {
+      "integratedSha256": "9df926633e2af0eba92541aceaad3b41820a8ff2c6370fe414da8d517f0b1714",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "8a7b5900d522d3e01573adeb306b755ea320dd8bd23b9529379621f7a35451d8"
+    },
+    "docs/acceptance/2026-10-25-joint-diagnostics-and-rescue-evidence.json": {
+      "integratedSha256": "9f111bbb5ff5066883c2466f328a97ab108f4c993db8bcb8234e65161cbcb68d",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBytesRetained": true,
+      "originalSha256": "9f111bbb5ff5066883c2466f328a97ab108f4c993db8bcb8234e65161cbcb68d"
+    },
+    "docs/acceptance/2026-10-25-joint-diagnostics-and-rescue.md": {
+      "integratedSha256": "64b27c80a81e5cdc044e1ef783c34f1203530578382551274ba09f5087f1459a",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "646297bd992be7ee6bede769e955692e4705a2fdc0ede766a3a2e7e05ab4f724"
+    },
+    "docs/acceptance/2026-10-26-context-feature-ranking-evidence.json": {
+      "integratedSha256": "9afde643ad27f398720c0afdb2a0d4a90ab73417bb69871baebd4082f33e481f",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBytesRetained": true,
+      "originalSha256": "9afde643ad27f398720c0afdb2a0d4a90ab73417bb69871baebd4082f33e481f"
+    },
+    "docs/acceptance/2026-10-26-contextual-novy-evidence.json": {
+      "integratedSha256": "46ebbde5695fb37f0fb4bc919445d8d65902f370da157356d07a0ee4c8a78187",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBytesRetained": true,
+      "originalSha256": "46ebbde5695fb37f0fb4bc919445d8d65902f370da157356d07a0ee4c8a78187"
+    },
+    "docs/acceptance/2026-10-26-contextual-novy.md": {
+      "integratedSha256": "3d3ec355c5c52ed9e131a898ffe41e38b4903c57573cef54cddc2807f0dc1191",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "cbafd458247b68128376be2036a8b1c0068fce12ceb4894e9fc4fa7f7229976e"
+    },
+    "docs/acceptance/2026-10-26-fold-input-forensics.md": {
+      "integratedSha256": "664b372746181a2e39ea1bb995926ff2a9f22a2658d23e5c6700ac9998c9252f",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "d18e848b7658abf1191c6bcb2ce7fdd45de7bd5113bdb114933e386894aa7d6a"
+    },
+    "docs/acceptance/2026-10-26-fresh-phrase-ranking-evidence.json": {
+      "integratedSha256": "e3a1ec9e2c0f3484100afd6aa4c4f519d0cb0f1d1c3e5dddae7ffd71b8e4fb0a",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBytesRetained": true,
+      "originalSha256": "e3a1ec9e2c0f3484100afd6aa4c4f519d0cb0f1d1c3e5dddae7ffd71b8e4fb0a"
+    },
+    "docs/acceptance/2026-10-26-fresh-phrase-ranking.md": {
+      "integratedSha256": "4d48c60f129d6ad90247e3f110e1ff6d4ff0071a5a9d02b00dfa1059fa78a850",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "7c9c04d1c69aadd1b767bcc5071d175cb403be1e1387d5b9aa56bc7f3eea2a53"
+    },
+    "docs/acceptance/2026-10-26-undo-retry.md": {
+      "integratedSha256": "e3668f8d4805730b5d555baf283ab5baccf8a949ac5c0d9823852217be386698",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "7f8babd1473fb735e5f8a460a49328b291f7bd511bf647bfefff66309a0ecd64"
+    },
+    "docs/plans/2026-10-25-autocorrection-roadmap.md": {
+      "integratedSha256": "afca749e6b23d14b86ca965ee470ca77e0a77d36456c6ee2b75a98b37c9c7b6d",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "d6297ccb404b6d36096c68cf83e531a72de7ec612387814c8e92fd007de041cc"
+    },
+    "docs/research/2026-10-25-keyboard-autocorrection.md": {
+      "integratedSha256": "dc963f886270d9e3c40283bdf2f74c97fe716a820dbb23057b7dfe42f47c0f52",
+      "kind": "historical-record-not-fresh-acceptance",
+      "originalBodyRetained": true,
+      "originalSha256": "1a89d169efb1b02421ed56b44b2ac78283d1961085b93506340aa6f99505e19b"
+    }
+  },
+  "hostedCiExecuted": false,
+  "navigation": {
+    "anchorsVerified": false,
+    "checkedPaths": [
+      ".github/workflows/ci.yml",
+      "CHANGELOG.md",
+      "CONTRIBUTING.md",
+      "LICENSE",
+      "PRIVACY.md",
+      "README.md",
+      "THIRD_PARTY_NOTICES.md",
+      "app/src/main/assets/emoji/LICENSE.txt",
+      "app/src/main/assets/smarttyping/experiments/NOTICE.md",
+      "app/src/main/assets/smarttyping/experiments/provenance.json",
+      "app/src/main/assets/smarttyping/lexicon/notices/CC-BY-SA-4.0.txt",
+      "app/src/main/assets/smarttyping/lexicon/notices/ES-MPL-1.1.txt",
+      "app/src/main/assets/smarttyping/lexicon/notices/ES-README.txt",
+      "app/src/main/assets/smarttyping/lexicon/notices/OpenCorpora-CC-BY-SA-3.0.txt",
+      "app/src/main/assets/smarttyping/lexicon/notices/RU-Lebedev.txt",
+      "app/src/main/assets/smarttyping/lexicon/notices/SCOWL-Copyright.txt",
+      "app/src/main/assets/smarttyping/lexicon/provenance/PACKAGED_LEXICONS.md",
+      "app/src/main/assets/smarttyping/lexicon/provenance/morphology-manifest.json",
+      "artwork/keyboard-icons/LICENSE",
+      "artwork/keyboard-icons/README.md",
+      "artwork/menu-icons/README.md",
+      "docs/ACCEPTANCE.md",
+      "docs/ARCHITECTURE.md",
+      "docs/DEBUG_DIAGNOSTICS.md",
+      "docs/FDROID.md",
+      "docs/RELEASE.md",
+      "docs/USER_GUIDE.ru.md",
+      "docs/acceptance/2026-09-04-smart-typing-0.3-canonical-autoreplace.md",
+      "docs/acceptance/2026-09-12-rune-0.3.2-autocorrection.md",
+      "docs/acceptance/2026-09-26-ru-neighbor-recovery.md",
+      "docs/acceptance/2026-10-25-ambiguous-winner-evidence.json",
+      "docs/acceptance/2026-10-25-autocorrection-roadmap.md",
+      "docs/acceptance/2026-10-25-first-letter-and-ambiguous-winner.md",
+      "docs/acceptance/2026-10-25-fold-autocorrection.md",
+      "docs/acceptance/2026-10-25-fold-diagnostics-reopen.md",
+      "docs/acceptance/2026-10-25-fold-phrase-autocorrection-evidence.json",
+      "docs/acceptance/2026-10-25-fold-phrase-autocorrection.md",
+      "docs/acceptance/2026-10-25-joint-diagnostics-and-rescue-evidence.json",
+      "docs/acceptance/2026-10-25-joint-diagnostics-and-rescue.md",
+      "docs/acceptance/2026-10-25-joint-short-correction.md",
+      "docs/acceptance/2026-10-26-context-feature-ranking.md",
+      "docs/acceptance/2026-10-26-contextual-novy-evidence.json",
+      "docs/acceptance/2026-10-26-contextual-novy.md",
+      "docs/acceptance/2026-10-26-conversation-ranking-95.md",
+      "docs/acceptance/2026-10-26-fresh-phrase-ranking.md",
+      "docs/acceptance/2026-10-26-grammar-context-ranking.md",
+      "docs/acceptance/2026-10-26-local-spelling-stress.md",
+      "docs/acceptance/2026-10-26-supervised-conversation-ranking.md",
+      "docs/acceptance/2026-10-27-native-preparation-runtime.md",
+      "docs/acceptance/2026-10-27-q1-fdroid-data.md",
+      "docs/acceptance/2026-10-27-q1-fdroid-history.md",
+      "docs/acceptance/2026-10-27-q1-prepared-source.md",
+      "docs/acceptance/2026-10-28-q2-compact-sources.md",
+      "docs/acceptance/2026-10-28-q2-disclosure-tools.md",
+      "docs/acceptance/2026-10-28-q2-holdout-sources.md",
+      "docs/acceptance/2026-10-28-q2-joint-neighbor-sources.md",
+      "docs/acceptance/2026-10-28-q2-readme-sources.md",
+      "docs/plans/2026-09-02-smart-typing-progress.md",
+      "docs/plans/2026-10-27-review-completion.md",
+      "docs/quality-source-counters.md",
+      "docs/research/2026-10-25-keyboard-autocorrection.md",
+      "docs/typing-candidate-retrieval.md",
+      "docs/typing-extra-epochs.md",
+      "docs/typing-word-ranking.md",
+      "fastlane/metadata/android",
+      "fdroid/io.github.mesteriis.rune.keyboard.yml",
+      "fdroid/prepared-source-policy.json",
+      "fdroid/review-data-policy.json",
+      "runtime-llama/src/main/cpp/llama.cpp/LICENSE",
+      "tools/emoji/README.md",
+      "tools/emoji/source-manifest.json",
+      "tools/lexicon/smart-typing-0.3/README.md",
+      "tools/model/rune-text-0.1/README.md",
+      "tools/morphology/DICTIONARY_ASSET.md",
+      "tools/morphology/README.md",
+      "tools/typing_experiments/README.md"
+    ],
+    "commandsExecuted": false,
+    "documents": {
+      "CHANGELOG.md": "b0ca38578b7a905d023ab1c33ae3666b3f0561d786ac716d38e81079de2616de",
+      "CONTRIBUTING.md": "20bea12cf50e6e308dc68823d46378748a351dbb7d21b9fceb600f60493bb93c",
+      "PRIVACY.md": "c260a2dc2809c89ff263d37954749cd61fc26ccf4dec737ee2fcb64a5b7557b5",
+      "README.md": "359471f148bbcc764d29b5c7b0047d0b5381ffc82a32ee5082f9c31db1ab72f3",
+      "THIRD_PARTY_NOTICES.md": "46c2bd4b231430c3cd84afff77c162ed15c72aea553f0d70c2403238d827f0e1",
+      "app/src/main/assets/smarttyping/experiments/NOTICE.md": "efceac6d0dde6e787e3545e6b3de0f87be6950c67b655ee9076869f07580a9ce",
+      "app/src/main/assets/smarttyping/lexicon/provenance/PACKAGED_LEXICONS.md": "649ee304c20c4f38d8580de61920ad3f3ec804ed0ab836d4a14368ed51bb0d14",
+      "artwork/keyboard-icons/README.md": "e7339fc5f785111c02f37d6c25fa5370dc8991a6687750ab4b2028b1568c7f1a",
+      "artwork/menu-icons/README.md": "cc137737065a5c773cf1e35dd0927dfe5ba85f611c44c207f2b1fb142ef593fc",
+      "docs/ACCEPTANCE.md": "5aea97c3fbec1e16e9edd73ed7ecd6a4ca21ebb6cfd98ee238947b005a2ce52a",
+      "docs/ARCHITECTURE.md": "7798e33026449c96c45a8618fb227a97af0f7e54428d634cc3e12f446ddda490",
+      "docs/DEBUG_DIAGNOSTICS.md": "b33ab57f57b041d75fd0cf5ed48045abff6be5248b8d99609c5cb8220226dfb6",
+      "docs/FDROID.md": "76f9e842b07b1853a717af3fb021b69647d9ecbcf22b8f20b683f7d137694833",
+      "docs/RELEASE.md": "011b1e7be5f18a4e15dd01eae790183a0e4332a816e431eb0921cad7053672e3",
+      "docs/USER_GUIDE.ru.md": "b73d055b4b7c6cd75d494d4568c47a36ce36bfc44437ac497077b9702c109b5b",
+      "docs/acceptance/2026-09-04-smart-typing-0.3-canonical-autoreplace.md": "a9859e636d19493211c36c7a77b6b99d375396acf136db858b3ac2229b0d6a48",
+      "docs/acceptance/2026-09-12-rune-0.3.2-autocorrection.md": "8ad1c279ea85dd61a8500d61e65f70143225599f1d0c17fe889c235ad0992a5c",
+      "docs/acceptance/2026-09-26-ru-neighbor-recovery.md": "0baea8b43c238c1fa0678c48a570fc500d26e1a0129e8678ddea0855894ce501",
+      "docs/acceptance/2026-10-25-autocorrection-roadmap.md": "344ccad15fd8101eca052d1278359699361014d080a84baf6cc48e6df75b93cb",
+      "docs/acceptance/2026-10-25-first-letter-and-ambiguous-winner.md": "4536d17c0fce04c6b4e361fbe358928f3f82aa768adc53c4d24322bdb34611cf",
+      "docs/acceptance/2026-10-25-fold-autocorrection.md": "29317463c28d211970bf04f9d3791a7c0e8f0cd8a401a05c02ffde21f16331e1",
+      "docs/acceptance/2026-10-25-fold-diagnostics-reopen.md": "a762d1182184116e506c431bf7e2a71dc5ac15e74376bc45afdb74cd47a6b9d0",
+      "docs/acceptance/2026-10-25-fold-phrase-autocorrection.md": "9df926633e2af0eba92541aceaad3b41820a8ff2c6370fe414da8d517f0b1714",
+      "docs/acceptance/2026-10-25-joint-diagnostics-and-rescue.md": "64b27c80a81e5cdc044e1ef783c34f1203530578382551274ba09f5087f1459a",
+      "docs/acceptance/2026-10-25-joint-short-correction.md": "40711a922de8ce4606ec17b0141efc26090352cc5f828b17db98cf859c40c723",
+      "docs/acceptance/2026-10-26-context-feature-ranking.md": "00f6a561a7ca6a1e29183f13b68fa41b8f167637a3f9cf4438f1f9eff0ce38a0",
+      "docs/acceptance/2026-10-26-contextual-novy.md": "3d3ec355c5c52ed9e131a898ffe41e38b4903c57573cef54cddc2807f0dc1191",
+      "docs/acceptance/2026-10-26-conversation-ranking-95.md": "926f3be626006be2948fd6a1da838f12da7e950d7484bf7847dbf895cc0cf0c0",
+      "docs/acceptance/2026-10-26-fresh-phrase-ranking.md": "4d48c60f129d6ad90247e3f110e1ff6d4ff0071a5a9d02b00dfa1059fa78a850",
+      "docs/acceptance/2026-10-26-grammar-context-ranking.md": "3f2ee006e6aeb07e6e92a4a0aae16977a1708e86b9ba73df09ce87909a8405df",
+      "docs/acceptance/2026-10-26-local-spelling-stress.md": "458f0bac9a5587fca9b5b12c8aa26c5f267e0bb6289a6848b0d1db11b86c31fd",
+      "docs/acceptance/2026-10-26-supervised-conversation-ranking.md": "41bb464ee7111df193b375887f920dece7ff7a7bbda9e94ab800a62a769c8647",
+      "docs/acceptance/2026-10-27-native-preparation-runtime.md": "4ee42739f144e9f04ccfc86ba2347b3ffc9b4457a51deb320a8f709189b6358d",
+      "docs/acceptance/2026-10-27-q1-fdroid-data.md": "8481f2d8dc0a9f0a26adbf61604b381e64a47af68211b0afdbd86117de5d9d41",
+      "docs/acceptance/2026-10-27-q1-fdroid-history.md": "40aff593c9cfca421c68025802ad250dd5cb9dee082c7cdd6801e877d65455ee",
+      "docs/acceptance/2026-10-27-q1-prepared-source.md": "5054996f22c94b1d4074e65cbeffb8b28c5158918923e363bf360b3b2e15f857",
+      "docs/acceptance/2026-10-28-q2-compact-sources.md": "ea594ee7fc75dd9fec648b16fc74e2510beddc0edccaeff21ae83f74766858c9",
+      "docs/acceptance/2026-10-28-q2-disclosure-tools.md": "1be8286e7fbba59c55df1ab8264b889946f4ce00ffd192cfdc17897a00644ac4",
+      "docs/acceptance/2026-10-28-q2-holdout-sources.md": "cdabcd6176bfc3f41eb30c3808527c61d31a493f9e5304ec23bb93487001acd6",
+      "docs/acceptance/2026-10-28-q2-joint-neighbor-sources.md": "66472188526dd49b86d66dea3dadcd70328173f1c36ea4ea2654de9040788fef",
+      "docs/acceptance/2026-10-28-q2-readme-sources.md": "9811c25ef4c3d04961b4c8993c6913ddebcc113f01037440eb0788a7c3882dab",
+      "docs/plans/2026-09-02-smart-typing-progress.md": "19ffc036d7de3faa8244eb9fdadeffeb678d466ee599b8cf7dddd7ea08e5c40b",
+      "docs/plans/2026-10-27-review-completion.md": "58b6f1e20916efd6794c2b4f7f6831fe44000aba2e441b25565d98b02ed788ae",
+      "docs/quality-source-counters.md": "8a942758dd9f5ee9f0e492b029fc3f96b7dc5cdd83ec6919ace1e3fd51f1fdc6",
+      "docs/research/2026-10-25-keyboard-autocorrection.md": "dc963f886270d9e3c40283bdf2f74c97fe716a820dbb23057b7dfe42f47c0f52",
+      "docs/typing-candidate-retrieval.md": "c3e4ace1b52ab5e08d6909408350f0d5a74a669bc17f1631188ad3674c0f69b7",
+      "docs/typing-extra-epochs.md": "bbe453a54a6503fa5866faf686b7126cd47085e19bb34cb784c1d24b227ba8b7",
+      "docs/typing-word-ranking.md": "66d2f1ea6513c8e87101c16be34872fa34967b696c045e1fe9f670546e4eae56",
+      "tools/emoji/README.md": "d9654a2b9cab3c74bb568c8522f36c18c5bd0e9156538a3ba38d6e76fe35e5ab",
+      "tools/lexicon/smart-typing-0.3/README.md": "d22fc3d92eb7648b04dcdbdfe454d2a03ffffb9f9b3f6ef3572563a68703f60f",
+      "tools/model/rune-text-0.1/README.md": "5e30bea7440bfa3a87c9a0696b822e41b400d1d8f6f84afe8c6fbcdf3028c51a",
+      "tools/morphology/DICTIONARY_ASSET.md": "7ae3c9d70feba055af29f2d099a2836d538725746e65728cfba87c9c7b95af23",
+      "tools/morphology/README.md": "a3bcc9fa7a7873feea7fe62aeab2da375b775e3dc02c9950f277c074f98f8115",
+      "tools/typing_experiments/README.md": "c46bafe17d5ae768e39d3d40e9db0ab1b2e67c9c36f867a4a60336a04c2a7112"
+    },
+    "pinnedSubmoduleFiles": {
+      "runtime-llama/src/main/cpp/llama.cpp/LICENSE": {
+        "commit": "36b10154383b60eb15baac2c7a40d2a5f784faa7",
+        "sha256": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d"
+      }
+    },
+    "remoteLinksVerified": false,
+    "scope": "REACHABLE_LOCAL_MARKDOWN_LINKS"
+  },
+  "newModelQualification": false,
+  "newPhoneChecks": false,
+  "purpose": "Q2_GUIDE_AND_NAVIGATION_NOT_MODEL_OR_DISTRIBUTION_ACCEPTANCE",
+  "pythonChecks": {
+    "exitCode": 0,
+    "graphTests": 9,
+    "readmeTests": 13,
+    "versions": [
+      "3.12.14",
+      "3.14.6"
+    ]
+  },
+  "sourceBindings": {
+    ".github/workflows/ci.yml": "36634f439c2dbf0888ff36a5dd70ab3febde2be72d466d30a64f9f5e98bbd224",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CommonConfusions.kt": "dd9483f2c12d7025218c98166b5116f349799c5eec36dbe3be96f6251c45533e",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/RecoveryQualification.kt": "7cfb75351cfc6cc53a2f4b36ebb891581ab795f0f307a09673a1d4ad94ebfad6",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/ContextualCorrectionPolicy.kt": "a7946c3907fa8e1986b9077e54e61e5d485cb2e35b2380356e2553b5a7c74a8f",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/WordContextPolicy.kt": "df123d3e57e801b7a086c66c0d325a170450ef2ce1317b3bfd7b7fca7fcc580a",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt": "4d830724cc66f967f7c7736efedd540da9f5e27892d1f09cb753dabaa592e684",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelCandidateCoordinator.kt": "b5d4ec3bc2080a9ac4d36af2e5b64c053e279644faecb19b6505742a58f37a4b",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "8ab2f91df2597bc34d4dcac3e2731d23bf6a11c0224df5be42a9d4562d1dac73",
+    "docs/USER_GUIDE.ru.md": "b73d055b4b7c6cd75d494d4568c47a36ce36bfc44437ac497077b9702c109b5b",
+    "docs/typing-candidate-retrieval.md": "c3e4ace1b52ab5e08d6909408350f0d5a74a669bc17f1631188ad3674c0f69b7",
+    "tools/check_doc_links.py": "d9048577861d7a2c2e88dbdbf3754fb084122f0cfeafbd5d80232f85bb2d9fff",
+    "tools/check_readme_sources.py": "27a8be4ebb3cf6c363a27e34e18e97bf5fc535e07fa25960a0ee7a869e83d4b3",
+    "tools/test_doc_links.py": "f9d8599df593ead376a3d0e95a1efdcbd0a86e9e7b3aebd09d6e304ca83921af",
+    "tools/test_readme_sources.py": "97f1025258874c32e68634b9a2cc6ea09140b8ee5c9ffebcdbedb62ce1efc02a"
+  }
+}

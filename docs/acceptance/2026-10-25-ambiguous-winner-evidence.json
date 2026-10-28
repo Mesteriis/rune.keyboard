@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "scope": "Only additional long Russian joint replacements with a known but ambiguous morphology winner and one complete distance-one candidate",
+  "unchangedModelSha256": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+  "unchangedThresholds": true,
+  "firstSample": {
+    "rows": 4672,
+    "selectedSurfaceFamilies": 500,
+    "passed": false,
+    "reason": "49 correct acquisitions below frozen minimum 100",
+    "newCorrect": 49,
+    "newWrong": 0,
+    "rowsSha256": "ba69721830a1b7d49e67c0b4b489a670beac06dac8ccb6e2d16cbfd436942e4a",
+    "protocolSha256": "3e12c5065b2e8401eb2463aa397b799bf9aa7f82a51934913a7726ffe2278e08"
+  },
+  "confirmatory": {
+    "rows": 18696,
+    "selectedSurfaceFamilies": 2000,
+    "passed": true,
+    "acquisition": {
+      "correct": 200,
+      "wrong": 0,
+      "precision": 1.0,
+      "passed": true
+    },
+    "metrics": {
+      "short": {
+        "rows": 190,
+        "typos": 190,
+        "controls": 0,
+        "baselineCorrect": 0,
+        "baselineWrong": 0,
+        "replacements": 0,
+        "correct": 0,
+        "wrong": 0,
+        "newCorrect": 0,
+        "newCorrectFamilies": 0,
+        "baselineCorrectToWrong": 0,
+        "baselineCorrectAbstained": 0,
+        "wrongResolved": 0,
+        "controlChanges": 0,
+        "undoFailures": 0,
+        "prefixChanges": 0,
+        "precision": null,
+        "passed": false
+      },
+      "long": {
+        "rows": 18506,
+        "typos": 14506,
+        "controls": 4000,
+        "baselineCorrect": 5485,
+        "baselineWrong": 66,
+        "replacements": 5751,
+        "correct": 5685,
+        "wrong": 66,
+        "newCorrect": 200,
+        "newCorrectFamilies": 177,
+        "baselineCorrectToWrong": 0,
+        "baselineCorrectAbstained": 0,
+        "wrongResolved": 0,
+        "controlChanges": 0,
+        "undoFailures": 0,
+        "prefixChanges": 0,
+        "precision": 0.9885237350026083,
+        "passed": false
+      }
+    },
+    "rowsSha256": "5976f444226d0ec9325b30316745b21d4ab7b860f8864e19fc94f43308c9d5f2",
+    "protocolSha256": "3b4a7b74d726b07733d23af3cb793f81123207da86b4dd8a013f52a4b5395cf2"
+  },
+  "regression": {
+    "rows": 4799,
+    "changedOutputs": 0,
+    "metrics": {
+      "short": {
+        "rows": 22,
+        "typos": 22,
+        "controls": 0,
+        "baselineCorrect": 0,
+        "baselineWrong": 0,
+        "replacements": 0,
+        "correct": 0,
+        "wrong": 0,
+        "newCorrect": 0,
+        "newCorrectFamilies": 0,
+        "baselineCorrectToWrong": 0,
+        "baselineCorrectAbstained": 0,
+        "wrongResolved": 0,
+        "controlChanges": 0,
+        "undoFailures": 0,
+        "prefixChanges": 0,
+        "precision": null,
+        "passed": false
+      },
+      "long": {
+        "rows": 4777,
+        "typos": 3777,
+        "controls": 1000,
+        "baselineCorrect": 2361,
+        "baselineWrong": 15,
+        "replacements": 2376,
+        "correct": 2361,
+        "wrong": 15,
+        "newCorrect": 0,
+        "newCorrectFamilies": 0,
+        "baselineCorrectToWrong": 0,
+        "baselineCorrectAbstained": 0,
+        "wrongResolved": 0,
+        "controlChanges": 0,
+        "undoFailures": 0,
+        "prefixChanges": 0,
+        "precision": 0.9936868686868687,
+        "passed": false
+      }
+    },
+    "gate": "Exact output parity with prior qualified joint product",
+    "passed": true
+  },
+  "limitations": [
+    "Synthetic public text only; no personal text or touch data used in training.",
+    "Surface and article separation, not lemma separation for ambiguous morphology.",
+    "31 and 66 pre-existing wrong substitutions remain on the two new samples.",
+    "Generic evaluator per-band passed flags require old-error removal and do not define this separately frozen acquisition gate."
+  ],
+  "receipts": {
+    "baseline/receipt.json": "ef42c79f33271252c416961946012528cfba182dbfd8b868e1ab3198e74c2d32",
+    "product/receipt.json": "75e69161bc809991d433fa8ccd23a20059331d76b8193318767dd520c6f2ca06",
+    "confirmatory/baseline/receipt.json": "a2dd4b0aa8cc08217e4c2057c56db70e4381522a7505aa0f8ac4050b6f2f3832",
+    "confirmatory/product/receipt.json": "2f9141ed673b54c00554cce54e7196cfa783ef2b3aeeed1ecc2431adf6487884",
+    "final-smoke/receipt.json": "f2160d67cb092afe5dc587252b258b316fa23c64841b713fade3110d0c13a33c"
+  },
+  "physicalFold": {
+    "initial": {
+      "tests": 6,
+      "passed": 5,
+      "failed": 1,
+      "reason": "Test compared an empty UiAutomator field with empty string, but Android exposed its hint as text."
+    },
+    "repairedTest": {
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "bothEmptyBackspaceScenariosPassed": true
+    },
+    "normalCases": 14,
+    "newAmbiguousCorrectionAndUndoCases": 4,
+    "rapidRequestedIntervalsMs": [
+      50,
+      100,
+      150
+    ],
+    "editorPayloadReadCountersZero": true,
+    "installation": {
+      "apkSha256": "860c49993afb03f85e6cf9f62655d4041883b34e41883dcc954e549eb6f08346",
+      "installedMatches": true,
+      "preferencesPreserved": true,
+      "personalStoresPreserved": true,
+      "runeEnabled": true,
+      "runeSelected": true
+    }
+  }
+}

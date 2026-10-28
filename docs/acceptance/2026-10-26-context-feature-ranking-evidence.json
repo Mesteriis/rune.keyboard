@@ -1,0 +1,309 @@
+{
+  "stage": "local-experiments-complete-promotion-refused",
+  "phoneCommandsExecuted": false,
+  "packagedModelsChanged": false,
+  "productQualificationPassed": false,
+  "newFeatureTests": 4,
+  "pythonRegressionTests": 20,
+  "baselineReplayObservations": 27826,
+  "authoredContextControls": {
+    "rows": 120,
+    "intentions": 30,
+    "controls": 90,
+    "existingProductControlChanges": 0
+  },
+  "publicConversationSource": {
+    "url": "https://downloads.tatoeba.org/exports/per_language/rus/rus_sentences_CC0.tsv.bz2",
+    "compressedSha256": "982264e0857d2574ada9d1c07897e816ab9c4a8fb139f05320b5836f53d4d7ed",
+    "decodedSha256": "8a6ffe780ea440b7deb3a34df5fcea0a8432ecb3fd367d4a4b68f00742bc1236",
+    "license": "CC0-1.0",
+    "licenseSource": "https://tatoeba.org/en/downloads",
+    "countsTrainingOnly": true,
+    "splitCounts": {
+      "train": 18497,
+      "holdout": 2245,
+      "calibration": 2335
+    }
+  },
+  "variants": {
+    "additive": {
+      "model": {
+        "stage": "frozen-before-fresh-calibration-scores",
+        "modelSha256": "0b8e0a88c9043dd75bf7a6f9ffa4508b161413ed4b55374f3b8a69ddb750fd6d",
+        "trainingRowsSha256": "a67ee9d103851f8b5c54e4059338a60e1cd5b8776e22440057eb48f07885bab9",
+        "trainingObservationsSha256": "09a01ebcc7e5a683854f8a18d8c88a0b0c83a12d1e56af5380515797517ac19f",
+        "featureNames": [
+          "wiki:pair_count",
+          "wiki:pair_documents",
+          "wiki:word_conditioned_pair",
+          "wiki:prefix_conditioned_pair",
+          "wiki:gain_over_original_pair",
+          "wiki:pair_available",
+          "tatoeba:pair_count",
+          "tatoeba:pair_documents",
+          "tatoeba:word_conditioned_pair",
+          "tatoeba:prefix_conditioned_pair",
+          "tatoeba:gain_over_original_pair",
+          "tatoeba:pair_available"
+        ],
+        "featureCodeSha256": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef",
+        "trainingScriptSha256": "926a1eb14b29546170182e0346e6039808309afb607e93b03b0d98793fee60df",
+        "contextModelSha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+        "baselineModelSha256": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+        "countsSha256": [
+          "921175789d8cb5def69cd575329184f29dcacde19082ba9e373ed54bb694659d",
+          "523f6c57c797e6d708de55efc06f9bd39dc7a363bcef76e5dd631deb9d1bc7b3"
+        ],
+        "freshCorpusManifestSha256": "c6c6e5cb53646d9ae3e3f86145854472190d496ff8dba9c4dbc1fe2add301f2b",
+        "trainGroups": 5492,
+        "trainCandidateRows": 56966
+      },
+      "policy": {
+        "stage": "frozen-before-fresh-holdout-model-scores",
+        "calibrationPassed": false,
+        "minimumScore": 2.0,
+        "minimumMargin": 2.0,
+        "modelSha256": "0b8e0a88c9043dd75bf7a6f9ffa4508b161413ed4b55374f3b8a69ddb750fd6d",
+        "holdoutRowsSha256": "440ec850ae33022002bdaf1fc972f6614e8539cddf459af1e20895ec86bfb687",
+        "gate": "Calibration>=100 new correct /99.5% precision; independent>=100 /99%; zero control changes and prior-correct losses, positive net correct. Python candidate probe only; Kotlin/controller/Undo qualification still required.",
+        "bestBelowVolumeGate": {
+          "minimumScore": -0.09638583289572732,
+          "minimumMargin": 0.5002079044980281,
+          "metrics": {
+            "newCorrect": 21,
+            "newWrong": 0,
+            "newPrecision": 1.0,
+            "controlChanges": 0,
+            "priorCorrectLosses": 0,
+            "netCorrect": 21
+          }
+        },
+        "calibrationMetrics": {
+          "newCorrect": 0,
+          "newWrong": 0,
+          "newPrecision": null,
+          "controlChanges": 0,
+          "priorCorrectLosses": 0,
+          "netCorrect": 0
+        }
+      },
+      "reservedRawRanking": {
+        "summary": {
+          "groups": 3466,
+          "baselineCorrect": 3040,
+          "experimentalCorrect": 3055,
+          "improvements": 50,
+          "regressions": 35,
+          "bothWrong": 376
+        },
+        "slices": {
+          "missing_letter": {
+            "groups": 1606,
+            "baselineCorrect": 1291,
+            "experimentalCorrect": 1318,
+            "improvements": 48,
+            "regressions": 21,
+            "bothWrong": 267
+          },
+          "adjacent1": {
+            "groups": 1151,
+            "baselineCorrect": 1087,
+            "experimentalCorrect": 1078,
+            "improvements": 2,
+            "regressions": 11,
+            "bothWrong": 62
+          },
+          "transposition": {
+            "groups": 204,
+            "baselineCorrect": 194,
+            "experimentalCorrect": 193,
+            "improvements": 0,
+            "regressions": 1,
+            "bothWrong": 10
+          },
+          "repeated_letter": {
+            "groups": 290,
+            "baselineCorrect": 283,
+            "experimentalCorrect": 281,
+            "improvements": 0,
+            "regressions": 2,
+            "bothWrong": 7
+          },
+          "substitution": {
+            "groups": 215,
+            "baselineCorrect": 185,
+            "experimentalCorrect": 185,
+            "improvements": 0,
+            "regressions": 0,
+            "bothWrong": 30
+          }
+        },
+        "rawJointPoolRankingOnly": true,
+        "noAutomaticAdmissionClaim": true
+      },
+      "reservedDiagnosticPoint": {
+        "predeclaredPoint": {
+          "minimumScore": -0.09638583289572732,
+          "minimumMargin": 0.5002079044980281,
+          "metrics": {
+            "newCorrect": 21,
+            "newWrong": 0,
+            "newPrecision": 1.0,
+            "controlChanges": 0,
+            "priorCorrectLosses": 0,
+            "netCorrect": 21
+          }
+        },
+        "selectedBeforeHoldoutScoring": true,
+        "newCorrect": 38,
+        "newWrong": 1,
+        "precision": 0.9743589743589743,
+        "priorCorrectLosses": 0,
+        "controlChanges": 0,
+        "productQualified": false,
+        "automaticSourceEnabled": false,
+        "frozenPolicySha256": "2db08c195eb1da6c5b146a9b99d59e904132fadec3786f72d93787d5ad27d7e3"
+      }
+    },
+    "unified": {
+      "model": {
+        "stage": "frozen-before-fresh-calibration-scores",
+        "modelSha256": "99fe30f45b068002b9c3c4b591001c676f75612e0d949407da7275e70f82e310",
+        "trainingRowsSha256": "a67ee9d103851f8b5c54e4059338a60e1cd5b8776e22440057eb48f07885bab9",
+        "trainingObservationsSha256": "09a01ebcc7e5a683854f8a18d8c88a0b0c83a12d1e56af5380515797517ac19f",
+        "featureNames": [
+          "wiki:pair_count",
+          "wiki:pair_documents",
+          "wiki:word_conditioned_pair",
+          "wiki:prefix_conditioned_pair",
+          "wiki:gain_over_original_pair",
+          "wiki:pair_available",
+          "tatoeba:pair_count",
+          "tatoeba:pair_documents",
+          "tatoeba:word_conditioned_pair",
+          "tatoeba:prefix_conditioned_pair",
+          "tatoeba:gain_over_original_pair",
+          "tatoeba:pair_available",
+          "character_context"
+        ],
+        "featureCodeSha256": "32b61c606a034dce4586c858b135d9ac114de06391b10b1d4b57791207b4b4ef",
+        "trainingScriptSha256": "f9a264619f19d8bdd38aae15bd924b030fd8b0c56d47e0f85f50b417293b902b",
+        "contextModelSha256": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+        "baselineModelSha256": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+        "countsSha256": [
+          "921175789d8cb5def69cd575329184f29dcacde19082ba9e373ed54bb694659d",
+          "523f6c57c797e6d708de55efc06f9bd39dc7a363bcef76e5dd631deb9d1bc7b3"
+        ],
+        "freshCorpusManifestSha256": "76a1d12473bcd31e3d093537eb8a52dfd88332b8043927b9f1a1986a6b7ee541",
+        "trainGroups": 5492,
+        "trainCandidateRows": 56966
+      },
+      "policy": {
+        "stage": "frozen-before-fresh-holdout-model-scores",
+        "calibrationPassed": false,
+        "minimumScore": 2.0,
+        "minimumMargin": 2.0,
+        "modelSha256": "99fe30f45b068002b9c3c4b591001c676f75612e0d949407da7275e70f82e310",
+        "holdoutRowsSha256": "0d16f7543b5e2265ef27cf9aead4c468d3110006fb5ac4c5f52301b89cf35fbb",
+        "gate": "Calibration>=100 new correct /99.5% precision; independent>=100 /99%; zero control changes and prior-correct losses, positive net correct. Python candidate probe only; Kotlin/controller/Undo qualification still required.",
+        "bestBelowVolumeGate": {
+          "minimumScore": 0.30011515556777646,
+          "minimumMargin": 0.12842261399690738,
+          "metrics": {
+            "newCorrect": 56,
+            "newWrong": 0,
+            "newPrecision": 1.0,
+            "controlChanges": 0,
+            "priorCorrectLosses": 0,
+            "netCorrect": 56
+          }
+        },
+        "calibrationMetrics": {
+          "newCorrect": 0,
+          "newWrong": 0,
+          "newPrecision": null,
+          "controlChanges": 0,
+          "priorCorrectLosses": 0,
+          "netCorrect": 0
+        }
+      },
+      "reservedRawRanking": {
+        "summary": {
+          "groups": 1024,
+          "baselineCorrect": 875,
+          "experimentalCorrect": 908,
+          "improvements": 68,
+          "regressions": 35,
+          "bothWrong": 81
+        },
+        "slices": {
+          "transposition": {
+            "groups": 62,
+            "baselineCorrect": 60,
+            "experimentalCorrect": 61,
+            "improvements": 1,
+            "regressions": 0,
+            "bothWrong": 1
+          },
+          "missing_letter": {
+            "groups": 478,
+            "baselineCorrect": 363,
+            "experimentalCorrect": 388,
+            "improvements": 49,
+            "regressions": 24,
+            "bothWrong": 66
+          },
+          "adjacent1": {
+            "groups": 324,
+            "baselineCorrect": 307,
+            "experimentalCorrect": 314,
+            "improvements": 12,
+            "regressions": 5,
+            "bothWrong": 5
+          },
+          "substitution": {
+            "groups": 78,
+            "baselineCorrect": 65,
+            "experimentalCorrect": 65,
+            "improvements": 5,
+            "regressions": 5,
+            "bothWrong": 8
+          },
+          "repeated_letter": {
+            "groups": 82,
+            "baselineCorrect": 80,
+            "experimentalCorrect": 80,
+            "improvements": 1,
+            "regressions": 1,
+            "bothWrong": 1
+          }
+        },
+        "rawJointPoolRankingOnly": true,
+        "noAutomaticAdmissionClaim": true
+      },
+      "reservedDiagnosticPoint": {
+        "predeclaredPoint": {
+          "minimumScore": 0.30011515556777646,
+          "minimumMargin": 0.12842261399690738,
+          "metrics": {
+            "newCorrect": 56,
+            "newWrong": 0,
+            "newPrecision": 1.0,
+            "controlChanges": 0,
+            "priorCorrectLosses": 0,
+            "netCorrect": 56
+          }
+        },
+        "selectedBeforeHoldoutScoring": true,
+        "newCorrect": 43,
+        "newWrong": 0,
+        "precision": 1.0,
+        "priorCorrectLosses": 0,
+        "controlChanges": 0,
+        "productQualified": false,
+        "automaticSourceEnabled": false,
+        "frozenPolicySha256": "59b1792a49e355979a24cbb838af43baa009c2b9bc6e01aef07f27ae29243707"
+      }
+    }
+  }
+}
