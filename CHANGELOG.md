@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Document all spelling/diagnostic source namespaces and current cascade order,
+  including disabled model refinement and route-dependent joint event labels.
+  Explicitly enumerate all 13 packaged experimental numeric assets with their
+  declared attribution/provenance; bind NOTICE, data-policy and branch-order
+  checks in CI. Renewed local 14,160-row replay retains both existing baselines.
+
 - Correct local-learning privacy disclosures in English/Russian consent, the
   privacy policy and guide: word/phrase fragments, optional raw correction
   examples, deterministic hashes, bounds, incognito exclusions and separate

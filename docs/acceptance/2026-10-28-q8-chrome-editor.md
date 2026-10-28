@@ -79,3 +79,12 @@ in the existing display configuration. It does not establish cover + inner +
 landscape, fold/unfold, or the omnibox GO/backspace scenario. Telegram, Gmail and
 Termux were present but were not driven in this slice; Samsung Notes was absent.
 Q8 and the full APP-001…005 matrix remain in progress.
+
+## Later package update — Q2 source/NOTICE slice
+
+The Q2 update receipt records the exact new Fold APK and a fresh two-case native +
+113-record DOM pass. With Rune originally disabled, one initial post-install
+second-test setup refused IME selection before typing; the failure is retained.
+The whole class passed on controlled repeat without reinstalling or changing the
+fixture. Activation reliability is not claimed fixed, and full Q8 remains open.
+See [the Q2 integration receipt](2026-10-28-q2-source-cascade-notices.md).

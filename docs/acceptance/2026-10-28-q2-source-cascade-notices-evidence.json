@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "card": "Q2",
-  "status": "source and NOTICE slice verified locally; integration pending; full Q2 remains open",
+  "status": "source/NOTICE/scanner/current-package slice verified; remaining Q2 text/path closure open",
   "sourceBase": "9507790e42e8d415e05ab77c2ccd2baf78cd3237",
   "sourceBindings": {
     ".github/workflows/ci.yml": "39e16e9859be9c789d7a9382a405bb4148220a84e1b762a40370eaba3b4909ef",
-    "docs/ARCHITECTURE.md": "8b3e9003c393abd4ec896099595438d50f4d1004877ebb86a1917f4dcb3f4cf5",
+    "docs/ARCHITECTURE.md": "7798e33026449c96c45a8618fb227a97af0f7e54428d634cc3e12f446ddda490",
     "app/src/main/assets/smarttyping/experiments/NOTICE.md": "efceac6d0dde6e787e3545e6b3de0f87be6950c67b655ee9076869f07580a9ce",
     "tools/check_typing_sources.py": "a28cf3806d3c171f3b7628d85cdc3fc54e0819125f4c4db980a8a687aa1e4373",
     "tools/test_typing_sources.py": "d3a5556d8b64b7fd2480350844f00c50e13f6a837ea1930aeb2a081c6d879631",
@@ -14,7 +14,8 @@
     "tools/check_learning_disclosures.py": "959b478317d37943c788e8b6af589d3d4aba0c632e8986689d3851df3a91b8b6",
     "tools/fdroid_data_policy.py": "00ea227c3bde163e196b1971ca80c4d4fa183c7e7e068605c347a8fb6438a77e",
     "fdroid/review-data-policy.json": "4322bbee815a629a4525ca487920bc1c318e83ef30c041fb7727984c73b779e8",
-    "fdroid/io.github.mesteriis.rune.keyboard.yml": "65e79511e784e4a912fb2fe9f2730dd706c6a93ab1ba4685d20f1e4623b2ffbc"
+    "fdroid/io.github.mesteriis.rune.keyboard.yml": "65e79511e784e4a912fb2fe9f2730dd706c6a93ab1ba4685d20f1e4623b2ffbc",
+    "CHANGELOG.md": "b0ca38578b7a905d023ab1c33ae3666b3f0561d786ac716d38e81079de2616de"
   },
   "runtimeSourceBindings": {
     "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt": "67c0b3215c6183239632ce521c7d7d16f64cda01caeb1421eb31791b35085c9b",
@@ -231,9 +232,197 @@
     "originalUntrackedPaths": 98,
     "allOriginalPathsRetained": true
   },
-  "cleanReleaseProfile": "pending committed-source integration",
-  "sourceScanner": "pending committed-source preparation/scanner",
-  "phoneUpdate": "not performed yet",
+  "cleanReleaseProfile": {
+    "sourceCommit": "239e9f3999723dd6f91ad1050412b0a631ceba4d",
+    "exitCode": 0,
+    "elapsedSeconds": 13.393155791000027,
+    "cleanBefore": true,
+    "cleanAfter": true,
+    "sourceAfter": {
+      "commit": "239e9f3999723dd6f91ad1050412b0a631ceba4d",
+      "passed": true,
+      "schema": 1,
+      "statusEntries": 0,
+      "submodules": 1
+    },
+    "offline": true,
+    "signingMaterialCopied": false
+  },
+  "sourceScanner": {
+    "sourceCommit": "239e9f3999723dd6f91ad1050412b0a631ceba4d",
+    "fdroidserver": "2.4.5",
+    "dataEntries": 29,
+    "approvedChanges": 11,
+    "scannerFatal": 0,
+    "warnings": [
+      [
+        "gzip file archive",
+        "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+      ],
+      [
+        "executable binary, possibly code",
+        "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+      ]
+    ],
+    "inventoryAsIgnoreProbe": {
+      "addedInventoryPaths": 3,
+      "fatal": 3,
+      "unusedPathMarkersVerified": true,
+      "restoredFatal": 0
+    },
+    "networkBlockedDuringScanner": true,
+    "probes": [
+      {
+        "label": "prepared-positive",
+        "exitCode": 0,
+        "expectedExit": 0,
+        "markerFound": true,
+        "logSha256": "9d5de64c4d9f086403b565aec61f99c3e910a571644d8de0ba5a8ea7f599d732"
+      },
+      {
+        "label": "default-negative",
+        "exitCode": 1,
+        "expectedExit": 1,
+        "markerFound": true,
+        "logSha256": "c21bfd56088beb08a52fc4ec2684098cb11f55d80fd8a412270ea470bbea6e19"
+      },
+      {
+        "label": "qualification-positive",
+        "exitCode": 0,
+        "expectedExit": 0,
+        "markerFound": true,
+        "logSha256": "ec698b1dc9841ae9d8a45aa5e0ece741449b94a10baa8b39fb10d438e8d1d460"
+      },
+      {
+        "label": "partial-negative",
+        "exitCode": 1,
+        "expectedExit": 1,
+        "markerFound": true,
+        "logSha256": "4f1da89a116079857659e67f32d2b7a0c5f776a5654e8197536b19719eec8b23"
+      },
+      {
+        "label": "dirty-negative",
+        "exitCode": 1,
+        "expectedExit": 1,
+        "markerFound": true,
+        "logSha256": "4723244b5267fffc42d7aded52daedb900117d5729006d177fa9956fe633adfa"
+      },
+      {
+        "label": "compiled-source-negative",
+        "exitCode": 1,
+        "expectedExit": 1,
+        "markerFound": true,
+        "logSha256": "271ff28594d34c28b8081fcf3ae6eeb87952a8b1c4238f8f2603b05be4abc2ae"
+      },
+      {
+        "label": "prepared-restored",
+        "exitCode": 0,
+        "expectedExit": 0,
+        "markerFound": true,
+        "logSha256": "9d5de64c4d9f086403b565aec61f99c3e910a571644d8de0ba5a8ea7f599d732"
+      }
+    ],
+    "prebuildOmitted": "SDK acquisition; installed toolchain reused",
+    "launcherCleanup": "exact build_local launcher condition reproduced; build_local and Gradle not run",
+    "fullBuild": false,
+    "buildServer": false,
+    "sourceTarball": false,
+    "files": {
+      "fdroid/prepared-source-policy.json": "ef0a4000c7da423ab5824b926063c045b09d09fb28671cb5b20ac18ab54e0907",
+      "fdroid/review-data-policy.json": "4322bbee815a629a4525ca487920bc1c318e83ef30c041fb7727984c73b779e8",
+      "tools/release_source_check.py": "79a6a6a997a6af6e1b59c44c0e4654a28bad9cbda3a16217d354d88db1d8ef8c",
+      "tools/fdroid_prepared_source.py": "d2422e83f1f1c228ebc7da60c062accf45d9a3929fe02a52cc439501405e2103",
+      "tools/qualification_artifacts.py": "247f94ef585475b7a454a17767d2552028285daf682f9b5f9fd48fc3590b91a7",
+      "tools/fdroid_data_policy.py": "00ea227c3bde163e196b1971ca80c4d4fa183c7e7e068605c347a8fb6438a77e"
+    },
+    "preparerModules": {
+      "common.py": "6fbb9e2de16e4bde8d463babad4412603b6ca6f5bd7a749723e3cc089b3d0021",
+      "scanner.py": "4de525a85ba519a41838cf1ed7e70184d0b9df782da8a6c82c6dea5234adf7e1",
+      "build.py": "be294c3d2b0f9c117d768e1d3f107ff83ab8b3e7f3e731dd2c1afa6790627d70"
+    }
+  },
+  "phoneUpdate": {
+    "native": {
+      "passed": true,
+      "exitCode": 0,
+      "tests": 2,
+      "elapsedSeconds": 61.145106416999624,
+      "testApkSha256": "b31dc3001300890be3bd7477507550ae60351c5be96a1a611bdb76894c27fea0"
+    },
+    "independentDom": {
+      "nativeTests": 2,
+      "numericOnly": true,
+      "passed": true,
+      "profiles": {
+        "no-suggestions": {
+          "orderedStages": 2,
+          "passed": true,
+          "records": 51
+        },
+        "ordinary": {
+          "orderedStages": 3,
+          "passed": true,
+          "records": 62
+        }
+      }
+    },
+    "initialFailedAttempt": {
+      "passed": false,
+      "exitCode": 0,
+      "tests": 2,
+      "elapsedSeconds": 33.92211599999973,
+      "testApkSha256": "b31dc3001300890be3bd7477507550ae60351c5be96a1a611bdb76894c27fea0"
+    },
+    "diagnosis": {
+      "defaultImeMatchesOriginal": true,
+      "runeDefault": false,
+      "enabledImeComponentSetUnchanged": true,
+      "exitInfoRecords": 16,
+      "exitReasonCodes": [
+        "10",
+        "10",
+        "10",
+        "10",
+        "10",
+        "10",
+        "10",
+        "10"
+      ],
+      "imeReportsRune": true
+    },
+    "preservation": {
+      "protectedFiles": 1,
+      "protectedByteIdentical": true,
+      "originalPreferenceFiles": 4,
+      "originalPreferencesSemanticallyEqual": true,
+      "diagnosticsAppendOnly": false,
+      "appendedEventKinds": [],
+      "modelsByteIdentical": true,
+      "imeSettingsRestored": true,
+      "installedApkMatchesBuild": true,
+      "installedApkSha256": "16f01aab7895f0c0602971167392d8d3a57f1691f5d82f3ea8d9a46df910665a"
+    },
+    "subtypeOrder": {
+      "componentAndSubtypeSetsUnchanged": true,
+      "originalSubtypeOrderRestored": true
+    },
+    "cleanup": {
+      "taskReverseRemoved": true,
+      "ownedTabsClosedByNativeAssertions": true,
+      "ownerSettingsRestoredByNativeFinally": true
+    },
+    "localServersStopped": true,
+    "foldReleasedToBothChats": true,
+    "noReinstallOnRetry": true,
+    "diagnostics": {
+      "rotatingFilesNotByteIdentical": true,
+      "originalJournalParts": 8,
+      "completeOriginalsRetainedInPrivateBackup": true,
+      "beforeArchiveSha256": "560e9c1418dfdd9c43126a4f7b7a91d5ba14330c087d0cc8c718cde701cfcc09",
+      "afterArchiveSha256": "8936633de2151125fbcfd7061dd9e554e8c44a922d2fef408779e2081e3184e8",
+      "recordingConsentUnchanged": true
+    }
+  },
   "logs": {
     "source-check.log": "2b36f1fd502d58d5dd865be7f912b16e7767ad5dfafb07813a0f47ea84345321",
     "source-final-tests.log": "9eddeff677329ad9aff4e106a7b1a5c5a89a92820f5fbd59fda55be639c3e79e",
@@ -242,13 +431,44 @@
     "notice-py312-tests.log": "58d83614a3ed239b1f76d656a4bd475a73e405c49ff1a576ffdd5b7c9e89fb71",
     "data-policy-tests.log": "29e698fcdaf5ed08b8e28e12c2e471aec871566011768b7aaedb3c8e5a20f22a",
     "build-final.log": "64eb1df24f245d5b05864a8afd17f3ef2cfe9252b2c4da0c609db0f918fc2736",
-    "replay.log": "34370693a14c24383bfcfec493cc00e09139cfb897fe8d5dc63299e03d214018"
+    "replay.log": "34370693a14c24383bfcfec493cc00e09139cfb897fe8d5dc63299e03d214018",
+    "clean-release.log": "b1688633c9875beb68d385fd8a5b0dc0fc023ad9babbd0ee729bc9fc4ad5158c",
+    "clean-source-before.log": "7ebc9fb3fd12695eeccbb12431c87ec8d1b500b7d5451d8bdb8394a9cfb2b8bb",
+    "clean-source-after.log": "7ebc9fb3fd12695eeccbb12431c87ec8d1b500b7d5451d8bdb8394a9cfb2b8bb",
+    "clean-source-doc-check.log": "2b36f1fd502d58d5dd865be7f912b16e7767ad5dfafb07813a0f47ea84345321",
+    "clean-notice-check.log": "75ee7f6313a7ac3c3988027991082799de3221798115013c9e82a44f20bc598a",
+    "clean-source-tests.log": "9eddeff677329ad9aff4e106a7b1a5c5a89a92820f5fbd59fda55be639c3e79e",
+    "clean-notice-tests.log": "1e15bfcf3c3eff2dbca2bf77c368d20a71c0b44a154dca24e4cfcf974f0ea4d8",
+    "scanner-run.log": "0ed7ac1f45f7d3bd26cd498d7eb3a8d728d9863302353cc2657c7ec12079838e",
+    "inventory-as-ignore-negative.log": "493c40758a59bf82e4c81ab741abc190726f338b8b5ebec23b1bd6bd0792b4be",
+    "phone-chrome.log": "532ce1b2c05e38f699c71a8f4931dcd3066ff6a6908612e34f900bac25cd981f",
+    "phone-retry.log": "f481f4784a8cd3b9b341a43bc7d7b2bd02bfb21b5eb5b1a2023480a30517dc7f",
+    "phone-retry-receipt.jsonl": "513aa50c6a3eee6f8c249b1cd1262bb5e119fd14a8de4ab4eb129bddc081c9b9",
+    "build-committed.log": "15d0f327a068d3e48ec6c787937067ba254943bac7cbed87d242f033cff70880"
   },
   "limits": [
     "Orchestration markers cover named branch/call orders, not every inner policy condition.",
     "Declared provenance and filename inventory do not prove complete training lineage or fresh qualification.",
     "Current review overlay is distinct from frozen historical release recipes; inventory-only data is not blanket scanignore.",
     "Remaining guide/schema/experiment text and provenance/README closure remain in Q2.",
-    "No runtime, threshold, ranking, model, baseline, version/tag or publication change."
-  ]
+    "No runtime, threshold, ranking, model, baseline, version/tag or publication change.",
+    "One initial post-install IME activation refusal before typing is retained; controlled repeat passed, activation reliability is not claimed fixed."
+  ],
+  "apkFootprint": {
+    "passed": true,
+    "compressedBytes": 180105417,
+    "unpackedBytes": 182213874
+  },
+  "cleanDocumentationChecks": {
+    "sourceTests": 9,
+    "noticeTests": 9,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "passed": true
+  },
+  "committedBuild": {
+    "exitCode": 0,
+    "elapsedSeconds": 2.260625375000018
+  }
 }
