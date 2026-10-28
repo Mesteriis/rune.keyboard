@@ -39,6 +39,11 @@ jobs:
         run: |
           python tools/check_typing_asset_notice.py
           python -m unittest discover -s tools -p test_typing_asset_notice.py -v
+      - name: Check guide schema, feature count and loaded model facts
+        if: matrix.profile == 'stdlib'
+        run: |
+          python tools/check_guide_facts.py
+          python -m unittest discover -s tools -p test_guide_facts.py -v
       - name: Install pinned scientific dependencies
         if: matrix.profile == 'scientific'
         run: |
