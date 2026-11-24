@@ -1,0 +1,84 @@
+{
+  "archiveReceipts": {
+    "0013.parquet": "6eb77fcc78371530cd78bd3ef3b07d416d932623ea57c9e6748f0104da0f94ee",
+    "0014.parquet": "b3c4181adff79a790cffe893c268fef8c69a8e9878e29d6b7c81e08a4426456d",
+    "0015.parquet": "4847a1b8758e8413926cdcc970cbe24cb9790f7cd613acb943429a184eb65777",
+    "0016.parquet": "8377b1aa797968120fc64729da917bab424a6f6c1a9841aa18dc241e56eeba6c",
+    "0017.parquet": "bc467ae77c4bfb0100327fc7e87f217761e5c1ceb97967bbf4f8cdffe6c747d9",
+    "0018.parquet": "85b59c36aeac603652b078ae902fcd857642d0d262622dfbe7ef36e7a09b3a59",
+    "0019.parquet": "fc33a82efc6b7e1d64eb46eb51408b65cf455c93e7961e93cc1e027d21bd40d2",
+    "0020.parquet": "22b54ca72e381f809f2054bd7ca863ddb20832f26adc0bb07b40e6493a509d27"
+  },
+  "distributionRightsReviewed": false,
+  "extendedHistoryReceipts": {
+    "0017.parquet": "228e093682d29cbf6e25f9f9d88b19becd6efa32d045200038e0ffe1ea3a1ff9"
+  },
+  "pageIndexSha256": "0f55e171539de0b476041a960f2a8f212ff6b4bfac23625aed8eecd84d8b2d88",
+  "partitions": {
+    "calibration": {
+      "corpusRowsSha256": "0e38210241368965d30edbce36387b6de3f821447c1e69d5ba19ef4c2b75ebf9",
+      "noticeAndArchivedSourceWindow": {
+        "articles": 0,
+        "contexts": 0,
+        "rows": 0
+      },
+      "noticeAndFullContentWitness": {
+        "articles": 217,
+        "contexts": 218,
+        "rows": 1035
+      },
+      "noticeScope": {
+        "articles": 217,
+        "contexts": 218,
+        "rows": 1035
+      },
+      "noticeWithoutFullArticleOrSourceWindow": {
+        "articles": 0,
+        "contexts": 0,
+        "rows": 0
+      },
+      "sourceIndexSha256": "feed2e451dbe91d7afb5eac8fc946b92b2dbda2b414e7cb3f91469df559c44d8",
+      "translationReceiptSha256": "1461b88dc8faac62280255cc347cbd03594b62b63054b109a34de182e97c02a4"
+    },
+    "holdout": {
+      "corpusRowsSha256": "fab03f6fb1c08c462328ebf5c18877b0483ab7977179090c2bd48db9e89a0e8d",
+      "noticeAndArchivedSourceWindow": {
+        "articles": 0,
+        "contexts": 0,
+        "rows": 0
+      },
+      "noticeAndFullContentWitness": {
+        "articles": 243,
+        "contexts": 244,
+        "rows": 1155
+      },
+      "noticeScope": {
+        "articles": 243,
+        "contexts": 244,
+        "rows": 1155
+      },
+      "noticeWithoutFullArticleOrSourceWindow": {
+        "articles": 0,
+        "contexts": 0,
+        "rows": 0
+      },
+      "sourceIndexSha256": "d56fb9d7fa167f599e8414dac7190a057a2a7667ad3cad07694dbe3c850e03eb",
+      "translationReceiptSha256": "f9f64c4e97f8d3699ead875ec5aeed1d3667b36d129b965d845e27c51c00779b"
+    }
+  },
+  "passageLevelOriginsReviewed": false,
+  "schema": 1,
+  "scope": "historical translation notices by recorded source evidence",
+  "witnessShards": {
+    "0011.parquet": "7b011b73fc8ac45458f7aad96be9c22326cd4ee460ce2f813a1a8fb4330c6b37",
+    "0012.parquet": "39618287e7b39bbb3c8b347caab692fe3130fff203481ef33e3cc852247e1314",
+    "0013.parquet": "07f20a483707c461721617432fecb1d8dae699aefd700f646ce974de16d89fa6",
+    "0014.parquet": "5740c7ac59aed44edefb6bb73ae799800176958ea38f3760d0fe45fb13fef61b",
+    "0015.parquet": "03b93826acf5f1a470c169e29df23764a88783af78763c3116616aa340b8f972",
+    "0016.parquet": "ca603a95776d7a83cb99b91d25bcc293958d4b86cc287d4d11c7a6e48a1efa68",
+    "0017.parquet": "01fd30d8674c651046df0d8a528c1a4c0c9fb76506a14911be2fa2af33a592ec",
+    "0018.parquet": "bd752fd7bfdfdf7af27f91eafd4163f3e378b9033b094105ad73eb6336606a2a",
+    "0019.parquet": "e611474e7d59d9848f996a5a875ea0eb2b9b282d9a712db7faac6468ce2d9749",
+    "0020.parquet": "f41659e6b3b3821628ae5f4b4dae1434fb56d7dcf7f26883465dd32167aeaeb7"
+  }
+}

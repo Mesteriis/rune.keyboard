@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare complete controller observations, excluding only two declared host timings."""
+"""Compare observations exactly, with an opt-in bound for baseline score diagnostics."""
 from __future__ import annotations
 
 import argparse
@@ -8,6 +8,7 @@ import gzip
 import json
 import os
 from pathlib import Path
+import re
 import sys
 
 MAX_LINE_BYTES = 1024 * 1024
@@ -17,6 +18,12 @@ TIMING_FIELDS = frozenset({'fullTokenGenerationNanos', 'hostStageNanos'})
 REQUIRED_FIELDS = frozenset({'index', 'id', 'language', 'split', 'prefix', 'typed', 'status',
     'beforeBoundary', 'afterBoundary', 'afterBackspace', 'boundaryCommands', 'backspaceCommands',
     'stateAfterBoundary', 'stateAfterBackspace'})
+
+# Two binary64 ULPs at 1.0, limited to diagnostic model scores. Product
+# decisions and the two runs' determinism remain exact.
+BASELINE_SCORE_ABS_TOLERANCE = 4.440892098500626e-16
+SCORE_PATH = re.compile(r'^/(?:jointModelScores|rescueModelScores)/[0-9]+$|'
+                        r'^/compactScores/[0-9]+/(?:combinedScore|contextScore)$')
 
 
 def canonical(value):
@@ -66,7 +73,7 @@ def projection_bytes(rows):
     return b''.join(canonical(row) + b'\n' for row in rows)
 
 
-def changed_paths(before, after, path=''):
+def changed_paths(before, after, path='', *, score_tolerance=0.0):
     # Explicitly compare types too: Python otherwise treats true and 1 as equal.
     if type(before) is not type(after): return [path or '/']
     if isinstance(before, dict):
@@ -74,31 +81,40 @@ def changed_paths(before, after, path=''):
         for key in sorted(before.keys() | after.keys()):
             child = path + '/' + key.replace('~', '~0').replace('/', '~1')
             paths.extend([child] if key not in before or key not in after
-                         else changed_paths(before[key], after[key], child))
+                         else changed_paths(before[key], after[key], child, score_tolerance=score_tolerance))
         return paths
     if isinstance(before, list):
         paths = []
         for index in range(max(len(before), len(after))):
             child = path + '/' + str(index)
             paths.extend([child] if index >= min(len(before), len(after))
-                         else changed_paths(before[index], after[index], child))
+                         else changed_paths(before[index], after[index], child, score_tolerance=score_tolerance))
         return paths
+    if (score_tolerance and type(before) is float and SCORE_PATH.fullmatch(path)
+            and abs(before - after) <= score_tolerance):
+        return []
     return [] if before == after else [path or '/']
 
 
-def compare(baseline, candidate):
+def compare(baseline, candidate, *, score_tolerance=0.0):
+    if score_tolerance not in (0.0, BASELINE_SCORE_ABS_TOLERANCE):
+        raise ValueError('REPLAY_SCORE_TOLERANCE')
     differences = []
+    tolerated = 0
     for index in range(max(len(baseline), len(candidate))):
         old = baseline[index] if index < len(baseline) else None
         new = candidate[index] if index < len(candidate) else None
-        paths = changed_paths(old, new)
+        paths = changed_paths(old, new, score_tolerance=score_tolerance)
+        if score_tolerance:
+            tolerated += len(changed_paths(old, new)) - len(paths)
         if paths: differences.append({'row': index + 1, 'baselineId': old['id'] if old else None,
             'candidateId': new['id'] if new else None, 'paths': paths})
     return {'schemaVersion': 1, 'excludedTopLevelFields': sorted(TIMING_FIELDS),
         'baselineRows': len(baseline), 'candidateRows': len(candidate),
         'baselineProjectionSha256': hashlib.sha256(projection_bytes(baseline)).hexdigest(),
         'candidateProjectionSha256': hashlib.sha256(projection_bytes(candidate)).hexdigest(),
-        'differentRows': len(differences), 'differences': differences, 'passed': not differences}
+        'differentRows': len(differences), 'differences': differences, 'passed': not differences,
+        'scoreAbsoluteTolerance': score_tolerance, 'toleratedScoreDifferences': tolerated}
 
 
 def main(argv=None):

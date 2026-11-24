@@ -16,6 +16,8 @@ val runtimeAndroid = project(":runtime-llama").extensions.getByType<com.android.
 // Explicit debug-only application identity for isolated native qualification.
 val nativeQualification = providers.gradleProperty("runeNativeQualification").orElse("false").get()
 require(nativeQualification in setOf("true", "false")) { "runeNativeQualification must be true or false" }
+val modelPrefixWindow = providers.gradleProperty("runeModelPrefixWindow").orElse("false").get()
+require(modelPrefixWindow in setOf("true", "false")) { "runeModelPrefixWindow must be true or false" }
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
 val keystoreProperties = Properties().apply {
@@ -28,7 +30,10 @@ android {
     namespace = "io.github.mesteriis.rune.keyboard"
     compileSdk = 37
     ndkVersion = runtimeAndroid.ndkVersion
-    buildFeatures { aidl = true }
+    buildFeatures {
+        aidl = true
+        buildConfig = true
+    }
 
     androidResources {
         // Packed lexicon components are read-only APK mappings opened through AssetManager.openFd.
@@ -41,6 +46,7 @@ android {
         targetSdk = 37
         versionCode = 8
         versionName = "0.4.2"
+        buildConfigField("boolean", "MODEL_PREFIX_WINDOW", "false")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // UTP collects failure screenshots/XML before uninstalling the test application.
         testInstrumentationRunnerArguments["additionalTestOutputDir"] =
@@ -62,6 +68,7 @@ android {
     buildTypes {
         getByName("debug") {
             if (nativeQualification == "true") applicationIdSuffix = ".qualification"
+            buildConfigField("boolean", "MODEL_PREFIX_WINDOW", modelPrefixWindow)
         }
         release {
             signingConfig = signingConfigs.findByName("release")

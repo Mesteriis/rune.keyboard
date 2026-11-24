@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit
 
 /** Explicit physical probe of the production service/duty policy; fixed public text only. */
 class RealModelServiceInstrumentedTest {
-    @Test(timeout = 180_000) fun exactInstalledModelPreparesAndScoresThroughPrivateBinder() {
+    @Test(timeout = 230_000) fun exactInstalledModelPreparesAndScoresThroughPrivateBinder() {
         assumeTrue("Explicit installed-model service probe only",
             InstrumentationRegistry.getArguments().getString("runeRealService") == "true")
         if (InstrumentationRegistry.getArguments().getString("runePrepareQualificationModel") == "true") {
@@ -136,8 +136,36 @@ class RealModelServiceInstrumentedTest {
             val immediate = reply(3)
             assertTrue("Unexpected duty result", immediate.code in listOf(ScoringCode.OK, ScoringCode.UNAVAILABLE))
             if (immediate.code == ScoringCode.OK) success(immediate)
-            // Refill the existing process budget with no rebind/reset or hidden retry.
-            SystemClock.sleep(9_000)
+            val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            val process = manager.runningAppProcesses.single { it.processName == context.packageName + ":model_runtime" }
+            assertEquals(android.os.Process.myUid(), process.uid)
+            val ticksPerSecond = Os.sysconf(OsConstants._SC_CLK_TCK)
+            assertTrue(ticksPerSecond > 0)
+            // Sample only our service's CPU. The process identity and /proc contents stay local.
+            fun cpuMillis(): Long {
+                val fields = File("/proc/${process.pid}/stat").readText().substringAfterLast(")").trim().split(Regex("\\s+"))
+                return (fields[11].toLong() + fields[12].toLong()) * 1000 / ticksPerSecond
+            }
+            var previousCpu = cpuMillis()
+            var previousWall = SystemClock.elapsedRealtime()
+            val refillStart = previousWall
+            val unitsPerCpuMillis = ModelDutyProfile.UNITS_PER_CPU_MILLI
+            // Charge all CPU used since process creation and credit only refill observed here.
+            var credit = ModelDutyProfile.CAPACITY_UNITS - previousCpu * unitsPerCpuMillis
+            val tickRoundingMillis = 2 * ((1000 + ticksPerSecond - 1) / ticksPerSecond)
+            val minimumCredit = (ModelDutyProfile.MIN_ADMISSION_CPU_MILLIS + tickRoundingMillis) * unitsPerCpuMillis
+            while (previousWall - refillStart < 9_000 || credit < minimumCredit) {
+                assertTrue("Warm admission budget did not refill within 50 seconds", previousWall - refillStart < 50_000)
+                SystemClock.sleep(250)
+                val cpu = cpuMillis()
+                val wall = SystemClock.elapsedRealtime()
+                assertTrue("Service CPU clock moved backwards", cpu >= previousCpu)
+                credit = minOf(ModelDutyProfile.CAPACITY_UNITS, credit +
+                    (wall - previousWall) * ModelDutyProfile.REFILL_UNITS_PER_ELAPSED_MILLI) -
+                    (cpu - previousCpu) * unitsPerCpuMillis
+                previousCpu = cpu
+                previousWall = wall
+            }
             assertTrue(replies.isEmpty())
             val warmStart = SystemClock.elapsedRealtime()
             submit(4)
@@ -150,16 +178,10 @@ class RealModelServiceInstrumentedTest {
                 putInt("serviceImmediateCode", immediate.code)
                 putLong("serviceWarmWallMillis", SystemClock.elapsedRealtime() - warmStart)
                 putLong("serviceWarmNativeMillis", warm.elapsedMillis)
+                putLong("serviceRefillWaitMillis", previousWall - refillStart)
                 putInt("serviceSuccessfulRequests", if (immediate.code == ScoringCode.OK) 3 else 2)
             })
             if (InstrumentationRegistry.getArguments().getString("runeRealServiceDuty") == "true") {
-                val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-                val process = manager.runningAppProcesses.single { it.processName == context.packageName + ":model_runtime" }
-                assertEquals(android.os.Process.myUid(), process.uid)
-                fun cpuMillis(): Long {
-                    val fields = File("/proc/${process.pid}/stat").readText().substringAfterLast(") ").trim().split(Regex("\\s+"))
-                    return (fields[11].toLong() + fields[12].toLong()) * 1000 / Os.sysconf(OsConstants._SC_CLK_TCK)
-                }
                 fun rssBytes(): Long {
                     val status = File("/proc/${process.pid}/status").readText()
                     return Regex("(?m)^VmRSS:\\s+(\\d+) kB$").find(status)!!.groupValues[1].toLong() * 1024

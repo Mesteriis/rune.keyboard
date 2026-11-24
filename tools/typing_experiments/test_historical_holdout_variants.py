@@ -3,6 +3,8 @@ import importlib
 import io
 import json
 from pathlib import Path
+import subprocess
+import sys
 from unittest.mock import patch
 import unittest
 
@@ -36,6 +38,39 @@ class HistoricalHoldoutVariantsTest(unittest.TestCase):
                 self.assertEqual(source['path'], path)
                 self.assertEqual(source['sha256'], digest)
                 self.assertEqual(source['bytes'], size)
+
+    def test_v7_v8_delegate_to_shared_builder_with_original_public_arguments(self):
+        from fresh_spelling_holdout import HoldoutSpec
+        for version in (7, 8):
+            with self.subTest(version=version):
+                module = importlib.import_module(f'prepare_external_spelling_holdout_v{version}')
+                self.assertIsInstance(module.SPEC, HoldoutSpec)
+                self.assertEqual(version, module.SPEC.version)
+                self.assertEqual(module.SOURCE_PATH, module.SPEC.source_path)
+                self.assertEqual(module.SOURCE_SHA256, module.SPEC.source_sha256)
+                self.assertEqual(module.SOURCE_BYTES, module.SPEC.source_bytes)
+                self.assertEqual(module.SEED, module.SPEC.seed)
+                args = (Path('source'), Path('frequency'), [Path('excluded')], Path('output'))
+                with patch.object(module.shared, 'prepare', return_value={'fixture': True}) as prepare:
+                    self.assertEqual({'fixture': True}, module.prepare(*args, historical_reproduction=True))
+                prepare.assert_called_once_with(module.SPEC, Path(module.__file__), *args,
+                                                historical_reproduction=True)
+                with patch.object(module.shared, 'build_rows', return_value=['fixture']) as build:
+                    self.assertEqual(['fixture'], module.build_rows([], set(), 'generator', typo_count=3, correct_count=4))
+                build.assert_called_once_with(module.SPEC, [], set(), 'generator', typo_count=3, correct_count=4)
+
+    def test_v7_v8_load_by_absolute_path_without_project_on_sys_path(self):
+        command = ('import importlib.util,sys; '
+                   's=importlib.util.spec_from_file_location("external_holdout",sys.argv[1]); '
+                   'm=importlib.util.module_from_spec(s); s.loader.exec_module(m); '
+                   'print(m.SOURCE_PATH)')
+        for version in (7, 8):
+            with self.subTest(version=version):
+                script = ROOT / 'tools/typing_experiments' / f'prepare_external_spelling_holdout_v{version}.py'
+                result = subprocess.run([sys.executable, '-I', '-B', '-c', command, str(script)],
+                                        text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                self.assertEqual(0, result.returncode, result.stderr)
+                self.assertEqual(f'20231101.ru/train/{version + 5:04d}.parquet', result.stdout.strip())
 
     def test_each_replay_rejects_a_different_corpus_version(self):
         from fresh_spelling_replay import validate_rows

@@ -1,0 +1,41 @@
+{
+  "archiveBytes": 266280,
+  "archiveSha256": "15e42e958c5e218313303e8f088468ce66cb22033588223cc45a038c201148ee",
+  "calibrationControlSha256": "b19e91877a9dc4ec200a4982b191d7c9348efdf8196ddb84047521a4c04b3abb",
+  "candidateLayouts": 4,
+  "cohortCompatibleLayouts": 1,
+  "contexts": 1630,
+  "decodedBytes": 3116900,
+  "decodedSha256": "36a769b5b2e1ed0f76667bd4336d4792502195c83233ff34fd29e85d2ca0ca6b",
+  "decodedSourceShards": 10,
+  "fullCohortGatePassed": false,
+  "holdoutScoringAllowed": false,
+  "inputBindings": {
+    "docs/acceptance/2026-10-27-right-context-numeric-bridge-evidence.json": "d1921af39595a156f69b995003fae7cbdd9b7aa068ecbf612015d154465407f9",
+    "tools/typing_experiments/available-v6-article-origin-v1/context-recovery/anchors.jsonl": "2fc6aecbc3616ffdb80c124b16e2d5bd7c6c74d0eb7be3731ab9034845bfb472",
+    "tools/typing_experiments/available-v6-article-origin-v1/source-lock.json": "02397f3424d85634e372e87d8cde55bd97af79615442d3ec1cada45831f95ede",
+    "tools/typing_experiments/historical_provenance_sources/available_clean_v6_manifest.json": "63a96729330de3d36024ab6d062542bfeed0461d3b3d4202f820c74a30b90691",
+    "tools/typing_experiments/historical_provenance_sources/sentence_pairs_v2_v6_availability.json": "ea94b32ee61b828de62e7e4a4666a2b699031614e34fe77906d6fc3da1e92d83"
+  },
+  "localReconstructionScriptSha256": "a51f954a96b806ae8c8c5d02a571dc189f07f9813caa1896d18c431a9ab5ee0a",
+  "modelCalls": 0,
+  "originalHoldoutJsonlRecovered": false,
+  "possibleGapLayouts": 2556,
+  "publicationRightsReviewed": false,
+  "rows": 7750,
+  "schema": 1,
+  "scope": "historical-diagnostic-holdout-tsv-recovery",
+  "sourceIDGaps": [
+    {
+      "finalRowIndex": 3965,
+      "omittedRows": 5,
+      "omittedSourceIDStart": 3965
+    },
+    {
+      "finalRowIndex": 4000,
+      "omittedRows": 5,
+      "omittedSourceIDStart": 4005
+    }
+  ],
+  "sourceRecordsScanned": 926220
+}

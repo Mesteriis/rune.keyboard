@@ -21,7 +21,8 @@ def main():
     parser.add_argument('--adb',required=True,type=Path);parser.add_argument('--serial',required=True)
     parser.add_argument('--expected-avd',required=True);parser.add_argument('--expected',choices=('blocked','promoted'),required=True)
     parser.add_argument('--output',required=True,type=Path);args=parser.parse_args()
-    if not args.serial.startswith('emulator-') or not args.expected_avd.startswith('rune_review_u13_'):
+    if not args.serial.startswith('emulator-') or not (args.expected_avd == 'rune-ci-night-learning'
+            or args.expected_avd.startswith('rune_review_u13_')):
         parser.error('explicit disposable U13 emulator required')
     log=args.output.with_suffix('.instrumentation.log')
     if args.output.exists() or log.exists():parser.error('fresh output required')

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "scope": "historical-byte-recovery",
+  "sourceShards": 10,
+  "scannedArticles": 926220,
+  "eligibleArticles": 844368,
+  "blockedArticles": 19954,
+  "counts": {
+    "calibration": {
+      "parentContexts": 1661,
+      "contexts": 1661,
+      "rows": 7905
+    },
+    "holdout": {
+      "parentContexts": 1632,
+      "contexts": 1630,
+      "rows": 7750
+    }
+  },
+  "parentAvailabilitySha256": "ea94b32ee61b828de62e7e4a4666a2b699031614e34fe77906d6fc3da1e92d83",
+  "parentRecordsSha256": "5894fc3d81bcebd87ed743c28b6d90123e864d82852aa9d4a2416325fb74ef32",
+  "parentPlanSha256": "b54efac3d50e8f5d59ec9796118c55a370dd97b0f2111c37fb23c0c3561d6346",
+  "originalCleanPreparerSha256": "28cd94ab4f4df8f9a85691f4e6e152047559cca36c1aee02fab6693c70838325",
+  "originalFiles": {
+    "calibration.jsonl": "0e38210241368965d30edbce36387b6de3f821447c1e69d5ba19ef4c2b75ebf9",
+    "calibration.tsv": "b19e91877a9dc4ec200a4982b191d7c9348efdf8196ddb84047521a4c04b3abb",
+    "holdout.jsonl": "fab03f6fb1c08c462328ebf5c18877b0483ab7977179090c2bd48db9e89a0e8d",
+    "holdout.tsv": "36a769b5b2e1ed0f76667bd4336d4792502195c83233ff34fd29e85d2ca0ca6b",
+    "plan.json": "e9044d338058cd55c56f0d231d161769cec4ca3e5672864c211db8e54c38afcf"
+  },
+  "ledgerVerification": {
+    "sha256": "5c369af3b9913c4d3b929d9919ce9c61558c160c02a76d1ee7d2d6d7c42f6329",
+    "entryCount": 229,
+    "globalFreshnessCoverageComplete": false,
+    "exactEntryKeys": {
+      "public-right-context-available-v6-calibration": {
+        "article": 1651,
+        "family": 588,
+        "sentence": 1661,
+        "context": 4583
+      },
+      "public-right-context-available-v6-holdout": {
+        "article": 1614,
+        "family": 523,
+        "sentence": 1630,
+        "context": 4481
+      }
+    }
+  },
+  "modelCalls": 0,
+  "independentQualification": false
+}

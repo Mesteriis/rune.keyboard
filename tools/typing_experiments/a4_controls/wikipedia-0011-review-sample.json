@@ -1,0 +1,386 @@
+{
+  "controlsSha256": "e1553ebd2dc54dd2358c41b39d9ebd5833dba06165ff79c7c8aea4a93370597a",
+  "frequencyHelperSha256": "fc3a1f8594241473b1ada665bc45572c2b2c514bcc0ff1294faeae135415585c",
+  "helperSha256": "b1b5446061cfc72509139bb837fdc69156d624f9dc81496bcb04a2b717ea670b",
+  "independentlyQualified": false,
+  "pyarrowVersion": "25.0.1",
+  "pythonVersion": "3.12.14",
+  "records": [
+    {
+      "article": "4694023",
+      "case": "mixed",
+      "end": 1022,
+      "excerptSha256": "2eb8acd2317a617b2feed5e7f5617d2565f7809fb448fd607a5c1d7b9a4448fd",
+      "form": "спб",
+      "start": 1018
+    },
+    {
+      "article": "4964745",
+      "case": "mixed",
+      "end": 2559,
+      "excerptSha256": "c2e184ec7c11f64d60ce82aaf1a77c7758ba70d93e9224b3b132a9cbfa893f3c",
+      "form": "спб",
+      "start": 2555
+    },
+    {
+      "article": "4737278",
+      "case": "mixed",
+      "end": 4991,
+      "excerptSha256": "bbff48ca160681c71e2edf0032e7ccb52fe39e93a102cf998387d24b5e0155c8",
+      "form": "спб",
+      "start": 4987
+    },
+    {
+      "article": "4787409",
+      "case": "mixed",
+      "end": 1100,
+      "excerptSha256": "14daa835313fae6cf63d241bee584805373744508248fa14235b5498177c8460",
+      "form": "спб",
+      "start": 1096
+    },
+    {
+      "article": "4828342",
+      "case": "mixed",
+      "end": 324,
+      "excerptSha256": "8ff2ed1e1995a60f17a2ea87d5cba08713065ea1d8a5b005fd84ffc1af408c6a",
+      "form": "спб",
+      "start": 320
+    },
+    {
+      "article": "4962175",
+      "case": "mixed",
+      "end": 5716,
+      "excerptSha256": "f72a2ae90f3e2ee9b521052bad3ec6dfb7054c5b2656fa002c7f74de57769963",
+      "form": "спб",
+      "start": 5712
+    },
+    {
+      "article": "4922493",
+      "case": "mixed",
+      "end": 691,
+      "excerptSha256": "fff3021eb7ef786e8208eeb9d4d6184e9486654954a44994fa899f78143b93aa",
+      "form": "спб",
+      "start": 687
+    },
+    {
+      "article": "4878104",
+      "case": "mixed",
+      "end": 2056,
+      "excerptSha256": "c1e8043ecfb871ab16e115dd7d08c7d32aba7ebaaa42edc31932f2203e50b5ff",
+      "form": "спб",
+      "start": 2052
+    },
+    {
+      "article": "5007363",
+      "case": "mixed",
+      "end": 3110,
+      "excerptSha256": "c68d94de56b0c41d01d8ae1b36688281bac5755d0c3e283923473c24fa7243fb",
+      "form": "спб",
+      "start": 3106
+    },
+    {
+      "article": "4827137",
+      "case": "mixed",
+      "end": 8340,
+      "excerptSha256": "81df7eafa70151efb2962dab8195fcf29dfd9b2799ea6c4f51d6986ae543dcf0",
+      "form": "спб",
+      "start": 8336
+    },
+    {
+      "article": "4965704",
+      "case": "upper",
+      "end": 1334,
+      "excerptSha256": "02b20160e74746e9d92680f45b76bc2bcef3aa15ab01768a66b6cc6413f27b3f",
+      "form": "мск",
+      "start": 1330
+    },
+    {
+      "article": "4692678",
+      "case": "lower",
+      "end": 7058,
+      "excerptSha256": "c900c537e56ae619a008a36ddf28b93fbe2b0bca4e28d12e3d85b48e33042b42",
+      "form": "мск",
+      "start": 7054
+    },
+    {
+      "article": "4997862",
+      "case": "lower",
+      "end": 1575,
+      "excerptSha256": "61c2600dcf568473c0a40a05dd0b8b6e314df5cc7340efaf5bc1bcc9bcfca2e1",
+      "form": "мск",
+      "start": 1571
+    },
+    {
+      "article": "4693844",
+      "case": "lower",
+      "end": 1506,
+      "excerptSha256": "42a4f2b39321cc6d2c72a56897f726fd5939d346ae611bb9e45e34b424e3bc6a",
+      "form": "мск",
+      "start": 1502
+    },
+    {
+      "article": "4914110",
+      "case": "lower",
+      "end": 776,
+      "excerptSha256": "707a56c20a334d22ded745ce36df3a16e5d476353e645574fed0fa078a410313",
+      "form": "мск",
+      "start": 772
+    },
+    {
+      "article": "5033330",
+      "case": "upper",
+      "end": 538,
+      "excerptSha256": "a2005f1bae0c11e29aa4e360637e3c8feb6af346e027b54f409422bc3004e8ca",
+      "form": "мск",
+      "start": 534
+    },
+    {
+      "article": "4745008",
+      "case": "mixed",
+      "end": 621,
+      "excerptSha256": "36f77ebac3dd64e8a6011e2b9981e728377eedc0579d6387e54d44e3247f184b",
+      "form": "адм",
+      "start": 617
+    },
+    {
+      "article": "4744996",
+      "case": "mixed",
+      "end": 603,
+      "excerptSha256": "78384ae5137795e209ab1aa5417308754fb53259d67ad59b004c647234a62dcf",
+      "form": "адм",
+      "start": 599
+    },
+    {
+      "article": "5058525",
+      "case": "lower",
+      "end": 1581,
+      "excerptSha256": "b2eb4a3afd9c0d6a6bb276ce221190715d2b3c1b280b66d0a8dec6799fcad4f0",
+      "form": "адм",
+      "start": 1577
+    },
+    {
+      "article": "4752969",
+      "case": "mixed",
+      "end": 17816,
+      "excerptSha256": "b9c66ab3f133d8be5666ff8908817fb9ef18298ac9a9188bade7b61f01d09bdf",
+      "form": "адм",
+      "start": 17812
+    },
+    {
+      "article": "4737888",
+      "case": "lower",
+      "end": 1284,
+      "excerptSha256": "d5520d00791e30bcc725574499a4eb63095fedf0a43c7a2bb87554ed404fa88f",
+      "form": "адм",
+      "start": 1280
+    },
+    {
+      "article": "4785824",
+      "case": "mixed",
+      "end": 742,
+      "excerptSha256": "f67fb15e587e5325f0a9c72f9e5bc6bfc70af0896ba190545ca66846d0f43de7",
+      "form": "адм",
+      "start": 738
+    },
+    {
+      "article": "4785796",
+      "case": "mixed",
+      "end": 1042,
+      "excerptSha256": "f2b5cf589d5112b77c759d1e0e8c2ec9734364774cac8ccbd2e8e97570192980",
+      "form": "адм",
+      "start": 1038
+    },
+    {
+      "article": "5036576",
+      "case": "lower",
+      "end": 29200,
+      "excerptSha256": "2294bbe9eca3e278507a43e1d184e81647d416f34a008690d0cb39b6bf61fd4b",
+      "form": "адм",
+      "start": 29196
+    },
+    {
+      "article": "4957563",
+      "case": "mixed",
+      "end": 10531,
+      "excerptSha256": "c38f621ea99cc520ef7d34f503611e003dbdd67cf2b7d084fd28c1bb9a5e30be",
+      "form": "адм",
+      "start": 10527
+    },
+    {
+      "article": "4968431",
+      "case": "mixed",
+      "end": 5987,
+      "excerptSha256": "fb1c9fb20a3a9b4ca131ffff57f29589ccb6a86aff09106952eade7c6d8cf22b",
+      "form": "адм",
+      "start": 5983
+    },
+    {
+      "article": "5093089",
+      "case": "lower",
+      "end": 491,
+      "excerptSha256": "7da184535e554ba074342f010f0dd93ea9c8acd3eda3d3c270e726a19b73f1f3",
+      "form": "пгт",
+      "start": 487
+    },
+    {
+      "article": "5071531",
+      "case": "lower",
+      "end": 48,
+      "excerptSha256": "1be7a75639f2df073eac6b0e081d5e1923971ebd794ee464038282aecc19f69d",
+      "form": "пгт",
+      "start": 44
+    },
+    {
+      "article": "4770750",
+      "case": "lower",
+      "end": 906,
+      "excerptSha256": "8ec5f356a6bfa6bb07d12939a5fa8e21f30aa67f43239ac6240556f3490b8b3a",
+      "form": "пгт",
+      "start": 902
+    },
+    {
+      "article": "4765414",
+      "case": "lower",
+      "end": 196,
+      "excerptSha256": "316cfb9531d32c73872581b58ac62ca838b6d60084882ad5404f4c12e81268b5",
+      "form": "пгт",
+      "start": 192
+    },
+    {
+      "article": "4915349",
+      "case": "lower",
+      "end": 1691,
+      "excerptSha256": "bf2694e8c6915381e4d79a7661201bc03c2e038fe4f5301e901caaf68d059812",
+      "form": "пгт",
+      "start": 1687
+    },
+    {
+      "article": "4867818",
+      "case": "lower",
+      "end": 2973,
+      "excerptSha256": "9a6651540e7732e61498c83e3a0e074aa0eaf7c714bbf60ac6e35c3ce31276a1",
+      "form": "пгт",
+      "start": 2969
+    },
+    {
+      "article": "4972456",
+      "case": "lower",
+      "end": 3774,
+      "excerptSha256": "ae300ff849b7f2a114fd147dd50881397753912814f2789b4af149650d8e4eeb",
+      "form": "пгт",
+      "start": 3770
+    },
+    {
+      "article": "4826789",
+      "case": "lower",
+      "end": 343,
+      "excerptSha256": "0104b8be8be9e37eaf77b492524d6f2219e39c7cf58919cb1c44fc3869b4f96b",
+      "form": "пгт",
+      "start": 339
+    },
+    {
+      "article": "5101536",
+      "case": "lower",
+      "end": 92,
+      "excerptSha256": "f4846c84ceb36c3a2d2627f88bee8743ecb6be33b0dceb29d40a0cd60c6f1112",
+      "form": "пгт",
+      "start": 88
+    },
+    {
+      "article": "4911112",
+      "case": "lower",
+      "end": 125,
+      "excerptSha256": "b46a696153b8a2c5ffe424422806c522432ad078578c95b89bf2b685f198ef87",
+      "form": "пгт",
+      "start": 121
+    },
+    {
+      "article": "5014239",
+      "case": "lower",
+      "end": 2727,
+      "excerptSha256": "35bc75959ed171559699c4c7528d20ea836d11bdd4e65e8897e8196d315a4d27",
+      "form": "экон",
+      "start": 2722
+    },
+    {
+      "article": "4687026",
+      "case": "lower",
+      "end": 3461,
+      "excerptSha256": "56925119c9f59d77cbe9f63eac6bc2ca3813b1b196e53bfeb0f3deb73db06f97",
+      "form": "экон",
+      "start": 3456
+    },
+    {
+      "article": "5042730",
+      "case": "lower",
+      "end": 9129,
+      "excerptSha256": "982ece314c708b036a2413a94c08b1db156386c47689d15cc34ec0bd9820ca65",
+      "form": "экон",
+      "start": 9124
+    },
+    {
+      "article": "4716062",
+      "case": "mixed",
+      "end": 2774,
+      "excerptSha256": "1ebb886386a2456a2453ae32bf3d7dfeec622db499554404f7ac583db5094bbf",
+      "form": "экон",
+      "start": 2769
+    },
+    {
+      "article": "4873341",
+      "case": "lower",
+      "end": 5429,
+      "excerptSha256": "533fb4c096aaebb76771824c81b7dc4002673e12c7e30d15f8b901a3002e7b26",
+      "form": "экон",
+      "start": 5424
+    },
+    {
+      "article": "4704902",
+      "case": "lower",
+      "end": 1289,
+      "excerptSha256": "a47dad834eb6a5e32743c7b4b664b76e7eec20b30a6a61b60a0ff10306b9155f",
+      "form": "экон",
+      "start": 1284
+    },
+    {
+      "article": "4842006",
+      "case": "lower",
+      "end": 979,
+      "excerptSha256": "936519957843b524063a0b3cf097220333b22363f874ef5ee8f7ecbe9ae03132",
+      "form": "экон",
+      "start": 974
+    },
+    {
+      "article": "5005411",
+      "case": "lower",
+      "end": 1435,
+      "excerptSha256": "0edf4badf770a3a569d24e189fb927aef3ad2162a41028d3caab85e77d50b923",
+      "form": "экон",
+      "start": 1430
+    },
+    {
+      "article": "5095591",
+      "case": "lower",
+      "end": 5260,
+      "excerptSha256": "5d720cfa78ab43f4ad31e3e9438f4970ad0dd841a6f8a8b3211aa42a35fe90c9",
+      "form": "экон",
+      "start": 5255
+    },
+    {
+      "article": "4818159",
+      "case": "lower",
+      "end": 2309,
+      "excerptSha256": "b42d75c1481fd254f6aecae9970ec3857554fcbd5c965f0a5127e8531edf75f5",
+      "form": "экон",
+      "start": 2304
+    }
+  ],
+  "sampleSizePerForm": 10,
+  "schema": 1,
+  "seed": "rune-a4-meaning-sample-v1",
+  "sourceDecoderAttested": false,
+  "sourceLockSha256": "02397f3424d85634e372e87d8cde55bd97af79615442d3ec1cada45831f95ede",
+  "sourceRows": 92622,
+  "sourceSha256": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f",
+  "unicodeVersion": "15.0.0"
+}

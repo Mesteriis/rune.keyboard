@@ -1,0 +1,11 @@
+{
+  "analyzerSha256": "44ccdeeb426e048cf1a33e4e617d91d7259349f3cff6f0f7b94473ff0b4f4b0b",
+  "independentQualification": false,
+  "resultSha256": "a017085bd7658198432401613dea663ca681438aaf5235adb9ec6f3930ce6e5b",
+  "scope": "disclosed-posthoc-preservation-controls",
+  "sources": {
+    "CONTEXTUAL_RANKER": 3,
+    "JOINT_RESCUE": 1,
+    "LOCAL_POLICY": 4
+  }
+}

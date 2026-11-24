@@ -60,12 +60,21 @@ also require the verified historical-data preparation shown there. Start with
 fresh ignored output directories. Revealed tests cannot become fresh
 qualification data through rerunning the following historical commands.
 
-1. Run `prepare_refinement.py --parquet PATH_TO_PINNED_RU_0007 --frequency PATH_TO_PINNED_RU_50K --output build/typing-refinement/data` using the neural environment. Concatenate train/dev/test `*-rows.jsonl`, in that order, into `build/typing-refinement/data/all-rows.jsonl`.
+1. For disclosed historical reproduction, run `prepare_refinement.py --historical-reproduction --parquet PATH_TO_PINNED_RU_0007 --frequency PATH_TO_PINNED_RU_50K --output build/typing-refinement/data` using the neural environment. Concatenate train/dev/test `*-rows.jsonl`, in that order, into `build/typing-refinement/data/all-rows.jsonl`. Current manifests explicitly identify regression scope; exact original source bytes remain in the frozen archive for historical receipt recovery.
 2. Run `tools/morphology/evaluate.py export --rows build/typing-refinement/data/all-rows.jsonl --output build/typing-refinement/candidates-v2` with JDK 17 and the existing Kotlin compiler dependencies. Then run `split_observations.py --data build/typing-refinement/data --export build/typing-refinement/candidates-v2 --output build/typing-refinement/verified-observations`.
 3. Run `neural_refinement.py` with the neural environment, then `neural_refinement.py --evaluate-dev` with the NumPy environment. It only trains/chooses on train/dev.
 4. Run `rank_refinement.py --train build/typing-refinement/verified-observations/train.jsonl --dev build/typing-refinement/verified-observations/dev.jsonl --output build/typing-refinement/ranker`, then `select_refinement.py`. Inputs require public source identities, manifest/receipt hashes, row alignment and partition checks.
-5. Run `evaluate_refinement.py` once. It evaluates frozen models on fresh test plus the explicitly exposed old regression set; the latter requires the existing source-bound `build/morphology-public-export-v3` receipt. It does not refit or select models.
-6. Review metrics and retained regressions, then run `promote_refinement.py` to copy the already-selected artifacts, generate identities/parity and public provenance. It requires the evaluated selection hash and supported runtime dimensions/blend. Run host tests, Kotlin parity, Android integration/latency and repository gates before packaging.
+5. Run `evaluate_refinement.py --historical-reproduction` once for disclosed reproduction (optionally pass `--source-root`). Its original test is now regression data, alongside the earlier exposed regression set; the latter requires the source-bound `build/morphology-public-export-v3` receipt and original v2 corpus. The v2 evaluation receipt binds both data/export graphs, selected/baseline weights, checked generator sources, evaluator/loader sources and both registries; a canonical payload checksum records the metrics. Legacy snapshots default to the project root; `--legacy-root` may select a snapshot contained inside it. `--legacy-row-limit` is only for explicit bounded historical smoke, and its value is bound in the receipt. It does not qualify new model quality. Default independent evaluation requires complete registries and checked corpus preparation; existing reports are never overwritten. Older typed v1 reports must be reevaluated for the v2 contract.
+6. Review metrics and retained regressions. For disclosed artifact review, run `promote_refinement.py --source-root build/typing-refinement --historical-reproduction --output build/refinement-review-export` with a fresh output directory. It validates the evaluation/selection/model hashes and supported dimensions/blend, generates identities/parity/provenance before writing, and exports six files under `build/` without changing packaged assets. New evaluation receipts are reconstructed against current inputs and checked again before writing; legacy reports remain review-only. This is not new model qualification. Default packaged promotion requires complete permanent registries, matching data/registry receipts, an independent-data evaluation and the final row gate; current incomplete coverage refuses it. Host tests, Kotlin parity, device/latency and release gates remain required before packaging.
+
+The bounded disclosed-data evaluation/export roundtrip is retained in the
+scientific CI inventory. It uses four original main rows, four original legacy
+rows and published frozen weights; it does not reproduce or qualify the full
+original experiment. A standalone run uses a fresh directory:
+
+```sh
+python3 tools/ci/refinement_evaluation_smoke.py --output build/refinement-evaluation-smoke
+```
 
 All scripts above except the explicitly qualified morphology exporter are in `tools/typing_experiments/`. Example checks:
 
@@ -77,6 +86,8 @@ python3 tools/ci/python_tools_tests.py --profile stdlib --output build/python-to
 
 Legacy `train.py` now emits only ignored `build/typing-experiments` artifacts and generated fixture proposals. It cannot overwrite the refined APK models or Kotlin source. Legacy tests compare the frozen baseline artifact to its retained CatBoost reference.
 
+Historical retrieval rows can also be reproduced from the portable prior fixtures using the [retrieval reproduction command](../../docs/acceptance/2026-10-29-q6-retrieval-portable-reproduction.md). Its output is disclosed regression data and cannot qualify an independent corpus.
+
 ## Provenance and license
 
 Public `wikimedia/wikipedia`, snapshot `20231101`, revision `a634f78b1c435397c07001e175fa74cc4ad5e775`; contributors are the original authors. Source metadata declares CC-BY-SA-3.0 and GFDL-1.3; derived weights are distributed under CC-BY-SA-3.0. See the packaged `NOTICE.md` and license. Changes include text extraction, synthetic spelling perturbations, model fitting and numeric export. APK provenance contains aggregate metrics and public hashes only.
@@ -85,9 +96,54 @@ Public `wikimedia/wikipedia`, snapshot `20231101`, revision `a634f78b1c435397c07
 
 A further twelve epochs were evaluated with dev-only checkpoint selection and a newly reserved article test. The selected +2 checkpoint did not pass the predeclared fresh-improvement/regression gates; bundled models are unchanged. See [experiment results](../../docs/typing-extra-epochs.md) for counts, limitations and reproduction.
 
+Current `evaluate_extra_epochs.py` defaults to registry-gated independent
+evaluation. For disclosed replay use `--historical-reproduction`; then numerical
+criteria remain in `observedGatePassed`, while `accepted` is always false.
+The receipt binds dev-selection artifacts/observations, selected/original/ranker
+weights, main/previous/legacy data and candidate export graphs, code and both
+registries. It rechecks the inputs before an exclusive report write.
+`--source-root` selects the experiment root; `--legacy-root` selects a snapshot
+inside the project. `--regression-row-limit` is restricted to explicit historical
+smoke and is bound in the receipt. The original evaluator bytes remain archived.
+
+The scientific CI inventory includes a controlled bounded comparison using
+disclosed refinement rows and identical published before/after weights. This is
+an input/decision-path test, not original additional-epoch training or test
+reproduction. A fresh standalone run is:
+
+```sh
+python3 tools/ci/extra_epoch_evaluation_smoke.py --output build/extra-epoch-evaluation-smoke
+```
+
 ## Candidate-level training follow-up
 
 A fixed six-epoch listwise candidate-selection experiment added exact one/two/three-edit public examples and correct-input controls. Dev improved slightly, but the frozen independent test failed promotion gates; bundled models remain unchanged. The main observed limit was missing gold candidates, especially for three-edit examples. See [candidate-training report](../../docs/typing-word-ranking.md) for exact counts, objective, source separation, tests and reproduction.
+
+
+Current `evaluate_word_ranking.py` uses the same independent-registry admission:
+use `--historical-reproduction` for disclosed comparisons. The sealed receipt
+binds main, previous-refinement, extra-epoch and legacy dataset/export graphs,
+both dev observation groups and score-row identities, all selected weights,
+code and registries. Typed cohort checks keep correct-input controls out of
+one/two/three-error denominators. The original strict overall/hard improvement
+and single-error/regression no-loss criteria remain in `observedGatePassed`;
+disclosed replay always has `accepted=False`. Root and historical-only row-limit
+options match the epoch evaluator. Reports are exclusive and inputs are checked
+again before writing. Original evaluator bytes are archived.
+
+The scientific job also runs a bounded real-driver comparison using four
+original disclosed word rows and actual current JVM-generated proposals,
+including a row with no proposals. Identical packaged before/after weights and
+explicit fixture-only selection records test the comparison/receipt path,
+not original training or a new model qualification:
+
+```sh
+python3 tools/ci/word_evaluation_smoke.py --output build/word-evaluation-smoke
+```
+
+The portable [capture](../ci/fixtures/word-ranking-bounded-capture.json) retains
+public rows, observations and project-source hashes; local JVM compiler/runtime
+logs are not redistributed. See [capture attribution](../ci/fixtures/README.md).
 
 
 ### Product quality slices
@@ -112,13 +168,118 @@ target in the diagnostic manual pool, not automatic admission or visibility in
 the strip. `spellingPrecision` excludes casing-only changes, which remain counted
 separately alongside the literal surface-change metrics.
 
+The 56 disclosed standalone named regression cases are permanently registered
+in `control-ledger.json`, separately from canonical lexical families. Run
+`python3 tools/typing_experiments/register_named_regressions.py --check` to
+verify their source bindings, exact context keys and language-qualified surface
+keys. To review a first registration against a ledger without those entries,
+use `--ledger PATH --output FRESH_PATH`; existing entries are preserved and
+duplicate registration fails. Empty context is valid only for regression keys;
+protected/punctuation context rules and all existing nonempty hashes remain
+unchanged. Known inputs are excluded even under a new prefix. Global coverage
+remains incomplete, so unknown inputs are never certified fresh by this gate.
+
+Public corpus preparation reports include v2 `registryBindings`: exact bytes
+of both exclusion ledgers, canonical SHA-256 for every full entry, and the
+English source-surface fixture and helper bindings. Preserve
+this binding even for blocked proposals. Use the
+[corpus acceptance template](../../docs/acceptance/TEMPLATE-corpus.md) to record
+the relevant entry IDs/digests and verify a saved report against current ledger
+snapshots. Hash agreement establishes identity; the preparation/quality gates
+still determine whether any acceptance is possible.
+
+For a diagnostic of the separately emitted Russian selector texts, run
+`python3 tools/typing_experiments/selector_text_preflight_files_v1.py --data DATA_DIR --source RU_0007_PARQUET`
+in the documented pyarrow/Pymorphy environment. `DATA_DIR` must contain a
+manifest with `containsPersonalMessages: false`, the source SHA-256 and hashes
+of all six `train|dev|test` text/rows JSONL files. The tool checks the source
+against the tracked lock and emits a bound diagnostic only; it never publishes
+or certifies the corpus. An empty rows file means word-row coverage was not
+checked. Nonempty rows receive the existing spelling preflight and report
+identity and overlap findings. The file-bound check also verifies each row's
+article, source window, whole-token boundary and dictionary analyses; it does
+not independently attest the supplied decoder, qualify typo labels or establish
+corpus independence. The CLI reads the pinned Parquet source with PyArrow.
+The existing collectors retain their stricter refusal.
+
+The versioned `selector_text_preflight_files_v2.py` accepts the same arguments
+and reads the Parquet internally with PyArrow 25.0.1 instead of accepting a
+caller-supplied decoder. It rejects non-string article IDs or text and binds
+the reader, selected imported Python/native modules and a digest of all
+recorded installed PyArrow files (excluding bytecode) before and after the
+scan. This detects changed or missing recorded files, but does not authenticate
+the distribution or the complete native dependency chain; unrecorded files
+are outside this check. `sourceDecoderAttested` remains false. Library callers must establish
+trust in the supplied source lock themselves. Coverage, source labels,
+independence and publication remain separate unresolved requirements.
+
+`python3 tools/typing_experiments/ewt_packaged_lemma_exclusions.py --check`
+verifies the retained EWT lemma exclusions and their packaged English-trie
+binding without the source files or `build/`. To regenerate the public fixture,
+use `--source-directory DIR --generate NEW_FILE` with the three files matching
+the tracked EWT source lock. These unsalted keys represent public dictionary
+words, are reversible by enumeration, and do not prove complete English
+family coverage or independent qualification.
+
+`python3 tools/typing_experiments/ewt_scowl_lemma_exclusions.py --check`
+verifies additional exact EWT lemma exclusions found in the pinned SCOWL
+5desk dictionary. To reproduce the fixture, supply the three locked EWT files
+with `--source-directory DIR`, the locked SCOWL source archive with
+`--archive FILE`, and a fresh `--generate NEW_FILE`. SCOWL's full notices
+are in `tools/lexicon/smart-typing-0.3/notices/SCOWL-Copyright.txt`. The
+unsalted public dictionary keys are reversible; this is not anonymization or
+complete family coverage.
+
+`python3 tools/typing_experiments/ewt_frequency_lemma_exclusions.py --check`
+checks the additional EWT exact-lemma exclusions from the pinned full
+FrequencyWords list. Reproduction needs the locked EWT files and the pinned
+`en_full.txt` source passed via `--source-directory DIR --frequency FILE
+--generate NEW_FILE`. The source and its attribution are identified in the
+script and existing FrequencyWords notice. The minimum frequency is five;
+public unsalted hashes are reversible. This is neither complete family
+coverage nor independent qualification. The static check does not re-extract
+the original source.
+
+The strict `new-families` preflight also checks typed and target English forms
+against the separate pinned EWT token-surface exclusion fixture. Reproduce it
+with `ewt_surface_exclusions_v1.py --source-directory DIR --generate NEW_FILE`
+using the three files from the tracked EWT lock; `--check` validates the
+retained fixture and lock without those files. The fixture contains unsalted,
+reversible hashes of public annotated token forms, not lemmas, complete family
+coverage, labels, or independent qualification. The `new-sentences` profile
+does not apply this strict surface rule.
+
 ### Joint short-word and conservative long-word autocorrection (2026-10-25)
 
 `ru-joint-ranker.bin` compares the original and the complete public candidate pool using the existing 95 RET2 features and frozen ranking context. Short acquisition, long acquisition and retention have separate thresholds. Retention can only keep the admitted baseline word or retain the original. Sources `JOINT_SHORT` and `JOINT_LONG` require their own dictionary/model/policy fingerprints; missing resources retain the existing qualified paths. Search runs in the existing cancellable candidate worker. No user text is used in training.
 
 Evidence, rejected policies and the explicit abstention tradeoff: [acceptance](../../docs/acceptance/2026-10-25-joint-short-correction.md). Packaged hashes and aggregate results: `app/src/main/assets/smarttyping/experiments/joint-correction-provenance.json`.
 
-The public source files must match the pinned HF revision and LFS hashes in the source lock before building corpora. `prepare_joint_correction.py` freezes lemma-disjoint train/calibration/holdout; `prepare_joint_followup.py` excludes all previous selected families/articles, with `--exclude-corpus` for a revealed follow-up. Never reuse a revealed holdout to choose thresholds. The final follow-up reused the **original** conservative acquisition threshold and the already-frozen retention threshold, with no new fitting. The prior 98.8% acquisition result remains a failure.
+The public source files must match the pinned HF revision and LFS hashes in the source lock before building corpora. The historical `prepare_joint_correction.py` freezes lemma-disjoint train/calibration/holdout; `prepare_joint_followup.py` excludes previously selected families/articles, with `--exclude-corpus` for a revealed follow-up. Never reuse a revealed holdout to choose thresholds. The final follow-up reused the **original** conservative acquisition threshold and the already-frozen retention threshold, with no new fitting. The prior 98.8% acquisition result remains a failure.
+
+Current v6–v12 holdout CLI collectors, `prepare_joint_correction.py` and
+`prepare_joint_followup.py` additionally
+use `independent_corpus_guard.py`: default execution requires complete permanent
+lexical/control registries before reading corpus inputs. All selected rows must
+then pass the shared new-family preparation gate, with unchanged ledger snapshots,
+before creating output. Current incomplete coverage blocks independent collection.
+Missing source identities are never silently synthesized to pass this gate.
+
+For disclosed historical reproduction only, add `--historical-reproduction` to
+the existing collector command. The manifest and CLI result explicitly identify
+`historical-disclosed-regression`, `independentQualification=False`, and the
+manifest sets `newUnseenHoldout=False`. The row-building algorithm is retained;
+new manifests bind the current guard sources. Original collector bytes are
+preserved by SHA-256 in `frozen_sources/manifest.json` for exact historical
+source recovery. This mode does not certify new independent data or model quality.
+
+The refinement, word-ranking, extra-epoch and retrieval preparers now use the
+same default registry gate and explicit historical option. All corpus outputs
+are deferred until final row checks pass. Historical data/source verification
+uses `frozen_source_identity.py`: a maintained file may change, but the original
+path and exact expected source digest must still match either that file or its
+declared frozen archive. Existing data manifests and registry bindings retain
+their original digests; no archive source is executed by this identity reader.
 
 Use the same pinned Python/CatBoost/NumPy environment as the existing ranker tools. The JVM replay also requires JDK 17, the locked Kotlin jars and `ANDROID_HOME`:
 
@@ -130,9 +291,20 @@ python tools/typing_experiments/replay_joint_correction.py \
   --rows build/joint-correction-20261025/corpus/calibration.jsonl \
   --output build/joint-calibration-export --mode joint-export
 python tools/typing_experiments/train_joint_correction.py \
-  build/joint-correction-20261025/corpus build/joint-train-export \
-  build/joint-calibration-export build/joint-ranker-reproduction
+  build/joint-correction-20261025/corpus build/joint-correction-20261025/evidence/train \
+  build/joint-correction-20261025/evidence/calibration build/joint-ranker-reproduction \
+  --historical-reproduction
 ```
+
+The trainer accepts only the originally pinned public corpus and original export
+receipts in this historical mode; freshly generated exports above do not match
+those original receipts. Its output is explicitly disclosed and is not an
+independent or production qualification. The new-training path requires complete
+registries, a matching registry-bound public corpus and source-bound replay for
+both training and calibration; it is currently refused because registry coverage
+is incomplete. Even after coverage is complete, training remains refused until
+the held partition is source-attested against the training inputs. A checked
+proposal is not an independent or production qualification.
 
 `calibrate_joint_source.py` reproduces the initial full-source arbitration. `calibrate_joint_followup.py` fits acquisition and retention on a fresh calibration only. `joint-ready` takes a six/eight-field TSV: ranker path, ranker SHA-256, short score/margin, long acquisition score/margin, optional retention score/margin. This developer mode explicitly admits the candidate source for an evaluation; it does **not** modify release qualification.
 
@@ -153,6 +325,53 @@ python tools/typing_experiments/replay_joint_correction.py \
 Final-product replay mode `joint-primary-only` is the ablation baseline; `joint-production` applies the independently pinned supplemental qualification. `joint-rescue-ready` is a developer evaluation mode, not production authorization. The harness delivers baseline then recovery and separate manual pools for the actual controller token, including automatic capitalization.
 
 ## Local authored stress audit
+
+### Russian chat-shaped regression corpus
+
+`chat_corpus.py` extracts two-to-six-word lowercase Russian phrases from the
+previously exposed, pinned CC0 Tatoeba source. It retains only article IDs
+already in the durable lexical exclusion registry. Each eligible phrase gets
+one control and one candidate per applicable orthographic edit; the operation
+counts are a synthetic construction, not estimated typing frequencies. Edits
+may yield valid words, and source controls are not proofread and can contain
+typos. A control change is not automatically a false correction. The output is disclosed regression data, never an
+independent holdout or a model promotion gate.
+
+```sh
+python3 tools/typing_experiments/chat_corpus.py \
+  --source tools/typing_experiments/public_sources/tatoeba-ru-cc0-20261024/rus_sentences_CC0.tsv.bz2 \
+  --lock tools/typing_experiments/public_sources/tatoeba-ru-cc0-20261024/tatoeba-source-lock.json \
+  --ledger tools/typing_experiments/holdout-ledger.json --output build/chat-regression
+python3 tools/typing_experiments/replay_joint_correction.py \
+  --rows build/chat-regression/rows.jsonl --output build/chat-regression-replay \
+  --mode current-product --java /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/bin/java
+python3 tools/typing_experiments/chat_corpus_report_v3.py \
+  --rows build/chat-regression/rows.jsonl --observations build/chat-regression-replay/observations.jsonl \
+  --source tools/typing_experiments/public_sources/tatoeba-ru-cc0-20261024/rus_sentences_CC0.tsv.bz2 \
+  --lock tools/typing_experiments/public_sources/tatoeba-ru-cc0-20261024/tatoeba-source-lock.json \
+  --ledger tools/typing_experiments/holdout-ledger.json \
+  --output build/chat-regression-report.json
+```
+
+`inputs.tsv` and the replay wrapper contain only controller inputs, never target
+labels. The v3 command verifies that the pinned source and specified ledger
+regenerate the exact rows, checks cluster identities and one control per
+article, and checks the Undo flag against actual before-boundary and
+after-Backspace text; missing or inconsistent evidence is refused. The earlier
+v2 reporter is retained to reproduce its historical receipts. The original
+`chat_corpus_report.py` remains available for historical receipt reproduction.
+The report includes row and article-cluster Wilson intervals, which are
+descriptive and do not correct for correlations between authors or sentences.
+Token replay does not establish phrase-revision behavior.
+
+The [post-hoc review](../../docs/acceptance/2026-10-28-q5-chat-control-review.md)
+contains disclosed editorial expectations for eight colloquial forms. After a
+later replay, use `chat_control_review.py --mode compare --rows <rows.jsonl>
+--observations <observations.jsonl> --review
+tools/typing_experiments/chat_regression/source-control-review-v1.json --ledger
+tools/typing_experiments/holdout-ledger.json --output <report.json>`. It verifies
+that the source articles remain excluded and reports preservation failures; it
+cannot qualify a policy.
 
 `local_spelling_stress.py` freezes deterministic everyday-word edits and correct-word/name/short-form controls before replay. It does not train or qualify policies. Run `prepare` once into a new output directory:
 
@@ -244,3 +463,140 @@ The [acceptance record](../../docs/acceptance/2026-10-28-q2-readme-sources.md)
 distinguishes tracked source paths from generated Gradle artifacts. This check
 does not execute training/build commands, follow remote links or prove complete
 transitive model/data lineage.
+
+
+### Manual retrieval evaluation admission
+
+`evaluate_retrieval.py` now uses the permanent Q6 registry guard before optional
+scorer imports or export reads. Already disclosed diagnostics and former fresh
+sets require `--historical-reproduction`; both `independentQualification` and
+`productionQualified` stay false. The report retains measured coverage/top-1/2/3
+and host-only retrieval timings without granting automatic-correction authority.
+
+The receipt binds every declared export/source file (including real external
+compiler/SDK files as hashed data), source-freeze consistency, selected manifest/
+selection edges when supplied, both packaged scorer weights, code and registries.
+Typed control/error counts, manual original tokens, search budgets and finite
+nonnegative host timings are validated. Every input is rechecked before exclusive
+output. Original source bytes of the evaluator/exporter are archived.
+
+The exporter shares the morphology exporter's pure dependency filter, including
+experiment-policy sources required by current correction code. CI compiles a
+four-row real observer after Gradle; scientific CI executes real scoring on the
+portable attributed actual-JVM capture. Standalone numerical replay:
+
+```sh
+python3 tools/ci/retrieval_evaluation_smoke.py --output build/retrieval-evaluation-smoke
+```
+
+See [retrieval experiment](../../docs/typing-candidate-retrieval.md) and
+[fixture attribution](../ci/fixtures/README.md). Current independent corpus/model
+qualification and historical transitive/runtime closure remain separate Q6 work.
+
+
+### Joint editor evaluation admission
+
+`evaluate_joint_product.py` and `evaluate_joint_followup.py` now require the
+permanent registry guard before data/scientific imports. Use
+`--historical-reproduction` for disclosed replay. Original numerical predicates
+remain in `numericalGatePassed`; verified editor checks contribute to
+`observedGatePassed`; `passed` is always false for disclosed data. The CLI keeps
+a nonzero qualification exit and the complete negative report. A successful
+regression smoke only proves that this refusal/verification path worked.
+
+Both actual replay receipts must use schema 2 with complete input/resource and
+output bindings, source closure, opaque input TSV and raw/host-restored identity
+maps. `replay_joint_correction.py` now sends only opaque IDs and input fields to
+Kotlin; label-bearing original IDs are restored host-side after checking every
+row. All assets, compiler/JAR/SDK inputs, optional config/model and code are
+checked before/after execution; a failure after output creation retains a failed
+receipt. Old receipts without resource binding are refused rather than upgraded
+by copying metadata. Exact original producer/evaluator sources remain archived.
+
+The evaluator checks policy model/context and thresholds against the explicit
+six/eight-column config or packaged joint provenance. Follow-up policy requires
+`--short-policy` when short thresholds are inherited; its hash must match the
+chain. `--corpus-manifest` is mandatory for independent evaluation and must bind
+the actual holdout plus the permanent registries/public-data role. Data-role and
+historical/family gaps remain Q6 work; these tools cannot establish natural-text
+quality or release acceptance by themselves.
+
+Actual UTF-16 snapshots and editor flags are cross-checked by the existing
+source-bound editor validator. Text/caret Undo failures, changed input/prefix,
+introduced case-only controls and introduced expected-case/layout discrepancies
+block the observed gate. Existing baseline case changes and composing-range
+Undo differences are reported separately; the historical numerical metrics are
+not silently rewritten. Reports recheck every captured input before exclusive
+output and carry a payload checksum (not a signature).
+
+Native regression command, using a real installed JDK 17 and the existing SDK/
+Kotlin cache setup, is:
+
+```sh
+python3 tools/ci/joint_evaluation_smoke.py --java "$JAVA_HOME/bin/java" --output build/joint-evaluation-smoke
+```
+
+See [fixture attribution](../ci/fixtures/README.md). The four-row fixture is
+already disclosed and includes a known typing-context deviation and an existing
+baseline case change; neither is counted as independent quality evidence.
+
+
+### Joint calibration admission
+
+All three joint calibrator CLIs now run the permanent registry guard before
+optional numerical imports or data reads. Disclosed replay requires
+`--historical-reproduction`. Policy stage is then
+`historical-disclosed-calibration`, with `independentQualification=False` and
+`productionQualified=False`; numerical results remain in thresholds and
+`observedCalibrationPassed`. Joint evaluation accepts this stage only under its
+own explicit historical option. These stages/flags grant no APK promotion.
+
+The source/follow-up calibrators recompute scores from bound current calibration
+rows, real schema-2 `joint-export` observations and exact weights. Existing
+`ranker/calibration-scores.json` is not consumed. Both use the editor replay
+capture/opaque-ID/resource validator shared with joint evaluation; old source
+bytes and unchanged historical receipt identities are retained by frozen lookup.
+Model/context, parent policy, calibration corpus and held-file hashes, scorers,
+registries and recipe code are captured and rechecked before exclusive writes.
+Scores are checked against row/pool identities and finite typed summaries. Parent
+policies with a calibration checksum are verified before follow-up inheritance.
+Held label files are hashed as bytes and never parsed by the calibration recipes.
+
+Source arguments remain positional (`ranker calibration_export output`), with
+optional `--corpus` (default `ranker.parent/corpus`). Follow-up keeps
+`--root --export --output`, with optional `--corpus` (default
+`root/followup-corpus`). Source still returns success when it writes a negative
+calibration policy; follow-up retains its nonzero exit when its numerical gates
+fail. Neither exit means independent model qualification. Missing eligible
+calibration groups fail explicitly; no threshold is relaxed.
+
+Rescue is an import-safe fixed historical recipe. Its original public input/model
+pins remain; secondary scores and training-receipt bytes must additionally match
+the published policy. It binds morphology and the held-file hash without reading
+held labels. Numeric results replay the pinned caches; original generator/runtime
+and parent training are explicitly unverified, not renewed by a hash match.
+No independent mode is provided for this already disclosed fixed recipe.
+
+A native/numerical regression uses a real JDK/SDK plus the existing scientific
+requirements:
+
+```sh
+python3 tools/ci/joint_calibration_smoke.py --java "$JAVA_HOME/bin/java" --output build/joint-calibration-smoke
+```
+
+The six calibration rows and four hash-only held rows are already disclosed;
+the shared corpus and parent policies are explicitly fixture-only. See
+[attribution](../ci/fixtures/README.md). This checks execution, bindings and
+expected refusal, not original training/follow-up reproduction or natural-text
+quality. Global registry coverage, fresh corpus-role alignment, remaining
+training/other drivers and historical ancestry remain Q6 work.
+
+
+Joint follow-up exclusion corpora must include a manifest binding every JSONL
+file. Required split files must be nonempty, have the declared row counts and
+contain rows for the matching split. Undeclared JSONL files are rejected, and
+the captured bytes and directory membership are rechecked before output. This
+checks completeness and integrity. Independent collection also requires every
+manifest and split pair to be registered in the permanent lexical ledger; the
+report names the entries used. Registration alone does not prove public provenance
+of arbitrary exclusions. Historical reproduction remains disclosed.

@@ -5,9 +5,25 @@
       "file": "prepare_014565007f55eb0e.py",
       "originalPath": "build/right-context-training-v4-20261027/prepare.py"
     },
+    "0320514bf45bfb204ca2a7b83220d5a9effe5bffc56e660a5f5e460b7906a848": {
+      "file": "calibrate_joint_followup_0320514bf45bfb20.py",
+      "originalPath": "tools/typing_experiments/calibrate_joint_followup.py"
+    },
+    "03a9638130769de11b38f70794cd2a89a208df8486a00bed38f4a54df31a8cec": {
+      "file": "calibrate_joint_rescue_03a9638130769de1.py",
+      "originalPath": "tools/typing_experiments/calibrate_joint_rescue.py"
+    },
     "05a8f53610b0f9dc4b3cfd55ffa236c30f3fbfe87118218cd6c7a8df6c8f2e2f": {
       "file": "natural_collector_05a8f53610b0f9dc.py",
       "originalPath": "build/right-context-wiki0015-20261027/collect.py"
+    },
+    "06f34ce6790b11344ba793539635e13cbd1032d0cf800a05d3bb1313180ae54a": {
+      "file": "prepare_joint_correction_06f34ce6790b1134.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_correction.py"
+    },
+    "13df18f3a72ccc6ae8a79ffd34e67579dc706ff26fdc6cb4096f91ebfbeb216f": {
+      "file": "prepare_external_spelling_holdout_v12_13df18f3a72ccc6a.py",
+      "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout_v12.py"
     },
     "14ceb1c0cbe8b20e9d12db83d5983999a97fff0e1e1b080409c65ed4f7d65fa0": {
       "file": "qualification_v3_source_lock_14ceb1c0cbe8b20e.json",
@@ -17,9 +33,25 @@
       "file": "prepare_174499d4873263d8.py",
       "originalPath": "build/right-context-training-v5-20261027/prepare.py"
     },
+    "1823b5695179fabb782ead950197a5f9d849277e382787b4ca42589fe22b12e1": {
+      "file": "calibrate_joint_source_1823b5695179fabb.py",
+      "originalPath": "tools/typing_experiments/calibrate_joint_source.py"
+    },
+    "22c1cd2bfb57be54a839dad73770af9a0d5395ec3a7c1d7fcb08f284c1e24c3f": {
+      "file": "replay_joint_correction_22c1cd2bfb57be54.py",
+      "originalPath": "tools/typing_experiments/replay_joint_correction.py"
+    },
     "22e4e2bfd2cd46337b4ddcb7fbd30f4c265fbcab2c72bb32dfbfd6a1e6303eee": {
       "file": "natural_collector_22e4e2bfd2cd4633.py",
       "originalPath": "build/right-context-wiki0014-20261027/collect.py"
+    },
+    "2442a38501946f6fcaad293a99b11d0ad785123efb1fe207b03beb5332a841d0": {
+      "file": "right_context_role_features_2442a38501946f6f.py",
+      "originalPath": "tools/typing_experiments/right_context_role_features.py"
+    },
+    "276cd3c3be2dc0ce2162feb5e1a22d897aa45b0f7a19d04aa6b474bfce3af565": {
+      "file": "prepare_joint_followup_276cd3c3be2dc0ce.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_followup.py"
     },
     "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65": {
       "file": "qualification_v2_2cbcb2508ef66b32.py",
@@ -33,9 +65,33 @@
       "file": "qualification_v4_source_lock_3f86e8b384c094e7.json",
       "originalPath": "tools/eval/smart-typing-0.3/qualification-v4/source-lock.json"
     },
+    "486c1ab8814721e713e7ad3a176b4eda5ac6a99fa15613fa1e4e7edabd56af4e": {
+      "file": "evaluate_refinement_486c1ab8814721e7.py",
+      "originalPath": "tools/typing_experiments/evaluate_refinement.py"
+    },
+    "4ae6fbd74b305b1f8351e5ce5e2c0c610578bf4e79a42ead6f0b86cab63ef11f": {
+      "file": "prepare_joint_followup_4ae6fbd74b305b1f.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_followup.py"
+    },
+    "4b5710d76e16faf1a06c316af1b7f45045d8a7d3187ad7da456572e380564fe6": {
+      "file": "prepare_external_spelling_holdout_v8_4b5710d76e16faf1.py",
+      "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout_v8.py"
+    },
+    "54b52f6b8b6231fcf5703ae674a5752ff44840c9d77e03909f4c8eb12f22c168": {
+      "file": "export_retrieval_54b52f6b8b6231fc.py",
+      "originalPath": "tools/typing_experiments/export_retrieval.py"
+    },
+    "54f2abfb8d9634b381f8b19e7897f652ebff5e40d2423386a0cba1ac4060e874": {
+      "file": "prepare_external_spelling_holdout_v9_54f2abfb8d9634b3.py",
+      "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout_v9.py"
+    },
     "557b57f7362d04d7dd6c8fd0e4cdbebee210bf41705bd85eb7933d26bbb6d17b": {
       "file": "prepare_557b57f7362d04d7.py",
       "originalPath": "build/right-context-training-v7-20261027/prepare.py"
+    },
+    "5a2d91a55d27650ad570dce89807baf967c4e873a92df153c34d404220b44378": {
+      "file": "evaluate_extra_epochs_5a2d91a55d27650a.py",
+      "originalPath": "tools/typing_experiments/evaluate_extra_epochs.py"
     },
     "602890657811a39c17ce01e1557a01b6aa124bb0c1f6a1886131f6a79fa835d9": {
       "file": "right_context_applied_corpus_602890657811a39c.py",
@@ -45,6 +101,18 @@
       "file": "qualification_v3_60cb1cdf671dcc07.py",
       "originalPath": "tools/eval/smart-typing-0.3/qualification-v3/generate_corpus.py"
     },
+    "60e00f413de1d3c9b7ca8fb549b7d4fd232ee4b7db45a278c2b0ce782cdbe3e1": {
+      "file": "evaluate_joint_followup_60e00f413de1d3c9.py",
+      "originalPath": "tools/typing_experiments/evaluate_joint_followup.py"
+    },
+    "60f079e28a18fd980a145c8e6184996501277231dc77a17fdd875ac4cc175307": {
+      "file": "prepare_60f079e28a18fd98.py",
+      "originalPath": "build/right-context-sentence-pairs-v2-v6-20261027/prepare.py"
+    },
+    "6a6b141ae434c5f262a2c11fd3b0825fdf6d86c202e10ba2ba6c4af0a074822a": {
+      "file": "evaluate_joint_product_6a6b141ae434c5f2.py",
+      "originalPath": "tools/typing_experiments/evaluate_joint_product.py"
+    },
     "6c8302be34d57de689e6430f997a002c2cbbdd5dc1a55628778d699ac1fa3b2e": {
       "file": "prepare_6c8302be34d57de6.py",
       "originalPath": "build/right-context-instrumental-v2-20261027/prepare.py"
@@ -53,17 +121,41 @@
       "file": "right_context_role_corpus_6c98af64d142d216.py",
       "originalPath": "tools/typing_experiments/right_context_role_corpus.py"
     },
+    "7d08806ddae6eab8714871ddaaf332f6e3b7bb41e8e14d95b0ddd7a7ba7ae6b4": {
+      "file": "promote_refinement_7d08806ddae6eab8.py",
+      "originalPath": "tools/typing_experiments/promote_refinement.py"
+    },
     "7d2b6254024680f4bee6fe91848ac7221242ef50ccfcd755481e5a18c02be3a0": {
       "file": "prepare_7d2b6254024680f4.py",
       "originalPath": "build/right-context-natural-frozen-20261027/freeze.py"
+    },
+    "7d647596682381969db7e2d5883f1fa76f1bc9e254aa02874fb74cef2e12f411": {
+      "file": "prepare_joint_followup_7d64759668238196.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_followup.py"
     },
     "7e9b8780a969645aa97309f3096a594fc509e24cd32da82fd153c4cda3363d7c": {
       "file": "right_context_applied_corpus_7e9b8780a969645a.py",
       "originalPath": "tools/typing_experiments/right_context_applied_corpus.py"
     },
+    "82aeb37a82f7ac32aafd2f5f08eab36469ad2605b169943359db9a069726788e": {
+      "file": "right_context_left_sequence_features_82aeb37a82f7ac32.py",
+      "originalPath": "tools/typing_experiments/right_context_left_sequence_features.py"
+    },
     "838fb68a8c4b90efbe0a68433afb6395b4b91fd311b8ea3fd4bc92ba0b369615": {
       "file": "prepare_838fb68a8c4b90ef.py",
       "originalPath": "build/right-context-fresh-side-v5-20261027/prepare.py"
+    },
+    "84d35c3abd6844761dac020c3a48b55a617c70d63d618d54c06fa043a861af20": {
+      "file": "prepare_joint_correction_84d35c3abd684476.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_correction.py"
+    },
+    "8a674c7d1ec553b0443b578e5adbe20592cd461b19a085e3f109d59feb3974c2": {
+      "file": "prepare_joint_followup_8a674c7d1ec553b0.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_followup.py"
+    },
+    "9053f06179ed782a72c4378cb8dc49c4da265820b1d3142bc3a0d94d21cb0cb8": {
+      "file": "prepare_external_spelling_holdout_v10_9053f06179ed782a.py",
+      "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout_v10.py"
     },
     "956436a1fbd708706bddb3bad44c1fdf7bff838ef95a8c06911008148590fe01": {
       "file": "prepare_external_spelling_holdout_956436a1fbd70870.py",
@@ -81,13 +173,33 @@
       "file": "right_context_left_sequence_corpus_99aeb5d9e2118e54.py",
       "originalPath": "tools/typing_experiments/right_context_left_sequence_corpus.py"
     },
+    "9b1ac2491feb961c6e45192e5a01f1c59e14448cedf87cd48bd00b68e354c241": {
+      "file": "prepare_epoch_test_9b1ac2491feb961c.py",
+      "originalPath": "tools/typing_experiments/prepare_epoch_test.py"
+    },
     "9ce00a00fe49583bca8ed2218f3dae9158fcef88d234bdb31e223755309e7875": {
       "file": "prepare_9ce00a00fe49583b.py",
       "originalPath": "build/right-context-oblique-v1-20261027/prepare.py"
     },
+    "9d25818d18e8c1e124f81f2cc55a29119f6c39db1a0908e03e68689337e52b4d": {
+      "file": "prepare_joint_followup_9d25818d18e8c1e1.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_followup.py"
+    },
     "a108a87b00fca32165eedc11fcfbec1fa95da9665a21a156b6f440e83abb55e4": {
       "file": "prepare_a108a87b00fca321.py",
       "originalPath": "build/right-context-side-20261027/prepare.py"
+    },
+    "a5fe5e58e2801996d62c293b89dec1aae64ac0356e070260cbacf5357feaf25f": {
+      "file": "fresh_spelling_holdout_a5fe5e58e2801996.py",
+      "originalPath": "tools/typing_experiments/fresh_spelling_holdout.py"
+    },
+    "aae1fcdefab5c71036ed47000a0d890e472321afe3abc0e16fa33bdd18970dc7": {
+      "file": "prepare_joint_correction_aae1fcdefab5c710.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_correction.py"
+    },
+    "aae5fbc4975762e37589ba220d7a7f57f6cf681a1bec6bb9fe5b6f3661c4bef5": {
+      "file": "prepare_joint_followup_aae5fbc4975762e3.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_followup.py"
     },
     "ad76b78ba9f00f301465e0f47eb7e96781c44d8bc141a8e1176603bc7f12d5d7": {
       "file": "qualification_evaluator_ad76b78ba9f00f30.py",
@@ -117,6 +229,26 @@
       "file": "natural_collector_ba32729d021b40ce.py",
       "originalPath": "build/right-context-wiki0012-20261027/collect.py"
     },
+    "bcedc46c4e063b6af7dbba43b521a32eee230ea69186bfcab21c33303151fecd": {
+      "file": "prepare_bcedc46c4e063b6a.py",
+      "originalPath": "build/right-context-reliable-side-v5-20261027/prepare.py"
+    },
+    "bebdb8ad99e5e5f243de0f8fb730d6a0c5b473172fb8d599b34b18c23b70ab49": {
+      "file": "prepare_retrieval_test_bebdb8ad99e5e5f2.py",
+      "originalPath": "tools/typing_experiments/prepare_retrieval_test.py"
+    },
+    "bf2118a0b7d54f10a56d59c73ae77900fbd957c997f8307452b33549769b0323": {
+      "file": "neighbor_recovery_bf2118a0b7d54f10.py",
+      "originalPath": "tools/typing_experiments/neighbor_recovery.py"
+    },
+    "c6a4344041358defe1ed9686784de14cb57f2af13f5024ab94bd39a66a99824b": {
+      "file": "evaluate_retrieval_c6a4344041358def.py",
+      "originalPath": "tools/typing_experiments/evaluate_retrieval.py"
+    },
+    "cca6f8c7e7ed1f2b0a161136b7471c516cea582c6397f01182189ac9a5e4cce4": {
+      "file": "prepare_external_spelling_holdout_v11_cca6f8c7e7ed1f2b.py",
+      "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout_v11.py"
+    },
     "cf6502fd69c52de3ab4b0a2b25bcd45f5053857c4a1978e30f23d54d5744ec6c": {
       "file": "prepare_cf6502fd69c52de3.py",
       "originalPath": "build/right-context-applied-v10-20261027/prepare.py"
@@ -125,9 +257,17 @@
       "file": "prepare_joint_correction_cfa5777d2a2ac53f.py",
       "originalPath": "tools/typing_experiments/prepare_joint_correction.py"
     },
+    "d22734e202939a4276190ef5a570bf2760b12af01f185fdeba1c525ff39a9631": {
+      "file": "prepare_d22734e202939a42.py",
+      "originalPath": "build/noun-case-focus-v3-20261026/prepare.py"
+    },
     "d2c269bbfaa1aa145f89bd3e4515171f09b4c17e29644dab47435d5c15d3810a": {
       "file": "right_context_contrast_d2c269bbfaa1aa14.py",
       "originalPath": "tools/typing_experiments/right_context_contrast_corpus.py"
+    },
+    "d2d84c3f328771fd0b9908a9216ee428eb2877079c8dacb481c42a0dafe11bab": {
+      "file": "prepare_refinement_d2d84c3f328771fd.py",
+      "originalPath": "tools/typing_experiments/prepare_refinement.py"
     },
     "d6cd17951bd19e11115f515c09eb4eed9442644132f870a43450137eb65a5456": {
       "file": "right_context_contrast_d6cd17951bd19e11.py",
@@ -141,13 +281,29 @@
       "file": "prepare_d998fe824368a3b5.py",
       "originalPath": "build/right-context-instrumental-v1-20261027/prepare.py"
     },
+    "dd58937d02795ff8e4d9444b63e88db1847a0f860d31d9a00c709f260ca422f6": {
+      "file": "prepare_dd58937d02795ff8.py",
+      "originalPath": "build/right-context-sentence-corpus-v6-20261027/prepare.py"
+    },
     "dfdf3e0f0275be62032f26e3714f21acd52685e3aa9cbded332b08094775da24": {
       "file": "right_context_other_part_corpus_dfdf3e0f0275be62.py",
       "originalPath": "tools/typing_experiments/right_context_other_part_corpus.py"
     },
+    "e11a412fbdd95ac9828313899f49e43d3d53ece21f895e623b076d40dea8a9be": {
+      "file": "prepare_joint_correction_e11a412fbdd95ac9.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_correction.py"
+    },
     "e13b6201fcfa97dccdff17f22cf3891d44f850c79719f9ba79e85df02f7e354c": {
       "file": "prepare_e13b6201fcfa97dc.py",
       "originalPath": "build/right-context-fresh-side-v4-20261027/prepare.py"
+    },
+    "e213566e8f22f619a372f09c2c91866f93d8029d5db8666f783318285df74240": {
+      "file": "prepare_word_ranking_e213566e8f22f619.py",
+      "originalPath": "tools/typing_experiments/prepare_word_ranking.py"
+    },
+    "e2e966b484e086bc21c19562dddd8a30951f13b2f29aee341bcb09acfecb4b96": {
+      "file": "prepare_joint_followup_e2e966b484e086bc.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_followup.py"
     },
     "e3ad381de42a6ac08defd3bad7486789ea15329742e19448b39bf4ebaed795ed": {
       "file": "qualification_v2_source_lock_e3ad381de42a6ac0.json",
@@ -157,6 +313,10 @@
       "file": "natural_collector_e44a0e180658170e.py",
       "originalPath": "build/right-context-wiki0017-20261027/collect.py"
     },
+    "e8b5adf14ac94ae6f54efbc2ad499630d3460dbf007eb76d4b640b9f2422620a": {
+      "file": "train_joint_correction_e8b5adf14ac94ae6.py",
+      "originalPath": "tools/typing_experiments/train_joint_correction.py"
+    },
     "ec0a6349a5c99805e3274b01c631bd0aa7009000f37a914a958f79535cbfa14c": {
       "file": "prepare_ec0a6349a5c99805.py",
       "originalPath": "build/right-context-left-sequence-v1-20261027/prepare.py"
@@ -165,13 +325,29 @@
       "file": "qualification_v2_ed9928d64d80911c.py",
       "originalPath": "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py"
     },
+    "ee7b3bd94d12d6a3497870a5232941ad6208b5b882c62c9ef892f2766bb08038": {
+      "file": "prepare_joint_followup_ee7b3bd94d12d6a3.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_followup.py"
+    },
     "f0e7696dbcca03c1896c54f1f36862042e2412e057f224980af9a21b5092ede2": {
       "file": "natural_collector_f0e7696dbcca03c1.py",
       "originalPath": "build/right-context-wikipedia-20261027/collect.py"
     },
+    "f2881861e8528b8174ce5c92818f2a50c3994486858d796fcc509fcaad995ecd": {
+      "file": "evaluate_word_ranking_f2881861e8528b81.py",
+      "originalPath": "tools/typing_experiments/evaluate_word_ranking.py"
+    },
+    "f6bb5edac8fc9ee785653e3d6e8018b9ac5003e87d0ae448807b08d53ced13c5": {
+      "file": "prepare_joint_correction_f6bb5edac8fc9ee7.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_correction.py"
+    },
     "f84bdc1a990bd422c2d0a1edf52510a63c1905269244345930128323febb801e": {
       "file": "natural_collector_f84bdc1a990bd422.py",
       "originalPath": "build/right-context-wiki0016-20261027/collect.py"
+    },
+    "fbc88fc175dd0407df287faa7cb3c6257fa181a271ffb03cbf6221a812b68a9b": {
+      "file": "prepare_external_spelling_holdout_v7_fbc88fc175dd0407.py",
+      "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout_v7.py"
     }
   }
 }

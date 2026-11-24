@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "sourceSha256": "a144a0c52f8be13bee7cc30eb109eb5836803f22128a8ef8376c1ca5c6c5cf8a",
+  "purpose": "disclosed agent-reviewed examples; not independent qualification",
+  "rows": [
+    {"id": "7965387", "offset": 222, "label": "opening_quote_pronoun"},
+    {"id": "8913916", "offset": 41, "label": "internal_apostrophe_preserve"},
+    {"id": "10317858", "offset": 18, "label": "internal_apostrophe_preserve"},
+    {"id": "11313145", "offset": 293, "label": "opening_quote_pronoun"},
+    {"id": "11867617", "offset": 1, "label": "opening_quote_pronoun"},
+    {"id": "12095803", "offset": 1, "label": "opening_quote_pronoun"},
+    {"id": "12154373", "offset": 26, "label": "internal_apostrophe_preserve"},
+    {"id": "12363690", "offset": 1, "label": "opening_quote_pronoun"}
+  ]
+}

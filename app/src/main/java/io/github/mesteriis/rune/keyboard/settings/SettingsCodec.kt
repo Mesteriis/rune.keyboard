@@ -22,6 +22,7 @@ object SettingsCodec {
     const val KEY_THEME = "theme"
     const val KEY_KEY_FLICKS = "key_flicks"
     const val KEY_KEYBOARD_THEME = "keyboard_theme"
+    const val KEY_KEYBOARD_PALETTE = "keyboard_palette"
     const val KEY_HAPTIC_MODE = "haptic_mode"
     const val KEY_SOUND_MODE = "sound_mode"
     const val KEY_KEY_PREVIEW = "key_preview"
@@ -94,6 +95,7 @@ object SettingsCodec {
             emojiKey = raw[KEY_EMOJI_KEY] as? Boolean ?: defaults.emojiKey,
             theme = enumOrDefault(raw[KEY_THEME] as? String, defaults.theme),
             keyboardTheme = enumOrDefault(raw[KEY_KEYBOARD_THEME] as? String, defaults.keyboardTheme),
+            keyboardPalette = enumOrDefault(raw[KEY_KEYBOARD_PALETTE] as? String, defaults.keyboardPalette),
             hapticMode = enumOrDefault(raw[KEY_HAPTIC_MODE] as? String, defaults.hapticMode),
             soundMode = enumOrDefault(raw[KEY_SOUND_MODE] as? String, defaults.soundMode),
             keyPreview = raw[KEY_KEY_PREVIEW] as? Boolean ?: defaults.keyPreview,

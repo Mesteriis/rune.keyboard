@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "independentOriginalSourceDigestsAvailable": false,
+  "sourceBodies": {
+    "word_context_v3_counter.py": "798ac04f645111a3d499b1259d074a681711d71675988466c3c9d2a15b5b57c3",
+    "word_context_v3_packer.py": "df7eb868604220d80902d18f6df0d1a1946c0224481cd9f9b228c9ff7a7e8a74"
+  },
+  "expectedCounts": {
+    "articles": 416186,
+    "tokens": 38933219,
+    "pairs": 1999683
+  },
+  "expectedModelCountsSha256": "921175789d8cb5def69cd575329184f29dcacde19082ba9e373ed54bb694659d",
+  "expectedPackedModel": {
+    "sha256": "b5a9b64c1ddcfb42e4042b325b22c7c3d594d7cda282ec3fc99a2330e341d053",
+    "bytes": 4558118,
+    "pairs": 500000,
+    "vocabulary": 32977
+  },
+  "trainingArticleBuckets": [
+    0,
+    1,
+    2
+  ],
+  "qualified": false
+}

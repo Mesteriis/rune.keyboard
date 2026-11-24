@@ -21,13 +21,14 @@ class SourceIdentityTest(unittest.TestCase):
         self.assertNotEqual(keys_for([tt()],'article'),keys_for([dict(article='123')],'article'))
         self.assertEqual(keys_for([tt()],'article'),keys_for([tt(article='tatoeba:00123')],'article'))
         with self.assertRaises(ValueError):keys_for([dict(article='tatoeba:123')],'article')
+        self.assertNotEqual(keys_for([tt()],'article'),keys_for([tt(language='en')],'article'))
 
     def test_full_sentence_hashes_do_not_alias_source_windows_or_depend_on_id(self):
         self.assertNotEqual(keys_for([tt()],'sentence'),keys_for([dict(contextHash='a'*64)],'sentence'))
         self.assertEqual(keys_for([tt()],'sentence'),keys_for([tt(article='tatoeba:124')],'sentence'))
 
     def test_invalid_language_unknown_source_zero_and_mismatched_id_are_rejected(self):
-        for change in (dict(language='en'),dict(sourceRepository='unknown'),dict(article='tatoeba:0'),dict(article='123'),dict(sentenceHash='bad')):
+        for change in (dict(language='es'),dict(sourceRepository='unknown'),dict(article='tatoeba:0'),dict(article='123'),dict(sentenceHash='bad')):
             with self.assertRaises(ValueError):keys_for([tt(**change)],'sentence')
 
     def test_control_source_articles_use_the_same_explicit_source_scope(self):

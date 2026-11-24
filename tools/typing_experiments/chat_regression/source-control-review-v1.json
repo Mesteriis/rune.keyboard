@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "purpose": "POSTHOC_DISCLOSED_REGRESSION_NOT_QUALIFICATION",
+  "source": "CC0 Tatoeba snapshot, manually reviewed after current-product replay",
+  "notes": "Preserve labels are editorial regression expectations for recognizable colloquial words; apparent typos remain separate and user intent is not known.",
+  "cases": [
+    {"id":"chat-regression-7249072-control","typed":"пейринг","baseline":"рейтинг","label":"preserve"},
+    {"id":"chat-regression-9302909-control","typed":"равносесие","baseline":"равновесие","label":"possible_source_typo"},
+    {"id":"chat-regression-9498758-control","typed":"поъезда","baseline":"поезда","label":"possible_source_typo"},
+    {"id":"chat-regression-9843278-control","typed":"токсиков","baseline":"трусиков","label":"preserve"},
+    {"id":"chat-regression-9858341-control","typed":"админку","baseline":"спинку","label":"preserve"},
+    {"id":"chat-regression-11113170-control","typed":"забанили","baseline":"заманили","label":"preserve"},
+    {"id":"chat-regression-11152838-control","typed":"бадлон","baseline":"баллон","label":"preserve"},
+    {"id":"chat-regression-11152842-control","typed":"бадлон","baseline":"баллон","label":"preserve"},
+    {"id":"chat-regression-11619309-control","typed":"могёт","baseline":"могут","label":"preserve"},
+    {"id":"chat-regression-11737085-control","typed":"сосатб","baseline":"сосать","label":"possible_source_typo"},
+    {"id":"chat-regression-12205540-control","typed":"ебобо","baseline":"бобо","label":"preserve"}
+  ]
+}

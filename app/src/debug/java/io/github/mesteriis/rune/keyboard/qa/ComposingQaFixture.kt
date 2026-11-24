@@ -231,7 +231,7 @@ internal class ComposingQaFixture(context: Context, mode: String) {
                 return mode == "drop"
             }
             val accepted = super.setComposingText(text, newCursorPosition)
-            if (accepted && mode == "selection_then_composition" && !twoPhaseScheduled) {
+            if (accepted && mode in setOf("selection_then_composition", "selection_then_composition_diagnostics") && !twoPhaseScheduled) {
                 twoPhaseScheduled = true
                 count("twoPhaseRequested")
                 editor.notifySelection(reportComposition = false)

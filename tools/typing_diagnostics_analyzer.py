@@ -39,7 +39,8 @@ REFUSAL_REASONS = frozenset((
     "DEADLINE_MISSED", "TARGET_UNKNOWN", "RIVAL_UNKNOWN", "LOCAL_SEARCH_EMPTY",
     "PERSONAL_VETO", "PROTECTED_WORD",
     "PROTECTED_TOKEN", "PROTECTED_PUNCTUATION", "PROTECTED_LINE", "AMBIGUOUS_DOT", "AMBIGUOUS_COLON",
-    "DOUBLE_SPACE_INELIGIBLE", "TRUNCATED_CONTEXT", "OWNERSHIP_MISMATCH",
+    "DOUBLE_SPACE_INELIGIBLE", "TRUNCATED_CONTEXT", "OWNERSHIP_MISMATCH", "EXTERNAL_SELECTION_DISABLED",
+    "CONTEXT_TOO_LONG",
 ))
 
 CANDIDATE_REJECTION_REASONS = frozenset(("INVALID", "LIMIT", "STALE", "STALE_REVISION"))
@@ -271,9 +272,12 @@ def analyze_events(events, ground_truth=None):
     for event in events:
         schema, kind, reason, session, revision = _event_fields(event)
         schemas.add(schema)
-        if schema >= 7 and (reason in REFUSAL_REASONS or
+        refusal = "CONTEXT_TOO_LONG" if (
+            kind == "RANKING" and reason == "MODEL_ERROR" and event.get("scoringCode") == 13
+        ) else reason
+        if schema >= 7 and (refusal in REFUSAL_REASONS or
                             kind == "CANDIDATES" and reason in CANDIDATE_REJECTION_REASONS):
-            refusal_events.append({"kind": kind, "reason": reason, "session": session,
+            refusal_events.append({"kind": kind, "reason": refusal, "session": session,
                 "revision": revision, "source": event.get("source", "NONE"),
                 "requestId": event.get("requestId", 0), "operationId": event.get("operationId", 0),
                 **({"editorType": event["editorType"]} if schema >= 9 else {})})

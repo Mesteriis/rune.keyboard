@@ -13,6 +13,8 @@ import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.intelligence.inference.LifecycleModelInferenceService
 import io.github.mesteriis.rune.keyboard.settings.SettingsActivity
+import io.github.mesteriis.rune.keyboard.settings.KeyboardPreferences
+import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticStream
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason
@@ -106,6 +108,37 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
         assertNotNull(row("diagnostics_text_toggle"))
     }
 
+    @Test fun externalSelectionDisableProducesContentFreeMetadataInRealIme() {
+        operation { recorder.setMetadata(true, it) }
+        driver.launchComposingQa("selection_then_composition_diagnostics")
+        type("t")
+        driver.awaitFieldText("qa_composing_text", "t")
+        val deadline = android.os.SystemClock.uptimeMillis() + 5000
+        while (stats().getValue("twoPhaseReleased") != 1) {
+            assertTrue("Two-phase callback timed out", android.os.SystemClock.uptimeMillis() < deadline)
+            android.os.SystemClock.sleep(25)
+        }
+        operation(recorder::barrier)
+        val beforePrivate = snapshot(DiagnosticStream.METADATA)
+        val records = beforePrivate.lineSequence().filter(String::isNotBlank)
+            .map(::JSONObject).filter { it.optString("reason") == "EXTERNAL_SELECTION_DISABLED" }.toList()
+        assertEquals("Expected one actual disable outcome", 1, records.size)
+        assertEquals("SESSION", records.single().getString("kind"))
+        assertFalse(records.single().has("input")); assertFalse(records.single().has("context"))
+        noReadback()
+        driver.launchComposingQa("selection_then_composition")
+        type("t")
+        driver.awaitFieldText("qa_composing_text", "t")
+        val privateDeadline = android.os.SystemClock.uptimeMillis() + 5000
+        while (stats().getValue("twoPhaseReleased") != 1) {
+            assertTrue("Private two-phase callback timed out", android.os.SystemClock.uptimeMillis() < privateDeadline)
+            android.os.SystemClock.sleep(25)
+        }
+        operation(recorder::barrier)
+        assertEquals("Private editor must not add diagnostics", beforePrivate, snapshot(DiagnosticStream.METADATA))
+        noReadback()
+    }
+
     @Test fun consentStartsWithFreshRuneInputAndDisableStopsTextOnly() {
         driver.configureMechanicalPunctuation(mechanical = false, doubleSpace = false)
         driver.launchComposingQa()
@@ -189,6 +222,29 @@ class TypingDiagnosticsInstrumentedTest : ImeTestBase() {
             assertEquals("Private input changed persistent store bytes", storesBefore, personalStoreSnapshot(context))
             if (mode == "private") assertTrue(stats().getValue("compose") > 0)
         }
+    }
+
+    @Test fun privateExpandedCandidateSelectionDoesNotWriteEnabledDiagnostics() {
+        driver.launchSettings()
+        enableTextThroughDialogs()
+        operation { recorder.setMetadata(true, it) }
+        KeyboardPreferences(context).writeManualCandidateExpansion(true)
+        driver.configureSmartTyping(AutocorrectionMode.SUGGESTIONS, true, mechanical = false, doubleSpace = false)
+        driver.launchComposingQa("private")
+        val beforeText = snapshot(DiagnosticStream.TEXT)
+        val beforeMetadata = snapshot(DiagnosticStream.METADATA)
+        val stores = personalStoreSnapshot(context)
+        type("addess")
+        val expand = driver.device.wait(Until.findObject(By.desc(context.getString(R.string.candidate_expand))), 30_000)
+        assertNotNull(expand)
+        expand.click()
+        val candidate = driver.device.wait(Until.findObject(By.desc(context.getString(R.string.candidate_correction, "access"))), 5_000)
+        assertNotNull(candidate)
+        candidate.click()
+        driver.awaitFieldText("qa_composing_text", "access")
+        assertEquals(beforeText, snapshot(DiagnosticStream.TEXT))
+        assertEquals(beforeMetadata, snapshot(DiagnosticStream.METADATA))
+        assertEquals("Private expanded candidates changed persistent stores", stores, personalStoreSnapshot(context))
     }
 
     @Test fun managementDeleteDisablesBothAndRemovesManagedLogs() {

@@ -24,7 +24,7 @@ import org.junit.rules.TestName
 import org.junit.Before
 import org.junit.Test
 
-/** Explicit physical test of a fixed loopback page; never reads other browser fields. */
+/** Explicit Fold or owned-emulator test of a fixed loopback page; never reads other browser fields. */
 class ChromeEditorCompatibilityInstrumentedTest {
     private val driver = ImeTestDriver()
     private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
@@ -39,8 +39,10 @@ class ChromeEditorCompatibilityInstrumentedTest {
 
     @Before fun prepare() {
         val args = InstrumentationRegistry.getArguments()
-        assumeTrue("Explicit physical Chrome run required", Build.MODEL.startsWith("SM-F") &&
-            args.getString("allowPhysicalDevice") == "true")
+        val physicalFold = Build.MODEL.startsWith("SM-F") && args.getString("allowPhysicalDevice") == "true"
+        val ownedEmulator = args.getString("runeOwnedEmulator") == "q8-chrome" &&
+            Build.HARDWARE in setOf("ranchu", "goldfish") && driver.shell("getprop ro.kernel.qemu") == "1"
+        assumeTrue("Explicit Fold or owned-emulator Chrome run required", physicalFold || ownedEmulator)
         check(args.getString("runeFailureArtifacts") == "false")
         port = checkNotNull(args.getString("runeLoopbackPort")).toInt()
         check(port in 1024..65535)
@@ -59,7 +61,13 @@ class ChromeEditorCompatibilityInstrumentedTest {
         captured = true
         val route = if (testName.methodName.startsWith("noSuggestions")) "rune-q8-no-suggestions" else "rune-q8"
         driver.device.executeShellCommand("am start -W -a android.intent.action.VIEW -d http://127.0.0.1:$port/$route --ez create_new_tab true -p $browser")
-        assertTrue("Fixed local QA page missing", driver.device.wait(Until.hasObject(By.pkg(browser).text("Rune Q8 local editor")), 10000))
+        val title = By.pkg(browser).text("Rune Q8 local editor")
+        if (ownedEmulator && driver.device.wait(Until.hasObject(
+                By.pkg(browser).text("Chrome notifications make things easier")), 5000)) {
+            val decline = checkNotNull(driver.device.findObject(By.pkg(browser).text("No thanks")))
+            decline.click()
+        }
+        assertTrue("Fixed local QA page missing", driver.device.wait(Until.hasObject(title), 10000))
         pageOwned = true
         val field = checkNotNull(driver.device.wait(Until.findObject(By.pkg(browser).res("rune-qa").clazz("android.widget.EditText")), 5000))
         assertEquals("", field.text.orEmpty())

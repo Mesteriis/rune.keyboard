@@ -20,7 +20,8 @@ class ControlsBuilderTest(unittest.TestCase):
 
     def test_unseen_authored_control_still_fails_incomplete_coverage(self):
         with tempfile.TemporaryDirectory() as folder:
-            result=run_builder(folder,'prepare_public_controls_v1.py',[protected(prefix='Новый контекст проверки')],['--kind','protected'])
+            result=run_builder(folder,'prepare_public_controls_v1.py',[protected(prefix='Новый контекст проверки',
+                typed='RuneUniqueQ6x9', candidates=[' RuneUniqueQ6x9',' RuneUniqueQ6x8'])],['--kind','protected'])
             self.assertEqual(2,result.returncode,result.stderr);report=json.loads(result.stdout)
             self.assertEqual('BLOCKED_COVERAGE',report['status']);self.assertFalse(report['sourceLabelsQualified'])
             self.assertFalse((Path(folder)/'output').exists())

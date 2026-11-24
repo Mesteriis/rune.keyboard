@@ -1,0 +1,116 @@
+{
+  "sourceCommit": "1b3d8c332d388c5434d786a5ef2a532ec75cb009",
+  "fdroidserver": "2.4.5",
+  "sourceScan": {
+    "dataEntries": 31,
+    "approvedChanges": 11,
+    "fatal": 0,
+    "warnings": [
+      [
+        "gzip file archive",
+        "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+      ],
+      [
+        "executable binary, possibly code",
+        "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+      ]
+    ],
+    "networkBlocked": true,
+    "probes": [
+      {
+        "label": "prepared-positive",
+        "exitCode": 0,
+        "expectedExit": 0,
+        "markerFound": true,
+        "logSha256": "15b2c69521b933a2339416a04bc5d1e49999e830635776c5f22084aca52ebe46"
+      },
+      {
+        "label": "default-negative",
+        "exitCode": 1,
+        "expectedExit": 1,
+        "markerFound": true,
+        "logSha256": "d7d9c9239bce5d2137a9dd5c741873997c46e295b7b8f56a8f13cc0987dfb4a6"
+      },
+      {
+        "label": "qualification-positive",
+        "exitCode": 0,
+        "expectedExit": 0,
+        "markerFound": true,
+        "logSha256": "ec698b1dc9841ae9d8a45aa5e0ece741449b94a10baa8b39fb10d438e8d1d460"
+      },
+      {
+        "label": "partial-negative",
+        "exitCode": 1,
+        "expectedExit": 1,
+        "markerFound": true,
+        "logSha256": "7d96d378c107e6866808c6a7f002262c8a5c5cb5e01af839352b7256b8bfb628"
+      },
+      {
+        "label": "dirty-negative",
+        "exitCode": 1,
+        "expectedExit": 1,
+        "markerFound": true,
+        "logSha256": "5f65e90438a4b60361b82f8f85bb27aabd0073e12d3caadddeef18aaacc65965"
+      },
+      {
+        "label": "compiled-source-negative",
+        "exitCode": 1,
+        "expectedExit": 1,
+        "markerFound": true,
+        "logSha256": "2d84cd2a687de36e9042de1dc68f5eb8221f09bd86caebdc6fe30e14c9eb9c2b"
+      },
+      {
+        "label": "prepared-restored",
+        "exitCode": 0,
+        "expectedExit": 0,
+        "markerFound": true,
+        "logSha256": "15b2c69521b933a2339416a04bc5d1e49999e830635776c5f22084aca52ebe46"
+      }
+    ]
+  },
+  "localBuild": {
+    "passed": true,
+    "sourceCommit": "1b3d8c332d388c5434d786a5ef2a532ec75cb009",
+    "elapsedSeconds": 40.04520762500033,
+    "fdroidserver": "2.4.5",
+    "scan": {
+      "fatal": 0,
+      "warnings": [
+        [
+          "gzip file archive",
+          "app/src/test/resources/smarttyping/ranker/calibration.tsv.gz"
+        ],
+        [
+          "executable binary, possibly code",
+          "runtime-llama/src/main/cpp/llama.cpp/docs/development/llama-star/idea-arch.key"
+        ]
+      ],
+      "errors": []
+    },
+    "prebuildOmitted": "SDK acquisition only; installed CMake reused",
+    "sourceTarballCreated": false,
+    "binaryScannerRun": false,
+    "buildServerRun": false,
+    "localBuildFunction": "fdroidserver.build.build_local",
+    "gradleOffline": true,
+    "existingDependencyCache": true
+  },
+  "comparison": {
+    "equalBytes": true,
+    "sizeBytes": 180122901,
+    "sha256": "5ed8115a4d985029704e0580824054587a0906f59b392bc58d0318187a958f7c"
+  },
+  "sourcePolicyHashes": {
+    "fdroid/prepared-source-policy.json": "ef0a4000c7da423ab5824b926063c045b09d09fb28671cb5b20ac18ab54e0907",
+    "fdroid/review-data-policy.json": "90f0292c9cf68d2534d4aea0da0954649f631b69d48f4bf730f84fa1e9ceeaaf",
+    "tools/release_source_check.py": "79a6a6a997a6af6e1b59c44c0e4654a28bad9cbda3a16217d354d88db1d8ef8c",
+    "tools/fdroid_prepared_source.py": "d2422e83f1f1c228ebc7da60c062accf45d9a3929fe02a52cc439501405e2103",
+    "tools/qualification_artifacts.py": "247f94ef585475b7a454a17767d2552028285daf682f9b5f9fd48fc3590b91a7",
+    "tools/fdroid_data_policy.py": "09a73119b50a9e35acaf5e242e384d4576215554ed3259c3b771ea39a61163d2"
+  },
+  "fdroidModuleHashes": {
+    "common.py": "6fbb9e2de16e4bde8d463babad4412603b6ca6f5bd7a749723e3cc089b3d0021",
+    "scanner.py": "4de525a85ba519a41838cf1ed7e70184d0b9df782da8a6c82c6dea5234adf7e1",
+    "build.py": "be294c3d2b0f9c117d768e1d3f107ff83ab8b3e7f3e731dd2c1afa6790627d70"
+  }
+}

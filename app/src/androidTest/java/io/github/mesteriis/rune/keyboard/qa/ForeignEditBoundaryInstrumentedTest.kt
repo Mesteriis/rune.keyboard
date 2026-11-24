@@ -21,6 +21,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionContro
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 /** Isolated guard coverage; public panel wiring is covered by EditingPanelInstrumentedTest. */
@@ -28,7 +29,9 @@ class ForeignEditBoundaryInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val context get() = instrumentation.targetContext
     private val driver = ImeTestDriver()
-    private var prepared = false
+    @get:Rule val failureArtifacts = ImeFailureArtifacts(driver) {
+        android.os.Build.HARDWARE in setOf("ranchu", "goldfish")
+    }
     private var clipboardTouched = false
     private lateinit var service: RuneInputMethodService
     private lateinit var controller: TypingSessionController
@@ -36,7 +39,6 @@ class ForeignEditBoundaryInstrumentedTest {
 
     @Before fun prepareDisposableEditor() {
         check(android.os.Build.HARDWARE in setOf("ranchu", "goldfish")) { "Disposable emulator required" }
-        prepared = true
         driver.setUp()
         driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
             mechanical = false, doubleSpace = false, contextual = ContextualPunctuationMode.OFF)
@@ -60,7 +62,6 @@ class ForeignEditBoundaryInstrumentedTest {
             if (android.os.Build.VERSION.SDK_INT >= 28) clipboard.clearPrimaryClip()
             else clipboard.setPrimaryClip(ClipData.newPlainText("Rune QA", ""))
         }
-        if (prepared) driver.tearDown()
     }
 
     @Test fun pastedSuffixStaysLiteralAndOwnWhitespaceRestoresQualifiedCorrection() {

@@ -13,6 +13,39 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class TypingDiagnosticsHooksTest {
+    @Test fun postSpaceRecoveryMetadataContainsOnlyBoundedEvidenceAndIsSilentInPasswordFields() {
+        val observer = Observer()
+        val controller = TypingSessionController(jvmGraphemes)
+        controller.setDiagnostics(observer)
+        controller.startSession(EditorContext.from(android.text.InputType.TYPE_CLASS_TEXT, 0), 0, 0)
+        observer.records.clear()
+        val generation = CandidateGeneration("private-sentinel", emptyList(), CandidateCompletion.COMPLETE,
+            false, null, 1, 0, neighborRecovery = LocalSearchEvidence(CandidateCompletion.STATES_EXHAUSTED,
+                emptyList(), 9876, 3))
+        val reply = LocalCandidateReply(controller.state.sessionId, controller.state.revision, 7,
+            generation, stage = CandidateStage.RECOVERY)
+        controller.recordRecoverySpaceReply(reply)
+        val record = observer.records.single()
+        assertNull(record.second)
+        assertEquals(DiagnosticSource.NEIGHBOR_RECOVERY, record.first.source)
+        assertEquals(DiagnosticCompletion.STATES_EXHAUSTED, record.first.recoveryCompletion)
+        assertEquals(9876, record.first.recoveryInspectedStates)
+        assertEquals(3, record.first.recoveryVerifiedTerminals)
+        val metadata = DiagnosticsEncoding.metadata(record.first).decodeToString()
+        assertTrue(metadata.contains("\"recoveryCompletion\":\"STATES_EXHAUSTED\""))
+        assertTrue(metadata.contains("\"recoveryInspectedStates\":9876"))
+        assertFalse(metadata.contains("private-sentinel"))
+        assertFalse(metadata.contains("\"input\""))
+        assertFalse(metadata.contains("\"context\""))
+
+        controller.startSession(EditorContext.from(android.text.InputType.TYPE_CLASS_TEXT or
+            android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD, 0), 0, 0)
+        observer.records.clear()
+        controller.recordRecoverySpaceReply(reply.copy(sessionId = controller.state.sessionId,
+            revision = controller.state.revision))
+        assertTrue(observer.records.isEmpty())
+    }
+
     @Test fun editorMetadataDropsFlagsAndUpdatesOnlyForTheCurrentSession() {
         val observer = Observer()
         val controller = TypingSessionController(jvmGraphemes)

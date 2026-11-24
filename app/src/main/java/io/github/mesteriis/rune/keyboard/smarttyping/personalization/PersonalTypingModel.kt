@@ -1,6 +1,8 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.personalization
 
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.TokenUnicode
 import java.text.Normalizer
 import java.util.Locale
 
@@ -10,6 +12,7 @@ class PersonalTypingModel(
 ) {
     private val feedback = linkedMapOf<FeedbackKey, PersonalFeedback>()
     private val confirmed = linkedSetOf<PersonalWord>()
+    private val caseRejections = linkedSetOf<PersonalWord>()
     private val phrases = linkedMapOf<PhraseKey, PersonalPhrase>()
 
     @Synchronized fun recordAccepted(original: String, replacement: String, language: KeyboardLanguage) {
@@ -26,6 +29,10 @@ class PersonalTypingModel(
         recordAccepted(original, replacement, language)
 
     @Synchronized fun recordRejected(original: String, replacement: String, language: KeyboardLanguage) {
+        caseRejectionWord(original, replacement)?.let { word ->
+            if (caseRejections.size < MAX_CASE_REJECTIONS) caseRejections.add(PersonalWord(language, word))
+            return
+        }
         val key = feedbackKey(original, replacement, language) ?: return
         val old = feedback[key]
         if (old == null && feedback.size >= MAX_FEEDBACK) {
@@ -50,6 +57,9 @@ class PersonalTypingModel(
         normalizeWord(word)?.let { confirmed.remove(PersonalWord(language, it)) } == true
 
     @Synchronized fun rejects(original: String, replacement: String, language: KeyboardLanguage): Boolean {
+        caseRejectionWord(original, replacement)?.let { word ->
+            return PersonalWord(language, word) in caseRejections || caseRejections.size >= MAX_CASE_REJECTIONS
+        }
         val key = feedbackKey(original, replacement, language) ?: return false
         return feedback[key]?.rejected ?: rejectionTableFull()
     }
@@ -96,7 +106,7 @@ class PersonalTypingModel(
     }
 
     @Synchronized fun snapshot(): PersonalTypingSnapshot =
-        PersonalTypingSnapshot(feedback.values.toList(), confirmed.toList(), phrases.values.toList())
+        PersonalTypingSnapshot(feedback.values.toList(), confirmed.toList(), phrases.values.toList(), caseRejections.toList())
 
     /** All-or-nothing validation; persisted explicit confirmations may validate local phrase words. */
     @Synchronized fun restore(snapshot: PersonalTypingSnapshot) {
@@ -104,6 +114,7 @@ class PersonalTypingModel(
         reset()
         snapshot.confirmed.forEach { confirmed.add(it) }
         snapshot.feedback.forEach { feedback[FeedbackKey(it.language, it.original, it.replacement)] = it }
+        caseRejections.addAll(snapshot.caseRejections)
         // Dictionary assets may still be loading. Keep structurally valid private entries; suggestions
         // recheck spelling at query time so unavailable dictionaries never destroy saved evidence.
         snapshot.phrases.forEach { addPhrase(it, accumulate = false) }
@@ -123,7 +134,7 @@ class PersonalTypingModel(
         return added
     }
 
-    @Synchronized fun reset() { feedback.clear(); confirmed.clear(); phrases.clear() }
+    @Synchronized fun reset() { feedback.clear(); confirmed.clear(); phrases.clear(); caseRejections.clear() }
 
     private fun validSpelling(word: String, language: KeyboardLanguage): Boolean =
         PersonalWord(language, word) in confirmed || dictionaryContains(word, language)
@@ -135,6 +146,13 @@ class PersonalTypingModel(
         val count = if (accumulate) (old?.support ?: 0) + phrase.support else maxOf(old?.support ?: 0, phrase.support)
         phrases[key] = phrase.copy(support = count.coerceAtMost(MAX_COUNT))
         return true
+    }
+
+    private fun caseRejectionWord(original: String, replacement: String): String? {
+        val lower = normalizeWord(original) ?: return null
+        if (!TokenUnicode.bounded(original) || !TokenUnicode.bounded(replacement)) return null
+        if (Normalizer.normalize(original, Normalizer.Form.NFC) != lower || CasePattern.analyze(original) != CasePattern.LOWER) return null
+        return lower.takeIf { CasePattern.TITLE.preserve(lower) == Normalizer.normalize(replacement, Normalizer.Form.NFC) }
     }
 
     private fun feedbackKey(original: String, replacement: String, language: KeyboardLanguage): FeedbackKey? {
@@ -149,6 +167,7 @@ class PersonalTypingModel(
     companion object {
         const val MAX_FEEDBACK = 512
         const val MAX_CONFIRMED = 512
+        const val MAX_CASE_REJECTIONS = 512
         const val MAX_PHRASES = 1024
         const val MAX_COUNT = 255
         const val MAX_WORD_CHARS = 48
@@ -203,6 +222,7 @@ data class PersonalPhraseSuggestion(val text: String, val support: Int) {
     override fun toString() = "PersonalPhraseSuggestion(support=$support)"
 }
 data class PersonalTypingSnapshot(val feedback: List<PersonalFeedback> = emptyList(),
-    val confirmed: List<PersonalWord> = emptyList(), val phrases: List<PersonalPhrase> = emptyList()) {
-    override fun toString() = "PersonalTypingSnapshot(feedback=${feedback.size}, confirmed=${confirmed.size}, phrases=${phrases.size})"
+    val confirmed: List<PersonalWord> = emptyList(), val phrases: List<PersonalPhrase> = emptyList(),
+    val caseRejections: List<PersonalWord> = emptyList()) {
+    override fun toString() = "PersonalTypingSnapshot(feedback=${feedback.size}, confirmed=${confirmed.size}, phrases=${phrases.size}, caseRejections=${caseRejections.size})"
 }

@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "api": "37.0",
+  "abi": "arm64-v8a",
+  "pageSize": 16384,
+  "sourceBase": "40e4559512270a3b865a52484c557ba360d4a295",
+  "sourceOverlays": {
+    "app/src/debug/AndroidManifest.xml": {
+      "commit": "e3e9df48",
+      "sha256": "2dac005f13e50167cd32f4f26a883cf34d87962033128359e1ed925dafa4e53d"
+    },
+    "app/src/debug/res/values/themes.xml": {
+      "commit": "e3e9df48",
+      "sha256": "5345daf5e379f4944c2629024ddf0251156fba01e94b2b861785cf18654bb957"
+    },
+    "app/src/debug/java/io/github/mesteriis/rune/keyboard/qa/ImeQaActivity.kt": {
+      "commit": "004c09df",
+      "sha256": "60dc96df6ff282778a2a7b4ea899c8f98363499ed2d0c4b4cfdea7194b8016c5"
+    }
+  },
+  "firstRun": {
+    "exitCode": 1,
+    "receiptSha256": "9d7a0ef1cd13da635d74414daafc58c692e7303b4eeb46b6dcd3e3f62883eb5d",
+    "failedScope": "compose-editor",
+    "missingFixturePackage": "io.github.mesteriis.rune.qa.compose"
+  },
+  "composeRepeat": {
+    "exitCode": 0,
+    "verifiedPackageInstalled": true,
+    "receiptSha256": "4dff9725d7a16d39eaeef4a2e1b7835faaf7f207d323e468463a459d9c1702e0"
+  },
+  "discoverySha256": "ed85cee9d6cc6dcfb863a4537095d5d8afb9223cee12b8978585aa40c1702b9e",
+  "discoveredCaseCount": 398,
+  "scopes": [
+    {
+      "scope": "general",
+      "passed": 339,
+      "skipped": 59,
+      "reportSha256": "52fdad7513acc81fecdc110a56e7dbbf283b19c478bf87ac29363d51799728c8",
+      "separateRepeat": false
+    },
+    {
+      "scope": "personal",
+      "passed": 4,
+      "skipped": 0,
+      "reportSha256": "9def395088f77668e451d55557fd1d56bef1f655ab58f57e082ade3e16fb24ac",
+      "separateRepeat": false
+    },
+    {
+      "scope": "case-rejection",
+      "passed": 2,
+      "skipped": 0,
+      "reportSha256": "745de30cbaa73c70f38bef38a1771d12ca2686992be62fcb43c45f2290423456",
+      "separateRepeat": false
+    },
+    {
+      "scope": "confirmed-words",
+      "passed": 3,
+      "skipped": 0,
+      "reportSha256": "341b0e69fa9eb09d00bb13ba13b9cb3ce3250431629b5e7dc7b773010855426d",
+      "separateRepeat": false
+    },
+    {
+      "scope": "compose-editor",
+      "passed": 4,
+      "skipped": 0,
+      "reportSha256": "156273e0126dc040072963b739b684f313617180ea1b40cab3c5e9da91c53c0d",
+      "separateRepeat": true
+    },
+    {
+      "scope": "emoji-memory",
+      "passed": 1,
+      "skipped": 0,
+      "reportSha256": "a53fd45ea3b68eb3414b438de5de59f5ef98860f252dd4c2850c12dc75eb8fb7",
+      "separateRepeat": false
+    },
+    {
+      "scope": "export-navigation",
+      "passed": 1,
+      "skipped": 0,
+      "reportSha256": "70c28c463f7e73162a8735c7f909f724001aed4318da1f8b43033001209bd2f1",
+      "separateRepeat": false
+    },
+    {
+      "scope": "qualification-lifecycle",
+      "passed": 1,
+      "skipped": 0,
+      "reportSha256": "751ea3961fd07dbc33abb1c4edd6154488ea85577a991da812e93912bf2d8ee9",
+      "separateRepeat": false
+    },
+    {
+      "scope": "qualification-safety",
+      "passed": 1,
+      "skipped": 0,
+      "reportSha256": "6791bbaf2de0b6d2b0af13c1b048207852d7cb82deeec28e7065744a29c925a9",
+      "separateRepeat": false
+    },
+    {
+      "scope": "native-runtime",
+      "passed": 6,
+      "skipped": 0,
+      "reportSha256": "8eec33637c1f9ca3b1c7d2fbd44bdd87bb6a80b4daaa6cce294f38edd453d7f0",
+      "separateRepeat": false
+    }
+  ],
+  "onePassAllScopes": false,
+  "hosted": false,
+  "physicalDevice": false
+}

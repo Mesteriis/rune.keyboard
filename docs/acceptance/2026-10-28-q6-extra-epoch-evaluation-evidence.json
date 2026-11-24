@@ -1,0 +1,121 @@
+{
+  "boundedReplay": {
+    "characters": 100,
+    "driverSha256": "f1546137943b299a8143c8095e6739e863333a588bdbb005ef6bca3237f7367a",
+    "exportFiles": {
+      "FrozenExperimentAssets.kt": "e37e7aeacad19559990bafa312c1adabc1be3ca4ff8506975be0fe355638fbfd",
+      "parity.tsv": "2f351090e20682e7065159983a9f5c1dcb4d7365a5b887570733de5126b9f542",
+      "provenance.json": "df1c5a1d6bf6676f63debfda7610e95431d4582861bd1e98875bd4882dd9cacb",
+      "ru-context.bin": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
+      "ru-ranker.bin": "f3ac83997946b97b57f410f0955a9a479a72453f4c68ed4f473c1afded583648",
+      "ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50"
+    },
+    "extraComparison": {
+      "accepted": false,
+      "devInputMutationRejected": true,
+      "legacyRows": 4,
+      "mainRows": 4,
+      "observedGatePassed": false,
+      "previousRows": 4,
+      "receiptInputs": 165,
+      "reportSha256": "40277e15cc3376c1eb13e3151f2613d8e7ee2e2ef18bd16601468de2f917f5a6",
+      "scope": "controlled-bound-input-comparison-not-original-epoch-qualification"
+    },
+    "independentDataEvaluation": false,
+    "legacyBinding": {
+      "checkedGeneratorSources": 39,
+      "corpusManifestSha256": "8bb3d0a0db1c11306ab809a4a1ede7c1a2b613529c7305e51523d668afd5a452",
+      "exportRows": 4000,
+      "matchedSourceRows": 3400
+    },
+    "legacyInputMutationRejected": true,
+    "legacyRegressionBound": true,
+    "legacyRows": 4,
+    "mainRows": 4,
+    "metricMutationRejected": true,
+    "packagedFileSha256": {
+      "app/src/main/assets/smarttyping/experiments/NOTICE.md": "efceac6d0dde6e787e3545e6b3de0f87be6950c67b655ee9076869f07580a9ce",
+      "app/src/main/assets/smarttyping/experiments/contextual-provenance.json": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435",
+      "app/src/main/assets/smarttyping/experiments/contextual-tatoeba-attribution.json": "f81b27066cee38a2f2a14c2766e9cceae399d3c7590bca7b63e4d782fd18dd44",
+      "app/src/main/assets/smarttyping/experiments/infinitive-revision-provenance.json": "a20fe5c9981e857dda6823fb5aeffb56c365556a6e38542250a714ea3aa20fca",
+      "app/src/main/assets/smarttyping/experiments/joint-correction-provenance.json": "7b42d0a46dd754d32903f73dabcefa7eea462f5c6cba1e886a06008bd22cf5e7",
+      "app/src/main/assets/smarttyping/experiments/joint-rescue-provenance.json": "4700fab35c3d9ea83457920187ae41ea88c7a95220325401cf13d83bcd83fcdb",
+      "app/src/main/assets/smarttyping/experiments/neighbor-recovery-provenance.json": "f988fea3f6d96f68ad0394e5a4ded6e067dec8fb305d561415cdc77c4440e4ce",
+      "app/src/main/assets/smarttyping/experiments/noun-case-provenance.json": "a9b1760a0b462a68ff38264be9ae13a9dac9ebf5840cf606778b32c1d2910235",
+      "app/src/main/assets/smarttyping/experiments/provenance.json": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4",
+      "app/src/main/assets/smarttyping/experiments/ru-context.bin": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
+      "app/src/main/assets/smarttyping/experiments/ru-context.gram": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b",
+      "app/src/main/assets/smarttyping/experiments/ru-contextual-policy.json": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6",
+      "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+      "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6",
+      "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-policy.json": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595",
+      "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-policy.json": "ebdb0e83f3c4ed3476f5b317e31619415ca020d9703cd3d6900b9e8ac5c4701d",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+      "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+      "app/src/main/assets/smarttyping/experiments/ru-noun-case-policy.json": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+      "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker.bin": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+      "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+      "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt": "ff4e3cc8b0f67da2295e375b129518100fa8b2b981f32ed490e6e38daa01fd34",
+      "tools/typing_experiments/parity.tsv": "374f78253303b3fd77c5fd17a04190fd73e9d410bc5f069d5860bcefea90fad0"
+    },
+    "packagedFilesUnchanged": true,
+    "reportSha256": "5dba03ca45e1b80b77035216f48939f4a0dbe897d641a6d21218f9e50cc77831",
+    "scope": "bounded-disclosed-real-driver-replay-not-original-qualification"
+  },
+  "ciToolsTests": {
+    "exitCode": 0,
+    "logSha256": "e931b52656e5191b78105518d94761911ff706384c038339d2250d0f57c75567",
+    "tests": 41
+  },
+  "focusedTests": {
+    "python3.12": 6,
+    "python3.14": 6
+  },
+  "freshQualification": false,
+  "fullReportRetained": true,
+  "fullReportSha256": "40277e15cc3376c1eb13e3151f2613d8e7ee2e2ef18bd16601468de2f917f5a6",
+  "historicalEvaluator": {
+    "path": "tools/typing_experiments/frozen_sources/evaluate_extra_epochs_5a2d91a55d27650a.py",
+    "sha256": "5a2d91a55d27650ad570dce89807baf967c4e873a92df153c34d404220b44378"
+  },
+  "modelTrainingPerformed": false,
+  "originalEpochTestReproduced": false,
+  "packagedFilesChanged": false,
+  "phoneExecuted": false,
+  "profiles": {
+    "scientific": {
+      "errors": 0,
+      "failures": 0,
+      "modules": 21,
+      "receiptSha256": "97662358fad7452f6e67ecc0286dd1867f6bbed04767709693623df9810f6af7",
+      "skips": 1,
+      "tests": 74
+    },
+    "stdlib": {
+      "errors": 0,
+      "failures": 0,
+      "modules": 117,
+      "receiptSha256": "9a2f0efc785685aef53fcc8b6761f170cac4358a511809013cbd7ce8faeab0b9",
+      "skips": 0,
+      "tests": 623
+    }
+  },
+  "schemaVersion": 1,
+  "scope": "Q6-additional-epoch-disclosed-evaluation-binding",
+  "sourceSha256": {
+    "tools/ci/extra_epoch_evaluation_smoke.py": "3f23290b027139345fd1a5a2579a36501dce3c3fa35687d1f4da7b2a54db5281",
+    "tools/ci/python-tools-tests.json": "094a6fb574447be967c4caad6e2caf967224ce1b7b74e1fa88e9f87f89a09506",
+    "tools/ci/refinement_evaluation_smoke.py": "f1546137943b299a8143c8095e6739e863333a588bdbb005ef6bca3237f7367a",
+    "tools/typing_experiments/evaluate_extra_epochs.py": "60e9ff2f90414543ed533ec424e1ee093b510d96d1e1e73eeaa7d63cf8878761",
+    "tools/typing_experiments/extra_epoch_evaluation_receipt.py": "fc9d93a36c00fa866c1af4f48bd104881aaadf1ba5b9d1a46371c0e2c5ef5b8e",
+    "tools/typing_experiments/frozen_sources/manifest.json": "d40b4fd7e651c2d07614b44e0770bf35a192a4ce30d0c6b436b0936755a728b9",
+    "tools/typing_experiments/refinement_evaluation_receipt.py": "79bf73ae19c7d0c7500e06b79c83f0de0be163be86671c9522cbd8ba75b8dab7",
+    "tools/typing_experiments/test_extra_epoch_evaluation_driver.py": "c75cc9152bea15373721135dc70e8f6381023e2345a8f83d22d7023504202d27",
+    "tools/typing_experiments/test_extra_epoch_evaluation_receipt.py": "73d04c3142058bba990647d05115f92c7c27500e3c86fc01daa6641f20c54121"
+  }
+}

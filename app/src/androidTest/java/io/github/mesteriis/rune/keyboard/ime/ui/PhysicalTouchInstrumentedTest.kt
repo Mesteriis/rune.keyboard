@@ -150,8 +150,12 @@ class PhysicalTouchInstrumentedTest {
         measure(this, 600)
     }
 
-    private fun key(keyboard: RuneKeyboardView, index: Int = 0): View =
-        ((keyboard.getChildAt(1) as ViewGroup).getChildAt(0) as ViewGroup).getChildAt(index)
+    private fun key(keyboard: RuneKeyboardView, index: Int = 0): View {
+        val host = keyboard.getChildAt(1) as ViewGroup
+        val keys = host.getChildAt(0) as ViewGroup
+        val firstRow = keys.getChildAt(0) as ViewGroup
+        return firstRow.getChildAt(index)
+    }
 
     private fun centerInParent(parent: RuneKeyboardView, child: View): Point {
         val bounds = Rect(0, 0, child.width, child.height)

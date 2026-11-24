@@ -1,0 +1,22 @@
+{
+  "archives": {
+    "v3": {
+      "archive": "qualification-v3.tar.bz2",
+      "archiveSha256": "a259035899925b7d36e9d2abf6dbf57f025adaa8fbc4b9058b001dc6a38b444e",
+      "fileCount": 8,
+      "manifestSha256": "56a5b994bc2048c4cf434a123ebbe2e2f7a746102b936a83d535fc582ceecee3",
+      "originalPath": "tools/eval/smart-typing-0.3/qualification-v3/corpus",
+      "sourceCommit": "8965be52d0a08ba26cc1a9a65591908db603427d"
+    },
+    "v4": {
+      "archive": "qualification-v4.tar.bz2",
+      "archiveSha256": "ceee74f2cf1937f968f46784a959b4327f34f645670899f9efc716ee751cd189",
+      "fileCount": 8,
+      "manifestSha256": "a1579d3596ba733dbf5fff49adb6c9dad5d7a54902fe5d98776329578328c9cc",
+      "originalPath": "tools/eval/smart-typing-0.3/qualification-v4/corpus",
+      "sourceCommit": "998a1e9b08a0edb2225313a44133530c1af75300"
+    }
+  },
+  "purpose": "DISCLOSED_HISTORICAL_CORPORA_NOT_QUALIFICATION",
+  "schema": 1
+}

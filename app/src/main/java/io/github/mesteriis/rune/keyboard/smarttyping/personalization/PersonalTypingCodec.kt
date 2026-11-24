@@ -1,6 +1,8 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.personalization
 
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.TokenUnicode
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.DataInputStream
@@ -13,13 +15,14 @@ import java.nio.charset.CodingErrorAction
 object PersonalTypingCodec {
     const val MAX_FILE_BYTES = 1024 * 1024
     const val PROFILE_HEADER = "RUNE_PERSONAL_PHRASES_V1"
-    private const val MAGIC = 0x52505431
+    private const val MAGIC_V1 = 0x52505431
+    private const val MAGIC_V2 = 0x52505432
 
     fun encode(snapshot: PersonalTypingSnapshot): ByteArray {
         validate(snapshot)
         val bytes = ByteArrayOutputStream()
         DataOutputStream(bytes).use { out ->
-            out.writeInt(MAGIC)
+            out.writeInt(if (snapshot.caseRejections.isEmpty()) MAGIC_V1 else MAGIC_V2)
             out.writeInt(snapshot.confirmed.size)
             snapshot.confirmed.forEach { out.writeUTF(it.language.name); out.writeUTF(it.word) }
             out.writeInt(snapshot.feedback.size)
@@ -31,6 +34,10 @@ object PersonalTypingCodec {
             snapshot.phrases.forEach {
                 out.writeUTF(it.language.name); out.writeUTF(it.prefix); out.writeUTF(it.continuation); out.writeInt(it.support)
             }
+            if (snapshot.caseRejections.isNotEmpty()) {
+                out.writeInt(snapshot.caseRejections.size)
+                snapshot.caseRejections.forEach { out.writeUTF(it.language.name); out.writeUTF(it.word) }
+            }
         }
         return bytes.toByteArray().also { require(it.size <= MAX_FILE_BYTES) { "Invalid personal snapshot" } }
     }
@@ -38,7 +45,8 @@ object PersonalTypingCodec {
     fun decode(bytes: ByteArray): PersonalTypingSnapshot {
         require(bytes.size <= MAX_FILE_BYTES) { "Invalid personal snapshot" }
         val source = DataInputStream(ByteArrayInputStream(bytes))
-        require(source.readInt() == MAGIC) { "Invalid personal snapshot" }
+        val magic = source.readInt()
+        require(magic == MAGIC_V1 || magic == MAGIC_V2) { "Invalid personal snapshot" }
         val confirmed = List(readSize(source, PersonalTypingModel.MAX_CONFIRMED)) {
             PersonalWord(language(source.readUTF()), source.readUTF())
         }
@@ -54,8 +62,12 @@ object PersonalTypingCodec {
         val phrases = List(readSize(source, PersonalTypingModel.MAX_PHRASES)) {
             PersonalPhrase(language(source.readUTF()), source.readUTF(), source.readUTF(), source.readInt())
         }
+        val caseRejections = if (magic == MAGIC_V2) List(readSize(source, PersonalTypingModel.MAX_CASE_REJECTIONS)) {
+            PersonalWord(language(source.readUTF()), source.readUTF())
+        } else emptyList()
+        require(magic != MAGIC_V2 || caseRejections.isNotEmpty()) { "Invalid personal snapshot" }
         require(source.read() == -1) { "Invalid personal snapshot" }
-        return PersonalTypingSnapshot(feedback, confirmed, phrases).also(::validate)
+        return PersonalTypingSnapshot(feedback, confirmed, phrases, caseRejections).also(::validate)
     }
 
     /** Never permits imported confirmations or correction pairs, regardless of supplied counts. */
@@ -97,10 +109,15 @@ object PersonalTypingCodec {
     internal fun validate(snapshot: PersonalTypingSnapshot) {
         require(snapshot.feedback.size <= PersonalTypingModel.MAX_FEEDBACK &&
             snapshot.confirmed.size <= PersonalTypingModel.MAX_CONFIRMED &&
-            snapshot.phrases.size <= PersonalTypingModel.MAX_PHRASES) { "Invalid personal snapshot" }
+            snapshot.phrases.size <= PersonalTypingModel.MAX_PHRASES &&
+            snapshot.caseRejections.size <= PersonalTypingModel.MAX_CASE_REJECTIONS) { "Invalid personal snapshot" }
         require(snapshot.confirmed.all { canonicalWord(it.word) } && snapshot.confirmed.distinct().size == snapshot.confirmed.size) {
             "Invalid personal snapshot"
         }
+        require(snapshot.caseRejections.all { canonicalWord(it.word) &&
+            TokenUnicode.bounded(it.word) &&
+            CasePattern.analyze(it.word) == CasePattern.LOWER } &&
+            snapshot.caseRejections.distinct().size == snapshot.caseRejections.size) { "Invalid personal snapshot" }
         require(snapshot.feedback.all { canonicalWord(it.original) && canonicalWord(it.replacement) &&
             it.original != it.replacement && it.accepted in 0..PersonalTypingModel.MAX_COUNT && (it.rejected || it.accepted > 0) } &&
             snapshot.feedback.map { Triple(it.language, it.original, it.replacement) }.distinct().size == snapshot.feedback.size) {

@@ -1,0 +1,43 @@
+{
+  "distributionRightsReviewed": false,
+  "pageIndexSha256": "0f55e171539de0b476041a960f2a8f212ff6b4bfac23625aed8eecd84d8b2d88",
+  "partitions": {
+    "calibration": {
+      "corpusRowsSha256": "0e38210241368965d30edbce36387b6de3f821447c1e69d5ba19ef4c2b75ebf9",
+      "noticeAndFullContentWitness": {
+        "articles": 73,
+        "contexts": 74,
+        "rows": 354
+      },
+      "noticeScope": {
+        "articles": 217,
+        "contexts": 218,
+        "rows": 1035
+      },
+      "translationReceiptSha256": "1461b88dc8faac62280255cc347cbd03594b62b63054b109a34de182e97c02a4"
+    },
+    "holdout": {
+      "corpusRowsSha256": "fab03f6fb1c08c462328ebf5c18877b0483ab7977179090c2bd48db9e89a0e8d",
+      "noticeAndFullContentWitness": {
+        "articles": 81,
+        "contexts": 81,
+        "rows": 382
+      },
+      "noticeScope": {
+        "articles": 243,
+        "contexts": 244,
+        "rows": 1155
+      },
+      "translationReceiptSha256": "f9f64c4e97f8d3699ead875ec5aeed1d3667b36d129b965d845e27c51c00779b"
+    }
+  },
+  "passageLevelOriginsReviewed": false,
+  "schema": 1,
+  "scope": "historical translation-notice intersection with revision witnesses",
+  "witnessShards": {
+    "0011.parquet": "7b011b73fc8ac45458f7aad96be9c22326cd4ee460ce2f813a1a8fb4330c6b37",
+    "0012.parquet": "39618287e7b39bbb3c8b347caab692fe3130fff203481ef33e3cc852247e1314",
+    "0013.parquet": "07f20a483707c461721617432fecb1d8dae699aefd700f646ce974de16d89fa6",
+    "0014.parquet": "5740c7ac59aed44edefb6bb73ae799800176958ea38f3760d0fe45fb13fef61b"
+  }
+}

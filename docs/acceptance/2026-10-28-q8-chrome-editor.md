@@ -88,3 +88,111 @@ second-test setup refused IME selection before typing; the failure is retained.
 The whole class passed on controlled repeat without reinstalling or changing the
 fixture. Activation reliability is not claimed fixed, and full Q8 remains open.
 See [the Q2 integration receipt](2026-10-28-q2-source-cascade-notices.md).
+
+## Disposable emulator recheck — 2026-11-10
+
+On an isolated Android API 37 emulator, Chrome 145.0.7632.218 and the debug
+application built from `a4a4de3d` were exercised with the explicit emulator
+opt-in in the test harness. Without that opt-in, both cases were skipped. A
+first run failed both teardown assertions because an earlier owned tab used the
+same fixture address. With a fresh fixture on a different port, both native
+cases passed and the independent numeric DOM oracle passed (51 no-suggestions
+and 62 ordinary records). The failed run is retained alongside the successful
+logs under `build/ci-editing-investigation/q8-chrome-emulator`.
+
+The emulator check does not expand the physical Fold or application matrix
+acceptance described above. The emulator and its local fixture were stopped.
+
+## Current Fold recheck
+
+On the current Fold debug application and test APK built from `b48d73c2`,
+both physical Chrome tests passed with no skips. The independent numeric DOM
+gate passed with 62 ordinary and 51 no-suggestions records. The two fixture
+tabs closed, the one owned ADB reverse mapping was removed and the host fixture
+stopped. The device reported `CLOSED` after the run; that observation does not
+establish a continuously measured fold state or cover inner/landscape modes.
+
+Rune's keyboard and diagnostic preference values and selected IME matched
+before and after. The rotating diagnostic streams displaced two original files;
+their exact prior bytes were retained in a local owner-only, Git-ignored recovery
+directory. Do not delete that backup as a build artifact: it contains owner
+diagnostics. The remaining original diagnostic files were still present. No
+raw test logs or page text were retained, and the temporary fixture was removed.
+The full APP-001–005 matrix and independent qualification remain open.
+
+## Fold Chrome address-bar follow-up
+
+An opt-in instrumentation test opens its own loopback Chrome tab and uses Rune
+touches to enter a synthetic `.invalid` address. On the Fold it observed the
+complete address, verified that Backspace removed the last character, pressed
+the displayed Go key and observed the address retained while that key was no
+longer visible. This does not independently establish that the whole keyboard
+was dismissed. The test does not independently observe an HTTP request or a page
+load, and it does not establish fold/unfold or landscape behavior. The device
+reported its closed state before the run.
+
+The test APK built in a clean temporary checkout and the physical test passed.
+The owner keyboard and diagnostic preference values, selected IME and original
+diagnostic bytes were unchanged. The owned Chrome tab and ADB reverse were
+removed, the fixture stopped, and the phone returned to its launcher. Temporary
+build files were deleted. The earlier private diagnostic recovery backup remains
+retained and is not a build artifact. The existing CI report parser's 23 host
+tests passed with the new opt-in test added to the known-skip inventory; this is
+not a hosted execution or completion of APP-002.
+
+## Gmail availability
+
+An attempted synthetic `mailto:` compose intent did not resolve to Gmail.
+The installed Gmail package was disabled for Android user 0; no test draft was
+created. The package and its settings were left unchanged. APP-003 remains
+unverified on Fold.
+
+## Fold inner-screen recheck — 2026-11-10
+
+On the unfolded Fold, using the installed debug app and test APK built from
+`b48d73c2`, the two Chrome textarea instrumentation tests passed. The separate
+numeric DOM gate also passed: 62 ordinary and 51 no-suggestions records, with
+all required ordered stages. The address-bar instrumentation test passed as
+well, with the same observation limits described in the address-bar follow-up
+above. The device reported `OPENED` before each test class and after the run;
+continuous display-state sampling, fold transitions and landscape were not
+measured. This is not full APP-002 acceptance.
+
+The fixture server and its owned ADB reverse mapping were removed, and the
+fixture's temporary files were deleted. The three original IME settings matched
+before and after. Three rotated diagnostic files no longer present on the
+device were retained byte-for-byte in a private, ignored recovery directory;
+these owner records must not be deleted as build artifacts. The tests' own
+teardown restores and checks the keyboard preference map. A separate host-side
+comparison mistakenly read a nonexistent preference filename with error checking
+disabled, so its reported equality provides no independent preference evidence;
+no independent diagnostic-preference comparison was made in this run.
+
+## API 37 emulator CI route
+
+The emulator-smoke workflow schedules the Chrome textarea suite on its
+disposable API 37 AVD. The runner verifies the AVD identity and installed
+packages before using a loopback server or changing browser setup. It refuses
+an existing Chrome flags file or debug-app configuration and removes its own
+reverse mapping and temporary setup on exit. The gate requires both named
+instrumentation cases to start and pass, plus the existing ordered numeric
+DOM gate. Numeric instrumentation progress reports are separate from test
+results.
+
+The first local clean-Chrome attempt loaded both pages but failed before typing
+because Chrome's own notification prompt obscured the editor. The
+instrumentation now declines that prompt only during the owned-emulator path.
+On the next fresh install of Chrome data, both native cases completed and
+the corrected host parser accepted the actual captures. Chrome
+`145.0.7632.218` emitted 62 ordinary and 51 no-suggestions records on the
+ARM64 userdebug emulator. The ordinary stages verified five corrections, exact
+Undo and the sixth correction. The no-suggestions stages verified five literal
+words and Backspace. This covers the textarea suite. Hosted x86_64 execution
+and the remainder of the Fold third-party application matrix are open.
+
+The complete runner then repeated both passes after clearing the disposable
+Chrome app data, returned exit 0 and wrote the verdict. ADB confirmed the
+reverse mapping and temporary browser configuration were gone afterward.
+All 50 Android CI helper tests, eight Chrome oracle tests, and actionlint
+passed. The most recent published run remained 40680972358 at `2c1ff975`
+with a failed conclusion.

@@ -1,0 +1,31 @@
+{
+  "analyzerSha256": "4e95c94c2f3b48cc1615416e4dc37add887d27500100cd2d897f08e5bdfde244",
+  "independentQualification": false,
+  "metrics": {
+    "affectedEditKinds": {
+      "correct:control:other": 3,
+      "typo:double_consonant:other": 19,
+      "typo:remove_sign:other": 6,
+      "typo:vowel_ei:other": 27,
+      "typo:vowel_oa:other": 39
+    },
+    "counts": {
+      "correct:attributed": 11,
+      "correct:distance_over_one:other": 3,
+      "correct:edits": 41,
+      "correct:rows": 9543,
+      "correct:unattributed": 30,
+      "typo:attributed": 16767,
+      "typo:distance_over_one:other": 91,
+      "typo:edits": 16778,
+      "typo:rows": 24787,
+      "typo:unattributed": 11
+    }
+  },
+  "observationsSha256": "7f6537da39266bed9cb824d1de396c0d3b5d7ee60a7858f67e91d4f46ed2417e",
+  "policyChanged": false,
+  "replayReceiptSha256": "01617cf8e4fe654de3ee54d6969c90d8e45f7b384f0d59d96e32277f76784245",
+  "rowsSha256": "c25d9afed4b75f78490f2e360c3eb0a0e06aaf97e3291d79f0bdd29aec0ee62f",
+  "scope": "posthoc-disclosed-single-token-distance-screen",
+  "sourceLabelsVerified": false
+}

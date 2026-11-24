@@ -79,6 +79,30 @@ class NeighborRecoverySearchTest {
         assertTrue(search.search("ролверка", running).alternatives.isNotEmpty())
     }
 
+    @Test fun `wall deadline changes the candidate generation included in replay`() {
+        val index = PackedFixture.build(listOf("проверка"), ru).ready()
+        val reader = PackedCandidateLexicon(listOf(index))
+        fun generation(clock: () -> Long): CandidateGeneration {
+            val lexicon = object : CandidateLexicon by reader {
+                private val recovery = NeighborRecoverySearch({ index }, clock)
+                override fun recoverNeighbors(token: String, cancellation: CandidateCancellation) =
+                    recovery.search(token, cancellation)
+            }
+            val generator = CandidateGenerator(lexicon)
+            val baseline = generator.generate("ролверка", ru)
+            return generator.generateRecovery("ролверка", ru, baseline)
+        }
+        val complete = generation { 0L }
+        var time = -NeighborRecoverySearch.MAX_NANOS
+        val timedOut = generation { time += NeighborRecoverySearch.MAX_NANOS; time }
+        assertEquals(CandidateCompletion.COMPLETE, complete.neighborRecovery.completion)
+        assertEquals(listOf("проверка"), complete.neighborRecovery.alternatives.map { it.text })
+        assertEquals(CandidateCompletion.STATES_EXHAUSTED, timedOut.neighborRecovery.completion)
+        assertTrue(timedOut.neighborRecovery.alternatives.isEmpty())
+        assertEquals(complete.localSearch, timedOut.localSearch)
+        assertEquals(complete.alternatives, timedOut.alternatives)
+    }
+
     private fun neighbor(c: Char): Char = ('а'..'я').first { KeyboardDistance.areAdjacent(c.code, it.code, ru) }
 
     /** Enumerate the position of at most one structural edit, then count adjacent substitutions. */

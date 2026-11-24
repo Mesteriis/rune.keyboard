@@ -36,7 +36,9 @@ class EditingWebViewInstrumentedTest {
 
     @After fun restore() {
         if (clipboardTouched) instrumentation.runOnMainSync {
-            context.getSystemService(ClipboardManager::class.java).clearPrimaryClip()
+            val clipboard = context.getSystemService(ClipboardManager::class.java)
+            if (android.os.Build.VERSION.SDK_INT >= 28) clipboard.clearPrimaryClip()
+            else clipboard.setPrimaryClip(ClipData.newPlainText("Rune QA", ""))
         }
         if (prepared) driver.tearDown()
     }
@@ -68,6 +70,21 @@ class EditingWebViewInstrumentedTest {
             assertEquals("abcX", context.getSystemService(ClipboardManager::class.java)
                 .primaryClip?.getItemAt(0)?.text?.toString())
         }
+        noPayloadReads()
+    }
+
+    @Test fun webViewColonCorrectionAndUndoPreserveOwnedWord() {
+        driver.switchToRussian()
+        driver.tapKey("С", "с")
+        type("мотруть")
+        awaitField("смотруть")
+        assertNotNull(driver.device.wait(Until.findObject(By.desc(
+            context.getString(R.string.candidate_correction, "смотреть"))), 15_000))
+        driver.tapKeyByDescription(context.getString(R.string.key_symbols))
+        driver.tapKey(":")
+        awaitField("смотреть:")
+        driver.tapDelete()
+        awaitField("смотруть")
         noPayloadReads()
     }
 

@@ -5,7 +5,6 @@ on:
 
 permissions:
   contents: read
-  actions: read
 
 jobs:
   exact-model-contract:
@@ -22,14 +21,16 @@ jobs:
       - name: Install pinned CMake
         run: |
           sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"
-          yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" "cmake;3.31.6" >/dev/null
+          "$sdk_root/cmdline-tools/latest/bin/sdkmanager" "cmake;3.31.6" >/dev/null < <(yes)
       - name: Fetch the fixed qualification artifact
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p build/exact-model-input
-          gh api repos/Mesteriis/rune.keyboard/actions/artifacts/9800688354/zip > build/exact-model-input/artifact.zip
-          python3 tools/test-native-scoring/extract_model.py build/exact-model-input/artifact.zip build/exact-model-input/model.gguf
+          model=build/exact-model-input/model.gguf
+          curl --fail --location --silent --show-error --retry 3 --max-filesize 396704416 \
+            --output "$model" \
+            'https://huggingface.co/alexm37/rune-text-v1/resolve/c057e37928624d3c3c4bd526d3515f7202395920/rune-text-v1-0.1.0-q4_k_m.gguf'
+          test "$(wc -c < "$model")" -eq 396704416
+          printf '%s  %s\n' '7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4' "$model" | sha256sum -c -
       - name: Verify exact digest, scalar scores and tokenizer contracts
         run: |
           sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-/usr/local/lib/android/sdk}}"

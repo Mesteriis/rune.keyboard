@@ -24,10 +24,14 @@ def main() -> None:
     parser.add_argument("--frequency", type=Path, required=True)
     parser.add_argument("--exclude-rows", type=Path, action="append", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--historical-reproduction", action="store_true",
+                        help="Reproduce disclosed data; never claim independent qualification.")
     args = parser.parse_args()
     result = prepare(SPEC, Path(__file__), args.parquet, args.frequency,
-                     args.exclude_rows, args.output)
-    print(json.dumps({"counts": result["counts"], "selection": result["selection"]},
+                     args.exclude_rows, args.output,
+                     historical_reproduction=args.historical_reproduction)
+    print(json.dumps({"counts": result["counts"], "selection": result["selection"],
+                      "scope": result["scope"], "independentQualification": result["independentQualification"]},
                      ensure_ascii=False, sort_keys=True))
 
 

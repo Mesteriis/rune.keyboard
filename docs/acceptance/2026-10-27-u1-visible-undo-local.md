@@ -58,3 +58,34 @@ The disposable emulator and fresh AVD were removed after tests completed. The
 adjacent JSON binds sources, APKs, replay inputs/receipts and actual check outputs.
 **U1 remains open for the review's physical Fold acceptance.** No Fold installation,
 paired-phone action, remote CI or full-review completion is claimed by this step.
+
+## Fold inner-screen follow-up — 2026-11-10
+
+An explicitly opted-in physical Fold instrumentation class tests visible Undo
+after the first following letter for a canonical-case correction and for two
+model-reply timings. The model tests inject a synthetic public Binder response;
+they do not exercise the owner's downloaded model. All three tests passed with
+no skips, including six zero payload-read counters. The device reported `OPENED`
+before and after, not continuously. This does not establish complete U1 release
+acceptance or real-model scoring.
+
+The tests disable personalization and metrics during the synthetic input and
+assert that non-diagnostic personal-store snapshots match. The test driver
+restores and checks the keyboard preference map; an additional host snapshot
+confirmed both keyboard and diagnostic preference maps matched. Four rotated
+diagnostic files displaced by the run were preserved byte-for-byte in a private,
+ignored recovery directory. These owner records are not build artifacts.
+
+The four-field host comparison of system IME settings did **not** match after
+the run. The host wrapper retained only the aggregate comparison, so it cannot
+identify which field differed or reconstruct its prior value. The current
+selected IME is Rune; the exact pre-run system state is not established by this
+receipt. The test driver ran its teardown and all tests reported success, but
+that does not prove exact system-state restoration. No attempt was made to
+invent or overwrite the missing prior state. This preservation gap remains open.
+
+The test APK was built in a temporary Git clone with the pinned submodule and
+installed as an update to the test package; the app APK was not reinstalled.
+The temporary clone and build were removed. The CI boundary parser's 23 host
+tests passed with the three explicit physical-only cases added to the known-skip
+inventory. Neither hosted CI nor a general emulator suite was run.

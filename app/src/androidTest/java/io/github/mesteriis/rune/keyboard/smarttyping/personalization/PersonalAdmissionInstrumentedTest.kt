@@ -90,6 +90,10 @@ class PersonalAdmissionInstrumentedTest {
                 protectionEnabled = true; learningEnabled = true
             }
             assertTrue(subject.compactAutomaticDecision(generation, target, ru).allowed)
+            val reviewed = generation.copy(original = "бадлон")
+            val reviewedDecision = subject.compactAutomaticDecision(reviewed, target, ru)
+            assertFalse(reviewedDecision.allowed)
+            assertEquals(AutomaticAdmissionRefusal.ORIGINAL_VALID, reviewedDecision.refusal)
             await { done -> resources.controls.protect(original, ru) {
                 assertEquals(TypingControlStore.Result.SAVED, it); done()
             } }

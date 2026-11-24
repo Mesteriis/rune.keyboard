@@ -62,10 +62,12 @@ class LanguageSettingsActivity : ThemedActivity() {
             setOnClickListener { toggle(language) }
         }
         row.findViewById<Button>(R.id.language_move_up).apply {
+            contentDescription = getString(R.string.settings_language_move_up_accessibility, language.displayLabel)
             this.isEnabled = isEnabled && index > 0
             setOnClickListener { move(language, -1) }
         }
         row.findViewById<Button>(R.id.language_move_down).apply {
+            contentDescription = getString(R.string.settings_language_move_down_accessibility, language.displayLabel)
             this.isEnabled = isEnabled && index >= 0 && index < enabledLanguages.lastIndex
             setOnClickListener { move(language, 1) }
         }

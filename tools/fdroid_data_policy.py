@@ -10,13 +10,31 @@ import re
 
 REPO = Path(__file__).resolve().parents[1]
 POLICY = REPO / 'fdroid/review-data-policy.json'
-DATA_SUFFIXES = {'.bin', '.ctx', '.gram', '.zip', '.gz'}
+DATA_SUFFIXES = {'.bin', '.ctx', '.gram', '.zip', '.gz', '.bz2'}
 INVENTORY_ARCHIVES = {'app/src/test/resources/smarttyping/ranker/calibration.tsv.gz'}
 HOST_ARCHIVES = {
     'tools/ci/product-replay-v1/baseline.jsonl.gz': 'tools/ci/product-replay-v1/baseline-manifest.json',
     'tools/ci/product-replay-history-v1/baseline.jsonl.gz': 'tools/ci/product-replay-history-v1/baseline-manifest.json',
     'tools/ci/historical-data-v1/files.tar.gz': 'tools/ci/historical-data-v1/manifest.json',
     'tools/ci/historical-model-fixtures-v1/files.tar.gz': 'tools/ci/historical-model-fixtures-v1/manifest.json',
+}
+PUBLIC_ARCHIVES = {
+    'tools/typing_experiments/public_sources/tatoeba-ru-cc0-20261024/rus_sentences_CC0.tsv.bz2':
+        'tools/typing_experiments/public_sources/tatoeba-ru-cc0-20261024/tatoeba-source-lock.json',
+    'tools/typing_experiments/public_sources/tatoeba-en-cc0-20261024/eng_sentences_CC0.tsv.bz2':
+        'tools/typing_experiments/public_sources/tatoeba-en-cc0-20261024/tatoeba-source-lock.json',
+}
+
+
+HISTORICAL_ARCHIVES = {
+    'tools/typing_experiments/historical-qualification-v3-v4/qualification-v3.tar.bz2':
+        'tools/typing_experiments/historical-qualification-v3-v4/catalog.json',
+    'tools/typing_experiments/historical-qualification-v3-v4/qualification-v4.tar.bz2':
+        'tools/typing_experiments/historical-qualification-v3-v4/catalog.json',
+    'tools/typing_experiments/available-v6-article-origin-v1/calibration-recovery/calibration.tsv.bz2':
+        'tools/typing_experiments/available-v6-article-origin-v1/archive-catalog.json',
+    'tools/typing_experiments/available-v6-article-origin-v1/rival-recovery/matches.jsonl.bz2':
+        'tools/typing_experiments/available-v6-article-origin-v1/archive-catalog.json',
 }
 
 
@@ -65,7 +83,9 @@ def parse_policy(data: bytes) -> dict:
 def check(root: Path, value: dict) -> dict:
     discovered = set()
     for directory in ('app/src/main/assets', 'app/src/test/resources', 'tools/emoji/sources',
-                      'tools/typing_experiments/baseline', 'tools/ci'):
+                      'tools/typing_experiments/baseline', 'tools/typing_experiments/public_sources',
+                      'tools/typing_experiments/historical-qualification-v3-v4',
+                      'tools/typing_experiments/available-v6-article-origin-v1', 'tools/ci'):
         for path in (root / directory).rglob('*'):
             if path.is_file() and path.suffix in DATA_SUFFIXES:
                 discovered.add(path.relative_to(root).as_posix())
@@ -76,6 +96,8 @@ def check(root: Path, value: dict) -> dict:
                 'DATA_ENTRY_SCHEMA')
         name = entry['path']
         require(isinstance(name, str) and name in discovered, 'UNREVIEWED_OR_STALE_DATA_SET')
+        if name.startswith('tools/typing_experiments/public_sources/'):
+            require(name in PUBLIC_ARCHIVES, 'UNREVIEWED_PUBLIC_ARCHIVE')
         path = relative_file(root, name)
         require(name not in registered, 'DUPLICATE_DATA_ENTRY')
         registered.add(name)
@@ -84,16 +106,30 @@ def check(root: Path, value: dict) -> dict:
                     for key in ('sha256', 'provenanceSha256')), 'DATA_ENTRY_IDENTITY')
         require(path.stat().st_size == entry['bytes'] and digest(path) == entry['sha256'], 'DATA_BYTES_DRIFT')
         declared = entry['provenance']
-        if name in HOST_ARCHIVES:
-            require(declared == HOST_ARCHIVES[name], 'INVALID_PROVENANCE_SCOPE')
+        if name in HOST_ARCHIVES or name in PUBLIC_ARCHIVES or name in HISTORICAL_ARCHIVES:
+            require(declared == (HOST_ARCHIVES | PUBLIC_ARCHIVES | HISTORICAL_ARCHIVES)[name], 'INVALID_PROVENANCE_SCOPE')
         require(isinstance(declared, str) and declared.endswith('.json') and
                 (declared.startswith(('app/src/main/assets/', 'app/src/test/resources/')) or
                  declared == 'tools/emoji/source-manifest.json' or
-                 HOST_ARCHIVES.get(name) == declared), 'INVALID_PROVENANCE_SCOPE')
+                 HOST_ARCHIVES.get(name) == declared or PUBLIC_ARCHIVES.get(name) == declared or
+                 HISTORICAL_ARCHIVES.get(name) == declared), 'INVALID_PROVENANCE_SCOPE')
         provenance = relative_file(root, declared)
         require(digest(provenance) == entry['provenanceSha256'], 'DECLARED_PROVENANCE_DRIFT')
+        if name in PUBLIC_ARCHIVES:
+            lock = json.loads(provenance.read_text(encoding='utf-8'))
+            require(isinstance(lock, dict) and lock.get('compressedSha256') == entry['sha256'] and
+                    lock.get('license') == 'CC0-1.0', 'PUBLIC_ARCHIVE_PROVENANCE')
+        if name in HISTORICAL_ARCHIVES:
+            catalog = json.loads(provenance.read_text(encoding='utf-8'))
+            version = path.name.removeprefix('qualification-').removesuffix('.tar.bz2')
+            archives = catalog.get('archives') if isinstance(catalog, dict) else None
+            archive = archives.get(version, {}) if isinstance(archives, dict) else {}
+            require(isinstance(catalog, dict) and isinstance(archive, dict) and catalog.get('schema') == 1 and
+                    catalog.get('purpose') == 'DISCLOSED_HISTORICAL_CORPORA_NOT_QUALIFICATION' and
+                    archive.get('archive') == path.name and archive.get('archiveSha256') == entry['sha256'],
+                    'HISTORICAL_ARCHIVE_PROVENANCE')
         expected = 'delete' if name.startswith('tools/typing_experiments/baseline/') or name in HOST_ARCHIVES else (
-            'inventory' if path.suffix in {'.ctx', '.gram'} or name in INVENTORY_ARCHIVES else 'ignore')
+            'inventory' if path.suffix in {'.ctx', '.gram'} or name in INVENTORY_ARCHIVES or name in PUBLIC_ARCHIVES or name in HISTORICAL_ARCHIVES else 'ignore')
         require(entry['action'] == expected, 'SCANNER_ACTION_MISMATCH')
         actions[expected].append(name)
         # Upstream 2.4.5 uses startswith after resolving an exact scanignore path.

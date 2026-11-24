@@ -68,3 +68,11 @@ catalogue. Do not execute their top levels from this directory: they reference
 historical models/inputs and write old output locations. The audit verifies
 public captures, inherited natural-pool fields, variants and v5 filtering without
 running those operations or claiming selection/model parity.
+
+The reliable-side-v5, sentence-corpus-v6 and sentence-pairs-v2-v6 preparation
+sources are also retained at the exact hashes recorded in their original
+acceptance evidence. They were reconstructed as text from the archived v4
+source and the sequential creation/correction records; the historical scripts
+were not executed. Tests bind each archive to its original path and evidence
+hash. These source files alone do not restore their inputs, the later
+available-clean-v6 rows, the selection result or model execution.

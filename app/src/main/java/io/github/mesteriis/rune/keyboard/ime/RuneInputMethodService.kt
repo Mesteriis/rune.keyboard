@@ -8,9 +8,15 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.text.InputType
+import android.view.KeyEvent
 import android.view.View
+import android.view.WindowInsetsController
+import android.view.WindowManager
+import android.graphics.Color
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.InputMethodSubtype
+import io.github.mesteriis.rune.keyboard.BuildConfig
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.ime.editor.EditorCommandExecutor
 import io.github.mesteriis.rune.keyboard.ime.editor.EditorCallbackTrace
@@ -83,6 +89,7 @@ class RuneInputMethodService : InputMethodService() {
     private val layoutProvider = KeyboardLayoutProvider()
     private lateinit var feedbackController: FeedbackController
     private lateinit var keyboardPreferences: KeyboardPreferences
+    private var voiceTarget: Pair<String, InputMethodSubtype>? = null
     private var keyboardView: RuneKeyboardView? = null
     private var editorContext = EditorContext.from(InputType.TYPE_CLASS_TEXT, EditorInfo.IME_ACTION_NONE)
     private var settings = KeyboardSettings.DEFAULT
@@ -94,7 +101,7 @@ class RuneInputMethodService : InputMethodService() {
     private var state = KeyboardState.initial(KeyboardLanguage.ENGLISH, automaticCapitalization = false)
     private var selectedLanguage = KeyboardLanguage.ENGLISH
     private var hasSelection = false
-    private val typingSession = TypingSessionController(RuneTrace)
+    private val typingSession = TypingSessionController(RuneTrace, BuildConfig.MODEL_PREFIX_WINDOW)
     private val externalEditContinuity = ExternalEditContinuity()
     private lateinit var personalResources: PersonalTypingResources
     private lateinit var personalization: AndroidTypingPersonalization
@@ -194,7 +201,10 @@ class RuneInputMethodService : InputMethodService() {
     override fun onCreateInputView(): View {
         return RuneTrace.section("Rune#createInputView") {
             val themedContext = ThemeOverride.themedContext(this, settings.theme)
-            RuneKeyboardView(themedContext, buildMetrics(themedContext), settings.keyboardTheme).also { view ->
+            val systemNight = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+            val light = settings.keyboardPalette.isLight(systemNight)
+            applyKeyboardNavigation(light)
+            RuneKeyboardView(themedContext, buildMetrics(themedContext), settings.keyboardTheme, light).also { view ->
                 keyboardView = view
                 view.setOnPhysicalTouchListener { sample ->
                     updatePersonalizationPolicy()
@@ -210,9 +220,38 @@ class RuneInputMethodService : InputMethodService() {
                 view.setDynamicTouchResolver(::dynamicTouchStamp, ::resolveDynamicTouch)
                 view.setOnActionListener(::handleAction)
                 view.setOnCandidateSelectedListener(::handleCandidateSelection)
+                view.setOnCandidateExpandListener {
+                    updatePersonalizationPolicy()
+                    val expanded = candidates.openExpandedCandidates()
+                    if (expanded != null && !view.showExpandedCandidates(expanded.candidates, { id ->
+                            updatePersonalizationPolicy()
+                            candidates.selectExpandedCandidate(expanded, id, ::executeTypingEdit)
+                            renderCandidates()
+                        }, { candidates.closeExpandedCandidates() })) {
+                        candidates.closeExpandedCandidates()
+                    }
+                }
                 renderKeyboard()
                 view.requestApplyInsets()
             }
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun applyKeyboardNavigation(light: Boolean) {
+        val imeWindow = window?.window ?: return
+        val lightNavigation = light && Build.VERSION.SDK_INT >= 27
+        imeWindow.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        imeWindow.navigationBarColor = if (lightNavigation) Color.rgb(0xe8, 0xe8, 0xe8) else Color.rgb(0x18, 0x18, 0x18)
+        if (Build.VERSION.SDK_INT >= 30) {
+            imeWindow.insetsController?.setSystemBarsAppearance(
+                if (lightNavigation) WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS else 0,
+                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+            )
+        } else if (Build.VERSION.SDK_INT >= 27) {
+            val flags = imeWindow.decorView.systemUiVisibility
+            imeWindow.decorView.systemUiVisibility = if (lightNavigation) flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                else flags and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
         }
     }
 
@@ -261,6 +300,7 @@ class RuneInputMethodService : InputMethodService() {
         super.onStartInputView(info, restarting)
         if (info != null) editorContext = EditorContext.from(info)
         inputViewActive = true
+        voiceTarget = findVoiceInput()
         candidates.invalidate()
         if (!editorContext.supportsSmartTyping) typingSession.endSession()
         candidates.warmCurrentLanguage()
@@ -307,6 +347,21 @@ class RuneInputMethodService : InputMethodService() {
         externalEditContinuity.observe(typingSession.state.enabled, typingSession.requiresExternalWordBoundary)
         renderCandidates()
         refreshAutomaticCapitalization()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && keyboardView?.hasExpandedCandidates == true) {
+            if (event.repeatCount == 0) event.startTracking()
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking && !event.isCanceled &&
+            keyboardView?.dismissExpandedCandidates() == true
+        ) return true
+        return super.onKeyUp(keyCode, event)
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
@@ -375,6 +430,11 @@ class RuneInputMethodService : InputMethodService() {
                 (transition.command == EditorCommand.InsertNewline || transition.command is EditorCommand.PerformEditorAction)
             val leavingEditing = previousState.layer == KeyboardLayer.EDITING && action == KeyboardAction.ToggleSymbols
             val leavingEmoji = previousState.layer == KeyboardLayer.EMOJI && action == KeyboardAction.ToggleSymbols
+            // Keep the owned word only while entering the first symbols page, so ':' can
+            // consume a ready correction. Any other symbol still ends that ownership.
+            val enteringSymbolsWithOwnedWord = action == KeyboardAction.ToggleSymbols &&
+                previousState.layer == KeyboardLayer.LETTERS && transition.state.layer == KeyboardLayer.SYMBOLS &&
+                typingSession.canRequestCandidates
             val editingCursor = previousState.layer == KeyboardLayer.EDITING &&
                 (action is KeyboardAction.MoveCursor || action == KeyboardAction.CursorModeStarted)
             val externalEdit = action == KeyboardAction.OpenEditing && transition.state.layer == KeyboardLayer.EDITING ||
@@ -385,7 +445,7 @@ class RuneInputMethodService : InputMethodService() {
                     action is KeyboardAction.MoveCursor
                 if (!typingSession.prepareExternalEdit(await, ::executeTypingEdit)) return@section
                 externalEditContinuity.arm()
-            } else if (!leavingEditing && !leavingEmoji && !ownedEnter && invalidatesTyping(action)) {
+            } else if (!leavingEditing && !leavingEmoji && !ownedEnter && !enteringSymbolsWithOwnedWord && invalidatesTyping(action)) {
                 candidates.invalidate()
                 if (action is KeyboardAction.MoveCursor || action == KeyboardAction.Enter) {
                     typingSession.awaitEditorSelection(::executeTypingEdit)
@@ -443,6 +503,7 @@ class RuneInputMethodService : InputMethodService() {
         KeyboardAction.CursorModeStarted,
         KeyboardAction.HideKeyboard,
         KeyboardAction.NextInputMethod,
+        KeyboardAction.VoiceInput,
         is KeyboardAction.SwitchLanguage,
         is KeyboardAction.MoveCursor,
         -> true
@@ -450,6 +511,11 @@ class RuneInputMethodService : InputMethodService() {
     }
 
     private fun executeTypingOrEditorCommand(command: EditorCommand, beforeAction: KeyboardState): CommandOutcome {
+        if (beforeAction.layer == KeyboardLayer.SYMBOLS && command is EditorCommand.CommitText &&
+            command.value != ":" && typingSession.state.composing?.typedWord?.isNotEmpty() == true) {
+            candidates.invalidate()
+            if (!typingSession.invalidate(::executeTypingEdit)) return CommandOutcome.DROPPED
+        }
         when (command) {
             is EditorCommand.CommitText -> typingSession.recordInput(command.value,
                 allowFreshDiagnostics = inputViewActive && editorContext.supportsSmartTyping &&
@@ -483,7 +549,8 @@ class RuneInputMethodService : InputMethodService() {
         val result = if (command is EditorCommand.CommitText || command == EditorCommand.DeletePreviousCodePoint ||
             command == EditorCommand.ConvertPrecedingSpaceToPeriod || command == EditorCommand.InsertNewline) {
             candidates.edit(spaceCorrection = if (command is EditorCommand.CommitText && command.value == " ")
-                ::executeTypingEdit else null) {
+                ::executeTypingEdit else null, retainReadySymbolBoundary = beforeAction.layer == KeyboardLayer.SYMBOLS &&
+                command is EditorCommand.CommitText && command.value == ":" && typingSession.canRequestCandidates) {
                 when (command) {
                     is EditorCommand.CommitText -> if (beforeAction.layer == KeyboardLayer.EMOJI && command.value != " ")
                         typingSession.typeIsolatedText(command.value, ::executeTypingEdit)
@@ -529,6 +596,10 @@ class RuneInputMethodService : InputMethodService() {
 
     private fun executeCommand(command: EditorCommand): CommandOutcome {
         when (command) {
+            EditorCommand.SwitchToVoiceInput -> {
+                switchToVoiceInputOrShowPicker()
+                return CommandOutcome.DELIVERED
+            }
             EditorCommand.SwitchToNextInputMethod -> {
                 switchToNextInputMethodOrShowPicker()
                 return CommandOutcome.DELIVERED
@@ -677,7 +748,7 @@ class RuneInputMethodService : InputMethodService() {
             layoutProvider.layoutFor(
                 state = state,
                 editorContext = editorContext,
-                options = LayoutOptions(showNumberRow = settings.numberRow, keyFlicks = settings.keyFlicks, emojiKey = settings.emojiKey),
+                options = LayoutOptions(showNumberRow = settings.numberRow, keyFlicks = settings.keyFlicks, emojiKey = settings.emojiKey, voiceInput = voiceTarget != null),
             )
         }
         view.render(layout, state)
@@ -740,8 +811,9 @@ class RuneInputMethodService : InputMethodService() {
 
     private fun updatePersonalizationPolicy() {
         if (!::personalization.isInitialized) return
+        val retainedSymbolWord = state.layer == KeyboardLayer.SYMBOLS && typingSession.canRequestCandidates
         val eligible = inputViewActive && editorContext.allowsPersonalization && !hasSelection &&
-            state.layer == KeyboardLayer.LETTERS
+            (state.layer == KeyboardLayer.LETTERS || retainedSymbolWord)
         val visible = eligible && settings.candidateStrip
         typingTools.boundariesEnabled = visible && settings.wordBoundarySuggestions
         typingTools.abbreviationsEnabled = visible && settings.abbreviations
@@ -754,7 +826,8 @@ class RuneInputMethodService : InputMethodService() {
         keyboardView?.setOnCandidateLongPressedListener(if (visible && settings.protectedWords && personalResources.controls.isReady)
             ::handleCandidateProtection else null)
         val configured = DiagnosticFeatures.configured(globalSettings)
-        val effective = TypingFeaturePolicy.effective(DiagnosticFeatures.configured(settings), candidateOwnerState(),
+        val featureOwner = candidateOwnerState().let { if (retainedSymbolWord) it.copy(layer = KeyboardLayer.LETTERS) else it }
+        val effective = TypingFeaturePolicy.effective(DiagnosticFeatures.configured(settings), featureOwner,
             personalResources.dictionaryLoaded, abbreviationStore.isReady, personalResources.personal.isReady,
             personalResources.touch.isReady, qualityStore.isReady, personalResources.controls.isReady, personalResources.learning.isReady,
             personalResources.experiments.learnedReady, personalResources.experiments.contextReady, personalResources.experiments.tapReady)
@@ -797,7 +870,7 @@ class RuneInputMethodService : InputMethodService() {
         updatePersonalizationPolicy()
         val view = keyboardView ?: return
         val snapshot = candidates.viewState
-        view.updateCandidates(snapshot)
+        view.updateCandidates(snapshot, candidates.hasExpandedCandidates())
         val undoId = snapshot.candidates.filterIsInstance<CandidateUiItem.Undo>().firstOrNull()?.id
         if (undoId != null && undoId != timedUndoId) {
             timedUndoId = undoId
@@ -822,6 +895,42 @@ class RuneInputMethodService : InputMethodService() {
             keyHeightPx = KeyboardMetrics.keyHeightPx(baseHeightPx, settings.heightPreset(bucket)),
             keyGapPx = resources.getDimensionPixelSize(gapResource),
         )
+    }
+
+    private fun findVoiceInput(): Pair<String, InputMethodSubtype>? {
+        val manager = getSystemService(InputMethodManager::class.java)
+        return try {
+            manager.enabledInputMethodList.asSequence().flatMap { method ->
+                manager.getEnabledInputMethodSubtypeList(method, true).asSequence()
+                    .filter { it.mode.equals("voice", ignoreCase = true) }
+                    .map { method.id to it }
+            }.firstOrNull()
+        } catch (_: SecurityException) {
+            null
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun switchToVoiceInputOrShowPicker() {
+        val manager = getSystemService(InputMethodManager::class.java)
+        val target = findVoiceInput()
+        if (target != null) {
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    switchInputMethod(target.first, target.second)
+                } else {
+                    val token = window?.window?.attributes?.token
+                    if (token == null) { manager.showInputMethodPicker(); return }
+                    manager.setInputMethodAndSubtype(token, target.first, target.second)
+                }
+                return
+            } catch (_: IllegalArgumentException) {
+                // The enabled or visible IME can change while the popup is open.
+            } catch (_: SecurityException) {
+                // Fall back to the system chooser if Android rejects direct switching.
+            }
+        }
+        manager.showInputMethodPicker()
     }
 
     private fun switchToNextInputMethodOrShowPicker() {

@@ -22,7 +22,7 @@
         android:exported="true"
         android:label="@string/qa_title"
         android:process=":qa_editor"
-        android:theme="@style/Theme.RuneKeyboard.Setup"
+        android:theme="@style/Theme.RuneKeyboard.QaEditor"
         android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
   </application>
 

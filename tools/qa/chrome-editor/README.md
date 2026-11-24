@@ -47,3 +47,27 @@ owned fixture tabs, remove only the created reverse mapping, stop the server,
 and verify owner state. Neither background processes nor global ADB state should
 be reset. This fixture measures the current display configuration; it does not
 prove cover/inner/rotation, omnibox GO, other applications or full Q8 acceptance.
+
+## Disposable emulator
+
+The same test can run on an explicitly owned emulator with Chrome installed.
+Use an isolated ADB server and replace `-e allowPhysicalDevice true` with
+`-e runeOwnedEmulator q8-chrome`; the test also requires emulator hardware and
+`ro.kernel.qemu=1`. Complete first-run Chrome setup without an account. Start a
+fresh fixture on a port not already open in another Chrome tab, then apply the
+same native and DOM verification above. This supplements, but does not replace,
+the physical Fold matrix. Remove the owned reverse mapping and stop the fixture,
+emulator and isolated ADB server after the run.
+
+## Android emulator CI
+
+The API 37 smoke job runs the Chrome textarea class and its numeric oracle
+with `tools/ci/android_chrome_editor.py`. The command requires an owned
+`rune-ci-*` API 37 userdebug emulator, installed ordinary debug and test APKs,
+and the image's Chrome package. It temporarily supplies Chrome's first-run
+flags, allocates one loopback reverse port, and removes the port mapping and
+temporary Chrome configuration on exit. The route refuses an existing Chrome
+flags file or debug app configuration. It requires both exact instrumentation
+cases and the ordered DOM outcomes. The matrix collects the native log,
+numeric event stream and result.
+[Chromium Android command-line flag documentation](https://new.chromium.org/developers/how-tos/run-chromium-with-flags/#android)

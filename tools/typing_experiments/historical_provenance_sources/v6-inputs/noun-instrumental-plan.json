@@ -1,0 +1,13 @@
+{
+  "stage": "frozen-before-negative-cohort-selection-and-scoring",
+  "maximumContexts": 512,
+  "maximumContextsPerFamily": 32,
+  "seed": "rune-noun-instrumental-after-object-cue-20261026-v1",
+  "sourceSha256": "3993a545d85db1e60a9423c0165a909c0d52beba85070883adf93cf5abe3db5f",
+  "modelSha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+  "policySha256": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+  "requiredPrecisionWhenAnyRevisions": 0.95,
+  "maximumPriorCorrectLosses": 0,
+  "maximumControlChanges": 0,
+  "purpose": "Natural instrumental nouns after the same existing object cue: additional regression gate with actual availability, no minimum volume or broad precision claim"
+}

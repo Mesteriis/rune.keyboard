@@ -34,7 +34,8 @@ def verify_sections(output: str) -> None:
 
 def verify_paths(payload: bytes) -> None:
     # Report a fixed code, never a captured machine-local path or string payload.
-    require(re.search(rb"/(?:Users|home)/", payload) is None, "NATIVE_LOCAL_SOURCE_PATH")
+    require(re.search(rb"/(?:(?:Users|home)/|(?:private/)?(?:tmp/|var/folders/)|opt/homebrew/)", payload) is None,
+            "NATIVE_LOCAL_SOURCE_PATH")
 
 
 def verify(apk: Path, stripped: Path, readelf: Path, *, require_no_local_paths: bool = False) -> list[dict]:
@@ -72,7 +73,7 @@ def main() -> None:
     parser.add_argument("--stripped", type=Path, required=True)
     parser.add_argument("--readelf", type=Path, required=True)
     parser.add_argument("--require-no-local-paths", action="store_true",
-                        help="Also refuse /Users/ or /home/ strings retained in runtime data")
+                        help="Also refuse common host user, temporary and Homebrew paths in runtime data")
     args = parser.parse_args()
     try:
         for item in verify(args.apk, args.stripped, args.readelf, require_no_local_paths=args.require_no_local_paths):

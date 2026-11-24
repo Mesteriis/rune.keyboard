@@ -1,0 +1,20 @@
+{
+  "auditSha256": "c273c677e80e816908fbcdaca03a2eff34badd2d568d595eee805c03455468de",
+  "checked": 5,
+  "failureIds": [
+    "chat-regression-11073774-control",
+    "chat-regression-11113184-control",
+    "chat-regression-11113196-control",
+    "chat-regression-11219473-control",
+    "chat-regression-12072098-control"
+  ],
+  "independentQualification": false,
+  "inputs": {
+    "ledger": "9382b5c18b5b583808316fbdf68c4a0f1ef9d21be41c3dba211c64c8a1e0770c",
+    "observations": "7f6537da39266bed9cb824d1de396c0d3b5d7ee60a7858f67e91d4f46ed2417e",
+    "review": "b9db328d07eb151365e32c34b67913c16afb9c9b0399d39d61589444dd7ecd84",
+    "rows": "c25d9afed4b75f78490f2e360c3eb0a0e06aaf97e3291d79f0bdd29aec0ee62f"
+  },
+  "preserved": 0,
+  "purpose": "POSTHOC_DISCLOSED_CASE_REGRESSION_NOT_QUALIFICATION"
+}

@@ -16,8 +16,7 @@ hashes and normalized reference maps as well. Neither mode executes scripts.
 
 This archive establishes direct declared source identities only. It does not
 establish transitive import coverage, feature parity, model execution or model
-identity. In particular, it does not recover the different missing role-feature
-hash in the v4 **corpus** manifest or the missing left-sequence-v1 feature hash.
-The available source referenced by a later training plan cannot replace either
-missing historical version. Existing family/context exclusions remain in
-`../holdout-ledger.json`; no new independent examples or training are claimed.
+identity. The distinct role-v4 and left-sequence-v1 corpus feature versions
+are tracked in the [frozen source archive](../frozen_sources/manifest.json).
+Their recorded hashes are verified by the authored-history auditors. Existing
+family/context exclusions are recorded in `../holdout-ledger.json`.

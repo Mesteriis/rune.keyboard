@@ -18,7 +18,8 @@ import evaluate_local_holdout
 NAMED = {
     'en': [('teh', 'the'), ('recieve', 'receive'), ('adress', 'address')],
     'ru': [('автокрекция', 'автокоррекция'), ('арфография', 'орфография'), ('сообшение', 'сообщение'),
-           ('реалбно', 'реально'), ('мододец', 'молодец'), ('шоржусь', 'горжусь')],
+           ('реалбно', 'реально'), ('мододец', 'молодец'), ('шоржусь', 'горжусь'), ('заьыл', 'забыл'),
+           ('заберай', 'забирай'), ('зочу', 'хочу')],
     'es': [('mensage', 'mensaje'), ('correcion', 'corrección')],
 }
 
@@ -31,8 +32,27 @@ def named_rows():
                     ('@' + typed, '@' + typed, 'protected'), (typed + '@example.com', typed + '@example.com', 'protected')]:
                 rows.append({'id': f'named-{lang}-{len(rows)}', 'split': 'holdout', 'language': lang,
                     'prefix': '', 'typed': token, 'expectedSpelling': target, 'cohort': cohort,
-                    'noAuto': cohort != 'typo'})
+                    'noAuto': cohort != 'typo', 'purpose': 'REGRESSION_ONLY_NOT_TRAINING'})
     return rows
+
+
+def require_named_acceptance(rows, observations):
+    replay.require(bool(rows) and len(rows) == len(observations) and
+                   len({r['id'] for r in rows}) == len(rows), 'NAMED_IDENTITY')
+    for row, observation in zip(rows, observations, strict=True):
+        evaluate_local_holdout.validate_input(row, observation)
+        expected = (row.get('prefix', '') + ' ' if row.get('prefix') else '') + row['expectedSpelling'] + ' '
+        replay.require(observation.get('afterBoundary', {}).get('text') == expected,
+                       'NAMED_EXACT_OUTPUT')
+        changed = observation.get('boundaryChangedBeyondInsertedSpace') or observation.get('inputChangedByTyping')
+        if row['cohort'] == 'typo':
+            generation = observation.get('fullTokenGeneration') or {}
+            replay.require(generation.get('protectedReason') is None and
+                row['expectedSpelling'] in [c['text'] for c in generation.get('alternatives', [])] and
+                changed, 'NAMED_TARGET_AND_REPLACEMENT')
+        else:
+            replay.require(not changed, 'NAMED_CONTROL_CHANGED')
+        replay.require(observation.get('restoredBeforeBoundaryExactly') is True, 'NAMED_EXACT_UNDO')
 
 
 def artifact_bindings(java, sources, jars, android):
@@ -67,6 +87,20 @@ def run(args):
         commands[name] = replay.run_harness(root, java, jars, android, jar, inputs, out, 'unavailable')
         return replay.read_jsonl(out)
 
+    if args.named_only:
+        named = named_rows()
+        observations = observe(named, 'named')
+        require_named_acceptance(named, observations)
+        replay.verify_bound_files({'files': bindings})
+        report = {'scope': 'disclosed-named-regression', 'rows': len(named),
+                  'allCasesPass': True, 'independentQualification': False,
+                  'newUnseenHoldout': False, 'thresholdsFittedOnHoldout': False,
+                  'files': {p.name: replay.sha256(p) for p in root.iterdir() if p.is_file()},
+                  'commands': commands}
+        replay.write_json(root / 'named-report.json', report)
+        print(json.dumps(report, indent=2))
+        return
+
     # Selection reads only calibration labels. Holdout labels are loaded after config is written.
     manifest = json.loads((replay.CORPUS / 'manifest.json').read_text())
     def corpus(split):
@@ -87,12 +121,10 @@ def run(args):
     report = evaluate_local_holdout.evaluate(config, holdout, observed, bindings)
     named = named_rows()
     observed_named = observe(named, 'named')
+    require_named_acceptance(named, observed_named)
     named_report = evaluate_local_holdout.evaluate(config, named, observed_named, bindings)
-    for row, observation in zip(named, observed_named, strict=True):
-        if row['cohort'] == 'typo':
-            replay.require(observation['fullTokenGeneration']['protectedReason'] is None and
-                row['expectedSpelling'] in [c['text'] for c in observation['fullTokenGeneration']['alternatives']] and
-                observation['boundaryChangedBeyondInsertedSpace'], 'NAMED_TARGET_AND_REPLACEMENT')
+    named_report.update(dataRole='disclosed-named-regression', independentQualification=False,
+                        newUnseenHoldout=False)
     named_report['allLanguagesPass'] = all(v['pass'] for v in named_report['languages'].values())
     replay.require(named_report['allLanguagesPass'], 'NAMED_ACCEPTANCE_FAILED')
     replay.verify_bound_files({'files': bindings})
@@ -109,4 +141,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--java', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--named-only', action='store_true',
+                        help='Run disclosed exact-output regressions without selecting or qualifying a policy.')
     run(parser.parse_args())

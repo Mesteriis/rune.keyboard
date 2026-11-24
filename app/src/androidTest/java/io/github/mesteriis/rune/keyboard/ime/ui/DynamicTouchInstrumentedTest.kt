@@ -115,8 +115,12 @@ class DynamicTouchInstrumentedTest {
         render(layout(upper), state)
         measure(this, 600)
     }
-    private fun key(keyboard: RuneKeyboardView): View =
-        ((keyboard.getChildAt(1) as ViewGroup).getChildAt(0) as ViewGroup).getChildAt(0)
+    private fun key(keyboard: RuneKeyboardView): View {
+        val host = keyboard.getChildAt(1) as ViewGroup
+        val keys = host.getChildAt(0) as ViewGroup
+        val firstRow = keys.getChildAt(0) as ViewGroup
+        return firstRow.getChildAt(0)
+    }
     private fun measure(view: View, width: Int) {
         view.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
             View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))

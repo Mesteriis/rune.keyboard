@@ -1,0 +1,17 @@
+{
+  "calibration": {
+    "originalRows": 7905,
+    "keptRows": 7905,
+    "removedRows": 0,
+    "removedContextHashes": []
+  },
+  "holdout": {
+    "originalRows": 7760,
+    "keptRows": 7750,
+    "removedRows": 10,
+    "removedContextHashes": [
+      "755eb97dbf4407a3795bb1fd49d9c7e424fa8d265928218851626795197499f6",
+      "b6214534702659d8792592c571a6416523c59201a7186600983ffe9976f6b5b5"
+    ]
+  }
+}

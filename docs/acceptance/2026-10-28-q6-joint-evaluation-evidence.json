@@ -1,0 +1,202 @@
+{
+  "apkChanged": false,
+  "baseRevision": "53084a2",
+  "checks": {
+    "scientific-all": {
+      "errors": 0,
+      "failures": 0,
+      "modules": 23,
+      "receipt": "build/review-q6-joint-evaluation-20261028/scientific-all/receipt.json",
+      "receiptSha256": "e17be45b86146f82d4d386d5d756ec7a77332c37ee806ab8ad56c928b4db7f64",
+      "skipped": 1,
+      "status": "PASS",
+      "tests": 76
+    },
+    "stdlib-all": {
+      "errors": 0,
+      "failures": 0,
+      "modules": 120,
+      "receipt": "build/review-q6-joint-evaluation-20261028/stdlib-all/receipt.json",
+      "receiptSha256": "a10340c9f1b8378cd9598e8a99983520831470c2bb29844ba737cdfd5c037058",
+      "skipped": 0,
+      "status": "PASS",
+      "tests": 651
+    }
+  },
+  "ciTools": {
+    "exitCode": 0,
+    "logSha256": "dcd8e998ab563798d272508ec3e84d438635b6144854ead531a893dcfd7d40a4",
+    "tests": 41
+  },
+  "deviceUsed": false,
+  "fixtureOriginalHoldoutSha256": "03e32ae46a61dd3c5ee0f84a308b9b2d79bf17f7c18de78442d2284738e8084d",
+  "fixtureOriginalManifestSha256": "27c7084f8c739f608da77f617eca1c5ac552ff16b74da05a1a3c3cc888120e3f",
+  "fixtureOriginalMembershipReconstructedOnCI": false,
+  "fixtureOriginalMembershipVerifiedLocally": true,
+  "hostedCIExecuted": false,
+  "independentQualification": false,
+  "inputs": {
+    ".github/workflows/ci.yml": "1f56633d6e6343cbd35a99b7fb430e8f2d7e2bcae309017edb7dcd29fe5a1125",
+    "tools/ci/fixtures/README.md": "f8a20fee49b10941b8c03b7659dee7b6db596f17082b5f6bb8955e60ab090349",
+    "tools/ci/fixtures/joint-editor-disclosed-rows.json": "ea22c602306c7913fec121657eca86e2b35aede3de766a4483cadf027b604abd",
+    "tools/ci/joint_evaluation_smoke.py": "533677b4ee866ecfa431255d8f12b5a55b04109891cd0f201a7be9ba47ed69c1",
+    "tools/ci/python-tools-tests.json": "e2c756d554576b7419590834216bd9aa4e5cdacaa543214315ec014564b416c7",
+    "tools/typing_experiments/evaluate_joint_followup.py": "3b3f4c7c6bf04b3eec1d60660e350b322dd54c0642b08f74eeba69d2ab18cc56",
+    "tools/typing_experiments/evaluate_joint_product.py": "21691786f78633711805617a090cf5415059c1a9f32f5fd658c59b8b874ee6b4",
+    "tools/typing_experiments/frozen_sources/evaluate_joint_followup_60e00f413de1d3c9.py": "60e00f413de1d3c9b7ca8fb549b7d4fd232ee4b7db45a278c2b0ce782cdbe3e1",
+    "tools/typing_experiments/frozen_sources/evaluate_joint_product_6a6b141ae434c5f2.py": "6a6b141ae434c5f262a2c11fd3b0825fdf6d86c202e10ba2ba6c4af0a074822a",
+    "tools/typing_experiments/frozen_sources/manifest.json": "1c7110ccfef4b58bb4047ef80f457ef8870022cf49971d3ba39d43cf6b644372",
+    "tools/typing_experiments/frozen_sources/replay_joint_correction_22c1cd2bfb57be54.py": "22c1cd2bfb57be54a839dad73770af9a0d5395ec3a7c1d7fcb08f284c1e24c3f",
+    "tools/typing_experiments/joint_evaluation_receipt.py": "87d287ebf470b65955651ab8295be2aa560f5c686bad4e024e13f8532347bf3b",
+    "tools/typing_experiments/replay_joint_correction.py": "56915fbcc177ebc610dfa5940263096f5967df8ea728d3d94cff4c62e0d48b74",
+    "tools/typing_experiments/test_joint_evaluation_receipt.py": "bf91aee31cd0ffad71893ec9fb26a3548346da4adff45e3ab61b7f08430c4d68"
+  },
+  "limitations": [
+    "four already disclosed original rows; fixture-only policy; not original training/dev/historical experiment reproduction",
+    "one original typed context deviates; no independent qualification can be drawn from it",
+    "baseline capitalization and composing-range differences are diagnostic; Undo gate checks original text plus caret",
+    "old replay receipts without full resource binding refused; not upgraded with fabricated metadata",
+    "calibrators/training paths, full historical/family provenance and fresh natural qualification remain Q6 work",
+    "complete JDK/distribution, hosted workflow and device/other review criteria remain open"
+  ],
+  "nativeReplays": {
+    "baseline": {
+      "receiptSha256": "beb5be925550a8acc332c4fe53641e5912f26f75d8f1b24cdffdfa754c74e56d",
+      "status": "COMPLETE"
+    },
+    "product": {
+      "receiptSha256": "aa7b531e51d880642dfcf7d35cd582b6b40ad6eb79ee71855c52f0687f9d4e93",
+      "status": "COMPLETE"
+    }
+  },
+  "nativeSmoke": {
+    "capturedFiles": 188,
+    "driverSha256": "533677b4ee866ecfa431255d8f12b5a55b04109891cd0f201a7be9ba47ed69c1",
+    "editorIntegrity": {
+      "long": {
+        "baselineControlChangesExact": 0,
+        "controlChangesExact": 0,
+        "expectedCaseOrLayoutMismatches": 1,
+        "inputChanges": 1,
+        "introducedCaseOrLayoutMismatches": 0,
+        "introducedControlChangesExact": 0,
+        "passed": false,
+        "prefixChanges": 1,
+        "rows": 2,
+        "undoCaretFailures": 0,
+        "undoCompositionDifferences": 0,
+        "undoTextFailures": 0
+      },
+      "short": {
+        "baselineControlChangesExact": 1,
+        "controlChangesExact": 1,
+        "expectedCaseOrLayoutMismatches": 1,
+        "inputChanges": 0,
+        "introducedCaseOrLayoutMismatches": 0,
+        "introducedControlChangesExact": 0,
+        "passed": true,
+        "prefixChanges": 0,
+        "rows": 2,
+        "undoCaretFailures": 0,
+        "undoCompositionDifferences": 0,
+        "undoTextFailures": 0
+      }
+    },
+    "fixtureSha256": "ea22c602306c7913fec121657eca86e2b35aede3de766a4483cadf027b604abd",
+    "independentDataEvaluation": false,
+    "isolatedMutationRejections": 18,
+    "metrics": {
+      "long": {
+        "baselineCorrect": 1,
+        "baselineCorrectAbstained": 0,
+        "baselineCorrectToWrong": 0,
+        "baselineWrong": 0,
+        "controlChanges": 0,
+        "controls": 1,
+        "correct": 1,
+        "newCorrect": 0,
+        "newCorrectFamilies": 0,
+        "passed": false,
+        "precision": 1.0,
+        "prefixChanges": 0,
+        "replacements": 1,
+        "rows": 2,
+        "typos": 1,
+        "undoFailures": 0,
+        "wrong": 0,
+        "wrongResolved": 0
+      },
+      "short": {
+        "baselineCorrect": 0,
+        "baselineCorrectAbstained": 0,
+        "baselineCorrectToWrong": 0,
+        "baselineWrong": 0,
+        "controlChanges": 0,
+        "controls": 1,
+        "correct": 0,
+        "newCorrect": 0,
+        "newCorrectFamilies": 0,
+        "passed": false,
+        "precision": null,
+        "prefixChanges": 0,
+        "replacements": 0,
+        "rows": 2,
+        "typos": 1,
+        "undoFailures": 0,
+        "wrong": 0,
+        "wrongResolved": 0
+      }
+    },
+    "midEvaluationDriftRejected": true,
+    "namedInputs": 363,
+    "opaqueControllerIds": true,
+    "packagedFileSha256": {
+      "app/src/main/assets/smarttyping/experiments/NOTICE.md": "efceac6d0dde6e787e3545e6b3de0f87be6950c67b655ee9076869f07580a9ce",
+      "app/src/main/assets/smarttyping/experiments/contextual-provenance.json": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435",
+      "app/src/main/assets/smarttyping/experiments/contextual-tatoeba-attribution.json": "f81b27066cee38a2f2a14c2766e9cceae399d3c7590bca7b63e4d782fd18dd44",
+      "app/src/main/assets/smarttyping/experiments/infinitive-revision-provenance.json": "a20fe5c9981e857dda6823fb5aeffb56c365556a6e38542250a714ea3aa20fca",
+      "app/src/main/assets/smarttyping/experiments/joint-correction-provenance.json": "7b42d0a46dd754d32903f73dabcefa7eea462f5c6cba1e886a06008bd22cf5e7",
+      "app/src/main/assets/smarttyping/experiments/joint-rescue-provenance.json": "4700fab35c3d9ea83457920187ae41ea88c7a95220325401cf13d83bcd83fcdb",
+      "app/src/main/assets/smarttyping/experiments/neighbor-recovery-provenance.json": "f988fea3f6d96f68ad0394e5a4ded6e067dec8fb305d561415cdc77c4440e4ce",
+      "app/src/main/assets/smarttyping/experiments/noun-case-provenance.json": "a9b1760a0b462a68ff38264be9ae13a9dac9ebf5840cf606778b32c1d2910235",
+      "app/src/main/assets/smarttyping/experiments/provenance.json": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4",
+      "app/src/main/assets/smarttyping/experiments/ru-context.bin": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
+      "app/src/main/assets/smarttyping/experiments/ru-context.gram": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b",
+      "app/src/main/assets/smarttyping/experiments/ru-contextual-policy.json": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6",
+      "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+      "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6",
+      "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-policy.json": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595",
+      "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-policy.json": "ebdb0e83f3c4ed3476f5b317e31619415ca020d9703cd3d6900b9e8ac5c4701d",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+      "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+      "app/src/main/assets/smarttyping/experiments/ru-noun-case-policy.json": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+      "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker.bin": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+      "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+      "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt": "ff4e3cc8b0f67da2295e375b129518100fa8b2b981f32ed490e6e38daa01fd34",
+      "tools/typing_experiments/parity.tsv": "374f78253303b3fd77c5fd17a04190fd73e9d410bc5f069d5860bcefea90fad0"
+    },
+    "packagedFilesUnchanged": true,
+    "passed": false,
+    "reports": {
+      "followup-report.json": "1e37084154fdd255b36373c3defff8c62b2e7634305361b9946470f2a748aa6e",
+      "main-report.json": "415b0972a5a41d16df22452c766fb4f578e11ae6802019ba48799539b5b2446c"
+    },
+    "rows": 4,
+    "scope": "actual current joint controller replay on disclosed original rows; no independent model qualification",
+    "secondWriteRejected": true
+  },
+  "nativeSmokeExitCode": 0,
+  "packagedProvenance": {
+    "exitCode": 0,
+    "logSha256": "106f0b29c87ddbf509aa995df3d144f5a6826f79878fbe1478d4383b192d82fe",
+    "tests": 12
+  },
+  "productionQualified": false,
+  "schemaVersion": 1,
+  "scope": "joint editor evaluation/data-role binding slice; full Q6 incomplete"
+}

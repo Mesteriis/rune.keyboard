@@ -92,6 +92,35 @@ class ModelPreparationWorkerTest {
         assertTrue(f.replies.isEmpty()); assertEquals(1, f.engine.cancels.get())
     }
 
+    @Test fun cancellingAQueuedWordDoesNotTransferAFreshDeadlineToItsSuccessor() = Fixture().use { f ->
+        f.worker.onBind(); f.engine.entered.awaitDone()
+        val cancelled = f.submit(1)
+        f.worker.cancel(1, 1); cancelled.awaitDone()
+        assertFalse(f.engine.flag!!.get())
+
+        f.clock.elapsed = 2000
+        f.clock.cpu = 600
+        f.engine.blockScore = true
+        val successor = f.submit(2)
+        f.finishPreparation(); f.engine.scoreEntered.awaitDone()
+
+        f.clock.elapsed = 2999
+        f.clock.cpu = 4100
+        f.scheduler.tick()
+        assertTrue(f.owner.account().creditUnits > 0)
+        assertFalse(f.engine.flag!!.get())
+        f.clock.elapsed = 3000
+        f.scheduler.tick()
+        assertTrue(f.engine.flag!!.get())
+
+        f.engine.scoreRelease.countDown(); successor.awaitDone()
+        assertTrue(f.replies.isEmpty())
+        assertEquals(1, f.engine.preparations.get())
+        assertEquals(1, f.engine.scores.get())
+        assertEquals(1, f.engine.cancels.get())
+        assertEquals(2, f.finished.get())
+    }
+
     @Test fun expiredPreparationAdmissionCannotBypassTheNormalCreditThreshold() = Fixture().use { f ->
         f.worker.onBind(); f.engine.entered.awaitDone(); f.clock.cpu = 2000
         f.finishPreparation(); f.clock.elapsed = 3000

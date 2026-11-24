@@ -1,0 +1,93 @@
+{
+  "bindings": {
+    "case": "845144afb06ae7881f0db2f577f340694b8c7dfa5fee9685563ec4852939c81b",
+    "identityTool": "1697de9157919e3c7cc3ce329e94e826220d4f4fd7e4f4cab75ff37e6489a1ce",
+    "ledger": "9382b5c18b5b583808316fbdf68c4a0f1ef9d21be41c3dba211c64c8a1e0770c",
+    "ledgerTool": "cedd150f6f2b7cdc3ec7f60cfd2d5ee8a0e9288904b88855a23fed47d4d33777",
+    "review": "b9db328d07eb151365e32c34b67913c16afb9c9b0399d39d61589444dd7ecd84",
+    "source": "982264e0857d2574ada9d1c07897e816ab9c4a8fb139f05320b5836f53d4d7ed",
+    "splitTool": "373879a4483989d8adb7f1831265ee0803502fb25660a202a6898ed74c613683",
+    "tool": "28b9aa86ce718bb39932aa0e19a726add7b209fcd5279a948b6098b899c05dda"
+  },
+  "independentQualification": false,
+  "purpose": "DISCLOSED_LOWERCASE_EVIDENCE_SCREEN_NOT_QUALIFICATION",
+  "result": {
+    "eligibleCaseKeys": 16293,
+    "excludedSourceArticlesWithMatches": 326,
+    "keysWithBothCases": 2,
+    "keysWithLowerEvidence": 10,
+    "lowercaseEvidence": [
+      {
+        "lowerArticles": 7,
+        "titleArticles": 7,
+        "token": "господи"
+      },
+      {
+        "lowerArticles": 1,
+        "titleArticles": 0,
+        "token": "клава"
+      },
+      {
+        "lowerArticles": 3,
+        "titleArticles": 0,
+        "token": "клаве"
+      },
+      {
+        "lowerArticles": 4,
+        "titleArticles": 0,
+        "token": "клавы"
+      },
+      {
+        "lowerArticles": 1,
+        "titleArticles": 0,
+        "token": "майн"
+      },
+      {
+        "lowerArticles": 1,
+        "titleArticles": 1,
+        "token": "марсе"
+      },
+      {
+        "lowerArticles": 1,
+        "titleArticles": 0,
+        "token": "моника"
+      },
+      {
+        "lowerArticles": 1,
+        "titleArticles": 0,
+        "token": "монику"
+      },
+      {
+        "lowerArticles": 1,
+        "titleArticles": 0,
+        "token": "ника"
+      },
+      {
+        "lowerArticles": 5,
+        "titleArticles": 0,
+        "token": "читы"
+      }
+    ],
+    "reviewCases": [
+      {
+        "label": "ambiguous",
+        "lowerEvidence": true,
+        "occurrences": 1,
+        "titleEvidence": false
+      },
+      {
+        "label": "lowercase_preserve",
+        "lowerEvidence": true,
+        "occurrences": 5,
+        "titleEvidence": false
+      },
+      {
+        "label": "proper_name",
+        "lowerEvidence": false,
+        "occurrences": 24,
+        "titleEvidence": true
+      }
+    ]
+  },
+  "schema": 1
+}

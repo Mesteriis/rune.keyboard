@@ -1,0 +1,123 @@
+{
+  "archiveMetadata": {
+    "exactSnapshotRevisionProven": false,
+    "publicationRightsReviewed": false,
+    "queryTimestamp": "20231101",
+    "rows": [
+      {
+        "article": "8245986",
+        "availabilityHttp": 200,
+        "captureHttp": "200",
+        "captureTimestamp": "20220715033832",
+        "htmlSha256": "587c7884ec7cc3352f21eca23b648e2188f7550f5cb497f825f064e2e0eb83da",
+        "ids": {
+          "wgArticleId": 8245986,
+          "wgCurRevisionId": 120576649,
+          "wgRevisionId": 120576649
+        },
+        "pageIdentityMatches": true,
+        "replayStatus": 200
+      },
+      {
+        "article": "8345062",
+        "availabilityHttp": 200,
+        "captureHttp": "200",
+        "captureTimestamp": "20250127090125",
+        "htmlSha256": "9177b05c1652a7aa8814772f2da5ba9c34a9b04ccdedf32b2e565719c9ff3da4",
+        "ids": {
+          "wgArticleId": 8345062,
+          "wgCurRevisionId": 134915696,
+          "wgRevisionId": 0
+        },
+        "pageIdentityMatches": true,
+        "replayStatus": 200
+      },
+      {
+        "article": "8402514",
+        "availabilityHttp": 200,
+        "captureHttp": "200",
+        "captureTimestamp": "20220721215349",
+        "htmlSha256": "0e17b225eddfab4615abeae8c6b62d905ad52ad68c41cd8eef8a44ce1e67dc21",
+        "ids": {
+          "wgArticleId": 8402514,
+          "wgCurRevisionId": 122103831,
+          "wgRevisionId": 122103831
+        },
+        "pageIdentityMatches": true,
+        "replayStatus": 200
+      },
+      {
+        "article": "8441629",
+        "availabilityHttp": 200,
+        "captureHttp": "200",
+        "captureTimestamp": "20221218181527",
+        "htmlSha256": "211d052b0fa33fc936695abd05aeee02901e45cc9222db0f673c3ee607879ee1",
+        "ids": {
+          "wgArticleId": 8441629,
+          "wgCurRevisionId": 122603371,
+          "wgRevisionId": 122603371
+        },
+        "pageIdentityMatches": true,
+        "replayStatus": 200
+      }
+    ],
+    "scope": "public Wayback metadata only"
+  },
+  "archivePassages": {
+    "calibration": {
+      "checked": [
+        {
+          "article": "8402514",
+          "captureSha256": "0e17b225eddfab4615abeae8c6b62d905ad52ad68c41cd8eef8a44ce1e67dc21",
+          "captureTimestamp": "20220721215349",
+          "contexts": 1,
+          "displayedRevision": 122103831,
+          "fullWindowMatch": false,
+          "leftMatch": false,
+          "rightMatch": true,
+          "rows": 5
+        }
+      ],
+      "exactSnapshotRevisionProven": false,
+      "historicalCalibrationSha256": "0e38210241368965d30edbce36387b6de3f821447c1e69d5ba19ef4c2b75ebf9",
+      "htmlSelector": "#mw-content-text .mw-parser-output",
+      "includesFullCleanedArticleCheck": false,
+      "publicationRightsReviewed": false,
+      "scope": "normalized visible archive passage check"
+    },
+    "holdout": {
+      "checked": [
+        {
+          "article": "8245986",
+          "captureSha256": "587c7884ec7cc3352f21eca23b648e2188f7550f5cb497f825f064e2e0eb83da",
+          "captureTimestamp": "20220715033832",
+          "contexts": 1,
+          "displayedRevision": 120576649,
+          "fullWindowMatch": true,
+          "leftMatch": true,
+          "rightMatch": true,
+          "rows": 5
+        },
+        {
+          "article": "8441629",
+          "captureSha256": "211d052b0fa33fc936695abd05aeee02901e45cc9222db0f673c3ee607879ee1",
+          "captureTimestamp": "20221218181527",
+          "contexts": 1,
+          "displayedRevision": 122603371,
+          "fullWindowMatch": false,
+          "leftMatch": false,
+          "rightMatch": true,
+          "rows": 5
+        }
+      ],
+      "exactSnapshotRevisionProven": false,
+      "historicalHoldoutSha256": "fab03f6fb1c08c462328ebf5c18877b0483ab7977179090c2bd48db9e89a0e8d",
+      "htmlSelector": "#mw-content-text .mw-parser-output",
+      "includesFullCleanedArticleCheck": false,
+      "publicationRightsReviewed": false,
+      "scope": "normalized visible archive passage check"
+    }
+  },
+  "schema": 1,
+  "sourceShardArticlesSha256": "01fd30d8674c651046df0d8a528c1a4c0c9fb76506a14911be2fa2af33a592ec"
+}

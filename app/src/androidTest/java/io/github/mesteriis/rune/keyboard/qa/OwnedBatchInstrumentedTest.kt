@@ -1,8 +1,5 @@
 package io.github.mesteriis.rune.keyboard.qa
 
-import android.content.Context
-import android.content.ContextWrapper
-import android.inputmethodservice.InputMethodService
 import android.os.SystemClock
 import android.view.inputmethod.InputConnection
 import androidx.test.platform.app.InstrumentationRegistry
@@ -20,11 +17,7 @@ class OwnedBatchInstrumentedTest : ImeTestBase() {
     @Test fun commitBoundaryAndRestoreOwnedRegionPreserveTextAndDoNotReadEditor() {
         driver.launchComposingQa()
         val keyboard = keyboardSnapshot()
-        val connection = onMain {
-            var context: Context = keyboard.keyboard.rootView.context
-            while (context !is InputMethodService && context is ContextWrapper) context = context.baseContext
-            checkNotNull((context as? InputMethodService)?.currentInputConnection)
-        }
+        val connection = independentControllerConnection()
         run(connection, EditorCommand.SetComposingText("helllo"))
         driver.awaitFieldText(FIELD, "helllo")
         awaitSpan(0, 6)
@@ -58,12 +51,14 @@ class OwnedBatchInstrumentedTest : ImeTestBase() {
 
     private fun awaitSpan(start: Int, end: Int) {
         val deadline = SystemClock.uptimeMillis() + ImeTestDriver.WAIT_MILLIS
+        var last = emptyMap<String, Int>()
         do {
             val current = stats()
+            last = current
             if (current["start"] == start && current["end"] == end) return
             SystemClock.sleep(25)
         } while (SystemClock.uptimeMillis() < deadline)
-        throw AssertionError("Expected composing region did not arrive")
+        throw AssertionError("Expected composing region $start..$end did not arrive; observed $last")
     }
 
     private fun <T> onMain(action: () -> T): T {

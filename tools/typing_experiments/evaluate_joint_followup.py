@@ -3,8 +3,8 @@
 import argparse
 import json
 from pathlib import Path
-import train_joint_correction as training
-from evaluate_joint_product import evaluate
+import joint_evaluation_receipt as binding
+from evaluate_joint_product import evaluate,arguments
 
 
 def acquisition(rows, baseline, product):
@@ -23,18 +23,25 @@ def acquisition(rows, baseline, product):
         passed=precision is not None and precision>=.99 and correct>=100)
 
 
+def run(rows,baseline,product,policy,output,historical_reproduction=False,short_policy=None,corpus_manifest=None):
+    frozen=binding.freeze(rows,baseline,product,policy,historical_reproduction,
+        short_policy_path=short_policy,corpus_manifest_path=corpus_manifest)
+    output=Path(output).resolve()
+    binding.require(output.is_relative_to(binding.ROOT/'build') and not output.exists() and not output.is_symlink(),'FRESH_JOINT_OUTPUT')
+    metrics=evaluate(frozen['rows'],frozen['baseline'],frozen['product'])
+    new=acquisition(frozen['rows'],frozen['baseline'],frozen['product'])
+    observed=metrics['long']['passed'] and new['passed']
+    record=dict(stage='disclosed-followup-regression' if historical_reproduction else 'registry-checked-followup-holdout',
+        policySha256=frozen['receipt']['policySha256'],rowsSha256=frozen['receipt']['rowsSha256'],metrics=metrics,acquisition=new)
+    binding.finish_report(frozen,record,observed)
+    encoded=json.dumps(record,ensure_ascii=False,sort_keys=True,indent=2,allow_nan=False)+'\n'
+    with output.open('x',encoding='utf-8') as stream:stream.write(encoded)
+    print(json.dumps(record),flush=True);return record
+
+
 def main():
-    p=argparse.ArgumentParser(description=__doc__)
-    for key in ['rows','baseline','product','policy','output']:p.add_argument('--'+key,type=Path,required=True)
-    a=p.parse_args();policy=json.loads(a.policy.read_text())
-    if policy['stage']!='frozen-before-independent-holdout' or training.sha(a.rows)!=policy['holdoutSha256']:raise ValueError('FROZEN_HOLDOUT_IDENTITY')
-    rows,baseline,product=map(training.read,[a.rows,a.baseline,a.product])
-    metrics=evaluate(rows,baseline,product);new=acquisition(rows,baseline,product)
-    record=dict(stage='independent-followup-product-holdout',passed=metrics['long']['passed'] and new['passed'],
-        policySha256=training.sha(a.policy),rowsSha256=training.sha(a.rows),baselineSha256=training.sha(a.baseline),
-        productSha256=training.sha(a.product),evaluatorSha256=training.sha(Path(__file__)),metrics=metrics,acquisition=new)
-    with a.output.open('x') as stream:json.dump(record,stream,indent=2);stream.write('\n')
-    print(json.dumps(record),flush=True)
+    a=arguments();record=run(a.rows,a.baseline,a.product,a.policy,a.output,a.historical_reproduction,a.short_policy,a.corpus_manifest)
     if not record['passed']:raise SystemExit(1)
+
 
 if __name__=='__main__':main()

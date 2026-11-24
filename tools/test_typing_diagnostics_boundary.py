@@ -43,6 +43,7 @@ interface TypingDiagnostics {
     fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)? = null)
     fun editorOperation(session: Long, revision: Long): (() -> Unit)? = null
     fun editorOutcome(event: DiagnosticEvent): ((Boolean) -> Unit)? = null
+    fun externalSelectionDisabled(event: DiagnosticEvent): (() -> Unit)? = null
 }
 object NoTypingDiagnostics : TypingDiagnostics {
     override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
@@ -206,6 +207,8 @@ class DiagnosticsBoundaryTest(unittest.TestCase):
                 'interface TypingDiagnostics { fun encode(text: DiagnosticText): String = text.toString()'),
             lambda text: text.replace('fun editorOperation(session: Long, revision: Long): (() -> Unit)? = null',
                 'fun editorOperation(session: Long, revision: Long): (() -> Unit)? = { revision.toString() }'),
+            lambda text: text.replace('fun externalSelectionDisabled(event: DiagnosticEvent): (() -> Unit)? = null',
+                'fun externalSelectionDisabled(event: DiagnosticEvent): (() -> Unit)? = { event.toString() }'),
         ):
             case = fixture('release'); path = ROOT.format('main') + 'TypingDiagnostics.kt'
             case[path] = mutation(case[path])

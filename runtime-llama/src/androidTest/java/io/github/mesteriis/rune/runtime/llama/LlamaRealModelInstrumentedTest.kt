@@ -20,6 +20,41 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class LlamaRealModelInstrumentedTest {
     @Test(timeout = 120_000)
+    fun successiveBoundedPrefixesMatchFreshAndroidScorers() {
+        val model = verifiedModel()
+        fun words(first: Int, last: Int) = (first..last).joinToString("") { "word${it.toString().padStart(2, '0')} " }
+        // These are the exact successive outputs from ModelPrefixWindowTest and
+        // the host cache probe: initial cut, extension, then a shifted cut.
+        val requests = listOf(words(17, 39), words(17, 40), words(34, 56)).map {
+            request(it, "hello", "helllo")
+        }
+        var maxDelta = 0.0
+        LlamaLocalModelRuntime().use { warm ->
+            assertLoaded(warm.load(model, isCancelled = { false }))
+            for (candidateRequest in requests) {
+                val actual = assertSuccess(candidateRequest, warm.scoreCandidates(candidateRequest))
+                LlamaLocalModelRuntime().use { fresh ->
+                    assertLoaded(fresh.load(model, isCancelled = { false }))
+                    val expected = assertSuccess(candidateRequest, fresh.scoreCandidates(candidateRequest))
+                    actual.scores.zip(expected.scores).forEach { (hot, cold) ->
+                        assertEquals(cold.id, hot.id)
+                        assertEquals(cold.scoredTokenCount, hot.scoredTokenCount)
+                        val delta = kotlin.math.abs(hot.sumLogProbability - cold.sumLogProbability)
+                        assertTrue("warm/cold score mismatch", delta <= 0.002 * maxOf(1, hot.scoredTokenCount))
+                        maxDelta = maxOf(maxDelta, delta)
+                    }
+                }
+            }
+        }
+        // Public runtime has no cache telemetry; this proves score parity only.
+        InstrumentationRegistry.getInstrumentation().sendStatus(0, Bundle().apply {
+            putInt("prefixWindowRequests", requests.size)
+            putInt("comparedCandidates", requests.sumOf { it.candidates.size })
+            putDouble("maximumScoreDelta", maxDelta)
+        })
+    }
+
+    @Test(timeout = 120_000)
     fun verifiedModelScoresAndRecoversThroughThePublicAndroidRuntime() {
         val started = SystemClock.elapsedRealtime()
         // Verify before even constructing the runtime. This test never downloads or searches for a model.

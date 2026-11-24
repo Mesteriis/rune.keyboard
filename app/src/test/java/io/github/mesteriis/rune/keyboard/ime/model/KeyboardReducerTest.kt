@@ -9,6 +9,14 @@ import org.junit.Assert.assertNull
 import org.junit.Test
 
 class KeyboardReducerTest {
+    @Test fun voiceInputDispatchesOnlyOutsideSensitiveFields() {
+        val state = KeyboardState(KeyboardLanguage.ENGLISH)
+        val text = EditorContext.from(InputType.TYPE_CLASS_TEXT, 0)
+        val secret = EditorContext.from(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD, 0)
+        assertEquals(EditorCommand.SwitchToVoiceInput, KeyboardReducer.reduce(state, KeyboardAction.VoiceInput, text, 0).command)
+        assertNull(KeyboardReducer.reduce(state, KeyboardAction.VoiceInput, secret, 0).command)
+    }
+
     @Test fun emojiEntryIsGuardedAndCommitsAnExactSequenceWithoutChangingItsLayer() {
         val editor = EditorContext.from(InputType.TYPE_CLASS_TEXT, 0)
         val before = KeyboardState(KeyboardLanguage.ENGLISH, shiftMode = ShiftMode.LOCKED, selectionMode = true)

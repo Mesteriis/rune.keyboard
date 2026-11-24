@@ -1,0 +1,18 @@
+{
+  "baselineSha256": {
+    "product-replay-history-v1": "a7dea8d9ead6b235f1b63086f4fb946ab840b6272ae39c254f148ecc5032c5d8",
+    "product-replay-v1": "cc63e36f4b95c7328440ff2965dae5ab1432c119df53e14b12a8e264f7ca409b"
+  },
+  "caveat": "Parity inputs are unlabeled; expectedSpelling is a transport placeholder and is not a correctness label.",
+  "chatRowsSha256": "c25d9afed4b75f78490f2e360c3eb0a0e06aaf97e3291d79f0bdd29aec0ee62f",
+  "counts": {
+    "product-replay-history-v1": 4000,
+    "product-replay-v1": 720,
+    "reviewed": 8
+  },
+  "generatorSha256": "44577f80a1a7ccc4c562ffda994972a6d0e13b2bcce2b69547ab72735cc714d6",
+  "independentQualification": false,
+  "purpose": "DISCLOSED_PARITY_AND_REVIEW_NOT_QUALIFICATION",
+  "reviewSha256": "06c68ae27b540e3bfcae541c3ea074a9213ceac9fb77fe31cff64a9d8095d2b8",
+  "rowsSha256": "2e21ec606ce8834c3eaab2a49e9b56250b0bc86d46e97a1f214ae7036d16c311"
+}

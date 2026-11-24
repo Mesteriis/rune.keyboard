@@ -25,7 +25,7 @@ LIVE={name:DEPENDENCIES[name] for name in ('grammar_contrast_corpus','right_cont
 LIVE.update(right_context_applied_corpus='602890657811a39c17ce01e1557a01b6aa124bb0c1f6a1886131f6a79fa835d9',
     prepare_word_ranking='e213566e8f22f619a372f09c2c91866f93d8029d5db8666f783318285df74240',
     prepare_refinement='d2d84c3f328771fd0b9908a9216ee428eb2877079c8dacb481c42a0dafe11bab')
-MISSING_FEATURE_SHA='82aeb37a82f7ac32aafd2f5f08eab36469ad2605b169943359db9a069726788e'
+LEFT_SEQUENCE_V1_FEATURE_SHA='82aeb37a82f7ac32aafd2f5f08eab36469ad2605b169943359db9a069726788e'
 COMBINATIONS=(
  ('left-role-v11-inputs',('applied-v10-v2','left-sequence-v1-v2','instrumental-v2')),
  ('oblique-v12-inputs',('left-role-v11-inputs','oblique-v1')),
@@ -67,7 +67,7 @@ def source_path(raw,expected_directory,allowed):
 
 
 def build(root,base,lexicon):
-    root=Path(root);result=copy.deepcopy(validate_ledger(base));archive=root/(BASE+'frozen_sources');bindings={};jobs=[];counts={};unavailable=[]
+    root=Path(root);result=copy.deepcopy(validate_ledger(base));archive=root/(BASE+'frozen_sources');bindings={};jobs=[];counts={}
     if any(e['id'].startswith(PREFIX) for e in result['entries']):raise ValueError('AUXILIARY_HISTORY_ALREADY_IMPORTED')
     parent=next(e for e in base['entries'] if e['id']=='authored-right-context-late-history-v7-contexts')
     parent_path=PARENT+'/corpus/train.jsonl'
@@ -96,8 +96,10 @@ def build(root,base,lexicon):
         for raw,expected in metadata['sourceHashes'].items():
             source=source_path(raw,directory,allowed)
             if source==BASE+module:continue
-            if name=='left-sequence-v1' and source==BASE+'right_context_left_sequence_features.py' and expected==MISSING_FEATURE_SHA:
-                unavailable.append(dict(corpus=name,path=source,sha256=expected,usedForPayloadGeneration=False));continue
+            if name=='left-sequence-v1' and source==BASE+'right_context_left_sequence_features.py' and expected==LEFT_SEQUENCE_V1_FEATURE_SHA:
+                archived=archive_path(archive,source,expected)
+                bindings[str(archived.relative_to(root))]=expected
+                continue
             if sha(root/source)!=expected:raise ValueError('AUXILIARY_SOURCE_BINDING')
             if source.endswith('/prepare.py') and expected!=producer_sha:raise ValueError('AUXILIARY_PRODUCER_IDENTITY')
             bindings[source]=expected
@@ -122,7 +124,7 @@ def build(root,base,lexicon):
         result['entries'].extend(entries)
     receipt=dict(purpose='AUXILIARY_AUTHORED_CORPUS_AND_COMBINED_GROUP_LINEAGE_NOT_QUALIFICATION',counts=counts,bindings=bindings,sourceBindings=source_bindings,
         combinations=combinations,residualReuses=reuses,dictionary=lexicon.receipt(),modelCalls=0,archivedPreparationScriptsExecuted=False,
-        unavailableHistoricalSources=unavailable,fullHistoricalSourceCoverageComplete=not unavailable,
+        unavailableHistoricalSources=[],fullHistoricalSourceCoverageComplete=True,
         corpusAliases={'left-sequence-v1-v2':'left-sequence-v1'},exposureRows=sum(len(r) for _,r in jobs),uniqueRowIds=len({r['id'] for _,rows in jobs for r in rows}))
     return validate_ledger(result),receipt
 

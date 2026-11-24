@@ -30,6 +30,19 @@ enum class KeyboardTheme {
     SILENT,
 }
 
+/** Keyboard colors are independent of both key shape and settings-screen theme. */
+enum class KeyboardPalette {
+    DARK,
+    LIGHT,
+    SYSTEM;
+
+    fun isLight(systemNight: Boolean): Boolean = when (this) {
+        DARK -> false
+        LIGHT -> true
+        SYSTEM -> !systemNight
+    }
+}
+
 enum class HapticMode {
     OFF,
     SYSTEM,
@@ -99,6 +112,7 @@ data class KeyboardSettings(
     val doubleSpacePeriod: Boolean,
     val keyFlicks: Boolean = true,
     val keyboardTheme: KeyboardTheme = KeyboardTheme.AIR,
+    val keyboardPalette: KeyboardPalette = KeyboardPalette.DARK,
     val autocorrectionMode: AutocorrectionMode = AutocorrectionMode.HIGH_CONFIDENCE,
     val mechanicalPunctuation: Boolean = true,
     val contextualPunctuationMode: ContextualPunctuationMode = ContextualPunctuationMode.OFF,
@@ -134,6 +148,7 @@ data class KeyboardSettings(
     fun affectsKeyboardView(other: KeyboardSettings): Boolean =
         theme != other.theme ||
             keyboardTheme != other.keyboardTheme ||
+            keyboardPalette != other.keyboardPalette ||
             keyGap != other.keyGap ||
             numberRow != other.numberRow ||
             emojiKey != other.emojiKey ||

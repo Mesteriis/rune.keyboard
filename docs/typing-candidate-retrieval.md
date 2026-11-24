@@ -109,7 +109,7 @@ SHA-256 `6776b9e2127dd0a36a936842a7cbb4dc5d1a91e6f20d0fae9a8d4e14b99af160`.
 Все данные, исполняемые артефакты, сырые логи и результаты находятся в игнорируемом
 `build/typing-retrieval`; приватные данные не добавляются в git.
 
-- `prepare_retrieval_test.py`: новый публичный набор, фиксированные квоты и проверки
+- `prepare_retrieval_test.py`: исходный публичный набор, фиксированные квоты и проверки
   источника/предыдущих манифестов; нужен локальный PyArrow.
 - `export_retrieval.py`: компиляция реального Kotlin-поиска, хеши исходников,
   словарей и инструментов. Наблюдатель получает только введённое слово, без
@@ -128,7 +128,7 @@ SHA-256 `6776b9e2127dd0a36a936842a7cbb4dc5d1a91e6f20d0fae9a8d4e14b99af160`.
 PYTHONDONTWRITEBYTECODE=1 build/morphology-venv/bin/python tools/typing_experiments/export_retrieval.py \
   --rows build/typing-retrieval/data/test-rows.jsonl --output build/typing-retrieval/reproduction
 PYTHONDONTWRITEBYTECODE=1 build/morphology-venv/bin/python tools/typing_experiments/evaluate_retrieval.py \
-  --export build/typing-retrieval/reproduction --output build/typing-retrieval/reproduction.json \
+  --historical-reproduction --export build/typing-retrieval/reproduction --output build/typing-retrieval/reproduction.json \
   --fresh-manifest build/typing-retrieval/data/manifest.json --selection build/typing-retrieval/selection.json
 ```
 
@@ -147,3 +147,27 @@ Baseline-ответ и отложенный recovery-ответ проходят
 Явный выбор и возврат к оригиналу не превращают соседние словарные слова в
 самопроизвольную автозамену. Недоступный словарь, отмена или переполнение пула
 оставляют исходное поведение без добавленных вариантов.
+
+
+## Текущий режим раскрытого воспроизведения
+
+Обычный запуск оценщика теперь сначала требует полного покрытия постоянных
+реестров Q6, а затем — манифест и зафиксированное решение. Повтор старых
+диагностических/итоговых наборов требует `--historical-reproduction`. Отчёт
+сохраняет численные результаты с ролью `historical-disclosed-regression`;
+`independentQualification` и `productionQualified` ложны. Старый заголовок
+«Независимая проверка качества» описывает историческое назначение набора и
+не подтверждает его текущую независимость.
+
+Связаны экспорт, source-freeze, все объявленные файлы и источники, модели,
+опциональные манифест/решение, код и реестры. Типы счётчиков, контрольные строки,
+оригинал ручного пула, бюджеты поиска и конечные неотрицательные времена
+проверяются до расчётов; изменение входа во время расчёта запрещает запись.
+Отчёт нельзя перезаписать повторным запуском.
+
+Экспортёр использует общий набор чистых зависимостей с morphology-экспортом,
+включая политики экспериментов: прежний состав исходников больше не
+компилировался. CI дополнительно собирает реальный наблюдатель на четырёх
+раскрытых строках; численный прогон использует настоящие JVM-кандидаты и
+неизменённые опубликованные модели. Это проверка инструментов и происхождения
+входов, а не новая приёмка качества или задержки на Android.

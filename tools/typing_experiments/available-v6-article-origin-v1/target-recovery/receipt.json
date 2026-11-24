@@ -1,0 +1,141 @@
+{
+  "ambiguousTargets": 6,
+  "anchorSha256": "2fc6aecbc3616ffdb80c124b16e2d5bd7c6c74d0eb7be3731ab9034845bfb472",
+  "articleMappingSha256": "0f55e171539de0b476041a960f2a8f212ff6b4bfac23625aed8eecd84d8b2d88",
+  "corpusRowsRecovered": false,
+  "crossPartitionMatches": 0,
+  "helperSha256": {
+    "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py": "ed9928d64d80911c0182e03446d710a60abb990cb5fb1cff30730443db773225",
+    "tools/typing_experiments/check_available_v6_articles.py": "903bdb9a01156d0fcc83b5e3df793f583bba893a93450fd66046f77bb0682972",
+    "tools/typing_experiments/check_available_v6_contexts.py": "7ef78735e7c0960e3d5a82e4701ab267c2f34b67de254d97d5c73ea5b8258e00",
+    "tools/typing_experiments/conversation_split_checks.py": "373879a4483989d8adb7f1831265ee0803502fb25660a202a6898ed74c613683",
+    "tools/typing_experiments/frozen_sources/prepare_60f079e28a18fd98.py": "60f079e28a18fd980a145c8e6184996501277231dc77a17fdd875ac4cc175307",
+    "tools/typing_experiments/holdout_ledger.py": "466d711e261e07a6d3bc570218d3dd2d3d23f2e0c853acf999fa84ce17821cdb",
+    "tools/typing_experiments/prepare_external_spelling_holdout.py": "f6f264b5fdd9d2481a0247ee9828a9e2e2810e94eda6963000ea8bd6b36eeb6a",
+    "tools/typing_experiments/recover_available_v6_articles.py": "a386dc26cd703b4a3cbfd5c5376c8d1c8f8f1f8c115c679e173078ca6e6cae1b",
+    "tools/typing_experiments/recover_available_v6_contexts.py": "93eb30be8701fb33f3e77de814a74973affcf26b345b6e005f6659ffe17ba50a",
+    "tools/typing_experiments/recover_available_v6_targets.py": "8db1d1f418400c590b45fafcf9963a231af06207db785edc037a969f207e5a37",
+    "tools/typing_experiments/right_context_sentence_selection.py": "1c3ff47c8672f2acb8697999f5ab8183c328aff175dafc724e13a24ccef56b42",
+    "tools/typing_experiments/source_identities.py": "f4e8c95415c180702f15a291fc32462ac4e2bd95046706bf60f98a04b40c98c4"
+  },
+  "independentQualification": false,
+  "ledgerSha256": "bd62f38dde1f7fc3be424af3fa0d480d65e9e98e01603f8e14ff35cfd9798b2e",
+  "matchesSha256": "2be072e1019f844f5455626a9443a9f3481b2e633c015c9e3f4519ec4d1537d4",
+  "originalLabelsRecovered": false,
+  "pyarrowVersion": "25.0.1",
+  "pythonVersion": "3.12.14",
+  "schema": 1,
+  "scope": "source-and-protected-target-candidate-diagnostic-not-corpus-reproduction",
+  "sourceCounts": {
+    "0011.parquet": {
+      "articles": 355,
+      "candidates": {
+        "protected-source-word": 356,
+        "source-word": 356
+      },
+      "checkedAnchors": 356,
+      "matched": 712,
+      "sourceRows": 92622
+    },
+    "0012.parquet": {
+      "articles": 292,
+      "candidates": {
+        "protected-source-word": 296,
+        "source-word": 296
+      },
+      "checkedAnchors": 296,
+      "matched": 590,
+      "sourceRows": 92622
+    },
+    "0013.parquet": {
+      "articles": 327,
+      "candidates": {
+        "protected-source-word": 330,
+        "source-word": 330
+      },
+      "checkedAnchors": 330,
+      "matched": 656,
+      "sourceRows": 92622
+    },
+    "0014.parquet": {
+      "articles": 345,
+      "candidates": {
+        "protected-source-word": 352,
+        "source-word": 352
+      },
+      "checkedAnchors": 352,
+      "matched": 698,
+      "sourceRows": 92622
+    },
+    "0015.parquet": {
+      "articles": 335,
+      "candidates": {
+        "protected-source-word": 341,
+        "source-word": 341
+      },
+      "checkedAnchors": 341,
+      "matched": 680,
+      "sourceRows": 92622
+    },
+    "0016.parquet": {
+      "articles": 366,
+      "candidates": {
+        "protected-source-word": 371,
+        "source-word": 371
+      },
+      "checkedAnchors": 371,
+      "matched": 736,
+      "sourceRows": 92622
+    },
+    "0017.parquet": {
+      "articles": 354,
+      "candidates": {
+        "protected-source-word": 356,
+        "source-word": 356
+      },
+      "checkedAnchors": 356,
+      "matched": 712,
+      "sourceRows": 92622
+    },
+    "0018.parquet": {
+      "articles": 343,
+      "candidates": {
+        "protected-source-word": 347,
+        "source-word": 347
+      },
+      "checkedAnchors": 347,
+      "matched": 690,
+      "sourceRows": 92622
+    },
+    "0019.parquet": {
+      "articles": 342,
+      "candidates": {
+        "protected-source-word": 349,
+        "source-word": 349
+      },
+      "checkedAnchors": 349,
+      "matched": 696,
+      "sourceRows": 92622
+    },
+    "0020.parquet": {
+      "articles": 206,
+      "candidates": {
+        "protected-source-word": 208,
+        "source-word": 208
+      },
+      "checkedAnchors": 208,
+      "matched": 414,
+      "sourceRows": 92622
+    }
+  },
+  "sourceDecoderAttested": false,
+  "sourceLockSha256": "02397f3424d85634e372e87d8cde55bd97af79615442d3ec1cada45831f95ede",
+  "targetCounts": {
+    "calibration": 4583,
+    "holdout": 4481
+  },
+  "totalTargets": 9064,
+  "unicodeVersion": "15.0.0",
+  "uniqueTargets": 6570,
+  "unmatchedTargets": 2488
+}

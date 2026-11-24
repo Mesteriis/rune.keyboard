@@ -43,6 +43,99 @@ class TypingCandidateSelectionTest {
     private val execute: (TypingEdit) -> Boolean = { edits.add(it); true }
     private var requestId = 0L
 
+    @Test fun `contextual original veto keeps its proposal manual and selectable`() {
+        val ru = KeyboardLanguage.RUSSIAN
+        start("ебобо")
+        val request = controller.beginCandidateRequest(++requestId, ru)!!
+        val raw = reply(request, "бобр", "бобо")
+        val candidates = raw.generation.alternatives.map { it.copy(language = ru) }
+        val proposal = candidates.last()
+        val generation = raw.generation.copy(alternatives = candidates.take(1),
+            completion = CandidateCompletion.STATES_EXHAUSTED,
+            jointSearch = io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalSearchEvidence(
+                CandidateCompletion.COMPLETE, listOf(proposal), 1, 1), jointEvaluated = true)
+        controller.setPersonalization(object : TypingPersonalization {
+            override fun jointAutomaticEvaluation(context: String, generation: CandidateGeneration,
+                language: KeyboardLanguage, baselineWord: String?) =
+                io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionEvaluation(
+                    contextualAdmissionRefusal = io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal.ORIGINAL_VALID,
+                    contextualManualCandidate = proposal)
+        }, ru)
+        val current = controller.beginCandidateRequest(++requestId, ru)!!
+        assertTrue(controller.acceptCandidates(raw.copy(sessionId = current.sessionId, revision = current.revision,
+            requestId = current.requestId, generation = generation)))
+        assertTrue(labels().contains("бобо"))
+        val id = controller.candidateViewState.candidates.single { it.text == "бобо" }.id
+        assertEquals(TypingTextResult.HANDLED, controller.selectCandidate(id, execute))
+        assertEquals("бобо", controller.state.composing!!.typedWord)
+
+        start("ебобо")
+        val next = controller.beginCandidateRequest(++requestId, ru)!!
+        assertTrue(controller.acceptCandidates(raw.copy(sessionId = next.sessionId, revision = next.revision,
+            requestId = next.requestId, generation = generation)))
+        controller.typeText(" ", execute)
+        assertEquals("ебобо ", controller.state.contextText)
+    }
+
+    @Test fun `manual contextual proposal must belong to complete current joint search`() {
+        val ru = KeyboardLanguage.RUSSIAN
+        start("мала")
+        val first = controller.beginCandidateRequest(++requestId, ru)!!
+        val raw = reply(first, "мама", "мара")
+        val candidates = raw.generation.alternatives.map { it.copy(language = ru) }
+        val proposal = candidates.last()
+        controller.setPersonalization(object : TypingPersonalization {
+            override fun jointAutomaticEvaluation(context: String, generation: CandidateGeneration,
+                language: KeyboardLanguage, baselineWord: String?) =
+                io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionEvaluation(
+                    contextualAdmissionRefusal = io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal.ORIGINAL_VALID,
+                    contextualManualCandidate = proposal)
+        }, ru)
+        val search = io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalSearchEvidence(
+            CandidateCompletion.COMPLETE, listOf(candidates.first()), 1, 1)
+        for (joint in listOf(search, search.copy(alternatives = listOf(proposal), completion = CandidateCompletion.STATES_EXHAUSTED))) {
+            start("мала")
+            val request = controller.beginCandidateRequest(++requestId, ru)!!
+            val generation = raw.generation.copy(alternatives = candidates.take(1), jointSearch = joint, jointEvaluated = true)
+            assertTrue(controller.acceptCandidates(raw.copy(sessionId = request.sessionId, revision = request.revision,
+                requestId = request.requestId, generation = generation)))
+            assertFalse(labels().contains("мара"))
+        }
+    }
+
+    @Test fun `full baseline still exposes a vetoed contextual proposal within the display limit`() {
+        val ru = KeyboardLanguage.RUSSIAN
+        start("мала")
+        val first = controller.beginCandidateRequest(++requestId, ru)!!
+        val raw = reply(first, "мама", "мара", "мака", "мела", "мила", "мула", "малая", "маля")
+        val candidates = raw.generation.alternatives.map { it.copy(language = ru) }
+        val proposal = candidates.last()
+        controller.setPersonalization(object : TypingPersonalization {
+            override fun jointAutomaticEvaluation(context: String, generation: CandidateGeneration,
+                language: KeyboardLanguage, baselineWord: String?) =
+                io.github.mesteriis.rune.keyboard.smarttyping.experiments.JointCorrectionEvaluation(
+                    contextualAdmissionRefusal = io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal.ORIGINAL_VALID,
+                    contextualManualCandidate = proposal)
+        }, ru)
+        val request = controller.beginCandidateRequest(++requestId, ru)!!
+        val generation = raw.generation.copy(alternatives = candidates.dropLast(1),
+            completion = CandidateCompletion.STATES_EXHAUSTED,
+            jointSearch = io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalSearchEvidence(
+                CandidateCompletion.COMPLETE, listOf(proposal), 1, 1), jointEvaluated = true)
+        assertTrue(controller.acceptCandidates(raw.copy(sessionId = request.sessionId, revision = request.revision,
+            requestId = request.requestId, generation = generation)))
+        assertTrue(labels().contains("маля"))
+        assertEquals(CandidateGenerator.MAX_ALTERNATIVES, controller.candidateOrderForReplay().size)
+        val expanded = controller.openExpandedCandidates()!!
+        assertEquals(CandidateGenerator.MAX_ALTERNATIVES - 2, expanded.candidates.size)
+        controller.closeExpandedCandidates()
+        val id = controller.candidateViewState.candidates.single { it.text == "маля" }.id
+        assertEquals(TypingTextResult.HANDLED, controller.selectCandidate(id, execute))
+        assertEquals("маля", controller.state.composing!!.typedWord)
+        controller.typeText(" ", execute)
+        assertEquals("маля ", controller.state.contextText)
+    }
+
     @Test fun `only latest registered reply for exact composition can publish`() {
         start("helo")
         val old = request()

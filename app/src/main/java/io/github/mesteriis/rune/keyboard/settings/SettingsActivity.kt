@@ -1,5 +1,6 @@
 package io.github.mesteriis.rune.keyboard.settings
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.Context
@@ -10,6 +11,8 @@ import android.view.inputmethod.InputMethodManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.accessibility.AccessibilityManager
+import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -305,6 +308,16 @@ class SettingsActivity : ThemedActivity() {
             selected = settings.keyboardTheme,
         ) { preferences.writeKeyboardTheme(it) }
         addChoiceRow(
+            titleRes = R.string.settings_keyboard_palette,
+            values = KeyboardPalette.entries,
+            labels = KeyboardPalette.entries.map { getString(when (it) {
+                KeyboardPalette.DARK -> R.string.keyboard_palette_dark
+                KeyboardPalette.LIGHT -> R.string.keyboard_palette_light
+                KeyboardPalette.SYSTEM -> R.string.keyboard_palette_system
+            }) },
+            selected = settings.keyboardPalette,
+        ) { preferences.writeKeyboardPalette(it) }
+        addChoiceRow(
             titleRes = R.string.settings_theme,
             values = ThemePreference.entries,
             labels = ThemePreference.entries.map { getString(themeLabel(it)) },
@@ -416,6 +429,8 @@ class SettingsActivity : ThemedActivity() {
     private fun renderPage() {
         val destination = page
         shell.bottom.visibility = if (destination == null) View.VISIBLE else View.GONE
+        container.isFocusableInTouchMode = destination == null
+        container.isFocusable = destination == null
         if (destination == null) {
             ui.heading(container, getString(R.string.menu_settings))
             val search = EditText(this).apply {
@@ -455,7 +470,6 @@ class SettingsActivity : ThemedActivity() {
                 search.clearFocus()
                 true
             }
-            container.isFocusableInTouchMode = true
             container.requestFocus()
             return
         }
@@ -478,11 +492,29 @@ class SettingsActivity : ThemedActivity() {
         }
         if (requestedRow != 0) container.post {
             visible.firstOrNull { it.title == requestedRow }?.view?.let { target ->
-                shell.scroll.smoothScrollTo(0, (target.top - ui.dp(16)).coerceAtLeast(0))
-                target.requestFocus()
+                val offset = (target.top - ui.dp(16)).coerceAtLeast(0)
+                if (getSystemService(AccessibilityManager::class.java)?.isTouchExplorationEnabled == true) {
+                    shell.scroll.scrollTo(0, offset)
+                    val focusTarget = target.findViewById<View>(R.id.row_checkbox)?.takeIf { it.isShown } ?: target
+                    if (focusTarget.isEnabled) {
+                        focusTarget.isFocusableInTouchMode = true
+                        focusTarget.requestFocus()
+                    } else {
+                        focusDisabledSearchResult(focusTarget)
+                    }
+                } else {
+                    shell.scroll.smoothScrollTo(0, offset)
+                    target.requestFocus()
+                }
             }
             requestedRow = 0
         }
+    }
+
+    @SuppressLint("AccessibilityFocus")
+    private fun focusDisabledSearchResult(target: View) {
+        // The user chose this specific result. Input focus does not announce a disabled switch.
+        target.performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null)
     }
 
     private fun renderResults(results: LinearLayout) {

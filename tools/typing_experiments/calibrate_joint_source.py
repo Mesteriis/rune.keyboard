@@ -3,8 +3,7 @@
 import argparse
 import json
 from pathlib import Path
-import numpy as np
-import train_joint_correction as training
+import joint_calibration_receipt as binding
 
 
 def normalized(records,observations):
@@ -38,7 +37,9 @@ def full_metrics(records,minimum_score,minimum_margin):
 
 
 def calibrate(records,band):
+    import numpy as np
     r=[x for x in records if x['band']==band]
+    if not r:raise ValueError('NO_CALIBRATION')
     scores=np.unique(np.quantile([x['topScore'] for x in r],np.linspace(0,1,65)))
     margins=np.unique(np.quantile([x['margin'] for x in r],np.linspace(0,1,65)))
     best=None
@@ -57,21 +58,43 @@ def calibrate(records,band):
     return dict(calibrationPassed=True,minimumScore=best[1],minimumMargin=best[2],metrics=best[3])
 
 
+def score_bound(frozen):
+    import numpy as np
+    import catboost
+    import train_joint_correction as training
+    import promote_refinement as promotion
+    binding.require(np.__version__=='2.2.6' and catboost.__version__=='1.2.8','CALIBRATION_NUMERICAL_DEPENDENCIES')
+    promotion.validate_tree(frozen['model'].read_bytes(),training.rank.FEATURES)
+    context=training.neural.load_model(frozen['context'])
+    binding.require((context.window,context.hidden)==(48,48) and training.base.CONTEXT_MODEL.resolve()==frozen['context'],
+                    'CALIBRATION_CONTEXT_SHAPE')
+    groups=training.groups(frozen['rows'],frozen['observations'])
+    records=training.score(frozen['model'],groups)
+    binding.validate_scores(records,frozen['rows'],frozen['observations'])
+    frozen['scoreSummary']=dict(eligibleGroups=len(groups),totalCalibrationRows=len(frozen['rows']))
+    frozen['hostScoringVersions']=dict(numpy=np.__version__,catboost=catboost.__version__)
+    return normalized(records,frozen['observations'])
+
+
+def run(ranker,calibration_export,output,historical_reproduction=False,corpus=None):
+    ranker=Path(ranker).resolve();corpus=Path(corpus).resolve() if corpus else ranker.parent/'corpus'
+    frozen=binding.freeze('source',ranker,corpus,calibration_export,ranker/'frozen-policy.json',historical_reproduction)
+    output=Path(output).resolve()
+    binding.require(output.is_relative_to(binding.ROOT/'build') and not output.exists() and not output.is_symlink(),'FRESH_CALIBRATION_OUTPUT')
+    records=score_bound(frozen);result={band:calibrate(records,band) for band in ('short','long')}
+    policy=dict(frozen['parent'],arbitration='complete joint pool; below threshold retains original; inadmissible proposal retains qualified baseline',
+        thresholds=result,calibratorSha256=binding.file_hash(Path(__file__)),
+        calibrationSummary=frozen['scoreSummary'],hostScoringVersions=frozen['hostScoringVersions'],
+        protocolAmendment='Explicit abstention; correct-to-original <=10%; zero correct-to-wrong and no fall in correct count.')
+    binding.seal_policy(frozen,policy,all(v['calibrationPassed'] for v in result.values()))
+    binding.publish(frozen,output,policy,records);print(json.dumps(result),flush=True);return policy
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('ranker',type=Path);p.add_argument('calibration_export',type=Path);p.add_argument('output',type=Path)
-    a=p.parse_args()
-    if a.output.exists():raise ValueError('FRESH_OUTPUT')
-    old=json.loads((a.ranker/'frozen-policy.json').read_text())
-    if training.sha(a.ranker/'joint-ranker.bin')!=old['modelSha256']:raise ValueError('MODEL_DRIFT')
-    records=normalized(json.loads((a.ranker/'calibration-scores.json').read_text()),training.read(a.calibration_export/'observations.jsonl'))
-    a.output.mkdir();result={b:calibrate(records,b) for b in ['short','long']}
-    policy=dict(old,stage='frozen-before-independent-holdout',arbitration='complete joint pool; below threshold retains original; inadmissible selected proposal leaves the qualified baseline untouched',
-        thresholds=result,calibratorSha256=training.sha(Path(__file__)),
-        protocolAmendment='Before opening holdout: replace legacy fallback with explicit abstention; count correct-to-original separately, capped at 10%, while correct-to-wrong must remain zero and total correct cannot fall.')
-    training.write(a.output/'frozen-policy.json',policy)
-    training.write(a.output/'calibration-scores.json',records)
-    print(json.dumps(result),flush=True)
+    for name in ('ranker','calibration_export','output'):p.add_argument(name,type=Path)
+    p.add_argument('--corpus',type=Path);p.add_argument('--historical-reproduction',action='store_true')
+    a=p.parse_args();run(a.ranker,a.calibration_export,a.output,a.historical_reproduction,a.corpus)
 
 
 if __name__=='__main__':main()

@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "modelCalls": 0,
+  "corpora": {
+    "corpus": {
+      "originalRoot": "build/joint-correction-20261025/corpus",
+      "manifestSha256": "27c7084f8c739f608da77f617eca1c5ac552ff16b74da05a1a3c3cc888120e3f",
+      "articles": 3254,
+      "files": {
+        "train.jsonl": {
+          "rows": 8536,
+          "sha256": "a67ee9d103851f8b5c54e4059338a60e1cd5b8776e22440057eb48f07885bab9"
+        },
+        "calibration.jsonl": {
+          "rows": 8554,
+          "sha256": "1234785b62d4ff59ea54b52a7e7fb2ca3214996e0bb173d1c0b355d86015e97a"
+        },
+        "holdout.jsonl": {
+          "rows": 8557,
+          "sha256": "03e32ae46a61dd3c5ee0f84a308b9b2d79bf17f7c18de78442d2284738e8084d"
+        }
+      }
+    },
+    "followup-corpus": {
+      "originalRoot": "build/joint-correction-20261025/followup-corpus",
+      "manifestSha256": "abfb4cdea2657478f7834f4d645339238907bce71de31f13339a1410967f471b",
+      "articles": 957,
+      "files": {
+        "calibration.jsonl": {
+          "rows": 4784,
+          "sha256": "09089d6d173268f5908a7b320a99dfd5f6778a672f09baa67a3fc92c785421ff"
+        },
+        "holdout.jsonl": {
+          "rows": 4800,
+          "sha256": "89d816bb3db371fa89161d808efe21ed75ebc4dbdf586d8b0ff3d0134a509eb6"
+        }
+      }
+    },
+    "followup-corpus-v3": {
+      "originalRoot": "build/joint-correction-20261025/followup-corpus-v3",
+      "manifestSha256": "9e8f8e5ec18825b340b9da68956fa75f55432f45ad1d21c01347e99430d7216b",
+      "articles": 962,
+      "files": {
+        "calibration.jsonl": {
+          "rows": 4786,
+          "sha256": "cb606a6efb8fffeb41679bac29bf9516c2c06831ee6b07f5417a1f979f4097cb"
+        },
+        "holdout.jsonl": {
+          "rows": 4799,
+          "sha256": "04f779a29ee0a13ae9c27ea70af9513410facd063c164a59f755ef4c18593c75"
+        }
+      }
+    },
+    "diagnostic-rare-ranking": {
+      "originalRoot": "build/diagnostic-rare-ranking/fresh-corpus",
+      "manifestSha256": "25e95ccee6dc62095b7b015dd378fe734b4aa8e4fae0325d86c7f677a93d51af",
+      "articles": 964,
+      "files": {
+        "calibration.jsonl": {
+          "rows": 4760,
+          "sha256": "624f2cfb7d0dfe35348745abbc7caef4750628a9d313d4532e392f3e25aa0520"
+        },
+        "holdout.jsonl": {
+          "rows": 4788,
+          "sha256": "080a880598461948f49f7635fd0fb1fd6ebf53eea7f218368ba3404100420723"
+        }
+      }
+    }
+  },
+  "reliableSideV5BlockedArticles": 16152,
+  "reliableSideV5ArticleKeyIndexSha256": "418771b1e265e445e8572ebe35906c1e60712ae646f17d3a1b4da3fb34a3e78d",
+  "rawRows": 54364
+}

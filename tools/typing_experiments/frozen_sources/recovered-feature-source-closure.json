@@ -1,0 +1,78 @@
+{
+  "corpora": [
+    {
+      "corpus": "role-v4",
+      "manifestReceiptPath": "build/right-context-training-v4-20261027/corpus/manifest.json",
+      "manifestSha256": "e5340775e4e31d5fed8a61c120d3b0001184ad7d3717e7eb26e21debb119271d",
+      "receipt": "2026-10-27-late-authored-history-evidence.json",
+      "rows": 8688,
+      "sources": [
+        {
+          "originalName": "prepare.py",
+          "sha256": "014565007f55eb0e0063b0e1a51bafcd392c07cbb8dad76e4eebf9c9e363f2cb",
+          "trackedPath": "tools/typing_experiments/frozen_sources/prepare_014565007f55eb0e.py"
+        },
+        {
+          "originalName": "grammar_contrast_corpus.py",
+          "sha256": "eeb289a4572eda11889a7180200d9b94894411bddd6ad97a92578b5bdb8f402f",
+          "trackedPath": "tools/typing_experiments/grammar_contrast_corpus.py"
+        },
+        {
+          "originalName": "right_context_role_corpus.py",
+          "sha256": "6c98af64d142d216c4eaf4ee36e00ed418cb22d04863b2f596322cbfb36b82e5",
+          "trackedPath": "tools/typing_experiments/frozen_sources/right_context_role_corpus_6c98af64d142d216.py"
+        },
+        {
+          "originalName": "right_context_role_features.py",
+          "sha256": "2442a38501946f6fcaad293a99b11d0ad785123efb1fe207b03beb5332a841d0",
+          "trackedPath": "tools/typing_experiments/frozen_sources/right_context_role_features_2442a38501946f6f.py"
+        }
+      ]
+    },
+    {
+      "corpus": "left-sequence-v1",
+      "manifestReceiptPath": "build/right-context-left-sequence-v1-20261027/corpus/manifest.json",
+      "manifestSha256": "c4519f9d59c5f03c9a988533b3dd8e8ace6e07063bebd8739a94952e77a086a6",
+      "receipt": "2026-10-27-auxiliary-authored-history-evidence.json",
+      "rows": 2268,
+      "sources": [
+        {
+          "originalName": "prepare.py",
+          "sha256": "ec0a6349a5c99805e3274b01c631bd0aa7009000f37a914a958f79535cbfa14c",
+          "trackedPath": "tools/typing_experiments/frozen_sources/prepare_ec0a6349a5c99805.py"
+        },
+        {
+          "originalName": "grammar_contrast_corpus.py",
+          "sha256": "eeb289a4572eda11889a7180200d9b94894411bddd6ad97a92578b5bdb8f402f",
+          "trackedPath": "tools/typing_experiments/grammar_contrast_corpus.py"
+        },
+        {
+          "originalName": "right_context_applied_corpus.py",
+          "sha256": "602890657811a39c17ce01e1557a01b6aa124bb0c1f6a1886131f6a79fa835d9",
+          "trackedPath": "tools/typing_experiments/frozen_sources/right_context_applied_corpus_602890657811a39c.py"
+        },
+        {
+          "originalName": "right_context_applied_features.py",
+          "sha256": "0207f2013564b4e0cb736a984ce89074ee292a0861d1223090bc1d80ff8f81bb",
+          "trackedPath": "tools/typing_experiments/late_training_sources/right_context_applied_features_0207f2013564b4e0.py"
+        },
+        {
+          "originalName": "right_context_left_sequence_corpus.py",
+          "sha256": "99aeb5d9e2118e54aec84c3575d07a30866eba38354cf598204f762237c608ff",
+          "trackedPath": "tools/typing_experiments/frozen_sources/right_context_left_sequence_corpus_99aeb5d9e2118e54.py"
+        },
+        {
+          "originalName": "right_context_left_sequence_features.py",
+          "sha256": "82aeb37a82f7ac32aafd2f5f08eab36469ad2605b169943359db9a069726788e",
+          "trackedPath": "tools/typing_experiments/frozen_sources/right_context_left_sequence_features_82aeb37a82f7ac32.py"
+        },
+        {
+          "originalName": "right_context_training_groups.py",
+          "sha256": "3f59f7cbab6e32b8da14f55925723814c4cc9da6d48f8d7b21e1a929c107f69c",
+          "trackedPath": "tools/typing_experiments/late_training_sources/right_context_training_groups_3f59f7cbab6e32b8.py"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 1
+}

@@ -22,6 +22,12 @@ class SmartTypingTraceTest {
                 "Rune#dictionaryReady",
                 "Rune#contextualAssetsLoad",
                 "Rune#contextualReady",
+                "Rune#modelSpaceKey",
+                "Rune#modelSpaceRequest",
+                "Rune#modelSpaceScoreOk",
+                "Rune#modelSpaceDeadline",
+                "Rune#modelSpaceContextTooLong",
+                "Rune#modelSpaceScoringError",
             ),
             SmartTypingTraceSection.entries.map { it.sectionName },
         )

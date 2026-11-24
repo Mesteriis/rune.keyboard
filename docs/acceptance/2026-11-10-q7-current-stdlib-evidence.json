@@ -1,0 +1,2917 @@
+{
+  "schemaVersion": 1,
+  "profile": "stdlib",
+  "modules": [
+    {
+      "path": "tools/morphology/test_evaluate.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07021783292293549,
+      "unittest": {
+        "tests": 9,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/morphology/test_export_android_profile.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.1325803748331964,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/morphology/test_export_dictionary.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07981041609309614,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/morphology/test_personal_holdout.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07659983402118087,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/morphology/test_ranker.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08382150018587708,
+      "unittest": {
+        "tests": 18,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/morphology/test_telegram_style.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.33955312496982515,
+      "unittest": {
+        "tests": 21,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/test_qualification_artifacts.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04371025017462671,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_a3_case_control_inputs.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.048384750029072165,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_a3_case_sidecar_audit.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04694179096259177,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_a3_lowercase_sidecar.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.039714915910735726,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_a3_rare_membership_probe.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07324379100464284,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_a3_taiga_propn_screen.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04588841600343585,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_a4_abbreviation_frequency.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04462520801462233,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_a4_abbreviation_review_sample.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08082658401690423,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_a4_controls_gate.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08261633384972811,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_all_text_source_boundaries.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.12408145889639854,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_applied_authored_history.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07307550008408725,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_authored_training_history.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.06990125006996095,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_auxiliary_authored_history.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08503758301958442,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_candidate_hidden_order.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.03732000011950731,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_candidate_modes.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.03958587511442602,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_candidate_strip_utility.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04051362490281463,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_case_homograph_source.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.06771895801648498,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_chat_case_morphology.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07034266600385308,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_chat_dialog_registry.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0778547921217978,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_chat_dialog_source.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0784901671577245,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_chat_distance_candidate.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04525804193690419,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_disclosed_fixtures.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 1.4042387919034809,
+      "unittest": {
+        "tests": 11,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_english_ewt_i_context.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.2391950418241322,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_english_i_apostrophe.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.4095156250987202,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_family_coverage.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04423858295194805,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_frozen_context_descendants.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07153924996964633,
+      "unittest": {
+        "tests": 10,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_late_authored_history.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08243058295920491,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_late_source_closure.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08069016691297293,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_q7_authored_typo_families.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.079628000035882,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_q7_variant_families.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08307412499561906,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_retrieval_row_attestation.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08371708285994828,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_retrieval_unicode_boundaries.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07500316691584885,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_shared_text_source_boundaries.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.12860416690818965,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_truncated_text_sources.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08128908416256309,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_unimorph_text_boundaries.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07890366716310382,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_unmanifested_conversation.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07152087497524917,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_wiktionary_text_boundaries.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07685325015336275,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_wordrank_distance.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07588795898482203,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_wordrank_hyphen_origins.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07426791684702039,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_audit_wordrank_source_boundaries.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07732662511989474,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_available_v6_recovery.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 1.2916963330935687,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_build_case_name_contrasts.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08399283303879201,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_chat_case_review.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08260049996897578,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_chat_corpus_report_v2.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 1.422757541993633,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_chat_corpus_report_v3.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 4.743189417058602,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_check_available_v6_articles.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 6.527487708022818,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_check_available_v6_contexts.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 12.711501457961276,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_check_available_v6_targets.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 20.378051792038605,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_compare_packed_wordrank.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08068491704761982,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_contextual_assets.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07740604202263057,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_contextual_policy_calibration.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08196395891718566,
+      "unittest": {
+        "tests": 9,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_control_ledger.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07028137496672571,
+      "unittest": {
+        "tests": 10,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_conversation_acceptance.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.044366792077198625,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_conversation_split_checks.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.042047458002343774,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_english_ewt_control_screen.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07170191686600447,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_english_ewt_error_model.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08379083406180143,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_english_family_keys.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.043057499919086695,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_evaluate_product_compact_policy.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.039077291963621974,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_ewt_frequency_lemma_exclusions.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 12.202855207957327,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_ewt_lemma_exclusions.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 4.892976083094254,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_ewt_packaged_lemma_exclusions.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 6.79832037515007,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_ewt_scowl_lemma_exclusions.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 9.921253791078925,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_ewt_surface_exclusions_v1.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.12734099989756942,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_export_external_spelling_replay.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.044319541892036796,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_export_external_spelling_replay_v7.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.046343541936948895,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_export_external_spelling_replay_v8.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.03694554208777845,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_extra_epoch_evaluation_receipt.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 3.072747291997075,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_fresh_spelling_holdout.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 20.73057895898819,
+      "unittest": {
+        "tests": 27,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_fresh_spelling_replay.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07598829106427729,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_frozen_source_identity.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.06827320787124336,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_grammar_context_features.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.036095499992370605,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_grammar_contrast_corpus.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.17514683306217194,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_grammar_focus_forms.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04696354200132191,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_grammar_revision_calibration.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.03749379189684987,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_grammar_revision_scope.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0395514580886811,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_grammar_training_groups.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0448057500179857,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_historical_holdout_variants.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.18485999992117286,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_holdout_ledger.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.1331016249023378,
+      "unittest": {
+        "tests": 13,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_a4_frequency_source.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 2.704226000001654,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_a4_review_exposure.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 2.499413250014186,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_control_components.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07288454216904938,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_early_ru_history.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08050537505187094,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_english_ewt_exposure.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07691383315250278,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_english_tatoeba_screen.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07020916603505611,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_english_tatoeba_surfaces.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 4.791461959015578,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_english_unimorph_surfaces.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 7.9881517079193145,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_joint_history.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.1276364999357611,
+      "unittest": {
+        "tests": 9,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_legacy_context_history.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07958562509156764,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_natural_context_history.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0479784170165658,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_neighbor_article_segments.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08244479214772582,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_neighbor_history_families.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08843000000342727,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_neighbor_prefix_families.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0730594580527395,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_q7_regression_families.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07178704207763076,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_ranker_history.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.038462124997749925,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_refinement_article_segments.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07931929198093712,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_refinement_text_families.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08971208310686052,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_spanish_unimorph_control_surfaces.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 1.3608746659010649,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_spelling_v6.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04656441695988178,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_taiga_context_exposure.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 3.539114708080888,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_taiga_dev_exposure.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08033058396540582,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_taiga_family_exposure.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 2.333074792055413,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_taiga_lemma_exposure.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 2.3169539580121636,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_tatoeba_history.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07502066693268716,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_unimorph_early_exclusions.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 18.365705625154078,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_wiktionary_historical_exclusions.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 36.01449991692789,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_wiktionary_remaining_surfaces.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 6.422650333028287,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_word_epoch_article_segments.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08643241715617478,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_word_epoch_segments.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0789224999025464,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_word_epoch_text_families.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08343991707079113,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_import_word_epoch_text_segments.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07129154191352427,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_joint_calibration_receipt.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 26.467755292076617,
+      "unittest": {
+        "tests": 10,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_joint_evaluation_receipt.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 18.253391374833882,
+      "unittest": {
+        "tests": 13,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_joint_exclusion_inputs.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0905682910233736,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_joint_neighbor_source_history.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 6.183223334141076,
+      "unittest": {
+        "tests": 9,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_joint_public_sources.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.13116045901551843,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_legacy_family_recovery.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08267229190096259,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_legacy_holdout_merge.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04211470787413418,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_legacy_holdout_recovery.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.1228509999345988,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_local_spelling_stress.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.13444020901806653,
+      "unittest": {
+        "tests": 18,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_merge_early_ru_sources.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.037473582895472646,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_neighbor_recovery.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0814649579115212,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_neighbor_refinement.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.12340958300046623,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_noun_case_contrast_corpus.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.13025112496688962,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_noun_case_focus_forms.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.034882792038843036,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_noun_case_revision_scope.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.03500541695393622,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_pack_rare_word_lexicon.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07591616595163941,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_past_context_assets.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.03638099995441735,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_prepare_external_spelling_holdout.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0787727499846369,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_prepare_external_spelling_holdout_v11.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08615441690199077,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_prepare_external_spelling_holdout_v12.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07781191705726087,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_prepare_external_spelling_holdout_v7.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08218645793385804,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_prepare_external_spelling_holdout_v8.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07706595910713077,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_prepare_public_controls_v1.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 6.583122791023925,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_prepare_public_spelling_v1.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 36.07768233399838,
+      "unittest": {
+        "tests": 11,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_promote_refinement.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 3.066243499983102,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_public_control_ledger.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 1.1913743331097066,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_public_corpus_preparation_v1.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 2.672216875012964,
+      "unittest": {
+        "tests": 29,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_public_holdout_ledger.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 48.730849290965125,
+      "unittest": {
+        "tests": 26,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_quarantine_a4_frequency_source.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0882026250474155,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_quarantine_unknown_families.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07469454105012119,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_rare_word_supplement.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04052399983629584,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_recover_early_ru_sources.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.13737625000067055,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_recover_punctuation_articles.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07320704101584852,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_recover_ranker_sources.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.1406274999026209,
+      "unittest": {
+        "tests": 8,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_refinement_evaluation_receipt.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 25.400845249881968,
+      "unittest": {
+        "tests": 9,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_register_ewt_error_targets.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 7.854497374966741,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_registry_without_build.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 14.930729875108227,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_replay_case_evidence_candidate.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08845583302900195,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_restore_frozen_followup.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04759791702963412,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_retrieval_evaluation_receipt.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 9.903941415948793,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_agreement_delta_source.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.041146582923829556,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_applied_corpus.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04298758297227323,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_applied_features.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.044013834092766047,
+      "unittest": {
+        "tests": 8,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_applied_ranker.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04181916592642665,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_continuation_calibration.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.03963320795446634,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_continuation_corpus.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.043269542045891285,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_continuation_features.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04393995879217982,
+      "unittest": {
+        "tests": 11,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_continuation_source.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.03658475005067885,
+      "unittest": {
+        "tests": 9,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_contrast_corpus.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.23845233395695686,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_corpus_separation.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0417150838766247,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_focus_forms.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.03732075006701052,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_grammar_features.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.043953416869044304,
+      "unittest": {
+        "tests": 10,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_input_audit.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04460420901887119,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_instrumental_corpus.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08262387500144541,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_left_role_ranker.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.044197625014930964,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_left_sequence_corpus.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.048011708073318005,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_left_sequence_features.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.042827249970287085,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_modal_source.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04444333305582404,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_oblique_corpus.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08020729199051857,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_other_part_corpus.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04667045781388879,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_prior_evidence.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04043883387930691,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_residual_ranker.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.03521708399057388,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_revision_features.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.041693042032420635,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_revision_scope.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.036694959038868546,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_role_corpus.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08201412484049797,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_role_features.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.035810917150229216,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_sentence_audit.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.03553624986670911,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_sentence_selection.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0459392499178648,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_side_forms.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.045104249846190214,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_signature_weights.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.03800220787525177,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_source_calibration.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04178641689941287,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_source_scope.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.048202916979789734,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_subject_evidence.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04845899995416403,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_surface_source.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04592733387835324,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_timeline_calibration.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04043983295559883,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_training_exclusion.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.03808720805682242,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_training_groups.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.044537708861753345,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_right_context_training_weights.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04037579195573926,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_screen_case_lowercase_evidence.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.08374941605143249,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_screen_english_ewt.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.040509582962840796,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_screen_english_i_source.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.24028762499801815,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_screen_rulexnorm_source.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04747579200193286,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_selector_collector_format.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.12978229206055403,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_selector_text_preflight_files_v1.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.24483799980953336,
+      "unittest": {
+        "tests": 11,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_selector_text_preflight_v1.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07938445801846683,
+      "unittest": {
+        "tests": 11,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_selector_text_preflight_v2.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07876450009644032,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_selector_text_preflight_v3.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.13301179208792746,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_source_identities.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07670087506994605,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_typing_quality_slices.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.04032812500372529,
+      "unittest": {
+        "tests": 8,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_word_context_features.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.0402215828653425,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_word_evaluation_receipt.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 3.3198941671289504,
+      "unittest": {
+        "tests": 9,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    }
+  ],
+  "status": "PASS",
+  "totals": {
+    "modules": 207,
+    "failedModules": 0,
+    "timedOutModules": 0,
+    "modulesWithoutReceipt": 0,
+    "tests": 1005,
+    "failures": 0,
+    "errors": 0,
+    "expectedFailures": 0,
+    "unexpectedSuccesses": 0,
+    "skipped": 0
+  }
+}

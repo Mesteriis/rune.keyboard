@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.session
 
 import io.github.mesteriis.rune.keyboard.ime.model.EditorContext
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.*
 import org.junit.Assert.*
 import org.junit.After
 import org.junit.Test
@@ -47,6 +48,63 @@ class EditorSimulatorTest {
         assertNull(editor.controller.state.lastAutoEdit)
         editor.type(" ")
         assertEquals("outside teh ", editor.document)
+    }
+
+    @Test fun `external composing loss emits admitted outcome only when session is disabled`() {
+        val editor = prepared()
+        val events = mutableListOf<DiagnosticEvent>()
+        editor.controller.setDiagnostics(object : TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+            override fun invalidate() = Unit
+            override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) = Unit
+            override fun externalSelectionDisabled(event: DiagnosticEvent): () -> Unit = { events += event }
+        })
+        val caret = editor.document.length
+        editor.controller.startSession(EditorContext.from(1, 0), caret, caret)
+        editor.profile = EditorSimulator.Profile.SELECTION_THEN_COMPOSITION
+        editor.type("teh")
+        assertFalse(editor.controller.state.enabled)
+        assertEquals(listOf(DiagnosticReason.EXTERNAL_SELECTION_DISABLED), events.map { it.reason })
+        editor.type(" ")
+        assertEquals(1, events.size)
+    }
+
+    @Test fun `external caret movement without disabled session emits no disabled outcome`() {
+        val editor = prepared()
+        val events = mutableListOf<DiagnosticEvent>()
+        editor.controller.setDiagnostics(object : TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+            override fun invalidate() = Unit
+            override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) = Unit
+            override fun externalSelectionDisabled(event: DiagnosticEvent): () -> Unit = { events += event }
+        })
+        val caret = editor.document.length
+        editor.controller.startSession(EditorContext.from(1, 0), caret, caret)
+        assertTrue(editor.controller.updateSelection(caret - 1, caret - 1, -1, -1, editor.execute))
+        assertTrue(editor.controller.state.enabled)
+        assertTrue(events.isEmpty())
+    }
+
+    @Test fun `reentrant diagnostic admission cannot clear a replacement session`() {
+        val editor = prepared()
+        var outcomes = 0
+        editor.controller.setDiagnostics(object : TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+            override fun invalidate() = Unit
+            override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) = Unit
+            override fun externalSelectionDisabled(event: DiagnosticEvent): () -> Unit {
+                val caret = editor.document.length
+                editor.controller.startSession(EditorContext.from(1, 0), caret, caret)
+                return { outcomes++ }
+            }
+        })
+        val caret = editor.document.length
+        editor.controller.startSession(EditorContext.from(1, 0), caret, caret)
+        val oldSession = editor.controller.state.sessionId
+        assertTrue(editor.controller.updateSelection(caret - 1, caret - 1, -1, -1, editor.execute))
+        assertTrue(editor.controller.state.sessionId > oldSession)
+        assertTrue(editor.controller.state.enabled)
+        assertEquals(0, outcomes)
     }
 
     @Test fun `prefix insert before region acknowledgement preserves outside text and removes Undo`() {

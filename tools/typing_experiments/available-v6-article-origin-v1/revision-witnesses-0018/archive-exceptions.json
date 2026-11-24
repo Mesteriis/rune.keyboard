@@ -1,0 +1,120 @@
+{
+  "archiveMetadata": {
+    "exactSnapshotRevisionProven": false,
+    "publicationRightsReviewed": false,
+    "queryTimestamp": "20231101",
+    "rows": [
+      {
+        "article": "8717920",
+        "availabilityHttp": 200,
+        "captureHttp": "200",
+        "captureTimestamp": "20250119212342",
+        "htmlSha256": "8193488d280f0e194e5e64704c4cbe44645dab5948cc34aa729871520cdd0a7a",
+        "ids": {
+          "wgArticleId": 8716150,
+          "wgCurRevisionId": 136621955,
+          "wgRevisionId": 136621955
+        },
+        "pageIdentityMatches": false,
+        "replayStatus": 200
+      },
+      {
+        "article": "8732109",
+        "availabilityHttp": 200,
+        "captureHttp": "200",
+        "captureTimestamp": "20221023213820",
+        "htmlSha256": "06b309be13250c76f43df4d0cd9354c08f939d52fadabba7684da9ef7ee325fd",
+        "ids": {
+          "wgArticleId": 8732109,
+          "wgCurRevisionId": 124386505,
+          "wgRevisionId": 124386505
+        },
+        "pageIdentityMatches": true,
+        "replayStatus": 200
+      },
+      {
+        "article": "8848451",
+        "availabilityHttp": 200,
+        "captureHttp": "200",
+        "captureTimestamp": "20250125111658",
+        "htmlSha256": "ad5b87fdbe9cdb5bcf8615dc8b0de4dee856aa7a495e1dec354a6f4e0c996304",
+        "ids": {
+          "wgArticleId": 8848451,
+          "wgCurRevisionId": 135878269,
+          "wgRevisionId": 135878269
+        },
+        "pageIdentityMatches": true,
+        "replayStatus": 200
+      }
+    ],
+    "scope": "public Wayback metadata only"
+  },
+  "archivePassages": {
+    "calibration": {
+      "checked": [
+        {
+          "article": "8732109",
+          "captureSha256": "06b309be13250c76f43df4d0cd9354c08f939d52fadabba7684da9ef7ee325fd",
+          "captureTimestamp": "20221023213820",
+          "contexts": 1,
+          "displayedRevision": 124386505,
+          "fullWindowMatch": true,
+          "leftMatch": true,
+          "rightMatch": true,
+          "rows": 4
+        },
+        {
+          "article": "8848451",
+          "captureSha256": "ad5b87fdbe9cdb5bcf8615dc8b0de4dee856aa7a495e1dec354a6f4e0c996304",
+          "captureTimestamp": "20250125111658",
+          "contexts": 1,
+          "displayedRevision": 135878269,
+          "fullWindowMatch": true,
+          "leftMatch": true,
+          "rightMatch": true,
+          "rows": 5
+        }
+      ],
+      "exactSnapshotRevisionProven": false,
+      "historicalCalibrationSha256": "0e38210241368965d30edbce36387b6de3f821447c1e69d5ba19ef4c2b75ebf9",
+      "htmlSelector": "#mw-content-text .mw-parser-output",
+      "includesFullCleanedArticleCheck": false,
+      "publicationRightsReviewed": false,
+      "scope": "normalized visible archive passage check"
+    },
+    "holdout": {
+      "checked": [],
+      "exactSnapshotRevisionProven": false,
+      "historicalHoldoutSha256": "fab03f6fb1c08c462328ebf5c18877b0483ab7977179090c2bd48db9e89a0e8d",
+      "htmlSelector": "#mw-content-text .mw-parser-output",
+      "includesFullCleanedArticleCheck": false,
+      "publicationRightsReviewed": false,
+      "scope": "normalized visible archive passage check"
+    }
+  },
+  "moveLog": {
+    "endpoint": "https://ru.wikipedia.org/w/api.php",
+    "query": {
+      "action": "query",
+      "format": "json",
+      "formatversion": 2,
+      "lelimit": 5,
+      "leprop": "ids|type|timestamp",
+      "letitle": "92 \u043a\u043c",
+      "letype": "move",
+      "list": "logevents"
+    },
+    "record": {
+      "action": "move",
+      "logid": 100548647,
+      "logpage": 8717920,
+      "pageid": 8716150,
+      "revid": 136619180,
+      "timestamp": "2024-03-11T11:07:31Z",
+      "type": "move"
+    },
+    "responseSha256": "22a0a6d8c0fceb12ff16097543a2159b947b8af2491cb2230d42eb39e3f811ba"
+  },
+  "schema": 1,
+  "sourceShardArticlesSha256": "bd752fd7bfdfdf7af27f91eafd4163f3e378b9033b094105ad73eb6336606a2a"
+}

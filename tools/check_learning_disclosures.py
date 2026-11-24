@@ -12,7 +12,7 @@ CONTRACTS = {
     'PersonalWord': ('personalization/PersonalTypingModel.kt', {'language', 'word'}),
     'PersonalFeedback': ('personalization/PersonalTypingModel.kt', {'language', 'original', 'replacement', 'accepted', 'rejected'}),
     'PersonalPhrase': ('personalization/PersonalTypingModel.kt', {'language', 'prefix', 'continuation', 'support'}),
-    'PersonalTypingSnapshot': ('personalization/PersonalTypingModel.kt', {'feedback', 'confirmed', 'phrases'}),
+    'PersonalTypingSnapshot': ('personalization/PersonalTypingModel.kt', {'feedback', 'confirmed', 'phrases', 'caseRejections'}),
     'LearningEvidence': ('learning/LearningModel.kt', {'language', 'originalHash', 'expectedHash', 'source', 'pattern', 'holdout', 'trains', 'original', 'expected', 'conflicted'}),
     'LearningSnapshot': ('learning/LearningModel.kt', {'evidence', 'activePolicy', 'rollbackPolicy'}),
     'LearningPatternPolicy': ('learning/LearningModel.kt', {'counts'}),
@@ -20,6 +20,7 @@ CONTRACTS = {
 LIMITS = {
     ('personalization/PersonalTypingCodec.kt', 'MAX_FILE_BYTES'): 1048576,
     ('personalization/PersonalTypingModel.kt', 'MAX_CONFIRMED'): 512,
+    ('personalization/PersonalTypingModel.kt', 'MAX_CASE_REJECTIONS'): 512,
     ('personalization/PersonalTypingModel.kt', 'MAX_FEEDBACK'): 512,
     ('personalization/PersonalTypingModel.kt', 'MAX_PHRASES'): 1024,
     ('personalization/PersonalTypingModel.kt', 'MAX_WORD_CHARS'): 48,
@@ -29,20 +30,20 @@ LIMITS = {
 }
 # Reviewed serialized writers; schema edits require renewed disclosure review.
 WRITERS = {
-    ('personalization/PersonalTypingCodec.kt', 'encode'): 'd19117ba65f652180b89159917f3abc5366cd71797308bd36a80c0166ec26d69',
+    ('personalization/PersonalTypingCodec.kt', 'encode'): '8fdbfd99fb4003ea707e38bb4fbb2795b8026d7f78cdab84375b18d00881f129',
     ('learning/LearningCodec.kt', 'encode'): '8783fdfd580d4a52bf774b3a3310dcf441fbe9c63864c820d2f45861d5b920b0',
     ('learning/LearningCodec.kt', 'writePolicy'): 'f3b6ba5e25389cf46f6a07e6bcde7a6f861a3876bd590dcb07842925d0eb7846',
 }
 
 CONSENT = {
     'values': {
-        ('strings.xml', 'settings_personal_learning_summary'): ['confirmed words', 'typed/chosen', 'acceptance counts', 'rejection flags', 'phrase prefixes/continuations', 'language', 'support counts', '1 MiB', 'password', 'incognito', 'keeps the profile', 'including words you did not correct'],
+        ('strings.xml', 'settings_personal_learning_summary'): ['confirmed words', 'typed/chosen', 'acceptance counts', 'rejection flags', 'rejected lowercase-to-titlecase changes', 'phrase prefixes/continuations', 'language', 'support counts', '1 MiB', 'password', 'incognito', 'keeps the profile', 'including words you did not correct'],
         ('typing_controls_strings.xml', 'settings_collect_examples_summary'): ['original/expected words', 'language', 'hashes', 'feedback source', 'edit type', 'training/holdout/conflict', '512 records', '512 KiB', 'do not encrypt', 'also turn off typo-pattern learning'],
         ('typing_controls_strings.xml', 'settings_typo_patterns_summary'): ['word hashes', 'training/holdout/conflict', 'raw-example collection off', 'do not encrypt', 'active and rollback edit-pattern counts', 'both learning-lab switches'],
         ('learning_strings.xml', 'learning_scope'): ['active and rollback edit-pattern counts', 'per language', 'both example collection and typo-pattern learning', 'password', 'incognito', 'neither encryption nor anonymization'],
     },
     'values-ru': {
-        ('strings.xml', 'settings_personal_learning_summary'): ['подтверждённые слова', 'набранных и выбранных', 'числом подтверждений', 'запретом замены', 'начала и продолжения фраз', 'языком', 'частотой', '1 МиБ', 'пароли', 'инкогнито', 'сохраняет профиль', 'включая слова без исправлений'],
+        ('strings.xml', 'settings_personal_learning_summary'): ['подтверждённые слова', 'набранных и выбранных', 'числом подтверждений', 'запретом замены', 'отменённые изменения строчной буквы на заглавную', 'начала и продолжения фраз', 'языком', 'частотой', '1 МиБ', 'пароли', 'инкогнито', 'сохраняет профиль', 'включая слова без исправлений'],
         ('typing_controls_strings.xml', 'settings_collect_examples_summary'): ['исходные и ожидаемые слова', 'языком', 'хешами', 'источником', 'типом опечатки', 'обучения, проверочной выборки и конфликта', '512 записей', '512 КиБ', 'не шифруют', 'выключите также обучение типам опечаток'],
         ('typing_controls_strings.xml', 'settings_typo_patterns_summary'): ['хеши слов', 'обучения, проверочной выборки и конфликта', 'при выключенном сборе исходных примеров', 'не шифруют', 'текущие и предыдущие счётчики', 'выключите оба переключателя'],
         ('learning_strings.xml', 'learning_scope'): ['текущие и предыдущие счётчики типов опечаток по языкам', 'выключите оба переключателя', 'пароли', 'инкогнито', 'не являются шифрованием или анонимизацией'],
@@ -98,7 +99,10 @@ def inspect(root=ROOT):
             if actual != expected:
                 errors.append('UNREVIEWED_PERSISTED_FIELDS ' + name)
             rows = [line for line in guide.splitlines() if line.startswith('| `' + name + '`')]
-            if len(rows) != 1 or any('`' + field + '`' not in rows[0] for field in actual):
+            expected_rows = 2 if name == 'PersonalWord' else 1
+            if (len(rows) != expected_rows or any('`' + field + '`' not in row for row in rows for field in actual)
+                    or name == 'PersonalWord' and not all(any('/ `' + role + '`' in row for row in rows)
+                                                          for role in ('confirmed', 'caseRejections'))):
                 errors.append('GUIDE_PERSISTED_FIELDS ' + name)
         for (path, key), expected in LIMITS.items():
             source = (root / (BASE + path)).read_text()
@@ -116,6 +120,9 @@ def inspect(root=ROOT):
                 errors.append('STORAGE_PATH_DISCLOSURE ' + path)
         if 'Learning lab → Reset examples and patterns' not in privacy or 'Delete personal typing data' not in privacy:
             errors.append('SEPARATE_RESET_DISCLOSURE')
+        if any(marker not in privacy for marker in ('lowercase words and language for explicitly rejected capitalization changes',
+                                                      '512 capitalization rejections')):
+            errors.append('CASE_REJECTION_PRIVACY_DISCLOSURE')
     except (OSError, ValueError, SyntaxError, ET.ParseError):
         errors.append('UNREADABLE_OR_UNREVIEWED_DISCLOSURE_SOURCE')
     return errors
@@ -123,5 +130,5 @@ def inspect(root=ROOT):
 
 if __name__ == '__main__':
     failures = inspect()
-    print('\n'.join(failures) if failures else 'Learning privacy disclosures PASS: seven records, eight limits, EN/RU consent')
+    print('\n'.join(failures) if failures else 'Learning privacy disclosures PASS: seven records, nine limits, EN/RU consent')
     raise SystemExit(bool(failures))

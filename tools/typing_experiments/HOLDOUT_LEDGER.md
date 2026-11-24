@@ -1,5 +1,25 @@
 # Durable public corpus exclusions
 
+The disclosed Q7 Russian regression surfaces now have conservative
+dictionary-only family addenda; unresolved surfaces remain exact exclusions.
+See `docs/acceptance/2026-10-28-q6-q7-regression-families.md`.
+
+The four historical word/epoch manifest partitions now also exclude segments
+from all matching articles in their pinned source parquet. See
+`docs/acceptance/2026-10-28-q6-word-epoch-article-segments.md`; delimiter-based
+segments are not independently verified linguistic sentences.
+
+Historical word-ranking and additional-epoch target occurrences additionally
+have complete selector-segment hashes; these are delimiter-defined segments,
+not certified linguistic sentences. See
+`docs/acceptance/2026-10-28-q6-word-epoch-segments.md`.
+
+The inspected UD Russian Taiga 2.18 development partition is excluded by
+normalized full-sentence identity (1,260 rows, 1,244 keys). Its original entry remains sentence-only. A separate addendum excludes
+dictionary families, exact Cyrillic fragments of up to 32 characters and
+within-sentence contexts. Document identity, cross-sentence contexts, other
+surfaces and fresh corpus coverage remain incomplete. See `docs/acceptance/2026-10-28-a2-taiga-source-screen.md`.
+
 `holdout-ledger.json` stores sorted, domain-separated SHA-256 identity keys and
 source/corpus bindings. It does not store sentence text, predictions or model
 scores. Hashes of public words/contexts are not anonymization of private data.
@@ -20,6 +40,39 @@ cannot certify independence from historical spelling articles. The earlier
 97/115 counts describe v7-v12 only. Existing rows and scores are unchanged;
 reserved means unscored, not independently fresh. The ledger records this
 finding and its exact corpus scope in `historicalArticleOverlap`.
+
+The spelling-only disclosure is not the full set of known article collisions.
+The later `historical-neighbor-recovery-public-v1` entry overlaps 26 calibration
+and 25 reserved-holdout article keys. Of those, 18 and 13 respectively are not
+in the spelling-only union. Combining those two recorded sources therefore
+gives 140 calibration and 144 reserved-holdout article keys. These count unique
+hashed article identities, not rows or distinct affected examples. The
+regression test recomputes the intersections from the tracked ledger; its
+scope is the spelling disclosure plus that neighbor entry, not proof of
+complete historical coverage. No historical row or score was changed.
+
+At the earlier 223-entry lexical snapshot, the intersection with **all** other
+registered entries (excluding the two v6 target entries) was also 140
+calibration and 144 holdout articles. The current 225-entry snapshot additionally
+quarantines the complete Wikipedia shard screened for A4: 193 calibration and
+162 holdout v6 articles are in that shard. The union against all other entries
+is now 304 calibration and 289 holdout articles. The tracked test expands packed
+key sets before comparison. These are distinct article identities, not affected
+rows; the larger counts reflect subsequent source exposure, not retroactive
+proof of historical training or complete coverage.
+
+The article hashes can also be resolved to the retained neighbor corpus: its
+15,000 rows and attribution are checked against their frozen manifest before
+mapping. The 26 calibration-overlap articles contain 180 neighbor rows
+(108 train, 18 calibration, 54 holdout); the 25 holdout-overlap articles
+contain 150 neighbor rows (66 train, 48 calibration, 36 holdout). These are
+counts in the neighbor corpus, not counts of affected v6 rows. The two entries
+share no recorded target-context keys, but article overlap still violates the
+article-disjoint protocol. The [byte-exact v6 row audit](../../docs/acceptance/2026-11-10-q6-available-v6-metadata-recovery.md#exact-v6-rows-affected-by-article-overlap)
+counts 690 calibration rows and 710 holdout rows in the spelling-or-neighbor
+article union. The 239-entry snapshot counts 1,469 and 1,402 affected rows
+respectively after excluding the v6 partitions and their direct parent.
+Independent qualification remains open.
 
 **Coverage is incomplete.** Known overlap is rejected as `LEDGER_OVERLAP`.
 An otherwise disjoint freshness check fails as `LEDGER_INCOMPLETE` until historical

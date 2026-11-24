@@ -1,0 +1,46 @@
+{
+  "archiveMetadata": {
+    "exactSnapshotRevisionProven": false,
+    "publicationRightsReviewed": false,
+    "queryTimestamp": "20231101",
+    "rows": [
+      {
+        "article": "6724762",
+        "availabilityHttp": 200,
+        "captureHttp": "200",
+        "captureTimestamp": "20231214040903",
+        "htmlSha256": "5dd84cf67bcd8596ac5eb1d23d3c05551e0fd4e6efc3332a85f7a94dcc4a1489",
+        "ids": {
+          "wgArticleId": 6724762,
+          "wgCurRevisionId": 122857447,
+          "wgRevisionId": 122857447
+        },
+        "pageIdentityMatches": true,
+        "replayStatus": 200
+      }
+    ],
+    "scope": "public Wayback metadata only"
+  },
+  "archivePassages": {
+    "checked": [
+      {
+        "article": "6724762",
+        "captureSha256": "5dd84cf67bcd8596ac5eb1d23d3c05551e0fd4e6efc3332a85f7a94dcc4a1489",
+        "captureTimestamp": "20231214040903",
+        "contexts": 1,
+        "displayedRevision": 122857447,
+        "fullWindowMatch": true,
+        "leftMatch": true,
+        "rightMatch": true,
+        "rows": 4
+      }
+    ],
+    "exactSnapshotRevisionProven": false,
+    "historicalHoldoutSha256": "fab03f6fb1c08c462328ebf5c18877b0483ab7977179090c2bd48db9e89a0e8d",
+    "includesFullCleanedArticleCheck": false,
+    "publicationRightsReviewed": false,
+    "scope": "normalized visible archive passage check"
+  },
+  "schema": 1,
+  "sourceShardArticlesSha256": "5740c7ac59aed44edefb6bb73ae799800176958ea38f3760d0fe45fb13fef61b"
+}

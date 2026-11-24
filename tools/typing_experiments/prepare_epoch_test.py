@@ -5,6 +5,7 @@ import argparse
 import json
 import re
 import unicodedata
+import independent_corpus_guard as registry_guard
 import prepare_refinement as public
 
 ROOT=public.ROOT
@@ -17,7 +18,8 @@ def excluded_articles(manifest):
         raise ValueError('PUBLIC_PRIOR_REQUIRED')
     return {str(article) for part in manifest['partitions'].values() for article in part['articles']}
 
-def prepare(parquet_path,frequency_path,output):
+def prepare(parquet_path,frequency_path,output, *, historical_reproduction=False):
+    snapshot=registry_guard.begin(historical_reproduction)
     import pyarrow.parquet as pq
     lock=json.loads((ROOT/'tools/model/rune-text-0.2/source-lock.json').read_text())
     source=lock['wikipediaContext']['files']['ru-0007.parquet']
@@ -25,6 +27,8 @@ def prepare(parquet_path,frequency_path,output):
         raise ValueError('PUBLIC_PARQUET_IDENTITY')
     if public.file_hash(frequency_path)!=lock['frequencyWords']['files']['ru_50k.txt']:
         raise ValueError('PUBLIC_FREQUENCY_IDENTITY')
+    input_snapshot=registry_guard.selector_inputs(snapshot,parquet_path,source['sha256'],frequency_path,lock['frequencyWords']['files']['ru_50k.txt'],Path(__file__))
+    prior_snapshot=registry_guard.prior_input_snapshot(ROOT, (('typing-refinement','verified-observations'),)) if snapshot is not None else None
     prior_path=ROOT/'build/typing-refinement/data/manifest.json'
     binding=json.loads((ROOT/'build/typing-refinement/verified-observations/manifest.json').read_text())
     if public.file_hash(prior_path)!=binding['dataManifestSha256']:
@@ -33,7 +37,6 @@ def prepare(parquet_path,frequency_path,output):
     if prior['scannedArticles']!=1920:raise ValueError('UNEXPECTED_PRIOR_SCAN')
     output=output.resolve()
     if output.exists() or not output.is_relative_to(ROOT/'build'):raise ValueError('FRESH_BUILD_OUTPUT_REQUIRED')
-    output.mkdir(parents=True)
     # Exclude exact earlier text fragments and row contexts in addition to article IDs.
     prior_text=set();seen_contexts=set()
     for part in ('train','dev','test'):
@@ -58,12 +61,14 @@ def prepare(parquet_path,frequency_path,output):
             if chars<CHARACTERS and len(clean)>=80:
                 fragment=clean[:min(12000,CHARACTERS-chars)]
                 if public.digest(fragment.encode()) not in prior_text:
+                    registry_guard.check_selected_source_text(snapshot, normalized, fragment)
                     texts.append({'articleId':article,'text':fragment});chars+=len(fragment)
             selected=set();count=0
-            for sentence in re.split(r'(?<=[.!?])\s+|\n+',normalized):
+            for sentence,segment_start in registry_guard.selector_segments(normalized):
                 for ordinal,match in enumerate(public.WORD.finditer(sentence)):
                     word=match.group()
                     if ordinal<3 or word!=word.lower() or not 5<=len(word)<=12 or word not in vocab:continue
+                    if not registry_guard.whole_selector_token(normalized,sentence,segment_start,match,snapshot):continue
                     if word in selected or word_counts.get(word,0)>=4:continue
                     prefix=sentence[:match.start()][-128:].lstrip()
                     if not prefix or not prefix[-1].isspace():continue
@@ -78,12 +83,24 @@ def prepare(parquet_path,frequency_path,output):
                     rows.append({'id':'extra-'+identity[:24],'articleId':article,'language':'ru','partition':'test',
                         'split':'holdout','family':word,'template':'article-'+article,'typed':typed,'prefix':prefix,
                         'cohort':'typo','noAuto':False,'expectedSpelling':word,'category':category})
+                    registry_guard.attach_selector_source(rows[-1],normalized,sentence,segment_start,match,snapshot)
                 if len(rows)>=ROWS or count>=12:break
             if len(rows)==ROWS and chars==CHARACTERS:break
         if len(rows)==ROWS and chars==CHARACTERS:break
         if scanned>=20000:break
     if len(rows)!=ROWS or chars!=CHARACTERS:raise ValueError('INSUFFICIENT_FRESH_TEST')
     if set(articles)&excluded:raise ValueError('ARTICLE_LEAKAGE')
+    dictionary_receipt=registry_guard.selector_families(snapshot,rows)
+    registry_guard.verify_selector_inputs(input_snapshot)
+    registry_guard.reject_unchecked_texts(snapshot,{'test':texts})
+    registry_receipt=registry_guard.finish(snapshot,rows)
+    if prior_snapshot is not None:
+        registry_guard.verify_selector_inputs(prior_snapshot)
+        registry_receipt['priorInputSha256']={name:digest for name,(_,digest) in prior_snapshot.items()}
+    if dictionary_receipt is not None:
+        registry_receipt['canonicalFamilyDictionary']=dictionary_receipt
+        registry_receipt['selectorInputSha256']={name:digest for name,(_,digest) in input_snapshot.items()}
+    output.mkdir(parents=True)
     for part in ('train','dev','test'):
         for kind,records in [('rows',rows),('text',texts)]:
             (output/f'{part}-{kind}.jsonl').write_text(''.join(json.dumps(r,ensure_ascii=False,sort_keys=True)+'\n' for r in (records if part=='test' else [])))
@@ -96,9 +113,11 @@ def prepare(parquet_path,frequency_path,output):
         'preparationScriptSha256':public.file_hash(Path(__file__)),
         'partitions':{p:{'characters':chars if p=='test' else 0,'rows':len(rows) if p=='test' else 0,'articles':articles if p=='test' else []} for p in ('train','dev','test')},
         'files':{p.name:public.file_hash(p) for p in output.glob('*.jsonl')}}
+    manifest.update(registry_receipt)
     (output/'manifest.json').write_text(json.dumps(manifest,indent=2,sort_keys=True)+'\n')
-    print(json.dumps({'rows':len(rows),'characters':chars,'articles':len(articles),'scannedArticles':scanned,'excludedPriorArticles':len(excluded)}))
+    print(json.dumps({'rows':len(rows),'characters':chars,'articles':len(articles),'scannedArticles':scanned,'excludedPriorArticles':len(excluded),'scope':manifest['scope'],'independentQualification':False}))
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--parquet',type=Path,required=True);p.add_argument('--frequency',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
-    a=p.parse_args();prepare(a.parquet,a.frequency,a.output)
+    p.add_argument('--historical-reproduction',action='store_true',help='Reproduce disclosed data without independent qualification.')
+    a=p.parse_args();prepare(a.parquet,a.frequency,a.output,historical_reproduction=a.historical_reproduction)

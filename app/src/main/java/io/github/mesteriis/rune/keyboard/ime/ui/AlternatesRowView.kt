@@ -52,7 +52,7 @@ internal class AlternatesRowView(context: Context, private val appearance: Keybo
         setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx)
         typeface = Typeface.DEFAULT
         setTextColor(appearance.text)
-        contentDescription = alternate.label
+        contentDescription = alternate.accessibilityLabel ?: alternate.label
         layoutParams = LayoutParams(cellWidth, rowHeight)
     }
 

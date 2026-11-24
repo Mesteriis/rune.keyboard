@@ -1,0 +1,42 @@
+{
+  "analyzerSha256": "dbe9c7a96adf1315995add1a1398f467b4fb68bb0bd6f72fe222517c32314e7e",
+  "contextMeaning": "adjacent frequency-list entries, not a natural sentence",
+  "counts": {
+    "delete-middle": {
+      "changedTransforms": 180,
+      "completion:COMPLETE": 55,
+      "completion:STATES_EXHAUSTED": 73,
+      "completion:VALID_WORD": 46,
+      "completion:VERIFIED_EXHAUSTED": 6,
+      "targetAbsent": 93,
+      "targetInAlternatives": 87,
+      "targetSeenAndSearchAllowsAuto": 21,
+      "targetSeenButSearchProhibitsAuto": 66
+    },
+    "transpose-first": {
+      "changedTransforms": 180,
+      "completion:COMPLETE": 76,
+      "completion:STATES_EXHAUSTED": 92,
+      "completion:VALID_WORD": 9,
+      "completion:VERIFIED_EXHAUSTED": 3,
+      "targetAbsent": 73,
+      "targetInAlternatives": 107,
+      "targetSeenAndSearchAllowsAuto": 32,
+      "targetSeenButSearchProhibitsAuto": 75
+    }
+  },
+  "inputs": {
+    "tools/ci/product-replay-v1/baseline-manifest.json": "0b17163f8856636393ddbaede8ff7c37c75a76b3c9dad25cefd43cc28b368a24",
+    "tools/ci/product-replay-v1/baseline.jsonl.gz": "cc63e36f4b95c7328440ff2965dae5ab1432c119df53e14b12a8e264f7ca409b",
+    "tools/ci/product-replay-v1/inputs.jsonl": "a1200189645a577b29fd94830c910974ae2356bf2017c20ee09a3ae9152e16db",
+    "tools/ci/product-replay-v1/manifest.json": "09f4f1482aa731ba08141b500f2da50b81ab093909b1823c2f87dce1071d36e9",
+    "tools/ci/product-replay-v1/origins.jsonl": "62429cc5d9b88c6c19f5fb974d14f79bd5d8660f288e9a53a11c7c5e4e5fbbc5"
+  },
+  "modelCalls": 0,
+  "projectionSha256": "e2f5b604d83eceb3d75cf75ec69f73e679ab847dfebdbf7ddc408b455c0cb0ea",
+  "qualification": false,
+  "schemaVersion": 1,
+  "scope": "disclosed-synthetic-diagnostic-not-qualification",
+  "sourceCaptureCommit": "3fb4000a3cbdaa9302ee719baa1cd6ab513a8951",
+  "targetMeaning": "frequency-list source surface, not a verified correction"
+}

@@ -1,0 +1,120 @@
+{
+  "apkChanged": false,
+  "baseRevision": "502eeed",
+  "checks": {
+    "scientific-final": {
+      "errors": 0,
+      "failures": 0,
+      "modules": 22,
+      "receipt": "build/review-q6-word-evaluation-20261028/scientific-final/receipt.json",
+      "sha256": "643f178231abc43509bf5e0eeea6224c3257776ab5af7a198856a039854189ef",
+      "skipped": 1,
+      "status": "PASS",
+      "tests": 75
+    },
+    "stdlib-source-final": {
+      "errors": 0,
+      "failures": 0,
+      "modules": 118,
+      "receipt": "build/review-q6-word-evaluation-20261028/stdlib-source-final/receipt.json",
+      "sha256": "3305e3cb0990f4350957d22e96dda4b74a4b3ad16bec5490bde926b3f92310ec",
+      "skipped": 0,
+      "status": "PASS",
+      "tests": 631
+    }
+  },
+  "ciTools": {
+    "exitCode": 0,
+    "logSha256": "cb161b3641dfedf5b5cbc10504f5073d72e2e723ce8e2d680db27d8a1c62ed20",
+    "tests": 41
+  },
+  "currentJvmExport": {
+    "exitCode": 0,
+    "receiptSha256": "4b2cc0db3c6863eccf2276b27ea76ef5d1c24b4ae8ed26a79220a7ee3f52049e",
+    "rows": 4
+  },
+  "deviceUsed": false,
+  "failuresRetained": [
+    "initial isolated-fixture directory collision; corrected; failed driver.log retained"
+  ],
+  "independentQualification": false,
+  "limitations": [
+    "identical published weights and fixture-only selection evidence; not original training or checkpoint selection reproduction",
+    "original epoch regression observations absent; controlled disclosed refinement copy used",
+    "global registry coverage incomplete; other drivers/historical provenance/family gaps and fresh qualification remain open"
+  ],
+  "packagedFileSha256": {
+    "app/src/main/assets/smarttyping/experiments/NOTICE.md": "efceac6d0dde6e787e3545e6b3de0f87be6950c67b655ee9076869f07580a9ce",
+    "app/src/main/assets/smarttyping/experiments/contextual-provenance.json": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435",
+    "app/src/main/assets/smarttyping/experiments/contextual-tatoeba-attribution.json": "f81b27066cee38a2f2a14c2766e9cceae399d3c7590bca7b63e4d782fd18dd44",
+    "app/src/main/assets/smarttyping/experiments/infinitive-revision-provenance.json": "a20fe5c9981e857dda6823fb5aeffb56c365556a6e38542250a714ea3aa20fca",
+    "app/src/main/assets/smarttyping/experiments/joint-correction-provenance.json": "7b42d0a46dd754d32903f73dabcefa7eea462f5c6cba1e886a06008bd22cf5e7",
+    "app/src/main/assets/smarttyping/experiments/joint-rescue-provenance.json": "4700fab35c3d9ea83457920187ae41ea88c7a95220325401cf13d83bcd83fcdb",
+    "app/src/main/assets/smarttyping/experiments/neighbor-recovery-provenance.json": "f988fea3f6d96f68ad0394e5a4ded6e067dec8fb305d561415cdc77c4440e4ce",
+    "app/src/main/assets/smarttyping/experiments/noun-case-provenance.json": "a9b1760a0b462a68ff38264be9ae13a9dac9ebf5840cf606778b32c1d2910235",
+    "app/src/main/assets/smarttyping/experiments/provenance.json": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4",
+    "app/src/main/assets/smarttyping/experiments/ru-context.bin": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
+    "app/src/main/assets/smarttyping/experiments/ru-context.gram": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b",
+    "app/src/main/assets/smarttyping/experiments/ru-contextual-policy.json": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6",
+    "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+    "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6",
+    "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-policy.json": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595",
+    "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+    "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+    "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-policy.json": "ebdb0e83f3c4ed3476f5b317e31619415ca020d9703cd3d6900b9e8ac5c4701d",
+    "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+    "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+    "app/src/main/assets/smarttyping/experiments/ru-noun-case-policy.json": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+    "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+    "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+    "app/src/main/assets/smarttyping/experiments/ru-ranker.bin": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+    "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+    "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt": "ff4e3cc8b0f67da2295e375b129518100fa8b2b981f32ed490e6e38daa01fd34",
+    "tools/typing_experiments/parity.tsv": "374f78253303b3fd77c5fd17a04190fd73e9d410bc5f069d5860bcefea90fad0"
+  },
+  "packagedFilesUnchanged": true,
+  "packagedProvenance": {
+    "exitCode": 0,
+    "logSha256": "8947c8e9fdce3706751d06a2e06d6053045cfdb9cdc25090e9ed27adb68d7ed9",
+    "tests": 12
+  },
+  "productionQualified": false,
+  "retainedReports": {
+    "build/review-q6-word-evaluation-20261028/all-project-source-smoke/bounded-replay-receipt.json": "afdc012d5c9b42a6b255012550fba565da81273f63b3b6840d7dcd0320ede932",
+    "build/review-q6-word-evaluation-20261028/all-project-source-smoke/bounded-test-report.json": "f5da792496851bfded1d56ccb27e157c454ea9c865a671946e6af392495d99d0",
+    "build/review-q6-word-evaluation-20261028/all-project-source-smoke/word-ranking-report.json": "52422008b95b28533505973551e743de7499d5a1b3061dd6f182df25de3d71b4"
+  },
+  "schemaVersion": 1,
+  "scope": "word-ranking-evaluation-binding-not-full-Q6-closure",
+  "smoke": {
+    "accepted": false,
+    "capturedFiles": 232,
+    "controls": 1,
+    "extraRows": 4,
+    "fixtureSha256": "3ebaa48bf9f8fc432d0ecf9a65120d1a03d98e985bcddace293487efb5df1dca",
+    "inputMutationRejections": 232,
+    "legacyRows": 4,
+    "mainRows": 4,
+    "observedGatePassed": false,
+    "oldDevRows": 4,
+    "previousRows": 4,
+    "receiptInputs": 412,
+    "reportSha256": "52422008b95b28533505973551e743de7499d5a1b3061dd6f182df25de3d71b4",
+    "scope": "controlled disclosed word comparison; real JVM-captured proposals; no training reproduction",
+    "secondDisclosureRejected": true,
+    "typoRows": 3
+  },
+  "sources": {
+    "tools/ci/fixtures/README.md": "362de0678658621dbaceba9aa703ba9cc37221c215efe905e9e1e02baf3d370c",
+    "tools/ci/fixtures/word-ranking-bounded-capture.json": "3ebaa48bf9f8fc432d0ecf9a65120d1a03d98e985bcddace293487efb5df1dca",
+    "tools/ci/python-tools-tests.json": "cb5bbebcf4e00698f19e3133a2429872d5384c86bd548e4c0d794103430cc7be",
+    "tools/ci/word_evaluation_smoke.py": "227a1dcf58fde108b2db9e8f2f671ec68cc995788748e5cace0dcc3325f60d34",
+    "tools/typing_experiments/evaluate_word_ranking.py": "543f702aec05d9924f8274e56efc9bfea7a02206a6e9882fb1e9b3af4614fad4",
+    "tools/typing_experiments/frozen_sources/evaluate_word_ranking_f2881861e8528b81.py": "f2881861e8528b8174ce5c92818f2a50c3994486858d796fcc509fcaad995ecd",
+    "tools/typing_experiments/frozen_sources/manifest.json": "a52d9163a095392854e8bb8a1280d0417f049fd4475bc9d418eb11d8d83d4916",
+    "tools/typing_experiments/test_word_evaluation_driver.py": "4bd91a7ecba8571e6b710133ae4f1e4b0e2a460634b0c9966b6c61dc8c47c0f4",
+    "tools/typing_experiments/test_word_evaluation_receipt.py": "1b4f7ed5001f7ba3c233e7414ef4cc9aed6efb0337c89e8b1cd24ee80379ad31",
+    "tools/typing_experiments/word_evaluation_receipt.py": "dfd8d63b082e26f7b455ee07a4e0e81089cba109e230680028344ae3a61ed9dd"
+  }
+}

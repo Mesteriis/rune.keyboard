@@ -5,13 +5,17 @@ import argparse
 from collections import Counter
 import json
 import math
-import numpy as np
-import rank_refinement as rank
-import neural_refinement as neural
+import retrieval_evaluation_receipt as binding
 from export_retrieval import support
 
-ROOT = rank.ROOT
+ROOT = Path(__file__).resolve().parents[2]
 ASSETS = ROOT / 'app/src/main/assets/smarttyping/experiments'
+
+
+def load_scoring():
+    global rank, neural
+    import rank_refinement as rank
+    import neural_refinement as neural
 
 
 def verify_export(directory):
@@ -20,7 +24,7 @@ def verify_export(directory):
     support.require(receipt.get('scope') == 'host-production-manual-retrieval', 'EXPORT_SCOPE')
     for name in ('rows.jsonl', 'observations.jsonl', 'source-freeze.json', 'inputs.tsv'):
         path = directory / name
-        support.require(receipt['files'].get(str(path.resolve())) == rank.sha(path), 'CONSUMED_FILE_BINDING')
+        support.require(receipt['files'].get(str(path.resolve())) == support.sha(path), 'CONSUMED_FILE_BINDING')
     support.verify_bindings(receipt['sources'])
     support.verify_bindings(receipt['files'])
     rows = support.read_jsonl(directory / 'rows.jsonl')
@@ -50,6 +54,7 @@ def aggregate(records):
 
 
 def summarize(rows, observations):
+    load_scoring()
     tree = ASSETS / 'ru-ranker.bin'
     context = neural.load_model(ASSETS / 'ru-ranking-context.bin')
     # Score the union once per query; this mirrors one inference per candidate per UI projection.
@@ -102,37 +107,43 @@ def verify_fresh(rows, manifest_path, selection_path):
     selection = json.loads(selection_path.read_text())
     support.require(selection.get('frozenBeforeFreshEvaluation') is True, 'FROZEN_SELECTION_REQUIRED')
     support.verify_bindings(selection['files'])
-    support.require(selection['freshManifestSha256'] == rank.sha(manifest_path), 'FRESH_MANIFEST_IDENTITY')
+    support.require(selection['freshManifestSha256'] == support.sha(manifest_path), 'FRESH_MANIFEST_IDENTITY')
     row_path = manifest_path.parent / 'test-rows.jsonl'
     support.require(manifest.get('containsPersonalMessages') is False and
-        manifest['files'][row_path.name] == rank.sha(row_path) and support.read_jsonl(row_path) == rows, 'FRESH_ROWS_IDENTITY')
+        manifest['files'][row_path.name] == support.sha(row_path) and support.read_jsonl(row_path) == rows, 'FRESH_ROWS_IDENTITY')
     lock = json.loads((ROOT / 'tools/model/rune-text-0.2/source-lock.json').read_text())
     support.require(manifest['sourceSha256'] == lock['wikipediaContext']['files']['ru-0007.parquet']['sha256'], 'PUBLIC_SOURCE_IDENTITY')
     support.require(set(map(str, (r['articleId'] for r in rows))).issubset(set(manifest['articles'])), 'FRESH_ARTICLES')
-    return rank.sha(selection_path)
+    return support.sha(selection_path)
+
+
+def run(directory,output,historical_reproduction=False,manifest_path=None,selection_path=None):
+    frozen=binding.freeze(directory,historical_reproduction,ROOT,manifest_path,selection_path)
+    output=Path(output).resolve()
+    support.require(output.is_relative_to(ROOT/'build') and not output.exists() and not output.is_symlink(),
+                    'FRESH_BUILD_OUTPUT_REQUIRED')
+    load_scoring()
+    import promote_refinement as promotion
+    promotion.validate_tree((ASSETS/'ru-ranker.bin').read_bytes(),rank.FEATURES)
+    result=summarize(frozen['rows'],frozen['observations'])
+    result.update(schema=1,exportReceiptSha256=frozen['receipt']['exportReceiptSha256'],
+        evaluationScriptSha256=support.sha(Path(__file__)),selectionSha256=frozen['receipt']['selectionSha256'],
+        modelHashes=frozen['receipt']['modelHashes'],
+        scope='Public synthetic manual suggestions, original separate; personal/touch scores zero; no model retraining; host latency excludes scoring/editor/render/loading; correct controls assess supplemental pool and existing local policy only')
+    binding.finish_report(frozen,result)
+    support.write_json(output,result)
+    print(json.dumps(result,ensure_ascii=False));return result
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--export', type=Path, required=True)
-    parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--fresh-manifest', type=Path)
-    parser.add_argument('--selection', type=Path)
-    args = parser.parse_args()
-    output = args.output.resolve()
-    support.require(output.is_relative_to(ROOT / 'build') and not output.exists(), 'FRESH_BUILD_OUTPUT_REQUIRED')
-    rows, observations = verify_export(args.export.resolve())
-    selection_hash = None
-    if args.fresh_manifest or args.selection:
-        support.require(args.fresh_manifest is not None and args.selection is not None, 'FRESH_BINDINGS_REQUIRED')
-        selection_hash = verify_fresh(rows, args.fresh_manifest, args.selection)
-    result = summarize(rows, observations)
-    result.update(schema=1, exportReceiptSha256=rank.sha(args.export / 'receipt.json'),
-        evaluationScriptSha256=rank.sha(Path(__file__)), selectionSha256=selection_hash,
-        modelHashes={p.name: rank.sha(p) for p in (ASSETS / 'ru-ranker.bin', ASSETS / 'ru-ranking-context.bin')},
-        scope='Public synthetic manual suggestions, original separate; personal/touch scores zero; no model retraining; host latency excludes scoring/editor/render/loading; correct controls assess supplemental pool and existing local policy only')
-    support.write_json(output, result)
-    print(json.dumps(result, ensure_ascii=False))
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--export',type=Path,required=True)
+    parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--fresh-manifest',type=Path)
+    parser.add_argument('--selection',type=Path)
+    parser.add_argument('--historical-reproduction',action='store_true')
+    args=parser.parse_args()
+    run(args.export,args.output,args.historical_reproduction,args.fresh_manifest,args.selection)
 
 
 if __name__ == '__main__':

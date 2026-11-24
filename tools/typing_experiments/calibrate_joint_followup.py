@@ -3,8 +3,7 @@
 import argparse
 import json
 from pathlib import Path
-import numpy as np
-import train_joint_correction as training
+import joint_calibration_receipt as binding
 import calibrate_joint_source as source
 
 
@@ -22,6 +21,7 @@ def metric(records, score, margin):
 
 
 def calibrate(records, retention):
+    import numpy as np
     values=[r for r in records if (r['baseline']!=r['original']) == retention and r['band']=='long']
     if not values: raise ValueError('NO_CALIBRATION')
     scores=np.unique(np.quantile([r['topScore'] for r in values],np.linspace(0,1,65)))
@@ -43,30 +43,36 @@ def calibrate(records, retention):
     return dict(calibrationPassed=True,minimumScore=best[1],minimumMargin=best[2],metrics=best[3])
 
 
+def run(root,export,output,historical_reproduction=False,corpus=None):
+    root=Path(root).resolve()
+    frozen=binding.freeze('followup',root/'ranker',Path(corpus).resolve() if corpus else root/'followup-corpus',export,
+                          root/'arbitration-v3/frozen-policy.json',historical_reproduction)
+    output=Path(output).resolve()
+    binding.require(output.is_relative_to(binding.ROOT/'build') and not output.exists() and not output.is_symlink(),'FRESH_CALIBRATION_OUTPUT')
+    records=source.score_bound(frozen);by_id={o['id']:o for o in frozen['observations']}
+    for record in records:
+        winner=max(range(len(record['scores'])),key=lambda i:(record['scores'][i],-i))
+        raw=by_id[record['id']]['jointSearch']['alternatives'][winner-1]['text'].casefold() if winner else record['original']
+        if record['baseline']!=record['original'] and raw!=record['baseline']:record['candidate']=record['original']
+    result={name:calibrate(records,retention) for name,retention in [('acquisition',False),('retention',True)]}
+    parent=frozen['parent'];policy=dict(schema=1,modelSha256=parent['modelSha256'],contextSha256=parent['contextSha256'],
+        shortPolicySha256=frozen['receipt']['parentPolicySha256'],holdoutSha256=frozen['receipt']['holdoutSha256'],
+        corpusSha256=frozen['receipt']['corpusManifestSha256'],thresholds=result,calibratorSha256=binding.file_hash(Path(__file__)),
+        calibrationSummary=frozen['scoreSummary'],hostScoringVersions=frozen['hostScoringVersions'],
+        protocol='Acquisition calibration >=99.5%, independent >=99%; retention never introduces a third word, resolves >=10 old errors and abstains <=10% of old correct.')
+    observed=all(v['calibrationPassed'] for v in result.values());binding.seal_policy(frozen,policy,observed)
+    short=parent['thresholds']['short'];acq=result['acquisition'];ret=result['retention']
+    config='\t'.join(map(str,[frozen['model'],parent['modelSha256'],short['minimumScore'],short['minimumMargin'],
+        acq['minimumScore'],acq['minimumMargin'],ret['minimumScore'],ret['minimumMargin']]))+'\n'
+    binding.publish(frozen,output,policy,records,config);print(json.dumps(result),flush=True);return policy
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    for k in ['root','export','output']:p.add_argument('--'+k,type=Path,required=True)
-    a=p.parse_args();root=a.root.resolve();out=a.output.resolve()
-    if out.exists():raise ValueError('FRESH_OUTPUT')
-    rows=training.read(root/'followup-corpus/calibration.jsonl');obs=training.read(a.export/'observations.jsonl')
-    records=source.normalized(training.score(root/'ranker/joint-ranker.bin',training.groups(rows,obs)),obs)
-    by_id={o['id']:o for o in obs}
-    for r in records:
-        winner=max(range(len(r['scores'])),key=lambda i:(r['scores'][i],-i))
-        raw=by_id[r['id']]['jointSearch']['alternatives'][winner-1]['text'].casefold() if winner else r['original']
-        if r['baseline']!=r['original'] and raw!=r['baseline']:r['candidate']=r['original']
-    result={name:calibrate(records,retention) for name,retention in [('acquisition',False),('retention',True)]}
-    out.mkdir(parents=True);old=json.loads((root/'arbitration-v3/frozen-policy.json').read_text())
-    policy=dict(schema=1,stage='frozen-before-independent-holdout',modelSha256=old['modelSha256'],
-        contextSha256=old['contextSha256'],shortPolicySha256=training.sha(root/'arbitration-v3/frozen-policy.json'),
-        holdoutSha256=training.sha(root/'followup-corpus/holdout.jsonl'),
-        corpusSha256=training.sha(root/'followup-corpus/manifest.json'),calibrationExportSha256=training.sha(a.export/'observations.jsonl'),
-        thresholds=result,calibratorSha256=training.sha(Path(__file__)),
-        protocol='Fresh article and lemma disjoint splits. Acquisition calibration precision >=99.5%, independent >=99%; retention cannot introduce a third word, resolves >=10 old errors, abstains <=10% of old correct. Full product precision >=99%, net correct cannot fall; controls, correct-to-wrong, prefix and Undo failures must be zero.')
-    training.write(out/'frozen-policy.json',policy);training.write(out/'calibration-scores.json',records)
-    short=old['thresholds']['short'];acq=result['acquisition'];retain=result['retention']
-    (out/'config.tsv').write_text('\t'.join(map(str,[root/'ranker/joint-ranker.bin',old['modelSha256'],short['minimumScore'],short['minimumMargin'],acq['minimumScore'],acq['minimumMargin'],retain['minimumScore'],retain['minimumMargin']]))+'\n')
-    print(json.dumps(result),flush=True)
-    if not all(v['calibrationPassed'] for v in result.values()):raise SystemExit(1)
+    for key in ('root','export','output'):p.add_argument('--'+key,type=Path,required=True)
+    p.add_argument('--historical-reproduction',action='store_true');p.add_argument('--corpus',type=Path);a=p.parse_args()
+    policy=run(a.root,a.export,a.output,a.historical_reproduction,a.corpus)
+    if not policy['observedCalibrationPassed']:raise SystemExit(1)
+
 
 if __name__=='__main__':main()

@@ -1,5 +1,9 @@
 import copy
+import ast
+import hashlib
+import json
 from pathlib import Path
+import tempfile
 from types import SimpleNamespace
 import unittest
 
@@ -7,6 +11,8 @@ from audit_frozen_context_descendants import (SPECS,entries_for,folder,verify_fi
     verify_pool_ancestry,verify_variants)
 from audit_late_authored_history import archive_path
 from holdout_ledger import keys_for
+from recover_natural_frozen_corpus import read_metadata, select
+from recover_side_context_corpora import EVIDENCE, V5_PLAN, read_v5_plan
 from right_context_training_exclusion import exclude_training_contexts
 
 
@@ -37,6 +43,41 @@ class Dictionary:
 
 
 class FrozenDescendantTest(unittest.TestCase):
+    def test_recovered_side_receipt_binds_payloads_and_exact_v5_filter(self):
+        _, plan = read_v5_plan()
+        self.assertFalse(plan['modelScoresUsed'])
+        self.assertEqual(38, len(set(plan['excludedFamilies'])))
+        receipt = json.loads(V5_PLAN.with_name('side-context-recovery.json').read_bytes())
+        expected = json.loads(EVIDENCE.read_bytes())['receipt']['bindings']
+        self.assertEqual(14, len(receipt['files']))
+        for path, digest in receipt['files'].items():
+            self.assertEqual(expected['build/' + path], digest)
+        self.assertEqual(35016, sum(part['rows'] for part in receipt['stats'].values()))
+        filters = receipt['freshSideV5Exclusions']
+        manifest = V5_PLAN.with_name('fresh-side-v5-manifest.json').read_bytes()
+        self.assertEqual(SPECS['fresh-side-v5']['manifestSha256'], hashlib.sha256(manifest).hexdigest())
+        self.assertEqual(filters, json.loads(manifest)['exclusionAudits'])
+        self.assertEqual(0, filters['calibration']['excludedRows'])
+        self.assertEqual(4, filters['holdout']['excludedRows'])
+        self.assertEqual(1, filters['holdout']['excludedContexts'])
+
+    def test_recovered_natural_plan_and_manifest_bind_original_outputs(self):
+        raw_plan, raw_manifest = read_metadata()
+        plan, manifest = json.loads(raw_plan), json.loads(raw_manifest)
+        root = Path(__file__).resolve().parents[2]
+        evidence = root / 'docs/acceptance/2026-10-27-frozen-context-descendants-evidence.json'
+        bindings = json.loads(evidence.read_bytes())['receipt']['bindings']
+        self.assertEqual(7, len(plan['sourceHashes']))
+        self.assertEqual(plan['sourceHashes'], manifest['sourceContextBindings'])
+        for name, digest in manifest['files'].items():
+            self.assertEqual(bindings['build/right-context-natural-frozen-20261027/corpus/' + name], digest)
+        with tempfile.TemporaryDirectory() as directory:
+            pools = Path(directory)
+            first = Path(next(iter(plan['sourceHashes']))).parent.name
+            (pools / (first + '.jsonl')).write_bytes(b'changed pool')
+            with self.assertRaisesRegex(ValueError, 'NATURAL_FROZEN_POOL_DIGEST'):
+                select(pools, plan, manifest)
+
     def test_both_variant_constructions_preserve_input_and_source_capture(self):
         for natural in (False,True):
             rows=variants(natural);before=copy.deepcopy(rows)
@@ -81,6 +122,57 @@ class FrozenDescendantTest(unittest.TestCase):
         archive=Path(__file__).with_name('frozen_sources')
         for name,spec in SPECS.items():
             self.assertTrue(archive_path(archive,folder(name)+'/'+spec['script'],spec['scriptSha256']).is_file())
+
+    def test_sentence_preparation_chain_matches_original_evidence(self):
+        root=Path(__file__).resolve().parents[2]
+        archive=Path(__file__).with_name('frozen_sources')
+        for evidence,path in (
+            ('2026-10-27-right-context-other-part-training-evidence.json',
+             'build/right-context-reliable-side-v5-20261027/prepare.py'),
+            ('2026-10-27-right-context-role-kotlin-evidence.json',
+             'build/right-context-sentence-corpus-v6-20261027/prepare.py'),
+            ('2026-10-27-right-context-source-parity-and-selection-evidence.json',
+             'build/right-context-sentence-pairs-v2-v6-20261027/prepare.py'),
+        ):
+            with self.subTest(path=path):
+                record=json.loads((root/'docs/acceptance'/evidence).read_text())
+                self.assertTrue(archive_path(archive,path,record['bindings'][path]).is_file())
+
+    def test_unattested_available_v6_source_snapshots_are_stable(self):
+        directory=Path(__file__).with_name('historical_provenance_sources')
+        snapshots=(('available_calibration_v6_reconstructed.py',
+                    'eaf5b962490ae7d4572efb4c5ef502be03257a0deebf022cc5b6c6bbaec4211d'),
+                   ('available_clean_v6_reconstructed.py',
+                    '28cd94ab4f4df8f9a85691f4e6e152047559cca36c1aee02fab6693c70838325'))
+        for name,expected in snapshots:
+            with self.subTest(name=name):
+                raw=(directory/name).read_bytes()
+                self.assertEqual(expected,hashlib.sha256(raw).hexdigest())
+                ast.parse(raw,filename=name)
+
+    def test_noun_case_preparer_matches_frozen_cohort_manifest(self):
+        root = Path(__file__).resolve().parents[2]
+        evidence = root / 'docs/acceptance/2026-10-26-noun-case-training-evidence.json'
+        digest = json.loads(evidence.read_bytes())['cohortManifest']['preparerSha256']
+        archive = Path(__file__).with_name('frozen_sources')
+        path = archive_path(archive, 'build/noun-case-focus-v3-20261026/prepare.py', digest)
+        ast.parse(path.read_bytes(), filename=path.name)
+
+    def test_earlier_v6_source_snapshots_are_stable(self):
+        directory = Path(__file__).with_name('historical_provenance_sources')
+        snapshots = {
+            'grammar_focused_preparer.py': '3a933cb6764555d5a9c6cee39cb834f82ef6a5f6df9aafc5c55a2f08de7420da',
+            'noun_focus_v2_preparer.py': '79e2c466c4b12ae3297c8c1d6fb4f855ee7e7146ae5c39d3397630f4f623f731',
+            'noun_broad_v2_preparer.py': 'a7840751e07a3f2b379d500d9c30a2dfc43cc5a8298824a92a4215b5169f2f7d',
+            'noun_instrumental_preparer.py': '7db34adc55ebca18ac0d01334482d7a13587adb4e193cca34b63b806f8e99553',
+            'right_context_focused_v2_preparer.py': '8e2b6ebce4ea21e812d6dc96b9a3379c965586e48d468104c4359b417c628cf9',
+            'right_context_fresh_matched_v5_preparer.py': '66d98a53b16d1db21f7059c367d76602e58b97a590ab56300adab8ad166dd2c9',
+        }
+        for name, digest in snapshots.items():
+            with self.subTest(name=name):
+                raw = (directory / name).read_bytes()
+                self.assertEqual(digest, hashlib.sha256(raw).hexdigest())
+                ast.parse(raw, filename=name)
 
 
 if __name__=='__main__':unittest.main()

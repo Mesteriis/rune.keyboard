@@ -1,0 +1,52 @@
+{
+  "counts": {
+    "ambiguous_distinct_source": 6,
+    "attested": 25641
+  },
+  "dictionaryReceiptSha256": "dc4745f9ac4d89dfc60f201cc2c1845d3ffa7d4197f6da6cf5e3c7d33c3596de",
+  "historicalDisclosed": true,
+  "manifestSha256": "27c7084f8c739f608da77f617eca1c5ac552ff16b74da05a1a3c3cc888120e3f",
+  "overlaps": {
+    "calibration-holdout": {
+      "article": 0,
+      "context": 0,
+      "family": 0,
+      "segment": 0
+    },
+    "train-calibration": {
+      "article": 0,
+      "context": 0,
+      "family": 0,
+      "segment": 0
+    },
+    "train-holdout": {
+      "article": 0,
+      "context": 0,
+      "family": 0,
+      "segment": 0
+    }
+  },
+  "qualified": false,
+  "rows": 25647,
+  "schema": 1,
+  "sourceHashes": {
+    "app/src/main/assets/smarttyping/lexicon/ru.morph": "c1707864a8fbc805aa98bc8307be99f2c9904eec5cc27d26a5220e001d88d28b",
+    "build/joint-correction-20261025/0018.parquet": "588e30523cfed480151b4bd5c1a7d7211dc03971fee399a3db6af3ad04e42c87",
+    "build/joint-correction-20261025/0019.parquet": "4c3bd676fbeb9d92ae7ed324e99f329de2542f5399cbf39b924529fff944dec6",
+    "build/joint-correction-20261025/corpus/calibration.jsonl": "1234785b62d4ff59ea54b52a7e7fb2ca3214996e0bb173d1c0b355d86015e97a",
+    "build/joint-correction-20261025/corpus/holdout.jsonl": "03e32ae46a61dd3c5ee0f84a308b9b2d79bf17f7c18de78442d2284738e8084d",
+    "build/joint-correction-20261025/corpus/manifest.json": "27c7084f8c739f608da77f617eca1c5ac552ff16b74da05a1a3c3cc888120e3f",
+    "build/joint-correction-20261025/corpus/train.jsonl": "a67ee9d103851f8b5c54e4059338a60e1cd5b8776e22440057eb48f07885bab9",
+    "build/typing-ranker-v2/ru-0011.parquet": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f",
+    "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py": "ed9928d64d80911c0182e03446d710a60abb990cb5fb1cff30730443db773225",
+    "tools/morphology/ranker.py": "66a4004867f68b04942cf08975641523d0bd40f82d57bed82b6b14eb93035c3d",
+    "tools/typing_experiments/audit_joint_history_sources.py": "c111fc72ba34486d0701b50b4df4d142e90e287d50ed32e748fbf2d3994e565a",
+    "tools/typing_experiments/holdout_ledger.py": "d99db87f070a693369da5276f370676e3b6b3d8c5d072382d2cf4a05c4036648",
+    "tools/typing_experiments/joint_exclusion_inputs.py": "abfda9ee24bfa0ead9c54b1048757a7cd270fa39820ddae61ca3f8590b1b778d",
+    "tools/typing_experiments/joint_source_attestation.py": "ebd530620654638f6e934c55f2bce93ef7af50619cd77f6fa2708ab83590c80d",
+    "tools/typing_experiments/neighbor_recovery.py": "605ecb9e02a249bd07000174ca1eb7368891bed3075710265ae6c06546b0d0b5",
+    "tools/typing_experiments/prepare_external_spelling_holdout.py": "0433c995d89211489bb7827190a7093164a39983a8179f6573670398db1f9bfb",
+    "tools/typing_experiments/prepare_joint_correction.py": "9d1b425e2a44ed22045f56b581bf1a399d41e05f40f66a274921d917f526a1af",
+    "tools/typing_experiments/right_context_sentence_audit.py": "73b7965af2aaceaea6b2fc591405c45a721b6b8b6b9b77e943afe51012d5a231"
+  }
+}

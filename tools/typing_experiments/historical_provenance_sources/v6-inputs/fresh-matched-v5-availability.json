@@ -1,0 +1,14 @@
+{
+  "scannedArticles": 926220,
+  "eligibleArticles": 45,
+  "available": {
+    "calibration": {
+      "contexts": 25,
+      "families": 24
+    },
+    "holdout": {
+      "contexts": 20,
+      "families": 19
+    }
+  }
+}

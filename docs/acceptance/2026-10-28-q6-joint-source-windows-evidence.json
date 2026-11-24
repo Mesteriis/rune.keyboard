@@ -1,0 +1,54 @@
+{
+  "codeBindings": {
+    "tools/typing_experiments/import_joint_source_windows.py": "8e87fd2222b7dfbb17672d0ec6944ceab7385bfed5cd27d3d3ac3d1df5b33ff3",
+    "tools/typing_experiments/import_legacy_context_history.py": "8325cf5cf04cdbe117dd071a287a62746aa70c560872464b995b4bac8c124c06",
+    "tools/typing_experiments/recover_legacy_holdout.py": "96e865488bea430a0472cee2ca20f94d50b7ce804e9cb6eb34b366dab5f67531",
+    "tools/typing_experiments/right_context_sentence_audit.py": "73b7965af2aaceaea6b2fc591405c45a721b6b8b6b9b77e943afe51012d5a231"
+  },
+  "counts": {
+    "corpus/calibration": {
+      "articles": 1089,
+      "rows": 8554,
+      "windows": 1129
+    },
+    "corpus/holdout": {
+      "articles": 1075,
+      "rows": 8557,
+      "windows": 1127
+    },
+    "corpus/train": {
+      "articles": 1090,
+      "rows": 8536,
+      "windows": 1131
+    },
+    "followup-corpus-v3/calibration": {
+      "articles": 479,
+      "rows": 4786,
+      "windows": 500
+    },
+    "followup-corpus-v3/holdout": {
+      "articles": 483,
+      "rows": 4799,
+      "windows": 500
+    },
+    "followup-corpus/calibration": {
+      "articles": 475,
+      "rows": 4784,
+      "windows": 500
+    },
+    "followup-corpus/holdout": {
+      "articles": 482,
+      "rows": 4800,
+      "windows": 500
+    }
+  },
+  "generatorSha256": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+  "modelCalls": 0,
+  "purpose": "JOINT_PUBLIC_WINDOWS_NOT_QUALIFICATION",
+  "sourceBindings": {
+    "build/joint-correction-20261025/0018.parquet": "588e30523cfed480151b4bd5c1a7d7211dc03971fee399a3db6af3ad04e42c87",
+    "build/joint-correction-20261025/0019.parquet": "4c3bd676fbeb9d92ae7ed324e99f329de2542f5399cbf39b924529fff944dec6",
+    "build/joint-correction-20261025/0020.parquet": "fc1e2edc58fa27085d36c32c38922d7904077d9cdac05719efbcefa3faeea240",
+    "build/typing-ranker-v2/ru-0011.parquet": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f"
+  }
+}

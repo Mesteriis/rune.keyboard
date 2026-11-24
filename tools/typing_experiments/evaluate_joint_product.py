@@ -3,7 +3,7 @@
 import argparse
 import json
 from pathlib import Path
-import train_joint_correction as training
+import joint_evaluation_receipt as binding
 
 
 def evaluate(rows,baseline,product):
@@ -47,18 +47,31 @@ def evaluate(rows,baseline,product):
     return result
 
 
-def main():
+def run(rows,baseline,product,policy,output,historical_reproduction=False,short_policy=None,corpus_manifest=None):
+    frozen=binding.freeze(rows,baseline,product,policy,historical_reproduction,
+        short_policy_path=short_policy,corpus_manifest_path=corpus_manifest)
+    output=Path(output).resolve()
+    binding.require(output.is_relative_to(binding.ROOT/'build') and not output.exists() and not output.is_symlink(),'FRESH_JOINT_OUTPUT')
+    metrics=evaluate(frozen['rows'],frozen['baseline'],frozen['product'])
+    observed=all(v['passed'] for v in metrics.values())
+    record=dict(stage='disclosed-product-regression' if historical_reproduction else 'registry-checked-product-holdout',
+        policySha256=frozen['receipt']['policySha256'],rowsSha256=frozen['receipt']['rowsSha256'],metrics=metrics)
+    binding.finish_report(frozen,record,observed)
+    encoded=json.dumps(record,ensure_ascii=False,sort_keys=True,indent=2,allow_nan=False)+'\n'
+    with output.open('x',encoding='utf-8') as stream:stream.write(encoded)
+    print(json.dumps(record),flush=True);return record
+
+
+def arguments():
     p=argparse.ArgumentParser(description=__doc__)
-    for name in ['rows','baseline','product','policy','output']:p.add_argument('--'+name,type=Path,required=True)
-    a=p.parse_args()
-    policy=json.loads(a.policy.read_text())
-    if policy['stage']!='frozen-before-independent-holdout' or training.sha(a.rows)!=policy['holdoutSha256']:raise ValueError('FROZEN_HOLDOUT_IDENTITY')
-    result=evaluate(training.read(a.rows),training.read(a.baseline),training.read(a.product))
-    record=dict(stage='independent-product-holdout',policySha256=training.sha(a.policy),rowsSha256=training.sha(a.rows),
-        baselineSha256=training.sha(a.baseline),productSha256=training.sha(a.product),metrics=result)
-    with a.output.open('x') as stream:json.dump(record,stream,indent=2);stream.write('\n')
-    print(json.dumps(result),flush=True)
-    if not all(v['passed'] for v in result.values()):raise SystemExit(1)
+    for name in ('rows','baseline','product','policy','output'):p.add_argument('--'+name,type=Path,required=True)
+    p.add_argument('--short-policy',type=Path);p.add_argument('--corpus-manifest',type=Path)
+    p.add_argument('--historical-reproduction',action='store_true');return p.parse_args()
+
+
+def main():
+    a=arguments();record=run(a.rows,a.baseline,a.product,a.policy,a.output,a.historical_reproduction,a.short_policy,a.corpus_manifest)
+    if not record['passed']:raise SystemExit(1)
 
 
 if __name__=='__main__':main()

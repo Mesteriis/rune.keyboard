@@ -5,7 +5,8 @@ import tempfile
 from types import SimpleNamespace
 import unittest
 
-from audit_late_authored_history import BASE,SPECS,archive_path,directory,training_chain,verify_derivation
+from audit_auxiliary_authored_history import LEFT_SEQUENCE_V1_FEATURE_SHA
+from audit_late_authored_history import BASE,SPECS,V4_ROLE_FEATURE_SHA,archive_path,directory,training_chain,verify_derivation
 from audit_authored_training_history import exclusions
 from holdout_ledger import keys_for
 
@@ -41,6 +42,24 @@ class LateAuthoredHistoryTest(unittest.TestCase):
             self.assertEqual(p/'prepare.py',archive_path(p,'build/corpus/prepare.py',digest))
             (p/'prepare.py').write_bytes(payload+b'\n')
             with self.assertRaisesRegex(ValueError,'ARCHIVE_IDENTITY'):archive_path(p,'build/corpus/prepare.py',digest)
+            (p/'prepare.py').unlink()
+            (p/'other.py').write_bytes(payload)
+            (p/'prepare.py').symlink_to(p/'other.py')
+            with self.assertRaisesRegex(ValueError,'ARCHIVE_IDENTITY'):archive_path(p,'build/corpus/prepare.py',digest)
+
+    def test_original_feature_sources_resolve_through_the_audit_archive(self):
+        archive = Path(__file__).with_name('frozen_sources')
+        closure = json.loads((archive / 'recovered-feature-source-closure.json').read_bytes())
+        for source, digest in (
+            ('right_context_role_features.py', V4_ROLE_FEATURE_SHA),
+            ('right_context_left_sequence_features.py', LEFT_SEQUENCE_V1_FEATURE_SHA),
+        ):
+            with self.subTest(source=source):
+                path = archive_path(archive, BASE + source, digest)
+                matches = [ref for corpus in closure['corpora'] for ref in corpus['sources']
+                           if ref['originalName'] == source and ref['sha256'] == digest]
+                self.assertEqual(1, len(matches))
+                self.assertEqual(matches[0]['trackedPath'], BASE + 'frozen_sources/' + path.name)
 
     def test_selection_manifest_group_file_and_plan_must_agree(self):
         with tempfile.TemporaryDirectory() as folder:

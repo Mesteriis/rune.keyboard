@@ -1,0 +1,17 @@
+{
+  "analyzerSha256": "1b5af6e05f8fa951b366aa33e9a1250c6a022a7dd240936637d5420bf70eb127",
+  "archiveRowsSha256": "91eef8e6d32f17b722dec6b4ab2a8b2e46dec2f660ee88663c9e71a73e6d5ab5",
+  "contextsSha256": "91bbbb3bd57708ee474e472c524f0d04f0ef49c594ad537a6f066e335b64d912",
+  "counts": {
+    "alphanumericRows": 1,
+    "hyphenRows": 51,
+    "multipleSourceMatches": 13,
+    "rows": 9000,
+    "standaloneRows": 8948
+  },
+  "independentQualification": false,
+  "scope": "disclosed-historical-source-boundary-audit",
+  "sourceArticles": 1721,
+  "sourceLockSha256": "582aab04ebad1876f344f14b585466bbdf793930c7d5ebd287cc6dc91637c193",
+  "sourceSha256": "39b59952cd92a148b301f4d2b3ae1fb71e4caab987c6abe278f0dbdf0b01bb88"
+}

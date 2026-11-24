@@ -1,0 +1,161 @@
+{
+  "byEditKind": {
+    "control": {
+      "caseOnlyChanges": 30,
+      "controlChanges": 41,
+      "correct": 0,
+      "incorrect": 41,
+      "inputTransformations": 0,
+      "manualRetrievedTypos": 0,
+      "precision": 0.0,
+      "prefixChanges": 0,
+      "recall": null,
+      "replacements": 41,
+      "retrievedTypos": 0,
+      "rows": 9543,
+      "spellingPrecision": 0.0,
+      "spellingReplacements": 11,
+      "typos": 0,
+      "undoFailures": 0
+    },
+    "double_consonant": {
+      "caseOnlyChanges": 0,
+      "controlChanges": 0,
+      "correct": 8040,
+      "incorrect": 51,
+      "inputTransformations": 0,
+      "manualRetrievedTypos": 9242,
+      "precision": 0.9936967000370782,
+      "prefixChanges": 0,
+      "recall": 0.8452481076534903,
+      "replacements": 8091,
+      "retrievedTypos": 9187,
+      "rows": 9512,
+      "spellingPrecision": 0.9936967000370782,
+      "spellingReplacements": 8091,
+      "typos": 9512,
+      "undoFailures": 0
+    },
+    "reflexive_suffix": {
+      "caseOnlyChanges": 0,
+      "controlChanges": 0,
+      "correct": 139,
+      "incorrect": 10,
+      "inputTransformations": 0,
+      "manualRetrievedTypos": 265,
+      "precision": 0.9328859060402684,
+      "prefixChanges": 0,
+      "recall": 0.5091575091575091,
+      "replacements": 149,
+      "retrievedTypos": 198,
+      "rows": 273,
+      "spellingPrecision": 0.9328859060402684,
+      "spellingReplacements": 149,
+      "typos": 273,
+      "undoFailures": 0
+    },
+    "remove_sign": {
+      "caseOnlyChanges": 0,
+      "controlChanges": 0,
+      "correct": 721,
+      "incorrect": 24,
+      "inputTransformations": 0,
+      "manualRetrievedTypos": 1364,
+      "precision": 0.9677852348993289,
+      "prefixChanges": 0,
+      "recall": 0.4642627173213136,
+      "replacements": 745,
+      "retrievedTypos": 1133,
+      "rows": 1553,
+      "spellingPrecision": 0.9677852348993289,
+      "spellingReplacements": 745,
+      "typos": 1553,
+      "undoFailures": 0
+    },
+    "vowel_ei": {
+      "caseOnlyChanges": 6,
+      "controlChanges": 0,
+      "correct": 3398,
+      "incorrect": 272,
+      "inputTransformations": 0,
+      "manualRetrievedTypos": 5921,
+      "precision": 0.9258855585831063,
+      "prefixChanges": 0,
+      "recall": 0.5345288658172094,
+      "replacements": 3670,
+      "retrievedTypos": 5248,
+      "rows": 6357,
+      "spellingPrecision": 0.9274017467248908,
+      "spellingReplacements": 3664,
+      "typos": 6357,
+      "undoFailures": 0
+    },
+    "vowel_oa": {
+      "caseOnlyChanges": 5,
+      "controlChanges": 0,
+      "correct": 3845,
+      "incorrect": 278,
+      "inputTransformations": 0,
+      "manualRetrievedTypos": 6392,
+      "precision": 0.9325733689061363,
+      "prefixChanges": 0,
+      "recall": 0.5421601804850535,
+      "replacements": 4123,
+      "retrievedTypos": 5826,
+      "rows": 7092,
+      "spellingPrecision": 0.9337056823700826,
+      "spellingReplacements": 4118,
+      "typos": 7092,
+      "undoFailures": 0
+    }
+  },
+  "caveats": [
+    "Tatoeba sentences are previously exposed; this is not a holdout.",
+    "Source control spellings are not independently verified and may contain typos; changes are not necessarily false corrections.",
+    "Wilson intervals are descriptive and do not account for correlated sentences or authors.",
+    "Synthetic edits may be valid words and do not prove user intent.",
+    "Token replay does not measure accumulated phrase revisions."
+  ],
+  "controlClusters": {
+    "changed": 41,
+    "total": 9543,
+    "wilson95": {
+      "lower": 0.0031687320956295412,
+      "upper": 0.005822876196072201
+    }
+  },
+  "controlRows": {
+    "changed": 41,
+    "total": 9543,
+    "wilson95": {
+      "lower": 0.0031687320956295412,
+      "upper": 0.005822876196072201
+    }
+  },
+  "independentQualification": false,
+  "inputs": {
+    "observations": "7f6537da39266bed9cb824d1de396c0d3b5d7ee60a7858f67e91d4f46ed2417e",
+    "rows": "c25d9afed4b75f78490f2e360c3eb0a0e06aaf97e3291d79f0bdd29aec0ee62f"
+  },
+  "language": "ru",
+  "overall": {
+    "caseOnlyChanges": 41,
+    "controlChanges": 41,
+    "correct": 16143,
+    "incorrect": 676,
+    "inputTransformations": 0,
+    "manualRetrievedTypos": 23184,
+    "precision": 0.9598073607229919,
+    "prefixChanges": 0,
+    "recall": 0.6512688102634445,
+    "replacements": 16819,
+    "retrievedTypos": 21592,
+    "rows": 34330,
+    "spellingPrecision": 0.962152819167958,
+    "spellingReplacements": 16778,
+    "typos": 24787,
+    "undoFailures": 0
+  },
+  "purpose": "DESCRIPTIVE_CHAT_REGRESSION_NOT_QUALIFICATION",
+  "schema": 1
+}

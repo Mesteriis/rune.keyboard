@@ -17,7 +17,9 @@ import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.NoopSmartTypingTracer
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceSection
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTracer
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.section
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReason
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticSource
 import java.util.concurrent.Executor
@@ -112,6 +114,15 @@ class LocalCandidateCoordinator internal constructor(
     private var epoch = 0L
     private var requestId = 0L
     private var closed = false
+    private var expandedCandidates: ExpandedCandidates? = null
+
+    internal class ExpandedCandidates internal constructor(
+        internal val owner: CandidateOwnerState,
+        internal val epoch: Long,
+        internal val snapshot: TypingSessionController.ExpandedCandidateSnapshot,
+    ) {
+        val candidates: List<CandidateUiItem.Correction> get() = snapshot.candidates
+    }
 
     init {
         modelRanking?.onPreviousWordRefined = { if (!closed) requestCurrentWord() }
@@ -137,10 +148,14 @@ class LocalCandidateCoordinator internal constructor(
     }
 
     /** Wrap only actual typing commands. Their controller result decides whether admission is allowed. */
-    fun edit(spaceCorrection: ((TypingEdit) -> Boolean)? = null, action: () -> TypingTextResult): TypingTextResult {
+    fun edit(spaceCorrection: ((TypingEdit) -> Boolean)? = null, retainReadySymbolBoundary: Boolean = false,
+        action: () -> TypingTextResult): TypingTextResult {
         checkOwner()
+        closeExpandedCandidates()
         if (closed) return action()
-        val spaceStartedAt = nanoTime()
+        val spaceStartedAt = if (spaceCorrection != null) {
+            trace.section(SmartTypingTraceSection.MODEL_SPACE_KEY) { nanoTime() }
+        } else nanoTime()
         // Retain the latest accepted decision until this action consumes its exact word.
         // Cancel local work first. Only an explicitly marked Space may transfer one model
         // request to a separately checked committed suffix after the edit succeeds.
@@ -173,7 +188,11 @@ class LocalCandidateCoordinator internal constructor(
             return result
         }
         val retainSpace = spaceCorrection != null && modelRanking != null
-        cancelCandidates(clearAllowlist = owner?.canRequestCandidateWork != true, cancelModel = !retainSpace && modelRanking == null)
+        val keepReadySymbol = retainReadySymbolBoundary && owner?.layer == KeyboardLayer.SYMBOLS &&
+            owner.editorAllowsSmartTyping && owner.editorAllowsSuggestions && owner.inputViewActive &&
+            !owner.hasSelection && controller.canRequestCandidates
+        cancelCandidates(clearAllowlist = owner?.canRequestCandidateWork != true && !keepReadySymbol,
+            cancelModel = !retainSpace && modelRanking == null)
         val editEpoch = epoch
         val session = controller.state.sessionId
         val revision = controller.state.revision
@@ -191,6 +210,7 @@ class LocalCandidateCoordinator internal constructor(
     /** Session/view/language/layer/privacy/cursor/boundary invalidation; never waits for computation. */
     fun invalidate() {
         checkOwner()
+        closeExpandedCandidates()
         if (closed) return
         cancelCandidates(clearAllowlist = true)
         modelRanking?.invalidate()
@@ -200,6 +220,7 @@ class LocalCandidateCoordinator internal constructor(
     /** A tap must retain its current allowlist until the controller resolves the ID. */
     fun selectCandidate(id: String, execute: (TypingEdit) -> Boolean): TypingTextResult {
         checkOwner()
+        closeExpandedCandidates()
         val owner = ownerState?.invoke()
         if (closed || owner?.showsCandidates != true || (!controller.ownsCandidateComposition && !controller.ownsContinuation && !controller.ownsToolSurface)) {
             invalidate()
@@ -216,6 +237,47 @@ class LocalCandidateCoordinator internal constructor(
             return if (controller.selectOriginal(id)) TypingTextResult.HANDLED else TypingTextResult.REJECTED
         }
         return controller.selectCandidate(id, execute)
+    }
+
+    internal fun hasExpandedCandidates(): Boolean {
+        checkOwner()
+        val owner = ownerState?.invoke() ?: return false
+        if (closed || !owner.showsCandidates || !owner.spellingEnabled || !controller.ownsCandidateComposition ||
+            controller.expandedCandidateLanguage != owner.language) return false
+        return controller.hasHiddenCandidates()
+    }
+
+    internal fun openExpandedCandidates(): ExpandedCandidates? {
+        checkOwner()
+        closeExpandedCandidates()
+        val owner = ownerState?.invoke() ?: return null
+        if (closed || !owner.showsCandidates || !owner.spellingEnabled || !controller.ownsCandidateComposition ||
+            controller.expandedCandidateLanguage != owner.language) return null
+        val snapshot = controller.openExpandedCandidates() ?: return null
+        return ExpandedCandidates(owner, epoch, snapshot).also { expandedCandidates = it }
+    }
+
+    internal fun closeExpandedCandidates() {
+        checkOwner()
+        expandedCandidates = null
+        controller.closeExpandedCandidates()
+    }
+
+    internal fun selectExpandedCandidate(expanded: ExpandedCandidates, id: String,
+        execute: (TypingEdit) -> Boolean): TypingTextResult {
+        checkOwner()
+        val owner = ownerState?.invoke()
+        if (closed || expanded !== expandedCandidates || expanded.epoch != epoch || owner != expanded.owner ||
+            owner?.showsCandidates != true || !owner.spellingEnabled || !controller.ownsCandidateComposition ||
+            controller.expandedCandidateLanguage != owner.language ||
+            expanded.candidates.none { it.id == id }) {
+            closeExpandedCandidates()
+            return TypingTextResult.REJECTED
+        }
+        expandedCandidates = null
+        cancelCandidates(clearAllowlist = false)
+        invalidateLoads()
+        return controller.selectExpandedCandidate(expanded.snapshot, id, execute)
     }
 
     /** Pure presentation: calling this cannot request a route or submit a job. */
@@ -246,6 +308,7 @@ class LocalCandidateCoordinator internal constructor(
 
     override fun close() {
         checkOwner()
+        closeExpandedCandidates()
         if (closed) return
         modelRanking?.discardQualityResponseAdmissions()
         cancelCandidates(clearAllowlist = true)
@@ -330,6 +393,9 @@ class LocalCandidateCoordinator internal constructor(
         val owner = ownerState?.invoke()
         val space = pendingSpace
         if (space != null && space.pending === current) {
+            if (reply.stage == io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateStage.RECOVERY) {
+                controller.recordRecoverySpaceReply(reply)
+            }
             if (reply.isFinal) { pending = null; pendingSpace = null }
             val elapsed = nanoTime() - space.startedAtNanos
             if (elapsed !in 0 until SPACE_GRACE_NANOS) {
@@ -369,6 +435,7 @@ class LocalCandidateCoordinator internal constructor(
         val accepted = if (reply.stage == io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateStage.RECOVERY)
             controller.acceptRecoveryCandidates(visibleReply) else controller.acceptCandidates(visibleReply)
         if (accepted) {
+            closeExpandedCandidates()
             onCandidatesChanged?.invoke()
             modelRanking?.candidatesChanged()
         }

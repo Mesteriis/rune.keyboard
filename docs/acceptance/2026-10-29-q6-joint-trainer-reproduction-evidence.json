@@ -1,0 +1,24 @@
+{
+  "binarySha256": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+  "calibrationGroups": 5480,
+  "calibrationScoresSha256": "37007c441a35b66e4624f062c4bd2a89d39fcc22bc08e3a27edb51335b2041a6",
+  "catboost": "1.2.8",
+  "historicalReproduction": true,
+  "independentQualification": false,
+  "modelJsonDifferingMetadataFields": [
+    "model_guid",
+    "train_finish_time"
+  ],
+  "modelJsonStructuralSectionsIdentical": true,
+  "numpy": "2.2.6",
+  "originalCalibrationScoresIdentical": true,
+  "originalModelBinaryIdentical": true,
+  "originalPolicySha256": "cdb2c5176504c044fa83567e99fe6956f8e3419d972fb558af0da04ded90410e",
+  "originalThresholdsIdentical": true,
+  "policySha256": "b0d8fdd238fe0463fb6d20effdc7f58f50ce93ac6b6d51d076b8f88ebe60a31c",
+  "productionQualified": false,
+  "schema": 1,
+  "scope": "HISTORICAL_DISCLOSED_REPRODUCTION_NOT_QUALIFICATION",
+  "trainerSha256": "03df102ff3139fdfd56e56a12418275fece511d8ca6ddee2f9d678d8f6558877",
+  "trainingGroups": 5492
+}

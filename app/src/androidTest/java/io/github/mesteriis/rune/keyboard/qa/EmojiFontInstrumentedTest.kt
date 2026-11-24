@@ -79,6 +79,55 @@ class EmojiFontInstrumentedTest {
         }
     }
 
+    @Test fun categoryTabsKeepIdentityAcrossSelectionLanguageAndPrivacyChanges() {
+        check(Build.HARDWARE in setOf("ranchu", "goldfish"))
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        ActivityScenario.launch(SetupActivity::class.java).use { scenario ->
+            lateinit var panel: EmojiPanelView
+            scenario.onActivity { activity ->
+                panel = EmojiPanelView(activity, (48 * activity.resources.displayMetrics.density).toInt(),
+                    KeyboardAppearance(activity, KeyboardTheme.AIR)) { }
+                activity.setContentView(panel)
+                panel.render(KeyboardLanguage.ENGLISH, recentsAllowed = false)
+            }
+            instrumentation.waitForIdleSync()
+            var result: Result<Unit>? = null
+            scenario.onActivity { activity ->
+                result = runCatching {
+                    val people = descendants(panel).single { it.contentDescription?.toString() == "People & Body" }
+                    // The emulator is in touch mode; allow synthetic focus for this retention test.
+                    people.isFocusableInTouchMode = true
+                    assertTrue("Category tab must accept keyboard focus", people.requestFocus())
+                    assertTrue(people.performClick())
+                    assertTrue("Selecting a category must keep keyboard focus", people.isFocused)
+                    assertSame("Selecting a category must preserve its focusable view", people,
+                        descendants(panel).single { it.contentDescription?.toString() == "People & Body" })
+                    assertTrue(people.isSelected)
+                    val category = EmojiCatalog.read(activity.assets.open(EmojiCatalog.ASSET_PATH))
+                        .categories.single { it.id == "people" }
+                    panel.render(KeyboardLanguage.RUSSIAN, recentsAllowed = false)
+                    assertSame(people, descendants(panel).single {
+                        it.contentDescription?.toString() == category.names.russian
+                    })
+                    assertTrue(people.isSelected)
+                    panel.render(KeyboardLanguage.RUSSIAN, recentsAllowed = true)
+                    assertSame(people, descendants(panel).single {
+                        it.contentDescription?.toString() == category.names.russian
+                    })
+                    val recent = descendants(panel).single { it.contentDescription?.toString() == "Недавние эмодзи" }
+                    assertTrue(recent.performClick())
+                    panel.render(KeyboardLanguage.RUSSIAN, recentsAllowed = false)
+                    assertTrue(descendants(panel).none { it.contentDescription?.toString() == "Недавние эмодзи" })
+                    assertSame(people, descendants(panel).single {
+                        it.contentDescription?.toString() == category.names.russian
+                    })
+                    assertFalse(people.isSelected)
+                }
+            }
+            checkNotNull(result).getOrThrow()
+        }
+    }
+
     private fun descendants(view: View): List<View> = listOf(view) + if (view is ViewGroup)
         (0 until view.childCount).flatMap { descendants(view.getChildAt(it)) } else emptyList()
 }

@@ -16,6 +16,102 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class TypingSessionControllerTest {
+    @Test fun `private owned emoji deletion requires acknowledged selection and is one shot`() {
+        for (emoji in listOf("👩‍💻", "👍🏽", "🇪🇸")) {
+            val c = TypingSessionController(jvmGraphemes)
+            val writes = mutableListOf<TypingEdit>()
+            val apply: (TypingEdit) -> Boolean = { writes.add(it); true }
+            c.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING), 4, 4)
+            assertEquals(TypingTextResult.HANDLED, c.typeIsolatedText(emoji, apply))
+            val end = 4 + emoji.length
+            assertFalse(c.updateSelection(end, end, 4, end, apply))
+            writes.clear()
+            assertEquals(TypingTextResult.HANDLED, c.deletePrevious(apply))
+            assertEquals(listOf(TypingEdit.SetComposingText(""), TypingEdit.FinishComposingText), writes)
+            assertEquals(TypingTextResult.BYPASS, c.deletePrevious(apply))
+        }
+    }
+
+    @Test fun `private emoji deletion refuses unknown or changed selection`() {
+        fun controllerAtEmoji(): Pair<TypingSessionController, MutableList<TypingEdit>> {
+            val c = TypingSessionController(jvmGraphemes)
+            val writes = mutableListOf<TypingEdit>()
+            c.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING), 4, 4)
+            assertEquals(TypingTextResult.HANDLED, c.typeIsolatedText("👩‍💻") { writes.add(it); true })
+            return c to writes
+        }
+        val (unacknowledged, first) = controllerAtEmoji()
+        first.clear()
+        assertEquals(TypingTextResult.REJECTED, unacknowledged.deletePrevious { first.add(it); true })
+        assertTrue(first.none { it is TypingEdit.Batch })
+        assertEquals(TypingTextResult.HANDLED, unacknowledged.typeText("a") { first.add(it); true })
+        assertEquals(TypingEdit.FinishComposingText, first.first())
+        val (moved, second) = controllerAtEmoji()
+        val end = 4 + "👩‍💻".length
+        moved.updateSelection(end, end, 4, end) { second.add(it); true }
+        assertTrue(moved.updateSelection(2, 2, -1, -1) { second.add(it); true })
+        second.clear()
+        assertEquals(TypingTextResult.BYPASS, moved.deletePrevious { second.add(it); true })
+        assertTrue(second.none { it is TypingEdit.Batch })
+    }
+
+    @Test fun `silent foreign edit drops composing ownership without replacing foreign text`() {
+        val c = TypingSessionController(jvmGraphemes)
+        var text = ""
+        var composing = false
+        val apply: (TypingEdit) -> Boolean = { edit ->
+            when (edit) {
+                is TypingEdit.SetComposingText -> {
+                    if (edit.value.isNotEmpty()) { text = edit.value; composing = true }
+                    else if (composing) { text = ""; composing = true }
+                }
+                TypingEdit.FinishComposingText -> composing = false
+                else -> error("Unexpected editor action")
+            }
+            true
+        }
+        c.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING), 0, 0)
+        assertEquals(TypingTextResult.HANDLED, c.typeIsolatedText("👍🏽", apply))
+        val end = "👍🏽".length
+        c.updateSelection(end, end, 0, end, apply)
+        // Editor changes its own content and drops the composing span without a callback.
+        text = "foreign"
+        composing = false
+        assertEquals(TypingTextResult.HANDLED, c.deletePrevious(apply))
+        assertEquals("foreign", text)
+    }
+
+    @Test fun `private palette action stays one owned unit with older segmentation`() {
+        val c = TypingSessionController(GraphemeSegmenter { text -> (0..text.length).toList() })
+        val writes = mutableListOf<TypingEdit>()
+        c.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING), 0, 0)
+        assertEquals(TypingTextResult.HANDLED, c.typeIsolatedText("🧑🏽‍💻") { writes.add(it); true })
+        assertEquals(TypingEdit.SetComposingText("🧑🏽‍💻"), writes.last())
+    }
+
+    @Test fun `private emoji composing is finished on input end`() {
+        val c = TypingSessionController(jvmGraphemes)
+        val writes = mutableListOf<TypingEdit>()
+        val apply: (TypingEdit) -> Boolean = { writes.add(it); true }
+        c.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING), 0, 0)
+        assertEquals(TypingTextResult.HANDLED, c.typeIsolatedText("👍🏽", apply))
+        writes.clear()
+        assertTrue(c.finishComposition(apply))
+        assertEquals(listOf(TypingEdit.FinishComposingText), writes)
+    }
+
+    @Test fun `private owned deletion is not retried after editor refusal`() {
+        val c = TypingSessionController(jvmGraphemes)
+        c.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING), 0, 0)
+        assertEquals(TypingTextResult.HANDLED, c.typeIsolatedText("👍🏽") { true })
+        val end = "👍🏽".length
+        c.updateSelection(end, end, 0, end) { true }
+        val attempts = mutableListOf<TypingEdit>()
+        assertEquals(TypingTextResult.REJECTED, c.deletePrevious { attempts.add(it); false })
+        assertEquals(1, attempts.count { it is TypingEdit.SetComposingText })
+        assertFalse(c.state.enabled)
+    }
+
     @Test fun `palette insertion clears ranking context and candidates without completing a learned word`() {
         val committed = mutableListOf<String>()
         controller.setPersonalization(object : TypingPersonalization {

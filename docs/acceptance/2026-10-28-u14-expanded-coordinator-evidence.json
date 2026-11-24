@@ -1,0 +1,19 @@
+{
+  "deviceTested": false,
+  "jvm": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 1358
+  },
+  "lintDebug": "PASS",
+  "purpose": "U14_COORDINATOR_EXPANDED_SELECTION_PARTIAL",
+  "schema": 1,
+  "scoringBoundaryVerifier": "PASS",
+  "sources": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt": "8c353c7fda21d5bf18f7ca174528faf9312c5fd1c3e08f53313c492381af5179",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "6e39d510e4ddd30f7b1a8fc17db972755931b5682d4c6f4ef7b462c5b16ed2b7",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinatorTest.kt": "75d7b242681663eefd9b4557349a1f6b05014645789f7f3b807f74406601547b"
+  },
+  "uiImplemented": false
+}

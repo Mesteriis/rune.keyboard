@@ -1,0 +1,17 @@
+{
+  "analyzerSha256": "88681abb3a41cbc88b8de894be2944c14ba5f2cc900fd1f0bd267a3cb0e66c5d",
+  "archiveRowsSha256": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+  "boundaryAnalyzerSha256": "1b5af6e05f8fa951b366aa33e9a1250c6a022a7dd240936637d5420bf70eb127",
+  "contextsSha256": "be6555877c18ae13182d1b35172af45ac5b4bf537059f25f28d764363c1a31ef",
+  "counts": {
+    "hyphenRows": 65,
+    "multipleSourceMatches": 29,
+    "rows": 7500,
+    "standaloneRows": 7435
+  },
+  "independentQualification": false,
+  "scope": "disclosed-historical-source-boundary-audit",
+  "sourceArticles": 732,
+  "sourceLockSha256": "582aab04ebad1876f344f14b585466bbdf793930c7d5ebd287cc6dc91637c193",
+  "sourceSha256": "39b59952cd92a148b301f4d2b3ae1fb71e4caab987c6abe278f0dbdf0b01bb88"
+}

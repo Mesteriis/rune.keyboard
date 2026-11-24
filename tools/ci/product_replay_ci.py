@@ -87,13 +87,25 @@ def run(java,output,historical=False):
     result=subprocess.run(command,cwd=ROOT)
     if result.returncode:return result.returncode
     receipt=json.loads((output/'receipt.json').read_text())
+    comparison_path=output/'baseline-comparison.json'
+    if not comparison_path.is_file():raise ValueError('CI_REPLAY_NOT_PROVEN')
+    comparison=json.loads(comparison_path.read_text())
     if (receipt.get('status')!='COMPLETE' or receipt.get('deterministic') is not True
             or receipt.get('baselineMatches') is not True or receipt.get('rows')!=meta['rows']
-            or receipt.get('projectionSha256')!=meta['projectionSha256']):
+            or comparison.get('passed') is not True or comparison.get('differentRows')!=0
+            or comparison.get('baselineRows')!=meta['rows'] or comparison.get('candidateRows')!=meta['rows']
+            or type(comparison.get('toleratedScoreDifferences')) is not int
+            or comparison['toleratedScoreDifferences']<0
+            or comparison.get('scoreAbsoluteTolerance')!=projection.BASELINE_SCORE_ABS_TOLERANCE
+            or comparison.get('baselineProjectionSha256')!=meta['projectionSha256']
+            or comparison.get('candidateProjectionSha256')!=receipt.get('projectionSha256')):
         raise ValueError('CI_REPLAY_NOT_PROVEN')
     validator()
     if before!={str(p):sha(p) for p in baseline_files}:raise ValueError('CI_BASELINE_CHANGED_DURING_RUN')
-    print(json.dumps({'passed':True,'rows':meta['rows'],'projectionSha256':meta['projectionSha256']},sort_keys=True))
+    print(json.dumps({'passed':True,'rows':meta['rows'],
+        'baselineProjectionSha256':meta['projectionSha256'],
+        'candidateProjectionSha256':receipt['projectionSha256'],
+        'toleratedScoreDifferences':comparison['toleratedScoreDifferences']},sort_keys=True))
     return 0
 
 

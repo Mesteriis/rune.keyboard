@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- With personal learning enabled, retain an explicit rejection of a lowercase-to-titlecase
+  correction across restarts. The veto applies only to that language and case transition;
+  explicit suggestions and unrelated corrections remain available. Existing V1 private
+  profiles remain readable and retain their encoding until a case rejection is stored;
+  profiles with case rejections use V2 and cannot be read by older Rune versions.
+
 - Document all spelling/diagnostic source namespaces and current cascade order,
   including disabled model refinement and route-dependent joint event labels.
   Explicitly enumerate all 13 packaged experimental numeric assets with their

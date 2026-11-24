@@ -387,6 +387,8 @@ class AndroidTypingPersonalization(
             return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE)
         if (morphology.present || rare.present)
             return AutomaticTypingDecision(false, AutomaticAdmissionRefusal.ORIGINAL_VALID)
+        val publicWord = PublicOriginalProtection.evaluate(generation, candidate, resources.rareWords)
+        if (!publicWord.allowed) return AutomaticTypingDecision(false, publicWord.refusal)
         if (candidate.kind == io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidateKind.PUBLIC_AUGMENTED) {
             val targetMorphology = resources.lexicon.lookup(language, candidate.terminalKey)
             val targetRare = resources.rareWords.lookup(candidate.terminalKey)

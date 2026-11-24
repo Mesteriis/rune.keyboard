@@ -10,6 +10,7 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.WindowInsets
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.ime.RuneTrace
@@ -25,6 +26,7 @@ import io.github.mesteriis.rune.keyboard.ime.model.ShiftMode
 import io.github.mesteriis.rune.keyboard.settings.KeyboardViewMetrics
 import io.github.mesteriis.rune.keyboard.settings.KeyboardTheme
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
+import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
 import io.github.mesteriis.rune.keyboard.smarttyping.touch.PhysicalTouchSample
 import io.github.mesteriis.rune.keyboard.smarttyping.touch.TouchKeyOffset
 import io.github.mesteriis.rune.keyboard.smarttyping.touch.TouchLayoutProfile
@@ -36,8 +38,9 @@ internal class RuneKeyboardView(
     context: Context,
     private val metrics: KeyboardViewMetrics,
     theme: KeyboardTheme = KeyboardTheme.AIR,
+    lightPalette: Boolean = false,
 ) : LinearLayout(context), KeyPopupHost {
-    private val appearance = KeyboardAppearance(context, theme)
+    private val appearance = KeyboardAppearance(context, theme, lightPalette)
     private val bottomSurfacePaint = Paint().apply { color = appearance.bottomBackground }
     private var actionListener: ((KeyboardAction) -> Unit)? = null
     private var physicalTouchListener: ((PhysicalTouchSample) -> Unit)? = null
@@ -63,6 +66,9 @@ internal class RuneKeyboardView(
         orientation = VERTICAL
         layoutDirection = LAYOUT_DIRECTION_LTR
         gravity = Gravity.CENTER_HORIZONTAL
+    }
+    private val keysHost = FrameLayout(context).apply {
+        addView(keysContainer, FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
     }
 
     init {
@@ -97,7 +103,7 @@ internal class RuneKeyboardView(
                 resources.getDimensionPixelSize(R.dimen.candidate_strip_height),
             ),
         )
-        addView(keysContainer, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
+        addView(keysHost, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
     }
 
     fun setOnActionListener(listener: (KeyboardAction) -> Unit) {
@@ -145,9 +151,20 @@ internal class RuneKeyboardView(
         candidateStrip.setOnCandidateSelectedListener(listener)
     }
 
+    fun setOnCandidateExpandListener(listener: () -> Unit) {
+        candidateStrip.setOnExpandListener(listener)
+    }
+
+    fun showExpandedCandidates(candidates: List<CandidateUiItem.Correction>, selected: (String) -> Unit,
+        dismissed: () -> Unit): Boolean = candidateStrip.showExpanded(keysHost, candidates, selected, dismissed)
+
+    val hasExpandedCandidates: Boolean get() = candidateStrip.hasExpandedCandidates
+
+    fun dismissExpandedCandidates(): Boolean = candidateStrip.dismissExpanded()
+
     /** Updates only the permanent strip. Key gestures and any pending key render stay untouched. */
-    fun updateCandidates(state: SmartTypingViewState) {
-        candidateStrip.render(state)
+    fun updateCandidates(state: SmartTypingViewState, canExpand: Boolean = false) {
+        candidateStrip.render(state, canExpand)
     }
 
     fun setPopupPolicy(previewEnabled: Boolean, inputPolicy: InputPolicy) {
@@ -181,6 +198,7 @@ internal class RuneKeyboardView(
         RuneTrace.section("Rune#rebuildKeys") {
             // Key views are about to be discarded; a popup anchored to one of them must go first.
             popupController?.dismissAll()
+            candidateStrip.dismissExpanded()
             letterKeys.clear()
             keysContainer.removeAllViews()
             if (layout.emojiPanel) {
@@ -203,6 +221,7 @@ internal class RuneKeyboardView(
         touchGeometryChangedListener?.invoke()
         pendingRender = null
         popupController?.dismissAll()
+        candidateStrip.dismissExpanded()
         forEachKey { key -> key.cancelPendingActions() }
         activeTouchCount = 0
     }
@@ -313,7 +332,7 @@ internal class RuneKeyboardView(
             val bottomRow = keysContainer.getChildAt(keysContainer.childCount - 1) ?: return
             if (bottomRow.background != null) {
                 // Continue the bottom strip through the safe area and outer padding.
-                canvas.drawRect(0f, (keysContainer.top + bottomRow.top).toFloat(),
+                canvas.drawRect(0f, (keysHost.top + keysContainer.top + bottomRow.top).toFloat(),
                     width.toFloat(), height.toFloat(), bottomSurfacePaint)
             }
         }
@@ -518,6 +537,7 @@ internal class RuneKeyboardView(
             -> spec.accessibilityLabel ?: spec.label
             KeyboardAction.HideKeyboard -> context.getString(R.string.key_hide_keyboard)
             KeyboardAction.NextInputMethod -> context.getString(R.string.key_next_keyboard)
+            KeyboardAction.VoiceInput -> spec.accessibilityLabel ?: spec.label
             is KeyboardAction.SwitchLanguage -> context.getString(R.string.key_language)
             KeyboardAction.DoubleSpaceTap,
             KeyboardAction.CursorModeStarted,

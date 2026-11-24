@@ -1,0 +1,245 @@
+{
+  "knownSkips": [
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.RealModelScoringInstrumentedTest",
+      "method": "installedRuneTextLoadsAndScoresBoundedCandidates"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.intelligence.inference.RealModelServiceInstrumentedTest",
+      "method": "exactInstalledModelPreparesAndScoresThroughPrivateBinder"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.A2SpaceTimingInstrumentedTest",
+      "method": "captureOneSpace"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.CaseRejectionImeInstrumentedTest",
+      "method": "learnedCaseRejectionSurvivesSymbolsAndColon"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.CaseRejectionImeInstrumentedTest",
+      "method": "undoLearnsAndLaterManualCaseChoiceStillWorks"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.CaseRejectionPersistenceInstrumentedTest",
+      "method": "caseRejectionSurvivesProcessRestart"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.CaseRejectionPersistenceInstrumentedTest",
+      "method": "writeCaseRejectionWithoutChangingLegacyEntries"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ChromeEditorCompatibilityInstrumentedTest",
+      "method": "correctionRemainsAvailableAfterFiveWordsAndExactUndo"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ChromeEditorCompatibilityInstrumentedTest",
+      "method": "noSuggestionsPreservesFiveLiteralWordsAndBackspace"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ChromeOmniboxInstrumentedTest",
+      "method": "syntheticAddressBackspaceAndGoReachChrome"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ConfirmedWordsInstrumentedTest",
+      "method": "failedRemovalOffersIdempotentRetryAndPreservesPairRejection"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ConfirmedWordsInstrumentedTest",
+      "method": "fullConfirmationReportsLimitOnceAndListCanBeFiltered"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ConfirmedWordsInstrumentedTest",
+      "method": "originalConfirmationIsVisibleAndRemovalIsDurable"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ConfirmedWordsInstrumentedTest",
+      "method": "removalSurvivesAProcessRestart"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ConfirmedWordsInstrumentedTest",
+      "method": "settingsNavigationOpensTheConfirmedWordsList"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditingComposeInstrumentedTest",
+      "method": "composePasteKeepsAdjacentSuffixLiteralAndOwnSpaceRestoresCorrection"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditingComposeInstrumentedTest",
+      "method": "composePrivateEmojiDeletionAndContinuation"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditingComposeInstrumentedTest",
+      "method": "composeSelectionCutPasteAndNativeMenuKeepPayloadReadsZero"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditingComposeInstrumentedTest",
+      "method": "composeVerticalSelectionAndHomeEndUseNativeBoundaries"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditingProcessDeathInstrumentedTest",
+      "method": "prepareForeignTextForHostKill"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EditingProcessDeathInstrumentedTest",
+      "method": "recreatedProcessKeepsForeignSuffixIsolated"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.EmojiMemoryMeasurementInstrumentedTest",
+      "method": "observeProcessMemoryBeforeAfterOpeningAndVisitingCategories"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "contextualInternalEditsKeepWordFormsAndExactUndoAtTwoPaces"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "correctionPreviewAndUndoPreserveNextWord"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "diagnosticRecordingSurvivesManualFocusAndKeyboardReshow"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "extraBackspacesInEmptyFieldKeepTheWholeNextWord"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "freshReviewedCorrectionsAtTwoPacesWithExactUndo"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "jointDiagnosticExplainsRareProtectionWithoutChangingTheWord"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "knownAmbiguousWordsCanBeCorrectedAndUndone"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "learnedContextualCorrectionsAtTwoPacesPreserveExactUndo"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "learnedInfinitiveRevisionsPreserveExactUndoAtTwoPaces"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "learnedNounCaseRevisionsPreserveExactUndoAtTwoPaces"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "normalTouchTypingChecksCorrectionsAndUnchangedWords"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "probeFreshEverydayPhrasesThroughRealTouchInput"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "probePhrasesThroughRealTouchInput"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "rapidShortWordCorrectionAtThreePacesKeepsFollowingWords"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "repeatedRealTouchInputAndUndoKeepTheRequestedCharacters"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "reviewedPhraseFixesAtTwoPacesWithExactUndo"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "separatelyQualifiedRescueCorrectsAndUndoesPublicWords"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldAutocorrectionInstrumentedTest",
+      "method": "validWordManualAlternativesNeverBecomeAutomatic"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldBoundaryPrivateInstrumentedTest",
+      "method": "ambiguousAbbreviationBeforeColon"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldBoundaryPrivateInstrumentedTest",
+      "method": "ambiguousAbbreviationBeforePeriod"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldBoundaryPrivateInstrumentedTest",
+      "method": "correctionAndExactUndoBeforeColon"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldBoundaryPrivateInstrumentedTest",
+      "method": "correctionAndExactUndoBeforePeriod"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldBoundaryPrivateInstrumentedTest",
+      "method": "reviewPhrasePreservesAbbreviationAndUndoesCorrection"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldVisibleUndoInstrumentedTest",
+      "method": "canonicalUndoSurvivesNextLetter"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldVisibleUndoInstrumentedTest",
+      "method": "lateModelUndoSurvivesNextLetter"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.FoldVisibleUndoInstrumentedTest",
+      "method": "readyModelUndoSurvivesNextLetter"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.PhysicalFoldComposingInstrumentedTest",
+      "method": "physicalUnfoldPreservesEditorAndVisualStateWithoutReplayingOwnedComposition"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.RealModelTypingInstrumentedTest",
+      "method": "installedModelCorrectsOnSpaceWithoutTapAndBackspaceRestoresOriginal"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.TermuxOwnedSessionInstrumentedTest",
+      "method": "rawTypingBackspaceAndEnterInOwnedSession"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.VoiceInputInstrumentedTest",
+      "method": "enabledVoiceSubtypeIsOfferedAndActuallySelected"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.VoiceInputInstrumentedTest",
+      "method": "nextKeyboardPopupOpensSystemPickerOnApi26"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.VoiceInputInstrumentedTest",
+      "method": "nextKeyboardPopupSwitchesOrShowsPicker"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.VoiceInputInstrumentedTest",
+      "method": "unavailableVoiceSubtypeIsNotOffered"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.VoiceInputInstrumentedTest",
+      "method": "voiceDisabledAfterKeyboardShownFallsBackToPicker"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.VoiceInputInstrumentedTest",
+      "method": "voicePopupGestureSwitchesTheIme"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningLabProgressInstrumentedTest",
+      "method": "showsEligibleThresholdProgressAndActualRefusalReason"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningNightJobFixtureInstrumentedTest",
+      "method": "observeJob"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.smarttyping.learning.LearningNightJobFixtureInstrumentedTest",
+      "method": "seedFixture"
+    }
+  ],
+  "schema": 1
+}

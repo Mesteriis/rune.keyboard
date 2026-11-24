@@ -1,0 +1,94 @@
+{
+  "analyzerSha256": "0d4cdd85af46fa4e3e7db412ff36be2742a2a5d96b34463aef20063619a54566",
+  "boundaryDiagnostics": {
+    "annotated": {
+      "NONE:LOCAL_SEARCH_EMPTY": 1,
+      "NONE:NOT_QUALIFIED": 6,
+      "NONE:ORIGINAL_VALID": 82,
+      "NONE:SERVICE_REFUSED": 97
+    },
+    "unannotated-unknown": {
+      "CANONICAL_CASE:AUTO_REPLACE": 1,
+      "NONE:INELIGIBLE": 31,
+      "NONE:LOCAL_SEARCH_EMPTY": 4,
+      "NONE:NO_RANKING": 21,
+      "NONE:ORIGINAL_VALID": 52,
+      "NONE:SERVICE_REFUSED": 55,
+      "NONE:WINNER_AMBIGUOUS": 1
+    }
+  },
+  "candidateContexts": 945,
+  "caseOnlyChanges": 1,
+  "independentQualification": false,
+  "inputContexts": 533,
+  "labelsQualified": false,
+  "otherChanges": 0,
+  "registrySha256": "d11164f4372cbe443583005e015b13aa785f78b3b171251171828b0a61bc34a0",
+  "schemaVersion": 1,
+  "scope": "disclosed-ewt-current-product-report-not-qualification",
+  "summary": {
+    "analyzerSha256": "c5c2ae8986f202a735cdfdd7816d59dcaab5d4bbd5560458d27967cb69fbd8b1",
+    "counts": {
+      "dev:annotated": {
+        "autoAllowed": 0,
+        "completion:COMPLETE": 8,
+        "completion:STATES_EXHAUSTED": 5,
+        "completion:VALID_WORD": 13,
+        "originalPreserved": 26,
+        "otherBoundary": 0,
+        "rows": 26,
+        "targetApplied": 0,
+        "targetInAlternatives": 12,
+        "undoExact": 26
+      },
+      "test:annotated": {
+        "autoAllowed": 0,
+        "completion:COMPLETE": 3,
+        "completion:STATES_EXHAUSTED": 6,
+        "completion:VALID_WORD": 15,
+        "originalPreserved": 24,
+        "otherBoundary": 0,
+        "rows": 24,
+        "targetApplied": 0,
+        "targetInAlternatives": 9,
+        "undoExact": 24
+      },
+      "test:unannotated-unknown": {
+        "autoAllowed": 1,
+        "completion:COMPLETE": 19,
+        "completion:PROTECTED": 31,
+        "completion:STATES_EXHAUSTED": 59,
+        "completion:VALID_WORD": 53,
+        "completion:VERIFIED_EXHAUSTED": 3,
+        "originalPreserved": 164,
+        "otherBoundary": 1,
+        "rows": 165,
+        "targetApplied": 0,
+        "targetInAlternatives": 1,
+        "undoExact": 165
+      },
+      "train:annotated": {
+        "autoAllowed": 0,
+        "completion:COMPLETE": 32,
+        "completion:STATES_EXHAUSTED": 43,
+        "completion:VALID_WORD": 60,
+        "completion:VERIFIED_EXHAUSTED": 1,
+        "originalPreserved": 136,
+        "otherBoundary": 0,
+        "rows": 136,
+        "targetApplied": 0,
+        "targetInAlternatives": 68,
+        "undoExact": 136
+      }
+    },
+    "independentQualification": false,
+    "modelCalls": 0,
+    "preparationManifestSha256": "c8ee746044e59a201deb2f6f50de3fd1b837df195469e45ca61235f49251d69a",
+    "projectionSha256": "f0329e4d9c44752a157b40cff96870f31effb0d5e0feb7c5d3f2855c77a62bbc",
+    "replayReceiptSha256": "eb8272bd361bb4672c7349ef1d6721035c6ba45463d1ec79a401d2f116fa29f1",
+    "rows": 351,
+    "schemaVersion": 1,
+    "scope": "disclosed-ewt-current-product-diagnostic-not-qualification",
+    "sourceLabelsQualified": false
+  }
+}

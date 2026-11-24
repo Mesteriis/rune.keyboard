@@ -45,3 +45,37 @@ work includes owner-authored provenance, remaining historical inventory and
 generator/source chains, and canonical families for the previously quarantined
 unsupported public targets. No model fitting, APK update or Fold operation was
 performed.
+
+## Exact replay and control exclusions for the rejected corpus
+
+The original v1 [preparer](../../tools/typing_experiments/historical_provenance_sources/conversation_supervised_v1_preparer.py)
+was recovered from the literal creation command. The replay used the
+verified CC0 Tatoeba split, historical vocabulary and packed morphology,
+and the same 33 prior bindings as the later v2 run. Six unavailable raw
+prior files used their existing hash-verified registry projections. The
+selection and serialization stages wrote all three original v1 row files.
+The original guard again threw `CONTEXT_SPLIT_OVERLAP` before writing a
+manifest. All three files matched the original SHA-256 values in the
+adjacent audit evidence, covering 29,162 rows. The replay made zero model calls.
+
+The [registration command](../../tools/typing_experiments/register_rejected_conversation_controls.py)
+verifies the recovered source and all three row-file digests before
+projecting the control ledger. It added three entries while preserving every
+previous entry.
+
+| Entry | Exact contexts | Surface keys | Tatoeba sentence keys |
+| --- | ---: | ---: | ---: |
+| Protected controls | 5,359 | 3,261 | 0 |
+| Regressions | 23,657 | 19,008 | 0 |
+| Source | 0 | 0 | 5,414 |
+
+Rerunning the command without `--output` compared the three registered
+entries for exact equality. The tests cover conflicting contexts, cross-context
+surface reuse, source-sentence reuse, changed row bytes and unexpected
+manifests. The new entries contain hashes. The recovered row files were
+temporary, and the historical dataset remains rejected. Both registries
+still report incomplete global coverage.
+
+The canonical digest of the three ordered entries is
+`3f8e7d260e8a00644e28c7a16e56480faf816adb78e1f1c374a1ab75c2d5f983`.
+The source-only test checks it after the recovered row files are removed.

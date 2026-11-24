@@ -115,18 +115,19 @@ class PackagedProvenancePathsTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'UNSAFE_PATH'):
                 self.inspect()
 
-    def test_exact_historical_archive_resolves_changed_current_test(self):
-        (script, digest), archive = next(iter(gate.HISTORICAL.items()))
-        # The real immutable historical bytes are source identity, not an executed fixture.
-        self.write(archive, (gate.ROOT / archive).read_bytes())
-        self.write(gate.SCRIPTS + script, b'# portable current test')
-        self.data['trainingScripts'] = {script: digest}
-        self.save()
-        result = self.inspect()['provenanceFiles'][0]['trainingScripts'][0]
-        self.assertEqual(archive, result['resolved'])
-        self.write(archive, b'# tampered historical source')
-        with self.assertRaisesRegex(ValueError, 'HISTORICAL_SCRIPT_IDENTITY'):
-            self.inspect()
+    def test_exact_historical_archives_resolve_changed_current_sources(self):
+        for (script, digest), archive in gate.HISTORICAL.items():
+            with self.subTest(script=script):
+                # Exact real source bytes are checked, never executed.
+                self.write(archive, (gate.ROOT / archive).read_bytes())
+                self.write(gate.SCRIPTS + script, b'# maintained current source')
+                self.data['trainingScripts'] = {script: digest}
+                self.save()
+                result = self.inspect()['provenanceFiles'][0]['trainingScripts'][0]
+                self.assertEqual(archive, result['resolved'])
+                self.write(archive, b'# tampered historical source')
+                with self.assertRaisesRegex(ValueError, 'HISTORICAL_SCRIPT_IDENTITY'):
+                    self.inspect()
 
 
 if __name__ == '__main__':

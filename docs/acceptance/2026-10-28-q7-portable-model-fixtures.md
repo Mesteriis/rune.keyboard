@@ -1,8 +1,8 @@
 # Q6/Q7: all historical Python modules run from versioned fixtures
 
-All 103 tracked modules in Q7's tools scope are now assigned to runnable CI
-profiles: 92 stdlib and 11 scientific modules. The historical-artifacts profile
-is empty, and the runner's inventory test requires it to remain empty.
+The original rollout assigned all 103 tracked modules in Q7's tools scope to
+92 stdlib and 11 scientific modules. At that point the historical-artifacts
+profile was empty. Later additions and profile changes are recorded below.
 
 The three original artifact-dependent modules now enter explicit class-scoped
 fixture workspaces. AST comparison confirms that all ten original test-method
@@ -89,3 +89,26 @@ F-Droid build-server or whole-release acceptance result.
 Q7 remains in progress: supported MLX execution/CI, live Pymorphy integration and
 full hosted Ubuntu workflow evidence are outstanding. This slice closes the
 three formerly unwired module/resource gaps, not the whole review.
+
+
+## Local v6 historical text profile
+
+The hosted matrix uses `stdlib` and `scientific`. Four archive-dependent v6
+modules run locally under `historical-artifacts`, which uses the pinned
+PyArrow version from `tools/typing_experiments/requirements.txt`. Its 21 tests
+check the original calibration TSV and observation, their registry and
+attribution bindings, and reconstruction and refusal behavior. The hosted
+profiles still check the attribution metadata, the public-source anchor
+registry and the restored output digests.
+
+Run this profile from the source checkout with the original calibration TSV
+and logged observation available at their recorded paths and the scientific
+dependencies installed:
+
+```sh
+python tools/ci/python_tools_tests.py --profile historical-artifacts --output build/python-tools-historical-artifacts
+```
+
+The module inventory enforces the assignment of all four modules. The
+ordinary executor returns a nonzero status if a required historical input
+is absent.

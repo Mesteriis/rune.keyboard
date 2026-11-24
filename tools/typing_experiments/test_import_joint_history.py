@@ -6,6 +6,9 @@ from types import SimpleNamespace
 from unittest.mock import patch
 from holdout_ledger import keys_for
 import import_joint_history as importer
+import import_joint_source_windows as window_importer
+import import_joint_article_segments as segment_importer
+import audit_joint_family_closure as family_audit
 from import_joint_history import partition_entries
 from recover_legacy_families import sha
 
@@ -16,6 +19,123 @@ class Dictionary:
 
 
 class JointHistoryTest(unittest.TestCase):
+    def test_article_segments_bind_history_and_refuse_input_drift(self):
+        from test_holdout_ledger import ledger
+        from import_word_epoch_text_segments import segment_keys
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);corpus='followup-corpus';directory=root/'data'/corpus
+            directory.mkdir(parents=True);source=root/'data/0020.parquet';source.write_bytes(b'public')
+            files={};parents=[]
+            for part,article in [('calibration','123'),('holdout','124')]:
+                row=dict(id=part,source='0020.parquet',article=article,split=part,language='ru')
+                path=directory/(part+'.jsonl');path.write_text(json.dumps(row)+'\n');files[path.name]=sha(path)
+                bindings={f'data/{corpus}/{part}.jsonl':files[path.name]}
+                for prefix in ('public-joint-history-','public-joint-source-windows-'):
+                    parents.append(dict(id=f'{prefix}{corpus}-{part}',usage='historical-exclusion',rowCount=1,
+                        bindings=bindings,keys={'article':sorted(keys_for([row],'article'))},missingAxes=['family','sentence','context']))
+            manifest=directory/'manifest.json';manifest.write_text(json.dumps({'files':files}))
+            base=ledger(False);base['entries'].extend(parents)
+            code=('import_joint_article_segments.py','import_word_epoch_article_segments.py','import_word_epoch_text_segments.py',
+                  'import_joint_history.py','holdout_ledger.py','recover_ranker_sources.py','recover_legacy_families.py')
+            for name in code:
+                target=root/'tools/typing_experiments'/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_text('fixture')
+            def batches(_):return [(['123','124'],['Один. Второй.','Третий.'])]
+            with patch.object(segment_importer,'BASE','data'),patch.object(segment_importer,'MANIFESTS',{corpus:sha(manifest)}), \
+                 patch.object(segment_importer,'SOURCES',{'data/0020.parquet':sha(source)}):
+                result,receipt=segment_importer.build(root,base,batches)
+                entry=next(e for e in result['entries'] if e['id']==segment_importer.PREFIX+corpus+'-calibration')
+                self.assertEqual(segment_keys('Один. Второй.'),set(entry['keys']['sentence']))
+                self.assertEqual(2,receipt['counts'][corpus+'-calibration']['distinctSegments'])
+                missing=dict(base,entries=[e for e in base['entries'] if e['id']!='public-joint-source-windows-'+corpus+'-holdout'])
+                with self.assertRaisesRegex(ValueError,'JOINT_SEGMENTS_PARENT'):
+                    segment_importer.build(root,missing,batches)
+                target=directory/'calibration.jsonl';before=target.read_bytes();target.write_bytes(before+b' ')
+                with self.assertRaisesRegex(ValueError,'JOINT_SEGMENTS_ROWS_IDENTITY'):
+                    segment_importer.build(root,base,batches)
+                target.write_bytes(before)
+                def drift(_):
+                    yield ['123','124'],['Один. Второй.','Третий.']
+                    source.write_bytes(b'changed')
+                with self.assertRaisesRegex(ValueError,'JOINT_SEGMENTS_INPUT_DRIFT'):
+                    segment_importer.build(root,base,drift)
+
+    def test_joint_family_closure_resolves_protected_word_and_checks_all_analyses(self):
+        from test_holdout_ledger import ledger
+        class Lexicon(Dictionary):
+            def receipt(self): return {'dictionaryOnly':True}
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);corpus='followup-corpus';directory=root/'data'/corpus;directory.mkdir(parents=True)
+            files={};rows={}
+            for part in ('calibration','holdout'):
+                rows[part]=[dict(id=part,split=part,language='ru',word='стали',cohort='protected',group='protected',
+                                 typed='@стали',expectedSpelling='@стали',noAuto=True)]
+                path=directory/(part+'.jsonl');path.write_text(json.dumps(rows[part][0])+'\n');files[path.name]=sha(path)
+            manifest=directory/'manifest.json';manifest.write_text(json.dumps({'files':files,'counts':{p:{'rows':1} for p in rows}}))
+            manifest_name=f'data/{corpus}/manifest.json';base=ledger(False)
+            for part in rows:
+                path=f'data/{corpus}/{part}.jsonl';bindings={path:files[part+'.jsonl'],manifest_name:sha(manifest)}
+                base['entries'].extend([
+                    dict(id=f'public-joint-history-{corpus}-{part}',usage='historical-exclusion',rowCount=1,bindings=bindings,
+                         keys={'article':['a'*64]},missingAxes=['family','sentence','context']),
+                    dict(id=f'public-joint-history-{corpus}-{part}-families',usage='historical-family-exclusion',bindings=bindings,
+                         keys={'family':sorted(keys_for([dict(families=['стать','сталь'])],'family'))},missingAxes=[]),
+                    dict(id=f'public-joint-source-windows-{corpus}-{part}',usage='historical-source-exclusion',bindings=bindings,
+                         keys={'article':['a'*64],'sentence':['b'*64]},missingAxes=[])])
+            with patch.object(family_audit,'BASE','data'), patch.object(family_audit,'MANIFESTS',{corpus:sha(manifest)}):
+                history={corpus+'/'+part:{'unresolvedRows':[part]} for part in rows}
+                receipt=family_audit.audit(root,base,Lexicon(),history)
+                self.assertEqual(1,receipt['counts'][corpus+'/calibration']['protectedRows'])
+                self.assertEqual(0,receipt['counts'][corpus+'/calibration']['unresolvedRows'])
+                history[corpus+'/calibration']['unresolvedRows']=[]
+                with self.assertRaisesRegex(ValueError,'JOINT_FAMILY_HISTORICAL_MISMATCH'):
+                    family_audit.audit(root,base,Lexicon(),history)
+                target=next(e for e in base['entries'] if e['id'].endswith('calibration-families'))
+                target['keys']['family'].pop()
+                with self.assertRaisesRegex(ValueError,'JOINT_FAMILY_INCOMPLETE'):
+                    family_audit.audit(root,base,Lexicon())
+                (directory/'calibration.jsonl').write_text('{}\n')
+                with self.assertRaisesRegex(ValueError,'JOINT_FAMILY_BINDING'):
+                    family_audit.audit(root,base,Lexicon())
+
+    def test_source_window_import_binds_inputs_and_refuses_source_drift(self):
+        from test_holdout_ledger import ledger
+        class Generator:
+            @staticmethod
+            def bounded_prefix(text): return text
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);corpus='followup-corpus';directory=root/'data'/corpus
+            directory.mkdir(parents=True);source=root/'data/0020.parquet';source.write_bytes(b'public')
+            files={};parents=[];rows_by_part={}
+            for part,article in [('calibration','123'),('holdout','124')]:
+                row=dict(id=part,source='0020.parquet',article=article,split=part,language='ru',word='стали',prefix='Они')
+                path=directory/(part+'.jsonl');path.write_text(json.dumps(row)+'\n');files[path.name]=sha(path);rows_by_part[part]=row
+            manifest=directory/'manifest.json';manifest.write_text(json.dumps({'files':files,'counts':{p:{'rows':1} for p in rows_by_part}}))
+            source_name='data/0020.parquet';manifest_name=f'data/{corpus}/manifest.json'
+            for part in rows_by_part:
+                path=f'data/{corpus}/{part}.jsonl'
+                parents.append(dict(id=f'public-joint-history-{corpus}-{part}',usage='historical-exclusion',rowCount=1,
+                    bindings={path:files[part+'.jsonl'],manifest_name:sha(manifest),source_name:sha(source)},
+                    keys={'article':sorted(keys_for([rows_by_part[part]],'article'))},missingAxes=['family','sentence','context']))
+            base=ledger(False);base['entries'].extend(parents)
+            for path in ('tools/typing_experiments/import_joint_source_windows.py','tools/typing_experiments/import_legacy_context_history.py',
+                         'tools/typing_experiments/recover_legacy_holdout.py','tools/typing_experiments/right_context_sentence_audit.py'):
+                target=root/path;target.parent.mkdir(parents=True,exist_ok=True);target.write_text('fixture')
+            batches=lambda _: [(['123','124'],['Они стали здесь.','Они стали там.'])]
+            with patch.object(window_importer,'BASE','data'), patch.object(window_importer,'MANIFESTS',{corpus:sha(manifest)}), \
+                 patch.object(window_importer,'SOURCES',{source_name:sha(source)}), patch.object(window_importer,'load_generator',return_value=Generator()):
+                result,receipt=window_importer.build(root,base,batches)
+                self.assertEqual(2,len([e for e in result['entries'] if e['id'].startswith(window_importer.PREFIX)]))
+                self.assertEqual(1,receipt['counts'][corpus+'/calibration']['windows'])
+                def drift(_):
+                    yield ['123','124'],['Они стали здесь.','Они стали там.']
+                    source.write_bytes(b'changed')
+                with self.assertRaisesRegex(ValueError,'JOINT_WINDOWS_INPUT_DRIFT'):
+                    window_importer.build(root,base,drift)
+                source.write_bytes(b'public')
+                source.write_bytes(b'changed')
+                with self.assertRaisesRegex(ValueError,'JOINT_WINDOWS_SOURCE_HASH'):
+                    window_importer.build(root,base,batches)
+
     def entries(self,part='train',**changes):
         rows=[dict(id='r',source='source.parquet',article='123',split=part,language='ru',
                    family='999999',prefix='Они',typed='стмли',expectedSpelling='стали')|changes]

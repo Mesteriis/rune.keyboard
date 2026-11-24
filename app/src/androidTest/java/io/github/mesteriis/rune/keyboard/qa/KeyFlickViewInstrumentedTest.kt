@@ -67,11 +67,58 @@ class KeyFlickViewInstrumentedTest {
         try {
             f.key.onInitializeAccessibilityNodeInfo(node)
             assertTrue(node.actionList.any { it.id == R.id.action_key_flick })
+            assertFalse(f.key.performAccessibilityAction(R.id.action_open_editing, null))
             assertTrue(f.key.performAccessibilityAction(R.id.action_key_flick, null))
             f.key.performClick()
             f.key.performLongClick()
             assertEquals(listOf(KeyboardAction.CommitText("1"), KeyboardAction.CommitLetter("q"), KeyboardAction.CommitLetter("é")), f.actions)
             assertEquals(0, f.learnedTouches)
+        } finally { node.recycle() }
+    }
+
+    @Test fun keyboardSwitchAccessibilityKeepsEditingAndTap() = instrumentation.runOnMainSync {
+        val actions = mutableListOf<KeyboardAction>()
+        val key = KeyboardKeyView(instrumentation.targetContext)
+        FrameLayout(key.context).addView(key)
+        key.configure(KeySpec("?123", KeyboardAction.ToggleSymbols, longPressAlternates = listOf(
+            KeyAlternate("Edit", KeyboardAction.OpenEditing),
+            KeyAlternate("⌨", KeyboardAction.NextInputMethod, "Next keyboard"),
+        )), actionListener = { actions += it }, touchStateListener = {}, popupHost = null,
+            physicalTouchListener = { _, _ -> }, physicalTouchAllowed = { false })
+        val node = AccessibilityNodeInfo.obtain()
+        try {
+            key.onInitializeAccessibilityNodeInfo(node)
+            assertEquals("Edit", node.actionList.single { it.id == R.id.action_open_editing }.label)
+            assertEquals("Next keyboard", node.actionList.single { it.id == R.id.action_next_keyboard }.label)
+            assertTrue(key.performAccessibilityAction(R.id.action_open_editing, null))
+            assertTrue(key.performAccessibilityAction(R.id.action_next_keyboard, null))
+            assertTrue(key.performLongClick())
+            assertTrue(key.performClick())
+            assertEquals(listOf(KeyboardAction.OpenEditing, KeyboardAction.NextInputMethod,
+                KeyboardAction.OpenEditing, KeyboardAction.ToggleSymbols), actions)
+            key.isEnabled = false
+            assertFalse(key.performAccessibilityAction(R.id.action_open_editing, null))
+            assertFalse(key.performAccessibilityAction(R.id.action_next_keyboard, null))
+        } finally { node.recycle() }
+    }
+
+    @Test fun voiceAccessibilityIsLabeledAndDispatchesOnlyWhenAvailable() = instrumentation.runOnMainSync {
+        val actions = mutableListOf<KeyboardAction>()
+        val key = KeyboardKeyView(instrumentation.targetContext)
+        FrameLayout(key.context).addView(key)
+        fun configure(available: Boolean) = key.configure(KeySpec("?123", KeyboardAction.ToggleSymbols,
+            longPressAlternates = if (available) listOf(KeyAlternate("🎤", KeyboardAction.VoiceInput, "Voice input")) else emptyList()),
+            actionListener = { actions += it }, touchStateListener = {}, popupHost = null,
+            physicalTouchListener = { _, _ -> }, physicalTouchAllowed = { false })
+        configure(true)
+        val node = AccessibilityNodeInfo.obtain()
+        try {
+            key.onInitializeAccessibilityNodeInfo(node)
+            assertEquals("Voice input", node.actionList.single { it.id == R.id.action_voice_input }.label)
+            assertTrue(key.performAccessibilityAction(R.id.action_voice_input, null))
+            assertEquals(listOf(KeyboardAction.VoiceInput), actions)
+            configure(false)
+            assertFalse(key.performAccessibilityAction(R.id.action_voice_input, null))
         } finally { node.recycle() }
     }
 

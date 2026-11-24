@@ -31,6 +31,27 @@ class PersonalTypingCodecTest {
         assertEquals(listOf("you"), model.suggestions("see", en).map { it.text })
     }
 
+    @Test fun `legacy snapshots remain v1 and case rejections use a validated v2 extension`() {
+        val emptyV1 = byteArrayOf(0x52, 0x50, 0x54, 0x31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        assertArrayEquals(emptyV1, PersonalTypingCodec.encode(PersonalTypingSnapshot()))
+        assertEquals(PersonalTypingSnapshot(), PersonalTypingCodec.decode(emptyV1))
+        val emptyV2 = emptyV1.copyOf().apply { this[3] = 0x32 }
+        invalid { PersonalTypingCodec.decode(emptyV2) }
+        invalid { PersonalTypingCodec.decode(emptyV2 + byteArrayOf(0, 0, 0, 0)) }
+        val legacy = PersonalTypingSnapshot(confirmed = listOf(PersonalWord(en, "hello")))
+        val v1 = PersonalTypingCodec.encode(legacy)
+        assertEquals(0x31, v1[3].toInt())
+        assertEquals(legacy, PersonalTypingCodec.decode(v1))
+        val newer = legacy.copy(caseRejections = listOf(PersonalWord(en, "london")))
+        val v2 = PersonalTypingCodec.encode(newer)
+        assertEquals(0x32, v2[3].toInt())
+        assertEquals(newer, PersonalTypingCodec.decode(v2))
+        invalid { PersonalTypingCodec.decode(v2.copyOf(v2.size - 1)) }
+        invalid { PersonalTypingCodec.decode(v2 + byteArrayOf(0)) }
+        invalid { PersonalTypingCodec.encode(newer.copy(caseRejections = listOf(PersonalWord(en, "London")))) }
+        invalid { PersonalTypingCodec.encode(newer.copy(caseRejections = listOf(PersonalWord(en, "london"), PersonalWord(en, "london")))) }
+    }
+
     @Test fun `corrupt truncated oversized and trailing snapshot data is rejected`() {
         val bytes = PersonalTypingCodec.encode(PersonalTypingSnapshot())
         invalid { PersonalTypingCodec.decode(bytes.copyOf(bytes.size - 1)) }
@@ -67,6 +88,7 @@ class PersonalTypingCodecTest {
         val snapshot = PersonalTypingSnapshot(
             feedback = List(PersonalTypingModel.MAX_FEEDBACK) { PersonalFeedback(en, word(it), word(it + 2000), 255, true) },
             confirmed = List(PersonalTypingModel.MAX_CONFIRMED) { PersonalWord(en, word(it)) },
+            caseRejections = List(PersonalTypingModel.MAX_CASE_REJECTIONS) { PersonalWord(en, word(it + 3000).takeLast(31)) },
             phrases = List(PersonalTypingModel.MAX_PHRASES) { PersonalPhrase(en, word(it) + " " + word(it),
                 word(it + 2000) + " " + word(it + 2000), 255) },
         )
@@ -82,6 +104,9 @@ class PersonalTypingCodecTest {
         assertFalse(snapshot.feedback.single().toString().contains("private"))
         assertFalse(snapshot.confirmed.single().toString().contains("secret"))
         assertFalse(snapshot.phrases.single().toString().contains("private"))
+        val caseSnapshot = snapshot.copy(caseRejections = listOf(PersonalWord(en, "secret")))
+        assertFalse(caseSnapshot.toString().contains("secret"))
+        assertFalse(caseSnapshot.caseRejections.single().toString().contains("secret"))
     }
 
     private fun profile(value: String) = PersonalTypingCodec.decodeProfile(ByteArrayInputStream(value.toByteArray(Charsets.UTF_8)))

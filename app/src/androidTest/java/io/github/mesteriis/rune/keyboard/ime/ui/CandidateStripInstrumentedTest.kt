@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.TextView
+import android.widget.Button
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -173,6 +174,83 @@ class CandidateStripInstrumentedTest {
                 }
             } finally {
                 device.setCompressedLayoutHierarchy(wasCompressed)
+            }
+        }
+    }
+
+    @Test
+    fun expandedCandidatesStayOverKeysAndCancelHeldTouchOnRefresh() {
+        val chosen = mutableListOf<String>()
+        val hidden = listOf(CandidateUiItem.Correction("hidden:1", "there"),
+            CandidateUiItem.Correction("hidden:2", "their"))
+        var dismissals = 0
+        ActivityScenario.launch(SettingsActivity::class.java).use { scenario ->
+            lateinit var keyboard: RuneKeyboardView
+            scenario.onActivity { activity ->
+                keyboard = keyboard(activity)
+                keyboard.setOnCandidateExpandListener {
+                    assertTrue(keyboard.showExpandedCandidates(hidden, chosen::add) { dismissals++ })
+                }
+                keyboard.updateCandidates(fullState(), canExpand = true)
+                activity.setContentView(keyboard)
+            }
+            instrumentation.waitForIdleSync()
+            val device = UiDevice.getInstance(instrumentation)
+            val label = instrumentation.targetContext.getString(R.string.candidate_correction, hidden[0].text)
+            lateinit var toggle: View
+            var height = 0
+            lateinit var beforeKeys: List<View>
+            scenario.onActivity {
+                val strip = keyboard.getChildAt(0) as ViewGroup
+                toggle = strip.getChildAt(3)
+                height = keyboard.height
+                beforeKeys = keys(keyboard)
+                assertEquals(keyboard.context.getString(R.string.candidate_expand), toggle.contentDescription)
+                assertEquals(Button::class.java.name, toggle.accessibilityClassName)
+                assertTrue(toggle.width >= (48 * keyboard.resources.displayMetrics.density).toInt())
+                assertEquals(listOf(original.text, correction.text, punctuation.text),
+                    (0..2).map { (strip.getChildAt(it) as TextView).text.toString() })
+                assertTrue(toggle.performAccessibilityAction(AccessibilityNodeInfo.ACTION_CLICK, null))
+            }
+            val first = device.wait(Until.findObject(By.desc(label)), 5_000)
+            assertTrue(first != null)
+            assertEquals(height, keyboard.height)
+            scenario.onActivity {
+                assertIdentical(beforeKeys, keys(keyboard))
+                assertEquals(keyboard.context.getString(R.string.candidate_collapse), toggle.contentDescription)
+                val host = keyboard.getChildAt(1) as ViewGroup
+                val expanded = host.getChildAt(1) as ViewGroup
+                val firstCandidate = expanded.getChildAt(0)
+                assertSame(toggle.windowToken, firstCandidate.windowToken)
+                assertEquals(toggle.id, firstCandidate.accessibilityTraversalAfter)
+            }
+            scenario.onActivity { assertTrue(toggle.performClick()) }
+            assertTrue(device.wait(Until.gone(By.desc(label)), 5_000))
+            assertEquals(1, dismissals)
+            scenario.onActivity { assertEquals(keyboard.context.getString(R.string.candidate_expand), toggle.contentDescription) }
+            scenario.onActivity { assertTrue(toggle.performClick()) }
+            val reopened = device.wait(Until.findObject(By.desc(label)), 5_000)
+            assertTrue(reopened != null)
+            reopened.click()
+            instrumentation.waitForIdleSync()
+            assertEquals(listOf(hidden[0].id), chosen)
+            assertEquals(2, dismissals)
+            scenario.onActivity { assertTrue(toggle.performClick()) }
+            val held = device.wait(Until.findObject(By.desc(label)), 5_000)
+            assertTrue(held != null)
+            val bounds = held.visibleBounds
+            val downTime = SystemClock.uptimeMillis()
+            instrumentation.sendPointerSync(MotionEvent.obtain(downTime, downTime, MotionEvent.ACTION_DOWN,
+                bounds.centerX().toFloat(), bounds.centerY().toFloat(), 0))
+            scenario.onActivity { keyboard.updateCandidates(fullState(), canExpand = true) }
+            instrumentation.sendPointerSync(MotionEvent.obtain(downTime, SystemClock.uptimeMillis(), MotionEvent.ACTION_UP,
+                bounds.centerX().toFloat(), bounds.centerY().toFloat(), 0))
+            instrumentation.waitForIdleSync()
+            assertEquals(listOf(hidden[0].id), chosen)
+            assertEquals(3, dismissals)
+            scenario.onActivity {
+                assertEquals(height, keyboard.height)
+                assertEquals(4, (keyboard.getChildAt(0) as ViewGroup).childCount)
             }
         }
     }

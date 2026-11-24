@@ -34,7 +34,8 @@ internal object ContextualCorrectionPolicy {
         val selected = pool.alternatives.getOrNull(order[0] - 1)
         if (selected != null) {
             val refusal = admission(selected)
-            if (refusal != null) return baseline.copy(contextualAttempted = true, contextualAdmissionRefusal = refusal)
+            if (refusal != null) return baseline.copy(contextualAttempted = true, contextualAdmissionRefusal = refusal,
+                contextualManualCandidate = selected.takeIf { refusal == AutomaticAdmissionRefusal.ORIGINAL_VALID })
         }
         val previous = if (baseline.choice != null) baseline.choice.candidate?.text ?: original else baselineWord ?: original
         val retained = selected?.takeIf { previous == original || it.text == previous }

@@ -30,7 +30,16 @@ Canonical RU spelling proposals need language, article, families (pinned canonic
 target analyses from upstream), contextHash, prefix, typed and expectedSpelling.
 Punctuation proposals need language, article, prefix, currentWord, expectedBoundary,
 task=punctuation and noAuto=true; RU proposals also need canonical families and
-contextHash. Protected authored proposals need language, prefix, typed,
+contextHash. Source-backed RU Wikipedia proposals additionally require
+`sourceSegmentHash`: SHA-256 of the complete source-verified historical-selector
+segment after NFC, casefold and whitespace normalization. Use
+`holdout_ledger.source_segment_hash` on the extracted source segment. The
+preflight compares both this hash and the existing target-window `contextHash`;
+missing or malformed segment identity blocks preparation. The upstream source
+extractor must prove the segment came from the claimed article; the hash alone
+cannot establish provenance or a linguistic sentence boundary. Legacy historical
+reproduction and authored protected controls without a source are unchanged.
+Protected authored proposals need language, prefix, typed,
 cohort=protected, noAuto=true, expectedCandidate=0 and unchanged first candidate.
 They do not receive invented article IDs or canonical lemmas. Source-backed
 foreign control proposals remain blocked by incomplete foreign lexical history.

@@ -183,8 +183,9 @@ class SmartTypingSettingsInstrumentedTest : ImeTestBase() {
         // Accessibility text may be the hint; this stat is the actual Editable length.
         assertEquals("Private editor retained text", 0, stats().getValue("length"))
         driver.tapKey("w"); driver.awaitFieldText(FIELD, "w")
-        assertCandidateMissing(R.string.candidate_original, "w")
-        assertEquals(0, stats().getValue("compose")); noReadback()
+        awaitCandidate(R.string.candidate_original, "w")
+        assertCandidateMissing(R.string.candidate_original, "a")
+        assertEquals(1, stats().getValue("compose")); noReadback()
     }
 
     @Test fun spellingAndStripChangesPreserveMechanicalUndoAndIndependentDoubleSpace() {

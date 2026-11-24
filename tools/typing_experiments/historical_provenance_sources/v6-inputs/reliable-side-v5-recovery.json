@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "modelCalls": 0,
+  "independentQualification": false,
+  "originalRoot": "build/right-context-reliable-side-v5-20261027",
+  "contextsSha256": "b6c511070154b02a9116b717663886f521e71dca765f87dd2842d5dcc1f361e3",
+  "availabilitySha256": "968ce36e3fab7476458c97cd29e0277c50d5f6caff520d90a64b09dc59e2b944",
+  "contextRows": 1690,
+  "partCounts": {
+    "calibration": 844,
+    "holdout": 846
+  },
+  "scannedArticles": 648354,
+  "eligibleArticles": 313977,
+  "nextBlockedArticles": 17886,
+  "nextArticleKeyIndexSha256": "f65a31ce3f4c8c5942558d4364582c63405095d7462b48a662efb7b33bcd4cf6"
+}

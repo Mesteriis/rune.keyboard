@@ -1,11 +1,70 @@
 import struct
+import sys
+from temporary_test_build import temporary_build_directory
 import unittest
+import json
+from pathlib import Path
+from unittest import mock
 import numpy as np
 import train_joint_correction as joint
+import joint_calibration_receipt as binding
 from prepare_joint_correction import partition
 
 
 class JointTrainingTest(unittest.TestCase):
+    def test_independent_training_refuses_until_source_attestation_exists(self):
+        root=Path(joint.__file__).resolve().parents[2]
+        with temporary_build_directory(root) as tmp:
+            out=Path(tmp)/'result';context=Path(tmp)/'context';context.write_bytes(b'test-context')
+            frozen=dict(partitions={'train':[],'calibration':[]},observations={'train':[],'calibration':[]},
+                context=context,files={context:context.read_bytes()},manifest={'files':{'holdout.jsonl':'a'*64}},
+                bindings={'train/replay/receipt':'b'*64,'calibration/replay/receipt':'c'*64},
+                receipt=dict(historicalReproduction=False,corpusRole='registry-checked-corpus-proposal',
+                    independentQualification=False,productionQualified=False,corpusManifestSha256='d'*64))
+            args=type('Args',(),dict(corpus='unused',train_export='unused',calibration_export='unused',output=out))()
+            with mock.patch.object(binding,'freeze_training',return_value=frozen):
+                with self.assertRaisesRegex(ValueError,'TRAINING_SOURCE_ATTESTATION_REQUIRED'):
+                    joint.train_independent(args,{'test':True})
+            self.assertFalse(out.exists())
+
+    def test_historical_control_flow_marks_output_and_refuses_input_drift(self):
+        root=Path(joint.__file__).resolve().parents[2]
+        ref=json.loads((root/'tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/joint-original-policy.json').read_text())
+        with temporary_build_directory(root) as tmp:
+            parent=Path(tmp);corpus=parent/'corpus';corpus.mkdir()
+            manifest={'files':{'holdout.jsonl':ref['holdoutSha256']}}
+            dirs=[]
+            for part,key in [('train','trainExportReceiptSha256'),('calibration','calibrationExportReceiptSha256')]:
+                rows=corpus/f'{part}.jsonl';rows.write_text('{}\n')
+                manifest['files'][f'{part}.jsonl']=joint.sha(rows)
+                directory=parent/part;directory.mkdir();dirs.append(directory)
+                observations=directory/'observations.jsonl';observations.write_text('{}\n')
+                (directory/'receipt.json').write_text(json.dumps({'rows':joint.sha(rows),'observations':joint.sha(observations)}))
+            (corpus/'manifest.json').write_text(json.dumps(manifest))
+            original_sha=joint.sha
+            def fake_sha(path):
+                path=Path(path)
+                if path==corpus/'manifest.json':return ref['corpusManifestSha256']
+                if path==dirs[0]/'receipt.json':return ref['trainExportReceiptSha256']
+                if path==dirs[1]/'receipt.json':return ref['calibrationExportReceiptSha256']
+                return original_sha(path)
+            def exercise(out,drift):
+                def fit(_rows,path):
+                    path.write_bytes(b'test-only-model')
+                    if drift:(corpus/'train.jsonl').write_text('changed\n')
+                argv=['trainer',str(corpus),str(dirs[0]),str(dirs[1]),str(out),'--historical-reproduction']
+                with mock.patch.object(sys,'argv',argv), mock.patch.object(joint,'sha',side_effect=fake_sha), \
+                     mock.patch.object(joint,'groups',return_value=[]), mock.patch.object(joint,'fit',side_effect=fit), \
+                     mock.patch.object(joint,'score',return_value=[]), mock.patch.object(joint,'calibrate',return_value={'qualifiedCalibration':False}):
+                    joint.main()
+            out=parent/'valid';exercise(out,False)
+            policy=json.loads((out/'frozen-policy.json').read_text())
+            self.assertEqual('historical-disclosed-calibration',policy['stage'])
+            self.assertFalse(policy['independentQualification']);self.assertFalse(policy['productionQualified'])
+            with self.assertRaisesRegex(ValueError,'HISTORICAL_INPUT_DRIFT'):
+                exercise(parent/'drift',True)
+            self.assertFalse((parent/'drift/frozen-policy.json').exists())
+
     def record(self, index, **changes):
         value=dict(id=str(index),family=str(index),band='short',topScore=.9,margin=.8,
             candidate='хочу',original='зочу',expected='хочу',baseline='зочу',control=False)

@@ -1,0 +1,22 @@
+{
+  "baselineExitCode": 0,
+  "baselineObservationsSha256": "d055da08e158861b8a3da4b59ac2f47136de53c78fc1de73db1883ec4e0e073e",
+  "baselineStatus": "COMPLETE",
+  "candidateHarnessSha256": "4c0d373b3fe4a7ef6d59cdc4e83547147a2dc887bc94518347abcb09ecc1cbb9",
+  "candidateJarSha256": "2e87f633bb3e943db35a550719b840df77d30a9902c63d54976cc1412cfecae3",
+  "candidateObservationsSha256": "63e5e9d974e64ba87b719fa97080f2ec2956e1f626e6f0b4c0c360c32712248a",
+  "candidateWords": 10,
+  "comparison": "parity",
+  "comparisonToolSha256": "050d0621fa84249b7a232b7d9566829848492dba618ef7d91eefbc0bfd0a3284",
+  "counts": {
+    "product-replay-history-v1Rows": 4000,
+    "product-replay-v1Rows": 720,
+    "reviewedRows": 8
+  },
+  "independentQualification": false,
+  "purpose": "DISCLOSED_CASE_AMBIGUITY_PARITY_NOT_QUALIFICATION",
+  "rowsSha256": "2e21ec606ce8834c3eaab2a49e9b56250b0bc86d46e97a1f214ae7036d16c311",
+  "runnerSha256": "18b906bccdfd05c999dc5da29bc7524271e3f55d0307a85316c2ce3e65283387",
+  "schema": 1,
+  "screenSha256": "613fdc6f53c65692031de7ac9edb3da292115bc55a3a14bfbf9e6d88d0be9ddd"
+}

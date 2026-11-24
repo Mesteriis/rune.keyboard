@@ -1,0 +1,4490 @@
+{
+  "articleRevisionsVerified": false,
+  "articles": [
+    {
+      "article": "4671601",
+      "discussionRevision": 57939912,
+      "discussionTimestamp": "2013-08-25T18:34:20Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "fr",
+          "title": "Anastasie de Circourt"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4679488",
+      "discussionRevision": 58066514,
+      "discussionTimestamp": "2013-08-31T23:25:30Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "New World (supermarket)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4728050",
+      "discussionRevision": 95928982,
+      "discussionTimestamp": "2018-10-28T05:49:44Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Claw-free graph"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4728518",
+      "discussionRevision": 100671805,
+      "discussionTimestamp": "2019-06-27T16:52:44Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Postage stamps and postal history of Vietnam"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4735839",
+      "discussionRevision": 58949591,
+      "discussionTimestamp": "2013-10-16T19:05:08Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "fr",
+          "title": "Tournée (film)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4742126",
+      "discussionRevision": 63739254,
+      "discussionTimestamp": "2014-06-20T07:41:44Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Деснянсько-Старогутський національний природний парк"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4787895",
+      "discussionRevision": 72658399,
+      "discussionTimestamp": "2015-08-10T12:22:19Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Edge coloring"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4801142",
+      "discussionRevision": 59963573,
+      "discussionTimestamp": "2013-12-07T17:52:35Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "be",
+          "title": "Лыскаўскі замак"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4865126",
+      "discussionRevision": 66154468,
+      "discussionTimestamp": "2014-10-14T11:07:40Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "(What Is) Love?"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4877039",
+      "discussionRevision": 61954892,
+      "discussionTimestamp": "2014-03-16T05:06:20Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Gülen Gözler"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4890266",
+      "discussionRevision": 61208313,
+      "discussionTimestamp": "2014-02-04T17:07:33Z",
+      "projection": {
+        "translationTemplates": 2,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Atys (Lully)"
+        },
+        {
+          "language": "fr",
+          "title": "Atys (opéra)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4899914",
+      "discussionRevision": 61326978,
+      "discussionTimestamp": "2014-02-10T12:36:37Z",
+      "projection": {
+        "translationTemplates": 2,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "no",
+          "sourceRevision": 12400205,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 92941,
+            "status": "title-matches",
+            "title": "Sørøya (Finnmark)"
+          },
+          "title": "Sørøya (Finnmark)"
+        },
+        {
+          "language": "en",
+          "sourceRevision": 546111600,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 6419720,
+            "status": "title-matches",
+            "title": "Sørøya"
+          },
+          "title": "Sørøya"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4923744",
+      "discussionRevision": 95901901,
+      "discussionTimestamp": "2018-10-27T18:07:48Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Somali bushbaby"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4943320",
+      "discussionRevision": 61857349,
+      "discussionTimestamp": "2014-03-10T15:56:16Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Stem-loop"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4976354",
+      "discussionRevision": 118149448,
+      "discussionTimestamp": "2021-11-27T10:43:04Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "receivingRevision": 110532950,
+          "receivingRevisionCheck": {
+            "namespace": 0,
+            "pageId": 4976354,
+            "status": "article-matches",
+            "title": "Паркс, Генри"
+          },
+          "sourceRevision": 988110885,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 301816,
+            "status": "title-matches",
+            "title": "Henry Parkes"
+          },
+          "title": "Henry Parkes"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "4980218",
+      "discussionRevision": 76170564,
+      "discussionTimestamp": "2016-02-02T07:23:12Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Cold"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5014252",
+      "discussionRevision": 62857449,
+      "discussionTimestamp": "2014-05-02T22:25:53Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Голландська колонізація Америки"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5018544",
+      "discussionRevision": 62914127,
+      "discussionTimestamp": "2014-05-06T06:01:23Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "bg",
+          "title": "Philander opossum"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5047470",
+      "discussionRevision": 95841881,
+      "discussionTimestamp": "2018-10-27T09:16:24Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Radio New Zealand National"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5089937",
+      "discussionRevision": 95929335,
+      "discussionTimestamp": "2018-10-28T05:54:45Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Amelia Dyer"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5090470",
+      "discussionRevision": 87231250,
+      "discussionTimestamp": "2017-08-24T10:27:15Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Marco Bortolami"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5107139",
+      "discussionRevision": 99291783,
+      "discussionTimestamp": "2019-04-18T11:55:01Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Postage stamps and postal history of Colombia"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5147318",
+      "discussionRevision": 78992777,
+      "discussionTimestamp": "2016-06-15T10:58:36Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Zach LaVine"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5155693",
+      "discussionRevision": 94120263,
+      "discussionTimestamp": "2018-07-22T11:28:51Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Catawba County, North Carolina"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5161580",
+      "discussionRevision": 133129973,
+      "discussionTimestamp": "2023-09-19T23:43:11Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "de",
+          "title": "Grænlendingar"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5177807",
+      "discussionRevision": 115693428,
+      "discussionTimestamp": "2021-07-26T17:27:53Z",
+      "projection": {
+        "translationTemplates": 2,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "bg",
+          "title": "Владайско въстание"
+        },
+        {
+          "language": "es",
+          "title": "República de Radomir"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5191626",
+      "discussionRevision": 67915696,
+      "discussionTimestamp": "2015-01-13T19:12:01Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Final Fantasy X/X-2 HD Remaster"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5220148",
+      "discussionRevision": 111231190,
+      "discussionTimestamp": "2020-12-22T12:18:01Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Particle"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5274183",
+      "discussionRevision": 66520291,
+      "discussionTimestamp": "2014-10-31T12:15:07Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Appalachian cottontail"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5310039",
+      "discussionRevision": 67030685,
+      "discussionTimestamp": "2014-11-27T17:34:54Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "ja",
+          "title": "松川事件"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5330649",
+      "discussionRevision": 95893343,
+      "discussionTimestamp": "2018-10-27T17:07:14Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Ocular ischemic syndrome"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5353460",
+      "discussionRevision": 101436543,
+      "discussionTimestamp": "2019-08-04T22:37:49Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Kenta Hasegawa"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5364012",
+      "discussionRevision": 130252491,
+      "discussionTimestamp": "2023-05-06T11:30:33Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Григорович Василь Іванович"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5397390",
+      "discussionRevision": 95926651,
+      "discussionTimestamp": "2018-10-28T05:19:01Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Ernie Banks"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5472899",
+      "discussionRevision": 120257449,
+      "discussionTimestamp": "2022-02-23T12:39:19Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Tolland County, Connecticut"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5501855",
+      "discussionRevision": 69238802,
+      "discussionTimestamp": "2015-03-15T09:03:30Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Gasket"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5589303",
+      "discussionRevision": 69446527,
+      "discussionTimestamp": "2015-03-20T19:25:23Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "sourceRevision": 652704566,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 45386895,
+            "status": "title-matches",
+            "title": "If You're Reading This It's Too Late"
+          },
+          "title": "If You're Reading This It's Too Late"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5616203",
+      "discussionRevision": 110480460,
+      "discussionTimestamp": "2020-11-14T14:49:37Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "The Sea of Trees"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5657200",
+      "discussionRevision": 71954200,
+      "discussionTimestamp": "2015-07-06T17:40:58Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Prohibitin"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5704895",
+      "discussionRevision": 70829108,
+      "discussionTimestamp": "2015-05-16T00:07:41Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Adrenal ferredoxin"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5711661",
+      "discussionRevision": 74429902,
+      "discussionTimestamp": "2015-11-09T20:34:21Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Trial of Dzhokhar Tsarnaev"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5842279",
+      "discussionRevision": 72212782,
+      "discussionTimestamp": "2015-07-18T18:50:12Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Royal Navy Medical Service"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5851068",
+      "discussionRevision": 71902056,
+      "discussionTimestamp": "2015-07-04T10:50:06Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Robert van Genechten"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5907482",
+      "discussionRevision": 72421529,
+      "discussionTimestamp": "2015-07-29T09:09:32Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "de",
+          "title": "Antonie Barth"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5908374",
+      "discussionRevision": 95934761,
+      "discussionTimestamp": "2018-10-28T07:02:08Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Duke of Cornwall's Light Infantry"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5925940",
+      "discussionRevision": 72603092,
+      "discussionTimestamp": "2015-08-07T09:55:28Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Даріо Марколін"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5931354",
+      "discussionRevision": 77557477,
+      "discussionTimestamp": "2016-04-03T21:29:24Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Louise Lehzen"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "5935374",
+      "discussionRevision": 72762606,
+      "discussionTimestamp": "2015-08-16T13:03:19Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "sourceRevision": 672259175,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 34005459,
+            "status": "title-matches",
+            "title": "Yevadu"
+          },
+          "title": "Yevadu"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6041205",
+      "discussionRevision": 110630061,
+      "discussionTimestamp": "2020-11-22T08:47:40Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Joseph's Tomb"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6162283",
+      "discussionRevision": 76555102,
+      "discussionTimestamp": "2016-02-19T21:44:40Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Generalized coordinates"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6173169",
+      "discussionRevision": 133374128,
+      "discussionTimestamp": "2023-10-02T11:48:06Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "sourceRevision": 543948517,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 1501797,
+            "status": "title-matches",
+            "title": "Earl Nugent"
+          },
+          "title": "Earl Nugent"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6175525",
+      "discussionRevision": 95902542,
+      "discussionTimestamp": "2018-10-27T18:11:54Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "List of regular polytopes and compounds"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6196511",
+      "discussionRevision": 87586987,
+      "discussionTimestamp": "2017-09-11T21:17:38Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Scrambling"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6218364",
+      "discussionRevision": 78319896,
+      "discussionTimestamp": "2016-05-12T18:01:36Z",
+      "projection": {
+        "translationTemplates": 2,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 2
+      },
+      "sources": [
+        {
+          "language": "de",
+          "title": "Pedal (Orgel)"
+        },
+        {
+          "language": "en",
+          "title": "Pedal keyboard"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6259932",
+      "discussionRevision": 76800374,
+      "discussionTimestamp": "2016-02-28T21:00:11Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Pentagonal polytope"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6266530",
+      "discussionRevision": 128518812,
+      "discussionTimestamp": "2023-02-14T20:52:48Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Dua Lipa"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6278809",
+      "discussionRevision": 77697347,
+      "discussionTimestamp": "2016-04-10T14:58:30Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "sourceRevision": 697979407,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 504915,
+            "status": "title-matches",
+            "title": "Baron Wakehurst"
+          },
+          "title": "Baron Wakehurst"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6313540",
+      "discussionRevision": 78507721,
+      "discussionTimestamp": "2016-05-22T06:34:01Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "it",
+          "title": "Giovanni Battista De Fornari"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6333458",
+      "discussionRevision": 86892388,
+      "discussionTimestamp": "2017-08-03T21:46:00Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "bg",
+          "title": "Андрей Пантев"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6334799",
+      "discussionRevision": 125806746,
+      "discussionTimestamp": "2022-10-01T17:24:23Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Balchik Palace"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6339820",
+      "discussionRevision": 77703233,
+      "discussionTimestamp": "2016-04-10T18:48:22Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Baron Lyveden"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6411229",
+      "discussionRevision": 95874522,
+      "discussionTimestamp": "2018-10-27T14:50:01Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Ilyo Voyvoda"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6420495",
+      "discussionRevision": 80482999,
+      "discussionTimestamp": "2016-08-27T17:40:02Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Personal Recollections of Joan of Arc"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6428100",
+      "discussionRevision": 85906742,
+      "discussionTimestamp": "2017-06-11T01:35:27Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Battle of Blanchetaque"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6430587",
+      "discussionRevision": 78862812,
+      "discussionTimestamp": "2016-06-09T11:09:19Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "French Renaissance architecture"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6457964",
+      "discussionRevision": 129868672,
+      "discussionTimestamp": "2023-04-17T01:06:16Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Transport in Aruba"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6465084",
+      "discussionRevision": 79248287,
+      "discussionTimestamp": "2016-06-28T17:23:27Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Battle of Sangan"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6477095",
+      "discussionRevision": 92952347,
+      "discussionTimestamp": "2018-05-29T16:03:30Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Juniper berry"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6616703",
+      "discussionRevision": 81317072,
+      "discussionTimestamp": "2016-10-14T05:35:26Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Chlamydophila psittaci"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6635856",
+      "discussionRevision": 83492163,
+      "discussionTimestamp": "2017-02-05T15:01:35Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "fr",
+          "title": "Issenhausen"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6652574",
+      "discussionRevision": 95948228,
+      "discussionTimestamp": "2018-10-28T13:09:33Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "fr",
+          "title": "Gérard du cinéma"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6655653",
+      "discussionRevision": 81850831,
+      "discussionTimestamp": "2016-11-13T12:33:03Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "sr",
+          "title": "Душан Јерковић"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6689678",
+      "discussionRevision": 82264369,
+      "discussionTimestamp": "2016-12-03T10:33:56Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "sr",
+          "title": "Милица Вучетић"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6689869",
+      "discussionRevision": 128320242,
+      "discussionTimestamp": "2023-02-05T12:23:50Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "History of alcoholic drinks"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6724339",
+      "discussionRevision": 86975196,
+      "discussionTimestamp": "2017-08-08T19:55:24Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "es",
+          "title": "Mundir I"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6760846",
+      "discussionRevision": 86577693,
+      "discussionTimestamp": "2017-07-17T14:38:17Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "All Happy Families Are Alike"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6873297",
+      "discussionRevision": 96222930,
+      "discussionTimestamp": "2018-11-11T01:00:11Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Eurovision Song Contest 2018"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6882962",
+      "discussionRevision": 84973913,
+      "discussionTimestamp": "2017-04-21T07:53:31Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Monika Kryemadhi"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6905139",
+      "discussionRevision": 95874695,
+      "discussionTimestamp": "2018-10-27T14:52:01Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Charles Ingram"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6925955",
+      "discussionRevision": 108513465,
+      "discussionTimestamp": "2020-08-02T13:32:36Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "it",
+          "sourceRevision": 87766964,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 6388460,
+            "status": "title-matches",
+            "title": "Coltello genovese"
+          },
+          "title": "Coltello genovese"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6930175",
+      "discussionRevision": 131435091,
+      "discussionTimestamp": "2023-07-03T12:02:46Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "receivingRevision": 98740693,
+          "receivingRevisionCheck": {
+            "namespace": 0,
+            "pageId": 6930175,
+            "status": "article-matches",
+            "title": "Интернет-цензура на Украине"
+          },
+          "sourceRevision": 22727722,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 2433392,
+            "status": "title-matches",
+            "title": "Блокування російських інтернет-сервісів в Україні"
+          },
+          "title": "Блокування російських інтернет-сервісів в Україні"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6993739",
+      "discussionRevision": 86378097,
+      "discussionTimestamp": "2017-07-06T10:11:43Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Хакерські атаки на Україну (2017)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6996331",
+      "discussionRevision": 89255418,
+      "discussionTimestamp": "2017-11-25T23:41:24Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Peasants (short story)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "6997258",
+      "discussionRevision": 122387412,
+      "discussionTimestamp": "2022-05-17T22:41:35Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Reino Häyhänen"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7024184",
+      "discussionRevision": 95963643,
+      "discussionTimestamp": "2018-10-28T19:48:04Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Mars trilogy"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7027596",
+      "discussionRevision": 89550162,
+      "discussionTimestamp": "2017-12-09T16:37:09Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Водяна черв'яга"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7035173",
+      "discussionRevision": 86762823,
+      "discussionTimestamp": "2017-07-27T12:16:07Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Helly family"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7035652",
+      "discussionRevision": 100672365,
+      "discussionTimestamp": "2019-06-27T17:21:39Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Postage stamps and postal history of the Caribbean Netherlands"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7067326",
+      "discussionRevision": 87170719,
+      "discussionTimestamp": "2017-08-20T21:04:57Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Damian Jones (basketball)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7092256",
+      "discussionRevision": 87478813,
+      "discussionTimestamp": "2017-09-06T16:44:38Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Generalized quadrangle"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7116337",
+      "discussionRevision": 87855217,
+      "discussionTimestamp": "2017-09-25T19:40:07Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "sourceRevision": 798755331,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 22928014,
+            "status": "title-matches",
+            "title": "Elementary cellular automaton"
+          },
+          "title": "Elementary cellular automaton"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7177603",
+      "discussionRevision": 88747095,
+      "discussionTimestamp": "2017-11-02T05:41:01Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "de",
+          "title": "Antonio Maria Salvini"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7183480",
+      "discussionRevision": 112545177,
+      "discussionTimestamp": "2021-02-22T13:08:35Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Quaternary extinction event"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7248318",
+      "discussionRevision": 89649701,
+      "discussionTimestamp": "2017-12-14T10:20:45Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "National Wool Museum"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7248886",
+      "discussionRevision": 89759685,
+      "discussionTimestamp": "2017-12-20T08:37:02Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Nouvelle Droite"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7294083",
+      "discussionRevision": 90250917,
+      "discussionTimestamp": "2018-01-12T21:34:15Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Snub (geometry)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7328741",
+      "discussionRevision": 133448511,
+      "discussionTimestamp": "2023-10-06T14:33:00Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Wide Field Infrared Survey Telescope"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7347018",
+      "discussionRevision": 91217761,
+      "discussionTimestamp": "2018-02-27T19:14:15Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "pl",
+          "title": "Andrzej Gawroński (językoznawca)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7370035",
+      "discussionRevision": 91562338,
+      "discussionTimestamp": "2018-03-17T11:13:41Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Ващенко-Демпель Тетяна Гаврилівна"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7381698",
+      "discussionRevision": 117041214,
+      "discussionTimestamp": "2021-10-05T14:20:35Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Billie Eilish"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7389001",
+      "discussionRevision": 110334291,
+      "discussionTimestamp": "2020-11-06T20:31:21Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Paddle steamer"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7393601",
+      "discussionRevision": 93028834,
+      "discussionTimestamp": "2018-06-02T09:09:46Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Bullet Cluster"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7398689",
+      "discussionRevision": 127937385,
+      "discussionTimestamp": "2023-01-17T22:12:31Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "sourceRevision": 835568658,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 14166739,
+            "status": "title-matches",
+            "title": "Construction and management simulation"
+          },
+          "title": "Construction and management simulation"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7418861",
+      "discussionRevision": 101198449,
+      "discussionTimestamp": "2019-07-23T07:25:28Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Coat of arms of the King of Spain"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7423038",
+      "discussionRevision": 101198455,
+      "discussionTimestamp": "2019-07-23T07:25:48Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Coat of arms of the Prince of Spain"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7549701",
+      "discussionRevision": 107863873,
+      "discussionTimestamp": "2020-06-26T05:29:37Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Strömgren sphere"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7552076",
+      "discussionRevision": 131435439,
+      "discussionTimestamp": "2023-07-03T12:20:58Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "WOWCube"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7556639",
+      "discussionRevision": 95033521,
+      "discussionTimestamp": "2018-09-11T18:01:05Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "sourceRevision": 845188141,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 40678640,
+            "status": "resolves-to-same-page",
+            "title": "Anarchist synthesis"
+          },
+          "title": "Synthesis anarchism"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7566890",
+      "discussionRevision": 130550962,
+      "discussionTimestamp": "2023-05-20T12:24:46Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Tad Lincoln"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7573402",
+      "discussionRevision": 94625030,
+      "discussionTimestamp": "2018-08-20T21:32:04Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Concentric objects"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7599925",
+      "discussionRevision": 129930560,
+      "discussionTimestamp": "2023-04-19T19:34:01Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Keep Talking and Nobody Explodes"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7631668",
+      "discussionRevision": 123111642,
+      "discussionTimestamp": "2022-06-07T18:47:37Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Надання автокефалії Українській православній церкві"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7663272",
+      "discussionRevision": 102675045,
+      "discussionTimestamp": "2019-10-11T18:09:47Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "de",
+          "title": "Oswald Schäfer"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7665887",
+      "discussionRevision": 120716812,
+      "discussionTimestamp": "2022-03-17T19:13:35Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Vukašin Mandrapa"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7667468",
+      "discussionRevision": 98522323,
+      "discussionTimestamp": "2019-03-08T13:23:29Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Operation Undertone"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7675733",
+      "discussionRevision": 96424781,
+      "discussionTimestamp": "2018-11-21T15:22:02Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Перенесення столиці УСРР з Харкова до Києва"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7676240",
+      "discussionRevision": 96429779,
+      "discussionTimestamp": "2018-11-21T20:20:29Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Independent component analysis"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7686152",
+      "discussionRevision": 97748878,
+      "discussionTimestamp": "2019-01-27T17:38:37Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "receivingRevision": 869472774,
+          "receivingRevisionCheck": {
+            "status": "unavailable"
+          },
+          "sourceRevision": 96582226,
+          "sourceRevisionCheck": {
+            "namespace": 4,
+            "pageId": 8608668,
+            "status": "different-page",
+            "title": "Wikipedia:Miscellany for deletion/Wikipedia:Sandbox/Games"
+          },
+          "title": "Focus stacking"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7696002",
+      "discussionRevision": 96732173,
+      "discussionTimestamp": "2018-12-08T23:16:27Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "sourceRevision": 867595370,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 25762667,
+            "status": "title-matches",
+            "title": "Mereruka"
+          },
+          "title": "Mereruka"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7711250",
+      "discussionRevision": 96981137,
+      "discussionTimestamp": "2018-12-21T23:50:20Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Pico Perdiguero"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7747007",
+      "discussionRevision": 104688597,
+      "discussionTimestamp": "2020-01-22T02:27:35Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Eleanor, Fair Maid of Brittany"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7759812",
+      "discussionRevision": 97825262,
+      "discussionTimestamp": "2019-01-31T15:41:34Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Bidiakis cube"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7761130",
+      "discussionRevision": 97850558,
+      "discussionTimestamp": "2019-02-01T19:35:07Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Graph homomorphism"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7805390",
+      "discussionRevision": 130654044,
+      "discussionTimestamp": "2023-05-25T11:04:45Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "receivingRevision": 98565686,
+          "receivingRevisionCheck": {
+            "namespace": 0,
+            "pageId": 7805390,
+            "status": "article-matches",
+            "title": "Double Nickels on the Dime"
+          },
+          "sourceRevision": 886722443,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 2131216,
+            "status": "title-matches",
+            "title": "Double Nickels on the Dime"
+          },
+          "title": "Double Nickels on the Dime"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7806598",
+      "discussionRevision": 98820841,
+      "discussionTimestamp": "2019-03-24T09:56:09Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "it",
+          "title": "Jacopo II Appiano"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7822824",
+      "discussionRevision": 98787425,
+      "discussionTimestamp": "2019-03-22T13:57:52Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Jani Vruho"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7822969",
+      "discussionRevision": 130183079,
+      "discussionTimestamp": "2023-05-02T16:49:32Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "The Lord of the Rings: The Rings of Power"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7862111",
+      "discussionRevision": 110609123,
+      "discussionTimestamp": "2020-11-21T08:35:56Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Actresses (film)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7920753",
+      "discussionRevision": 100423229,
+      "discussionTimestamp": "2019-06-14T22:31:11Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Greenhouse frog"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7928484",
+      "discussionRevision": 100558735,
+      "discussionTimestamp": "2019-06-21T18:56:09Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Lagos City Marathon"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7941508",
+      "discussionRevision": 101695140,
+      "discussionTimestamp": "2019-08-19T15:28:42Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Conscientious objection to military taxation"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7954360",
+      "discussionRevision": 101036595,
+      "discussionTimestamp": "2019-07-14T20:16:56Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Network science"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7957723",
+      "discussionRevision": 109778735,
+      "discussionTimestamp": "2020-10-09T14:52:00Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "ka",
+          "title": "ივანე ლორთქიფანიძე"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7963538",
+      "discussionRevision": 101170833,
+      "discussionTimestamp": "2019-07-21T18:46:10Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Victor Richardson (British Army officer)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7973982",
+      "discussionRevision": 111178131,
+      "discussionTimestamp": "2020-12-19T20:21:17Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "receivingRevision": 904597971,
+          "receivingRevisionCheck": {
+            "status": "unavailable"
+          },
+          "sourceRevision": 101342664,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 2474920,
+            "status": "different-page",
+            "title": "Țiriac Air"
+          },
+          "title": "Plain English"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "7981075",
+      "discussionRevision": 101699716,
+      "discussionTimestamp": "2019-08-19T18:04:15Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Culture of New Zealand"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8016704",
+      "discussionRevision": 102082860,
+      "discussionTimestamp": "2019-09-10T04:49:02Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Шведський сірник (фільм, 1922)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8020081",
+      "discussionRevision": 103818495,
+      "discussionTimestamp": "2019-12-10T15:24:57Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Taemin (album)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8036152",
+      "discussionRevision": 102458789,
+      "discussionTimestamp": "2019-09-30T15:26:44Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Stars (M. C. Escher)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8037208",
+      "discussionRevision": 102507668,
+      "discussionTimestamp": "2019-10-03T04:51:18Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "mk",
+          "title": "Культура во Боцвана"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8041372",
+      "discussionRevision": 102517701,
+      "discussionTimestamp": "2019-10-03T16:13:52Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 1,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Геронова куля"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8051561",
+      "discussionRevision": 102700986,
+      "discussionTimestamp": "2019-10-13T07:41:31Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "sourceRevision": 920369014,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 38414036,
+            "status": "title-matches",
+            "title": "Allah-Las"
+          },
+          "title": "Allah-Las"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8054275",
+      "discussionRevision": 104701107,
+      "discussionTimestamp": "2020-01-22T18:02:31Z",
+      "projection": {
+        "translationTemplates": 2,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "sourceRevision": 911037497,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 41794922,
+            "status": "title-matches",
+            "title": "Honey encryption"
+          },
+          "title": "Honey encryption"
+        },
+        {
+          "language": "de",
+          "sourceRevision": 140405160,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 8588220,
+            "status": "different-page",
+            "title": "Honey Encryption"
+          },
+          "title": "Honey encryption"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8058851",
+      "discussionRevision": 118882790,
+      "discussionTimestamp": "2021-12-25T09:15:39Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Yerevan Football Academy"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8060766",
+      "discussionRevision": 116191217,
+      "discussionTimestamp": "2021-08-21T13:08:42Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "sourceRevision": 920067934,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 58064404,
+            "status": "resolves-to-same-page",
+            "title": "Devs (TV series)"
+          },
+          "title": "Devs (miniseries)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8063644",
+      "discussionRevision": 104426889,
+      "discussionTimestamp": "2020-01-07T23:18:31Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Fearless Girl"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8080921",
+      "discussionRevision": 127573678,
+      "discussionTimestamp": "2022-12-31T02:23:38Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Bangladesh Navy"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8114645",
+      "discussionRevision": 103725401,
+      "discussionTimestamp": "2019-12-05T15:48:16Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Анопченко Дмитро Юрійович"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8123635",
+      "discussionRevision": 103840201,
+      "discussionTimestamp": "2019-12-11T17:47:57Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "de",
+          "title": "Hermann Pister"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8130012",
+      "discussionRevision": 103970131,
+      "discussionTimestamp": "2019-12-16T20:15:17Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Einstein radius"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8162945",
+      "discussionRevision": 104518561,
+      "discussionTimestamp": "2020-01-12T20:05:10Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Clan Keith"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8163433",
+      "discussionRevision": 118334993,
+      "discussionTimestamp": "2021-12-04T03:57:30Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Грузинський національний легіон"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8165637",
+      "discussionRevision": 122417421,
+      "discussionTimestamp": "2022-05-19T10:48:49Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 1,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Echuca"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8190555",
+      "discussionRevision": 104939083,
+      "discussionTimestamp": "2020-02-03T23:27:20Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "bg",
+          "title": "Капрони Български"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8194423",
+      "discussionRevision": 105020876,
+      "discussionTimestamp": "2020-02-08T12:48:41Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Iranian Principlists"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8230644",
+      "discussionRevision": 110151851,
+      "discussionTimestamp": "2020-10-28T04:32:33Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "de",
+          "title": "Von Deutscher Baukunst"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8244059",
+      "discussionRevision": 105867462,
+      "discussionTimestamp": "2020-03-23T16:05:29Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "sr",
+          "title": "Рахела Албахари Перишић"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8252349",
+      "discussionRevision": 105871196,
+      "discussionTimestamp": "2020-03-23T19:10:22Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Peranmai"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8261984",
+      "discussionRevision": 124559245,
+      "discussionTimestamp": "2022-08-04T18:14:24Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Gigaton"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8265477",
+      "discussionRevision": 106052068,
+      "discussionTimestamp": "2020-04-01T20:34:05Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Athalia Schwartz"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8274416",
+      "discussionRevision": 127775706,
+      "discussionTimestamp": "2023-01-09T20:14:40Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Paradise and Hell"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8280830",
+      "discussionRevision": 106285441,
+      "discussionTimestamp": "2020-04-11T17:09:57Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Helicopter Cube"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8315526",
+      "discussionRevision": 132325903,
+      "discussionTimestamp": "2023-08-12T21:43:01Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "COVID-19 pandemic in Bulgaria"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8316551",
+      "discussionRevision": 107407638,
+      "discussionTimestamp": "2020-06-01T11:22:13Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Conditional independence"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8385561",
+      "discussionRevision": 115676099,
+      "discussionTimestamp": "2021-07-25T21:30:34Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Florence Knoll"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8396220",
+      "discussionRevision": 118497699,
+      "discussionTimestamp": "2021-12-09T00:09:02Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Thou Art the Man"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8420168",
+      "discussionRevision": 133853748,
+      "discussionTimestamp": "2023-10-28T10:42:23Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Garena Free Fire"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8466511",
+      "discussionRevision": 108810155,
+      "discussionTimestamp": "2020-08-19T06:24:00Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "receivingRevision": 108810006,
+          "receivingRevisionCheck": {
+            "namespace": 0,
+            "pageId": 8466511,
+            "status": "article-matches",
+            "title": "Тургутлу"
+          },
+          "sourceRevision": 733028763,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 4116768,
+            "status": "different-page",
+            "title": "Turgutlu"
+          },
+          "title": "Tutgutuglu"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8470260",
+      "discussionRevision": 108864000,
+      "discussionTimestamp": "2020-08-22T10:33:57Z",
+      "projection": {
+        "translationTemplates": 2,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "sr",
+          "receivingRevision": 108863349,
+          "receivingRevisionCheck": {
+            "namespace": 0,
+            "pageId": 8470260,
+            "status": "article-matches",
+            "title": "Тадич, Йорьо"
+          },
+          "sourceRevision": 4057785,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 213563,
+            "status": "title-matches",
+            "title": "Јорјо Тадић"
+          },
+          "title": "Јорјо Тадић"
+        },
+        {
+          "language": "sh",
+          "receivingRevision": 108863349,
+          "receivingRevisionCheck": {
+            "namespace": 0,
+            "pageId": 8470260,
+            "status": "article-matches",
+            "title": "Тадич, Йорьо"
+          },
+          "sourceRevision": 4725022,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 1408235,
+            "status": "different-page",
+            "title": "Jorjo Tadić"
+          },
+          "title": "Јорјо Тадић"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8506264",
+      "discussionRevision": 127777174,
+      "discussionTimestamp": "2023-01-09T21:44:16Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Arminda Schutte"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8518714",
+      "discussionRevision": 109600004,
+      "discussionTimestamp": "2020-10-01T18:08:20Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Jam Kamal Khan"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8522513",
+      "discussionRevision": 110073327,
+      "discussionTimestamp": "2020-10-24T09:39:18Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "he",
+          "receivingRevision": 109661455,
+          "receivingRevisionCheck": {
+            "namespace": 0,
+            "pageId": 8522513,
+            "status": "article-matches",
+            "title": "Новый год хасидизма"
+          },
+          "sourceRevision": 28852107,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 127501,
+            "status": "title-matches",
+            "title": "חג הגאולה"
+          },
+          "title": "חג הגאולה"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8547531",
+      "discussionRevision": 110065222,
+      "discussionTimestamp": "2020-10-23T19:18:44Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Clan Jardine"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8548494",
+      "discussionRevision": 128543711,
+      "discussionTimestamp": "2023-02-16T04:51:53Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Android Go"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8552214",
+      "discussionRevision": 129380519,
+      "discussionTimestamp": "2023-03-22T17:49:25Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 1,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Проголошення незалежності України 1991"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8552931",
+      "discussionRevision": 110131661,
+      "discussionTimestamp": "2020-10-27T03:00:34Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "it",
+          "title": "Università degli Studi di Sassari"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8574380",
+      "discussionRevision": 121411195,
+      "discussionTimestamp": "2022-04-14T10:27:31Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Abolition of monarchy"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8620247",
+      "discussionRevision": 111122072,
+      "discussionTimestamp": "2020-12-17T02:57:50Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Role of Christianity in civilization"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8639486",
+      "discussionRevision": 111415686,
+      "discussionTimestamp": "2020-12-31T23:16:55Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "GI Monocerotis"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8689232",
+      "discussionRevision": 116059752,
+      "discussionTimestamp": "2021-08-14T14:29:15Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Mass in special relativity"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8708304",
+      "discussionRevision": 113180272,
+      "discussionTimestamp": "2021-03-25T07:10:33Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "receivingRevision": 112450473,
+          "receivingRevisionCheck": {
+            "namespace": 0,
+            "pageId": 8708304,
+            "status": "article-matches",
+            "title": "Ложная зависимость"
+          },
+          "sourceRevision": 1002267398,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 484778,
+            "status": "title-matches",
+            "title": "Spurious relationship"
+          },
+          "title": "Spurious relationship"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8717476",
+      "discussionRevision": 112583729,
+      "discussionTimestamp": "2021-02-24T09:18:58Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "receivingRevision": 112583664,
+          "receivingRevisionCheck": {
+            "namespace": 0,
+            "pageId": 8717476,
+            "status": "article-matches",
+            "title": "Эйткен-Уокер, Луиза"
+          },
+          "sourceRevision": 1005269984,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 13707223,
+            "status": "title-matches",
+            "title": "Louise Aitken-Walker"
+          },
+          "title": "Louise Aitken-Walker"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8733243",
+      "discussionRevision": 112824328,
+      "discussionTimestamp": "2021-03-07T22:55:46Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Matrix multiplication algorithm"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8733776",
+      "discussionRevision": 112847621,
+      "discussionTimestamp": "2021-03-09T08:10:24Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Alison Williamson"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8738939",
+      "discussionRevision": 113506402,
+      "discussionTimestamp": "2021-04-09T22:26:28Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Hassa bint Salman Al Saud"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8757748",
+      "discussionRevision": 114950950,
+      "discussionTimestamp": "2021-06-17T07:50:49Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 1,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "de",
+          "title": "Der Bau"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8759714",
+      "discussionRevision": 113217558,
+      "discussionTimestamp": "2021-03-26T14:57:40Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "History of far-right movements in France"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8765716",
+      "discussionRevision": 113302631,
+      "discussionTimestamp": "2021-03-30T18:48:28Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Thora Kulle"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8773291",
+      "discussionRevision": 122208122,
+      "discussionTimestamp": "2022-05-10T09:35:40Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Гливинський Олександр Віталійович"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8782540",
+      "discussionRevision": 113544969,
+      "discussionTimestamp": "2021-04-11T20:34:37Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Martina Haag"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8782773",
+      "discussionRevision": 113544503,
+      "discussionTimestamp": "2021-04-11T20:06:02Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "sourceRevision": 1015079011,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 12538627,
+            "status": "title-matches",
+            "title": "Space Channel 5: Part 2"
+          },
+          "title": "Space Channel 5: Part 2"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8830567",
+      "discussionRevision": 114241287,
+      "discussionTimestamp": "2021-05-16T19:16:08Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Turnstile (symbol)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8833191",
+      "discussionRevision": 116277759,
+      "discussionTimestamp": "2021-08-25T21:03:26Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Академічний словник литовської мови"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8842097",
+      "discussionRevision": 114413304,
+      "discussionTimestamp": "2021-05-24T20:24:05Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "LGBT Aging Project"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8842657",
+      "discussionRevision": 114428850,
+      "discussionTimestamp": "2021-05-25T10:19:58Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "de",
+          "title": "Baumwühlmäuse"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8861766",
+      "discussionRevision": 114790468,
+      "discussionTimestamp": "2021-06-09T11:16:26Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "JILA"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8901621",
+      "discussionRevision": 129194040,
+      "discussionTimestamp": "2023-03-12T18:25:03Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "2021 Eswatini protests"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8905182",
+      "discussionRevision": 115482006,
+      "discussionTimestamp": "2021-07-15T07:20:44Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 1,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "fr",
+          "title": "Palais des sports Jean-Michel-Geoffroy"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8906839",
+      "discussionRevision": 115508304,
+      "discussionTimestamp": "2021-07-16T17:14:09Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Coca (pastry)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8913999",
+      "discussionRevision": 116307610,
+      "discussionTimestamp": "2021-08-27T08:16:07Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Mary Whiton Calkins"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8914898",
+      "discussionRevision": 115629917,
+      "discussionTimestamp": "2021-07-23T12:22:52Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "fr",
+          "title": "Sophie Benech"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8917348",
+      "discussionRevision": 115668463,
+      "discussionTimestamp": "2021-07-25T14:00:09Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Mortyplicity"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8938422",
+      "discussionRevision": 130526648,
+      "discussionTimestamp": "2023-05-19T10:18:03Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 1,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Ngāti Whātua"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8967957",
+      "discussionRevision": 116450838,
+      "discussionTimestamp": "2021-09-03T18:41:21Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Clairo"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8969350",
+      "discussionRevision": 119385353,
+      "discussionTimestamp": "2022-01-15T20:57:21Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "sourceRevision": 1041852821,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 62877120,
+            "status": "title-matches",
+            "title": "Black Book (video game)"
+          },
+          "title": "Black Book (video game)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8972300",
+      "discussionRevision": 120233092,
+      "discussionTimestamp": "2022-02-22T15:31:35Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 1,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Battle of El Herri"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8972454",
+      "discussionRevision": 116462989,
+      "discussionTimestamp": "2021-09-04T13:58:04Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Noncommutative geometry"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "8989801",
+      "discussionRevision": 116720351,
+      "discussionTimestamp": "2021-09-18T16:01:35Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Temple of Dendur"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9025179",
+      "discussionRevision": 117266766,
+      "discussionTimestamp": "2021-10-17T08:47:41Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Criticism of communist party rule"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9051023",
+      "discussionRevision": 119135990,
+      "discussionTimestamp": "2022-01-05T23:57:03Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Stirling Colgate"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9066994",
+      "discussionRevision": 117901781,
+      "discussionTimestamp": "2021-11-15T16:38:16Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Time Reborn"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9070458",
+      "discussionRevision": 117952544,
+      "discussionTimestamp": "2021-11-18T10:21:54Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Ayr, Queensland"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9084364",
+      "discussionRevision": 118173167,
+      "discussionTimestamp": "2021-11-28T15:48:12Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Fatimid conquest of Egypt"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9093194",
+      "discussionRevision": 118365294,
+      "discussionTimestamp": "2021-12-04T19:45:02Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Tituba"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9099990",
+      "discussionRevision": 118441647,
+      "discussionTimestamp": "2021-12-07T06:39:49Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Upheaval (book)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9128101",
+      "discussionRevision": 119944544,
+      "discussionTimestamp": "2022-02-10T16:31:23Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Jayanti (Hinduism)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9133380",
+      "discussionRevision": 118795841,
+      "discussionTimestamp": "2021-12-22T20:01:55Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Feda (municipality)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9133863",
+      "discussionRevision": 119375338,
+      "discussionTimestamp": "2022-01-15T12:34:57Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Forced abortion of Feng Jianmei"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9139596",
+      "discussionRevision": 119849214,
+      "discussionTimestamp": "2022-02-06T04:13:59Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "de",
+          "sourceRevision": 217208547,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 8464313,
+            "status": "title-matches",
+            "title": "Adolf Hampel"
+          },
+          "title": "Adolf Hampel"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9179739",
+      "discussionRevision": 119585440,
+      "discussionTimestamp": "2022-01-25T08:56:37Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Лемківська кухня"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9225779",
+      "discussionRevision": 130403745,
+      "discussionTimestamp": "2023-05-13T11:57:04Z",
+      "projection": {
+        "translationTemplates": 2,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Атака на острів Зміїний (2022)"
+        },
+        {
+          "language": "en",
+          "title": "Battle of Snake Island"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9241368",
+      "discussionRevision": 132660172,
+      "discussionTimestamp": "2023-08-30T09:01:25Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Kyiv offensive (2022)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9447611",
+      "discussionRevision": 123152065,
+      "discussionTimestamp": "2022-06-09T12:38:22Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "хорватсько-німецькі відносини"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9738319",
+      "discussionRevision": 122810842,
+      "discussionTimestamp": "2022-05-24T22:26:34Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Living Tribunal"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9744493",
+      "discussionRevision": 123202822,
+      "discussionTimestamp": "2022-06-11T12:21:16Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Херсонська фортеця"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9747786",
+      "discussionRevision": 122969785,
+      "discussionTimestamp": "2022-06-01T09:10:48Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Калібр 155 мм"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9762941",
+      "discussionRevision": 123238646,
+      "discussionTimestamp": "2022-06-12T20:36:21Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Republican in Name Only"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9776320",
+      "discussionRevision": 133297437,
+      "discussionTimestamp": "2023-09-28T07:58:07Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Elemental (2023 film)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9797591",
+      "discussionRevision": 123910922,
+      "discussionTimestamp": "2022-07-09T18:54:28Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Law of Guarantees"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9844152",
+      "discussionRevision": 124803648,
+      "discussionTimestamp": "2022-08-14T11:41:04Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "bg",
+          "title": "Екатерина Йосифова"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9847585",
+      "discussionRevision": 124996628,
+      "discussionTimestamp": "2022-08-21T20:59:12Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "receivingRevision": 124870218,
+          "receivingRevisionCheck": {
+            "namespace": 0,
+            "pageId": 9847585,
+            "status": "article-matches",
+            "title": "Блэкстон (гостиница, Чикаго)"
+          },
+          "sourceRevision": 1102257774,
+          "sourceRevisionCheck": {
+            "namespace": 0,
+            "pageId": 3540506,
+            "status": "title-matches",
+            "title": "The Blackstone Hotel"
+          },
+          "title": "The Blackstone Hotel"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9860563",
+      "discussionRevision": 128359446,
+      "discussionTimestamp": "2023-02-07T09:52:15Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "58th Baeksang Arts Awards"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9860880",
+      "discussionRevision": 126917296,
+      "discussionTimestamp": "2022-11-27T16:27:59Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 1,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Operation Perch"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9910150",
+      "discussionRevision": 125893211,
+      "discussionTimestamp": "2022-10-05T22:04:01Z",
+      "projection": {
+        "translationTemplates": 2,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "de",
+          "title": "Antilopenziesel"
+        },
+        {
+          "language": "en",
+          "title": "Antelope squirrel"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9932037",
+      "discussionRevision": 126202962,
+      "discussionTimestamp": "2022-10-22T08:30:36Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Stith Thompson"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "9985440",
+      "discussionRevision": 126982935,
+      "discussionTimestamp": "2022-11-30T18:40:03Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Wang Lixia"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "10074066",
+      "discussionRevision": 128265570,
+      "discussionTimestamp": "2023-02-02T16:24:25Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Rudolf Stammler"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "10080630",
+      "discussionRevision": 128359023,
+      "discussionTimestamp": "2023-02-07T09:28:25Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "List of snakes by scientific name"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "10153540",
+      "discussionRevision": 130796296,
+      "discussionTimestamp": "2023-06-01T21:03:15Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 1
+      },
+      "sources": [
+        {
+          "language": "de",
+          "title": "Konservative Partei (Preußen)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "10156016",
+      "discussionRevision": 129636920,
+      "discussionTimestamp": "2023-04-04T12:42:26Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Jessica Jones (season 1)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "10266864",
+      "discussionRevision": 131526107,
+      "discussionTimestamp": "2023-07-06T20:52:08Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "uk",
+          "title": "Чемпіонат Професійної асоціації гольфу"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "10320205",
+      "discussionRevision": 132519902,
+      "discussionTimestamp": "2023-08-22T16:15:00Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "de",
+          "title": "Venus, Mars und Amor (Tizian)"
+        }
+      ],
+      "status": "parsed"
+    },
+    {
+      "article": "10324218",
+      "discussionRevision": 132591623,
+      "discussionTimestamp": "2023-08-26T13:31:38Z",
+      "projection": {
+        "translationTemplates": 1,
+        "unprojectableReceivingVersions": 0,
+        "unprojectableSourceVersions": 0
+      },
+      "sources": [
+        {
+          "language": "en",
+          "title": "Timeline of food"
+        }
+      ],
+      "status": "parsed"
+    }
+  ],
+  "decodedHoldoutTSVSha256": "36a769b5b2e1ed0f76667bd4336d4792502195c83233ff34fd29e85d2ca0ca6b",
+  "parser": "mwparserfromhell==0.7.2",
+  "publicationRightsReviewed": false,
+  "queryCutoff": "2023-11-01T23:59:59Z",
+  "reviewedUTCDate": "2026-11-24",
+  "revisionReferences": {
+    "distinctQueries": 41,
+    "outcomes": {
+      "receiving-article-matches": 10,
+      "receiving-unavailable": 2,
+      "source-different-page": 5,
+      "source-resolves-to-same-page": 2,
+      "source-title-matches": 23
+    },
+    "scope": "numeric-revisions-explicitly-named-in-projected-historical-notices"
+  },
+  "schema": 1,
+  "scope": "historical-v6-holdout-discussion-translation-metadata",
+  "sourceArticleMapSha256": "7e15f3dd5eb23a9d70946c5b5c08df82e521177828b5ab9fbafebc3469bf54dc",
+  "sourceIndexSha256": "d56fb9d7fa167f599e8414dac7190a057a2a7667ad3cad07694dbe3c850e03eb",
+  "summary": {
+    "currentCandidatePages": 266,
+    "historicalMarkup": 262,
+    "historicalRevisions": 262,
+    "projectedArticles": 243,
+    "projectedContexts": 244,
+    "projectedNotices": 251,
+    "projectedRows": 1155,
+    "projection": {
+      "translationTemplates": 251,
+      "unprojectableReceivingVersions": 8,
+      "unprojectableSourceVersions": 24
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "historicalSelectorSha256": "60f079e28a18fd980a145c8e6184996501277231dc77a17fdd875ac4cc175307",
+  "repository": "wikimedia/wikipedia",
+  "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+  "schema": 1,
+  "scope": "public-article-identity-recovery-not-corpus-reproduction",
+  "shards": [
+    {
+      "bytes": 200905664,
+      "name": "0011.parquet",
+      "repositoryPath": "20231101.ru/train/0011.parquet",
+      "sha256": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f"
+    },
+    {
+      "bytes": 196511972,
+      "name": "0012.parquet",
+      "repositoryPath": "20231101.ru/train/0012.parquet",
+      "sha256": "21e33d8a7a0d068e573db688f5816a22fd690bf699dee958373f9b9e957921ad"
+    },
+    {
+      "bytes": 205965652,
+      "name": "0013.parquet",
+      "repositoryPath": "20231101.ru/train/0013.parquet",
+      "sha256": "475666c0d80153ab9a76adca42db8afd18fc16c87804e3de0532ffc1309b2d0c"
+    },
+    {
+      "bytes": 214902777,
+      "name": "0014.parquet",
+      "repositoryPath": "20231101.ru/train/0014.parquet",
+      "sha256": "d2ad352beecb92765110e57e8ee9409f4ffe03ff9e4b6ec0640840dec748db18"
+    },
+    {
+      "bytes": 219480494,
+      "name": "0015.parquet",
+      "repositoryPath": "20231101.ru/train/0015.parquet",
+      "sha256": "dc248873a3cc80b857f11a0320cfaa889da803eabf09351f1ba8abbf9348eda0"
+    },
+    {
+      "bytes": 229151965,
+      "name": "0016.parquet",
+      "repositoryPath": "20231101.ru/train/0016.parquet",
+      "sha256": "0e2d2100e924ebedb057a37e789fec861fe2b78787c912c266e36eadd8d2e0a7"
+    },
+    {
+      "bytes": 210166516,
+      "name": "0017.parquet",
+      "repositoryPath": "20231101.ru/train/0017.parquet",
+      "sha256": "1a5c96dfda452e7725229760347e781b46f88ccd5df4196a5c1a9d46b51b1a65"
+    },
+    {
+      "bytes": 209795982,
+      "name": "0018.parquet",
+      "repositoryPath": "20231101.ru/train/0018.parquet",
+      "sha256": "588e30523cfed480151b4bd5c1a7d7211dc03971fee399a3db6af3ad04e42c87"
+    },
+    {
+      "bytes": 186535710,
+      "name": "0019.parquet",
+      "repositoryPath": "20231101.ru/train/0019.parquet",
+      "sha256": "4c3bd676fbeb9d92ae7ed324e99f329de2542f5399cbf39b924529fff944dec6"
+    },
+    {
+      "bytes": 182075278,
+      "name": "0020.parquet",
+      "repositoryPath": "20231101.ru/train/0020.parquet",
+      "sha256": "fc1e2edc58fa27085d36c32c38922d7904077d9cdac05719efbcefa3faeea240"
+    }
+  ],
+  "snapshot": "20231101.ru"
+}

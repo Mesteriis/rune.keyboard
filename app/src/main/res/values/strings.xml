@@ -122,6 +122,8 @@
   <string name="settings_language_last_used">Last used</string>
   <string name="settings_language_move_up">Move up</string>
   <string name="settings_language_move_down">Move down</string>
+  <string name="settings_language_move_up_accessibility">Move %1$s up</string>
+  <string name="settings_language_move_down_accessibility">Move %1$s down</string>
   <string name="settings_language_min_warning">At least one language must stay enabled.</string>
 
   <string name="height_compact">Compact</string>
@@ -146,7 +148,7 @@
     <string name="candidate_apply_continuation">Insert continuation %1$s</string>
     <string name="settings_section_personal">Personal typing</string>
     <string name="settings_personal_learning">Learn from my corrections</string>
-    <string name="settings_personal_learning_summary">Save confirmed words, typed/chosen word pairs with acceptance counts and rejection flags, and short phrase prefixes/continuations with language and support counts on this device. Phrases are learned while typing, including words you did not correct. Up to 1 MiB. Password and incognito fields are excluded. Turning this off keeps the profile; Delete personal typing data removes it.</string>
+    <string name="settings_personal_learning_summary">Save confirmed words, typed/chosen word pairs with acceptance counts and rejection flags, rejected lowercase-to-titlecase changes, and short phrase prefixes/continuations with language and support counts on this device. Phrases are learned while typing, including words you did not correct. Up to 1 MiB. Password and incognito fields are excluded. Turning this off keeps the profile; Delete personal typing data removes it.</string>
     <string name="settings_touch_personalization">Adapt to my taps</string>
     <string name="settings_touch_personalization_summary">Use confirmed choices to rank suggestions by where you tap. Each keyboard size and language learns separately.</string>
     <string name="settings_phrase_suggestions">Personal phrase suggestions</string>
@@ -162,4 +164,10 @@
     <string name="settings_personal_empty">No supported dictionary phrases in this profile</string>
     <string name="settings_manual_candidate_expansion">More spelling suggestions</string>
     <string name="settings_manual_candidate_expansion_summary">Experimental: rank up to seven local Russian alternatives for manual selection. Automatic correction uses the existing rules.</string>
+    <string name="candidate_expand">Show more suggestions</string>
+    <string name="candidate_collapse">Hide additional suggestions</string>
+    <string name="settings_keyboard_palette">Keyboard palette</string>
+    <string name="keyboard_palette_dark">Dark</string>
+    <string name="keyboard_palette_light">Light</string>
+    <string name="keyboard_palette_system">Follow system</string>
 </resources>

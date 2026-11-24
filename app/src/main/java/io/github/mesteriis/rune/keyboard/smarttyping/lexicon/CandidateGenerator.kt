@@ -283,11 +283,17 @@ class CandidateGenerator(
                 when (membership) {
                     ExactMembership.PRESENT -> {
                         validWord = true
-                        val canonical = if (pattern == CasePattern.LOWER)
-                            canonicalCaseLexicon.lookup(language, key) else null
+                        // Manual-only while the pronoun rule lacks independent qualification.
+                        val englishPronoun = activeLanguage == KeyboardLanguage.ENGLISH &&
+                            language == KeyboardLanguage.ENGLISH && token == "i"
+                        val canonical = if (englishPronoun) CanonicalCase("I", false)
+                            else if (pattern == CasePattern.LOWER) canonicalCaseLexicon.lookup(language, key) else null
                         if (!control.cancellationCheckpoint()) return result(CandidateCompletion.CANCELLED)
                         val caseAutoEligible = canonical?.let { own ->
-                            own.unambiguous && languages.filter { it != language }.all { other ->
+                            // «инн» is also an ordinary lowercase abbreviation. The title-case
+                            // name remains selectable, but the surface alone cannot choose it.
+                            own.unambiguous && !(language == KeyboardLanguage.RUSSIAN && key == "инн") &&
+                                languages.filter { it != language }.all { other ->
                                 val membership = lexicon.exact(other, key, control)
                                 if (!control.checkpoint()) false else when (membership) {
                                     ExactMembership.ABSENT -> true
@@ -312,7 +318,7 @@ class CandidateGenerator(
                                 unitDistance = 0,
                                 editFeatures = EditFeatures(0.0, 0, 0.0),
                                 lengthDifference = 0,
-                                casePattern = CasePattern.TITLE,
+                                casePattern = CasePattern.analyze(it.text),
                                 kind = GeneratedCandidateKind.CANONICAL_CASE,
                                 canonicalCaseUnambiguous = it.unambiguous,
                                 canonicalCaseAutoEligible = caseAutoEligible,

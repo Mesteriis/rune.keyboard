@@ -1,0 +1,318 @@
+{
+  "actualCliRefusals": [
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout.py",
+        "--parquet",
+        "build/review-q6-training-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-training-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-training-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-training-collector-gates-20261028/prepare_external_spelling_holdout.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "c2b4ceb311114fe6c8b42181f4bed19da69ba184c281302e90e58a7374aa06fc"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v7.py",
+        "--parquet",
+        "build/review-q6-training-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-training-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-training-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-training-collector-gates-20261028/prepare_external_spelling_holdout_v7.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "386d677a77fed730125e29592301477bbd33639922068c10991b30c8e8ac8736"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v8.py",
+        "--parquet",
+        "build/review-q6-training-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-training-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-training-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-training-collector-gates-20261028/prepare_external_spelling_holdout_v8.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "17aa9f70ab90de70c7cdeb3f92ab34404461e89f8d39c5670dd0d05c493f2d32"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v9.py",
+        "--parquet",
+        "build/review-q6-training-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-training-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-training-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-training-collector-gates-20261028/prepare_external_spelling_holdout_v9.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "92d4b06a172cc90126d857ba941445a6fcf5a54f75eb51d59d940c6e7a50521d"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v10.py",
+        "--parquet",
+        "build/review-q6-training-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-training-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-training-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-training-collector-gates-20261028/prepare_external_spelling_holdout_v10.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "5791b5ff99ad9dac9298662fcad0a5b99e52dbf51ba5c400d37c82c5ae9b816c"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v11.py",
+        "--parquet",
+        "build/review-q6-training-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-training-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-training-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-training-collector-gates-20261028/prepare_external_spelling_holdout_v11.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "71773cde1d40b5529d416215b025bd7d3130567ad658e7662226ab9e44d0837b"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v12.py",
+        "--parquet",
+        "build/review-q6-training-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-training-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-training-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-training-collector-gates-20261028/prepare_external_spelling_holdout_v12.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "b4f1afbbbeac4240be47d709ea4e932b3b06e86b15da0fb85548321890c96126"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_joint_correction.py",
+        "--source-root",
+        "build/review-q6-training-collector-gates-20261028/absent-source",
+        "--output",
+        "build/review-q6-training-collector-gates-20261028/prepare_joint_correction.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "03e7a7aac801e040a51719cdcf5e66d80d906f4b6b412d77ef643145ecdbe18e"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_joint_followup.py",
+        "--source-root",
+        "build/review-q6-training-collector-gates-20261028/absent-source",
+        "--output",
+        "build/review-q6-training-collector-gates-20261028/prepare_joint_followup.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "652917ee4bb88bd5603375755e5aebfd70a6f5fb7baae51dd69276b7c725e414"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_refinement.py",
+        "--parquet",
+        "build/review-q6-training-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-training-collector-gates-20261028/absent-frequency",
+        "--output",
+        "build/review-q6-training-collector-gates-20261028/prepare_refinement.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "3ee9913676cb52ccf7545e4041d5241f2ddc76130fc842a104cd3a488ec2fcd0"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_word_ranking.py",
+        "--parquet",
+        "build/review-q6-training-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-training-collector-gates-20261028/absent-frequency",
+        "--output",
+        "build/review-q6-training-collector-gates-20261028/prepare_word_ranking.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "47cd05dca935649dd80dc384124f4162efb26b1dfc7972d5be674b9c69b0d653"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_epoch_test.py",
+        "--parquet",
+        "build/review-q6-training-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-training-collector-gates-20261028/absent-frequency",
+        "--output",
+        "build/review-q6-training-collector-gates-20261028/prepare_epoch_test.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "edbbcc0c0c707cd78f552b2afd8dc56de1852b040d2ffe253a1e2d0a2be63f94"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_retrieval_test.py",
+        "--parquet",
+        "build/review-q6-training-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-training-collector-gates-20261028/absent-frequency",
+        "--output",
+        "build/review-q6-training-collector-gates-20261028/prepare_retrieval_test.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "ec6b9288739a7472d3022209bcb37f23ca465fe5b801c4f310c13313a8621987"
+    }
+  ],
+  "ciToolsTests": {
+    "exitCode": 0,
+    "expectedTimeoutProbeExitCode": 124,
+    "logSha256": "1b8d3cf2ffd63121a1116cded18883a9d69fccef2954206a720cbc4e8cb8de65",
+    "tests": 41
+  },
+  "focusedTests": {
+    "python3.12": {
+      "collector": 7,
+      "frozenSourceIdentity": 4
+    },
+    "python3.14": {
+      "collector": 7,
+      "frozenSourceIdentity": 4,
+      "historicalDataFixtures": 7,
+      "historicalModelSources": 5
+    }
+  },
+  "freshQualification": false,
+  "fullHistoricalCorpusRegenerated": false,
+  "historicalSources": {
+    "prepare_epoch_test.py": {
+      "archiveVerified": true,
+      "archived": "tools/typing_experiments/frozen_sources/prepare_epoch_test_9b1ac2491feb961c.py",
+      "currentSha256": "edd0011b5d3cfe0cebfd8b302c548e495af9dfa56a88b4a633e9a734963a6035",
+      "originalSha256": "9b1ac2491feb961c6e45192e5a01f1c59e14448cedf87cd48bd00b68e354c241"
+    },
+    "prepare_refinement.py": {
+      "archiveVerified": true,
+      "archived": "tools/typing_experiments/frozen_sources/prepare_refinement_d2d84c3f328771fd.py",
+      "currentSha256": "b888862c4ab988e0f533126b4a6dc8eeeadca4a59a43060c811513c130ce6d10",
+      "originalSha256": "d2d84c3f328771fd0b9908a9216ee428eb2877079c8dacb481c42a0dafe11bab"
+    },
+    "prepare_retrieval_test.py": {
+      "archiveVerified": true,
+      "archived": "tools/typing_experiments/frozen_sources/prepare_retrieval_test_bebdb8ad99e5e5f2.py",
+      "currentSha256": "592d29facd3262741eb6ceacee92f214d7c23a09d920b785466819f318e2de56",
+      "originalSha256": "bebdb8ad99e5e5f243de0f8fb730d6a0c5b473172fb8d599b34b18c23b70ab49"
+    },
+    "prepare_word_ranking.py": {
+      "archiveVerified": true,
+      "archived": "tools/typing_experiments/frozen_sources/prepare_word_ranking_e213566e8f22f619.py",
+      "currentSha256": "c51229466e4e80e2a719a2c2bffe7de9ca38965162610aca4ed13bab4371a73a",
+      "originalSha256": "e213566e8f22f619a372f09c2c91866f93d8029d5db8666f783318285df74240"
+    }
+  },
+  "ledgersRewritten": false,
+  "modelTrainingPerformed": false,
+  "packagedProvenanceGuard": {
+    "exactArchiveMappingAdded": true,
+    "finalExitCode": 0,
+    "initialRefusal": "TRAINING_SCRIPT_IDENTITY prepare_refinement.py",
+    "originalDigestRetained": true,
+    "reportSha256": "ac6acb9b838697a9a40c2b8fe489562879b2949a441dcd35e7e9d2f9c6f43548",
+    "tamperedArchivesRejected": true,
+    "unitTestsPython3.12": 12,
+    "unitTestsPython3.14": 12
+  },
+  "phoneExecuted": false,
+  "profiles": {
+    "scientific": {
+      "errors": 0,
+      "failures": 0,
+      "modules": 19,
+      "receiptSha256": "0afe1c3595dfd4ce6d1490f1ab1871e45214f93768fed45c3342e45616c6be5c",
+      "skips": 1,
+      "tests": 72
+    },
+    "stdlib": {
+      "errors": 0,
+      "failures": 0,
+      "modules": 114,
+      "receiptSha256": "6560230031c7786c069a2db121dc2c76e019c682174b16e8be4fde9ea4715081",
+      "skips": 0,
+      "tests": 603
+    }
+  },
+  "schemaVersion": 1,
+  "scope": "Q6-training-evaluation-collector-registry-gates",
+  "sourceSha256": {
+    "tools/check_packaged_provenance_paths.py": "541f40f5e0ed7d780c60ca5c19b94313a29ac66b9022fc6a36c6e9a8b75a227a",
+    "tools/ci/generate_historical_data_v1.py": "31dbb79b114215f1e648b64d883b3e01a2ad67e89e45aa6b7643fc7ad4a29190",
+    "tools/ci/historical_data_fixtures.py": "1043e4eabe8b67a54f942c2b57cd8af4d0cc525d16724561ba9f51d57d065f23",
+    "tools/ci/historical_model_sources.py": "8e47cb5ee459ca4d4d415c32f69cb29cf9aa0cc6606d4fd4d068f0d7dff52a2a",
+    "tools/ci/python-tools-tests.json": "016d64a27372361d0f2e08900888549c7a951619fd71b058d6192ae729daebfc",
+    "tools/test_packaged_provenance_paths.py": "fe8ec01e7b32420de3b757614dd8e1259b480e738c16818e7ae27f94378cbc46",
+    "tools/typing_experiments/frozen_source_identity.py": "348581c8725ed765ea10702f64b3e19d60ef35fdfb96f604d29fcdced3ad665e",
+    "tools/typing_experiments/frozen_sources/manifest.json": "8000c045dee27b851153255ace5d2bcfe7b3c6e8b0a839c8b3f602ac462bc8ae",
+    "tools/typing_experiments/prepare_epoch_test.py": "edd0011b5d3cfe0cebfd8b302c548e495af9dfa56a88b4a633e9a734963a6035",
+    "tools/typing_experiments/prepare_refinement.py": "b888862c4ab988e0f533126b4a6dc8eeeadca4a59a43060c811513c130ce6d10",
+    "tools/typing_experiments/prepare_retrieval_test.py": "592d29facd3262741eb6ceacee92f214d7c23a09d920b785466819f318e2de56",
+    "tools/typing_experiments/prepare_word_ranking.py": "c51229466e4e80e2a719a2c2bffe7de9ca38965162610aca4ed13bab4371a73a",
+    "tools/typing_experiments/recover_ranker_sources.py": "610fbe009e4f639c6c5aac35e86854fa25646b425976c81ddf20658e7c11203d",
+    "tools/typing_experiments/test_fresh_spelling_holdout.py": "f6f42b1ce5656ae8e90ccda6ce6a17201e9a8a8cd5941b24b4312e2aa9ab62a6",
+    "tools/typing_experiments/test_frozen_source_identity.py": "1586ba6ff1cb428cdb411193c2bfe840e2ec8a0fbe1c04aaf1e8ecd7d2d0927e"
+  }
+}

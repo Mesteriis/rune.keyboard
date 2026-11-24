@@ -1,0 +1,51 @@
+{
+  "addedSentenceKeys": 480625,
+  "counts": {
+    "corpus-calibration": {
+      "articles": 1089,
+      "distinctSegments": 97661,
+      "rows": 8554
+    },
+    "corpus-holdout": {
+      "articles": 1075,
+      "distinctSegments": 105040,
+      "rows": 8557
+    },
+    "corpus-train": {
+      "articles": 1090,
+      "distinctSegments": 109220,
+      "rows": 8536
+    },
+    "followup-corpus-calibration": {
+      "articles": 475,
+      "distinctSegments": 46702,
+      "rows": 4784
+    },
+    "followup-corpus-holdout": {
+      "articles": 482,
+      "distinctSegments": 46148,
+      "rows": 4800
+    },
+    "followup-corpus-v3-calibration": {
+      "articles": 479,
+      "distinctSegments": 38365,
+      "rows": 4786
+    },
+    "followup-corpus-v3-holdout": {
+      "articles": 483,
+      "distinctSegments": 37489,
+      "rows": 4799
+    }
+  },
+  "coverageUnchanged": true,
+  "globalCoverageComplete": false,
+  "importerSha256": "23d0837041d98d55690cc0096a8f7c526c9e49aa82747e10243cf7dfa07410e6",
+  "ledgerBytes": 94497017,
+  "ledgerSha256": "842b06a104bae5012c121c0e079800e8588c853e5cb1f0e1f33f8130443c88cc",
+  "modelCalls": 0,
+  "newEntries": 7,
+  "priorEntries": 157,
+  "priorEntriesPreserved": true,
+  "priorLedgerSha256": "7501c8bfb17403f1617e3ab7fd2bf9e79721f0c602d9d90d67219c43d93a2c38",
+  "purpose": "HISTORICAL_JOINT_ARTICLE_SEGMENTS_NOT_QUALIFICATION"
+}

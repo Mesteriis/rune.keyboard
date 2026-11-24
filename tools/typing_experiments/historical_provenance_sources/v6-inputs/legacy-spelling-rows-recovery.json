@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "modelCalls": 0,
+  "independentQualification": false,
+  "originalRows": 11900,
+  "distinctFamilies": 11900,
+  "corpora": {
+    "6": {
+      "originalPath": "build/typing-ranker-v2/external-holdout-v6-ru0011/rows.jsonl",
+      "sha256": "6d7dbaf67f16d3dd6a63a15551bebfb486b3b24e686f76f1a9d3e0ed1d083569",
+      "sourceSha256": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f",
+      "generatorSha256": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+      "registryEntry": "public-legacy-spelling-v6",
+      "articles": 1583,
+      "rows": 1700,
+      "families": 1700,
+      "candidateAssignments": 2
+    },
+    "7": {
+      "originalPath": "build/typing-ranker-v2/external-holdout-v7-ru0012/rows.jsonl",
+      "sha256": "5e9e82177edf943be83ea1dd256e0631044124ed5342444793d9cf31caf451ac",
+      "sourceSha256": "21e33d8a7a0d068e573db688f5816a22fd690bf699dee958373f9b9e957921ad",
+      "generatorSha256": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+      "registryEntry": "public-spelling-v7",
+      "articles": 1569,
+      "rows": 1700,
+      "families": 1700,
+      "candidateAssignments": 1
+    },
+    "8": {
+      "originalPath": "build/typing-ranker-v2/external-holdout-v8-ru0013/rows.jsonl",
+      "sha256": "4db31b8283e50ce3130714c5af870df563c90b18cbe2e7e2457c3b8470571538",
+      "sourceSha256": "475666c0d80153ab9a76adca42db8afd18fc16c87804e3de0532ffc1309b2d0c",
+      "generatorSha256": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+      "registryEntry": "public-spelling-v8",
+      "articles": 1562,
+      "rows": 1700,
+      "families": 1700,
+      "candidateAssignments": 1
+    },
+    "9": {
+      "originalPath": "build/typing-ranker-v2/external-holdout-v9-ru0014/rows.jsonl",
+      "sha256": "9dfee85583cade8ec3b968be7ba275ff33d00081427faef95ca6ad0442252c6a",
+      "sourceSha256": "d2ad352beecb92765110e57e8ee9409f4ffe03ff9e4b6ec0640840dec748db18",
+      "generatorSha256": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+      "registryEntry": "public-spelling-v9",
+      "articles": 1576,
+      "rows": 1700,
+      "families": 1700,
+      "candidateAssignments": 1
+    },
+    "10": {
+      "originalPath": "build/typing-ranker-v2/external-holdout-v10-ru0015/rows.jsonl",
+      "sha256": "6640f42600fcd7a3f5d79e4d47aa0cb7debbda778901c1b369ea5a7c4bd77133",
+      "sourceSha256": "dc248873a3cc80b857f11a0320cfaa889da803eabf09351f1ba8abbf9348eda0",
+      "generatorSha256": "ed9928d64d80911c0182e03446d710a60abb990cb5fb1cff30730443db773225",
+      "registryEntry": "public-spelling-v10",
+      "articles": 1583,
+      "rows": 1700,
+      "families": 1700,
+      "candidateAssignments": 1
+    },
+    "11": {
+      "originalPath": "build/typing-ranker-v2/external-holdout-v11-ru0016/rows.jsonl",
+      "sha256": "855fe3bf10aa1346817a03006487af5858cced660d14524964b51257b13a5d84",
+      "sourceSha256": "0e2d2100e924ebedb057a37e789fec861fe2b78787c912c266e36eadd8d2e0a7",
+      "generatorSha256": "ed9928d64d80911c0182e03446d710a60abb990cb5fb1cff30730443db773225",
+      "registryEntry": "public-spelling-v11",
+      "articles": 1610,
+      "rows": 1700,
+      "families": 1700,
+      "candidateAssignments": 1
+    },
+    "12": {
+      "originalPath": "build/typing-ranker-v2/external-holdout-v12-ru0017/rows.jsonl",
+      "sha256": "95c0f40915241ef72e5bc7bcc1dd484e5aafcee691b32cb31d1e983b012d8fa2",
+      "sourceSha256": "1a5c96dfda452e7725229760347e781b46f88ccd5df4196a5c1a9d46b51b1a65",
+      "generatorSha256": "ed9928d64d80911c0182e03446d710a60abb990cb5fb1cff30730443db773225",
+      "registryEntry": "public-spelling-v12",
+      "articles": 1605,
+      "rows": 1700,
+      "families": 1700,
+      "candidateAssignments": 1
+    }
+  }
+}

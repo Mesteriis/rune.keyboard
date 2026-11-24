@@ -176,11 +176,12 @@ def compile_inputs(java: Path) -> tuple[list[Path], list[Path], Path]:
     require(all(path.is_file() for path in source_paths), "COMPILE_SOURCE_MISSING")
     manifest = json.loads(TOOLCHAIN.read_text())
     jars = []
-    cache = Path.home() / ".gradle/caches/modules-2/files-2.1"
+    gradle_home = Path(os.environ.get("GRADLE_USER_HOME", str(Path.home() / ".gradle"))).expanduser()
+    cache = gradle_home / "caches/modules-2/files-2.1"
     for item in manifest["jars"]:
         found = [path for path in (cache / item["group"] / item["artifact"] / item["version"]).glob("*/*.jar")
                  if sha256(path) == item["sha256"]]
-        require(len(found) == 1, "PINNED_KOTLIN_CACHE")
+        require(len(found) == 1, "PINNED_KOTLIN_CACHE:" + item["artifact"])
         jars.append(found[0])
     version = subprocess.run([str(java), "-version"], capture_output=True, timeout=15, check=True)
     require(b'version "17.' in version.stderr, "JAVA_17_REQUIRED")
@@ -192,19 +193,27 @@ def compile_inputs(java: Path) -> tuple[list[Path], list[Path], Path]:
 
 
 def immutable_bindings(java: Path, sources: list[Path], jars: list[Path], android: Path,
-                       rows: list[dict]) -> dict:
+                       rows: list[dict], *, bind_native_model: bool = True) -> dict:
     corpus_manifest = json.loads((CORPUS / "manifest.json").read_text())
     java_runtime = java_runtime_binding(java)
     java_home = Path(java_runtime["home"])
     java_runtime_files = [java_home / relative for relative in JDK_RUNTIME_INVENTORY]
+    native_files = [RUNNER, MODEL] if bind_native_model else []
     fixed = [CORPUS / "manifest.json", *(CORPUS / name for name in corpus_manifest["files"]),
              CORPUS / "evaluate.py", Path(__file__), SOURCE_MANIFEST, TOOLCHAIN,
-             DETERMINISTIC_CONFIG, COMBINED_CONFIG, RUNNER, MODEL, *java_runtime_files, android,
+             DETERMINISTIC_CONFIG, COMBINED_CONFIG, *native_files, *java_runtime_files, android,
              *asset_paths(), *compact_asset_paths(), *jars, *sources]
     files = {path_key(path): sha256(path) for path in fixed}
-    require(files[path_key(RUNNER)] == RUNNER_SHA256, "RUNNER_IDENTITY")
-    require(files[path_key(MODEL)] == MODEL_SHA256 and MODEL.stat().st_size == MODEL_BYTES,
-            "MODEL_IDENTITY")
+    native = {}
+    if bind_native_model:
+        runner_key, model_key = map(path_key, native_files)
+        require(files[runner_key] == RUNNER_SHA256, "RUNNER_IDENTITY")
+        require(files[model_key] == MODEL_SHA256 and MODEL.stat().st_size == MODEL_BYTES,
+                "MODEL_IDENTITY")
+        native = {
+            "runner": {"path": runner_key, "sha256": RUNNER_SHA256},
+            "model": {"path": model_key, "bytes": MODEL_BYTES, "sha256": MODEL_SHA256},
+        }
     current = (REPO / "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/SpellingQualification.kt").read_text()
     settings = (REPO / "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt").read_text()
     calibrated = (REPO / "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/correction/CalibratedSpellingPolicy.kt").read_text()
@@ -222,8 +231,7 @@ def immutable_bindings(java: Path, sources: list[Path], jars: list[Path], androi
         "rowIdentitySha256": digest([{"id": row["id"], "split": row["split"]} for row in rows]),
         "assets": {path_key(path): sha256(path) for path in asset_paths()},
         "compactAssets": {path_key(path): sha256(path) for path in compact_asset_paths()},
-        "runner": {"path": path_key(RUNNER), "sha256": RUNNER_SHA256},
-        "model": {"path": path_key(MODEL), "bytes": MODEL_BYTES, "sha256": MODEL_SHA256},
+        **native,
         "javaRuntime": java_runtime,
         "qualification": "SpellingQualification.CURRENT",
         "settings": "KeyboardSettings.DEFAULT",

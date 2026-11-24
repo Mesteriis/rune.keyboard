@@ -16,10 +16,17 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA = Path(__file__).with_name('historical-model-sources-v1')
 sys.path.insert(0, str(ROOT / 'tools/typing_experiments'))
 from holdout_ledger import keys_for, load_ledger, validate_ledger
+from frozen_source_identity import read_frozen_source
 import historical_data_fixtures as fixtures
 
 ENTRY = 'public-word-ranking-data-articles-v1'
 WORD_SHA = '8a5a11a16543315ff3114bf0034f54b455b5e432828098cf2030f85737c34466'
+# Sources that were still live when the original export index was sealed.
+ARCHIVED_REPOSITORY_SOURCES = {
+    ('app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/SessionTextContext.kt',
+     '8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643'):
+        '13d95372108665758168b4ea9932c927077fff60',
+}
 
 
 def sha(path):
@@ -33,22 +40,34 @@ def relative(name):
     return name
 
 
+def resolve_archive_record(record):
+    name, digest = record['path'], record['sha256']
+    git_object = ARCHIVED_REPOSITORY_SOURCES.get((name, digest))
+    if record['origin'] == 'repository' and git_object is not None:
+        return dict(record, origin='archived-git', gitObject=git_object,
+                    file='sources/' + digest + Path(name).suffix)
+    return record
+
+
 def word_entry(root=ROOT, data=DATA):
     path = data / 'word-data-manifest.json'
     if sha(path) != WORD_SHA:
         raise ValueError('HISTORICAL_WORD_MANIFEST')
     manifest = json.loads(path.read_text())
     producer = root / 'tools/typing_experiments/prepare_word_ranking.py'
+    producer_sha=manifest['preparationScriptSha256']
+    read_frozen_source(root,str(producer.relative_to(root)),producer_sha)
     lock = root / 'tools/model/rune-text-0.2/source-lock.json'
     source = json.loads(lock.read_text())
-    if (manifest['containsPersonalMessages'] is not False or sha(producer) != manifest['preparationScriptSha256'] or
+    if (manifest['containsPersonalMessages'] is not False or
             manifest['sourceSha256'] != source['wikipediaContext']['files']['ru-0007.parquet']['sha256']):
         raise ValueError('HISTORICAL_WORD_SOURCE')
     articles = {article for part in manifest['partitions'].values() for article in part['articles']}
     return {'id': ENTRY, 'usage': 'historical-exclusion',
         'rowCount': sum(part['rows'] for part in manifest['partitions'].values()),
         'sourceArticleCount': len(articles),
-        'bindings': {str(p.relative_to(root)): sha(p) for p in (path, producer, lock)},
+        'bindings': {str(path.relative_to(root)):sha(path),str(producer.relative_to(root)):producer_sha,
+                     str(lock.relative_to(root)):sha(lock)},
         'keys': {'article': sorted(keys_for([{'article': a} for a in articles], 'article'))},
         'missingAxes': ['family', 'sentence', 'context'],
         'notes': 'Original public word-ranking train/dev/test text exposure; original manifest and all '
@@ -69,6 +88,7 @@ def audit(root=ROOT, data=DATA, historical_build=None, verify_git=False):
         key = (name, digest)
         if key in records:
             raise ValueError('HISTORICAL_SOURCE_DUPLICATE')
+        record = resolve_archive_record(record)
         records[key] = record
         origin = record['origin']
         if origin == 'repository':

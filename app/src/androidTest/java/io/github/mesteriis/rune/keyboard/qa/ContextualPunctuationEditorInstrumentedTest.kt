@@ -1,9 +1,6 @@
 package io.github.mesteriis.rune.keyboard.qa
 
 import android.content.ComponentName
-import android.content.Context
-import android.content.ContextWrapper
-import android.inputmethodservice.InputMethodService
 import android.os.SystemClock
 import android.text.InputType
 import android.view.inputmethod.InputConnection
@@ -136,17 +133,12 @@ class ContextualPunctuationEditorInstrumentedTest : ImeTestBase() {
             driver.configureSmartTyping(AutocorrectionMode.OFF, true, mechanical = false,
                 doubleSpace = false, contextual = ContextualPunctuationMode.OFF)
             driver.launchComposingQa()
-            val keyboard = keyboardSnapshot().keyboard
             val target = InstrumentationRegistry.getInstrumentation().targetContext
             @Suppress("DEPRECATION")
             val editorInfo = target.packageManager.getActivityInfo(
                 ComponentName(target, ImeQaActivity::class.java), 0)
             assertEquals("${target.packageName}:qa_editor", editorInfo.processName)
-            connection = onMain {
-                var context: Context = keyboard.rootView.context
-                while (context !is InputMethodService && context is ContextWrapper) context = context.baseContext
-                checkNotNull((context as? InputMethodService)?.currentInputConnection) { "Live editor connection unavailable" }
-            }
+            connection = independentControllerConnection()
             onMain { controller.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, 0), 0, 0) }
             type(left, left, 0)
             type(" ", "$left ", left.length)
@@ -161,7 +153,7 @@ class ContextualPunctuationEditorInstrumentedTest : ImeTestBase() {
 
         fun observe(expected: String, start: Int) {
             driver.awaitFieldText(FIELD, expected)
-            val observed = awaitStats {
+            val observed = awaitStats("start=$start end=${expected.length} selection=${expected.length}") {
                 it["start"] == start && it["end"] == expected.length &&
                     it["selectionStart"] == expected.length && it["selectionEnd"] == expected.length
             }
@@ -238,14 +230,16 @@ class ContextualPunctuationEditorInstrumentedTest : ImeTestBase() {
         val (key, value) = it.split('='); key to value.toInt()
     }
 
-    private fun awaitStats(predicate: (Map<String, Int>) -> Boolean): Map<String, Int> {
+    private fun awaitStats(expected: String = "predicate", predicate: (Map<String, Int>) -> Boolean): Map<String, Int> {
         val deadline = SystemClock.uptimeMillis() + ImeTestDriver.WAIT_MILLIS
+        var last = emptyMap<String, Int>()
         do {
             val observed = stats()
+            last = observed
             if (predicate(observed)) return observed
             SystemClock.sleep(25)
         } while (SystemClock.uptimeMillis() < deadline)
-        throw AssertionError("Remote composing state did not settle")
+        throw AssertionError("Remote composing state did not settle: expected $expected, observed $last")
     }
 
     private fun <T> onMain(action: () -> T): T {

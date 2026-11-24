@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 
 from control_ledger import SCHEMA,LANGUAGES,key_for,load,validate
+import check_historical_qualification_archives as archives
 from import_early_ru_history import CORPORA,ROOT
 from recover_early_ru_sources import archived_source
 from recover_legacy_families import sha
@@ -44,28 +45,56 @@ def validate_rows(rows,kind,seed=None):
             raise ValueError('CONTROL_PROTECTED_LABEL')
 
 
+def read_components(root,name,directory,expected_manifest,filenames):
+    """Use checked legacy files, or verified archives when the legacy set is absent."""
+    root=Path(root); names=['manifest.json',*filenames]
+    allowed={'manifest.json','protected-tokens.jsonl',*(f'punctuation-{lang}.jsonl' for lang in LANGUAGES)}
+    if len(set(names))!=len(names) or not set(names)<=allowed:raise ValueError('CONTROL_COMPONENT_NAMES')
+    paths={item:root/directory/item for item in names}
+    present=any(p.exists() or p.is_symlink() for p in paths.values())
+    if present:
+        if any(p.is_symlink() or not p.is_file() for p in paths.values()):raise ValueError('CONTROL_PARTIAL_CORPUS')
+        data={item:path.read_bytes() for item,path in paths.items()}
+        local={str(path.relative_to(root)):hashlib.sha256(data[item]).hexdigest() for item,path in paths.items()}
+        storage='historical-files'
+    elif name in ('compact-v3','compact-v4'):
+        base=root/'tools/typing_experiments/historical-qualification-v3-v4'
+        checker=root/'tools/typing_experiments/check_historical_qualification_archives.py'
+        if sha(checker)!=sha(Path(archives.__file__)):raise ValueError('CONTROL_ARCHIVE_CHECKER_DRIFT')
+        label='v3' if name=='compact-v3' else 'v4'
+        data=archives.load(base)[label]
+        bound=[base/f'qualification-{label}.tar.bz2',base/'catalog.json',checker]
+        local={str(path.relative_to(root)):sha(path) for path in bound}
+        catalog=json.loads(bound[1].read_bytes())
+        if local[str(bound[0].relative_to(root))]!=catalog['archives'][label]['archiveSha256']:
+            raise ValueError('CONTROL_ARCHIVE_DRIFT')
+        storage='verified-archive'
+    else:raise ValueError('CONTROL_MISSING_CORPUS')
+    if hashlib.sha256(data['manifest.json']).hexdigest()!=expected_manifest:raise ValueError('CONTROL_MANIFEST_IDENTITY')
+    manifest=json.loads(data['manifest.json'])
+    for filename in filenames:
+        if hashlib.sha256(data[filename]).hexdigest()!=manifest['files'][filename]:raise ValueError('CONTROL_COMPONENT_IDENTITY')
+    return manifest,{filename:data[filename] for filename in filenames},local,storage
+
+
 def build(root,kind,base=None):
     root=Path(root)
     result=copy.deepcopy(validate(base)) if base is not None else dict(schema=SCHEMA,publicDataOnly=True,
         coverageComplete=False,pending=['Other historical controls and versioned preparation integration; lexical registry also required.'],entries=[])
     if any(entry['kind']==kind for entry in result['entries']):raise ValueError('CONTROL_ALREADY_IMPORTED')
-    counts={};bindings={}
+    counts={};bindings={};storage={}
     for name,(directory,digest,_) in CORPORA.items():
-        manifest_path=directory+'/manifest.json'
-        if sha(root/manifest_path)!=digest:raise ValueError('CONTROL_MANIFEST_IDENTITY')
-        manifest=json.loads((root/manifest_path).read_text())
+        files=[f'punctuation-{lang}.jsonl' for lang in LANGUAGES] if kind=='punctuation' else ['protected-tokens.jsonl']
+        manifest,components,local,storage[name]=read_components(root,name,directory,digest,files)
         if manifest['containsPersonalMessages'] is not False or manifest['frozenBeforeScoring'] is not True:
             raise ValueError('CONTROL_PUBLIC_PROVENANCE')
         generator,generator_path=load_original(root,manifest)
         lock_original=next(p for p in manifest['sources'] if p.endswith('/source-lock.json'))
         lock_path=archived_source(root,lock_original,manifest['sources'][lock_original]);lock=json.loads(lock_path.read_text())
         seed=3042026 if name=='qualification-v2' else lock['corpusSeed']
-        files=[f'punctuation-{lang}.jsonl' for lang in LANGUAGES] if kind=='punctuation' else ['protected-tokens.jsonl']
-        component=[];local={manifest_path:digest,str(generator_path.relative_to(root)):sha(generator_path),str(lock_path.relative_to(root)):sha(lock_path)}
+        component=[];local.update({str(generator_path.relative_to(root)):sha(generator_path),str(lock_path.relative_to(root)):sha(lock_path)})
         for filename in files:
-            path=directory+'/'+filename
-            if sha(root/path)!=manifest['files'][filename]:raise ValueError('CONTROL_COMPONENT_IDENTITY')
-            local[path]=sha(root/path);component.extend(json.loads(line) for line in (root/path).read_text().splitlines())
+            component.extend(json.loads(line) for line in components[filename].splitlines())
         validate_rows(component,kind,seed)
         for lang in LANGUAGES:
             rows=[r for r in component if r['language']==lang]
@@ -76,7 +105,7 @@ def build(root,kind,base=None):
                 keys=sorted({key_for(r,kind) for r in rows}),bindings=local))
         counts[name]=dict(rows=len(component),languages=dict(Counter(r['language'] for r in component)))
         bindings.update(local)
-    receipt=dict(purpose='PUBLIC_CONTROL_COMPONENT_EXCLUSIONS_NOT_QUALIFICATION',kind=kind,counts=counts,bindings=bindings,
+    receipt=dict(purpose='PUBLIC_CONTROL_COMPONENT_EXCLUSIONS_NOT_QUALIFICATION',kind=kind,counts=counts,bindings=bindings,corpusStorage=storage,
         sourceBindings={p:sha(root/p) for p in ('tools/typing_experiments/control_ledger.py','tools/typing_experiments/import_control_components.py')},
         modelCalls=0,lexicalFamiliesChanged=False,lexicalLedgerChanged=False)
     return validate(result),receipt

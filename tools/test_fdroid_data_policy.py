@@ -104,6 +104,71 @@ class DataPolicyTest(unittest.TestCase):
             with self.assertRaisesRegex(policy.DataPolicyError, 'UNREVIEWED_OR_STALE_DATA_SET'):
                 policy.check(root, value)
 
+    def test_public_archives_are_bound_and_never_suppress_scanning(self):
+        for name, declared in policy.PUBLIC_ARCHIVES.items():
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as directory:
+                root, value = self.fixture(directory)
+                path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(b'public fixture')
+                provenance = root / declared
+                provenance.write_text(json.dumps({'compressedSha256': policy.digest(path), 'license': 'CC0-1.0'}))
+                row = dict(path=name, bytes=path.stat().st_size, sha256=policy.digest(path), action='inventory',
+                           provenance=declared, provenanceSha256=policy.digest(provenance))
+                value['entries'].append(row)
+                report = policy.check(root, value)
+                self.assertIn(name, report['inventoryOnly'])
+                self.assertNotIn(name, report['scanignore'])
+                self.assertNotIn(name, report['scandelete'])
+                provenance.write_text(json.dumps({'compressedSha256': '0' * 64, 'license': 'CC0-1.0'}))
+                row['provenanceSha256'] = policy.digest(provenance)
+                with self.assertRaisesRegex(policy.DataPolicyError, 'PUBLIC_ARCHIVE_PROVENANCE'):
+                    policy.check(root, value)
+                provenance.write_text(json.dumps({'compressedSha256': policy.digest(path), 'license': 'CC0-1.0'}))
+                row['provenanceSha256'] = policy.digest(provenance)
+                row['action'] = 'ignore'
+                with self.assertRaisesRegex(policy.DataPolicyError, 'SCANNER_ACTION_MISMATCH'):
+                    policy.check(root, value)
+                row['action'] = 'inventory'; row['provenance'] = 'app/src/main/assets/provenance.json'
+                with self.assertRaisesRegex(policy.DataPolicyError, 'INVALID_PROVENANCE_SCOPE'):
+                    policy.check(root, value)
+
+    def test_historical_archives_require_catalog_and_do_not_suppress_scanning(self):
+        for name, declared in policy.HISTORICAL_ARCHIVES.items():
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as directory:
+                root, value = self.fixture(directory)
+                path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(b'historical fixture')
+                version = {'qualification-v3.tar.bz2': 'v3', 'qualification-v4.tar.bz2': 'v4'}.get(path.name, path.name)
+                provenance = root / declared
+                catalog = {'schema': 1, 'purpose': 'DISCLOSED_HISTORICAL_CORPORA_NOT_QUALIFICATION',
+                           'archives': {version: {'archive': path.name, 'archiveSha256': policy.digest(path)}}}
+                provenance.write_text(json.dumps(catalog))
+                row = dict(path=name, bytes=path.stat().st_size, sha256=policy.digest(path), action='inventory',
+                           provenance=declared, provenanceSha256=policy.digest(provenance))
+                value['entries'].append(row)
+                report = policy.check(root, value)
+                self.assertIn(name, report['inventoryOnly'])
+                self.assertNotIn(name, report['scanignore'])
+                self.assertNotIn(name, report['scandelete'])
+                catalog['archives'][version]['archiveSha256'] = '0' * 64
+                provenance.write_text(json.dumps(catalog)); row['provenanceSha256'] = policy.digest(provenance)
+                with self.assertRaisesRegex(policy.DataPolicyError, 'HISTORICAL_ARCHIVE_PROVENANCE'):
+                    policy.check(root, value)
+
+    def test_unregistered_historical_archive_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, value = self.fixture(directory)
+            path = root / 'tools/typing_experiments/historical-qualification-v3-v4/unreviewed.bz2'
+            path.parent.mkdir(parents=True); path.write_bytes(b'unreviewed')
+            with self.assertRaisesRegex(policy.DataPolicyError, 'UNREVIEWED_OR_STALE_DATA_SET'):
+                policy.check(root, value)
+
+    def test_unregistered_public_archive_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, value = self.fixture(directory)
+            path = root / 'tools/typing_experiments/public_sources/unknown.bz2'
+            path.parent.mkdir(parents=True); path.write_bytes(b'unknown')
+            with self.assertRaisesRegex(policy.DataPolicyError, 'UNREVIEWED_OR_STALE_DATA_SET'):
+                policy.check(root, value)
+
     def test_existing_calibration_archive_is_inventory_only(self):
         with tempfile.TemporaryDirectory() as directory:
             root, value = self.fixture(directory)

@@ -71,7 +71,21 @@ def run(profile, output, *, root=ROOT, manifest=MANIFEST, timeout=240):
         (output / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
         print(name, 'exit=' + str(code), flush=True)
     receipt['status'] = 'PASS' if results and all(r['exitCode'] == 0 for r in results) else 'FAIL'
+    summaries = [r['unittest'] for r in results if r['unittest'] is not None]
+    receipt['totals'] = {
+        'modules': len(results),
+        'failedModules': sum(r['exitCode'] != 0 for r in results),
+        'timedOutModules': sum(r['timedOut'] for r in results),
+        'modulesWithoutReceipt': len(results) - len(summaries),
+        'tests': sum(s['tests'] for s in summaries),
+        'failures': sum(len(s['failures']) for s in summaries),
+        'errors': sum(len(s['errors']) for s in summaries),
+        'expectedFailures': sum(len(s['expectedFailures']) for s in summaries),
+        'unexpectedSuccesses': sum(len(s['unexpectedSuccesses']) for s in summaries),
+        'skipped': sum(len(s['skipped']) for s in summaries),
+    }
     (output / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
+    print(json.dumps({'profile':profile, 'status':receipt['status'], **receipt['totals']}, sort_keys=True), flush=True)
     return 0 if receipt['status'] == 'PASS' else 1
 
 

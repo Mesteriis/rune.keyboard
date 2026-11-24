@@ -16,6 +16,12 @@ SCRIPTS = 'tools/typing_experiments/'
 HISTORICAL = {
     ('test_refinement.py', '9a183595c9f52c6a6d6f39d79d6f168369b7a7ae966ecc6b475f1798e2e155d9'):
         SCRIPTS + 'historical_provenance_sources/refinement_test_9a183595c9f52c6a6d6f39d79d6f168369b7a7ae966ecc6b475f1798e2e155d9.py',
+    ('prepare_refinement.py', 'd2d84c3f328771fd0b9908a9216ee428eb2877079c8dacb481c42a0dafe11bab'):
+        SCRIPTS + 'frozen_sources/prepare_refinement_d2d84c3f328771fd.py',
+    ('promote_refinement.py', '7d08806ddae6eab8714871ddaaf332f6e3b7bb41e8e14d95b0ddd7a7ba7ae6b4'):
+        SCRIPTS + 'frozen_sources/promote_refinement_7d08806ddae6eab8.py',
+    ('evaluate_refinement.py', '486c1ab8814721e713e7ad3a176b4eda5ac6a99fa15613fa1e4e7edabd56af4e'):
+        SCRIPTS + 'frozen_sources/evaluate_refinement_486c1ab8814721e7.py',
 }
 NAMED_DIGESTS = {
     ASSETS + '/smarttyping/experiments/provenance.json':

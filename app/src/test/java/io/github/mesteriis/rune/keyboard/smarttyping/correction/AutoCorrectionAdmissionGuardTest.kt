@@ -161,6 +161,36 @@ class AutoCorrectionAdmissionGuardTest {
         assertFalse(guard("слово" to 1).allows(generation("словоо", listOf(winner, candidate("слова"))), winner))
     }
 
+    @Test fun `reviewed chat originals are protected without modifying frozen rare words`() {
+        val absent = io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon {
+            io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordMembership.ABSENT
+        }
+        val winner = candidate("баллон")
+        for (original in listOf("пейринг", "токсиков", "админку", "забанили", "бадлон", "могёт", "ебобо", "БАДЛОН")) {
+            val decision = PublicOriginalProtection.evaluate(generation(original, listOf(winner)), winner, absent)
+            assertFalse(decision.allowed)
+            assertEquals(AutomaticAdmissionRefusal.ORIGINAL_VALID, decision.refusal)
+        }
+        assertTrue(PublicOriginalProtection.evaluate(generation("бадлона", listOf(winner)), winner, absent).allowed)
+        assertEquals(AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE,
+            PublicOriginalProtection.evaluate(generation("бадлон", listOf(winner)), winner,
+                io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon.UNAVAILABLE).refusal)
+    }
+
+    @Test fun `reviewed ordinary chat forms resist misleading corrections`() {
+        val absent = io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon {
+            io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordMembership.ABSENT
+        }
+        val winner = candidate("баллон")
+        for (original in listOf("хотелки", "скипать", "усмеяться", "скипай", "ебалу", "анимки",
+            "инвент", "похуй", "уведы", "афантазия", "инвайт", "пофаниться", "темпой")) {
+            val decision = PublicOriginalProtection.evaluate(generation(original, listOf(winner)), winner, absent)
+            assertEquals(original, AutomaticAdmissionRefusal.ORIGINAL_VALID, decision.refusal)
+            assertFalse(original, decision.allowed)
+        }
+        assertTrue(PublicOriginalProtection.evaluate(generation("скипала", listOf(winner)), winner, absent).allowed)
+    }
+
     @Test fun `public rare original vetoes ordinary correction and unavailable evidence fails closed`() {
         val winner = candidate("пантера")
         val input = generation("хантера", listOf(winner))

@@ -8,6 +8,7 @@ import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
+import io.github.mesteriis.rune.keyboard.settings.KeyboardPreferences
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -16,6 +17,67 @@ import org.junit.runner.RunWith
 /** Public fixture only; observations cross the existing :qa_editor Binder connection. */
 @RunWith(AndroidJUnit4::class)
 class LiveCandidatesInstrumentedTest : ImeTestBase() {
+    @Test fun languageSwitchFailureReportsDisabledTarget() {
+        driver.configureEnglishStartingLanguage()
+        driver.launchComposingQa()
+        val failure = runCatching { driver.switchToRussian() }.exceptionOrNull()
+        assertTrue("Expected language switch failure", failure is IllegalStateException)
+        val message = failure?.message.orEmpty()
+        assertTrue(message, message.contains("enabled=[ENGLISH]"))
+        assertTrue(message, message.contains("visible=[EN]"))
+        assertTrue(message, message.contains("swipesSent=5"))
+    }
+
+    @Test fun englishIIsManualSuggestionAndSpaceKeepsOriginal() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa()
+        driver.tapKey("Y", "y"); driver.tapKey("e"); driver.tapKey("s"); space(); driver.tapKey("i")
+        driver.awaitFieldText(FIELD, "yes i")
+        assertEquals("I", awaitCandidate(R.string.candidate_correction, "I").text)
+        space(); driver.awaitFieldText(FIELD, "yes i ")
+        driver.tapKey("i")
+        driver.awaitFieldText(FIELD, "yes i i")
+        awaitCandidate(R.string.candidate_correction, "I").click()
+        driver.awaitFieldText(FIELD, "yes i I")
+        noReadback()
+    }
+
+    @Test fun spanishIHasNoEnglishPronounSuggestion() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa(language =
+            io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.SPANISH)
+        driver.tapKey("I", "i")
+        driver.awaitFieldText(FIELD, "i")
+        assertTrue(!driver.device.wait(Until.hasObject(By.desc(description(R.string.candidate_correction, "I"))), 3_000))
+        space(); driver.awaitFieldText(FIELD, "i ")
+        noReadback()
+    }
+
+    @Test fun englishIAfterInternalApostropheIsNotSuggested() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        KeyboardPreferences(instrumentation.targetContext).writeKeyFlicks(true)
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa()
+        "baha".forEach { driver.tapKey(it.toString(), it.uppercase()) }
+        val bounds = driver.characterKey("k", "K").visibleBounds
+        assertTrue(driver.device.swipe(bounds.centerX(), bounds.centerY(), bounds.centerX(),
+            bounds.centerY() + (bounds.height() * .8f).toInt(), 10))
+        driver.awaitFieldText(FIELD, "baha'")
+        driver.tapKey("i", "I")
+        driver.awaitFieldText(FIELD, "baha'i")
+        val correction = By.desc(description(R.string.candidate_correction, "I"))
+        assertTrue(!driver.device.wait(Until.hasObject(correction), 3_000))
+        space()
+        driver.awaitFieldText(FIELD, "baha'i ")
+        driver.tapKey("i", "I")
+        driver.awaitFieldText(FIELD, "baha'i i")
+        assertEquals("I", awaitCandidate(R.string.candidate_correction, "I").text)
+        noReadback()
+    }
+
     @Test fun shortRussianCorrectionPreviewAndUndoPreserveTheNextWord() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         assertTrue(context.getSharedPreferences(ImeTestDriver.PREFERENCES_NAME, android.content.Context.MODE_PRIVATE)
@@ -34,6 +96,22 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
         driver.awaitFieldText(FIELD, "хочу до")
         awaitCandidate(R.string.candidate_undo, "зочу").click()
         driver.awaitFieldText(FIELD, "зочу до")
+        noReadback()
+    }
+
+    @Test fun immediateBackspaceUndoThenSpaceKeepsOriginalDuringFollowingWord() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa(language =
+            io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.RUSSIAN)
+        "зочу".forEach { driver.tapKey(it.toString()) }
+        awaitCandidate(R.string.candidate_correction, "хочу")
+        space(); driver.awaitFieldText(FIELD, "хочу ")
+        driver.tapDelete(); driver.awaitFieldText(FIELD, "зочу")
+        space(); driver.awaitFieldText(FIELD, "зочу ")
+        "домой".forEach { driver.tapKey(it.toString()) }
+        driver.awaitFieldText(FIELD, "зочу домой")
+        space(); driver.awaitFieldText(FIELD, "зочу домой ")
         noReadback()
     }
 
@@ -159,6 +237,101 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
         noReadback()
     }
 
+    @Test fun ambiguousInnStaysLowercaseBeforePeriod() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa(language =
+            io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.RUSSIAN)
+        driver.tapKey("И", "и")
+        driver.tapKey("н"); driver.tapKey("н")
+        driver.awaitFieldText(FIELD, "инн")
+        awaitCandidate(R.string.candidate_correction, "Инн")
+        driver.tapKey(".")
+        driver.awaitFieldText(FIELD, "инн.")
+        driver.tapDelete()
+        driver.awaitFieldText(FIELD, "инн")
+        noReadback()
+    }
+
+    @Test fun ambiguousInnTitleCaseRemainsManuallySelectable() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa(language =
+            io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.RUSSIAN)
+        driver.tapKey("И", "и")
+        driver.tapKey("н"); driver.tapKey("н")
+        driver.awaitFieldText(FIELD, "инн")
+        awaitCandidate(R.string.candidate_correction, "Инн").click()
+        driver.awaitFieldText(FIELD, "Инн")
+        noReadback()
+    }
+
+    @Test fun ambiguousInnStaysLowercaseBeforeColon() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa(language =
+            io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.RUSSIAN)
+        driver.tapKey("И", "и")
+        driver.tapKey("н"); driver.tapKey("н")
+        driver.awaitFieldText(FIELD, "инн")
+        awaitCandidate(R.string.candidate_correction, "Инн")
+        driver.tapKeyByDescription(InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.key_symbols))
+        driver.tapKey(":")
+        driver.awaitFieldText(FIELD, "инн:")
+        driver.tapDelete()
+        driver.awaitFieldText(FIELD, "инн")
+        noReadback()
+    }
+
+    @Test fun russianColonCorrectsReadyWordAndBackspaceRestoresExactSource() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa(language =
+            io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.RUSSIAN)
+        for (key in listOf("с", "м", "о", "т", "р", "у", "т", "ь")) driver.tapKey(key)
+        driver.awaitFieldText(FIELD, "смотруть")
+        awaitCandidate(R.string.candidate_correction, "смотреть")
+        driver.tapKeyByDescription(InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.key_symbols))
+        driver.tapKey(":")
+        driver.awaitFieldText(FIELD, "смотреть:")
+        driver.tapDelete()
+        driver.awaitFieldText(FIELD, "смотруть")
+        noReadback()
+    }
+
+    @Test fun otherSymbolAfterLayerChangeKeepsOriginalWord() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa(language =
+            io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.RUSSIAN)
+        for (key in listOf("с", "м", "о", "т", "р", "у", "т", "ь")) driver.tapKey(key)
+        driver.awaitFieldText(FIELD, "смотруть")
+        awaitCandidate(R.string.candidate_correction, "смотреть")
+        driver.tapKeyByDescription(InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.key_symbols))
+        driver.tapKey("1")
+        driver.awaitFieldText(FIELD, "смотруть1")
+        noReadback()
+    }
+
+    @Test fun retainedSymbolsCandidateDoesNotCrossEditorBoundary() {
+        for (mode in listOf("private", "no_suggestions")) {
+            driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+                mechanical = false, doubleSpace = false)
+            driver.launchComposingQa(language =
+                io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.RUSSIAN)
+            for (key in listOf("с", "м", "о", "т", "р", "у", "т", "ь")) driver.tapKey(key)
+            driver.awaitFieldText(FIELD, "смотруть")
+            awaitCandidate(R.string.candidate_correction, "смотреть")
+            driver.tapKeyByDescription(InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.key_symbols))
+            driver.launchComposingQa(mode, io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage.RUSSIAN)
+            assertTrue(!driver.device.hasObject(By.desc(description(R.string.candidate_correction, "смотреть"))))
+            driver.tapKeyByDescription(InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.key_symbols))
+            driver.tapKey(":")
+            driver.awaitFieldText(FIELD, ":")
+            noReadback()
+        }
+    }
+
     @Test fun correctionAndOriginalTapsReplaceOnlyOwnedWordWithNoReadback() {
         val correction = prepareCorrection()
         val before = stats()
@@ -186,15 +359,16 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
         noReadback()
     }
 
-    @Test fun sensitiveEditorTransitionClearsLoadedSuggestionsAndPreservesPlainTyping() {
+    @Test fun incognitoEditorTransitionClearsLoadedSuggestionsAndAllowsOwnedTyping() {
         prepareCorrection()
         driver.launchComposingQa("private")
         assertTrue(!driver.device.hasObject(By.desc(description(R.string.candidate_correction, "hello"))))
         assertTrue(!driver.device.hasObject(By.desc(description(R.string.candidate_original, "helllo"))))
         driver.tapKey("a")
         driver.awaitFieldText(FIELD, "a")
-        assertEquals(0, stats().getValue("compose"))
-        assertTrue(!driver.device.hasObject(By.desc(description(R.string.candidate_original, "a"))))
+        assertEquals(1, stats().getValue("compose"))
+        awaitCandidate(R.string.candidate_original, "a")
+        assertTrue(!driver.device.hasObject(By.desc(description(R.string.candidate_correction, "hello"))))
         noReadback()
     }
 

@@ -1,0 +1,14 @@
+{
+  "baselineProjectionSha256": "41c373d13944a1f671fd395fc814e59a3261162559d477d975fa355988a13070",
+  "baselineRows": 1800,
+  "candidateProjectionSha256": "41c373d13944a1f671fd395fc814e59a3261162559d477d975fa355988a13070",
+  "candidateRows": 1800,
+  "differences": [],
+  "differentRows": 0,
+  "excludedTopLevelFields": [
+    "fullTokenGenerationNanos",
+    "hostStageNanos"
+  ],
+  "passed": true,
+  "schemaVersion": 1
+}

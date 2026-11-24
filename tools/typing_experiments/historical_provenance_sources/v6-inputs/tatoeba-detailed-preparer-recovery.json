@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "modelCalls": 0,
+  "declaredFamilyKind": "packed-morphology-id",
+  "sourceBodies": {
+    "conversation-followon": {
+      "originalSource": "build/conversation-supervised-20261026/prepare_followon.py",
+      "archivedSource": "tatoeba_detailed_preparers/conversation_followon.py",
+      "sha256": "da5128b734aa9f7df422573aa32a0954994a811cf2ce28881c61be0db7bce050",
+      "historicalDigestObservedAt": "2026-10-26T16:07:20.502Z",
+      "files": {
+        "build/conversation-supervised-20261026/followon-corpus-v2/holdout.jsonl": "c7edc9896263c92b050d176931249503afef8ff3506b10bc110fc9ca4c2f1a63"
+      }
+    },
+    "conversation-supervised95": {
+      "originalSource": "build/conversation-supervised95-20261026/prepare.py",
+      "archivedSource": "tatoeba_detailed_preparers/conversation_supervised95.py",
+      "sha256": "efce0042e49e7ab92b1978e64849d8fb97c4dcb24cbcbeecf7c73ac4e5c45dca",
+      "historicalDigestObservedAt": "2026-10-27T07:22:21.745Z",
+      "files": {
+        "build/conversation-supervised95-20261026/corpus/calibration.jsonl": "2421e798044f87da69045533f98ca2d2decd59e995c440cc5a760a722f5e9b57",
+        "build/conversation-supervised95-20261026/corpus/holdout.jsonl": "d08c98a17a51dbe10be2dff743b22d7a3e20f5d44410560cf6f90e0b5026ff5d"
+      }
+    },
+    "grammar-context": {
+      "originalSource": "build/grammar-context-ranking-20261026/prepare.py",
+      "archivedSource": "tatoeba_detailed_preparers/grammar_context.py",
+      "sha256": "f39e9b7436ed98893aa804e0fe99fa410e2081c8cb5d60fd4664d19350754450",
+      "historicalDigestObservedAt": "2026-10-26T17:11:46.037Z",
+      "files": {
+        "build/grammar-context-ranking-20261026/corpus/calibration.jsonl": "36b71d6bf96f8a31a5729dd198a0e183cd41be0973840e6647d82c2b3c5a4ba0",
+        "build/grammar-context-ranking-20261026/corpus/holdout.jsonl": "bcbaa61dd8dd44c77148af494702fa1433c5f56660d6f14df9c4394052cfcb45"
+      }
+    },
+    "grammar-contrast-evaluation": {
+      "originalSource": "build/grammar-contrast-training-20261026/prepare_evaluation.py",
+      "archivedSource": "tatoeba_detailed_preparers/grammar_contrast_evaluation.py",
+      "sha256": "d1cc9acb75c168dc0858cfc1f638d455cefaaf1dac65da3689f76d8b0e95da4d",
+      "historicalDigestObservedAt": null,
+      "files": {
+        "build/grammar-contrast-training-20261026/corpus/calibration.jsonl": "10e512087c9530f30663ba2f9847768e1897a1d5765895650a12357ee684517e",
+        "build/grammar-contrast-training-20261026/corpus/holdout.jsonl": "ee6fa2995d26e7861971ca045e95b4e11e2ca8728c293ce6b32627201dcc9d4f"
+      }
+    },
+    "grammar-conservative-evaluation": {
+      "originalSource": "build/grammar-conservative-20261026/prepare_evaluation.py",
+      "archivedSource": "tatoeba_detailed_preparers/grammar_conservative_evaluation.py",
+      "sha256": "605ba2755a585ca038090f820a50cdc37bc7b1723008bda08dd00b2e56a03058",
+      "historicalDigestObservedAt": null,
+      "files": {
+        "build/grammar-conservative-20261026/corpus/calibration.jsonl": "fc59d3cfa3ca53968d40c03f9b53f22bada785c2bebc0e4479a646a9724a6611",
+        "build/grammar-conservative-20261026/corpus/holdout.jsonl": "e0ecd0544db579203bb489bdf611d621da4bba9659105c6acd23a83484c3d1d9"
+      }
+    }
+  },
+  "duplicateCorpusBindings": {
+    "build/grammar-profile-training-20261026/corpus/calibration.jsonl": "build/grammar-conservative-20261026/corpus/calibration.jsonl",
+    "build/grammar-profile-training-20261026/corpus/holdout.jsonl": "build/grammar-conservative-20261026/corpus/holdout.jsonl",
+    "build/grammar-revision-broad-20261026/corpus/calibration.jsonl": "build/grammar-conservative-20261026/corpus/calibration.jsonl",
+    "build/grammar-revision-broad-20261026/corpus/holdout.jsonl": "build/grammar-conservative-20261026/corpus/holdout.jsonl"
+  }
+}

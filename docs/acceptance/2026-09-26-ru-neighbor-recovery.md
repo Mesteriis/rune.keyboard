@@ -3,6 +3,8 @@
 > Historical material from 2026-09-26. The original body is retained.
 > Its source, model and device claims are not fresh acceptance. Current scope
 > and outstanding evidence are in the [review completion map](../plans/2026-10-27-review-completion.md).
+> A later dictionary audit found one train/holdout lemma overlap (`чёртов`);
+> see the [neighbor family audit](2026-10-29-q6-neighbor-families.md#partition-independence-recheck).
 
 ## Решение о выпуске
 

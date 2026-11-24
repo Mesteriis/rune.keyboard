@@ -1,0 +1,26 @@
+{
+  "baselineExitCode": 0,
+  "baselineObservationsSha256": "452643c4a7f115899b2f29880a2d394379ee2780639f42cb4a4bcdacd3e94804",
+  "baselineStatus": "COMPLETE",
+  "candidateHarnessSha256": "4c0d373b3fe4a7ef6d59cdc4e83547147a2dc887bc94518347abcb09ecc1cbb9",
+  "candidateJarSha256": "2e87f633bb3e943db35a550719b840df77d30a9902c63d54976cc1412cfecae3",
+  "candidateObservationsSha256": "3e4fdc80e8d7ce52195cd729f840fc36466b2240bee54f9e1786545343928b35",
+  "comparison": "collision",
+  "counts": {
+    "baseline_common_matches": 0,
+    "baseline_name_matches": 1,
+    "candidate_common_matches": 1,
+    "candidate_name_matches": 0,
+    "distinctBaselineOutputs": 1,
+    "distinctCandidateOutputs": 1,
+    "distinctInputs": 1,
+    "rows": 2
+  },
+  "independentQualification": false,
+  "ledgerSha256": "4b94902f3f69288b81ce73eba5a25f85af8cc39e4b0982511b93dfdd017b5831",
+  "purpose": "DISCLOSED_CONTEXT_COLLISION_REPLAY_NOT_QUALIFICATION",
+  "rowsSha256": "7330574956e3e7cb058b374ca924a01a3126a25aa642a72fc5678fc5ce323a90",
+  "runnerSha256": "18667bf71ebf4e3e5286f6938c8eac6ace0662c7467a06b13a32f42fc83e9ce6",
+  "schema": 1,
+  "screenSha256": "6b1dc755d6c3f209e76a07a4d9a44865febd8c02f4eb3ccf6a9e495341ffc51b"
+}

@@ -12,6 +12,8 @@ observed kotlinCompilerClasspath. The standalone version catalog and Gradle lock
 file keep its library graph separate. The lint exception applies only to update
 suggestions for those intentionally pinned catalog entries. Backup/transfer are
 disabled. No network, model, logging or owner-data acquisition is implemented.
+The Kotlin common metadata component is declared at the same pinned compiler
+version so Gradle's Android variant resolution can be checked against the lock.
 
 Build from the Rune repository using its checked-in wrapper and configured SDK:
 
@@ -23,9 +25,28 @@ Install that debug APK, Rune debug and Rune's androidTest APK on a disposable
 emulator. Run EditingComposeInstrumentedTest with instrumentation argument
 runeComposeQa=true. It checks emulator hardware before changing IME/settings,
 uses real Rune keys and prepares public clipboard sentinels in test code.
-Without explicit opt-in these three cases are skipped, not acceptance passes;
+Without explicit opt-in these four cases are skipped, not acceptance passes;
 without the fixture an opted-in run fails. The test driver does not install apps
-or switch to a different device. Physical Fold acceptance is separate.
+or switch to a different device. The private emoji case additionally accepts an
+explicit Fold opt-in with failure captures disabled; the other three cases stay
+emulator-only because they touch the clipboard. A physical host must preserve and
+verify owner settings and diagnostic stores, and remove only its own QA package.
+
+Android CI also runs `tools/ci/android_editing_process_death.py` after restoring
+the ordinary debug APKs. It requires one verified disposable emulator and this
+installed editor, checks both process identities, and kills only the verified
+Rune PID during each synthetic left/right-context preparation. The preparation
+crash is intentional; the recovery phase must independently pass. API 26 uses
+an enabled sample Latin keyboard to rebind Rune explicitly. No physical device
+or owner clipboard is in scope.
+
+The same debug-only fixture also declares a silent input method with a `voice`
+subtype for `tools/ci/android_voice_fixture_suites.py`. The fixture implements
+no speech recognition, audio capture or network access. On a verified disposable
+emulator the host runner checks the unavailable path, enables this exact fixture
+for the accessibility and gesture paths, verifies stale-target and next-keyboard
+behavior on API 26/37, and restores the previous IME state.
+It does not test real speech recognition or a physical phone.
 
 The fixture publishes only numeric length/selection and six InputConnection
 payload-read counters through qa_compose_stats. It uses Compose's documented
@@ -37,3 +58,8 @@ fixed public text through accessibility, not through the IME connection.
 
 References: [platform input interception](https://developer.android.com/reference/kotlin/androidx/compose/ui/platform/PlatformTextInputInterceptor),
 [compiler setup](https://developer.android.com/develop/ui/compose/setup-compose-dependencies-and-compiler).
+
+The opt-in `qa_private_input` extra marks the Compose input connection with
+`NO_PERSONALIZED_LEARNING`. The emoji case checks that flag, selection, deletion,
+continuation and the six payload-read counters. It dispatches the emoji grid's
+item-click listener directly; it is not a physical-touch or screen-reader test.

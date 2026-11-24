@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "modelCalls": 0,
+  "independentQualification": false,
+  "sources": [
+    "0018.parquet",
+    "0019.parquet"
+  ],
+  "corpora": {
+    "word-context": {
+      "originalRoot": "build/context-ranking-20261025/corpus",
+      "archivedSource": "word_context_wikipedia_preparer.py",
+      "archivedPreparerSha256": "d9534cd43974c7b103b56eb087b0e87d7d1565522a711d9b81b62e4430c04a94",
+      "independentOriginalSourceDigestAvailable": false,
+      "archivedManifest": "early-wikipedia-word-context-manifest.json",
+      "files": {
+        "calibration.jsonl": "e3c8f68b9227ad5dd9d2e56796023f698c3b8d35034e3158258d7d4974ac86c0",
+        "holdout.jsonl": "0b6a3285ecd0b0b624b5d4fb7c4b8734509e38d7fa43f407c613f966673bf994",
+        "manifest.json": "0a10608b993d3688c832f7af349294604d8cb7fd1114b2646c527ed9728b3034"
+      },
+      "rows": {
+        "calibration": 3648,
+        "holdout": 3648
+      }
+    },
+    "word-context-extra": {
+      "originalRoot": "build/context-ranking-20261025/corpus-extra",
+      "archivedSource": "word_context_extra_wikipedia_preparer.py",
+      "archivedPreparerSha256": "c97c4dfe1b01ca7d15a00ae3b87d5e29913d5fe0e9fe754a834b8bfd8edac203",
+      "independentOriginalSourceDigestAvailable": false,
+      "archivedManifest": "early-wikipedia-word-context-extra-manifest.json",
+      "files": {
+        "calibration.jsonl": "779a41a758417fecdb1307cb50ebb1f994ceca6c2eb589d31e6aa0fdf13b5b1e",
+        "holdout.jsonl": "d92d645d606b50f2515d57d848ff31ec02daafc9f24266df8fb89d61b083ecdb",
+        "manifest.json": "64edff6524629a7e26163ba672214e32ffab00909459afaa1a96b005c1027b67"
+      },
+      "rows": {
+        "calibration": 3636,
+        "holdout": 3576
+      }
+    }
+  }
+}

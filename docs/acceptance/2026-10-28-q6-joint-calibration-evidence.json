@@ -1,0 +1,161 @@
+{
+  "apkChanged": false,
+  "baseRevision": "0129249",
+  "checks": {
+    "scientific-final": {
+      "errors": 0,
+      "failures": 0,
+      "modules": 23,
+      "receipt": "build/review-q6-joint-calibration-20261028/scientific-final/receipt.json",
+      "receiptSha256": "cc379c0963d33b68512b3900336dc2e34ee67db1303aff88a4ed19b6d4adea05",
+      "skipped": 1,
+      "status": "PASS",
+      "tests": 76
+    },
+    "stdlib-final": {
+      "errors": 0,
+      "failures": 0,
+      "modules": 121,
+      "receipt": "build/review-q6-joint-calibration-20261028/stdlib-final/receipt.json",
+      "receiptSha256": "d18e0ee93e93e8e9cf051eb9cdfdfc82cf3510364c86c6d31e01f091c9642997",
+      "skipped": 0,
+      "status": "PASS",
+      "tests": 660
+    }
+  },
+  "ciTools": {
+    "exitCode": 0,
+    "logSha256": "d65cde3e320d8ccd670871c420b6d4fb284869700feaaacf764a125379ea4336",
+    "tests": 41
+  },
+  "deviceUsed": false,
+  "hostedCIExecuted": false,
+  "independentQualification": false,
+  "inputs": {
+    ".github/workflows/ci.yml": "c4e24280aa17fae7271d105b3791ee41181299839583bdde06de5d6e59ebb807",
+    "tools/ci/fixtures/joint-calibration-disclosed-rows.json": "256c631579b6dadf3e8eef8bd38daad1a4260856cd07d06f2f1af740d924436d",
+    "tools/ci/joint_calibration_smoke.py": "740a01893f8e875d3e637e72ada73b5a793db07a1e939c4a38336f7f1ad68802",
+    "tools/ci/python-tools-tests.json": "94183a1138f13a5ebc1d7888de88efabd78bd643315d616382ff6dca485dafb1",
+    "tools/typing_experiments/calibrate_joint_followup.py": "57015f58c8d2fd582617c005935feaf5d09cd1333bab90c990886a3d30ff9347",
+    "tools/typing_experiments/calibrate_joint_rescue.py": "43813f104d375c19cb4e2efee8f37b76e92d4c1dd2ae5df364056cbd8685e8ba",
+    "tools/typing_experiments/calibrate_joint_source.py": "e26aeea424cf9267022a8f8f03c4576d87aaaae2dd84b5d107702a26dfb6c943",
+    "tools/typing_experiments/frozen_sources/calibrate_joint_followup_0320514bf45bfb20.py": "0320514bf45bfb204ca2a7b83220d5a9effe5bffc56e660a5f5e460b7906a848",
+    "tools/typing_experiments/frozen_sources/calibrate_joint_rescue_03a9638130769de1.py": "03a9638130769de11b38f70794cd2a89a208df8486a00bed38f4a54df31a8cec",
+    "tools/typing_experiments/frozen_sources/calibrate_joint_source_1823b5695179fabb.py": "1823b5695179fabb782ead950197a5f9d849277e382787b4ca42589fe22b12e1",
+    "tools/typing_experiments/frozen_sources/manifest.json": "1f4cbff0a6535ffd9b0380dc4a4b83283793e4c192684a1a42da9adbd8d6791a",
+    "tools/typing_experiments/joint_calibration_receipt.py": "d027049815a81af6939f7e1e558b7249faea58f7e6d98a3f4654a749e8390e52",
+    "tools/typing_experiments/joint_evaluation_receipt.py": "1b2c5f9d2c4ed8500bb5c7dc27cb8f83aa51beecad2ad8f71949bec2a4aaebf5",
+    "tools/typing_experiments/test_joint_calibration_receipt.py": "f869238ae6aa132d8794b636e88e2f1e85320028138e9a1910d58e1bcce8a88e",
+    "tools/typing_experiments/test_joint_neighbor_source_history.py": "5674e61a8fcc96dbb844dd3f4a370551c858463ecee2fb808318e4b44cbe699c"
+  },
+  "limitations": [
+    "bounded disclosed source/followup corpus; no original full followup/training reproduction",
+    "rescue numerical inputs pinned to published policy; original generator/runtime and training remain unqualified",
+    "historical family labels do not establish new canonical families or natural quality",
+    "global registry coverage, fresh role alignment, remaining training/other drivers and full historical lineage remain open"
+  ],
+  "nativeExportReceiptSha256": "fe08f652c98335556b0267b4b7ea62139326220d1c0c0769b0dd407d4bf7999a",
+  "nativeSmoke": {
+    "capturedFiles": 184,
+    "driverSha256": "740a01893f8e875d3e637e72ada73b5a793db07a1e939c4a38336f7f1ad68802",
+    "fixtureSha256": "256c631579b6dadf3e8eef8bd38daad1a4260856cd07d06f2f1af740d924436d",
+    "followup": {
+      "eligibleGroups": 6,
+      "totalCalibrationRows": 6
+    },
+    "independentQualification": false,
+    "isolatedMutationRejections": 14,
+    "midCalibrationDriftRejected": true,
+    "oldScoreCacheIgnored": true,
+    "packagedFileSha256": {
+      "app/src/main/assets/smarttyping/experiments/NOTICE.md": "efceac6d0dde6e787e3545e6b3de0f87be6950c67b655ee9076869f07580a9ce",
+      "app/src/main/assets/smarttyping/experiments/contextual-provenance.json": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435",
+      "app/src/main/assets/smarttyping/experiments/contextual-tatoeba-attribution.json": "f81b27066cee38a2f2a14c2766e9cceae399d3c7590bca7b63e4d782fd18dd44",
+      "app/src/main/assets/smarttyping/experiments/infinitive-revision-provenance.json": "a20fe5c9981e857dda6823fb5aeffb56c365556a6e38542250a714ea3aa20fca",
+      "app/src/main/assets/smarttyping/experiments/joint-correction-provenance.json": "7b42d0a46dd754d32903f73dabcefa7eea462f5c6cba1e886a06008bd22cf5e7",
+      "app/src/main/assets/smarttyping/experiments/joint-rescue-provenance.json": "4700fab35c3d9ea83457920187ae41ea88c7a95220325401cf13d83bcd83fcdb",
+      "app/src/main/assets/smarttyping/experiments/neighbor-recovery-provenance.json": "f988fea3f6d96f68ad0394e5a4ded6e067dec8fb305d561415cdc77c4440e4ce",
+      "app/src/main/assets/smarttyping/experiments/noun-case-provenance.json": "a9b1760a0b462a68ff38264be9ae13a9dac9ebf5840cf606778b32c1d2910235",
+      "app/src/main/assets/smarttyping/experiments/provenance.json": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4",
+      "app/src/main/assets/smarttyping/experiments/ru-context.bin": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
+      "app/src/main/assets/smarttyping/experiments/ru-context.gram": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b",
+      "app/src/main/assets/smarttyping/experiments/ru-contextual-policy.json": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6",
+      "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+      "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6",
+      "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-policy.json": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595",
+      "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-policy.json": "ebdb0e83f3c4ed3476f5b317e31619415ca020d9703cd3d6900b9e8ac5c4701d",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+      "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+      "app/src/main/assets/smarttyping/experiments/ru-noun-case-policy.json": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+      "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker.bin": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+      "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+      "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt": "ff4e3cc8b0f67da2295e375b129518100fa8b2b981f32ed490e6e38daa01fd34",
+      "tools/typing_experiments/parity.tsv": "374f78253303b3fd77c5fd17a04190fd73e9d410bc5f069d5860bcefea90fad0"
+    },
+    "packagedFilesUnchanged": true,
+    "policies": {
+      "workspace/arbitration-v3/frozen-policy.json": "a01db8b656a55048724bd94fb88b330d1f647bc24b94acbc6a785729df2b651c",
+      "workspace/followup-policy/frozen-policy.json": "ac89d3b62e1385454e36c7ce80e40942403052bb794c3d5e4973adad4096e9f0"
+    },
+    "primary": {
+      "eligibleGroups": 6,
+      "totalCalibrationRows": 6
+    },
+    "productionQualified": false,
+    "rows": 6,
+    "scope": "actual current native proposals and published-weight scoring; bounded disclosed calibration; no independent qualification",
+    "secondWriteRejected": true
+  },
+  "nativeSmokeExitCode": 0,
+  "packagedProvenance": {
+    "exitCode": 0,
+    "logSha256": "8947c8e9fdce3706751d06a2e06d6053045cfdb9cdc25090e9ed27adb68d7ed9",
+    "tests": 12
+  },
+  "productionQualified": false,
+  "rescueReplay": {
+    "exitCode": 0,
+    "matchesPublishedFields": {
+      "alpha": 0.0,
+      "calibrationCorrect": 114,
+      "calibrationFamilies": 96,
+      "calibrationRowsSha256": "09089d6d173268f5908a7b320a99dfd5f6778a672f09baa67a3fc92c785421ff",
+      "calibrationScoresSha256": "3d6a5d2b4bd52d09fe773527aa0eed821b7b677de9aad67de38187e989875907",
+      "calibrationWrong": 0,
+      "frequencyScale": 5000.0,
+      "holdoutSha256": "080a880598461948f49f7635fd0fb1fd6ebf53eea7f218368ba3404100420723",
+      "minimumMargin": 0.632436045368692,
+      "minimumScore": 0.46357352954758124,
+      "modelSha256": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+      "secondaryCalibrationScoresSha256": "3f2f92d4657fe230d5904c8140ac9312702f3d0ff4e5543c65ee6e4709c85c0a",
+      "trainingReceiptSha256": "e811ebde4ada1e0bceb2e5086f062dfcb762cdc0c3e7ed56891a5fa91a5e4bc9"
+    },
+    "originalGeneratorRuntimeVerified": false,
+    "parentTrainingRequalified": false,
+    "policySha256": "865de845d50e995c11fb08cf586541e31941ce08c93fb7f628f07bf91365102b"
+  },
+  "retainedFailures": [
+    {
+      "childExitNotCapturedSeparately": true,
+      "errors": 8,
+      "focusedTests": 13,
+      "kind": "initial extraction",
+      "logSha256": "2d574782eaf6ee59c42b61b92e1b98528569b071cee790a6c314f459974510ab",
+      "outerShellExitCode": 0
+    },
+    {
+      "failures": 1,
+      "kind": "first full stdlib historical current-source assertion",
+      "receiptSha256": "2c4a3eb4d07ae638b48af997d2c6d6f23d529de0b7df0c98fc09804096e74688",
+      "resolution": "exact archived source lookup; original receipts unchanged",
+      "status": "FAIL"
+    }
+  ],
+  "schemaVersion": 1,
+  "scope": "joint calibration binding and pinned numerical replay; full Q6 incomplete"
+}

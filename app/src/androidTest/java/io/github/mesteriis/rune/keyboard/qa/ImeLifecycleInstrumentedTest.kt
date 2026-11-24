@@ -34,13 +34,44 @@ class ImeLifecycleInstrumentedTest : ImeTestBase() {
             driver.cancelTouch(touch)
         }
         assertTrue("Detach must follow real deletion without emptying the fixture", deletions in 3 until CANARY.length)
-        val afterDetach = CANARY.dropLast(deletions)
         SystemClock.sleep(900)
         driver.device.pressBack()
         driver.focusField("qa_plain_text")
-        driver.awaitFieldText("qa_plain_text", afterDetach)
+        // A Delete dispatched during the focus transition can be refused or have no
+        // editor connection. Count actual text changes separately from dispatches.
+        val afterDetach = driver.fieldText("qa_plain_text")
+        val applied = CANARY.length - afterDetach.length
+        assertTrue("Detach must preserve the prefix and apply at least three deletes without extra edits",
+            CANARY.startsWith(afterDetach) && afterDetach.isNotEmpty() && applied in 3..deletions)
         SystemClock.sleep(900)
         driver.awaitFieldText("qa_plain_text", afterDetach)
+    }
+
+    @Test
+    fun observeDeleteDetachOrdering() {
+        driver.launchQa(observeDetachLength = true)
+        driver.tapQaControl("qa_seed_canary")
+        driver.awaitFieldText("qa_plain_text", CANARY)
+        val detached = java.util.concurrent.atomic.AtomicLong(-1)
+        val deliveries = driver.holdDeleteForActions(onDetached = { detached.set(it) }) { touch ->
+            driver.shell("am start -W -n ${ImeTestDriver.PACKAGE_NAME}/.settings.SettingsActivity")
+            driver.cancelTouch(touch)
+        }
+        SystemClock.sleep(900)
+        driver.device.pressBack()
+        driver.focusField("qa_plain_text")
+        val stats = checkNotNull(driver.device.findObject(By.res(ImeTestDriver.PACKAGE_NAME,
+            "qa_detach_length"))).text.split(' ').associate { val (key, value) = it.split('='); key to value.toLong() }
+        val final = driver.fieldText("qa_plain_text")
+        assertTrue(CANARY.startsWith(final))
+        assertTrue(CANARY.length - final.length in 3..deliveries)
+        SystemClock.sleep(900)
+        driver.awaitFieldText("qa_plain_text", final)
+        InstrumentationRegistry.getInstrumentation().sendStatus(2, android.os.Bundle().apply {
+            putInt("delivered", deliveries); putInt("final_length", final.length)
+            putLong("pause_length", stats.getValue("pause")); putLong("stop_length", stats.getValue("stop"))
+            putLong("last_edit_at", stats.getValue("lastEditAt")); putLong("key_detached_at", detached.get())
+        })
     }
 
     @Test

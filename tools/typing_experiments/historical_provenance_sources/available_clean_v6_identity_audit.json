@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "parts": {
+    "calibration": {
+      "rows": 7905,
+      "contexts": 1661,
+      "families": 588,
+      "articles": 1651,
+      "trainingFamilyOverlap": [],
+      "priorArticleOverlap": [],
+      "priorContextOverlap": [],
+      "familyPartitionMismatch": [],
+      "previouslyBoundFamilies": 498,
+      "familiesNotInPriorMetadata": 90
+    },
+    "holdout": {
+      "rows": 7750,
+      "contexts": 1630,
+      "families": 523,
+      "articles": 1614,
+      "trainingFamilyOverlap": [],
+      "priorArticleOverlap": [],
+      "priorContextOverlap": [],
+      "familyPartitionMismatch": [],
+      "previouslyBoundFamilies": 456,
+      "familiesNotInPriorMetadata": 67
+    }
+  },
+  "crossPartOverlap": {
+    "families": [],
+    "articles": [],
+    "contexts": []
+  },
+  "qualityQualificationPerformed": false,
+  "priorFamilyMetadataIsNotExhaustive": true,
+  "earlierEvaluationFamiliesAllowed": true
+}

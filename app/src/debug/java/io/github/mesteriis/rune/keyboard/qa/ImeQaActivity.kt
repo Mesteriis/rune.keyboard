@@ -6,6 +6,11 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
+import android.text.Editable
+import android.text.Spanned
+import android.text.TextWatcher
+import android.os.SystemClock
+import android.text.style.SuggestionSpan
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
@@ -24,6 +29,30 @@ import io.github.mesteriis.rune.keyboard.R
 class ImeQaActivity : Activity() {
     private lateinit var plainText: EditText
     private var webEditingFixture: WebEditingQaFixture? = null
+    private var detachLength: TextView? = null
+    private var pauseLength = -1
+    private var stopLength = -1
+    private var lastEditAt = 0L
+
+    private fun updateDetachStats() {
+        detachLength?.text = "pause=$pauseLength stop=$stopLength lastEditAt=$lastEditAt"
+    }
+
+    override fun onPause() {
+        if (::plainText.isInitialized && detachLength != null && pauseLength < 0) {
+            pauseLength = plainText.length()
+            updateDetachStats()
+        }
+        super.onPause()
+    }
+
+    override fun onStop() {
+        if (::plainText.isInitialized && detachLength != null && stopLength < 0) {
+            stopLength = plainText.length()
+            updateDetachStats()
+        }
+        super.onStop()
+    }
 
     override fun onDestroy() {
         webEditingFixture?.dispose()
@@ -50,8 +79,7 @@ class ImeQaActivity : Activity() {
             }
             setContentView(scrollView)
             applySystemBarInsets(scrollView)
-            fixture.editor.requestFocus()
-            fixture.editor.post { showKeyboard(fixture.editor) }
+            showKeyboardOnLaunch(fixture.editor)
             return
         }
         val content = LinearLayout(this).apply {
@@ -60,6 +88,11 @@ class ImeQaActivity : Activity() {
             setPadding(padding, padding, padding, padding)
         }
         content.addView(label(getString(R.string.qa_title)))
+        if (intent.getBooleanExtra("qa_observe_detach_length", false)) {
+            detachLength = TextView(this).apply { id = R.id.qa_detach_length }
+            updateDetachStats()
+            content.addView(detachLength)
+        }
 
         plainText = addEditor(
             content, getString(R.string.qa_plain_label), R.id.qa_plain_text,
@@ -67,11 +100,23 @@ class ImeQaActivity : Activity() {
             InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES,
             EditorInfo.IME_ACTION_DONE,
         )
+        if (detachLength != null) plainText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+            override fun afterTextChanged(s: Editable?) { lastEditAt = SystemClock.uptimeMillis(); updateDetachStats() }
+        })
         content.addView(actionButton(R.id.qa_seed_selection, R.string.qa_seed_selection) {
             seed(plainText, "beforeSELECTEDafter", 6, 14)
         })
         content.addView(actionButton(R.id.qa_seed_cursor, R.string.qa_seed_cursor) {
             seed(plainText, "leftright", 4, 4)
+            if (intent.getBooleanExtra("qa_misspelling_fixture", false)) {
+                plainText.text.setSpan(
+                    SuggestionSpan(this, arrayOf("left right"),
+                        SuggestionSpan.FLAG_EASY_CORRECT or SuggestionSpan.FLAG_MISSPELLED),
+                    0, plainText.text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+                )
+            }
         })
         content.addView(actionButton(R.id.qa_seed_start, R.string.qa_seed_start) {
             seed(plainText, "start", 0, 0)
@@ -178,8 +223,7 @@ class ImeQaActivity : Activity() {
         }
         setContentView(scrollView)
         applySystemBarInsets(scrollView)
-        plainText.requestFocus()
-        plainText.post { showKeyboard(plainText) }
+        showKeyboardOnLaunch(plainText)
     }
 
     private fun addEditor(
@@ -247,6 +291,17 @@ class ImeQaActivity : Activity() {
             -1,
         )
         showKeyboard(editor)
+    }
+
+    private fun showKeyboardOnLaunch(editor: EditText) {
+        editor.requestFocus()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.let {
+                it.show(WindowInsets.Type.ime())
+                return
+            }
+        }
+        editor.post { showKeyboard(editor) }
     }
 
     private fun showKeyboard(editor: EditText) {

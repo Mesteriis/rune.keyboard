@@ -82,8 +82,7 @@ def read_bundle(data=DATA):
         name = 'prepare_refinement.py' if directory.startswith('typing-refinement') else 'prepare_epoch_test.py'
         name = 'tools/typing_experiments/' + name
         expected_generators[name] = original['preparationScriptSha256']
-        if sha((ROOT / name).read_bytes()) != original['preparationScriptSha256']:
-            raise ValueError('HISTORICAL_GENERATOR_IDENTITY')
+        read_frozen_source(ROOT,name,original['preparationScriptSha256'])
     if meta.get('generators') != expected_generators:
         raise ValueError('HISTORICAL_GENERATOR_BINDING')
     if set(payloads) != set(meta['files']):
@@ -103,6 +102,7 @@ def read_bundle(data=DATA):
 
 sys.path.insert(0, str(ROOT / 'tools/typing_experiments'))
 from holdout_ledger import keys_for, load_ledger, validate_ledger
+from frozen_source_identity import read_frozen_source
 
 ENTRY = 'public-extra-epochs-data-history-v1'
 LEDGER = ROOT / 'tools/typing_experiments/holdout-ledger.json'

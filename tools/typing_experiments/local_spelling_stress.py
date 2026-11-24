@@ -62,9 +62,22 @@ def percentile(values, fraction):
     return sorted(values)[max(0, math.ceil(len(values) * fraction) - 1)]
 
 
-def audit(rows, observations):
+def restore_source_ids(rows, observations, identities):
+    if len(rows) != len(observations) or len(rows) != len(identities):
+        raise ValueError('IDENTITY_MAP_COUNT')
+    restored = []
+    for index, (row, obs, identity) in enumerate(zip(rows, observations, identities, strict=True)):
+        if (identity.get('index') != index or identity.get('sourceId') != row.get('id') or
+                identity.get('id') != obs.get('id') or identity.get('id') != f'replay-{index:08d}'):
+            raise ValueError('IDENTITY_MAP_MISMATCH')
+        restored.append({**obs, 'id': row['id']})
+    return restored
+
+
+def audit(rows, observations, boundary=' '):
     # Reuse strict identity, editor, flags, prefix and Undo accounting.
-    result = evaluate(rows, observations)
+    result = evaluate(rows, observations, boundary)
+    change_key = 'boundaryChangedBeyondInsertedSpace' if boundary == ' ' else 'boundaryChangedBeyondInsertion'
     families = {}
     refusals = Counter()
     valid_originals = dict(rows=0, retained=0, caseOnlyChanges=0, spellingChanges=0)
@@ -77,10 +90,10 @@ def audit(rows, observations):
         valid = pool.get('isValidWord') is True
         if valid and row['cohort'] == 'typo':
             valid_originals['rows'] += 1
-            changed = obs['boundaryChangedBeyondInsertedSpace']
-            case_only = obs['afterBoundary']['text'].casefold() == (obs['beforeBoundary']['text'] + ' ').casefold()
+            changed = obs[change_key]
+            case_only = obs['afterBoundary']['text'].casefold() == (obs['beforeBoundary']['text'] + boundary).casefold()
             valid_originals['retained' if not changed else 'caseOnlyChanges' if case_only else 'spellingChanges'] += 1
-        if row['cohort'] == 'typo' and not obs['boundaryChangedBeyondInsertedSpace']:
+        if row['cohort'] == 'typo' and not obs[change_key]:
             reason = obs.get('automaticAdmissionRefusal')
             # Absence of an admission callback is not an invented refusal reason.
             reason = reason or ('VALID_ORIGINAL' if valid else 'NO_ADMISSION_CALLBACK')
@@ -95,15 +108,17 @@ def audit(rows, observations):
         after = obs['afterBoundary']['text']
         before = obs['beforeBoundary']['text']
         prefix = before[:-len(row['typed'])] if before.endswith(row['typed']) else None
-        intended = prefix is not None and after.casefold() == (prefix + row['expectedSpelling'] + ' ').casefold()
+        intended = prefix is not None and after.casefold() == (prefix + row['expectedSpelling'] + boundary).casefold()
         item = families.setdefault(row['family'], dict(rows=0, intendedOutput=0, retained=0))
         item['rows'] += 1
         item['intendedOutput'] += intended
-        item['retained'] += not obs['boundaryChangedBeyondInsertedSpace']
-        if obs['boundaryChangedBeyondInsertedSpace'] and not intended:
-            departures = case_only_departures if after.casefold() == (before + ' ').casefold() else failures
-            departures.append(dict(id=row['id'], typed=row['typed'], target=row['expectedSpelling'],
-                                   actual=after, validOriginal=valid, family=row['family']))
+        item['retained'] += not obs[change_key]
+        if obs[change_key]:
+            case_only = after.casefold() == (before + boundary).casefold()
+            if case_only or not intended:
+                departures = case_only_departures if case_only else failures
+                departures.append(dict(id=row['id'], typed=row['typed'], target=row['expectedSpelling'],
+                                       actual=after, validOriginal=valid, family=row['family']))
         for stage, value in obs.get('hostStageNanos', {}).items():
             if type(value) is not int or value < 0:
                 raise ValueError('INVALID_STAGE_TIMING')
@@ -133,6 +148,8 @@ def main():
     prepare = sub.add_parser('prepare')
     prepare.add_argument('--output', type=Path, required=True)
     report = sub.add_parser('report')
+    report.add_argument('--boundary', choices=('space', 'period', 'colon'), default='space')
+    report.add_argument('--identities', type=Path, help='host-only current-product input-identities.jsonl')
     for name in ('rows', 'observations', 'output'):
         report.add_argument('--' + name, type=Path, required=True)
     args = parser.parse_args()
@@ -150,9 +167,15 @@ def main():
                                for name in ('rows.jsonl', 'inputs.tsv')})
         (args.output / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     else:
-        result = audit(read(args.rows), read(args.observations))
+        boundary = {'space': ' ', 'period': '.', 'colon': ':'}[args.boundary]
+        rows, observations = read(args.rows), read(args.observations)
+        if args.identities:
+            observations = restore_source_ids(rows, observations, read(args.identities))
+        result = audit(rows, observations, boundary)
+        if boundary != ' ': result['boundary'] = boundary
         result['inputs'] = {name: hashlib.sha256(path.read_bytes()).hexdigest()
                             for name, path in [('rows', args.rows), ('observations', args.observations)]}
+        if args.identities: result['inputs']['identities'] = hashlib.sha256(args.identities.read_bytes()).hexdigest()
         with args.output.open('x') as stream:
             json.dump(result, stream, ensure_ascii=False, indent=2)
             stream.write('\n')

@@ -803,7 +803,11 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
     private fun awaitNonNormalText(mode: String, expected: String): EditorSnapshot {
         var result: EditorSnapshot? = null
         await("Non-normal public editor text/selection/span did not settle") {
-            val current = snapshot()
+            val current = visibleSnapshot()
+            if (current == null) {
+                result = null
+                return@await false
+            }
             val textMatches = if (mode == "password") {
                 // The debug editor compares its actual Editable against the fixed public prefix.
                 // Android's password accessibility text remains masked and is not asserted.
@@ -917,13 +921,15 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
         }
     }
 
-    private fun snapshot(): EditorSnapshot {
-        val text = checkNotNull(driver.device.findObject(By.res(ImeTestDriver.PACKAGE_NAME, "qa_composing_text")))
-            .text.orEmpty()
-        val stats = checkNotNull(driver.device.findObject(By.res(ImeTestDriver.PACKAGE_NAME, "qa_composing_stats")))
-            .text.orEmpty().split(' ').associate { value ->
-                val (key, number) = value.split('='); key to number.toInt()
-            }
+    private fun snapshot(): EditorSnapshot = checkNotNull(visibleSnapshot()) { "QA editor field or counters unavailable" }
+
+    private fun visibleSnapshot(): EditorSnapshot? {
+        val field = driver.device.findObject(By.res(ImeTestDriver.PACKAGE_NAME, "qa_composing_text")) ?: return null
+        val text = field.text.orEmpty()
+        val node = driver.device.findObject(By.res(ImeTestDriver.PACKAGE_NAME, "qa_composing_stats")) ?: return null
+        val stats = node.text.orEmpty().split(' ').associate { value ->
+            val (key, number) = value.split('='); key to number.toInt()
+        }
         return EditorSnapshot(text, stats)
     }
 

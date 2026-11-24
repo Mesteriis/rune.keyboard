@@ -35,17 +35,19 @@ class EditorBoundaryInstrumentedTest : ImeTestBase() {
         assertServedEditor(R.id.qa_multiline_text)
         driver.assertKeyVisible("c")
         driver.tapKey("c")
-        driver.revealFieldAndAwaitText("qa_multiline_text", "c")
-
-        driver.focusField("qa_multiline_text")
+        assertServedEditor(R.id.qa_multiline_text)
         driver.tapKeyByDescription(context.getString(R.string.key_symbols))
-        assertTrue(driver.device.hasObject(By.desc(context.getString(R.string.key_letters))))
+        assertServedEditor(R.id.qa_multiline_text)
+        assertTrue("Symbols layer did not expose the letters key",
+            driver.device.wait(Until.hasObject(By.pkg(ImeTestDriver.PACKAGE_NAME)
+                .desc(context.getString(R.string.key_letters))), 5_000L))
         driver.focusField("qa_plain_text")
         assertServedEditor(R.id.qa_plain_text)
         driver.assertKeyVisible("q")
         driver.tapKey("q")
         // Selection is expected to be refreshed by editor focus changes between distinct fields.
         driver.revealFieldAndAwaitText("qa_plain_text", "leftrightq")
+        driver.revealFieldAndAwaitText("qa_multiline_text", "c")
     }
 
     /** Verify actual Binder editor delivery, even if adjustResize hides its accessibility node. */

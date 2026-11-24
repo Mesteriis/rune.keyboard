@@ -32,7 +32,7 @@ class LearningDisclosureTest(unittest.TestCase):
 
     def test_computed_serialized_value_cannot_bypass_record_inventory(self):
         self.change(gate.BASE + 'personalization/PersonalTypingCodec.kt',
-                    'out.writeInt(MAGIC)', 'out.writeInt(MAGIC); out.writeLong(0L)')
+                    'out.writeInt(snapshot.confirmed.size)', 'out.writeInt(snapshot.confirmed.size); out.writeLong(0L)')
         self.assertIn('UNREVIEWED_SERIALIZED_WRITER personalization/PersonalTypingCodec.kt/encode',
                       gate.inspect(self.root))
 
@@ -57,6 +57,22 @@ class LearningDisclosureTest(unittest.TestCase):
     def test_numeric_prefix_cannot_hide_larger_underscored_limit(self):
         self.change(gate.BASE + 'learning/LearningModel.kt', 'MAX_EVIDENCE = 512', 'MAX_EVIDENCE = 512_000')
         self.assertIn('UNDISCLOSED_STORAGE_LIMIT MAX_EVIDENCE', gate.inspect(self.root))
+
+    def test_case_rejection_limit_and_both_consent_locales_are_reviewed(self):
+        self.change(gate.BASE + 'personalization/PersonalTypingModel.kt',
+                    'MAX_CASE_REJECTIONS = 512', 'MAX_CASE_REJECTIONS = 513')
+        self.assertIn('UNDISCLOSED_STORAGE_LIMIT MAX_CASE_REJECTIONS', gate.inspect(self.root))
+        for locale, phrase in [('values', 'rejected lowercase-to-titlecase changes'),
+                               ('values-ru', 'отменённые изменения строчной буквы на заглавную')]:
+            with self.subTest(locale=locale):
+                path = self.root / 'app/src/main/res' / locale / 'strings.xml'
+                original = path.read_text(); path.write_text(original.replace(phrase, 'other data'))
+                self.assertIn('CONSENT_DISCLOSURE ' + locale + '/settings_personal_learning_summary', gate.inspect(self.root))
+                path.write_text(original)
+
+    def test_privacy_policy_must_disclose_case_rejections(self):
+        self.change('PRIVACY.md', '512 capitalization rejections', 'capitalization rejections')
+        self.assertIn('CASE_REJECTION_PRIVACY_DISCLOSURE', gate.inspect(self.root))
 
     def test_phrase_disclosure_must_exist_in_each_consent_locale(self):
         for locale, word in [('values', 'phrase prefixes/continuations'), ('values-ru', 'начала и продолжения фраз')]:

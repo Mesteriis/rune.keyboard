@@ -23,6 +23,50 @@ def fixture(split='calibration', changed=True, undo=True, protected=False):
 
 
 class LocalQualificationTest(unittest.TestCase):
+    def test_aggregate_precision_cannot_hide_a_failed_named_case(self):
+        rows, observations = [], []
+        for index in range(101):
+            row, observation = fixture('holdout')
+            row['id'] = observation['id'] = f'case-{index}'
+            rows.append(row)
+            observations.append(observation)
+        observations[-1]['afterBoundary']['text'] = 'wrong '
+        self.assertTrue(holdout.metrics(rows, observations)['pass'])
+        with self.assertRaisesRegex(ValueError, 'NAMED_EXACT_OUTPUT'):
+            runner.require_named_acceptance(rows, observations)
+
+    def test_named_cases_remain_disclosed_with_correct_and_protected_controls(self):
+        rows = runner.named_rows()
+        self.assertEqual(56, len(rows))
+        self.assertEqual(len(rows), len({r['id'] for r in rows}))
+        for typed, expected in [('заьыл', 'забыл'), ('заберай', 'забирай'), ('зочу', 'хочу')]:
+            selected = [r for r in rows if r['language'] == 'ru' and r['typed'] == typed]
+            self.assertEqual(1, len(selected))
+            self.assertEqual(expected, selected[0]['expectedSpelling'])
+            for token in (expected, '@' + typed, typed + '@example.com'):
+                self.assertTrue(any(r['typed'] == token and r['noAuto'] for r in rows))
+        self.assertTrue(all(r['purpose'] == 'REGRESSION_ONLY_NOT_TRAINING' for r in rows))
+
+    def test_every_named_output_and_undo_must_pass_individually(self):
+        row, observation = fixture('holdout')
+        runner.require_named_acceptance([row], [observation])
+        observation['afterBoundary']['text'] = 'wrong '
+        with self.assertRaisesRegex(ValueError, 'NAMED_EXACT_OUTPUT'):
+            runner.require_named_acceptance([row], [observation])
+        observation['afterBoundary']['text'] = 'the '
+        observation['restoredBeforeBoundaryExactly'] = False
+        with self.assertRaisesRegex(ValueError, 'NAMED_EXACT_UNDO'):
+            runner.require_named_acceptance([row], [observation])
+
+    def test_named_identity_and_unreported_control_mutation_are_rejected(self):
+        row, observation = fixture('holdout')
+        with self.assertRaisesRegex(ValueError, 'NAMED_IDENTITY'):
+            runner.require_named_acceptance([row, row], [observation, observation])
+        row.update(cohort='correct', noAuto=True, expectedSpelling='teh')
+        observation['afterBoundary']['text'] = 'teh '
+        with self.assertRaisesRegex(ValueError, 'NAMED_CONTROL_CHANGED'):
+            runner.require_named_acceptance([row], [observation])
+
     def test_evaluator_cli_refuses_every_independent_holdout_failure_without_a_receipt(self):
         for mutation in ('protected', 'correct', 'undo', 'original', 'original-no-coverage', 'precision'):
             with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as folder:

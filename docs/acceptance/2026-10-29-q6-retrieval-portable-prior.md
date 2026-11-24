@@ -1,0 +1,9 @@
+# Q6: portable retrieval prior-data fixture
+
+The historical word-ranking observations manifest found in the [real-prior diagnostic](2026-10-29-q6-retrieval-real-prior.md) contains machine-local paths. `tools/ci/historical-model-fixtures-v1/word-observations-projection.json` retains only its schema, original manifest SHA-256, data-manifest binding, export-receipt hash and partition hashes. It is a test-only projection, not the original manifest or an export receipt. Its own SHA-256 is pinned in `historical_model_fixtures.py`; mutation is rejected before the isolated fixture is used.
+
+The `word` fixture workspace now assembles this projection alongside the existing hash-checked public historical data archives and prior binding templates. In a fresh temporary workspace, the unmodified retrieval prior-data reader loaded all three prior data graphs: 6,308 article IDs, 18,000 context hashes, 1,697 text hashes and scan boundary 10,880. The test does not depend on the owner's `build/` copies. Mutating a referenced historical row file produces `PRIOR_DATA_IDENTITY`; changing the projection produces `MODEL_FIXTURE_WORD_OBSERVATIONS_PROJECTION`. The temporary workspace is removed afterwards.
+
+The historical fixture test module passes 8 tests with no skips. Its first run exposed an old registration assertion that assumed its ledger entry remained last. The assertion now checks all entries by unique ID, the full coverage record, and preservation of all pre-existing entry order. The final run passes; the initial failed run is retained in the local test log.
+
+This establishes portable **test-fixture** restoration of the inputs consumed by the prior-data reader, not a portable production collector command or a new qualified corpus. The projection does not establish the original observation/export bytes or full provenance. The actual registry remains incomplete and fresh qualification remains blocked. No product assets or APK changed.

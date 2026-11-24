@@ -1,0 +1,54 @@
+{
+  "allRowsCaptured": true,
+  "bindings": {
+    "build/smart-typing-0.3/model-v02/wikipedia-20231101/ru-0007.parquet": "39b59952cd92a148b301f4d2b3ae1fb71e4caab987c6abe278f0dbdf0b01bb88",
+    "tools/ci/historical-data-v1/NOTICE.md": "1b969c38a07e27ea6c827d8ac8a3e8e8d57ac5e1feae50a470578ea65d2a7e82",
+    "tools/ci/historical-data-v1/articles.jsonl": "5c1fbb820a39522a546ab6fd0d3954db8bc677f3a3ce248a813732e40b75a48f",
+    "tools/ci/historical-data-v1/files.tar.gz": "8a906500b956cd278a8c3230d584f580b23ff2980831436fc4d8cd4d33d9169c",
+    "tools/ci/historical-data-v1/manifest.json": "75c9076f0b960393f7c555f21b994443a3f67e853edc675730514820068ebf3a",
+    "tools/ci/historical-model-fixtures-v1/NOTICE.md": "c44b66ea1aa68b71600cb2c0085cd3c38da8773042063d6e3933a6d3b13cb4bd",
+    "tools/ci/historical-model-fixtures-v1/articles.jsonl": "4d792bb9d7e3d68299bbda9434239034e46f5e5d56c6e31b9789cbbc55922ddb",
+    "tools/ci/historical-model-fixtures-v1/files.tar.gz": "8c2e7bcf8906651185683220c32ac4a245c576f852416b77a365f1e95ce90ec2",
+    "tools/ci/historical-model-fixtures-v1/manifest.json": "e7e73185d1da72e5b45e79fd0556429c7de0af5a0d5c23d28a5e98b0df5567e1",
+    "tools/eval/smart-typing-0.3/qualification-v2/generate_corpus.py": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+    "tools/model/rune-text-0.2/source-lock.json": "582aab04ebad1876f344f14b585466bbdf793930c7d5ebd287cc6dc91637c193",
+    "tools/typing_experiments/frozen_sources/manifest.json": "014cd980e2f3c0fc074066bf79717d1fa7436900620d8e0f3ad18899eb63dba2",
+    "tools/typing_experiments/frozen_sources/prepare_epoch_test_9b1ac2491feb961c.py": "9b1ac2491feb961c6e45192e5a01f1c59e14448cedf87cd48bd00b68e354c241",
+    "tools/typing_experiments/frozen_sources/prepare_word_ranking_e213566e8f22f619.py": "e213566e8f22f619a372f09c2c91866f93d8029d5db8666f783318285df74240",
+    "tools/typing_experiments/frozen_sources/qualification_v2_2cbcb2508ef66b32.py": "2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65",
+    "tools/typing_experiments/import_word_epoch_windows.py": "1935442a59a6d7a8be38cf57ddbcd02e921954bc33f5025b5ab597fee0bf26ff",
+    "tools/typing_experiments/prepare_epoch_test.py": "9b1ac2491feb961c6e45192e5a01f1c59e14448cedf87cd48bd00b68e354c241",
+    "tools/typing_experiments/prepare_word_ranking.py": "e213566e8f22f619a372f09c2c91866f93d8029d5db8666f783318285df74240",
+    "tools/typing_experiments/recover_ranker_sources.py": "a1a3ab6a25fc2069635ec81615c450f60deaaedcb91652818342b340377723f5",
+    "tools/typing_experiments/right_context_sentence_audit.py": "73b7965af2aaceaea6b2fc591405c45a721b6b8b6b9b77e943afe51012d5a231"
+  },
+  "counts": {
+    "extra-test": {
+      "articles": 164,
+      "newWindows": 1499,
+      "rows": 1500,
+      "windows": 1499
+    },
+    "wordrank-dev": {
+      "articles": 202,
+      "newWindows": 1199,
+      "rows": 1200,
+      "windows": 1199
+    },
+    "wordrank-test": {
+      "articles": 402,
+      "newWindows": 1800,
+      "rows": 1800,
+      "windows": 1800
+    },
+    "wordrank-train": {
+      "articles": 1117,
+      "newWindows": 6014,
+      "rows": 6000,
+      "windows": 6014
+    }
+  },
+  "globalCoverageComplete": false,
+  "modelCalls": 0,
+  "purpose": "PUBLIC_HISTORICAL_TARGET_WINDOWS_NOT_QUALIFICATION"
+}

@@ -1,0 +1,71 @@
+{
+  "stage": "frozen-before-model-training-and-calibration-scores",
+  "seed": "rune-context-feature-probe-20261026-v1",
+  "sourceSha256": "fc1e2edc58fa27085d36c32c38922d7904077d9cdac05719efbcefa3faeea240",
+  "priorRows": {
+    "build/context-ranking-20261025/corpus/calibration.jsonl": "e3c8f68b9227ad5dd9d2e56796023f698c3b8d35034e3158258d7d4974ac86c0",
+    "build/context-ranking-20261025/corpus/holdout.jsonl": "0b6a3285ecd0b0b624b5d4fb7c4b8734509e38d7fa43f407c613f966673bf994",
+    "build/context-ranking-20261025/corpus-extra/calibration.jsonl": "779a41a758417fecdb1307cb50ebb1f994ceca6c2eb589d31e6aa0fdf13b5b1e",
+    "build/context-ranking-20261025/corpus-extra/holdout.jsonl": "d92d645d606b50f2515d57d848ff31ec02daafc9f24266df8fb89d61b083ecdb",
+    "build/diagnostic-rare-ranking/fresh-corpus/calibration.jsonl": "624f2cfb7d0dfe35348745abbc7caef4750628a9d313d4532e392f3e25aa0520",
+    "build/diagnostic-rare-ranking/fresh-corpus/holdout.jsonl": "080a880598461948f49f7635fd0fb1fd6ebf53eea7f218368ba3404100420723",
+    "build/joint-correction-20261025/corpus/calibration.jsonl": "1234785b62d4ff59ea54b52a7e7fb2ca3214996e0bb173d1c0b355d86015e97a",
+    "build/joint-correction-20261025/corpus/holdout.jsonl": "03e32ae46a61dd3c5ee0f84a308b9b2d79bf17f7c18de78442d2284738e8084d",
+    "build/joint-correction-20261025/corpus/train.jsonl": "a67ee9d103851f8b5c54e4059338a60e1cd5b8776e22440057eb48f07885bab9",
+    "build/joint-correction-20261025/followup-corpus/calibration.jsonl": "09089d6d173268f5908a7b320a99dfd5f6778a672f09baa67a3fc92c785421ff",
+    "build/joint-correction-20261025/followup-corpus/holdout.jsonl": "89d816bb3db371fa89161d808efe21ed75ebc4dbdf586d8b0ff3d0134a509eb6",
+    "build/joint-correction-20261025/followup-corpus-v3/calibration.jsonl": "cb606a6efb8fffeb41679bac29bf9516c2c06831ee6b07f5417a1f979f4097cb",
+    "build/joint-correction-20261025/followup-corpus-v3/holdout.jsonl": "04f779a29ee0a13ae9c27ea70af9513410facd063c164a59f755ef4c18593c75",
+    "build/typing-ranker-v2/candidates-current/rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/candidates-current-v2/rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/candidates-current-v2-failed-compile/rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/candidates-current-v2-failed-compile2/rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/data/all-rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/data/dev-rows.jsonl": "a2ddea29d8086a6c1d138e6ef59fc7399145b33b79becc3c0545940ad9ba260b",
+    "build/typing-ranker-v2/data/test-rows.jsonl": "e83eb9b99f2df73a8eae001ebedf1cafbd3fa370b6166ae9548551495c97f204",
+    "build/typing-ranker-v2/data/train-rows.jsonl": "e86df521d3c1a249fe514044a75d20b64259ffb76df6920e3f236ec3f6b5fc64",
+    "build/typing-ranker-v2/external-holdout-v10-ru0015/rows.jsonl": "6640f42600fcd7a3f5d79e4d47aa0cb7debbda778901c1b369ea5a7c4bd77133",
+    "build/typing-ranker-v2/external-holdout-v11-ru0016/rows.jsonl": "855fe3bf10aa1346817a03006487af5858cced660d14524964b51257b13a5d84",
+    "build/typing-ranker-v2/external-holdout-v12-ru0017/rows.jsonl": "95c0f40915241ef72e5bc7bcc1dd484e5aafcee691b32cb31d1e983b012d8fa2",
+    "build/typing-ranker-v2/external-holdout-v6-ru0011/rows.jsonl": "6d7dbaf67f16d3dd6a63a15551bebfb486b3b24e686f76f1a9d3e0ed1d083569",
+    "build/typing-ranker-v2/external-holdout-v7-ru0012/rows.jsonl": "5e9e82177edf943be83ea1dd256e0631044124ed5342444793d9cf31caf451ac",
+    "build/typing-ranker-v2/external-holdout-v8-ru0013/rows.jsonl": "4db31b8283e50ce3130714c5af870df563c90b18cbe2e7e2457c3b8470571538",
+    "build/typing-ranker-v2/external-holdout-v9-ru0014/rows.jsonl": "9dfee85583cade8ec3b968be7ba275ff33d00081427faef95ca6ad0442252c6a"
+  },
+  "excludedArticles": 9179,
+  "excludedLemmaOrFamilyKeys": 25428,
+  "excludedPrefixTails": 25314,
+  "files": {
+    "calibration.jsonl": "fba4db6936b60cdced2f593b67d8bf80cff1312d36488970bd81db26e15335fc",
+    "holdout.jsonl": "440ec850ae33022002bdaf1fc972f6614e8539cddf459af1e20895ec86bfb687"
+  },
+  "counts": {
+    "calibration": {
+      "rows": 3563,
+      "families": 600,
+      "groups": {
+        "missing_letter": 1166,
+        "adjacent1": 770,
+        "correct": 600,
+        "protected": 600,
+        "repeated_letter": 138,
+        "substitution": 166,
+        "transposition": 123
+      }
+    },
+    "holdout": {
+      "rows": 5906,
+      "families": 1000,
+      "groups": {
+        "missing_letter": 1910,
+        "adjacent1": 1244,
+        "substitution": 231,
+        "correct": 1000,
+        "protected": 1000,
+        "transposition": 216,
+        "repeated_letter": 305
+      }
+    }
+  },
+  "limits": "Ranker-label lemma/article disjoint; public unsupervised pretraining may contain these words. Heldout source0020 is absent from context-count sources."
+}

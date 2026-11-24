@@ -1,0 +1,9 @@
+{
+  "stage": "new-training-only-model-bound-before-independent-evaluation",
+  "previousModelSha256": "8413c59bb034a4f15fcd3b972fec7673e5844ad60b7ba22bd44bddfb389ca86e",
+  "modelSha256": "fd27f9224620e1866cbace6510d4de7c1034bccc36d480750887bc6e0f70def4",
+  "corpusManifestSha256": "7ed0a1f09bf39a73659c66ba21243de92ea39bdf7bd49ac75f9e2aed759662aa",
+  "corpusFilesUnchanged": true,
+  "trainingFamiliesUnchanged": true,
+  "independentModelScoresRead": false
+}

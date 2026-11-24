@@ -1,0 +1,80 @@
+{
+  "controlledHostExport": {
+    "exitCode": 0,
+    "files": {
+      "FrozenExperimentAssets.kt": "a60f326aa729cf4541a6967a6bbb7c2eb424bb480f9ae6c394e2e56af056961a",
+      "parity.tsv": "374f78253303b3fd77c5fd17a04190fd73e9d410bc5f069d5860bcefea90fad0",
+      "provenance.json": "d0de9be44a552232a9cd43d6a672521be40ca9ad4e66e9f592f468e44a615a86",
+      "ru-context.bin": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
+      "ru-ranker.bin": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+      "ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50"
+    },
+    "optimizedPython": true,
+    "packagedFileSha256": {
+      "app/src/main/assets/smarttyping/experiments/NOTICE.md": "efceac6d0dde6e787e3545e6b3de0f87be6950c67b655ee9076869f07580a9ce",
+      "app/src/main/assets/smarttyping/experiments/contextual-provenance.json": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435",
+      "app/src/main/assets/smarttyping/experiments/contextual-tatoeba-attribution.json": "f81b27066cee38a2f2a14c2766e9cceae399d3c7590bca7b63e4d782fd18dd44",
+      "app/src/main/assets/smarttyping/experiments/infinitive-revision-provenance.json": "a20fe5c9981e857dda6823fb5aeffb56c365556a6e38542250a714ea3aa20fca",
+      "app/src/main/assets/smarttyping/experiments/joint-correction-provenance.json": "7b42d0a46dd754d32903f73dabcefa7eea462f5c6cba1e886a06008bd22cf5e7",
+      "app/src/main/assets/smarttyping/experiments/joint-rescue-provenance.json": "4700fab35c3d9ea83457920187ae41ea88c7a95220325401cf13d83bcd83fcdb",
+      "app/src/main/assets/smarttyping/experiments/neighbor-recovery-provenance.json": "f988fea3f6d96f68ad0394e5a4ded6e067dec8fb305d561415cdc77c4440e4ce",
+      "app/src/main/assets/smarttyping/experiments/noun-case-provenance.json": "a9b1760a0b462a68ff38264be9ae13a9dac9ebf5840cf606778b32c1d2910235",
+      "app/src/main/assets/smarttyping/experiments/provenance.json": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4",
+      "app/src/main/assets/smarttyping/experiments/ru-context.bin": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
+      "app/src/main/assets/smarttyping/experiments/ru-context.gram": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b",
+      "app/src/main/assets/smarttyping/experiments/ru-contextual-policy.json": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6",
+      "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+      "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6",
+      "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-policy.json": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595",
+      "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-policy.json": "ebdb0e83f3c4ed3476f5b317e31619415ca020d9703cd3d6900b9e8ac5c4701d",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+      "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+      "app/src/main/assets/smarttyping/experiments/ru-noun-case-policy.json": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+      "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker.bin": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+      "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+      "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt": "ff4e3cc8b0f67da2295e375b129518100fa8b2b981f32ed490e6e38daa01fd34",
+      "tools/typing_experiments/parity.tsv": "374f78253303b3fd77c5fd17a04190fd73e9d410bc5f069d5860bcefea90fad0"
+    },
+    "packagedFilesUnchanged": true,
+    "parityRows": 4,
+    "promoterSha256": "8fc836c045636acae62297760505d2127e6078a888497cfd1942ce3bbfbc5c01",
+    "scope": "controlled-host-export-not-historical-qualification"
+  },
+  "freshQualification": false,
+  "fullHistoricalEvaluationPerformed": false,
+  "historicalPromoter": {
+    "path": "tools/typing_experiments/frozen_sources/promote_refinement_7d08806ddae6eab8.py",
+    "sha256": "7d08806ddae6eab8714871ddaaf332f6e3b7bb41e8e14d95b0ddd7a7ba7ae6b4"
+  },
+  "independentDataEvaluationProducerIntegrated": false,
+  "modelTrainingPerformed": false,
+  "packagedFilesChanged": false,
+  "phoneExecuted": false,
+  "schemaVersion": 1,
+  "scope": "refinement-promotion-admission-and-controlled-host-export",
+  "sourceSha256": {
+    "tools/check_packaged_provenance_paths.py": "8a66fbfee72e26efe29a5548872db7b3bd6cb1ba9941c0731b631278b4f20460",
+    "tools/ci/python-tools-tests.json": "ba82428df46803e68968a91c5f700fe83fe981747151000da643b4b134eadfd0",
+    "tools/typing_experiments/frozen_sources/manifest.json": "e0069e63b317a7c08191049437e37a6f5ee513f0afddfbecd8e40110ed4463f7",
+    "tools/typing_experiments/promote_refinement.py": "8fc836c045636acae62297760505d2127e6078a888497cfd1942ce3bbfbc5c01",
+    "tools/typing_experiments/test_promote_refinement.py": "3e1e38b84fb07a025531f62151e9f586e7f3bbcbea6281564e6df8d273760e50"
+  },
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "finalFocusedAfterRegistryRecheck": true,
+    "finalRuntimeTreeValidation": true,
+    "focusedPython3_12": 6,
+    "focusedPython3_14": 6,
+    "packagedProvenanceTests": 12,
+    "receiptSha256": "4c83280119e3be20533920bb1aae33ea937afaf2efb12a36b9adfa4fafed8a3b",
+    "skips": 0,
+    "stdlibModules": 115,
+    "stdlibTests": 609
+  }
+}

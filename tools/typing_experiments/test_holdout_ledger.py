@@ -1,9 +1,15 @@
 import json
+import copy
+import base64
+import hashlib
+import subprocess
+import sys
 from pathlib import Path
 import tempfile
+from temporary_test_build import temporary_build_directory
 import unittest
 
-from holdout_ledger import KEY_SCHEMA, KINDS, assert_disjoint, keys_for, load_ledger, validate_ledger
+from holdout_ledger import KEY_SCHEMA, KINDS, assert_disjoint, keys_for, load_ledger, pack_ledger, validate_ledger
 
 
 def row(**changes):
@@ -19,6 +25,57 @@ def ledger(complete=True):
 
 
 class HoldoutLedgerTest(unittest.TestCase):
+    def test_temporary_build_support_creates_missing_parent_and_preserves_existing_data(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            with temporary_build_directory(root) as work:
+                self.assertTrue(Path(work).is_dir())
+                self.assertTrue(Path(work).is_relative_to(root / 'build'))
+                (root / 'build' / 'keep').write_text('existing')
+            self.assertFalse(Path(work).exists())
+            self.assertEqual('existing', (root / 'build' / 'keep').read_text())
+
+    def test_compact_storage_round_trips_and_preserves_overlap_checks(self):
+        original=ledger();packed=pack_ledger(original,minimum=1)
+        self.assertIsInstance(packed['entries'][0]['keys']['sentence'],dict)
+        self.assertIsInstance(original['entries'][0]['keys']['sentence'],list)
+        decoded=validate_ledger(copy.deepcopy(packed))
+        self.assertEqual(original,decoded)
+        self.assertEqual(packed,pack_ledger(decoded,minimum=1))
+        with self.assertRaisesRegex(ValueError,'LEDGER_OVERLAP:sentence'):
+            assert_disjoint([row()],copy.deepcopy(packed),kinds=('sentence',))
+
+    def test_compact_storage_rejects_corruption_and_noncanonical_order(self):
+        packed=pack_ledger(ledger(),minimum=1)
+        for field,value in [('count',True),('count',2000001),('data','!'),('sha256','0'*64),('encoding','unknown')]:
+            changed=copy.deepcopy(packed);changed['entries'][0]['keys']['sentence'][field]=value
+            with self.subTest(field=field),self.assertRaisesRegex(ValueError,'LEDGER_PACKED_KEYS'):
+                validate_ledger(changed)
+        changed=copy.deepcopy(packed);value=changed['entries'][0]['keys']['sentence']
+        raw=bytes.fromhex('f'*64)+bytes.fromhex('0'*64)
+        value.update(count=2,sha256=hashlib.sha256(raw).hexdigest(),data=base64.b64encode(raw).decode())
+        with self.assertRaisesRegex(ValueError,'LEDGER_ENTRY_KEYS'):validate_ledger(changed)
+        raw=bytes.fromhex('1'*64)*2
+        value.update(count=2,sha256=hashlib.sha256(raw).hexdigest(),data=base64.b64encode(raw).decode())
+        with self.assertRaisesRegex(ValueError,'LEDGER_ENTRY_KEYS'):validate_ledger(changed)
+        for minimum in (0,True,-1):
+            with self.assertRaisesRegex(ValueError,'LEDGER_PACK_THRESHOLD'):pack_ledger(ledger(),minimum)
+
+    def test_compact_command_writes_new_verified_copy_and_refuses_overwrite(self):
+        root=Path(__file__).resolve().parents[2]
+        with temporary_build_directory(root) as folder:
+            source=Path(folder)/'source.json';out=Path(folder)/'packed.json'
+            source.write_text(json.dumps(ledger()));before=source.read_bytes()
+            args=[sys.executable,str(root/'tools/typing_experiments/compact_holdout_ledger.py'),
+                  '--input',str(source),'--output',str(out),'--minimum','1']
+            result=subprocess.run(args,capture_output=True,text=True)
+            self.assertEqual(0,result.returncode,result.stderr)
+            self.assertTrue(json.loads(result.stdout)['logicalEntriesUnchanged'])
+            self.assertEqual(ledger(),load_ledger(out));self.assertEqual(before,source.read_bytes())
+            saved=out.read_bytes();result=subprocess.run(args,capture_output=True,text=True)
+            self.assertNotEqual(0,result.returncode);self.assertIn('COMPACT_PATH',result.stderr)
+            self.assertEqual(saved,out.read_bytes())
+
     def test_known_overlap_on_every_axis_is_rejected(self):
         for kind in KINDS:
             with self.assertRaisesRegex(ValueError, 'LEDGER_OVERLAP:' + kind):
@@ -51,7 +108,8 @@ class HoldoutLedgerTest(unittest.TestCase):
 
     def test_missing_or_malformed_identity_cannot_be_silently_skipped(self):
         for kind, value in [('article', row(article=None)), ('article', row(article='tatoeba:1')),
-                            ('family', row(families=[])), ('sentence', row(contextHash='bad')),
+                            ('family', row(families=[])), ('family', row(families=['172788'])),
+                            ('sentence', row(contextHash='bad')),
                             ('context', row(expectedSpelling=None))]:
             with self.assertRaises(ValueError):
                 keys_for([value], kind)

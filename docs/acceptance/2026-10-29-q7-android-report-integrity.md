@@ -1,0 +1,7 @@
+# Q7: Android CI report integrity
+
+The Android suite router previously trusted aggregate JUnit XML attributes and a minimum count. A fresh, empty document declaring 300 tests could therefore satisfy the general suite floor, and a populated report for the wrong class could satisfy a special suite's floor. Neither is proof that the intended tests ran.
+
+The router now checks the actual testcase records against the aggregate test, failure, error and skip counts; rejects missing or duplicate class/name pairs and conflicting status elements; and checks that each special suite reports only its assigned class and, where applicable, the exact assigned method. The general suite rejects the four specially routed classes, and native runtime records must use the runtime package. Existing per-suite minimum executed counts, fresh-result isolation and failure aggregation remain in force. The general floor still does not prove that every intended test was discovered.
+
+Seven local Python unit tests pass, including empty-but-counted XML, inconsistent failure/skip counts, duplicate cases, wrong classes and wrong general routing. The parser also accepted a retained genuine Android Gradle report with two actual testcase records. This demonstrates compatibility with that report, not every Android plugin version or a hosted CI run. The running API 37 direct-instrumentation suite does not produce Gradle JUnit XML and does not validate the full connected-runner path; that check remains outstanding.

@@ -20,7 +20,10 @@ class PublicControlSnapshotTest(unittest.TestCase):
         self.assertFalse(self.ledger['coverageComplete'])
 
     def test_all_protected_language_components_are_persisted(self):
-        entries=[e for e in self.ledger['entries'] if e['kind']=='protected']
+        prefixes=('qualification-v2-protected-', 'compact-v3-protected-', 'compact-v4-protected-')
+        entries=[e for e in self.ledger['entries'] if e['kind']=='protected' and e['id'].startswith(prefixes)]
+        self.assertEqual({prefix + lang for prefix in prefixes for lang in ('en','ru','es')},
+                         {e['id'] for e in entries})
         self.assertEqual(9,len(entries));self.assertEqual(5400,sum(e['rowCount'] for e in entries))
         self.assertEqual(1800,len({k for e in entries for k in e['keys']}))
 

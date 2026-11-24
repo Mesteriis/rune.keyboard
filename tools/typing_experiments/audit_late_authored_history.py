@@ -29,7 +29,7 @@ DEPENDENCIES={
  'right_context_revision_features':'3169a63758cca4aa0ddd2dc8274f46945e2db3cdb15254f7b0f0b802359cc4cd',
  'right_context_subject_evidence':'353d2f7b9451923045bd7c97cb8c905198c30683539914e82f603b70352e1a4d',
 }
-MISSING_FEATURE_SHA='2442a38501946f6fcaad293a99b11d0ad785123efb1fe207b03beb5332a841d0'
+V4_ROLE_FEATURE_SHA='2442a38501946f6fcaad293a99b11d0ad785123efb1fe207b03beb5332a841d0'
 
 
 def directory(version):return f'build/right-context-training-v{version}-20261027'
@@ -39,7 +39,8 @@ def archive_path(archive,original,digest):
     archive=Path(archive);entry=json.loads((archive/'manifest.json').read_text())['sources'].get(digest)
     if not entry or entry['originalPath']!=original:raise ValueError('LATE_ARCHIVE_MISSING')
     path=archive/entry['file']
-    if path.parent!=archive or sha(path)!=digest:raise ValueError('LATE_ARCHIVE_IDENTITY')
+    if path.parent!=archive or path.is_symlink() or not path.is_file() or sha(path)!=digest:
+        raise ValueError('LATE_ARCHIVE_IDENTITY')
     return path
 
 
@@ -78,7 +79,7 @@ def training_chain(root,version,manifest_path,rows):
 def build(root,base,lexicon):
     root=Path(root);result=copy.deepcopy(validate_ledger(base));archive=root/(BASE+'frozen_sources')
     if any(e['id'].startswith(PREFIX) for e in result['entries']):raise ValueError('LATE_ALREADY_IMPORTED')
-    bindings={};counts={};unavailable=[];all_rows={};manifests={}
+    bindings={};counts={};all_rows={};manifests={}
     # Verify live import dependencies before archived generator imports execute.
     for name,digest in DEPENDENCIES.items():
         path=BASE+name+'.py'
@@ -95,8 +96,10 @@ def build(root,base,lexicon):
                 if candidate not in allowed:raise ValueError('LATE_SOURCE_PATH')
                 original=candidate
             if original not in allowed:raise ValueError('LATE_SOURCE_PATH')
-            if version==4 and original==BASE+'right_context_role_features.py' and digest==MISSING_FEATURE_SHA:
-                unavailable.append(dict(version=version,path=original,sha256=digest,usedForPayloadGeneration=False));continue
+            if version==4 and original==BASE+'right_context_role_features.py' and digest==V4_ROLE_FEATURE_SHA:
+                archived=archive_path(archive,original,digest)
+                bindings[str(archived.relative_to(root))]=digest
+                continue
             if sha(root/original)!=digest:raise ValueError('LATE_SOURCE_BINDING')
             bindings[original]=digest
         gen_path=archive_path(archive,BASE+filename,generator_sha)
@@ -128,7 +131,7 @@ def build(root,base,lexicon):
         result['entries'].extend(entries);counts[str(version)]['trainingChain']=chain
     source_bindings={p:sha(root/p) for p in (BASE+'audit_late_authored_history.py',BASE+'audit_authored_training_history.py','tools/morphology/ranker.py')}
     receipt=dict(purpose='LATE_AUTHORED_EXCLUSION_HISTORY_NOT_QUALIFICATION',counts=counts,bindings=bindings,sourceBindings=source_bindings,dictionary=lexicon.receipt(),
-        unavailableHistoricalSources=unavailable,fullHistoricalSourceCoverageComplete=not unavailable,modelCalls=0,
+        unavailableHistoricalSources=[],fullHistoricalSourceCoverageComplete=True,modelCalls=0,
         corpusAliases={'v6':'v5'},exposureRows=sum(len(r) for r in all_rows.values()),uniqueRowIds=len({r['id'] for rows in all_rows.values() for r in rows}),
         archivedPreparationScriptsExecuted=False)
     return validate_ledger(result),receipt

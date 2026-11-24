@@ -20,7 +20,9 @@ def edit_distance(left, right):
     return matrix[-1][-1]
 
 
-def evaluate(rows, observations):
+def evaluate(rows, observations, boundary=' '):
+    if boundary not in (' ', '.', ':'):
+        raise ValueError('INVALID_BOUNDARY')
     ids = [row['id'] for row in rows]
     if len(set(ids)) != len(ids) or [o.get('id') for o in observations] != ids:
         raise ValueError('OBSERVATION_IDENTITY')
@@ -38,17 +40,25 @@ def evaluate(rows, observations):
         expected_input = (prefix + ' ' if prefix else '') + typed
         before = observation.get('beforeBoundary', {}).get('text')
         after = observation.get('afterBoundary', {}).get('text')
-        if not isinstance(before, str) or not isinstance(after, str) or not after.endswith(' '):
+        if not isinstance(before, str) or not isinstance(after, str) or not after.endswith(boundary):
             raise ValueError('EDITOR_OUTPUT_CHANGED')
+        if boundary != ' ' and observation.get('boundary') != boundary:
+            raise ValueError('BOUNDARY_MISMATCH')
         transformed_input = before != expected_input
         if observation.get('inputChangedByTyping', False) != transformed_input:
             raise ValueError('INPUT_TRANSFORM_FLAG_MISMATCH')
         editor_prefix = before[:-len(typed)] if typed and before.casefold().endswith(typed.casefold()) else None
         prefix_changed = editor_prefix is None or not after.startswith(editor_prefix)
-        changed = after != before + ' '
-        if type(observation.get('boundaryChangedBeyondInsertedSpace')) is not bool or changed != observation['boundaryChangedBeyondInsertedSpace']:
+        changed = after != before + boundary
+        change_key = 'boundaryChangedBeyondInsertedSpace' if boundary == ' ' else 'boundaryChangedBeyondInsertion'
+        if type(observation.get(change_key)) is not bool or changed != observation[change_key]:
             raise ValueError('CHANGE_FLAG_MISMATCH')
-        correct = changed and after.casefold() != (before + ' ').casefold() and typo and not prefix_changed and after[len(editor_prefix):-1].casefold() == target.casefold()
+        if boundary != ' ':
+            restored = observation.get('restoredBeforeBoundaryExactly')
+            backspace = observation.get('afterBackspace', {}).get('text')
+            if type(restored) is not bool or not isinstance(backspace, str) or restored != (backspace == before):
+                raise ValueError('UNDO_FLAG_MISMATCH')
+        correct = changed and after.casefold() != (before + boundary).casefold() and typo and not prefix_changed and after[len(editor_prefix):-1].casefold() == target.casefold()
         pool = observation.get('fullTokenGeneration') or {}
         retrieved = any(c.get('text', '').casefold() == target.casefold() for key in
                         ('alternatives', 'compactAlternatives') for c in pool.get(key, []))
@@ -66,7 +76,7 @@ def evaluate(rows, observations):
                 incorrect=0, controlChanges=0, retrievedTypos=0, undoFailures=0, inputTransformations=0, prefixChanges=0, caseOnlyChanges=0, manualRetrievedTypos=0))
             item['inputTransformations'] += transformed_input
             item['prefixChanges'] += prefix_changed
-            item['caseOnlyChanges'] += changed and after.casefold() == (before + ' ').casefold()
+            item['caseOnlyChanges'] += changed and after.casefold() == (before + boundary).casefold()
             item['rows'] += 1
             item['typos'] += typo
             item['replacements'] += changed
