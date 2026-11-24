@@ -538,10 +538,29 @@ jobs:
           python3 -m unittest discover -s tools/ci -p test_collect_android_failure_artifacts.py
           python3 -m unittest discover -s tools/ci -p test_android_ci_shell.py
       - name: Build Android boundary APKs before emulator startup
+        id: boundary-apks
         run: |
           ./gradlew --no-daemon assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest
           ./gradlew --no-daemon -p tools/qa/compose-editor assembleDebug
+      - name: Select night-learning emulator timezone
+        id: night-learning-timezone
+        run: |
+          timezone="$(PYTHONPATH=tools/ci python3 -c 'from datetime import datetime, timezone; from android_night_learning import night_timezone; print(night_timezone(datetime.now(timezone.utc)))')"
+          echo "zone=$timezone" >> "$GITHUB_OUTPUT"
+      - name: Run night-learning fixture on a fresh emulator
+        uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d
+        with:
+          api-level: ${{ matrix.api-level }}
+          avd-name: rune-ci-night-learning
+          target: ${{ matrix.target }}
+          arch: x86_64
+          ram-size: ${{ matrix.ram-size }}
+          disk-size: ${{ matrix.disk-size }}
+          emulator-options: -no-window -wipe-data -no-snapshot -timezone ${{ steps.night-learning-timezone.outputs.zone }} -gpu ${{ matrix.gpu-mode }} ${{ matrix.emulator-features }} -noaudio -no-boot-anim
+          script: python3 tools/ci/android_night_learning.py --api '${{ matrix.api-level }}' --output build/ci-night-learning
       - name: Run Android boundary suite
+        # Continue after a night-learning failure while retaining that failure in the job.
+        if: ${{ !cancelled() && steps.boundary-apks.outcome == 'success' }}
         uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d
         with:
           api-level: ${{ matrix.api-level }}
@@ -612,22 +631,6 @@ jobs:
               fi
             fi
             exit "$suite_status"
-      - name: Select night-learning emulator timezone
-        id: night-learning-timezone
-        run: |
-          timezone="$(PYTHONPATH=tools/ci python3 -c 'from datetime import datetime, timezone; from android_night_learning import night_timezone; print(night_timezone(datetime.now(timezone.utc)))')"
-          echo "zone=$timezone" >> "$GITHUB_OUTPUT"
-      - name: Run night-learning fixture on a fresh emulator
-        uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d
-        with:
-          api-level: ${{ matrix.api-level }}
-          avd-name: rune-ci-night-learning
-          target: ${{ matrix.target }}
-          arch: x86_64
-          ram-size: ${{ matrix.ram-size }}
-          disk-size: ${{ matrix.disk-size }}
-          emulator-options: -no-window -wipe-data -no-snapshot -timezone ${{ steps.night-learning-timezone.outputs.zone }} -gpu ${{ matrix.gpu-mode }} ${{ matrix.emulator-features }} -noaudio -no-boot-anim
-          script: python3 tools/ci/android_night_learning.py --api '${{ matrix.api-level }}' --output build/ci-night-learning
       - name: Upload instrumentation results
         if: always()
         uses: actions/upload-artifact@v4

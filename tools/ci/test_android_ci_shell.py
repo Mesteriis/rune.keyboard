@@ -12,7 +12,7 @@ class AndroidCiShellTest(unittest.TestCase):
     def test_boundary_apks_build_before_emulator_and_install_after_guard(self):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
         setup = workflow.split('      - name: Build Android boundary APKs before emulator startup\n', 1)[1]
-        builds = setup.split('      - name: Run Android boundary suite\n', 1)[0]
+        builds = setup.split('\n      - name:', 1)[0]
         script = workflow.split('          script: |\n', 1)[1].split('\n      - name: Upload instrumentation results', 1)[0]
         self.assertIn('assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest', builds)
         self.assertIn('tools/qa/compose-editor assembleDebug', builds)
@@ -23,6 +23,19 @@ class AndroidCiShellTest(unittest.TestCase):
         suites = script.index('python3 tools/ci/android_boundary_suites.py')
         self.assertLess(guard, install)
         self.assertLess(install, suites)
+
+    def test_night_learning_uses_ordinary_apks_and_cannot_skip_boundary_suite(self):
+        workflow = (ROOT / '.github/workflows/ci.yml').read_text()
+        setup = workflow.split('      - name: Build Android boundary APKs before emulator startup\n', 1)[1]
+        self.assertLess(setup.index('Select night-learning emulator timezone'), setup.index('Run Android boundary suite'))
+        builds, night = setup.split('      - name: Select night-learning emulator timezone\n', 1)
+        night, boundary = night.split('      - name: Run Android boundary suite\n', 1)
+        self.assertIn('        id: boundary-apks\n', builds)
+        self.assertIn('avd-name: rune-ci-night-learning', night)
+        self.assertIn('android_night_learning.py', night)
+        self.assertIn("        if: ${{ !cancelled() && steps.boundary-apks.outcome == 'success' }}\n", boundary)
+        self.assertIn('avd-name: rune-ci-boundary', boundary)
+        self.assertIn('android_boundary_suites.py', boundary)
 
     def test_all_direct_adb_actions_use_the_verified_serial(self):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
@@ -36,8 +49,8 @@ class AndroidCiShellTest(unittest.TestCase):
         script = workflow.split('          script: |\n', 1)[1].split('\n      - name: Upload instrumentation results', 1)[0]
         lines = [line[12:] if line.startswith('            ') else line for line in script.splitlines()]
         text = '\n'.join(lines)
-        builds = workflow.split('      - name: Build Android boundary APKs before emulator startup\n        run: |\n', 1)[1]
-        builds = builds.split('      - name: Run Android boundary suite\n', 1)[0]
+        builds = workflow.split('      - name: Build Android boundary APKs before emulator startup\n', 1)[1]
+        builds = builds.split('\n      - name:', 1)[0].split('        run: |\n', 1)[1] + '\n'
         start = text.index('compose_serial=')
         end = text.index('\n', text.index('adb -s "$compose_serial" install -r app/build/outputs/apk/debug/app-debug.apk', start))
         setup = builds + text[start:end]
