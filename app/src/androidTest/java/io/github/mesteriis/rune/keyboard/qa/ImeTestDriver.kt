@@ -321,19 +321,25 @@ class ImeTestDriver private constructor(private val packageName: String) {
         check(device.wait(Until.hasObject(statsSelector), WAIT_MILLIS)) {
             "Offline WebView QA surface did not become visible"
         }
-        // A browser editor is focused by one real user tap; page load can finish before the
-        // Activity window receives focus, so its opportunistic showSoftInput is not readiness.
+        // Prefer the real tap. Chromium may already be focused and connected while its
+        // virtual accessibility node is unavailable during Activity recreation.
         val field = device.wait(Until.findObject(By.pkg(packageName).clazz("android.widget.EditText")), WAIT_MILLIS)
-        checkNotNull(field) {
+        if (field != null) {
+            field.click()
+        } else {
             val fields = device.findObject(statsSelector)?.text.orEmpty().split(' ')
             val domReady = fields.firstOrNull { it == "ready=0" || it == "ready=1" }?.last()
+            val editorFocused = "editorFocused=1" in fields
             val connections = fields.firstOrNull { it.startsWith("connections=") }
                 ?.substringAfter('=')?.toIntOrNull()
-            val containerExposed = device.hasObject(By.res(packageName, "qa_webview"))
-            "Offline HTML editor did not become visible " +
-                "(qaForeground=${device.currentPackageName == packageName}, " +
-                "containerExposed=$containerExposed, domReady=$domReady, connections=$connections)"
-        }.click()
+            val qaForeground = device.currentPackageName == packageName
+            check(qaForeground && domReady == '1' && editorFocused && (connections ?: 0) > 0) {
+                val containerExposed = device.hasObject(By.res(packageName, "qa_webview"))
+                "Offline HTML editor did not become visible " +
+                    "(qaForeground=$qaForeground, containerExposed=$containerExposed, " +
+                    "domReady=$domReady, editorFocused=$editorFocused, connections=$connections)"
+            }
+        }
         waitForKeyboard()
         switchLanguageUntil("EN")
         instrumentation.waitForIdleSync()
