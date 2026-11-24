@@ -462,6 +462,7 @@ class ImeTestDriver private constructor(private val packageName: String) {
         // The remote editor's selection must reach Rune before the next Delete. The numeric
         // acknowledgement is observed only; the final editor assertion still checks the command.
         eventually(WAIT_MILLIS) { onMain { selection.getBoolean(service) } }
+        check(onMain { selection.getBoolean(service) }) { "Rune did not acknowledge the seeded editor selection" }
     }
 
     fun tapKey(label: String) {
