@@ -9,14 +9,18 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class AndroidCiShellTest(unittest.TestCase):
-    def test_compose_install_is_after_device_guard_and_before_suites(self):
+    def test_boundary_apks_build_before_emulator_and_install_after_guard(self):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
+        setup = workflow.split('      - name: Build Android boundary APKs before emulator startup\n', 1)[1]
+        builds = setup.split('      - name: Run Android boundary suite\n', 1)[0]
         script = workflow.split('          script: |\n', 1)[1].split('\n      - name: Upload instrumentation results', 1)[0]
-        build = script.index('tools/qa/compose-editor assembleDebug')
-        guard = script.index('owned_emulator("rune-ci-boundary")', build)
+        self.assertIn('assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest', builds)
+        self.assertIn('tools/qa/compose-editor assembleDebug', builds)
+        self.assertNotIn(':runtime-llama:assembleDebugAndroidTest', script)
+        self.assertNotIn('tools/qa/compose-editor assembleDebug', script)
+        guard = script.index('owned_emulator("rune-ci-boundary")')
         install = script.index('adb -s "$compose_serial" install -r tools/qa/compose-editor/build/outputs/apk/debug/RuneComposeEditorQa-debug.apk')
         suites = script.index('python3 tools/ci/android_boundary_suites.py')
-        self.assertLess(build, guard)
         self.assertLess(guard, install)
         self.assertLess(install, suites)
 
@@ -32,16 +36,26 @@ class AndroidCiShellTest(unittest.TestCase):
         script = workflow.split('          script: |\n', 1)[1].split('\n      - name: Upload instrumentation results', 1)[0]
         lines = [line[12:] if line.startswith('            ') else line for line in script.splitlines()]
         text = '\n'.join(lines)
-        start = text.index('./gradlew --no-daemon -p tools/qa/compose-editor assembleDebug')
+        builds = workflow.split('      - name: Build Android boundary APKs before emulator startup\n        run: |\n', 1)[1]
+        builds = builds.split('      - name: Run Android boundary suite\n', 1)[0]
+        start = text.index('compose_serial=')
         end = text.index('\n', text.index('adb -s "$compose_serial" install -r app/build/outputs/apk/debug/app-debug.apk', start))
-        setup = text[start:end]
-        fake = '''./gradlew() { return "$BUILD_STATUS"; }
+        setup = builds + text[start:end]
+        fake = '''./gradlew() {
+  case "$*" in
+    *tools/qa/compose-editor*) return "$COMPOSE_STATUS" ;;
+    *) return "$BUILD_STATUS" ;;
+  esac
+}
 python3() { if [ "$GUARD_STATUS" -ne 0 ]; then return "$GUARD_STATUS"; fi; printf 'emulator-5554\\n'; }
 adb() { return "$INSTALL_STATUS"; }
 '''
-        for build, guard, install, expected in ((9, 0, 0, 9), (0, 8, 0, 8), (0, 0, 7, 7), (0, 0, 0, 0)):
-            with self.subTest(build=build, guard=guard, install=install):
-                env = dict(os.environ, BUILD_STATUS=str(build), GUARD_STATUS=str(guard), INSTALL_STATUS=str(install))
+        for build, compose, guard, install, expected in (
+            (9, 0, 0, 0, 9), (0, 10, 0, 0, 10), (0, 0, 8, 0, 8), (0, 0, 0, 7, 7), (0, 0, 0, 0, 0),
+        ):
+            with self.subTest(build=build, compose=compose, guard=guard, install=install):
+                env = dict(os.environ, BUILD_STATUS=str(build), COMPOSE_STATUS=str(compose),
+                           GUARD_STATUS=str(guard), INSTALL_STATUS=str(install))
                 result = subprocess.run(['bash', '-c', 'set -e\n' + fake + setup + '\nprintf "REACHED\\n"'],
                                         cwd=ROOT, env=env, capture_output=True, text=True)
                 self.assertEqual(expected, result.returncode, result.stderr)
@@ -51,11 +65,10 @@ adb() { return "$INSTALL_STATUS"; }
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
         script = workflow.split('          script: |\n', 1)[1].split('\n      - name: Upload instrumentation results', 1)[0]
         text = '\n'.join(line[12:] if line.startswith('            ') else line for line in script.splitlines())
-        start = text.index('./gradlew --no-daemon -p tools/qa/compose-editor assembleDebug')
+        start = text.index('compose_serial=')
         end = text.index('\n', text.index('adb -s "$compose_serial" install -r app/build/outputs/apk/debug/app-debug.apk', start))
         setup = text[start:end]
-        fake = '''./gradlew() { return 0; }
-python3() { printf 'emulator-5554\\n'; }
+        fake = '''python3() { printf 'emulator-5554\\n'; }
 ADB_CALLS=0
 adb() { ADB_CALLS=$((ADB_CALLS + 1)); if [ "$ADB_CALLS" -eq "$FAIL_ON" ]; then return 7; fi; }
 '''
