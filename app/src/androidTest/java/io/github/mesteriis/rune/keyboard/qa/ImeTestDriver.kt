@@ -317,13 +317,23 @@ class ImeTestDriver private constructor(private val packageName: String) {
         val launched = shell("am start -W -f 0x10008000 -n $qaActivity --ez qa_webview_fixture true" +
             if (privateInput) " --ez qa_callback_trace true" else "")
         check("Status: ok" in launched) { "Offline WebView QA launch failed" }
-        check(device.wait(Until.hasObject(By.res(packageName, "qa_webview_stats")), WAIT_MILLIS)) {
+        val statsSelector = By.res(packageName, "qa_webview_stats")
+        check(device.wait(Until.hasObject(statsSelector), WAIT_MILLIS)) {
             "Offline WebView QA surface did not become visible"
         }
         // A browser editor is focused by one real user tap; page load can finish before the
         // Activity window receives focus, so its opportunistic showSoftInput is not readiness.
         val field = device.wait(Until.findObject(By.pkg(packageName).clazz("android.widget.EditText")), WAIT_MILLIS)
-        checkNotNull(field) { "Offline HTML editor did not become visible" }.click()
+        checkNotNull(field) {
+            val fields = device.findObject(statsSelector)?.text.orEmpty().split(' ')
+            val domReady = fields.firstOrNull { it == "ready=0" || it == "ready=1" }?.last()
+            val connections = fields.firstOrNull { it.startsWith("connections=") }
+                ?.substringAfter('=')?.toIntOrNull()
+            val containerExposed = device.hasObject(By.res(packageName, "qa_webview"))
+            "Offline HTML editor did not become visible " +
+                "(qaForeground=${device.currentPackageName == packageName}, " +
+                "containerExposed=$containerExposed, domReady=$domReady, connections=$connections)"
+        }.click()
         waitForKeyboard()
         switchLanguageUntil("EN")
         instrumentation.waitForIdleSync()
