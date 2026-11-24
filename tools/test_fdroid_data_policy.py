@@ -6,9 +6,16 @@ import tempfile
 import unittest
 
 import fdroid_data_policy as policy
+from fdroid_prepared_source import POLICY as PREPARED_POLICY, parse_policy as parse_prepared_policy
 
 
 class DataPolicyTest(unittest.TestCase):
+    def test_prepared_source_policy_matches_gradle_input(self):
+        changes = parse_prepared_policy((policy.REPO / PREPARED_POLICY).read_bytes())
+        path = 'app/build.gradle.kts'
+        [replacement] = [row for row in changes if row['path'] == path and row['action'] == 'replace']
+        self.assertEqual(replacement['beforeSha256'], policy.digest(policy.REPO / path))
+
     def fixture(self, directory):
         root = Path(directory)
         paths = ['app/src/main/assets/weights.bin', 'app/src/main/assets/context.ctx',
