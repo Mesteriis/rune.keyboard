@@ -136,7 +136,7 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
         noReadback()
     }
 
-    @Test fun reportedRussianMisspellingsCorrectOnSpaceWhileAmbiguousFragmentStaysUntouched() {
+    @Test fun reportedRussianMisspellingsCorrectOnSpaceWhileAmbiguousFragmentStaysUntouched() = withCiFailureMetadata(driver) {
         driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
             mechanical = false, doubleSpace = false)
         driver.launchComposingQa(language =
