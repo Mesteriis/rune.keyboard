@@ -45,6 +45,10 @@
       "method": "syntheticAddressBackspaceAndGoReachChrome"
     },
     {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ChromePasswordInstrumentedTest",
+      "method": "passwordSuppressesPreviewAndDeletesOneCharacter"
+    },
+    {
       "class": "io.github.mesteriis.rune.keyboard.qa.ConfirmedWordsInstrumentedTest",
       "method": "failedRemovalOffersIdempotentRetryAndPreservesPairRejection"
     },

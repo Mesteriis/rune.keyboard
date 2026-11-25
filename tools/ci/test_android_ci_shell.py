@@ -17,21 +17,25 @@ class AndroidCiShellTest(unittest.TestCase):
   if [ "$1" != tools/ci/android_chrome_editor.py ]; then return 0; fi
   case "$*" in
     *--navigation) echo omnibox; return "$OMNIBOX_STATUS" ;;
+    *--password) echo password; return "$PASSWORD_STATUS" ;;
     *) echo textarea; return "$TEXTAREA_STATUS" ;;
   esac
 }
 ./gradlew() { return 0; }
 '''
-        for api, textarea, omnibox, expected in (('26', 9, 11, 0), ('37.0', 9, 0, 9),
-                                                ('37.0', 0, 11, 11), ('37.0', 9, 11, 9)):
-            with self.subTest(api=api, textarea=textarea, omnibox=omnibox):
+        for api, textarea, omnibox, password, expected in (
+                ('26', 9, 11, 13, 0), ('37.0', 9, 0, 0, 9), ('37.0', 0, 11, 0, 11),
+                ('37.0', 0, 0, 13, 13), ('37.0', 9, 11, 13, 9)):
+            with self.subTest(api=api, textarea=textarea, omnibox=omnibox, password=password):
                 job = suites.replace('${{ matrix.api-level }}', api)
                 result = subprocess.run(['bash', '-ec', pretend + job], cwd=ROOT, text=True,
                     capture_output=True, env=dict(os.environ, TEXTAREA_STATUS=str(textarea),
-                                                  OMNIBOX_STATUS=str(omnibox)))
+                                                  OMNIBOX_STATUS=str(omnibox), PASSWORD_STATUS=str(password)))
                 self.assertEqual(expected, result.returncode, result.stderr)
-                self.assertEqual(['textarea', 'omnibox'] if api == '37.0' else [], result.stdout.splitlines())
-        self.assertIn('build/ci-chrome-omnibox/**', workflow.split('- name: Upload instrumentation results', 1)[1])
+                self.assertEqual(['textarea', 'omnibox', 'password'] if api == '37.0' else [], result.stdout.splitlines())
+        uploads = workflow.split('- name: Upload instrumentation results', 1)[1]
+        for scope in ('omnibox', 'password'):
+            self.assertIn(f'build/ci-chrome-{scope}/**', uploads)
 
     def test_boundary_apks_build_before_emulator_and_install_after_guard(self):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()

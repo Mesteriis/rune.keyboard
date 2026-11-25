@@ -98521,7 +98521,7 @@
         "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelPrefixWindowTest.kt": "ef387134396876d158da525b1bb3f76243104e6ac61ef4c5195aee5f0b802c72",
         "runtime-llama/src/androidTest/java/io/github/mesteriis/rune/runtime/llama/LlamaRealModelInstrumentedTest.kt": "bb9dc23715f639459b5c7cb22c984bf9cac639709e594008a57176718642324e",
         "tools/ci/register_a2_window_contexts.py": "1f594cf500964b61c3c8914372f1705ca056d085ae903b77ed4315a89ab37c02",
-        "tools/eval/smart-typing-0.3/a2_cache_probe.cpp": "d15b22232e8c3f20c3b479f7329f4889413fc7684c8c631c436a66b84481e321"
+        "tools/eval/smart-typing-0.3/a2_cache_probe.cpp": "afa8292653d962e34edfbf96705dac22f93290e2af5f12e863366ed3b77635cc"
       },
       "id": "a2-bounded-prefix-native-probe-v1",
       "keys": [
@@ -588948,6 +588948,27 @@
       "kind": "punctuation",
       "language": "ru",
       "rowCount": 81
+    },
+    {
+      "bindings": {
+        "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelPrefixWindowTest.kt": "ef387134396876d158da525b1bb3f76243104e6ac61ef4c5195aee5f0b802c72",
+        "runtime-llama/src/androidTest/java/io/github/mesteriis/rune/runtime/llama/LlamaRealModelInstrumentedTest.kt": "bb9dc23715f639459b5c7cb22c984bf9cac639709e594008a57176718642324e",
+        "tools/ci/register_a2_window_contexts.py": "9f2291390d6eda06f5093160dbf333e71b7541e79182dd6815ff4b6923b7db00",
+        "tools/eval/smart-typing-0.3/a2_cache_probe.cpp": "d15b22232e8c3f20c3b479f7329f4889413fc7684c8c631c436a66b84481e321"
+      },
+      "id": "a2-bounded-prefix-native-probe-v2",
+      "keys": [
+        "11831b1286ec4674030e5dba0a3a0c6a91a14f23429f686c53e320c3f077e291",
+        "16b6008d6d1013e8f1bee2cc597284722f7da8d5e8f586fa5aa54609114d3a7a",
+        "65b1cea082ca452aae80f39702ecba298b25bbf662a49a7d6fec2f90d23eab60",
+        "7a3805f71671ada24e05d5b1a0e4288abe9ee68f8caf44e6a9119f08c917ac69",
+        "ad3b450bcf03c554d7c9f898b281844e0a0b917c6c7632555e1cae4291fd4ebb",
+        "e2ef126612ee7bd32856557d12d511cc6f2d9b2c4c2de2a429c8b15f371f24d8"
+      ],
+      "kind": "regression",
+      "language": "en",
+      "rowCount": 6,
+      "semantics": "Disclosed synthetic bounded-prefix model contexts; not independent qualification."
     }
   ],
   "pending": [

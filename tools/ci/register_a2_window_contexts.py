@@ -10,7 +10,8 @@ import control_ledger as control
 from recover_legacy_families import sha
 
 LEDGER=ROOT/'tools/typing_experiments/control-ledger.json'
-ENTRY='a2-bounded-prefix-native-probe-v1'
+# The original registration remains bound by the historical Spanish control fixture.
+ENTRY='a2-bounded-prefix-native-probe-v2'
 ANDROID=ROOT/'runtime-llama/src/androidTest/java/io/github/mesteriis/rune/runtime/llama/LlamaRealModelInstrumentedTest.kt'
 WINDOW_TEST=ROOT/'app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelPrefixWindowTest.kt'
 HOST=ROOT/'tools/eval/smart-typing-0.3/a2_cache_probe.cpp'

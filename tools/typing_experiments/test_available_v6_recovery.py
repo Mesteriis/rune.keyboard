@@ -23,8 +23,9 @@ from refit_historical_role_models import refit, verify_imports
 from audit_available_v6_family_exposure import assignment_masks, noun_case_family_keys, refinement_families
 from audit_available_v6_article_rows import partition_report
 from check_v6_revision_witnesses import (
-    CORPUS_RECEIPT, FINEWIKI_RECEIPT, KIWIX_RECEIPT, MIRROR_RECEIPT, audit as audit_article_witnesses,
-    kiwix_archive_coverage, mirror_archive_coverage, project_corpus, read_finewiki_witnesses,
+    CONTRIBUTOR_HISTORY_RECEIPT, CORPUS_RECEIPT, FINEWIKI_RECEIPT, KIWIX_RECEIPT, MIRROR_RECEIPT,
+    audit as audit_article_witnesses,
+    kiwix_archive_coverage, mirror_archive_coverage, project_attribution, project_corpus, read_finewiki_witnesses,
     verify_partition_binding, verify_rows,
 )
 from import_joint_history import MANIFESTS as JOINT_MANIFESTS
@@ -193,6 +194,45 @@ class AvailableV6RecoveryTest(unittest.TestCase):
         self.assertEqual(434, result['checked']['multipleMatches'])
         self.assertEqual([f'{number:04d}.parquet' for number in range(13, 21)], result['missingShards'])
         self.assertFalse(result['originalDumpRevisionIdsVerified'])
+
+    def test_attribution_links_public_matching_revision_and_keeps_archive_only_gap(self):
+        older = {'revid': 10, 'timestamp': '2023-10-31T08:00:00Z'}
+        matching = {'revid': 11, 'timestamp': '2023-11-01T08:00:00Z'}
+        later = {'revid': 12, 'timestamp': '2023-11-02T08:00:00Z'}
+        pages = [
+            {'article': '1', 'partition': 'calibration', 'status': 'content-match', 'matches': [older, later, matching]},
+            {'article': '2', 'partition': 'holdout', 'status': 'content-match', 'matches': [older]},
+            {'article': '3', 'partition': 'holdout', 'status': 'missing-page', 'matches': []},
+        ]
+        corpus = {'calibration': [{'article': '1'}] * 2, 'holdout': [{'article': '2'}, {'article': '3'}]}
+        original = {'calibration.jsonl': 'calibration-digest', 'holdout.jsonl': 'holdout-digest'}
+        finewiki = {'2': {'revision': older['revid'], 'timestamp': older['timestamp']}}
+        report = project_attribution(pages, finewiki, corpus, original)
+        self.assertEqual(2, report['linkedRows'])
+        self.assertEqual(2, report['unlinkedRows'])
+        self.assertEqual(matching, report['articles']['1']['matchingRevision'])
+        self.assertEqual('https://ru.wikipedia.org/w/index.php?oldid=11', report['articles']['1']['revisionUrl'])
+        self.assertEqual(older, report['articles']['2']['matchingRevision'])
+        self.assertNotIn('revisionUrl', report['articles']['2'])
+        self.assertNotIn('revisionUrl', report['articles']['3'])
+        self.assertFalse(report['publicationRightsReviewed'])
+        with self.assertRaisesRegex(ValueError, 'V6_ATTRIBUTION_PARTITION_COVERAGE'):
+            project_attribution(pages[:-1], finewiki, corpus, original)
+
+    def test_attribution_adds_pinned_archive_credits_without_a_live_revision_link(self):
+        origin = ROOT / 'tools/typing_experiments/available-v6-article-origin-v1'
+        path = origin / CONTRIBUTOR_HISTORY_RECEIPT
+        archive = json.loads(path.read_bytes())
+        pages = [dict(record, status='missing-page', matches=[]) for record in archive['articles']]
+        corpus = {'calibration': [{'article': '7795183'}] * 5 + [{'article': '8402514'}] * 5, 'holdout': []}
+        original = {'calibration.jsonl': 'calibration-digest', 'holdout.jsonl': 'holdout-digest'}
+        report = project_attribution(pages, {}, corpus, original, path)
+        self.assertEqual(10, report['archivedContributorHistory']['rows'])
+        self.assertEqual(0, report['linkedArticles'])
+        self.assertEqual(132871704, report['articles']['7795183']['contributorArchive']['matchingRevisions'][-1]['revid'])
+        pages[0]['snapshotTextSha256'] = '0' * 64
+        with self.assertRaisesRegex(ValueError, 'V6_ATTRIBUTION_CONTRIBUTOR_HISTORY_BINDING'):
+            project_attribution(pages, {}, corpus, original, path)
 
     def test_extended_v6_witness_counts_only_the_pinned_recovery(self):
         origin = ROOT / 'tools/typing_experiments/available-v6-article-origin-v1/revision-witnesses-0017'

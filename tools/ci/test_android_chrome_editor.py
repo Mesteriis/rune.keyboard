@@ -2,6 +2,7 @@ from contextlib import contextmanager
 import json
 from pathlib import Path
 import tempfile
+import threading
 import unittest
 from unittest.mock import patch
 
@@ -19,6 +20,42 @@ def native_output():
 
 
 class ChromeRouteTest(unittest.TestCase):
+    def test_fold_watch_only_dispatches_the_expected_next_console_command(self):
+        for requested, expected in ((('closed', 'opened'), ['fold', 'unfold']),
+                                    (('opened',), [])):
+            with self.subTest(requested=requested), tempfile.TemporaryDirectory() as directory:
+                log = Path(directory) / 'native.log'
+                log.write_text(''.join(f'INSTRUMENTATION_STATUS: fold_request={stage}\n' for stage in requested))
+                sent, recorded = [], []
+                stop = threading.Event()
+
+                def adb(*args):
+                    self.assertEqual('emu', args[0])
+                    sent.append(args[1])
+                    if args[1] == 'unfold':
+                        stop.set()
+                    return 'OK'
+
+                chrome.watch_fold_requests(log, adb, stop, recorded)
+                self.assertEqual(expected, sent)
+                self.assertEqual(list(requested) if expected else [], recorded)
+
+    def test_fold_requires_both_observed_width_changes_in_order(self):
+        closed = ('INSTRUMENTATION_STATUS: fold_observed=closed\n'
+                  'INSTRUMENTATION_STATUS: fold_width_before=2208\n'
+                  'INSTRUMENTATION_STATUS: fold_width=1080\n')
+        opened = ('INSTRUMENTATION_STATUS: fold_observed=opened\n'
+                  'INSTRUMENTATION_STATUS: fold_width_before=1080\n'
+                  'INSTRUMENTATION_STATUS: fold_width=2208\n')
+        dispatched = ['closed', 'opened']
+        self.assertEqual([1080, 2208], [row['widthAfter'] for row in
+                                         chrome.verify_fold_transition(closed + opened, dispatched)])
+        for native, commands in ((opened + closed, dispatched), (closed, dispatched),
+                                 (closed + opened, ['closed']),
+                                 ((closed + opened).replace('fold_width=1080', 'fold_width=2208'), dispatched)):
+            with self.subTest(native=native, commands=commands), self.assertRaisesRegex(ValueError, 'CHROME_FOLD_TRANSITIONS'):
+                chrome.verify_fold_transition(native, commands)
+
     def test_navigation_route_uses_the_owned_case_and_requires_dom_evidence(self):
         verifier = chrome.fixture_module('verify')
         native = ''.join(f'INSTRUMENTATION_STATUS: class={verifier.OMNIBOX_CLASS}\n'

@@ -7,9 +7,11 @@ from pathlib import Path
 
 HTML = Path(__file__).with_name('index.html').read_bytes()
 NO_SUGGESTIONS = Path(__file__).with_name('no-suggestions.html').read_bytes()
+PASSWORD = Path(__file__).with_name('password.html').read_bytes()
 FIELDS = {'length', 'words', 'corrections', 'lastCorrected', 'firstFive', 'undo',
           'sixth', 'literalFive', 'literalBackspace'}
 FLAGS = FIELDS - {'length', 'words', 'corrections'}
+PASSWORD_FIELDS = {'length', 'typed', 'deleted'}
 
 
 class FixtureHandler(http.server.BaseHTTPRequestHandler):
@@ -17,7 +19,8 @@ class FixtureHandler(http.server.BaseHTTPRequestHandler):
         pass
 
     def do_GET(self):
-        payload = {'/rune-q8': HTML, '/rune-q8-no-suggestions': NO_SUGGESTIONS}.get(self.path)
+        payload = {'/rune-q8': HTML, '/rune-q8-no-suggestions': NO_SUGGESTIONS,
+                   '/rune-q8-password': PASSWORD}.get(self.path)
         if payload is None:
             self.send_error(404)
             return
@@ -30,7 +33,8 @@ class FixtureHandler(http.server.BaseHTTPRequestHandler):
 
     def do_POST(self):
         profile = {'/rune-q8-metrics/ordinary': 'ordinary',
-                   '/rune-q8-metrics/no-suggestions': 'no-suggestions'}.get(self.path)
+                   '/rune-q8-metrics/no-suggestions': 'no-suggestions',
+                   '/rune-q8-metrics/password': 'password'}.get(self.path)
         if profile is None:
             self.send_error(404)
             return
@@ -40,11 +44,13 @@ class FixtureHandler(http.server.BaseHTTPRequestHandler):
             if not 0 < size <= 512:
                 raise ValueError('size')
             value = json.loads(self.rfile.read(size))
-            if not isinstance(value, dict) or value.keys() != FIELDS:
+            fields = PASSWORD_FIELDS if profile == 'password' else FIELDS
+            flags = {'typed', 'deleted'} if profile == 'password' else FLAGS
+            if not isinstance(value, dict) or value.keys() != fields:
                 raise ValueError('fields')
             if any(type(v) is not int or not 0 <= v <= 512 for v in value.values()):
                 raise ValueError('numbers')
-            if any(value[k] not in (0, 1) for k in FLAGS):
+            if any(value[k] not in (0, 1) for k in flags):
                 raise ValueError('flags')
         except (ValueError, TimeoutError, OSError):
             self.send_error(400)

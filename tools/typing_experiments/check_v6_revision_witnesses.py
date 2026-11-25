@@ -25,6 +25,8 @@ KIWIX_RECEIPT = 'kiwix-source-windows.json'
 KIWIX_RECEIPT_SHA256 = '0fa4daa19a84561523b310ef07d42a2d9339283b492c0eaa447f37acf8b80f9e'
 MIRROR_RECEIPT = 'mirror-source-window.json'
 MIRROR_RECEIPT_SHA256 = '03c4f078f1cab4ce1b7b0f107c81a43f1ebf1a82082266affab21d497f4f9472'
+CONTRIBUTOR_HISTORY_RECEIPT = 'archived-contributor-history.json'
+CONTRIBUTOR_HISTORY_RECEIPT_SHA256 = '383c42a4bc759025eaa28f086d584a6bbd756643858ac04e73b9bc89f5a7718e'
 EXTENDED_HISTORY_SHA256 = {
     '0017.parquet': '228e093682d29cbf6e25f9f9d88b19becd6efa32d045200038e0ffe1ea3a1ff9',
 }
@@ -103,6 +105,74 @@ def checked_shard(directory, shard, expected, lock_sha):
 def count_corpus_rows(rows):
     return {'rows': len(rows), 'contexts': len({row['contextHash'] for row in rows}),
             'articles': len({row['article'] for row in rows})}
+
+
+def project_attribution(witness_rows, finewiki, corpus_rows, original, archived_history=None):
+    """Bind historical corpus rows to public revision references or explicit gaps."""
+    counts = {part: Counter(row['article'] for row in corpus_rows[part]) for part in PARTITIONS}
+    articles = {}
+    for witness in sorted(witness_rows, key=lambda row: int(row['article'])):
+        article, part = witness['article'], witness['partition']
+        entry = {'partition': part, 'rows': counts[part].pop(article)}
+        candidates = [match for match in witness['matches'] if match['timestamp'] <= DUMP_DAY_END]
+        if article in finewiki:
+            archived = finewiki[article]
+            entry.update(evidence='finewiki-matching-text',
+                         matchingRevision={'revid': archived['revision'], 'timestamp': archived['timestamp']})
+        elif candidates:
+            match = max(candidates, key=lambda item: (item['timestamp'], item['revid']))
+            entry.update(evidence='wikipedia-matching-revision', matchingRevision=match,
+                         revisionUrl=f"https://ru.wikipedia.org/w/index.php?oldid={match['revid']}")
+        else:
+            entry.update(evidence='no-public-by-date-revision', witnessStatus=witness['status'])
+        articles[article] = entry
+    if any(counts.values()):
+        raise ValueError('V6_ATTRIBUTION_PARTITION_COVERAGE')
+    linked = [item for item in articles.values() if 'revisionUrl' in item]
+    result = {
+        'schema': 1,
+        'scope': 'historical-v6-revision-attribution-index',
+        'originalDumpRevisionIdsVerified': False,
+        'independentQualification': False,
+        'publicationRightsReviewed': False,
+        'sourceIndexSha256': ARTICLES_SHA256,
+        'corpusSha256': {part: original[part + '.jsonl'] for part in PARTITIONS},
+        'linkedArticles': len(linked),
+        'linkedRows': sum(item['rows'] for item in linked),
+        'unlinkedArticles': len(articles) - len(linked),
+        'unlinkedRows': sum(item['rows'] for item in articles.values() if 'revisionUrl' not in item),
+        'articles': articles,
+    }
+    if archived_history is not None:
+        add_archived_contributor_history(result, witness_rows, archived_history)
+    return result
+
+
+def add_archived_contributor_history(result, witness_rows, path):
+    raw = path.read_bytes()
+    if digest(raw) != CONTRIBUTOR_HISTORY_RECEIPT_SHA256:
+        raise ValueError('V6_ATTRIBUTION_CONTRIBUTOR_HISTORY_DIGEST')
+    archive = json.loads(raw)
+    metadata = {row['article']: row for row in witness_rows}
+    for record in archive['articles']:
+        article = record['article']
+        entry = result['articles'][article]
+        if ('revisionUrl' in entry or 'contributorArchive' in entry or
+                entry['partition'] != record['partition'] or entry['rows'] != record['rows'] or
+                metadata[article]['snapshotTextSha256'] != record['snapshotTextSha256']):
+            raise ValueError('V6_ATTRIBUTION_CONTRIBUTOR_HISTORY_BINDING:' + article)
+        archive_url = ('https://dumps.wikimedia.org/other/mediawiki_content_history/ruwiki/'
+                       f"{archive['snapshotDate']}/xml/bzip2/{record['archiveFile']}")
+        entry['contributorArchive'] = {
+            'url': archive_url,
+            'sha256': record['archiveSha256'],
+            'matchingRevisions': record['matches'],
+        }
+    result['archivedContributorHistory'] = {
+        'receiptSha256': CONTRIBUTOR_HISTORY_RECEIPT_SHA256,
+        'articles': len(archive['articles']),
+        'rows': sum(record['rows'] for record in archive['articles']),
+    }
 
 
 def project_corpus(corpus, index, witness_rows, original):
@@ -350,7 +420,7 @@ def mirror_archive_coverage(path, rows, coverage, original, corpus_rows):
     return result
 
 
-def audit(tracked, local=None, corpus=None):
+def audit(tracked, local=None, corpus=None, *, include_attribution=False):
     lock, lock_bytes = read_lock()
     index_raw = (DIRECTORY / 'articles.jsonl').read_bytes()
     if digest(index_raw) != ARTICLES_SHA256:
@@ -408,6 +478,8 @@ def audit(tracked, local=None, corpus=None):
         result['fineWikiFullTextArticles'] = sorted(finewiki, key=int)
     result['byDateWitnessArticles'] = result['checked']['withMatchOnOrBeforeDumpDate'] + len(extended) + len(finewiki)
     corpus_rows = None
+    if include_attribution and (corpus is None or missing or not canonical):
+        raise ValueError('V6_ATTRIBUTION_REQUIRES_COMPLETE_CANONICAL_CORPUS')
     if corpus is not None:
         new_matches = {article: evidence['matches'] for article, evidence in extended.items()}
         for article, witness in finewiki.items():
@@ -436,6 +508,9 @@ def audit(tracked, local=None, corpus=None):
         if mirror.exists() or canonical:
             coverage = mirror_archive_coverage(mirror, rows, coverage, original, corpus_rows)
         result['archiveWindowCoverage'] = coverage
+    if include_attribution:
+        result['attributionIndex'] = project_attribution(
+            resolved, finewiki, corpus_rows, original, tracked / CONTRIBUTOR_HISTORY_RECEIPT)
     return result
 
 
@@ -443,9 +518,22 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--local-root', type=Path, help='Directory with additional locally recovered shard reports')
     parser.add_argument('--corpus', type=Path, help='Directory with both exact restored v6 JSONL partitions')
+    parser.add_argument('--attribution-index', type=Path, help='Write the metadata-only attribution index to a new file')
     parser.add_argument('--require-all', action='store_true')
     args = parser.parse_args()
-    result = audit(DIRECTORY.parent, args.local_root, args.corpus)
+    if args.attribution_index and not args.corpus:
+        parser.error('--attribution-index requires --corpus')
+    result = audit(DIRECTORY.parent, args.local_root, args.corpus,
+                   include_attribution=args.attribution_index is not None)
+    if args.attribution_index:
+        attribution = result.pop('attributionIndex')
+        payload = (json.dumps(attribution, sort_keys=True, indent=2) + '\n').encode()
+        with args.attribution_index.open('xb') as stream:
+            stream.write(payload)
+        result['attributionIndex'] = {key: attribution[key] for key in
+                                      ('linkedArticles', 'linkedRows', 'unlinkedArticles', 'unlinkedRows',
+                                       'archivedContributorHistory')}
+        result['attributionIndex']['sha256'] = digest(payload)
     print(json.dumps(result, indent=2, sort_keys=True))
     if args.require_all and result['missingShards']:
         raise SystemExit(1)

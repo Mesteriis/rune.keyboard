@@ -1,18 +1,16 @@
 package io.github.mesteriis.rune.keyboard.qa
 
-import android.graphics.Bitmap
-import android.graphics.Rect
-import android.os.Bundle
+import android.os.Process
 import android.os.SystemClock
+import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
-import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.regex.Pattern
 
 @RunWith(AndroidJUnit4::class)
 class ImePrivacyInstrumentedTest : ImeTestBase() {
@@ -20,106 +18,56 @@ class ImePrivacyInstrumentedTest : ImeTestBase() {
     fun passwordFieldSuppressesPopupWithNormalFieldPositiveControl() {
         driver.setKeyPreviewForTest(true)
         driver.tapQaControl("qa_seed_cursor")
-        observePreview(phase = 0, enabled = true, policy = InputPolicy.NORMAL, expectedVisible = true)
+        observePreview(driver, phase = 0, enabled = true, policy = InputPolicy.NORMAL, expectedVisible = true)
         driver.setKeyPreviewForTest(false)
         // The same editor is still focused. Tapping its misspelled seed on API 26 opens
         // Android's spelling popup and changes the accessibility window under observation.
-        observePreview(phase = 1, enabled = false, policy = InputPolicy.NORMAL, expectedVisible = false)
+        observePreview(driver, phase = 1, enabled = false, policy = InputPolicy.NORMAL, expectedVisible = false)
         driver.setKeyPreviewForTest(true)
         driver.focusField("qa_password")
-        observePreview(phase = 2, enabled = true, policy = InputPolicy.SENSITIVE, expectedVisible = false)
-    }
-
-    /** Eventual visual policy, not a frame-latency or continuous-absence measurement. */
-    private fun observePreview(phase: Int, enabled: Boolean, policy: InputPolicy, expectedVisible: Boolean) {
-        driver.device.waitForIdle()
-        // A preference change can replace the input view after accessibility first reports
-        // its Delete key, and can restore either enabled letter layout. Await a no-alternate
-        // character in both EN and RU before freezing touch geometry.
-        val key = checkNotNull(driver.device.wait(
-            Until.findObject(By.text(Pattern.compile("[bBвВ]"))), ImeTestDriver.WAIT_MILLIS,
-        )) { "Preview phase $phase character target did not become visible" }
-        val bounds = Rect(key.visibleBounds)
-        assertPreviewFixture(bounds, enabled, policy)
-        val crop = Rect(bounds.left, (bounds.top - bounds.height() * 2).coerceAtLeast(0), bounds.right, bounds.top)
-        fun captureCrop(): Bitmap {
-            val screen = driver.captureScreen()
-            return try {
-                Bitmap.createBitmap(screen, crop.left, crop.top, crop.width(), crop.height())
-            } finally {
-                screen.recycle()
-            }
-        }
-
-        // Each mode gets its own settled baseline. Never query accessibility during the touch:
-        // doing so can wait past a key's alternate timer and alter the state being observed.
-        var baseline = captureCrop()
-        var stable = false
-        val settleDeadline = SystemClock.uptimeMillis() + 1_000
-        while (SystemClock.uptimeMillis() < settleDeadline) {
-            SystemClock.sleep(50)
-            val next = captureCrop()
-            stable = driver.changedPixels(baseline, next) <= 40
-            baseline.recycle()
-            baseline = next
-            if (stable) break
-        }
-        if (!stable) {
-            baseline.recycle()
-            error("Preview phase $phase did not reach a stable baseline")
-        }
-        var maxChanged = -1
-        var samples = 0
-        var firstVisibleMs = -1L
-        var peak: Bitmap? = null
-        try {
-            val touch = driver.touchDown(bounds)
-            try {
-                val deadline = touch.downTime + 1_000
-                // All three phases sample the complete bounded window, including negative controls.
-                do {
-                    val sample = captureCrop()
-                    val elapsed = SystemClock.uptimeMillis() - touch.downTime
-                    val changed = driver.changedPixels(baseline, sample)
-                    samples++
-                    if (changed > 40 && firstVisibleMs < 0) firstVisibleMs = elapsed
-                    if (changed > maxChanged) {
-                        peak?.recycle()
-                        peak = sample
-                        maxChanged = changed
-                    } else sample.recycle()
-                    val remaining = deadline - SystemClock.uptimeMillis()
-                    if (remaining > 0) SystemClock.sleep(minOf(50, remaining))
-                } while (SystemClock.uptimeMillis() < deadline)
-            } finally {
-                driver.cancelTouch(touch)
-                InstrumentationRegistry.getInstrumentation().sendStatus(0, Bundle().apply {
-                    putInt("preview_phase", phase)
-                    putInt("preview_samples", samples)
-                    putInt("preview_max_changed_pixels", maxChanged)
-                    putLong("preview_first_visible_sample_ms", firstVisibleMs)
-                    putLong("preview_observed_ms", SystemClock.uptimeMillis() - touch.downTime)
-                })
-            }
-            val matches = if (expectedVisible) maxChanged > 40 else maxChanged in 0..40
-            if (!matches) {
-                driver.saveFailureBitmap("popup-$phase-before.png", baseline)
-                peak?.let { driver.saveFailureBitmap("popup-$phase-peak.png", it) }
-            }
-            assertTrue("Preview phase $phase: $maxChanged changed pixels across $samples samples", matches)
-        } finally {
-            baseline.recycle()
-            peak?.recycle()
-        }
+        observePreview(driver, phase = 2, enabled = true, policy = InputPolicy.SENSITIVE, expectedVisible = false)
     }
 
     @Test
     fun syntheticCanaryIsAbsentFromRuneProcessLogcat() {
-        driver.shell("logcat -c")
+        val pid = Process.myPid().toString()
+        assertEquals("Instrumentation must observe the active Rune process", pid,
+            driver.shell("pidof ${ImeTestDriver.PACKAGE_NAME}"))
+        val probe = "rune-qa-logcat-$pid-${SystemClock.elapsedRealtimeNanos()}"
+        val begin = "$probe-begin"
+        val end = "$probe-end"
+        val canary = "RUNE_QA_CANARY_7429"
+        val passwordCanary = "runeqalogleak"
+
+        Log.i("RuneQaLogcatProbe", begin)
         driver.tapQaControl("qa_seed_canary")
+        driver.awaitFieldText("qa_plain_text", canary)
         driver.tapDelete()
-        val imePid = driver.shell("pidof ${ImeTestDriver.PACKAGE_NAME}").split(' ').firstOrNull().orEmpty()
-        val logs = if (imePid.isEmpty()) "" else driver.shell("logcat -d --pid=$imePid")
-        assertTrue("Synthetic editor text appeared in Rune-scoped Logcat", "RUNE_QA_CANARY_7429" !in logs)
+        driver.awaitFieldText("qa_plain_text", canary.dropLast(1))
+        driver.launchComposingQa(mode = "password")
+        passwordCanary.forEach { driver.tapKey(it.toString(), it.uppercase()) }
+        driver.tapDelete()
+        driver.device.waitForIdle()
+        val stats = checkNotNull(driver.device.findObject(By.res(ImeTestDriver.PACKAGE_NAME,
+            "qa_composing_stats"))).text.orEmpty().split(' ').associate {
+            val (name, count) = it.split('='); name to count.toInt()
+        }
+        assertEquals(passwordCanary.length, stats.getValue("commit"))
+        assertEquals(passwordCanary.length - 1, stats.getValue("selectionEnd"))
+        for (counter in listOf("before", "after", "selected", "extracted", "surrounding", "snapshot")) {
+            assertEquals("Unexpected password payload read: $counter", 0, stats.getValue(counter))
+        }
+        assertEquals("Rune process changed during the probe", pid, driver.shell("pidof ${ImeTestDriver.PACKAGE_NAME}"))
+        Log.i("RuneQaLogcatProbe", end)
+
+        val lines = driver.shell("logcat -d --pid=$pid -v raw").lines()
+        val first = lines.indexOf(begin)
+        val last = lines.lastIndexOf(end)
+        assertTrue("The scoped Logcat interval was not observed", first >= 0 && last > first)
+        val interval = lines.subList(first + 1, last)
+        assertFalse("Synthetic ordinary editor text appeared in Rune-scoped Logcat",
+            interval.any { it.contains(canary.dropLast(1), ignoreCase = true) })
+        assertFalse("Synthetic password editor text appeared in Rune-scoped Logcat",
+            interval.any { it.contains(passwordCanary.dropLast(1), ignoreCase = true) })
     }
 }

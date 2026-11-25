@@ -32,6 +32,15 @@ RARE_RANKING_ADDITIONS = {
     'public-recovered-v6-diagnostic-rare-ranking-holdout-windows': '78af0cebbdb59145048143b99897853dd488875c35e933e94bc4f4162b0ba16b',
     'public-recovered-v6-diagnostic-rare-ranking-holdout-dictionary-families': '2568faf738c608051b3f48fee4ce6b0e74cc3b4f17a557a47c202402e85dc3fd',
 }
+PUBLIC_SOURCE_ADDITIONS = (
+    {'public-ru-wikisource-page-exposure-v1': 'b6b1d46aaa526bc18a61142ce27369a8df1002fe3234752ac01e0e5e21a11ed4'},
+    {
+        'public-ud-ancora-test-exposure-v1-ca': 'e2b407460b09d2a5ea8fc25237eed6264e26b5a30e24109447a816fd220ec91a',
+        'public-ud-ancora-test-exposure-v1-es': '2e7b87b330848ff148c2bad3e315115fe001c46c41e2281f57e73c2431222c11',
+    },
+    {'public-a4-brockhaus-efron-quantities-v1': '76050a4b8d2dca46b67a36c852c9bcc6ae08170e43124e295110d9120be149c6'},
+    {'public-a4-ytsaurus-ru-markdown-v1': 'f2043bf94b4e125a627c9f569e6b09a403436a2788c770893804c58cfc82780c'},
+)
 
 
 def verify_ledger_binding(path, expected):
@@ -58,7 +67,7 @@ def verify_ledger_binding(path, expected):
             raise ValueError('V6_TARGET_LEDGER_BINDING')
         removed = {reviewed.ENTRY, frequency.ENTRY}
         for additions in (NOUN_CASE_ADDITIONS, GRAMMAR_CONTRAST_ADDITIONS,
-                          RECOVERED_V6_ADDITIONS, RARE_RANKING_ADDITIONS):
+                          RECOVERED_V6_ADDITIONS, RARE_RANKING_ADDITIONS, *PUBLIC_SOURCE_ADDITIONS):
             present = additions.keys() & by_id.keys()
             if not present:
                 continue

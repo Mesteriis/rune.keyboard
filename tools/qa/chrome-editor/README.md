@@ -37,7 +37,7 @@ only bounded integers and boolean flags reach the host, with no input text.
 The gate requires five corrected words, exact Undo, correction of the sixth word,
 and five literal words plus Backspace when suggestions are forbidden. It rejects
 missing/out-of-order stages, unexpected fields, strings and incomplete native runs.
-The server accepts only two fixed GET routes and two numeric POST routes; it
+The server accepts only three fixed GET routes and three numeric POST routes. It
 never serves a directory and retains at most 512 metric records.
 
 Each test closes its own tab, identified by the exact loopback address in the
@@ -105,3 +105,39 @@ flags file or debug app configuration. It requires both exact instrumentation
 cases and the ordered DOM outcomes. The matrix collects the native log,
 numeric event stream and result.
 [Chromium Android command-line flag documentation](https://new.chromium.org/developers/how-tos/run-chromium-with-flags/#android)
+
+### Foldable emulator textarea route
+
+Use a disposable API 37 foldable profile with a cover display, such as the
+Pixel Fold. Boot and unlock it on the inner display. Install the matching Rune
+debug and test APKs and select Rune before starting the run.
+
+```sh
+python3 tools/ci/android_chrome_editor.py --avd-name rune-ci-q8-fold \
+  --output build/ci-chrome-fold-transitions --fold-transitions
+```
+
+The same Chrome tab holds three corrected words and a literal fourth word
+before the fold. The test dismisses the emulator keyguard if it appears and
+uses Ctrl+End to resume at the end of the same field. Rune completes the
+fourth word with Space on the cover display, corrects the fifth word, and
+undoes that correction. After unfolding, the test returns to the end again,
+enters the separator, and requires correction of the sixth word. The independent
+DOM oracle checks exact text at all three word boundaries and the existing
+literal no-suggestions control. The native fixture separately requires the
+display width to change in both directions and the closed and reopened
+editor to remain on the owned loopback tab.
+
+### Password route
+
+The separate API 37 case compares preview visibility for ordinary and password
+inputs on one loopback page with preview enabled. It then types a synthetic
+value in the password field and presses Backspace. Exact string comparisons
+run in Chrome. The host verifier requires the empty, full and one-character
+shorter stages in order, and the native test closes the owned tab. Preview
+images stay in emulator memory.
+
+```sh
+python3 tools/ci/android_chrome_editor.py --avd-name rune-ci-boundary \
+  --output build/ci-chrome-password --password
+```

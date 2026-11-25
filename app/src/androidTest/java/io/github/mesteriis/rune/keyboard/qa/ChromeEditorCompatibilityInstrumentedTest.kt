@@ -1,5 +1,6 @@
 package io.github.mesteriis.rune.keyboard.qa
 
+import android.app.KeyguardManager
 import android.content.Context
 import android.content.ContextWrapper
 import android.inputmethodservice.InputMethodService
@@ -34,6 +35,7 @@ class ChromeEditorCompatibilityInstrumentedTest {
     private var captured = false
     private var pageOwned = false
     private var port = 0
+    private var foldTransitions = false
     @get:Rule val testName = TestName()
     private val browser = "com.android.chrome"
 
@@ -43,6 +45,8 @@ class ChromeEditorCompatibilityInstrumentedTest {
         val ownedEmulator = args.getString("runeOwnedEmulator") == "q8-chrome" &&
             Build.HARDWARE in setOf("ranchu", "goldfish") && driver.shell("getprop ro.kernel.qemu") == "1"
         assumeTrue("Explicit Fold or owned-emulator Chrome run required", physicalFold || ownedEmulator)
+        foldTransitions = args.getString("runeFoldTransitions") == "true"
+        check(!foldTransitions || ownedEmulator)
         check(args.getString("runeFailureArtifacts") == "false")
         port = checkNotNull(args.getString("runeLoopbackPort")).toInt()
         check(port in 1024..65535)
@@ -125,6 +129,49 @@ class ChromeEditorCompatibilityInstrumentedTest {
     }
     private fun type(value: String) = value.forEach { checkEditor(); driver.tapKey(it.toString()) }
     private fun space() { checkEditor(); driver.tapKeyByDescription(context.getString(R.string.key_space)) }
+
+    private fun changePosture(close: Boolean) {
+        checkEditor()
+        val widthBefore = driver.device.displayWidth
+        val posture = if (close) "closed" else "opened"
+        instrumentation.sendStatus(2, Bundle().apply { putString("fold_request", posture) })
+        val deadline = SystemClock.uptimeMillis() + 15_000
+        var width = widthBefore
+        while (SystemClock.uptimeMillis() < deadline) {
+            width = driver.device.displayWidth
+            if (if (close) width < widthBefore else width > widthBefore) break
+            SystemClock.sleep(100)
+        }
+        assertTrue("Chrome display did not become $posture", if (close) width < widthBefore else width > widthBefore)
+        val tab = By.res(browser, "url_bar").textContains("127.0.0.1:$port")
+        val keyguard = context.getSystemService(KeyguardManager::class.java)
+        val resumeDeadline = SystemClock.uptimeMillis() + 8000
+        while (SystemClock.uptimeMillis() < resumeDeadline && !driver.device.hasObject(tab)) {
+            if (keyguard?.isKeyguardLocked == true) {
+                driver.shell("wm dismiss-keyguard")
+                break
+            }
+            SystemClock.sleep(100)
+        }
+        assertTrue("Owned Chrome tab lost", driver.device.wait(Until.hasObject(tab), 8000))
+        val delete = By.pkg(context.packageName).desc(context.getString(R.string.key_delete))
+        if (!driver.device.hasObject(delete)) {
+            val editor = checkNotNull(driver.device.wait(Until.findObject(
+                By.pkg(browser).res("rune-qa").clazz("android.widget.EditText")), 5000))
+            editor.click()
+        }
+        assertTrue("Rune keyboard missing after $posture", driver.device.wait(Until.hasObject(delete), 5000))
+        checkEditor()
+        // Resuming at the end is an explicit editor gesture. Chrome can move the caret while refocusing.
+        assertTrue("Chrome did not receive Ctrl+End after $posture",
+            driver.device.pressKeyCode(KeyEvent.KEYCODE_MOVE_END, KeyEvent.META_CTRL_ON))
+        instrumentation.sendStatus(2, Bundle().apply {
+            putString("fold_observed", posture)
+            putInt("fold_width", width)
+            putInt("fold_width_before", widthBefore)
+        })
+    }
+
     @Test fun noSuggestionsPreservesFiveLiteralWordsAndBackspace() {
         repeat(5) { type("teh"); space(); reportState(it + 1) }
         SystemClock.sleep(250)
@@ -134,10 +181,19 @@ class ChromeEditorCompatibilityInstrumentedTest {
     }
 
     @Test fun correctionRemainsAvailableAfterFiveWordsAndExactUndo() {
-        repeat(5) { type("teh"); space(); reportState(it + 1) }
+        repeat(5) {
+            if (foldTransitions && it == 3) {
+                type("the")
+                changePosture(close = true)
+            } else {
+                type("teh")
+            }
+            space(); reportState(it + 1)
+        }
         SystemClock.sleep(250)
         checkEditor(); driver.tapDelete()
         SystemClock.sleep(250)
+        if (foldTransitions) changePosture(close = false)
         space(); type("teh"); space()
         SystemClock.sleep(250)
         reportState(6)

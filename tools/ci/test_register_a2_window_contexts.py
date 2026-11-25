@@ -12,7 +12,13 @@ class A2WindowContextsTest(unittest.TestCase):
         expected=subject.entry();ledger=subject.control.load(subject.LEDGER)
         self.assertEqual([expected],[e for e in ledger['entries'] if e['id']==subject.ENTRY])
         self.assertEqual(6,len(expected['keys']))
-        prior={key for e in ledger['entries'] if e['id']!=subject.ENTRY and e['kind']=='regression' for key in e['keys']}
+        legacy_id = 'a2-bounded-prefix-native-probe-v1'
+        legacy, = [entry for entry in ledger['entries'] if entry['id'] == legacy_id]
+        self.assertEqual(expected['keys'], legacy['keys'])
+        self.assertNotEqual(expected['bindings'], legacy['bindings'])
+        prior = {key for entry in ledger['entries']
+                 if entry['id'] not in (subject.ENTRY, legacy_id) and entry['kind'] == 'regression'
+                 for key in entry['keys']}
         self.assertFalse(set(expected['keys'])&prior)
         for first,last in ((17,39),(17,40),(34,56)):
             prefix=''.join(f'word{i:02d} ' for i in range(first,last+1))
