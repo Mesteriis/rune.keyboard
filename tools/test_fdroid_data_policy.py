@@ -168,6 +168,36 @@ class DataPolicyTest(unittest.TestCase):
             with self.assertRaisesRegex(policy.DataPolicyError, 'UNREVIEWED_OR_STALE_DATA_SET'):
                 policy.check(root, value)
 
+    def test_source_export_requires_exactly_the_two_declared_absent_archives(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, value = self.fixture(directory)
+            original = policy.parse_policy(policy.POLICY.read_bytes())
+            archives = [row for row in original['entries'] if row['path'] in policy.REBUILT_QUALIFICATION_ARCHIVES]
+            self.assertEqual(2, len(archives))
+            value['entries'].extend(archives)
+            catalog, = {row['provenance'] for row in archives}
+            (root / catalog).parent.mkdir(parents=True)
+            (root / catalog).write_bytes((policy.REPO / catalog).read_bytes())
+
+            with self.assertRaisesRegex(policy.DataPolicyError, 'UNREVIEWED_OR_STALE_DATA_SET'):
+                policy.check(root, value)
+            report = policy.check(root, value, source_export=True)
+            self.assertEqual(4, report['entries'])
+            self.assertEqual(sorted(policy.REBUILT_QUALIFICATION_ARCHIVES), report['omittedQualificationArchives'])
+
+            missing_record = value | {'entries': value['entries'][:-1]}
+            with self.assertRaisesRegex(policy.DataPolicyError, 'REBUILT_QUALIFICATION_ARCHIVE_POLICY_MISSING'):
+                policy.check(root, missing_record, source_export=True)
+            unreviewed = root / 'app/src/main/assets/unknown.bin'
+            unreviewed.write_bytes(b'unreviewed')
+            with self.assertRaisesRegex(policy.DataPolicyError, 'UNREVIEWED_OR_STALE_DATA_SET'):
+                policy.check(root, value, source_export=True)
+            unreviewed.unlink()
+
+            (root / archives[0]['path']).write_bytes(b'archive present')
+            with self.assertRaisesRegex(policy.DataPolicyError, 'REBUILT_QUALIFICATION_ARCHIVE_PRESENT'):
+                policy.check(root, value, source_export=True)
+
     def test_unregistered_public_archive_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             root, value = self.fixture(directory)

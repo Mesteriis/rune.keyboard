@@ -85,16 +85,20 @@ three root wrapper files, the unused training baseline, two llama.cpp example
 wrapper files and four host CI archives. The archives are deleted by exact path
 and hash; the calibration test gzip remains inventory-only.
 
-A future versioned recipe must run both guards in `init`, before preparation,
+A future versioned recipe for the source export without the rebuildable v3/v4
+qualification archives must run both guards in `init`, before preparation,
 and explicitly select the prepared-source mode for Gradle:
 
 ```yaml
 init:
-  - cd .. && python3 tools/release_source_check.py && python3 tools/fdroid_data_policy.py
+  - cd .. && python3 tools/release_source_check.py && python3 tools/fdroid_data_policy.py --source-export
 gradleprops:
   - runePreparedSource=fdroidserver-2.4.5
 ```
 
+The source-export check requires both known archive paths to be absent and
+validates both inventory records against their catalog. CI reconstructs those
+archives in its test checkout and uses the ordinary full inventory check.
 Use the current review data overlay with that entry; retain historical recipes.
 After source scanning, the equivalent standalone checkpoint is:
 
