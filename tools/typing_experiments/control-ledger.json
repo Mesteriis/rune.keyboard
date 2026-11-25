@@ -588283,6 +588283,28 @@
         "Клавы": 18,
         "Читы": 43
       }
+    },
+    {
+      "articleKeys": [
+        "1ae6b42983af32e130765edcf7f970745d0b9dc3a18358ed972e0e1351174e5c",
+        "2f52892d8913c3bd2d10525738d589ecc278861b54d5069b4cda7ddc9f333b98",
+        "37a44c034bb51fb2e55715923ab61d26bc8460d489e4babf798dd08bac3d8e79",
+        "4230712ec3d8af996fb511a2f6c2a2f01000bb88ab077f3b930f6c9aeaa2bff9",
+        "4ba5a12b7d715efac25a48eaf3cc1f552c9fcf3b66e1cc100e7e6c60bb98a7ef",
+        "4ffe5db1a986b4cf7d61c1facd79fee81c7d6952b68b0a7230ca0f4dd724471c",
+        "7027c2934e848d3ef42d1195522095328a05b3c8dc1eba4cd6d8368609a6dbe8",
+        "7b83bfa6e036d4f21f8602aed8eeabd634dcb358bd21cd5007fdc0c2d87d2495",
+        "86cf69baee570969e84355e94d350605bb11437b9c1ac2cf932717d814f7ff63",
+        "b368407ba30620fc861e1b55a9fd6e02ca539ad6d0ea9f5d872eefe5a0b44236"
+      ],
+      "bindings": {
+        "tools/typing_experiments/wikisource-page-exposure-v1.json": "57525f5ff359d8eb8813294d6fb8a07ef2f1fe1678377b032f4b0c3ec1dd6b88"
+      },
+      "id": "public-ru-wikisource-page-exposure-v1",
+      "keys": [],
+      "kind": "source",
+      "language": "ru",
+      "rowCount": 10
     }
   ],
   "pending": [

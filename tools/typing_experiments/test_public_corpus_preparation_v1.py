@@ -8,7 +8,7 @@ from types import SimpleNamespace
 from control_ledger import SCHEMA,key_for,article_key
 from holdout_ledger import keys_for,source_segment_hash,require_source_segment
 from public_corpus_preparation_v1 import (preflight,prepare,registry_bindings,registry_bindings_v1,
-    verify_registry_bindings,verify_historical_registry_bindings_v1)
+    verify_registry_bindings,verify_historical_registry_bindings_v1,WIKISOURCE,wikisource_page_key)
 from test_holdout_ledger import ledger
 from source_identities import unsupported_surface_key
 from joint_exclusion_inputs import canonical_registry_parts
@@ -214,6 +214,53 @@ class PreparationGateTest(unittest.TestCase):
             require_source_segment(missing)
         require_source_segment(candidate(sourceSegmentHash=text_hash))
         self.assertIn('source-segment-schema', self.report(candidate(sourceSegmentHash='bad'))['identityErrors'])
+
+    def test_wikisource_page_overlap_survives_revisions_in_both_registries(self):
+        old = candidate(sourceRepository=WIKISOURCE, article='wikisource:999999999', sourceRevision='123')
+        key = wikisource_page_key(old)
+        lex = ledger(False)
+        lex['entries'].append(dict(id='exposed-ru-source', usage='historical-exclusion',
+            bindings={'fixture':'a'*64}, keys={'article':[key]}, missingAxes=['family','sentence','context']))
+        ctrl = controls()
+        ctrl['entries'].append(dict(id='exposed-ru-source', kind='source', language='ru',
+            rowCount=1, bindings={'fixture':'a'*64}, keys=[], articleKeys=[key]))
+        revised = old | dict(sourceRevision='456', prefix='Другая фраза', typed='другая', expectedSpelling='другая',
+                             contextHash='3'*64, sourceSegmentHash='4'*64)
+        for lexical, control, expected in ((lex, ctrl, (1, 1)), (lex, controls(), (1, 0)),
+                                           (ledger(False), ctrl, (0, 1))):
+            result = preflight([revised], 'spelling', lexical, control)
+            self.assertEqual('BLOCKED_OVERLAP', result['status'])
+            self.assertEqual([], result['identityErrors'])
+            self.assertEqual(expected, (result['lexicalOverlaps']['article'], result['controlOverlaps']['article']))
+        unrelated = candidate(sourceRepository='wikimedia/wikipedia')
+        result = preflight([unrelated], 'spelling', lex, ctrl)
+        self.assertEqual(0, result['lexicalOverlaps']['article'])
+        self.assertEqual(0, result['controlOverlaps']['article'])
+
+    def test_wikisource_requires_canonical_page_revision_and_source_segment(self):
+        row = candidate(sourceRepository=WIKISOURCE, article='wikisource:999999999', sourceRevision='123')
+        self.assertEqual([], self.report(row)['identityErrors'])
+        for invalid in (dict(article='999999999'), dict(article='wikisource:0999'), dict(sourceRevision=None),
+                        dict(sourceRevision='0123'), dict(language='es')):
+            with self.subTest(invalid=invalid):
+                report = self.report(row | invalid)
+                self.assertIn('source-article-schema', report['identityErrors'])
+        self.assertIn('source-segment-schema', self.report(row | dict(sourceSegmentHash=None))['identityErrors'])
+
+    def test_wikisource_segment_still_matches_disclosed_text_from_another_source(self):
+        text_hash = source_segment_hash('Проверенный публичный фрагмент')
+        source = dict(sourceRepository='tatoeba', language='ru', article='tatoeba:7', sentenceHash=text_hash)
+        lex = ledger(False)
+        lex['entries'].append(dict(id='shared-text', usage='historical-source-exclusion',
+            bindings={'fixture':'a'*64}, keys={axis: sorted(keys_for([source], axis)) for axis in ('article','sentence')},
+            missingAxes=[]))
+        row = candidate(sourceRepository=WIKISOURCE, article='wikisource:999999999', sourceRevision='123',
+                        sourceSegmentHash=text_hash)
+        report = preflight([row], 'spelling', lex, controls())
+        self.assertEqual('BLOCKED_OVERLAP', report['status'])
+        self.assertEqual([], report['identityErrors'])
+        self.assertEqual(0, report['lexicalOverlaps']['article'])
+        self.assertEqual(1, report['lexicalOverlaps']['sentence'])
 
     def report(self,row=None,task='spelling',**changes):
         args=dict(rows=[row or candidate()],task=task,lexical=ledger(False),controls=controls())|changes

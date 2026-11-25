@@ -8,6 +8,7 @@ import hashlib
 import itertools
 import json
 from pathlib import Path
+import re
 
 import control_ledger as control
 import english_family_keys
@@ -18,6 +19,24 @@ from source_identities import unsupported_surface_key
 
 TASKS=('spelling','punctuation','protected')
 APOSTROPHES="'’ʼ"
+WIKISOURCE = 'wikimedia/wikisource'
+WIKISOURCE_PAGE = re.compile(r'wikisource:([1-9][0-9]{0,19})\Z')
+WIKISOURCE_REVISION = re.compile(r'[1-9][0-9]{0,19}\Z')
+
+
+def wikisource_page_key(row):
+    if not isinstance(row, dict) or row.get('sourceRepository') != WIKISOURCE or row.get('language') != 'ru':
+        raise ValueError('WIKISOURCE_PAGE_SCOPE')
+    article = row.get('article')
+    revision = row.get('sourceRevision')
+    if not isinstance(article, str) or not isinstance(revision, str) or not WIKISOURCE_REVISION.fullmatch(revision):
+        raise ValueError('WIKISOURCE_PAGE_IDENTITY')
+    page = WIKISOURCE_PAGE.fullmatch(article)
+    if page is None:
+        raise ValueError('WIKISOURCE_PAGE_IDENTITY')
+    # Revisions identify the captured text. Exclusions apply across revisions of the same page.
+    identity = ['rune-public-wikisource-page-v1', 'ru.wikisource.org', page[1]]
+    return hashlib.sha256(json.dumps(identity, separators=(',', ':')).encode()).hexdigest()
 
 
 def english_surface_variants(value):
@@ -141,17 +160,30 @@ def preflight(rows,task,lexical,controls,profile='new-sentences'):
             control_keys['punctuation'].add(control.key_for(dict(language=language,prefix=row.get('prefix'),currentWord=target,
                 expectedBoundary=row.get('expectedBoundary',' ')),'punctuation'))
         except ValueError:errors.add('control-punctuation-schema')
-        if task!='protected' or 'article' in row:
-            try:control_keys['article'].add(control.article_key(row))
+        wikisource = row.get('sourceRepository') == WIKISOURCE
+        has_source = task != 'protected' or 'article' in row or wikisource
+        page_key = None
+        if has_source:
+            try:
+                page_key = wikisource_page_key(row) if wikisource else control.article_key(row)
+                control_keys['article'].add(page_key)
             except ValueError:errors.add('source-article-schema')
         if language=='ru':
             mapped=row|dict(expectedSpelling=target)
-            if task!='protected' or 'article' in row:
-                try:require_source_segment(row)
+            if has_source:
+                segment_row = {'sourceSegmentHash': row.get('sourceSegmentHash')} if wikisource else row
+                try:require_source_segment(segment_row)
                 except ValueError:errors.add('source-segment-schema')
-            axes=('article','sentence','context','family') if task!='protected' else ('article','sentence','context') if 'article' in row else ('context',)
+            axes=('article','sentence','context','family') if task!='protected' else ('article','sentence','context') if has_source else ('context',)
             for axis in axes:
-                try:lex_keys[axis].update(keys_for([mapped],axis))
+                if wikisource and axis=='article':
+                    if page_key is not None:lex_keys[axis].add(page_key)
+                    continue
+                # Source-neutral sentence keys still match disclosed text from other collections.
+                key_row = mapped
+                if wikisource and axis=='sentence':
+                    key_row = {key: row[key] for key in ('contextHash', 'sourceSegmentHash') if key in row}
+                try:lex_keys[axis].update(keys_for([key_row],axis))
                 except ValueError:errors.add('lexical-'+axis+'-schema')
         elif language=='en':
             # The registry already quarantines these English source identities.
