@@ -293,9 +293,10 @@ class ImeTestDriver private constructor(private val packageName: String) {
         instrumentation.waitForIdleSync(); device.waitForIdle()
     }
 
-    fun launchQa(observeDetachLength: Boolean = false) {
+    fun launchQa(observeDetachLength: Boolean = false, numberFirst: Boolean = false) {
         val option = if (observeDetachLength) " --ez qa_observe_detach_length true" else ""
-        shell("am start -W -f 0x10008000 -n $qaActivity$option")
+        val layout = if (numberFirst) " --ez qa_number_first true" else ""
+        shell("am start -W -f 0x10008000 -n $qaActivity$option$layout")
         awaitQaActivity()
     }
 
@@ -884,6 +885,17 @@ class ImeTestDriver private constructor(private val packageName: String) {
     }
 
     private fun restartRuneIme() {
+        if (InstrumentationRegistry.getArguments().getString("runeCiRebindIme") == "true") {
+            check(android.os.Build.VERSION.SDK_INT == 26 &&
+                android.os.Build.HARDWARE in setOf("ranchu", "goldfish") &&
+                shell("getprop ro.kernel.qemu") == "1") { "QA rebind IME requires an API 26 emulator" }
+            val rebindIme = "io.github.mesteriis.rune.qa.compose/.RebindInputMethodService"
+            shell("ime enable $rebindIme")
+            check(rebindIme in shell("ime list -s").lineSequence()) { "QA rebind IME is not enabled" }
+            selectImeAndDrain(rebindIme)
+            selectImeAndDrain(imeComponent)
+            return
+        }
         val fallback = sequenceOf(previousIme)
             .plus(previousEnabledImes.split(':'))
             .map { it.substringBefore(';').trim() }

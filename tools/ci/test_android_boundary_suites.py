@@ -172,6 +172,9 @@ class BoundarySuitePlanTest(unittest.TestCase):
             for name in (suites.PERSONAL,suites.EXPORT,suites.LIFECYCLE,suites.QUAL_SAFETY):
                 self.assertIn(name,general)
             self.assertIn('notClass=',general)
+            self.assertEqual(api == '26', 'runeCiRebindIme=true' in general)
+            self.assertTrue(all('runeCiRebindIme=' not in ' '.join(command)
+                                for scope, command in plan.items() if scope != 'general'))
             self.assertIn('runeOwnedEmulator=q3-personal',' '.join(plan['personal']))
             self.assertIn('runeSyntheticProfileFixture=true',' '.join(plan['case-rejection']))
             self.assertIn(suites.CASE_REJECTION,' '.join(plan['case-rejection']))

@@ -183,7 +183,10 @@ def plan(api):
     common=['./gradlew','--no-daemon',':app:connectedDebugAndroidTest']
     arg=GRADLE_RUNNER_ARG
     excluded=','.join((PERSONAL,EXPORT,LIFECYCLE,QUAL_SAFETY))
-    result=[('general',common+[arg+'runeOwnedEmulator=q4-counters',arg+'notClass='+excluded]),
+    general=common+[arg+'runeOwnedEmulator=q4-counters',arg+'notClass='+excluded]
+    if api == '26':
+        general.append(arg+'runeCiRebindIme=true')
+    result=[('general',general),
             ('personal',common+[arg+'runeOwnedEmulator=q3-personal',arg+'class='+PERSONAL]),
             ('case-rejection',common+[arg+'runeSyntheticProfileFixture=true',arg+'class='+CASE_REJECTION]),
             ('confirmed-words',common+[arg+'runeSyntheticProfileFixture=true',

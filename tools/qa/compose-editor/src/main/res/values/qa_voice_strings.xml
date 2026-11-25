@@ -1,3 +1,4 @@
 <resources>
   <string name="qa_voice_ime">Rune QA Voice</string>
+  <string name="qa_rebind_ime">Rune QA Rebind</string>
 </resources>

@@ -87,7 +87,28 @@ class ImeQaActivity : Activity() {
             val padding = dp(24)
             setPadding(padding, padding, padding, padding)
         }
+        val actionStatus = label(getString(R.string.qa_action_waiting)).apply {
+            id = R.id.qa_action_status
+        }
+        val recordEditorAction = TextView.OnEditorActionListener { _, actionId, _ ->
+            actionStatus.text = getString(R.string.qa_action_received, actionId)
+            true
+        }
+        fun addNumberEditor() {
+            addEditor(
+                content, getString(R.string.qa_number_label), R.id.qa_number,
+                getString(R.string.qa_number_hint),
+                InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED or
+                    InputType.TYPE_NUMBER_FLAG_DECIMAL,
+                EditorInfo.IME_ACTION_DONE,
+            ).setOnEditorActionListener(recordEditorAction)
+        }
+        val numberFirst = intent.getBooleanExtra("qa_number_first", false)
         content.addView(label(getString(R.string.qa_title)))
+        if (numberFirst) {
+            addNumberEditor()
+            content.addView(actionStatus)
+        }
         if (intent.getBooleanExtra("qa_observe_detach_length", false)) {
             detachLength = TextView(this).apply { id = R.id.qa_detach_length }
             updateDetachStats()
@@ -162,20 +183,7 @@ class ImeQaActivity : Activity() {
             content, getString(R.string.qa_phone_label), R.id.qa_phone,
             getString(R.string.qa_phone_hint), InputType.TYPE_CLASS_PHONE, EditorInfo.IME_ACTION_DONE,
         )
-        val actionStatus = label(getString(R.string.qa_action_waiting)).apply {
-            id = R.id.qa_action_status
-        }
-        val recordEditorAction = TextView.OnEditorActionListener { _, actionId, _ ->
-            actionStatus.text = getString(R.string.qa_action_received, actionId)
-            true
-        }
-        addEditor(
-            content, getString(R.string.qa_number_label), R.id.qa_number,
-            getString(R.string.qa_number_hint),
-            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED or
-                InputType.TYPE_NUMBER_FLAG_DECIMAL,
-            EditorInfo.IME_ACTION_DONE,
-        ).setOnEditorActionListener(recordEditorAction)
+        if (!numberFirst) addNumberEditor()
         addEditor(
             content, getString(R.string.qa_password_label), R.id.qa_password,
             getString(R.string.qa_password_hint),
@@ -206,7 +214,7 @@ class ImeQaActivity : Activity() {
                 setOnEditorActionListener(recordEditorAction)
             },
         )
-        content.addView(actionStatus)
+        if (!numberFirst) content.addView(actionStatus)
 
         // Keep QA navigation free of residual fling/stretch interception. The following real
         // editor-focus tap belongs to the Binder test, not to stopping a ScrollView animation.

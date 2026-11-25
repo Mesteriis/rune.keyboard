@@ -149,6 +149,7 @@ class EditorBoundaryInstrumentedTest : ImeTestBase() {
 
     @Test
     fun signedDecimalKeysAndDoneReachTheSameRemoteEditor() {
+        driver.launchQa(numberFirst = true)
         driver.focusField("qa_number")
         assertServedEditor(R.id.qa_number)
         "-12.35".forEach { driver.tapKey(it.toString()) }
@@ -158,6 +159,6 @@ class EditorBoundaryInstrumentedTest : ImeTestBase() {
         assertServedEditor(R.id.qa_number)
         driver.tapEnter(R.string.key_done)
         driver.awaitStatus("Action received: ${EditorInfo.IME_ACTION_DONE}")
-        driver.revealFieldAndAwaitText("qa_number", "-12.3")
+        driver.awaitFieldText("qa_number", "-12.3")
     }
 }
