@@ -3,6 +3,9 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import shlex
+import stat
+import subprocess
 import tempfile
 import unittest
 
@@ -74,6 +77,63 @@ class QualityPeriodTest(unittest.TestCase):
             meta.write_text(json.dumps(metadata))
             with self.assertRaisesRegex(ValueError, 'timezone'):
                 q.read_snapshot(snapshot, meta)
+
+    def test_capture_reads_only_user_zero_opt_in_and_bounded_counters(self):
+        raw = b'RUNE_QUALITY_3\n' + b'0\n' * q.COUNTS
+        commands = []
+        responses = iter([b'device\n', b'0\n', b'1\n', raw, b'1\n'])
+
+        def run(command, *, capture_output, timeout):
+            self.assertTrue(capture_output)
+            self.assertEqual(timeout, 15)
+            commands.append(command)
+            return subprocess.CompletedProcess(command, 0, next(responses), b'')
+
+        with tempfile.TemporaryDirectory() as root:
+            directory = q.capture_snapshot('fold-fixture', Path(root), execute=run)
+            snapshot, metadata_path = directory / 'quality.txt', directory / 'metadata.json'
+            self.assertEqual(stat.S_IMODE(directory.stat().st_mode), 0o700)
+            self.assertEqual(stat.S_IMODE(snapshot.stat().st_mode), 0o600)
+            self.assertEqual(stat.S_IMODE(metadata_path.stat().st_mode), 0o600)
+            self.assertEqual(q.read_snapshot(snapshot, metadata_path)[1], self.zero)
+            metadata = json.loads(metadata_path.read_bytes())
+            self.assertEqual(set(metadata), {
+                'captured_utc', 'snapshot_sha256', 'quality_metrics_enabled_before_and_after',
+            })
+            self.assertTrue(metadata['quality_metrics_enabled_before_and_after'])
+
+        self.assertEqual([command[:3] for command in commands], [['adb', '-s', 'fold-fixture']] * 5)
+        self.assertEqual(commands[0][3:], ['get-state'])
+        self.assertEqual(commands[1][3:], ['shell', 'am', 'get-current-user'])
+        self.assertEqual(commands[2], commands[4])
+        pref = shlex.split(commands[2][-1])
+        snapshot = shlex.split(commands[3][-1])
+        self.assertEqual(pref, ['run-as', q.PACKAGE, '--user', '0', 'sed', '-n',
+                                f's|{q.PREFERENCE}|1|p', q.PREFERENCES])
+        self.assertEqual(snapshot, ['run-as', q.PACKAGE, '--user', '0', 'head', '-c', '2049', q.COUNTER_FILE])
+        self.assertEqual([command[3] for command in commands[2:]], ['exec-out'] * 3)
+
+    def test_capture_leaves_no_files_on_failed_transport_or_unconfirmed_data(self):
+        raw = b'RUNE_QUALITY_3\n' + b'0\n' * q.COUNTS
+        for responses, reason in (
+            ([(1, b'')], 'ADB read failed'),
+            ([(0, b'offline')], 'online device'),
+            ([(0, b'device'), (0, b'10')], 'Android user 0'),
+            ([(0, b'device'), (0, b'0'), (0, b'')], 'preference'),
+            ([(0, b'device'), (0, b'0'), (0, b'1'), (0, raw + b'x')], 'schema'),
+            ([(0, b'device'), (0, b'0'), (0, b'1'), (0, raw), (0, b'1\n1\n')], 'preference'),
+        ):
+            with self.subTest(reason=reason), tempfile.TemporaryDirectory() as root:
+                pending = iter(responses)
+
+                def run(command, **kwargs):
+                    code, data = next(pending)
+                    return subprocess.CompletedProcess(command, code, data, b'private transport details')
+
+                with self.assertRaisesRegex(ValueError, reason) as failure:
+                    q.capture_snapshot('fold-fixture', Path(root), execute=run)
+                self.assertNotIn('private transport details', str(failure.exception))
+                self.assertEqual(list(Path(root).iterdir()), [])
 
 
 if __name__ == '__main__':
