@@ -152,12 +152,12 @@ class AutoCorrectionAdmissionGuard(private val lexicon: MorphologyLexicon) {
 
 /** Additional public-word veto shared by Android and replay; never creates or ranks a winner. */
 object PublicOriginalProtection {
-    // Public CC0 chat controls, reviewed after the original regression replay.
+    // Reviewed public controls. The exact hospital domain label яокб is attested as яокб.рф.
     // Exact forms only: do not infer inflections or alter the frozen rare-word asset.
-    private val reviewedChatOriginals = setOf(
+    private val reviewedOriginals = setOf(
         "пейринг", "токсиков", "админку", "забанили", "бадлон", "могёт", "ебобо",
         "хотелки", "скипать", "усмеяться", "скипай", "ебалу", "анимки", "инвент",
-        "похуй", "уведы", "афантазия", "инвайт", "пофаниться", "темпой",
+        "похуй", "уведы", "афантазия", "инвайт", "пофаниться", "темпой", "яокб",
     )
     /** Manual suggestions remain useful even when a lower-case short entity protects the original. */
     fun manualPreference(original: String, candidate: GeneratedCandidate, morphology: MorphologyLexicon,
@@ -183,7 +183,7 @@ object PublicOriginalProtection {
         val source = rareWords.lookup(sourceKey)
         return when {
             !source.available -> AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE)
-            source.present || sourceKey in reviewedChatOriginals ->
+            source.present || sourceKey in reviewedOriginals ->
                 AutomaticAdmissionDecision(false, AutomaticAdmissionRefusal.ORIGINAL_VALID)
             else -> AutomaticAdmissionDecision(true)
         }

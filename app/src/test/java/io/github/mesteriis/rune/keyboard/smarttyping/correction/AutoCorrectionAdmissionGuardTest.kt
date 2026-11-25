@@ -8,6 +8,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidateK
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalSearchEvidence
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyMembership
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordMembership
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -189,6 +191,18 @@ class AutoCorrectionAdmissionGuardTest {
             assertFalse(original, decision.allowed)
         }
         assertTrue(PublicOriginalProtection.evaluate(generation("скипала", listOf(winner)), winner, absent).allowed)
+    }
+
+    @Test fun `reviewed public domain label resists spelling correction`() {
+        val absent = RareWordLexicon { RareWordMembership.ABSENT }
+        val winner = candidate("якоб")
+        val input = generation("яокб", listOf(winner))
+
+        val decision = PublicOriginalProtection.evaluate(input, winner, absent)
+
+        assertFalse(decision.allowed)
+        assertEquals(AutomaticAdmissionRefusal.ORIGINAL_VALID, decision.refusal)
+        assertTrue(PublicOriginalProtection.evaluate(input.copy(original = "яокв"), winner, absent).allowed)
     }
 
     @Test fun `public rare original vetoes ordinary correction and unavailable evidence fails closed`() {
