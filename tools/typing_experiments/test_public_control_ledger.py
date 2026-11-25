@@ -140,6 +140,17 @@ class PublicControlSnapshotTest(unittest.TestCase):
         self.assertEqual(77, len(entry['keys']))
         self.assertNotIn('surfaceKeys', entry)
 
+    def test_q5_wikisource_name_contrasts_bind_only_exact_contexts(self):
+        entry, = [item for item in self.ledger['entries']
+                  if item['id'] == 'public-q5-wikisource-same-surface-names-v1']
+        frozen = json.dumps(entry, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+        self.assertEqual('19585f59353c786773a88e6ed46921765a8e1596e19eb35f2cc153061711c922',
+                         hashlib.sha256(frozen).hexdigest())
+        self.assertEqual(61, entry['rowCount'])
+        self.assertEqual(61, len(entry['keys']))
+        self.assertEqual({'works': 7, 'Клавы': 18, 'Читы': 43}, entry['sourceCapture'])
+        self.assertNotIn('surfaceKeys', entry)
+
     def test_archived_protected_matrices_match_every_persisted_key(self):
         directory=Path(__file__).with_name('frozen_sources')
         versions=[('qualification-v2',2,'2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65'),
