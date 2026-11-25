@@ -12,18 +12,30 @@ import re
 import subprocess
 
 
+# UIAutomator 2.4.1 is used only by the app's androidTest configuration.
+# Keep the qualified runtime recipe ID for this exact catalog revision.
+RUNTIME_CATALOG = 'gradle/libs.versions.toml'
+CATALOG_RECIPE_EQUIVALENTS = {
+    '632dc00f6ad3e056df61a396825d884da12fe6a57021ed7ecbcb39e5df1e21a9':
+    '81120cb90edadda3ae97f2be4125479fbfb25daab24aac09805ca4b83fb447e7',
+}
+
+
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def fingerprint(root, paths, llama_commit):
-    record = {'llamaCommit': llama_commit,
-              'files': {p: sha(root / p) for p in sorted(paths)}}
+    files = {p: sha(root / p) for p in sorted(paths)}
+    catalog_digest = files.get(RUNTIME_CATALOG)
+    if catalog_digest in CATALOG_RECIPE_EQUIVALENTS:
+        files[RUNTIME_CATALOG] = CATALOG_RECIPE_EQUIVALENTS[catalog_digest]
+    record = {'llamaCommit': llama_commit, 'files': files}
     return hashlib.sha256(json.dumps(record, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 
 
 def runtime_inputs(root):
-    paths = ['runtime-llama/build.gradle.kts', 'gradle/libs.versions.toml',
+    paths = ['runtime-llama/build.gradle.kts', RUNTIME_CATALOG,
              'tools/eval/smart-typing-0.3/scoring.cpp', 'tools/eval/smart-typing-0.3/scoring.h']
     paths += [str(p.relative_to(root)) for p in (root / 'runtime-llama/src/main').rglob('*')
               if p.is_file() and 'llama.cpp' not in p.parts]

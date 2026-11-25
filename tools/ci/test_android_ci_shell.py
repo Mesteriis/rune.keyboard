@@ -6,12 +6,24 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
+BOUNDARY_SCRIPT = ROOT / 'tools/ci/run_android_boundary_suite.sh'
 
 
 class AndroidCiShellTest(unittest.TestCase):
+    def test_boundary_workflow_passes_one_shell_command_to_emulator_runner(self):
+        workflow = (ROOT / '.github/workflows/ci.yml').read_text()
+        boundary = workflow.split('- name: Run Android boundary suite', 1)[1]
+        boundary = boundary.split('- name: Upload instrumentation results', 1)[0]
+        script_input = boundary.split('          script: ', 1)[1].strip()
+        self.assertEqual(
+            "bash tools/ci/run_android_boundary_suite.sh '${{ matrix.api-level }}'",
+            script_input,
+        )
+        subprocess.run(['bash', '-n', str(BOUNDARY_SCRIPT)], check=True)
+
     def test_chrome_routes_run_independently_only_on_api37(self):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
-        script = workflow.split('          script: |\n', 1)[1].split('\n      - name: Upload instrumentation results', 1)[0]
+        script = BOUNDARY_SCRIPT.read_text()
         suites = script[script.index('suite_status=0'):]
         pretend = '''python3() {
   if [ "$1" != tools/ci/android_chrome_editor.py ]; then return 0; fi
@@ -27,9 +39,8 @@ class AndroidCiShellTest(unittest.TestCase):
                 ('26', 9, 11, 13, 0), ('37.0', 9, 0, 0, 9), ('37.0', 0, 11, 0, 11),
                 ('37.0', 0, 0, 13, 13), ('37.0', 9, 11, 13, 9)):
             with self.subTest(api=api, textarea=textarea, omnibox=omnibox, password=password):
-                job = suites.replace('${{ matrix.api-level }}', api)
-                result = subprocess.run(['bash', '-ec', pretend + job], cwd=ROOT, text=True,
-                    capture_output=True, env=dict(os.environ, TEXTAREA_STATUS=str(textarea),
+                result = subprocess.run(['bash', '-ec', pretend + suites], cwd=ROOT, text=True,
+                    capture_output=True, env=dict(os.environ, api_level=api, TEXTAREA_STATUS=str(textarea),
                                                   OMNIBOX_STATUS=str(omnibox), PASSWORD_STATUS=str(password)))
                 self.assertEqual(expected, result.returncode, result.stderr)
                 self.assertEqual(['textarea', 'omnibox', 'password'] if api == '37.0' else [], result.stdout.splitlines())
@@ -41,7 +52,7 @@ class AndroidCiShellTest(unittest.TestCase):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
         setup = workflow.split('      - name: Build Android boundary APKs before emulator startup\n', 1)[1]
         builds = setup.split('\n      - name:', 1)[0]
-        script = workflow.split('          script: |\n', 1)[1].split('\n      - name: Upload instrumentation results', 1)[0]
+        script = BOUNDARY_SCRIPT.read_text()
         self.assertIn('assembleDebug assembleDebugAndroidTest :runtime-llama:assembleDebugAndroidTest', builds)
         self.assertIn('tools/qa/compose-editor assembleDebug', builds)
         self.assertNotIn(':runtime-llama:assembleDebugAndroidTest', script)
@@ -63,20 +74,17 @@ class AndroidCiShellTest(unittest.TestCase):
         self.assertIn('android_night_learning.py', night)
         self.assertIn("        if: ${{ !cancelled() && steps.boundary-apks.outcome == 'success' }}\n", boundary)
         self.assertIn('avd-name: rune-ci-boundary', boundary)
-        self.assertIn('android_boundary_suites.py', boundary)
+        self.assertIn('android_boundary_suites.py', BOUNDARY_SCRIPT.read_text())
 
     def test_all_direct_adb_actions_use_the_verified_serial(self):
-        workflow = (ROOT / '.github/workflows/ci.yml').read_text()
-        script = workflow.split('          script: |\n', 1)[1].split('\n      - name: Upload instrumentation results', 1)[0]
+        script = BOUNDARY_SCRIPT.read_text()
         self.assertIn('adb -s "$compose_serial" install -r app/build/outputs/apk/debug/app-debug.apk', script)
         self.assertNotIn('installDebug', script)
         self.assertEqual([], re.findall(r'\badb\s+(?!-s\s+"\$compose_serial")', script))
 
     def test_compose_setup_failures_stop_before_boundary_suite(self):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
-        script = workflow.split('          script: |\n', 1)[1].split('\n      - name: Upload instrumentation results', 1)[0]
-        lines = [line[12:] if line.startswith('            ') else line for line in script.splitlines()]
-        text = '\n'.join(lines)
+        text = BOUNDARY_SCRIPT.read_text()
         builds = workflow.split('      - name: Build Android boundary APKs before emulator startup\n', 1)[1]
         builds = builds.split('\n      - name:', 1)[0].split('        run: |\n', 1)[1] + '\n'
         start = text.index('compose_serial=')
@@ -103,9 +111,7 @@ adb() { return "$INSTALL_STATUS"; }
                 self.assertEqual(expected == 0, 'REACHED' in result.stdout)
 
     def test_each_apk_install_failure_stops_the_setup(self):
-        workflow = (ROOT / '.github/workflows/ci.yml').read_text()
-        script = workflow.split('          script: |\n', 1)[1].split('\n      - name: Upload instrumentation results', 1)[0]
-        text = '\n'.join(line[12:] if line.startswith('            ') else line for line in script.splitlines())
+        text = BOUNDARY_SCRIPT.read_text()
         start = text.index('compose_serial=')
         end = text.index('\n', text.index('adb -s "$compose_serial" install -r app/build/outputs/apk/debug/app-debug.apk', start))
         setup = text[start:end]
@@ -121,8 +127,7 @@ adb() { ADB_CALLS=$((ADB_CALLS + 1)); if [ "$ADB_CALLS" -eq "$FAIL_ON" ]; then r
                 self.assertEqual(fail_on == 0, 'REACHED' in result.stdout)
 
     def test_logcat_capture_restarts_after_adb_failure(self):
-        workflow = (ROOT / '.github/workflows/ci.yml').read_text()
-        script = workflow.split('          script: |\n', 1)[1].split('\n      - name: Upload instrumentation results', 1)[0]
+        script = BOUNDARY_SCRIPT.read_text()
         capture = next(line.strip().split(' > app/build/ci-device/logcat.txt', 1)[0]
                        for line in script.splitlines() if line.strip().startswith('while true; do adb '))
         fake = '''compose_serial=emulator-5554
@@ -136,10 +141,7 @@ sleep() { if [ "$calls" -eq 2 ]; then exit 0; fi; }
         self.assertEqual(['attempt 1', 'attempt 2'], result.stdout.splitlines())
 
     def test_suite_and_capture_exit_statuses_are_preserved(self):
-        workflow = (ROOT / '.github/workflows/ci.yml').read_text()
-        script = workflow.split('          script: |\n', 1)[1].split('\n      - name: Upload instrumentation results', 1)[0]
-        lines = [line[12:] if line.startswith('            ') else line for line in script.splitlines()]
-        text = '\n'.join(lines)
+        text = BOUNDARY_SCRIPT.read_text()
         capture = text[text.index('capture_ci_failures() {'):text.index('trap capture_ci_failures EXIT') + len('trap capture_ci_failures EXIT')]
         suites = text[text.index('suite_status=0'):]
         fake = '''python3() {
