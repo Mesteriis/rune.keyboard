@@ -38,6 +38,10 @@
     },
     {
       "class": "io.github.mesteriis.rune.keyboard.qa.ChromeOmniboxInstrumentedTest",
+      "method": "landscapeGoLoadsOwnedPageAndDismissesKeyboard"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.ChromeOmniboxInstrumentedTest",
       "method": "syntheticAddressBackspaceAndGoReachChrome"
     },
     {
@@ -193,12 +197,20 @@
       "method": "readyModelUndoSurvivesNextLetter"
     },
     {
+      "class": "io.github.mesteriis.rune.keyboard.qa.GetBackGpsNumericInstrumentedTest",
+      "method": "signedDecimalBackspaceAndDoneInUnsavedDestination"
+    },
+    {
       "class": "io.github.mesteriis.rune.keyboard.qa.PhysicalFoldComposingInstrumentedTest",
       "method": "physicalUnfoldPreservesEditorAndVisualStateWithoutReplayingOwnedComposition"
     },
     {
       "class": "io.github.mesteriis.rune.keyboard.qa.RealModelTypingInstrumentedTest",
       "method": "installedModelCorrectsOnSpaceWithoutTapAndBackspaceRestoresOriginal"
+    },
+    {
+      "class": "io.github.mesteriis.rune.keyboard.qa.TermuxOwnedSessionInstrumentedTest",
+      "method": "ownedTermuxExecutesTrueBeforeAndAfterLandscapeRotation"
     },
     {
       "class": "io.github.mesteriis.rune.keyboard.qa.TermuxOwnedSessionInstrumentedTest",

@@ -397,8 +397,8 @@ class TypingSessionController internal constructor(
     // Kept only between the two immediately adjacent letters of a possible .рф continuation.
     private var pendingRfPeriod: UndoableTextEdit? = null
 
-    internal fun awaitsRussianEraAbbreviationLetter(): Boolean =
-        punctuationEvidence()?.let(MechanicalPunctuationPlanner::awaitsRussianEraAbbreviationLetter) == true
+    internal fun awaitsRussianAbbreviationContinuation(): Boolean =
+        punctuationEvidence()?.let(MechanicalPunctuationPlanner::awaitsRussianAbbreviationContinuation) == true
 
     private var context: SessionTextContext? = null
     // Numeric proof of the known palette delimiter; never a synthetic context character.

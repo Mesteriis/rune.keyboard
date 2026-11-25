@@ -61,6 +61,40 @@ emulator and isolated ADB server after the run.
 
 ## Android emulator CI
 
+### Separate landscape omnibox test
+
+On the owned API 37 emulator, use a fresh fixture port and Chrome tab. The
+omnibox test rotates the display and types the last two characters of a fixed
+loopback URL using Rune. Backspace removes the extra character. Go loads the
+second fixture page. The test checks that the keyboard's Delete control and
+the input service's shown state both clear after navigation.
+
+```sh
+adb -s "$RUNE_QA_EMULATOR" shell am instrument --user 0 -w -r \
+  -e class 'io.github.mesteriis.rune.keyboard.qa.ChromeOmniboxInstrumentedTest#landscapeGoLoadsOwnedPageAndDismissesKeyboard' \
+  -e runeOwnedEmulator q8-omnibox -e runeLoopbackPort PORT -e runeFailureArtifacts false \
+  io.github.mesteriis.rune.keyboard.test/androidx.test.runner.AndroidJUnitRunner
+
+python3 tools/qa/chrome-editor/verify.py --navigation \
+  --receipt /tmp/rune-chrome-dom.jsonl --native-log /tmp/rune-chrome-native.log
+```
+
+The navigation gate requires the exact native case and independent numeric
+reports from both empty pages, with the original page observed first. Both
+scenarios use the existing loopback routes. The textarea oracle still checks
+its original word and Undo stages.
+
+The API 37 smoke job runs the omnibox case separately using the same owned-AVD
+runner. The command allocates a fresh loopback port and saves a separate native
+log, numeric stream and verdict.
+
+```sh
+python3 tools/ci/android_chrome_editor.py --avd-name rune-ci-boundary \
+  --output build/ci-chrome-omnibox --navigation
+```
+
+### Textarea route
+
 The API 37 smoke job runs the Chrome textarea class and its numeric oracle
 with `tools/ci/android_chrome_editor.py`. The command requires an owned
 `rune-ci-*` API 37 userdebug emulator, installed ordinary debug and test APKs,

@@ -9,6 +9,30 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class AndroidCiShellTest(unittest.TestCase):
+    def test_chrome_routes_run_independently_only_on_api37(self):
+        workflow = (ROOT / '.github/workflows/ci.yml').read_text()
+        script = workflow.split('          script: |\n', 1)[1].split('\n      - name: Upload instrumentation results', 1)[0]
+        suites = script[script.index('suite_status=0'):]
+        pretend = '''python3() {
+  if [ "$1" != tools/ci/android_chrome_editor.py ]; then return 0; fi
+  case "$*" in
+    *--navigation) echo omnibox; return "$OMNIBOX_STATUS" ;;
+    *) echo textarea; return "$TEXTAREA_STATUS" ;;
+  esac
+}
+./gradlew() { return 0; }
+'''
+        for api, textarea, omnibox, expected in (('26', 9, 11, 0), ('37.0', 9, 0, 9),
+                                                ('37.0', 0, 11, 11), ('37.0', 9, 11, 9)):
+            with self.subTest(api=api, textarea=textarea, omnibox=omnibox):
+                job = suites.replace('${{ matrix.api-level }}', api)
+                result = subprocess.run(['bash', '-ec', pretend + job], cwd=ROOT, text=True,
+                    capture_output=True, env=dict(os.environ, TEXTAREA_STATUS=str(textarea),
+                                                  OMNIBOX_STATUS=str(omnibox)))
+                self.assertEqual(expected, result.returncode, result.stderr)
+                self.assertEqual(['textarea', 'omnibox'] if api == '37.0' else [], result.stdout.splitlines())
+        self.assertIn('build/ci-chrome-omnibox/**', workflow.split('- name: Upload instrumentation results', 1)[1])
+
     def test_boundary_apks_build_before_emulator_and_install_after_guard(self):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
         setup = workflow.split('      - name: Build Android boundary APKs before emulator startup\n', 1)[1]

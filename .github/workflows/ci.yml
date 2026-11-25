@@ -624,6 +624,10 @@ jobs:
                   chrome_status=$?
                   if [ "$suite_status" -eq 0 ]; then suite_status=$chrome_status; fi
                 }
+                python3 tools/ci/android_chrome_editor.py --avd-name rune-ci-boundary --output build/ci-chrome-omnibox --navigation || {
+                  chrome_status=$?
+                  if [ "$suite_status" -eq 0 ]; then suite_status=$chrome_status; fi
+                }
               fi
             fi
             exit "$suite_status"
@@ -642,4 +646,5 @@ jobs:
             build/ci-editing-process-death/**
             build/ci-voice-fixture/**
             build/ci-chrome-editor/**
+            build/ci-chrome-omnibox/**
             build/ci-night-learning/**

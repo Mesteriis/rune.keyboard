@@ -162,13 +162,20 @@ class ImeQaActivity : Activity() {
             content, getString(R.string.qa_phone_label), R.id.qa_phone,
             getString(R.string.qa_phone_hint), InputType.TYPE_CLASS_PHONE, EditorInfo.IME_ACTION_DONE,
         )
+        val actionStatus = label(getString(R.string.qa_action_waiting)).apply {
+            id = R.id.qa_action_status
+        }
+        val recordEditorAction = TextView.OnEditorActionListener { _, actionId, _ ->
+            actionStatus.text = getString(R.string.qa_action_received, actionId)
+            true
+        }
         addEditor(
             content, getString(R.string.qa_number_label), R.id.qa_number,
             getString(R.string.qa_number_hint),
             InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED or
                 InputType.TYPE_NUMBER_FLAG_DECIMAL,
             EditorInfo.IME_ACTION_DONE,
-        )
+        ).setOnEditorActionListener(recordEditorAction)
         addEditor(
             content, getString(R.string.qa_password_label), R.id.qa_password,
             getString(R.string.qa_password_hint),
@@ -177,9 +184,6 @@ class ImeQaActivity : Activity() {
         )
 
         content.addView(label(getString(R.string.qa_actions_label)))
-        val actionStatus = label(getString(R.string.qa_action_waiting)).apply {
-            id = R.id.qa_action_status
-        }
         listOf(
             ActionField(R.id.qa_action_send, R.string.qa_send_hint, EditorInfo.IME_ACTION_SEND),
             ActionField(R.id.qa_action_search, R.string.qa_search_hint, EditorInfo.IME_ACTION_SEARCH),
@@ -189,10 +193,7 @@ class ImeQaActivity : Activity() {
         ).forEach { field ->
             content.addView(
                 editor(field.id, getString(field.hint), InputType.TYPE_CLASS_TEXT, field.actionId).apply {
-                    setOnEditorActionListener { _, actionId, _ ->
-                        actionStatus.text = getString(R.string.qa_action_received, actionId)
-                        true
-                    }
+                    setOnEditorActionListener(recordEditorAction)
                 },
             )
         }
@@ -202,10 +203,7 @@ class ImeQaActivity : Activity() {
                 InputType.TYPE_CLASS_TEXT, EditorInfo.IME_ACTION_UNSPECIFIED,
             ).apply {
                 setImeActionLabel(getString(R.string.qa_custom_action), 0)
-                setOnEditorActionListener { _, actionId, _ ->
-                    actionStatus.text = getString(R.string.qa_action_received, actionId)
-                    true
-                }
+                setOnEditorActionListener(recordEditorAction)
             },
         )
         content.addView(actionStatus)

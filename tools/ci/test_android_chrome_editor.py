@@ -1,5 +1,11 @@
+from contextlib import contextmanager
+import json
+from pathlib import Path
+import tempfile
 import unittest
+from unittest.mock import patch
 
+import android_chrome_editor as chrome
 from android_chrome_editor import CLASS, METHODS, verify_native_identities
 
 
@@ -13,6 +19,53 @@ def native_output():
 
 
 class ChromeRouteTest(unittest.TestCase):
+    def test_navigation_route_uses_the_owned_case_and_requires_dom_evidence(self):
+        verifier = chrome.fixture_module('verify')
+        native = ''.join(f'INSTRUMENTATION_STATUS: class={verifier.OMNIBOX_CLASS}\n'
+                         f'INSTRUMENTATION_STATUS: test={verifier.OMNIBOX_METHOD}\n'
+                         f'INSTRUMENTATION_STATUS_CODE: {status}\n' for status in (1, 0))
+        native += 'OK (1 test)\nINSTRUMENTATION_CODE: -1\n'
+        for destination in (True, False):
+            with self.subTest(destination=destination), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory).resolve()
+                output = root / 'build/omnibox'
+                calls = []
+
+                def adb(args):
+                    calls.append(tuple(args))
+                    if args[-1] == 'ro.build.version.sdk':
+                        return '37'
+                    if args[-1] == 'ro.build.type':
+                        return 'userdebug'
+                    if args[-1] == 'debug_app':
+                        return 'null'
+                    return 'package:/fixture.apk' if args[3:5] == ['pm', 'path'] else ''
+
+                @contextmanager
+                def numeric_server(path):
+                    profiles = ('ordinary', 'no-suggestions') if destination else ('ordinary',)
+                    path.write_text(''.join(json.dumps({'profile': profile, **dict.fromkeys(
+                        verifier.FIELDS - {'profile'}, 0)}) + '\n' for profile in profiles))
+                    yield 43123
+
+                def instrument(command, **arguments):
+                    self.assertIn('q8-omnibox', command)
+                    self.assertIn(verifier.OMNIBOX_CLASS + '#' + verifier.OMNIBOX_METHOD, command)
+                    arguments['stdout'].write(native)
+
+                with patch.multiple(chrome, ROOT=root, owned_emulator=lambda _: 'emulator-5588',
+                                    checked_adb=adb, numeric_server=numeric_server), \
+                        patch.object(chrome.subprocess, 'run', side_effect=instrument):
+                    if destination:
+                        chrome.run(output, 'rune-ci-boundary', navigation=True)
+                        self.assertTrue(json.loads((output / 'receipt.json').read_text())['passed'])
+                    else:
+                        with self.assertRaisesRegex(ValueError, 'DOM_NAVIGATION_NOT_OBSERVED'):
+                            chrome.run(output, 'rune-ci-boundary', navigation=True)
+                        self.assertFalse((output / 'receipt.json').exists())
+                self.assertIn(('-s', 'emulator-5588', 'reverse', '--remove', 'tcp:43123'), calls)
+                self.assertIn(('-s', 'emulator-5588', 'shell', 'am', 'clear-debug-app'), calls)
+
     def test_allows_numeric_progress_between_case_events(self):
         native = native_output().replace(
             'INSTRUMENTATION_STATUS_CODE: 1\n',

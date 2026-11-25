@@ -28,6 +28,22 @@ def fixture():
 
 
 class OracleTest(unittest.TestCase):
+    def test_navigation_requires_exact_native_case_and_destination_dom(self):
+        status = (f'INSTRUMENTATION_STATUS: class={verify.OMNIBOX_CLASS}\n'
+                  f'INSTRUMENTATION_STATUS: test={verify.OMNIBOX_METHOD}\n')
+        native = (status + 'INSTRUMENTATION_STATUS_CODE: 1\n' +
+                  status + 'INSTRUMENTATION_STATUS_CODE: 0\nOK (1 test)\nINSTRUMENTATION_CODE: -1\n')
+        pages = [row('ordinary'), row('no-suggestions')]
+        self.assertEqual({'ordinary': 1, 'no-suggestions': 1},
+                         verify.verify_navigation(pages, native)['profiles'])
+        for bad in (pages[:1], pages[::-1], [pages[0], row('no-suggestions', length=1)]):
+            with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, 'DOM_NAVIGATION_NOT_OBSERVED'):
+                verify.verify_navigation(bad, native)
+        for bad in (native.replace(verify.OMNIBOX_METHOD, 'differentTest'),
+                    native.replace('STATUS_CODE: 0', 'STATUS_CODE: -3'), NATIVE):
+            with self.assertRaisesRegex(ValueError, 'OMNIBOX_NATIVE_RUN_INCOMPLETE'):
+                verify.verify_navigation(pages, bad)
+
     def test_complete_independent_outcomes(self):
         self.assertTrue(verify.verify(fixture(), NATIVE)['passed'])
 

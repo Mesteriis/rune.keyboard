@@ -747,7 +747,7 @@ class RuneInputMethodService : InputMethodService() {
             ownedSentenceBoundary = typingSession.sentenceCapitalizationPending,
             suppressSentenceCaps = {
                 settings.mechanicalPunctuation && candidate.language == KeyboardLanguage.RUSSIAN &&
-                    typingSession.awaitsRussianEraAbbreviationLetter()
+                    typingSession.awaitsRussianAbbreviationContinuation()
             },
         ) { currentInputConnection?.getCursorCapsMode(editorContext.inputType) }
 

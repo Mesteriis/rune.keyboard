@@ -15,9 +15,11 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class RapidTypingInstrumentedTest : ImeTestBase() {
     @Test fun rapidTouchBurstKeepsEveryCharacterAcrossWordBoundaries() {
+        val requireLandscape = InstrumentationRegistry.getArguments().getString("runeExpectedLandscape") == "true"
         driver.configureSmartTyping(AutocorrectionMode.SUGGESTIONS, true,
             mechanical = false, doubleSpace = false)
         driver.launchComposingQa()
+        if (requireLandscape) assertLandscape()
         val text = "hello world ".repeat(6) + "end"
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         // Resolve every target before the burst. Accessibility idle waits must not pace typing.
@@ -43,6 +45,7 @@ class RapidTypingInstrumentedTest : ImeTestBase() {
         }
         val elapsed = SystemClock.uptimeMillis() - started
         driver.awaitFieldText("qa_composing_text", text)
+        if (requireLandscape) assertLandscape()
         driver.tapDelete()
         driver.awaitFieldText("qa_composing_text", text.dropLast(1))
         val stats = checkNotNull(driver.device.findObject(By.res(ImeTestDriver.PACKAGE_NAME,
@@ -59,5 +62,9 @@ class RapidTypingInstrumentedTest : ImeTestBase() {
         })
         // Actual injection duration is reported, not equated to the requested spacing or a
         // physical-device frame/latency budget. Exact editor text is the delivery assertion.
+    }
+
+    private fun assertLandscape() {
+        assertTrue("Rapid typing must run on a landscape display", driver.device.displayWidth > driver.device.displayHeight)
     }
 }

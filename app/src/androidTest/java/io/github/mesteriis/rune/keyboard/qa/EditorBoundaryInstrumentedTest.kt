@@ -2,6 +2,7 @@ package io.github.mesteriis.rune.keyboard.qa
 
 import android.content.ContextWrapper
 import android.inputmethodservice.InputMethodService
+import android.view.inputmethod.EditorInfo
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
@@ -144,5 +145,19 @@ class EditorBoundaryInstrumentedTest : ImeTestBase() {
         driver.assertKeyVisible(".")
         driver.focusField("qa_password")
         driver.assertKeyVisible("?123")
+    }
+
+    @Test
+    fun signedDecimalKeysAndDoneReachTheSameRemoteEditor() {
+        driver.focusField("qa_number")
+        assertServedEditor(R.id.qa_number)
+        "-12.35".forEach { driver.tapKey(it.toString()) }
+        driver.awaitFieldText("qa_number", "-12.35")
+        driver.tapDelete()
+        driver.awaitFieldText("qa_number", "-12.3")
+        assertServedEditor(R.id.qa_number)
+        driver.tapEnter(R.string.key_done)
+        driver.awaitStatus("Action received: ${EditorInfo.IME_ACTION_DONE}")
+        driver.revealFieldAndAwaitText("qa_number", "-12.3")
     }
 }

@@ -147,10 +147,54 @@ class MechanicalPunctuationInstrumentedTest : ImeTestBase() {
         noReadback()
 
         driver.launchComposingQa(mode = "sentence_caps", language = KeyboardLanguage.RUSSIAN)
+        word("В"); space(); word("6"); space(); word("веке"); space(); word("н"); driver.tapKey("."); space()
+        driver.awaitFieldText(FIELD, "В 6 веке н. ")
+        driver.tapKey("э"); driver.tapKey(".")
+        driver.awaitFieldText(FIELD, "В 6 веке н. э.")
+        driver.tapDelete(); driver.awaitFieldText(FIELD, "В 6 веке н. э")
+        noReadback()
+
+        driver.launchComposingQa(mode = "sentence_caps", language = KeyboardLanguage.RUSSIAN)
         word("Это"); space(); word("я"); driver.tapKey("."); space()
         driver.tapKey("Э")
         driver.awaitFieldText(FIELD, "Это я. Э")
         noReadback()
+    }
+
+    @Test fun russianExplanatoryAbbreviationKeepsLowercaseAcrossBothPeriods() {
+        driver.configureMechanicalPunctuation(mechanical = true, doubleSpace = false)
+        driver.launchComposingQa(mode = "sentence_caps", language = KeyboardLanguage.RUSSIAN)
+        word("Это"); space(); word("так"); driver.tapKey(","); space()
+        word("т"); driver.tapKey("."); space()
+        driver.awaitFieldText(FIELD, "Это так, т. ")
+        word("е"); driver.tapKey("."); space()
+        driver.awaitFieldText(FIELD, "Это так, т. е. ")
+        word("з")
+        driver.awaitFieldText(FIELD, "Это так, т. е. з")
+        driver.tapDelete(); driver.awaitFieldText(FIELD, "Это так, т. е. ")
+        noReadback()
+
+        driver.launchComposingQa(mode = "sentence_caps", language = KeyboardLanguage.RUSSIAN)
+        word("Т"); driver.tapKey("."); space()
+        word("Е")
+        driver.awaitFieldText(FIELD, "Т. Е")
+        noReadback()
+    }
+
+    @Test fun russianEnumerationAbbreviationsKeepLowercaseBeforeSentenceEnd() {
+        driver.configureMechanicalPunctuation(mechanical = true, doubleSpace = false)
+        for (letter in listOf("п", "д")) {
+            driver.launchComposingQa(mode = "sentence_caps", language = KeyboardLanguage.RUSSIAN)
+            word("Книги"); space(); word("и"); space(); word("т"); driver.tapKey("."); space()
+            driver.awaitFieldText(FIELD, "Книги и т. ")
+            word(letter); driver.tapKey(".")
+            val abbreviation = "Книги и т. $letter"
+            driver.awaitFieldText(FIELD, "$abbreviation.")
+            driver.tapDelete(); driver.awaitFieldText(FIELD, abbreviation)
+            driver.tapKey("."); space(); word("Потом")
+            driver.awaitFieldText(FIELD, "$abbreviation. Потом")
+            noReadback()
+        }
     }
 
     @Test fun russianPeriodContinuationCapitalizesNextSentence() {

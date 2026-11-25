@@ -67,7 +67,7 @@ def verify_native_identities(native):
         raise ValueError('CHROME_NATIVE_STATUS')
 
 
-def run(output, avd_name):
+def run(output, avd_name, *, navigation=False):
     output = Path(output).resolve()
     if output.exists() or not output.is_relative_to(ROOT / 'build'):
         raise ValueError('CHROME_OUTPUT')
@@ -88,6 +88,9 @@ def run(output, avd_name):
     output.mkdir(parents=True, mode=0o700)
     numeric = output / 'dom.jsonl'
     native_log = output / 'native.log'
+    verifier = fixture_module('verify')
+    selector = f'{verifier.OMNIBOX_CLASS}#{verifier.OMNIBOX_METHOD}' if navigation else CLASS
+    opt_in = 'q8-omnibox' if navigation else 'q8-chrome'
     with numeric_server(numeric) as port, ExitStack() as cleanup:
         if owned_emulator(avd_name) != serial:
             raise ValueError('CHROME_DEVICE_CHANGED')
@@ -101,7 +104,7 @@ def run(output, avd_name):
         adb('reverse', '--no-rebind', endpoint, endpoint)
         cleanup.callback(adb, 'reverse', '--remove', endpoint)
         command = ['adb', '-s', serial, 'shell', 'am', 'instrument', '--user', '0', '-w', '-r',
-                   '-e', 'class', CLASS, '-e', 'runeOwnedEmulator', 'q8-chrome',
+                   '-e', 'class', selector, '-e', 'runeOwnedEmulator', opt_in,
                    '-e', 'runeLoopbackPort', str(port), '-e', 'runeFailureArtifacts', 'false',
                    RUNE + '.test/androidx.test.runner.AndroidJUnitRunner']
         with native_log.open('x') as log:
@@ -115,9 +118,12 @@ def run(output, avd_name):
     if native_log.stat().st_size > 1024 * 1024 or numeric.stat().st_size > 256 * 1024:
         raise ValueError('CHROME_REPORT_SIZE')
     native = native_log.read_text()
-    verify_native_identities(native)
     records = [json.loads(line) for line in numeric.read_text().splitlines()]
-    result = fixture_module('verify').verify(records, native)
+    if navigation:
+        result = verifier.verify_navigation(records, native)
+    else:
+        verify_native_identities(native)
+        result = verifier.verify(records, native)
     (output / 'receipt.json').write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
     print(json.dumps(result, sort_keys=True))
 
@@ -126,8 +132,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--avd-name', required=True)
+    parser.add_argument('--navigation', action='store_true', help='Run the owned landscape omnibox scenario.')
     args = parser.parse_args()
-    run(args.output, args.avd_name)
+    run(args.output, args.avd_name, navigation=args.navigation)
 
 
 if __name__ == '__main__':
