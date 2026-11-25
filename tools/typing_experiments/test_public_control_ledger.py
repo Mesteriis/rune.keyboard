@@ -64,6 +64,22 @@ class PublicControlSnapshotTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, '^CONTROL_SURFACE_OVERLAP$'):
             assert_disjoint([punctuation], self.ledger, 'punctuation')
 
+    def test_disclosed_domain_labels_block_new_punctuation_contexts(self):
+        entry, = [entry for entry in self.ledger['entries']
+                  if entry['id'] == 'public-a4-tranco-jzw4y-short-rf-labels-v1']
+        frozen = json.dumps(entry, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+        self.assertEqual(hashlib.sha256(frozen).hexdigest(),
+                         '35832890e53cad9283125f9f19272afb0f41e1e8d03051cb58d644600e5d4278')
+        self.assertEqual(50, len(entry['keys']))
+        self.assertEqual(50, len(entry['surfaceKeys']))
+        punctuation = {'language': 'ru', 'prefix': 'Новый контекст',
+                       'currentWord': 'яокб', 'expectedBoundary': '. '}
+        before = self.ledger | {'entries': [item for item in self.ledger['entries'] if item is not entry]}
+        with self.assertRaisesRegex(ValueError, '^CONTROL_COVERAGE_INCOMPLETE$'):
+            assert_disjoint([punctuation], before, 'punctuation')
+        with self.assertRaisesRegex(ValueError, '^CONTROL_SURFACE_OVERLAP$'):
+            assert_disjoint([punctuation], self.ledger, 'punctuation')
+
     def test_archived_protected_matrices_match_every_persisted_key(self):
         directory=Path(__file__).with_name('frozen_sources')
         versions=[('qualification-v2',2,'2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65'),
