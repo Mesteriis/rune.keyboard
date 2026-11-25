@@ -2206,6 +2206,22 @@ class CorrectionBoundaryTest {
         }
     }
 
+    @Test fun `colon continuation requires a whole owned Cyrillic word and a live colon`() {
+        val owned = Fixture()
+        owned.raw("уточню"); owned.raw(":")
+        assertTrue(owned.controller.ownsCyrillicColonContinuation())
+        assertTrue(owned.controller.invalidate(owned.execute))
+        assertFalse(owned.controller.ownsCyrillicColonContinuation())
+
+        val ascii = Fixture()
+        ascii.raw("https"); ascii.raw(":")
+        assertFalse(ascii.controller.ownsCyrillicColonContinuation())
+
+        val attached = Fixture()
+        attached.raw("@"); attached.raw("уточню"); attached.raw(":")
+        assertFalse(attached.controller.ownsCyrillicColonContinuation())
+    }
+
     @Test fun `dot and colon correct a ready Cyrillic word while ASCII protected forms stay unchanged`() {
         for (boundary in listOf(".", ":")) {
             val cyrillic = Fixture().apply { keyboard = KeyboardState(KeyboardLanguage.RUSSIAN) }

@@ -448,6 +448,15 @@ class TypingSessionController internal constructor(
             candidateSelection?.manual != true &&
             !ProtectedTokenPolicy.isProtected(state.composing!!.typedWord)
 
+    internal fun ownsCyrillicColonContinuation(): Boolean {
+        val owned = punctuationEvidence() ?: return false
+        if (owned.composingText != ":") return false
+        val beforeColon = owned.text.dropLast(1)
+        val wordStart = beforeColon.indexOfLast(Char::isWhitespace) + 1
+        return (wordStart > 0 || owned.startsAtTokenBoundary) &&
+            isPureCyrillicWord(beforeColon.substring(wordStart))
+    }
+
     /** Only the numeric stamp is retained. Caller admits this request after live service checks. */
     fun beginCandidateRequest(requestId: Long, activeLanguage: KeyboardLanguage): LocalCandidateRequest? {
         if (!canRequestCandidates || requestId < 0 || requestId <= lastCandidateRequestId) return null

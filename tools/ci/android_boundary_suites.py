@@ -104,7 +104,9 @@ GENERAL_REQUIRED={
         'cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo',
         'commaPopupPunctuationCapsAndImmediateUndoNeverReplayOldWord',
         'commandDotKeepsItsSeparatorAcrossBoundaryAndOrdinaryBackspace',
-        'russianEraAbbreviationKeepsLowercaseInSentenceCapsEditor')),
+        'russianColonContinuationAddsSpaceWithoutCapitalization',
+        'russianEraAbbreviationKeepsLowercaseInSentenceCapsEditor',
+        'russianPeriodContinuationCapitalizesNextSentence')),
 }
 
 

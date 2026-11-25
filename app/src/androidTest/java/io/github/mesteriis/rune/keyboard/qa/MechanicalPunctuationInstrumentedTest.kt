@@ -153,6 +153,51 @@ class MechanicalPunctuationInstrumentedTest : ImeTestBase() {
         noReadback()
     }
 
+    @Test fun russianPeriodContinuationCapitalizesNextSentence() {
+        driver.configureMechanicalPunctuation(mechanical = true, doubleSpace = false)
+        driver.launchComposingQa(mode = "sentence_caps", language = KeyboardLanguage.RUSSIAN)
+        word("Сейчас"); space(); word("проверю"); driver.tapKey(".")
+        driver.awaitFieldText(FIELD, "Сейчас проверю.")
+        space()
+        word("Потом")
+        driver.awaitFieldText(FIELD, "Сейчас проверю. Потом")
+        repeat(5) { driver.tapDelete() }
+        driver.awaitFieldText(FIELD, "Сейчас проверю. ")
+        driver.tapDelete()
+        driver.awaitFieldText(FIELD, "Сейчас проверю.")
+        noReadback()
+    }
+
+    @Test fun russianColonContinuationAddsSpaceWithoutCapitalization() {
+        driver.configureMechanicalPunctuation(mechanical = true, doubleSpace = false)
+        typeRussianColonAndReturnToLetters()
+        driver.tapKey("д")
+        driver.awaitFieldText(FIELD, "Сначала уточню: д")
+        driver.tapDelete()
+        driver.awaitFieldText(FIELD, "Сначала уточню:д")
+        driver.tapDelete()
+        driver.awaitFieldText(FIELD, "Сначала уточню:")
+        noReadback()
+
+        driver.configureMechanicalPunctuation(mechanical = false, doubleSpace = false)
+        typeRussianColonAndReturnToLetters()
+        driver.tapKey("д")
+        driver.awaitFieldText(FIELD, "Сначала уточню:д")
+        driver.tapDelete()
+        driver.awaitFieldText(FIELD, "Сначала уточню:")
+        noReadback()
+    }
+
+    private fun typeRussianColonAndReturnToLetters() {
+        driver.launchComposingQa(mode = "sentence_caps", language = KeyboardLanguage.RUSSIAN)
+        word("Сначала"); space(); word("уточню")
+        val resources = InstrumentationRegistry.getInstrumentation().targetContext
+        driver.tapKeyByDescription(resources.getString(R.string.key_symbols))
+        driver.tapKey(":")
+        driver.awaitFieldText(FIELD, "Сначала уточню:")
+        driver.tapKeyByDescription(resources.getString(R.string.key_letters))
+    }
+
     private fun prepare(mechanical: Boolean = true) {
         driver.configureMechanicalPunctuation(mechanical, doubleSpace = false)
         driver.launchComposingQa()

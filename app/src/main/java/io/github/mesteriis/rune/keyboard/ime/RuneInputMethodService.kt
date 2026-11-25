@@ -435,6 +435,11 @@ class RuneInputMethodService : InputMethodService() {
             val enteringSymbolsWithOwnedWord = action == KeyboardAction.ToggleSymbols &&
                 previousState.layer == KeyboardLayer.LETTERS && transition.state.layer == KeyboardLayer.SYMBOLS &&
                 typingSession.canRequestCandidates
+            val returningFromOwnedColon = action == KeyboardAction.ToggleSymbols &&
+                previousState.layer == KeyboardLayer.SYMBOLS && transition.state.layer == KeyboardLayer.LETTERS &&
+                previousState.language == KeyboardLanguage.RUSSIAN && !hasSelection &&
+                editorContext.inputPolicy == InputPolicy.NORMAL && editorContext.supportsSmartTyping &&
+                settings.mechanicalPunctuation && typingSession.ownsCyrillicColonContinuation()
             val editingCursor = previousState.layer == KeyboardLayer.EDITING &&
                 (action is KeyboardAction.MoveCursor || action == KeyboardAction.CursorModeStarted)
             val externalEdit = action == KeyboardAction.OpenEditing && transition.state.layer == KeyboardLayer.EDITING ||
@@ -445,6 +450,10 @@ class RuneInputMethodService : InputMethodService() {
                     action is KeyboardAction.MoveCursor
                 if (!typingSession.prepareExternalEdit(await, ::executeTypingEdit)) return@section
                 externalEditContinuity.arm()
+            } else if (returningFromOwnedColon) {
+                // The punctuation planner still decides on the actual next key.
+                candidates.invalidate()
+                typingSession.closeDiagnosticsAdmission()
             } else if (!leavingEditing && !leavingEmoji && !ownedEnter && !enteringSymbolsWithOwnedWord && invalidatesTyping(action)) {
                 candidates.invalidate()
                 if (action is KeyboardAction.MoveCursor || action == KeyboardAction.Enter) {

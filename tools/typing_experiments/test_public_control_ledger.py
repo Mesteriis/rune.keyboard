@@ -129,6 +129,17 @@ class PublicControlSnapshotTest(unittest.TestCase):
         self.assertEqual({'inline': 30, 'nextParagraphDash': 2}, entry['sourceCapture'])
         self.assertNotIn('surfaceKeys', entry)
 
+    def test_russian_forum_punctuation_binds_exact_contexts_only(self):
+        entry, = [item for item in self.ledger['entries']
+                  if item['id'] == 'public-a4-rus-stackexchange-comment-boundaries-v1']
+        frozen = json.dumps(entry, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+        self.assertEqual('58cf284289e553813285f20b0ff12d147e4103efdb87f7fb2b600ff51829fde5',
+                         hashlib.sha256(frozen).hexdigest())
+        self.assertEqual({'period': 71, 'colon': 6}, entry['sourceCapture'])
+        self.assertEqual(77, entry['rowCount'])
+        self.assertEqual(77, len(entry['keys']))
+        self.assertNotIn('surfaceKeys', entry)
+
     def test_archived_protected_matrices_match_every_persisted_key(self):
         directory=Path(__file__).with_name('frozen_sources')
         versions=[('qualification-v2',2,'2cbcb2508ef66b32a60b5c7665ad96c66dc1c6477c9da4ad6dde0ea969806e65'),
