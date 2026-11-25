@@ -81,14 +81,8 @@ class NeighborRecoverySearchTest {
 
     @Test fun `wall deadline changes the candidate generation included in replay`() {
         val index = PackedFixture.build(listOf("проверка"), ru).ready()
-        val reader = PackedCandidateLexicon(listOf(index))
         fun generation(clock: () -> Long): CandidateGeneration {
-            val lexicon = object : CandidateLexicon by reader {
-                private val recovery = NeighborRecoverySearch({ index }, clock)
-                override fun recoverNeighbors(token: String, cancellation: CandidateCancellation) =
-                    recovery.search(token, cancellation)
-            }
-            val generator = CandidateGenerator(lexicon)
+            val generator = CandidateGenerator(PackedCandidateLexicon(listOf(index), clock))
             val baseline = generator.generate("ролверка", ru)
             return generator.generateRecovery("ролверка", ru, baseline)
         }

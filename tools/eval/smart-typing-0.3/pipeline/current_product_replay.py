@@ -102,6 +102,8 @@ def parser():
     result.add_argument('--a3-rare-probe', action='store_true')
     result.add_argument('--contextual-score-probe', action='store_true')
     result.add_argument('--disable-contextual-choice', action='store_true')
+    result.add_argument('--deterministic-neighbor-search', action='store_true',
+                        help='Freeze the RU recovery clock for behavior parity while retaining work caps and cancellation.')
     result.add_argument('--boundary', choices=('space', 'period', 'colon'), default='space')
     return result
 
@@ -129,6 +131,7 @@ def run(args):
         'a3RareProbe': args.a3_rare_probe,
         'contextualScoreProbe': args.contextual_score_probe,
         'contextualChoiceDisabled': args.disable_contextual_choice,
+        'deterministicNeighborSearch': args.deterministic_neighbor_search,
         'boundary': args.boundary,
         'baselineObservationExcludedFields': ['fullCandidateOrder'] if args.candidate_order else []}
     started = time.monotonic()
@@ -150,6 +153,7 @@ def run(args):
             + ' -Drune.replay.a3RareProbe=' + ('true' if args.a3_rare_probe else 'false')
             + ' -Drune.replay.contextualScoreProbe=' + ('true' if args.contextual_score_probe else 'false')
             + ' -Drune.replay.disableContextualChoice=' + ('true' if args.disable_contextual_choice else 'false')
+            + ' -Drune.replay.deterministicNeighborSearch=' + ('true' if args.deterministic_neighbor_search else 'false')
             + ' -Drune.replay.boundary=' + args.boundary)
         compile_started = time.monotonic()
         jar, _ = harness.compile_harness(root, java, sources, jars, android)

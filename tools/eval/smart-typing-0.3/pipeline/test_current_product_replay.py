@@ -71,6 +71,10 @@ class CurrentProductReplayTest(unittest.TestCase):
         self.assertFalse(args.a3_rare_probe)
         self.assertFalse(args.contextual_score_probe)
         self.assertFalse(args.disable_contextual_choice)
+        self.assertFalse(args.deterministic_neighbor_search)
+        parity = replay.parser().parse_args(['--java', '/jdk/bin/java', '--rows', 'ru.jsonl',
+            '--output', 'build/replay', '--deterministic-neighbor-search'])
+        self.assertTrue(parity.deterministic_neighbor_search)
         probe = replay.parser().parse_args(['--java', '/jdk/bin/java', '--rows', 'ru.jsonl',
             '--output', 'build/replay', '--a3-rare-probe'])
         self.assertTrue(probe.a3_rare_probe)

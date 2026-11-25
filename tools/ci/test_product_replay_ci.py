@@ -56,7 +56,7 @@ class ProductReplayCiTest(unittest.TestCase):
             output=Path(folder)/'output'; output.mkdir()
             baseline='a'*64; candidate='b'*64
             receipt={'status':'COMPLETE','deterministic':True,'baselineMatches':True,
-                     'rows':2160,'projectionSha256':candidate}
+                     'deterministicNeighborSearch':True,'rows':2160,'projectionSha256':candidate}
             comparison={'passed':True,'differentRows':0,'baselineRows':2160,'candidateRows':2160,
                         'toleratedScoreDifferences':3,
                         'scoreAbsoluteTolerance':gate.projection.BASELINE_SCORE_ABS_TOLERANCE,
@@ -65,9 +65,14 @@ class ProductReplayCiTest(unittest.TestCase):
             path=output/'baseline-comparison.json'
             with mock.patch.object(gate,'validate',return_value={'rows':2160,'projectionSha256':baseline}), \
                  mock.patch.object(gate,'sha',return_value='fixed'), \
-                 mock.patch.object(gate.subprocess,'run',return_value=SimpleNamespace(returncode=0)):
+                 mock.patch.object(gate.subprocess,'run',return_value=SimpleNamespace(returncode=0)) as run:
                 path.write_text(json.dumps(comparison))
                 self.assertEqual(0,gate.run(Path('/synthetic/java'),output))
+                self.assertIn('--deterministic-neighbor-search',run.call_args.args[0])
+                (output/'receipt.json').write_text(json.dumps(receipt | {'deterministicNeighborSearch':False}))
+                with self.assertRaisesRegex(ValueError,'NOT_PROVEN'):
+                    gate.run(Path('/synthetic/java'),output)
+                (output/'receipt.json').write_text(json.dumps(receipt))
                 for key,value in (('baselineProjectionSha256','c'*64),('candidateProjectionSha256','c'*64),
                                   ('candidateRows',2159),('toleratedScoreDifferences',-1)):
                     changed=comparison | {key:value}; path.write_text(json.dumps(changed))

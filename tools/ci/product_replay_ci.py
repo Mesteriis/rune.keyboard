@@ -81,7 +81,7 @@ def run(java,output,historical=False):
     baseline_files+= [ROOT/path for path in meta['inputPaths']] if historical else [data/name for name in ('inputs.jsonl','manifest.json')]
     before={str(p):sha(p) for p in baseline_files}
     command=[sys.executable,str(PIPELINE/'current_product_replay.py'),'--java',str(java),
-        '--baseline',str(data/'baseline.jsonl.gz'),'--output',str(output)]
+        '--baseline',str(data/'baseline.jsonl.gz'),'--output',str(output),'--deterministic-neighbor-search']
     for path in ([ROOT/name for name in meta['inputPaths']] if historical else [data/'inputs.jsonl']):
         command+=['--rows',str(path)]
     result=subprocess.run(command,cwd=ROOT)
@@ -91,6 +91,7 @@ def run(java,output,historical=False):
     if not comparison_path.is_file():raise ValueError('CI_REPLAY_NOT_PROVEN')
     comparison=json.loads(comparison_path.read_text())
     if (receipt.get('status')!='COMPLETE' or receipt.get('deterministic') is not True
+            or receipt.get('deterministicNeighborSearch') is not True
             or receipt.get('baselineMatches') is not True or receipt.get('rows')!=meta['rows']
             or comparison.get('passed') is not True or comparison.get('differentRows')!=0
             or comparison.get('baselineRows')!=meta['rows'] or comparison.get('candidateRows')!=meta['rows']

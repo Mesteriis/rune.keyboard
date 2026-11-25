@@ -397,6 +397,8 @@ object FinalProductSpellingReplay {
         check(!prefixWindow || mode in setOf("export", "ready", "unavailable")) { "PREFIX_WINDOW_MODE_UNSUPPORTED" }
         val rareVetoProbe = System.getProperty("rune.replay.a3RareProbe", "false").toBooleanStrict()
         check(!rareVetoProbe || args[2] == "current-product") { "A3_PROBE_MODE_UNSUPPORTED" }
+        val deterministicNeighborSearch = java.lang.Boolean.getBoolean("rune.replay.deterministicNeighborSearch")
+        check(!deterministicNeighborSearch || args[2] == "current-product") { "DETERMINISTIC_NEIGHBOR_MODE_UNSUPPORTED" }
         val nounCaseMode = mode == "noun-case-production"
         val infinitiveMode = mode == "infinitive-revision-production" || nounCaseMode
         val contextualMode = mode == "contextual-production" || infinitiveMode
@@ -466,7 +468,10 @@ object FinalProductSpellingReplay {
         val rareWords = if (packagedReaders) PackedRareWordLexicon.openPackaged(
             mapping(rareFile), FrozenRareWordLexicon.ASSET_BYTES) else validatedRareWords
         check(rareWords.lookup("кармен").available) { "RARE_WORDS_NOT_READY" }
-        val generator = CandidateGenerator(PackedCandidateLexicon(handles),
+        // Freeze only the recovery clock for behavior parity. Its work caps and cancellation still apply.
+        fun packedLexicon() = if (deterministicNeighborSearch) PackedCandidateLexicon(handles) { 0L }
+            else PackedCandidateLexicon(handles)
+        val generator = CandidateGenerator(packedLexicon(),
             CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES,
             CanonicalCaseLexicon { language, key -> cases.getValue(language).lookup(key) },
             morphology, rareWords)
@@ -727,7 +732,7 @@ object FinalProductSpellingReplay {
                         val maskedRare = RareWordLexicon { requested ->
                             if (requested == key) RareWordMembership.ABSENT else rareWords.lookup(requested)
                         }
-                        val probeGenerator = CandidateGenerator(PackedCandidateLexicon(handles),
+                        val probeGenerator = CandidateGenerator(packedLexicon(),
                             CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES,
                             CanonicalCaseLexicon { lang, term -> cases.getValue(lang).lookup(term) },
                             morphology, maskedRare)
