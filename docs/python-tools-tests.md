@@ -2,10 +2,11 @@
 
 Q7's scope is all tracked `test_*.py` modules directly under
 `tools/typing_experiments` and `tools/morphology`, plus
-`tools/test_qualification_artifacts.py`. The versioned inventory assigns all
-207 modules to runnable jobs: 183 stdlib and 24 scientific modules. The retained
-`historical-artifacts` profile is empty; the runner's own tests require it to
-stay empty. An empty profile cannot produce a successful run.
+`tools/test_qualification_artifacts.py`. The versioned inventory assigns
+242 modules across three profiles. The hosted workflow selects the 211 stdlib and
+27 scientific modules. The four `historical-artifacts` modules run locally
+with the two original v6 text files excluded from the hosted candidate.
+The runner tests enforce that assignment. An empty profile fails.
 
 ```sh
 python tools/ci/python_tools_tests.py --check
@@ -16,6 +17,21 @@ python tools/ci/historical_data_fixtures.py --install-build build
 python tools/ci/historical_model_fixtures.py
 python tools/ci/python_tools_tests.py --profile scientific --output build/python-tools-scientific
 ```
+
+In an intact historical checkout with both original v6 text files and
+the pinned PyArrow dependency, use the same runner for the local profile.
+Its original archive and logged-row assertions are covered separately
+from the hosted profiles.
+
+```sh
+python tools/ci/python_tools_tests.py --profile historical-artifacts --output build/python-tools-historical
+```
+
+On `6c3b38ce`, Python 3.12 with PyArrow 25.0.1 passed all 21 tests
+in the four historical modules. The two original files matched their
+recorded hashes before the run. The runner receipt SHA-256 was
+`3249690fef2611eeeca9146cf80eeee775e7c1b70e843144236d5e1ac16d93d8`.
+The temporary logs and dependency environment were removed.
 
 Use Python 3.12 and fresh output/data directories. Each module runs in a separate
 interpreter; generic imports cannot leak across modules. PYTHONPATH/PYTHONHOME

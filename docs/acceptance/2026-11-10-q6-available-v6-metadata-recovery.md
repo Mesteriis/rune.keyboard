@@ -1501,14 +1501,114 @@ The notices named 41 distinct numeric revisions across source and receiving
 sites. Of 30 source references, 23 matched the named article, two resolved to
 the same article through title resolution, and five pointed to a different
 article. Of 12 receiving references, ten matched the receiving article and
-two were unavailable. The receipt preserves those outcomes. Another 24
-source-version fields and eight receiving-version fields could not be
-projected to numeric revision identifiers.
+two were unavailable. The receipt preserves those outcomes. The
+unprojectable counts were 24 source versions and eight receiving
+versions. Those counts include absent or blank values.
 
 The initial candidate set comes from current notices, so it can omit notices
 removed before the current scan. The discussion revision identifies the
 notice, while the original excerpt's exact revision and passage-level origin
 remain unverified. Publication rights remain open.
+
+### Translation notice version forms and chronology
+
+The 23 holdout discussion revisions containing the unprojectable
+version counts were fetched by recorded revision ID. All revision
+timestamps, notice identities and per-page projection counts matched
+the tracked receipt. Re-parsing the 24 templates with the same
+`mwparserfromhell` version separated missing values from values
+with a nonnumeric encoding.
+
+| Version field | Absent | Present but blank | Literal oldid placeholder | Date-like |
+| --- | ---: | ---: | ---: | ---: |
+| Source | 5 | 14 | 3 | 2 |
+| Receiving | 16 | 6 | 2 | 0 |
+
+Every missing or blank source field counts toward the 24. Receiving
+fields count only when present, giving the eight from the receipt.
+No additional explicit numeric ID was found in a Wikipedia URL,
+an oldid assignment, a formatted number or a numeric value with an
+inline comment. No unprojectable nonblank value contained a run of six
+or more digits. The projection SHA-256 is
+`dde01f21766b02935d42a87fd271b968772118023d97f69b238c621928fae5c5`.
+
+Both date-like fields named English sources. The corresponding title
+resolved in each case. A query for revisions within the reported UTC
+calendar day returned one candidate for holdout page `7183480` on
+2017-10-30, English revision `807800374` at 05:06:43 UTC. It returned
+zero for holdout page `7552076` on 2018-07-30. The first result is a
+same-day candidate. The notice itself supplies no revision ID or
+timezone, and the candidate's translation passage remains unverified.
+
+A separate metadata check across both notice receipts queried 65
+distinct wiki and revision ID pairs in nine language editions.
+All nine API requests returned complete responses. The 62 resolved
+revisions account for 63 template references. Every resolved revision
+predates or matches the time of its discussion revision.
+
+| Partition and direction | Resolved by the notice time | Unavailable |
+| --- | ---: | ---: |
+| Calibration source | 17 | 1 |
+| Calibration receiving | 6 | 0 |
+| Holdout source | 30 | 0 |
+| Holdout receiving | 10 | 2 |
+
+Chronology projection SHA-256
+`5c0944bef8d18040d09a38e2db49ce30ccff011ca655e5541c832af4f84b5dd2`.
+Among seven recorded title mismatches, a move log tied one calibration
+reference to the named title by original page ID. The move happened
+in May 2026, after the historical notice. It supplies no by-date
+equivalence. Three pairs remained different pages without a matching
+move in the available responses, one title could not resolve, and
+two requests had service failures. Earlier source-title mismatch
+outcomes remain in force.
+
+No historical article passage or author information was retained.
+Revision chronology is a metadata check. The source passage and
+distribution terms still require review.
+[MediaWiki revisions API](https://www.mediawiki.org/wiki/API:Revisions)
+[MediaWiki log events API](https://www.mediawiki.org/wiki/API:Logevents)
+
+#### Source history and citations for the two date-only notices
+
+For each receiving page, two metadata windows covered its first 40
+public revisions and the last 40 at or before the notice. The first
+visible Russian revision for `7183480` is `88825524` on 2017-11-06.
+The first visible timestamp for `7552076` is
+2018-07-31T02:52:05Z. Neither
+80-revision sample contains a translation-marked edit summary that
+explicitly names an originating revision ID. The first page had
+two translation-related summaries. The English history for the
+second notice places its reported 2018-07-30 date between revisions
+`851786003` on July 24 and `854065695` on August 8.
+
+The matching Russian snapshot revisions were then compared to
+the possible English source windows using normalized external
+URLs. The comparison ignores Wikimedia and Internet Archive
+hosts, URI fragments, schemes and UTM parameters, and retains
+the external path and other query parameters.
+
+| Russian snapshot revision(s) | English source revisions checked | Shared external URLs |
+| --- | --- | --- |
+| `133847379` | `806378964`, `807800374`, `811310815` | 8, 8, 9 respectively |
+| `132868884`, `132868855`, `132868838` | `851786003`, `854065695` | 0 in each comparison |
+
+The same-day October 30 candidate shares the same eight URLs as
+its predecessor. A later English revision shares one additional
+URL absent from the two earlier tested revisions. It postdates
+the first visible Russian revision. The three September 2023
+Russian revisions reproduce the same cleaned snapshot and have
+49, 49 and 48 normalized external URLs respectively. The
+reference-level difference demonstrates that a cleaned-text
+match alone cannot identify the exact citation state.
+
+The metadata-window projection SHA-256 is
+`30f99994073abc6d06ea744efd0b9b2806d40f16a818609477f8781d1b7884a9`.
+The citation projection SHA-256 is
+`a0a45a87b399385523d664f346326730b57b6d01da69b6c49ba94a385a1fc855`.
+The public citation comparison supports an article-level link for
+the first notice. It leaves the exact originating revision,
+individual v6 passages and distribution rights open.
 
 ### Exact early Wikipedia Word Context corpora
 
@@ -1608,6 +1708,39 @@ A source-only test checks the entries without needing the recovered
 corpus files. The legacy protected-control test verifies the nine original
 language/version entries by identity, alongside the new corpus exclusions.
 The registry retains its incomplete global coverage status.
+
+### Exact v6 partitions tested against an empty build tree
+
+A clean checkout of `cc6575ab` had no `build/` before or after the check.
+The two restored historical JSONL files were supplied from outside that
+checkout. Both matched the original corpus manifest. The current public
+spelling preparer refused both with `BLOCKED_OVERLAP` and created no
+output. Its receipt bindings verified against the tracked registries.
+
+| Attempted reuse | Rows | Article overlaps | Family overlaps | Sentence overlaps | Target-context overlaps |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Calibration | 7,905 | 1,651 | 588 | 1,661 | 4,583 |
+| Holdout | 7,750 | 1,614 | 523 | 1,630 | 4,481 |
+
+Direct calls to the shared lexical gate refused each of the four axes
+individually. The control registry independently flagged all listed
+articles and 4,583 calibration and 4,481 holdout regression keys. The
+historical row format also lacks the current source-segment field.
+The lexical and control registry SHA-256 values respectively are
+`db1093ede1b0fcfebf9112bec83a135eaf92d694ee89d344d3d65545702cac77`
+and `fd4f7d9e76c2ce55b6f1180de375acbae3f97868cd520c91fe0bf1e6cff04e4a`.
+Independent natural qualification remains open.
+
+The [renewed Android draft](2026-11-10-publication-text-screen.md#draft-candidate-for-the-renewed-android-matrix)
+at `e8558c393fce3238ed3432cadd35b188a37c2e7e` repeated the restoration
+and the reuse check in its own checkout. The parent inputs and exact row
+files were supplied from outside that checkout. The restoration matched
+all five original SHA-256 values with zero model calls. The projected
+keys exactly equaled each of the two original entries in the 239-entry
+lexical registry. Both preparation attempts returned `BLOCKED_OVERLAP`
+with the counts above, verified their registry bindings, and created no
+output. The checkout had no `build/` before or after these checks and
+was deleted afterward.
 
 ### Exact v6 rows affected by article overlap
 
@@ -2013,3 +2146,517 @@ and ledger bytes. The ledger now has 239 entries and SHA-256
 `db1093ede1b0fcfebf9112bec83a135eaf92d694ee89d344d3d65545702cac77`.
 The importer made zero model calls. Global freshness and independent
 qualification remain open.
+
+### Alternate archive routes for the four unresolved title lookups in shard 0020
+
+The pinned snapshot attribution maps identified the four page IDs whose
+desktop-title Wayback query yielded no indexed capture: 10084417,
+10138404, 10164587 and 10355886. For each, the availability API was queried
+at 2023-11-01 using the mobile article URL, `w/index.php?curid=` and
+`wiki/Special:Redirect/page/`. All 12 requests returned HTTP 200 with
+no closest capture. This check added no revision or full-window witness
+and did not download article content.
+[Wayback availability API](https://archive.org/help/wayback_api.php)
+
+### Direct revision lookup for incomplete archive captures
+
+Twelve unresolved article records had a Wayback HTML capture with the
+original page ID and a numeric revision reference. The screen used
+`wgRevisionId` when nonzero and otherwise tried `wgCurRevisionId`. The
+Russian Wikipedia Revisions API returned HTTP 200 and classified all
+12 IDs as unavailable in `badrevids`. The metadata-only response
+SHA-256 was `7da41ee4c398e818a5d9a1a5974525390795ff3cccf0924bf1d16803905d120c`
+for revision IDs 79987682, 102002002, 122103831, 122603371, 122857447,
+124277971, 134915696, 137003127, 139969781, 140173070, 140612442 and
+141710277. This response does not distinguish deletion from other
+causes of unavailability.
+
+Wayback availability queries for both `w/index.php?oldid=` and
+`wiki/Special:PermanentLink/` for those IDs returned no indexed capture
+in all 24 requests at the dump-date target. No source passage was
+recovered. The prior verified article and passage counts are unchanged.
+[MediaWiki Revisions API](https://www.mediawiki.org/wiki/API:Revisions)
+[Wayback availability API](https://archive.org/help/wayback_api.php)
+
+### Public deletion logs for the 26 live-API exceptions
+
+The Russian Wikipedia log API was queried by each original snapshot
+title for deletion events from 2023-11-01 onward. Matching required the
+event's `logpage` to equal the original v6 page ID. The query requested
+only log IDs, action, date and comment metadata. The initial scan returned
+17 complete title results, and two follow-ups completed the missing nine
+after transient service errors and rate limiting.
+[MediaWiki log events API](https://www.mediawiki.org/wiki/API:Logevents)
+
+| Matched deletion evidence | Pages | Historical rows |
+| --- | ---: | ---: |
+| All live revision exceptions | 24 of 26 | 116 of 126 |
+| Previously confirmed archive windows | 10 of 10 | 47 of 47 |
+| Remaining source-window exceptions | 14 of 16 | 69 of 79 |
+
+The query for holdout page `8717920` returned no deletion events under its
+snapshot title. The query for calibration page `9089473` returned an event
+under another page ID. Both remain unmatched by original ID.
+
+Holdout page `10323497` has an exact deletion event, log ID `102363925`
+at `2024-09-08T13:02:11Z`. A separate request confirmed wording referring
+to copyright infringement in the public deletion comment. Keep the five
+holdout rows from this page withheld pending passage-level rights review.
+The log records the deletion and its stated reason. It supplies no original
+revision text, no passage-specific rights determination and no permission to
+redistribute. The source-window count remains 79 unresolved rows. Only public
+numeric references, counts and scoped reason categories were retained.
+
+### Archive index checks around the known deletion dates
+
+The Wayback availability endpoint was queried twice for each of the 14
+source-window exceptions with an exact deletion event. The target times
+were one minute before the deletion and midway between the dump date
+and deletion. All 28 responses reported no closest capture. The
+canonical projection SHA-256 was
+`eab2821c1f33966c4fbca037ac793f1dd7099ed7fa66d22ffcf47834d2ee52d9`.
+The same endpoint also returned no capture for two previously verified
+archive witnesses, at their recorded capture times, with both encoded
+and Unicode URLs. The negative results from this endpoint therefore
+provide no reliable coverage conclusion for the 14 pages.
+[Wayback availability API](https://archive.org/help/wayback_api.php)
+
+The Common Crawl exact-URL CDX API returned seven HTTP 404 results,
+eight gateway failures and one HTTP 400 for the 16 URLs in
+`CC-MAIN-2023-40`. All 16 requests in `CC-MAIN-2023-50` returned
+HTTP 504, although the control URL was indexed for that crawl. The
+`CC-MAIN-2024-10` request sequence ended on a remote disconnect.
+This API attempt recovered no capture and leaves coverage unresolved.
+[Common Crawl CDXJ index](https://commoncrawl.org/cdxj-index)
+
+A direct range check read the complete 163,187,199-byte
+`CC-MAIN-2023-50` clustered index, SHA-256
+`5920b6c08c9e1f30a36a26b54c6ce9e2f22e83fa658b33865a7e0117b74b8d57`.
+Of the eleven selected compressed index blocks, six decoded and five
+returned HTTP 503. The failed blocks overlap six candidate pages. The
+direct lookup did not reproduce the positive control or yield an article
+capture. No WARC payload was downloaded. The index and decoded blocks
+were processed in memory. The 79 unresolved source-window rows remain.
+
+### Archived Kiwix source windows
+
+The Internet Archive catalog lists the September 2023 Russian Wikipedia
+`nopic` and October 2023 `mini` images at 17,149,351,246 and 5,068,637,031
+bytes. Its file metadata reports SHA-1
+`7b37d3d4d3d45f0c350e23bfa6b8ea6fb47edc60` and
+`6968eea68435bb16f2ba9288bb9cf61e38044d85`, respectively. The probe
+required exact HTTP `206` ranges and decoded the requested OpenZIM entries
+and clusters in memory. The initial pass requested 19,593,755 bytes from
+September and 17,483,033 bytes from October. Neither full image was downloaded,
+so the catalog's checksums were not independently recomputed.
+[September image](https://archive.org/details/wikipedia_ru_all_nopic_2023-09.zim)
+[October image](https://archive.org/details/wikipedia_ru_all_mini_2023-10.zim)
+
+A stricter second pass on six September entries verified that each HTML
+canonical title and Russian Wikipedia `oldid` link title match the pinned
+v6 article title. It then read both historical JSONL files under their
+original verified hashes. NFC normalization, case folding and whitespace
+collapsing preserved punctuation in the extracted HTML text. Each of
+the four complete row variants matched once, with the stored source-context
+digest, and each shortened unfinished variant matched once as well.
+
+| Original page ID | Linked revision | Rows | Inclusive cluster range, blob | September HTML SHA-256 |
+| --- | --- | ---: | --- | --- |
+| 5935145 | 131086844 | 5 | `3119993476–3120215516`, 38 | `6187b299cf49c2cc1be428691e401e45c206a95a86a7ad5170730aec4eb81f5d` |
+| 6139095 | 128358701 | 5 | `613977742–614210761`, 27 | `a5f44dce5d70665aac5910f2cf0248c70accf6252055d6bbe285bdb0e39492f3` |
+| 7121163 | 128935987 | 5 | `3448551862–3448795146`, 26 | `37750a45aabcd3a41f7384d4b43d20124a7018c3ee927759988a26db6122d58d` |
+| 7171152 | 118409286 | 5 | `5889118905–5889347147`, 15 | `6392097e14238b2a014c378a834f210713fd254c22649e899d8337b66ce0270e` |
+| 8345062 | 118287516 | 5 | `717343944–717577821`, 4 | `a984a42ea2f16cbd972793fdac94ca3494178d5854c4076952dff66231a713db` |
+| 8717920 | 118325851 | 5 | `4369609468–4369824916`, 22 | `737bf341f06f73383405feb869fd65c3e74226843dc65c5a6a0c370ab609044d` |
+
+These passage-level witnesses cover 30 of the previously unresolved 79
+rows. The same check found complete windows for another 29 rows. In each
+case both titles matched, every stored full-context digest was reproduced,
+and each complete or shortened variant occurred once in the archive text.
+
+| Original page ID | Linked revision | Rows | Inclusive cluster range, blob | September HTML SHA-256 |
+| --- | --- | ---: | --- | --- |
+| 5883205 | 79987682 | 5 | `2442797762–2443038803`, 50 | `f3f89ade7013a3b89547d6f2788c759a9d19500c910acf1691d1f9ae6e4d8b12` |
+| 9089473 | 130904314 | 5 | `8548920109–8549138585`, 9 | `7e2c6e699bc1a351bc6433ff125859cb04072a31b5c6317958e7851e2a7e02be` |
+| 10084417 | 129291440 | 5 | `7516401414–7516632083`, 9 | `e7d50abf26b496d5da28e9b86b1ee43dd23f12e1c1a71cfe9117e5e0f91cd7b3` |
+| 10138404 | 129401855 | 4 | `5073599735–5073774336`, 18 | `6dc13ea36d8505093b831783285c634416537ec708d2909c38f15e4e7e997529` |
+| 10164587 | 132000224 | 5 | `3736203028–3736398234`, 43 | `0147f3700e6c1d0d5da13403a93acc81aa318b853a79aaecede615a15fd12a83` |
+| 10323497 | 132671990 | 5 | `1292557585–1292786483`, 44 | `7efe7b056de5744668c784ddc79aea2092316512d52d9febd2d5c3f11fc88cb6` |
+
+The October `mini` extracts matched both title references for four other
+pages, with zero exact windows. The September archive contains three of
+those pages. Its unfiltered HTML matched only the shortened variant on
+`9744441`. Inspecting the intervening inline markup identified a numbered
+citation rendered by a `span` with class `mw-reflink-text`. Removing
+only numeric citation markers with that class restored exactly one match
+for each of the five rows, with all four complete context digests matching.
+The verified September HTML for page `9744441` links revision `126305416`.
+It is blob 34 at inclusive cluster range `6367202785–6367430571` and has
+SHA-256 `bac4342343db7361f82211675437ecf66708b13858f06ac836ffd903abb8f757`.
+
+The same citation removal left zero exact windows for `8402514` and
+`8441629`. The September image lacks an exact entry for `10355886`.
+The five Wikimedia daily incremental history indexes from November 22–26
+were available in the Internet Archive. Each compressed file matched its
+catalog SHA-1. The indexes contained 62,593 page entries and none of the
+three remaining page IDs. These increments cover only their five update
+days. A complete source-window result is still due for 15 rows.
+[First daily index](https://archive.org/details/incr-ruwiki-20231122)
+[Last daily index](https://archive.org/details/incr-ruwiki-20231126)
+
+The [pinned Kiwix receipt](../../tools/typing_experiments/available-v6-article-origin-v1/kiwix-source-windows.json)
+binds the archive evidence to the historical calibration and holdout
+JSONL digests. The offline witness audit reports it in
+`archiveWindowCoverage`. With `--require-all --corpus` on the restored v6
+inputs, it recorded 13 additional archive pages, 64 witnessed rows, and
+15 unresolved rows across the three remaining pages. The report's SHA-256
+is `0b34df23f2fac7064d6b1e2a2daecf62f54d29600bd58ff166979796c58ac72e`.
+The full-article count remains 3,239 pages with a by-date witness.
+
+The Kiwix links identify candidate revisions for the source passages
+underlying those 64 rows. A public deletion comment cites copyright infringement for
+`10323497`, so its five historical rows remain withheld. Original dump
+revision identities, full-article equality, rights review and fresh natural
+qualification remain open. Only public identifiers, counts and digests
+were retained.
+
+#### Original revision metadata for the three remaining pages
+
+The public deletion log returned an exact original page ID match for
+each of the three remaining pages. The linked Kiwix revisions were all
+classified as unavailable by the Russian Wikipedia Revisions API.
+
+| Original page ID | Linked Kiwix revision | Public deletion log ID | Deletion date UTC |
+| --- | --- | --- | --- |
+| 8402514 | 125253232 | 114932623 | 2026-10-13 00:07:30 |
+| 8441629 | 131081713 | 110759080 | 2026-05-01 14:14:11 |
+| 10355886 | 133321062 | 99314928 | 2023-12-20 17:49:47 |
+
+Revision API response SHA-256
+`51d59f50af47d35301f6db2e3d5a5588e5e69466e0fc117ccc113e3a507682d2`.
+These dates identify which later snapshots could contain the articles.
+This metadata check adds zero complete windows.
+[MediaWiki log events API](https://www.mediawiki.org/wiki/API:Logevents)
+[MediaWiki Revisions API](https://www.mediawiki.org/wiki/API:Revisions)
+
+#### FineWiki full-text witnesses
+
+The Russian FineWiki subset comes from an August 2025 Wikimedia
+Enterprise snapshot. Its filter endpoint kept returning HTTP 503.
+The fallback queried all five Parquet files at revision
+`8bd13e72e6a002407649b3e898535f42ceb1aeb9`. Range requests selected
+candidate row groups using `page_id` statistics, then checked actual
+IDs and retrieved wikitext for the matching rows. The scanner read
+25,105,539 bytes across the five files. It matched exact page IDs,
+dataset IDs and titles for two articles. The third ID `10355886` was
+absent from this snapshot.
+[FineWiki processing and metadata](https://huggingface.co/datasets/HuggingFaceFW/finewiki/blob/main/README.md#data-processing)
+
+The digest-pinned Wikimedia cleaner and `mwparserfromhell` 0.6.5
+produced byte-identical full cleaned text for both articles compared
+with the locked November 2023 corpus source. Each revision's recorded
+timestamp precedes the original dump date. All ten historical row
+variants matched their source windows once. The
+[pinned FineWiki receipt](../../tools/typing_experiments/available-v6-article-origin-v1/finewiki-revision-witnesses.json)
+records the archived revision IDs, timestamps and input and output
+digests. Temporary Python environments were removed.
+
+The offline audit with `--require-all --corpus` now reports 3,241
+full-text witnesses covering 15,539 rows. The union with verified
+archived windows accounts for all but five historical rows, all from
+page `10355886`. Audit SHA-256
+`98d1448b8b53f26e1fd5cd4ef04a9c2fc26b104d9c5b451f4f96590cad093adf`.
+Original dump revision identities and passage rights remain open.
+
+#### Archive checks for the final unresolved page
+
+The September 2023 Kiwix `maxi` and `mini` directory lookups found no
+entry at the pinned title of page `10355886`. Both lookups returned
+and decoded the known control page `6724762`. The requests used byte
+ranges and retained no archive file or article text. The Internet
+Archive catalog returned no October, November or December Russian
+`maxi` or `nopic` edition under the exact Kiwix identifiers checked.
+[September maxi](https://archive.org/details/wikipedia_ru_all_maxi_2023-09.zim)
+[September mini](https://archive.org/details/wikipedia_ru_all_mini_2023-09.zim)
+
+At the pre-deletion target date of December 19, 2023, the Wayback
+availability API returned HTTP 200 with an empty closest capture for
+the original title, the `133321062` permalink, and its two query forms
+with and without `action=raw`. Exact-title HTTP 200 capture queries
+to Common Crawl returned HTTP 404 in `CC-MAIN-2023-40`,
+`CC-MAIN-2023-50` and `CC-MAIN-2024-10`. These are scoped index
+results. The October Kiwix `mini` remains the verified revision lead,
+and its excerpt lacks the historical window for the five rows.
+[Wayback availability API](https://archive.org/help/wayback_api.php)
+[Common Crawl CDXJ index](https://commoncrawl.org/cdxj-index)
+
+#### Public mirrors of the last unresolved article
+
+The five rows for page `10355886` came from the exact restored holdout
+JSONL, verified against the pinned Kiwix receipt. The four complete
+row variants reproduce their historical normalized context digests.
+The fifth variant has a shortened right context.
+
+The MediaWiki parse endpoint for the current EverybodyWiki page
+`130057`, mirror revision `699660`, returned the original title.
+The Cyclowiki endpoint selected mirror page `579523`, revision
+`2043405`, through a redirect from the original title. Each rendered
+body yielded exactly one occurrence of the shortened variant and zero
+complete windows. The check preserves punctuation and normalizes NFC,
+case and whitespace after dropping rendered reference markers.
+Cyclowiki returned the left component once for each variant. Its
+four complete target-plus-right components had no exact match.
+
+| Parsed mirror revision | Body HTML SHA-256 |
+| --- | --- |
+| EverybodyWiki `699660` | `b7b36461d4600cfcf5645ca045f12462e8d2d5ed3fb15cf685bc2138e35cf216` |
+| Cyclowiki `2043405` | `558caf327927fc729797255204f119098a0af5e97cc45085132bb061ae130040` |
+
+EverybodyWiki's revision metadata lists `347723` and `348387` in
+December 2023, before the original's deletion. Its revision-specific
+parse calls returned HTTP 403. The exact-title Cyclowiki redirect
+revision `2043406` itself yielded zero matches. Ruwiki's parse endpoint
+returned HTTP 403. Mirror revision IDs establish neither original
+Wikipedia revision identity nor a license for the historical passages.
+The source-window audit still has five unresolved rows. Only IDs,
+digests and aggregate match results were retained.
+[MediaWiki parse API](https://www.mediawiki.org/wiki/API:Parsing_wikitext)
+[MediaWiki revisions API](https://www.mediawiki.org/wiki/API:Revisions)
+
+#### Exact window witness from the December 2023 mirror revision
+
+The revisions API returned wikitext for EverybodyWiki page `130057`,
+revision `347723` dated 2023-12-11T08:42:39Z. The title matches the pinned
+v6 index. The revision comment references Wikipedia without the original
+revision ID. Two reads replayed the digest-pinned Wikimedia cleaner with
+`mwparserfromhell` 0.6.5. Each matched one occurrence of the full
+context shared by four historical row variants and one occurrence of the
+shortened fifth variant. The later mirror revisions `348387` and
+`518256` each matched only the shortened variant.
+
+The [mirror receipt](../../tools/typing_experiments/available-v6-article-origin-v1/mirror-source-window.json)
+binds the match counts, wikitext and cleaned-text digests, and the exact
+holdout digest. The cleaned mirror article differs from the pinned
+snapshot as a whole. Wikitext and cleaned text were processed in memory.
+
+The offline audit with `--require-all --corpus` verified the bindings and
+reports **zero unresolved source-window rows** across all 15,655 restored
+rows. This includes 15,539 rows with by-date full-article witnesses, 47
+with the earlier Wayback witnesses, 64 with Kiwix windows, and five with
+this mirror. Audit SHA-256
+`4d292c55531a273cd7a97432cf86631c2d44aaf3d2d8d6fe1266fd6dcc6329a4`.
+Exact original dump revision attribution, passage rights and independent
+qualification remain open.
+
+#### Revision identity and dump-date cutoff check
+
+The ten standard captured reports have one known by-date exact-text
+revision for 1,190 articles covering 5,710 rows, and multiple for 2,048
+articles covering 9,814 rows. Of those 3,238 articles, 2,767 have an
+earlier continuation in the API response. An apparently unique match in
+that response therefore supplies only a candidate revision. Before adding
+the separately recorded extended-history and FineWiki witnesses, 27
+articles covering 131 rows had no by-date match in the standard reports.
+
+For the 28 articles with an exact match timestamped on November 1 or 2,
+2023, a metadata-only API query repeated each original eight-revision
+window. All 28 returned the previously compared revision count and
+contained every recorded matching ID. For this subset, one article's
+latest visible revision at the end of November 1 differs from the
+snapshot, and four articles' latest visible revisions at the start of
+the day differ. The other 23 match at both endpoints. The current
+per-page metadata and the recorded text hashes are consistent with a
+shared instant only in the following half-open intervals on November 1
+UTC for this subset:
+
+- 12:01:14–18:21:37
+- 18:30:36–20:17:54
+- 21:07:30–22:27:45
+
+These are intersections of known matching revision intervals. They
+leave more than one compatible instant and cover 28 of 3,265 articles.
+The legacy dump reads may span different times. The exact dump
+revision IDs remain open, and the audit retains every matching witness.
+The scoped metadata projection SHA-256 was
+`e1b42038caf3df9f8a301db14d6810c392cb3d2a41959acc215732f66390a751`.
+[MediaWiki revisions API](https://www.mediawiki.org/wiki/API:Revisions)
+[Wikimedia export timing](https://wikitech.wikimedia.org/wiki/MediaWiki_Content_File_Exports)
+
+The official dump host and two Wikimedia mirrors returned HTTP 404 for
+the November and December 2023 Russian MediaWiki History directories,
+the November 1 legacy dump status, and the checked Enterprise HTML
+run path. The Internet Archive catalog returned no files for six exact
+November and December dump identifiers. The same catalog returned the
+known November 22 incremental dump and October Kiwix image controls.
+These probes recovered no source XML or original dump revision IDs.
+[Wikimedia Analytics archive format](https://dumps.wikimedia.your.org/other/mediawiki_history/readme.html)
+
+#### Passages in receiving revisions named by translation notices
+
+The two tracked notice maps contain 15 distinct numeric receiving
+revisions whose page identity was confirmed. The 16 confirmed template
+references include one repeated holdout revision. The Revisions API
+returned all 15 bodies with the expected page and revision IDs. The
+original Russian cleaner with `mwparserfromhell` 0.6.5 processed the
+bodies in memory. The comparison bound both restored JSONL partitions to
+their original digests and compared the normalized windows, preserving
+punctuation.
+
+| Partition | Distinct receiving revisions | Historical rows on those pages | Full rows with one window match | Shortened rows with one window match |
+| --- | ---: | ---: | ---: | ---: |
+| Calibration | 6 | 29 | 8 | 2 |
+| Holdout | 9 | 43 | 4 | 2 |
+
+All 15 cleaned article digests differ from the corresponding full
+snapshots. For the four receiving revisions with an exact window, a
+follow-up checked the MediaWiki parent ID and reconstructed the same
+windows in the public parent when present.
+
+| Russian article | Receiving revision | Parent revision | Exact rows in receiving revision | Exact rows in parent | English source revision named in notice |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `8399461` | `107944203` | First revision | 5 | — | `960840778` |
+| `9140119` | `118934881` | First revision | 5 | — | `1031250595` |
+| `7805390` | `98565686` | `98565557` | 5 | 5 | `886722443` |
+| `9847585` | `124870218` | First revision | 1 shortened | — | `1102257774` |
+
+These links identify the named English source revisions for the 11
+variants already present at page creation. For article `7805390`, the
+five variants predate the receiving edit named by the notice. Passage
+alignment with the English revisions and distribution rights still
+require review. The projections contain IDs, counts and digests only.
+Receiving-window projection SHA-256
+`0e03e7abc09d21f02f775613c777417671d0f1de791c62e25d7f21cb66d13292`.
+Parent comparison projection SHA-256
+`8268ce07e9e40baf409f1346e4890378731e09f71e8c5635e1f56e9ac6a0e6e4`.
+[MediaWiki revisions API](https://www.mediawiki.org/wiki/API:Revisions)
+
+#### Passage comparison with the four named English revisions
+
+The Revisions API returned all four exact English wikitext revisions.
+The comparison used the Russian windows established above, looked up
+English paragraphs by distinctive terms, and checked the order and
+meaning of details in context. Matching an isolated term was insufficient.
+The excerpts were processed in memory. The repository retains the
+revision IDs, count results and projection digest.
+
+| Russian article | English revision | Passage comparison | Exact historical rows supported |
+| --- | --- | --- | ---: |
+| `8399461` | [`960840778`](https://en.wikipedia.org/w/index.php?oldid=960840778) | The same three researchers, numbers-and-letters design, and split into intuitive and reasoned responses occur in the same order. | 5 |
+| `9140119` | [`1031250595`](https://en.wikipedia.org/w/index.php?oldid=1031250595) | The named English article discusses pilgrims and cathedral plans. No corresponding paragraph was found for the Russian window about monastic access, church layout and relics. | 0 |
+| `7805390` | [`886722443`](https://en.wikipedia.org/w/index.php?oldid=886722443) | The same compilation, unpaid recording, song counts, month, and studio costs occur in the same order. The Russian passage already appears in the parent of the edit named in the notice. | 5 |
+| `9847585` | [`1102257774`](https://en.wikipedia.org/w/index.php?oldid=1102257774) | The Beaux-Arts description and the register nomination's Second Empire classification align with the shortened Russian context. The local right context differs from the complete v6 window. | 1 shortened |
+
+For Russian article `9140119`, the exact receiving revision places
+an inline citation to Auguste Choisy's Russian edition, pages 498–499,
+inside the checked paragraph. The associated bibliography names the
+2009 printing. Choisy's original work is catalogued by the Bibliothèque
+nationale de France. The cited Russian printing remains unverified at
+page level and needs a separate passage and rights check.
+[Russian receiving revision](https://ru.wikipedia.org/w/index.php?oldid=118934881)
+[BnF catalogue record for Choisy](https://catalogue.bnf.fr/ark:/12148/cb30239336b)
+
+The projection SHA-256 is
+`877b912c2d1b321b6d7f8d92ded8f2a7428f7b452ca92feb015a01d3f052d265`.
+It covers the downloaded revision bodies' digests, English paragraph
+digests and Russian per-row window counts. Passage alignment supports
+attribution for the 11 listed row variants. It leaves other source
+passages and redistribution review open.
+
+#### Choisy passage underlying the Gothic architecture window
+
+Choisy's French first edition, volume II, page 416, supplies the
+sequence of details in the Russian paragraph on article `9140119`.
+Both accounts describe the monastic choir and long transepts,
+pilgrims' access along the side aisles to the crypt, the narthex, and
+the contrast with a Gothic church intended to receive the public.
+This is passage-level evidence for the work cited in Russian revision
+`118934881`. The five v6 row variants share this Russian context.
+
+The Internet Archive transcription contains 2,232,237 bytes and
+matches its catalog SHA-1 `3112448adf781db7a564031b2610807aa8a30844`.
+Its SHA-256 is
+`9cbe0d69c5ab192ce01e137140ed169a161ec85fad7d3aea7e8156e0b9fb941e`.
+The normalized extract on the printed page has SHA-256
+`4956593a154ad311193e5ccdf888d572d78e73a4eb5ecbf1a77a56de125129a4`.
+The separate scan index, verified against its catalog SHA-1, labels
+leaf 1061 as page 416 in volume II. The transcription and scan index
+were read in memory.
+[1899 first-edition catalogue](https://catalogue.bnf.fr/ark:/12148/cb30239336b)
+[Archived volume II, printed page 416](https://archive.org/details/histoire-de-larchitecture/page/n1061/mode/1up)
+
+The 2009 Eksmo edition is listed in the St Petersburg Polytechnic
+University acquisition catalogue with ISBN `978-5-699-29270-7`. The
+historical Russian Wikipedia bibliography transposes its first two
+digits. The French source supplies the passage regardless of that
+metadata error. Verification of the cited Russian edition's pages
+498–499, its wording and the redistribution review remain open.
+[University acquisition catalogue](https://elib.spbstu.ru/dl/2060.pdf/download/2060.pdf)
+
+#### Publication attribution for the 26 archived articles
+
+The exact v6 audit has zero unresolved source windows. This follow-up
+tested a separate requirement, an accessible attribution destination for
+the 26 pages recovered using archive evidence. It selected one original
+Wikipedia revision reference per page from the Wayback, Kiwix and
+FineWiki receipts, using the Kiwix lead for the final mirror witness.
+The API returned a complete response for all 26 original page IDs and
+all 26 revision references. Every original page is currently reported
+missing. All 26 revision references were returned in `badrevids`.
+
+| Text witness route | Original pages unavailable | Historical rows |
+| --- | ---: | ---: |
+| Wayback source windows | 10 | 47 |
+| Kiwix source windows | 13 | 64 |
+| FineWiki by-date full article | 2 | 10 |
+| December mirror source window, with a separate Kiwix revision lead | 1 | 5 |
+| Total | 26 | 126 |
+
+This check includes the FineWiki pages despite their exact cleaned-text
+matches. A working article link with contributor history, an equivalent
+licensed archive with contributor credit, or a verified author list
+remains to be established for these pages. The copyright-related
+deletion notice for article `10323497` still applies to the passage
+review for its five rows.
+[Wikimedia Terms of Use, licensing and re-use](https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use#7._Licensing_of_Content)
+[MediaWiki revisions API](https://www.mediawiki.org/wiki/API:Revisions)
+
+The live Russian Wikipedia `rightsinfo` endpoint declares CC BY-SA
+4.0. The dataset card separately labels the Parquet text CC BY-SA 3.0
+and GFDL. The distribution notice for the exact v6 files still needs
+to resolve the applicable terms, retain source-specific credits, and
+describe the selection, constructed typo and rival variants, and
+shortened contexts. The restored corpus and current publication
+decision remain local. The metadata projection SHA-256 is
+`84b965188738dc4422406d3fdfdf5c2ab56c0778761a3c751fff66a5c404a043`.
+[Dataset card at the reviewed revision](https://huggingface.co/datasets/wikimedia/wikipedia/raw/b04c8d1ceb2f5cd4588862100d08de323dccfbaa/README.md)
+[MediaWiki site information API](https://www.mediawiki.org/wiki/API:Siteinfo)
+
+### Detailed Tatoeba export creation cutoff diagnostic
+
+The official per-language export served on this check has Last-Modified
+2026-11-21 06:30:12 GMT. Its 23,741,971 bytes hash to
+`338d00cb7badb9f9e6ee64a523db956fdac1cab8da4cacd62cba381ac06e3662`,
+and it contains 1,239,867 six-field Russian records.
+
+| Creation cutoff in the export's timestamp field | Surviving rows before cutoff | Difference from the original 1,232,336 |
+| --- | ---: | ---: |
+| 2026-10-24 06:00 | 1,231,562 | −774 |
+| 2026-10-25 00:00 | 1,231,775 | −561 |
+| 2026-10-26 00:00 | 1,231,892 | −444 |
+| 2026-10-27 00:00 | 1,232,192 | −144 |
+| 2026-10-28 00:00 | 1,232,514 | +178 |
+
+Filtering on creation time alone first reaches the original count
+during the 2026-10-27 18:00 hour. Matching the count at that point
+does not establish October snapshot membership. For example, 23,181
+of the rows created before October 26 have a modification timestamp
+at or after that cutoff. This route still lacks the exact original
+memberships, owner fields and modification dates needed for replay.
+
+The Wayback availability check found no capture of the uncompressed
+Russian TSV. Its closest export index captures were from August 2026,
+and the global detailed CSV capture was from November 2024. The lookup
+did not supply the October export. Only counts and file identity were
+retained, and the downloaded export was removed.
+[Official export catalog](https://downloads.tatoeba.org/exports/)
+[Wayback availability API](https://archive.org/help/wayback_api.php)

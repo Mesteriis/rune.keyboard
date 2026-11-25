@@ -154,6 +154,13 @@ result distinguishes matches by the dump date, later matches, missing pages,
 and pages still awaiting checks. It also lists each checked exception with
 its public article ID and the number of affected rows and contexts.
 
+The `archiveWindowCoverage` counts include the pinned Kiwix and December
+2023 mirror receipts. The mirror receipt covers the remaining five rows of
+one holdout article. With `--corpus`, the checker reconstructs the full
+and shortened window digests and checks their row multiplicities. This
+adds passage evidence while keeping the by-date full-article counts and
+original revision status separate.
+
 The following command repeats the metadata-only scan with the pinned
 scientific requirements.
 

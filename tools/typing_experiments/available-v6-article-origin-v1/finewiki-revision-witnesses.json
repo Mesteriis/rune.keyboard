@@ -1,0 +1,24 @@
+{
+  "articles": [
+    {
+      "article": "8402514",
+      "cleanedSha256": "43b59a7edff7ff5c4de2a7630000844e46d8b65443efcc89b02f58f84422a68c",
+      "revision": 125253232,
+      "rows": 5,
+      "timestamp": "2022-09-03T14:49:36Z",
+      "wikitextSha256": "47aeb525e87e47012f9da349f16bb9d5af6ddd2c097633246de060f97397bea1"
+    },
+    {
+      "article": "8441629",
+      "cleanedSha256": "28da27aba722b39d3de5462fd7ee9d5398d37ebe508690df17a4f517fc1c808a",
+      "revision": 131081713,
+      "rows": 5,
+      "timestamp": "2023-06-16T14:24:23Z",
+      "wikitextSha256": "23b9b58d777b29b68ea0ea6545906f4cb34fcf2d9d1beeaaa45f238102f5945b"
+    }
+  ],
+  "cleanerSha256": "bbae6bf05eaa833dec5c56fa75057dd01c14b418fccdb4d6ee4b363f476d455f",
+  "parserVersion": "0.6.5",
+  "schema": 1,
+  "source": "https://huggingface.co/datasets/HuggingFaceFW/finewiki/tree/8bd13e72e6a002407649b3e898535f42ceb1aeb9/data/ruwiki"
+}

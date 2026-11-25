@@ -23,7 +23,9 @@ from refit_historical_role_models import refit, verify_imports
 from audit_available_v6_family_exposure import assignment_masks, noun_case_family_keys, refinement_families
 from audit_available_v6_article_rows import partition_report
 from check_v6_revision_witnesses import (
-    audit as audit_article_witnesses, project_corpus, verify_partition_binding, verify_rows,
+    CORPUS_RECEIPT, FINEWIKI_RECEIPT, KIWIX_RECEIPT, MIRROR_RECEIPT, audit as audit_article_witnesses,
+    kiwix_archive_coverage, mirror_archive_coverage, project_corpus, read_finewiki_witnesses,
+    verify_partition_binding, verify_rows,
 )
 from import_joint_history import MANIFESTS as JOINT_MANIFESTS
 from import_recovered_rare_ranking import recover_windows
@@ -231,6 +233,52 @@ class AvailableV6RecoveryTest(unittest.TestCase):
             path.write_bytes(raw + b'\n')
             with self.assertRaisesRegex(ValueError, 'V6_WITNESS_ARCHIVE_DIGEST:0018.parquet'):
                 audit_article_witnesses(tracked)
+
+    def test_kiwix_windows_extend_coverage_without_counting_full_article_witnesses(self):
+        origin = ROOT / 'tools/typing_experiments/available-v6-article-origin-v1'
+        result = audit_article_witnesses(origin)
+        self.assertEqual(3241, result['byDateWitnessArticles'])
+        self.assertEqual(['8402514', '8441629'], result['fineWikiFullTextArticles'])
+        coverage = result['archiveWindowCoverage']
+        self.assertEqual(13, coverage['kiwixWitnessedArticles'])
+        self.assertEqual(64, coverage['kiwixWitnessedRows'])
+        self.assertEqual(1, coverage['mirrorWitnessedArticles'])
+        self.assertEqual(5, coverage['mirrorWitnessedRows'])
+        self.assertEqual([], coverage['unresolvedArticles'])
+        self.assertFalse(result['originalDumpRevisionIdsVerified'])
+        self.assertNotIn('unresolvedRows', coverage)
+
+        receipt = origin / KIWIX_RECEIPT
+        original = json.loads(CORPUS_RECEIPT.read_bytes())['originalFiles']
+        projected = [dict(row, rows=1) for row in result['archivePassages']]
+        with self.assertRaisesRegex(ValueError, 'V6_WITNESS_KIWIX_PARTITION_COUNTS'):
+            kiwix_archive_coverage(receipt, projected, original)
+        with tempfile.TemporaryDirectory() as directory:
+            mutant = Path(directory) / receipt.name
+            mutant.write_bytes(receipt.read_bytes() + b'\n')
+            with self.assertRaisesRegex(ValueError, 'V6_WITNESS_KIWIX_DIGEST'):
+                kiwix_archive_coverage(mutant, result['archivePassages'], original)
+            finewiki = Path(directory) / FINEWIKI_RECEIPT
+            finewiki.write_bytes((origin / FINEWIKI_RECEIPT).read_bytes() + b'\n')
+            with self.assertRaisesRegex(ValueError, 'V6_WITNESS_FINEWIKI_DIGEST'):
+                read_finewiki_witnesses(finewiki, set(), {}, set())
+            mirror = Path(directory) / MIRROR_RECEIPT
+            mirror.write_bytes((origin / MIRROR_RECEIPT).read_bytes() + b'\n')
+            with self.assertRaisesRegex(ValueError, 'V6_WITNESS_MIRROR_DIGEST'):
+                mirror_archive_coverage(mirror, [], coverage, original, None)
+
+    def test_mirror_window_proof_rejects_an_inconsistent_corpus_projection(self):
+        origin = ROOT / 'tools/typing_experiments/available-v6-article-origin-v1'
+        path = origin / MIRROR_RECEIPT
+        original = json.loads(CORPUS_RECEIPT.read_bytes())['originalFiles']
+        index = [json.loads(line) for line in
+                 (origin / 'revision-witnesses-0020/articles.jsonl').read_text().splitlines()]
+        coverage = {'unresolvedArticles': ['10355886'], 'unresolvedRows': 5}
+
+        with self.assertRaisesRegex(ValueError, 'V6_WITNESS_MIRROR_CORPUS_WINDOWS'):
+            mirror_archive_coverage(path, index, coverage, original, {'holdout': []})
+        with self.assertRaisesRegex(ValueError, 'V6_WITNESS_MIRROR_PARTITION_COUNTS'):
+            mirror_archive_coverage(path, index, dict(coverage, unresolvedRows=6), original, None)
 
     def test_revision_witness_verifier_refuses_page_reassignment_and_duplicate_revision(self):
         row = dict(article='12', partition='calibration', snapshotTextSha256='a' * 64,

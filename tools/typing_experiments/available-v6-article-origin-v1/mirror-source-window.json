@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "article": "10355886",
+  "partition": "holdout",
+  "corpusSha256": "fab03f6fb1c08c462328ebf5c18877b0483ab7977179090c2bd48db9e89a0e8d",
+  "source": "https://ru.everybodywiki.com/api.php",
+  "mirrorPage": 130057,
+  "mirrorRevision": 347723,
+  "mirrorTimestamp": "2023-12-11T08:42:39Z",
+  "deletionTimestamp": "2023-12-20T17:49:47Z",
+  "wikitextSha256": "2dc5ba690555344ab15b92ce0c29a9afa1234a1fe6f292f82785a19b4834bfeb",
+  "cleanerSha256": "bbae6bf05eaa833dec5c56fa75057dd01c14b418fccdb4d6ee4b363f476d455f",
+  "parserVersion": "0.6.5",
+  "cleanedSha256": "d439333aad01398e5313a0efea7e63779af21303f8abdea569291f3ca574b96a",
+  "snapshotTextSha256": "be541f0e28ff506e86de47cd6e0c36a5791692b50665d411b1469802b340c3a8",
+  "windows": [
+    {
+      "sha256": "61cd15988b53ff019ee38114289e6425682c61971462402520065d3516eb90ab",
+      "full": true,
+      "rows": 4,
+      "occurrences": 1
+    },
+    {
+      "sha256": "5e0e26e8719ac7253e45a80085c9d6b25727f8a415dd76c808223f7f65f0e53d",
+      "full": false,
+      "rows": 1,
+      "occurrences": 1
+    }
+  ]
+}

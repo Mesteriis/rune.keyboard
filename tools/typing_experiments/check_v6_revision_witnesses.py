@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 
 from check_available_v6_articles import ARTICLES_SHA256, DIRECTORY
+from holdout_ledger import source_segment_hash
 from recover_available_v6_articles import ROOT, read_lock
 from recover_v6_revision_witnesses import (
     CLEANER_REVISION, CLEANER_SHA256, DUMP_DAY_END, REVISION_LIMIT, UPPER_BOUND, digest,
@@ -18,6 +19,12 @@ STATUSES = {'content-match', 'no-content-match', 'missing-page', 'no-readable-co
 SHA256 = re.compile(r'[a-f0-9]{64}')
 TIMESTAMP = re.compile(r'\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ')
 CORPUS_RECEIPT = ROOT / 'docs/acceptance/2026-11-24-q6-final-v6-recovery.json'
+FINEWIKI_RECEIPT = 'finewiki-revision-witnesses.json'
+FINEWIKI_RECEIPT_SHA256 = 'a268460401eb4d91602478c68c372b7ab46429f131add4908512caaedaba23b7'
+KIWIX_RECEIPT = 'kiwix-source-windows.json'
+KIWIX_RECEIPT_SHA256 = '0fa4daa19a84561523b310ef07d42a2d9339283b492c0eaa447f37acf8b80f9e'
+MIRROR_RECEIPT = 'mirror-source-window.json'
+MIRROR_RECEIPT_SHA256 = '03c4f078f1cab4ce1b7b0f107c81a43f1ebf1a82082266affab21d497f4f9472'
 EXTENDED_HISTORY_SHA256 = {
     '0017.parquet': '228e093682d29cbf6e25f9f9d88b19becd6efa32d045200038e0ffe1ea3a1ff9',
 }
@@ -245,6 +252,104 @@ def archive_projection(cases, corpus_rows):
     return projected
 
 
+def kiwix_archive_coverage(path, archive_passages, original):
+    if not path.is_file() or digest(raw := path.read_bytes()) != KIWIX_RECEIPT_SHA256:
+        raise ValueError('V6_WITNESS_KIWIX_DIGEST')
+    evidence = json.loads(raw)
+    if (evidence['schema'] != 1 or
+            evidence['corpusRowsSha256'] != {part: original[part + '.jsonl'] for part in PARTITIONS}):
+        raise ValueError('V6_WITNESS_KIWIX_CORPUS_DIGEST')
+
+    incomplete = {row['article']: row for row in archive_passages if row['status'] != 'full-source-window'}
+    covered = set()
+    revisions = set()
+    for passage in evidence['passages']:
+        article = passage['article']
+        revision = passage['revision']
+        if (article not in incomplete or article in covered or revision in revisions or
+                revision < 1 or passage['blob'] < 0 or passage['rows'] < 1 or
+                not 0 <= passage['firstByte'] <= passage['lastByte'] < evidence['archive']['bytes'] or
+                not SHA256.fullmatch(passage['htmlSha256'])):
+            raise ValueError('V6_WITNESS_KIWIX_PASSAGE:' + article)
+        if 'rows' in incomplete[article] and incomplete[article]['rows'] != passage['rows']:
+            raise ValueError('V6_WITNESS_KIWIX_PARTITION_COUNTS:' + article)
+        covered.add(article)
+        revisions.add(revision)
+
+    unresolved = sorted(incomplete.keys() - covered, key=int)
+    coverage = {
+        'kiwixReceiptSha256': KIWIX_RECEIPT_SHA256,
+        'kiwixWitnessedArticles': len(covered),
+        'kiwixWitnessedRows': sum(row['rows'] for row in evidence['passages']),
+        'unresolvedArticles': unresolved,
+    }
+    if all('rows' in row for row in archive_passages):
+        coverage['unresolvedRows'] = sum(incomplete[article]['rows'] for article in unresolved)
+    return coverage
+
+
+def read_finewiki_witnesses(path, missing_articles, index_rows, prior_revisions):
+    if not path.is_file() or digest(raw := path.read_bytes()) != FINEWIKI_RECEIPT_SHA256:
+        raise ValueError('V6_WITNESS_FINEWIKI_DIGEST')
+    evidence = json.loads(raw)
+    if (evidence['schema'] != 1 or evidence['cleanerSha256'] != CLEANER_SHA256 or
+            evidence['parserVersion'] != '0.6.5'):
+        raise ValueError('V6_WITNESS_FINEWIKI_CLEANER')
+    articles = {}
+    revisions = set(prior_revisions)
+    for witness in evidence['articles']:
+        article, revid, timestamp = witness['article'], witness['revision'], witness['timestamp']
+        if (article not in missing_articles or article in articles or revid in revisions or revid < 1 or
+                not TIMESTAMP.fullmatch(timestamp) or timestamp > DUMP_DAY_END or
+                witness['cleanedSha256'] != index_rows[article]['snapshotTextSha256'] or
+                not SHA256.fullmatch(witness['wikitextSha256']) or witness['rows'] < 1):
+            raise ValueError('V6_WITNESS_FINEWIKI_ARTICLE:' + article)
+        articles[article] = witness
+        revisions.add(revid)
+    return articles
+
+
+def mirror_archive_coverage(path, rows, coverage, original, corpus_rows):
+    if not path.is_file() or digest(raw := path.read_bytes()) != MIRROR_RECEIPT_SHA256:
+        raise ValueError('V6_WITNESS_MIRROR_DIGEST')
+    evidence = json.loads(raw)
+    article, part = evidence['article'], evidence['partition']
+    indexed = next((row for row in rows if row['article'] == article), {})
+    if (evidence['schema'] != 1 or article not in coverage['unresolvedArticles'] or
+            part not in PARTITIONS or indexed.get('partition') != part or
+            evidence['corpusSha256'] != original[part + '.jsonl'] or
+            evidence['snapshotTextSha256'] != indexed.get('snapshotTextSha256') or
+            evidence['cleanedSha256'] == evidence['snapshotTextSha256'] or
+            evidence['cleanerSha256'] != CLEANER_SHA256 or evidence['parserVersion'] != '0.6.5' or
+            not DUMP_DAY_END < evidence['mirrorTimestamp'] < evidence['deletionTimestamp']):
+        raise ValueError('V6_WITNESS_MIRROR_BINDING')
+
+    windows = evidence['windows']
+    witnessed = Counter({(item['sha256'], item['full']): item['rows'] for item in windows})
+    if (len(witnessed) != len(windows) or {full for _, full in witnessed} != {True, False} or
+            any(not SHA256.fullmatch(item['sha256']) or type(item['full']) is not bool or
+                item['rows'] < 1 or item['occurrences'] != 1 for item in windows)):
+        raise ValueError('V6_WITNESS_MIRROR_WINDOWS')
+    if corpus_rows is not None:
+        observed = Counter()
+        for row in corpus_rows[part]:
+            if row['article'] == article:
+                window = source_segment_hash(row['prefix'] + ' ' + row['word'] + row['rightContext'])
+                observed[window, window == row['contextHash']] += 1
+        if observed != witnessed:
+            raise ValueError('V6_WITNESS_MIRROR_CORPUS_WINDOWS')
+
+    count = witnessed.total()
+    result = dict(coverage, mirrorReceiptSha256=MIRROR_RECEIPT_SHA256,
+                  mirrorWitnessedArticles=1, mirrorWitnessedRows=count,
+                  unresolvedArticles=[item for item in coverage['unresolvedArticles'] if item != article])
+    if 'unresolvedRows' in coverage:
+        result['unresolvedRows'] = coverage['unresolvedRows'] - count
+        if result['unresolvedRows'] < 0 or (not result['unresolvedArticles'] and result['unresolvedRows']):
+            raise ValueError('V6_WITNESS_MIRROR_PARTITION_COUNTS')
+    return result
+
+
 def audit(tracked, local=None, corpus=None):
     lock, lock_bytes = read_lock()
     index_raw = (DIRECTORY / 'articles.jsonl').read_bytes()
@@ -288,15 +393,27 @@ def audit(tracked, local=None, corpus=None):
         if seen.intersection(revisions):
             raise ValueError('V6_WITNESS_CROSS_SHARD_REVISION')
         seen.update(revisions)
+        seen.update(revisions)
         projection = evidence['corpusProjection']
         if projection['rowsSha256'] != original[projection['partition'] + '.jsonl']:
             raise ValueError('V6_WITNESS_EXTENDED_HISTORY_CORPUS_DIGEST')
     result['extendedHistoryArticles'] = sorted(extended, key=int)
-    result['byDateWitnessArticles'] = result['checked']['withMatchOnOrBeforeDumpDate'] + len(extended)
+    finewiki_path = tracked / FINEWIKI_RECEIPT
+    canonical = tracked.resolve() == DIRECTORY.parent.resolve()
+    finewiki = {}
+    if finewiki_path.exists() or canonical:
+        archive_missing = {row['article'] for row in archive_cases if row['status'] != 'full-source-window'}
+        indexed_rows = {row['article']: row for row in rows}
+        finewiki = read_finewiki_witnesses(finewiki_path, archive_missing - extended.keys(), indexed_rows, seen)
+        result['fineWikiFullTextArticles'] = sorted(finewiki, key=int)
+    result['byDateWitnessArticles'] = result['checked']['withMatchOnOrBeforeDumpDate'] + len(extended) + len(finewiki)
     corpus_rows = None
     if corpus is not None:
-        resolved = [dict(row, status='content-match', matches=extended[row['article']]['matches'])
-                    if row['article'] in extended else row for row in rows]
+        new_matches = {article: evidence['matches'] for article, evidence in extended.items()}
+        for article, witness in finewiki.items():
+            new_matches[article] = [{'revid': witness['revision'], 'timestamp': witness['timestamp']}]
+        resolved = [dict(row, status='content-match', matches=new_matches[row['article']])
+                    if row['article'] in new_matches else row for row in rows]
         result['historicalCorpus'], corpus_rows = project_corpus(corpus, index, resolved, original)
         for article, evidence in extended.items():
             projection = evidence['corpusProjection']
@@ -304,9 +421,21 @@ def audit(tracked, local=None, corpus=None):
                                         if row['article'] == article])
             if any(counts[key] != projection[key] for key in ('rows', 'contexts')):
                 raise ValueError('V6_WITNESS_EXTENDED_HISTORY_PARTITION_COUNTS')
+        for article, witness in finewiki.items():
+            part = indexed_rows[article]['partition']
+            if sum(row['article'] == article for row in corpus_rows[part]) != witness['rows']:
+                raise ValueError('V6_WITNESS_FINEWIKI_PARTITION_COUNTS:' + article)
     for receipt, shard_rows in bound_receipts:
         verify_partition_binding(receipt, original, shard_rows, corpus_rows)
     result['archivePassages'] = archive_projection(archive_cases, corpus_rows)
+    kiwix = tracked / KIWIX_RECEIPT
+    if kiwix.exists() or canonical:
+        archive_only = [row for row in result['archivePassages'] if row['article'] not in finewiki]
+        coverage = kiwix_archive_coverage(kiwix, archive_only, original)
+        mirror = tracked / MIRROR_RECEIPT
+        if mirror.exists() or canonical:
+            coverage = mirror_archive_coverage(mirror, rows, coverage, original, corpus_rows)
+        result['archiveWindowCoverage'] = coverage
     return result
 
 
