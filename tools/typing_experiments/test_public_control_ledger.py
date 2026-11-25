@@ -9,11 +9,17 @@ from import_control_components import load_original
 
 
 class PublicControlSnapshotTest(unittest.TestCase):
+    HISTORICAL_PUNCTUATION_IDS = {f'{corpus}-punctuation-{language}'
+                                 for corpus in ('qualification-v2', 'compact-v3', 'compact-v4')
+                                 for language in ('en', 'ru', 'es')}
+
     def setUp(self):self.ledger=load(Path(__file__).with_name('control-ledger.json'))
 
     def test_all_punctuation_components_and_languages_are_persisted(self):
-        entries=[e for e in self.ledger['entries'] if e['kind']=='punctuation']
-        self.assertEqual(9,len(entries));self.assertEqual(3600,sum(e['rowCount'] for e in entries))
+        entries=[e for e in self.ledger['entries']
+                 if e['kind']=='punctuation' and e['id'] in self.HISTORICAL_PUNCTUATION_IDS]
+        self.assertEqual(self.HISTORICAL_PUNCTUATION_IDS,{e['id'] for e in entries})
+        self.assertEqual(3600,sum(e['rowCount'] for e in entries))
         self.assertEqual({'en','ru','es'},{e['language'] for e in entries})
 
     def test_known_ru_punctuation_identity_survives_without_original_corpora(self):
@@ -30,7 +36,7 @@ class PublicControlSnapshotTest(unittest.TestCase):
         self.assertEqual(1800,len({k for e in entries for k in e['keys']}))
 
     def test_all_punctuation_articles_are_persisted_with_language_namespace(self):
-        entries=[e for e in self.ledger['entries'] if e['kind']=='punctuation']
+        entries=[e for e in self.ledger['entries'] if e['id'] in self.HISTORICAL_PUNCTUATION_IDS]
         self.assertEqual(3476,sum(len(e['articleKeys']) for e in entries))
         self.assertIn(article_key(dict(language='ru',article='4476020')),{k for e in entries for k in e['articleKeys']})
         self.assertTrue(all('articleKeys' not in e for e in self.ledger['entries'] if e['kind']=='protected'))
@@ -79,6 +85,49 @@ class PublicControlSnapshotTest(unittest.TestCase):
             assert_disjoint([punctuation], before, 'punctuation')
         with self.assertRaisesRegex(ValueError, '^CONTROL_SURFACE_OVERLAP$'):
             assert_disjoint([punctuation], self.ledger, 'punctuation')
+
+    def test_disclosed_registry_domain_labels_bind_both_replay_inputs(self):
+        entry, = [item for item in self.ledger['entries']
+                  if item['id'] == 'public-a4-cctld-rf-deletion-lists-20261124-25-v1']
+        frozen = json.dumps(entry, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+        self.assertEqual('2d6f7349ff94688f5d1077a95da65f3d09d51466603b31b3d75b776edc3d7015',
+                         hashlib.sha256(frozen).hexdigest())
+        self.assertEqual(506, entry['rowCount'])
+        self.assertEqual(506, len(entry['keys']))
+        self.assertEqual(506, len(entry['surfaceKeys']))
+        self.assertEqual({'cctld/RFDelList20261124.zip', 'cctld/RFDelList20261125.zip',
+                          'first-period.jsonl', 'full-domain-space.jsonl'}, set(entry['bindings']))
+
+    def test_followup_registry_domain_replay_excludes_labels_and_complete_names(self):
+        entry, = [item for item in self.ledger['entries']
+                  if item['id'] == 'public-a4-cctld-rf-deletion-lists-20261118-20-v1']
+        frozen = json.dumps(entry, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+        self.assertEqual('7eb983ab5e019e49ca04072f3cb39f8b31a3f6548f998af668b05d96ff16b128',
+                         hashlib.sha256(frozen).hexdigest())
+        self.assertEqual(113, entry['rowCount'])
+        self.assertEqual(113, len(entry['keys']))
+        self.assertEqual(226, len(entry['surfaceKeys']))
+
+    def test_law_enumeration_colons_bind_exact_contexts_only(self):
+        entry, = [item for item in self.ledger['entries']
+                  if item['id'] == 'public-a4-law79-enumeration-colons-v1']
+        frozen = json.dumps(entry, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+        self.assertEqual('d6ef33e48121e916d7b2a41335422c0303eea08141a929b5256a4b4fac253447',
+                         hashlib.sha256(frozen).hexdigest())
+        self.assertEqual(18, entry['rowCount'])
+        self.assertEqual(18, len(entry['keys']))
+        self.assertNotIn('surfaceKeys', entry)
+
+    def test_direct_speech_colons_bind_exact_contexts_only(self):
+        entry, = [item for item in self.ledger['entries']
+                  if item['id'] == 'public-a4-wikisource-direct-speech-colons-v1']
+        frozen = json.dumps(entry, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+        self.assertEqual('b7e51a8f0dd33d497a07e310bb6ba16eea870db9afb45c8c7a0fba046b2639ee',
+                         hashlib.sha256(frozen).hexdigest())
+        self.assertEqual(32, entry['rowCount'])
+        self.assertEqual(32, len(entry['keys']))
+        self.assertEqual({'inline': 30, 'nextParagraphDash': 2}, entry['sourceCapture'])
+        self.assertNotIn('surfaceKeys', entry)
 
     def test_archived_protected_matrices_match_every_persisted_key(self):
         directory=Path(__file__).with_name('frozen_sources')

@@ -394,6 +394,9 @@ class TypingSessionController internal constructor(
     var sentenceCapitalizationPending: Boolean = false
         private set
 
+    // Kept only between the two immediately adjacent letters of a possible .рф continuation.
+    private var pendingRfPeriod: UndoableTextEdit? = null
+
     internal fun awaitsRussianEraAbbreviationLetter(): Boolean =
         punctuationEvidence()?.let(MechanicalPunctuationPlanner::awaitsRussianEraAbbreviationLetter) == true
 
@@ -1969,6 +1972,7 @@ class TypingSessionController internal constructor(
     }
 
     fun deletePrevious(execute: (TypingEdit) -> Boolean): TypingTextResult {
+        pendingRfPeriod = null
         val isolated = privateIsolatedRange
         if (isolated != null) {
             val owned = EditorSelection(isolated.second, isolated.second, isolated.first, isolated.second)
@@ -2202,6 +2206,12 @@ class TypingSessionController internal constructor(
         if (text.isNotEmpty() && !finishPrivateIsolated(execute)) return TypingTextResult.REJECTED
         if (text.isNotEmpty()) expandedCandidateSnapshot = null
         if (externalWordBoundaryRequired) return typeText(text, execute)
+        if (text.equals("ф", ignoreCase = true)) restoreRfDomain(text, execute)?.let { return it }
+        val rfPeriod = state.lastAutoEdit?.takeIf {
+            text.equals("р", ignoreCase = true) && it.revision == state.revision &&
+                it.composingAfter == ComposingSegment(leadingBoundary = ".") &&
+                it.correction?.language == KeyboardLanguage.RUSSIAN
+        }
         if (text.isNotEmpty()) preparePreviousWordForText(text)
         val correction = applyBoundaryCorrection(text, policy, keyboard, autocorrectionMode, execute)
         if (correction != TypingTextResult.BYPASS) return correction
@@ -2213,6 +2223,10 @@ class TypingSessionController internal constructor(
         val transformed = applyPunctuation(action, policy, keyboard, execute)
         // An ineligible gesture follows the ordinary space path once, never the legacy converter.
         val result = if (transformed == TypingTextResult.BYPASS) typeText(text, execute) else transformed
+        if (result == TypingTextResult.HANDLED && rfPeriod != null && state.sessionId == rfPeriod.sessionId &&
+            state.revision == rfPeriod.revision + 1 && state.composing == ComposingSegment(".", text)) {
+            pendingRfPeriod = rfPeriod
+        }
         if (result == TypingTextResult.HANDLED && text.isNotEmpty() &&
             !text.codePoints().allMatch(::isWordCodePoint)) {
             if (completed.isNotEmpty()) {
@@ -2224,6 +2238,35 @@ class TypingSessionController internal constructor(
             resetPersonalContext()
         }
         return result
+    }
+
+    private fun restoreRfDomain(lastLetter: String, execute: (TypingEdit) -> Boolean): TypingTextResult? {
+        val edit = pendingRfPeriod ?: return null
+        pendingRfPeriod = null
+        val start = edit.committedStart ?: return null
+        val current = state.composing ?: return null
+        if (state.sessionId != edit.sessionId || state.revision != edit.revision + 1 ||
+            current.leadingBoundary != "." || !current.typedWord.equals("р", ignoreCase = true)) return null
+        val existing = edit.applied + current.typedWord
+        val owned = punctuationEvidence() ?: return null
+        if (selectionStart.toLong() != start.toLong() + existing.length || !owned.text.endsWith(existing)) return null
+
+        val next = current.copy(typedWord = current.typedWord + lastLetter)
+        val restored = edit.original + next.text
+        val end = start.toLong() + restored.length
+        if (end > Int.MAX_VALUE || restored.length > MAX_COMPOSING_UTF16) return null
+        val caret = end.toInt()
+        val nextStart = caret - next.text.length
+        remember(EditorSelection(selectionStart, selectionEnd, start, selectionEnd))
+        remember(EditorSelection(caret, caret, -1, -1))
+        return applyGuardedBatch(listOf(TypingEdit.SetComposingRegion(start, selectionEnd),
+            TypingEdit.CommitText(restored), TypingEdit.SetComposingRegion(nextStart, caret)),
+            EditorSelection(caret, caret, nextStart, caret), execute) {
+            check(context!!.replaceSuffix(existing, restored)) { "Domain restoration ownership mismatch" }
+            composingStart = nextStart
+            state = state.copy(composing = next, originalSelected = false)
+            publish()
+        }
     }
 
     /** Prepare SEND/GO/etc. from the last ready decision; never invent punctuation or wait. */
@@ -2612,6 +2655,7 @@ class TypingSessionController internal constructor(
     }
 
     private fun discardUndoState() {
+        pendingRfPeriod = null
         if (state.lastAutoEdit != null) state = state.copy(lastAutoEdit = null)
         sentenceCapitalizationPending = false
     }
@@ -2650,6 +2694,7 @@ class TypingSessionController internal constructor(
             candidatesStart == -1 && candidatesEnd == -1
         ) return false
 
+        pendingRfPeriod = null
         sentenceCapitalizationPending = false
         invalidateQualityComparison()
         resetPersonalContext()
@@ -2704,6 +2749,7 @@ class TypingSessionController internal constructor(
     }
 
     fun endSession() {
+        pendingRfPeriod = null
         privateIsolatedRange = null
         privateInput = false
         lateCompositionCleanupSession = null
@@ -2830,6 +2876,7 @@ class TypingSessionController internal constructor(
     }
 
     private fun disableSession() {
+        pendingRfPeriod = null
         privateIsolatedRange = null
         lateCompositionCleanupSession = null
         isolatedBoundaryCaret = null

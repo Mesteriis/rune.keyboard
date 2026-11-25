@@ -262,6 +262,27 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
     }
 
     @Test fun russianSentencePeriodCorrectsReadyWordAndBackspaceRestoresExactSource() {
+        typeRussianSentencePeriodWithReadyCorrection()
+        driver.tapDelete()
+        driver.awaitFieldText(FIELD, "смотруть")
+        assertTrue(awaitCandidate(R.string.candidate_original, "смотруть").isSelected)
+        noReadback()
+    }
+
+    @Test fun russianDomainContinuationRestoresLabelAfterReadyPeriodCorrection() {
+        typeRussianSentencePeriodWithReadyCorrection()
+        driver.tapKey("р")
+        driver.tapKey("ф")
+        driver.awaitFieldText(FIELD, "смотруть.рф")
+        driver.tapDelete()
+        driver.awaitFieldText(FIELD, "смотруть.р")
+        driver.tapKey("ф")
+        space()
+        driver.awaitFieldText(FIELD, "смотруть.рф ")
+        noReadback()
+    }
+
+    private fun typeRussianSentencePeriodWithReadyCorrection() {
         driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
             mechanical = false, doubleSpace = false)
         driver.launchComposingQa(language =
@@ -284,10 +305,6 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
 
         driver.tapKey(".")
         driver.awaitFieldText(FIELD, "смотреть.")
-        driver.tapDelete()
-        driver.awaitFieldText(FIELD, "смотруть")
-        assertTrue(awaitCandidate(R.string.candidate_original, "смотруть").isSelected)
-        noReadback()
     }
 
     @Test fun ambiguousInnStaysLowercaseBeforePeriod() {

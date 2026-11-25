@@ -286,12 +286,6 @@ jobs:
           python3 -m unittest discover -s tools/ci -p 'test_check_text_boundary_history.py' -v
           python3 -m unittest discover -s tools/ci -p 'test_historical_discovery.py' -v
           python3 tools/ci/check_text_boundary_history.py
-          python3 -m unittest discover -s tools/ci -p 'test_register_refinement_text_boundaries.py' -v
-          python3 tools/ci/register_refinement_text_boundaries.py --check
-          python3 -m unittest discover -s tools/ci -p 'test_register_epoch_text_boundaries.py' -v
-          python3 tools/ci/register_epoch_text_boundaries.py --check
-          python3 -m unittest discover -s tools/ci -p 'test_register_truncated_text_sources.py' -v
-          python3 tools/ci/register_truncated_text_sources.py --check
           python3 -m unittest discover -s tools/ci -p 'test_register_neighbor_prefix_compounds.py' -v
           python3 tools/ci/register_neighbor_prefix_compounds.py --check
           python3 -m unittest discover -s tools/ci -p 'test_register_retrieval_history.py' -v

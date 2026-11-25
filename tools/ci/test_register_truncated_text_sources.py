@@ -7,6 +7,11 @@ import unittest
 from unittest import mock
 
 import register_truncated_text_sources as subject
+import historical_discovery
+
+
+def load_tests(loader, tests, pattern):
+    return historical_discovery.isolated_suite('test_register_truncated_text_sources', tests)
 
 
 class TruncatedSourceRegistrationTest(unittest.TestCase):

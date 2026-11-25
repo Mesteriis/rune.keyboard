@@ -14,7 +14,14 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
 ARCHIVE = Path('tools/typing_experiments/retrieval-history-v1/sources')
+CONTROLLER = ('app/src/main/java/io/github/mesteriis/rune/keyboard/'
+              'smarttyping/session/SessionTextContext.kt')
 HELPERS = {
+    CONTROLLER: '8e6f6c82c113a0acfa4286a9de46518de732d408854da33c415740d504241643',
+    'tools/ci/historical_model_fixtures.py':
+        '450d752d42cbc4a1776909e4529e769a4dcc19a41462b848e68128f22edaa594',
+    'tools/ci/historical_model_sources.py':
+        '8e47cb5ee459ca4d4d415c32f69cb29cf9aa0cc6606d4fd4d068f0d7dff52a2a',
     'tools/typing_experiments/control_ledger.py':
         '2647503526a78fad3c31c27ec3739b9f3468a428072716f43c7b73c489872674',
     'tools/typing_experiments/independent_corpus_guard.py':
@@ -23,28 +30,30 @@ HELPERS = {
 
 
 EWT_SOURCE = 'historical-english-ewt-control-source-v1'
+VERIFIERS = ('shared_text_boundaries', 'all_text_boundaries',
+             'refinement_text_boundaries', 'epoch_text_boundaries', 'truncated_text_sources')
+
+
+def archived_path(name, digest):
+    if name == CONTROLLER:
+        return Path('tools/ci/historical-model-sources-v1/sources') / (digest + '.kt')
+    return ARCHIVE / (digest + '.txt')
 
 
 def project_control_ledger(path):
-    """Hide only the checked later source-only entry from the old schema."""
+    """Project source-only entries out of the archived control schema."""
     ledger = json.loads(path.read_bytes())
     entries = ledger.get('entries')
     if not isinstance(entries, list):
         raise ValueError('HISTORICAL_CONTROL_SCHEMA')
-    selected = [e for e in entries if isinstance(e, dict) and e.get('id') == EWT_SOURCE]
-    if not selected:
-        return False
-    if len(selected) != 1:
+    ewt = [e for e in entries if isinstance(e, dict) and e.get('id') == EWT_SOURCE]
+    if ewt and (len(ewt) != 1 or ewt[0].get('kind') != 'source'):
         raise ValueError('HISTORICAL_CONTROL_SOURCE')
-    item = selected[0]
-    keys = item.get('articleKeys')
-    if (item.get('kind') != 'source' or item.get('language') != 'en' or
-            item.get('rowCount') != 16622 or item.get('keys') != [] or
-            not isinstance(keys, list) or len(keys) != 1174 or keys != sorted(set(keys))):
-        raise ValueError('HISTORICAL_CONTROL_SOURCE')
-    ledger['entries'] = [e for e in entries if e is not item]
-    path.write_text(json.dumps(ledger, ensure_ascii=False, sort_keys=True, indent=2) + '\n')
-    return True
+    sources = [e for e in entries if isinstance(e, dict) and e.get('kind') == 'source']
+    if sources:
+        ledger['entries'] = [e for e in entries if not isinstance(e, dict) or e.get('kind') != 'source']
+        path.write_text(json.dumps(ledger, ensure_ascii=False, sort_keys=True, indent=2) + '\n')
+    return {e.get('id') for e in sources}
 
 
 @contextmanager
@@ -56,13 +65,17 @@ def historical_snapshot(root):
                         ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
         shutil.copytree(root / 'app/src/main', snapshot / 'app/src/main', symlinks=True)
         for name, digest in HELPERS.items():
-            raw = (snapshot / ARCHIVE / (digest + '.txt')).read_bytes()
+            raw = (snapshot / archived_path(name, digest)).read_bytes()
             if hashlib.sha256(raw).hexdigest() != digest:
                 raise ValueError('HISTORICAL_HELPER_MISMATCH:' + name)
             (snapshot / name).write_bytes(raw)
-        if project_control_ledger(snapshot / 'tools/typing_experiments/control-ledger.json'):
-            # Verify the complete live source-only entry before excluding it from
-            # the archived schema's temporary view. Never modify the live ledger.
+        omitted = project_control_ledger(snapshot / 'tools/typing_experiments/control-ledger.json')
+        if omitted:
+            # The old schema predates article-only rows. Validate the full live
+            # ledger before using the projection for historical checks only.
+            subprocess.run([sys.executable, str(root / 'tools/typing_experiments/control_ledger.py'),
+                            '--validate-only'], cwd=root, check=True)
+        if EWT_SOURCE in omitted:
             subprocess.run([sys.executable, str(root / 'tools/ci/register_ewt_control_source.py'), '--check'],
                            cwd=root, check=True)
         yield snapshot
@@ -70,13 +83,13 @@ def historical_snapshot(root):
 
 def verify(root):
     with historical_snapshot(root) as snapshot:
-        for suffix in ('shared', 'all'):
-            test = 'test_register_' + suffix + '_text_boundaries.py'
+        for verifier in VERIFIERS:
+            test = 'test_register_' + verifier + '.py'
             subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s',
                             str(snapshot / 'tools/ci'), '-p', test, '-v'],
                            cwd=snapshot, check=True)
             subprocess.run([sys.executable, str(snapshot / 'tools/ci' /
-                           ('register_' + suffix + '_text_boundaries.py')), '--check'],
+                           ('register_' + verifier + '.py')), '--check'],
                            cwd=snapshot, check=True)
 
         subprocess.run([sys.executable, str(snapshot / 'tools/typing_experiments' /

@@ -2224,6 +2224,43 @@ class CorrectionBoundaryTest {
         }
     }
 
+    @Test fun `continuous Russian domain entry restores the original label after a ready period correction`() {
+        for ((first, last) in listOf("р" to "ф", "Р" to "Ф")) {
+            val f = Fixture().apply { keyboard = KeyboardState(KeyboardLanguage.RUSSIAN) }
+            f.raw("адрес"); f.raw(" "); f.raw("смотруть"); f.publish("смотреть")
+            f.type(".")
+            assertEquals("адрес смотреть.", f.document)
+            f.type(first)
+            assertEquals(TypingTextResult.HANDLED, f.type(last))
+            assertEquals("адрес смотруть.$first$last", f.document)
+            assertNull(f.controller.state.lastAutoEdit)
+            f.undo()
+            assertEquals("адрес смотруть.$first", f.document)
+            f.type(last); f.type(" ")
+            assertEquals("адрес смотруть.$first$last ", f.document)
+            assertEquals(0, f.batchDepth)
+        }
+    }
+
+    @Test fun `Russian domain restoration expires after intervening input and never retries a rejected commit`() {
+        fun afterFirstLetter() = Fixture().apply {
+            keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+            raw("смотруть"); publish("смотреть"); type("."); type("р")
+        }
+        val later = afterFirstLetter()
+        later.type("я"); later.type("ф")
+        assertEquals("смотреть.ряф", later.document)
+
+        val rejected = afterFirstLetter()
+        rejected.fail = "commitText"
+        rejected.calls.clear()
+        assertEquals(TypingTextResult.REJECTED, rejected.type("ф"))
+        assertEquals("смотреть.р", rejected.document)
+        assertEquals(1, rejected.calls.count { it == "commitText" })
+        assertFalse(rejected.controller.state.enabled)
+        assertEquals(0, rejected.batchDepth)
+    }
+
     @Test fun `reentrant candidate policy invalidation stops batch and never publishes its Undo`() {
         for (stage in listOf("beginBatchEdit", "commitText", "endBatchEdit")) {
             val f = Fixture(); f.raw("helllo"); f.publish("hello")

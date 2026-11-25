@@ -7,6 +7,11 @@ import unittest
 from unittest import mock
 
 import register_epoch_text_boundaries as subject
+import historical_discovery
+
+
+def load_tests(loader, tests, pattern):
+    return historical_discovery.isolated_suite('test_register_epoch_text_boundaries', tests)
 
 
 class EpochTextBoundaryRegistrationTest(unittest.TestCase):

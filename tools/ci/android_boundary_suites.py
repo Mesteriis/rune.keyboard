@@ -72,6 +72,7 @@ GENERAL_REQUIRED={
     (QA+'LiveCandidatesInstrumentedTest','canonicalCaseAutoReplacesOnBoundaryAndBackspaceRestoresOriginal'),
     (QA+'LiveCandidatesInstrumentedTest','russianAlpAbbreviationStaysLowercaseAtAllBoundaries'),
     (QA+'LiveCandidatesInstrumentedTest','russianDomainLabelStaysExactAtAllBoundaries'),
+    (QA+'LiveCandidatesInstrumentedTest','russianDomainContinuationRestoresLabelAfterReadyPeriodCorrection'),
     (QA+'LiveCandidatesInstrumentedTest','englishIAfterInternalApostropheIsNotSuggested'),
     (QA+'LiveCandidatesInstrumentedTest','languageSwitchFailureReportsDisabledTarget'),
     *((QA+'EditingPanelInstrumentedTest',name) for name in (
