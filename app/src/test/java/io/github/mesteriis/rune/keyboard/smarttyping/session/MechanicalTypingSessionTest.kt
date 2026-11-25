@@ -114,6 +114,40 @@ class MechanicalTypingSessionTest {
         }
     }
 
+    @Test fun `mechanical sentence case preserves the Russian era abbreviation`() {
+        for (prefix in listOf("Это было до н. ", "В 536 году н. ", "1 году н. ")) {
+            val abbreviation = Fixture()
+            abbreviation.rawSequence(prefix)
+            assertTrue(abbreviation.controller.awaitsRussianEraAbbreviationLetter())
+            abbreviation.type("э")
+            assertFalse(abbreviation.controller.awaitsRussianEraAbbreviationLetter())
+            assertEquals(prefix + "э", abbreviation.document)
+            assertNull(abbreviation.controller.state.lastAutoEdit)
+            abbreviation.type(".")
+            assertEquals(prefix + "э.", abbreviation.document)
+            abbreviation.undo()
+            assertEquals(prefix + "э", abbreviation.document)
+            assertEquals(0, abbreviation.reads)
+        }
+
+        val sentence = Fixture()
+        sentence.rawSequence("Это я. ")
+        assertFalse(sentence.controller.awaitsRussianEraAbbreviationLetter())
+        sentence.type("э")
+        assertEquals("Это я. Э", sentence.document)
+        sentence.undo()
+        assertEquals("Это я. э", sentence.document)
+        assertEquals(0, sentence.reads)
+
+        for (prefix in listOf("В 536 г. ", "В x536 году н. ", "В 12345 году н. ")) {
+            val ordinary = Fixture()
+            ordinary.rawSequence(prefix)
+            assertFalse(prefix, ordinary.controller.awaitsRussianEraAbbreviationLetter())
+            ordinary.type("э")
+            assertEquals(prefix + "Э", ordinary.document)
+        }
+    }
+
     @Test fun `space before comma and missing after use one replacement each`() {
         val f = Fixture(); f.type("hello"); f.type(" "); f.calls.clear()
         f.type(","); assertEquals(listOf("set"), f.calls); assertEquals(",", f.sent.last())

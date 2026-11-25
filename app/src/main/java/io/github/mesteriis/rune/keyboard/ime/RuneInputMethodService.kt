@@ -736,6 +736,10 @@ class RuneInputMethodService : InputMethodService() {
             editor = editorContext,
             hasComposingWord = !typingSession.state.composing?.typedWord.isNullOrEmpty(),
             ownedSentenceBoundary = typingSession.sentenceCapitalizationPending,
+            suppressSentenceCaps = {
+                settings.mechanicalPunctuation && candidate.language == KeyboardLanguage.RUSSIAN &&
+                    typingSession.awaitsRussianEraAbbreviationLetter()
+            },
         ) { currentInputConnection?.getCursorCapsMode(editorContext.inputType) }
 
     private fun renderKeyboard() {

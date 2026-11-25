@@ -82,9 +82,23 @@ class MechanicalCapitalizationStateTest {
         val private = EditorContext.from(1, android.view.inputmethod.EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING)
         val noReads = { throw AssertionError("Private field must not query caps") }
         assertEquals(ShiftMode.AUTO, KeyboardSessionPolicy.withAutomaticCapitalization(state, private,
-            false, true, noReads).shiftMode)
+            false, true, readCursorCapsMode = noReads).shiftMode)
         assertEquals(ShiftMode.OFF, KeyboardSessionPolicy.withAutomaticCapitalization(state, private,
-            false, false, noReads).shiftMode)
+            false, false, readCursorCapsMode = noReads).shiftMode)
+    }
+
+    @Test fun `owned abbreviation suppresses only automatic sentence caps`() {
+        val state = KeyboardState.initial(KeyboardLanguage.RUSSIAN, automaticCapitalization = true)
+        val editor = EditorContext.from(1 or android.text.TextUtils.CAP_MODE_SENTENCES, 0)
+        fun caps(keyboard: KeyboardState, mode: Int, abbreviation: Boolean) =
+            KeyboardSessionPolicy.withAutomaticCapitalization(keyboard, editor, false, false,
+                suppressSentenceCaps = { abbreviation }) { mode }.shiftMode
+
+        assertEquals(ShiftMode.OFF, caps(state, android.text.TextUtils.CAP_MODE_SENTENCES, true))
+        assertEquals(ShiftMode.AUTO, caps(state, android.text.TextUtils.CAP_MODE_SENTENCES, false))
+        assertEquals(ShiftMode.AUTO, caps(state, android.text.TextUtils.CAP_MODE_WORDS, true))
+        val manualShift = KeyboardState(KeyboardLanguage.RUSSIAN).onShiftPressed(1)
+        assertEquals(ShiftMode.ONCE, caps(manualShift, android.text.TextUtils.CAP_MODE_SENTENCES, true))
     }
 
     @Test fun `gesture consumes old lowercase suppression before priming next action`() {

@@ -102,7 +102,8 @@ GENERAL_REQUIRED={
         'decimalVersionAndHostnameKeepOwnedBoundariesWithoutLayerChanges',
         'cachedMechanicalTogglePreservesHeldKeyInstancesAndNextInputUndo',
         'commaPopupPunctuationCapsAndImmediateUndoNeverReplayOldWord',
-        'commandDotKeepsItsSeparatorAcrossBoundaryAndOrdinaryBackspace')),
+        'commandDotKeepsItsSeparatorAcrossBoundaryAndOrdinaryBackspace',
+        'russianEraAbbreviationKeepsLowercaseInSentenceCapsEditor')),
 }
 
 

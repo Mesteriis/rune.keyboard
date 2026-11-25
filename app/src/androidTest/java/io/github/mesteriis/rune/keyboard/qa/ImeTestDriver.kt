@@ -300,7 +300,7 @@ class ImeTestDriver private constructor(private val packageName: String) {
     }
 
     fun launchComposingQa(mode: String = "accept", language: KeyboardLanguage = KeyboardLanguage.ENGLISH) {
-        require(mode in setOf("accept", "reject", "drop", "private", "raw", "password", "email", "url", "multiline",
+        require(mode in setOf("accept", "reject", "drop", "private", "raw", "password", "email", "url", "multiline", "sentence_caps",
             "number", "phone", "date_time", "no_suggestions", "private_no_suggestions", "autocomplete", "filter",
             "callback_trace", "selection_then_composition", "selection_then_composition_diagnostics"))
         val launched = shell("am start -W -f 0x10008000 -n $qaActivity --es qa_composing_fixture $mode")

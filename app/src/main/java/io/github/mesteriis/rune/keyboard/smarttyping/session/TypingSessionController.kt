@@ -394,6 +394,9 @@ class TypingSessionController internal constructor(
     var sentenceCapitalizationPending: Boolean = false
         private set
 
+    internal fun awaitsRussianEraAbbreviationLetter(): Boolean =
+        punctuationEvidence()?.let(MechanicalPunctuationPlanner::awaitsRussianEraAbbreviationLetter) == true
+
     private var context: SessionTextContext? = null
     // Numeric proof of the known palette delimiter; never a synthetic context character.
     private var isolatedBoundaryCaret: Int? = null

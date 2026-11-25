@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import io.github.mesteriis.rune.keyboard.R
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -123,6 +124,32 @@ class MechanicalPunctuationInstrumentedTest : ImeTestBase() {
         driver.awaitFieldText(FIELD, "find . w")
         driver.tapDelete(); driver.awaitFieldText(FIELD, "find . ")
         driver.tapDelete(); driver.awaitFieldText(FIELD, "find .")
+        noReadback()
+    }
+
+    @Test fun russianEraAbbreviationKeepsLowercaseInSentenceCapsEditor() {
+        driver.configureMechanicalPunctuation(mechanical = true, doubleSpace = false)
+        driver.setNumberRowThroughSettings(enabled = true)
+        driver.launchComposingQa(mode = "sentence_caps", language = KeyboardLanguage.RUSSIAN)
+        word("До"); space(); word("н"); driver.tapKey("."); space()
+        driver.awaitFieldText(FIELD, "До н. ")
+        driver.tapKey("э"); driver.tapKey(".")
+        driver.awaitFieldText(FIELD, "До н. э.")
+        driver.tapDelete(); driver.awaitFieldText(FIELD, "До н. э")
+        noReadback()
+
+        driver.launchComposingQa(mode = "sentence_caps", language = KeyboardLanguage.RUSSIAN)
+        word("В"); space(); word("536"); space(); word("году"); space(); word("н"); driver.tapKey("."); space()
+        driver.awaitFieldText(FIELD, "В 536 году н. ")
+        driver.tapKey("э"); driver.tapKey(".")
+        driver.awaitFieldText(FIELD, "В 536 году н. э.")
+        driver.tapDelete(); driver.awaitFieldText(FIELD, "В 536 году н. э")
+        noReadback()
+
+        driver.launchComposingQa(mode = "sentence_caps", language = KeyboardLanguage.RUSSIAN)
+        word("Это"); space(); word("я"); driver.tapKey("."); space()
+        driver.tapKey("Э")
+        driver.awaitFieldText(FIELD, "Это я. Э")
         noReadback()
     }
 
