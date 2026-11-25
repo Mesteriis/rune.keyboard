@@ -366,6 +366,7 @@ class BoundarySuitePlanTest(unittest.TestCase):
             ('EmojiPanelInstrumentedTest', 'privateEmojiDroppedCompositionKeepsEmojiAndNextInput'),
             ('ImeLifecycleInstrumentedTest', 'backspaceRepeatStopsWhenImeViewDetaches'),
             ('LiveCandidatesInstrumentedTest', 'canonicalCaseAutoReplacesOnBoundaryAndBackspaceRestoresOriginal'),
+            ('LiveCandidatesInstrumentedTest', 'russianDomainLabelStaysExactAtAllBoundaries'),
             ('LiveCandidatesInstrumentedTest', 'languageSwitchFailureReportsDisabledTarget'),
         ):
             self.assertIn((suites.QA+cls, method), suites.GENERAL_REQUIRED)

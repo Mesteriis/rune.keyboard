@@ -210,13 +210,21 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
     }
 
     @Test fun russianAlpAbbreviationStaysLowercaseAtAllBoundaries() {
+        assertRussianOriginalAtAllBoundaries("альп", "Альп")
+    }
+
+    @Test fun russianDomainLabelStaysExactAtAllBoundaries() {
+        assertRussianOriginalAtAllBoundaries("яокб", "якоб")
+    }
+
+    private fun assertRussianOriginalAtAllBoundaries(original: String, suggestion: String) {
         driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
             mechanical = false, doubleSpace = false)
         for (boundary in listOf(" ", ".", ":")) {
             driver.launchComposingQa(language = KeyboardLanguage.RUSSIAN)
-            for (character in "альп") driver.tapKey(character.toString(), character.uppercase())
-            driver.awaitFieldText(FIELD, "альп")
-            awaitCandidate(R.string.candidate_correction, "Альп")
+            for (character in original) driver.tapKey(character.toString(), character.uppercase())
+            driver.awaitFieldText(FIELD, original)
+            awaitCandidate(R.string.candidate_correction, suggestion)
             when (boundary) {
                 " " -> space()
                 ":" -> {
@@ -226,9 +234,9 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
                 }
                 else -> driver.tapKey(boundary)
             }
-            driver.awaitFieldText(FIELD, "альп$boundary")
+            driver.awaitFieldText(FIELD, "$original$boundary")
             driver.tapDelete()
-            driver.awaitFieldText(FIELD, "альп")
+            driver.awaitFieldText(FIELD, original)
             noReadback()
         }
     }
