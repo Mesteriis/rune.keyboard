@@ -2058,6 +2058,22 @@ class CorrectionBoundaryTest {
         assertEquals("I", f.document)
     }
 
+    @Test fun `english i distinguishes dotted tokens from sentence starts`() {
+        for ((prefix, expectSuggestion) in listOf("obj." to false, "sample." to false,
+            "1." to false, "yes. " to true, "yes \"" to true)) {
+            val f = Fixture(qualified = true)
+            f.keyboard = KeyboardState(KeyboardLanguage.ENGLISH)
+            prefix.forEach { f.raw(it.toString()) }
+            f.raw("i")
+            val reply = f.canonicalReply("I", unambiguous = false, eligible = false)
+            assertEquals(prefix, expectSuggestion, f.controller.acceptCandidates(reply))
+            assertEquals(prefix, expectSuggestion, f.controller.candidateViewState.candidates.any { it.text == "I" })
+            assertEquals(TypingTextResult.HANDLED, f.type(" "))
+            assertEquals("${prefix}i ", f.document)
+            assertNull(f.controller.state.lastAutoEdit)
+        }
+    }
+
     @Test fun `canonical case auto replaces on boundary and Undo restores lowercase original`() {
         val f = Fixture(qualified = false)
         f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)

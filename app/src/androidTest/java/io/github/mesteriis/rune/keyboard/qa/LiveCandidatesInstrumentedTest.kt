@@ -99,6 +99,23 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
         noReadback()
     }
 
+    @Test fun englishIDistinguishesDottedTokensFromSentenceStarts() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa()
+        "obj.i".forEach { driver.tapKey(it.toString(), it.uppercase()) }
+        driver.awaitFieldText(FIELD, "obj.i")
+        val correction = By.desc(description(R.string.candidate_correction, "I"))
+        assertTrue(!driver.device.wait(Until.hasObject(correction), 3_000))
+        driver.tapKey(".")
+        space()
+        driver.tapKey("i", "I")
+        driver.awaitFieldText(FIELD, "obj.i. i")
+        awaitCandidate(R.string.candidate_correction, "I").click()
+        driver.awaitFieldText(FIELD, "obj.i. I")
+        noReadback()
+    }
+
     @Test fun shortRussianCorrectionPreviewAndUndoPreserveTheNextWord() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         assertTrue(context.getSharedPreferences(ImeTestDriver.PREFERENCES_NAME, android.content.Context.MODE_PRIVATE)

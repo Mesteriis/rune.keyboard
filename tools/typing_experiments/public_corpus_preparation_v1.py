@@ -13,15 +13,18 @@ import re
 import control_ledger as control
 import english_family_keys
 import ewt_surface_exclusions_v1 as english_surfaces
-from holdout_ledger import keys_for,load_ledger,validate_ledger,require_source_segment
+from holdout_ledger import keys_for,load_ledger,validate_ledger,require_source_segment,source_segment_hash
 from recover_legacy_families import sha
 from source_identities import unsupported_surface_key
 
-TASKS=('spelling','punctuation','protected')
+TASKS=('spelling','punctuation','protected','english-pronoun')
 APOSTROPHES="'’ʼ"
 WIKISOURCE = 'wikimedia/wikisource'
 WIKISOURCE_PAGE = re.compile(r'wikisource:([1-9][0-9]{0,19})\Z')
 WIKISOURCE_REVISION = re.compile(r'[1-9][0-9]{0,19}\Z')
+ANCORA_REPOSITORIES = {'ud-catalan-ancora': 'ca', 'ud-spanish-ancora': 'es'}
+ANCORA_DOCUMENT = re.compile(r'ancora:([A-Za-z0-9_-]{1,80})\Z')
+GIT_REVISION = re.compile(r'[0-9a-f]{40}\Z')
 
 
 def wikisource_page_key(row):
@@ -117,18 +120,87 @@ def verify_historical_registry_bindings_v1(report,lexical_path,control_path):
     return expected
 
 
+def ancora_document_key(row):
+    repository = row.get('sourceRepository')
+    language = ANCORA_REPOSITORIES.get(repository) if isinstance(repository, str) else None
+    article, revision = row.get('article'), row.get('sourceRevision')
+    if (language is None or language != row.get('sourceLanguage') or
+            not isinstance(article, str) or not ANCORA_DOCUMENT.fullmatch(article) or
+            not isinstance(revision, str) or not GIT_REVISION.fullmatch(revision)):
+        raise ValueError('ancora-source-document')
+    identity = ['rune-public-ancora-document-v1', repository, article.removeprefix('ancora:')]
+    return hashlib.sha256(json.dumps(identity, separators=(',', ':')).encode()).hexdigest()
+
+
+def pronoun_source_sentence(row):
+    """Verify a proposal's typed occurrence against its public source sentence."""
+    text, offset = row.get('sourceText'), row.get('sourceOffset')
+    target = row.get('expectedSpelling')
+    if (row.get('split') != 'holdout' or row.get('language') not in ('en', 'es') or
+            row.get('typed') != 'i' or target not in ('i', 'I') or
+            (target == 'I' and (row['language'] != 'en' or row.get('sourceLanguage') != 'en'))):
+        raise ValueError('pronoun-label-schema')
+    if (not isinstance(text, str) or type(offset) is not int or not 0 <= offset < len(text) or
+            text[offset] != 'i' or row.get('prefix') != text[:offset].removesuffix(' ')):
+        raise ValueError('pronoun-source-occurrence')
+    left, right = text[offset - 1:offset], text[offset + 1:offset + 2]
+    if left.isalnum() or right.isalnum():
+        raise ValueError('pronoun-source-occurrence')
+    opens_quote = left in ('"', '“', "'", '‘') and (offset == 1 or text[offset - 2].isspace())
+    if target == 'I' and (
+            (left and not (left.isspace() or opens_quote)) or
+            (right and not (right.isspace() or right in ',!?;:'))):
+        raise ValueError('pronoun-capitalization-boundary')
+    return source_segment_hash(text)
+
+
+def collect_pronoun_keys(row, lexical_keys, control_keys):
+    sentence_hash = pronoun_source_sentence(row)
+    repository = row.get('sourceRepository')
+    if repository in tuple(ANCORA_REPOSITORIES):
+        article = ancora_document_key(row)
+        lexical_keys['article'].add(article)
+    else:
+        if (repository not in ('ud-english-ewt', 'tatoeba', 'wikimedia/wikipedia') or
+                row.get('sourceLanguage') not in control.LANGUAGES):
+            raise ValueError('pronoun-source-repository')
+        source = row | {'language': row['sourceLanguage']}
+        article = control.article_key(source)
+        lexical_keys['article'].update(keys_for([source], 'article'))
+    lexical_keys['sentence'].update(keys_for([dict(contextHash=sentence_hash,
+        sourceSegmentHash=sentence_hash)], 'sentence'))
+    lexical_keys['context'].update(keys_for([row], 'context'))
+    control_keys['article'].add(article)
+    for layout, spelling in itertools.product(('en', 'es'), ('i', 'I')):
+        context = dict(language=layout, prefix=row['prefix'], typed=spelling,
+                       currentWord=spelling, expectedBoundary=' ')
+        control_keys['regression'].add(control.key_for(context, 'regression'))
+        if context['prefix']:
+            for kind in ('protected', 'punctuation'):
+                control_keys[kind].add(control.key_for(context, kind))
+
+
 def preflight(rows,task,lexical,controls,profile='new-sentences'):
     validate_ledger(lexical);control.validate(controls)
-    if task not in TASKS or profile not in ('new-sentences','new-families'):raise ValueError('PREPARATION_SCOPE')
+    pronoun = task == 'english-pronoun'
+    if (task not in TASKS or profile not in ('new-sentences','new-families') or
+            (pronoun and profile != 'new-sentences')):raise ValueError('PREPARATION_SCOPE')
     if not isinstance(rows,list) or not rows:raise ValueError('PREPARATION_EMPTY_ROWS')
     lexical_overlap={k:0 for k in ('article','sentence','context','family')}
     control_overlap={k:0 for k in ('article','punctuation','protected','regression','surface')}
     errors=set();seen=set();lex_keys={k:set() for k in lexical_overlap};control_keys={k:set() for k in control_overlap};surface_keys=set()
-    unsupported=set();english_surface_keys=set()
+    unsupported=set();english_surface_keys=set();pronoun_surfaces=set()
     for row in rows:
         if not isinstance(row,dict):errors.add('row-schema');continue
         if not isinstance(row.get('id'),str) or not row['id'] or row['id'] in seen:errors.add('row-id')
         else:seen.add(row['id'])
+        if pronoun:
+            try:
+                collect_pronoun_keys(row, lex_keys, control_keys)
+                pronoun_surfaces.add(control.surface_key(row['language'], row['typed']))
+            except ValueError as error:
+                errors.add(str(error))
+            continue
         language=row.get('language');target=row.get('currentWord') if task=='punctuation' else row.get('expectedSpelling',row.get('typed'))
         typed=row.get('typed',target)
         for token in (typed,target):
@@ -209,7 +281,8 @@ def preflight(rows,task,lexical,controls,profile='new-sentences'):
     for kind in ('punctuation','protected','regression'):
         blocked={k for e in controls['entries'] if e['kind']==kind for k in e['keys']}
         control_overlap[kind]=len(control_keys[kind]&blocked)
-    control_overlap['surface']=len(control_keys['surface']&{k for e in controls['entries'] for k in e.get('surfaceKeys',[])})
+    blocked_control_surfaces={k for e in controls['entries'] for k in e.get('surfaceKeys',[])}
+    control_overlap['surface']=len(control_keys['surface']&blocked_control_surfaces)
     articles={k for e in controls['entries'] for k in e.get('articleKeys',[])}
     control_overlap['article']=len(control_keys['article']&articles)
     punctuation=[e for e in controls['entries'] if e['kind']=='punctuation']
@@ -219,10 +292,13 @@ def preflight(rows,task,lexical,controls,profile='new-sentences'):
     overlap=any(lexical_overlap.values()) or any(control_overlap.values()) or bool(unsupported_targets) or bool(english_surface_overlap)
     complete=lexical['coverage']['complete'] and controls['coverageComplete'] and article_coverage and not unsupported
     status='BLOCKED_OVERLAP' if overlap else 'BLOCKED_IDENTITIES' if errors else 'BLOCKED_COVERAGE' if not complete else 'READY_TO_FREEZE'
-    return dict(status=status,task=task,profile=profile,rows=len(rows),lexicalOverlaps=lexical_overlap,controlOverlaps=control_overlap,unsupportedTargetOverlaps=unsupported_targets,
+    result = dict(status=status,task=task,profile=profile,rows=len(rows),lexicalOverlaps=lexical_overlap,controlOverlaps=control_overlap,unsupportedTargetOverlaps=unsupported_targets,
         identityErrors=sorted(errors),unsupportedLexicalLanguages=sorted(unsupported),englishSourceSurfaceOverlaps=english_surface_overlap,
         lexicalCoverageComplete=lexical['coverage']['complete'],controlCoverageComplete=controls['coverageComplete'],
         controlArticleCoverage=article_coverage,modelQualityQualified=False,sourceLabelsQualified=False)
+    if pronoun:
+        result['fixedTargetSurfaceOverlaps'] = len(pronoun_surfaces & blocked_control_surfaces)
+    return result
 
 
 def prepare(rows_path,manifest_path,output,task,lexical_path,controls_path,profile='new-sentences'):
@@ -259,7 +335,7 @@ def prepare(rows_path,manifest_path,output,task,lexical_path,controls_path,profi
 
 def cli(task=None):
     parser=argparse.ArgumentParser(description=__doc__)
-    if task is None:parser.add_argument('--kind',choices=('punctuation','protected'),required=True)
+    if task is None:parser.add_argument('--kind',choices=('punctuation','protected','english-pronoun'),required=True)
     parser.add_argument('--rows',type=Path,required=True);parser.add_argument('--source-manifest',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--lexical-ledger',type=Path,default=Path(__file__).with_name('holdout-ledger.json'))

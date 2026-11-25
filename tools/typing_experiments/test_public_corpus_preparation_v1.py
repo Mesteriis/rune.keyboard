@@ -7,7 +7,7 @@ import unittest
 from types import SimpleNamespace
 from control_ledger import SCHEMA,key_for,article_key
 from holdout_ledger import keys_for,source_segment_hash,require_source_segment
-from public_corpus_preparation_v1 import (preflight,prepare,registry_bindings,registry_bindings_v1,
+from public_corpus_preparation_v1 import (ancora_document_key,preflight,prepare,registry_bindings,registry_bindings_v1,
     verify_registry_bindings,verify_historical_registry_bindings_v1,WIKISOURCE,wikisource_page_key)
 from test_holdout_ledger import ledger
 from source_identities import unsupported_surface_key
@@ -17,6 +17,13 @@ from joint_exclusion_inputs import canonical_registry_parts
 def candidate(**changes):
     return dict(id='new',language='ru',article='999999999',families=['пробный'],contextHash='0'*64,sourceSegmentHash='f'*64,
                 prefix='Новый контекст проверки',typed='пробный',expectedSpelling='пробный')|changes
+
+
+def pronoun_candidate(**changes):
+    return dict(id='pronoun', split='holdout', language='en', sourceLanguage='en',
+                sourceRepository='ud-english-ewt', article='ewt:fixture-document',
+                sourceText='Yesterday i walked home', sourceOffset=10, prefix='Yesterday',
+                typed='i', expectedSpelling='I') | changes
 
 
 def controls():
@@ -29,6 +36,116 @@ def controls():
 
 
 class PreparationGateTest(unittest.TestCase):
+    def test_ancora_document_exclusion_survives_revision_and_layout_changes(self):
+        base = pronoun_candidate(sourceRepository='ud-catalan-ancora', sourceLanguage='ca',
+            article='ancora:sample-document', sourceRevision='a'*40, expectedSpelling='i')
+        key = ancora_document_key(base)
+        lex = ledger(False)
+        lex['entries'][0]['keys']['article'] = [key]
+        registry = controls()
+        registry['entries'][0]['articleKeys'] = [key]
+        row = base | dict(sourceRevision='b'*40, language='es')
+        result = preflight([row], 'english-pronoun', lex, registry)
+        self.assertEqual('BLOCKED_OVERLAP', result['status'])
+        self.assertEqual([], result['identityErrors'])
+        self.assertEqual(1, result['lexicalOverlaps']['article'])
+        self.assertEqual(1, result['controlOverlaps']['article'])
+        other_repo = row | dict(sourceRepository='ud-spanish-ancora', sourceLanguage='es')
+        self.assertNotEqual(key, ancora_document_key(other_repo))
+        for mutation in (dict(sourceLanguage='en'), dict(sourceRevision='b'), dict(article='123')):
+            malformed = preflight([row | mutation], 'english-pronoun', lex, registry)
+            self.assertEqual('BLOCKED_IDENTITIES', malformed['status'])
+            self.assertIn('ancora-source-document', malformed['identityErrors'])
+
+    def test_ancora_registration_binds_source_bytes_and_keeps_one_document_across_sentences(self):
+        from unittest.mock import patch
+        import register_ancora_exposure as registration
+        raw = (b'# newdoc id = fixture\n# sent_id = f1\n# text = First i second\n\n'
+               b'# sent_id = f2\n# text = Second i first\n')
+        source = ('Catalan', 'a'*40, hashlib.sha256(raw).hexdigest(), 1, 2)
+        with patch.dict(registration.SOURCES, {'ca':source}):
+            control_entry, lexical_entry = registration.entries('ca', raw)
+            self.assertEqual(2, control_entry['rowCount'])
+            self.assertEqual(control_entry['articleKeys'], lexical_entry['keys']['article'])
+            self.assertEqual(1, len(control_entry['articleKeys']))
+            self.assertEqual(4, len(lexical_entry['keys']['sentence']))
+            with self.assertRaisesRegex(ValueError, 'ANCORA_EXPOSURE_SOURCE_HASH'):
+                registration.entries('ca', raw + b'\n')
+
+    def test_english_pronoun_reports_fixed_surface_without_waiving_coverage(self):
+        from control_ledger import surface_key
+        registry = controls()
+        registry['entries'][1]['surfaceKeys'] = [surface_key('en', 'I')]
+        row = pronoun_candidate()
+        report = preflight([row], 'english-pronoun', ledger(False), registry)
+        self.assertEqual('BLOCKED_COVERAGE', report['status'])
+        self.assertEqual([], report['identityErrors'])
+        self.assertEqual(1, report['fixedTargetSurfaceOverlaps'])
+        self.assertEqual(0, report['controlOverlaps']['surface'])
+        generic = preflight([row | dict(noAuto=True, cohort='protected', expectedCandidate=0,
+            candidates=[' i'])], 'protected', ledger(False), registry)
+        self.assertEqual('BLOCKED_OVERLAP', generic['status'])
+        self.assertEqual(1, generic['controlOverlaps']['surface'])
+
+    def test_english_pronoun_checks_source_across_layouts_and_sentences_across_repositories(self):
+        row = pronoun_candidate(language='es', expectedSpelling='i')
+        source = row | {'language': 'en', 'sentenceHash': source_segment_hash(row['sourceText'])}
+        lex = ledger(False)
+        lex['entries'].append(dict(id='pronoun-source', usage='historical-source-exclusion',
+            bindings={'fixture': 'd'*64}, keys={axis: sorted(keys_for([source], axis))
+            for axis in ('article', 'sentence')}, missingAxes=[]))
+        registry = controls()
+        registry['entries'].append(dict(id='pronoun-source', kind='source', language='en', rowCount=1,
+            bindings={'fixture': 'd'*64}, articleKeys=[article_key(source)], keys=[]))
+        report = preflight([row], 'english-pronoun', lex, registry)
+        self.assertEqual([], report['identityErrors'])
+        self.assertEqual(1, report['lexicalOverlaps']['article'])
+        self.assertEqual(1, report['controlOverlaps']['article'])
+        renamed = row | dict(sourceRepository='wikimedia/wikipedia', article='314159265',
+            sourceText='yesterday i WALKED home', prefix='yesterday')
+        report = preflight([renamed], 'english-pronoun', lex, registry)
+        self.assertEqual('BLOCKED_OVERLAP', report['status'])
+        self.assertEqual(1, report['lexicalOverlaps']['sentence'])
+        self.assertEqual(0, report['lexicalOverlaps']['article'])
+
+    def test_english_pronoun_preserve_checks_uppercase_context_on_other_layout(self):
+        row = pronoun_candidate(expectedSpelling='i', language='es')
+        registry = controls()
+        for kind in ('protected', 'regression', 'punctuation'):
+            key_row = dict(language='en', prefix=row['prefix'], typed='I', currentWord='I', expectedBoundary=', ')
+            registry['entries'].append(dict(id='disclosed-'+kind, kind=kind, language='en',
+                rowCount=1, bindings={'fixture': 'd'*64}, keys=[key_for(key_row, kind)]))
+        lex = ledger(False)
+        lex['entries'][0]['keys']['context'] = sorted(keys_for([row | {'expectedSpelling': 'I'}], 'context'))
+        report = preflight([row], 'english-pronoun', lex, registry)
+        self.assertEqual('BLOCKED_OVERLAP', report['status'])
+        self.assertEqual(1, report['lexicalOverlaps']['context'])
+        for kind in ('protected', 'regression', 'punctuation'):
+            self.assertEqual(1, report['controlOverlaps'][kind])
+
+    def test_english_pronoun_requires_bound_occurrence_and_narrow_label(self):
+        for changes, reason in (
+            (dict(prefix='Forged'), 'pronoun-source-occurrence'),
+            (dict(sourceOffset=True), 'pronoun-source-occurrence'),
+            (dict(sourceText='Yesterday iwalked'), 'pronoun-source-occurrence'),
+            (dict(typed='it'), 'pronoun-label-schema'),
+            (dict(language='es'), 'pronoun-label-schema'),
+            (dict(sourceLanguage='es'), 'pronoun-label-schema'),
+            (dict(split='train'), 'pronoun-label-schema'),
+            (dict(sourceRepository='unregistered'), 'pronoun-source-repository'),
+            (dict(sourceText='Yesterday i.e. today'), 'pronoun-capitalization-boundary'),
+        ):
+            with self.subTest(changes=changes):
+                result = preflight([pronoun_candidate(**changes)], 'english-pronoun', ledger(False), controls())
+                self.assertEqual('BLOCKED_IDENTITIES', result['status'])
+                self.assertIn(reason, result['identityErrors'])
+        for row in (pronoun_candidate(sourceText='i want this', sourceOffset=0, prefix=''),
+                    pronoun_candidate(sourceText='“i want this', sourceOffset=1, prefix='“'),
+                    pronoun_candidate(sourceText='obj.i is set', sourceOffset=4, prefix='obj.', expectedSpelling='i')):
+            self.assertEqual([], preflight([row], 'english-pronoun', ledger(False), controls())['identityErrors'])
+        with self.assertRaisesRegex(ValueError, 'PREPARATION_SCOPE'):
+            preflight([pronoun_candidate()], 'english-pronoun', ledger(False), controls(), 'new-families')
+
     def test_source_selector_projection_reaches_both_registry_checks(self):
         import re
         from unittest.mock import patch

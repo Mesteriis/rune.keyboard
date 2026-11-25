@@ -2979,7 +2979,7 @@ class TypingSessionController internal constructor(
 
         fun joinsPreviousText(prefix: String): Boolean = when (prefix.lastOrNull()) {
             '_' -> true
-            '\'', '’' -> prefix.lastIndex > 0 && prefix.codePointBefore(prefix.lastIndex).let { codePoint ->
+            '.', '\'', '’' -> prefix.lastIndex > 0 && prefix.codePointBefore(prefix.lastIndex).let { codePoint ->
                 isWordCodePoint(codePoint) || Character.isDigit(codePoint)
             }
             else -> false

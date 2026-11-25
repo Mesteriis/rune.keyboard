@@ -3,6 +3,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from test_prepare_public_spelling_v1 import run_builder
+from test_public_corpus_preparation_v1 import pronoun_candidate
 
 
 def protected(**changes):
@@ -11,6 +12,17 @@ def protected(**changes):
 
 
 class ControlsBuilderTest(unittest.TestCase):
+    def test_pronoun_cli_binds_inputs_and_reports_fixed_surface_under_incomplete_coverage(self):
+        with tempfile.TemporaryDirectory() as folder:
+            result=run_builder(folder,'prepare_public_controls_v1.py',[pronoun_candidate()],['--kind','english-pronoun'])
+            self.assertEqual(2,result.returncode,result.stderr)
+            report=json.loads(result.stdout)
+            self.assertEqual('BLOCKED_COVERAGE',report['status'])
+            self.assertEqual(1,report['fixedTargetSurfaceOverlaps'])
+            self.assertEqual([],report['identityErrors'])
+            self.assertFalse(report['sourceLabelsQualified'])
+            self.assertFalse((Path(folder)/'output').exists())
+
     def test_real_protected_matrix_blocks_reuse_without_creating_output(self):
         with tempfile.TemporaryDirectory() as folder:
             result=run_builder(folder,'prepare_public_controls_v1.py',[protected()],['--kind','protected'])

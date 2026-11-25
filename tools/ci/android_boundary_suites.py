@@ -74,6 +74,7 @@ GENERAL_REQUIRED={
     (QA+'LiveCandidatesInstrumentedTest','russianDomainLabelStaysExactAtAllBoundaries'),
     (QA+'LiveCandidatesInstrumentedTest','russianDomainContinuationRestoresLabelAfterReadyPeriodCorrection'),
     (QA+'LiveCandidatesInstrumentedTest','englishIAfterInternalApostropheIsNotSuggested'),
+    (QA+'LiveCandidatesInstrumentedTest','englishIDistinguishesDottedTokensFromSentenceStarts'),
     (QA+'LiveCandidatesInstrumentedTest','languageSwitchFailureReportsDisabledTarget'),
     *((QA+'EditingPanelInstrumentedTest',name) for name in (
         'publicSelectionNavigationAndCutReachTheEditorWithoutPayloadReads',

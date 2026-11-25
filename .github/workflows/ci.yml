@@ -181,6 +181,7 @@ jobs:
           python3 -m unittest discover -s tools/typing_experiments -p test_recover_punctuation_articles.py
           python3 -m unittest discover -s tools/typing_experiments -p test_public_corpus_preparation_v1.py
           python3 tools/typing_experiments/register_wikisource_page_exposure.py
+          python3 tools/typing_experiments/register_ancora_exposure.py
           python3 -m unittest discover -s tools/typing_experiments -p test_english_family_keys.py
           python3 -m unittest discover -s tools/typing_experiments -p test_ewt_lemma_exclusions.py
           python3 tools/typing_experiments/ewt_lemma_exclusions.py --check
