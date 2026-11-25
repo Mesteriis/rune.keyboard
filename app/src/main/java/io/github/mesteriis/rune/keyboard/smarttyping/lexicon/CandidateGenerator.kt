@@ -290,9 +290,9 @@ class CandidateGenerator(
                             else if (pattern == CasePattern.LOWER) canonicalCaseLexicon.lookup(language, key) else null
                         if (!control.cancellationCheckpoint()) return result(CandidateCompletion.CANCELLED)
                         val caseAutoEligible = canonical?.let { own ->
-                            // «инн» is also an ordinary lowercase abbreviation. The title-case
-                            // name remains selectable, but the surface alone cannot choose it.
-                            own.unambiguous && !(language == KeyboardLanguage.RUSSIAN && key == "инн") &&
+                            // Manually selectable title-case forms that are also lowercase abbreviations.
+                            own.unambiguous &&
+                                !(language == KeyboardLanguage.RUSSIAN && key in RUSSIAN_CASE_ABBREVIATIONS) &&
                                 languages.filter { it != language }.all { other ->
                                 val membership = lexicon.exact(other, key, control)
                                 if (!control.checkpoint()) false else when (membership) {
@@ -486,6 +486,7 @@ class CandidateGenerator(
         /** Increment whenever the qualified complete distance-one candidate set can change. */
         const val SEARCH_VERSION = 1
         const val MAX_ALTERNATIVES = 7
+        private val RUSSIAN_CASE_ABBREVIATIONS = setOf("альп", "инн")
 
         internal val COMPARATOR = Comparator<GeneratedCandidate> { left, right ->
             var order = left.editFeatures.editCost.compareTo(right.editFeatures.editCost)

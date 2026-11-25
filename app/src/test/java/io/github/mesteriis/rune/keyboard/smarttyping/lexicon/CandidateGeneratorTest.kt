@@ -95,19 +95,19 @@ class CandidateGeneratorTest {
     }
 
     @Test
-    fun `ambiguous inn abbreviation retains title case suggestion without automatic eligibility`() {
-        val lexicon = ScriptedLexicon(mapOf(ru to listOf(Entry("инн"), Entry("москва"))))
+    fun `ambiguous abbreviations retain title case suggestions without automatic eligibility`() {
+        val abbreviations = mapOf("альп" to "Альп", "инн" to "Инн")
+        val canonicalForms = abbreviations + ("москва" to "Москва")
+        val lexicon = ScriptedLexicon(mapOf(ru to canonicalForms.keys.map { Entry(it) }))
         val canonical = CanonicalCaseLexicon { language, key ->
-            if (language != ru) null else when (key) {
-                "инн" -> CanonicalCase("Инн", true)
-                "москва" -> CanonicalCase("Москва", true)
-                else -> null
-            }
+            if (language == ru) canonicalForms[key]?.let { CanonicalCase(it, true) } else null
         }
         val generator = CandidateGenerator(lexicon, canonicalCaseLexicon = canonical)
-        val candidate = generator.generate("инн", ru).alternatives.single()
-        assertEquals("Инн", candidate.text)
-        assertFalse(candidate.canonicalCaseAutoEligible)
+        for ((typed, expected) in abbreviations) {
+            val candidate = generator.generate(typed, ru).alternatives.single()
+            assertEquals(expected, candidate.text)
+            assertFalse(candidate.canonicalCaseAutoEligible)
+        }
         assertTrue(generator.generate("москва", ru).alternatives.single().canonicalCaseAutoEligible)
     }
 
