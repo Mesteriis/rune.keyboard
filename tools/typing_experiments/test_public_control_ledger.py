@@ -1,8 +1,10 @@
+import hashlib
+import json
 from pathlib import Path
 import shutil
 import tempfile
 import unittest
-from control_ledger import load,key_for,article_key,assert_disjoint
+from control_ledger import load,key_for,article_key,assert_disjoint,surface_key
 from import_control_components import load_original
 
 
@@ -36,6 +38,31 @@ class PublicControlSnapshotTest(unittest.TestCase):
     def test_protected_ru_token_is_blocked_without_original_corpora(self):
         with self.assertRaisesRegex(ValueError,'CONTROL_OVERLAP:protected'):
             assert_disjoint([dict(language='ru',prefix='Сохраните точный токен в примере 0',typed='Amelia')],self.ledger,'protected')
+
+    def test_disclosed_wiktionary_abbreviations_block_new_contexts(self):
+        entry, = [entry for entry in self.ledger['entries']
+                  if entry['id'] == 'public-a4-wiktionary-graphic-abbreviations-v1']
+        frozen = json.dumps(entry, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+        self.assertEqual(hashlib.sha256(frozen).hexdigest(),
+                         '6c2b5f4452fa71c23713f26df62a30bddcd47d60cd40af2caff22f31bc6c2e38')
+        source_rows = entry['sourceCapture']['rows']
+        self.assertEqual(124, len({row['pageId'] for row in source_rows}))
+        self.assertEqual(set(entry['surfaceKeys']), {row['surfaceSha256'] for row in source_rows})
+        original = {'language': 'ru', 'prefix': '', 'typed': 'аббр'}
+        self.assertIn(key_for(original, 'regression'), entry['keys'])
+        self.assertIn(surface_key('ru', original['typed']), entry['surfaceKeys'])
+        before = self.ledger | {'entries': [item for item in self.ledger['entries'] if item is not entry]}
+        new_context = original | {'prefix': 'Новый контекст'}
+        with self.assertRaisesRegex(ValueError, '^CONTROL_COVERAGE_INCOMPLETE$'):
+            assert_disjoint([new_context], before, 'regression')
+        with self.assertRaisesRegex(ValueError, '^CONTROL_OVERLAP:regression$'):
+            assert_disjoint([original], self.ledger, 'regression')
+        with self.assertRaisesRegex(ValueError, '^CONTROL_SURFACE_OVERLAP$'):
+            assert_disjoint([new_context], self.ledger, 'regression')
+        punctuation = {'language': 'ru', 'prefix': 'Новый контекст',
+                       'currentWord': 'аббр', 'expectedBoundary': '. '}
+        with self.assertRaisesRegex(ValueError, '^CONTROL_SURFACE_OVERLAP$'):
+            assert_disjoint([punctuation], self.ledger, 'punctuation')
 
     def test_archived_protected_matrices_match_every_persisted_key(self):
         directory=Path(__file__).with_name('frozen_sources')
