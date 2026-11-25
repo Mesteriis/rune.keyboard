@@ -98521,7 +98521,7 @@
         "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/ModelPrefixWindowTest.kt": "ef387134396876d158da525b1bb3f76243104e6ac61ef4c5195aee5f0b802c72",
         "runtime-llama/src/androidTest/java/io/github/mesteriis/rune/runtime/llama/LlamaRealModelInstrumentedTest.kt": "bb9dc23715f639459b5c7cb22c984bf9cac639709e594008a57176718642324e",
         "tools/ci/register_a2_window_contexts.py": "1f594cf500964b61c3c8914372f1705ca056d085ae903b77ed4315a89ab37c02",
-        "tools/eval/smart-typing-0.3/a2_cache_probe.cpp": "afa8292653d962e34edfbf96705dac22f93290e2af5f12e863366ed3b77635cc"
+        "tools/eval/smart-typing-0.3/a2_cache_probe.cpp": "d15b22232e8c3f20c3b479f7329f4889413fc7684c8c631c436a66b84481e321"
       },
       "id": "a2-bounded-prefix-native-probe-v1",
       "keys": [
