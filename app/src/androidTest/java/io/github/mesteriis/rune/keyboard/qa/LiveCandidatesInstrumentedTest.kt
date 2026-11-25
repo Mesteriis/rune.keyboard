@@ -56,6 +56,26 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
         noReadback()
     }
 
+    @Test fun russianKuaOffersKudaManuallyInStandardStrip() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        KeyboardPreferences(context).writeManualCandidateExpansion(false)
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        driver.launchComposingQa(language = KeyboardLanguage.RUSSIAN)
+
+        "куа".forEach { driver.tapKey(it.toString()) }
+        driver.awaitFieldText(FIELD, "куа")
+        assertEquals("куда", awaitCandidate(R.string.candidate_correction, "куда").text)
+        space()
+        driver.awaitFieldText(FIELD, "куа ")
+
+        "куа".forEach { driver.tapKey(it.toString()) }
+        driver.awaitFieldText(FIELD, "куа куа")
+        awaitCandidate(R.string.candidate_correction, "куда").click()
+        driver.awaitFieldText(FIELD, "куа куда")
+        noReadback()
+    }
+
     @Test fun englishIAfterInternalApostropheIsNotSuggested() {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         KeyboardPreferences(instrumentation.targetContext).writeKeyFlicks(true)

@@ -431,7 +431,8 @@ class LocalCandidateCoordinator internal constructor(
             return
         }
         if (reply.isFinal) pending = null
-        val visibleReply = if (owner.canExpandManualCandidates) reply else reply.copy(manualGeneration = null)
+        val visibleReply = if (reply.manualRequiresExpansion && !owner.canExpandManualCandidates)
+            reply.copy(manualGeneration = null) else reply
         val accepted = if (reply.stage == io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateStage.RECOVERY)
             controller.acceptRecoveryCandidates(visibleReply) else controller.acceptCandidates(visibleReply)
         if (accepted) {

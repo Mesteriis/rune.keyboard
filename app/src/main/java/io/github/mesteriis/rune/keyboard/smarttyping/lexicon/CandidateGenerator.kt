@@ -103,7 +103,7 @@ class CandidateGenerator(
     private val candidates = arrayOfNulls<GeneratedCandidate>(CandidateSearchControl.MAX_VERIFIED)
     private val publicAugmenter = PublicCandidateAugmenter(morphologyLexicon, rareWordLexicon)
 
-    /** Optional display retrieval; never replace the baseline generation or its local certificate. */
+    /** Display-only retrieval; never replace the baseline generation or its local certificate. */
     fun generateManualPool(
         token: String,
         activeLanguage: KeyboardLanguage,
@@ -111,6 +111,8 @@ class CandidateGenerator(
         enabled: Boolean,
         cancellation: CandidateCancellation = CandidateCancellation { false },
     ): CandidateGeneration? {
+        // Confirmed omission from the standard strip. Space must still retain the original.
+        val reviewedTarget = "куда".takeIf { !enabled && token == "куа" }
         // A dictionary-valid typo may still need explicit alternatives (e.g. нуден / нужен).
         // This display-only snapshot never replaces the original validity/admission certificate.
         if (enabled && activeLanguage == KeyboardLanguage.RUSSIAN && baseline.original == token &&
@@ -127,15 +129,15 @@ class CandidateGenerator(
                 neighborRecovery = LocalSearchEvidence.NONE, jointSearch = LocalSearchEvidence.NONE,
                 jointEvaluated = false, inspectedStates = 0, verifiedTerminals = additions.size)
         }
-        if (!enabled || activeLanguage != KeyboardLanguage.RUSSIAN ||
+        if ((!enabled && reviewedTarget == null) || activeLanguage != KeyboardLanguage.RUSSIAN ||
             LanguageRouter.route(token, activeLanguage).primary != KeyboardLanguage.RUSSIAN ||
             cancellation.isCancelled() || baseline.original != token ||
             baseline.isValidWord || baseline.protectedReason != null ||
             baseline.completion !in setOf(CandidateCompletion.COMPLETE,
                 CandidateCompletion.STATES_EXHAUSTED, CandidateCompletion.VERIFIED_EXHAUSTED)) return null
         val shortWord = token.codePointCount(0, token.length) in 3..4
-        if (maximumAlternatives == MAX_ALTERNATIVES ||
-            !shortWord && baseline.isComplete && baseline.alternatives.size < maximumAlternatives) return baseline
+        if (reviewedTarget == null && (maximumAlternatives == MAX_ALTERNATIVES ||
+                !shortWord && baseline.isComplete && baseline.alternatives.size < maximumAlternatives)) return baseline
         // Short words have a separate manual-only public-dictionary pool. The frozen
         // automatic path and its minimum length never consume this wider evidence.
         val expanded = if (maximumAlternatives == MAX_ALTERNATIVES ||
@@ -143,6 +145,7 @@ class CandidateGenerator(
             CandidateGenerator(lexicon, MAX_ALTERNATIVES, canonicalCaseLexicon)
                 .generate(token, activeLanguage, cancellation)
         if (cancellation.isCancelled() || expanded.completion == CandidateCompletion.CANCELLED) return null
+        if (reviewedTarget != null && (!baseline.isComplete || !expanded.isComplete)) return null
         if (expanded.completion !in setOf(CandidateCompletion.COMPLETE,
                 CandidateCompletion.STATES_EXHAUSTED, CandidateCompletion.VERIFIED_EXHAUSTED)) return null
         val additions = if (shortWord && baseline.isComplete && expanded.isComplete) {
@@ -151,11 +154,16 @@ class CandidateGenerator(
                 route.primaryPrior, CasePattern.analyze(token), cancellation).orEmpty()
         } else emptyList()
         if (cancellation.isCancelled()) return null
-        if (expanded === baseline && additions.all { added ->
+        if (reviewedTarget == null && expanded === baseline && additions.all { added ->
                 baseline.alternatives.any { it.canonicalKey == added.canonicalKey } }) return baseline
         // Wider retrieval may exhaust its budget: keep every baseline proposal before adding extras.
-        return expanded.copy(alternatives = (baseline.alternatives + expanded.alternatives + additions)
-            .distinctBy { it.canonicalKey }.take(MAX_ALTERNATIVES),
+        val alternatives = (baseline.alternatives + expanded.alternatives + additions)
+            .distinctBy { it.canonicalKey }.take(MAX_ALTERNATIVES)
+        val displayed = if (reviewedTarget == null) alternatives else alternatives.filter {
+            it.text == reviewedTarget && it.terminalKey == reviewedTarget && it.unitDistance == 1
+        }
+        if (reviewedTarget != null && displayed.isEmpty()) return null
+        return expanded.copy(alternatives = displayed,
             localSearch = if (shortWord) LocalSearchEvidence.NONE else expanded.localSearch)
     }
 

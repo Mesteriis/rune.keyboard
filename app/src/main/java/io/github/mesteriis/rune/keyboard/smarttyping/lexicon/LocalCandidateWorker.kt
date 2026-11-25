@@ -37,6 +37,7 @@ data class LocalCandidateReply(
     val manualGeneration: CandidateGeneration? = null,
     val stage: CandidateStage = CandidateStage.BASELINE,
     val isFinal: Boolean = true,
+    val manualRequiresExpansion: Boolean = true,
 ) {
     override fun toString(): String =
         "LocalCandidateReply(sessionId=$sessionId, revision=$revision, requestId=$requestId, redacted)"
@@ -202,7 +203,8 @@ class LocalCandidateWorker internal constructor(
                 jointSearch = generator.generateJointPool(request.token, request.activeLanguage, recovered,
                     CandidateCancellation { work.cancelled.get() }), jointEvaluated = true) else recovered
             publish(work, LocalCandidateReply(work.sessionId, work.revision, work.requestId, complete,
-                manual, if (staged) CandidateStage.RECOVERY else CandidateStage.BASELINE))
+                manual, if (staged) CandidateStage.RECOVERY else CandidateStage.BASELINE,
+                manualRequiresExpansion = request.manualCandidateExpansion))
         }
         synchronized(lock) { if (active === work) active = null }
     }

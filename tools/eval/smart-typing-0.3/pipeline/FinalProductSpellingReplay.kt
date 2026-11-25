@@ -866,9 +866,9 @@ object FinalProductSpellingReplay {
                     } else actualBaseline!!
                 }
                 val manualExpansion = System.getProperty("rune.replay.manualExpansion", "true").toBooleanStrict()
-                val actualManual = localRequest?.takeIf { manualExpansion }?.let {
-                    if (it.token == typed) manualSearch else
-                        generator.generateManualPool(it.token, language, actualBaseline!!, enabled = true)
+                val actualManual = localRequest?.let {
+                    if (manualExpansion && it.token == typed) manualSearch else
+                        generator.generateManualPool(it.token, language, actualBaseline!!, enabled = manualExpansion)
                 }
                 result["actualRequestGeneration"] = generation?.let(::candidate)
                 result["actualOriginal"] = generation?.original ?: controller.state.composing?.typedWord
