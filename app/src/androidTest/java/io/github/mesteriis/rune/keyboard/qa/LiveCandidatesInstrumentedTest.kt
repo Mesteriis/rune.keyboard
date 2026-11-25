@@ -7,6 +7,7 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
 import io.github.mesteriis.rune.keyboard.R
+import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.settings.KeyboardPreferences
 import org.junit.Assert.assertEquals
@@ -206,6 +207,30 @@ class LiveCandidatesInstrumentedTest : ImeTestBase() {
         assertEquals(7, deleted.getValue("selectionStart"))
         assertEquals(7, deleted.getValue("selectionEnd"))
         noReadback()
+    }
+
+    @Test fun russianAlpAbbreviationStaysLowercaseAtAllBoundaries() {
+        driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
+            mechanical = false, doubleSpace = false)
+        for (boundary in listOf(" ", ".", ":")) {
+            driver.launchComposingQa(language = KeyboardLanguage.RUSSIAN)
+            for (character in "альп") driver.tapKey(character.toString(), character.uppercase())
+            driver.awaitFieldText(FIELD, "альп")
+            awaitCandidate(R.string.candidate_correction, "Альп")
+            when (boundary) {
+                " " -> space()
+                ":" -> {
+                    val context = InstrumentationRegistry.getInstrumentation().targetContext
+                    driver.tapKeyByDescription(context.getString(R.string.key_symbols))
+                    driver.tapKey(boundary)
+                }
+                else -> driver.tapKey(boundary)
+            }
+            driver.awaitFieldText(FIELD, "альп$boundary")
+            driver.tapDelete()
+            driver.awaitFieldText(FIELD, "альп")
+            noReadback()
+        }
     }
 
     @Test fun russianSentencePeriodCorrectsReadyWordAndBackspaceRestoresExactSource() {

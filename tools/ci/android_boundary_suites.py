@@ -70,6 +70,7 @@ GENERAL_REQUIRED={
     (QA+'EmojiPanelInstrumentedTest','privateEmojiDroppedCompositionKeepsEmojiAndNextInput'),
     (QA+'ImeLifecycleInstrumentedTest','backspaceRepeatStopsWhenImeViewDetaches'),
     (QA+'LiveCandidatesInstrumentedTest','canonicalCaseAutoReplacesOnBoundaryAndBackspaceRestoresOriginal'),
+    (QA+'LiveCandidatesInstrumentedTest','russianAlpAbbreviationStaysLowercaseAtAllBoundaries'),
     (QA+'LiveCandidatesInstrumentedTest','englishIAfterInternalApostropheIsNotSuggested'),
     (QA+'LiveCandidatesInstrumentedTest','languageSwitchFailureReportsDisabledTarget'),
     *((QA+'EditingPanelInstrumentedTest',name) for name in (
