@@ -12,6 +12,8 @@ ARCHIVES={
      '1a30c167af91a9241a18f964419f060617448082cb035c954fc08926088ffc6f'):'JointCorrectionPolicy-1a30c167.kt',
     ('app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/CandidateGenerator.kt',
      '4d830724cc66f967f7c7736efedd540da9f5e27892d1f09cb753dabaa592e684'):'CandidateGenerator-4d830724.kt',
+    ('app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/NeighborRecoverySearch.kt',
+     '0c30517b0f59e4d2d1b4927c5e654d22d190119d059af6cdcfbe059309032b55'):'NeighborRecoverySearch-0c30517b.kt',
     ('app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/lexicon/PackedCandidateLexicon.kt',
      '0d59152024c64263cf7d1d178cd353446ab0c0a1bea79ee3b8f55ec4fe788d54'):'PackedCandidateLexicon-0d591520.kt',
     ('app/src/main/java/io/github/mesteriis/rune/keyboard/intelligence/ipc/ScoringContract.kt',
