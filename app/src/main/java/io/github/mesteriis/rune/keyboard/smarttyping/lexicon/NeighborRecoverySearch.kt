@@ -24,6 +24,10 @@ internal class NeighborRecoverySearch(
         val radius = if (key.length >= 7) 3 else 2
         val started = nanoTime()
         val path = CharArray(32)
+        // Offset input positions by one and use an unreachable row outside the query.
+        val alignmentCosts = Array(path.size + 2) { position ->
+            key.getOrNull(position - 1)?.let { SUBSTITUTION_COSTS[it - 'а'] } ?: UNREACHABLE
+        }
         val next = IntArray(33)
         // Each depth has four alignments: substitutions only, one output insertion,
         // one input deletion, or one exact adjacent transposition. Fixed O(word length) scratch.
@@ -44,12 +48,6 @@ internal class NeighborRecoverySearch(
             }
             return completion == CandidateCompletion.COMPLETE
         }
-        fun cost(position: Int, letter: Char): Int = when {
-            position !in key.indices -> INF
-            key[position] == letter -> 0
-            KeyboardDistance.areAdjacent(key[position].code, letter.code, KeyboardLanguage.RUSSIAN) -> 1
-            else -> INF
-        }
         try {
             var depth = 0
             next[0] = index.child(0)
@@ -63,10 +61,12 @@ internal class NeighborRecoverySearch(
                 val letter = index.label(node).toChar()
                 path[depth] = letter
                 val length = depth + 1
-                plain[length] = plain[depth] + cost(depth, letter)
-                inserted[length] = minOf(inserted[depth] + cost(depth - 1, letter), plain[depth] + 1)
-                deleted[length] = minOf(deleted[depth] + cost(depth + 1, letter), plain[length] + 1)
-                transposed[length] = transposed[depth] + cost(depth, letter)
+                val column = (letter - 'а').let { if (it in 0 until ALPHABET_SIZE) it else ALPHABET_SIZE }
+                val substitution = alignmentCosts[length][column]
+                plain[length] = plain[depth] + substitution
+                inserted[length] = minOf(inserted[depth] + alignmentCosts[depth][column], plain[depth] + 1)
+                deleted[length] = minOf(deleted[depth] + alignmentCosts[length + 1][column], plain[length] + 1)
+                transposed[length] = transposed[depth] + substitution
                 if (depth > 0 && depth < key.length && path[depth - 1] == key[depth] && letter == key[depth - 1]) {
                     transposed[length] = minOf(transposed[length], plain[depth - 1] + 1)
                 }
@@ -90,9 +90,10 @@ internal class NeighborRecoverySearch(
                         WeightedDamerauLevenshtein().features(key, word, KeyboardLanguage.RUSSIAN),
                         kotlin.math.abs(length - key.length), pattern))
                 }
-                if (length < 32 && index.child(node) != 0) {
+                val child = if (length < 32) index.child(node) else 0
+                if (child != 0) {
                     depth++
-                    next[depth] = index.child(node)
+                    next[depth] = child
                 }
             }
             checkpoint()
@@ -100,6 +101,7 @@ internal class NeighborRecoverySearch(
             completion = CandidateCompletion.READER_FAILURE
             checkpoint()
         } finally {
+            alignmentCosts.fill(UNREACHABLE)
             path.fill('\u0000'); next.fill(0); plain.fill(0)
             inserted.fill(0); deleted.fill(0); transposed.fill(0)
         }
@@ -115,5 +117,17 @@ internal class NeighborRecoverySearch(
         const val MAX_TERMINALS = 64
         const val MAX_NANOS = 100_000_000L
         private const val INF = 128
+        private const val ALPHABET_SIZE = 'ё' - 'а' + 1
+        private val UNREACHABLE = IntArray(ALPHABET_SIZE + 1) { INF }
+        private val SUBSTITUTION_COSTS = Array(ALPHABET_SIZE) { source ->
+            IntArray(ALPHABET_SIZE + 1) { target ->
+                when {
+                    source == target -> 0
+                    target == ALPHABET_SIZE -> INF
+                    KeyboardDistance.areAdjacent('а'.code + source, 'а'.code + target, KeyboardLanguage.RUSSIAN) -> 1
+                    else -> INF
+                }
+            }
+        }
     }
 }

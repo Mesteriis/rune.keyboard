@@ -58,7 +58,9 @@ class ReviewedChatProtectionInstrumentedTest {
 
     @Test fun compactChatOriginalIsKeptAtSpace() = exercise("том натянул на себя", "бадлон", "баллон")
 
-    @Test fun contextualChatOriginalIsKeptAtSpace() = exercise("выдай мне", "админку", "спинку")
+    @Test fun contextualChatOriginalIsKeptAtSpace() = withCiFailureMetadata(driver) {
+        exercise("выдай мне", "админку", "спинку")
+    }
 
     @Test fun pairingChatOriginalIsKeptAtSpace() = exercise("это неканоничный", "пейринг", "рейтинг")
 
@@ -74,7 +76,7 @@ class ReviewedChatProtectionInstrumentedTest {
 
     @Test fun inviteChatOriginalIsKeptAtSpace() = exercise("апрувни", "инвайт", "инсайт")
 
-    @Test fun protectedOriginalStillAllowsManualSuggestion() {
+    @Test fun protectedOriginalStillAllowsManualSuggestion() = withCiFailureMetadata(driver) {
         for (character in "выдай мне админку") {
             if (character == ' ') driver.tapKeyByDescription(context.getString(R.string.key_space))
             else driver.tapKey(character.toString())
