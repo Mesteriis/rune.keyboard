@@ -1,0 +1,2 @@
+{"cohort":"case_collision","expectedSpelling":"клава","id":"case-context-collision-common","language":"ru","noAuto":false,"prefix":"моя","purpose":"DISCLOSED_CONTEXT_COLLISION_NOT_QUALIFICATION","sense":"common","split":"calibration","typed":"клава"}
+{"cohort":"case_collision","expectedSpelling":"Клава","id":"case-context-collision-name","language":"ru","noAuto":false,"prefix":"моя","purpose":"DISCLOSED_CONTEXT_COLLISION_NOT_QUALIFICATION","sense":"name","split":"calibration","typed":"клава"}

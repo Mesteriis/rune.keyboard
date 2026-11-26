@@ -37,4 +37,5 @@ sealed interface KeyboardAction {
     data object ToggleSymbolsPage : KeyboardAction
     data object HideKeyboard : KeyboardAction
     data object NextInputMethod : KeyboardAction
+    data object VoiceInput : KeyboardAction
 }

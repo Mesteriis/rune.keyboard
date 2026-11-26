@@ -1,12 +1,28 @@
 from pathlib import Path
+import hashlib
+import json
 import unittest
 
 from holdout_ledger import assert_disjoint, load_ledger
+from import_recovered_v6_history import PARENT_ENTRY
+from source_identities import unsupported_surface_key
 
 
 class PublicLedgerSnapshotTest(unittest.TestCase):
     def setUp(self):
         self.ledger = load_ledger(Path(__file__).with_name('holdout-ledger.json'))
+
+    def test_disclosed_case_collision_is_bound_and_blocked(self):
+        root = Path(__file__).resolve().parents[2]
+        relative = 'tools/typing_experiments/chat_regression/case-context-collision-v1/rows.jsonl'
+        raw = (root / relative).read_bytes()
+        rows = [json.loads(line) for line in raw.splitlines() if line]
+        entry = next(e for e in self.ledger['entries'] if e['id'] == 'public-case-context-collision-v1')
+        self.assertEqual(hashlib.sha256(raw).hexdigest(), entry['bindings'][relative])
+        self.assertEqual(2, len(rows))
+        self.assertEqual(1, len({(r['prefix'], r['typed']) for r in rows}))
+        with self.assertRaisesRegex(ValueError, 'LEDGER_OVERLAP:context'):
+            assert_disjoint(rows, self.ledger, kinds=('context',), require_complete=False)
 
     def test_historical_entries_cannot_disappear_from_the_bootstrap_snapshot(self):
         expected = {f'public-spelling-v{v}' for v in range(7, 13)} | {
@@ -72,6 +88,64 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
 
     def test_unsupported_surface_exclusions_do_not_clear_unproven_families(self):
         entries=[e for e in self.ledger['entries'] if 'unsupportedSurfaceKeys' in e]
+        english=next(e for e in entries if e['id']=='public-tatoeba-english-a1-exact-surface-exclusions-v1')
+        self.assertEqual(26735,len(english['unsupportedSurfaceKeys']))
+        self.assertEqual('historical-context-exclusion',english['usage'])
+        entries=[e for e in entries if e is not english]
+        english_forms=next(e for e in entries if e['id']=='public-english-unimorph-historical-surfaces-v1')
+        self.assertEqual(22647,len(english_forms['unsupportedSurfaceKeys']))
+        self.assertEqual('historical-context-exclusion',english_forms['usage'])
+        entries=[e for e in entries if e is not english_forms]
+        suspended=next(e for e in entries if e['id']=='historical-retrieval-suspended-source-v1-contexts')
+        self.assertEqual('historical-context-exclusion', suspended['usage'])
+        self.assertEqual([unsupported_surface_key('видеофайлов')], suspended['unsupportedSurfaceKeys'])
+        entries=[e for e in entries if e is not suspended]
+        new=next(e for e in entries if e['id']=='public-word-ranking-family-quarantine-v1')
+        self.assertEqual('prepared-training-quarantine',new['usage']);self.assertEqual(3,len(new['unsupportedSurfaceKeys']))
+        parent=next(e for e in self.ledger['entries'] if e['id']=='public-word-ranking-data-articles-v1')
+        self.assertIn('family',parent['missingAxes'])
+        q7=[e for e in entries if e['id'].startswith('public-q7-regression-dictionary-families-')]
+        self.assertEqual({'public-q7-regression-dictionary-families-product-v1',
+                          'public-q7-regression-dictionary-families-original-v2'}, {e['id'] for e in q7})
+        self.assertTrue(all(e['usage']=='historical-family-exclusion' and not e['missingAxes'] for e in q7))
+        text_families=[e for e in entries if e['id'].startswith('public-word-epoch-text-families-')]
+        self.assertEqual(4,len(text_families))
+        self.assertTrue(all(e['usage']=='historical-family-exclusion' and not e['missingAxes'] for e in text_families))
+        refinement_families=[e for e in entries if e['id'].startswith('public-refinement-text-families-')]
+        self.assertEqual(3,len(refinement_families))
+        self.assertTrue(all(e['usage']=='historical-family-exclusion' and not e['missingAxes'] for e in refinement_families))
+        neighbor=next(e for e in entries if e['id']=='historical-neighbor-recovery-prefix-families-v1')
+        self.assertEqual('historical-family-exclusion',neighbor['usage'])
+        self.assertEqual(1163,len(neighbor['unsupportedSurfaceKeys']))
+        self.assertFalse(neighbor['missingAxes'])
+        truncated=next(e for e in entries if e['id']=='historical-truncated-text-source-completions-v1-families')
+        self.assertEqual('prepared-training-quarantine',truncated['usage'])
+        self.assertEqual(4,len(truncated['unsupportedSurfaceKeys']))
+        self.assertEqual(24,len(truncated['keys']['family']))
+        self.assertFalse(truncated['missingAxes'])
+        taiga=next(e for e in entries if e['id']=='public-taiga-dev-dictionary-families-v1')
+        self.assertEqual('historical-family-exclusion',taiga['usage'])
+        self.assertEqual(6185,len(taiga['unsupportedSurfaceKeys']))
+        self.assertEqual(4528,len(taiga['keys']['family']))
+        self.assertFalse(taiga['missingAxes'])
+        taiga_lemmas=next(e for e in entries if e['id']=='public-taiga-dev-annotated-lemmas-v1')
+        self.assertEqual('historical-family-exclusion',taiga_lemmas['usage'])
+        self.assertEqual(4080,len(taiga_lemmas['unsupportedSurfaceKeys']))
+        self.assertEqual(4216,len(taiga_lemmas['keys']['family']))
+        self.assertFalse(taiga_lemmas['missingAxes'])
+        unimorph=next(e for e in entries if e['id']=='public-early-ru-unimorph-exclusions-v1')
+        self.assertEqual('historical-context-exclusion',unimorph['usage'])
+        self.assertEqual({'context'},set(unimorph['keys']))
+        self.assertEqual(644,len(unimorph['unsupportedSurfaceKeys']))
+        wiktionary=next(e for e in entries if e['id']=='public-historical-wiktionary-surfaces-v1')
+        self.assertEqual('historical-context-exclusion',wiktionary['usage'])
+        self.assertEqual({'context'},set(wiktionary['keys']))
+        self.assertEqual(15833,len(wiktionary['unsupportedSurfaceKeys']))
+        remaining=next(e for e in entries if e['id']=='public-historical-wiktionary-remaining-surfaces-v1')
+        self.assertEqual('historical-context-exclusion',remaining['usage'])
+        self.assertEqual({'context'},set(remaining['keys']))
+        self.assertEqual(54808,len(remaining['unsupportedSurfaceKeys']))
+        entries=[e for e in entries if e is not new and e is not neighbor and e is not truncated and e is not taiga and e is not taiga_lemmas and e is not unimorph and e is not wiktionary and e is not remaining and e not in q7 and e not in text_families and e not in refinement_families]
         self.assertEqual(13,len(entries))
         historical=[e for e in entries if e['id'] not in ('ci-product-replay-v1-ru-contexts','ci-original-spelling-v2-ru-contexts')]
         self.assertEqual(11,len(historical));self.assertEqual(1357,len({k for e in historical for k in e['unsupportedSurfaceKeys']}))
@@ -144,6 +218,30 @@ class PublicLedgerSnapshotTest(unittest.TestCase):
                 self.assertEqual(len(historical & set(e['keys']['article'])), disclosure['entries'][e['id']])
         self.assertEqual(122, disclosure['entries']['public-right-context-available-v6-calibration'])
         self.assertEqual(131, disclosure['entries']['public-right-context-available-v6-holdout'])
+
+    def test_neighbor_history_adds_to_v6_spelling_article_overlap(self):
+        entries={entry['id']:entry for entry in self.ledger['entries']}
+        spelling=set().union(*(set(entries[name]['keys']['article'])
+                               for name in self.ledger['historicalArticleOverlap']['scopeEntries']))
+        neighbor=set(entries['historical-neighbor-recovery-public-v1']['keys']['article'])
+        for part, expected in (('calibration',(122,26,18,140)),('holdout',(131,25,13,144))):
+            with self.subTest(part=part):
+                articles=set(entries['public-right-context-available-v6-'+part]['keys']['article'])
+                self.assertEqual(expected,(len(articles & spelling),len(articles & neighbor),
+                    len((articles & neighbor)-spelling),len(articles & (spelling | neighbor))))
+
+    def test_v6_article_overlap_with_its_parent_and_other_registered_entries(self):
+        entries={entry['id']:entry for entry in self.ledger['entries']}
+        historical=set().union(*(set(entry.get('keys', {}).get('article', []))
+            for entry in self.ledger['entries']
+            if entry['id'] != PARENT_ENTRY
+            and not entry['id'].startswith('public-right-context-available-v6-')))
+        parent = set(entries[PARENT_ENTRY]['keys']['article'])
+        for part, expected in (('calibration',304),('holdout',289)):
+            with self.subTest(part=part):
+                articles=set(entries['public-right-context-available-v6-'+part]['keys']['article'])
+                self.assertTrue(articles <= parent)
+                self.assertEqual(expected,len(articles & historical))
 
     def test_frozen_natural_and_side_descendants_survive_without_original_data(self):
         entries=[e for e in self.ledger['entries'] if e['id'].startswith('public-frozen-context-descendant-')]

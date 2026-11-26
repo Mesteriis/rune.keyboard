@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "revision": "846188315184643dd7c7e03bb45c460739692524",
+  "python": "3.12.14",
+  "workflowShellSteps": 14,
+  "hosted": false,
+  "cleanSource": true,
+  "workflowSha256": "db6a6362f926e18e27ac78d8735fe695c748b1922ad53f0c7c8bfce7e9610e4f",
+  "firstThirteenExitCodes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "resolvedMatrixProfile": "stdlib",
+  "isolatedStepExitCode": 0,
+  "firstLocalStep14ExitCode": 1,
+  "testTotals": {
+    "modules": 210,
+    "failedModules": 0,
+    "timedOutModules": 0,
+    "modulesWithoutReceipt": 0,
+    "tests": 1074,
+    "failures": 0,
+    "errors": 0,
+    "expectedFailures": 0,
+    "unexpectedSuccesses": 0,
+    "skipped": 0
+  },
+  "workflowReceiptSha256": "7fcc5a1a0d9f283230cf4403bd9afea89e853252b441b6ae87f50ef94a363416",
+  "moduleReceiptSha256": "d879a87a19933215e433cbe8c9654ab3078816e1c954acabdde634c6f90e247a",
+  "localArchiveSha256": "73647cf78434619de2a277d517ac57fc6a5c87d86c572478f6ebc08522e0ed65"
+}

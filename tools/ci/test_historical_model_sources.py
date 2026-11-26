@@ -13,7 +13,7 @@ class HistoricalModelSourceTest(unittest.TestCase):
     def test_complete_project_source_index_verifies_without_historical_build(self):
         result = audit.audit()
         self.assertEqual(71, result['sourceVersions'])
-        self.assertEqual(29, result['archivedGitSources'])
+        self.assertEqual(30, result['archivedGitSources'])
         self.assertEqual(2, result['exports'])
         self.assertFalse(result['originalReceiptsVerified'])
         self.assertFalse(result['externalRuntimeIdentityEstablished'])
@@ -28,6 +28,15 @@ class HistoricalModelSourceTest(unittest.TestCase):
             record = next(r for r in manifest['sources'] if r['origin'] == 'archived-git')
             (data / record['file']).write_bytes(b'# tampered\n')
             with self.assertRaisesRegex(ValueError, 'HISTORICAL_SOURCE_IDENTITY'):
+                audit.audit(data=data)
+
+    def test_moved_live_source_requires_exact_archived_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            data = Path(directory) / 'data'
+            shutil.copytree(audit.DATA, data)
+            (name, digest), = audit.ARCHIVED_REPOSITORY_SOURCES
+            (data / 'sources' / (digest + Path(name).suffix)).write_bytes(b'wrong bytes')
+            with self.assertRaisesRegex(ValueError, 'HISTORICAL_SOURCE_IDENTITY:.*SessionTextContext'):
                 audit.audit(data=data)
 
     def test_git_object_metadata_cannot_be_a_command_option(self):

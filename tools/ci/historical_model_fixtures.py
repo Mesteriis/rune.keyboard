@@ -15,6 +15,7 @@ import historical_model_sources as sources
 ROOT = sources.ROOT
 DATA = Path(__file__).with_name('historical-model-fixtures-v1')
 ARCHIVE_SHA256 = '8c2e7bcf8906651185683220c32ac4a245c576f852416b77a365f1e95ce90ec2'
+WORD_OBSERVATIONS_PROJECTION_SHA256 = '05d9e670d192a3d62a237a6c589034148304ad03cdbcd2e80cb7e9bca0df944f'
 ENTRY = 'public-word-ranking-contexts-v1'
 MODEL_PINS = {
     'build/typing-experiments/catboost-reference.cbm': 'f79649eab727b90ae6da22e8c873a12d2f8ac9c72c0e5db6cda68a8660a25891',
@@ -125,12 +126,12 @@ def _write(root, name, raw):
 
 
 @contextmanager
-def workspace(profile):
+def workspace(profile,parent=None):
     if profile not in ('baseline', 'refinement', 'word'):
         raise ValueError('MODEL_FIXTURE_PROFILE')
     meta, payloads = verify()
     original_data = core.verify()
-    with tempfile.TemporaryDirectory(prefix='rune-historical-') as folder:
+    with tempfile.TemporaryDirectory(prefix='rune-historical-',dir=parent) as folder:
         root = Path(folder)
         if profile in ('refinement', 'word'):
             for name, raw in original_data.items():
@@ -147,7 +148,7 @@ def workspace(profile):
             export = 'morphology-public-export-v3' if profile == 'baseline' else 'typing-refinement/candidates-v2'
             records = {(r['path'], r['sha256']): r for r in graph['sources']}
             for name, expected in graph['exports'][export]['sources'].items():
-                record = records[name, expected]
+                record = sources.resolve_archive_record(records[name, expected])
                 if record['origin'] == 'repository':
                     raw = (ROOT / name).read_bytes()
                 elif record['origin'] == 'archived-git':
@@ -177,6 +178,14 @@ def workspace(profile):
             binding = json.loads(path.read_text())
             binding['exportReceiptSha256'] = sources.sha(root / 'build/typing-refinement/candidates-v2/receipt.json')
             path.write_text(json.dumps(binding, sort_keys=True, indent=2) + '\n')
+        if profile == 'word':
+            raw = (DATA / 'word-observations-projection.json').read_bytes()
+            if digest(raw) != WORD_OBSERVATIONS_PROJECTION_SHA256:
+                raise ValueError('MODEL_FIXTURE_WORD_OBSERVATIONS_PROJECTION')
+            binding = json.loads(raw)
+            if binding.get('dataManifestSha256') != sources.WORD_SHA:
+                raise ValueError('MODEL_FIXTURE_WORD_OBSERVATIONS_BINDING')
+            _write(root, 'build/typing-word-ranking/observations/manifest.json', raw)
         yield root
 
 

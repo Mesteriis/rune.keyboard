@@ -1,0 +1,232 @@
+{
+  "controlsSha256": "e1553ebd2dc54dd2358c41b39d9ebd5833dba06165ff79c7c8aea4a93370597a",
+  "forms": {
+    "адм": {
+      "articles": 29,
+      "occurrences": 48
+    },
+    "акад": {
+      "articles": 171,
+      "occurrences": 313
+    },
+    "ао": {
+      "articles": 13,
+      "occurrences": 14
+    },
+    "библ": {
+      "articles": 7,
+      "occurrences": 7
+    },
+    "гор": {
+      "articles": 140,
+      "occurrences": 182
+    },
+    "дер": {
+      "articles": 237,
+      "occurrences": 303
+    },
+    "доц": {
+      "articles": 18,
+      "occurrences": 23
+    },
+    "зав": {
+      "articles": 120,
+      "occurrences": 186
+    },
+    "зам": {
+      "articles": 128,
+      "occurrences": 186
+    },
+    "зао": {
+      "articles": 1,
+      "occurrences": 1
+    },
+    "изд": {
+      "articles": 1616,
+      "occurrences": 2548
+    },
+    "им": {
+      "articles": 3240,
+      "occurrences": 5785
+    },
+    "инн": {
+      "articles": 0,
+      "occurrences": 0
+    },
+    "каб": {
+      "articles": 2,
+      "occurrences": 4
+    },
+    "кв": {
+      "articles": 189,
+      "occurrences": 261
+    },
+    "коп": {
+      "articles": 21,
+      "occurrences": 29
+    },
+    "корп": {
+      "articles": 10,
+      "occurrences": 11
+    },
+    "кпп": {
+      "articles": 8,
+      "occurrences": 8
+    },
+    "макс": {
+      "articles": 24,
+      "occurrences": 26
+    },
+    "мес": {
+      "articles": 10,
+      "occurrences": 11
+    },
+    "мин": {
+      "articles": 195,
+      "occurrences": 276
+    },
+    "млн": {
+      "articles": 366,
+      "occurrences": 510
+    },
+    "млрд": {
+      "articles": 77,
+      "occurrences": 133
+    },
+    "моб": {
+      "articles": 1,
+      "occurrences": 1
+    },
+    "мск": {
+      "articles": 6,
+      "occurrences": 6
+    },
+    "обл": {
+      "articles": 288,
+      "occurrences": 467
+    },
+    "огрн": {
+      "articles": 0,
+      "occurrences": 0
+    },
+    "ооо": {
+      "articles": 0,
+      "occurrences": 0
+    },
+    "пгт": {
+      "articles": 42,
+      "occurrences": 44
+    },
+    "пер": {
+      "articles": 609,
+      "occurrences": 1375
+    },
+    "перев": {
+      "articles": 21,
+      "occurrences": 43
+    },
+    "пос": {
+      "articles": 284,
+      "occurrences": 479
+    },
+    "почт": {
+      "articles": 0,
+      "occurrences": 0
+    },
+    "преп": {
+      "articles": 22,
+      "occurrences": 51
+    },
+    "прил": {
+      "articles": 32,
+      "occurrences": 36
+    },
+    "прим": {
+      "articles": 42,
+      "occurrences": 52
+    },
+    "просп": {
+      "articles": 12,
+      "occurrences": 12
+    },
+    "проф": {
+      "articles": 243,
+      "occurrences": 516
+    },
+    "ред": {
+      "articles": 1404,
+      "occurrences": 2552
+    },
+    "респ": {
+      "articles": 29,
+      "occurrences": 50
+    },
+    "рис": {
+      "articles": 51,
+      "occurrences": 78
+    },
+    "руб": {
+      "articles": 185,
+      "occurrences": 404
+    },
+    "сел": {
+      "articles": 33,
+      "occurrences": 67
+    },
+    "смот": {
+      "articles": 0,
+      "occurrences": 0
+    },
+    "сост": {
+      "articles": 665,
+      "occurrences": 1012
+    },
+    "соч": {
+      "articles": 70,
+      "occurrences": 244
+    },
+    "спб": {
+      "articles": 1108,
+      "occurrences": 2334
+    },
+    "ср": {
+      "articles": 75,
+      "occurrences": 111
+    },
+    "стр": {
+      "articles": 995,
+      "occurrences": 1847
+    },
+    "таб": {
+      "articles": 1,
+      "occurrences": 4
+    },
+    "тел": {
+      "articles": 102,
+      "occurrences": 108
+    },
+    "тыс": {
+      "articles": 1268,
+      "occurrences": 3238
+    },
+    "экон": {
+      "articles": 13,
+      "occurrences": 22
+    },
+    "эл": {
+      "articles": 45,
+      "occurrences": 54
+    }
+  },
+  "helperSha256": "fc3a1f8594241473b1ada665bc45572c2b2c514bcc0ff1294faeae135415585c",
+  "independentlyQualified": false,
+  "interpretation": "raw token-dot occurrences, not meaning or verified abbreviation frequency",
+  "schema": 1,
+  "sourceDecoderAttested": false,
+  "sourceLockSha256": "02397f3424d85634e372e87d8cde55bd97af79615442d3ec1cada45831f95ede",
+  "sourceRepository": "wikimedia/wikipedia",
+  "sourceRevision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+  "sourceRows": 92622,
+  "sourceSha256": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f",
+  "sourceShard": "0011.parquet"
+}

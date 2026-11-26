@@ -1,0 +1,43 @@
+{
+  "bindings": {
+    "audit": "0206648f89ac2c993cf7361975ad39d101fcb12841cabe066dba2be1d284d06a",
+    "off": "a33fcf54618c352d722a18cc860fd3a7d0c4e57113634155b13d937cc0b54146",
+    "offIdentities": "117838bc7fafaae6b6ffcd02751d173ca09546f80595d1ee39a9c919891ccc71",
+    "offReceipt": "be0575521da21d62a41c99cbb1282cfbc2e02caa0de06f6375c3af0f56ee0f08",
+    "on": "e10f53ce28b0ed085be89799dd2c7c3179ab8fdfd2a27482ab1928636854a71d",
+    "onIdentities": "117838bc7fafaae6b6ffcd02751d173ca09546f80595d1ee39a9c919891ccc71",
+    "onReceipt": "02c60b8da0820bb91fe2e58c124eea3ea8edd1b8783298414408ba4eeb465778",
+    "rows": "d6a346911a5fb4476ee16e45ca5672f0ed75076cdb799c6fbad0ba042867b081",
+    "utility": "018c093270d4f3bfd23082fdce91c439ba7286660fc343843565861226430e35"
+  },
+  "counts": {
+    "languages": {
+      "en": {
+        "hidden3to7_off": 22,
+        "hidden3to7_on": 22,
+        "rows": 4000,
+        "typos": 1990
+      },
+      "es": {
+        "hidden3to7_off": 39,
+        "hidden3to7_on": 39,
+        "rows": 4000,
+        "typos": 1990
+      },
+      "ru": {
+        "hidden3to7_off": 125,
+        "hidden3to7_on": 211,
+        "rows": 4000,
+        "typos": 1960
+      }
+    },
+    "rows": 12000
+  },
+  "limitations": [
+    "Existing synthetic corpus; no physical device or native model.",
+    "Hypothetical full order preserves existing visible corrections first; hidden candidates remain unselectable.",
+    "No observation of user selection or practical value."
+  ],
+  "purpose": "U14_VALIDATED_HIDDEN_ORDER_NOT_UI_ACCEPTANCE",
+  "schema": 1
+}

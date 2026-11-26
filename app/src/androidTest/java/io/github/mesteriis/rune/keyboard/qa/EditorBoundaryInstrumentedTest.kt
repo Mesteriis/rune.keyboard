@@ -2,6 +2,7 @@ package io.github.mesteriis.rune.keyboard.qa
 
 import android.content.ContextWrapper
 import android.inputmethodservice.InputMethodService
+import android.view.inputmethod.EditorInfo
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
@@ -35,17 +36,19 @@ class EditorBoundaryInstrumentedTest : ImeTestBase() {
         assertServedEditor(R.id.qa_multiline_text)
         driver.assertKeyVisible("c")
         driver.tapKey("c")
-        driver.revealFieldAndAwaitText("qa_multiline_text", "c")
-
-        driver.focusField("qa_multiline_text")
+        assertServedEditor(R.id.qa_multiline_text)
         driver.tapKeyByDescription(context.getString(R.string.key_symbols))
-        assertTrue(driver.device.hasObject(By.desc(context.getString(R.string.key_letters))))
+        assertServedEditor(R.id.qa_multiline_text)
+        assertTrue("Symbols layer did not expose the letters key",
+            driver.device.wait(Until.hasObject(By.pkg(ImeTestDriver.PACKAGE_NAME)
+                .desc(context.getString(R.string.key_letters))), 5_000L))
         driver.focusField("qa_plain_text")
         assertServedEditor(R.id.qa_plain_text)
         driver.assertKeyVisible("q")
         driver.tapKey("q")
         // Selection is expected to be refreshed by editor focus changes between distinct fields.
         driver.revealFieldAndAwaitText("qa_plain_text", "leftrightq")
+        driver.revealFieldAndAwaitText("qa_multiline_text", "c")
     }
 
     /** Verify actual Binder editor delivery, even if adjustResize hides its accessibility node. */
@@ -142,5 +145,20 @@ class EditorBoundaryInstrumentedTest : ImeTestBase() {
         driver.assertKeyVisible(".")
         driver.focusField("qa_password")
         driver.assertKeyVisible("?123")
+    }
+
+    @Test
+    fun signedDecimalKeysAndDoneReachTheSameRemoteEditor() {
+        driver.launchQa(numberFirst = true)
+        driver.focusField("qa_number")
+        assertServedEditor(R.id.qa_number)
+        "-12.35".forEach { driver.tapKey(it.toString()) }
+        driver.awaitFieldText("qa_number", "-12.35")
+        driver.tapDelete()
+        driver.awaitFieldText("qa_number", "-12.3")
+        assertServedEditor(R.id.qa_number)
+        driver.tapEnter(R.string.key_done)
+        driver.awaitStatus("Action received: ${EditorInfo.IME_ACTION_DONE}")
+        driver.awaitFieldText("qa_number", "-12.3")
     }
 }

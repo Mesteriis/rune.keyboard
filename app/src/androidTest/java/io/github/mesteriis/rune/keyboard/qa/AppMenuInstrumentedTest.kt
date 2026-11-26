@@ -68,7 +68,9 @@ class AppMenuInstrumentedTest {
                     }
                     clickableParent(result).performClick()
                     assertEquals(activity.getString(R.string.menu_appearance), activity.findViewById<TextView>(R.id.menu_detail_title).text)
-                    val row = activity.findViewById<LinearLayout>(R.id.settings_container).findViewWithTag<View>(R.string.settings_number_row)
+                    val container = activity.findViewById<LinearLayout>(R.id.settings_container)
+                    assertFalse(container.isFocusable)
+                    val row = container.findViewWithTag<View>(R.string.settings_number_row)
                     assertTrue(row.performClick())
                     assertEquals(!before.numberRow, preferences.readSettings().numberRow)
                 }
@@ -77,6 +79,7 @@ class AppMenuInstrumentedTest {
                     val row = activity.findViewById<LinearLayout>(R.id.settings_container).findViewWithTag<View>(R.string.settings_number_row)
                     assertEquals(!before.numberRow, row.findViewById<Switch>(R.id.row_checkbox).isChecked)
                     activity.findViewById<View>(R.id.menu_back).performClick()
+                    assertTrue(activity.findViewById<LinearLayout>(R.id.settings_container).isFocusableInTouchMode)
                     val search = activity.findViewById<EditText>(R.id.menu_search)
                     assertEquals(activity.getString(R.string.settings_number_row), search.text.toString())
                     search.setText("zzzznoresult")

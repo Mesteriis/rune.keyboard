@@ -13,6 +13,8 @@ def main():
     summary = {'tests': result.testsRun,
                'failures': [test.id() for test, _ in result.failures],
                'errors': [test.id() for test, _ in result.errors],
+               'expectedFailures': [test.id() for test, _ in result.expectedFailures],
+               'unexpectedSuccesses': [test.id() for test in result.unexpectedSuccesses],
                'skipped': [{'test': test.id(), 'reason': reason} for test, reason in result.skipped]}
     Path(destination).write_text(json.dumps(summary, indent=2) + '\n')
     return 0 if result.wasSuccessful() and result.testsRun > 0 else 1

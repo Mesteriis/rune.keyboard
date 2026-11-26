@@ -52,6 +52,7 @@ object ScoringCode {
     const val CANCELLED = 9
     const val INTERNAL = 10
     const val INVALID = 12
+    const val CONTEXT_TOO_LONG = 13
     /** Native scorer could not form one complete comparable candidate set. */
     const val SCORING_FAILED = 15
 }

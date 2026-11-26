@@ -1,0 +1,238 @@
+{
+  "independentlyQualified": false,
+  "labels": [
+    {
+      "category": "abbreviation",
+      "index": 0,
+      "meaning": "saint_petersburg"
+    },
+    {
+      "category": "abbreviation",
+      "index": 1,
+      "meaning": "saint_petersburg"
+    },
+    {
+      "category": "abbreviation",
+      "index": 2,
+      "meaning": "saint_petersburg"
+    },
+    {
+      "category": "abbreviation",
+      "index": 3,
+      "meaning": "saint_petersburg"
+    },
+    {
+      "category": "abbreviation",
+      "index": 4,
+      "meaning": "saint_petersburg"
+    },
+    {
+      "category": "abbreviation",
+      "index": 5,
+      "meaning": "saint_petersburg"
+    },
+    {
+      "category": "abbreviation",
+      "index": 6,
+      "meaning": "saint_petersburg"
+    },
+    {
+      "category": "abbreviation",
+      "index": 7,
+      "meaning": "saint_petersburg"
+    },
+    {
+      "category": "abbreviation",
+      "index": 8,
+      "meaning": "saint_petersburg"
+    },
+    {
+      "category": "abbreviation",
+      "index": 9,
+      "meaning": "saint_petersburg"
+    },
+    {
+      "category": "abbreviation",
+      "index": 10,
+      "meaning": "moscow_time"
+    },
+    {
+      "category": "abbreviation",
+      "index": 11,
+      "meaning": "moscow_time"
+    },
+    {
+      "category": "domain_label",
+      "index": 12,
+      "meaning": "website_suffix"
+    },
+    {
+      "category": "abbreviation",
+      "index": 13,
+      "meaning": "moscow_time"
+    },
+    {
+      "category": "abbreviation",
+      "index": 14,
+      "meaning": "moscow_time"
+    },
+    {
+      "category": "abbreviation",
+      "index": 15,
+      "meaning": "moscow_time"
+    },
+    {
+      "category": "abbreviation",
+      "index": 16,
+      "meaning": "administrative"
+    },
+    {
+      "category": "abbreviation",
+      "index": 17,
+      "meaning": "administrative"
+    },
+    {
+      "category": "abbreviation",
+      "index": 18,
+      "meaning": "administrative"
+    },
+    {
+      "category": "abbreviation",
+      "index": 19,
+      "meaning": "administrative"
+    },
+    {
+      "category": "abbreviation",
+      "index": 20,
+      "meaning": "administrative"
+    },
+    {
+      "category": "abbreviation",
+      "index": 21,
+      "meaning": "administrative"
+    },
+    {
+      "category": "abbreviation",
+      "index": 22,
+      "meaning": "administrative"
+    },
+    {
+      "category": "abbreviation",
+      "index": 23,
+      "meaning": "administrative"
+    },
+    {
+      "category": "abbreviation",
+      "index": 24,
+      "meaning": "admiral"
+    },
+    {
+      "category": "abbreviation",
+      "index": 25,
+      "meaning": "administrative"
+    },
+    {
+      "category": "abbreviation",
+      "index": 26,
+      "meaning": "urban_settlement"
+    },
+    {
+      "category": "abbreviation",
+      "index": 27,
+      "meaning": "urban_settlement"
+    },
+    {
+      "category": "abbreviation",
+      "index": 28,
+      "meaning": "urban_settlement"
+    },
+    {
+      "category": "abbreviation",
+      "index": 29,
+      "meaning": "urban_settlement"
+    },
+    {
+      "category": "abbreviation",
+      "index": 30,
+      "meaning": "urban_settlement"
+    },
+    {
+      "category": "abbreviation",
+      "index": 31,
+      "meaning": "urban_settlement"
+    },
+    {
+      "category": "abbreviation",
+      "index": 32,
+      "meaning": "urban_settlement"
+    },
+    {
+      "category": "abbreviation",
+      "index": 33,
+      "meaning": "urban_settlement"
+    },
+    {
+      "category": "abbreviation",
+      "index": 34,
+      "meaning": "urban_settlement"
+    },
+    {
+      "category": "abbreviation",
+      "index": 35,
+      "meaning": "urban_settlement"
+    },
+    {
+      "category": "abbreviation",
+      "index": 36,
+      "meaning": "economic"
+    },
+    {
+      "category": "abbreviation",
+      "index": 37,
+      "meaning": "economic"
+    },
+    {
+      "category": "abbreviation",
+      "index": 38,
+      "meaning": "economic"
+    },
+    {
+      "category": "uncertain",
+      "index": 39,
+      "meaning": "uncertain"
+    },
+    {
+      "category": "abbreviation",
+      "index": 40,
+      "meaning": "economic"
+    },
+    {
+      "category": "abbreviation",
+      "index": 41,
+      "meaning": "economic"
+    },
+    {
+      "category": "abbreviation",
+      "index": 42,
+      "meaning": "economic"
+    },
+    {
+      "category": "abbreviation",
+      "index": 43,
+      "meaning": "economic"
+    },
+    {
+      "category": "abbreviation",
+      "index": 44,
+      "meaning": "economic"
+    },
+    {
+      "category": "abbreviation",
+      "index": 45,
+      "meaning": "economic"
+    }
+  ],
+  "method": "single model review of transient public excerpts; no source text retained",
+  "sampleSha256": "2ae92996095bd6f8644f80de97858bdaece31caa50336a96585c5522684db1ca",
+  "schema": 1
+}

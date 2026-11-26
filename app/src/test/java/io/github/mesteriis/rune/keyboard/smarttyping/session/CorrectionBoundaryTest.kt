@@ -10,6 +10,7 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.*
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.*
 import io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticCompletion
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticFeature
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticEvent
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticKind
@@ -17,6 +18,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticReaso
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticText
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnostics
 import io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingModel
+import io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalTypingCodec
+import io.github.mesteriis.rune.keyboard.smarttyping.personalization.PersonalAdmissionPolicy
 import java.lang.reflect.Proxy
 import org.junit.Assert.*
 import org.junit.Test
@@ -399,6 +402,86 @@ class CorrectionBoundaryTest {
                 assertEquals("кнь ", f.document)
                 assertNull(f.controller.state.lastAutoEdit)
             }
+        }
+    }
+
+    @Test fun `replay order retains visible prefix without making hidden candidates selectable`() {
+        val f = Fixture(qualified = null)
+        f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+        f.raw("кнь")
+        val request = f.controller.beginCandidateRequest(1, KeyboardLanguage.RUSSIAN)!!
+        val baseline = CandidateGeneration("кнь", emptyList(), CandidateCompletion.COMPLETE, false, null, 1, 0)
+        val words = listOf("конь", "камень", "князь", "книга").mapIndexed { i, text ->
+            GeneratedCandidate(text, text, text, KeyboardLanguage.RUSSIAN, false, 2, 50_001 + i,
+                1, EditFeatures(1.0, 0, 0.0), 1, CasePattern.LOWER, GeneratedCandidateKind.PUBLIC_AUGMENTED)
+        }
+        val manual = baseline.copy(alternatives = words, verifiedTerminals = words.size)
+        assertTrue(f.controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision,
+            request.requestId, baseline, manual)))
+        val order = f.controller.candidateOrderForReplay()
+        val visible = f.controller.candidateViewState.candidates.filterIsInstance<
+            io.github.mesteriis.rune.keyboard.smarttyping.ui.CandidateUiItem.Correction>()
+        assertEquals(4, order.size)
+        assertEquals(visible, order.take(visible.size))
+        assertEquals(TypingTextResult.REJECTED, f.controller.selectCandidate(order.last().id, f.execute))
+        f.type(" ")
+        assertEquals("кнь ", f.document)
+        assertTrue(f.controller.candidateOrderForReplay().isEmpty())
+    }
+
+    @Test fun `expanded selection requires a current single use snapshot`() {
+        fun fixture(): Fixture {
+            val f = Fixture(qualified = null)
+            f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+            f.raw("кнь")
+            val request = f.controller.beginCandidateRequest(1, KeyboardLanguage.RUSSIAN)!!
+            val baseline = CandidateGeneration("кнь", emptyList(), CandidateCompletion.COMPLETE, false, null, 1, 0)
+            val words = listOf("конь", "камень", "князь", "книга").mapIndexed { i, text ->
+                GeneratedCandidate(text, text, text, KeyboardLanguage.RUSSIAN, false, 2, 50_001 + i,
+                    1, EditFeatures(1.0, 0, 0.0), 1, CasePattern.LOWER, GeneratedCandidateKind.PUBLIC_AUGMENTED)
+            }
+            assertTrue(f.controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision,
+                request.requestId, baseline, baseline.copy(alternatives = words, verifiedTerminals = words.size))))
+            return f
+        }
+        run {
+            val f = fixture(); val snapshot = f.controller.openExpandedCandidates()!!
+            assertEquals(2, snapshot.candidates.size)
+            val candidate = snapshot.candidates.last()
+            assertEquals(TypingTextResult.REJECTED, f.controller.selectCandidate(candidate.id, f.execute))
+            val current = f.controller.openExpandedCandidates()!!
+            assertEquals(TypingTextResult.REJECTED, f.controller.selectExpandedCandidate(snapshot, candidate.id, f.execute))
+            assertEquals(TypingTextResult.HANDLED, f.controller.selectExpandedCandidate(current, candidate.id, f.execute))
+            assertEquals(candidate.text, f.document)
+            assertEquals(TypingTextResult.REJECTED, f.controller.selectExpandedCandidate(current, candidate.id, f.execute))
+            f.type(" ")
+            assertEquals(candidate.text + " ", f.document)
+            assertNull(f.controller.state.lastAutoEdit)
+        }
+        run {
+            val f = fixture(); val snapshot = f.controller.openExpandedCandidates()!!
+            val id = snapshot.candidates.last().id
+            f.raw("а")
+            assertEquals(TypingTextResult.REJECTED, f.controller.selectExpandedCandidate(snapshot, id, f.execute))
+            assertEquals("кньа", f.document)
+        }
+        run {
+            val f = fixture(); val snapshot = f.controller.openExpandedCandidates()!!
+            f.controller.closeExpandedCandidates()
+            assertEquals(TypingTextResult.REJECTED,
+                f.controller.selectExpandedCandidate(snapshot, snapshot.candidates.last().id, f.execute))
+        }
+        run {
+            val f = fixture(); val snapshot = f.controller.openExpandedCandidates()!!
+            val current = f.controller.openExpandedCandidates()!!
+            assertEquals(TypingTextResult.REJECTED,
+                f.controller.selectExpandedCandidate(snapshot, snapshot.candidates.last().id, f.execute))
+            assertEquals(TypingTextResult.REJECTED,
+                f.controller.selectExpandedCandidate(current, "foreign", f.execute))
+            f.controller.clearCandidates()
+            assertEquals(TypingTextResult.REJECTED,
+                f.controller.selectExpandedCandidate(current, current.candidates.last().id, f.execute))
+            assertEquals("кнь", f.document)
         }
     }
 
@@ -1082,6 +1165,69 @@ class CorrectionBoundaryTest {
         assertEquals(0L, unchangedModel.snapshot()[QualityEvent.MANUAL_RETYPE])
     }
 
+    @Test fun `experimental model window preserves short bytes and suppresses empty prefix`() {
+        val empty = Fixture(modelOnly = true, prefixWindow = true)
+        empty.raw("helllo"); empty.publish("hello")
+        assertNull(empty.controller.beginModelRanking(1))
+
+        val short = Fixture(modelOnly = true, prefixWindow = true)
+        short.raw("a".repeat(256)); short.type(" ")
+        short.raw("helllo"); short.publish("hello")
+        assertEquals("a".repeat(256) + " ", short.controller.beginModelRanking(1)!!.prefix)
+    }
+
+    @Test fun `experimental model window bounds long rune owned prefix`() {
+        val f = Fixture(modelOnly = true, prefixWindow = true)
+        repeat(80) { f.raw("слово"); f.type(" ") }
+        f.raw("helllo"); f.publish("hello")
+        val prefix = f.controller.beginModelRanking(1)!!.prefix
+        assertTrue(prefix.endsWith(" "))
+        assertTrue(prefix.dropLast(1).toByteArray(Charsets.UTF_8).size <= 256)
+        assertTrue(prefix.startsWith("слово"))
+    }
+
+    @Test fun `experimental model window retains its start across context eviction and a late request`() {
+        val f = Fixture(modelOnly = true, prefixWindow = true)
+        repeat(180) { index ->
+            f.raw("prefix${'a' + index / 26}${'a' + index % 26}")
+            f.type(" ")
+        }
+        assertTrue(f.document.length >= 1500)
+        f.raw("helllooooo"); f.publish("hello")
+        val first = requireNotNull(f.controller.beginModelRanking(1)).prefix
+        f.type(" ")
+        val reply = f.pendingModelLocalSpace("worlld", "world")
+        val next = requireNotNull(f.controller.beginModelRankingAfterLocalSpace(reply, 2)).prefix
+        assertEquals(first + "helllooooo ", next)
+        assertTrue(next.dropLast(1).toByteArray(Charsets.UTF_8).size <= 256)
+    }
+
+    @Test fun `experimental late local scoring suppresses empty prefix and bounds long prefix`() {
+        val empty = Fixture(modelOnly = true, prefixWindow = true)
+        val emptyReply = empty.pendingModelLocalSpace("helllo", "hello")
+        assertNull(empty.controller.beginModelRankingAfterLocalSpace(emptyReply, 1))
+
+        val long = Fixture(modelOnly = true, prefixWindow = true)
+        repeat(80) { long.raw("word"); long.type(" ") }
+        val reply = long.pendingModelLocalSpace("helllo", "hello")
+        val prefix = long.controller.beginModelRankingAfterLocalSpace(reply, 1)!!.prefix
+        assertTrue(prefix.endsWith(" "))
+        assertTrue(prefix.dropLast(1).toByteArray(Charsets.UTF_8).size <= 256)
+        assertTrue(prefix.startsWith("word"))
+    }
+
+    @Test fun `experimental contextual model bounds only the sent prefix`() {
+        val f = Fixture(prefixWindow = true)
+        repeat(80) { f.raw("word"); f.type(" ") }
+        f.raw("hello"); f.publishValid()
+        assertTrue(f.controller.canRequestContextualRanking)
+        val input = f.controller.beginContextualRanking(1)!!
+        assertTrue(input.prefix.toByteArray(Charsets.UTF_8).size <= 256)
+        assertTrue(input.prefix.endsWith("word"))
+        assertTrue(input.continuations.contains(" hello"))
+        assertTrue(input.continuations.contains(", hello"))
+    }
+
     @Test fun `qualified model choice is the primary with one comparison before manual pick or late undo`() {
         val f = Fixture(modelOnly = true); val model = quality(f)
         f.raw("helllo"); f.publish("hello")
@@ -1226,8 +1372,41 @@ class CorrectionBoundaryTest {
             }
             assertEquals("completeLocal=$completeLocal useModel=$useModel", expected,
                 events.single { it.kind == DiagnosticKind.BOUNDARY }.reason)
+            if (!completeLocal && !useModel) {
+                val event = events.single { it.kind == DiagnosticKind.BOUNDARY }
+                assertEquals(DiagnosticCompletion.UNAVAILABLE, event.localCompletion)
+                assertEquals(0, event.localInspectedStates)
+                assertEquals(0, event.localVerifiedTerminals)
+            }
             assertTrue(f.calls.none { it.startsWith("get") })
         }
+    }
+
+    @Test fun `boundary diagnostic carries an exhausted local search budget`() {
+        val f = Fixture()
+        val events = mutableListOf<DiagnosticEvent>()
+        f.controller.setDiagnostics(object : TypingDiagnostics {
+            override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+            override fun invalidate() = Unit
+            override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { events += event }
+        })
+        f.raw("helllo")
+        val request = f.controller.beginCandidateRequest(1, KeyboardLanguage.ENGLISH)!!
+        val item = GeneratedCandidate("hello", "hello", "hello", KeyboardLanguage.ENGLISH, false, 4, 1, 1,
+            EditFeatures(1.0, 0, 0.0), 1, CasePattern.LOWER)
+        val local = LocalSearchEvidence(CandidateCompletion.STATES_EXHAUSTED, emptyList(), 8192, 13)
+        assertTrue(f.controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision,
+            request.requestId, CandidateGeneration(request.token, listOf(item), CandidateCompletion.COMPLETE,
+                false, null, 1, 1, local))))
+        events.clear()
+        f.type(" ")
+        val event = events.single { it.kind == DiagnosticKind.BOUNDARY }
+        assertEquals(DiagnosticReason.SEARCH_INCOMPLETE, event.reason)
+        assertEquals(DiagnosticCompletion.STATES_EXHAUSTED, event.localCompletion)
+        assertEquals(8192, event.localInspectedStates)
+        assertEquals(13, event.localVerifiedTerminals)
+        assertEquals("helllo ", f.document)
+        assertTrue(f.calls.none { it.startsWith("get") })
     }
 
     @Test fun `specific joint refusal is not replaced by the earlier empty local search`() {
@@ -1860,6 +2039,41 @@ class CorrectionBoundaryTest {
         }
     }
 
+    @Test fun `english i offers manual capital without automatic replacement`() {
+        for (boundary in listOf(" ", ".", ":")) {
+            val f = Fixture(qualified = true)
+            f.keyboard = KeyboardState(KeyboardLanguage.ENGLISH)
+            f.raw("i"); f.publishCanonical("I", unambiguous = false, eligible = false)
+            assertTrue(f.controller.candidateViewState.candidates.any { it.text == "I" })
+            assertEquals(TypingTextResult.HANDLED, f.type(boundary))
+            assertEquals("i$boundary", f.document)
+            assertNull(f.controller.state.lastAutoEdit)
+        }
+        val f = Fixture(qualified = true)
+        f.keyboard = KeyboardState(KeyboardLanguage.ENGLISH)
+        f.raw("i"); f.publishCanonical("I", unambiguous = false, eligible = false)
+        val candidate = f.controller.candidateViewState.candidates.filterIsInstance<CandidateUiItem.Correction>()
+            .single { it.text == "I" }
+        assertEquals(TypingTextResult.HANDLED, f.controller.selectCandidate(candidate.id, f.execute))
+        assertEquals("I", f.document)
+    }
+
+    @Test fun `english i distinguishes dotted tokens from sentence starts`() {
+        for ((prefix, expectSuggestion) in listOf("obj." to false, "sample." to false,
+            "1." to false, "yes. " to true, "yes \"" to true)) {
+            val f = Fixture(qualified = true)
+            f.keyboard = KeyboardState(KeyboardLanguage.ENGLISH)
+            prefix.forEach { f.raw(it.toString()) }
+            f.raw("i")
+            val reply = f.canonicalReply("I", unambiguous = false, eligible = false)
+            assertEquals(prefix, expectSuggestion, f.controller.acceptCandidates(reply))
+            assertEquals(prefix, expectSuggestion, f.controller.candidateViewState.candidates.any { it.text == "I" })
+            assertEquals(TypingTextResult.HANDLED, f.type(" "))
+            assertEquals("${prefix}i ", f.document)
+            assertNull(f.controller.state.lastAutoEdit)
+        }
+    }
+
     @Test fun `canonical case auto replaces on boundary and Undo restores lowercase original`() {
         val f = Fixture(qualified = false)
         f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
@@ -1875,6 +2089,75 @@ class CorrectionBoundaryTest {
         assertTrue(f.controller.state.originalSelected)
     }
 
+    @Test fun `undo of canonical case teaches a scoped veto without hiding the explicit suggestion`() {
+        val ru = KeyboardLanguage.RUSSIAN
+        for ((original, canonical) in listOf("клава" to "Клава", "клавы" to "Клавы",
+            "читы" to "Читы", "моника" to "Моника")) {
+            var personal = PersonalTypingModel { _, _ -> true }
+            fun connect(f: Fixture) {
+                f.keyboard = KeyboardState(ru)
+                f.controller.setPersonalization(object : TypingPersonalization {
+                    override fun allowsAutomatic(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                        language: KeyboardLanguage): Boolean = PersonalAdmissionPolicy.personalRefusal(
+                            true, personal, generation.original.orEmpty(), candidate.text, language) == null
+                    override fun rejected(original: String, replacement: String, language: KeyboardLanguage) {
+                        personal.recordRejected(original, replacement, language)
+                    }
+                }, ru)
+            }
+            val first = Fixture(qualified = false)
+            connect(first)
+            first.raw(original); first.publishCanonical(canonical, unambiguous = true)
+            assertEquals(TypingTextResult.HANDLED, first.type(" "))
+            assertEquals("$canonical ", first.document)
+            assertEquals(TypingTextResult.HANDLED, first.undo())
+            assertEquals(original, first.document)
+            assertTrue(personal.rejects(original, canonical, ru))
+            val snapshot = PersonalTypingCodec.encode(personal.snapshot())
+            personal = PersonalTypingModel { _, _ -> true }.apply { restore(PersonalTypingCodec.decode(snapshot)) }
+
+            val next = Fixture(qualified = false)
+            connect(next)
+            next.raw(original); next.publishCanonical(canonical, unambiguous = true)
+            assertTrue(next.controller.candidateViewState.candidates.any { it.text == canonical })
+            assertEquals(TypingTextResult.HANDLED, next.type(" "))
+            assertEquals("$original ", next.document)
+            assertNull(next.controller.state.lastAutoEdit)
+
+            val manual = Fixture(qualified = false)
+            connect(manual)
+            manual.raw(original); manual.publishCanonical(canonical, unambiguous = true)
+            val explicit = manual.controller.candidateViewState.candidates.filterIsInstance<CandidateUiItem.Correction>()
+                .single { it.text == canonical }
+            assertEquals(TypingTextResult.HANDLED, manual.controller.selectCandidate(explicit.id, manual.execute))
+            assertEquals(canonical, manual.document)
+
+            val other = Fixture(qualified = false)
+            connect(other)
+            other.raw("москва"); other.publishCanonical("Москва", unambiguous = true)
+            assertEquals(TypingTextResult.HANDLED, other.type(" "))
+            assertEquals("Москва ", other.document)
+        }
+    }
+
+    @Test fun `ineligible canonical suggestion is manual only at every boundary`() {
+        for (boundary in listOf(" ", ".", ":")) {
+            val f = Fixture(qualified = true)
+            f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+            f.raw("инн"); f.publishCanonical("Инн", unambiguous = true, eligible = false)
+            assertEquals(TypingTextResult.HANDLED, f.type(boundary))
+            assertEquals("инн$boundary", f.document)
+            assertNull(f.controller.state.lastAutoEdit)
+        }
+        val manual = Fixture(qualified = true)
+        manual.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+        manual.raw("инн"); manual.publishCanonical("Инн", unambiguous = true, eligible = false)
+        val candidate = manual.controller.candidateViewState.candidates.filterIsInstance<CandidateUiItem.Correction>()
+            .single { it.text == "Инн" }
+        assertEquals(TypingTextResult.HANDLED, manual.controller.selectCandidate(candidate.id, manual.execute))
+        assertEquals("Инн", manual.document)
+    }
+
     @Test fun `routed lowercase conflict blocks canonical auto even with ordinary qualification`() {
         val f = Fixture(qualified = true)
         f.raw("si")
@@ -1882,6 +2165,22 @@ class CorrectionBoundaryTest {
         assertEquals(TypingTextResult.HANDLED, f.type(" "))
         assertEquals("si ", f.document)
         assertNull(f.controller.state.lastAutoEdit)
+    }
+
+    @Test fun `english pronoun suggestion respects apostrophes and identifiers`() {
+        for (text in listOf("the Baha'i", "the Baha’i", "value_i", "_i", "she said 'i", "yes i")) {
+            val f = Fixture(qualified = true)
+            f.keyboard = KeyboardState(KeyboardLanguage.ENGLISH)
+            text.forEach { assertEquals(TypingTextResult.HANDLED, f.type(it.toString())) }
+            val expectedSuggestion = text in listOf("she said 'i", "yes i")
+            assertEquals(text, expectedSuggestion,
+                f.controller.acceptCandidates(f.canonicalReply("I", unambiguous = false, eligible = false)))
+            assertEquals(text, expectedSuggestion, f.controller.candidateViewState.candidates
+                .filterIsInstance<CandidateUiItem.Correction>().any { it.text == "I" })
+            assertEquals(TypingTextResult.HANDLED, f.type(" "))
+            assertEquals("$text ", f.document)
+            assertNull(f.controller.state.lastAutoEdit)
+        }
     }
 
     @Test fun `disabled autocorrection keeps canonical case as a suggestion`() {
@@ -1908,6 +2207,37 @@ class CorrectionBoundaryTest {
         }
     }
 
+    @Test fun `symbols layer corrects only colon and retains protected ASCII`() {
+        for ((word, boundary, expected) in listOf(
+            Triple("смотруть", ":", "смотреть:"),
+            Triple("смотруть", ".", "смотруть."),
+            Triple("смотруть", "/", "смотруть/"),
+            Triple("http", ":", "http:"),
+        )) {
+            val f = Fixture()
+            f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN, layer = KeyboardLayer.SYMBOLS)
+            f.raw(word); f.publish(if (word == "http") "https" else "смотреть")
+            assertEquals(TypingTextResult.HANDLED, f.type(boundary))
+            assertEquals(expected, f.document)
+        }
+    }
+
+    @Test fun `colon continuation requires a whole owned Cyrillic word and a live colon`() {
+        val owned = Fixture()
+        owned.raw("уточню"); owned.raw(":")
+        assertTrue(owned.controller.ownsCyrillicColonContinuation())
+        assertTrue(owned.controller.invalidate(owned.execute))
+        assertFalse(owned.controller.ownsCyrillicColonContinuation())
+
+        val ascii = Fixture()
+        ascii.raw("https"); ascii.raw(":")
+        assertFalse(ascii.controller.ownsCyrillicColonContinuation())
+
+        val attached = Fixture()
+        attached.raw("@"); attached.raw("уточню"); attached.raw(":")
+        assertFalse(attached.controller.ownsCyrillicColonContinuation())
+    }
+
     @Test fun `dot and colon correct a ready Cyrillic word while ASCII protected forms stay unchanged`() {
         for (boundary in listOf(".", ":")) {
             val cyrillic = Fixture().apply { keyboard = KeyboardState(KeyboardLanguage.RUSSIAN) }
@@ -1924,6 +2254,43 @@ class CorrectionBoundaryTest {
             assertEquals("helllo$boundary", ascii.document)
             assertNull(ascii.controller.state.lastAutoEdit)
         }
+    }
+
+    @Test fun `continuous Russian domain entry restores the original label after a ready period correction`() {
+        for ((first, last) in listOf("р" to "ф", "Р" to "Ф")) {
+            val f = Fixture().apply { keyboard = KeyboardState(KeyboardLanguage.RUSSIAN) }
+            f.raw("адрес"); f.raw(" "); f.raw("смотруть"); f.publish("смотреть")
+            f.type(".")
+            assertEquals("адрес смотреть.", f.document)
+            f.type(first)
+            assertEquals(TypingTextResult.HANDLED, f.type(last))
+            assertEquals("адрес смотруть.$first$last", f.document)
+            assertNull(f.controller.state.lastAutoEdit)
+            f.undo()
+            assertEquals("адрес смотруть.$first", f.document)
+            f.type(last); f.type(" ")
+            assertEquals("адрес смотруть.$first$last ", f.document)
+            assertEquals(0, f.batchDepth)
+        }
+    }
+
+    @Test fun `Russian domain restoration expires after intervening input and never retries a rejected commit`() {
+        fun afterFirstLetter() = Fixture().apply {
+            keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+            raw("смотруть"); publish("смотреть"); type("."); type("р")
+        }
+        val later = afterFirstLetter()
+        later.type("я"); later.type("ф")
+        assertEquals("смотреть.ряф", later.document)
+
+        val rejected = afterFirstLetter()
+        rejected.fail = "commitText"
+        rejected.calls.clear()
+        assertEquals(TypingTextResult.REJECTED, rejected.type("ф"))
+        assertEquals("смотреть.р", rejected.document)
+        assertEquals(1, rejected.calls.count { it == "commitText" })
+        assertFalse(rejected.controller.state.enabled)
+        assertEquals(0, rejected.batchDepth)
     }
 
     @Test fun `reentrant candidate policy invalidation stops batch and never publishes its Undo`() {
@@ -2035,6 +2402,44 @@ class CorrectionBoundaryTest {
         Triple(KeyboardLanguage.SPANISH, "mensage", "mensaje"),
         Triple(KeyboardLanguage.SPANISH, "correcion", "corrección"),
     )
+
+    @Test fun `staged neighbor recovery after space respects completeness and deadline`() {
+        for ((elapsed, completion, expected) in listOf(
+            Triple(100_000_000L, CandidateCompletion.COMPLETE, true),
+            Triple(250_000_000L, CandidateCompletion.COMPLETE, false),
+            Triple(100_000_000L, CandidateCompletion.STATES_EXHAUSTED, false),
+            Triple(100_000_000L, CandidateCompletion.CANCELLED, false),
+        )) {
+            val f = Fixture(); f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
+            f.controller.setPersonalization(object : TypingPersonalization {
+                override fun recoveryAutomaticCandidate(context: String, generation: CandidateGeneration,
+                    language: KeyboardLanguage) = generation.neighborRecovery.alternatives.singleOrNull()
+                    .takeIf { generation.neighborRecovery.isComplete }
+                override fun recoveryAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                    language: KeyboardLanguage) = AutomaticTypingDecision(candidate in generation.neighborRecovery.alternatives)
+            }, KeyboardLanguage.RUSSIAN)
+            f.raw("рооверка")
+            val request = f.controller.beginCandidateRequest(1, KeyboardLanguage.RUSSIAN)!!
+            val candidate = GeneratedCandidate("проверка", "проверка", "проверка", KeyboardLanguage.RUSSIAN,
+                false, 0, 30, 2, EditFeatures(1.5, 2, 0.0), 0, CasePattern.LOWER)
+            val baseline = CandidateGeneration(request.token, emptyList(), CandidateCompletion.COMPLETE,
+                false, null, 1, 0, LocalSearchEvidence(CandidateCompletion.COMPLETE, emptyList(), 1, 0))
+            assertTrue(f.controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision,
+                request.requestId, baseline, isFinal = false)))
+            f.controller.retainCandidateAcrossSpace { f.type(" ") }
+            assertEquals("рооверка ", f.document)
+            f.now = elapsed
+            val recoveryCandidates = if (completion == CandidateCompletion.CANCELLED) emptyList() else listOf(candidate)
+            val result = baseline.copy(neighborRecovery = LocalSearchEvidence(completion, recoveryCandidates, 2,
+                recoveryCandidates.size))
+            val reply = LocalCandidateReply(request.sessionId, request.revision, request.requestId,
+                result, stage = CandidateStage.RECOVERY)
+            assertEquals("elapsed=$elapsed completion=$completion", expected,
+                f.controller.acceptLocalSpaceCorrection(reply, f.execute))
+            assertEquals(if (expected) "проверка " else "рооверка ", f.document)
+            if (expected) { f.undo(); assertEquals("рооверка", f.document) }
+        }
+    }
 
     @Test fun `recovery winner retains recovery evidence when already present in baseline suggestions`() {
         val f = Fixture(); f.keyboard = KeyboardState(KeyboardLanguage.RUSSIAN)
@@ -2224,6 +2629,7 @@ class CorrectionBoundaryTest {
     }
 
     private class Fixture(qualified: Boolean? = true, modelOnly: Boolean = false, initial: String = "", refinement: Boolean = false,
+        prefixWindow: Boolean = false,
         refinementQualified: Boolean? = null, rescueQualified: Boolean? = null, wordContextQualified: Boolean? = null, grammarRevisionQualified: Boolean? = null, nounCaseQualified: Boolean? = null) {
         var now = 0L
         val controller = TypingSessionController(jvmGraphemes, qualified?.let { allowed ->
@@ -2234,7 +2640,8 @@ class CorrectionBoundaryTest {
                 wordContextQualified else if (model == SpellingSource.JOINT_RESCUE && rescueQualified != null)
                 rescueQualified else allowed && (!modelOnly || model == SpellingSource.MODEL) }
         } ?: SpellingQualification.CURRENT, nanoTime = { now },
-            refinementThresholds = if (refinement) RecoveryThresholds(-3.0, 0.5) else null)
+            refinementThresholds = if (refinement) RecoveryThresholds(-3.0, 0.5) else null,
+            experimentalModelPrefixWindow = prefixWindow)
             .apply { startSession(EditorContext.from(1, 0), initial.length, initial.length) }
         var document = initial
         var caret = initial.length
@@ -2298,6 +2705,16 @@ class CorrectionBoundaryTest {
             doubleSpaceGesture = doubleSpace, autocorrectionMode = mode, execute = execute)
         fun raw(text: String) = controller.typeText(text, execute)
         fun undo() = controller.deletePrevious(execute)
+        fun pendingModelLocalSpace(original: String, target: String): LocalCandidateReply {
+            raw(original)
+            val request = checkNotNull(controller.beginCandidateRequest(++requestId, keyboard.language))
+            val item = GeneratedCandidate(target, TokenUnicode.folded(target), TokenUnicode.folded(target), keyboard.language,
+                false, 4, 1, 1, EditFeatures(1.0, 0, 0.0),
+                kotlin.math.abs(target.length - original.length), CasePattern.analyze(original))
+            val generation = CandidateGeneration(original, listOf(item), CandidateCompletion.COMPLETE, false, null, 1, 1)
+            controller.retainCandidateAcrossSpace { type(" ") }
+            return LocalCandidateReply(request.sessionId, request.revision, request.requestId, generation)
+        }
         fun pendingLocalSpace(original: String, target: String): LocalCandidateReply {
             raw(original)
             val request = checkNotNull(controller.beginCandidateRequest(++requestId, keyboard.language))
@@ -2317,6 +2734,11 @@ class CorrectionBoundaryTest {
             val input = controller.beginModelRanking(1)!!
             controller.retainRankingAcrossSpace { type(" ") }
             return input
+        }
+        fun publishValid() {
+            val request = checkNotNull(controller.beginCandidateRequest(++requestId, keyboard.language))
+            val generation = CandidateGeneration(request.token, emptyList(), CandidateCompletion.VALID_WORD, true, null, 1, 0)
+            assertTrue(controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision, request.requestId, generation)))
         }
         fun publish(word: String, completion: CandidateCompletion = CandidateCompletion.COMPLETE) {
             val request = controller.beginCandidateRequest(++requestId, keyboard.language)!!
@@ -2355,10 +2777,10 @@ class CorrectionBoundaryTest {
             controller.retainCandidateAcrossSpace { type(" ") }
             return reply
         }
-        private fun canonicalReply(word: String, unambiguous: Boolean, eligible: Boolean): LocalCandidateReply {
+        fun canonicalReply(word: String, unambiguous: Boolean, eligible: Boolean): LocalCandidateReply {
             val request = controller.beginCandidateRequest(++requestId, keyboard.language)!!
             val item = GeneratedCandidate(word, word, TokenUnicode.folded(word), keyboard.language,
-                false, 4, 1, 0, EditFeatures(0.0, 0, 0.0), 0, CasePattern.TITLE,
+                false, 4, 1, 0, EditFeatures(0.0, 0, 0.0), 0, CasePattern.analyze(word),
                 GeneratedCandidateKind.CANONICAL_CASE, canonicalCaseUnambiguous = unambiguous,
                 canonicalCaseAutoEligible = eligible)
             return LocalCandidateReply(request.sessionId, request.revision,

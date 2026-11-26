@@ -57,6 +57,21 @@ class SessionTextContextTest {
         assertEquals(1_024, context.text.codePointCount(0, context.text.length))
     }
 
+    @Test fun `retained start counts whole evicted graphemes and resets on restore`() {
+        val context = SessionTextContext(jvmGraphemes, maxCodePoints = 4)
+        context.append("a👩‍💻")
+        assertEquals(0L, context.retainedStartUtf16)
+        context.append("b")
+        assertEquals(1L, context.retainedStartUtf16)
+        context.append("c")
+        assertEquals("bc", context.text)
+        assertEquals(6L, context.retainedStartUtf16)
+        assertTrue(context.replaceSuffix("bc", "zz"))
+        assertEquals(6L, context.retainedStartUtf16)
+        context.restore("bc")
+        assertEquals(0L, context.retainedStartUtf16)
+    }
+
     @Test
     fun `backspace removes whole final cluster and clear destroys retained text`() {
         val context = SessionTextContext(jvmGraphemes)

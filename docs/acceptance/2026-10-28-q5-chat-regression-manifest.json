@@ -1,0 +1,32 @@
+{
+  "controlGroundTruth": "unverified source spelling; cohort correct denotes unchanged source control only",
+  "counts": {
+    "editCounts": {
+      "control": 9543,
+      "double_consonant": 9512,
+      "reflexive_suffix": 273,
+      "remove_sign": 1553,
+      "vowel_ei": 6357,
+      "vowel_oa": 7092
+    },
+    "eligibleSentences": 9550,
+    "rows": 34330,
+    "unregisteredExcluded": 7
+  },
+  "editDistribution": "one candidate per applicable operation, not measured typo frequency",
+  "generatorSha256": "f63ff55837c9c3914e025a7826ac3484adda0c42ad298a5cf94e81599fd8e133",
+  "independentQualification": false,
+  "inputsSha256": "33182005eb09a9aa6fa491f110c7147103470dd565e50bf8965642271552f753",
+  "labelsCaveat": "Source controls are not independently proofread and may contain errors; synthetic edits can be real words. Neither proves user intent.",
+  "language": "ru",
+  "ledgerSha256": "6f9bc49549e5628655fe2de74b720f96ecd25ccce6ce95997a031eeea7bc18f5",
+  "license": "CC0-1.0",
+  "modelCalls": 0,
+  "purpose": "DISCLOSED_REGRESSION_NOT_QUALIFICATION",
+  "rowsSha256": "c25d9afed4b75f78490f2e360c3eb0a0e06aaf97e3291d79f0bdd29aec0ee62f",
+  "schema": 1,
+  "sourceCaveat": "Tatoeba has prior training and evaluation exposure; not independent holdout.",
+  "sourceLockSha256": "850a865909accd5680c0e7ddb522efb05b5dc6addc6e3f2e96d2d3be899cbeff",
+  "sourceSha256": "982264e0857d2574ada9d1c07897e816ab9c4a8fb139f05320b5836f53d4d7ed",
+  "sourceUrl": "https://downloads.tatoeba.org/exports/per_language/rus/rus_sentences_CC0.tsv.bz2"
+}

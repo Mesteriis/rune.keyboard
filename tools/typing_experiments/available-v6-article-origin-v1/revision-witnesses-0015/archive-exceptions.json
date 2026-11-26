@@ -1,0 +1,99 @@
+{
+  "alternateAvailability": {
+    "article": "7171152",
+    "captureAvailable": false,
+    "forms": [
+      "original-encoded-title",
+      "mobile-title",
+      "curid"
+    ],
+    "httpStatus": 200,
+    "queryTimestamp": "20231101"
+  },
+  "archiveMetadata": {
+    "exactSnapshotRevisionProven": false,
+    "publicationRightsReviewed": false,
+    "queryTimestamp": "20231101",
+    "rows": [
+      {
+        "article": "7121163",
+        "availabilityHttp": 200,
+        "captureHttp": "200",
+        "captureTimestamp": "20241201164819",
+        "htmlSha256": "472722f6081e45d6ed24ba5a32f58d3b8e88652beda2f3f6462b7a287ebbf5a6",
+        "ids": {
+          "wgArticleId": 7121163,
+          "wgCurRevisionId": 141710277,
+          "wgRevisionId": 141710277
+        },
+        "pageIdentityMatches": true,
+        "replayStatus": 200
+      },
+      {
+        "article": "7171152",
+        "availability": "no-indexed-capture",
+        "availabilityHttp": 200
+      },
+      {
+        "article": "7452977",
+        "availabilityHttp": 200,
+        "captureHttp": "200",
+        "captureTimestamp": "20240605054304",
+        "htmlSha256": "20a82727550279af5c9379ed4a1db8f672a84529c24d7700bfaeb3ac23fca914",
+        "ids": {
+          "wgArticleId": 7452977,
+          "wgCurRevisionId": 133007996,
+          "wgRevisionId": 133007996
+        },
+        "pageIdentityMatches": true,
+        "replayStatus": 200
+      }
+    ],
+    "scope": "public Wayback metadata only"
+  },
+  "archivePassages": {
+    "calibration": {
+      "checked": [],
+      "exactSnapshotRevisionProven": false,
+      "historicalCalibrationSha256": "0e38210241368965d30edbce36387b6de3f821447c1e69d5ba19ef4c2b75ebf9",
+      "htmlSelector": "#mw-content-text .mw-parser-output",
+      "includesFullCleanedArticleCheck": false,
+      "publicationRightsReviewed": false,
+      "scope": "normalized visible archive passage check"
+    },
+    "holdout": {
+      "checked": [
+        {
+          "article": "7121163",
+          "captureSha256": "472722f6081e45d6ed24ba5a32f58d3b8e88652beda2f3f6462b7a287ebbf5a6",
+          "captureTimestamp": "20241201164819",
+          "contexts": 1,
+          "displayedRevision": 141710277,
+          "fullWindowMatch": false,
+          "leftMatch": false,
+          "rightMatch": false,
+          "rows": 5
+        },
+        {
+          "article": "7452977",
+          "captureSha256": "20a82727550279af5c9379ed4a1db8f672a84529c24d7700bfaeb3ac23fca914",
+          "captureTimestamp": "20240605054304",
+          "contexts": 1,
+          "displayedRevision": 133007996,
+          "fullWindowMatch": true,
+          "leftMatch": true,
+          "rightMatch": true,
+          "rows": 5
+        }
+      ],
+      "exactSnapshotRevisionProven": false,
+      "historicalHoldoutSha256": "fab03f6fb1c08c462328ebf5c18877b0483ab7977179090c2bd48db9e89a0e8d",
+      "htmlSelector": "#mw-content-text .mw-parser-output",
+      "includesFullCleanedArticleCheck": false,
+      "publicationRightsReviewed": false,
+      "scope": "normalized visible archive passage check"
+    }
+  },
+  "schema": 1,
+  "sourceShardArticlesSha256": "03b93826acf5f1a470c169e29df23764a88783af78763c3116616aa340b8f972"
+}

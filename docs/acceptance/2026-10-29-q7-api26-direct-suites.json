@@ -1,0 +1,64 @@
+{
+  "appTree": "b9d7cfa5ad31f4e8bd5d880a5e662ef4aa84bdde",
+  "gradleConnectedRunnerVerified": false,
+  "hostedCiVerified": false,
+  "nativeTestApkSha256": "b9ca2fbf524b652b2c28dc9d3dc78d18de5a48eb23af3113e369466c141d0af8",
+  "normalApkSha256": "4ec78729849a0d86bed2e9636c1717e859692e86836a6f2e98ef075ed1af82f3",
+  "normalTestApkSha256": "6d8440c5d4e09348ba8d301004a56ce6d467b90d30ce779fdc6e1fcc7b4f9686",
+  "qualificationApkSha256": "3f105837204155ce5a2332dfefda431230c400f27773af77b9e178704d29d3d2",
+  "qualificationTestApkSha256": "9d3135fe8c048111b486be91ad6e0ae31c30145b8500f6447cce323c140fe52e",
+  "results": {
+    "export-navigation": {
+      "executed": 1,
+      "failures": 0,
+      "logSha256": "0c80f5e09ff782f659502330bc425e0393d27250c508a72a034faa7a70d91445",
+      "reported": 1,
+      "skipped": 0
+    },
+    "export-picker": {
+      "executed": 1,
+      "failures": 0,
+      "logSha256": "f6bebc9519eefaaff23f7e0f349cb5c5f63361ad656cf7359471363f01953348",
+      "reported": 1,
+      "skipped": 0
+    },
+    "general": {
+      "executed": 303,
+      "failures": 0,
+      "logSha256": "d5e0e103eb89e78a1a2fc6c4adbacdc72b1cf1fd1c72c4ae00f3555b59819f28",
+      "reported": 351,
+      "skipped": 48
+    },
+    "native-runtime": {
+      "executed": 6,
+      "failures": 0,
+      "logSha256": "04aace2c2995a7753d5b2ff85da1d6b9f122dc123e3987f77bcaf5163ccced38",
+      "reported": 6,
+      "skipped": 0
+    },
+    "personal": {
+      "executed": 4,
+      "failures": 0,
+      "logSha256": "9dae9e14308610e1001cc3290815c19c0a2138042aa865b7163510335803a8bc",
+      "reported": 4,
+      "skipped": 0
+    },
+    "qualification-lifecycle": {
+      "executed": 1,
+      "failures": 0,
+      "logSha256": "986e97942e055453b47f85c6f6a0d858c0fc9b31c45b9433c4b469aec3bff3c4",
+      "reported": 1,
+      "skipped": 0
+    },
+    "qualification-safety": {
+      "executed": 1,
+      "failures": 0,
+      "logSha256": "c2c48356e3da6e6c40253ec1bf854ef07fa6e3250e4b7222ee6d26588797b441",
+      "reported": 1,
+      "skipped": 0
+    }
+  },
+  "runtimeTree": "bf9703ae3229173c9daa48b3481a8bece21d50ea",
+  "scope": "direct-adb-api26-emulator-separate-instrumentation-not-hosted-ci",
+  "sourceRevision": "f61464d26a30de511ca3c88032496a56af453255"
+}

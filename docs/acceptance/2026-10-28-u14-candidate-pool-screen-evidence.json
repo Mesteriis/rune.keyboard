@@ -1,0 +1,40 @@
+{
+  "bindings": {
+    "audit": "018c093270d4f3bfd23082fdce91c439ba7286660fc343843565861226430e35",
+    "identities": "117838bc7fafaae6b6ffcd02751d173ca09546f80595d1ee39a9c919891ccc71",
+    "observations": "c8f296b017b5a505081b693c8c446ac6e57496ffa2e09bf4c63934a6d0d9d024",
+    "receipt": "536395ad7b0e506f01fe3253d7a5bad96b5a77208a3780f385e1972641276201",
+    "rows": "d6a346911a5fb4476ee16e45ca5672f0ed75076cdb799c6fbad0ba042867b081"
+  },
+  "counts": {
+    "language": {
+      "en": {
+        "hiddenBaselinePoolUpperBound": 22,
+        "hiddenExpandedPoolUpperBound": 22,
+        "targetVisible": 1849,
+        "typoRows": 1990
+      },
+      "es": {
+        "hiddenBaselinePoolUpperBound": 39,
+        "hiddenExpandedPoolUpperBound": 39,
+        "targetVisible": 1765,
+        "typoRows": 1990
+      },
+      "ru": {
+        "hiddenBaselinePoolUpperBound": 151,
+        "hiddenExpandedPoolUpperBound": 211,
+        "manualOnlyPoolUpperBound": 60,
+        "targetVisible": 1703,
+        "typoRows": 1960
+      }
+    },
+    "rows": 12000
+  },
+  "limitations": [
+    "Raw generated pools are not validated or ordered as a hypothetical expanded strip.",
+    "The replay passes manual generation to the controller; it is not an expansion-off comparison.",
+    "Counts are synthetic, case-insensitive, and do not establish user benefit or device acceptance."
+  ],
+  "purpose": "U14_HIDDEN_POOL_UPPER_BOUND_NOT_UI_ACCEPTANCE",
+  "schema": 1
+}

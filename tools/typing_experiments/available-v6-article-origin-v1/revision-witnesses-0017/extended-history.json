@@ -1,0 +1,34 @@
+{
+  "article": "8122520",
+  "cleanerSha256": "bbae6bf05eaa833dec5c56fa75057dd01c14b418fccdb4d6ee4b363f476d455f",
+  "comparedRevisions": 32,
+  "corpusProjection": {
+    "contexts": 1,
+    "partition": "calibration",
+    "rows": 5,
+    "rowsSha256": "0e38210241368965d30edbce36387b6de3f821447c1e69d5ba19ef4c2b75ebf9"
+  },
+  "directRevisionResponseSha256": "96361253a886e5cf9ad1819b27241ee1dab84627ceafe5507b0cab0201e292ec",
+  "earlierContinuation": true,
+  "matches": [
+    {
+      "revid": 132298731,
+      "timestamp": "2023-08-11T13:10:14Z"
+    }
+  ],
+  "newestTimestamp": "2023-08-11T13:10:14Z",
+  "oldestTimestamp": "2021-12-02T12:17:31Z",
+  "originalDumpRevisionIdsVerified": false,
+  "parserVersion": "0.6.5",
+  "publicationRightsReviewed": false,
+  "query": {
+    "rvlimit": 32,
+    "rvprop": "ids|timestamp|content",
+    "rvslots": "main",
+    "rvstart": "2023-11-01T23:59:59Z"
+  },
+  "responseSha256": "d90c33f5682803d0e74a135730f45ff91bd33fea69db640de94a9d9dbe232e3b",
+  "schema": 1,
+  "snapshotTextSha256": "f1c580a36dfcc2f134672a0678d27ec13d88470d5c7814a3e05a4652305a7905",
+  "sourceShardArticlesSha256": "01fd30d8674c651046df0d8a528c1a4c0c9fb76506a14911be2fa2af33a592ec"
+}

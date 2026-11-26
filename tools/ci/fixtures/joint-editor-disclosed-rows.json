@@ -1,0 +1,96 @@
+{
+  "articleAttribution": [
+    {
+      "articleId": "9203585",
+      "authors": "Wikipedia contributors",
+      "historyUrl": "https://ru.wikipedia.org/w/index.php?curid=9203585&action=history"
+    },
+    {
+      "articleId": "9843471",
+      "authors": "Wikipedia contributors",
+      "historyUrl": "https://ru.wikipedia.org/w/index.php?curid=9843471&action=history"
+    }
+  ],
+  "containsPersonalMessages": false,
+  "originalHoldoutPath": "build/joint-correction-20261025/corpus/holdout.jsonl",
+  "originalHoldoutSha256": "03e32ae46a61dd3c5ee0f84a308b9b2d79bf17f7c18de78442d2284738e8084d",
+  "originalManifestPath": "build/joint-correction-20261025/corpus/manifest.json",
+  "originalManifestSha256": "27c7084f8c739f608da77f617eca1c5ac552ff16b74da05a1a3c3cc888120e3f",
+  "rows": [
+    {
+      "article": "9203585",
+      "band": "short",
+      "cohort": "typo",
+      "expectedSpelling": "риты",
+      "family": "139739",
+      "group": "adjacent1",
+      "id": "joint-holdout-000000",
+      "language": "ru",
+      "noAuto": false,
+      "prefix": "Через несколько часов убийца приезжает к дому Риты, душит её идёт на поиски Дианы. Диана вместе с Чином убегают в лес, который окружает дом",
+      "selectionHash": "03575ba3ee48bb2ee13bcb659664bb2e984f0c312d2adb8810127c6dd3d1dca6",
+      "source": "0019.parquet",
+      "split": "holdout",
+      "typed": "ниты",
+      "word": "риты"
+    },
+    {
+      "article": "9203585",
+      "band": "short",
+      "cohort": "correct",
+      "expectedSpelling": "риты",
+      "family": "139739",
+      "group": "correct",
+      "id": "joint-holdout-000004",
+      "language": "ru",
+      "noAuto": true,
+      "prefix": "Через несколько часов убийца приезжает к дому Риты, душит её идёт на поиски Дианы. Диана вместе с Чином убегают в лес, который окружает дом",
+      "selectionHash": "03575ba3ee48bb2ee13bcb659664bb2e984f0c312d2adb8810127c6dd3d1dca6",
+      "source": "0019.parquet",
+      "split": "holdout",
+      "typed": "риты",
+      "word": "риты"
+    },
+    {
+      "article": "9203585",
+      "band": "short",
+      "cohort": "protected",
+      "expectedSpelling": "@риты",
+      "family": "139739",
+      "group": "protected",
+      "id": "joint-holdout-000005",
+      "language": "ru",
+      "noAuto": true,
+      "prefix": "Через несколько часов убийца приезжает к дому Риты, душит её идёт на поиски Дианы. Диана вместе с Чином убегают в лес, который окружает дом",
+      "selectionHash": "03575ba3ee48bb2ee13bcb659664bb2e984f0c312d2adb8810127c6dd3d1dca6",
+      "source": "0019.parquet",
+      "split": "holdout",
+      "typed": "@риты",
+      "word": "риты"
+    },
+    {
+      "article": "9843471",
+      "band": "short",
+      "cohort": "typo",
+      "expectedSpelling": "рита",
+      "family": "139739",
+      "group": "repeated_letter",
+      "id": "joint-holdout-000015",
+      "language": "ru",
+      "noAuto": false,
+      "prefix": "фамилии  (для незамужней женщины). Известные носительницы:\n\n Раманаускайте, Паулина (род. 2003) — литовская фигуристка.\n Раманаускайте,",
+      "selectionHash": "04a7fdf7afed1d98ad9a6523c99d90e7569dd774b96082e8a0a248b3b9826e46",
+      "source": "0019.parquet",
+      "split": "holdout",
+      "typed": "ррита",
+      "word": "рита"
+    }
+  ],
+  "schema": "rune-joint-editor-disclosed-rows-v1",
+  "scope": "four original disclosed joint rows; local exact membership verified; no unseen/canonical-family claim",
+  "sourceBindings": {
+    "build/joint-correction-20261025/0018.parquet": "588e30523cfed480151b4bd5c1a7d7211dc03971fee399a3db6af3ad04e42c87",
+    "build/joint-correction-20261025/0019.parquet": "4c3bd676fbeb9d92ae7ed324e99f329de2542f5399cbf39b924529fff944dec6",
+    "build/typing-ranker-v2/ru-0011.parquet": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f"
+  }
+}

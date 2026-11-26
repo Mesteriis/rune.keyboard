@@ -1,0 +1,31 @@
+{
+  "auditorSha256": "a44709e5806c785f2727385dbe426b18f395e949f1bcc512c9313f479bca347b",
+  "exactCorrectedSentenceOverlap": 1,
+  "modelCalls": 0,
+  "qualified": false,
+  "reportContainsRawText": false,
+  "revision": "3395aa540689e4393c3e18d063e73a5b99d7f047",
+  "scope": "metadata-only-public-corpus-screen",
+  "sourceSha256": {
+    "test": "d159981fd5a92322dbca6781bc89c03a0c42babdd58a8232bf856e562e3f5138",
+    "train": "dd79c5a01ba53939d2b95ab4fd207c036ea801b998891568148ec73979e1a461"
+  },
+  "splits": {
+    "test": {
+      "distinctCorrectedSentences": 1810,
+      "eligibleCorrectedPhrases": 76,
+      "eligibleUnchangedPhrases": 35,
+      "eligibleUnchangedTokens": 150,
+      "rows": 1810,
+      "unchangedPairs": 665
+    },
+    "train": {
+      "distinctCorrectedSentences": 1810,
+      "eligibleCorrectedPhrases": 83,
+      "eligibleUnchangedPhrases": 32,
+      "eligibleUnchangedTokens": 129,
+      "rows": 1810,
+      "unchangedPairs": 647
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "articles": 92622,
+  "controlKeysSha256": "d2dc38d279eb9f328cbda35a32a6a15b9a38351ebb2c5334c106264836461241",
+  "dependencySha256": {
+    "tools/typing_experiments/control_ledger.py": "461a8977336cd2836f746565e7bb6fdd71ce0591c237dc78f6c65c1d72cbe470",
+    "tools/typing_experiments/conversation_split_checks.py": "373879a4483989d8adb7f1831265ee0803502fb25660a202a6898ed74c613683",
+    "tools/typing_experiments/holdout_ledger.py": "466d711e261e07a6d3bc570218d3dd2d3d23f2e0c853acf999fa84ce17821cdb",
+    "tools/typing_experiments/source_identities.py": "f4e8c95415c180702f15a291fc32462ac4e2bd95046706bf60f98a04b40c98c4"
+  },
+  "frequencyHelperSha256": "fc3a1f8594241473b1ada665bc45572c2b2c514bcc0ff1294faeae135415585c",
+  "helperSha256": "03ae25772fafd1914fde986059f37aaaa00696438aae0054005050396da5d9b7",
+  "independentlyQualified": false,
+  "lexicalKeysSha256": "62eb9acd14db52ca8dbcf7bc0e8758799bd97cccbaa8eef6f8338f69aafbd4bb",
+  "pyarrowVersion": "25.0.1",
+  "pythonVersion": "3.12.14",
+  "schema": 1,
+  "sourceDecoderAttested": false,
+  "sourceLockSha256": "02397f3424d85634e372e87d8cde55bd97af79615442d3ec1cada45831f95ede",
+  "sourceSha256": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f"
+}

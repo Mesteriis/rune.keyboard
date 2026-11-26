@@ -78,12 +78,27 @@ Three additional tests carry the `exact-model` label:
 - `tokenizer-model-abort` repeats real cancellation/status/reuse checks with the
   exact model vocabulary. It loads only vocabulary metadata, not weights.
 
-The manual `qualify-exact-model-scoring` workflow downloads only Actions artifact
-9800688354. `extract_model.py` selects exactly one matching inner GGUF, verifies
-its size and SHA-256, and only then replaces the destination. Missing/expired
-artifacts fail; there is no alternative URL or digest fallback. Ordinary CI does
-not download this model. Neither workflow publishes a model or qualifies its
-typing accuracy, Android latency or battery use.
+The manual `qualify-exact-model-scoring` workflow downloads the same model from
+the immutable Hugging Face revision pinned in the app's model manifest. It
+checks the exact size and SHA-256 before CMake reads the file; the CMake and test
+checks verify it again. It does not fall back to another revision or digest.
+The original Actions artifact 9800688354 is temporary; `extract_model.py` remains
+available to verify and extract that historical archive while it exists.
+Ordinary CI does not download this model. Neither workflow publishes a model or
+qualifies its typing accuracy, Android latency or battery use.
+
+On 2026-11-05, the pinned model was downloaded, size- and hash-verified, and
+tested locally on an arm64 macOS host with CMake 4.4.3. All seven native tests
+passed, including the three exact-model tests above. The temporary model and
+build tree were removed. This run does not establish Linux CI or Android ABI
+results.
+
+The same day, all seven tests also passed in an ephemeral Ubuntu 24.04 x86_64
+container under emulation on the same arm64 host, using CMake 3.31.6 and the
+verified model. The three exact-model tests passed, including the scalar oracle
+and tokenizer equivalence. The temporary source checkout, model, build tree,
+container and task-created image were removed. This is Linux host evidence,
+not a hosted CI run or an Android x86_64 device test.
 
 The reviewed tokenizer patch SHA256 is
 `0a043ce8a57b8534ef2f409443d2dd6ecf00042bd9c2b661b31d94618eb4dc95`.
@@ -119,7 +134,7 @@ and CI instrumentation therefore requires no model and does not report a model
 test as skipped or passed. Direct `adb am instrument` does not inherit Gradle's
 runner arguments: pass the filter explicitly.
 
-The optional test uses the actual public `LlamaLocalModelRuntime` on Android. It performs an actual model self-test before candidate scoring and emits only numeric self-test timing fields. Its
+The optional exact-model tests use the actual public `LlamaLocalModelRuntime` on Android. One performs a model self-test before candidate scoring; the other compares successive bounded prefixes against fresh scorers. They emit only numeric metrics. Their
 only model input is the test application's private
 `filesDir/qualification-model.gguf`. Size 396704416 bytes and SHA-256
 `7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4` are checked before
@@ -205,4 +220,4 @@ remain separate gates.
 
 ## Optional physical public-runtime benchmark
 
-The separate [runtime benchmark](runtime-benchmark/README.md) adds explicit `pilot` and `full` profiles. Ordinary instrumentation excludes `RuntimeBenchmarkOnly` as well as `VerifiedModelOnly`; the existing qualification annotation still selects exactly one test. Release measurements require an explicitly selected release Android test variant and verified native-entry equality with the app release APK. Debug qualification remains correctness evidence.
+The separate [runtime benchmark](runtime-benchmark/README.md) adds explicit `pilot` and `full` profiles. Ordinary instrumentation excludes `RuntimeBenchmarkOnly` as well as `VerifiedModelOnly`; the qualification annotation selects both exact-model tests. Release measurements require an explicitly selected release Android test variant and verified native-entry equality with the app release APK. Debug qualification remains correctness evidence.

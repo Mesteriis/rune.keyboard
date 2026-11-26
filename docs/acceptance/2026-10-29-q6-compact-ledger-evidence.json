@@ -1,0 +1,13 @@
+{
+  "afterBytes": 54412432,
+  "afterSha256": "b1e1bf0250488e8405ee72117e5f3e7fd9804cfe8db65a59eb12be150afe2d0a",
+  "beforeBytes": 94497017,
+  "beforeSha256": "842b06a104bae5012c121c0e079800e8588c853e5cb1f0e1f33f8130443c88cc",
+  "canonicalEntryHashesUnchanged": true,
+  "coverageComplete": false,
+  "entryCount": 164,
+  "independentQualification": false,
+  "logicalEntriesUnchanged": true,
+  "packedKeyLists": 208,
+  "schema": 1
+}

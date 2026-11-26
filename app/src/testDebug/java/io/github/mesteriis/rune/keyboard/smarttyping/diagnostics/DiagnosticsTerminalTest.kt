@@ -11,6 +11,33 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class DiagnosticsTerminalTest {
+    @Test fun externalSelectionOutcomeIsOneShotContentFreeAndConsentBound() {
+        for (streams in listOf(setOf(DiagnosticStream.METADATA), setOf(DiagnosticStream.TEXT), DiagnosticStream.entries.toSet())) {
+            val backend = Backend()
+            DiagnosticsRecorder(backend).use { recorder ->
+                configure(recorder, streams)
+                recorder.startSession(7, true, true)
+                val event = DiagnosticEvent(DiagnosticKind.SESSION, DiagnosticReason.EXTERNAL_SELECTION_DISABLED, 7, 3)
+                assertNull(recorder.externalSelectionDisabled(event.copy(session = 8)))
+                val outcome = checkNotNull(recorder.externalSelectionDisabled(event))
+                recorder.invalidate(); outcome(); outcome(); await(recorder::barrier)
+                assertEquals(streams, backend.records.map { it.first }.toSet())
+                assertEquals(streams.size, backend.records.size)
+                backend.records.forEach { (_, line) ->
+                    assertTrue(line.contains("EXTERNAL_SELECTION_DISABLED"))
+                    assertFalse(line.contains("\"input\"")); assertFalse(line.contains("\"context\""))
+                }
+            }
+        }
+        val backend = Backend()
+        DiagnosticsRecorder(backend).use { recorder ->
+            configure(recorder, setOf(DiagnosticStream.TEXT)); recorder.startSession(7, true, true)
+            val outcome = checkNotNull(recorder.externalSelectionDisabled(
+                DiagnosticEvent(DiagnosticKind.SESSION, DiagnosticReason.EXTERNAL_SELECTION_DISABLED, 7, 3)))
+            recorder.invalidate(); await { recorder.disableText(it) }; outcome(); await(recorder::barrier)
+            assertFalse(backend.records.any { "EXTERNAL_SELECTION_DISABLED" in it.second })
+        }
+    }
     @Test fun lateScoringNeedsAnAdmittedExactRequestAndRetainsOnlyOriginMetadata() {
         val backend = Backend()
         DiagnosticsRecorder(backend).use { recorder ->

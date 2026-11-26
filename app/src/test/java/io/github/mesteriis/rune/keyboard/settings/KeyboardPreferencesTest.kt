@@ -12,6 +12,32 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class KeyboardPreferencesTest {
+    @Test fun `keyboard palette round trips independently and malformed values preserve dark default`() {
+        assertFalse(KeyboardPalette.DARK.isLight(false))
+        assertTrue(KeyboardPalette.LIGHT.isLight(true))
+        assertTrue(KeyboardPalette.SYSTEM.isLight(false))
+        assertFalse(KeyboardPalette.SYSTEM.isLight(true))
+        for (value in listOf(null, "FUTURE_PALETTE", 7, false)) {
+            val source = FakeSharedPreferences(mapOf(SettingsCodec.KEY_KEYBOARD_PALETTE to value))
+            val settings = KeyboardPreferences(source).readSettings()
+            assertEquals(KeyboardPalette.DARK, settings.keyboardPalette)
+            assertEquals(value, source.all[SettingsCodec.KEY_KEYBOARD_PALETTE])
+        }
+        val source = FakeSharedPreferences()
+        val facade = KeyboardPreferences(source)
+        facade.writeTheme(ThemePreference.LIGHT)
+        facade.writeKeyboardTheme(KeyboardTheme.OUTLINE)
+        val initial = facade.readSettings()
+        for (palette in KeyboardPalette.entries) {
+            facade.writeKeyboardPalette(palette)
+            val restored = KeyboardPreferences(source).readSettings()
+            assertEquals(palette, restored.keyboardPalette)
+            assertEquals(ThemePreference.LIGHT, restored.theme)
+            assertEquals(KeyboardTheme.OUTLINE, restored.keyboardTheme)
+            assertEquals(initial.copy(keyboardPalette = palette), restored)
+            assertEquals(palette != initial.keyboardPalette, initial.affectsKeyboardView(restored))
+        }
+    }
     @Test fun schemaThreeUndoChoiceIsPersistedBeforeAnUnrelatedWriterUpgradesToFour() {
         for (choice in listOf(null, false, true)) {
             val initial = mutableMapOf<String, Any?>(SettingsCodec.KEY_SCHEMA_VERSION to 3)

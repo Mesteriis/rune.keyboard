@@ -1,0 +1,52 @@
+{
+  "androidInstrumentation": {
+    "api26": {
+      "failures": 0,
+      "tests": 17
+    },
+    "api37": {
+      "failures": 0,
+      "tests": 17
+    }
+  },
+  "debugApkSha256": "a8dd2c840e18f9cb1f8f4a7f989e810a63ff51f4542d35fa0926b31fb91e176a",
+  "foldTested": false,
+  "jvm": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 1358
+  },
+  "lintDebug": "PASS",
+  "manualTalkBackTested": false,
+  "purpose": "U14_EXPANDED_UI_EMULATOR_ACCEPTANCE_PARTIAL",
+  "replays": {
+    "off": {
+      "baselineMatches": true,
+      "deterministic": true,
+      "receiptSha256": "e6618eaf3f8097d22c12d0666ef32e7a7c95af73a0a83ea8f7df5987d475f79f",
+      "rows": 12000
+    },
+    "on": {
+      "baselineMatches": true,
+      "deterministic": true,
+      "receiptSha256": "512ece5fc64643c4cdabffd65ba284d89850cbe26c8aac9091bdc57f308c042b",
+      "rows": 12000
+    }
+  },
+  "schema": 1,
+  "scoringBoundaryVerifier": "PASS",
+  "sources": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/ime/ui/CandidateStripInstrumentedTest.kt": "604ecaec0ef34ec2273aac7b05cb395bcf34a1a8a87c033e35e4c2793e1e2d24",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ExpandedCandidatesInstrumentedTest.kt": "d596ddd0bbcfdf0ba0af00ea46af91216a93adbe690ca3bea1bcf0521a1141c3",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt": "d90435eb4501f8fceb9fafa8befeb46b04118c88313e1ef5c5ac6d70cc39042a",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/ui/CandidateStripView.kt": "878d2ab27204072448bb56618b2465a596f0c25c2a7713453de3242e8e2c4047",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/ui/RuneKeyboardView.kt": "6423511b653b8ffc5589fe0500f8c74ef49994ac9375cc551f20ee8fff5477e4",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinator.kt": "48a18cec81c840264d480253e63766bbd69a46fec5eed5078e9dc7f300dc1e9c",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "5e001bcc4d92ff941153630eeafb09c1b2a882a39ad93701ed90a3e95715d751",
+    "app/src/main/res/values-ru/strings.xml": "067c59689d4b2ce55fe44c42a1320408945de50e9a1e49b81e9d1389a1df0875",
+    "app/src/main/res/values/strings.xml": "3b64f8861d1964d42f489523086f249df35f0eca14ad2e618d4dee9da9faada2",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/LocalCandidateCoordinatorTest.kt": "82def6e88d323999de9bd84ed927992bdb41e9406009dcd484cfb28c4a81302d"
+  },
+  "testApkSha256": "51728f2f95972ef621e43f985edd589cb34bf5fa267b680595d201bd8ef7e233"
+}

@@ -432,17 +432,19 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
                 driver.releaseTouch(held)
                 released = true
             }, { observed ->
-                if (observed.packageName?.toString() == ImeTestDriver.PACKAGE_NAME &&
-                    observed.eventType == AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED && observedEditorEvents.size < 12) {
-                    observedEditorEvents.add("type=${observed.eventType} text=${observed.text} source=${observed.source?.viewIdResourceName} window=${observed.windowId} class=${observed.className} before=${observed.beforeText}")
+                val publicEditorChange = observed.eventType == AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED &&
+                    observed.packageName?.toString() == ImeTestDriver.PACKAGE_NAME
+                if (publicEditorChange && observedEditorEvents.size < 12) {
+                    observedEditorEvents.add("text=${observed.text} window=${observed.windowId} class=${observed.className} before=${observed.beforeText}")
                 }
-                val sourceId = observed.source?.viewIdResourceName
-                observed.eventType == AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED &&
-                    observed.packageName?.toString() == ImeTestDriver.PACKAGE_NAME &&
+                val matchesSpace = publicEditorChange &&
                     observed.windowId == editorIdentity.first && observed.className?.toString() == editorIdentity.second &&
                     observed.beforeText?.toString() == "a helllo" &&
-                    observed.text.any { it.toString() == "a helllo " } &&
-                    (sourceId == null || sourceId == "${ImeTestDriver.PACKAGE_NAME}:id/qa_composing_text")
+                    observed.text.any { it.toString() == "a helllo " }
+                if (matchesSpace) {
+                    val sourceId = observed.source?.viewIdResourceName
+                    sourceId == null || sourceId == "${ImeTestDriver.PACKAGE_NAME}:id/qa_composing_text"
+                } else false
             }, ImeTestDriver.WAIT_MILLIS)
         } catch (failure: java.util.concurrent.TimeoutException) {
             throw AssertionError("Public QA Space event timeout: $observedEditorEvents; editor=${driver.fieldText("qa_composing_text")}", failure)
@@ -450,6 +452,7 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
             if (!released) touch?.let(driver::cancelTouch)
         }
         try {
+            val eventObservedAt = SystemClock.uptimeMillis()
             val started = onMain { field(requireNotNull(model), "spaceStartedAt") as Long }
             assertTrue("Actual Space did not open its production grace", started > 0)
             var current = onMain { requireNotNull(controller).isCurrentSpaceCorrection(token) }
@@ -457,8 +460,9 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
                 SystemClock.sleep(1)
                 current = onMain { requireNotNull(controller).isCurrentSpaceCorrection(token) }
             }
-            assertTrue("Original+Space was observed outside its live ownership window", current)
             val observedAt = SystemClock.uptimeMillis()
+            assertTrue("Original+Space was observed outside its live ownership window " +
+                "(event delay=${eventObservedAt - started}ms, token check delay=${observedAt - started}ms)", current)
             assertTrue("Observation consumed the unchanged 250ms grace",
                 observedAt - started in 0 until ModelCandidateCoordinator.SPACE_GRACE_MILLIS)
             return started
@@ -803,7 +807,11 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
     private fun awaitNonNormalText(mode: String, expected: String): EditorSnapshot {
         var result: EditorSnapshot? = null
         await("Non-normal public editor text/selection/span did not settle") {
-            val current = snapshot()
+            val current = visibleSnapshot()
+            if (current == null) {
+                result = null
+                return@await false
+            }
             val textMatches = if (mode == "password") {
                 // The debug editor compares its actual Editable against the fixed public prefix.
                 // Android's password accessibility text remains masked and is not asserted.
@@ -917,13 +925,15 @@ internal class LiveFakeModelBinderFixture private constructor(private val driver
         }
     }
 
-    private fun snapshot(): EditorSnapshot {
-        val text = checkNotNull(driver.device.findObject(By.res(ImeTestDriver.PACKAGE_NAME, "qa_composing_text")))
-            .text.orEmpty()
-        val stats = checkNotNull(driver.device.findObject(By.res(ImeTestDriver.PACKAGE_NAME, "qa_composing_stats")))
-            .text.orEmpty().split(' ').associate { value ->
-                val (key, number) = value.split('='); key to number.toInt()
-            }
+    private fun snapshot(): EditorSnapshot = checkNotNull(visibleSnapshot()) { "QA editor field or counters unavailable" }
+
+    private fun visibleSnapshot(): EditorSnapshot? {
+        val field = driver.device.findObject(By.res(ImeTestDriver.PACKAGE_NAME, "qa_composing_text")) ?: return null
+        val text = field.text.orEmpty()
+        val node = driver.device.findObject(By.res(ImeTestDriver.PACKAGE_NAME, "qa_composing_stats")) ?: return null
+        val stats = node.text.orEmpty().split(' ').associate { value ->
+            val (key, number) = value.split('='); key to number.toInt()
+        }
         return EditorSnapshot(text, stats)
     }
 

@@ -48,9 +48,9 @@ import java.util.concurrent.atomic.AtomicInteger
 class AndroidModelCandidatesInstrumentedTest {
     @Test fun realBinderReplyAfterSpaceUsesOwnedSuffixAndImmediateUndo() = Fixture().use { f ->
         onMain { f.owner = f.owner.copy(modelAutoReplaceQualified = true); f.ranking.invalidate() }
-        await { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
+        f.awaitState("model ready") { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
         onMain { f.prepare("helo", "hello", 1); f.ranking.candidatesChanged() }
-        await { f.context.remote.get() > 0 }
+        f.awaitState("remote bound") { f.context.remote.get() > 0 }
         onMain {
             // Establish transport first; do not depend on a cold service binding within the pause.
             f.ranking.cancel()
@@ -64,7 +64,7 @@ class AndroidModelCandidatesInstrumentedTest {
             assertEquals("helos ", f.controller.state.contextText)
             assertTrue(f.controller.hasSpaceCorrection)
         }
-        await { onMain { f.controller.state.lastAutoEdit != null } }
+        f.awaitState("post-space correction") { onMain { f.controller.state.lastAutoEdit != null } }
         onMain {
             assertEquals("hellos ", f.controller.state.contextText)
             assertNotNull(f.controller.state.lastAutoEdit)
@@ -77,12 +77,14 @@ class AndroidModelCandidatesInstrumentedTest {
 
     @Test fun current95ProfileAppliesRemoteModelCorrectionAndImmediateUndo() = Fixture().use { f ->
         onMain { f.ranking.invalidate() }
-        await { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
+        f.awaitState("model ready") { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
         onMain {
             f.prepare("helos", "hellos", 1)
             f.ranking.candidatesChanged()
         }
-        await { f.context.remote.get() > 0 && onMain { !f.controller.canRequestModelRanking } }
+        f.awaitState("word ranking completed") {
+            f.context.remote.get() > 0 && onMain { !f.controller.canRequestModelRanking }
+        }
         onMain {
             assertEquals("hellos", f.controller.candidateViewState.candidates.single {
                 it.id == f.controller.candidateViewState.selectedCandidateId
@@ -111,14 +113,16 @@ class AndroidModelCandidatesInstrumentedTest {
                 contextualPunctuationEnabled = true)
             f.ranking.invalidate()
         }
-        await { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
+        f.awaitState("model ready") { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
         onMain {
             f.owner = f.owner.copy(contextualModelReady = true)
             f.prepareContextual("hello", "world", 1)
             assertTrue(f.controller.canRequestContextualRanking)
             f.ranking.candidatesChanged()
         }
-        await { f.context.remote.get() > 0 && onMain { !f.controller.canRequestContextualRanking } }
+        f.awaitState("contextual ranking completed") {
+            f.context.remote.get() > 0 && onMain { !f.controller.canRequestContextualRanking }
+        }
         assertEquals(1, f.context.attempts.get())
         assertEquals(0, f.context.mainReads.get())
         onMain {
@@ -131,7 +135,7 @@ class AndroidModelCandidatesInstrumentedTest {
 
     @Test fun readyDoesNotReplayAndNextEditUsesRealRemoteClientWithoutEditorWrite() = Fixture().use { f ->
         onMain { f.prepare("helo", "hello", 1); f.ranking.candidatesChanged() }
-        await { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
+        f.awaitState("model ready") { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
         assertEquals(0, f.context.attempts.get())
         assertEquals(0, f.context.mainReads.get())
         assertEquals(0, f.changes.get())
@@ -172,7 +176,7 @@ class AndroidModelCandidatesInstrumentedTest {
 
     @Test fun endingSessionClearsReadyAndLaterSessionRechecksRemovedModel() = Fixture().use { f ->
         onMain { f.ranking.invalidate() }
-        await { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
+        f.awaitState("model ready") { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.READY } }
         onMain {
             f.owner = f.owner.copy(inputViewActive = false)
             f.ranking.invalidate(); f.controller.endSession()
@@ -184,7 +188,7 @@ class AndroidModelCandidatesInstrumentedTest {
             f.owner = f.owner.copy(inputViewActive = true)
             f.ranking.invalidate()
         }
-        await { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.MISSING } }
+        f.awaitState("model missing") { onMain { f.ranking.modelReadinessHint == ModelReadinessHint.MISSING } }
         assertEquals(0, f.context.attempts.get())
         assertEquals(0, f.context.mainReads.get())
     }
@@ -213,6 +217,17 @@ class AndroidModelCandidatesInstrumentedTest {
         fun prepare(word: String, alternative: String, id: Long) {
             controller.typeText(word) { editorWrites.incrementAndGet(); true }
             publish(alternative, id)
+        }
+        fun awaitState(expected: String, condition: () -> Boolean) {
+            val deadline = SystemClock.uptimeMillis() + 5000
+            while (!condition()) {
+                check(SystemClock.uptimeMillis() < deadline) {
+                    "model state timeout: expected=$expected, bindAttempts=${context.attempts.get()}, " +
+                        "remoteBindings=${context.remote.get()}, unbinds=${context.unbinds.get()}, " +
+                        "candidateChanges=${changes.get()}, editorWrites=${editorWrites.get()}"
+                }
+                SystemClock.sleep(10)
+            }
         }
         fun publish(alternative: String, id: Long) {
             val request = checkNotNull(controller.beginCandidateRequest(id, KeyboardLanguage.ENGLISH))
@@ -268,13 +283,6 @@ class AndroidModelCandidatesInstrumentedTest {
             val task = FutureTask(Callable(action))
             InstrumentationRegistry.getInstrumentation().runOnMainSync(task)
             return task.get(5, TimeUnit.SECONDS)
-        }
-        private fun await(condition: () -> Boolean) {
-            val deadline = SystemClock.uptimeMillis() + 5000
-            while (!condition()) {
-                check(SystemClock.uptimeMillis() < deadline) { "numeric readiness state timeout" }
-                SystemClock.sleep(10)
-            }
         }
     }
 }

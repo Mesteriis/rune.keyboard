@@ -1,13 +1,16 @@
 package io.github.mesteriis.rune.keyboard.qa
 
 import android.app.Instrumentation
+import android.content.ComponentName
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.os.SystemClock
 import android.view.InputDevice
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewConfiguration
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
@@ -30,7 +33,64 @@ import java.util.concurrent.atomic.AtomicInteger
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-class ImeTestDriver {
+internal fun restorePreferenceSnapshot(preferences: SharedPreferences, snapshot: Map<String, *>) {
+    val editor = preferences.edit().clear()
+    snapshot.forEach { (key, value) ->
+        when (value) {
+            is Boolean -> editor.putBoolean(key, value)
+            is Float -> editor.putFloat(key, value)
+            is Int -> editor.putInt(key, value)
+            is Long -> editor.putLong(key, value)
+            is String -> editor.putString(key, value)
+            is Set<*> -> {
+                check(value.all { it is String }) { "Unsupported preference set" }
+                editor.putStringSet(key, value.filterIsInstance<String>().toSet())
+            }
+            else -> error("Unsupported preference type")
+        }
+    }
+    check(editor.commit()) { "Failed to restore preferences" }
+    check(preferences.all == snapshot) { "Restored preferences differ from snapshot" }
+}
+
+private fun validateSecureImeSetting(name: String, expected: String) {
+    val allowed = when (name) {
+        "enabled_input_methods" -> Regex("[A-Za-z0-9._/:;\\-]+")
+        "selected_input_method_subtype" -> Regex("-?[0-9]+")
+        "show_ime_with_hard_keyboard" -> Regex("[01]")
+        else -> error("Unsupported IME setting")
+    }
+    check(expected == "null" || expected.matches(allowed)) { "Invalid saved IME setting: $name" }
+}
+
+/** Restore only the exact captured setting, with shell-safe values and readback. */
+internal fun restoreSecureImeSetting(name: String, expected: String, shell: (String) -> String) {
+    validateSecureImeSetting(name, expected)
+    if (shell("settings get secure $name") != expected) {
+        if (expected == "null") shell("settings delete secure $name")
+        else {
+            // UiAutomation normally tokenizes without a shell. Refuse a semicolon-bearing
+            // IME list if the execution environment instead interprets shell metacharacters.
+            if (';' in expected) check(shell("echo rune;sentinel") == "rune;sentinel") {
+                "Unsafe shell semantics for saved IME list"
+            }
+            shell("settings put secure $name $expected")
+        }
+    }
+    check(shell("settings get secure $name") == expected) { "IME setting mismatch: $name" }
+}
+
+class ImeTestDriver private constructor(private val packageName: String) {
+    constructor() : this(PACKAGE_NAME)
+
+    private val imeComponent = component("ime.RuneInputMethodService")
+    private val qaActivity = component("qa.ImeQaActivity")
+    private val settingsActivity = component("settings.SettingsActivity")
+
+    private fun component(className: String) =
+        ComponentName(packageName, "$PACKAGE_NAME.$className").flattenToShortString()
+    internal var spellingPopupDismissals = 0
+        private set
     private val instrumentation: Instrumentation = InstrumentationRegistry.getInstrumentation()
     val device: UiDevice = UiDevice.getInstance(instrumentation)
     private val targetContext = instrumentation.targetContext
@@ -38,26 +98,33 @@ class ImeTestDriver {
     private var previousEnabledImes = ""
     private var runeWasEnabled = false
     private var previousHardKeyboardSetting = "0"
+    private var previousSubtype = "null"
     private var previousPreferences: Map<String, *> = emptyMap<String, Any?>()
     private var ownerStateCaptured = false
 
     fun setUp(privateQa: Boolean = false) {
         check(!ownerStateCaptured) { "IME QA driver already owns a settings snapshot" }
-        check(targetContext.packageName == PACKAGE_NAME) {
-            "IME QA driver requires the default Rune package"
+        check(targetContext.packageName == packageName) {
+            if (packageName == PACKAGE_NAME) "IME QA driver requires the default Rune package"
+            else "A2 timing requires the isolated Rune qualification package"
         }
-        // API 26's uncompressed tree can retain hidden, non-important container nodes.
-        // Query the same important-node hierarchy exposed to screen readers on that API.
-        if (android.os.Build.VERSION.SDK_INT == 26) device.setCompressedLayoutHierarchy(true)
         previousIme = shell("settings get secure default_input_method")
         previousEnabledImes = shell("settings get secure enabled_input_methods")
-        runeWasEnabled = IME_COMPONENT in previousEnabledImes
+        runeWasEnabled = previousEnabledImes.split(':').any { it.substringBefore(';') == imeComponent }
         previousHardKeyboardSetting = shell("settings get secure show_ime_with_hard_keyboard")
+        previousSubtype = shell("settings get secure selected_input_method_subtype")
+        validateSecureImeSetting("enabled_input_methods", previousEnabledImes)
+        validateSecureImeSetting("selected_input_method_subtype", previousSubtype)
+        validateSecureImeSetting("show_ime_with_hard_keyboard", previousHardKeyboardSetting)
+        check(previousIme.matches(IME_COMPONENT_PATTERN)) { "Invalid saved IME component" }
         val preferences = targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
         previousPreferences = HashMap(preferences.all)
         ownerStateCaptured = true
+        // API 26's uncompressed tree can retain hidden, non-important container nodes.
+        // Query the same important-node hierarchy exposed to screen readers on that API.
+        if (android.os.Build.VERSION.SDK_INT == 26) device.setCompressedLayoutHierarchy(true)
         shell("settings put secure show_ime_with_hard_keyboard 1")
-        shell("ime enable $IME_COMPONENT")
+        shell("ime enable $imeComponent")
         // `ime set` is a no-op when Rune was already selected by a preceding non-UI fixture.
         // Switch through an enabled fallback so each QA method starts with a new input view.
         restartRuneIme()
@@ -69,22 +136,47 @@ class ImeTestDriver {
     fun tearDown() {
         if (!ownerStateCaptured) return
         // An interrupted run must not navigate another active app away from its task.
-        if (device.currentPackageName == PACKAGE_NAME) device.pressHome()
-        restorePreferences()
-        // restorePreferences() runs on the instrumentation thread. Its commit makes the values
-        // visible immediately, but the IME listener is dispatched on the app's main thread.
-        // Drain that queue so the next test cannot inherit a stale keyboard layout.
-        instrumentation.waitForIdleSync()
-        if (previousIme == IME_COMPONENT) {
-            restartRuneIme()
-        } else if (previousIme.isNotBlank() && previousIme != "null") {
-            shell("ime set $previousIme")
+        if (device.currentPackageName == packageName) device.pressHome()
+        try {
+            restorePreferences()
+            // The IME listener is dispatched on the main thread after the commit.
+            instrumentation.waitForIdleSync()
+        } finally {
+            // Restore device-wide state even if persisting preferences fails.
+            try {
+                var failure: Throwable? = null
+                fun attempt(action: () -> Unit) {
+                    try { action() } catch (error: Throwable) {
+                        if (failure == null) failure = error else failure!!.addSuppressed(error)
+                    }
+                }
+                attempt {
+                    if (previousIme.isNotBlank() && previousIme != "null" &&
+                        shell("settings get secure default_input_method") != previousIme) {
+                        check(previousIme.matches(IME_COMPONENT_PATTERN)) { "Invalid saved IME component" }
+                        selectImeAndDrain(previousIme)
+                    }
+                }
+                if (!runeWasEnabled) attempt { shell("ime disable $imeComponent") }
+                attempt { restoreSecureImeSetting("enabled_input_methods", previousEnabledImes, ::shell) }
+                attempt { restoreSecureImeSetting("selected_input_method_subtype", previousSubtype, ::shell) }
+                attempt { restoreSecureImeSetting("show_ime_with_hard_keyboard", previousHardKeyboardSetting, ::shell) }
+                attempt {
+                    check(shell("settings get secure default_input_method") == previousIme) {
+                        "IME setting mismatch: default_input_method"
+                    }
+                }
+                for ((name, expected) in listOf("enabled_input_methods" to previousEnabledImes,
+                    "selected_input_method_subtype" to previousSubtype,
+                    "show_ime_with_hard_keyboard" to previousHardKeyboardSetting)) attempt {
+                    check(shell("settings get secure $name") == expected) { "IME setting mismatch: $name" }
+                }
+                if (android.os.Build.VERSION.SDK_INT == 26) attempt { device.setCompressedLayoutHierarchy(false) }
+                failure?.let { throw it }
+            } finally {
+                ownerStateCaptured = false
+            }
         }
-        if (!runeWasEnabled) shell("ime disable $IME_COMPONENT")
-        val hardKeyboardSetting = previousHardKeyboardSetting.takeUnless { it.isBlank() || it == "null" } ?: "0"
-        shell("settings put secure show_ime_with_hard_keyboard $hardKeyboardSetting")
-        if (android.os.Build.VERSION.SDK_INT == 26) device.setCompressedLayoutHierarchy(false)
-        ownerStateCaptured = false
     }
 
     /** Deterministic temporary QA settings; tearDown restores the full pre-test raw map. */
@@ -144,30 +236,45 @@ class ImeTestDriver {
     }
 
     fun launchSettings() {
-        shell("am start -W -f 0x24000000 -n $PACKAGE_NAME/.settings.SettingsActivity")
-        check(device.wait(Until.hasObject(By.res(PACKAGE_NAME, "settings_scroll")), WAIT_MILLIS)) {
+        shell("am start -W -f 0x24000000 -n $settingsActivity")
+        check(device.wait(Until.hasObject(By.res(packageName, "settings_scroll")), WAIT_MILLIS)) {
             "Settings screen unavailable"
         }
     }
 
     fun settingsRow(titleRes: Int): UiObject2 {
         val label = targetContext.getString(titleRes)
+        fun toggle(): UiObject2? = device.findObject(By.descStartsWith("$label\n").clazz("android.widget.Switch"))
+        toggle()?.let { return it }
         var title = device.findObject(By.text(label).clazz("android.widget.TextView"))
         if (title == null) {
             launchSettings()
-            checkNotNull(device.wait(Until.findObject(By.res(PACKAGE_NAME, "menu_search")), WAIT_MILLIS)).text = label
+            checkNotNull(device.wait(Until.findObject(By.res(packageName, "menu_search")), WAIT_MILLIS)).text = label
             val result = checkNotNull(device.wait(Until.findObject(By.text(label).clazz("android.widget.TextView")), WAIT_MILLIS))
             clickClosestClickable(result)
             instrumentation.waitForIdleSync()
             device.waitForIdle()
+            toggle()?.let { return it }
             title = device.findObject(By.text(label).clazz("android.widget.TextView"))
         }
         if (title == null) {
             @Suppress("DEPRECATION")
-            UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/settings_scroll")).apply {
-                setAsVerticalList(); scrollIntoView(UiSelector().text(label))
+            UiScrollable(UiSelector().resourceId("$packageName:id/settings_scroll")).apply {
+                setAsVerticalList()
+                scrollToBeginning(20)
+                scrollIntoView(UiSelector().text(label))
             }
+            toggle()?.let { return it }
             title = device.findObject(By.text(label).clazz("android.widget.TextView"))
+            if (title == null) {
+                @Suppress("DEPRECATION")
+                UiScrollable(UiSelector().resourceId("$packageName:id/settings_scroll")).apply {
+                    setAsVerticalList()
+                    scrollToBeginning(20)
+                    scrollIntoView(UiSelector().descriptionStartsWith("$label\n"))
+                }
+                toggle()?.let { return it }
+            }
         }
         var row: UiObject2? = checkNotNull(title) { "Settings row unavailable" }
         while (row != null && !row.isClickable) row = row.parent
@@ -186,16 +293,18 @@ class ImeTestDriver {
         instrumentation.waitForIdleSync(); device.waitForIdle()
     }
 
-    fun launchQa() {
-        shell("am start -W -f 0x10008000 -n $QA_ACTIVITY")
+    fun launchQa(observeDetachLength: Boolean = false, numberFirst: Boolean = false) {
+        val option = if (observeDetachLength) " --ez qa_observe_detach_length true" else ""
+        val layout = if (numberFirst) " --ez qa_number_first true" else ""
+        shell("am start -W -f 0x10008000 -n $qaActivity$option$layout")
         awaitQaActivity()
     }
 
     fun launchComposingQa(mode: String = "accept", language: KeyboardLanguage = KeyboardLanguage.ENGLISH) {
-        require(mode in setOf("accept", "reject", "drop", "private", "raw", "password", "email", "url", "multiline",
+        require(mode in setOf("accept", "reject", "drop", "private", "raw", "password", "email", "url", "multiline", "sentence_caps",
             "number", "phone", "date_time", "no_suggestions", "private_no_suggestions", "autocomplete", "filter",
-            "callback_trace", "selection_then_composition"))
-        val launched = shell("am start -W -f 0x10008000 -n $QA_ACTIVITY --es qa_composing_fixture $mode")
+            "callback_trace", "selection_then_composition", "selection_then_composition_diagnostics"))
+        val launched = shell("am start -W -f 0x10008000 -n $qaActivity --es qa_composing_fixture $mode")
         check("Status: ok" in launched) { "QA launch did not succeed: $launched" }
         awaitQaActivity()
         waitForKeyboard()
@@ -206,24 +315,41 @@ class ImeTestDriver {
     }
 
     fun launchWebViewQa(privateInput: Boolean = false) {
-        val launched = shell("am start -W -f 0x10008000 -n $QA_ACTIVITY --ez qa_webview_fixture true" +
+        val launched = shell("am start -W -f 0x10008000 -n $qaActivity --ez qa_webview_fixture true" +
             if (privateInput) " --ez qa_callback_trace true" else "")
         check("Status: ok" in launched) { "Offline WebView QA launch failed" }
-        check(device.wait(Until.hasObject(By.res(PACKAGE_NAME, "qa_webview_stats")), WAIT_MILLIS)) {
+        val statsSelector = By.res(packageName, "qa_webview_stats")
+        check(device.wait(Until.hasObject(statsSelector), WAIT_MILLIS)) {
             "Offline WebView QA surface did not become visible"
         }
-        // A browser editor is focused by one real user tap; page load can finish before the
-        // Activity window receives focus, so its opportunistic showSoftInput is not readiness.
-        val field = device.wait(Until.findObject(By.pkg(PACKAGE_NAME).clazz("android.widget.EditText")), WAIT_MILLIS)
-        checkNotNull(field) { "Offline HTML editor did not become visible" }.click()
+        // Prefer the real tap. Chromium may already be focused and connected while its
+        // virtual accessibility node is unavailable during Activity recreation.
+        val field = device.wait(Until.findObject(By.pkg(packageName).clazz("android.widget.EditText")), WAIT_MILLIS)
+        if (field != null) {
+            field.click()
+        } else {
+            val fields = device.findObject(statsSelector)?.text.orEmpty().split(' ')
+            val domReady = fields.firstOrNull { it == "ready=0" || it == "ready=1" }?.last()
+            val editorFocused = "editorFocused=1" in fields
+            val connections = fields.firstOrNull { it.startsWith("connections=") }
+                ?.substringAfter('=')?.toIntOrNull()
+            val qaForeground = device.currentPackageName == packageName
+            check(qaForeground && domReady == '1' && editorFocused && (connections ?: 0) > 0) {
+                val containerExposed = device.hasObject(By.res(packageName, "qa_webview"))
+                "Offline HTML editor did not become visible " +
+                    "(qaForeground=$qaForeground, containerExposed=$containerExposed, " +
+                    "domReady=$domReady, editorFocused=$editorFocused, connections=$connections)"
+            }
+        }
         waitForKeyboard()
         switchLanguageUntil("EN")
         instrumentation.waitForIdleSync()
         device.waitForIdle()
     }
 
-    fun launchComposeQa() {
-        val launched = shell("am start -W -f 0x10008000 -n io.github.mesteriis.rune.qa.compose/.ComposeEditorQaActivity")
+    fun launchComposeQa(privateInput: Boolean = false) {
+        val option = if (privateInput) " --ez qa_private_input true" else ""
+        val launched = shell("am start -W -f 0x10008000 -n io.github.mesteriis.rune.qa.compose/.ComposeEditorQaActivity$option")
         check("Status: ok" in launched) { "Independent Compose QA launch failed" }
         val field = device.wait(Until.findObject(By.pkg("io.github.mesteriis.rune.qa.compose").clazz("android.widget.EditText")), WAIT_MILLIS)
         checkNotNull(field) { "Independent Compose field did not become visible" }.click()
@@ -242,12 +368,12 @@ class ImeTestDriver {
     }
 
     private fun resumeQa() {
-        shell("am start -W -n $QA_ACTIVITY")
+        shell("am start -W -n $qaActivity")
         awaitQaActivity()
     }
 
     fun focusField(idName: String): UiObject2 {
-        val selector = By.res(PACKAGE_NAME, idName)
+        val selector = By.res(packageName, idName)
         val visibleField = device.findObject(selector)
         val needsFocus =
             visibleField == null ||
@@ -268,6 +394,14 @@ class ImeTestDriver {
         try {
             waitForKeyboard()
         } catch (failure: IllegalStateException) {
+            // API 26's spelling-suggestion popup can be the only accessible window after
+            // tapping a misspelled QA fixture. Dismiss only that identified popup and keep
+            // the focused editor; the caller still verifies the real keyboard and text.
+            if (dismissAndroidSpellingSuggestions()) {
+                waitForKeyboard()
+                device.waitForIdle()
+                return activeField
+            }
             // API 26 can leave a hidden input-view window after an in-test hide followed by a
             // different editor focus. Rebind once and repeat the same real editor transition.
             // A second failure still surfaces the original observation as a test failure.
@@ -290,6 +424,18 @@ class ImeTestDriver {
         // adjustResize may move a low editor outside the accessibility viewport once IME appears;
         // callers only need the focus transition, so keep the node captured before that resize.
         return activeField
+    }
+
+    internal fun dismissAndroidSpellingSuggestions(): Boolean {
+        val popup = By.res("android", "suggestionContainer")
+        if (device.findObject(popup) == null) return false
+        android.util.Log.i("RuneImeTest", "Dismissing Android spelling suggestions")
+        device.pressBack()
+        check(device.wait(Until.gone(popup), WAIT_MILLIS)) {
+            "Android spelling suggestions did not close"
+        }
+        spellingPopupDismissals++
+        return true
     }
 
     fun tapQaControl(idName: String) {
@@ -317,6 +463,7 @@ class ImeTestDriver {
         // The remote editor's selection must reach Rune before the next Delete. The numeric
         // acknowledgement is observed only; the final editor assertion still checks the command.
         eventually(WAIT_MILLIS) { onMain { selection.getBoolean(service) } }
+        check(onMain { selection.getBoolean(service) }) { "Rune did not acknowledge the seeded editor selection" }
     }
 
     fun tapKey(label: String) {
@@ -329,6 +476,8 @@ class ImeTestDriver {
                 ?: error("Rune key not found: ${possibleLabels.joinToString()}")
         }
     }
+
+    internal fun spaceKeyBounds(): Rect = Rect(keyByDescription(targetContext.getString(R.string.key_space)).visibleBounds)
 
     fun tapDelete() = tapKeyByDescription(targetContext.getString(R.string.key_delete))
 
@@ -366,23 +515,41 @@ class ImeTestDriver {
         switchLanguageUntil("EN")
     }
 
-    private fun switchLanguageUntil(expectedKey: String) {
+    internal fun switchLanguageUntil(expectedKey: String) {
+        var swipesSent = 0
         repeat(5) {
             if (findKeyByText(expectedKey) != null) return
             val space = keyByDescription(targetContext.getString(R.string.key_space))
             val bounds = space.visibleBounds
             // API 37 gesture navigation reserves the bottom strip for system task switching. The
             // upper edge remains part of the space key and exercises Rune's gesture detector.
-            val swipeY = (bounds.top + 4).coerceAtMost(bounds.bottom - 1)
-            device.swipe(bounds.right - 8, swipeY, bounds.left + 8, swipeY, 24)
+            val y = (bounds.top + 4).coerceAtMost(bounds.bottom - 1).toFloat()
+            val downTime = SystemClock.uptimeMillis()
+            var touch = TouchHandle(downTime, (bounds.right - 8).toFloat(), y)
+            inject(downTime, downTime, MotionEvent.ACTION_DOWN, touch.x, touch.y)
+            var released = false
+            try {
+                // Cross the threshold on the first move. Slow, incremental UiAutomator
+                // moves can let the hold timer win and dispatch cursor keys before typing.
+                touch = moveTouch(touch, (bounds.left + 8).toFloat(), y)
+                releaseTouch(touch)
+                released = true
+                swipesSent++
+            } finally {
+                if (!released) cancelTouch(touch)
+            }
             device.waitForIdle()
             eventually(INPUT_CONNECTION_SETTLE_MILLIS * 2) { findKeyByText(expectedKey) != null }
         }
-        error("Expected layout key '$expectedKey' did not appear after a bounded language cycle")
+        val preferences = targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val enabled = SettingsCodec.decodeLanguages(preferences.getString(SettingsCodec.KEY_LANGUAGES_ENABLED, null))
+        val visible = listOf("EN", "RU", "ES").filter { findKeyByText(it) != null }
+        error("Expected layout key '$expectedKey' did not appear after a bounded language cycle; " +
+            "enabled=$enabled; visible=$visible; swipesSent=$swipesSent")
     }
 
     fun awaitFieldText(idName: String, expected: String, timeoutMillis: Long = WAIT_MILLIS) {
-        val selector = By.res(PACKAGE_NAME, idName)
+        val selector = By.res(packageName, idName)
         var lastObserved: String? = null
         eventually(timeoutMillis) {
             device.findObject(selector)?.text?.let { observed ->
@@ -405,7 +572,7 @@ class ImeTestDriver {
     }
 
     fun awaitStatus(expected: String) {
-        if (device.findObject(By.res(PACKAGE_NAME, "qa_action_status")) == null) {
+        if (device.findObject(By.res(packageName, "qa_action_status")) == null) {
             device.pressBack()
             SystemClock.sleep(200)
             scrollToObject("qa_action_status")
@@ -426,7 +593,7 @@ class ImeTestDriver {
     }
 
     /** Count actual Delete dispatches while forwarding to the resident listener unchanged. */
-    internal fun holdDeleteForActions(finish: (TouchHandle) -> Unit): Int {
+    internal fun holdDeleteForActions(onDetached: ((Long) -> Unit)? = null, finish: (TouchHandle) -> Unit): Int {
         // Resolve accessibility geometry before DOWN: an idle wait during repeat could erase
         // the entire fixture. The observer counts deliveries, never supplies editor success.
         val bounds = Rect(deleteKey().visibleBounds)
@@ -438,13 +605,17 @@ class ImeTestDriver {
         @Suppress("UNCHECKED_CAST")
         val original = onMain { listener.get(key) as (KeyboardAction) -> Unit }
         val delivered = AtomicInteger()
+        val detachListener = object : View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(view: View) = Unit
+            override fun onViewDetachedFromWindow(view: View) { onDetached?.invoke(SystemClock.uptimeMillis()) }
+        }
         val observer: (KeyboardAction) -> Unit = { action ->
             if (action == KeyboardAction.Delete) delivered.incrementAndGet()
             original(action)
         }
         var touch: TouchHandle? = null
         var finished = false
-        onMain { listener.set(key, observer) }
+        onMain { if (onDetached != null) key.addOnAttachStateChangeListener(detachListener); listener.set(key, observer) }
         try {
             val held = touchDown(bounds).also { touch = it }
             val deadline = held.downTime + ViewConfiguration.getLongPressTimeout() + 1_000L
@@ -459,7 +630,10 @@ class ImeTestDriver {
                 if (!finished) touch?.let(::cancelTouch)
             } finally {
                 // A detached/reconfigured key may already have a new listener; preserve it.
-                onMain { if (listener.get(key) === observer) listener.set(key, original) }
+                onMain {
+                    if (onDetached != null) key.removeOnAttachStateChangeListener(detachListener)
+                    if (listener.get(key) === observer) listener.set(key, original)
+                }
             }
         }
     }
@@ -562,7 +736,7 @@ class ImeTestDriver {
 
     fun setNumberRowThroughSettings(enabled: Boolean) {
         if ((findKeyByText("1") != null) == enabled) return
-        shell("am start -W -n $PACKAGE_NAME/.settings.SettingsActivity")
+        shell("am start -W -n $settingsActivity")
         settingsRow(R.string.settings_number_row).click()
         eventually(WAIT_MILLIS) {
             targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
@@ -604,7 +778,7 @@ class ImeTestDriver {
     fun ensureKeyPreviewEnabled() {
         val wasEnabled = previousPreferences[KEY_PREVIEW] as? Boolean ?: true
         if (wasEnabled) return
-        shell("am start -W -n $PACKAGE_NAME/.settings.SettingsActivity")
+        shell("am start -W -n $settingsActivity")
         settingsRow(R.string.settings_key_preview).click()
         device.pressBack()
         resumeQa()
@@ -626,7 +800,7 @@ class ImeTestDriver {
             findKeyByText(label)?.let { return it }
             SystemClock.sleep(25)
         } while (SystemClock.uptimeMillis() < deadline)
-        val ownField = device.findObject(By.res(PACKAGE_NAME, "qa_composing_text"))
+        val ownField = device.findObject(By.res(packageName, "qa_composing_text"))
         val nativeKeyboardPresent = runCatching { keyboardSnapshot().keys.isNotEmpty() }.getOrDefault(false)
         error("Rune key '$label' not found; foreground=${device.currentPackageName}; " +
             "screenOn=${device.isScreenOn}; ownField=${ownField != null}; focused=${ownField?.isFocused}; " +
@@ -634,18 +808,8 @@ class ImeTestDriver {
     }
 
     private fun restorePreferences() {
-        val editor = targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE).edit().clear()
-        previousPreferences.forEach { (key, value) ->
-            when (value) {
-                is Boolean -> editor.putBoolean(key, value)
-                is Float -> editor.putFloat(key, value)
-                is Int -> editor.putInt(key, value)
-                is Long -> editor.putLong(key, value)
-                is String -> editor.putString(key, value)
-                is Set<*> -> editor.putStringSet(key, value.filterIsInstance<String>().toSet())
-            }
-        }
-        editor.commit()
+        val preferences = targetContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+        restorePreferenceSnapshot(preferences, previousPreferences)
     }
 
     private fun findKeyByText(label: String): UiObject2? = bottomMost(device.findObjects(By.text(label)))
@@ -667,7 +831,7 @@ class ImeTestDriver {
             .maxByOrNull { it.second.centerY() }?.first
 
     private fun requireObject(idName: String, scroll: Boolean = false): UiObject2 {
-        val selector = By.res(PACKAGE_NAME, idName)
+        val selector = By.res(packageName, idName)
         device.findObject(selector)?.let { return it }
         if (device.wait(Until.hasObject(selector), ACCESSIBILITY_SETTLE_MILLIS)) {
             return device.findObject(selector)
@@ -678,7 +842,7 @@ class ImeTestDriver {
     }
 
     private fun awaitQaActivity() {
-        val selector = By.res(PACKAGE_NAME, "qa_scroll")
+        val selector = By.res(packageName, "qa_scroll")
         check(device.wait(Until.hasObject(selector), WAIT_MILLIS)) { "QA activity did not become visible" }
     }
 
@@ -691,19 +855,19 @@ class ImeTestDriver {
     private fun scrollToObject(idName: String): UiObject2 {
         prepareQaForScroll()
         @Suppress("DEPRECATION")
-        val scrollable = UiScrollable(UiSelector().resourceId("$PACKAGE_NAME:id/qa_scroll")).apply {
+        val scrollable = UiScrollable(UiSelector().resourceId("$packageName:id/qa_scroll")).apply {
             setAsVerticalList()
             scrollToBeginning(12)
-            scrollIntoView(UiSelector().resourceId("$PACKAGE_NAME:id/$idName"))
+            scrollIntoView(UiSelector().resourceId("$packageName:id/$idName"))
         }
         check(scrollable.exists()) { "QA scroll container is unavailable" }
-        val selector = By.res(PACKAGE_NAME, idName)
+        val selector = By.res(packageName, idName)
         check(device.wait(Until.hasObject(selector), WAIT_MILLIS)) { "QA object not found: $idName" }
         return device.findObject(selector)
     }
 
     private fun prepareQaForScroll() {
-        val qaSelector = By.res(PACKAGE_NAME, "qa_scroll")
+        val qaSelector = By.res(packageName, "qa_scroll")
         val keyboardSelector = By.desc(targetContext.getString(R.string.key_delete))
         if (device.findObject(keyboardSelector) != null) {
             device.pressBack()
@@ -721,18 +885,29 @@ class ImeTestDriver {
     }
 
     private fun restartRuneIme() {
+        if (InstrumentationRegistry.getArguments().getString("runeCiRebindIme") == "true") {
+            check(android.os.Build.VERSION.SDK_INT == 26 &&
+                android.os.Build.HARDWARE in setOf("ranchu", "goldfish") &&
+                shell("getprop ro.kernel.qemu") == "1") { "QA rebind IME requires an API 26 emulator" }
+            val rebindIme = "io.github.mesteriis.rune.qa.compose/.RebindInputMethodService"
+            shell("ime enable $rebindIme")
+            check(rebindIme in shell("ime list -s").lineSequence()) { "QA rebind IME is not enabled" }
+            selectImeAndDrain(rebindIme)
+            selectImeAndDrain(imeComponent)
+            return
+        }
         val fallback = sequenceOf(previousIme)
             .plus(previousEnabledImes.split(':'))
             .map { it.substringBefore(';').trim() }
             .firstOrNull { candidate ->
                 candidate.isNotEmpty() &&
                     candidate != "null" &&
-                    candidate != IME_COMPONENT &&
+                    candidate != imeComponent &&
                     candidate.matches(IME_COMPONENT_PATTERN)
         }
         checkNotNull(fallback) { "A second enabled IME is required to restart Rune deterministically" }
         selectImeAndDrain(fallback)
-        selectImeAndDrain(IME_COMPONENT)
+        selectImeAndDrain(imeComponent)
     }
 
     private fun selectImeAndDrain(component: String) {
@@ -803,6 +978,9 @@ class ImeTestDriver {
 
     companion object {
         const val PACKAGE_NAME = "io.github.mesteriis.rune.keyboard"
+        internal const val QUALIFICATION_PACKAGE = "$PACKAGE_NAME.qualification"
+        internal fun forA2Timing() = ImeTestDriver(QUALIFICATION_PACKAGE)
+
         const val IME_COMPONENT = "$PACKAGE_NAME/.ime.RuneInputMethodService"
         const val QA_ACTIVITY = "$PACKAGE_NAME/.qa.ImeQaActivity"
         const val WAIT_MILLIS = 5_000L
@@ -815,16 +993,40 @@ class ImeTestDriver {
     }
 }
 
-class ImeFailureArtifacts(private val driver: ImeTestDriver) : TestWatcher() {
+class ImeFailureArtifacts(
+    private val driver: ImeTestDriver,
+    private val captureAllowed: () -> Boolean = { true },
+) : TestWatcher() {
     override fun failed(error: Throwable?, description: Description) {
         // Physical-device runs can suppress captures without skipping assertions or teardown.
-        if (InstrumentationRegistry.getArguments().getString("runeFailureArtifacts") == "false") return
+        if (!captureAllowed() || InstrumentationRegistry.getArguments().getString("runeFailureArtifacts") == "false") return
         val root = InstrumentationRegistry.getInstrumentation().targetContext
             .getExternalFilesDir("instrumentation-failures") ?: return
         val safeName = description.methodName.replace(Regex("[^A-Za-z0-9_.-]"), "_")
         root.mkdirs()
-        driver.device.takeScreenshot(File(root, "$safeName.png"))
-        driver.device.dumpWindowHierarchy(File(root, "$safeName.xml"))
+        val screenshot = File(root, "$safeName.png")
+        val hierarchy = File(root, "$safeName.xml")
+        val screenshotSaved = driver.device.takeScreenshot(screenshot)
+        driver.device.dumpWindowHierarchy(hierarchy)
+        // CI's Gradle runner can uninstall the target before the host collects
+        // app-private external files. Only the disposable CI fixture requests a
+        // shell-owned copy that survives that uninstall.
+        if (InstrumentationRegistry.getArguments().getString("runeCiFailureCapture") == "true") {
+            val safeClass = (description.className ?: "unknown").replace(Regex("[^A-Za-z0-9_.-]"), "_")
+            val prefix = "${safeClass}__${safeName}"
+            val source = root.absolutePath
+            check(source.matches(Regex("[/A-Za-z0-9_.-]+"))) { "Unsafe CI capture path" }
+            val destination = "/data/local/tmp/rune-ci-failure-captures"
+            driver.shell("mkdir -p $destination")
+            fun copyAndVerify(extension: String) {
+                val target = "$destination/$prefix.$extension"
+                driver.shell("cp $source/$safeName.$extension $target")
+                check(driver.shell("ls $target") == target) { "CI failure capture copy failed" }
+            }
+            copyAndVerify("xml")
+            check(screenshotSaved) { "CI failure screenshot unavailable" }
+            copyAndVerify("png")
+        }
     }
 
     override fun finished(description: Description) {

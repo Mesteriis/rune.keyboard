@@ -6,5 +6,19 @@
       android:label="Rune Compose QA" android:theme="@android:style/Theme.Material.Light.NoActionBar">
     <activity android:name=".ComposeEditorQaActivity" android:exported="true"
         android:excludeFromRecents="true" android:windowSoftInputMode="stateHidden|adjustResize" />
+    <service android:name=".VoiceInputMethodService" android:exported="true"
+        android:label="@string/qa_voice_ime" android:permission="android.permission.BIND_INPUT_METHOD">
+      <intent-filter>
+        <action android:name="android.view.InputMethod" />
+      </intent-filter>
+      <meta-data android:name="android.view.im" android:resource="@xml/qa_voice_input_method" />
+    </service>
+    <service android:name=".RebindInputMethodService" android:exported="true"
+        android:label="@string/qa_rebind_ime" android:permission="android.permission.BIND_INPUT_METHOD">
+      <intent-filter>
+        <action android:name="android.view.InputMethod" />
+      </intent-filter>
+      <meta-data android:name="android.view.im" android:resource="@xml/qa_rebind_input_method" />
+    </service>
   </application>
 </manifest>

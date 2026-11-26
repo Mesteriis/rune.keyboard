@@ -1,0 +1,44 @@
+{
+  "aggregateAvailabilityMatched": true,
+  "excludedContexts": [
+    {
+      "article": "8345020",
+      "contextHash": "755eb97dbf4407a3795bb1fd49d9c7e424fa8d265928218851626795197499f6",
+      "retainedRowIndex": 3965,
+      "selectionHash": "49053fa4565a5e74f32b36a223148def4ccfce1e4c8d94b647b5a43731a8dffb",
+      "source": "0017.parquet",
+      "wordEnd": 1364,
+      "wordStart": 1357
+    },
+    {
+      "article": "4719133",
+      "contextHash": "b6214534702659d8792592c571a6416523c59201a7186600983ffe9976f6b5b5",
+      "retainedRowIndex": 4000,
+      "selectionHash": "7158195e5a6436c72d55047d279ff1e240ecfcc26bae914ea7378934abe1e5b3",
+      "source": "0011.parquet",
+      "wordEnd": 23104,
+      "wordStart": 23098
+    }
+  ],
+  "familyExposureVerified": false,
+  "holdoutScoringAllowed": false,
+  "inputBindings": {
+    "tools/typing_experiments/available-v6-article-origin-v1/calibration-recovery/source-index.jsonl": "feed2e451dbe91d7afb5eac8fc946b92b2dbda2b414e7cb3f91469df559c44d8",
+    "tools/typing_experiments/available-v6-article-origin-v1/holdout-recovery/receipt.json": "48a7d09df1a3615eec1c84f30f78640cc441fba6cfb9e843519aae5b9d75adc8",
+    "tools/typing_experiments/available-v6-article-origin-v1/holdout-recovery/source-index.jsonl": "d56fb9d7fa167f599e8414dac7190a057a2a7667ad3cad07694dbe3c850e03eb",
+    "tools/typing_experiments/available-v6-article-origin-v1/source-lock.json": "02397f3424d85634e372e87d8cde55bd97af79615442d3ec1cada45831f95ede",
+    "tools/typing_experiments/historical_provenance_sources/available_clean_v6_prior_context_exclusions.json": "76e48ec2bca6d1e4dd180e83630ea080ae50e07510dbd29b324fede7e9f146c0",
+    "tools/typing_experiments/historical_provenance_sources/sentence_pairs_v2_v6_availability.json": "ea94b32ee61b828de62e7e4a4666a2b699031614e34fe77906d6fc3da1e92d83"
+  },
+  "localCandidatesArchiveSha256": "3ab57a0ff1ea61f9d4f2c9431e920774f0268003d81423130f676f4fdd488b46",
+  "localCandidatesSha256": "13782b22387778eebd26f12bed92a90390c0197a80b2f24f7743a85f3562a44d",
+  "modelCalls": 0,
+  "omittedRows": 10,
+  "parentContexts": 3293,
+  "parentContextsDigestVerified": false,
+  "publicationRightsReviewed": false,
+  "schema": 1,
+  "scope": "v6-excluded-source-context-anchor-recovery",
+  "sourceRecordsScanned": 926220,
+  "sourceShardsScanned": 10
+}

@@ -1,0 +1,86 @@
+{
+  "analyzerSha256": "ad186def1ff68765f4244751d9421f2b645d9d50ef36087606fccd0ee41f97e1",
+  "contextsSha256": "4355db6aaaeb8db28694489335206e067ff534fc8c4c26e3afea646afffd2171",
+  "controlLedgerSha256": "d11164f4372cbe443583005e015b13aa785f78b3b171251171828b0a61bc34a0",
+  "counts": {
+    "articles": 2426,
+    "forms": 232,
+    "frames": 2500,
+    "multipleMatches": 3,
+    "newForms": 192,
+    "occurrences": 268
+  },
+  "independentQualification": false,
+  "lexicalLedgerSha256": "777788249eb075aef58948769eb527104985660306ed9ba68b3e9f77dff97178",
+  "parentBindings": {
+    "tools/ci/register_neighbor_history.py": "d34d8d1593b49ae2fc385d647029c907982688a132f8ea612ecc19837c6bb3fc",
+    "tools/model/rune-text-0.2/WIKIMEDIA_NOTICE.md": "32864f1488511f0b333478541c5986a53ad1b4bc862428dc56eb083751ddd8ba",
+    "tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/neighbor-corpus-manifest.json": "2aeaf745c132c869d2560c89f3831f9710d82d34f559083a352eeb99b604060e",
+    "tools/typing_experiments/neighbor-history-v1/NOTICE.md": "577756752127f06c3c6d1a2e28286b6fe0660dbb815da79c6a5b3703bc5ecbeb",
+    "tools/typing_experiments/neighbor-history-v1/articles.jsonl": "a0b380cc8791985eb2a7e11641cbb6c69310836c08b7cfc4df0e0302912905ed",
+    "tools/typing_experiments/neighbor-history-v1/calibration.jsonl": "eadfe85630e13569970a897034a8aae112415fcb3cc541094050fabe652e3abd",
+    "tools/typing_experiments/neighbor-history-v1/holdout.jsonl": "e0a97cd39220a3887dfe2129f45c07db512e83e72a8c6f4b74ca3657d5928437",
+    "tools/typing_experiments/neighbor-history-v1/manifest.json": "2aeaf745c132c869d2560c89f3831f9710d82d34f559083a352eeb99b604060e",
+    "tools/typing_experiments/neighbor-history-v1/train.jsonl": "524305791ff77379b03c48a9abb78a4d248c3be3b5f9f02ba3006cd1b016d850"
+  },
+  "scope": "disclosed-neighbor-prefix-compounds",
+  "sourceBindings": {
+    "build/typing-ranker-v2/ru-0011.parquet": {
+      "bytes": 200905664,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0011.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f"
+    },
+    "build/typing-ranker-v2/ru-0012.parquet": {
+      "bytes": 196511972,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0012.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "21e33d8a7a0d068e573db688f5816a22fd690bf699dee958373f9b9e957921ad"
+    },
+    "build/typing-ranker-v2/ru-0013.parquet": {
+      "bytes": 205965652,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0013.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "475666c0d80153ab9a76adca42db8afd18fc16c87804e3de0532ffc1309b2d0c"
+    },
+    "build/typing-ranker-v2/ru-0014.parquet": {
+      "bytes": 214902777,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0014.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "d2ad352beecb92765110e57e8ee9409f4ffe03ff9e4b6ec0640840dec748db18"
+    },
+    "build/typing-ranker-v2/ru-0015.parquet": {
+      "bytes": 219480494,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0015.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "dc248873a3cc80b857f11a0320cfaa889da803eabf09351f1ba8abbf9348eda0"
+    },
+    "build/typing-ranker-v2/ru-0016.parquet": {
+      "bytes": 229151965,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0016.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "0e2d2100e924ebedb057a37e789fec861fe2b78787c912c266e36eadd8d2e0a7"
+    },
+    "build/typing-ranker-v2/ru-0017.parquet": {
+      "bytes": 210166516,
+      "license": "CC BY-SA 3.0 and GFDL",
+      "path": "20231101.ru/train/0017.parquet",
+      "repository": "https://huggingface.co/datasets/wikimedia/wikipedia",
+      "revision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+      "sha256": "1a5c96dfda452e7725229760347e781b46f88ccd5df4196a5c1a9d46b51b1a65"
+    }
+  },
+  "tokenizerSha256": "1b5af6e05f8fa951b366aa33e9a1250c6a022a7dd240936637d5420bf70eb127"
+}

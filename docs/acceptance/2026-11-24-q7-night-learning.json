@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "connectedBoundarySourceReceiptSha256": "ae98c99b13e9ca0188e6492f261edd0b9b836aaa9802219a4e996df02f5bb5ad",
+  "debugApkSha256": "60f1ed79f2a8af387286754ec548a32474ce13be9eac0d21e9f6b1346d855871",
+  "androidTestApkSha256": "a4fad218ff1797f4fca0c63335eb2cf9afe617e677a2788f74269912612889b2",
+  "runnerSha256": "f18610b25d745bfd3ab6b5353e7cf48a198d87d1f3e38cad0305b4a3e5d0b4b7",
+  "scopes": {
+    "26": {
+      "cases": 4,
+      "exitCode": 0,
+      "heldOut": 20,
+      "improvements": 8,
+      "regressions": 0,
+      "receiptSha256": "044d463a729bf8b5b9d88c59b46a255304c9cfce56a29218e038b7f7a42d5417",
+      "seedSha256": "2e4454e48a4403a9a513135c1e0b268d4dca0b3b35a6a70f858e86f48fe3ca6f",
+      "observerSha256": "5973372b2d88e607b5671a93f3c13b8fc9c53bcd6acf49505aa760909f2ee3d4"
+    },
+    "37.0": {
+      "cases": 4,
+      "exitCode": 0,
+      "heldOut": 20,
+      "improvements": 8,
+      "regressions": 0,
+      "receiptSha256": "891142364eb9e207ed5acfc929f353b4f5ca3a3a1e3623c9a6a137ef1f6d46d3",
+      "seedSha256": "2e4454e48a4403a9a513135c1e0b268d4dca0b3b35a6a70f858e86f48fe3ca6f",
+      "observerSha256": "5973372b2d88e607b5671a93f3c13b8fc9c53bcd6acf49505aa760909f2ee3d4"
+    }
+  },
+  "freshAvdEachApi": true,
+  "hosted": false,
+  "physicalDevice": false
+}

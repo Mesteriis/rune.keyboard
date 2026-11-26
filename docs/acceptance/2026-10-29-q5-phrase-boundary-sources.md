@@ -1,0 +1,11 @@
+# Q5: source attribution for reviewed phrase changes
+
+A metadata-only boundary observer now records the actual source and outcome at each word of the existing full-session phrase replay. It never requests diagnostic text. Its buffer is cleared immediately before each Space, so candidate-generation or earlier-word events cannot be mistaken for the current boundary. It is enabled only by the existing `rune.replay.boundaryDiagnostics` flag; ordinary replay output is unchanged.
+
+On the eight previously disclosed post-hoc preservation cases, actual `AUTO_REPLACE` events attribute three to `CONTEXTUAL_RANKER` (`пейринг`, `админку`, `ебобо`), one to `JOINT_RESCUE` (`токсиков`) and four to `LOCAL_POLICY` (`забанили`, both `бадлон` cases, `могёт`). This event name describes the controller's diagnostic category; it does not independently prove which local sub-policy selected the candidate. This is a reviewed sample, not a population estimate or independent qualification.
+
+The `ебобо` ordinary generation exhausted its state budget and set the ordinary retrieval veto, while its separate joint search completed and the controller attributed the final edit to the contextual ranker. The different search certificates and policy branches explain why these observations can coexist; they do not establish that this replacement was correct. Any change to these branches needs independent qualification and broad regression.
+
+The analyzer rejects missing, duplicate or stale application events and binds its output to the two identical source-bound replay runs. All 11 final edits and exact Undo checks still pass the existing disclosure screen. Removing diagnostic metadata reproduces the previous 11 phrase observations exactly; the six-case default replay is byte-identical to its prior output. Two analyzer unit tests and the real two-run screen passed locally. CI invokes the analyzer over the same disclosed screen; hosted CI has not been observed. [Source counts and hashes](2026-10-29-q5-phrase-boundary-sources.json). No product behavior or packaged assets were changed; Q5 remains open.
+
+Reproduce with `python3 tools/ci/phrase_boundary_sources.py --java <java-17> --output build/<new-directory>`.

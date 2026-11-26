@@ -14,6 +14,7 @@ The root MIT License applies to Rune's original code and documentation. It does 
 | Frequency data | [CC-BY-SA-4.0](app/src/main/assets/smarttyping/lexicon/notices/CC-BY-SA-4.0.txt) | Hermit Dave / FrequencyWords / OpenSubtitles2018; transformed into terminal ranks |
 | Russian morphology | [CC-BY-SA-3.0](app/src/main/assets/smarttyping/lexicon/notices/OpenCorpora-CC-BY-SA-3.0.txt) | OpenCorpora-derived morphology; [pinned provenance](app/src/main/assets/smarttyping/lexicon/provenance/morphology-manifest.json) |
 | Experimental ranking/context weights | [CC-BY-SA-3.0 and attribution](app/src/main/assets/smarttyping/experiments/NOTICE.md) | Derived from a pinned Wikimedia Wikipedia snapshot through text extraction, synthetic perturbations, model fitting and numeric export |
+| Historical v2–v4 Wikipedia-derived spelling and punctuation rows | [Historical source licenses and article attribution](tools/typing_experiments/historical-qualification-v3-v4/NOTICE.md) | Host-side fixtures generated from the pinned Wikipedia snapshot through context extraction, spelling perturbations and punctuation example construction |
 
 Exact sources, hashes and transformation scripts for dictionary assets are documented in [packaged lexicons](app/src/main/assets/smarttyping/lexicon/provenance/PACKAGED_LEXICONS.md) and [the lexicon pipeline](tools/lexicon/smart-typing-0.3/README.md). Small model provenance and training instructions are in [typing experiments](tools/typing_experiments/README.md).
 

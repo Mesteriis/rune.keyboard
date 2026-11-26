@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.ime.ui
 
 import android.content.Context
+import android.os.Build
 import android.graphics.Typeface
 import android.text.TextUtils
 import android.util.TypedValue
@@ -12,8 +13,11 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.window.OnBackInvokedCallback
+import android.window.OnBackInvokedDispatcher
 import io.github.mesteriis.rune.keyboard.R
 import io.github.mesteriis.rune.keyboard.ime.RuneTrace
 import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceSection
@@ -24,6 +28,11 @@ import io.github.mesteriis.rune.keyboard.smarttyping.ui.SmartTypingViewState
 internal class CandidateStripView(context: Context, private val appearance: KeyboardAppearance) : LinearLayout(context) {
     private var candidateListener: ((String) -> Unit)? = null
     private var longPressListener: ((String) -> Boolean)? = null
+    private var expandListener: (() -> Unit)? = null
+    private var expandedRow: LinearLayout? = null
+    private var expandedDismissed: (() -> Unit)? = null
+    private var unregisterExpandedBack: (() -> Unit)? = null
+    private var expandButton: TextView? = null
     private val cells = List(SmartTypingViewState.MAX_VISIBLE_CANDIDATES) {
         CandidateCell(context, appearance, { id -> candidateListener?.invoke(id) }, { id -> longPressListener?.invoke(id) == true })
     }
@@ -49,12 +58,89 @@ internal class CandidateStripView(context: Context, private val appearance: Keyb
         cells.forEach { it.setProtectionEnabled(listener != null) }
     }
 
-    fun render(state: SmartTypingViewState) {
+    fun setOnExpandListener(listener: (() -> Unit)?) { expandListener = listener }
+
+    val hasExpandedCandidates: Boolean get() = expandedRow != null
+
+    fun dismissExpanded(): Boolean {
+        val row = expandedRow ?: return false
+        expandedRow = null
+        val callback = expandedDismissed
+        expandedDismissed = null
+        unregisterExpandedBack?.invoke()
+        unregisterExpandedBack = null
+        (row.parent as? FrameLayout)?.removeView(row)
+        expandButton?.contentDescription = context.getString(R.string.candidate_expand)
+        callback?.invoke()
+        return true
+    }
+
+    fun showExpanded(host: FrameLayout, candidates: List<CandidateUiItem.Correction>, selected: (String) -> Unit,
+        dismissed: () -> Unit): Boolean {
+        dismissExpanded()
+        if (!isAttachedToWindow || candidates.isEmpty() || !isShown || host.height <= 0) return false
+        val row = LinearLayout(context).apply {
+            orientation = HORIZONTAL
+            layoutDirection = LAYOUT_DIRECTION_LTR
+            background = appearance.popupBackground()
+            importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
+        }
+        candidates.forEach { item ->
+            val cell = CandidateCell(context, appearance, { id ->
+                if (expandedRow === row) {
+                    selected(id)
+                    if (expandedRow === row) dismissExpanded()
+                }
+            }, { false })
+            cell.bind(item, false, false)
+            row.addView(cell, LayoutParams(0, LayoutParams.MATCH_PARENT, 1f))
+        }
+        expandButton?.let { row.getChildAt(0).accessibilityTraversalAfter = it.id }
+        expandedRow = row
+        expandedDismissed = dismissed
+        expandButton?.contentDescription = context.getString(R.string.candidate_collapse)
+        host.addView(row, FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+            minOf(host.height, resources.getDimensionPixelSize(R.dimen.candidate_strip_height)), Gravity.TOP))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            host.findOnBackInvokedDispatcher()?.let { dispatcher ->
+                val back = OnBackInvokedCallback { dismissExpanded() }
+                dispatcher.registerOnBackInvokedCallback(OnBackInvokedDispatcher.PRIORITY_OVERLAY, back)
+                unregisterExpandedBack = { dispatcher.unregisterOnBackInvokedCallback(back) }
+            }
+        }
+        return true
+    }
+
+    fun render(state: SmartTypingViewState, canExpand: Boolean = false) {
+        dismissExpanded()
         RuneTrace.section(SmartTypingTraceSection.CANDIDATE_RENDER) {
-            val childrenChanged = cells.count { it.visibility == VISIBLE } != state.candidates.size
+            val hadExpand = expandButton?.parent === this
+            val childrenChanged = cells.count { it.visibility == VISIBLE } != state.candidates.size ||
+                hadExpand != (state.enabled && canExpand)
             cells.forEachIndexed { index, cell ->
                 val item = state.candidates.getOrNull(index)
                 cell.bind(item, item != null && item.id == state.selectedCandidateId, item != null && item.id == state.automaticReplacementId)
+            }
+            if (state.enabled && canExpand) {
+                val button = expandButton ?: object : TextView(context) {
+                    override fun getAccessibilityClassName(): CharSequence = Button::class.java.name
+                }.apply {
+                    id = View.generateViewId()
+                    text = "⌄"
+                    gravity = Gravity.CENTER
+                    setTextColor(appearance.text)
+                    setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.candidate_text_size))
+                    contentDescription = context.getString(R.string.candidate_expand)
+                    isClickable = true
+                    isFocusable = true
+                    setOnClickListener {
+                        if (!dismissExpanded()) expandListener?.invoke()
+                    }
+                }.also { expandButton = it }
+                if (button.parent == null) addView(button, LayoutParams(
+                    (48 * resources.displayMetrics.density).toInt(), LayoutParams.MATCH_PARENT))
+            } else {
+                expandButton?.let { if (it.parent === this) removeView(it) }
             }
             visibility = if (state.enabled) VISIBLE else GONE
             if (childrenChanged && isShown &&
@@ -71,6 +157,11 @@ internal class CandidateStripView(context: Context, private val appearance: Keyb
                 )
             }
         }
+    }
+
+    override fun onDetachedFromWindow() {
+        dismissExpanded()
+        super.onDetachedFromWindow()
     }
 
     private class CandidateCell(

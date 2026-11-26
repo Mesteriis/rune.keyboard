@@ -40,6 +40,34 @@ class SettingsDependenciesInstrumentedTest {
     private fun row(activity: SettingsActivity, title: Int): View =
         checkNotNull(activity.findViewById<LinearLayout>(R.id.settings_container).findViewWithTag(title))
 
+    @Test fun languageMoveButtonsNameTheirLanguageAfterReordering() = withSettings {
+        val initial = listOf(KeyboardLanguage.ENGLISH, KeyboardLanguage.RUSSIAN, KeyboardLanguage.SPANISH)
+        preferences.writeEnabledLanguages(initial)
+        ActivityScenario.launch(LanguageSettingsActivity::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                val languages = activity.findViewById<LinearLayout>(R.id.languages_container)
+                fun checkOrder(order: List<KeyboardLanguage>) {
+                    for ((index, language) in order.withIndex()) {
+                        val row = languages.getChildAt(index)
+                        val up = row.findViewById<View>(R.id.language_move_up).createAccessibilityNodeInfo()
+                        val down = row.findViewById<View>(R.id.language_move_down).createAccessibilityNodeInfo()
+                        assertEquals(activity.getString(R.string.settings_language_move_up_accessibility, language.displayLabel),
+                            up.contentDescription.toString())
+                        assertEquals(activity.getString(R.string.settings_language_move_down_accessibility, language.displayLabel),
+                            down.contentDescription.toString())
+                        assertEquals(index > 0, up.isEnabled)
+                        assertEquals(index < order.lastIndex, down.isEnabled)
+                    }
+                }
+                checkOrder(initial)
+                assertTrue(languages.getChildAt(0).findViewById<View>(R.id.language_move_down).performClick())
+                val reordered = listOf(KeyboardLanguage.RUSSIAN, KeyboardLanguage.ENGLISH, KeyboardLanguage.SPANISH)
+                assertEquals(reordered, preferences.readSettings().enabledLanguages)
+                checkOrder(reordered)
+            }
+        }
+    }
+
     @Test fun nativeSwitchHasOneNamedCheckableTargetAndBothClickPathsPersist() = withSettings {
         preferences.writeVisibleUndo(false)
         ActivityScenario.launch<SettingsActivity>(SettingsActivity.intent(context, SettingsPage.TYPING)).use { scenario ->

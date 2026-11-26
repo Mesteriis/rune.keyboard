@@ -1,0 +1,54 @@
+{
+  "debugApkSha256": "a5880c41ce5320f9c12c372e8c6cdead6f86ada1ffa7d8e83cdd4a97cb86fdba",
+  "emulatorFinalTargeted": {
+    "api26": {
+      "failures": 0,
+      "tests": 4
+    },
+    "api37": {
+      "failures": 0,
+      "tests": 4
+    }
+  },
+  "foldTested": false,
+  "fullThemeMatrixBeforePreviewFix": {
+    "api26": {
+      "failures": 0,
+      "tests": 7
+    },
+    "api37": {
+      "failures": 0,
+      "tests": 7
+    }
+  },
+  "jvm": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 1360
+  },
+  "lintDebug": "PASS",
+  "manualTalkBackTested": false,
+  "purpose": "U18_PALETTE_EMULATOR_ACCEPTANCE_PARTIAL",
+  "schema": 1,
+  "scoringBoundaryVerifier": "PASS",
+  "sources": {
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/KeyboardThemesInstrumentedTest.kt": "d0cc8605769f3a5bc72e1af35c8db094f5b4ed008a535f29a6f0549c3bde261f",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/RuneInputMethodService.kt": "1e61e679d509cf558e16fc0596bc6fdaac77dcbf25b91cec25e8cdc25a4a7798",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/ui/KeyboardAppearance.kt": "b42050cc8a7b739d64b8e67aa8e0aeaf816f47ca73b8a78f5588d73b4ead2adb",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/ui/KeyboardPaletteColors.kt": "bfaf3cf68e1f8ec552d440f9c67d6bb1464ec1d946c0fc04cd38a03c34ebde13",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/ime/ui/RuneKeyboardView.kt": "bb70c7d45d166e90927f0606982cc462d84501f4bb7f17794800ea9edc635089",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardPreferences.kt": "3863128e7fd480ff36dac24065b860c49da3e5bafdfcb49dcf6995c424751c13",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/KeyboardSettings.kt": "73ef50f956bc1d30bb719343cabbc06afca693f0c8b3e2d0285b764283505e21",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SettingsActivity.kt": "3aacb62285dfaaff3f8a6c2a141ca21ed23a1df36f619f5665c5a696da21d97e",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SettingsCodec.kt": "b15e7912febcb02badf471d4f99803f094d5297b2d2958dd7d84646fbf8b2e70",
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/settings/SetupActivity.kt": "15e94ec42d631693a8abe8543ba46e8144c9e65947ca3f828239d221b61fa02d",
+    "app/src/main/res/values-es/keyboard_palettes.xml": "f307ec84def9751c558aff62ae67790543f7d46e42c5deeb0b7e60d1b4754d94",
+    "app/src/main/res/values-ru/strings.xml": "cd3b65896d3cf23a9a0702e8d29cdd7c9c036475cc77b8b5701e3213415885f0",
+    "app/src/main/res/values/strings.xml": "1eb60b867641d955111347318ef2fc1107d1f3e7d94e4701d223bdea21d93391",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/ime/ui/KeyboardPaletteColorsTest.kt": "108374671fd3d270d1bd8d662f90f0cca4a9e23c66193a12b8847e651023c28d",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/settings/KeyboardPreferencesTest.kt": "9e9d93a424ddf5e1ac0ace4ad0df370ae677b48066f9937dc4cc0e38d796bde0"
+  },
+  "systemNightRestored": true,
+  "testApkSha256": "7d15c3550e653e6446e36254b634b1775046544c7f098954eecf6c255913a7c0"
+}

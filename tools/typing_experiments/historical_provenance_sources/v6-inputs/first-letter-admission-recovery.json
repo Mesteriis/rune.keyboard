@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "sourceSha256": "fc1e2edc58fa27085d36c32c38922d7904077d9cdac05719efbcefa3faeea240",
+  "modelCalls": 0,
+  "jointArticleKeys": 5173,
+  "diagnosticRareRankingExcludedArticles": 7521,
+  "holdouts": {
+    "initial": {
+      "rows": 4672,
+      "surfaceFamilies": 500,
+      "articles": 491,
+      "originalRowsSha256": "ba69721830a1b7d49e67c0b4b489a670beac06dac8ccb6e2d16cbfd436942e4a",
+      "originalProtocolSha256": "3e12c5065b2e8401eb2463aa397b799bf9aa7f82a51934913a7726ffe2278e08"
+    },
+    "confirmatory": {
+      "rows": 18696,
+      "surfaceFamilies": 2000,
+      "articles": 1857,
+      "originalRowsSha256": "5976f444226d0ec9325b30316745b21d4ab7b860f8864e19fc94f43308c9d5f2",
+      "originalProtocolSha256": "3b4a7b74d726b07733d23af3cb793f81123207da86b4dd8a013f52a4b5395cf2"
+    }
+  }
+}

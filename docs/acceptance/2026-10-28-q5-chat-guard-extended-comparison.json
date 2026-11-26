@@ -1,0 +1,48 @@
+{
+  "caveat": "Q7 inputs are label-free, previously disclosed and are not independent accuracy data.",
+  "counts": {
+    "product-replay-history-v1Rows": 4000,
+    "product-replay-v1Rows": 720,
+    "reviewedDifferentBoundaryTexts": 8,
+    "reviewedDifferentRows": 8,
+    "reviewedRows": 8
+  },
+  "differentFields": {
+    "reviewed:actualRequestGeneration": 7,
+    "reviewed:afterBackspace": 8,
+    "reviewed:afterBoundary": 8,
+    "reviewed:autoEdit": 8,
+    "reviewed:automaticAdmissionAllowed": 8,
+    "reviewed:automaticAdmissionCandidate": 7,
+    "reviewed:automaticAdmissionRefusal": 1,
+    "reviewed:backspaceCommands": 8,
+    "reviewed:boundaryChangedBeyondInsertedSpace": 8,
+    "reviewed:boundaryCommands": 8,
+    "reviewed:candidateView": 4,
+    "reviewed:compactPolicyCandidate": 2,
+    "reviewed:fullTokenGeneration": 7,
+    "reviewed:grammarRevisionAttempted": 8,
+    "reviewed:grammarRevisionHistory": 8,
+    "reviewed:grammarRevisionRefusal": 8,
+    "reviewed:jointModelScores": 8,
+    "reviewed:jointSearch": 8,
+    "reviewed:jointSourceAdmission": 8,
+    "reviewed:jointSourceRefusals": 8,
+    "reviewed:jointTargetKnown": 8,
+    "reviewed:nounCaseAttempted": 8,
+    "reviewed:nounCaseHistory": 8,
+    "reviewed:nounCaseRefusal": 8,
+    "reviewed:rescueModelScores": 8,
+    "reviewed:rightContextSourceCertificates": 8,
+    "reviewed:stateAfterBackspace": 8,
+    "reviewed:stateAfterBoundary": 8
+  },
+  "independentQualification": false,
+  "inputs": {
+    "baseline": "0e40cada9973c0685dfa5c189ff011c0439daa346bdfbf1d82ca118f56d43e62",
+    "overlay": "d8c720e5593f94fc7281c76d4c3e094db21dda83b594b909d2d09463f1eee08f",
+    "rows": "2e21ec606ce8834c3eaab2a49e9b56250b0bc86d46e97a1f214ae7036d16c311"
+  },
+  "purpose": "DISCLOSED_OVERLAY_PARITY_NOT_QUALIFICATION",
+  "sourceSha256": "050d0621fa84249b7a232b7d9566829848492dba618ef7d91eefbc0bfd0a3284"
+}

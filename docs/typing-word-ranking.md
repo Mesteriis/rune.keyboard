@@ -63,10 +63,21 @@
 
 Используются прежние host-зависимости из `tools/typing_experiments/requirements*.txt`. Все команды ниже, кроме явно указанного экспортёра, находятся в `tools/typing_experiments/`:
 
-1. PyArrow-окружение: `prepare_word_ranking.py --parquet PATH_TO_PINNED_RU_0007 --frequency PATH_TO_PINNED_RU_50K --output build/typing-word-ranking/data`.
+1. Историческое воспроизведение в PyArrow-окружении: `prepare_word_ranking.py --historical-reproduction --parquet PATH_TO_PINNED_RU_0007 --frequency PATH_TO_PINNED_RU_50K --output build/typing-word-ranking/data`. Текущий manifest помечает эти раскрытые данные регрессионными. Обычный запуск требует полного покрытия постоянных реестров Q6 и не подтверждает новую независимую приёмку на прежнем тесте.
 2. Экспорт: `tools/morphology/evaluate.py export --rows build/typing-word-ranking/data/all-rows.jsonl --output build/typing-word-ranking/candidates`, затем `split_observations.py --data build/typing-word-ranking/data --export build/typing-word-ranking/candidates --output build/typing-word-ranking/observations`.
 3. CatBoost-окружение: `word_ranking.py prepare`; MLX-окружение: `word_ranking.py train`; NumPy-окружение: `word_ranking.py evaluate-dev`.
-4. После замораживания выбора: `evaluate_word_ranking.py` в CatBoost-окружении. Команда оценивает только выбранную модель и не изменяет приложение.
+4. После замораживания выбора: `evaluate_word_ranking.py --historical-reproduction` в CatBoost-окружении. Команда оценивает только выбранную модель и не изменяет приложение.
 5. Host-проверки: `PYTHONDONTWRITEBYTECODE=1 build/morphology-venv/bin/python -m unittest discover -s tools/typing_experiments -v`. MLX-проверки отдельно: `-m unittest discover -s tools/typing_experiments -p test_word_ranking.py -v` в MLX-окружении.
 
 Результаты, модели, полные журналы, точные хеши и ревью сохраняются в игнорируемом `build/typing-word-ranking`. Новый APK и новые Android-замеры не создаются при отклонённой модели: ни один файл приложения не изменён. Публичные исходники содержат инструменты, тесты и агрегированный отчёт; личные переписки не выгружаются.
+
+
+Текущий оценщик сначала проверяет постоянные реестры Q6. Для раскрытого набора
+требуется явный `--historical-reproduction`: численные критерии сохраняются в
+`observedGatePassed`, но `accepted` и `independentDataEvaluation` всегда ложны.
+Отчёт связывает входы основной и трёх регрессионных групп, обе dev-группы,
+идентификаторы строк dev-scores, модели, код и реестры; перед записью проверяет
+их повторно. Контроли и типизированное число ошибок проверяются до расчётов.
+Исходный оценщик сохранён по точному хешу. Ограниченный CI-прогон с настоящими
+JVM-кандидатами проверяет этот путь на четырёх раскрытых строках и одинаковых
+опубликованных весах; исходное обучение и независимую приёмку он не воспроизводит.

@@ -1,0 +1,186 @@
+{
+  "schema": 1,
+  "purpose": "POSTHOC_DISCLOSED_CASE_REGRESSION_NOT_QUALIFICATION",
+  "cases": [
+    {
+      "id": "chat-regression-7788300-control",
+      "typed": "австрию",
+      "baseline": "Австрию",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-8992253-control",
+      "typed": "мэри",
+      "baseline": "Мэри",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-9014905-control",
+      "typed": "париж",
+      "baseline": "Париж",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-9041096-control",
+      "typed": "мэри",
+      "baseline": "Мэри",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-9191791-control",
+      "typed": "мэри",
+      "baseline": "Мэри",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-9300346-control",
+      "typed": "мэри",
+      "baseline": "Мэри",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-9563821-control",
+      "typed": "джона",
+      "baseline": "Джона",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-9813994-control",
+      "typed": "эверест",
+      "baseline": "Эверест",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-9814039-control",
+      "typed": "мэри",
+      "baseline": "Мэри",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-9889113-control",
+      "typed": "мэри",
+      "baseline": "Мэри",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-9933235-control",
+      "typed": "россии",
+      "baseline": "России",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-9933238-control",
+      "typed": "америки",
+      "baseline": "Америки",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-10146741-control",
+      "typed": "мэри",
+      "baseline": "Мэри",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-10168886-control",
+      "typed": "мэри",
+      "baseline": "Мэри",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-10227293-control",
+      "typed": "америка",
+      "baseline": "Америка",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-10344991-control",
+      "typed": "мэри",
+      "baseline": "Мэри",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-10350088-control",
+      "typed": "александру",
+      "baseline": "Александру",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-10469672-control",
+      "typed": "мэри",
+      "baseline": "Мэри",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-10474141-control",
+      "typed": "мэри",
+      "baseline": "Мэри",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-10474142-control",
+      "typed": "джона",
+      "baseline": "Джона",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-11073774-control",
+      "typed": "клавы",
+      "baseline": "Клавы",
+      "label": "lowercase_preserve"
+    },
+    {
+      "id": "chat-regression-11113184-control",
+      "typed": "читы",
+      "baseline": "Читы",
+      "label": "lowercase_preserve"
+    },
+    {
+      "id": "chat-regression-11113196-control",
+      "typed": "читы",
+      "baseline": "Читы",
+      "label": "lowercase_preserve"
+    },
+    {
+      "id": "chat-regression-11219473-control",
+      "typed": "моника",
+      "baseline": "Моника",
+      "label": "lowercase_preserve"
+    },
+    {
+      "id": "chat-regression-11240551-control",
+      "typed": "мэри",
+      "baseline": "Мэри",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-11890296-control",
+      "typed": "майн",
+      "baseline": "Майн",
+      "label": "ambiguous"
+    },
+    {
+      "id": "chat-regression-12072098-control",
+      "typed": "клавы",
+      "baseline": "Клавы",
+      "label": "lowercase_preserve"
+    },
+    {
+      "id": "chat-regression-12663362-control",
+      "typed": "россию",
+      "baseline": "Россию",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-12663365-control",
+      "typed": "россию",
+      "baseline": "Россию",
+      "label": "proper_name"
+    },
+    {
+      "id": "chat-regression-12663383-control",
+      "typed": "чайковского",
+      "baseline": "Чайковского",
+      "label": "proper_name"
+    }
+  ]
+}

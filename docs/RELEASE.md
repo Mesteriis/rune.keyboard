@@ -91,7 +91,9 @@ scrub and six deletions; other edits remain refused. Its native source guard use
 the same complete checkpoint plus an independent two-wrapper-only submodule check.
 See [F-Droid instructions](FDROID.md) for the pre-prepare init guards and property.
 The real local `build_local` run now succeeds and produces the same unsigned APK
-as the normal checkout under the same host/toolchain/cache. Source tarball and
-final binary scanning were not run; missing-Git exports, an independent build
-server, a next versioned recipe and publication remain separate requirements.
+as the normal checkout under the same host/toolchain/cache. A later local run created the source tarball and scanned the unsigned APK. A
+[rebuild of the verified archive](acceptance/2026-10-29-q1-fdroid-trusted-export-rebuild.md)
+against a trusted checkout produced the same APK on the same host and cache. The
+archive alone still lacks the Git identity required by the gate; an independent
+build server, a next versioned recipe and publication remain separate requirements.
 Historical recipes keep their original immutable source commits.

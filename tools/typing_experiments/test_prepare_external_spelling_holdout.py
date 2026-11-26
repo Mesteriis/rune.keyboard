@@ -41,6 +41,8 @@ class ExternalHoldoutTest(unittest.TestCase):
             self.assertEqual({"елка"}, families)
             self.assertEqual(1, count)
             self.assertEqual(1, len(bindings))
+            with self.assertRaisesRegex(ValueError, 'EXCLUSION_PATH'):
+                holdout.excluded_families([path, path], str.casefold)
 
     def test_build_rows_fails_closed_when_pool_is_short(self):
         with self.assertRaisesRegex(ValueError, "INSUFFICIENT_FRESH_HOLDOUT"):

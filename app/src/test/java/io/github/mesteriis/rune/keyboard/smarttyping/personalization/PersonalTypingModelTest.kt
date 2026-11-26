@@ -10,6 +10,50 @@ class PersonalTypingModelTest {
     private val dictionary = setOf("see", "you", "soon", "very", "well", "hello", "world")
     private fun model() = PersonalTypingModel { word, language -> language == en && word in dictionary }
 
+    @Test fun `case-only rejection survives private snapshot and vetoes only that direction and language`() {
+        val model = model()
+        model.recordRejected("клава", "Клава", ru)
+        assertTrue(model.rejects("клава", "Клава", ru))
+        assertFalse(model.protectsOriginal("клава", ru))
+        assertFalse(model.rejects("клава", "Клава", en))
+        assertFalse(model.rejects("Клава", "клава", ru))
+        assertFalse(model.rejects("клава", "клаву", ru))
+        val restored = model()
+        restored.restore(PersonalTypingCodec.decode(PersonalTypingCodec.encode(model.snapshot())))
+        assertTrue(restored.rejects("клава", "Клава", ru))
+        restored.reset()
+        assertFalse(restored.rejects("клава", "Клава", ru))
+    }
+
+    @Test fun `case-only rejection ignores wrong direction and unrelated case patterns`() {
+        val model = model()
+        model.recordRejected("Клава", "клава", ru)
+        model.recordRejected("КЛАВА", "Клава", ru)
+        model.recordRejected("клава", "КЛАВА", ru)
+        assertFalse(model.rejects("клава", "Клава", ru))
+        assertTrue(model.snapshot().caseRejections.isEmpty())
+        model.recordRejected("д".repeat(33), "Д" + "д".repeat(32), ru)
+        assertFalse(model.rejects("д".repeat(33), "Д" + "д".repeat(32), ru))
+        model.recordRejected("клава", "Клава", ru)
+        assertEquals(listOf(PersonalWord(ru, "клава")), model.snapshot().caseRejections)
+        assertFalse(model.rejects("клава", "клаву", ru))
+        assertFalse(model.protectsOriginal("клава", ru))
+    }
+
+    @Test fun `case rejection capacity fails closed only for case changes`() {
+        val model = model()
+        fun word(index: Int) = "слово" + ('а' + index / 32) + ('а' + index % 32)
+        repeat(PersonalTypingModel.MAX_CASE_REJECTIONS) { i ->
+            val word = word(i)
+            model.recordRejected(word, word.replaceFirstChar { it.titlecase() }, ru)
+        }
+        assertEquals(PersonalTypingModel.MAX_CASE_REJECTIONS, model.snapshot().caseRejections.size)
+        assertTrue(model.rejects("клава", "Клава", ru))
+        assertFalse(model.rejects("клава", "клаву", ru))
+        model.reset()
+        assertFalse(model.rejects("клава", "Клава", ru))
+    }
+
     @Test fun `rejection permanently overrides stronger positive feedback without certifying original`() {
         val model = model()
         model.recordRejected("Yuo", "you", en)

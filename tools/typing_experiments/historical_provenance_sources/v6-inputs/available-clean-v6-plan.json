@@ -1,0 +1,13 @@
+{
+  "stage": "available-record-calibration-diagnostic-only",
+  "fullCohortGatePassed": false,
+  "failedAvailabilitySha256": "ea94b32ee61b828de62e7e4a4666a2b699031614e34fe77906d6fc3da1e92d83",
+  "parentPlanSha256": "b54efac3d50e8f5d59ec9796118c55a370dd97b0f2111c37fb23c0c3561d6346",
+  "recordsSha256": "5894fc3d81bcebd87ed743c28b6d90123e864d82852aa9d4a2416325fb74ef32",
+  "modelSha256": "dfdc98954e702b3787118cb88ecd3268b25b4b1f498b45777872dc4c4c977594",
+  "scriptSha256": "28cd94ab4f4df8f9a85691f4e6e152047559cca36c1aee02fab6693c70838325",
+  "auditSourceSha256": "73b7965af2aaceaea6b2fc591405c45a721b6b8b6b9b77e943afe51012d5a231",
+  "qualificationRequirementsChanged": false,
+  "holdoutScoringAllowed": false,
+  "modelCalls": 0
+}

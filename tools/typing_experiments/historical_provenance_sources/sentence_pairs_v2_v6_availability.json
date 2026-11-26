@@ -1,0 +1,39 @@
+{
+  "scannedArticles": 926220,
+  "eligibleArticles": 844368,
+  "grammarPredicates": 64814,
+  "grammarNominatives": 227196,
+  "blockedArticles": 19954,
+  "parts": {
+    "calibration": {
+      "contexts": 1661,
+      "groups": {
+        "hard_other_part_negative": 400,
+        "agreement_role_negative": 386,
+        "matched_copula_positive": 75,
+        "direct_subject_positive": 400,
+        "ordinary_other_part_negative": 400
+      },
+      "families": 588,
+      "cueTypes": {
+        "subject": 1527,
+        "copula": 134
+      }
+    },
+    "holdout": {
+      "contexts": 1632,
+      "groups": {
+        "hard_other_part_negative": 400,
+        "agreement_role_negative": 360,
+        "matched_copula_positive": 72,
+        "direct_subject_positive": 400,
+        "ordinary_other_part_negative": 400
+      },
+      "families": 523,
+      "cueTypes": {
+        "subject": 1487,
+        "copula": 145
+      }
+    }
+  }
+}

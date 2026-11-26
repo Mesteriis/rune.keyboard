@@ -95,12 +95,39 @@ class KeyboardLayoutProviderTest {
             it.action is KeyboardAction.Navigate || it.action is KeyboardAction.ContextMenu })
     }
 
-    @Test fun modeKeyTapIsUnchangedAndItsOnlyLongPressAlternateOpensEditing() {
+    @Test fun modeKeyTapAndEditingRemainAvailableAlongsideKeyboardSwitch() {
         for (language in KeyboardLanguage.entries) {
             val key = provider.layoutFor(KeyboardState(language), textEditor).rows.flatten().single {
                 it.action == KeyboardAction.ToggleSymbols }
-            assertEquals(listOf(KeyboardAction.OpenEditing), key.longPressAlternates.map { it.action })
-            assertTrue(key.longPressAlternates.single().label.isNotBlank())
+            assertEquals(listOf(KeyboardAction.OpenEditing, KeyboardAction.NextInputMethod), key.longPressAlternates.map { it.action })
+            assertTrue(key.longPressAlternates.all { it.label.isNotBlank() })
+            assertTrue(!key.longPressAlternates.last().accessibilityLabel.isNullOrBlank())
+            for (state in listOf(KeyboardState(language).toggleSymbols(), KeyboardState(language).toggleSymbols().toggleSymbolsPage())) {
+                val abc = provider.layoutFor(state, textEditor).rows.flatten().single { it.action == KeyboardAction.ToggleSymbols }
+                assertEquals(listOf(KeyboardAction.NextInputMethod), abc.longPressAlternates.map { it.action })
+                assertTrue(!abc.longPressAlternates.single().accessibilityLabel.isNullOrBlank())
+            }
+            val secret = EditorContext.from(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD, 0)
+            for (state in listOf(KeyboardState(language), KeyboardState(language).toggleSymbols())) {
+                val secretKey = provider.layoutFor(state, secret).rows.flatten().single { it.action == KeyboardAction.ToggleSymbols }
+                assertTrue(secretKey.longPressAlternates.isEmpty())
+            }
+        }
+    }
+
+    @Test fun voiceAlternateRequiresAvailabilityAndNonSensitiveEditor() {
+        val secret = EditorContext.from(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD, 0)
+        for (language in KeyboardLanguage.entries) {
+            for (state in listOf(KeyboardState(language), KeyboardState(language).toggleSymbols(),
+                    KeyboardState(language).toggleSymbols().toggleSymbolsPage())) {
+                fun alternates(editor: EditorContext, enabled: Boolean) =
+                    provider.layoutFor(state, editor, LayoutOptions(voiceInput = enabled)).rows.flatten()
+                        .single { it.action == KeyboardAction.ToggleSymbols }.longPressAlternates
+                assertTrue(alternates(textEditor, false).none { it.action == KeyboardAction.VoiceInput })
+                val voice = alternates(textEditor, true).single { it.action == KeyboardAction.VoiceInput }
+                assertTrue(!voice.accessibilityLabel.isNullOrBlank())
+                assertTrue(alternates(secret, true).none { it.action == KeyboardAction.VoiceInput })
+            }
         }
     }
 

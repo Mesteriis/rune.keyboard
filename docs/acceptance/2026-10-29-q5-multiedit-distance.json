@@ -1,0 +1,31 @@
+{
+  "analyzerSha256": "1bc53a96e675bf462a5bacb413ddd019008fccf6240af8f04f21a27bf5aede68",
+  "independentQualification": false,
+  "metrics": {
+    "operations_0:input_changed_by_typing": 274,
+    "operations_0:rows": 300,
+    "operations_1:automatic": 493,
+    "operations_1:automatic_expected": 492,
+    "operations_1:input_changed_by_typing": 535,
+    "operations_1:rows": 600,
+    "operations_1:unattributed": 1,
+    "operations_2:automatic": 289,
+    "operations_2:automatic_expected": 247,
+    "operations_2:distance_over_one": 269,
+    "operations_2:distance_over_one_expected": 247,
+    "operations_2:input_changed_by_typing": 535,
+    "operations_2:rows": 600,
+    "operations_3:automatic": 68,
+    "operations_3:automatic_expected": 34,
+    "operations_3:distance_over_one": 59,
+    "operations_3:distance_over_one_expected": 34,
+    "operations_3:input_changed_by_typing": 273,
+    "operations_3:rows": 300
+  },
+  "observationsSha256": "e9e734b8621cdd51f8d35c66e6d01330eab179b51bbbf30dea04db67d4b6f19f",
+  "policyChanged": false,
+  "replayReceiptSha256": "dce35a9fb4d4de0a12fa92446ef5bad15ff4fa5f7cabe630e5f46a7890efc8ab",
+  "rowsSha256": "14e114c4d3d8283e1604ae157cb8ce365d3d7c5b7043005e4411519e1f2d37f1",
+  "scope": "disclosed-historical-multi-operation-recorded-choice-screen",
+  "sourceLabelsVerified": false
+}

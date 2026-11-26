@@ -119,8 +119,16 @@ class KeyFlickImeInstrumentedTest : ImeTestBase() {
         val nodes = driver.device.findObjects(By.text(label)) + driver.device.findObjects(By.text(label.uppercase()))
         val key = checkNotNull(nodes.maxByOrNull { it.visibleBounds.centerY() }) { "Missing flick key $label" }
         val bounds = Rect(key.visibleBounds)
-        assertTrue(driver.device.swipe(bounds.centerX(), bounds.centerY(), bounds.centerX(),
-            bounds.centerY() + (bounds.height() * .8f).toInt(), 10))
+        // Cross the flick threshold on the first move so intermediate injections cannot arm a hold.
+        var touch = driver.touchDown(bounds)
+        var released = false
+        try {
+            touch = driver.moveTouch(touch, bounds.exactCenterX(), bounds.exactCenterY() + bounds.height() * .8f)
+            driver.releaseTouch(touch)
+            released = true
+        } finally {
+            if (!released) driver.cancelTouch(touch)
+        }
         instrumentation.waitForIdleSync()
     }
 }

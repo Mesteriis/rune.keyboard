@@ -1,0 +1,19 @@
+{
+  "analyzerSha256": "c2b79159603e08b073a4bc92e0cd405c4a2b32bc0dfee28d388d1a874a39e8a6",
+  "independentQualification": false,
+  "result": {
+    "appliedSources": {
+      "CONTEXTUAL_RANKER": 1,
+      "LOCAL_POLICY": 6
+    },
+    "refusals": {
+      "INSUFFICIENT_MARGIN": 1,
+      "ORIGINAL_VALID": 3,
+      "SEARCH_INCOMPLETE": 3,
+      "TOO_SHORT": 4,
+      "WINNER_AMBIGUOUS": 1
+    }
+  },
+  "resultSha256": "1fdf4bcd41045185ea926e8fac2fb26aaf0fea7c0be37f70e03a393871cae94b",
+  "scope": "disclosed-authored-deletion-boundary-diagnostics"
+}

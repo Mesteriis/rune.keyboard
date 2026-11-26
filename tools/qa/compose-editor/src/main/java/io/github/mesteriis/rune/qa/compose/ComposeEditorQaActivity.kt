@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedText
 import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputConnection
@@ -58,6 +59,7 @@ class ComposeEditorQaActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         status = TextView(this).apply { id = R.id.qa_compose_stats; textSize = 11f }
+        val privateInput = intent.getBooleanExtra("qa_private_input", false)
         val view = ComposeView(this).apply {
             importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
             setContent {
@@ -66,7 +68,9 @@ class ComposeEditorQaActivity : ComponentActivity() {
                 val interceptor = remember {
                     PlatformTextInputInterceptor { request, next ->
                         next.startInputMethod(PlatformTextInputMethodRequest { attrs ->
-                            wrap(request.createInputConnection(attrs))
+                            val connection = request.createInputConnection(attrs)
+                            if (privateInput) attrs.imeOptions = attrs.imeOptions or EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING
+                            wrap(connection)
                         })
                     }
                 }

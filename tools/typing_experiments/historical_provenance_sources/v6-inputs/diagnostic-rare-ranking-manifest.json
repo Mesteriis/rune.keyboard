@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "stage": "frozen-before-followup-calibration",
+  "sourceSha256": "fc1e2edc58fa27085d36c32c38922d7904077d9cdac05719efbcefa3faeea240",
+  "excludedFamilies": 6480,
+  "excludedArticles": 7521,
+  "priorCorpusSha256": "27c7084f8c739f608da77f617eca1c5ac552ff16b74da05a1a3c3cc888120e3f",
+  "builderSha256": "b9cc4859e08021f851711bcabff12d329d6219312d3d988157b9716a1af574b6",
+  "files": {
+    "calibration.jsonl": "624f2cfb7d0dfe35348745abbc7caef4750628a9d313d4532e392f3e25aa0520",
+    "holdout.jsonl": "080a880598461948f49f7635fd0fb1fd6ebf53eea7f218368ba3404100420723"
+  },
+  "counts": {
+    "calibration": {
+      "rows": 4760,
+      "families": 500,
+      "groups": {
+        "transposition": 183,
+        "adjacent1": 1113,
+        "missing_letter": 221,
+        "adjacent2": 500,
+        "adjacent3": 345,
+        "mixed2": 500,
+        "mixed3": 415,
+        "correct": 500,
+        "protected": 500,
+        "repeated_letter": 248,
+        "substitution": 235
+      }
+    },
+    "holdout": {
+      "rows": 4788,
+      "families": 500,
+      "groups": {
+        "adjacent1": 1096,
+        "missing_letter": 227,
+        "adjacent2": 500,
+        "mixed2": 500,
+        "mixed3": 429,
+        "correct": 500,
+        "protected": 500,
+        "adjacent3": 359,
+        "substitution": 253,
+        "transposition": 200,
+        "repeated_letter": 224
+      }
+    }
+  }
+}

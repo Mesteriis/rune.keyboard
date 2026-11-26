@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "modelCalls": 0,
+  "independentQualification": false,
+  "originalRoot": "build/right-context-sentence-corpus-v6-20261027",
+  "contextsSha256": "3559cf12fcb330e10c18d43893d213c2e6ab7074a298b2f306627731493d2eef",
+  "availabilitySha256": "1ca486cd42e833f3d21ef84041a1421646d9af58d36c03930003c5fb7751a2fd",
+  "contextRows": 2068,
+  "partCounts": {
+    "calibration": 1043,
+    "holdout": 1025
+  },
+  "scannedArticles": 926220,
+  "eligibleArticles": 806470,
+  "nextBlockedArticles": 19954,
+  "nextArticleKeyIndexSha256": "c8cfba9aa9c49d458db1aead6bd06b277e634a5e2109556ae6dc961c113fef5c"
+}

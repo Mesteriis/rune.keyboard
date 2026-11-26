@@ -1,0 +1,16 @@
+{
+  "stage": "frozen-before-broad-sample-selection",
+  "contexts": 3000,
+  "maximumContextsPerFamily": 4,
+  "minimumFamilies": 750,
+  "seed": "rune-noun-case-broad-independent-20261026-v1",
+  "sourceSha256": "3993a545d85db1e60a9423c0165a909c0d52beba85070883adf93cf5abe3db5f",
+  "modelSha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+  "policySha256": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+  "requiredPrecisionWhenAnyRevisions": 0.95,
+  "maximumPriorCorrectLosses": 0,
+  "maximumControlChanges": 0,
+  "qualification": "Additional whole-pipeline regression gate; no minimum broad revision volume and no accuracy claim if there are no changes",
+  "baseline": "Actual currently installed layered controller",
+  "preparerCorrection": "Use packed morphology family IDs consistently; the first unscored preparation compared numeric IDs with dictionary lemma names. No model evaluations used that corpus."
+}

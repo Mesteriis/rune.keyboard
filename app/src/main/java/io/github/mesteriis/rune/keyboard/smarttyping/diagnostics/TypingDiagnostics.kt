@@ -26,7 +26,8 @@ enum class DiagnosticReason {
     TARGET_UNKNOWN, RIVAL_UNKNOWN, LOCAL_SEARCH_EMPTY,
     PERSONAL_VETO, PROTECTED_WORD,
     PROTECTED_TOKEN, PROTECTED_PUNCTUATION, PROTECTED_LINE, AMBIGUOUS_DOT, AMBIGUOUS_COLON,
-    DOUBLE_SPACE_INELIGIBLE, TRUNCATED_CONTEXT, OWNERSHIP_MISMATCH,
+    DOUBLE_SPACE_INELIGIBLE, TRUNCATED_CONTEXT, OWNERSHIP_MISMATCH, EXTERNAL_SELECTION_DISABLED,
+    CONTEXT_TOO_LONG,
 }
 data class DiagnosticEvent(
     val kind: DiagnosticKind,
@@ -74,6 +75,8 @@ interface TypingDiagnostics {
     fun editorOperation(session: Long, revision: Long): (() -> Unit)? = null
     /** One-shot content-free final response, bound to the admitted attempt and consent. */
     fun editorOutcome(event: DiagnosticEvent): ((Boolean) -> Unit)? = null
+    /** One-shot content-free outcome, admitted before an external selection revokes the segment. */
+    fun externalSelectionDisabled(event: DiagnosticEvent): (() -> Unit)? = null
 }
 
 object NoTypingDiagnostics : TypingDiagnostics {

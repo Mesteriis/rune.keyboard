@@ -1,0 +1,221 @@
+{
+  "apkChanged": false,
+  "baseRevision": "eeb66b9",
+  "checks": {
+    "scientific-all": {
+      "errors": 0,
+      "failures": 0,
+      "modules": 23,
+      "receipt": "build/review-q6-retrieval-evaluation-20261028/scientific-all/receipt.json",
+      "receiptSha256": "7ade233220c8688782c7238aa56df2e7110c59d215d901f47e22033d82a94ebc",
+      "skipped": 1,
+      "status": "PASS",
+      "tests": 76
+    },
+    "stdlib-all": {
+      "errors": 0,
+      "failures": 0,
+      "modules": 119,
+      "receipt": "build/review-q6-retrieval-evaluation-20261028/stdlib-all/receipt.json",
+      "receiptSha256": "356b1b71856dda9136ee05524d5b14bc950ef57a2016b27e34004a4849d256d4",
+      "skipped": 0,
+      "status": "PASS",
+      "tests": 638
+    }
+  },
+  "ciTools": {
+    "exitCode": 0,
+    "logSha256": "716eda0702ef18b34142e8b09c94473926e14f4c6f171abd046bc08ba28ed502",
+    "tests": 41
+  },
+  "deviceUsed": false,
+  "fixedNativeExports": {
+    "ciEntryPointReceiptSha256": "fce4210b70b0a2eb61b926d5dd9145b9e246f108ea767f0fc5d8bfe534604773",
+    "excludedFields": [
+      "generationMs",
+      "manualMs",
+      "baselineMs"
+    ],
+    "exitCodes": [
+      0,
+      0
+    ],
+    "projectionHashes": [
+      "bb1d483571ccae6c11e8ec631f04ec1bb101ddf7c40d600fb86ffb615711d401",
+      "bb1d483571ccae6c11e8ec631f04ec1bb101ddf7c40d600fb86ffb615711d401"
+    ],
+    "receiptHashes": [
+      "899267f3f45c3eb37d65c2e3131336694079888eae1b59b713eb937665f7414a",
+      "3b85c09ba588145bdd9c9949a21d2d8add64bb6f5d50a3542e8755598e2a2c3c"
+    ],
+    "rows": 4
+  },
+  "hostedCIExecuted": false,
+  "independentQualification": false,
+  "inputs": {
+    ".github/workflows/ci.yml": "0a8025bb076bef47604fc28d1340320d16bc5e525fbe0616b5d6ac29e433aa1f",
+    "tools/ci/fixtures/README.md": "42656beb43e0228c94295be69e5eb7e7b62cfbc8133f6bd5e25cfd3117e6985a",
+    "tools/ci/fixtures/retrieval-bounded-capture.json": "42e1b262a4be9147208180aacc654bb239ee2483de911cb65b17da9dad7b68ec",
+    "tools/ci/python-tools-tests.json": "1f64df89548cb0950c97b094e97080fa8a39df6df5800b77cdb8f0a7a4436378",
+    "tools/ci/retrieval_evaluation_smoke.py": "a972ce896b570dbcf3d1d9062a3a9f0d3b41429f2648429dfee98815dbd25ddb",
+    "tools/ci/retrieval_export_smoke.py": "64616e70a6c228147a20a72c074ac9f4a3a9e136352b22fc40d6adadb4148c32",
+    "tools/typing_experiments/evaluate_retrieval.py": "a530dc3492c1454974811aa9f80fb75d733947ec9a6a52a43efbe845dc7e2296",
+    "tools/typing_experiments/export_retrieval.py": "50a448dba5985c14b39b986428ec91a97e3018a0b26c6f9f9bdea773d1db76cf",
+    "tools/typing_experiments/frozen_sources/evaluate_retrieval_c6a4344041358def.py": "c6a4344041358defe1ed9686784de14cb57f2af13f5024ab94bd39a66a99824b",
+    "tools/typing_experiments/frozen_sources/export_retrieval_54b52f6b8b6231fc.py": "54b52f6b8b6231fcf5703ae674a5752ff44840c9d77e03909f4c8eb12f22c168",
+    "tools/typing_experiments/frozen_sources/manifest.json": "012257cc018a1e9ef00d2f631622be92a3f1881de340a7169a152f7374624adb",
+    "tools/typing_experiments/retrieval_evaluation_receipt.py": "2fb71fe747acd75899c45bf2e7e58782c2031862455dce1e24dc3448bc35adb7",
+    "tools/typing_experiments/test_retrieval.py": "77fbc278fc6af5cea2b4bea01651dcfcd75bff6827912f23cfb86c7886ea0dfa",
+    "tools/typing_experiments/test_retrieval_evaluation_driver.py": "f25cc1946600b34eda376f973eaa4f3703f8920b92ea49f895534affb35e3bc0",
+    "tools/typing_experiments/test_retrieval_evaluation_receipt.py": "0501bf668d30cf5e5b05c9d7577caf9d3ac99dc57487857df9b65b13d20cc472"
+  },
+  "limitations": [
+    "already disclosed original word rows and current manual-retrieval proposals; not original retrieval experiment reproduction",
+    "portable derivative omits external compiler/runtime metadata; actual native exports preserve those real files/commands",
+    "host timing excludes scorer/editor/render/loading and is not Android performance evidence",
+    "global registry coverage, other evaluation/calibration/promotion entry points, historical/family gaps and independent natural qualification remain open"
+  ],
+  "numericalSmoke": {
+    "capturedFiles": 92,
+    "cohorts": {
+      "1": {
+        "baseline": {
+          "anyAlternatives": 1,
+          "combinedTop1": 1,
+          "combinedTop2": 1,
+          "combinedTop3": 1,
+          "goldAvailable": 1,
+          "treeTop1": 1
+        },
+        "expanded": {
+          "anyAlternatives": 1,
+          "combinedTop1": 1,
+          "combinedTop2": 1,
+          "combinedTop3": 1,
+          "goldAvailable": 1,
+          "treeTop1": 1
+        },
+        "rows": 1
+      },
+      "2": {
+        "baseline": {
+          "anyAlternatives": 0,
+          "combinedTop1": 0,
+          "combinedTop2": 0,
+          "combinedTop3": 0,
+          "goldAvailable": 0,
+          "treeTop1": 0
+        },
+        "expanded": {
+          "anyAlternatives": 0,
+          "combinedTop1": 0,
+          "combinedTop2": 0,
+          "combinedTop3": 0,
+          "goldAvailable": 0,
+          "treeTop1": 0
+        },
+        "rows": 1
+      },
+      "3": {
+        "baseline": {
+          "anyAlternatives": 1,
+          "combinedTop1": 0,
+          "combinedTop2": 0,
+          "combinedTop3": 0,
+          "goldAvailable": 0,
+          "treeTop1": 0
+        },
+        "expanded": {
+          "anyAlternatives": 1,
+          "combinedTop1": 0,
+          "combinedTop2": 0,
+          "combinedTop3": 0,
+          "goldAvailable": 0,
+          "treeTop1": 0
+        },
+        "rows": 1
+      },
+      "all": {
+        "baseline": {
+          "anyAlternatives": 2,
+          "combinedTop1": 1,
+          "combinedTop2": 1,
+          "combinedTop3": 1,
+          "goldAvailable": 1,
+          "treeTop1": 1
+        },
+        "expanded": {
+          "anyAlternatives": 2,
+          "combinedTop1": 1,
+          "combinedTop2": 1,
+          "combinedTop3": 1,
+          "goldAvailable": 1,
+          "treeTop1": 1
+        },
+        "rows": 3
+      }
+    },
+    "controls": 1,
+    "driverSha256": "a972ce896b570dbcf3d1d9062a3a9f0d3b41429f2648429dfee98815dbd25ddb",
+    "fixtureSha256": "42e1b262a4be9147208180aacc654bb239ee2483de911cb65b17da9dad7b68ec",
+    "independentQualification": false,
+    "inputBindings": 92,
+    "isolatedInputMutationRejections": 90,
+    "midEvaluationDriftRejected": true,
+    "modelSnapshotBindings": {
+      "ru-ranker.bin": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+      "ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50"
+    },
+    "packagedFileSha256": {
+      "app/src/main/assets/smarttyping/experiments/NOTICE.md": "efceac6d0dde6e787e3545e6b3de0f87be6950c67b655ee9076869f07580a9ce",
+      "app/src/main/assets/smarttyping/experiments/contextual-provenance.json": "b63fce079091f097e59451d49082d2afbd363ed071eebe2187e63b18fc8fb435",
+      "app/src/main/assets/smarttyping/experiments/contextual-tatoeba-attribution.json": "f81b27066cee38a2f2a14c2766e9cceae399d3c7590bca7b63e4d782fd18dd44",
+      "app/src/main/assets/smarttyping/experiments/infinitive-revision-provenance.json": "a20fe5c9981e857dda6823fb5aeffb56c365556a6e38542250a714ea3aa20fca",
+      "app/src/main/assets/smarttyping/experiments/joint-correction-provenance.json": "7b42d0a46dd754d32903f73dabcefa7eea462f5c6cba1e886a06008bd22cf5e7",
+      "app/src/main/assets/smarttyping/experiments/joint-rescue-provenance.json": "4700fab35c3d9ea83457920187ae41ea88c7a95220325401cf13d83bcd83fcdb",
+      "app/src/main/assets/smarttyping/experiments/neighbor-recovery-provenance.json": "f988fea3f6d96f68ad0394e5a4ded6e067dec8fb305d561415cdc77c4440e4ce",
+      "app/src/main/assets/smarttyping/experiments/noun-case-provenance.json": "a9b1760a0b462a68ff38264be9ae13a9dac9ebf5840cf606778b32c1d2910235",
+      "app/src/main/assets/smarttyping/experiments/provenance.json": "e6122fffb197f271f26536840b13590a66f613f367b2b62bcf92739d60d649a4",
+      "app/src/main/assets/smarttyping/experiments/ru-context.bin": "c97774d38d35393cbe0e99ea4271e40409fbdce0c08cc21fda5f3f7bf4fd006b",
+      "app/src/main/assets/smarttyping/experiments/ru-context.gram": "2e58a4d702f415de6579434247e3256909dc7546cfd77d64f878a4695a6d3a2b",
+      "app/src/main/assets/smarttyping/experiments/ru-contextual-policy.json": "f4df5f9d5498ced72472a0c4e15f4e96627126d72faab15d50f165dbfe7fd3c6",
+      "app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+      "app/src/main/assets/smarttyping/experiments/ru-conversation.ctx": "2fb480d5264ab5e6120695822bf4c7b6ddc839582a3bac7dd1b83299e27f77e6",
+      "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-policy.json": "67fc726f75afcc627997ec1968eefe6f3b513898958e9088e39c3f97d054e595",
+      "app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-policy.json": "ebdb0e83f3c4ed3476f5b317e31619415ca020d9703cd3d6900b9e8ac5c4701d",
+      "app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin": "16c1a81a86ce5e71a23d4dbd2b22297abe30529a3c3d75560d6163a12685d168",
+      "app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin": "15117d34f9c3257143b1b761482b9adc22340fe23f72b15ffeddce7acf106e20",
+      "app/src/main/assets/smarttyping/experiments/ru-noun-case-policy.json": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+      "app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin": "eb466bcabc4ea1cfac493422fa814386bdff02dc9c04c48bd66a9d8a25a11bcd",
+      "app/src/main/assets/smarttyping/experiments/ru-ranker.bin": "f4b0737515abc6855b7354ddaf0d1b349be98b5d7b80587cc94f1c0c1bc576ec",
+      "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+      "app/src/main/assets/smarttyping/experiments/ru-wiki.ctx": "e16f45a1c97c58d900efbffab498441389d7d0823f1d9ab4512b6085daae812b",
+      "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/experiments/FrozenExperimentAssets.kt": "ff4e3cc8b0f67da2295e375b129518100fa8b2b981f32ed490e6e38daa01fd34",
+      "tools/typing_experiments/parity.tsv": "374f78253303b3fd77c5fd17a04190fd73e9d410bc5f069d5860bcefea90fad0"
+    },
+    "packagedFilesUnchanged": true,
+    "productionQualified": false,
+    "reportSha256": "31cf32526762b909a4c9971b6976955f8cbb9cb3bcd0115df0de35ad3500bc8b",
+    "scope": "bounded disclosed current-JVM retrieval; no original historical or independent qualification",
+    "secondWriteRejected": true,
+    "typoRows": 3
+  },
+  "originalNativeExport": {
+    "compileLogSha256": "2c877240d74f3fcdd23debad4d5615dd2cd7cae1df76da35156acb0e2fe1e191",
+    "driverLogSha256": "04e4db9ce14050a2ed0c4a222fc224824ad808afab524fc0d6ed0d35fa42369d",
+    "exitCode": 1,
+    "reason": "missing experiment policy sources"
+  },
+  "packagedProvenance": {
+    "exitCode": 0,
+    "logSha256": "106f0b29c87ddbf509aa995df3d144f5a6826f79878fbe1478d4383b192d82fe",
+    "tests": 12
+  },
+  "productionQualified": false,
+  "retainedReportSha256": "31cf32526762b909a4c9971b6976955f8cbb9cb3bcd0115df0de35ad3500bc8b",
+  "schemaVersion": 1,
+  "scope": "manual retrieval tooling/data-binding slice; full Q6 incomplete"
+}

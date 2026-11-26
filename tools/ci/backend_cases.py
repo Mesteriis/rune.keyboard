@@ -1,5 +1,8 @@
 """Live dictionary contracts, loaded only by the required-backend gate."""
 from pathlib import Path
+import hashlib
+import itertools
+import json
 import sys
 import unittest
 
@@ -54,3 +57,36 @@ class LivePymorphyTest(unittest.TestCase):
             self.assertTrue(value['files'])
             self.assertTrue(all(len(digest) == 64 for digest in value['files'].values()))
             self.assertTrue(all(not Path(name).is_absolute() and '..' not in Path(name).parts for name in value['files']))
+
+    def test_historical_neighbor_partition_family_overlap(self):
+        """Disclose dictionary-family overlap; this is not a qualification gate."""
+        folder = ROOT / 'tools/typing_experiments/neighbor-history-v1'
+        manifest_bytes = (folder / 'manifest.json').read_bytes()
+        self.assertEqual('2aeaf745c132c869d2560c89f3831f9710d82d34f559083a352eeb99b604060e',
+                         hashlib.sha256(manifest_bytes).hexdigest())
+        manifest = json.loads(manifest_bytes)
+        partitions = {}
+        lexicon = PymorphyLexicon(cache_size=4096)
+        for part in ('train', 'calibration', 'holdout'):
+            path = folder / (part + '.jsonl')
+            content = path.read_bytes()
+            self.assertEqual(manifest['files'][path.name], hashlib.sha256(content).hexdigest())
+            rows = [json.loads(line) for line in content.splitlines()]
+            self.assertTrue(all(row['split'] == part for row in rows))
+            words = {row['word'] for row in rows}
+            lemmas = {}
+            for word in words:
+                analyses = lexicon.analyses(word)
+                self.assertTrue(analyses)
+                for analysis in analyses:
+                    lemmas.setdefault(analysis.lemma, set()).add(word)
+            partitions[part] = {'articles': {r['article'] for r in rows},
+                                'native': {r['family'] for r in rows},
+                                'words': words, 'lemmas': lemmas}
+        for left, right in itertools.combinations(partitions, 2):
+            for axis in ('articles', 'native', 'words'):
+                self.assertFalse(partitions[left][axis] & partitions[right][axis])
+            overlap = partitions[left]['lemmas'].keys() & partitions[right]['lemmas'].keys()
+            self.assertEqual({'чёртов'} if (left, right) == ('train', 'holdout') else set(), overlap)
+        self.assertEqual({'чертовым'}, partitions['train']['lemmas']['чёртов'])
+        self.assertEqual({'чёртовой'}, partitions['holdout']['lemmas']['чёртов'])

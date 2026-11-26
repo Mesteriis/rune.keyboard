@@ -1,5 +1,6 @@
 package io.github.mesteriis.rune.keyboard.ime.model
 
+import android.text.TextUtils
 import io.github.mesteriis.rune.keyboard.settings.KeyboardSettings
 import io.github.mesteriis.rune.keyboard.settings.StartingLanguage
 
@@ -36,6 +37,7 @@ object KeyboardSessionPolicy {
         editor: EditorContext,
         hasComposingWord: Boolean,
         ownedSentenceBoundary: Boolean,
+        suppressSentenceCaps: () -> Boolean = { false },
         readCursorCapsMode: () -> Int?,
     ): KeyboardState {
         if (!editor.supportsAutomaticCapitalization || state.layer != KeyboardLayer.LETTERS) {
@@ -45,7 +47,8 @@ object KeyboardSessionPolicy {
         if (ownedSentenceBoundary) return state.withAutomaticCapitalization(true)
         if (!editor.inputPolicy.allowsEditorReads) return state.withAutomaticCapitalization(false)
         val caps = readCursorCapsMode() ?: return state
-        return state.withAutomaticCapitalization(caps != 0)
+        return state.withAutomaticCapitalization(caps != 0 &&
+            (caps != TextUtils.CAP_MODE_SENTENCES || !suppressSentenceCaps()))
     }
 
     fun resolveStartLanguage(

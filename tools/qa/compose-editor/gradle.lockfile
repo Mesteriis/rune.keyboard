@@ -155,6 +155,7 @@ org.jetbrains.kotlin:kotlin-scripting-common:2.2.10=kotlinBuildToolsApiClasspath
 org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:2.2.10=kotlinBuildToolsApiClasspath
 org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:2.2.10=kotlinBuildToolsApiClasspath
 org.jetbrains.kotlin:kotlin-scripting-jvm:2.2.10=kotlinBuildToolsApiClasspath
+org.jetbrains.kotlin:kotlin-stdlib-common:2.2.10=debugAndroidTestCompileClasspath,debugCompileClasspath,debugLintChecksClasspath,debugRuntimeClasspath,debugUnitTestCompileClasspath,debugUnitTestRuntimeClasspath
 org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.10=androidLintTool
 org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.10=androidLintTool
 org.jetbrains.kotlin:kotlin-stdlib:2.2.10=androidLintTool,debugAndroidTestCompileClasspath,debugCompileClasspath,debugLintChecksClasspath,debugRuntimeClasspath,debugUnitTestCompileClasspath,debugUnitTestRuntimeClasspath,kotlinBuildToolsApiClasspath,kotlinCompilerClasspath

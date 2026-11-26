@@ -1,0 +1,7 @@
+{
+  "url": "https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences_CC0.tsv.bz2",
+  "compressedSha256": "a144a0c52f8be13bee7cc30eb109eb5836803f22128a8ef8376c1ca5c6c5cf8a",
+  "license": "CC0-1.0",
+  "licenseSource": "https://tatoeba.org/en/downloads",
+  "purpose": "disclosed exploratory data; not independently qualified"
+}

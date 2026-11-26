@@ -1,0 +1,19 @@
+{
+  "api26": {
+    "failures": 0,
+    "tests": 2
+  },
+  "api37": {
+    "failures": 0,
+    "tests": 2
+  },
+  "bindings": {
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "6c7086ac18c044333dd0c24d6179a4b7db9ea6a25942ab6c50569afe3b1fec2a",
+    "app/build/outputs/apk/debug/app-debug.apk": "a8dd2c840e18f9cb1f8f4a7f989e810a63ff51f4542d35fa0926b31fb91e176a",
+    "app/src/androidTest/java/io/github/mesteriis/rune/keyboard/qa/ExpandedCandidatesInstrumentedTest.kt": "8cedba48f1271f34279f06207da59564bffa3c815021c8c357f1100f6fe977ab"
+  },
+  "foldTested": false,
+  "manualTalkBackTested": false,
+  "purpose": "U14_IME_INPUT_WHILE_EXPANDED",
+  "schema": 1
+}

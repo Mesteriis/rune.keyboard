@@ -8,7 +8,12 @@ import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 class PackedReaderException internal constructor() : Exception("PACKED_READER_FAILURE")
 
 /** Worker-confined scratch over immutable handles; exhaustive scan and separately certified global top-N. */
-class PackedCandidateLexicon(handles: Collection<PackedLexiconData>) : CandidateLexicon {
+class PackedCandidateLexicon internal constructor(
+    handles: Collection<PackedLexiconData>,
+    neighborRecoveryNanoTime: () -> Long,
+) : CandidateLexicon {
+    constructor(handles: Collection<PackedLexiconData>) : this(handles, System::nanoTime)
+
     private val indices = arrayOfNulls<PackedLexiconData>(KeyboardLanguage.entries.size)
     private val query = IntArray(32)
     private val path = IntArray(32)
@@ -19,7 +24,9 @@ class PackedCandidateLexicon(handles: Collection<PackedLexiconData>) : Candidate
     private val lower = IntArray(33)
     private val topSeven by lazy(LazyThreadSafetyMode.NONE) { PackedTopSeven(::handle) }
 
-    private val recovery by lazy(LazyThreadSafetyMode.NONE) { NeighborRecoverySearch({ handle(KeyboardLanguage.RUSSIAN) }) }
+    private val recovery by lazy(LazyThreadSafetyMode.NONE) {
+        NeighborRecoverySearch({ handle(KeyboardLanguage.RUSSIAN) }, neighborRecoveryNanoTime)
+    }
 
     override fun recoverNeighbors(token: String, cancellation: CandidateCancellation): LocalSearchEvidence =
         recovery.search(token, cancellation)

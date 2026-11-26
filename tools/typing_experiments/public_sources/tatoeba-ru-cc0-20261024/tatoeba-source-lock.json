@@ -1,0 +1,29 @@
+{
+  "url": "https://downloads.tatoeba.org/exports/per_language/rus/rus_sentences_CC0.tsv.bz2",
+  "downloadHeaders": {
+    "Server": "nginx/1.22.1",
+    "Date": "Mon, 26 Oct 2026 14:24:34 GMT",
+    "Content-Type": "application/octet-stream",
+    "Content-Length": "515814",
+    "Last-Modified": "Sat, 24 Oct 2026 06:42:41 GMT",
+    "Connection": "close",
+    "ETag": "\"6adc5361-7dee6\"",
+    "Strict-Transport-Security": "max-age=15768000; includeSubdomains",
+    "X-Frame-Options": "Deny",
+    "X-Content-Type-Options": "nosniff",
+    "Accept-Ranges": "bytes"
+  },
+  "compressedSha256": "982264e0857d2574ada9d1c07897e816ab9c4a8fb139f05320b5836f53d4d7ed",
+  "decodedSha256": "8a6ffe780ea440b7deb3a34df5fcea0a8432ecb3fd367d4a4b68f00742bc1236",
+  "license": "CC0-1.0",
+  "licenseSource": "https://tatoeba.org/en/downloads",
+  "countsTrainingOnly": true,
+  "splitCounts": {
+    "train": 18497,
+    "holdout": 2245,
+    "calibration": 2335
+  },
+  "countsSha256": "523f6c57c797e6d708de55efc06f9bd39dc7a363bcef76e5dd631deb9d1bc7b3",
+  "sentenceSplitSha256": "5a2c1bf8301f48c689428d9f1bc34b89cbca6eb4e3e2f76ded2e596f508bb3e4",
+  "caveat": "Exact normalized sentences are disjoint; related templates and authors may span splits. Reserved splits are not used in this experiment scoring."
+}

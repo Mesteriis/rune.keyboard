@@ -2,14 +2,16 @@
 """A fixed additional-epoch candidate passes all gates or is retained as an experiment."""
 import json
 from pathlib import Path
-import numpy as np
-import neural_refinement as neural
-import rank_refinement as rank
+import argparse
+import extra_epoch_evaluation_receipt as binding
 
-ROOT=rank.ROOT
+ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'build/typing-extra-epochs'
 
 def compare(groups, ranker, before, after):
+    import numpy as np
+    import neural_refinement as neural
+    import rank_refinement as rank
     tree_scores=rank.scores(ranker,groups)
     result={'rowsWithAlternatives':len(groups),'expectedAvailable':sum(int(y.sum()>0) for _,_,y in groups),'models':{}}
     for name,network in [('before',before),('after',after)]:
@@ -26,34 +28,36 @@ def accepts(dev_before,dev_after,ce_before,ce_after,fresh,regressions):
     no_regression=all(r['models']['after']['combinedCorrectTop1']>=r['models']['before']['combinedCorrectTop1'] for r in regressions)
     return improved_dev and strict_fresh and no_regression
 
-def main():
-    output=OUT/'evaluation.json'
-    if output.exists():raise ValueError('EVALUATION_ALREADY_REVEALED')
-    directory=OUT/'training';selection_path=directory/'selection.json'
-    selection=json.loads(selection_path.read_text())
-    if not selection['selectionFrozenBeforeTest'] or selection['testAccess']:
-        raise ValueError('FROZEN_DEV_SELECTION_REQUIRED')
-    for name,key in [('plan.json','planSha256'),('metrics.json','metricsSha256'),('dev-report.json','devReportSha256'),('dev-scores.json','devScoresSha256')]:
-        if rank.sha(directory/name)!=selection[key]:raise ValueError('SELECTION_BINDING')
-    selected=Path(selection['selectedPath']);original=directory/'original.bin'
-    ranker=ROOT/'app/src/main/assets/smarttyping/experiments/ru-ranker.bin'
-    for path,key in [(selected,'selectedSha256'),(original,'originalSha256'),(ranker,'rankerSha256')]:
-        if rank.sha(path)!=selection[key]:raise ValueError('MODEL_IDENTITY')
+def run(source=OUT,historical_reproduction=False,legacy_root=ROOT,regression_row_limit=None):
+    source=Path(source).resolve()
+    frozen=binding.freeze(source,historical_reproduction,ROOT,legacy_root,regression_row_limit)
+    output=source/'evaluation.json'
+    binding.require(not output.exists() and not output.is_symlink(),'EVALUATION_ALREADY_REVEALED')
+    import numpy as np
+    import neural_refinement as neural
+    import rank_refinement as rank
+    import promote_refinement as promotion
+    directory=source/'training';selection_path=directory/'selection.json';selection=frozen['selection']
+    selected=frozen['selected'];original=frozen['original'];ranker=frozen['ranker']
+    promotion.validate_tree(ranker.read_bytes(),rank.FEATURES)
     before=neural.load_model(original);after=neural.load_model(selected)
     if (before.window,before.hidden,after.window,after.hidden)!=(48,48,48,48):raise ValueError('UNCHANGED_ARCHITECTURE_REQUIRED')
-    groups=rank.verified_groups(OUT/'observations/test.jsonl','test',allow_test=True)
+    groups=rank.verified_groups(source/'observations/test.jsonl','test',allow_test=True)
     fresh=compare(groups,ranker,before,after)
-    previous=rank.verified_groups(ROOT/'build/typing-refinement/verified-observations/test.jsonl','test',allow_test=True)
+    previous=rank.verified_groups(frozen['previous']/'verified-observations/test.jsonl','test',allow_test=True)
+    if regression_row_limit is not None:previous=previous[:regression_row_limit]
     previous=compare(previous,ranker,before,after)
-    oldrows,_,_=rank.baseline.load_public()
+    oldrows=frozen['legacyRows']
     legacy=[]
     for row,observation in oldrows:
         candidates=observation['generation']['alternatives']
         if row['split']=='holdout' and row['cohort']=='typo' and not row['noAuto'] and candidates:
             labels=np.array([int(c['text'].lower()==row['expectedSpelling'].lower()) for c in candidates])
             legacy.append((row,candidates,labels))
+    if regression_row_limit is not None:legacy=legacy[:regression_row_limit]
+    binding.require(bool(legacy),'EVALUATION_LEGACY_COHORT')
     legacy=compare(legacy,ranker,before,after)
-    manifest=json.loads((OUT/'data/manifest.json').read_text());path=OUT/'data/test-text.jsonl'
+    manifest=json.loads((source/'data/manifest.json').read_text());path=source/'data/test-text.jsonl'
     if rank.sha(path)!=manifest['files']['test-text.jsonl']:raise ValueError('FRESH_TEXT_IDENTITY')
     text=[json.loads(line) for line in path.read_text().splitlines()]
     x,y=neural.samples(text,48)
@@ -62,11 +66,23 @@ def main():
     accepted=accepts(selection['devTop1Before'],selection['devTop1After'],dev['original']['devCE'],dev[selection['selected']]['devCE'],fresh,[previous,legacy])
     result={'schemaVersion':1,'selected':selection['selected'],'selectedSha256':selection['selectedSha256'],
         'originalSha256':selection['originalSha256'],'rankerSha256':selection['rankerSha256'],
-        'selectionSha256':rank.sha(selection_path),'freshManifestSha256':rank.sha(OUT/'data/manifest.json'),
-        'freshObservationsSha256':rank.sha(OUT/'observations/test.jsonl'),'fresh':fresh,'exposedPrevious':previous,'exposedLegacy':legacy,
-        'freshCharacterCrossEntropy':ce,'accepted':accepted,'gate':'Dev improvement, strict fresh combined top1 gain, neither exposed combined count lower; no reselection',
+        'selectionSha256':rank.sha(selection_path),'freshManifestSha256':rank.sha(source/'data/manifest.json'),
+        'freshObservationsSha256':rank.sha(source/'observations/test.jsonl'),'fresh':fresh,'exposedPrevious':previous,'exposedLegacy':legacy,
+        'freshCharacterCrossEntropy':ce,'observedGatePassed':accepted,'gate':'Dev improvement, strict fresh combined top1 gain, neither exposed combined count lower; no reselection',
         'scope':'Synthetic public Wikipedia alternatives only; no private chats, automatic corrections or touch accuracy measured',
         'evaluationScriptSha256':rank.sha(Path(__file__))}
-    rank.write(output,result);print(json.dumps(result))
+    binding.finish_report(frozen,result,accepted)
+    encoded=json.dumps(result,ensure_ascii=False,sort_keys=True,indent=2,allow_nan=False)+'\n'
+    with output.open('x',encoding='utf-8') as report:report.write(encoded)
+    print(json.dumps(result));return result
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--source-root',type=Path,default=OUT)
+    parser.add_argument('--historical-reproduction',action='store_true')
+    parser.add_argument('--legacy-root',type=Path,default=ROOT)
+    parser.add_argument('--regression-row-limit',type=int,help='Explicit historical smoke only.')
+    args=parser.parse_args();run(args.source_root,args.historical_reproduction,args.legacy_root,args.regression_row_limit)
+
 
 if __name__=='__main__':main()

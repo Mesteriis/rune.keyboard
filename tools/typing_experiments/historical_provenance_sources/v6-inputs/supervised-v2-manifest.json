@@ -1,0 +1,109 @@
+{
+  "stage": "frozen-before-supervised-training",
+  "seed": "rune-supervised-conversation-20261026-v1",
+  "sourceSha256": "5a2c1bf8301f48c689428d9f1bc34b89cbca6eb4e3e2f76ded2e596f508bb3e4",
+  "sourceLockSha256": "850a865909accd5680c0e7ddb522efb05b5dc6addc6e3f2e96d2d3be899cbeff",
+  "exclusions": {
+    "build/context-feature-ranker-20261026/authored.jsonl": "2fca5fca3e056f27ebc2b8f7fc88e2fdc96d202ff0b4330f13e19423246213d0",
+    "build/context-feature-ranker-20261026/conversation-corpus/calibration.jsonl": "12c8bc76c858d1289a8f8e322ce9a21012a3a745b3c02ebaa43fd128d396ac99",
+    "build/context-feature-ranker-20261026/conversation-corpus/holdout.jsonl": "0d16f7543b5e2265ef27cf9aead4c468d3110006fb5ac4c5f52301b89cf35fbb",
+    "build/context-feature-ranker-20261026/corpus/calibration.jsonl": "fba4db6936b60cdced2f593b67d8bf80cff1312d36488970bd81db26e15335fc",
+    "build/context-feature-ranker-20261026/corpus/holdout.jsonl": "440ec850ae33022002bdaf1fc972f6614e8539cddf459af1e20895ec86bfb687",
+    "build/context-ranking-20261025/corpus/calibration.jsonl": "e3c8f68b9227ad5dd9d2e56796023f698c3b8d35034e3158258d7d4974ac86c0",
+    "build/context-ranking-20261025/corpus/holdout.jsonl": "0b6a3285ecd0b0b624b5d4fb7c4b8734509e38d7fa43f407c613f966673bf994",
+    "build/context-ranking-20261025/corpus-extra/calibration.jsonl": "779a41a758417fecdb1307cb50ebb1f994ceca6c2eb589d31e6aa0fdf13b5b1e",
+    "build/context-ranking-20261025/corpus-extra/holdout.jsonl": "d92d645d606b50f2515d57d848ff31ec02daafc9f24266df8fb89d61b083ecdb",
+    "build/diagnostic-rare-ranking/fresh-corpus/calibration.jsonl": "624f2cfb7d0dfe35348745abbc7caef4750628a9d313d4532e392f3e25aa0520",
+    "build/diagnostic-rare-ranking/fresh-corpus/holdout.jsonl": "080a880598461948f49f7635fd0fb1fd6ebf53eea7f218368ba3404100420723",
+    "build/joint-correction-20261025/corpus/calibration.jsonl": "1234785b62d4ff59ea54b52a7e7fb2ca3214996e0bb173d1c0b355d86015e97a",
+    "build/joint-correction-20261025/corpus/holdout.jsonl": "03e32ae46a61dd3c5ee0f84a308b9b2d79bf17f7c18de78442d2284738e8084d",
+    "build/joint-correction-20261025/followup-corpus/calibration.jsonl": "09089d6d173268f5908a7b320a99dfd5f6778a672f09baa67a3fc92c785421ff",
+    "build/joint-correction-20261025/followup-corpus/holdout.jsonl": "89d816bb3db371fa89161d808efe21ed75ebc4dbdf586d8b0ff3d0134a509eb6",
+    "build/joint-correction-20261025/followup-corpus-v3/calibration.jsonl": "cb606a6efb8fffeb41679bac29bf9516c2c06831ee6b07f5417a1f979f4097cb",
+    "build/joint-correction-20261025/followup-corpus-v3/holdout.jsonl": "04f779a29ee0a13ae9c27ea70af9513410facd063c164a59f755ef4c18593c75",
+    "build/typing-ranker-v2/candidates-current/rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/candidates-current-v2/rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/candidates-current-v2-failed-compile/rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/candidates-current-v2-failed-compile2/rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/data/all-rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/data/dev-rows.jsonl": "a2ddea29d8086a6c1d138e6ef59fc7399145b33b79becc3c0545940ad9ba260b",
+    "build/typing-ranker-v2/data/test-rows.jsonl": "e83eb9b99f2df73a8eae001ebedf1cafbd3fa370b6166ae9548551495c97f204",
+    "build/typing-ranker-v2/data/train-rows.jsonl": "e86df521d3c1a249fe514044a75d20b64259ffb76df6920e3f236ec3f6b5fc64",
+    "build/typing-ranker-v2/external-holdout-v10-ru0015/rows.jsonl": "6640f42600fcd7a3f5d79e4d47aa0cb7debbda778901c1b369ea5a7c4bd77133",
+    "build/typing-ranker-v2/external-holdout-v11-ru0016/rows.jsonl": "855fe3bf10aa1346817a03006487af5858cced660d14524964b51257b13a5d84",
+    "build/typing-ranker-v2/external-holdout-v12-ru0017/rows.jsonl": "95c0f40915241ef72e5bc7bcc1dd484e5aafcee691b32cb31d1e983b012d8fa2",
+    "build/typing-ranker-v2/external-holdout-v6-ru0011/rows.jsonl": "6d7dbaf67f16d3dd6a63a15551bebfb486b3b24e686f76f1a9d3e0ed1d083569",
+    "build/typing-ranker-v2/external-holdout-v7-ru0012/rows.jsonl": "5e9e82177edf943be83ea1dd256e0631044124ed5342444793d9cf31caf451ac",
+    "build/typing-ranker-v2/external-holdout-v8-ru0013/rows.jsonl": "4db31b8283e50ce3130714c5af870df563c90b18cbe2e7e2457c3b8470571538",
+    "build/typing-ranker-v2/external-holdout-v9-ru0014/rows.jsonl": "9dfee85583cade8ec3b968be7ba275ff33d00081427faef95ca6ad0442252c6a",
+    "tools/typing_experiments/fixtures/context_ranker_regressions_20261026.jsonl": "e34c64edfd6f80a0594a8d362c5ce028ab8f1f2dd3f548c35cf7591835a94b68"
+  },
+  "excludedSentenceIds": 9962,
+  "excludedTargetContexts": 35346,
+  "removedCrossSplitPredictionContexts": 199,
+  "builderSha256": "fe412895f2db47303a6669a266c50c71bcb20778c9049887187fdc1eb0ba5fec",
+  "guardSha256": "373879a4483989d8adb7f1831265ee0803502fb25660a202a6898ed74c613683",
+  "files": {
+    "train.jsonl": "c175cd5a1a23248f5b25518e3ba912111ad8ce05de70c60dc3b2077327e3b7de",
+    "calibration.jsonl": "e3582b9235a275a03aff9bb89e2f7d495250a6a31897b39aa406fcdf1e110ac6",
+    "holdout.jsonl": "8588f4549bc872e2eedd7abd859d565952bf4a916d003be61705ef9a1a564015"
+  },
+  "counts": {
+    "train": {
+      "rows": 22527,
+      "sentences": 3758,
+      "families": 1708,
+      "groups": {
+        "missing_letter": 7504,
+        "adjacent1": 4644,
+        "correct": 3758,
+        "protected": 3758,
+        "repeated_letter": 1019,
+        "transposition": 854,
+        "substitution": 990
+      },
+      "naturalRivalTargetRows": 216
+    },
+    "calibration": {
+      "rows": 3204,
+      "sentences": 801,
+      "families": 483,
+      "groups": {
+        "missing_letter": 808,
+        "adjacent1": 505,
+        "correct": 801,
+        "protected": 801,
+        "repeated_letter": 105,
+        "substitution": 103,
+        "transposition": 81
+      },
+      "naturalRivalTargetRows": 0
+    },
+    "holdout": {
+      "rows": 3172,
+      "sentences": 793,
+      "families": 478,
+      "groups": {
+        "missing_letter": 807,
+        "repeated_letter": 91,
+        "correct": 793,
+        "protected": 793,
+        "adjacent1": 510,
+        "transposition": 89,
+        "substitution": 89
+      },
+      "naturalRivalTargetRows": 20
+    }
+  },
+  "modelPlan": {
+    "wikiFoundationGroups": "all non-overlapping original train groups",
+    "maxFreshTrainGroups": 6000,
+    "maxCorrectRetentionGroups": 1000,
+    "trees": 128,
+    "depth": 5,
+    "learningRate": 0.05,
+    "seed": 25102026,
+    "contextScoring": "108-feature unified tree; character model frozen, no additive bonus",
+    "gate": "calibration>=100 new correct and >=99.5%; independent>=100 and >=99%; zero old-correct losses or control changes; positive net correct; runtime qualification separate"
+  }
+}

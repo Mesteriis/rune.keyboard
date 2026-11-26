@@ -234,6 +234,46 @@
       "action": "inventory",
       "provenance": "app/src/test/resources/smarttyping/ranker/manifest.json",
       "provenanceSha256": "8861521999a2bea9bbb9ec94d5491e7d1a01292efe6c56f5882a807d29be2609"
+    },
+    {
+      "path": "tools/typing_experiments/public_sources/tatoeba-ru-cc0-20261024/rus_sentences_CC0.tsv.bz2",
+      "bytes": 515814,
+      "sha256": "982264e0857d2574ada9d1c07897e816ab9c4a8fb139f05320b5836f53d4d7ed",
+      "action": "inventory",
+      "provenance": "tools/typing_experiments/public_sources/tatoeba-ru-cc0-20261024/tatoeba-source-lock.json",
+      "provenanceSha256": "850a865909accd5680c0e7ddb522efb05b5dc6addc6e3f2e96d2d3be899cbeff"
+    },
+    {
+      "path": "tools/typing_experiments/public_sources/tatoeba-en-cc0-20261024/eng_sentences_CC0.tsv.bz2",
+      "bytes": 1288635,
+      "sha256": "a144a0c52f8be13bee7cc30eb109eb5836803f22128a8ef8376c1ca5c6c5cf8a",
+      "action": "inventory",
+      "provenance": "tools/typing_experiments/public_sources/tatoeba-en-cc0-20261024/tatoeba-source-lock.json",
+      "provenanceSha256": "7c9116c827c492d2513410224f6cf8414591788ecbfbb9c050242b8bd1e5e910"
+    },
+    {
+      "path": "tools/typing_experiments/historical-qualification-v3-v4/qualification-v3.tar.bz2",
+      "bytes": 1177332,
+      "sha256": "a259035899925b7d36e9d2abf6dbf57f025adaa8fbc4b9058b001dc6a38b444e",
+      "action": "inventory",
+      "provenance": "tools/typing_experiments/historical-qualification-v3-v4/catalog.json",
+      "provenanceSha256": "7fb9b748bce58dc0ef0c1e2dcbb5a8464d3d4fcec108aab441e5532d1adc9c45"
+    },
+    {
+      "path": "tools/typing_experiments/historical-qualification-v3-v4/qualification-v4.tar.bz2",
+      "bytes": 1181954,
+      "sha256": "ceee74f2cf1937f968f46784a959b4327f34f645670899f9efc716ee751cd189",
+      "action": "inventory",
+      "provenance": "tools/typing_experiments/historical-qualification-v3-v4/catalog.json",
+      "provenanceSha256": "7fb9b748bce58dc0ef0c1e2dcbb5a8464d3d4fcec108aab441e5532d1adc9c45"
+    },
+    {
+      "path": "tools/typing_experiments/available-v6-article-origin-v1/rival-recovery/matches.jsonl.bz2",
+      "bytes": 282526,
+      "sha256": "514facc84e44086de5c6be788be481027bb3829a4250030c0ce4b16e0d23d9e7",
+      "action": "inventory",
+      "provenance": "tools/typing_experiments/available-v6-article-origin-v1/archive-catalog.json",
+      "provenanceSha256": "04c978da4291e5e6aa5d4e86b18d3fc0d98d11bcc529651a07d98599a7ae7cd0"
     }
   ]
 }

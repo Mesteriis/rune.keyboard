@@ -27,6 +27,9 @@ def observation(base, extra):
 
 
 class RetrievalEvaluationTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):evaluation.load_scoring()
+
     def summarize(self, rows, observations, values=None):
         with patch.object(evaluation.neural, 'load_model', return_value=object()), \
              patch.object(evaluation.neural, 'context_score', return_value=0.), \

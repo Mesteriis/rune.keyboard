@@ -63,3 +63,17 @@ No payload strings or absolute source paths are exported in the report.
 Q1 remains open for clean-source release enforcement, F-Droid/distribution and
 release/model/device evidence. The strict source-path audit from U16 still fails;
 this passing footprint check does not resolve it or grant release acceptance.
+
+At source commit `3c14fc98`, a separate clean Git checkout with the pinned
+submodule and an isolated copied Gradle cache built the current unsigned release
+offline. `:app:assembleRelease`, `:app:privacyGateRelease`, `:app:apkFootprint`
+and `:runtime-llama:nativeSymbolGate` all passed. The release-source check
+passed after an initial attempt correctly rejected an unregistered temporary
+submodule; the retry initialized the submodule normally. The APK was
+180,122,901 bytes, SHA-256
+`032e96f8348fad44b352550d9c991e92aee23c2a0df435359cee0801a7a99ca6`.
+The packaged-native gate passed for arm64-v8a and x86_64, including matching
+stripped libraries and the `--require-no-local-paths` check. This later check
+supersedes the earlier source-path failure for this exact local build only.
+The unsigned APK, isolated source, cache and build outputs were removed. No
+F-Droid build, signed release, device test, hosted CI or publication is claimed.

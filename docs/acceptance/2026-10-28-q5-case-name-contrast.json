@@ -1,0 +1,26 @@
+{
+  "baselineExitCode": 0,
+  "baselineObservationsSha256": "2aad02b3af13e8045f507892ab0208ce2d9504da13f6c5fd6656695a480c5274",
+  "baselineStatus": "COMPLETE",
+  "candidateHarnessSha256": "4c0d373b3fe4a7ef6d59cdc4e83547147a2dc887bc94518347abcb09ecc1cbb9",
+  "candidateJarSha256": "2e87f633bb3e943db35a550719b840df77d30a9902c63d54976cc1412cfecae3",
+  "candidateObservationsSha256": "540b9b24e7ed395041aa61821733a3c9c23d0ffecc60a191dc50719a16b64895",
+  "candidateWords": 10,
+  "comparison": "contrast",
+  "counts": {
+    "articles": 13,
+    "baselineSourceCaseMatches": 21,
+    "candidateSourceCaseMatches": 0,
+    "differentBoundaryRows": 21,
+    "gainedSourceCaseMatches": 0,
+    "lostSourceCaseMatches": 21,
+    "rows": 21
+  },
+  "generatorSha256": "48c079cadf8f530c735b094d0def3ad525cd5575c7b97aa9bbd7cce65daf5e65",
+  "independentQualification": false,
+  "manifestSha256": "997e8408a1fdbeb84af0dc0278e0475d70518c47f2bea428a776101c98ebef33",
+  "purpose": "DISCLOSED_CASE_NAME_CONTRAST_NOT_QUALIFICATION",
+  "rowsSha256": "88fa07f6f245a6f25d90a842e8d02ed957a52d76afffd125556feed08e2872e8",
+  "runnerSha256": "0af76c1fa02075cc985b7d3e4848d55b59c4593d9cf42dfbe655df1469be5fc3",
+  "schema": 1
+}

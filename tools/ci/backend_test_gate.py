@@ -22,7 +22,8 @@ REQUIRED = {
         'test_guesses_and_unsupported_tokens_never_become_evidence',
         'test_context_decisions_use_real_dictionary_analyses',
         'test_case_normalization_and_bounded_live_lookup_cache',
-        'test_receipt_binds_installed_dictionary_and_code')},
+        'test_receipt_binds_installed_dictionary_and_code',
+        'test_historical_neighbor_partition_family_overlap')},
 }
 
 
@@ -78,7 +79,10 @@ def input_bindings(backend):
                   'tools/typing_experiments/requirements-neural.txt']
     else:
         names += ['tools/ci/backend_cases.py', 'tools/morphology/ranker.py',
-                  'tools/morphology/test_ranker.py', 'tools/morphology/requirements.lock']
+                  'tools/morphology/test_ranker.py', 'tools/morphology/requirements.lock',
+                  'tools/typing_experiments/neighbor-history-v1/manifest.json',
+                  *['tools/typing_experiments/neighbor-history-v1/' + part + '.jsonl'
+                    for part in ('train', 'calibration', 'holdout')]]
     return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in names}
 
 

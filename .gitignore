@@ -30,3 +30,7 @@ __pycache__/
 /tools/lexicon/smart-typing-0.3/top-seven/results/
 /tools/lexicon/smart-typing-0.3/radix/results/
 /tools/lexicon/smart-typing-0.3/provenance/archive-members.json
+
+# Hosted and local replay can materialize these byte-verified historical fixtures.
+/tools/typing_experiments/historical-qualification-v3-v4/qualification-v3.tar.bz2
+/tools/typing_experiments/historical-qualification-v3-v4/qualification-v4.tar.bz2

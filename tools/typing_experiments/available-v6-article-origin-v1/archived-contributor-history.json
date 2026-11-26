@@ -1,0 +1,56 @@
+{
+  "articles": [
+    {
+      "archiveBytes": 240066359,
+      "archiveFile": "ruwiki-2026-08-01-p7767322p7799465.xml.bz2",
+      "archiveSha256": "891b6c0c2c1ee3b675968a69b07e41ca0993bda79942d9c810de20558c19067e",
+      "article": "7795183",
+      "matches": [
+        {
+          "revid": 127503226,
+          "timestamp": "2022-12-27T09:38:21Z"
+        },
+        {
+          "revid": 132871704,
+          "timestamp": "2023-09-11T06:19:39Z"
+        }
+      ],
+      "outsideParentReferences": 0,
+      "partition": "calibration",
+      "registeredRevisionCredits": 18,
+      "revisionsThroughLastMatch": 39,
+      "rootRevisions": 1,
+      "rows": 5,
+      "snapshotTextSha256": "c7c68b4db5879780da06ab31d112b4db3ec039f4e96eec129f6f0105928c2789",
+      "unavailableRevisionCredits": 0,
+      "unregisteredRevisionCredits": 21,
+      "witnessIndexShardSha256": "ca603a95776d7a83cb99b91d25bcc293958d4b86cc287d4d11c7a6e48a1efa68"
+    },
+    {
+      "archiveBytes": 655462192,
+      "archiveFile": "ruwiki-2026-08-01-p8382393p8438560.xml.bz2",
+      "archiveSha256": "72e06de0c892aa021369e57b714d2a57fb5944c70d10bddaec73b83f406aa9dd",
+      "article": "8402514",
+      "fineWikiWitnessSha256": "a268460401eb4d91602478c68c372b7ab46429f131add4908512caaedaba23b7",
+      "matches": [
+        {
+          "revid": 125253232,
+          "timestamp": "2022-09-03T14:49:36Z"
+        }
+      ],
+      "matchingWikitextSha256": "47aeb525e87e47012f9da349f16bb9d5af6ddd2c097633246de060f97397bea1",
+      "outsideParentReferences": 0,
+      "partition": "calibration",
+      "registeredRevisionCredits": 10,
+      "revisionsThroughLastMatch": 10,
+      "rootRevisions": 1,
+      "rows": 5,
+      "snapshotTextSha256": "43b59a7edff7ff5c4de2a7630000844e46d8b65443efcc89b02f58f84422a68c",
+      "unavailableRevisionCredits": 0,
+      "unregisteredRevisionCredits": 0
+    }
+  ],
+  "checksumsSha256": "6f8b1b758d294d529f73d4d37569716b8310537df1894d830a28e6e8177e93ff",
+  "schema": 1,
+  "snapshotDate": "2026-08-01"
+}

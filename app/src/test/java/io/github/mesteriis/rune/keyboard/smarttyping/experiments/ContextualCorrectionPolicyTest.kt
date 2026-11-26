@@ -44,6 +44,8 @@ class ContextualCorrectionPolicyTest {
         val vetoed = evaluate(models(), baseline, admission = AutomaticAdmissionRefusal.ORIGINAL_VALID)
         assertEquals(baseline.choice, vetoed.choice)
         assertEquals(AutomaticAdmissionRefusal.ORIGINAL_VALID, vetoed.contextualAdmissionRefusal)
+        assertEquals(candidate, vetoed.contextualManualCandidate)
+        assertNull(evaluate(models(), baseline, admission = AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE).contextualManualCandidate)
         assertEquals(JointCorrectionRefusal.RESULT_NOT_READY,
             evaluate(models(), baseline, generation = generation().copy(jointEvaluated = false)).contextualRefusal)
         assertEquals(JointCorrectionRefusal.SEARCH_INCOMPLETE,

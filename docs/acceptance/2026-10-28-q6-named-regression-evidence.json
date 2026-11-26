@@ -1,0 +1,46 @@
+{
+  "files": {
+    "tools/eval/smart-typing-0.3/pipeline/run_local_qualification.py": "c72e3feea827b455217261893b56e242ea2a0e829e0b815d66a4f71f9206814d",
+    "tools/eval/smart-typing-0.3/pipeline/test_local_qualification.py": "2689fa01e6244a127403efd150737e7734207c78a4aaeaeba87e0f62afd1a6b8"
+  },
+  "historicalQualificationAttempt": {
+    "exitCode": 1,
+    "holdoutExecuted": false,
+    "namedExecuted": false,
+    "reason": "GENERAL_LOCAL_MUST_REMAIN_DISABLED"
+  },
+  "independentQualification": false,
+  "modelTrainingPerformed": false,
+  "newUnseenHoldout": false,
+  "phoneExecuted": false,
+  "privateArtifactHashes": {
+    "artifacts.json": "a540ff665ac82529af54b93eef838093c35799af443bc2b6c9ea34a3f90535a5",
+    "named-observations.jsonl": "88da9b8b9c66dfa6e426135cab3fd32ad9bc6cebfd45ae3cd7712c46784edcba",
+    "named-report.json": "759fcb9f4e0e00fad31c363557b7d9354592ddda63cbba40aa7a81d5ca15c310",
+    "named-rows.jsonl": "cd819ea9e9d369226464a26baf65a2f3c6657678e912ccbf40e4ef597474780a"
+  },
+  "result": {
+    "en": 12,
+    "es": 8,
+    "exactOutputAndUndoEveryCase": true,
+    "exitCode": 0,
+    "missingOriginals": 0,
+    "rows": 56,
+    "ru": 36
+  },
+  "runtime": "JDK 17, production Kotlin JVM harness, model unavailable",
+  "schemaVersion": 1,
+  "scope": "disclosed-named-regression",
+  "unitTests": {
+    "python3.12": {
+      "errors": 0,
+      "failures": 0,
+      "tests": 13
+    },
+    "python3.14": {
+      "errors": 0,
+      "failures": 0,
+      "tests": 13
+    }
+  }
+}

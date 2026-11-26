@@ -50,6 +50,17 @@ class PersonalAdmissionPolicyTest {
         }
     }
 
+    @Test fun caseRejectionOnlyAppliesWhenPersonalModelIsReady() {
+        val model = PersonalTypingModel { _, _ -> false }
+        val ru = KeyboardLanguage.RUSSIAN
+        model.recordRejected("клава", "Клава", ru)
+        assertEquals(AutomaticAdmissionRefusal.PERSONAL_VETO,
+            PersonalAdmissionPolicy.personalRefusal(true, model, "клава", "Клава", ru))
+        assertNull(PersonalAdmissionPolicy.personalRefusal(false, model, "клава", "Клава", ru))
+        assertNull(PersonalAdmissionPolicy.personalRefusal(true, model, "клава", "клаву", ru))
+        assertNull(PersonalAdmissionPolicy.personalRefusal(true, model, "клава", "Клава", KeyboardLanguage.ENGLISH))
+    }
+
     @Test fun pairRejectionDoesNotProtectOtherReplacements() {
         val model = PersonalTypingModel { _, _ -> false }
         model.recordRejected("helloo", "hello", KeyboardLanguage.ENGLISH)

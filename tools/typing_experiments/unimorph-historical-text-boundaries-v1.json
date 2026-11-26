@@ -1,0 +1,520 @@
+{
+  "archiveSha256": {
+    "public-refinement-text-families-dev": "24e7f1267f099291ffc4ac133cb6ddb613e5a43d6da8450677a9529f1b690666",
+    "public-refinement-text-families-test": "ad67b64ca1c53df54d6569e7fad744efa0201ff4a40f06233199453e4b8f465c",
+    "public-refinement-text-families-train": "ad2c62e5a8368e944af49fb3f71b2621ab82ce92efbac26e745d4af94f4bcc52",
+    "public-word-epoch-text-families-extra-test": "327423761fc747bd09bf0dfc2c41dab78278359b8bbd154306f1eae3edaf69a1",
+    "public-word-epoch-text-families-wordrank-dev": "664d977f3af531790328b4f38e98a26c9182a2c7c7ef0f08d358c3481163f3db",
+    "public-word-epoch-text-families-wordrank-test": "d1ef480429643b8aa94112b5d738372c2a4bd7e489cc742eeffb9babc4c55c90",
+    "public-word-epoch-text-families-wordrank-train": "a2314f55a748d591c003239d37e32ec503a4623d7150aea700ad6f753c00d68f"
+  },
+  "records": [
+    {
+      "article": "3074274",
+      "ordinal": 14,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 120,
+      "sourceStart": 113,
+      "surfaceKey": "1f188e353dfb317fd2e2cf52acb51d9720c1dac6d8c3529715e3e30506fd1e1a"
+    },
+    {
+      "article": "3070606",
+      "ordinal": 188,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 1485,
+      "sourceStart": 1473,
+      "surfaceKey": "247277a5242af8b6c1c2d09cbd17bd6f91bbeb71db0a8dc8f9cd9e645a7739ea"
+    },
+    {
+      "article": "3072267",
+      "ordinal": 936,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 7571,
+      "sourceStart": 7560,
+      "surfaceKey": "2ac49cbddd2a9f4bb7692572f306c46909a32be45e848aad06ad54cdb16f3e61"
+    },
+    {
+      "article": "3071271",
+      "ordinal": 60,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 534,
+      "sourceStart": 520,
+      "surfaceKey": "2cda8b246f64a9fa23770be08fd78a50be1f743a256821ebae3085e57ba8c550"
+    },
+    {
+      "article": "3074623",
+      "ordinal": 184,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 1523,
+      "sourceStart": 1517,
+      "surfaceKey": "2ea5ecf9e846f9c9b5adeecbf281a9d60e2dccea8aa37ee407690bae7e89835e"
+    },
+    {
+      "article": "3074063",
+      "ordinal": 310,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 2887,
+      "sourceStart": 2876,
+      "surfaceKey": "31417467214f664c425f62cfe2dba74a111c99b26c98f7bd3537e58a4d55312e"
+    },
+    {
+      "article": "3070155",
+      "ordinal": 132,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 944,
+      "sourceStart": 937,
+      "surfaceKey": "381ba7dfd1eb7bd0f660411153f508633e10b76e3b81a3eb744672df756de0d1"
+    },
+    {
+      "article": "3071360",
+      "ordinal": 40,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 289,
+      "sourceStart": 282,
+      "surfaceKey": "38d310f759c1b6d6d3ce62dc0f024d185befe1266ac15ffe9bf03b2fd092c827"
+    },
+    {
+      "article": "3073722",
+      "ordinal": 286,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 2441,
+      "sourceStart": 2433,
+      "surfaceKey": "45b5cee3d5c00627bd2ba4097a62c6b17a0a66e41d2eb1e018330b5d88b23e40"
+    },
+    {
+      "article": "3071667",
+      "ordinal": 95,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 729,
+      "sourceStart": 720,
+      "surfaceKey": "46a079ee8dbd5919ed132b5d9eb2856d8f2ee21a67e6d5a66429a3f0076a132e"
+    },
+    {
+      "article": "3073702",
+      "ordinal": 28,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 226,
+      "sourceStart": 221,
+      "surfaceKey": "48a371732e469d7e43a9e7e01cb202210e2ed114bcadbd0012d055508bb401c6"
+    },
+    {
+      "article": "3069989",
+      "ordinal": 133,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 995,
+      "sourceStart": 984,
+      "surfaceKey": "50337691a8abfa318fcd5adfe16f1e584200fe739faf6058967fe75b6da55346"
+    },
+    {
+      "article": "3072254",
+      "ordinal": 79,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 657,
+      "sourceStart": 651,
+      "surfaceKey": "6e1226f8b959905c01422c7b76216c6afbe2fe8e7aeba95c0d093d5fbb2469b6"
+    },
+    {
+      "article": "3074063",
+      "ordinal": 307,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 2847,
+      "sourceStart": 2836,
+      "surfaceKey": "6ee65511cc22ce39e647b123babe9025ab5ffa52e01c2d8900595cbcebb87571"
+    },
+    {
+      "article": "3070721",
+      "ordinal": 102,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 801,
+      "sourceStart": 784,
+      "surfaceKey": "726622a287db040228c9db58a7a6b4b7211cb353a907739e5e1c424628bec62c"
+    },
+    {
+      "article": "3069912",
+      "ordinal": 1208,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 8968,
+      "sourceStart": 8958,
+      "surfaceKey": "79e0f3cac733972c0517a3bdcc8f36a14f81e7ab9f3958c429e52d0d64ad3bb4"
+    },
+    {
+      "article": "3073078",
+      "ordinal": 156,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 1103,
+      "sourceStart": 1097,
+      "surfaceKey": "7bd57db4d5a5b603977862e9c0ac4ce6fe5ed43bd4582b52a1621bd4df76e9f3"
+    },
+    {
+      "article": "3074623",
+      "ordinal": 1555,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 11954,
+      "sourceStart": 11948,
+      "surfaceKey": "90ab7f7c2ffc2ac35766bdccc81fc2489db527b8c46eead1791847bf2818dd7a"
+    },
+    {
+      "article": "3074696",
+      "ordinal": 208,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 1925,
+      "sourceStart": 1917,
+      "surfaceKey": "90d26ec67c033127479708af4b040ef3a066d95a9193b2b2e6dca510100374df"
+    },
+    {
+      "article": "3074276",
+      "ordinal": 279,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 2208,
+      "sourceStart": 2199,
+      "surfaceKey": "96cdf61f6d2f6200e2b1e8f12798c66f666fd0452b78609d5487b6e91a961951"
+    },
+    {
+      "article": "3072379",
+      "ordinal": 88,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 688,
+      "sourceStart": 679,
+      "surfaceKey": "9791e75df5369cb3945764aeb942cc1cf5e2e59315bbabbce3db1f9bdfa3ffc0"
+    },
+    {
+      "article": "3072740",
+      "ordinal": 1229,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 9936,
+      "sourceStart": 9919,
+      "surfaceKey": "99581b941b8b614d0e2935bc4a423ed13c46595cbd4aba69ec7213e00e9a9289"
+    },
+    {
+      "article": "3073537",
+      "ordinal": 532,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 3719,
+      "sourceStart": 3712,
+      "surfaceKey": "9b50e6bf12f2c4793cc0fc0ab7ef199bbcc56637efb6b7a7ea9054d38eb7fdfb"
+    },
+    {
+      "article": "3072567",
+      "ordinal": 158,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 1280,
+      "sourceStart": 1272,
+      "surfaceKey": "a5a0de3b1ea3bcb435809565cad748581fa959eeba577437ecbeaff0ccbf8542"
+    },
+    {
+      "article": "3072379",
+      "ordinal": 23,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 203,
+      "sourceStart": 195,
+      "surfaceKey": "a90eb98436e958a6d6782565fb5e7bc5ee0c8afce1e3b100bfd6162b437401c1"
+    },
+    {
+      "article": "3072346",
+      "ordinal": 178,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 1382,
+      "sourceStart": 1371,
+      "surfaceKey": "b9485dca0391cad77b5c00c5384521093d997797a550311d572732b22a23d431"
+    },
+    {
+      "article": "3071271",
+      "ordinal": 398,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 3260,
+      "sourceStart": 3246,
+      "surfaceKey": "bbeaed733cf9ed38d04b3e3c047c76b6304b3ed5e559b075ff8609dc45dada68"
+    },
+    {
+      "article": "3070981",
+      "ordinal": 333,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 2304,
+      "sourceStart": 2294,
+      "surfaceKey": "cb31bb449c9e627ac25f27fb38ff8d5afcd54a887a3a35fae3e2faf60d43d780"
+    },
+    {
+      "article": "3070367",
+      "ordinal": 38,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 301,
+      "sourceStart": 294,
+      "surfaceKey": "cfaf9d10a2ac85560adcf05df63eb8aa6098f4dc4d316cb229de16a13ee8b87b"
+    },
+    {
+      "article": "3072379",
+      "ordinal": 86,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 676,
+      "sourceStart": 666,
+      "surfaceKey": "d2289add2280f3b4501ad7aec3efde5688f82dfb9cf4fae52d2a2221c20d80ab"
+    },
+    {
+      "article": "3074623",
+      "ordinal": 651,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 5018,
+      "sourceStart": 5014,
+      "surfaceKey": "dbdf63aa66ef4d1e93fe8496344066de532ead483185fb253b22cb4f9c1660cc"
+    },
+    {
+      "article": "3072740",
+      "ordinal": 768,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 6192,
+      "sourceStart": 6185,
+      "surfaceKey": "e590b89c4f0552e941603d93c7deadbe5dc7412e1cc5a05eccb0c3b843a3c0a9"
+    },
+    {
+      "article": "3070961",
+      "ordinal": 198,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 1352,
+      "sourceStart": 1348,
+      "surfaceKey": "ea27768beec6fa58d30eaf1395ed9071ec974cafb48083d2038e1e2f1fe7a482"
+    },
+    {
+      "article": "3069994",
+      "ordinal": 393,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 2805,
+      "sourceStart": 2796,
+      "surfaceKey": "f074f32598d5eb6399222146bc644582d3473a145a10bf6af0d0bbff64f1c128"
+    },
+    {
+      "article": "3073074",
+      "ordinal": 855,
+      "parent": "public-refinement-text-families-train",
+      "sourceEnd": 7299,
+      "sourceStart": 7290,
+      "surfaceKey": "f51d7f2237450e7001f1b308436f78663aae372e4bb2606193d8481c80218c0f"
+    },
+    {
+      "article": "3070161",
+      "ordinal": 63,
+      "parent": "public-refinement-text-families-dev",
+      "sourceEnd": 521,
+      "sourceStart": 506,
+      "surfaceKey": "1bd882b906bfa4634e37f73ddf3d5182af8d35ca927a963dec97245e557bfd0c"
+    },
+    {
+      "article": "3071732",
+      "ordinal": 642,
+      "parent": "public-refinement-text-families-dev",
+      "sourceEnd": 5353,
+      "sourceStart": 5346,
+      "surfaceKey": "1f188e353dfb317fd2e2cf52acb51d9720c1dac6d8c3529715e3e30506fd1e1a"
+    },
+    {
+      "article": "3070552",
+      "ordinal": 854,
+      "parent": "public-refinement-text-families-dev",
+      "sourceEnd": 6849,
+      "sourceStart": 6835,
+      "surfaceKey": "242f00d8db197a961a5b5621c12bfe34f54bb206c7ae58cd4dbf4e6da6a735c1"
+    },
+    {
+      "article": "3071101",
+      "ordinal": 41,
+      "parent": "public-refinement-text-families-dev",
+      "sourceEnd": 392,
+      "sourceStart": 380,
+      "surfaceKey": "7df1dc7d957f7f0205bf89da74432cb5ed1ba904f4f934678bdb3a3ab27f6cb6"
+    },
+    {
+      "article": "3071101",
+      "ordinal": 2,
+      "parent": "public-refinement-text-families-dev",
+      "sourceEnd": 52,
+      "sourceStart": 41,
+      "surfaceKey": "a899e7c08f977a3ade5d5f21fe60646c63ba999c0823e7c9ca97160b99ed78fc"
+    },
+    {
+      "article": "3071233",
+      "ordinal": 6,
+      "parent": "public-refinement-text-families-dev",
+      "sourceEnd": 104,
+      "sourceStart": 96,
+      "surfaceKey": "a90eb98436e958a6d6782565fb5e7bc5ee0c8afce1e3b100bfd6162b437401c1"
+    },
+    {
+      "article": "3071101",
+      "ordinal": 282,
+      "parent": "public-refinement-text-families-dev",
+      "sourceEnd": 2345,
+      "sourceStart": 2333,
+      "surfaceKey": "be0402d5dc5f8a4fda0ddb808aa5d748b41e9bed9ac890c0929877c12bb55597"
+    },
+    {
+      "article": "3069821",
+      "ordinal": 783,
+      "parent": "public-refinement-text-families-test",
+      "sourceEnd": 6117,
+      "sourceStart": 6113,
+      "surfaceKey": "12f88f8617d73ae28de66e6749d464d65b688aea0f729112fce7b24d08e233f6"
+    },
+    {
+      "article": "3070088",
+      "ordinal": 1519,
+      "parent": "public-refinement-text-families-test",
+      "sourceEnd": 12197,
+      "sourceStart": 12186,
+      "surfaceKey": "2ac49cbddd2a9f4bb7692572f306c46909a32be45e848aad06ad54cdb16f3e61"
+    },
+    {
+      "article": "3069813",
+      "ordinal": 239,
+      "parent": "public-refinement-text-families-test",
+      "sourceEnd": 1976,
+      "sourceStart": 1968,
+      "surfaceKey": "371a9ca7941d0926e2e618ef1375b6eb0fc1015205b7645ab567728d84c7d14a"
+    },
+    {
+      "article": "3069821",
+      "ordinal": 330,
+      "parent": "public-refinement-text-families-test",
+      "sourceEnd": 2608,
+      "sourceStart": 2599,
+      "surfaceKey": "54b60367a4a99394d0e8472e728494797d68a0f0eee7c0ad3c26040b4bbc60c7"
+    },
+    {
+      "article": "3074160",
+      "ordinal": 914,
+      "parent": "public-refinement-text-families-test",
+      "sourceEnd": 6881,
+      "sourceStart": 6870,
+      "surfaceKey": "7085731f818b0195b721a37d2f8cb513f32808139a98ed753f5b29dbff9c76a3"
+    },
+    {
+      "article": "3070179",
+      "ordinal": 262,
+      "parent": "public-refinement-text-families-test",
+      "sourceEnd": 2048,
+      "sourceStart": 2035,
+      "surfaceKey": "9444acda89b53ce451e9d602007f51a70e8a749466499191fb32ecf7d0693c1e"
+    },
+    {
+      "article": "3073788",
+      "ordinal": 352,
+      "parent": "public-refinement-text-families-test",
+      "sourceEnd": 3087,
+      "sourceStart": 3073,
+      "surfaceKey": "fbda93d901147746c2434f7b8a11d360232954a94d494fe9938b44b080e91ed3"
+    },
+    {
+      "article": "3077957",
+      "ordinal": 119,
+      "parent": "public-word-epoch-text-families-wordrank-train",
+      "sourceEnd": 982,
+      "sourceStart": 965,
+      "surfaceKey": "726622a287db040228c9db58a7a6b4b7211cb353a907739e5e1c424628bec62c"
+    },
+    {
+      "article": "3077704",
+      "ordinal": 48,
+      "parent": "public-word-epoch-text-families-wordrank-train",
+      "sourceEnd": 369,
+      "sourceStart": 356,
+      "surfaceKey": "d6adbd887d5598c33c267cbabfdb2ed1bd6d9fa522915a113306da8a4eef23d5"
+    },
+    {
+      "article": "3077943",
+      "ordinal": 784,
+      "parent": "public-word-epoch-text-families-wordrank-train",
+      "sourceEnd": 6389,
+      "sourceStart": 6377,
+      "surfaceKey": "d8358dd187a2f64f1654f315c00e19e1776f30cacd1b337b4852bca600e9218f"
+    },
+    {
+      "article": "3077943",
+      "ordinal": 2,
+      "parent": "public-word-epoch-text-families-wordrank-train",
+      "sourceEnd": 30,
+      "sourceStart": 18,
+      "surfaceKey": "d898f7e1bc903aa8ad52e1c3a745a21af2997f0f3b1565c5f82770cb2a26490a"
+    },
+    {
+      "article": "3077733",
+      "ordinal": 283,
+      "parent": "public-word-epoch-text-families-wordrank-train",
+      "sourceEnd": 2323,
+      "sourceStart": 2314,
+      "surfaceKey": "e3783b459eb2774d5561c89db8564779609096002275e5db4e56c9f11cb8e6a5"
+    },
+    {
+      "article": "3078615",
+      "ordinal": 1114,
+      "parent": "public-word-epoch-text-families-wordrank-dev",
+      "sourceEnd": 7696,
+      "sourceStart": 7686,
+      "surfaceKey": "754bbc5ba31b02ed9191b78c0ae9f2a3da856c2e65e185b03431b6c86285f4fa"
+    },
+    {
+      "article": "3078615",
+      "ordinal": 505,
+      "parent": "public-word-epoch-text-families-wordrank-dev",
+      "sourceEnd": 3540,
+      "sourceStart": 3525,
+      "surfaceKey": "b0c95a527e264ec9681cec39aafdd714bf1ee62e2aa80455cc29b648df688b7a"
+    },
+    {
+      "article": "3077016",
+      "ordinal": 27,
+      "parent": "public-word-epoch-text-families-extra-test",
+      "sourceEnd": 204,
+      "sourceStart": 194,
+      "surfaceKey": "0a33cad89e2c5c133b490d5b774927dec034e1c69e2acd289e5a615ad8066b09"
+    },
+    {
+      "article": "3077142",
+      "ordinal": 220,
+      "parent": "public-word-epoch-text-families-extra-test",
+      "sourceEnd": 1708,
+      "sourceStart": 1697,
+      "surfaceKey": "12681be3442107e63d4393003069d2cd8bdacec6e64bdd43c2aa345bbbbf4480"
+    },
+    {
+      "article": "3077058",
+      "ordinal": 557,
+      "parent": "public-word-epoch-text-families-extra-test",
+      "sourceEnd": 4346,
+      "sourceStart": 4336,
+      "surfaceKey": "4d696a0afa89943f8dbff2493b7e5dd315db0a5fd1036d295c2aae2e689b5f85"
+    },
+    {
+      "article": "3076999",
+      "ordinal": 6,
+      "parent": "public-word-epoch-text-families-extra-test",
+      "sourceEnd": 33,
+      "sourceStart": 30,
+      "surfaceKey": "6f0076638f9bdb2a710c4cc2be27a5c6298d1d55144494fe21f5856b1490002b"
+    },
+    {
+      "article": "3077058",
+      "ordinal": 572,
+      "parent": "public-word-epoch-text-families-extra-test",
+      "sourceEnd": 4451,
+      "sourceStart": 4442,
+      "surfaceKey": "c635fffe343aa8814709eecbe281057b1acbfd88f2e381c9b7a1fddae31eb93b"
+    },
+    {
+      "article": "3077147",
+      "ordinal": 52,
+      "parent": "public-word-epoch-text-families-extra-test",
+      "sourceEnd": 362,
+      "sourceStart": 352,
+      "surfaceKey": "e8833848b31af99552291d4cc71fbed86b0ca19cb896b16248c862e3356f99a0"
+    },
+    {
+      "article": "3077058",
+      "ordinal": 521,
+      "parent": "public-word-epoch-text-families-extra-test",
+      "sourceEnd": 4062,
+      "sourceStart": 4053,
+      "surfaceKey": "fe3d11beda950626599be10a40510363b9897cca53c35fbb7eb4137561929342"
+    }
+  ],
+  "schema": 1,
+  "sourceSha256": "39b59952cd92a148b301f4d2b3ae1fb71e4caab987c6abe278f0dbdf0b01bb88",
+  "unimorphSha256": "6c13f849fc12844b23f46e70a02a45a2f537e60c62c8ffd8798bdff3991dc880"
+}

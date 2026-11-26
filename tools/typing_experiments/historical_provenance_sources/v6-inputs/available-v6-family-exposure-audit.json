@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "modelCalls": 0,
+  "independentQualification": false,
+  "originalInputs": {
+    "build/right-context-natural-frozen-20261027/corpus/calibration.jsonl": "ed88066300f08322c3c85d7a0eb0f93d4e6887578b9edc8aee8620727de0927c",
+    "build/right-context-natural-frozen-20261027/corpus/holdout.jsonl": "1d2f913750a5f2cf7c2d0fd2c306194fd12a60bd5be74ae63e1f100bb6822142",
+    "build/right-context-side-20261027/corpus/calibration.jsonl": "3c1ef49d7da414a7cf1cbfbf40cad58d54848b2b3be48ccba35bb701efa2102f",
+    "build/right-context-side-20261027/corpus/holdout.jsonl": "df5f7ddc46510ec088708388b2764e3c4e5ccee72eedf0ff9f71cc97652bfb92"
+  },
+  "candidateArchives": {
+    "calibration-context-candidates.json.bz2": "51804fd1eaa3ab5cf600970efd52de11e7b7a1f8059bb1b38841325abfb9ff82",
+    "holdout-context-candidates.json.bz2": "332f32d61036740938d886844c522045f0c8077a3fbf78ff78105bfc01c809c1"
+  },
+  "parts": {
+    "calibration": {
+      "contexts": 1661,
+      "confirmedExposed": 1325,
+      "exactTsvSha256": "b19e91877a9dc4ec200a4982b191d7c9348efdf8196ddb84047521a4c04b3abb",
+      "confirmedExposedByGroup": {
+        "agreement_role_negative": 313,
+        "direct_subject_positive": 351,
+        "hard_other_part_negative": 340,
+        "matched_copula_positive": 75,
+        "ordinary_other_part_negative": 246
+      },
+      "matchingDeclaredFamilies": 287,
+      "optionalInstrumentalFamilies": 10,
+      "distinctAssignmentsChecked": 512,
+      "exactJsonlMatches": 0
+    },
+    "holdout": {
+      "contexts": 1630,
+      "confirmedExposed": 1278,
+      "exactTsvSha256": "36a769b5b2e1ed0f76667bd4336d4792502195c83233ff34fd29e85d2ca0ca6b",
+      "confirmedExposedByGroup": {
+        "agreement_role_negative": 283,
+        "direct_subject_positive": 350,
+        "hard_other_part_negative": 331,
+        "matched_copula_positive": 70,
+        "ordinary_other_part_negative": 244
+      },
+      "matchingDeclaredFamilies": 256,
+      "optionalInstrumentalFamilies": 13,
+      "distinctAssignmentsChecked": 4096,
+      "exactJsonlMatches": 0
+    }
+  }
+}

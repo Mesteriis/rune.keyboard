@@ -1,0 +1,7 @@
+{
+  "repository": "https://github.com/UniversalDependencies/UD_Russian-Taiga",
+  "commit": "d1e48cd29c1f19b6aad1aec361d9f724db764f66",
+  "license": "CC-BY-SA-4.0",
+  "file": "ru_taiga-ud-dev.conllu",
+  "sha256": "91e8be6f74afd91623500d73954c5595db51a2eb3c7b0e02e38fb3b2508b1b6f"
+}

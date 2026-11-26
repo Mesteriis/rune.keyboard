@@ -1,0 +1,154 @@
+{
+  "api": "26",
+  "passed": true,
+  "schema": 1,
+  "suites": [
+    {
+      "discovery": {
+        "cases": 398,
+        "error": null
+      },
+      "exitCode": 0,
+      "freshResultVerified": true,
+      "name": "general",
+      "reports": [
+        {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 59,
+          "tests": 398
+        }
+      ]
+    },
+    {
+      "exitCode": 0,
+      "freshResultVerified": true,
+      "name": "personal",
+      "reports": [
+        {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 4
+        }
+      ]
+    },
+    {
+      "exitCode": 0,
+      "freshResultVerified": true,
+      "name": "case-rejection",
+      "reports": [
+        {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 2
+        }
+      ]
+    },
+    {
+      "exitCode": 0,
+      "freshResultVerified": true,
+      "name": "confirmed-words",
+      "reports": [
+        {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 3
+        }
+      ]
+    },
+    {
+      "exitCode": 0,
+      "freshResultVerified": true,
+      "name": "compose-editor",
+      "reports": [
+        {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 4
+        }
+      ]
+    },
+    {
+      "exitCode": 0,
+      "freshResultVerified": true,
+      "name": "emoji-memory",
+      "reports": [
+        {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 1
+        }
+      ]
+    },
+    {
+      "exitCode": 0,
+      "freshResultVerified": true,
+      "name": "export-navigation",
+      "reports": [
+        {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 1
+        }
+      ]
+    },
+    {
+      "exitCode": 0,
+      "freshResultVerified": true,
+      "name": "export-picker",
+      "reports": [
+        {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 1
+        }
+      ]
+    },
+    {
+      "exitCode": 0,
+      "freshResultVerified": true,
+      "name": "qualification-lifecycle",
+      "reports": [
+        {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 1
+        }
+      ]
+    },
+    {
+      "exitCode": 0,
+      "freshResultVerified": true,
+      "name": "qualification-safety",
+      "reports": [
+        {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 1
+        }
+      ]
+    },
+    {
+      "exitCode": 0,
+      "freshResultVerified": true,
+      "name": "native-runtime",
+      "reports": [
+        {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 6
+        }
+      ]
+    }
+  ]
+}

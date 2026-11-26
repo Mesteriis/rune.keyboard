@@ -5,6 +5,7 @@ import hashlib
 import json
 import re
 import unicodedata
+import independent_corpus_guard as registry_guard
 
 ROOT = Path(__file__).resolve().parents[2]
 SEED = 'rune-refinement-20260915-v1'
@@ -40,7 +41,8 @@ def perturb(word, identity, vocabulary):
                       key=lambda pair: digest((identity+':'+pair[0]+':'+pair[1]).encode()))
     return variants[0] if variants else None
 
-def run(parquet_path, frequency_path, output):
+def run(parquet_path, frequency_path, output, *, historical_reproduction=False):
+    snapshot=registry_guard.begin(historical_reproduction)
     import pyarrow.parquet as pq
     lock = json.loads((ROOT/'tools/model/rune-text-0.2/source-lock.json').read_text())
     expected = lock['wikipediaContext']['files']['ru-0007.parquet']
@@ -48,9 +50,10 @@ def run(parquet_path, frequency_path, output):
         raise ValueError('PUBLIC_PARQUET_IDENTITY')
     if file_hash(frequency_path) != lock['frequencyWords']['files']['ru_50k.txt']:
         raise ValueError('PUBLIC_VOCABULARY_IDENTITY')
+    input_snapshot=registry_guard.selector_inputs(snapshot,parquet_path,expected['sha256'],frequency_path,lock['frequencyWords']['files']['ru_50k.txt'],Path(__file__))
+    admission=registry_guard.selector_admission(snapshot)
     output = output.resolve()
     if output.exists() or not output.is_relative_to(ROOT/'build'): raise ValueError('FRESH_BUILD_OUTPUT_REQUIRED')
-    output.mkdir(parents=True)
     vocabulary = {unicodedata.normalize('NFC', line.rsplit(' ',1)[0]).lower()
                   for line in frequency_path.read_text().splitlines()}
     texts = {p: [] for p in CAPS}; rows = {p: [] for p in CAPS}
@@ -69,13 +72,15 @@ def run(parquet_path, frequency_path, output):
             clean = ' '.join(WORD.findall(normalized.lower()))
             if chars[p] < CAPS[p][0] and len(clean) >= 80:
                 fragment = clean[:min(12000,CAPS[p][0]-chars[p])]
+                registry_guard.check_selected_source_text(snapshot, normalized, fragment)
                 texts[p].append({'articleId':str(article_id),'text':fragment}); chars[p]+=len(fragment)
             selected = set(); count=0
-            for sentence in re.split(r'(?<=[.!?])\s+|\n+',normalized):
+            for sentence,segment_start in registry_guard.selector_segments(normalized):
                 matches=list(WORD.finditer(sentence))
                 for ordinal, match in enumerate(matches):
                     word=match.group()
                     if ordinal<3 or word!=word.lower() or not 5<=len(word)<=12 or word not in vocabulary: continue
+                    if not registry_guard.whole_selector_token(normalized,sentence,segment_start,match,snapshot):continue
                     if word in selected or word_counts[p].get(word,0)>=4: continue
                     prefix=sentence[:match.start()][-128:].lstrip()
                     if not prefix or not prefix[-1].isspace():continue
@@ -86,16 +91,31 @@ def run(parquet_path, frequency_path, output):
                     if mutation is None:continue
                     if len(rows[p])>=CAPS[p][1] or count>=12:break
                     typo, category=mutation
-                    seen_contexts.add(context_identity);selected.add(word);count+=1
-                    word_counts[p][word]=word_counts[p].get(word,0)+1
-                    rows[p].append({'id':'refine-'+rid[:24],'articleId':str(article_id),'language':'ru',
+                    row={'id':'refine-'+rid[:24],'articleId':str(article_id),'language':'ru',
                         'split':{'train':'calibration','dev':'diagnostic','test':'holdout'}[p], 'partition':p,
                         'family':word,'template':'article-'+str(article_id),'typed':typo,'prefix':prefix,
-                        'cohort':'typo','noAuto':False,'expectedSpelling':word,'category':category})
+                        'cohort':'typo','noAuto':False,'expectedSpelling':word,'category':category}
+                    registry_guard.attach_selector_source(row,normalized,sentence,segment_start,match,snapshot)
+                    if admission is not None and not admission.accept(row):continue
+                    seen_contexts.add(context_identity);selected.add(word);count+=1
+                    word_counts[p][word]=word_counts[p].get(word,0)+1
+                    rows[p].append(row)
                 if len(rows[p])>=CAPS[p][1] or count>=12:break
         if all(chars[p]>=CAPS[p][0] and len(rows[p])>=CAPS[p][1] for p in CAPS):break
         if scanned>=20000:break
-    if not all(chars[p]>=CAPS[p][0]//2 and len(rows[p])>=CAPS[p][1] for p in CAPS):raise ValueError('INSUFFICIENT_CORPUS')
+    if not all(chars[p]>=CAPS[p][0]//2 and len(rows[p])>=CAPS[p][1] for p in CAPS):
+        if admission is not None:raise ValueError('INSUFFICIENT_DISJOINT_CORPUS: '+str({p:len(rows[p]) for p in CAPS})+' '+str(admission.counts))
+        raise ValueError('INSUFFICIENT_CORPUS')
+    check_rows=[row for part in rows.values() for row in part]
+    dictionary_receipt=registry_guard.selector_families(snapshot,check_rows)
+    registry_guard.verify_selector_inputs(input_snapshot)
+    registry_guard.reject_unchecked_texts(snapshot,texts)
+    registry_receipt=registry_guard.finish(snapshot,check_rows)
+    if dictionary_receipt is not None:
+        registry_receipt['canonicalFamilyDictionary']=dictionary_receipt
+        registry_receipt['selectorInputSha256']={name:digest for name,(_,digest) in input_snapshot.items()}
+        registry_receipt['selectorAdmissionCounts']=dict(admission.counts)
+    output.mkdir(parents=True)
     def write_rows(path, values):
         path.write_text(''.join(json.dumps(v,ensure_ascii=False,sort_keys=True)+'\n' for v in values))
     for p in CAPS:
@@ -106,11 +126,14 @@ def run(parquet_path, frequency_path, output):
               'preparationScriptSha256':file_hash(Path(__file__)),'containsPersonalMessages':False,'scannedArticles':scanned,
               'partitions':{p:{'characters':chars[p],'rows':len(rows[p]),'articles':articles[p]} for p in CAPS},
               'files':{p.name:file_hash(p) for p in output.glob('*.jsonl')}}
+    manifest.update(registry_receipt)
     (output/'manifest.json').write_text(json.dumps(manifest,sort_keys=True,indent=2)+'\n')
-    print(json.dumps({p:{'characters':chars[p],'rows':len(rows[p]),'articles':len(articles[p])} for p in CAPS}))
+    print(json.dumps(dict(partitions={p:{'characters':chars[p],'rows':len(rows[p]),'articles':len(articles[p])} for p in CAPS},scope=manifest['scope'],independentQualification=False)))
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--parquet',type=Path,required=True);parser.add_argument('--frequency',type=Path,required=True)
-    parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
-    run(args.parquet,args.frequency,args.output)
+    parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--historical-reproduction',action='store_true',help='Reproduce disclosed data without independent qualification.')
+    args=parser.parse_args()
+    run(args.parquet,args.frequency,args.output,historical_reproduction=args.historical_reproduction)

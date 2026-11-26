@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Theme.RuneKeyboard.QaEditor" parent="Theme.RuneKeyboard.Setup">
+    <!-- Synthetic taps must reach the editor even during repeated QA activity launches. -->
+    <item name="android:windowDisablePreview">true</item>
+  </style>
+</resources>

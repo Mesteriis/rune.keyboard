@@ -1,0 +1,37 @@
+{
+  "backend": "mlx",
+  "device": "cpu",
+  "inputBindings": {
+    "app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin": "accd46a39e111999994d95c148d0cff6f9892ab8ad5176ffd4c64aa800372a50",
+    "tools/ci/backend_test_gate.py": "54580e9abceb6eb11bfd2b311862f2fb51ba4c08d15e47690826dd99a84c7c40",
+    "tools/typing_experiments/neural_refinement.py": "690ed0d94009f832484957c35072770649e50370dcd5562670b406b0dc568cc1",
+    "tools/typing_experiments/requirements-neural.txt": "ac6287a06e82d336e6a6f60a5c200f4489e904e7924a5a8b300f5a41b2087c71",
+    "tools/typing_experiments/test_word_ranking.py": "659fc46763d709c50ab08167704c404919c006760fc10ec730db66b3d21dbe35",
+    "tools/typing_experiments/word_ranking.py": "755a48324419cabc34a7bbb160453b486f15f46b1124f2cba79ca70304cde62d"
+  },
+  "schemaVersion": 1,
+  "status": "PASS",
+  "unittest": {
+    "errors": [],
+    "expectedFailures": [],
+    "failures": [],
+    "ids": [
+      "test_word_ranking.WordRankingTests.test_controls_coverage_and_missing_targets",
+      "test_word_ranking.WordRankingTests.test_exact_shipped_initialization_and_export",
+      "test_word_ranking.WordRankingTests.test_mlx_loss_parity_initialization_and_finite_gradient",
+      "test_word_ranking.WordRankingTests.test_numpy_loss_group_mean_and_terminal_score",
+      "test_word_ranking.WordRankingTests.test_preprocessing_and_runtime_score_numeric_parity",
+      "test_word_ranking.WordRankingTests.test_selection_ties_are_frozen",
+      "test_word_ranking.WordRankingTests.test_train_dev_boundary_rejects_before_any_open"
+    ],
+    "skipped": [],
+    "tests": 7,
+    "unexpectedSuccesses": []
+  },
+  "versions": {
+    "mlx": "0.32.2",
+    "mlx-metal": "0.32.2",
+    "numpy": "2.4.6",
+    "pyarrow": "25.0.1"
+  }
+}

@@ -1,0 +1,48 @@
+import groovy.json.JsonSlurper
+import java.security.MessageDigest
+
+// Standalone CI-only resolver; no dependency is added to the Android app.
+def manifestFile = file('../../lexicon/smart-typing-0.3/weighted-qualification/manifests/reproduction-toolchain.json')
+def manifest = new JsonSlurper().parse(manifestFile)
+if (manifest.schema != 1 || !(manifest.jars instanceof List) || manifest.jars.isEmpty()) {
+    throw new GradleException('REPLAY_TOOLCHAIN_MANIFEST')
+}
+def entries = manifest.jars.collect { item ->
+    if (!(item.group ==~ /[a-zA-Z0-9_.-]+/) || !(item.artifact ==~ /[a-zA-Z0-9_.-]+/) ||
+            !(item.version ==~ /[a-zA-Z0-9_.-]+/) || !(item.sha256 ==~ /[0-9a-f]{64}/) ||
+            !(item.bytes instanceof Number) || item.bytes.longValue() <= 0) {
+        throw new GradleException('REPLAY_TOOLCHAIN_ENTRY')
+    }
+    [group: item.group, artifact: item.artifact, version: item.version,
+     sha256: item.sha256, bytes: item.bytes.longValue()]
+}
+if (entries.collect { "${it.artifact}-${it.version}.jar" }.toSet().size() != entries.size()) {
+    throw new GradleException('REPLAY_TOOLCHAIN_DUPLICATE')
+}
+def toolchain = configurations.create('replayToolchain') {
+    canBeConsumed = false
+    canBeResolved = true
+    transitive = false
+}
+entries.each { item -> dependencies.add(toolchain.name, "${item.group}:${item.artifact}:${item.version}") }
+tasks.register('prepareReplayToolchain') {
+    doLast {
+        def files = toolchain.resolve()
+        if (files.size() != entries.size()) throw new GradleException('REPLAY_TOOLCHAIN_COUNT')
+        entries.each { item ->
+            def name = "${item.artifact}-${item.version}.jar"
+            def matches = files.findAll { it.name == name }
+            if (matches.size() != 1 || matches.first().length() != item.bytes) {
+                throw new GradleException('REPLAY_TOOLCHAIN_IDENTITY:' + item.artifact)
+            }
+            def md = MessageDigest.getInstance('SHA-256')
+            matches.first().withInputStream { stream ->
+                byte[] buf = new byte[65536]
+                for (int n = stream.read(buf); n != -1; n = stream.read(buf)) md.update(buf, 0, n)
+            }
+            def digest = md.digest().collect { String.format('%02x', it & 0xff) }.join()
+            if (digest != item.sha256) throw new GradleException('REPLAY_TOOLCHAIN_IDENTITY:' + item.artifact)
+        }
+        println "Replay toolchain verified: ${entries.size()} pinned JARs"
+    }
+}

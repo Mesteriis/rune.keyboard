@@ -95,15 +95,17 @@ object MechanicalPunctuationPlanner {
             if (punctuation == ':' && spaceAfter == 0 && raw.substring(left.start, left.end).all { it.code < 128 }) {
                 return keep(UnchangedPunctuationReason.AMBIGUOUS_COLON)
             }
+            val sentenceCaps = punctuation in SENTENCE_END && right.start == owned.text.length &&
+                !(punctuation == '.' && suppressesRussianAbbreviationCaps(owned, left, incoming))
             if (spaceAfter == 1 && leftEnd == separator - 1) {
-                if (punctuation in SENTENCE_END && right.start == owned.text.length) {
+                if (sentenceCaps) {
                     // Hint only; the consumer creates a transaction only if rendering changes case.
                     return replace(owned, incoming, raw, MechanicalEditKind.SENTENCE_CASE, capsAt = right.start)
                 }
                 return keep(UnchangedPunctuationReason.NO_CHANGE)
             }
             val desired = raw.substring(0, leftEnd) + punctuation + " " + raw.substring(right.start)
-            val caps = if (punctuation in SENTENCE_END && right.start == owned.text.length) desired.length - incoming.length else null
+            val caps = if (sentenceCaps) desired.length - incoming.length else null
             return replace(owned, incoming, desired, MechanicalEditKind.SPACE_AFTER, capsAt = caps)
         }
         if (right.start - separator > 1) {
@@ -136,6 +138,57 @@ object MechanicalPunctuationPlanner {
     }
 
     private data class Word(val start: Int, val end: Int)
+
+    internal fun awaitsRussianAbbreviationContinuation(owned: OwnedPunctuationSuffix): Boolean {
+        val end = skipSpaces(owned.text, owned.text.length)
+        if (end == owned.text.length || owned.text.getOrNull(end - 1) != '.') return false
+        val left = wordEnding(owned.text, end - 1) ?: return false
+        return suppressesRussianAbbreviationCaps(owned, left, incoming = null)
+    }
+
+    private fun suppressesRussianAbbreviationCaps(owned: OwnedPunctuationSuffix, left: Word, incoming: String?): Boolean {
+        if (left.end - left.start != 1) return false
+        val text = owned.text
+        val suffix = when (text[left.start]) {
+            'н' -> return (incoming == null || incoming == "э") && startsRussianEraAbbreviation(owned, left.start)
+            'т' -> {
+                if ((incoming == null || incoming == "п" || incoming == "д") &&
+                    startsRussianEnumerationAbbreviation(owned, left.end)
+                ) return true
+                if (incoming == null || incoming == "е") ", т" else return false
+            }
+            'е' -> ", т. е"
+            else -> return false
+        }
+        return text.regionMatches(left.end - suffix.length, suffix, 0, suffix.length)
+    }
+
+    private fun startsRussianEnumerationAbbreviation(owned: OwnedPunctuationSuffix, letterEnd: Int): Boolean {
+        val suffix = "и т"
+        val start = letterEnd - suffix.length
+        return start >= 0 && owned.text.regionMatches(start, suffix, 0, suffix.length) &&
+            startsAtTokenBoundary(owned, start)
+    }
+
+    private fun startsRussianEraAbbreviation(owned: OwnedPunctuationSuffix, letterStart: Int): Boolean {
+        val text = owned.text
+        val beforeEra = "до "
+        val preposition = letterStart - beforeEra.length
+        if (preposition >= 0 && text.regionMatches(preposition, beforeEra, 0, beforeEra.length, ignoreCase = true) &&
+            startsAtTokenBoundary(owned, preposition)) return true
+
+        val unit = ERA_NUMBER_SUFFIXES.firstOrNull { suffix ->
+            val numberEnd = letterStart - suffix.length
+            numberEnd > 0 && text.regionMatches(numberEnd, suffix, 0, suffix.length, ignoreCase = true)
+        } ?: return false
+        val numberEnd = letterStart - unit.length
+        var numberStart = numberEnd
+        while (numberStart > 0 && text[numberStart - 1] in '0'..'9') numberStart--
+        return numberEnd - numberStart in 1..4 && startsAtTokenBoundary(owned, numberStart)
+    }
+
+    private fun startsAtTokenBoundary(owned: OwnedPunctuationSuffix, start: Int): Boolean =
+        if (start == 0) owned.startsAtTokenBoundary else owned.text[start - 1].isWhitespace()
 
     private fun wordEnding(text: String, end: Int): Word? {
         var start = end
@@ -214,6 +267,7 @@ object MechanicalPunctuationPlanner {
     private fun keep(reason: UnchangedPunctuationReason) = MechanicalPunctuationPlan.Unchanged(reason)
     private val PUNCTUATION = setOf(',', '.', '?', '!', ':', ';')
     private val SENTENCE_END = setOf('.', '?', '!')
+    private val ERA_NUMBER_SUFFIXES = listOf(" году ", " веке ")
     private val CODE_MARKERS = setOf('=', '{', '}', '`', '$', '\\', '|', '<', '>', '/')
     private val CLI_FLAG = Regex("(?:^|\\s)--?\\p{L}")
     private val DOT_ARGUMENT = Regex("(?:^|\\s)(?:cd|cp|mv|rm|ls|du|stat|find|chmod|chown|git|rg|grep|echo|printf) +\\.(?=$|[\\s.])")

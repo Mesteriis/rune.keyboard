@@ -5,7 +5,7 @@
 **A quiet, private keyboard for Android.**
 
 English · Русский · Español<br>
-Five dark themes. Symbols with a downward flick. Typing stays on your device.
+Five keyboard styles and light or dark palettes. Symbols with a downward flick. Typing stays on your device.
 
 [Download APK](https://github.com/Mesteriis/rune.keyboard/releases/latest) · [User guide (RU)](docs/USER_GUIDE.ru.md) · [Report a bug](https://github.com/Mesteriis/rune.keyboard/issues) · [Contribute](CONTRIBUTING.md)
 
@@ -25,10 +25,12 @@ Five dark themes. Symbols with a downward flick. Typing stays on your device.
 
 Captured on a Samsung Galaxy Z Fold7 cover screen. System bars and the edge-panel handle are cropped out; the app UI is unchanged. The text is a sample typed in Rune's own practice field.
 
+[Light keyboard palette in the home preview](fastlane/metadata/android/en-US/images/phoneScreenshots/01-light-palette.png), captured on an Android emulator.
+
 ## Features
 
 - **Three languages:** English QWERTY, Russian ЙЦУКЕН and Spanish QWERTY with `ñ`.
-- **Five monochrome themes:** Air, Soft, Outline, Monolith and Silent. Borderless letters, restrained action keys, adjustable height and spacing.
+- **Five monochrome styles:** Air, Soft, Outline, Monolith and Silent, with dark, light or system-following keyboard palettes. Borderless letters, restrained action keys, adjustable height and spacing.
 - **Downward key flicks:** enter the small symbol above a letter without opening the symbol layer. Numbers sit above the top row. Long-press still opens `ё`, accented letters and punctuation alternatives.
 - **Spacebar gestures:** swipe sideways to change language; hold and drag to move the cursor; double-tap for a full stop.
 - **Local typing tools:** suggestions, autocorrection, undo with Backspace, personal words, protected words and abbreviations.
@@ -42,7 +44,8 @@ letters layout, off by default. Font support depends on the device; skin-tone se
 is a later stage. API 26 font/native checks pass; the first-open performance
 budget, cold-start measurements and physical Fold acceptance remain outstanding.
 
-Glide typing, split/one-handed layouts and voice input are not implemented yet.
+Glide typing and split/one-handed layouts are not implemented yet. Rune can switch
+to an enabled voice input method; it does not implement speech recognition.
 
 ## Install
 
@@ -58,6 +61,11 @@ including **10.0 MB** of native libraries (decimal units). `./gradlew :app:apkFo
 checks a 183 MB APK budget and separate unpacked/component/ABI limits; its JSON
 report is in `app/build/reports/apk-footprint/release.json`. See the
 [current native measurements and remaining release checks](docs/acceptance/2026-10-27-native-preparation-runtime.md).
+
+On a 2 GiB Android 8.0 ARM64 emulator, the unreleased profile build's setup
+screen took a median **115 ms** to start and used **14.94 MiB PSS** after about
+five seconds (five process-cold starts with warm storage). This measures the
+setup screen, not keyboard appearance. [Method and limits](docs/acceptance/2026-10-28-q1-minimum-device.md).
 
 Keep the same distribution/signing key when updating. Development debug builds and the public release use different keys; Android will not install one over the other. Export anything you need before choosing to remove an older debug installation.
 
@@ -75,7 +83,7 @@ Keep the same distribution/signing key when updating. Development debug builds a
 | Hold the spacebar, then drag | Move the cursor |
 | Hold Backspace | Repeat deletion |
 
-Key flicks can be disabled in **Settings → Appearance → Swipe down for symbols**. Keyboard themes and the app's light/dark setting are separate.
+Key flicks can be disabled in **Settings → Appearance → Swipe down for symbols**. Keyboard style, keyboard palette and the app's light/dark setting are separate.
 
 ## Privacy
 

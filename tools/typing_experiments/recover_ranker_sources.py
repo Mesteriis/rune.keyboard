@@ -12,6 +12,7 @@ from import_ranker_history import MANIFEST,MANIFEST_SHA,SOURCE
 from recover_legacy_families import sha
 from recover_legacy_holdout import load_generator
 from right_context_sentence_audit import _source_hash
+from frozen_source_identity import read_frozen_source
 
 ROOT=Path(__file__).resolve().parents[2]
 PREFIX='public-ranker-source-windows-'
@@ -20,6 +21,41 @@ PRODUCER_SHA='d2d84c3f328771fd0b9908a9216ee428eb2877079c8dacb481c42a0dafe11bab'
 SEED='rune-refinement-20260915-v1'
 WORD=re.compile('[а-яё]+',re.IGNORECASE)
 BOUNDARY=re.compile(r'(?<=[.!?])\s+|\n+')
+HISTORICAL_SEEDS={'wordrank':'rune-word-ranking-20260915-v1',
+                  'extra':'rune-extra-epochs-20260915-v1'}
+
+
+def recover_word_epoch_article(article,text,rows,generator):
+    """Recover every matching public window using each historical row identity."""
+    wanted={r['id']:r for r in rows}
+    if (len(wanted)!=len(rows) or any(r['articleId']!=article or
+            r['id'].split('-',1)[0] not in HISTORICAL_SEEDS for r in rows)):
+        raise ValueError('WORD_EPOCH_CAPTURE_ROWS')
+    found={identity:set() for identity in wanted}
+    text=unicodedata.normalize('NFC',text or '');start=0;segments=[]
+    for boundary in BOUNDARY.finditer(text):
+        segments.append((start,text[start:boundary.start()]));start=boundary.end()
+    segments.append((start,text[start:]))
+    for offset,sentence in segments:
+        for ordinal,match in enumerate(WORD.finditer(sentence)):
+            word=match.group()
+            if ordinal<3 or word!=word.lower() or not 5<=len(word)<=12:continue
+            prefix=sentence[:match.start()][-128:].lstrip()
+            if not prefix or not prefix[-1].isspace():continue
+            context=hashlib.sha256((prefix.lower()+'\0'+word).encode()).hexdigest()
+            for kind,seed in HISTORICAL_SEEDS.items():
+                components=[seed,article]
+                if kind=='extra':components.append(str(match.start()))
+                components.append(context)
+                identity=kind+'-'+hashlib.sha256(':'.join(components).encode()).hexdigest()[:24]
+                if identity not in wanted:continue
+                row=wanted[identity]
+                if row['prefix']!=prefix or row['expectedSpelling']!=word:raise ValueError('WORD_EPOCH_CAPTURE_DIVERGENCE')
+                begin=offset+match.start();end=offset+match.end()
+                projected=generator.bounded_prefix(text[max(0,begin-256):begin]).rstrip(' \t')
+                found[identity].add(_source_hash(projected,word,text[end:end+128]))
+    if any(not windows for windows in found.values()):raise ValueError('WORD_EPOCH_SOURCE_CAPTURE_MISSING')
+    return found
 
 
 def verify_reproduction(original,reproduced):
@@ -72,7 +108,8 @@ def build(root,base,reproduced,read_batches):
     root=Path(root);result=copy.deepcopy(validate_ledger(base))
     if any(e['id'].startswith(PREFIX) for e in result['entries']):raise ValueError('RANKER_WINDOWS_ALREADY_IMPORTED')
     manifest=verify_reproduction(root/Path(MANIFEST).parent,reproduced)
-    if manifest['preparationScriptSha256']!=PRODUCER_SHA or sha(root/PRODUCER)!=PRODUCER_SHA:raise ValueError('RANKER_PRODUCER_IDENTITY')
+    if manifest['preparationScriptSha256']!=PRODUCER_SHA:raise ValueError('RANKER_PRODUCER_IDENTITY')
+    read_frozen_source(root,PRODUCER,PRODUCER_SHA)
     if sha(root/SOURCE)!=manifest['sourceSha256']:raise ValueError('RANKER_SOURCE_IDENTITY')
     bindings={MANIFEST:MANIFEST_SHA,SOURCE:manifest['sourceSha256'],PRODUCER:PRODUCER_SHA}
     jobs={};needed={}

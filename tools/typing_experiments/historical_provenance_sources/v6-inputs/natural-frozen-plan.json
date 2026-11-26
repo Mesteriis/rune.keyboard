@@ -1,0 +1,34 @@
+{
+  "stage": "frozen-before-independent-model-scoring",
+  "seed": "right-context-natural-v1-20261027",
+  "contextsPerPart": 400,
+  "maximumContextsPerFamily": 30,
+  "minimumFamiliesPerPart": 20,
+  "modelSha256": "8413c59bb034a4f15fcd3b972fec7673e5844ad60b7ba22bd44bddfb389ca86e",
+  "sourceHashes": {
+    "build/right-context-wikipedia-20261027/contexts.unqualified.jsonl": "8bd9174fa380086274373855190ebf217da23248075b20a35bf39c8a715597a7",
+    "build/right-context-wiki0012-20261027/contexts.unqualified.jsonl": "eba87a3e13a7c9830d1ab2da7807a5a9d33ce0c234f301c2246c2485a14b65b5",
+    "build/right-context-wiki0013-20261027/contexts.unqualified.jsonl": "5fa172acbda5f18401cac5a19e95cb2419eb533a585a8038918edc683006a11a",
+    "build/right-context-wiki0014-20261027/contexts.unqualified.jsonl": "f329fc0e10d0f554da28b9179c72c2354cf7efb5efe1a104137e01cf780ff20b",
+    "build/right-context-wiki0015-20261027/contexts.unqualified.jsonl": "dd7865867feeeabfcc964cec969dc8db173b99a741c29194dbddced3ebb0b1ca",
+    "build/right-context-wiki0016-20261027/contexts.unqualified.jsonl": "f7437b600368003fccb6ac5b000375a85051df4b55ed18d683a2263d1ffa7d61",
+    "build/right-context-wiki0017-20261027/contexts.unqualified.jsonl": "e99544b5ebf52afc25d90909f1f06fdd9028a123bb586f395ee2edcb1e479295"
+  },
+  "collectorHashes": {
+    "build/right-context-wikipedia-20261027/collect.py": "f0e7696dbcca03c1896c54f1f36862042e2412e057f224980af9a21b5092ede2",
+    "build/right-context-wiki0012-20261027/collect.py": "ba32729d021b40cead0700f7d8ba1b56d7d0422d4042d4540c189db3ada6cb0f",
+    "build/right-context-wiki0013-20261027/collect.py": "af8ca660679d2d70ac6b9eb45ca62f69f264f445c415f55afcd7cef4489fc619",
+    "build/right-context-wiki0014-20261027/collect.py": "22e4e2bfd2cd46337b4ddcb7fbd30f4c265fbcab2c72bb32dfbfd6a1e6303eee",
+    "build/right-context-wiki0015-20261027/collect.py": "05a8f53610b0f9dc4b3cfd55ffa236c30f3fbfe87118218cd6c7a8df6c8f2e2f",
+    "build/right-context-wiki0016-20261027/collect.py": "f84bdc1a990bd422c2d0a1edf52510a63c1905269244345930128323febb801e",
+    "build/right-context-wiki0017-20261027/collect.py": "e44a0e180658170ea33617846aeab2c6d0a66177f8e6d5bce43b91e7dfd14c6e"
+  },
+  "sourceAssetHashes": {},
+  "featureAndSelectorHashes": {
+    "tools/typing_experiments/right_context_focus_forms.py": "9cb95f0039d48b0b196ee08697b8368d00cab79df446b8ad6f017c1ec1d802ae",
+    "tools/typing_experiments/right_context_corpus_separation.py": "c50d8fc22d403fab3468b53e7b2a06a2d78a5682585d9497097d435aedbcedf4",
+    "tools/typing_experiments/right_context_grammar_features.py": "5195bb9507623a8ebb796a8dded0da9f33c54242c7256f172ca861fa7369b363"
+  },
+  "thresholdChanges": false,
+  "modelCalls": 0
+}

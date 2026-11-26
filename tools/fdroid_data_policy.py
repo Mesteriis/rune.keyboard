@@ -10,7 +10,7 @@ import re
 
 REPO = Path(__file__).resolve().parents[1]
 POLICY = REPO / 'fdroid/review-data-policy.json'
-DATA_SUFFIXES = {'.bin', '.ctx', '.gram', '.zip', '.gz'}
+DATA_SUFFIXES = {'.bin', '.ctx', '.gram', '.zip', '.gz', '.bz2'}
 INVENTORY_ARCHIVES = {'app/src/test/resources/smarttyping/ranker/calibration.tsv.gz'}
 HOST_ARCHIVES = {
     'tools/ci/product-replay-v1/baseline.jsonl.gz': 'tools/ci/product-replay-v1/baseline-manifest.json',
@@ -18,6 +18,27 @@ HOST_ARCHIVES = {
     'tools/ci/historical-data-v1/files.tar.gz': 'tools/ci/historical-data-v1/manifest.json',
     'tools/ci/historical-model-fixtures-v1/files.tar.gz': 'tools/ci/historical-model-fixtures-v1/manifest.json',
 }
+PUBLIC_ARCHIVES = {
+    'tools/typing_experiments/public_sources/tatoeba-ru-cc0-20261024/rus_sentences_CC0.tsv.bz2':
+        'tools/typing_experiments/public_sources/tatoeba-ru-cc0-20261024/tatoeba-source-lock.json',
+    'tools/typing_experiments/public_sources/tatoeba-en-cc0-20261024/eng_sentences_CC0.tsv.bz2':
+        'tools/typing_experiments/public_sources/tatoeba-en-cc0-20261024/tatoeba-source-lock.json',
+}
+
+
+HISTORICAL_ARCHIVES = {
+    'tools/typing_experiments/historical-qualification-v3-v4/qualification-v3.tar.bz2':
+        'tools/typing_experiments/historical-qualification-v3-v4/catalog.json',
+    'tools/typing_experiments/historical-qualification-v3-v4/qualification-v4.tar.bz2':
+        'tools/typing_experiments/historical-qualification-v3-v4/catalog.json',
+    'tools/typing_experiments/available-v6-article-origin-v1/calibration-recovery/calibration.tsv.bz2':
+        'tools/typing_experiments/available-v6-article-origin-v1/archive-catalog.json',
+    'tools/typing_experiments/available-v6-article-origin-v1/rival-recovery/matches.jsonl.bz2':
+        'tools/typing_experiments/available-v6-article-origin-v1/archive-catalog.json',
+}
+REBUILT_QUALIFICATION_ARCHIVES = frozenset(
+    name for name in HISTORICAL_ARCHIVES if name.endswith(('qualification-v3.tar.bz2', 'qualification-v4.tar.bz2'))
+)
 
 
 class DataPolicyError(ValueError):
@@ -62,59 +83,94 @@ def parse_policy(data: bytes) -> dict:
     return value
 
 
-def check(root: Path, value: dict) -> dict:
+def check(root: Path, value: dict, *, source_export: bool = False) -> dict:
     discovered = set()
     for directory in ('app/src/main/assets', 'app/src/test/resources', 'tools/emoji/sources',
-                      'tools/typing_experiments/baseline', 'tools/ci'):
+                      'tools/typing_experiments/baseline', 'tools/typing_experiments/public_sources',
+                      'tools/typing_experiments/historical-qualification-v3-v4',
+                      'tools/typing_experiments/available-v6-article-origin-v1', 'tools/ci'):
         for path in (root / directory).rglob('*'):
             if path.is_file() and path.suffix in DATA_SUFFIXES:
                 discovered.add(path.relative_to(root).as_posix())
     registered = set()
+    omitted = set()
     actions = {name: [] for name in ('ignore', 'inventory', 'delete')}
     for entry in value['entries']:
         require(isinstance(entry, dict) and set(entry) == {'path', 'bytes', 'sha256', 'action', 'provenance', 'provenanceSha256'},
                 'DATA_ENTRY_SCHEMA')
         name = entry['path']
-        require(isinstance(name, str) and name in discovered, 'UNREVIEWED_OR_STALE_DATA_SET')
-        path = relative_file(root, name)
+        require(isinstance(name, str), 'UNREVIEWED_OR_STALE_DATA_SET')
+        omitted_archive = source_export and name in REBUILT_QUALIFICATION_ARCHIVES
+        if omitted_archive:
+            path = root / name
+            require(not path.exists() and not path.is_symlink(), 'REBUILT_QUALIFICATION_ARCHIVE_PRESENT')
+            omitted.add(name)
+        else:
+            require(name in discovered, 'UNREVIEWED_OR_STALE_DATA_SET')
+            path = relative_file(root, name)
+        if name.startswith('tools/typing_experiments/public_sources/'):
+            require(name in PUBLIC_ARCHIVES, 'UNREVIEWED_PUBLIC_ARCHIVE')
         require(name not in registered, 'DUPLICATE_DATA_ENTRY')
         registered.add(name)
         require(type(entry['bytes']) is int and entry['bytes'] > 0 and
                 all(isinstance(entry[key], str) and re.fullmatch(r'[0-9a-f]{64}', entry[key]) is not None
                     for key in ('sha256', 'provenanceSha256')), 'DATA_ENTRY_IDENTITY')
-        require(path.stat().st_size == entry['bytes'] and digest(path) == entry['sha256'], 'DATA_BYTES_DRIFT')
+        if not omitted_archive:
+            require(path.stat().st_size == entry['bytes'] and digest(path) == entry['sha256'], 'DATA_BYTES_DRIFT')
         declared = entry['provenance']
-        if name in HOST_ARCHIVES:
-            require(declared == HOST_ARCHIVES[name], 'INVALID_PROVENANCE_SCOPE')
+        if name in HOST_ARCHIVES or name in PUBLIC_ARCHIVES or name in HISTORICAL_ARCHIVES:
+            require(declared == (HOST_ARCHIVES | PUBLIC_ARCHIVES | HISTORICAL_ARCHIVES)[name], 'INVALID_PROVENANCE_SCOPE')
         require(isinstance(declared, str) and declared.endswith('.json') and
                 (declared.startswith(('app/src/main/assets/', 'app/src/test/resources/')) or
                  declared == 'tools/emoji/source-manifest.json' or
-                 HOST_ARCHIVES.get(name) == declared), 'INVALID_PROVENANCE_SCOPE')
+                 HOST_ARCHIVES.get(name) == declared or PUBLIC_ARCHIVES.get(name) == declared or
+                 HISTORICAL_ARCHIVES.get(name) == declared), 'INVALID_PROVENANCE_SCOPE')
         provenance = relative_file(root, declared)
         require(digest(provenance) == entry['provenanceSha256'], 'DECLARED_PROVENANCE_DRIFT')
+        if name in PUBLIC_ARCHIVES:
+            lock = json.loads(provenance.read_text(encoding='utf-8'))
+            require(isinstance(lock, dict) and lock.get('compressedSha256') == entry['sha256'] and
+                    lock.get('license') == 'CC0-1.0', 'PUBLIC_ARCHIVE_PROVENANCE')
+        if name in HISTORICAL_ARCHIVES:
+            catalog = json.loads(provenance.read_text(encoding='utf-8'))
+            version = path.name.removeprefix('qualification-').removesuffix('.tar.bz2')
+            archives = catalog.get('archives') if isinstance(catalog, dict) else None
+            archive = archives.get(version, {}) if isinstance(archives, dict) else {}
+            require(isinstance(catalog, dict) and isinstance(archive, dict) and catalog.get('schema') == 1 and
+                    catalog.get('purpose') == 'DISCLOSED_HISTORICAL_CORPORA_NOT_QUALIFICATION' and
+                    archive.get('archive') == path.name and archive.get('archiveSha256') == entry['sha256'],
+                    'HISTORICAL_ARCHIVE_PROVENANCE')
         expected = 'delete' if name.startswith('tools/typing_experiments/baseline/') or name in HOST_ARCHIVES else (
-            'inventory' if path.suffix in {'.ctx', '.gram'} or name in INVENTORY_ARCHIVES else 'ignore')
+            'inventory' if path.suffix in {'.ctx', '.gram'} or name in INVENTORY_ARCHIVES or name in PUBLIC_ARCHIVES or name in HISTORICAL_ARCHIVES else 'ignore')
         require(entry['action'] == expected, 'SCANNER_ACTION_MISMATCH')
+        if omitted_archive:
+            continue
         actions[expected].append(name)
         # Upstream 2.4.5 uses startswith after resolving an exact scanignore path.
         # Refuse siblings/directories which would otherwise inherit that suppression.
         if expected in {'ignore', 'delete'}:
             require(not any(sibling.name != path.name and sibling.name.startswith(path.name)
                             for sibling in path.parent.iterdir()), 'SCANNER_PREFIX_COLLISION')
-    require(discovered == registered, 'UNREVIEWED_OR_STALE_DATA_SET')
-    return dict(schema=1, passed=True, entries=len(registered),
+    require(not source_export or omitted == REBUILT_QUALIFICATION_ARCHIVES, 'REBUILT_QUALIFICATION_ARCHIVE_POLICY_MISSING')
+    require(discovered == registered - omitted, 'UNREVIEWED_OR_STALE_DATA_SET')
+    report = dict(schema=1, passed=True, entries=len(discovered),
                 scanignore=sorted(actions['ignore']), scandelete=sorted(actions['delete']),
                 inventoryOnly=sorted(actions['inventory']))
+    if source_export:
+        report['omittedQualificationArchives'] = sorted(omitted)
+    return report
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=REPO)
     parser.add_argument('--policy', type=Path, default=POLICY)
+    parser.add_argument('--source-export', action='store_true',
+                        help='Check a source export that omits both rebuildable v3/v4 qualification archives.')
     args = parser.parse_args()
     try:
         data = args.policy.read_bytes()
-        result = check(args.root, parse_policy(data))
+        result = check(args.root, parse_policy(data), source_export=args.source_export)
         result['policySha256'] = hashlib.sha256(data).hexdigest()
         print(json.dumps(result, sort_keys=True, indent=2))
     except (DataPolicyError, OSError, ValueError, UnicodeError) as error:

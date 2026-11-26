@@ -117,6 +117,7 @@ object EditorCommandExecutor {
                 catch (_: RuntimeException) { false },
         )
         EditorCommand.SwitchToNextInputMethod,
+        EditorCommand.SwitchToVoiceInput,
         EditorCommand.HideKeyboard,
         -> EditorExecutionResult(handled = false)
     }

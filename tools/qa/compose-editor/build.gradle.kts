@@ -27,6 +27,8 @@ androidComponents.beforeVariants(androidComponents.selector().withBuildType("rel
 dependencies {
     implementation(libs.activity)
     implementation(libs.compose.foundation)
+    // Make the Kotlin metadata component visible to the locked variant graph.
+    implementation(libs.kotlin.stdlib.common)
 }
 
 // Lock the separate fixture graph without changing Rune dependency resolution.

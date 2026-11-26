@@ -4,6 +4,43 @@ from typing_diagnostics_analyzer import analyze_events
 
 
 class TypingDiagnosticsAnalyzerTest(unittest.TestCase):
+    def test_context_length_refusal_keeps_the_model_request_in_the_report(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
+        flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)
+        event = dict(schema=9, session=1, revision=3, requestId=4, kind='RANKING', reason='CONTEXT_TOO_LONG',
+                     source='MODEL', scoringCode=13, features=flags, effectiveFeatures=flags,
+                     typingProfile=0, correctionId=0, localCompletion='NONE', localInspectedStates=0,
+                     localVerifiedTerminals=0, recoveryCompletion='NONE', recoveryInspectedStates=0,
+                     recoveryVerifiedTerminals=0, editorType=1)
+        expected = [dict(kind='RANKING', reason='CONTEXT_TOO_LONG', session=1, revision=3,
+                         source='MODEL', requestId=4, operationId=0, editorType=1)]
+        for schema in (7, 8, 9):
+            for reason in ('CONTEXT_TOO_LONG', 'MODEL_ERROR'):
+                with self.subTest(schema=schema, reason=reason):
+                    observed = dict(event, schema=schema, reason=reason)
+                    expected_record = dict(expected[0])
+                    if schema < 9:
+                        del observed['editorType']
+                        del expected_record['editorType']
+                    report = analyze_events([observed])
+                    self.assertEqual([expected_record], report['refusalEvents'])
+                    self.assertEqual([], report['outcomes'])
+
+        unrelated = [dict(event, reason='STALE'), dict(event, reason='MODEL_ERROR', scoringCode=10)]
+        self.assertEqual([], analyze_events(unrelated)['refusalEvents'])
+
+    def test_external_selection_disabled_is_reported_without_text(self):
+        from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
+        flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)
+        event = dict(schema=9, session=1, revision=2, kind='SESSION', reason='EXTERNAL_SELECTION_DISABLED',
+                     source='NONE', features=flags, effectiveFeatures=flags, typingProfile=0, correctionId=0,
+                     localCompletion='NONE', localInspectedStates=0, localVerifiedTerminals=0,
+                     recoveryCompletion='NONE', recoveryInspectedStates=0, recoveryVerifiedTerminals=0,
+                     editorType=1)
+        report = analyze_events([event])
+        self.assertEqual('EXTERNAL_SELECTION_DISABLED', report['refusalEvents'][0]['reason'])
+        self.assertEqual([], report['outcomes'])
+
     def test_joint_refusals_survive_as_metadata_without_editor_text(self):
         from typing_diagnostics_analyzer import FEATURE_KEYS_V6_MANUAL
         flags = dict.fromkeys(FEATURE_KEYS_V6_MANUAL, False)

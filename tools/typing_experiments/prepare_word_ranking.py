@@ -5,6 +5,7 @@ import argparse
 import json
 import re
 import unicodedata
+import independent_corpus_guard as registry_guard
 import prepare_refinement as public
 
 ROOT=public.ROOT
@@ -41,9 +42,10 @@ def mutate(word,identity,count,vocabulary):
             return value,operations
     return None
 
-def prior_evidence():
-    specs=[(ROOT/'build/typing-refinement/data/manifest.json',ROOT/'build/typing-refinement/verified-observations/manifest.json'),
-           (ROOT/'build/typing-extra-epochs/data/manifest.json',ROOT/'build/typing-extra-epochs/observations/manifest.json')]
+def prior_evidence(root=None):
+    root = ROOT if root is None else Path(root)
+    specs=[(root/'build/typing-refinement/data/manifest.json',root/'build/typing-refinement/verified-observations/manifest.json'),
+           (root/'build/typing-extra-epochs/data/manifest.json',root/'build/typing-extra-epochs/observations/manifest.json')]
     articles=set();contexts=set();texts=set();hashes={}
     for path,binding_path in specs:
         binding=json.loads(binding_path.read_text())
@@ -51,7 +53,7 @@ def prior_evidence():
         manifest=json.loads(path.read_text())
         if manifest.get('containsPersonalMessages') is not False:raise ValueError('PUBLIC_PRIOR_REQUIRED')
         if manifest['scannedArticles']>SKIP:raise ValueError('PRIOR_SCAN_CHANGED')
-        hashes[str(path.relative_to(ROOT))]=public.file_hash(path)
+        hashes[str(path.relative_to(root))]=public.file_hash(path)
         for part in ('train','dev','test'):
             articles.update(map(str,manifest['partitions'][part]['articles']))
             for kind in ('rows','text'):
@@ -63,16 +65,19 @@ def prior_evidence():
                     else:texts.add(public.digest(row['text'].encode()))
     return articles,contexts,texts,hashes
 
-def run(parquet,frequency,output):
+def run(parquet,frequency,output, *, historical_reproduction=False):
+    snapshot=registry_guard.begin(historical_reproduction)
     import pyarrow.parquet as pq
     lock=json.loads((ROOT/'tools/model/rune-text-0.2/source-lock.json').read_text())
     source=lock['wikipediaContext']['files']['ru-0007.parquet']
     if parquet.stat().st_size!=source['bytes'] or public.file_hash(parquet)!=source['sha256']:raise ValueError('PUBLIC_PARQUET_IDENTITY')
     if public.file_hash(frequency)!=lock['frequencyWords']['files']['ru_50k.txt']:raise ValueError('PUBLIC_FREQUENCY_IDENTITY')
+    input_snapshot=registry_guard.selector_inputs(snapshot,parquet,source['sha256'],frequency,lock['frequencyWords']['files']['ru_50k.txt'],Path(__file__))
+    prior_snapshot=registry_guard.prior_input_snapshot(ROOT, (('typing-refinement','verified-observations'),('typing-extra-epochs','observations'))) if snapshot is not None else None
+    admission=registry_guard.selector_admission(snapshot)
     excluded,seen_contexts,prior_text,prior_hashes=prior_evidence()
     output=output.resolve()
     if output.exists() or not output.is_relative_to(ROOT/'build'):raise ValueError('FRESH_BUILD_OUTPUT_REQUIRED')
-    output.mkdir(parents=True)
     vocab={unicodedata.normalize('NFC',s.rsplit(' ',1)[0]).lower() for s in frequency.read_text().splitlines()}
     rows={p:[] for p in QUOTAS};texts={p:[] for p in QUOTAS};articles={p:[] for p in QUOTAS}
     counts={p:{k:0 for k in QUOTAS[p]} for p in QUOTAS};chars={p:0 for p in QUOTAS}
@@ -91,12 +96,14 @@ def run(parquet,frequency,output):
             if chars[p]<TEXT_CAPS[p] and len(clean)>=80:
                 fragment=clean[:min(12000,TEXT_CAPS[p]-chars[p])]
                 if public.digest(fragment.encode()) not in prior_text:
+                    registry_guard.check_selected_source_text(snapshot, normalized, fragment)
                     texts[p].append({'articleId':article,'text':fragment});chars[p]+=len(fragment)
             selected=set();count=0
-            for sentence in re.split(r'(?<=[.!?])\s+|\n+',normalized):
+            for sentence,segment_start in registry_guard.selector_segments(normalized):
                 for ordinal,match in enumerate(public.WORD.finditer(sentence)):
                     word=match.group()
                     if ordinal<3 or word!=word.lower() or not 5<=len(word)<=12 or word not in vocab:continue
+                    if not registry_guard.whole_selector_token(normalized,sentence,segment_start,match,snapshot):continue
                     if word in selected or words[p].get(word,0)>=4:continue
                     prefix=sentence[:match.start()][-128:].lstrip()
                     if not prefix or not prefix[-1].isspace():continue
@@ -108,18 +115,37 @@ def run(parquet,frequency,output):
                     mutation=mutate(word,rid,errors,vocab)
                     if mutation is None:continue
                     typed,operations=mutation
-                    seen_contexts.add(identity);selected.add(word);count+=1;words[p][word]=words[p].get(word,0)+1;counts[p][errors]+=1
-                    rows[p].append({'id':'wordrank-'+rid[:24],'articleId':article,'language':'ru','partition':p,
+                    row={'id':'wordrank-'+rid[:24],'articleId':article,'language':'ru','partition':p,
                         'split':{'train':'calibration','dev':'diagnostic','test':'holdout'}[p],'family':word,'template':'article-'+article,
                         'typed':typed,'prefix':prefix,'cohort':'correct' if errors==0 else 'typo','noAuto':errors==0,
-                        'expectedSpelling':word,'category':f'edit-{errors}','errorCount':errors,'operations':operations})
+                        'expectedSpelling':word,'category':f'edit-{errors}','errorCount':errors,'operations':operations}
+                    registry_guard.attach_selector_source(row,normalized,sentence,segment_start,match,snapshot)
+                    if admission is not None and not admission.accept(row):continue
+                    seen_contexts.add(identity);selected.add(word);count+=1;words[p][word]=words[p].get(word,0)+1;counts[p][errors]+=1
+                    rows[p].append(row)
                     if count>=12:break
                 if count>=12:break
         if all(complete(p) for p in QUOTAS):break
         if scanned>=20000:break
-    if not all(complete(p) for p in QUOTAS):raise ValueError('INSUFFICIENT_COHORTS: '+str(counts))
+    if not all(complete(p) for p in QUOTAS):
+        detail=' '+str(admission.counts) if admission is not None else ''
+        raise ValueError('INSUFFICIENT_COHORTS: '+str(counts)+detail)
     for p in QUOTAS:
         if set(articles[p])&excluded:raise ValueError('ARTICLE_LEAKAGE')
+    check_rows=[row for part in rows.values() for row in part]
+    dictionary_receipt=registry_guard.selector_families(snapshot,check_rows)
+    registry_guard.verify_selector_inputs(input_snapshot)
+    registry_guard.reject_unchecked_texts(snapshot,texts)
+    registry_receipt=registry_guard.finish(snapshot,check_rows)
+    if prior_snapshot is not None:
+        registry_guard.verify_selector_inputs(prior_snapshot)
+        registry_receipt['priorInputSha256']={name:digest for name,(_,digest) in prior_snapshot.items()}
+    if dictionary_receipt is not None:
+        registry_receipt['canonicalFamilyDictionary']=dictionary_receipt
+        registry_receipt['selectorInputSha256']={name:digest for name,(_,digest) in input_snapshot.items()}
+        registry_receipt['selectorAdmissionCounts']=dict(admission.counts)
+    output.mkdir(parents=True)
+    for p in QUOTAS:
         for kind,records in [('rows',rows[p]),('text',texts[p])]:
             (output/f'{p}-{kind}.jsonl').write_text(''.join(json.dumps(r,ensure_ascii=False,sort_keys=True)+'\n' for r in records))
     (output/'all-rows.jsonl').write_bytes(b''.join((output/f'{p}-rows.jsonl').read_bytes() for p in QUOTAS))
@@ -130,9 +156,11 @@ def run(parquet,frequency,output):
         'preparationScriptSha256':public.file_hash(Path(__file__)),
         'partitions':{p:{'rows':len(rows[p]),'characters':chars[p],'articles':articles[p],'errorCounts':counts[p]} for p in QUOTAS},
         'files':{p.name:public.file_hash(p) for p in output.glob('*.jsonl')}}
+    manifest.update(registry_receipt)
     (output/'manifest.json').write_text(json.dumps(manifest,sort_keys=True,indent=2)+'\n')
-    print(json.dumps({p:{'rows':len(rows[p]),'characters':chars[p],'articles':len(articles[p]),'errorCounts':counts[p]} for p in QUOTAS}))
+    print(json.dumps(dict(partitions={p:{'rows':len(rows[p]),'characters':chars[p],'articles':len(articles[p]),'errorCounts':counts[p]} for p in QUOTAS},scope=manifest['scope'],independentQualification=False)))
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--parquet',type=Path,required=True);p.add_argument('--frequency',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
-    a=p.parse_args();run(a.parquet,a.frequency,a.output)
+    p.add_argument('--historical-reproduction',action='store_true',help='Reproduce disclosed data without independent qualification.')
+    a=p.parse_args();run(a.parquet,a.frequency,a.output,historical_reproduction=a.historical_reproduction)

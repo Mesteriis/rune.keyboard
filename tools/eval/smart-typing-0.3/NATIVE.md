@@ -25,11 +25,14 @@ exact model and protocol. No unrestricted generation is exposed.
 The reusable core returns raw divergent-span log-probability sums and token
 counts. Standalone prefix/continuation tokenization only enforces limits;
 scoring uses complete strings and their longest common token prefix. It does
-not append EOS. An absent common prefix yields `INSUFFICIENT_CONTEXT`; a zero
-divergent span yields zero count, which the evaluator treats as abstention.
-Each alternative starts with cleared KV state. This serial reference deliberately
-uses one-token CPU microbatches and disables flash attention: wider CPU
-microbatches did not match the scalar oracle on the pinned backend.
+not append EOS. An absent common prefix yields `INSUFFICIENT_CONTEXT`; any
+zero divergent span rejects the whole request with `SCORING_FAILED`.
+Each candidate uses the shared common prefix, and the scorer removes that
+candidate's divergent KV entries before the next candidate. Across successful
+requests it retains the matching common prefix and replays its final token for
+the logits. The scorer submits batches of up to 64 tokens with one-token CPU
+microbatches and flash attention disabled. Wider CPU microbatches differed
+from the scalar oracle on the pinned backend.
 
 The caller owns the model and cancellation flag, must outlive the scorer, and
 must serialize score calls. This PR checks cancellation around tokenization

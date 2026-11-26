@@ -105,6 +105,7 @@ DIAGNOSTICS_INTERFACE = '''interface TypingDiagnostics {
     fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)? = null)
     fun editorOperation(session: Long, revision: Long): (() -> Unit)? = null
     fun editorOutcome(event: DiagnosticEvent): ((Boolean) -> Unit)? = null
+    fun externalSelectionDisabled(event: DiagnosticEvent): (() -> Unit)? = null
 }'''
 DIAGNOSTICS_TEXT = '''data class DiagnosticText(
     val input: String = "",

@@ -2,9 +2,11 @@ package io.github.mesteriis.rune.keyboard.qa
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Rect
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsets
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedText
 import android.view.inputmethod.ExtractedTextRequest
@@ -33,9 +35,21 @@ internal class WebEditingQaFixture(private val context: Context, private val pri
     private var end = 0
     private var length = 0
     private var ready = false
+    private var editorFocused = false
+    private var keyboardRequested = false
     private var disposed = false
     private val status = TextView(context).apply { id = R.id.qa_webview_stats; textSize = 11f }
     private val web = object : WebView(context) {
+        override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
+            super.onFocusChanged(focused, direction, previouslyFocusedRect)
+            publishLater()
+        }
+
+        override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
+            super.onWindowFocusChanged(hasWindowFocus)
+            publishLater()
+        }
+
         override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? {
             val connection = super.onCreateInputConnection(outAttrs) ?: return null
             if (privateInput) outAttrs.imeOptions = outAttrs.imeOptions or EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING
@@ -67,11 +81,11 @@ internal class WebEditingQaFixture(private val context: Context, private val pri
             settings.domStorageEnabled = false
             settings.cacheMode = android.webkit.WebSettings.LOAD_NO_CACHE
             addJavascriptInterface(object {
-                @JavascriptInterface fun selection(from: Int, to: Int, size: Int) {
+                @JavascriptInterface fun selection(from: Int, to: Int, size: Int, focused: Boolean) {
                     if (size !in 0..10_000 || from !in 0..size || to !in 0..size) return
                     status.post {
                         if (!disposed) {
-                            start = from; end = to; length = size; ready = true
+                            start = from; end = to; length = size; editorFocused = focused; ready = true
                             publish()
                         }
                     }
@@ -85,7 +99,6 @@ internal class WebEditingQaFixture(private val context: Context, private val pri
                     if (disposed) return
                     view.evaluateJavascript("document.getElementById('editor').focus(); report();", null)
                     view.requestFocus()
-                    view.post { if (!disposed) context.getSystemService(InputMethodManager::class.java).showSoftInput(view, 0) }
                 }
             }
             loadDataWithBaseURL("https://rune.invalid/", HTML, "text/html", "UTF-8", null)
@@ -100,11 +113,27 @@ internal class WebEditingQaFixture(private val context: Context, private val pri
         (web.parent as? ViewGroup)?.removeView(web)
         web.destroy()
     }
-    private fun count(name: String) { counts.getValue(name).incrementAndGet(); status.post { if (!disposed) publish() } }
+    private fun publishLater() { status.post { if (!disposed) publish() } }
+    private fun count(name: String) { counts.getValue(name).incrementAndGet(); publishLater() }
     private fun publish() {
+        val focused = editorFocused && web.hasFocus() && web.hasWindowFocus()
         status.text = (counts.mapValues { it.value.get() } + mapOf("ready" to if (ready) 1 else 0,
+            "editorFocused" to if (focused) 1 else 0,
             "selectionStart" to start, "selectionEnd" to end, "length" to length))
             .entries.joinToString(" ") { (name, value) -> "$name=$value" }
+        if (focused && counts.getValue("connections").get() > 0 && !keyboardRequested) {
+            keyboardRequested = showKeyboard()
+        }
+    }
+
+    private fun showKeyboard(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            web.windowInsetsController?.let {
+                it.show(WindowInsets.Type.ime())
+                return true
+            }
+        }
+        return context.getSystemService(InputMethodManager::class.java).showSoftInput(web, 0)
     }
 
     private open class ObservedConnection(target: InputConnection, protected val count: (String) -> Unit) : InputConnectionWrapper(target, false) {
@@ -126,9 +155,9 @@ internal class WebEditingQaFixture(private val context: Context, private val pri
             <body><textarea id="editor" aria-label="Rune WebView QA" rows="3" autocapitalize="off" spellcheck="true"
             style="font:20px monospace;width:95%"></textarea><script>
             const editor=document.getElementById('editor');
-            function report(){RuneQa.selection(editor.selectionStart,editor.selectionEnd,editor.value.length);}
+            function report(){RuneQa.selection(editor.selectionStart,editor.selectionEnd,editor.value.length,document.activeElement===editor);}
             document.addEventListener('selectionchange',report);editor.addEventListener('input',report);
-            editor.addEventListener('focus',report);report();
+            editor.addEventListener('focus',report);editor.addEventListener('blur',report);report();
             </script></body></html>""".trimIndent()
     }
 }

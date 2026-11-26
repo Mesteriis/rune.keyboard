@@ -1,0 +1,21 @@
+{
+  "caveat": "Inputs are previously disclosed and unlabeled; change counts do not establish whether outcomes are correct.",
+  "counts": {
+    "baselineBoundaryChanges": 1534,
+    "baselineChangedCandidateUnchanged": 650,
+    "baselineUnchangedCandidateChanged": 8,
+    "candidateBoundaryChanges": 892,
+    "differentBoundaryText": 658,
+    "reviewedPreserved": 8,
+    "reviewedRows": 8,
+    "unlabeledRows": 4720
+  },
+  "independentQualification": false,
+  "inputs": {
+    "baseline": "0e40cada9973c0685dfa5c189ff011c0439daa346bdfbf1d82ca118f56d43e62",
+    "candidate": "8c3dee40bde5b2efc858f4709ccbbb009b881613fa39ab8025a2261bc8aafe05",
+    "rows": "2e21ec606ce8834c3eaab2a49e9b56250b0bc86d46e97a1f214ae7036d16c311"
+  },
+  "purpose": "UNQUALIFIED_PACKED_CANDIDATE_IMPACT",
+  "sourceSha256": "ca3b3f2d02fa9450036a2251713add410323cd392de7eb5002483fdf0dbafacd"
+}

@@ -1,0 +1,9 @@
+{
+  "stage": "frozen-before-admission-rule-replay",
+  "rows": 4672,
+  "surfaceFamilies": 4389,
+  "rowsSha256": "ba69721830a1b7d49e67c0b4b489a670beac06dac8ccb6e2d16cbfd436942e4a",
+  "protocol": "Existing scores and margins unchanged. Only long ambiguous morphology winners, complete unique distance-one local winner and complete joint comparison. New-replacement precision >=99%, at least 100 correct and 20 surface families; zero control changes, correct-to-wrong, prefix or Undo failures. Surface-disjoint only: ambiguous lemma IDs unavailable. Excluded all prior selected articles and words. No fitting on results.",
+  "model": "a917f63010b23cbb3ff06f8069460398b366bce389f70d61f77ad5c156783dcb",
+  "source": "fc1e2edc58fa27085d36c32c38922d7904077d9cdac05719efbcefa3faeea240"
+}

@@ -1,0 +1,49 @@
+{
+  "backends": {
+    "mlx": {
+      "receiptSha256": "ed2795ba20b1dd59709e757eebf6a421bb1f46fc52594ee491471ad615c10751",
+      "skipped": 0,
+      "tests": 7,
+      "versions": {
+        "mlx": "0.32.2",
+        "mlx-metal": "0.32.2",
+        "numpy": "2.4.6",
+        "pyarrow": "25.0.1"
+      }
+    },
+    "pymorphy": {
+      "receiptSha256": "a0421147a1967d625d2dc20ca1f3affa8eee044b0135fdab6533551f7f374935",
+      "skipped": 0,
+      "tests": 5,
+      "versions": {
+        "dawg2-python": "0.9.0",
+        "pymorphy3": "2.0.6",
+        "pymorphy3-dicts-ru": "2.4.417150.4580142",
+        "setuptools": "84.2.1"
+      }
+    }
+  },
+  "hostedCiVerified": false,
+  "qualificationClaimed": false,
+  "replays": [
+    {
+      "baselineMatches": true,
+      "deterministic": true,
+      "projectionSha256": "e2f5b604d83eceb3d75cf75ec69f73e679ab847dfebdbf7ddc408b455c0cb0ea",
+      "receiptSha256": "f5c6ab7582f104d66248121edbebb2102f05bc06ce3653a21f083faed3e09079",
+      "rows": 2160,
+      "status": "COMPLETE"
+    },
+    {
+      "baselineMatches": true,
+      "deterministic": true,
+      "projectionSha256": "b7b49f16aed912ea4c80d811c834f059dc1ac47f6b655e9798923651ec47f512",
+      "receiptSha256": "eaff5da6b06dec05eb9fb9bb228a077a5df61df7456b0afcb2391f195dd7adc4",
+      "rows": 12000,
+      "status": "COMPLETE"
+    }
+  ],
+  "schema": 1,
+  "sourceCommit": "97f3ea0a712c879638f60d1a8427fa943ee9eb3b",
+  "timingsExcluded": true
+}

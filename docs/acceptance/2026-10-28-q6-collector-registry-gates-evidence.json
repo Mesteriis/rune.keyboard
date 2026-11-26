@@ -1,0 +1,201 @@
+{
+  "actualCliRefusals": [
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v7.py",
+        "--parquet",
+        "build/review-q6-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-collector-gates-20261028/prepare_external_spelling_holdout_v7.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "386d677a77fed730125e29592301477bbd33639922068c10991b30c8e8ac8736"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v8.py",
+        "--parquet",
+        "build/review-q6-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-collector-gates-20261028/prepare_external_spelling_holdout_v8.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "17aa9f70ab90de70c7cdeb3f92ab34404461e89f8d39c5670dd0d05c493f2d32"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v9.py",
+        "--parquet",
+        "build/review-q6-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-collector-gates-20261028/prepare_external_spelling_holdout_v9.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "92d4b06a172cc90126d857ba941445a6fcf5a54f75eb51d59d940c6e7a50521d"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v10.py",
+        "--parquet",
+        "build/review-q6-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-collector-gates-20261028/prepare_external_spelling_holdout_v10.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "5791b5ff99ad9dac9298662fcad0a5b99e52dbf51ba5c400d37c82c5ae9b816c"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v11.py",
+        "--parquet",
+        "build/review-q6-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-collector-gates-20261028/prepare_external_spelling_holdout_v11.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "71773cde1d40b5529d416215b025bd7d3130567ad658e7662226ab9e44d0837b"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v12.py",
+        "--parquet",
+        "build/review-q6-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-collector-gates-20261028/prepare_external_spelling_holdout_v12.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "b4f1afbbbeac4240be47d709ea4e932b3b06e86b15da0fb85548321890c96126"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_joint_followup.py",
+        "--source-root",
+        "build/review-q6-collector-gates-20261028/absent-source",
+        "--output",
+        "build/review-q6-collector-gates-20261028/prepare_joint_followup.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "652917ee4bb88bd5603375755e5aebfd70a6f5fb7baae51dd69276b7c725e414"
+    }
+  ],
+  "coverageComplete": false,
+  "freshQualification": false,
+  "fullHistoricalCorpusRegenerated": false,
+  "historicalRowParity": {
+    "builders": 3,
+    "rowsEach": 4,
+    "scope": "finite deterministic fixture, not full natural corpus reproduction"
+  },
+  "historicalSources": {
+    "13df18f3a72ccc6ae8a79ffd34e67579dc706ff26fdc6cb4096f91ebfbeb216f": {
+      "file": "prepare_external_spelling_holdout_v12_13df18f3a72ccc6a.py",
+      "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout_v12.py"
+    },
+    "4b5710d76e16faf1a06c316af1b7f45045d8a7d3187ad7da456572e380564fe6": {
+      "file": "prepare_external_spelling_holdout_v8_4b5710d76e16faf1.py",
+      "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout_v8.py"
+    },
+    "54f2abfb8d9634b381f8b19e7897f652ebff5e40d2423386a0cba1ac4060e874": {
+      "file": "prepare_external_spelling_holdout_v9_54f2abfb8d9634b3.py",
+      "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout_v9.py"
+    },
+    "9053f06179ed782a72c4378cb8dc49c4da265820b1d3142bc3a0d94d21cb0cb8": {
+      "file": "prepare_external_spelling_holdout_v10_9053f06179ed782a.py",
+      "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout_v10.py"
+    },
+    "a5fe5e58e2801996d62c293b89dec1aae64ac0356e070260cbacf5357feaf25f": {
+      "file": "fresh_spelling_holdout_a5fe5e58e2801996.py",
+      "originalPath": "tools/typing_experiments/fresh_spelling_holdout.py"
+    },
+    "b9cc4859e08021f851711bcabff12d329d6219312d3d988157b9716a1af574b6": {
+      "file": "prepare_joint_followup_b9cc4859e08021f8.py",
+      "originalPath": "tools/typing_experiments/prepare_joint_followup.py"
+    },
+    "cca6f8c7e7ed1f2b0a161136b7471c516cea582c6397f01182189ac9a5e4cce4": {
+      "file": "prepare_external_spelling_holdout_v11_cca6f8c7e7ed1f2b.py",
+      "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout_v11.py"
+    },
+    "fbc88fc175dd0407df287faa7cb3c6257fa181a271ffb03cbf6221a812b68a9b": {
+      "file": "prepare_external_spelling_holdout_v7_fbc88fc175dd0407.py",
+      "originalPath": "tools/typing_experiments/prepare_external_spelling_holdout_v7.py"
+    }
+  },
+  "initialStdlibFailure": {
+    "module": "tools/typing_experiments/test_joint_neighbor_source_history.py",
+    "reason": "Historical test compared current followup bytes with old source; now checks exact archived bytes and original path."
+  },
+  "modelTrainingPerformed": false,
+  "phoneExecuted": false,
+  "schemaVersion": 1,
+  "scope": "Q6-legacy-collector-independent-data-refusal",
+  "sourceSha256": {
+    "tools/typing_experiments/fresh_spelling_holdout.py": "9b57706c240d2703fd2c0827faff2b49e9c61669ebf051fb7e3a836d374a48c9",
+    "tools/typing_experiments/frozen_sources/manifest.json": "ab29d0f1206bc609d09696276cc1ed2b390ff09e2203913f8590b0d1684a2c1e",
+    "tools/typing_experiments/independent_corpus_guard.py": "d209cd49bccfc2cb83eade302169486bfb6a217dc92190bc32d97e18061af43a",
+    "tools/typing_experiments/prepare_external_spelling_holdout_v10.py": "601d5b8bb7c70c7a377a051e7c91d8d221b396bda230d25ae090f76bb0e1797c",
+    "tools/typing_experiments/prepare_external_spelling_holdout_v11.py": "8ab9655fb7598e1ff743f95cc12b9339ddd65c7408f607a9d6dd31a1d10c627f",
+    "tools/typing_experiments/prepare_external_spelling_holdout_v12.py": "9300950212a62f846449125a5ebdaab264314724f8d9a63edeb08bf2b3899dd9",
+    "tools/typing_experiments/prepare_external_spelling_holdout_v7.py": "1cc3b33be47d183d241b129b5056ef1f17283b70bd58de0884ef49a802265538",
+    "tools/typing_experiments/prepare_external_spelling_holdout_v8.py": "8eaab428c4f50742d69062e5a19df3bba30bc63a706c2c3e2516304aa3310604",
+    "tools/typing_experiments/prepare_external_spelling_holdout_v9.py": "4c1ee6dbe5505f269e221b10f94f18eff0427dee05d45794dcc7f0de611a9c2f",
+    "tools/typing_experiments/prepare_joint_followup.py": "4ae6fbd74b305b1f8351e5ce5e2c0c610578bf4e79a42ead6f0b86cab63ef11f",
+    "tools/typing_experiments/test_fresh_spelling_holdout.py": "6ea3c43b96ff47eb01dfca981ba6b2cff860eeba4bf37650d8a8ce628f33bb9b",
+    "tools/typing_experiments/test_joint_neighbor_source_history.py": "e8b5f275dfee8e75c833c9e30160eeae98e44b0710dcc36b205ce1eef20e8cbe"
+  },
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "finalFocusedAfterImportPathRestoration": true,
+    "focusedPython3.12": 6,
+    "focusedPython3.14": 6,
+    "skips": 0,
+    "stdlibModules": 113,
+    "stdlibReceiptSha256": "30507b7a6b8b736d4f2e45e5793e385728751a564b8f7614ec4447361e9e4af0",
+    "stdlibTests": 598
+  }
+}

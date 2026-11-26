@@ -36,6 +36,7 @@ internal class EmojiPanelView(
     private var recentsAllowed = true
     private var entries: List<EmojiEntry> = emptyList()
     private val tabs = LinearLayout(context).apply { orientation = HORIZONTAL }
+    private val categoryTabs = mutableMapOf<String?, TextView>()
     private val cells = object : BaseAdapter() {
         override fun getCount(): Int = entries.size
         override fun getItem(position: Int): EmojiEntry = entries[position]
@@ -84,19 +85,23 @@ internal class EmojiPanelView(
         this.language = language
         this.recentsAllowed = recentsAllowed
         if (!recentsAllowed && selectedCategory == null) selectedCategory = "smileys"
-        tabs.removeAllViews()
+        if (!recentsAllowed) categoryTabs.remove(null)?.let(tabs::removeView)
         fun tab(id: String?, icon: String, description: String) {
-            tabs.addView(TextView(context).apply {
-                text = icon
-                contentDescription = description
+            val view = categoryTabs[id] ?: TextView(context).apply {
                 gravity = Gravity.CENTER
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
                 setTextColor(appearance.textColors)
                 background = appearance.candidateBackground()
-                isSelected = selectedCategory == id
                 isFocusable = true
-                setOnClickListener { selectedCategory = id; render(language, recentsAllowed) }
-            }, LayoutParams((48f * resources.displayMetrics.density + 0.5f).toInt(), rowHeight))
+                setOnClickListener { selectedCategory = id; render(this@EmojiPanelView.language, this@EmojiPanelView.recentsAllowed) }
+            }.also {
+                categoryTabs[id] = it
+                tabs.addView(it, if (id == null) 0 else tabs.childCount,
+                    LayoutParams((48f * resources.displayMetrics.density + 0.5f).toInt(), rowHeight))
+            }
+            if (view.text.toString() != icon) view.text = icon
+            if (view.contentDescription?.toString() != description) view.contentDescription = description
+            view.isSelected = selectedCategory == id
         }
         RuneTrace.section("Rune#emojiTabs") {
             if (recentsAllowed) tab(null, "◷", localized("Recent emoji", "Недавние эмодзи", "Emojis recientes"))

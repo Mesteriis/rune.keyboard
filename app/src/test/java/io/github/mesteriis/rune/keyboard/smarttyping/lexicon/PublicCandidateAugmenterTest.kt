@@ -82,6 +82,21 @@ class PublicCandidateAugmenterTest {
         assertNull(generator.generateManualPool("нуден", russian, baseline, true, CandidateCancellation { true }))
     }
 
+    @Test fun `reviewed short omission gets one default manual candidate without changing the baseline`() {
+        val lexicon = PackedCandidateLexicon(listOf(PackedFixture.build(listOf("кук", "куп", "ква", "куда"), russian).ready()))
+        val generator = CandidateGenerator(lexicon, 1)
+        val baseline = generator.generate("куа", russian)
+        assertTrue(baseline.alternatives.none { it.text == "куда" })
+        val manual = generator.generateManualPool("куа", russian, baseline, false)!!
+        assertEquals(listOf("куда"), manual.alternatives.map { it.text })
+        assertEquals(LocalSearchEvidence.NONE, manual.localSearch)
+        assertEquals(baseline, generator.generate("куа", russian))
+        assertNull(generator.generateManualPool("куа", russian, baseline.copy(completion = CandidateCompletion.STATES_EXHAUSTED), false))
+        assertNull(generator.generateManualPool("куа", russian, baseline, false, CandidateCancellation { true }))
+        assertNull(generator.generateManualPool("куа", KeyboardLanguage.ENGLISH, baseline, false))
+        assertNull(generator.generateManualPool("кук", russian, generator.generate("кук", russian), false))
+    }
+
     @Test fun `joint short pool is complete separate evidence and protects valid originals`() {
         val lexicon = PackedCandidateLexicon(listOf(PackedFixture.build(listOf("кот", "кит", "код"), russian).ready()))
         val morphology = MorphologyLexicon { _, word ->

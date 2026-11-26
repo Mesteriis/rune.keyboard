@@ -18,10 +18,14 @@ import io.github.mesteriis.rune.keyboard.ime.model.InputPolicy
 import io.github.mesteriis.rune.keyboard.ime.model.EditorMode
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.EditFeatures
 import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.*
 import io.github.mesteriis.rune.keyboard.smarttyping.quality.*
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.SpellingQualification
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateCancellation
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateCompletion
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateGeneration
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalSearchEvidence
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidate
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.TopCandidateSelection
 import io.github.mesteriis.rune.keyboard.smarttyping.punctuation.MechanicalPunctuationPolicy
@@ -32,6 +36,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.CandidateVisitor
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.ExactMembership
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LanguageRoute
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LexiconScanStatus
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTraceSection
+import io.github.mesteriis.rune.keyboard.smarttyping.telemetry.SmartTypingTracer
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executor
@@ -458,6 +464,56 @@ class LocalCandidateCoordinatorTest {
             assertEquals(input.token.sessionId, deadline.session)
             assertEquals(input.token.revision, deadline.revision)
             assertEquals(input.token.requestId, deadline.requestId)
+            assertEquals(listOf(
+                SmartTypingTraceSection.MODEL_SPACE_KEY,
+                SmartTypingTraceSection.MODEL_SPACE_REQUEST,
+                SmartTypingTraceSection.MODEL_SPACE_DEADLINE,
+            ), h.spaceTrace())
+        }
+    }
+
+    @Test fun `failed scores after Space do not emit a successful timing marker`() {
+        for ((code, reason, section) in listOf(
+            Triple(ScoringCode.CONTEXT_TOO_LONG, DiagnosticReason.CONTEXT_TOO_LONG, SmartTypingTraceSection.MODEL_SPACE_CONTEXT_TOO_LONG),
+            Triple(ScoringCode.SCORING_FAILED, DiagnosticReason.SCORING_FAILED, SmartTypingTraceSection.MODEL_SPACE_SCORING_ERROR),
+            Triple(ScoringCode.NO_MODEL, DiagnosticReason.SERVICE_REFUSED, SmartTypingTraceSection.MODEL_SPACE_SCORING_ERROR),
+        )) Harness(withModel = true, modelOnly = true).use { h ->
+            val records = mutableListOf<DiagnosticEvent>()
+            h.controller.setDiagnostics(object : TypingDiagnostics {
+                override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                override fun invalidate() = Unit
+                override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { records += event }
+            })
+            h.owner = h.owner.copy(modelAutoReplaceQualified = true)
+            h.type("helos"); h.deliver(); h.space()
+            val input = h.model.requests.single()
+            h.model.listener.onReply(ScoringReply(input.token, code, 0, emptyList()))
+            assertEquals("helos ", h.controller.state.contextText)
+            val rejected = records.single { it.kind == DiagnosticKind.RANKING && it.requestId == input.token.requestId }
+            assertEquals(code, rejected.scoringCode)
+            assertEquals(reason, rejected.reason)
+            assertEquals(listOf(SmartTypingTraceSection.MODEL_SPACE_KEY,
+                SmartTypingTraceSection.MODEL_SPACE_REQUEST, section), h.spaceTrace())
+        }
+    }
+
+    @Test fun `context length refusal before Space survives at the boundary`() {
+        Harness(withModel = true).use { h ->
+            val records = mutableListOf<DiagnosticEvent>()
+            h.controller.setDiagnostics(object : TypingDiagnostics {
+                override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                override fun invalidate() = Unit
+                override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { records += event }
+            })
+            h.type("helo"); h.deliver(); h.pause.fire()
+            val token = h.model.requests.single().token
+            h.model.listener.onReply(ScoringReply(token, ScoringCode.CONTEXT_TOO_LONG, 0, emptyList()))
+            h.space()
+            val ranking = records.single { it.kind == DiagnosticKind.RANKING && it.requestId == token.requestId }
+            assertEquals(DiagnosticReason.CONTEXT_TOO_LONG, ranking.reason)
+            assertEquals(ScoringCode.CONTEXT_TOO_LONG, ranking.scoringCode)
+            assertEquals(DiagnosticReason.CONTEXT_TOO_LONG, records.single { it.kind == DiagnosticKind.BOUNDARY }.reason)
+            assertEquals("helo ", h.controller.state.contextText)
         }
     }
 
@@ -545,6 +601,23 @@ class LocalCandidateCoordinatorTest {
             h.type("s")
             h.deliver()
             assertEquals(2, h.routeRequests)
+        }
+    }
+
+    @Test fun `symbol boundary retention requires an active eligible owner`() {
+        for (variant in listOf("eligible", "inactive", "selection", "suggestions-disabled", "unmarked")) {
+            Harness().use { h ->
+                h.type("helo"); h.deliver()
+                h.owner = h.owner.copy(layer = KeyboardLayer.SYMBOLS,
+                    inputViewActive = variant != "inactive", hasSelection = variant == "selection",
+                    editorAllowsSuggestions = variant != "suggestions-disabled")
+                var visibleInside = false
+                h.coordinator.edit(retainReadySymbolBoundary = variant != "unmarked") {
+                    visibleInside = h.controller.candidateViewState.candidates.any { it.text == "hello" }
+                    TypingTextResult.BYPASS
+                }
+                assertEquals(variant == "eligible", visibleInside)
+            }
         }
     }
 
@@ -1085,6 +1158,54 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
+    @Test fun `expanded candidates obey owner policy and current one shot snapshot`() {
+        fun setup(h: Harness) {
+            h.owner = h.owner.copy(manualCandidateExpansion = true, language = KeyboardLanguage.RUSSIAN)
+            h.lexicon.extraNeighbors = true
+            h.type("мала"); h.deliver()
+        }
+        Harness().use { h ->
+            setup(h)
+            assertTrue(h.coordinator.hasExpandedCandidates())
+            val snapshot = h.coordinator.openExpandedCandidates()!!
+            val candidate = snapshot.candidates.first()
+            assertTrue(h.coordinator.viewState.candidates.none { it.id == candidate.id })
+            assertEquals(TypingTextResult.HANDLED, h.coordinator.selectExpandedCandidate(snapshot, candidate.id, h.execute))
+            assertEquals(candidate.text, h.controller.state.composing?.typedWord)
+            assertEquals(TypingTextResult.REJECTED, h.coordinator.selectExpandedCandidate(snapshot, candidate.id, h.execute))
+        }
+        for (change in listOf<(CandidateOwnerState) -> CandidateOwnerState>(
+            { it.copy(editorAllowsSmartTyping = false) }, { it.copy(editorAllowsSuggestions = false) },
+            { it.copy(inputViewActive = false) }, { it.copy(hasSelection = true) },
+            { it.copy(layer = KeyboardLayer.SYMBOLS) }, { it.copy(candidateStripEnabled = false) },
+            { it.copy(autocorrectionMode = AutocorrectionMode.OFF) },
+            { it.copy(manualCandidateExpansion = false) },
+            { it.copy(language = KeyboardLanguage.ENGLISH) })) {
+            Harness().use { h ->
+                setup(h)
+                val snapshot = h.coordinator.openExpandedCandidates()!!
+                val id = snapshot.candidates.first().id
+                h.owner = change(h.owner)
+                if (!h.owner.showsCandidates || !h.owner.spellingEnabled || h.owner.language != KeyboardLanguage.RUSSIAN)
+                    assertFalse(h.coordinator.hasExpandedCandidates())
+                h.commands.clear()
+                assertEquals(TypingTextResult.REJECTED, h.coordinator.selectExpandedCandidate(snapshot, id, h.execute))
+                assertTrue(h.commands.isEmpty())
+                if (!h.owner.showsCandidates || !h.owner.spellingEnabled || h.owner.language != KeyboardLanguage.RUSSIAN)
+                    assertNull(h.coordinator.openExpandedCandidates())
+            }
+        }
+        Harness().use { h ->
+            setup(h)
+            val snapshot = h.coordinator.openExpandedCandidates()!!
+            val id = snapshot.candidates.first().id
+            h.type("а")
+            h.commands.clear()
+            assertEquals(TypingTextResult.REJECTED, h.coordinator.selectExpandedCandidate(snapshot, id, h.execute))
+            assertTrue(h.commands.isEmpty())
+        }
+    }
+
     @Test fun `production coordinator keeps three local alternatives for model submission`() {
         Harness(withModel = true).use { h ->
             h.lexicon.extraNeighbors = true
@@ -1477,6 +1598,76 @@ class LocalCandidateCoordinatorTest {
         }
     }
 
+    @Test fun `staged neighbor recovery arriving after Space applies only within grace`() {
+        for (baselineAfterSpace in listOf(false, true)) for (elapsed in listOf(100_000_000L, 250_000_000L))
+            for (completion in listOf(CandidateCompletion.COMPLETE, CandidateCompletion.STATES_EXHAUSTED)) {
+            val corrected = elapsed < 250_000_000L && completion == CandidateCompletion.COMPLETE
+            Harness(qualified = true).use { h ->
+                h.owner = h.owner.copy(language = KeyboardLanguage.RUSSIAN)
+                val records = mutableListOf<Pair<DiagnosticEvent, (() -> DiagnosticText)?>>()
+                h.controller.setDiagnostics(object : TypingDiagnostics {
+                    override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) = Unit
+                    override fun invalidate() = Unit
+                    override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { records += event to text }
+                })
+                h.controller.setPersonalization(object : TypingPersonalization {
+                    override fun recoveryAutomaticCandidate(context: String, generation: CandidateGeneration,
+                        language: KeyboardLanguage) = generation.neighborRecovery.alternatives.singleOrNull()
+                        .takeIf { generation.neighborRecovery.isComplete }
+                    override fun recoveryAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                        language: KeyboardLanguage) = AutomaticTypingDecision(candidate in generation.neighborRecovery.alternatives)
+                }, KeyboardLanguage.RUSSIAN)
+                val hold = Hold(); h.lexicon.recoveryHold = hold; h.lexicon.recoveryCompletion = completion
+                h.type("рооверка")
+                hold.entered.awaitChecked()
+                if (!baselineAfterSpace) h.deliver()
+                h.space()
+                if (baselineAfterSpace) { h.awaitQueued(); h.drain() }
+                assertEquals("рооверка ", h.controller.state.contextText)
+                h.nowNanos = elapsed
+                hold.release.countDown()
+                h.awaitQueued(); h.drain()
+                assertEquals(if (corrected) "проверка " else "рооверка ", h.controller.state.contextText)
+                val observed = records.filter { (event, _) -> event.kind == DiagnosticKind.CANDIDATES &&
+                    event.source == DiagnosticSource.NEIGHBOR_RECOVERY && event.reason == DiagnosticReason.NONE }
+                assertEquals(1, observed.size)
+                assertNull(observed.single().second)
+                assertEquals(DiagnosticCompletion.valueOf(completion.name), observed.single().first.recoveryCompletion)
+                assertEquals(2, observed.single().first.recoveryInspectedStates)
+                assertEquals(1, observed.single().first.recoveryVerifiedTerminals)
+                if (corrected) {
+                    h.coordinator.edit { h.controller.deletePrevious(h.execute) }
+                    assertEquals("рооверка", h.controller.state.contextText)
+                }
+            }
+        }
+    }
+
+    @Test fun `late staged neighbor recovery preserves next letter and visible Undo`() {
+        Harness(qualified = true).use { h ->
+            h.owner = h.owner.copy(language = KeyboardLanguage.RUSSIAN)
+            val flag = DiagnosticFeature.VISIBLE_UNDO.bit
+            h.controller.configureFeatures(flag, flag)
+            h.controller.setPersonalization(object : TypingPersonalization {
+                override fun recoveryAutomaticCandidate(context: String, generation: CandidateGeneration,
+                    language: KeyboardLanguage) = generation.neighborRecovery.alternatives.singleOrNull()
+                    .takeIf { generation.neighborRecovery.isComplete }
+                override fun recoveryAutomaticDecision(generation: CandidateGeneration, candidate: GeneratedCandidate,
+                    language: KeyboardLanguage) = AutomaticTypingDecision(candidate in generation.neighborRecovery.alternatives)
+            }, KeyboardLanguage.RUSSIAN)
+            val hold = Hold(); h.lexicon.recoveryHold = hold
+            h.type("рооверка"); hold.entered.awaitChecked(); h.deliver(); h.space()
+            h.nowNanos = 60_000_000L
+            h.type("д")
+            assertEquals("рооверка д", h.controller.state.contextText)
+            hold.release.countDown(); h.awaitQueued(); h.drain()
+            assertEquals("проверка д", h.controller.state.contextText)
+            val undo = h.controller.candidateViewState.candidates.filterIsInstance<CandidateUiItem.Undo>().single()
+            assertEquals(TypingTextResult.HANDLED, h.coordinator.selectCandidate(undo.id, h.execute))
+            assertEquals("рооверка д", h.controller.state.contextText)
+        }
+    }
+
     @Test fun `distance one lookup finishing after Space applies within the local grace window`() {
         Harness(qualified = true).use { h ->
             val hold = Hold(); h.lexicon.hold = hold
@@ -1535,6 +1726,11 @@ class LocalCandidateCoordinatorTest {
             assertTrue(winner > 0)
             h.model.reply(input, winner)
             assertEquals("hellos ", h.controller.state.contextText)
+            assertEquals(listOf(
+                SmartTypingTraceSection.MODEL_SPACE_KEY,
+                SmartTypingTraceSection.MODEL_SPACE_REQUEST,
+                SmartTypingTraceSection.MODEL_SPACE_SCORE_OK,
+            ), h.spaceTrace())
             h.coordinator.edit { h.controller.deletePrevious(h.execute) }
             assertEquals("helos", h.controller.state.contextText)
         }
@@ -1699,19 +1895,25 @@ class LocalCandidateCoordinatorTest {
         val model = FakeModel()
         val pause = Pause()
         val readinessActivity = mutableListOf<Boolean>()
+        private val traceSections = mutableListOf<SmartTypingTraceSection>()
+        private val trace = object : SmartTypingTracer {
+            override fun begin(section: SmartTypingTraceSection) { traceSections += section }
+            override fun end() = Unit
+        }
+        fun spaceTrace() = traceSections.filter { it.name.startsWith("MODEL_SPACE_") }
         private val ranking = if (withModel) ModelCandidateCoordinator(controller,
             { model.listener = it; model }, pause, { owner }, object : ModelReadinessSource {
                 override val hint get() = if (modelReady) ModelReadinessHint.READY else ModelReadinessHint.MISSING
                 override fun setActive(active: Boolean) { readinessActivity += active }
                 override fun close() = Unit
-            }, { published++ }) else null
+            }, { published++ }, trace) else null
         val commands = mutableListOf<TypingEdit>()
         val execute: (TypingEdit) -> Boolean = { commands.add(it); true }
         private val queue = ConcurrentLinkedQueue<Runnable>()
         val coordinator = LocalCandidateCoordinator(controller, lexicon,
             { routeRequests++; lastRoute = it; this.ready }, { this.ready },
             { invalidatedLoads++ }, { closedLoads++ }, Executor { queue.add(it) },
-            { owner }, { published++ }, modelRanking = ranking, nanoTime = { nowNanos },
+            { owner }, { published++ }, modelRanking = ranking, trace = trace, nanoTime = { nowNanos },
             registerRouteReady = { routeReadyCallback = it })
 
         init { controller.startSession(EditorContext.from(InputType.TYPE_CLASS_TEXT, 0), 0, 0) }
@@ -1739,7 +1941,7 @@ class LocalCandidateCoordinatorTest {
             val next = published + 1
             eventually { drain(); published >= next }
         }
-        override fun close() { coordinator.close(); lexicon.hold?.release?.countDown(); drain() }
+        override fun close() { coordinator.close(); lexicon.hold?.release?.countDown(); lexicon.recoveryHold?.release?.countDown(); drain() }
     }
 
     private class Hold {
@@ -1753,6 +1955,8 @@ class LocalCandidateCoordinatorTest {
         val maximumConcurrent = AtomicInteger()
         private val concurrent = AtomicInteger()
         @Volatile var hold: Hold? = null
+        @Volatile var recoveryHold: Hold? = null
+        @Volatile var recoveryCompletion = CandidateCompletion.COMPLETE
         @Volatile var fail = false
         @Volatile var extraNeighbors = false
         val requestedWidths = ConcurrentLinkedQueue<Int>()
@@ -1762,6 +1966,20 @@ class LocalCandidateCoordinatorTest {
             control: CandidateSearchControl, maximumAlternatives: Int): TopCandidateSelection? {
             requestedWidths.add(maximumAlternatives)
             return null // Exercise the real generator's generic fallback after checking admission width.
+        }
+
+        override fun recoverNeighbors(token: String,
+            cancellation: CandidateCancellation):
+            LocalSearchEvidence {
+            val gate = recoveryHold ?: return LocalSearchEvidence.NONE
+            gate.entered.countDown()
+            while (!gate.release.await(5, TimeUnit.MILLISECONDS)) {
+                if (cancellation.isCancelled()) return LocalSearchEvidence.NONE
+            }
+            val candidate = GeneratedCandidate("проверка", "проверка", "проверка", KeyboardLanguage.RUSSIAN,
+                false, 0, 30, 2, EditFeatures(1.5, 2, 0.0),
+                0, CasePattern.LOWER)
+            return LocalSearchEvidence(recoveryCompletion, listOf(candidate), 2, 1)
         }
 
         override fun exact(language: KeyboardLanguage, key: String, control: CandidateSearchControl): ExactMembership {

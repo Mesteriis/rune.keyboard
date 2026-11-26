@@ -29,6 +29,9 @@ internal class SessionTextContext(
 ) {
     var text: String = ""
         private set
+    // Counts UTF-16 units evicted from the front since the last clear or restore.
+    var retainedStartUtf16: Long = 0L
+        private set
 
     init {
         require(maxUtf16 > 0 && maxCodePoints > 0)
@@ -48,6 +51,7 @@ internal class SessionTextContext(
         val start = if (minimumStart == 0) 0 else {
             graphemes.boundaries(combined).first { it >= minimumStart }
         }
+        retainedStartUtf16 += start
         text = combined.substring(start)
     }
 
@@ -72,6 +76,7 @@ internal class SessionTextContext(
 
     fun clear() {
         text = ""
+        retainedStartUtf16 = 0L
     }
 
     override fun toString(): String = "SessionTextContext(redacted)"

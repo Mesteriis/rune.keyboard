@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "modelCalls": 0,
+  "independentQualification": false,
+  "source": "0020.parquet",
+  "originalRoot": "build/context-feature-ranker-20261026/corpus",
+  "archivedPreparerSha256": "ea8e92b2710c56851609ec5b18876ff84d56c60b3950e4a50f6e4bc51282355d",
+  "independentOriginalSourceDigestAvailable": false,
+  "files": {
+    "calibration.jsonl": "fba4db6936b60cdced2f593b67d8bf80cff1312d36488970bd81db26e15335fc",
+    "holdout.jsonl": "440ec850ae33022002bdaf1fc972f6614e8539cddf459af1e20895ec86bfb687"
+  },
+  "rows": {
+    "calibration": 3563,
+    "holdout": 5906
+  },
+  "declaredFamilyKind": "packed-morphology-id"
+}

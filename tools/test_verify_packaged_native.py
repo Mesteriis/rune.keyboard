@@ -27,7 +27,10 @@ class PackagedNativeTest(unittest.TestCase):
 
     def test_machine_local_paths_are_refused_without_echoing_payload(self):
         gate.verify_paths(b"JNI_OnLoad\x00/data/local/model.gguf\x00")
-        for path in (b"/Users/private/build/source.cc", b"/home/private/build/source.cc"):
+        for path in (b"/Users/private/build/source.cc", b"/home/private/build/source.cc",
+                     b"/tmp/rune-build/source.cc", b"/private/tmp/rune-build/source.cc",
+                     b"/var/folders/xx/build/source.cc", b"/private/var/folders/xx/build/source.cc",
+                     b"/opt/homebrew/Cellar/build/source.cc"):
             with self.assertRaisesRegex(gate.NativePayloadError, "^NATIVE_LOCAL_SOURCE_PATH$"):
                 gate.verify_paths(b"ELF\x00" + path + b"\x00")
 

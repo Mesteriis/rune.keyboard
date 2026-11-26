@@ -95,10 +95,18 @@ class QualityExportInstrumentedTest {
                 val save = device.wait(Until.findObject(By.res("android", "button1").enabled(true)), 10000)
                 assertNotNull("Document picker Save missing", save)
                 device.waitForIdle()
-                // Use platform input for the system-owned surface: this API 26 image does
-                // not deliver UiObject2's gesture on this row. Bounds come from live UI.
-                val bounds = save.visibleBounds
-                device.executeShellCommand("input tap ${bounds.centerX()} ${bounds.centerY()}")
+                // Invoke the system picker's own accessibility action. Coordinates for
+                // this row can be stale after the filename keyboard is dismissed.
+                val root = checkNotNull(instrumentation.uiAutomation.rootInActiveWindow)
+                val actions = root.findAccessibilityNodeInfosByViewId("android:id/button1")
+                try {
+                    val node = actions.single { it.isVisibleToUser && it.isEnabled }
+                    assertTrue("Document picker Save action rejected",
+                        node.performAction(android.view.accessibility.AccessibilityNodeInfo.ACTION_CLICK))
+                } finally {
+                    actions.forEach { it.recycle() }
+                    root.recycle()
+                }
                 val completed = device.wait(Until.hasObject(By.text(context.getString(R.string.diagnostics_exported))), 10000)
                 if (!completed) device.dumpWindowHierarchy(java.io.File(context.cacheDir, "quality-export-failure.xml"))
                 assertTrue("Numeric export did not complete; UI captured in private cache", completed)

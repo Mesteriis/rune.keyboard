@@ -1,0 +1,100 @@
+{
+  "analyzerSha256": "3c9bf1fb66bb523bdec0aaa3e79aed5e0b8ea42b5d9e08245f270da4cc95c5b4",
+  "candidateFixtureSha256": "214813e254dd20ec7df64c5a0fb25c6047eeb31e296909c87c9248e87fac1c38",
+  "counts": {
+    "dev": {
+      "allTargetVisible": 12,
+      "allTargetVisibleFirst": 11,
+      "competingCandidates": 9,
+      "completion:COMPLETE": 7,
+      "completion:STATES_EXHAUSTED": 2,
+      "rows": 26,
+      "seenTargetExcluded": 8,
+      "singleCandidate": 2,
+      "targetAbsentOrAmbiguous": 7,
+      "targetInPool": 11
+    },
+    "test": {
+      "allTargetVisible": 9,
+      "allTargetVisibleFirst": 8,
+      "competingCandidates": 5,
+      "completion:STATES_EXHAUSTED": 5,
+      "rows": 24,
+      "seenTargetExcluded": 9,
+      "singleCandidate": 3,
+      "targetAbsentOrAmbiguous": 7,
+      "targetInPool": 8
+    },
+    "train": {
+      "allTargetVisible": 67,
+      "allTargetVisibleFirst": 58,
+      "competingCandidates": 51,
+      "completion:COMPLETE": 22,
+      "completion:STATES_EXHAUSTED": 29,
+      "rows": 136,
+      "singleCandidate": 17,
+      "targetAbsentOrAmbiguous": 68,
+      "targetInPool": 68
+    }
+  },
+  "features": [
+    "editCost",
+    "frequencyRank",
+    "unitDistance",
+    "lengthDifference",
+    "repeatedCharacterEdits",
+    "repetitionBonus"
+  ],
+  "projectionSha256": "f0329e4d9c44752a157b40cff96870f31effb0d5e0feb7c5d3f2855c77a62bbc",
+  "registrySha256": "d11164f4372cbe443583005e015b13aa785f78b3b171251171828b0a61bc34a0",
+  "results": {
+    "chosenEpochs": 25,
+    "development": {
+      "0": {
+        "groups": 9,
+        "top1": 5
+      },
+      "100": {
+        "groups": 9,
+        "top1": 9
+      },
+      "25": {
+        "groups": 9,
+        "top1": 9
+      }
+    },
+    "independentQualification": false,
+    "learnedWeights": {
+      "100": [
+        0.909089784,
+        1.412415471,
+        1.079024546,
+        -0.195949438,
+        -0.302894805,
+        0.302894805
+      ],
+      "25": [
+        0.413530502,
+        0.681350205,
+        0.489740833,
+        -0.083801806,
+        -0.13874493,
+        0.13874493
+      ]
+    },
+    "productBehaviorChanged": false,
+    "sourceLabelsQualified": false,
+    "testBaseline": {
+      "groups": 5,
+      "top1": 4
+    },
+    "testSelected": {
+      "groups": 5,
+      "top1": 4
+    },
+    "trainGroups": 51
+  },
+  "schemaVersion": 1,
+  "scope": "disclosed-ewt-pairwise-development-not-qualification",
+  "sourceFixtureSha256": "5e1ebdfa43616aa83458a78e70289affb9f57ecd38b0337a909886066efecadc"
+}

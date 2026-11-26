@@ -79,6 +79,40 @@ class NeighborRecoverySearchTest {
         assertTrue(search.search("ролверка", running).alternatives.isNotEmpty())
     }
 
+    @Test fun `wall deadline changes the candidate generation included in replay`() {
+        val index = PackedFixture.build(listOf("проверка"), ru).ready()
+        fun generation(clock: () -> Long): CandidateGeneration {
+            val generator = CandidateGenerator(PackedCandidateLexicon(listOf(index), clock))
+            val baseline = generator.generate("ролверка", ru)
+            return generator.generateRecovery("ролверка", ru, baseline)
+        }
+        val complete = generation { 0L }
+        var time = -NeighborRecoverySearch.MAX_NANOS
+        val timedOut = generation { time += NeighborRecoverySearch.MAX_NANOS; time }
+        assertEquals(CandidateCompletion.COMPLETE, complete.neighborRecovery.completion)
+        assertEquals(listOf("проверка"), complete.neighborRecovery.alternatives.map { it.text })
+        assertEquals(CandidateCompletion.STATES_EXHAUSTED, timedOut.neighborRecovery.completion)
+        assertTrue(timedOut.neighborRecovery.alternatives.isEmpty())
+        assertEquals(complete.localSearch, timedOut.localSearch)
+        assertEquals(complete.alternatives, timedOut.alternatives)
+    }
+
+    @Test fun `final deadline check refuses completion between traversal samples`() {
+        val index = PackedFixture.build(listOf("проверка"), ru).ready()
+        val query = "проверка"
+        val untimed = NeighborRecoverySearch({ index }, { 0 }).search(query, running)
+        assertEquals(CandidateCompletion.COMPLETE, untimed.completion)
+        assertTrue(untimed.inspectedStates in 1..31)
+        assertTrue(untimed.alternatives.isEmpty())
+
+        var reads = 0
+        val timed = NeighborRecoverySearch({ index }, {
+            if (++reads <= 2) 0L else NeighborRecoverySearch.MAX_NANOS
+        }).search(query, running)
+        assertEquals(untimed.inspectedStates, timed.inspectedStates)
+        assertEquals(CandidateCompletion.STATES_EXHAUSTED, timed.completion)
+    }
+
     private fun neighbor(c: Char): Char = ('а'..'я').first { KeyboardDistance.areAdjacent(c.code, it.code, ru) }
 
     /** Enumerate the position of at most one structural edit, then count adjacent substitutions. */

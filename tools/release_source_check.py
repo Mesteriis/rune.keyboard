@@ -74,8 +74,13 @@ def main() -> None:
     args = parser.parse_args()
     try:
         if args.prepared_source:
-            from fdroid_prepared_source import check_prepared
-            report = check_prepared(args.root)
+            from fdroid_prepared_source import SourceCheckError as PreparedSourceCheckError, check_prepared
+            try:
+                report = check_prepared(args.root)
+            except PreparedSourceCheckError as error:
+                # The CLI executes this file as __main__, while the prepared-source
+                # verifier imports it by module name; those exception classes differ.
+                raise SourceCheckError(str(error)) from error
         else:
             report = check(args.root)
         print(json.dumps(report, sort_keys=True))

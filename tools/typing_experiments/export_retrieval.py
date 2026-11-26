@@ -22,10 +22,7 @@ def export(rows_path, output, java):
     replay = support.load_replay()
     java = java.resolve(strict=True)
     sources, jars, android = replay.compile_inputs(java)
-    sources = [p for p in sources if (
-        '/smarttyping/correction/' in str(p) or
-        '/smarttyping/lexicon/' in str(p) and p.name != 'LocalCandidateWorker.kt' or
-        p.name in ('KeyboardState.kt', 'ScoringContract.kt'))]
+    sources = [p for p in sources if support.candidate_export_source(p)]
     sources.append(ROOT / 'tools/morphology/ProductionRetrieval.kt')
     frozen = support.bindings([rows_path, *sources, *jars, android, java, *replay.asset_paths(),
         Path(__file__), ROOT / 'tools/morphology/evaluate.py', support.PIPELINE / 'final_product_replay.py',

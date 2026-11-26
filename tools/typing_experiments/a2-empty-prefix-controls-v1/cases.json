@@ -1,0 +1,7 @@
+[
+  {"id":"blank-1","language":"en","prefix":"","candidates":["hello","helllo"]},
+  {"id":"blank-2","language":"en","prefix":"","candidates":["testing","tested"]},
+  {"id":"blank-3","language":"ru","prefix":"","candidates":["молоко","молоо"]},
+  {"id":"blank-4","language":"en","prefix":"","candidates":["metro","metre"]},
+  {"id":"space-1","language":"en","prefix":" ","candidates":["hello","helllo"]}
+]

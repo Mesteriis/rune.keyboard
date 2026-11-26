@@ -6,6 +6,9 @@ absence of overlap cannot certify freshness until historical coverage is complet
 No old generator or qualification requirement is changed by this module.
 """
 import argparse
+import base64
+import binascii
+import copy
 import hashlib
 import json
 from pathlib import Path
@@ -13,13 +16,43 @@ import re
 import unicodedata
 
 from conversation_split_checks import target_context_key
-from source_identities import tatoeba_identity
+from source_identities import ewt_document_identity, tatoeba_identity
 
 SCHEMA = 1
 KEY_SCHEMA = 'rune-public-exclusions-v1'
 KINDS = ('article', 'family', 'sentence', 'context')
 USAGES = ('supervised', 'disclosed', 'reserved', 'historical-exclusion', 'historical-family-exclusion', 'historical-source-exclusion', 'prepared-training-quarantine', 'historical-context-exclusion')
 _HASH = re.compile(r'[0-9a-f]{64}\Z')
+PACKED_ENCODING = 'sha256-raw-base64-v1'
+MAX_PACKED_KEYS = 2_000_000
+
+
+def _unpack_keys(value):
+    if (not isinstance(value,dict) or set(value)!={'encoding','count','sha256','data'} or
+            value['encoding']!=PACKED_ENCODING or type(value['count']) is not int or
+            not 1<=value['count']<=MAX_PACKED_KEYS or not isinstance(value['data'],str) or
+            not isinstance(value['sha256'],str) or not _HASH.fullmatch(value['sha256']) or
+            len(value['data'])!=4*((value['count']*32+2)//3)):
+        raise ValueError('LEDGER_PACKED_KEYS')
+    try:raw=base64.b64decode(value['data'],validate=True)
+    except (ValueError,binascii.Error):raise ValueError('LEDGER_PACKED_KEYS') from None
+    if (len(raw)!=value['count']*32 or base64.b64encode(raw).decode('ascii')!=value['data'] or
+            hashlib.sha256(raw).hexdigest()!=value['sha256']):
+        raise ValueError('LEDGER_PACKED_KEYS')
+    return [raw[offset:offset+32].hex() for offset in range(0,len(raw),32)]
+
+
+def pack_ledger(ledger,minimum=1000):
+    """Return compact storage with exactly the same validated logical entries."""
+    if type(minimum) is not int or minimum<1:raise ValueError('LEDGER_PACK_THRESHOLD')
+    result=validate_ledger(copy.deepcopy(ledger))
+    for entry in result['entries']:
+        for axis,values in entry['keys'].items():
+            if minimum<=len(values)<=MAX_PACKED_KEYS:
+                raw=b''.join(bytes.fromhex(value) for value in values)
+                entry['keys'][axis]=dict(encoding=PACKED_ENCODING,count=len(values),
+                    sha256=hashlib.sha256(raw).hexdigest(),data=base64.b64encode(raw).decode('ascii'))
+    return result
 
 
 def _text(value):
@@ -33,6 +66,22 @@ def _digest(kind, value):
     return hashlib.sha256(encoded).hexdigest()
 
 
+def require_source_segment(row):
+    """New Wikipedia proposals must identify their source selector segment."""
+    if not isinstance(row, dict): raise ValueError('LEDGER_ROW_SCHEMA')
+    if row.get('sourceRepository') in (None, 'wikimedia/wikipedia'):
+        segment = row.get('sourceSegmentHash')
+        if not isinstance(segment, str) or not _HASH.fullmatch(segment):
+            raise ValueError('LEDGER_SOURCE_SEGMENT_SCHEMA')
+
+
+def source_segment_hash(text):
+    """Hash a source-verified whole selector segment using the shared normalization."""
+    if not isinstance(text, str) or not text.strip(): raise ValueError('LEDGER_SOURCE_SEGMENT_TEXT')
+    normalized = ' '.join(unicodedata.normalize('NFC', text).casefold().split())
+    return hashlib.sha256(normalized.encode('utf-8')).hexdigest()
+
+
 def keys_for(rows, kind):
     if kind not in KINDS:
         raise ValueError('LEDGER_KEY_KIND')
@@ -41,7 +90,7 @@ def keys_for(rows, kind):
         if not isinstance(row, dict):
             raise ValueError('LEDGER_ROW_SCHEMA')
         if kind == 'article':
-            sentence=tatoeba_identity(row)
+            sentence=ewt_document_identity(row) if row.get('sourceRepository') == 'ud-english-ewt' else tatoeba_identity(row)
             if sentence is not None:
                 result.add(_digest(kind,sentence));continue
             article = row.get('article')
@@ -54,13 +103,25 @@ def keys_for(rows, kind):
             if not isinstance(families, (list, tuple)) or not families:
                 raise ValueError('LEDGER_FAMILY_SCHEMA')
             for family in families:
-                result.add(_digest(kind, ['pymorph-lemma-ru', _text(family)]))
+                normalized = _text(family)
+                # Native morphology IDs are not Pymorph lemmas and must not
+                # silently occupy the same key namespace.
+                if normalized.isdecimal():
+                    raise ValueError('LEDGER_FAMILY_SCHEMA')
+                result.add(_digest(kind, ['pymorph-lemma-ru', normalized]))
         elif kind == 'sentence':
-            sentence=tatoeba_identity(row)
+            sentence=ewt_document_identity(row) if row.get('sourceRepository') == 'ud-english-ewt' else tatoeba_identity(row)
             value = row.get('sentenceHash') if sentence is not None else row.get('contextHash')
             if not isinstance(value, str) or not _HASH.fullmatch(value):
                 raise ValueError('LEDGER_SENTENCE_SCHEMA')
             result.add(_digest(kind, ['tatoeba-full-sentence-normalized-v1' if sentence is not None else 'right-context-source-hash-v1', value]))
+            # Wikipedia proposals can carry both the historical target window and
+            # a separately source-verified complete selector-segment hash.
+            if sentence is None and 'sourceSegmentHash' in row:
+                segment = row['sourceSegmentHash']
+                if not isinstance(segment, str) or not _HASH.fullmatch(segment):
+                    raise ValueError('LEDGER_SOURCE_SEGMENT_SCHEMA')
+                result.add(_digest(kind, ['tatoeba-full-sentence-normalized-v1', segment]))
         else:
             # Same typo-independent normalization as the existing split guard.
             prefix, target = target_context_key(row)
@@ -109,7 +170,10 @@ def validate_ledger(ledger):
             if set(keys)!={'context'} or missing:raise ValueError('LEDGER_CONTEXT_SCOPE')
         elif set(keys) | set(missing) != set(KINDS):
             raise ValueError('LEDGER_ENTRY_AXES_UNDECLARED')
-        for values in keys.values():
+        for axis,values in keys.items():
+            if isinstance(values,dict):
+                values=_unpack_keys(values)
+                keys[axis]=values
             if (not isinstance(values, list) or not values or
                     any(not isinstance(v, str) or not _HASH.fullmatch(v) for v in values)
                     or values != sorted(set(values))):
@@ -162,6 +226,8 @@ def main():
     if args.rows is None:
         parser.error('--rows is required for a freshness check')
     rows = [json.loads(line) for line in args.rows.read_text().splitlines() if line.strip()]
+    for row in rows:
+        require_source_segment(row)
     # Existing new-sentence protocol allows previously evaluated families, but
     # never supervised families. Legacy family-novel protocols exclude all.
     assert_disjoint(rows, ledger, kinds=('family',),

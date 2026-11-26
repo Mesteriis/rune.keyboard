@@ -1,0 +1,25 @@
+{
+  "stage": "frozen-before-independent-corpus-selection-or-scoring",
+  "contextsPerPart": 1000,
+  "maximumContextsPerFamily": 64,
+  "seed": "rune-noun-case-focus-20261026-v1",
+  "calibrationPrecision": 0.975,
+  "holdoutPrecision": 0.95,
+  "minimumIncrementalCorrect": 100,
+  "maximumInstalledCorrectLosses": 0,
+  "maximumControlChanges": 0,
+  "gridPoints": 33,
+  "sourceSha256": "3993a545d85db1e60a9423c0165a909c0d52beba85070883adf93cf5abe3db5f",
+  "formsSha256": "1449def4236fd7f8ebb9414c295cc774d92bcca3bc91f59bf7766e97bec68847",
+  "grammarSha256": "cce373e0964311fa9baf55edf7b2512b1c82fe4273d86de6c651716ad6f90574",
+  "modelSha256": "c848b1cac54515382287325343a863e4e8713ca7a628e3336806b74ccd64de42",
+  "baseline": "Current installed contextual + qualified infinitive revision, actual controller outputs",
+  "qualificationScope": "Noun accusative versus instrumental same-lemma replacement revision; actual retrieved/admitted candidates only",
+  "holdoutMustRemainUnusedUntilCalibrationPasses": true,
+  "availabilityAdjustment": {
+    "priorPlan": "build/noun-case-focus-20261026/plan.json",
+    "reason": "Only 863/967 contexts at cap24; no evaluation/model scores consumed. Raise cap to64 while preserving1000 contexts/part, family separation, >=100 incremental correct,97.5% calibration and95% holdout gates.",
+    "modelScoresConsumed": false,
+    "minimumFamiliesPerPart": 100
+  }
+}

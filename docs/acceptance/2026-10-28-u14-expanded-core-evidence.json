@@ -1,0 +1,24 @@
+{
+  "bindings": {
+    "app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/session/TypingSessionController.kt": "d409da9691044288af69edc455f2fe7fd09ef7e97bd9c9978b4c658b1bb0c056",
+    "app/src/test/java/io/github/mesteriis/rune/keyboard/smarttyping/session/CorrectionBoundaryTest.kt": "68d5f6e944076907765bc9d6936d995701ef1edeccd1bbef3cfa674f9aa2a609",
+    "build/u14-expanded-core-parity-v1/receipt.json": "7f4c00269ebdbf7e24aee34fb84d93d95a46a3c1dbca48b3f3702a87c991f77d"
+  },
+  "deviceTested": false,
+  "jvm": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 1357
+  },
+  "purpose": "U14_EXPANDED_SELECTION_CORE_PARTIAL",
+  "replay": {
+    "baselineMatches": true,
+    "deterministic": true,
+    "modelCalls": 0,
+    "projectionSha256": "fab02fa792f3a8ebc0721dff33e30f05d14cc30615b85e89963e7a13d6b4c1ec",
+    "rows": 12000
+  },
+  "schema": 1,
+  "uiImplemented": false
+}

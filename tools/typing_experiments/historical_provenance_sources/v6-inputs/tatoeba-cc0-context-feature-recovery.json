@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "modelCalls": 0,
+  "independentQualification": false,
+  "originalRoot": "build/context-feature-ranker-20261026/conversation-corpus",
+  "sourceSplitSha256": "5a2c1bf8301f48c689428d9f1bc34b89cbca6eb4e3e2f76ded2e596f508bb3e4",
+  "archivedPreparerSha256": "59caa3ee586c13def83d96803b8b1392c95bd993b2c649c0369e7eb855be52b7",
+  "files": {
+    "calibration.jsonl": "12c8bc76c858d1289a8f8e322ce9a21012a3a745b3c02ebaa43fd128d396ac99",
+    "holdout.jsonl": "0d16f7543b5e2265ef27cf9aead4c468d3110006fb5ac4c5f52301b89cf35fbb",
+    "manifest.json": "76a1d12473bcd31e3d093537eb8a52dfd88332b8043927b9f1a1986a6b7ee541"
+  },
+  "counts": {
+    "calibration": {
+      "rows": 2184,
+      "families": 378,
+      "sentences": 546
+    },
+    "holdout": {
+      "rows": 2260,
+      "families": 369,
+      "sentences": 565
+    }
+  },
+  "declaredFamilyKind": "packed-morphology-id"
+}

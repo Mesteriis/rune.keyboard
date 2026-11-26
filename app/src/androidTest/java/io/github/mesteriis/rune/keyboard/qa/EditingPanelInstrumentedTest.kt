@@ -14,6 +14,7 @@ import io.github.mesteriis.rune.keyboard.settings.ContextualPunctuationMode
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 /** Public key actions through the real service and remote :qa_editor InputConnection. */
@@ -21,23 +22,25 @@ class EditingPanelInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val context get() = instrumentation.targetContext
     private val driver = ImeTestDriver()
-    private var prepared = false
+    @get:Rule val failureArtifacts = ImeFailureArtifacts(driver) {
+        android.os.Build.HARDWARE in setOf("ranchu", "goldfish")
+    }
     private var clipboardTouched = false
 
     @Before fun prepare() {
         check(android.os.Build.HARDWARE in setOf("ranchu", "goldfish"))
-        prepared = true
         driver.setUp()
         driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true,
             mechanical = false, doubleSpace = false, contextual = ContextualPunctuationMode.OFF)
         driver.launchComposingQa()
     }
 
-    @After fun restore() {
+    @After fun restoreClipboard() {
         if (clipboardTouched) instrumentation.runOnMainSync {
-            context.getSystemService(ClipboardManager::class.java).clearPrimaryClip()
+            val clipboard = context.getSystemService(ClipboardManager::class.java)
+            if (android.os.Build.VERSION.SDK_INT >= 28) clipboard.clearPrimaryClip()
+            else clipboard.setPrimaryClip(ClipData.newPlainText("", ""))
         }
-        if (prepared) driver.tearDown()
     }
 
     @Test fun publicSelectionNavigationAndCutReachTheEditorWithoutPayloadReads() {
@@ -210,12 +213,6 @@ class EditingPanelInstrumentedTest {
         driver.tapKeyByDescription("Paste")
         driver.awaitFieldText("qa_composing_text", "oldforeign")
         driver.tapKeyByDescription(context.getString(R.string.key_letters))
-        fun serviceOwner(): io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService {
-            var owner: android.content.Context = keyboardSnapshot().keyboard.rootView.context
-            while (owner is android.content.ContextWrapper && owner !is io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService)
-                owner = owner.baseContext
-            return checkNotNull(owner as? io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService)
-        }
         val old = serviceOwner()
         driver.rebindRuneKeepingEditor()
         val fresh = serviceOwner()
@@ -242,6 +239,39 @@ class EditingPanelInstrumentedTest {
         val after = stats()
         for (name in listOf("before", "after", "selected", "extracted", "surrounding", "snapshot"))
             assertEquals("Rune added a payload read: $name", baseline.getValue(name), after.getValue(name))
+    }
+
+    @Test fun realServiceRebindAtStartPreservesForeignTextOnTheRight() {
+        openPanel()
+        instrumentation.runOnMainSync {
+            clipboardTouched = true
+            context.getSystemService(ClipboardManager::class.java)
+                .setPrimaryClip(ClipData.newPlainText("Rune QA", "foreign"))
+        }
+        driver.tapKeyByDescription("Paste")
+        driver.awaitFieldText("qa_composing_text", "foreign")
+        driver.tapKey("Home")
+        awaitSelection(0, 0)
+        driver.tapKeyByDescription(context.getString(R.string.key_letters))
+        val old = serviceOwner()
+        driver.rebindRuneKeepingEditor()
+        assertNotSame("Require actual framework service recreation", old, serviceOwner())
+        awaitSelection(0, 0)
+        val baseline = stats()
+        type("abc"); space()
+        driver.awaitFieldText("qa_composing_text", "abc foreign")
+        type("teh"); space()
+        driver.awaitFieldText("qa_composing_text", "abc the foreign")
+        val after = stats()
+        for (name in listOf("before", "after", "selected", "extracted", "surrounding", "snapshot"))
+            assertEquals("Rune added a payload read: $name", baseline.getValue(name), after.getValue(name))
+    }
+
+    private fun serviceOwner(): io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService {
+        var owner: android.content.Context = keyboardSnapshot().keyboard.rootView.context
+        while (owner is android.content.ContextWrapper && owner !is io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService)
+            owner = owner.baseContext
+        return checkNotNull(owner as? io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService)
     }
 
     private fun openPanel() {

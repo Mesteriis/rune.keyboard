@@ -1,0 +1,27 @@
+{
+  "stage": "corpus-only-no-model-scoring",
+  "parts": {
+    "calibration": {
+      "contexts": 1000,
+      "families": 157,
+      "rows": 4000,
+      "controls": 3000
+    },
+    "holdout": {
+      "contexts": 1000,
+      "families": 168,
+      "rows": 4000,
+      "controls": 3000
+    }
+  },
+  "calibrationHoldoutSentenceOrFamilyOverlap": 0,
+  "priorSourceSentenceIdOverlap": 0,
+  "priorNormalizedSentenceHashOverlap": 0,
+  "priorTargetContextOverlap": 0,
+  "authoredTemplateContextOverlap": 0,
+  "disclosedFailureFamilyOverlap": 0,
+  "priorSentenceIdsChecked": 62018,
+  "priorSentenceHashesChecked": 52077,
+  "bindingFilesChecked": 56,
+  "evaluationScoresConsumed": false
+}

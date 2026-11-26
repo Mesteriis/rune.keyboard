@@ -64,3 +64,28 @@ internal fun assertSameKeys(expected: KeyboardSnapshot, actual: KeyboardSnapshot
 }
 
 internal class KeyboardSnapshot(val keyboard: RuneKeyboardView, val keys: List<View>)
+
+/** Isolate a test-owned controller that drives the real editor connection directly. */
+internal fun independentControllerConnection(): android.view.inputmethod.InputConnection {
+    val keyboard = keyboardSnapshot().keyboard
+    var result: Result<android.view.inputmethod.InputConnection>? = null
+    InstrumentationRegistry.getInstrumentation().runOnMainSync {
+        result = runCatching {
+            var owner: android.content.Context = keyboard.rootView.context
+            while (owner is android.content.ContextWrapper && owner !is android.inputmethodservice.InputMethodService) {
+                val next = owner.baseContext
+                check(next !== owner)
+                owner = next
+            }
+            val service = checkNotNull(owner as? io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService)
+            val field = service.javaClass.getDeclaredField("typingSession").apply { isAccessible = true }
+            val resident = field.get(service) as io.github.mesteriis.rune.keyboard.smarttyping.session.TypingSessionController
+            // This does not touch the editor. It prevents the resident owner from treating
+            // the independent test controller's composing spans as foreign editor mutations.
+            resident.endSession()
+            check(!resident.state.enabled)
+            checkNotNull(service.currentInputConnection)
+        }
+    }
+    return checkNotNull(result).getOrThrow()
+}

@@ -42,6 +42,7 @@ internal class ComposingQaFixture(context: Context, mode: String) {
         id = R.id.qa_composing_text
         setHint(R.string.qa_composing_hint)
         inputType = when (mode) {
+            "sentence_caps" -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
             "multiline" -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
             "password" -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             "email" -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
@@ -231,7 +232,7 @@ internal class ComposingQaFixture(context: Context, mode: String) {
                 return mode == "drop"
             }
             val accepted = super.setComposingText(text, newCursorPosition)
-            if (accepted && mode == "selection_then_composition" && !twoPhaseScheduled) {
+            if (accepted && mode in setOf("selection_then_composition", "selection_then_composition_diagnostics") && !twoPhaseScheduled) {
                 twoPhaseScheduled = true
                 count("twoPhaseRequested")
                 editor.notifySelection(reportComposition = false)

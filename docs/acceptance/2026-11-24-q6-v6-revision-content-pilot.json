@@ -1,0 +1,642 @@
+{
+  "apiRevisionLimitPerPage": 8,
+  "apiUpperBound": "2023-11-03T00:00:00Z",
+  "cleanerRevision": "b35d406bd9e81f08c68e7bf95d130d2f506dfe77",
+  "cleanerSha256": "bbae6bf05eaa833dec5c56fa75057dd01c14b418fccdb4d6ee4b363f476d455f",
+  "independentQualification": false,
+  "originalDumpRevisionIdsVerified": false,
+  "parserVersion": "0.6.5",
+  "purpose": "historical-revision-content-pilot",
+  "rows": [
+    {
+      "article": "4681342",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 133294255,
+          "timestamp": "2023-09-28T02:59:19Z"
+        },
+        {
+          "revid": 132445177,
+          "timestamp": "2023-08-19T08:38:56Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "49f5d7d1e55ca0b4700fd2d8618a59f1c24647aafd62f84850d5a2f458977785",
+      "status": "content-match"
+    },
+    {
+      "article": "4707047",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 132523236,
+          "timestamp": "2023-08-22T19:36:41Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "7fd26b4b0c2bef7eb3e5e59d429761f2a55f864848e6008f75cbde98209398ed",
+      "status": "content-match"
+    },
+    {
+      "article": "4729020",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 133830095,
+          "timestamp": "2023-10-26T23:33:11Z"
+        },
+        {
+          "revid": 133719621,
+          "timestamp": "2023-10-21T10:51:35Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "e0e86a048d0a857245c661a44a3e2986cc443eed225edbe5d373c0742e8c76f5",
+      "status": "content-match"
+    },
+    {
+      "article": "4732696",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 127242940,
+          "timestamp": "2022-12-13T19:07:06Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "cd7061f84f01f52383250f5eeda7ff33ef8c1cee82af8dfb20e2d57f654fd380",
+      "status": "content-match"
+    },
+    {
+      "article": "4742126",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 132144646,
+          "timestamp": "2023-08-04T19:26:39Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "6d6650a308ebc0e1e57f604e12b39849f212bc3f24f192e934c8db380387e979",
+      "status": "content-match"
+    },
+    {
+      "article": "4763798",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 130702428,
+          "timestamp": "2023-05-28T02:07:00Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "c3966750b69d990ef23732d28e009f234f206b15ad95345e5a717cf93026f783",
+      "status": "content-match"
+    },
+    {
+      "article": "4771343",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 132980650,
+          "timestamp": "2023-09-16T10:13:04Z"
+        },
+        {
+          "revid": 131839353,
+          "timestamp": "2023-07-20T15:35:43Z"
+        },
+        {
+          "revid": 130826098,
+          "timestamp": "2023-06-03T11:55:09Z"
+        },
+        {
+          "revid": 129234866,
+          "timestamp": "2023-03-14T23:01:09Z"
+        },
+        {
+          "revid": 127303929,
+          "timestamp": "2022-12-17T05:35:56Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "729a32599f751aa560b56e4ebff2eab929c21c94a173a44edc0286fcda045426",
+      "status": "content-match"
+    },
+    {
+      "article": "4796483",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 133467194,
+          "timestamp": "2023-10-07T15:04:11Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "19cc538ccb9666cd8d2c88cafa5324e430329925c04985ce34113b8cb0258668",
+      "status": "content-match"
+    },
+    {
+      "article": "4801142",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 123951190,
+          "timestamp": "2022-07-11T14:15:27Z"
+        },
+        {
+          "revid": 118790551,
+          "timestamp": "2021-12-22T16:52:07Z"
+        },
+        {
+          "revid": 114458334,
+          "timestamp": "2021-05-26T03:36:51Z"
+        },
+        {
+          "revid": 100338452,
+          "timestamp": "2019-06-10T14:32:27Z"
+        },
+        {
+          "revid": 95003314,
+          "timestamp": "2018-09-10T13:23:25Z"
+        },
+        {
+          "revid": 89606694,
+          "timestamp": "2017-12-12T01:20:16Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "dce79fd1c2216a08458bb33729402ee073ac10487305b4b258f11fa7d5deb58a",
+      "status": "content-match"
+    },
+    {
+      "article": "4816739",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 124842768,
+          "timestamp": "2022-08-15T20:10:23Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "2e0bb3ee3e40ab56d2565b777e461de47fbf15a6bd626060adb2da4a36be78d6",
+      "status": "content-match"
+    },
+    {
+      "article": "4823809",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 132151300,
+          "timestamp": "2023-08-05T08:13:46Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "4714495066fa985b47ce6987d86d57c3bc003b5091eb2d660737b30eea756316",
+      "status": "content-match"
+    },
+    {
+      "article": "4825824",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 126897134,
+          "timestamp": "2022-11-26T18:47:17Z"
+        },
+        {
+          "revid": 104313719,
+          "timestamp": "2020-01-02T16:37:24Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "0bc5e06f08232e40fac7d17a643e91a7c63246be0887e5a12e231703625354f0",
+      "status": "content-match"
+    },
+    {
+      "article": "4827506",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 133073448,
+          "timestamp": "2023-09-18T04:47:29Z"
+        },
+        {
+          "revid": 125658449,
+          "timestamp": "2022-09-23T17:18:26Z"
+        },
+        {
+          "revid": 122054273,
+          "timestamp": "2022-05-04T09:26:21Z"
+        },
+        {
+          "revid": 115406464,
+          "timestamp": "2021-07-11T01:29:24Z"
+        },
+        {
+          "revid": 113557298,
+          "timestamp": "2021-04-12T13:47:02Z"
+        },
+        {
+          "revid": 101051677,
+          "timestamp": "2019-07-15T15:20:35Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "5f4f15adfeff8d7fbc3c5fc6014a030cbb75262611dcdaa6154cf836e989ef69",
+      "status": "content-match"
+    },
+    {
+      "article": "4845309",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 125307839,
+          "timestamp": "2022-09-06T07:55:09Z"
+        },
+        {
+          "revid": 120728078,
+          "timestamp": "2022-03-18T09:41:29Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "1fff40caf84cafd1992b01436092686f9923ecd4024f8648fa78f0fcbf2976a6",
+      "status": "content-match"
+    },
+    {
+      "article": "4846251",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 133749523,
+          "timestamp": "2023-10-22T19:09:58Z"
+        },
+        {
+          "revid": 133747396,
+          "timestamp": "2023-10-22T17:29:17Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "75300bb07d11e735b98e27cd56c93ff9ec1269355a759506de7331af95f0b26a",
+      "status": "content-match"
+    },
+    {
+      "article": "4847035",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 132981527,
+          "timestamp": "2023-09-16T10:15:36Z"
+        },
+        {
+          "revid": 122287062,
+          "timestamp": "2022-05-13T14:30:39Z"
+        },
+        {
+          "revid": 94767873,
+          "timestamp": "2018-08-29T05:02:35Z"
+        },
+        {
+          "revid": 92640433,
+          "timestamp": "2018-05-13T21:11:50Z"
+        },
+        {
+          "revid": 87524326,
+          "timestamp": "2017-09-09T02:12:10Z"
+        },
+        {
+          "revid": 81344107,
+          "timestamp": "2016-10-15T16:39:54Z"
+        },
+        {
+          "revid": 77702956,
+          "timestamp": "2016-04-10T18:36:38Z"
+        },
+        {
+          "revid": 70533526,
+          "timestamp": "2015-05-01T16:29:33Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "5791b3d0c124e85a89a0f3d06ebf52962cca058d08095650dc0be614f23ce127",
+      "status": "content-match"
+    },
+    {
+      "article": "4862991",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 125116829,
+          "timestamp": "2022-08-27T12:34:20Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "2960487eecd090d6ee4438c13218090632663cfed8b2372754bfc81b5f82a5b5",
+      "status": "content-match"
+    },
+    {
+      "article": "4941374",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 133551342,
+          "timestamp": "2023-10-12T06:31:45Z"
+        },
+        {
+          "revid": 127462726,
+          "timestamp": "2022-12-25T08:02:38Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "140c37d1c3592e3fc35d585cc10cadcabdcdaaf25a0de2a7d3a8c8017bf515fb",
+      "status": "content-match"
+    },
+    {
+      "article": "4951381",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 132109122,
+          "timestamp": "2023-08-02T22:07:04Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "9923c271a6b8e08a880d1ceb4846fcb3deb6764e4ff18381c6f08ff99965b7d8",
+      "status": "content-match"
+    },
+    {
+      "article": "4953727",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 133834024,
+          "timestamp": "2023-10-27T07:59:31Z"
+        },
+        {
+          "revid": 132959631,
+          "timestamp": "2023-09-15T15:18:32Z"
+        },
+        {
+          "revid": 132877366,
+          "timestamp": "2023-09-11T12:49:06Z"
+        },
+        {
+          "revid": 132840294,
+          "timestamp": "2023-09-09T15:02:02Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "75466b15bcd10678ff8f13b46b6b134d3081bb4a0666bfea59032f85e7d5781f",
+      "status": "content-match"
+    },
+    {
+      "article": "4957832",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 126560727,
+          "timestamp": "2022-11-09T18:47:03Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "80b495a9b765aeb06fc1e83da948c41efa4cfcccb1a7782c0aa44db6c0e744da",
+      "status": "content-match"
+    },
+    {
+      "article": "4966439",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 121494711,
+          "timestamp": "2022-04-17T20:05:01Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "8136e8605b7e9e47a62514792dfcceaff3893b519b0bdea8c2707e50ca1118c1",
+      "status": "content-match"
+    },
+    {
+      "article": "4970193",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": false,
+      "matches": [
+        {
+          "revid": 101090348,
+          "timestamp": "2019-07-17T13:19:58Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "f026089ec35f30230c60b7780e68a5d751523365bc8c0e2e0e4522b5320923e4",
+      "status": "content-match"
+    },
+    {
+      "article": "4971389",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 131886566,
+          "timestamp": "2023-07-22T18:34:21Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "4ac04d08abb12f1685b0cc2b9f163786f37136144ff92c0cf0318faf5db1f7ca",
+      "status": "content-match"
+    },
+    {
+      "article": "4977864",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 133278076,
+          "timestamp": "2023-09-27T06:08:43Z"
+        },
+        {
+          "revid": 132744530,
+          "timestamp": "2023-09-04T07:53:31Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "981914ab9f6b68f2ada34cf425c545d5a6102aa68fb9a117d1586fdae5547457",
+      "status": "content-match"
+    },
+    {
+      "article": "4981433",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 131252632,
+          "timestamp": "2023-06-23T20:17:19Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "3be329b42531d102b780810b706182f1db202623ad1a016ec537274b23af7a30",
+      "status": "content-match"
+    },
+    {
+      "article": "5025908",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 133924012,
+          "timestamp": "2023-11-01T01:05:03Z"
+        },
+        {
+          "revid": 133639993,
+          "timestamp": "2023-10-16T20:24:49Z"
+        },
+        {
+          "revid": 133635075,
+          "timestamp": "2023-10-16T15:27:33Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "132c2058cd4f9992bde7ad0b61719b669a3322fdc7701d40066569aec883e824",
+      "status": "content-match"
+    },
+    {
+      "article": "5042120",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 126843822,
+          "timestamp": "2022-11-24T09:11:20Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "35ab3861e8f2856606c15950f03e5d84c275c8cbfad065326ea12035e559ae85",
+      "status": "content-match"
+    },
+    {
+      "article": "5049926",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 128915679,
+          "timestamp": "2023-03-01T23:33:54Z"
+        },
+        {
+          "revid": 120367864,
+          "timestamp": "2022-03-01T03:23:03Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "13fdb65ed901975527c08867a664432dfaaa851e6425ff46c5253e67c56d43c8",
+      "status": "content-match"
+    },
+    {
+      "article": "5072969",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 132295703,
+          "timestamp": "2023-08-11T10:00:09Z"
+        }
+      ],
+      "partition": "calibration",
+      "snapshotTextSha256": "7d3adbec28c70813f3dfa9ce03d98ba47ee8bc3e455f2a977fd9111a886b71e7",
+      "status": "content-match"
+    },
+    {
+      "article": "5096366",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 129902303,
+          "timestamp": "2023-04-18T13:23:39Z"
+        },
+        {
+          "revid": 122389843,
+          "timestamp": "2022-05-18T04:51:58Z"
+        },
+        {
+          "revid": 119645527,
+          "timestamp": "2022-01-28T02:33:51Z"
+        },
+        {
+          "revid": 115592169,
+          "timestamp": "2021-07-21T12:41:14Z"
+        },
+        {
+          "revid": 115127191,
+          "timestamp": "2021-06-26T16:00:56Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "aaaeaec8d7350cda7f0e1dd5e4866f0aebd26ce97c64984a5897c4bb74eca74f",
+      "status": "content-match"
+    },
+    {
+      "article": "5098246",
+      "comparedRevisions": 8,
+      "hasEarlierContinuation": true,
+      "matches": [
+        {
+          "revid": 120809054,
+          "timestamp": "2022-03-21T07:37:20Z"
+        },
+        {
+          "revid": 112089213,
+          "timestamp": "2021-01-31T18:39:43Z"
+        },
+        {
+          "revid": 112088911,
+          "timestamp": "2021-01-31T18:29:56Z"
+        },
+        {
+          "revid": 112088807,
+          "timestamp": "2021-01-31T18:25:14Z"
+        },
+        {
+          "revid": 112088686,
+          "timestamp": "2021-01-31T18:18:13Z"
+        },
+        {
+          "revid": 99943194,
+          "timestamp": "2019-05-21T15:56:15Z"
+        },
+        {
+          "revid": 98612067,
+          "timestamp": "2019-03-13T01:05:54Z"
+        }
+      ],
+      "partition": "holdout",
+      "snapshotTextSha256": "28d6668d55a3b431e1ab8d20804ef0cfd819d1a6fe1355232487c560333190ce",
+      "status": "content-match"
+    }
+  ],
+  "sampling": "16 lowest sha256(rune-v6-revision-pilot-v1: + page ID) per partition on shard 0011",
+  "schema": 1,
+  "sourceIndexSha256": "0f55e171539de0b476041a960f2a8f212ff6b4bfac23625aed8eecd84d8b2d88",
+  "sourceLockSha256": "02397f3424d85634e372e87d8cde55bd97af79615442d3ec1cada45831f95ede",
+  "sourceShard": "0011.parquet",
+  "sourceShardSha256": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f"
+}

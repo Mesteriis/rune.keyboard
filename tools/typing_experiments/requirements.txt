@@ -1,3 +1,4 @@
 # Host only; Python 3.11. No Android inference framework.
 numpy==2.2.6
 catboost==1.2.8
+pyarrow==25.0.1

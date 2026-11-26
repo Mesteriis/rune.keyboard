@@ -51,6 +51,8 @@ class NeighborRecoveryInstrumentedTest {
         val tokens = listOf("рооверка", "ролверка", "опботает", "клавиатуар", "пожалйста", "привет")
         val baselineTimes = mutableListOf<Double>()
         val recoveryTimes = mutableListOf<Double>()
+        val completions = mutableMapOf<CandidateCompletion, Int>()
+        var maxInspectedStates = 0
         var complete = 0
         repeat(120) { iteration ->
             val token = tokens[iteration % tokens.size]
@@ -59,6 +61,9 @@ class NeighborRecoveryInstrumentedTest {
             val localEnd = System.nanoTime()
             val recovered = generator.generateRecovery(token, KeyboardLanguage.RUSSIAN, baseline)
             val ended = System.nanoTime()
+            val completion = recovered.neighborRecovery.completion
+            completions[completion] = (completions[completion] ?: 0) + 1
+            maxInspectedStates = maxOf(maxInspectedStates, recovered.neighborRecovery.inspectedStates)
             assertEquals(baseline.alternatives, recovered.alternatives)
             assertEquals(baseline.localSearch, recovered.localSearch)
             assertTrue(recovered.neighborRecovery.inspectedStates <= 32_768)
@@ -73,8 +78,9 @@ class NeighborRecoveryInstrumentedTest {
                 recoveryTimes += (ended - localEnd) / 1e6
             }
         }
-        assertTrue(complete > 0)
         fun p95(values: List<Double>) = values.sorted()[ceil(values.size * .95).toInt() - 1]
+        assertTrue("No complete recovery: statuses=$completions maxStates=$maxInspectedStates recoveryP95Ms=${p95(recoveryTimes)}",
+            complete > 0)
         instrumentation.sendStatus(0, Bundle().apply {
             putString("neighbor_recovery_latency", "samples=100 complete=$complete baselineP95Ms=${p95(baselineTimes)} recoveryP95Ms=${p95(recoveryTimes)} recoveryMaxMs=${recoveryTimes.max()}")
         })

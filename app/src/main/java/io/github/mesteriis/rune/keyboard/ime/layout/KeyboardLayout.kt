@@ -13,6 +13,7 @@ enum class KeyStyle {
 data class KeyAlternate(
     val label: String,
     val action: KeyboardAction,
+    val accessibilityLabel: String? = null,
 ) {
     init {
         require(label.isNotEmpty()) { "Alternate label must not be empty" }
@@ -51,7 +52,7 @@ data class KeyboardLayout(val rows: List<List<KeySpec>>, val emojiPanel: Boolean
 }
 
 /** Presentation options that never participate in a state transition. */
-data class LayoutOptions(val showNumberRow: Boolean = false, val keyFlicks: Boolean = true, val emojiKey: Boolean = false) {
+data class LayoutOptions(val showNumberRow: Boolean = false, val keyFlicks: Boolean = true, val emojiKey: Boolean = false, val voiceInput: Boolean = false) {
     companion object {
         val DEFAULT = LayoutOptions()
     }

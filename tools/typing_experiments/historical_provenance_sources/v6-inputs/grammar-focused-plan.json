@@ -1,0 +1,20 @@
+{
+  "stage": "frozen-before-focused-corpus-selection-or-scoring",
+  "contextsPerPart": 500,
+  "maximumContextsPerFamily": 16,
+  "calibrationPrecision": 0.975,
+  "holdoutPrecision": 0.95,
+  "minimumIncrementalCorrect": 100,
+  "maximumInstalledCorrectLosses": 0,
+  "maximumControlChanges": 0,
+  "gridPoints": 33,
+  "seed": "rune-infinitive-revision-focus-20261026-v1",
+  "sourceSha256": "3993a545d85db1e60a9423c0165a909c0d52beba85070883adf93cf5abe3db5f",
+  "scopeSha256": "819714c454636eeff0c772fabf1f848af715046547f74ffe9d0cb9b0e0d8c999",
+  "formsSha256": "0af90417bc553c8867bf63cb4aea359543f29286538deefd0f6a80755a00dbf4",
+  "modelSha256": "20409f7407fea7381d223351570b784adaed46357c5cd1643a28d285961b23cd",
+  "referenceModelSha256": "4d7bf2a9477b588046a1187c11e206bd1ca6f73180e8abf3b21c84f024a783f0",
+  "sampling": "Natural source infinitive after fixed cue, dictionary-verified finite rival and shared adjacent corruption; no model-based selection",
+  "qualificationScope": "Focused synthetic typing opportunities from natural public contexts, not general keyboard accuracy",
+  "holdoutMustRemainUnusedUntilCalibrationPasses": true
+}

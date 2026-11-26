@@ -34,6 +34,16 @@ class KeyboardLayoutProvider {
             KeyboardLayer.EMOJI -> if (editorContext.allowsEmojiPanel) emojiLayout(state, editorContext)
                 else lettersLayout(state, editorContext, options)
         }
+    }.let { layout ->
+        if (!options.voiceInput || editorContext.inputPolicy == InputPolicy.SENSITIVE) layout
+        else layout.copy(rows = layout.rows.map { row -> row.map { key ->
+            if (key.action != KeyboardAction.ToggleSymbols) key else key.copy(
+                longPressAlternates = key.longPressAlternates + KeyAlternate(
+                    "🎤", KeyboardAction.VoiceInput,
+                    editText(state.language, "Voice input", "Голосовой ввод", "Entrada de voz"),
+                ),
+            )
+        } })
     }
 
     private fun editText(language: KeyboardLanguage, en: String, ru: String, es: String): String = when (language) {
@@ -71,7 +81,7 @@ class KeyboardLayoutProvider {
     }
 
     private fun emojiLayout(state: KeyboardState, editor: EditorContext): KeyboardLayout {
-        val mode = lettersKey()
+        val mode = lettersKey(state.language, editor)
         val delete = deleteKey()
         val enter = enterKey(editor)
         val space = spaceKey(state.language, BOTTOM_ROW_WEIGHT - mode.weight - delete.weight - enter.weight)
@@ -205,7 +215,7 @@ class KeyboardLayoutProvider {
             EditorMode.URI -> "/"
             else -> ","
         }
-        val modeKey = if (includeModeKey) symbolsKey(state.language, editorContext) else lettersKey()
+        val modeKey = if (includeModeKey) symbolsKey(state.language, editorContext) else lettersKey(state.language, editorContext)
         val punctuationKey = symbolKey(punctuation, state.language, weight = PUNCTUATION_WEIGHT)
         val periodKey = symbolKey(".", state.language, weight = PUNCTUATION_WEIGHT)
         val enterKey = enterKey(editorContext)
@@ -307,14 +317,22 @@ class KeyboardLayoutProvider {
         weight = MODE_KEY_WEIGHT,
         style = KeyStyle.ACTION,
         longPressAlternates = if (editor.inputPolicy == InputPolicy.SENSITIVE) emptyList() else
-            listOf(KeyAlternate(editText(language, "Edit", "Правка", "Editar"), KeyboardAction.OpenEditing)),
+            listOf(KeyAlternate(editText(language, "Edit", "Правка", "Editar"), KeyboardAction.OpenEditing),
+                nextKeyboardAlternate(language)),
     )
 
-    private fun lettersKey(): KeySpec = KeySpec(
+    private fun nextKeyboardAlternate(language: KeyboardLanguage) = KeyAlternate(
+        "⌨", KeyboardAction.NextInputMethod,
+        editText(language, "Next keyboard", "Следующая клавиатура", "Siguiente teclado"),
+    )
+
+    private fun lettersKey(language: KeyboardLanguage, editor: EditorContext): KeySpec = KeySpec(
         label = "ABC",
         action = KeyboardAction.ToggleSymbols,
         weight = MODE_KEY_WEIGHT,
         style = KeyStyle.ACTION,
+        longPressAlternates = if (editor.inputPolicy == InputPolicy.SENSITIVE) emptyList() else
+            listOf(nextKeyboardAlternate(language)),
     )
 
     private fun symbolsPageKey(label: String): KeySpec = KeySpec(

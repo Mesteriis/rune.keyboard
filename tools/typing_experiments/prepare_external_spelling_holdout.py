@@ -9,6 +9,7 @@ import importlib.util
 import json
 from pathlib import Path
 import unicodedata
+import independent_corpus_guard as registry_guard
 
 
 HERE = Path(__file__).resolve().parent
@@ -54,9 +55,10 @@ def excluded_families(paths: list[Path], family_function) -> tuple[set[str], dic
     rows = 0
     for path in paths:
         resolved = path.resolve(strict=True)
-        if not resolved.is_file() or resolved in bindings:
+        key = str(resolved.relative_to(ROOT)) if resolved.is_relative_to(ROOT) else str(resolved)
+        if not resolved.is_file() or key in bindings:
             raise ValueError("EXCLUSION_PATH")
-        bindings[str(resolved.relative_to(ROOT)) if resolved.is_relative_to(ROOT) else str(resolved)] = sha256(resolved)
+        bindings[key] = sha256(resolved)
         for row in read_jsonl(resolved):
             value = row.get("family") or row.get("expectedSpelling") or row.get("typed")
             if not isinstance(value, str) or not value:
@@ -74,11 +76,18 @@ def build_rows(pool: list[dict], known: set[str], generator, typo_count: int = T
         f"{SEED}:external-holdout:{row['family']}:{row['selectionHash']}".encode()).digest())
     rows: list[dict] = []
     cursor = 0
+    seen_canonical = set()
     for cohort, required in (("typo", typo_count), ("correct", correct_count)):
         produced = 0
         while produced < required and cursor < len(ordered):
             item = ordered[cursor]
             cursor += 1
+            families = set()
+            if 'sourceEvidence' in item:
+                from fresh_spelling_holdout import canonical_family_keys
+                families = canonical_family_keys(item['sourceEvidence']['families'])
+                if seen_canonical & families:
+                    continue
             variants = generator.safe_typos(item["word"], "ru", known,
                 f"{SEED}:holdout:{cohort}:{item['selectionHash']}")
             if not variants:
@@ -112,7 +121,10 @@ def build_rows(pool: list[dict], known: set[str], generator, typo_count: int = T
             }
             if cohort == "typo":
                 row["expectedSpelling"] = item["word"]
+            if 'sourceEvidence' in item:
+                row.update(item['sourceEvidence'])
             rows.append(row)
+            seen_canonical.update(families)
             produced += 1
     if Counter(row["cohort"] for row in rows) != Counter(typo=typo_count, correct=correct_count):
         raise ValueError("INSUFFICIENT_FRESH_HOLDOUT")
@@ -121,7 +133,8 @@ def build_rows(pool: list[dict], known: set[str], generator, typo_count: int = T
     return rows
 
 
-def prepare(parquet_path: Path, frequency_path: Path, exclusions: list[Path], output: Path) -> dict:
+def prepare(parquet_path: Path, frequency_path: Path, exclusions: list[Path], output: Path, *, historical_reproduction: bool = False) -> dict:
+    snapshot = registry_guard.begin(historical_reproduction)
     try:
         import pyarrow
         import pyarrow.parquet as parquet
@@ -139,13 +152,27 @@ def prepare(parquet_path: Path, frequency_path: Path, exclusions: list[Path], ou
 
     generator = load_generator()
     excluded, exclusion_bindings, excluded_rows = excluded_families(exclusions, generator.family)
+    input_snapshot = None
+    lexicon = None
+    dictionary_receipt = None
+    if snapshot is not None:
+        import fresh_spelling_holdout as shared
+        input_snapshot, lexicon, dictionary_receipt = shared.prepare_source_resources(
+            snapshot, source, SOURCE_SHA256, frequency, FREQUENCY_SHA256,
+            Path(__file__).resolve(), exclusions, exclusion_bindings)
     known = generator.vocabulary(frequency, "ru")
     best: dict[str, dict] = {}
     articles = 0
+    seen_articles = set()
     for batch in parquet.ParquetFile(source).iter_batches(batch_size=128, columns=["id", "text"]):
         for article_id, text in zip(batch.column(0).to_pylist(), batch.column(1).to_pylist(), strict=True):
             articles += 1
-            for item in generator.spelling_candidates(text or "", "ru", known, excluded, SEED):
+            if snapshot is not None:
+                shared.register_source_article(article_id, seen_articles)
+                candidates = shared.source_bound_candidates(article_id, text, known, excluded, SEED, generator, lexicon)
+            else:
+                candidates = generator.spelling_candidates(text or "", "ru", known, excluded, SEED)
+            for item in candidates:
                 current = best.get(item["family"])
                 if current is None or item["selectionHash"] < current["selectionHash"]:
                     best[item["family"]] = item
@@ -153,6 +180,13 @@ def prepare(parquet_path: Path, frequency_path: Path, exclusions: list[Path], ou
     rows = build_rows(list(best.values()), known, generator)
     if any(generator.family(row["family"]) in excluded for row in rows):
         raise ValueError("EXCLUDED_FAMILY_SELECTED")
+    if snapshot is not None:
+        shared.require_disjoint_canonical_families(rows)
+    registry_receipt = registry_guard.finish(snapshot, rows)
+    if snapshot is not None:
+        registry_guard.verify_selector_inputs(input_snapshot)
+        if lexicon.receipt() != dictionary_receipt:
+            raise ValueError('FRESH_DICTIONARY_DRIFT')
     output.mkdir(parents=True)
     rows_path = output / "rows.jsonl"
     with rows_path.open("x", encoding="utf-8") as stream:
@@ -187,6 +221,10 @@ def prepare(parquet_path: Path, frequency_path: Path, exclusions: list[Path], ou
             str(GENERATOR.relative_to(ROOT)): sha256(GENERATOR),
         },
     }
+    manifest.update(registry_receipt)
+    if snapshot is not None:
+        manifest['dictionary'] = dictionary_receipt
+        manifest['selectionInputBindings'] = {name: digest for name, (_, digest) in sorted(input_snapshot.items())}
     manifest_path = output / "manifest.json"
     with manifest_path.open("x", encoding="utf-8") as stream:
         stream.write(json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=2,
@@ -200,9 +238,13 @@ def main() -> None:
     parser.add_argument("--frequency", type=Path, required=True)
     parser.add_argument("--exclude-rows", type=Path, action="append", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--historical-reproduction", action="store_true",
+                        help="Reproduce disclosed data; never claim independent qualification.")
     args = parser.parse_args()
-    result = prepare(args.parquet, args.frequency, args.exclude_rows, args.output)
-    print(json.dumps({"counts": result["counts"], "selection": result["selection"]},
+    result = prepare(args.parquet, args.frequency, args.exclude_rows, args.output,
+                     historical_reproduction=args.historical_reproduction)
+    print(json.dumps({"counts": result["counts"], "selection": result["selection"],
+                      "scope": result["scope"], "independentQualification": result["independentQualification"]},
                      ensure_ascii=False, sort_keys=True))
 
 

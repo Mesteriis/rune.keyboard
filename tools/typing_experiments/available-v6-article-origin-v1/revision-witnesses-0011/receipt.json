@@ -1,0 +1,47 @@
+{
+  "apiRevisionLimitPerPage": 8,
+  "apiUpperBound": "2023-11-03T00:00:00Z",
+  "articles": 355,
+  "articlesSha256": "7b011b73fc8ac45458f7aad96be9c22326cd4ee460ce2f813a1a8fb4330c6b37",
+  "cleanerRevision": "b35d406bd9e81f08c68e7bf95d130d2f506dfe77",
+  "cleanerSha256": "bbae6bf05eaa833dec5c56fa75057dd01c14b418fccdb4d6ee4b363f476d455f",
+  "comparedRevisions": 2816,
+  "corpusRowsSha256": {
+    "calibration": "0e38210241368965d30edbce36387b6de3f821447c1e69d5ba19ef4c2b75ebf9",
+    "holdout": "fab03f6fb1c08c462328ebf5c18877b0483ab7977179090c2bd48db9e89a0e8d"
+  },
+  "dumpDateCutoff": "2023-11-01T23:59:59Z",
+  "earlierContinuation": 338,
+  "independentQualification": false,
+  "matchingRevisions": 947,
+  "multipleMatches": 229,
+  "numericRunSha256": "2c31d274695d32a9fbe4172bfd8a26251c5082762f6bcb95a387f0a55362b9b5",
+  "originalDumpRevisionIdsVerified": false,
+  "parserVersion": "0.6.5",
+  "partitions": {
+    "calibration": {
+      "articles": 193,
+      "contexts": 193,
+      "multipleMatches": 123,
+      "rows": 919,
+      "singleMatch": 70
+    },
+    "holdout": {
+      "articles": 162,
+      "contexts": 163,
+      "multipleMatches": 106,
+      "rows": 773,
+      "singleMatch": 56
+    }
+  },
+  "pilotReceiptSha256": "e5ccaf17c636061c1d4706679bb923112b897403155a8bf98805b929f3164b15",
+  "purpose": "historical-revision-content-first-shard",
+  "sampling": "all recovered v6 article IDs in shard 0011",
+  "schema": 1,
+  "sourceIndexSha256": "0f55e171539de0b476041a960f2a8f212ff6b4bfac23625aed8eecd84d8b2d88",
+  "sourceLockSha256": "02397f3424d85634e372e87d8cde55bd97af79615442d3ec1cada45831f95ede",
+  "sourceShard": "0011.parquet",
+  "sourceShardSha256": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f",
+  "unavailableRequests": 0,
+  "withMatchOnOrBeforeDumpDate": 355
+}

@@ -26,6 +26,8 @@ data class JointCorrectionEvaluation(
     val contextualAttempted: Boolean = false,
     val contextualRefusal: JointCorrectionRefusal? = null,
     val contextualAdmissionRefusal: io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal? = null,
+    /** A contextual proposal refused for automatic use, available only for explicit selection. */
+    val contextualManualCandidate: GeneratedCandidate? = null,
     val wordContextAttempted: Boolean = false,
     val wordContextRefusal: JointCorrectionRefusal? = null,
     val wordContextAdmissionRefusal: io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal? = null,

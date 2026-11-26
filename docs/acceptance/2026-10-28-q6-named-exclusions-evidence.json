@@ -1,0 +1,30 @@
+{
+  "coverageComplete": false,
+  "independentQualification": false,
+  "namedRows": 56,
+  "newEntries": 3,
+  "oldEntriesPreserved": 24,
+  "phoneExecuted": false,
+  "privateStdlibReceiptSha256": "bb0313258bfd8931165dfa0bef8e1a20cc9ae5e81ab74f1268931da175024ba2",
+  "schemaVersion": 1,
+  "scope": "disclosed-named-control-exclusions",
+  "sourceSha256": {
+    "tools/typing_experiments/control-ledger.json": "830e0bcfb2c6c2bacfd5ff968ddedbf377f580402213ee132b760649623881ae",
+    "tools/typing_experiments/control_ledger.py": "2647503526a78fad3c31c27ec3739b9f3468a428072716f43c7b73c489872674",
+    "tools/typing_experiments/register_named_regressions.py": "a9619332c298dc766dbb83a20e4a174858cc841f96cb2393d13d49657b5dc50b",
+    "tools/typing_experiments/test_control_ledger.py": "a453c0376791e2b45b1ffb19f4d3e44f2ac900d0a80764ed1d9c807041a46af3"
+  },
+  "stdlib": {
+    "errors": 0,
+    "failures": 0,
+    "modules": 113,
+    "skips": 0,
+    "status": "PASS",
+    "tests": 591
+  },
+  "totalEntries": 27,
+  "unitTests": {
+    "python3.12": 8,
+    "python3.14": 8
+  }
+}

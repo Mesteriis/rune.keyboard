@@ -7,9 +7,13 @@ from pathlib import Path
 
 FIELDS = {'profile', 'length', 'words', 'corrections', 'lastCorrected', 'firstFive',
           'undo', 'sixth', 'literalFive', 'literalBackspace'}
+OMNIBOX_CLASS = 'io.github.mesteriis.rune.keyboard.qa.ChromeOmniboxInstrumentedTest'
+OMNIBOX_METHOD = 'landscapeGoLoadsOwnedPageAndDismissesKeyboard'
+PASSWORD_CLASS = 'io.github.mesteriis.rune.keyboard.qa.ChromePasswordInstrumentedTest'
+PASSWORD_METHOD = 'passwordSuppressesPreviewAndDeletesOneCharacter'
 
 
-def verify(records, native):
+def numeric_profiles(records):
     if not 1 <= len(records) <= 512:
         raise ValueError('DOM_RECEIPT_COUNT')
     profiles = {'ordinary': [], 'no-suggestions': []}
@@ -23,6 +27,11 @@ def verify(records, native):
         if value['corrections'] > value['words'] or value['words'] > value['length']:
             raise ValueError('DOM_RECEIPT_COUNTS')
         profiles[value['profile']].append(value)
+    return profiles
+
+
+def verify(records, native):
+    profiles = numeric_profiles(records)
     required = {
         'ordinary': [('firstFive', 20, 5, 5, 1), ('undo', 19, 5, 4, 0), ('sixth', 24, 6, 5, 1)],
         'no-suggestions': [('literalFive', 20, 5, 0, 0), ('literalBackspace', 19, 5, 0, 0)],
@@ -49,16 +58,58 @@ def verify(records, native):
     return {'passed': True, 'nativeTests': 2, 'profiles': outcomes, 'numericOnly': True}
 
 
+def verify_navigation(records, native):
+    profiles = numeric_profiles(records)
+    if (records[0]['profile'] != 'ordinary' or not profiles['no-suggestions'] or
+            any(value != 0 for row in records for key, value in row.items() if key != 'profile')):
+        raise ValueError('DOM_NAVIGATION_NOT_OBSERVED')
+    verify_single_native(native, OMNIBOX_CLASS, OMNIBOX_METHOD, 'OMNIBOX_NATIVE_RUN_INCOMPLETE')
+    return {'passed': True, 'nativeTests': 1, 'numericOnly': True,
+            'profiles': {name: len(rows) for name, rows in profiles.items()}}
+
+
+def verify_single_native(native, cls, method, failure):
+    classes = re.findall(r'^INSTRUMENTATION_STATUS: class=(.*)$', native, re.M)
+    methods = re.findall(r'^INSTRUMENTATION_STATUS: test=(.*)$', native, re.M)
+    events = re.findall(r'^INSTRUMENTATION_STATUS_CODE: (-?\d+)$', native, re.M)
+    if (classes != [cls] * 2 or methods != [method] * 2 or events != ['1', '0'] or
+            not re.search(r'^OK \(1 test\)$', native, re.M) or
+            not re.search(r'^INSTRUMENTATION_CODE: -1$', native, re.M) or 'FAILURES!!!' in native):
+        raise ValueError(failure)
+
+
+def verify_password(records, native):
+    stages = [(0, 0, 0), (10, 1, 0), (9, 0, 1)]
+    if not 3 <= len(records) <= 512:
+        raise ValueError('PASSWORD_DOM_COUNT')
+    for row in records:
+        if (not isinstance(row, dict) or row.keys() != {'profile', 'length', 'typed', 'deleted'}
+                or row['profile'] != 'password'
+                or any(type(row[field]) is not int for field in ('length', 'typed', 'deleted'))
+                or not 0 <= row['length'] <= 512 or row['typed'] not in (0, 1) or row['deleted'] not in (0, 1)):
+            raise ValueError('PASSWORD_DOM_FIELDS')
+        if stages and (row['length'], row['typed'], row['deleted']) == stages[0]:
+            stages.pop(0)
+    if stages:
+        raise ValueError('PASSWORD_DOM_STAGE_MISSING')
+    verify_single_native(native, PASSWORD_CLASS, PASSWORD_METHOD, 'PASSWORD_NATIVE_RUN_INCOMPLETE')
+    return {'passed': True, 'nativeTests': 1, 'numericOnly': True, 'passwordRecords': len(records)}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--receipt', required=True, type=Path)
     parser.add_argument('--native-log', required=True, type=Path)
+    scenario = parser.add_mutually_exclusive_group()
+    scenario.add_argument('--navigation', action='store_true', help='Require the separate owned omnibox scenario.')
+    scenario.add_argument('--password', action='store_true', help='Require the separate owned password scenario.')
     args = parser.parse_args()
     try:
         if args.receipt.stat().st_size > 256 * 1024 or args.native_log.stat().st_size > 1024 * 1024:
             raise ValueError('INPUT_SIZE')
         records = [json.loads(line) for line in args.receipt.read_text().splitlines()]
-        result = verify(records, args.native_log.read_text())
+        check = verify_navigation if args.navigation else verify_password if args.password else verify
+        result = check(records, args.native_log.read_text())
     except (ValueError, OSError) as error:
         # Never echo input or JSON parsing excerpts that could contain unexpected payload.
         print('Chrome editor verification FAILED:', type(error).__name__)

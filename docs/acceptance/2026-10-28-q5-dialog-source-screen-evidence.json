@@ -1,0 +1,23 @@
+{
+  "auditSha256": "1550fbcd44e52a18025ff47beca9c5b366f0a096382a27d0e5a14d85c7f36b3f",
+  "caveats": [
+    "Synthetic paired questions and assistant answers, not natural chat.",
+    "Exact prior control overlap is not a full training or holdout provenance audit.",
+    "Source text and labels have not been proofread."
+  ],
+  "counts": {
+    "answerEligible": 7871,
+    "dialogues": 125000,
+    "questionEligible": 6008,
+    "uniqueEligible": 6326,
+    "uniqueExactPriorControls": 0
+  },
+  "priorRowsSha256": "c25d9afed4b75f78490f2e360c3eb0a0e06aaf97e3291d79f0bdd29aec0ee62f",
+  "purpose": "PUBLIC_SYNTHETIC_SOURCE_SCREENING_NOT_QUALIFICATION",
+  "qualification": false,
+  "readmeSha256": "20a3d72074da322b063b82e2ddecbb2f9adc3cb003316749f3c58eb6e563e1f5",
+  "repository": "https://huggingface.co/datasets/GlayAI/Tiny-Russian-Dialogs",
+  "revision": "4f85463dc22850a2f6e961c9c21b13510d362d3a",
+  "schema": 1,
+  "sourceSha256": "15aea2ae3ceb98c23082731fda3e389e7bcd09c5fbcc9c50b728b4b7b20fce36"
+}

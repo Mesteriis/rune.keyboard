@@ -28,6 +28,7 @@ sealed interface EditorCommand {
     data class PerformEditorAction(val actionId: Int) : EditorCommand
     data object InsertNewline : EditorCommand
     data object SwitchToNextInputMethod : EditorCommand
+    data object SwitchToVoiceInput : EditorCommand
     data object HideKeyboard : EditorCommand
 
     data class NavigateCursor(val direction: CursorDirection, val extendSelection: Boolean = false) : EditorCommand

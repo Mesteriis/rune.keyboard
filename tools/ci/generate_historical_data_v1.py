@@ -58,8 +58,7 @@ def build(source_build, parquet, frequency, output):
             payloads[directory + '/' + filename] = (source_build / directory / filename).read_bytes()
         script = 'prepare_refinement.py' if directory.startswith('typing-refinement') else 'prepare_epoch_test.py'
         script = 'tools/typing_experiments/' + script
-        if fixtures.sha((fixtures.ROOT / script).read_bytes()) != manifest['preparationScriptSha256']:
-            raise ValueError('HISTORICAL_GENERATOR_IDENTITY')
+        fixtures.read_frozen_source(fixtures.ROOT,script,manifest['preparationScriptSha256'])
         generators[script] = manifest['preparationScriptSha256']
         articles.update(article for part in manifest['partitions'].values() for article in part['articles'])
     fixtures.check_payloads(payloads)

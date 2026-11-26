@@ -15,8 +15,12 @@ import org.junit.Test
 
 /** Fixed public words; the real IME, packed ranker, worker and remote editor own this flow. */
 class NeighborRecoveryLiveInstrumentedTest : ImeTestBase() {
-    @Test fun twoNeighborErrorsCorrectAndUndoKeepsTheNextWord() = exercise("палецшего", true)
-    @Test fun threeNeighborErrorsCorrectWithHiddenStripAndBackspaceRestoresSource() = exercise("машефшегш", false)
+    @Test fun twoNeighborErrorsCorrectAndUndoKeepsTheNextWord() = withCiFailureMetadata(driver) {
+        exercise("палецшего", true)
+    }
+    @Test fun threeNeighborErrorsCorrectWithHiddenStripAndBackspaceRestoresSource() = withCiFailureMetadata(driver) {
+        exercise("машефшегш", false)
+    }
 
     private fun exercise(typed: String, strip: Boolean) {
         val context = InstrumentationRegistry.getInstrumentation().targetContext

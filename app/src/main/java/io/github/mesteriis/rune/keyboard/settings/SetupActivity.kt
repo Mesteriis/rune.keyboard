@@ -2,6 +2,7 @@ package io.github.mesteriis.rune.keyboard.settings
 
 import android.content.ComponentName
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
 import android.text.InputType
@@ -131,7 +132,9 @@ class SetupActivity : ThemedActivity() {
         themeName.setText(themeTitle(selected))
         themeSummary.setText(themeDescription(selected))
         previewHost.removeAllViews()
-        val keyboard = RuneKeyboardView(this, KeyboardViewMetrics(ui.dp(46), ui.dp(3)), selected).apply {
+        val systemNight = applicationContext.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+        val keyboard = RuneKeyboardView(this, KeyboardViewMetrics(ui.dp(46), ui.dp(3)), selected,
+            settings.keyboardPalette.isLight(systemNight)).apply {
             // The shell owns system insets; an embedded preview is not a docked IME window.
             setOnApplyWindowInsetsListener { _, insets -> insets }
         }

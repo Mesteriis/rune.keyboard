@@ -66,6 +66,10 @@ object KeyboardReducer {
                 state = base,
                 command = EditorCommand.HideKeyboard,
             )
+            KeyboardAction.VoiceInput -> KeyboardTransition(
+                state = base,
+                command = if (editorContext.inputPolicy != InputPolicy.SENSITIVE) EditorCommand.SwitchToVoiceInput else null,
+            )
             KeyboardAction.NextInputMethod -> KeyboardTransition(
                 state = base,
                 command = EditorCommand.SwitchToNextInputMethod,

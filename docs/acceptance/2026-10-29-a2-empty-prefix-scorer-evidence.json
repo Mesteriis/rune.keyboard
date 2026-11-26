@@ -1,0 +1,24 @@
+{
+  "deterministic": true,
+  "independentQualification": false,
+  "inputSha256": {
+    "tools/ci/a2_empty_prefix_screen.py": "2ef50e681c4e4f1d51ee6bf439b43f7a1429a26ff6c1bff1091234985e25bfda",
+    "tools/ci/register_a2_empty_prefix.py": "50770704fc05dc731e46c16f616085cb5cdea627e961147b48eebb8b03383227",
+    "tools/eval/smart-typing-0.3/pipeline/final_product_replay.py": "b1ae37817a75001cacd1e7d164b406f335af806d760f4bb1221e77c26680baa5",
+    "tools/typing_experiments/a2-empty-prefix-controls-v1/NOTICE.md": "7fabfea538deebfa26e15efc2759675c38850fe114fb75c791e63252f3c1b021",
+    "tools/typing_experiments/a2-empty-prefix-controls-v1/cases.json": "dd8c87a1be03f3e2f8f659ea9aca0236e3daefa484222819c0a466de8bf4987a",
+    "tools/typing_experiments/control-ledger.json": "880b5266496a03e118ce2f8361fbbc5293468611dec7778afd6fe9b3c5a9f4d5",
+    "tools/typing_experiments/holdout-ledger.json": "7d92f2f606534a5edabed1daf36f6f68ee59fa536cb778309833e8f1e3dbd291"
+  },
+  "modelSha256": "7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4",
+  "outcomes": {
+    "blank-1": "INSUFFICIENT_CONTEXT",
+    "blank-2": "INSUFFICIENT_CONTEXT",
+    "blank-3": "SCORED",
+    "blank-4": "INSUFFICIENT_CONTEXT",
+    "space-1": "INSUFFICIENT_CONTEXT"
+  },
+  "runnerSha256": "bc3f78bdf3ac41009a7603ca5dd6b6c4d5e8d6c2bdcaf3a692cfd95a3b3d2553",
+  "scope": "disclosed-synthetic-host-scorer-diagnostic",
+  "scoresSha256": "a5fc74a0502c6e555a3bda9615a2270357e4c0c5ade00728347970544e91aaf3"
+}

@@ -7,10 +7,12 @@ import java.io.ByteArrayInputStream
 import java.io.File
 
 class EmojiCatalogTest {
-    @Test fun `category count and invalid indices do not decode names and valid accesses share a snapshot`() {
+    @Test fun `category count and invalid indices do not decode names and entries decode once`() {
         var calls = 0
         val entry = EmojiEntry("😀", EmojiNames("one", "один", "uno"))
-        val entries = DeferredEmojiEntries(2) { calls++; listOf(entry, entry.copy(glyph = "😃")) }
+        val entries = DeferredEmojiEntries(listOf("😀", "😃")) { index ->
+            calls++; if (index == 0) entry else entry.copy(glyph = "😃")
+        }
         assertEquals(2, entries.size)
         assertEquals(0, calls)
         for (index in listOf(-1, 2)) assertThrows(IndexOutOfBoundsException::class.java) { entries[index] }
@@ -18,16 +20,16 @@ class EmojiCatalogTest {
         assertSame(entry, entries[0])
         assertEquals("😃", entries[1].glyph)
         assertSame(entry, entries[0])
-        assertEquals(1, calls)
-        assertThrows(IllegalArgumentException::class.java) { DeferredEmojiEntries(0) { emptyList() } }
-        assertThrows(IllegalArgumentException::class.java) { DeferredEmojiEntries(1) { emptyList() }[0] }
+        assertEquals(2, calls)
+        assertThrows(IllegalArgumentException::class.java) { DeferredEmojiEntries(emptyList()) { entry } }
+        assertThrows(IllegalArgumentException::class.java) { DeferredEmojiEntries(listOf("😃")) { entry }[0] }
     }
 
     @Test fun `concurrent category readers decode once and observe the same immutable entry`() {
         val calls = java.util.concurrent.atomic.AtomicInteger()
-        val entries = DeferredEmojiEntries(1) {
+        val entries = DeferredEmojiEntries(listOf("😀")) {
             calls.incrementAndGet()
-            listOf(EmojiEntry("😀", EmojiNames("one", "один", "uno")))
+            EmojiEntry("😀", EmojiNames("one", "один", "uno"))
         }
         val start = java.util.concurrent.CountDownLatch(1)
         val pool = java.util.concurrent.Executors.newFixedThreadPool(2)
@@ -75,6 +77,19 @@ class EmojiCatalogTest {
         assertEquals(" second name ", entries.last().names.english)
         assertEquals(" второе имя ", entries.last().names.russian)
         assertEquals(" segundo nombre ", entries.last().names.spanish)
+    }
+
+    @Test fun `category id reuse handles interleaved groups and rejects changed ids`() {
+        val text = "# rune-emoji-catalog-v1\n" +
+            "G\ta\t😀\tA\tА\tA\nG\tab\t😃\tB\tБ\tB\n" +
+            "E\ta\t😀\tone\tодин\tuno\nE\tab\t😃\ttwo\tдва\tdos\n" +
+            "E\ta\t😄\tthree\tтри\ttres\nE\ta\t😁\tfour\tчетыре\tcuatro\n"
+        val categories = read(text).categories
+        assertEquals(listOf("a", "ab"), categories.map { it.id })
+        assertEquals(listOf("😀", "😄", "😁"), categories[0].entries.map { it.glyph })
+        assertEquals(listOf("😃"), categories[1].entries.map { it.glyph })
+        assertThrows(IllegalArgumentException::class.java) { read(text.replace("E\tab\t😃", "E\taB\t😃")) }
+        assertThrows(IllegalArgumentException::class.java) { read(text.replace("E\tab\t😃", "E\tabc\t😃")) }
     }
 
     private val asset = File("src/main/assets/emoji/catalog-v1.tsv")
@@ -148,6 +163,15 @@ class EmojiCatalogTest {
         assertTrue(input.available() > 0)
     }
 
+    @Test fun `the exact byte limit is accepted while a single extra byte is refused`() {
+        val padding = "x".repeat(320_000 - fixture.toByteArray().size)
+        val text = fixture.replace("woman technologist", "woman technologist" + padding)
+        assertEquals(320_000, text.toByteArray().size)
+        assertEquals("woman technologist" + padding, read(text).categories.single().entries.single().names.english)
+        val error = assertThrows(IllegalArgumentException::class.java) { read(text + "x") }
+        assertEquals("Emoji catalog exceeds byte budget", error.message)
+    }
+
     @Test fun `valid input is closed`() {
         var closed = false
         val input = object : ByteArrayInputStream(fixture.toByteArray()) {
@@ -199,5 +223,61 @@ class EmojiCatalogTest {
         palette.recordCommitted("not an emoji")
         assertEquals(32, palette.recents.size)
         assertTrue(EmojiPalette({ catalog }, { true }).recents.isEmpty())
+    }
+
+    @Test fun `recording an opened category does not decode preceding categories`() {
+        val names = EmojiNames("name", "имя", "nombre")
+        val entry = EmojiEntry("😀", names)
+        var precedingDecodes = 0
+        val catalog = EmojiCatalog(listOf(
+            EmojiCategory("first", "1", names, DeferredEmojiEntries(listOf("😃")) {
+                precedingDecodes++
+                EmojiEntry("😃", names)
+            }),
+            EmojiCategory("second", "2", names, listOf(entry)),
+        ))
+        val palette = EmojiPalette({ catalog }, { true })
+        assertEquals(listOf(entry), palette.entries("second"))
+        palette.recordCommitted(entry.glyph)
+        assertEquals(listOf(entry), palette.recents)
+        assertEquals(0, precedingDecodes)
+        palette.recordCommitted("😃")
+        assertEquals(1, precedingDecodes)
+        assertEquals(listOf("😃", "😀"), palette.recents.map { it.glyph })
+    }
+
+    @Test fun `filtering glyphs does not decode unopened entries`() {
+        val names = EmojiNames("name", "имя", "nombre")
+        val decoded = mutableListOf<Int>()
+        val glyphs = listOf("😀", "😃", "😄")
+        val entries = DeferredEmojiEntries(glyphs) { index ->
+            decoded.add(index); EmojiEntry(glyphs[index], names)
+        }
+        val palette = EmojiPalette({ EmojiCatalog(listOf(EmojiCategory("first", "1", names, entries))) }, { it != "😃" })
+        val filtered = palette.entries("first")
+        assertEquals(2, filtered.size)
+        assertTrue(decoded.isEmpty())
+        assertEquals("😄", filtered[1].glyph)
+        assertEquals(listOf(2), decoded)
+        assertEquals("😄", filtered[1].glyph)
+        assertEquals(listOf(2), decoded)
+        assertThrows(IndexOutOfBoundsException::class.java) { filtered[-1] }
+        assertThrows(IndexOutOfBoundsException::class.java) { filtered[2] }
+    }
+
+    @Test fun `recording a later opened glyph decodes only that glyph`() {
+        val names = EmojiNames("name", "имя", "nombre")
+        val glyphs = listOf("😀", "😃", "😄")
+        val decoded = mutableListOf<Int>()
+        val entries = DeferredEmojiEntries(glyphs) { index ->
+            decoded.add(index); EmojiEntry(glyphs[index], names)
+        }
+        val palette = EmojiPalette({ EmojiCatalog(listOf(EmojiCategory("first", "1", names, entries))) }, { true })
+        assertEquals(3, palette.entries("first").size)
+        palette.recordCommitted("😄")
+        assertEquals(listOf(2), decoded)
+        assertEquals(listOf("😄"), palette.recents.map { it.glyph })
+        palette.recordCommitted("😄")
+        assertEquals(listOf(2), decoded)
     }
 }

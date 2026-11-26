@@ -61,6 +61,10 @@ class KeyboardPreferences internal constructor(private val preferences: SharedPr
         edit { putString(SettingsCodec.KEY_KEYBOARD_THEME, theme.name) }
     }
 
+    fun writeKeyboardPalette(palette: KeyboardPalette) {
+        edit { putString(SettingsCodec.KEY_KEYBOARD_PALETTE, palette.name) }
+    }
+
     fun writeHapticMode(mode: HapticMode) {
         edit { putString(SettingsCodec.KEY_HAPTIC_MODE, mode.name) }
     }

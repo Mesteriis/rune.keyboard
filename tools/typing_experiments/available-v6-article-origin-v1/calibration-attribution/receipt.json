@@ -1,0 +1,60 @@
+{
+  "articleCount": 1651,
+  "articlesSha256": "52879ff76c1362c617d5910c4e75455c884e4a720034322a1a9593afe9e06fec",
+  "bindings": {
+    "tools/typing_experiments/available-v6-article-origin-v1/calibration-recovery/calibration.tsv.bz2": "0db4c6ed1cffce9f24f3f5fe9e5f875e8bdedf215196c5040e3a8baf62488903",
+    "tools/typing_experiments/available-v6-article-origin-v1/calibration-recovery/source-index.jsonl": "feed2e451dbe91d7afb5eac8fc946b92b2dbda2b414e7cb3f91469df559c44d8",
+    "tools/typing_experiments/available-v6-article-origin-v1/recovered/articles.jsonl": "0f55e171539de0b476041a960f2a8f212ff6b4bfac23625aed8eecd84d8b2d88",
+    "tools/typing_experiments/available-v6-article-origin-v1/source-lock.json": "02397f3424d85634e372e87d8cde55bd97af79615442d3ec1cada45831f95ede",
+    "tools/typing_experiments/recover_available_v6_calibration_attribution.py": "8b2747edc23f9841e1e506a9269bc0b92cf759882e5932c202c19e10461ea618",
+    "tools/typing_experiments/recover_historical_spelling_attribution.py": "711617a8737bb05a497da6a9241f46315f31b3bbc868634b8b5a6850861eac79"
+  },
+  "publicationRightsReviewed": false,
+  "pyarrowVersion": "25.0.1",
+  "revisionIdsVerified": false,
+  "scannedShards": {
+    "0011.parquet": {
+      "articles": 193,
+      "sourceRows": 92622
+    },
+    "0012.parquet": {
+      "articles": 140,
+      "sourceRows": 92622
+    },
+    "0013.parquet": {
+      "articles": 169,
+      "sourceRows": 92622
+    },
+    "0014.parquet": {
+      "articles": 185,
+      "sourceRows": 92622
+    },
+    "0015.parquet": {
+      "articles": 171,
+      "sourceRows": 92622
+    },
+    "0016.parquet": {
+      "articles": 185,
+      "sourceRows": 92622
+    },
+    "0017.parquet": {
+      "articles": 166,
+      "sourceRows": 92622
+    },
+    "0018.parquet": {
+      "articles": 173,
+      "sourceRows": 92622
+    },
+    "0019.parquet": {
+      "articles": 166,
+      "sourceRows": 92622
+    },
+    "0020.parquet": {
+      "articles": 103,
+      "sourceRows": 92622
+    }
+  },
+  "schema": 1,
+  "scope": "historical-calibration-article-metadata",
+  "sourceRevision": "a634f78b1c435397c07001e175fa74cc4ad5e775"
+}

@@ -8,6 +8,8 @@ import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.GeneratedCandidateK
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.LocalSearchEvidence
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyLexicon
 import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.MorphologyMembership
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon
+import io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordMembership
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -159,6 +161,48 @@ class AutoCorrectionAdmissionGuardTest {
         assertFalse(guard().allows(generation, winner))
         assertFalse(guard("слово" to null).allows(generation, winner))
         assertFalse(guard("слово" to 1).allows(generation("словоо", listOf(winner, candidate("слова"))), winner))
+    }
+
+    @Test fun `reviewed chat originals are protected without modifying frozen rare words`() {
+        val absent = io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon {
+            io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordMembership.ABSENT
+        }
+        val winner = candidate("баллон")
+        for (original in listOf("пейринг", "токсиков", "админку", "забанили", "бадлон", "могёт", "ебобо", "БАДЛОН")) {
+            val decision = PublicOriginalProtection.evaluate(generation(original, listOf(winner)), winner, absent)
+            assertFalse(decision.allowed)
+            assertEquals(AutomaticAdmissionRefusal.ORIGINAL_VALID, decision.refusal)
+        }
+        assertTrue(PublicOriginalProtection.evaluate(generation("бадлона", listOf(winner)), winner, absent).allowed)
+        assertEquals(AutomaticAdmissionRefusal.RESOURCE_UNAVAILABLE,
+            PublicOriginalProtection.evaluate(generation("бадлон", listOf(winner)), winner,
+                io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon.UNAVAILABLE).refusal)
+    }
+
+    @Test fun `reviewed ordinary chat forms resist misleading corrections`() {
+        val absent = io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordLexicon {
+            io.github.mesteriis.rune.keyboard.smarttyping.lexicon.RareWordMembership.ABSENT
+        }
+        val winner = candidate("баллон")
+        for (original in listOf("хотелки", "скипать", "усмеяться", "скипай", "ебалу", "анимки",
+            "инвент", "похуй", "уведы", "афантазия", "инвайт", "пофаниться", "темпой")) {
+            val decision = PublicOriginalProtection.evaluate(generation(original, listOf(winner)), winner, absent)
+            assertEquals(original, AutomaticAdmissionRefusal.ORIGINAL_VALID, decision.refusal)
+            assertFalse(original, decision.allowed)
+        }
+        assertTrue(PublicOriginalProtection.evaluate(generation("скипала", listOf(winner)), winner, absent).allowed)
+    }
+
+    @Test fun `reviewed public domain label resists spelling correction`() {
+        val absent = RareWordLexicon { RareWordMembership.ABSENT }
+        val winner = candidate("якоб")
+        val input = generation("яокб", listOf(winner))
+
+        val decision = PublicOriginalProtection.evaluate(input, winner, absent)
+
+        assertFalse(decision.allowed)
+        assertEquals(AutomaticAdmissionRefusal.ORIGINAL_VALID, decision.refusal)
+        assertTrue(PublicOriginalProtection.evaluate(input.copy(original = "яокв"), winner, absent).allowed)
     }
 
     @Test fun `public rare original vetoes ordinary correction and unavailable evidence fails closed`() {

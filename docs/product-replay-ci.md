@@ -28,6 +28,17 @@ qualification. Their CC BY-SA source attribution and adaptation details are in
 `tools/ci/product-replay-v1/NOTICE.md`. Older historical spelling inputs remain
 supported with their original attribution and license scope.
 
+`--boundary space` is the default and preserves the existing CI projection.
+For separate punctuation experiments select `--boundary period` or `--boundary
+colon`; each run applies that boundary to every input. Non-space observations
+record the actual `boundary` and `boundaryChangedBeyondInsertion` fields rather
+than the historical `boundaryChangedBeyondInsertedSpace`. Use a matching
+baseline and analyzer. `local_spelling_stress.py report` supports these fields
+with the corresponding `--boundary` and can use `--identities` with the
+host-only mapping. Other historical space-only reports may not interpret them.
+This host replay does not itself establish physical editor behavior or
+the quality of a control corpus.
+
 `current-product` selects the existing full noun-case production chain, including
 its contextual and infinitive stages and the earlier local/joint/rescue/word
 context paths. Default settings and current qualification gates still apply.

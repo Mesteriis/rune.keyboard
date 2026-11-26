@@ -15,22 +15,17 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
 import io.github.mesteriis.rune.keyboard.settings.KeyboardTheme
 
 /** Native, flat surfaces. Hidden key borders never change the full rectangular touch targets. */
-internal class KeyboardAppearance(context: Context, val theme: KeyboardTheme) {
+internal class KeyboardAppearance(context: Context, val theme: KeyboardTheme, light: Boolean = false) {
     private val density = context.resources.displayMetrics.density
-    val background: Int = grey(when (theme) {
-        KeyboardTheme.AIR -> 0x18
-        KeyboardTheme.SOFT -> 0x14
-        KeyboardTheme.OUTLINE -> 0x10
-        KeyboardTheme.MONOLITH -> 0x20
-        KeyboardTheme.SILENT -> 0x08
-    })
-    val text = grey(if (theme == KeyboardTheme.SILENT) 0xCF else 0xE0)
-    val secondaryText = grey(0xB8)
-    val bottomBackground = if (theme == KeyboardTheme.MONOLITH) grey(0x16) else background
+    private val colors = KeyboardPaletteColors.create(theme, light)
+    val background = colors.background
+    val text = colors.text
+    val secondaryText = colors.secondaryText
+    val bottomBackground = colors.bottomBackground
     val spaceIndicator = theme == KeyboardTheme.SILENT
     val textColors = ColorStateList(
         arrayOf(intArrayOf(android.R.attr.state_selected), intArrayOf()),
-        intArrayOf(Color.WHITE, text),
+        intArrayOf(colors.selectedText, text),
     )
 
     fun keyBackground(spec: KeySpec, gapPx: Int, heightPx: Int): Drawable {
@@ -40,13 +35,9 @@ internal class KeyboardAppearance(context: Context, val theme: KeyboardTheme) {
         val outlined = theme == KeyboardTheme.OUTLINE && utility
         val fill = when {
             outlined -> Color.TRANSPARENT
-            enter -> grey(when (theme) {
-                KeyboardTheme.AIR -> 0x46
-                KeyboardTheme.SILENT -> 0x36
-                else -> 0x55
-            })
-            theme == KeyboardTheme.SOFT && utility -> grey(if (space) 0x25 else 0x2B)
-            theme == KeyboardTheme.AIR && space -> grey(0x26)
+            enter -> colors.enter
+            theme == KeyboardTheme.SOFT && utility -> if (space) colors.softSpace else colors.softAction
+            theme == KeyboardTheme.AIR && space -> colors.airSpace
             else -> Color.TRANSPARENT
         }
         val radius = when (theme) {
@@ -56,9 +47,9 @@ internal class KeyboardAppearance(context: Context, val theme: KeyboardTheme) {
             KeyboardTheme.SILENT -> 12f
             KeyboardTheme.AIR -> if (enter) 10f else 8f
         }
-        val normal = surface(fill, radius, if (outlined) grey(if (enter) 0x74 else 0x43) else null)
-        val pressed = surface(grey(0x48), radius)
-        val selected = surface(grey(0x38), radius, if (outlined) grey(0x90) else null)
+        val normal = surface(fill, radius, if (outlined) if (enter) colors.enterOutline else colors.outline else null)
+        val pressed = surface(colors.pressed, radius)
+        val selected = surface(colors.selected, radius, if (outlined) colors.selectedOutline else null)
         val states = StateListDrawable().apply {
             addState(intArrayOf(android.R.attr.state_pressed), pressed)
             addState(intArrayOf(android.R.attr.state_selected), selected)
@@ -77,13 +68,13 @@ internal class KeyboardAppearance(context: Context, val theme: KeyboardTheme) {
     }
 
     fun candidateBackground(): Drawable = StateListDrawable().apply {
-        addState(intArrayOf(android.R.attr.state_pressed), surface(grey(0x38), 6f))
-        addState(intArrayOf(android.R.attr.state_focused), surface(grey(0x38), 6f))
+        addState(intArrayOf(android.R.attr.state_pressed), surface(colors.selected, 6f))
+        addState(intArrayOf(android.R.attr.state_focused), surface(colors.selected, 6f))
         addState(intArrayOf(), surface(Color.TRANSPARENT, 6f))
     }
 
-    fun popupBackground(): Drawable = surface(grey(0x2C), 10f, grey(0x50))
-    fun popupSelection(): Drawable = surface(grey(0x50), 7f)
+    fun popupBackground(): Drawable = surface(colors.popup, 10f, colors.popupStroke)
+    fun popupSelection(): Drawable = surface(colors.popupSelection, 7f)
 
     private fun surface(fill: Int, radius: Float, stroke: Int? = null): GradientDrawable =
         GradientDrawable().apply {
@@ -93,5 +84,4 @@ internal class KeyboardAppearance(context: Context, val theme: KeyboardTheme) {
         }
 
     private fun dp(value: Float): Int = (value * density + 0.5f).toInt()
-    private fun grey(value: Int): Int = Color.rgb(value, value, value)
 }

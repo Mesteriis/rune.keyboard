@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "scope": "historical-byte-recovery",
+  "sourceShards": {
+    "build/typing-ranker-v2/ru-0011.parquet": "30a2bd638e0556d1d09d459fd5ef5a4a7accbd54a7cc452798770bd80481dc5f",
+    "build/typing-ranker-v2/ru-0012.parquet": "21e33d8a7a0d068e573db688f5816a22fd690bf699dee958373f9b9e957921ad",
+    "build/typing-ranker-v2/ru-0013.parquet": "475666c0d80153ab9a76adca42db8afd18fc16c87804e3de0532ffc1309b2d0c",
+    "build/typing-ranker-v2/ru-0014.parquet": "d2ad352beecb92765110e57e8ee9409f4ffe03ff9e4b6ec0640840dec748db18",
+    "build/typing-ranker-v2/ru-0015.parquet": "dc248873a3cc80b857f11a0320cfaa889da803eabf09351f1ba8abbf9348eda0",
+    "build/typing-ranker-v2/ru-0016.parquet": "0e2d2100e924ebedb057a37e789fec861fe2b78787c912c266e36eadd8d2e0a7",
+    "build/typing-ranker-v2/ru-0017.parquet": "1a5c96dfda452e7725229760347e781b46f88ccd5df4196a5c1a9d46b51b1a65",
+    "build/joint-correction-20261025/0018.parquet": "588e30523cfed480151b4bd5c1a7d7211dc03971fee399a3db6af3ad04e42c87",
+    "build/joint-correction-20261025/0019.parquet": "4c3bd676fbeb9d92ae7ed324e99f329de2542f5399cbf39b924529fff944dec6"
+  },
+  "priorRowBindings": {
+    "build/diagnostic-rare-ranking/fresh-corpus/calibration.jsonl": "624f2cfb7d0dfe35348745abbc7caef4750628a9d313d4532e392f3e25aa0520",
+    "build/diagnostic-rare-ranking/fresh-corpus/holdout.jsonl": "080a880598461948f49f7635fd0fb1fd6ebf53eea7f218368ba3404100420723",
+    "build/joint-correction-20261025/corpus/calibration.jsonl": "1234785b62d4ff59ea54b52a7e7fb2ca3214996e0bb173d1c0b355d86015e97a",
+    "build/joint-correction-20261025/corpus/holdout.jsonl": "03e32ae46a61dd3c5ee0f84a308b9b2d79bf17f7c18de78442d2284738e8084d",
+    "build/joint-correction-20261025/followup-corpus/calibration.jsonl": "09089d6d173268f5908a7b320a99dfd5f6778a672f09baa67a3fc92c785421ff",
+    "build/joint-correction-20261025/followup-corpus/holdout.jsonl": "89d816bb3db371fa89161d808efe21ed75ebc4dbdf586d8b0ff3d0134a509eb6",
+    "build/joint-correction-20261025/followup-corpus-v3/calibration.jsonl": "cb606a6efb8fffeb41679bac29bf9516c2c06831ee6b07f5417a1f979f4097cb",
+    "build/joint-correction-20261025/followup-corpus-v3/holdout.jsonl": "04f779a29ee0a13ae9c27ea70af9513410facd063c164a59f755ef4c18593c75",
+    "build/typing-ranker-v2/candidates-current/rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/candidates-current-v2/rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/candidates-current-v2-failed-compile/rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/candidates-current-v2-failed-compile2/rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/data/all-rows.jsonl": "6225b7766f7156e60f6c4d901b1cd97b274f4f04b32ed05536ef78cbe04c0c7c",
+    "build/typing-ranker-v2/data/dev-rows.jsonl": "a2ddea29d8086a6c1d138e6ef59fc7399145b33b79becc3c0545940ad9ba260b",
+    "build/typing-ranker-v2/data/test-rows.jsonl": "e83eb9b99f2df73a8eae001ebedf1cafbd3fa370b6166ae9548551495c97f204",
+    "build/typing-ranker-v2/data/train-rows.jsonl": "e86df521d3c1a249fe514044a75d20b64259ffb76df6920e3f236ec3f6b5fc64",
+    "build/typing-ranker-v2/external-holdout-v10-ru0015/rows.jsonl": "6640f42600fcd7a3f5d79e4d47aa0cb7debbda778901c1b369ea5a7c4bd77133",
+    "build/typing-ranker-v2/external-holdout-v11-ru0016/rows.jsonl": "855fe3bf10aa1346817a03006487af5858cced660d14524964b51257b13a5d84",
+    "build/typing-ranker-v2/external-holdout-v12-ru0017/rows.jsonl": "95c0f40915241ef72e5bc7bcc1dd484e5aafcee691b32cb31d1e983b012d8fa2",
+    "build/typing-ranker-v2/external-holdout-v6-ru0011/rows.jsonl": "6d7dbaf67f16d3dd6a63a15551bebfb486b3b24e686f76f1a9d3e0ed1d083569",
+    "build/typing-ranker-v2/external-holdout-v7-ru0012/rows.jsonl": "5e9e82177edf943be83ea1dd256e0631044124ed5342444793d9cf31caf451ac",
+    "build/typing-ranker-v2/external-holdout-v8-ru0013/rows.jsonl": "4db31b8283e50ce3130714c5af870df563c90b18cbe2e7e2457c3b8470571538",
+    "build/typing-ranker-v2/external-holdout-v9-ru0014/rows.jsonl": "9dfee85583cade8ec3b968be7ba275ff33d00081427faef95ca6ad0442252c6a"
+  },
+  "frequencySha256": "6095f507cc167488ec66ada5a85ac50433503a08ad24a07c6eabdf54352c4e7f",
+  "excludedArticleIds": 5292,
+  "excludedTailOverlaps": 82875,
+  "counts": {
+    "articles": 416186,
+    "tokens": 38933219,
+    "pairs": 1999683
+  },
+  "pairFrequencyCounts": {
+    "2": 1999683,
+    "3": 1275639,
+    "5": 753159,
+    "8": 476127,
+    "10": 384486,
+    "16": 246282
+  },
+  "replayedRawCountsSha256": "b05f0ead3b0dcea2a6353cbaf56fcc3af15755a0645f7b5ef67c5634337dd16c",
+  "originalFiles": {
+    "model-counts.jsonl": {
+      "sha256": "921175789d8cb5def69cd575329184f29dcacde19082ba9e373ed54bb694659d",
+      "rows": 500000
+    },
+    "ru-word-context.bin": {
+      "sha256": "b5a9b64c1ddcfb42e4042b325b22c7c3d594d7cda282ec3fc99a2330e341d053",
+      "bytes": 4558118,
+      "pairs": 500000,
+      "vocabulary": 32977
+    }
+  },
+  "independentlyPinnedFiles": 2,
+  "modelCalls": 0,
+  "qualified": false
+}

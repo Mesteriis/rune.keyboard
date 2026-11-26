@@ -1,0 +1,71 @@
+{
+  "archiveMetadata": {
+    "exactSnapshotRevisionProven": false,
+    "publicationRightsReviewed": false,
+    "queryTimestamp": "20231101",
+    "rows": [
+      {
+        "article": "7778924",
+        "availabilityHttp": 200,
+        "captureHttp": "200",
+        "captureTimestamp": "20230804015432",
+        "htmlSha256": "e680ee1a6b15bd922c76879e93603266000251ba3002b4bd769258014cd173aa",
+        "ids": {
+          "wgArticleId": 7778924,
+          "wgCurRevisionId": 124277971,
+          "wgRevisionId": 124277971
+        },
+        "pageIdentityMatches": true,
+        "replayStatus": 200
+      },
+      {
+        "article": "7795183",
+        "availabilityHttp": 200,
+        "captureHttp": "200",
+        "captureTimestamp": "20250521230247",
+        "htmlSha256": "e1bb9e3f266dd5f99d356c17b33530437cb3157b4fbac40763c10e94576b5490",
+        "ids": {
+          "wgArticleId": 7795183,
+          "wgCurRevisionId": 140612442,
+          "wgRevisionId": 140612442
+        },
+        "pageIdentityMatches": true,
+        "replayStatus": 200
+      }
+    ],
+    "scope": "public Wayback metadata only"
+  },
+  "archivePassages": {
+    "checked": [
+      {
+        "article": "7778924",
+        "captureSha256": "e680ee1a6b15bd922c76879e93603266000251ba3002b4bd769258014cd173aa",
+        "captureTimestamp": "20230804015432",
+        "contexts": 1,
+        "displayedRevision": 124277971,
+        "fullWindowMatch": true,
+        "leftMatch": true,
+        "rightMatch": true,
+        "rows": 5
+      },
+      {
+        "article": "7795183",
+        "captureSha256": "e1bb9e3f266dd5f99d356c17b33530437cb3157b4fbac40763c10e94576b5490",
+        "captureTimestamp": "20250521230247",
+        "contexts": 1,
+        "displayedRevision": 140612442,
+        "fullWindowMatch": true,
+        "leftMatch": true,
+        "rightMatch": true,
+        "rows": 5
+      }
+    ],
+    "exactSnapshotRevisionProven": false,
+    "historicalCalibrationSha256": "0e38210241368965d30edbce36387b6de3f821447c1e69d5ba19ef4c2b75ebf9",
+    "includesFullCleanedArticleCheck": false,
+    "publicationRightsReviewed": false,
+    "scope": "normalized visible archive passage check"
+  },
+  "schema": 1,
+  "sourceShardArticlesSha256": "ca603a95776d7a83cb99b91d25bcc293958d4b86cc287d4d11c7a6e48a1efa68"
+}

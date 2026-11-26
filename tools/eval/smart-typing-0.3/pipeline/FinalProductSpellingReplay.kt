@@ -66,7 +66,8 @@ object FinalProductSpellingReplay {
                 jointAutomaticChoice(context, generation, language, baselineWord))
             if (!contextualEnabled || morphology.lookup(language, generation.original.orEmpty()).present ||
                 rareWords.lookup(generation.original.orEmpty()).present) return baseline
-            val contextual = io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualCorrectionPolicy.evaluate(
+            val contextual = if (java.lang.Boolean.getBoolean("rune.replay.disableContextualChoice")) baseline else
+                io.github.mesteriis.rune.keyboard.smarttyping.experiments.ContextualCorrectionPolicy.evaluate(
                 experiments, context, generation, language, baseline, baselineWord) { candidate ->
                 val decision = contextualAutomaticDecision(generation, candidate, language)
                 if (decision.allowed) null else decision.refusal ?: AutomaticAdmissionRefusal.NOT_QUALIFIED
@@ -241,10 +242,13 @@ object FinalProductSpellingReplay {
             val source = generation.original?.let(TokenUnicode::folded)
                 ?: return AutomaticTypingDecision(false, io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal.NOT_QUALIFIED)
             val morph = morphology.lookup(language, source); val rare = rareWords.lookup(source)
+            val publicWord = PublicOriginalProtection.evaluate(generation, candidate, rareWords)
             val allowed = morph.available && rare.available && !morph.present && !rare.present &&
-                generation.compactAlternatives.any { it.canonicalKey == candidate.canonicalKey }
+                generation.compactAlternatives.any { it.canonicalKey == candidate.canonicalKey } && publicWord.allowed
             return AutomaticTypingDecision(allowed,
-                if (allowed) null else io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal.NOT_QUALIFIED)
+                if (allowed) null else if (!publicWord.allowed && morph.available && rare.available &&
+                    !morph.present && !rare.present) publicWord.refusal
+                else io.github.mesteriis.rune.keyboard.smarttyping.correction.AutomaticAdmissionRefusal.NOT_QUALIFIED)
                 .also { decision = it; this.candidate = candidate.terminalKey }
         }
     }
@@ -380,7 +384,21 @@ object FinalProductSpellingReplay {
         }.toBoolean()
         // current-product follows the complete released local cascade. Historical mode
         // names remain available for frozen receipts; external model replies are separate.
+        val boundaryName = System.getProperty("rune.replay.boundary", "space")
+        val boundary = when (boundaryName) {
+            "space" -> " "
+            "period" -> "."
+            "colon" -> ":"
+            else -> error("INVALID_REPLAY_BOUNDARY")
+        }
+        check(boundaryName == "space" || args[2] == "current-product") { "BOUNDARY_MODE_UNSUPPORTED" }
         val mode = if (args[2] == "current-product") "noun-case-production" else args[2]
+        val prefixWindow = System.getProperty("rune.replay.prefixWindow", "false").toBooleanStrict()
+        check(!prefixWindow || mode in setOf("export", "ready", "unavailable")) { "PREFIX_WINDOW_MODE_UNSUPPORTED" }
+        val rareVetoProbe = System.getProperty("rune.replay.a3RareProbe", "false").toBooleanStrict()
+        check(!rareVetoProbe || args[2] == "current-product") { "A3_PROBE_MODE_UNSUPPORTED" }
+        val deterministicNeighborSearch = java.lang.Boolean.getBoolean("rune.replay.deterministicNeighborSearch")
+        check(!deterministicNeighborSearch || args[2] == "current-product") { "DETERMINISTIC_NEIGHBOR_MODE_UNSUPPORTED" }
         val nounCaseMode = mode == "noun-case-production"
         val infinitiveMode = mode == "infinitive-revision-production" || nounCaseMode
         val contextualMode = mode == "contextual-production" || infinitiveMode
@@ -450,7 +468,10 @@ object FinalProductSpellingReplay {
         val rareWords = if (packagedReaders) PackedRareWordLexicon.openPackaged(
             mapping(rareFile), FrozenRareWordLexicon.ASSET_BYTES) else validatedRareWords
         check(rareWords.lookup("кармен").available) { "RARE_WORDS_NOT_READY" }
-        val generator = CandidateGenerator(PackedCandidateLexicon(handles),
+        // Freeze only the recovery clock for behavior parity. Its work caps and cancellation still apply.
+        fun packedLexicon() = if (deterministicNeighborSearch) PackedCandidateLexicon(handles) { 0L }
+            else PackedCandidateLexicon(handles)
+        val generator = CandidateGenerator(packedLexicon(),
             CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES,
             CanonicalCaseLexicon { language, key -> cases.getValue(language).lookup(key) },
             morphology, rareWords)
@@ -565,7 +586,7 @@ object FinalProductSpellingReplay {
                 }, refinementThresholds = if (mode == "refinement-ready")
                     io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryQualification.refinement else
                     io.github.mesteriis.rune.keyboard.smarttyping.correction.RecoveryThresholds(-1000.0, 0.000001))
-                else TypingSessionController(graphemes)
+                else TypingSessionController(graphemes, experimentalModelPrefixWindow = prefixWindow)
             val boundaryDiagnostics = mutableListOf<Map<String, Any?>>()
             val observeBoundaries = java.lang.Boolean.getBoolean("rune.replay.boundaryDiagnostics")
             if (observeBoundaries) controller.setDiagnostics(object : io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnostics {
@@ -606,6 +627,71 @@ object FinalProductSpellingReplay {
                         settings.autocorrectionMode, editor::execute)
                     check(response == TypingTextResult.HANDLED) { "INPUT_$response" }; ack(); return response
                 }
+                if (java.lang.Boolean.getBoolean("rune.replay.phrase")) {
+                    check(args[2] == "current-product" && prefix.isEmpty() && language == KeyboardLanguage.RUSSIAN) {
+                        "PHRASE_REPLAY_SCOPE"
+                    }
+                    val words = typed.split(' ')
+                    check(words.size in 2..6 && words.all { it.isNotEmpty() }) { "PHRASE_REPLAY_INPUT" }
+                    val undoIndexText = System.getProperty("rune.replay.phraseUndoAtIndex")
+                    val undoIndex = undoIndexText?.toIntOrNull()
+                    check(undoIndexText == null || (undoIndex != null && undoIndex in 0 until words.lastIndex)) {
+                        "PHRASE_UNDO_INDEX"
+                    }
+                    val stages = mutableListOf<Map<String, Any?>>()
+                    for ((wordIndex, word) in words.withIndex()) {
+                        // Reset observation fields only; the controller/editor session persists.
+                        personalization.reset()
+                        word.codePoints().forEach { type(String(Character.toChars(it))) }
+                        val request = controller.beginCandidateRequest(index.toLong() * 10 + wordIndex + 1, language)
+                        if (request != null) {
+                            val base = generator.generate(request.token, language)
+                            val recovered = generator.generateRecovery(request.token, language, base)
+                            val full = if (JointQualification.enabled(language, request.token.length))
+                                recovered.copy(jointSearch = generator.generateJointPool(request.token, language, recovered), jointEvaluated = true)
+                            else recovered
+                            val manual = generator.generateManualPool(request.token, language, base, enabled = true)
+                            val accepted = controller.acceptCandidates(LocalCandidateReply(request.sessionId, request.revision,
+                                request.requestId, base, manualGeneration = manual, isFinal = false))
+                            check(accepted) { "PHRASE_BASELINE_REPLY_REFUSED" }
+                            check(controller.acceptRecoveryCandidates(LocalCandidateReply(request.sessionId, request.revision,
+                                request.requestId, full, manualGeneration = manual, stage = CandidateStage.RECOVERY))) {
+                                "PHRASE_RECOVERY_REPLY_REFUSED"
+                            }
+                        }
+                        val before = editor.text
+                        check(before.endsWith(word)) { "PHRASE_TYPED_WORD_MISMATCH" }
+                        val previous = before.dropLast(word.length)
+                        if (observeBoundaries) boundaryDiagnostics.clear()
+                        type(" ")
+                        val after = editor.text
+                        val automatic = controller.state.lastAutoEdit != null
+                        val stage = linkedMapOf<String, Any?>("wordIndex" to wordIndex, "typed" to word,
+                            "before" to before, "after" to after, "prefixChanged" to !after.startsWith(previous),
+                            "changed" to (after != before + " "), "caseOnly" to
+                                (after != before + " " && after.lowercase(Locale.ROOT) == (before + " ").lowercase(Locale.ROOT)),
+                            "automaticEdit" to automatic,
+                            "grammarRevisionAttempted" to (personalization.grammarEvaluation?.grammarRevisionAttempted ?: false),
+                            "nounCaseAttempted" to (personalization.nounEvaluation?.nounCaseAttempted ?: false))
+                        if (observeBoundaries) stage["boundaryDiagnostics"] = boundaryDiagnostics.toList()
+                        if (automatic && (wordIndex == undoIndex ||
+                                (undoIndex == null && wordIndex == words.lastIndex && java.lang.Boolean.getBoolean("rune.replay.phraseUndo")))) {
+                            val undo = controller.deletePrevious(editor::execute)
+                            if (undo == TypingTextResult.HANDLED) ack()
+                            stage["undoResult"] = undo.name
+                            stage["undoExact"] = editor.text == before
+                            if (wordIndex == undoIndex && undo == TypingTextResult.HANDLED && editor.text == before) {
+                                type(" ")
+                                stage["afterUndoBoundary"] = editor.text
+                            }
+                        }
+                        stages += stage
+                    }
+                    result["phraseStages"] = stages
+                    result["status"] = "COMPLETE"
+                    println(json(result))
+                    return@forEachIndexed
+                }
                 val fullInput = (if (prefix.isNotEmpty()) "$prefix " else "") + typed
                 fullInput.codePoints().forEach { type(String(Character.toChars(it))) }
                 result["inputExpected"] = fullInput; result["beforeBoundary"] = editor.snapshot()
@@ -636,10 +722,61 @@ object FinalProductSpellingReplay {
                 }
                 result["fullTokenGenerationNanos"] = System.nanoTime() - generationStarted
                 result["fullTokenGeneration"] = candidate(fullGeneration)
+                if (rareVetoProbe && language == KeyboardLanguage.RUSSIAN && typed.length in 3..4 &&
+                    fullGeneration.jointSearch.completion == CandidateCompletion.VALID_WORD) {
+                    val key = TokenUnicode.folded(typed)
+                    val sourceMorphology = morphology.lookup(language, key)
+                    val sourceRare = rareWords.lookup(key)
+                    if (sourceMorphology.available && !sourceMorphology.present && sourceRare.available && sourceRare.present) {
+                        // Diagnostic only: mask exactly the source form, not any other rare word.
+                        val maskedRare = RareWordLexicon { requested ->
+                            if (requested == key) RareWordMembership.ABSENT else rareWords.lookup(requested)
+                        }
+                        val probeGenerator = CandidateGenerator(packedLexicon(),
+                            CalibratedSpellingPolicy.MAXIMUM_ALTERNATIVES,
+                            CanonicalCaseLexicon { lang, term -> cases.getValue(lang).lookup(term) },
+                            morphology, maskedRare)
+                        val probePool = probeGenerator.generateJointPool(typed, language, recovered)
+                        val probeGeneration = recovered.copy(jointSearch = probePool, jointEvaluated = true)
+                        val context = (if (prefix.isNotEmpty()) "$prefix " else "").takeLast(128)
+                        val evaluation = JointCorrectionPolicy.evaluate(experiments, context, probeGeneration,
+                            language, JointQualification.thresholds)
+                        val winner = evaluation.choice?.candidate
+                        val publicDecision = winner?.let { PublicOriginalProtection.evaluate(probeGeneration, it, maskedRare) }
+                        val admission = winner?.let {
+                            if (publicDecision?.allowed == true) admissionGuard.evaluateJoint(probeGeneration, it,
+                                JointQualification.uniqueAmbiguousWinnerEnabled(language, typed.length)) else publicDecision
+                        }
+                        val unknownRivals = if (winner == null) emptyList() else
+                            (probeGeneration.localSearch.alternatives + probePool.alternatives).filter { other ->
+                                other.language == winner.language && other.terminalKey != winner.terminalKey &&
+                                    other.editFeatures.editCost.isFinite() &&
+                                    other.editFeatures.editCost >= 0 &&
+                                    other.editFeatures.editCost <= winner.editFeatures.editCost +
+                                        AutoCorrectionAdmissionGuard.PLAUSIBLE_EDIT_COST_MARGIN
+                            }.mapNotNull { other ->
+                                val evidence = morphology.lookup(other.language, other.terminalKey)
+                                if (!evidence.available || (evidence.present && evidence.lemmaId != null)) null
+                                else mapOf("terminalKey" to other.terminalKey, "present" to evidence.present,
+                                    "inJointPool" to probePool.alternatives.any { it.canonicalKey == other.canonicalKey },
+                                    "editCost" to other.editFeatures.editCost)
+                            }.distinct()
+                        result["a3RareProbe"] = mapOf("completion" to probePool.completion.name,
+                            "poolSize" to probePool.alternatives.size, "refusal" to evaluation.refusal?.name,
+                            "winner" to winner?.text, "admitted" to admission?.allowed,
+                            "admissionRefusal" to admission?.refusal?.name, "unknownRivals" to unknownRivals)
+                    }
+                }
                 if ((mode == "joint-ready" || productionMode)) {
                     val ownedPrefix = (if (prefix.isNotEmpty()) "$prefix " else "").takeLast(128)
                     result["jointModelScores"] = listOf(experiments.jointOriginalScore(ownedPrefix, typed)) +
                         fullGeneration.jointSearch.alternatives.map { experiments.jointScore(ownedPrefix, typed, it) }
+                    if (java.lang.Boolean.getBoolean("rune.replay.contextualScoreProbe")) {
+                        result["contextualScoreProbe"] = if (experiments.contextualReady)
+                            listOf(experiments.contextualOriginalScore(ownedPrefix, typed)) +
+                                fullGeneration.jointSearch.alternatives.map { experiments.contextualScore(ownedPrefix, typed, it) }
+                        else null
+                    }
                     result["jointSearch"] = mapOf("completion" to fullGeneration.jointSearch.completion.name,
                         "alternatives" to fullGeneration.jointSearch.alternatives.map(::item))
                     // Exact joint-source guard, without changing observer decision/candidate state.
@@ -728,9 +865,10 @@ object FinalProductSpellingReplay {
                                 jointEvaluated = true) else recoveredActual
                     } else actualBaseline!!
                 }
+                val manualExpansion = System.getProperty("rune.replay.manualExpansion", "true").toBooleanStrict()
                 val actualManual = localRequest?.let {
-                    if (it.token == typed) manualSearch else
-                        generator.generateManualPool(it.token, language, actualBaseline!!, enabled = true)
+                    if (manualExpansion && it.token == typed) manualSearch else
+                        generator.generateManualPool(it.token, language, actualBaseline!!, enabled = manualExpansion)
                 }
                 result["actualRequestGeneration"] = generation?.let(::candidate)
                 result["actualOriginal"] = generation?.original ?: controller.state.composing?.typedWord
@@ -785,6 +923,11 @@ object FinalProductSpellingReplay {
                     }
                 }
                 result["stateBeforeBoundary"] = state(controller)
+                if (java.lang.Boolean.getBoolean("rune.replay.fullCandidateOrder")) {
+                    result["fullCandidateOrder"] = controller.candidateOrderForReplay().map {
+                        mapOf("id" to it.id, "text" to it.text)
+                    }
+                }
                 result["candidateView"] = mapOf("enabled" to controller.candidateViewState.enabled,
                     "selectedCandidateId" to controller.candidateViewState.selectedCandidateId,
                     "candidates" to controller.candidateViewState.candidates.map {
@@ -799,9 +942,10 @@ object FinalProductSpellingReplay {
                 val beforeBoundaryText = editor.text; editor.commands.clear()
                 boundaryDiagnostics.clear()
                 val boundaryStarted = System.nanoTime()
-                result["boundaryResult"] = type(" ").name
+                result["boundaryResult"] = type(boundary).name
                 if (observeBoundaries) result["boundaryDiagnostics"] = boundaryDiagnostics.toList()
-                stageTimings["spaceBoundary"] = System.nanoTime() - boundaryStarted
+                stageTimings[if (boundaryName == "space") "spaceBoundary" else "punctuationBoundary"] =
+                    System.nanoTime() - boundaryStarted
                 result["afterBoundary"] = editor.snapshot()
                 result["grammarRevisionAttempted"] = personalization.grammarEvaluation?.grammarRevisionAttempted ?: false
                 result["grammarRevisionRefusal"] = personalization.grammarEvaluation?.grammarRevisionRefusal?.name
@@ -815,7 +959,12 @@ object FinalProductSpellingReplay {
                 result["automaticAdmissionRefusal"] = personalization.decision?.refusal?.name
                 result["automaticAdmissionCandidate"] = personalization.candidate
                 result["boundaryCommands"] = editor.commands.toList()
-                result["boundaryChangedBeyondInsertedSpace"] = editor.text != beforeBoundaryText + " "
+                if (boundaryName == "space") {
+                    result["boundaryChangedBeyondInsertedSpace"] = editor.text != beforeBoundaryText + boundary
+                } else {
+                    result["boundary"] = boundary
+                    result["boundaryChangedBeyondInsertion"] = editor.text != beforeBoundaryText + boundary
+                }
                 result["stateAfterBoundary"] = state(controller)
                 result["autoEdit"] = controller.state.lastAutoEdit?.let { mapOf(
                     "original" to it.original, "applied" to it.applied,

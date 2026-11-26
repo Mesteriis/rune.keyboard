@@ -296,8 +296,20 @@ internal class KeyboardKeyView @JvmOverloads constructor(
             info.isChecked = isSelected
         }
         spec?.longPressAlternates?.firstOrNull()?.takeIf { it.action == KeyboardAction.OpenEditing }?.let {
+            if (isEnabled) {
+                info.addAction(AccessibilityNodeInfo.AccessibilityAction(
+                    AccessibilityNodeInfo.ACTION_LONG_CLICK, it.label))
+                info.addAction(AccessibilityNodeInfo.AccessibilityAction(
+                    R.id.action_open_editing, it.accessibilityLabel ?: it.label))
+            }
+        }
+        spec?.longPressAlternates?.firstOrNull { it.action == KeyboardAction.NextInputMethod }?.let {
             if (isEnabled) info.addAction(AccessibilityNodeInfo.AccessibilityAction(
-                AccessibilityNodeInfo.ACTION_LONG_CLICK, it.label))
+                R.id.action_next_keyboard, it.accessibilityLabel ?: it.label))
+        }
+        spec?.longPressAlternates?.firstOrNull { it.action == KeyboardAction.VoiceInput }?.let {
+            if (isEnabled) info.addAction(AccessibilityNodeInfo.AccessibilityAction(
+                R.id.action_voice_input, it.accessibilityLabel ?: it.label))
         }
         spec?.flickDown?.let { alternate ->
             if (isEnabled) info.addAction(AccessibilityNodeInfo.AccessibilityAction(
@@ -307,6 +319,21 @@ internal class KeyboardKeyView @JvmOverloads constructor(
     }
 
     override fun performAccessibilityAction(action: Int, arguments: Bundle?): Boolean {
+        if (action == R.id.action_open_editing && isEnabled) {
+            if (spec?.longPressAlternates?.firstOrNull()?.action != KeyboardAction.OpenEditing) return false
+            actionListener?.invoke(KeyboardAction.OpenEditing)
+            return true
+        }
+        if (action == R.id.action_next_keyboard && isEnabled) {
+            val alternate = spec?.longPressAlternates?.firstOrNull { it.action == KeyboardAction.NextInputMethod } ?: return false
+            actionListener?.invoke(alternate.action)
+            return true
+        }
+        if (action == R.id.action_voice_input && isEnabled) {
+            val alternate = spec?.longPressAlternates?.firstOrNull { it.action == KeyboardAction.VoiceInput } ?: return false
+            actionListener?.invoke(alternate.action)
+            return true
+        }
         if (action == R.id.action_key_flick && isEnabled) {
             val alternate = spec?.flickDown ?: return false
             actionListener?.invoke(alternate.action)

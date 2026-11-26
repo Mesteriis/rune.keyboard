@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "sourceRepository": "wikimedia/wikisource",
+  "language": "ru",
+  "pages": [
+    {
+      "contextBinding": "wikisource/5791621.html",
+      "contextEntry": "public-a4-wikisource-direct-speech-colons-v1",
+      "pageId": "111257",
+      "renderedSha256": "ce1d54858cc24696cc2f7009ea99288676ceda516a00753702fdeb4d3fa4c58b",
+      "revisionId": "5791621"
+    },
+    {
+      "contextBinding": "ru.wikisource.org/?oldid=5641692",
+      "contextEntry": "public-q5-wikisource-same-surface-names-v1",
+      "pageId": "826905",
+      "renderedSha256": "3b52247e7bb02e25e67f23415c62886247ce1d60810bfd6ffc7b5827741be48b",
+      "revisionId": "5641692"
+    },
+    {
+      "contextBinding": "ru.wikisource.org/?oldid=5295365",
+      "contextEntry": "public-q5-wikisource-same-surface-names-v1",
+      "pageId": "1000294",
+      "renderedSha256": "65d7f3b5cd911cfd193ea0d80e5b82160286e642bc6502919e608dcf88d4547b",
+      "revisionId": "5295365"
+    },
+    {
+      "contextBinding": "ru.wikisource.org/?oldid=5810001",
+      "contextEntry": "public-q5-wikisource-same-surface-names-v1",
+      "pageId": "1001104",
+      "renderedSha256": "bfb16a18b71af22835886efce76adc81a4fe34eabfffc24d6c07ae9889e5ee5a",
+      "revisionId": "5810001"
+    },
+    {
+      "contextBinding": "wikisource/5654616.html",
+      "contextEntry": "public-a4-wikisource-direct-speech-colons-v1",
+      "pageId": "1006247",
+      "renderedSha256": "aa7f2d0dec6bc311393a19fa399092fe7b05025008e4a8d9c6949886e4ad2eef",
+      "revisionId": "5654616"
+    },
+    {
+      "contextBinding": "ru.wikisource.org/?oldid=5806490",
+      "contextEntry": "public-q5-wikisource-same-surface-names-v1",
+      "pageId": "1011256",
+      "renderedSha256": "c6518e13dba40f18c215500c8e7fe3ff351537ddb809dde7c17d31b175e061a7",
+      "revisionId": "5806490"
+    },
+    {
+      "contextBinding": "ru.wikisource.org/?oldid=5834260",
+      "contextEntry": "public-q5-wikisource-same-surface-names-v1",
+      "pageId": "1027641",
+      "renderedSha256": "5d8beb31ff408bec8dc75f457964769f74c5c962a6361ca892a484c742c192aa",
+      "revisionId": "5834260"
+    },
+    {
+      "contextBinding": "ru.wikisource.org/?oldid=5785015",
+      "contextEntry": "public-q5-wikisource-same-surface-names-v1",
+      "pageId": "1032139",
+      "renderedSha256": "0f8a2997d3302cfb92c96e285e7436444597ab24aed75908e6286aaa691612c2",
+      "revisionId": "5785015"
+    },
+    {
+      "contextBinding": "ru.wikisource.org/?oldid=5334443",
+      "contextEntry": "public-q5-wikisource-same-surface-names-v1",
+      "pageId": "1037690",
+      "renderedSha256": "dd6e0048d650236475ea45f2521c0f37ecdff5b73be8f8d576173e254e8fd27a",
+      "revisionId": "5334443"
+    },
+    {
+      "contextBinding": "wikisource/5811443.html",
+      "contextEntry": "public-a4-wikisource-direct-speech-colons-v1",
+      "pageId": "1100048",
+      "renderedSha256": "bd9013e611b673cec4b68e5878f245c745e15551dbd2b4a39f66b8647b8ecf58",
+      "revisionId": "5811443"
+    }
+  ]
+}

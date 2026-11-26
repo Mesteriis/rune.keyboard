@@ -16,6 +16,12 @@ enum class SmartTypingTraceSection(val sectionName: String) {
     DICTIONARY_READY("Rune#dictionaryReady"),
     CONTEXTUAL_ASSETS_LOAD("Rune#contextualAssetsLoad"),
     CONTEXTUAL_READY("Rune#contextualReady"),
+    MODEL_SPACE_KEY("Rune#modelSpaceKey"),
+    MODEL_SPACE_REQUEST("Rune#modelSpaceRequest"),
+    MODEL_SPACE_SCORE_OK("Rune#modelSpaceScoreOk"),
+    MODEL_SPACE_DEADLINE("Rune#modelSpaceDeadline"),
+    MODEL_SPACE_CONTEXT_TOO_LONG("Rune#modelSpaceContextTooLong"),
+    MODEL_SPACE_SCORING_ERROR("Rune#modelSpaceScoringError"),
 }
 
 /** Android supplies the trace sink at the composition root; host tests use the no-op default. */

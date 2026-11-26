@@ -1,0 +1,13 @@
+{
+  "scannedSourceRows": 1232336,
+  "eligibleSourceSentences": 2619,
+  "eligibleFamilies": 330,
+  "selected": {
+    "calibration": 863,
+    "holdout": 967
+  },
+  "familyCounts": {
+    "calibration": 159,
+    "holdout": 171
+  }
+}

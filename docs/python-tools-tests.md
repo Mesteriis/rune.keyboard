@@ -2,10 +2,11 @@
 
 Q7's scope is all tracked `test_*.py` modules directly under
 `tools/typing_experiments` and `tools/morphology`, plus
-`tools/test_qualification_artifacts.py`. The versioned inventory assigns all
-103 modules to runnable jobs: 92 stdlib and 11 scientific modules. The retained
-`historical-artifacts` profile is empty; the runner's own tests require it to
-stay empty. An empty profile cannot produce a successful run.
+`tools/test_qualification_artifacts.py`. The versioned inventory assigns
+242 modules across three profiles. The hosted workflow selects the 211 stdlib and
+27 scientific modules. The four `historical-artifacts` modules run locally
+with the two original v6 text files excluded from the hosted candidate.
+The runner tests enforce that assignment. An empty profile fails.
 
 ```sh
 python tools/ci/python_tools_tests.py --check
@@ -17,11 +18,38 @@ python tools/ci/historical_model_fixtures.py
 python tools/ci/python_tools_tests.py --profile scientific --output build/python-tools-scientific
 ```
 
+In an intact historical checkout with both original v6 text files and
+the pinned PyArrow dependency, use the same runner for the local profile.
+Its original archive and logged-row assertions are covered separately
+from the hosted profiles.
+
+```sh
+python tools/ci/python_tools_tests.py --profile historical-artifacts --output build/python-tools-historical
+```
+
+On `6c3b38ce`, Python 3.12 with PyArrow 25.0.1 passed all 21 tests
+in the four historical modules. The two original files matched their
+recorded hashes before the run. The runner receipt SHA-256 was
+`3249690fef2611eeeca9146cf80eeee775e7c1b70e843144236d5e1ac16d93d8`.
+The temporary logs and dependency environment were removed.
+
 Use Python 3.12 and fresh output/data directories. Each module runs in a separate
 interpreter; generic imports cannot leak across modules. PYTHONPATH/PYTHONHOME
 are removed. Logs, exact child exits, counts and skips are retained and uploaded.
+The final receipt and console summary report `skipped` from each unittest
+result, alongside expected failures, unexpected successes, failing modules,
+timeouts and modules without a child receipt.
+Test totals can be incomplete when a child receipt is missing; a skipped test
+is counted separately and is not presented as a passed test.
 Failures, timeouts and empty suites fail; later modules still run. Inventory
 drift or moving modules back into an unwired historical profile fails CI.
+
+Historical generator identities are checked against the exact original source
+bytes and original path. If a maintained collector changes, the shared frozen
+source reader verifies its declared archive instead; modified archives, wrong
+origins and symlinks fail. Existing historical data manifests and their source
+digests are preserved. Current preparation defaults also consult the permanent
+Q6 registries; disclosed reproduction requires an explicit historical option.
 
 ## Original historical tests
 
@@ -98,3 +126,30 @@ fast tests. See [exact v2 reproduction](../tools/eval/smart-typing-0.3/qualifica
 F-Droid preparation deletes the four exact host CI gzip archives, verified by
 hash and declared provenance; it does not add a blanket scanner exclusion.
 Run host tests before preparation. See [F-Droid process](FDROID.md).
+
+
+The JVM job also compiles the manual retrieval observer with the same pure
+candidate-export dependency closure. `retrieval_export_smoke.py` validates four
+original disclosed word rows, exports actual baseline/expanded proposals and
+freezes the resulting receipt/model inputs. Its raw compiler/generator evidence
+is uploaded under `build/retrieval-export-ci/`. The scientific job separately
+scores portable actual JVM proposals and rejects mid-evaluation input drift;
+this does not assert independent quality or device latency.
+
+
+The JVM job also runs `joint_evaluation_smoke.py`: real baseline/product
+controller executions with opaque IDs, resource/configuration binding and
+host-only restoration of source identities. Both disclosed evaluations retain
+`passed=False`; smoke success proves input/Undo/case guards and expected
+qualification refusal, not model acceptance. Raw controller and normalized
+observations, compiler logs and bound reports are uploaded under
+`build/joint-evaluation-ci/`.
+
+
+The JVM job additionally creates an isolated Python 3.12 environment with the
+existing pinned NumPy/CatBoost requirements, then runs
+`joint_calibration_smoke.py` against a fresh actual Kotlin calibration export.
+It recomputes scores with published models, tests stale-cache exclusion and
+mid-calculation drift, and preserves negative disclosed policy results. Native
+logs, calibration policies/scores and receipts are uploaded under
+`build/joint-calibration-ci/`; this is not an independent quality acceptance.

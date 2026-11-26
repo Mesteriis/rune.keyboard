@@ -1,5 +1,12 @@
 {
   "baseCommit": "571ee9a",
+  "cleanCheckoutValidation": {
+    "exitCode": 0,
+    "graphTests": 9,
+    "readmeTests": 13,
+    "sourceCommit": "2c1ff9751e74ef11241e0a6e5e3557ff22353724",
+    "trackedTreeCleanBeforeAndAfter": true
+  },
   "focusedJvm": [
     {
       "errors": 0,

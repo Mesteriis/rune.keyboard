@@ -365,3 +365,36 @@ being converted into fabricated successful abstentions. Replay launches the Java
 executable frozen by export and revalidates the exact bounded JDK-local inventory:
 `bin/java`, `release`, `lib/modules`, `lib/libjli.dylib`, and
 `lib/server/libjvm.dylib`.
+
+The disclosed named regression cases can also be replayed independently of the
+historical finite-only qualification policy:
+
+```sh
+python3 tools/eval/smart-typing-0.3/pipeline/run_local_qualification.py \
+  --java "$JAVA_HOME/bin/java" --output build/named-regression-review --named-only
+```
+
+This requires the pinned compiler dependencies and Android SDK used by the JVM
+harness, and a fresh output directory. All 56 named cases must individually
+produce the exact expected text and exact immediate Undo; correct/protected
+controls must remain unchanged. The output explicitly records disclosed
+regression scope, without selecting a policy or claiming independent unseen
+qualification. The original full mode retains its finite-only admission check;
+it rejects current configurations with general-local qualification enabled.
+
+## Optional contextual score probe
+
+`current_product_replay.py --contextual-score-probe` adds the frozen
+contextual ranker's raw scores to each diagnostic observation, in original
+token then joint-candidate order. It is off by default and changes only the
+host replay output, not the Android controller or policy. A null value means
+the contextual resources were unavailable. Probe-enabled projections contain
+an extra field and should be compared with equally instrumented projections;
+the ordinary frozen baseline is for the default mode. Raw scores alone do
+not prove final admission, actual selection, or independent qualification.
+
+`current_product_replay.py --disable-contextual-choice` is a host-only
+counterfactual: it bypasses the contextual choice while retaining the remaining
+replay cascade. It is off by default and is not an Android feature toggle or a
+qualified policy. Comparisons can reveal gains and losses on disclosed data;
+they cannot by themselves justify a production change.

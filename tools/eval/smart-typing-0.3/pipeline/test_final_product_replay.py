@@ -52,12 +52,31 @@ class FinalProductReplayTest(unittest.TestCase):
             android.parent.mkdir(parents=True); android.touch()
             with mock.patch.object(replay, 'TOOLCHAIN', toolchain), \
                     mock.patch.object(replay.Path, 'home', return_value=root), \
-                    mock.patch.dict(os.environ, {'ANDROID_HOME': str(root)}), \
+                    mock.patch.dict(os.environ, {'ANDROID_HOME': str(root), 'GRADLE_USER_HOME': str(root / '.gradle')}), \
                     mock.patch.object(replay.subprocess, 'run', return_value=SimpleNamespace(stderr=b'version "17.0"')):
                 _, jars, _ = replay.compile_inputs(Path('/synthetic/java'))
                 self.assertEqual([binary], jars)
                 binary.write_bytes(b'drifted executable')
                 with self.assertRaisesRegex(ValueError, 'PINNED_KOTLIN_CACHE'):
+                    replay.compile_inputs(Path('/synthetic/java'))
+
+    def test_compile_inputs_honors_gradle_user_home_and_rejects_duplicate_matches(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder); gradle = root / 'isolated-cache'
+            jar = gradle / 'caches/modules-2/files-2.1/example/compiler/1/hash/compiler-1.jar'
+            jar.parent.mkdir(parents=True); jar.write_bytes(b'pinned executable')
+            toolchain = root / 'toolchain.json'
+            toolchain.write_text(json.dumps({'jars': [{'group': 'example', 'artifact': 'compiler',
+                'version': '1', 'sha256': replay.sha256(jar)}]}))
+            android = root / 'platforms/android-37.0/android.jar'; android.parent.mkdir(parents=True); android.touch()
+            with mock.patch.object(replay, 'TOOLCHAIN', toolchain), \
+                    mock.patch.object(replay.Path, 'home', return_value=root / 'wrong-home'), \
+                    mock.patch.dict(os.environ, {'ANDROID_HOME': str(root), 'GRADLE_USER_HOME': str(gradle)}), \
+                    mock.patch.object(replay.subprocess, 'run', return_value=SimpleNamespace(stderr=b'version "17.0"')):
+                self.assertEqual([jar], replay.compile_inputs(Path('/synthetic/java'))[1])
+                duplicate = jar.parent.parent / 'other' / jar.name
+                duplicate.parent.mkdir(); duplicate.write_bytes(jar.read_bytes())
+                with self.assertRaisesRegex(ValueError, 'PINNED_KOTLIN_CACHE:compiler'):
                     replay.compile_inputs(Path('/synthetic/java'))
 
 

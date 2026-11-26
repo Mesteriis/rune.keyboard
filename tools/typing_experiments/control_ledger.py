@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import re
 import unicodedata
-from source_identities import tatoeba_identity
+from source_identities import ewt_document_identity, tatoeba_identity
 
 SCHEMA='rune-public-control-exclusions-v1'
 KINDS=('punctuation','protected','regression')
@@ -25,7 +25,12 @@ def key_for(row,kind):
         if boundary not in (' ', ', ', ': ', '. '):raise ValueError('CONTROL_BOUNDARY')
         # Expected labels must not make a disclosed context appear fresh.
         fields=[text(row.get('prefix')),text(row.get('currentWord'))]
-    else:fields=[text(row.get('prefix')),text(row.get('typed'))]
+    else:
+        prefix=row.get('prefix')
+        # A disclosed standalone regression has a real, empty context. Never
+        # invent a placeholder that would let the same input evade exclusions.
+        prefix='' if kind=='regression' and prefix=='' else text(prefix)
+        fields=[prefix,text(row.get('typed'))]
     payload=[SCHEMA,kind,row['language'],*fields]
     return hashlib.sha256(json.dumps(payload,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
 
@@ -41,6 +46,12 @@ def surface_key(language,value):
 
 def article_key(row):
     if not isinstance(row,dict) or row.get('language') not in LANGUAGES:raise ValueError('CONTROL_ARTICLE_SCOPE')
+    if row.get('sourceRepository')=='ud-english-ewt':
+        # Share the established EWT document namespace with the lexical ledger.
+        # English family qualification remains independently unsupported.
+        ewt_document_identity(row)
+        from holdout_ledger import keys_for
+        return next(iter(keys_for([row], 'article')))
     sentence=tatoeba_identity(row)
     if sentence is not None:
         return hashlib.sha256(json.dumps([SCHEMA,'source-sentence',*sentence],separators=(',',':')).encode()).hexdigest()
@@ -59,13 +70,15 @@ def validate(ledger):
     ids=set()
     for entry in ledger['entries']:
         if (not isinstance(entry,dict) or not isinstance(entry.get('id'),str) or not entry['id'] or entry['id'] in ids
-                or entry.get('kind') not in KINDS or entry.get('language') not in LANGUAGES
+                or entry.get('kind') not in KINDS+('source',) or entry.get('language') not in LANGUAGES
                 or type(entry.get('rowCount')) is not int or entry['rowCount']<1
                 or not isinstance(entry.get('bindings'),dict) or not entry['bindings']
                 or any(not isinstance(p,str) or not p or not isinstance(h,str) or not HASH.fullmatch(h) for p,h in entry['bindings'].items())):
             raise ValueError('CONTROL_ENTRY')
         ids.add(entry['id']);keys=entry.get('keys')
-        if (not isinstance(keys,list) or not keys or len(keys)>entry['rowCount']
+        if (not isinstance(keys,list) or len(keys)>entry['rowCount']
+                or (entry['kind']=='source' and (keys or 'surfaceKeys' in entry or not entry.get('articleKeys')))
+                or (entry['kind']!='source' and not keys)
                 or any(not isinstance(k,str) or not HASH.fullmatch(k) for k in keys) or keys!=sorted(set(keys))):
             raise ValueError('CONTROL_KEYS')
         if 'surfaceKeys' in entry:
@@ -78,6 +91,7 @@ def validate(ledger):
 
             keys=entry['articleKeys']
             if (not isinstance(keys,list) or not keys or any(not isinstance(k,str) or not HASH.fullmatch(k) for k in keys)
+                    or (entry['kind']=='source' and len(keys)>entry['rowCount'])
                     or keys!=sorted(set(keys))):raise ValueError('CONTROL_ARTICLE_KEYS')
     return ledger
 
@@ -94,6 +108,11 @@ def assert_disjoint(rows,ledger,kind):
     surfaces={surface_key(row['language'],row.get('currentWord') if kind=='punctuation' else row.get('typed')) for row in rows}
     if surfaces&{k for entry in ledger['entries'] for k in entry.get('surfaceKeys',[])}:
         raise ValueError('CONTROL_SURFACE_OVERLAP')
+    # Source identity is optional for standalone controls, but when supplied
+    # it must not bypass an already disclosed article or sentence.
+    articles={article_key(row) for row in rows if 'article' in row or 'sourceRepository' in row}
+    if articles&{k for entry in ledger['entries'] for k in entry.get('articleKeys',[])}:
+        raise ValueError('CONTROL_ARTICLE_OVERLAP')
     # A control registry alone never certifies overall corpus freshness.
     raise ValueError('CONTROL_COVERAGE_INCOMPLETE')
 

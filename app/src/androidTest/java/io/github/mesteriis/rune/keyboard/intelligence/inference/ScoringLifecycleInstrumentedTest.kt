@@ -60,7 +60,7 @@ class ScoringLifecycleInstrumentedTest {
         assertEquals(base.starts + 1, blocked.starts)
         assertEquals(1, blocked.active)
         f.command(LifecycleModelInferenceService.RELEASE)
-        assertEquals(103L, f.replies.poll(3, TimeUnit.SECONDS))
+        f.replies.assertReply(103L)
         val done = f.await { it.completions == base.completions + 2 }
         assertEquals(101L, done.previousId)
         assertEquals(103L, done.lastId)
@@ -82,7 +82,7 @@ class ScoringLifecycleInstrumentedTest {
         f.await { it.completions > base.completions }
         // A following callback from the same worker/Binder drains any earlier result.
         f.score(202)
-        assertEquals(202L, f.replies.poll(3, TimeUnit.SECONDS))
+        f.replies.assertReply(202L)
         assertTrue(f.replies.isEmpty())
         f.assertHealthy(f.command())
     }
@@ -105,13 +105,12 @@ class ScoringLifecycleInstrumentedTest {
                 assertEquals(base.cancelledCompletions + 1, after.cancelledCompletions)
                 f.score(303)
                 if (operation == LifecycleModelInferenceService.TRIM_CRITICAL) {
-                    assertEquals(-303L, f.replies.poll(3, TimeUnit.SECONDS))
-                    assertEquals(ScoringCode.UNAVAILABLE, f.codes.poll(3, TimeUnit.SECONDS))
+                    f.replies.assertReply(303L, ScoringCode.UNAVAILABLE)
                     assertEquals(base.starts + 1, f.command().starts)
                     f.rebindScoring()
                     f.score(304)
-                    assertEquals(304L, f.replies.poll(3, TimeUnit.SECONDS))
-                } else assertEquals(303L, f.replies.poll(3, TimeUnit.SECONDS))
+                    f.replies.assertReply(304L)
+                } else f.replies.assertReply(303L)
                 assertTrue(f.replies.isEmpty())
                 f.assertHealthy(f.command())
             }
@@ -125,18 +124,15 @@ class ScoringLifecycleInstrumentedTest {
                 val base = f.command()
                 f.command(pressure)
                 f.score(701)
-                assertEquals(-701L, f.replies.poll(3, TimeUnit.SECONDS))
-                assertEquals(ScoringCode.UNAVAILABLE, f.codes.poll(3, TimeUnit.SECONDS))
+                f.replies.assertReply(701L, ScoringCode.UNAVAILABLE)
                 f.command(LifecycleModelInferenceService.INVALIDATE) // version invalidation cannot clear pressure
                 f.score(702)
-                assertEquals(-702L, f.replies.poll(3, TimeUnit.SECONDS))
-                assertEquals(ScoringCode.UNAVAILABLE, f.codes.poll(3, TimeUnit.SECONDS))
+                f.replies.assertReply(702L, ScoringCode.UNAVAILABLE)
                 assertEquals(base.starts, f.command().starts)
                 // Control stays bound, so the same Service/worker/owner survives this real lifecycle edge.
                 f.rebindScoring()
                 f.score(703)
-                assertEquals(703L, f.replies.poll(3, TimeUnit.SECONDS))
-                assertEquals(ScoringCode.OK, f.codes.poll(3, TimeUnit.SECONDS))
+                f.replies.assertReply(703L)
                 assertEquals(base.starts + 1, f.command().starts)
                 f.assertHealthy(f.command())
             }
@@ -146,7 +142,7 @@ class ScoringLifecycleInstrumentedTest {
     @Test fun idleWorkerUnloadsAfterCompletionWithoutMoreInput() = Fixture().use { f ->
         val base = f.command()
         f.score(401)
-        assertEquals(401L, f.replies.poll(3, TimeUnit.SECONDS))
+        f.replies.assertReply(401L)
         val completed = f.command()
         val idle = f.await { it.unloadedCompletions == base.completions + 1 }
         assertEquals(completed.starts, idle.starts)
@@ -172,7 +168,7 @@ class ScoringLifecycleInstrumentedTest {
             assertEquals(0, restarted.starts)
             assertTrue(p.replies.isEmpty())
             p.score(502)
-            assertEquals(502L, p.replies.poll(3, TimeUnit.SECONDS))
+            p.replies.assertReply(502L)
             assertEquals(1, f.command().starts)
             assertEquals(1, p.context.registrations.size)
         }
@@ -243,7 +239,7 @@ class ScoringLifecycleInstrumentedTest {
             assertEquals(1L, evaluatedRevision)
             onMain { assertTrue(p.replies.isEmpty()) }
             p.score(602)
-            assertEquals(602L, p.replies.poll(3, TimeUnit.SECONDS))
+            p.replies.assertReply(602L)
             assertTrue(p.replies.isEmpty())
             p.revisionReads.clear()
             p.revision.set(2)
@@ -261,7 +257,7 @@ class ScoringLifecycleInstrumentedTest {
             p.revision.set(2)
             onMain { p.retainedSpaceToken = input(604, 10).token }
             p.score(604)
-            assertEquals(604L, p.replies.poll(3, TimeUnit.SECONDS))
+            p.replies.assertReply(604L)
             p.revisionReads.clear()
             p.score(605)
             f.await { it.lastId == 605L && it.active == 0 }
@@ -279,10 +275,9 @@ class ScoringLifecycleInstrumentedTest {
         private var scoringBinding = RealBinding(context, Intent().setComponent(component))
         val rawBinder get() = scoringBinding.binder()
         val service: IModelScoringService get() = IModelScoringService.Stub.asInterface(rawBinder)
-        val replies = LinkedBlockingQueue<Long>()
-        val codes = LinkedBlockingQueue<Int>()
+        val replies = LinkedBlockingQueue<ObservedReply>()
         private val callback = object : IModelScoringCallback.Stub() {
-            override fun onResult(reply: ScoreReplyParcel?) { reply?.value?.let { codes.add(it.code); replies.add(checkedId(it)) } }
+            override fun onResult(reply: ScoreReplyParcel?) { reply?.value?.let { replies.add(observe(it)) } }
         }
         private var killed = false
         init {
@@ -320,13 +315,17 @@ class ScoringLifecycleInstrumentedTest {
         }
         fun await(predicate: (Snapshot) -> Boolean): Snapshot {
             val deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(4)
+            var result: Snapshot
             do {
-                val result = command()
+                result = command()
                 assertHealthy(result)
                 if (predicate(result)) return result
                 // Each iteration is a real Binder roundtrip; no keystroke/timing sleeps.
             } while (System.nanoTime() < deadline)
-            error("remote numeric state did not reach expected condition")
+            error("remote worker state timeout: lastRequest=${result.lastId}, active=${result.active}, " +
+                "starts=${result.starts}, completions=${result.completions}, cancels=${result.cancels}, " +
+                "cancelledCompletions=${result.cancelledCompletions}, unloads=${result.unloads}, " +
+                "unloadedCompletions=${result.unloadedCompletions}")
         }
         fun assertHealthy(snapshot: Snapshot) {
             assertEquals(0, snapshot.orderViolations)
@@ -413,7 +412,7 @@ class ScoringLifecycleInstrumentedTest {
 
     private class ClientProbe(base: Context) : AutoCloseable {
         val context = RedirectingContext(base)
-        val replies = LinkedBlockingQueue<Long>()
+        val replies = LinkedBlockingQueue<ObservedReply>()
         val availability = LinkedBlockingQueue<Boolean>()
         val revision = AtomicLong(1)
         val revisionReads = LinkedBlockingQueue<Long>()
@@ -423,7 +422,7 @@ class ScoringLifecycleInstrumentedTest {
             override fun currentCompositionRevision(): Long = revision.get().also { revisionReads.add(it) }
             override fun isCurrentRequest(token: ScoringToken): Boolean =
                 token.revision == currentCompositionRevision() || token == retainedSpaceToken
-            override fun onReply(reply: ScoringReply) { replies.add(checkedId(reply)) }
+            override fun onReply(reply: ScoringReply) { replies.add(observe(reply)) }
             override fun onAvailabilityChanged(available: Boolean) { availability.add(available) }
         }) }
         fun attach(id: Long?, eligible: Boolean) { session = id ?: 1; onMain { client.attachSession(id, eligible) } }
@@ -450,11 +449,22 @@ class ScoringLifecycleInstrumentedTest {
         val cancels: Int, val cancelledCompletions: Int, val completions: Int,
         val unloads: Int, val unloadedCompletions: Int, val orderViolations: Int, val timeouts: Int)
 
+    private data class ObservedReply(val requestId: Long, val code: Int, val elapsedMillis: Long,
+        val scoreCount: Int, val fixtureScore: Boolean)
+
     companion object {
-        private fun checkedId(reply: ScoringReply): Long =
-            if (reply.code == 0 && reply.scores.size == 1 && reply.scores[0].candidateId == 11 &&
-                reply.scores[0].sumLogProbability == -1.0 && reply.scores[0].tokenCount == 1)
-                reply.token.requestId else -reply.token.requestId
+        private fun observe(reply: ScoringReply): ObservedReply {
+            val score = reply.scores.singleOrNull()
+            val fixtureScore = score != null && score.candidateId == 11 &&
+                score.sumLogProbability == -1.0 && score.tokenCount == 1
+            return ObservedReply(reply.token.requestId, reply.code, reply.elapsedMillis, reply.scores.size, fixtureScore)
+        }
+        private fun LinkedBlockingQueue<ObservedReply>.assertReply(id: Long, code: Int = ScoringCode.OK) {
+            val actual = checkNotNull(poll(3, TimeUnit.SECONDS)) { "no scoring reply for request $id" }
+            assertEquals("scoring reply $actual", id, actual.requestId)
+            assertEquals("scoring reply $actual", code, actual.code)
+            if (code == ScoringCode.OK) assertTrue("scoring reply $actual", actual.fixtureScore)
+        }
         private fun input(id: Long, session: Long = 1) =
             ScoringInput(ScoringToken(session, 1, id, listOf(11)), "fixture", listOf(" value"))
         private fun <T> onMain(block: () -> T): T {

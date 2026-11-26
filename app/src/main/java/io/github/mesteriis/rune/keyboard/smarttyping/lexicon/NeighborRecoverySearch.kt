@@ -24,6 +24,10 @@ internal class NeighborRecoverySearch(
         val radius = if (key.length >= 7) 3 else 2
         val started = nanoTime()
         val path = CharArray(32)
+        // Offset input positions by one and use an unreachable row outside the query.
+        val alignmentCosts = Array(path.size + 2) { position ->
+            key.getOrNull(position - 1)?.let { SUBSTITUTION_COSTS[it - 'а'] } ?: UNREACHABLE
+        }
         val next = IntArray(33)
         // Each depth has four alignments: substitutions only, one output insertion,
         // one input deletion, or one exact adjacent transposition. Fixed O(word length) scratch.
@@ -36,24 +40,21 @@ internal class NeighborRecoverySearch(
         var states = 0
         val candidates = ArrayList<GeneratedCandidate>()
         var completion = CandidateCompletion.COMPLETE
-        fun checkpoint(): Boolean {
-            if (Thread.currentThread().isInterrupted || cancellation.isCancelled()) {
+        val searchThread = Thread.currentThread()
+        fun checkpoint(checkTime: Boolean = true): Boolean {
+            if (searchThread.isInterrupted || cancellation.isCancelled()) {
                 completion = CandidateCompletion.CANCELLED
-            } else if (nanoTime() - started !in 0 until MAX_NANOS) {
+            } else if (checkTime && nanoTime() - started !in 0 until MAX_NANOS) {
                 completion = CandidateCompletion.STATES_EXHAUSTED
             }
             return completion == CandidateCompletion.COMPLETE
         }
-        fun cost(position: Int, letter: Char): Int = when {
-            position !in key.indices -> INF
-            key[position] == letter -> 0
-            KeyboardDistance.areAdjacent(key[position].code, letter.code, KeyboardLanguage.RUSSIAN) -> 1
-            else -> INF
-        }
         try {
             var depth = 0
             next[0] = index.child(0)
-            while (depth >= 0 && checkpoint()) {
+            // Sample time during traversal and always before verifying a terminal or returning.
+            // Cancellation remains per edge. No complete certificate can cross the deadline.
+            while (depth >= 0 && checkpoint(checkTime = states % TIME_CHECK_INTERVAL == 0)) {
                 val node = next[depth]
                 if (node == 0) { depth--; continue }
                 if (states == maximumStates) { completion = CandidateCompletion.STATES_EXHAUSTED; break }
@@ -63,24 +64,27 @@ internal class NeighborRecoverySearch(
                 val letter = index.label(node).toChar()
                 path[depth] = letter
                 val length = depth + 1
-                plain[length] = plain[depth] + cost(depth, letter)
-                inserted[length] = minOf(inserted[depth] + cost(depth - 1, letter), plain[depth] + 1)
-                deleted[length] = minOf(deleted[depth] + cost(depth + 1, letter), plain[length] + 1)
-                transposed[length] = transposed[depth] + cost(depth, letter)
+                val column = (letter - 'а').let { if (it in 0 until ALPHABET_SIZE) it else ALPHABET_SIZE }
+                val substitution = alignmentCosts[length][column]
+                plain[length] = plain[depth] + substitution
+                inserted[length] = minOf(inserted[depth] + alignmentCosts[depth][column], plain[depth] + 1)
+                deleted[length] = minOf(deleted[depth] + alignmentCosts[length + 1][column], plain[length] + 1)
+                transposed[length] = transposed[depth] + substitution
                 if (depth > 0 && depth < key.length && path[depth - 1] == key[depth] && letter == key[depth - 1]) {
                     transposed[length] = minOf(transposed[length], plain[depth - 1] + 1)
                 }
                 // The first half of a transposition may mismatch a non-neighbour. Do not prune it.
                 val pendingTranspose = if (length < key.length && letter == key[length]) plain[depth] + 1 else INF
-                if (minOf(plain[length], inserted[length], deleted[length], transposed[length], pendingTranspose) > radius) continue
-                val terminal = index.terminal(node)
+                if (plain[length] > radius && inserted[length] > radius && deleted[length] > radius &&
+                    transposed[length] > radius && pendingTranspose > radius) continue
                 val distance = when (length - key.length) {
                     0 -> minOf(plain[length], transposed[length])
                     1 -> inserted[length]
                     -1 -> deleted[length]
                     else -> INF
                 }
-                if (terminal != 0 && distance in 2..radius) {
+                val terminal = if (distance in 2..radius) index.terminal(node) else 0
+                if (terminal != 0) {
                     if (!checkpoint()) break
                     if (candidates.size == maximumTerminals) { completion = CandidateCompletion.VERIFIED_EXHAUSTED; break }
                     val word = String(path, 0, length)
@@ -90,9 +94,10 @@ internal class NeighborRecoverySearch(
                         WeightedDamerauLevenshtein().features(key, word, KeyboardLanguage.RUSSIAN),
                         kotlin.math.abs(length - key.length), pattern))
                 }
-                if (length < 32 && index.child(node) != 0) {
+                val child = if (length < 32) index.child(node) else 0
+                if (child != 0) {
                     depth++
-                    next[depth] = index.child(node)
+                    next[depth] = child
                 }
             }
             checkpoint()
@@ -100,6 +105,7 @@ internal class NeighborRecoverySearch(
             completion = CandidateCompletion.READER_FAILURE
             checkpoint()
         } finally {
+            alignmentCosts.fill(UNREACHABLE)
             path.fill('\u0000'); next.fill(0); plain.fill(0)
             inserted.fill(0); deleted.fill(0); transposed.fill(0)
         }
@@ -115,5 +121,18 @@ internal class NeighborRecoverySearch(
         const val MAX_TERMINALS = 64
         const val MAX_NANOS = 100_000_000L
         private const val INF = 128
+        private const val TIME_CHECK_INTERVAL = 32
+        private const val ALPHABET_SIZE = 'ё' - 'а' + 1
+        private val UNREACHABLE = IntArray(ALPHABET_SIZE + 1) { INF }
+        private val SUBSTITUTION_COSTS = Array(ALPHABET_SIZE) { source ->
+            IntArray(ALPHABET_SIZE + 1) { target ->
+                when {
+                    source == target -> 0
+                    target == ALPHABET_SIZE -> INF
+                    KeyboardDistance.areAdjacent('а'.code + source, 'а'.code + target, KeyboardLanguage.RUSSIAN) -> 1
+                    else -> INF
+                }
+            }
+        }
     }
 }

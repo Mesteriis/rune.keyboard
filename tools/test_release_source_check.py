@@ -11,6 +11,14 @@ import release_source_check as source
 
 
 class ReleaseSourceTest(unittest.TestCase):
+    def test_prepared_source_cli_reports_missing_git_without_traceback(self):
+        with tempfile.TemporaryDirectory() as directory:
+            result = subprocess.run([sys.executable, str(Path(source.__file__)), '--root', directory,
+                                     '--prepared-source', 'fdroidserver-2.4.5'], capture_output=True, text=True)
+        self.assertEqual(1, result.returncode)
+        self.assertIn('Release source check failed: RELEASE_GIT_QUERY_FAILED', result.stderr)
+        self.assertNotIn('Traceback', result.stderr)
+
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory()
         self.addCleanup(self.directory.cleanup)

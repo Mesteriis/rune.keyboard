@@ -1,0 +1,444 @@
+{
+  "schemaVersion": 1,
+  "profile": "scientific",
+  "modules": [
+    {
+      "path": "tools/typing_experiments/test_abstaining_ranker.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 5.787215041927993,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_applied_tree_batch.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 1.0066924579441547,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_augmented_abstaining_ranker.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.9095529168844223,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_calibrate_joint_followup.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07776929205283523,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_calibrate_joint_source.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07998791593126953,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_epoch_evaluation.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07436308381147683,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_evaluate_joint_followup.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07780645810998976,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_evaluate_joint_product.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.07280212501063943,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_extra_epoch_evaluation_driver.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 34.13339874986559,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_extra_epochs.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.20125441695563495,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_left_role_tree_batch.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.9151864589657634,
+      "unittest": {
+        "tests": 2,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_models.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 9.938738917000592,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_neural_refinement.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.19955354183912277,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_recover_available_v6_articles.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 1.1053532920777798,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_recover_available_v6_contexts.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.8083275000099093,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_recover_available_v6_targets.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.7920036669820547,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_refinement.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 9.705097124911845,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_refinement_evaluation_driver.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 28.202157334191725,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_refreeze_augmented_margin.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.9487419999204576,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_residual_tree_batch.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.92919766693376,
+      "unittest": {
+        "tests": 5,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_retrieval.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.9574124170467257,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_retrieval_evaluation_driver.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 10.962774999905378,
+      "unittest": {
+        "tests": 1,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_selector_text_preflight_files_v2.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 1.5695842921268195,
+      "unittest": {
+        "tests": 10,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_selector_text_preflight_files_v3.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 2.382263374980539,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_selector_text_preflight_files_v4.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 1.474130833055824,
+      "unittest": {
+        "tests": 6,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_train_joint_correction.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 1.1664622910320759,
+      "unittest": {
+        "tests": 9,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_verify_available_v6_observation.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.814398042159155,
+      "unittest": {
+        "tests": 4,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_word_evaluation_driver.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 41.37632712488994,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_word_ranking.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 0.18285770900547504,
+      "unittest": {
+        "tests": 7,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": [
+          {
+            "test": "test_word_ranking.WordRankingTests.test_mlx_loss_parity_initialization_and_finite_gradient",
+            "reason": "MLX environment required"
+          }
+        ]
+      }
+    },
+    {
+      "path": "tools/typing_experiments/test_word_ranking_data.py",
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 8.07095233304426,
+      "unittest": {
+        "tests": 3,
+        "failures": [],
+        "errors": [],
+        "expectedFailures": [],
+        "unexpectedSuccesses": [],
+        "skipped": []
+      }
+    }
+  ],
+  "status": "PASS",
+  "totals": {
+    "modules": 30,
+    "failedModules": 0,
+    "timedOutModules": 0,
+    "modulesWithoutReceipt": 0,
+    "tests": 123,
+    "failures": 0,
+    "errors": 0,
+    "expectedFailures": 0,
+    "unexpectedSuccesses": 0,
+    "skipped": 1
+  }
+}

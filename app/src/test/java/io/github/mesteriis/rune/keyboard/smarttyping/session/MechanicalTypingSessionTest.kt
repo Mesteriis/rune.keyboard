@@ -114,6 +114,90 @@ class MechanicalTypingSessionTest {
         }
     }
 
+    @Test fun `mechanical sentence case preserves the Russian era abbreviation`() {
+        for (prefix in listOf("Это было до н. ", "В 536 году н. ", "1 году н. ", "В 6 веке н. ")) {
+            val abbreviation = Fixture()
+            abbreviation.rawSequence(prefix)
+            assertTrue(abbreviation.controller.awaitsRussianAbbreviationContinuation())
+            abbreviation.type("э")
+            assertFalse(abbreviation.controller.awaitsRussianAbbreviationContinuation())
+            assertEquals(prefix + "э", abbreviation.document)
+            assertNull(abbreviation.controller.state.lastAutoEdit)
+            abbreviation.type(".")
+            assertEquals(prefix + "э.", abbreviation.document)
+            abbreviation.undo()
+            assertEquals(prefix + "э", abbreviation.document)
+            assertEquals(0, abbreviation.reads)
+        }
+
+        val sentence = Fixture()
+        sentence.rawSequence("Это я. ")
+        assertFalse(sentence.controller.awaitsRussianAbbreviationContinuation())
+        sentence.type("э")
+        assertEquals("Это я. Э", sentence.document)
+        sentence.undo()
+        assertEquals("Это я. э", sentence.document)
+        assertEquals(0, sentence.reads)
+
+        for (prefix in listOf(
+            "В 536 г. ", "В x536 году н. ", "В 12345 году н. ", "В x6 веке н. ", "В далёком веке н. ",
+        )) {
+            val ordinary = Fixture()
+            ordinary.rawSequence(prefix)
+            assertFalse(prefix, ordinary.controller.awaitsRussianAbbreviationContinuation())
+            ordinary.type("э")
+            assertEquals(prefix + "Э", ordinary.document)
+        }
+    }
+
+    @Test fun `explanatory abbreviation retains lowercase across both dots`() {
+        val explanation = Fixture()
+        explanation.rawSequence("Проверили, т. ")
+        explanation.type("е")
+        assertEquals("Проверили, т. е", explanation.document)
+        explanation.type(".")
+        explanation.type(" ")
+        explanation.type("з")
+        assertEquals("Проверили, т. е. з", explanation.document)
+        assertNull(explanation.controller.state.lastAutoEdit)
+        explanation.undo()
+        assertEquals("Проверили, т. е. ", explanation.document)
+        assertEquals(0, explanation.reads)
+
+        for (prefix in listOf("Это т. ", "Т. ", "Проверили, т. э. ")) {
+            val ordinary = Fixture()
+            ordinary.rawSequence(prefix)
+            ordinary.type("е")
+            assertEquals(prefix + "Е", ordinary.document)
+        }
+    }
+
+    @Test fun `enumeration abbreviations retain lowercase and allow a new sentence`() {
+        val prefix = "Книги и т. "
+        for (letter in listOf("п", "д")) {
+            val f = Fixture()
+            f.rawSequence(prefix)
+            f.type(letter)
+            assertEquals(prefix + letter, f.document)
+            assertNull(f.controller.state.lastAutoEdit)
+            f.type(".")
+            f.undo()
+            assertEquals(prefix + letter, f.document)
+            f.type(".")
+            f.type(" ")
+            f.type("з")
+            assertEquals(prefix + letter + ". З", f.document)
+            assertEquals(0, f.reads)
+        }
+
+        for ((context, letter) in listOf("Выбрали эти т. " to "п", "Это т. " to "д", prefix to "з")) {
+            val f = Fixture()
+            f.rawSequence(context)
+            f.type(letter)
+            assertEquals(context + letter.uppercase(), f.document)
+        }
+    }
+
     @Test fun `space before comma and missing after use one replacement each`() {
         val f = Fixture(); f.type("hello"); f.type(" "); f.calls.clear()
         f.type(","); assertEquals(listOf("set"), f.calls); assertEquals(",", f.sent.last())

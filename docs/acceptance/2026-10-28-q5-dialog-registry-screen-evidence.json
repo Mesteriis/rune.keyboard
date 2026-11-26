@@ -1,0 +1,31 @@
+{
+  "bindings": {
+    "README.md": "20a3d72074da322b063b82e2ddecbb2f9adc3cb003316749f3c58eb6e563e1f5",
+    "Tiny-Russian-Dialogs.csv": "15aea2ae3ceb98c23082731fda3e389e7bcd09c5fbcc9c50b728b4b7b20fce36",
+    "audit_chat_dialog_registry.py": "ae9c56476abc9d652b6bc8e2e309175ba17f98bc60ccb9174ac5ebad0c1f8adb",
+    "audit_chat_dialog_source.py": "1550fbcd44e52a18025ff47beca9c5b366f0a096382a27d0e5a14d85c7f36b3f",
+    "conversation_split_checks.py": "373879a4483989d8adb7f1831265ee0803502fb25660a202a6898ed74c613683",
+    "holdout-ledger.json": "9382b5c18b5b583808316fbdf68c4a0f1ef9d21be41c3dba211c64c8a1e0770c",
+    "holdout_ledger.py": "cedd150f6f2b7cdc3ec7f60cfd2d5ee8a0e9288904b88855a23fed47d4d33777"
+  },
+  "counts": {
+    "dialogues": 125000,
+    "distinctTokenContextOverlaps": 32,
+    "ledgerComplete": false,
+    "phrasesWithAnyContextOverlap": 419,
+    "phrasesWithFirstContextOverlap": 4,
+    "phrasesWithLastContextOverlap": 2,
+    "phrasesWithLaterContextOverlap": 415,
+    "uniquePhrases": 6326,
+    "uniqueTokenContexts": 10304
+  },
+  "limitations": [
+    "Only exact prefix-target keys are screened; source, article, family, right context and semantic overlap remain unverified.",
+    "Ledger coverage is incomplete; no independent freshness claim.",
+    "Synthetic source spelling and intent are not verified."
+  ],
+  "purpose": "PUBLIC_SYNTHETIC_CONTEXT_SCREEN_NOT_QUALIFICATION",
+  "qualification": false,
+  "revision": "4f85463dc22850a2f6e961c9c21b13510d362d3a",
+  "schema": 1
+}

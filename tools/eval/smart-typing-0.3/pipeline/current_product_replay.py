@@ -16,6 +16,7 @@ import final_product_replay as harness
 import replay_projection as projection
 
 INPUT_FIELDS = ('id', 'split', 'language', 'prefix', 'typed')
+NEIGHBOR_MAX_STATES = 32_768
 ANDROID_PERSONALIZATION = harness.REPO / 'app/src/main/java/io/github/mesteriis/rune/keyboard/smarttyping/personalization/AndroidTypingPersonalization.kt'
 
 
@@ -46,12 +47,64 @@ def bindings(paths):
     return {harness.path_key(path): harness.sha256(path) for path in paths}
 
 
+def baseline_projection(rows, candidate_order):
+    if not candidate_order:
+        return rows
+    if any('fullCandidateOrder' not in row for row in rows):
+        raise ValueError('REPLAY_CANDIDATE_ORDER_MISSING')
+    return [{key: value for key, value in row.items() if key != 'fullCandidateOrder'} for row in rows]
+
+
+def mismatch_summary(reason, report, before=None, after=None):
+    """Summarize field categories without emitting row IDs, paths or input text."""
+    allowed = {'jointModelScores', 'rescueModelScores', 'compactScores',
+               'beforeBoundary', 'afterBoundary', 'afterBackspace', 'boundaryCommands',
+               'backspaceCommands', 'candidateView', 'boundaryDiagnostics'}
+    counts = Counter()
+    for difference in report['differences']:
+        for path in difference['paths']:
+            root = path.split('/', 2)[1] if path.startswith('/') else ''
+            counts[root if root in allowed else 'other'] += 1
+    summary = {'differentRows': report['differentRows'], 'fieldCategories': dict(sorted(counts.items()))}
+    if before is not None and after is not None:
+        # These are fixed internal fields and enum values, never input text or IDs.
+        # A sub-cap STATES_EXHAUSTED result is only a deadline hypothesis: the
+        # original failure needs its actual evidence and source bindings reviewed.
+        recovery = Counter()
+        for difference in report['differences']:
+            number = difference.get('row')
+            if type(number) is not int or number < 1 or number > min(len(before), len(after)):
+                continue
+            for name in ('fullTokenGeneration', 'actualRequestGeneration'):
+                left, right = (rows[number - 1].get(name) for rows in (before, after))
+                left = left.get('neighborRecovery') if isinstance(left, dict) else None
+                right = right.get('neighborRecovery') if isinstance(right, dict) else None
+                if not isinstance(left, dict) or not isinstance(right, dict) or left == right:
+                    continue
+                recovery['changedEvidencePairs'] += 1
+                for side, item in (('first', left), ('second', right)):
+                    states = item.get('inspectedStates')
+                    if (item.get('completion') == 'STATES_EXHAUSTED' and type(states) is int
+                            and 0 <= states < NEIGHBOR_MAX_STATES):
+                        recovery[side + 'PossibleDeadline'] += 1
+        summary['neighborRecovery'] = dict(sorted(recovery.items()))
+    return reason + ':' + json.dumps(summary, sort_keys=True, separators=(',', ':'))
+
+
 def parser():
     result = argparse.ArgumentParser(description=__doc__)
     result.add_argument('--java', type=Path, required=True)
     result.add_argument('--rows', type=Path, action='append', required=True)
     result.add_argument('--output', type=Path, required=True)
     result.add_argument('--baseline', type=Path)
+    result.add_argument('--manual-expansion', choices=('on', 'off'), default='on')
+    result.add_argument('--candidate-order', action='store_true')
+    result.add_argument('--a3-rare-probe', action='store_true')
+    result.add_argument('--contextual-score-probe', action='store_true')
+    result.add_argument('--disable-contextual-choice', action='store_true')
+    result.add_argument('--deterministic-neighbor-search', action='store_true',
+                        help='Freeze the RU recovery clock for behavior parity while retaining work caps and cancellation.')
+    result.add_argument('--boundary', choices=('space', 'period', 'colon'), default='space')
     return result
 
 
@@ -73,7 +126,14 @@ def run(args):
     receipt = {'schemaVersion': 1, 'mode': 'current-product', 'status': 'STARTED',
         'files': before, 'rows': len(rows), 'languages': dict(Counter(row['language'] for row in rows)),
         'inputFieldsSent': list(INPUT_FIELDS), 'opaqueControllerIds': True, 'modelCalls': 0,
-        'boundaryDiagnostics': True, 'baselineCompared': args.baseline is not None}
+        'boundaryDiagnostics': True, 'baselineCompared': args.baseline is not None,
+        'manualExpansion': args.manual_expansion, 'candidateOrderObserved': args.candidate_order,
+        'a3RareProbe': args.a3_rare_probe,
+        'contextualScoreProbe': args.contextual_score_probe,
+        'contextualChoiceDisabled': args.disable_contextual_choice,
+        'deterministicNeighborSearch': args.deterministic_neighbor_search,
+        'boundary': args.boundary,
+        'baselineObservationExcludedFields': ['fullCandidateOrder'] if args.candidate_order else []}
     started = time.monotonic()
     try:
         encode = lambda value: base64.b64encode(value.encode('utf-8')).decode('ascii')
@@ -87,7 +147,14 @@ def run(args):
         harness.write_jsonl(identities, [{'index': index, 'id': row['id'], 'sourceId': row['sourceId']}
             for index, row in enumerate(rows)])
         receipt['hostOnlyIdentitiesSha256'] = harness.sha256(identities)
-        os.environ['JAVA_TOOL_OPTIONS'] = '-Drune.replay.boundaryDiagnostics=true'
+        os.environ['JAVA_TOOL_OPTIONS'] = ('-Drune.replay.boundaryDiagnostics=true '
+            + '-Drune.replay.manualExpansion=' + ('true' if args.manual_expansion == 'on' else 'false')
+            + ' -Drune.replay.fullCandidateOrder=' + ('true' if args.candidate_order else 'false')
+            + ' -Drune.replay.a3RareProbe=' + ('true' if args.a3_rare_probe else 'false')
+            + ' -Drune.replay.contextualScoreProbe=' + ('true' if args.contextual_score_probe else 'false')
+            + ' -Drune.replay.disableContextualChoice=' + ('true' if args.disable_contextual_choice else 'false')
+            + ' -Drune.replay.deterministicNeighborSearch=' + ('true' if args.deterministic_neighbor_search else 'false')
+            + ' -Drune.replay.boundary=' + args.boundary)
         compile_started = time.monotonic()
         jar, _ = harness.compile_harness(root, java, sources, jars, android)
         receipt['compileSeconds'] = time.monotonic() - compile_started
@@ -109,15 +176,19 @@ def run(args):
         determinism = projection.compare(*projections)
         harness.write_json(root / 'determinism.json', determinism)
         receipt['deterministic'] = determinism['passed']
-        if not determinism['passed']: raise ValueError('REPLAY_NONDETERMINISTIC:see determinism.json')
+        if not determinism['passed']:
+            raise ValueError(mismatch_summary('REPLAY_NONDETERMINISTIC', determinism, *projections))
         with (root / 'projection.jsonl').open('xb') as stream:
             stream.write(projection.projection_bytes(projections[1]))
         receipt['projectionSha256'] = harness.sha256(root / 'projection.jsonl')
         if args.baseline:
-            compared = projection.compare(projection.read_projection(args.baseline), projections[1])
+            compared = projection.compare(projection.read_projection(args.baseline),
+                                          baseline_projection(projections[1], args.candidate_order),
+                                          score_tolerance=projection.BASELINE_SCORE_ABS_TOLERANCE)
             harness.write_json(root / 'baseline-comparison.json', compared)
             receipt['baselineMatches'] = compared['passed']
-            if not compared['passed']: raise ValueError('REPLAY_BASELINE_DRIFT:see baseline-comparison.json')
+            if not compared['passed']:
+                raise ValueError(mismatch_summary('REPLAY_BASELINE_DRIFT', compared))
         if before != bindings(bound_paths): raise ValueError('REPLAY_BOUND_FILE_DRIFT')
         receipt.update(status='COMPLETE', exitCode=0)
         return 0

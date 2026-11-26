@@ -1,0 +1,11 @@
+{
+  "dataManifestSha256": "8a5a11a16543315ff3114bf0034f54b455b5e432828098cf2030f85737c34466",
+  "exportReceiptSha256": "7dfda8008d79a236d3f2838f273c0eabde2004b8530055ff2cd7b4766dc6d911",
+  "originalManifestSha256": "a1ad00622f5829b19fdad94a58dcf42b1f510294b09bb1e6b6d08c10b8bcc8f5",
+  "partitions": {
+    "dev": "d724fe141e0870e64e0e60e67d9342198206d80e9a6929384aa858e76a71b6f4",
+    "test": "e901bbc3f9bc21667e6df9f994150cb5dd4b36ff8e6b9cc78e92145fe2af118f",
+    "train": "1d4abdc2301d271401fc3bb4d720a6eba491a7e31707235264fbb3c8979ca6ce"
+  },
+  "schema": 1
+}

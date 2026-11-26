@@ -1,0 +1,27 @@
+{
+  "regressionGatePassed": true,
+  "metrics": {
+    "rows": 68,
+    "controls": 51,
+    "newCorrect": 0,
+    "newWrong": 0,
+    "priorCorrectLosses": 0,
+    "controlChanges": 0,
+    "baselineCorrect": 62,
+    "baselineCorrectTypos": 11,
+    "projectedCorrect": 62,
+    "scopeEligible": 0,
+    "precision": null
+  },
+  "observationsComplete": 136,
+  "exactUndoChecks": 136,
+  "scopeRefusals": {
+    "NO_COMPLETE_POOL": 51,
+    "SOURCE_ADMISSION_REFUSED": 11,
+    "NO_EXISTING_REPLACEMENT": 6
+  },
+  "policySha256": "ed6589ff9a16a7c7375258def2b1c9fc214afc1ca9a20a57e4c6d9448a244d1d",
+  "actualNewControllerIntegration": false,
+  "physicalDeviceQualified": false,
+  "packagedAssetsChanged": false
+}

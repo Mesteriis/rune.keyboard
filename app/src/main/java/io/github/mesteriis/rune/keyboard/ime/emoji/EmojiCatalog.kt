@@ -4,6 +4,7 @@ import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
 import java.io.InputStream
 import java.nio.ByteBuffer
 import java.nio.charset.CodingErrorAction
+import java.util.concurrent.atomic.AtomicReferenceArray
 
 internal data class EmojiNames(val english: String, val russian: String, val spanish: String) {
     fun inLanguage(language: KeyboardLanguage): String = when (language) {
@@ -22,44 +23,72 @@ internal data class EmojiCategory(
     val entries: List<EmojiEntry>,
 )
 
-/** Count and invalid-index checks need no names; successful access decodes one category once. */
+internal interface EmojiGlyphLookup {
+    fun findGlyph(glyph: String): EmojiEntry?
+}
+
+/** Glyph filtering needs no names; each successfully accessed entry is decoded once. */
 internal class DeferredEmojiEntries(
-    override val size: Int,
-    decode: () -> List<EmojiEntry>,
+    private val glyphs: List<String>,
+    private val decode: (Int) -> EmojiEntry,
 ) : AbstractList<EmojiEntry>() {
-    private val values by lazy {
-        decode().also { require(it.size == size) { "Emoji category count mismatch" } }
-    }
+    override val size: Int get() = glyphs.size
+    private val values = AtomicReferenceArray<EmojiEntry>(glyphs.size)
 
     init { require(size > 0) }
 
     override fun get(index: Int): EmojiEntry {
         if (index !in 0 until size) throw IndexOutOfBoundsException("Emoji entry index out of range")
-        return values[index]
+        values.get(index)?.let { return it }
+        synchronized(values) {
+            values.get(index)?.let { return it }
+            return decode(index).also {
+                require(it.glyph == glyphs[index]) { "Emoji category glyph mismatch" }
+                values.set(index, it)
+            }
+        }
+    }
+
+    fun filterGlyphs(include: (String) -> Boolean): List<EmojiEntry> {
+        val selected = glyphs.indices.filter { include(glyphs[it]) }.toIntArray()
+        return object : AbstractList<EmojiEntry>(), EmojiGlyphLookup {
+            override val size: Int get() = selected.size
+            override fun get(index: Int): EmojiEntry = this@DeferredEmojiEntries[selected[index]]
+            override fun findGlyph(glyph: String): EmojiEntry? {
+                val index = selected.firstOrNull { glyphs[it] == glyph } ?: return null
+                return this@DeferredEmojiEntries[index]
+            }
+        }
     }
 }
 
 /** Packaged, build-verified data. Parsing preserves sequence bytes and source order. */
-internal class EmojiCatalog private constructor(val categories: List<EmojiCategory>) {
+internal class EmojiCatalog internal constructor(val categories: List<EmojiCategory>) {
     companion object {
         const val ASSET_PATH = "emoji/catalog-v1.tsv"
         private const val MAX_BYTES = 320_000
+        // The packaged TSV fits in one read buffer. Only larger inputs need to grow it.
+        private const val INITIAL_CAPACITY = 144 * 1024
         private const val HEADER = "# rune-emoji-catalog-v1\n"
 
         /** Owns and closes the supplied stream, including on a malformed/oversized asset. */
         fun read(input: InputStream): EmojiCatalog = input.use { stream ->
-            val output = java.io.ByteArrayOutputStream()
-            val buffer = ByteArray(8192)
+            var buffer = ByteArray(INITIAL_CAPACITY)
+            var size = 0
             while (true) {
-                val count = stream.read(buffer)
+                if (size == buffer.size) {
+                    // Leave room for one byte to distinguish overflow from exact-size EOF.
+                    buffer = buffer.copyOf(minOf(buffer.size * 2, MAX_BYTES + 1))
+                }
+                val count = stream.read(buffer, size, buffer.size - size)
                 if (count < 0) break
-                require(output.size() + count <= MAX_BYTES) { "Emoji catalog exceeds byte budget" }
-                output.write(buffer, 0, count)
+                size += count
+                require(size <= MAX_BYTES) { "Emoji catalog exceeds byte budget" }
             }
             val decoder = Charsets.UTF_8.newDecoder()
                 .onMalformedInput(CodingErrorAction.REPORT)
                 .onUnmappableCharacter(CodingErrorAction.REPORT)
-            parse(decoder.decode(ByteBuffer.wrap(output.toByteArray())).toString())
+            parse(decoder.decode(ByteBuffer.wrap(buffer, 0, size)).toString())
         }
 
         private fun parse(text: String): EmojiCatalog {
@@ -69,6 +98,7 @@ internal class EmojiCatalog private constructor(val categories: List<EmojiCatego
             val entries = linkedMapOf<String, MutableList<EntrySource>>()
             val seenGlyphs = hashSetOf<String>()
             var readingEntries = false
+            var previousId: String? = null
             // Scan delimiters and validate controls/blank fields once. Reuse six field slots;
             // no whole-file line list, per-row split lists or repeated Unicode blank scans.
             val fields = IntArray(12)
@@ -96,9 +126,16 @@ internal class EmojiCatalog private constructor(val categories: List<EmojiCatego
                 column = 0
                 require(fields[1] - fields[0] == 1) { "Invalid emoji catalog row type" }
                 val kind = text[fields[0]]
-                val id = text.substring(fields[2], fields[3])
+                val idLength = fields[3] - fields[2]
+                val prior = previousId
+                val id = if (prior != null && prior.length == idLength &&
+                    text.regionMatches(fields[2], prior, 0, idLength)) prior else {
+                    text.substring(fields[2], fields[3]).also {
+                        require(it.all { c -> c in 'a'..'z' }) { "Invalid emoji category ID" }
+                        previousId = it
+                    }
+                }
                 val glyph = text.substring(fields[4], fields[5])
-                require(id.all { it in 'a'..'z' }) { "Invalid emoji category ID" }
                 when (kind) {
                     'G' -> {
                         require(!readingEntries && id !in categories) { "Duplicate or late emoji category" }
@@ -122,10 +159,11 @@ internal class EmojiCatalog private constructor(val categories: List<EmojiCatego
             }
             return EmojiCatalog(categories.map { (id, category) ->
                 val sources = entries.getValue(id).toList()
-                category.copy(entries = DeferredEmojiEntries(sources.size) {
-                    sources.map { source -> EmojiEntry(source.glyph, EmojiNames(
+                category.copy(entries = DeferredEmojiEntries(sources.map { it.glyph }) { index ->
+                    val source = sources[index]
+                    EmojiEntry(source.glyph, EmojiNames(
                         text.substring(source.enStart, source.enEnd), text.substring(source.ruStart, source.ruEnd),
-                        text.substring(source.esStart, source.esEnd))) }
+                        text.substring(source.esStart, source.esEnd)))
                 })
             })
         }

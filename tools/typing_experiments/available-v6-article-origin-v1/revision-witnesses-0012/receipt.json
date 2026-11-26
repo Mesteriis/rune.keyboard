@@ -1,0 +1,46 @@
+{
+  "apiRevisionLimitPerPage": 8,
+  "apiUpperBound": "2023-11-03T00:00:00Z",
+  "articles": 292,
+  "articlesSha256": "39618287e7b39bbb3c8b347caab692fe3130fff203481ef33e3cc852247e1314",
+  "cleanerRevision": "b35d406bd9e81f08c68e7bf95d130d2f506dfe77",
+  "cleanerSha256": "bbae6bf05eaa833dec5c56fa75057dd01c14b418fccdb4d6ee4b363f476d455f",
+  "comparedRevisions": 2314,
+  "corpusRowsSha256": {
+    "calibration": "0e38210241368965d30edbce36387b6de3f821447c1e69d5ba19ef4c2b75ebf9",
+    "holdout": "fab03f6fb1c08c462328ebf5c18877b0483ab7977179090c2bd48db9e89a0e8d"
+  },
+  "dumpDateCutoff": "2023-11-01T23:59:59Z",
+  "earlierContinuation": 281,
+  "independentQualification": false,
+  "matchingRevisions": 794,
+  "multipleMatches": 205,
+  "numericRunSha256": "5ecdb42768efe3bfc809d53fc811645444661ea6c9f8e8acd049c1d7b0e55d5f",
+  "originalDumpRevisionIdsVerified": false,
+  "parserVersion": "0.6.5",
+  "partitions": {
+    "calibration": {
+      "articles": 140,
+      "contexts": 142,
+      "multipleMatches": 97,
+      "rows": 673,
+      "singleMatch": 43
+    },
+    "holdout": {
+      "articles": 152,
+      "contexts": 153,
+      "multipleMatches": 108,
+      "rows": 721,
+      "singleMatch": 44
+    }
+  },
+  "purpose": "historical-revision-content-shard",
+  "sampling": "all recovered v6 article IDs in shard 0012",
+  "schema": 1,
+  "sourceIndexSha256": "0f55e171539de0b476041a960f2a8f212ff6b4bfac23625aed8eecd84d8b2d88",
+  "sourceLockSha256": "02397f3424d85634e372e87d8cde55bd97af79615442d3ec1cada45831f95ede",
+  "sourceShard": "0012.parquet",
+  "sourceShardSha256": "21e33d8a7a0d068e573db688f5816a22fd690bf699dee958373f9b9e957921ad",
+  "unavailableRequests": 0,
+  "withMatchOnOrBeforeDumpDate": 292
+}

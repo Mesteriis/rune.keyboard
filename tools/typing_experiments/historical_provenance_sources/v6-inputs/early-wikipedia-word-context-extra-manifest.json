@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "stage": "frozen-before-calibration-or-holdout-scores",
+  "seed": "rune-word-context-v1",
+  "wordContextModelSha256": "b5a9b64c1ddcfb42e4042b325b22c7c3d594d7cda282ec3fc99a2330e341d053",
+  "articleBuckets": {
+    "training": [
+      0,
+      1,
+      2
+    ],
+    "calibration": [
+      3
+    ],
+    "holdout": [
+      4
+    ]
+  },
+  "selection": "Supported public word pairs, 120 short and 380 long family keys; unique-lemma IDs with explicit surface-form fallback when lemma is ambiguous. No guarantee that ambiguous surface keys identify distinct lexical lemmas.",
+  "partitions": {
+    "calibration": {
+      "rows": 3636,
+      "familyKeys": 500,
+      "articles": 579,
+      "sha256": "779a41a758417fecdb1307cb50ebb1f994ceca6c2eb589d31e6aa0fdf13b5b1e",
+      "groups": {
+        "adjacent1": 1390,
+        "repeated_letter": 301,
+        "transposition": 214,
+        "correct": 606,
+        "protected": 606,
+        "substitution": 288,
+        "missing_letter": 231
+      }
+    },
+    "holdout": {
+      "rows": 3576,
+      "familyKeys": 500,
+      "articles": 575,
+      "sha256": "d92d645d606b50f2515d57d848ff31ec02daafc9f24266df8fb89d61b083ecdb",
+      "groups": {
+        "adjacent1": 1351,
+        "transposition": 255,
+        "correct": 596,
+        "protected": 596,
+        "repeated_letter": 284,
+        "substitution": 294,
+        "missing_letter": 200
+      }
+    }
+  }
+}

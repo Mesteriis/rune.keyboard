@@ -46,13 +46,27 @@ class IncognitoDiagnosticsTest {
         assertTrue(observer.records > 0)
     }
 
+    @Test fun externalSelectionDisableCannotAdmitIncognitoDiagnostic() {
+        val controller = TypingSessionController(jvmGraphemes)
+        val observer = Observer()
+        controller.setDiagnostics(observer)
+        controller.startSession(EditorContext.from(1, EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING), 0, 0)
+        assertEquals(TypingTextResult.HANDLED, controller.typeText("hello") { true })
+        assertTrue(controller.updateSelection(5, 5, -1, -1) { true })
+        assertFalse(controller.state.enabled)
+        assertEquals(0, observer.externalSelectionOutcomes)
+        assertEquals(0, observer.records)
+    }
+
     private class Observer : TypingDiagnostics {
         val admissions = mutableListOf<Boolean>()
         var records = 0
         var editorOutcomes = 0
+        var externalSelectionOutcomes = 0
         override fun startSession(session: Long, eligible: Boolean, fresh: Boolean) { admissions += eligible }
         override fun invalidate() = Unit
         override fun record(event: DiagnosticEvent, text: (() -> DiagnosticText)?) { records++; text?.invoke() }
         override fun editorOutcome(event: DiagnosticEvent): ((Boolean) -> Unit)? { editorOutcomes++; return null }
+        override fun externalSelectionDisabled(event: DiagnosticEvent): (() -> Unit)? { externalSelectionOutcomes++; return null }
     }
 }

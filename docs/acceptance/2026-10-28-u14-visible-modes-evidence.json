@@ -1,0 +1,47 @@
+{
+  "bindings": {
+    "audit": "2aa0f723cbca76dd5c6d965eaef2ed1e01093f852d624d0e0d2b89c15222498e",
+    "off": "620cae8e2ec9ec389e3295b83659eaad451fc7fc19cc2b6d1d7ae5d6fb00a10e",
+    "offIdentities": "117838bc7fafaae6b6ffcd02751d173ca09546f80595d1ee39a9c919891ccc71",
+    "offReceipt": "bd82bb56bd7d6fbd7a3d275ed1bc79adf38688c9059858a6631e3f04d02c9270",
+    "on": "5541320bfe542eaba11e1006069c6b07ba003a091fd6f1eb8cb0eb4ca0c00e1f",
+    "onIdentities": "117838bc7fafaae6b6ffcd02751d173ca09546f80595d1ee39a9c919891ccc71",
+    "onReceipt": "d7edf38abe4cf0a78d56c724b3fd7198fd852214011a3a69c13f45b1d171527f",
+    "rows": "d6a346911a5fb4476ee16e45ca5672f0ed75076cdb799c6fbad0ba042867b081",
+    "utility": "018c093270d4f3bfd23082fdce91c439ba7286660fc343843565861226430e35"
+  },
+  "counts": {
+    "languages": {
+      "en": {
+        "rows": 4000,
+        "targetVisibleOff": 1849,
+        "targetVisibleOn": 1849,
+        "typos": 1990
+      },
+      "es": {
+        "rows": 4000,
+        "targetVisibleOff": 1765,
+        "targetVisibleOn": 1765,
+        "typos": 1990
+      },
+      "ru": {
+        "rows": 4000,
+        "targetGainedOn": 44,
+        "targetLostOn": 39,
+        "targetVisibleOff": 1698,
+        "targetVisibleOn": 1703,
+        "typos": 1960,
+        "visibleTextChanges": 1439,
+        "visibleViewChanges": 1467
+      }
+    },
+    "rows": 12000
+  },
+  "limitations": [
+    "Observed current visible candidates only, not positions 3–7.",
+    "Synthetic regression corpus; no native model calls or device behavior.",
+    "Setting on/off may change existing suggestions and is not a UI expansion parity test."
+  ],
+  "purpose": "U14_CURRENT_VISIBLE_STRIP_ON_OFF_COMPARISON_NOT_QUALIFICATION",
+  "schema": 1
+}

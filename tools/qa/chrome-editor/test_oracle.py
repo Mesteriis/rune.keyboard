@@ -28,6 +28,35 @@ def fixture():
 
 
 class OracleTest(unittest.TestCase):
+    def test_password_requires_ordered_numeric_dom_outcomes_and_exact_native_case(self):
+        status = (f'INSTRUMENTATION_STATUS: class={verify.PASSWORD_CLASS}\n'
+                  f'INSTRUMENTATION_STATUS: test={verify.PASSWORD_METHOD}\n')
+        native = (status + 'INSTRUMENTATION_STATUS_CODE: 1\n' +
+                  status + 'INSTRUMENTATION_STATUS_CODE: 0\nOK (1 test)\nINSTRUMENTATION_CODE: -1\n')
+        rows = [dict(profile='password', length=length, typed=typed, deleted=deleted)
+                for length, typed, deleted in ((0, 0, 0), (10, 1, 0), (9, 0, 1))]
+        self.assertEqual(3, verify.verify_password(rows, native)['passwordRecords'])
+        for invalid, output in ((rows[::-1], native), (rows, NATIVE),
+                                ([rows[0] | {'value': 'secret'}, *rows[1:]], native)):
+            with self.assertRaises(ValueError):
+                verify.verify_password(invalid, output)
+
+    def test_navigation_requires_exact_native_case_and_destination_dom(self):
+        status = (f'INSTRUMENTATION_STATUS: class={verify.OMNIBOX_CLASS}\n'
+                  f'INSTRUMENTATION_STATUS: test={verify.OMNIBOX_METHOD}\n')
+        native = (status + 'INSTRUMENTATION_STATUS_CODE: 1\n' +
+                  status + 'INSTRUMENTATION_STATUS_CODE: 0\nOK (1 test)\nINSTRUMENTATION_CODE: -1\n')
+        pages = [row('ordinary'), row('no-suggestions')]
+        self.assertEqual({'ordinary': 1, 'no-suggestions': 1},
+                         verify.verify_navigation(pages, native)['profiles'])
+        for bad in (pages[:1], pages[::-1], [pages[0], row('no-suggestions', length=1)]):
+            with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, 'DOM_NAVIGATION_NOT_OBSERVED'):
+                verify.verify_navigation(bad, native)
+        for bad in (native.replace(verify.OMNIBOX_METHOD, 'differentTest'),
+                    native.replace('STATUS_CODE: 0', 'STATUS_CODE: -3'), NATIVE):
+            with self.assertRaisesRegex(ValueError, 'OMNIBOX_NATIVE_RUN_INCOMPLETE'):
+                verify.verify_navigation(pages, bad)
+
     def test_complete_independent_outcomes(self):
         self.assertTrue(verify.verify(fixture(), NATIVE)['passed'])
 
@@ -75,12 +104,13 @@ class ServerTest(unittest.TestCase):
         self.server.server_close()
         self.thread.join(5)
 
-    def post(self, payload):
+    def post(self, payload, profile='ordinary'):
         return urllib.request.urlopen(urllib.request.Request(
-            self.base + '/rune-q8-metrics/ordinary', data=json.dumps(payload).encode()), timeout=3)
+            self.base + '/rune-q8-metrics/' + profile, data=json.dumps(payload).encode()), timeout=3)
 
-    def test_only_two_fixed_documents_are_served_without_cache(self):
-        for path, content in [('/rune-q8', serve.HTML), ('/rune-q8-no-suggestions', serve.NO_SUGGESTIONS)]:
+    def test_only_fixed_documents_are_served_without_cache(self):
+        for path, content in [('/rune-q8', serve.HTML), ('/rune-q8-no-suggestions', serve.NO_SUGGESTIONS),
+                              ('/rune-q8-password', serve.PASSWORD)]:
             with urllib.request.urlopen(self.base + path) as response:
                 self.assertEqual(content, response.read())
                 self.assertEqual('no-store', response.headers['Cache-Control'])
@@ -104,6 +134,15 @@ class ServerTest(unittest.TestCase):
                 self.post(bad)
             self.assertEqual(400, caught.exception.code)
         self.assertEqual(original, self.server.receipt.getvalue())
+
+    def test_password_post_accepts_only_numeric_schema(self):
+        value = dict(length=9, typed=0, deleted=1)
+        with self.post(value, 'password') as response:
+            self.assertEqual(204, response.status)
+        with self.assertRaises(urllib.error.HTTPError) as caught:
+            self.post(value | {'value': 'secret'}, 'password')
+        self.assertEqual(400, caught.exception.code)
+        self.assertEqual(value | {'profile': 'password'}, json.loads(self.server.receipt.getvalue()))
 
     def test_receipt_is_bounded(self):
         self.server.records = 512

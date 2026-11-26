@@ -1,6 +1,9 @@
 package io.github.mesteriis.rune.keyboard.qa
 
+import android.content.Context
 import android.content.ContextWrapper
+import android.os.Build
+import android.os.SystemClock
 import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +17,13 @@ import io.github.mesteriis.rune.keyboard.ime.emoji.EmojiEntry
 import io.github.mesteriis.rune.keyboard.ime.RuneInputMethodService
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardAction
 import io.github.mesteriis.rune.keyboard.settings.AutocorrectionMode
+import io.github.mesteriis.rune.keyboard.settings.SettingsCodec
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.DiagnosticsRecorder
+import io.github.mesteriis.rune.keyboard.smarttyping.diagnostics.TypingDiagnosticsProvider
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import org.junit.After
+import org.junit.Assume.assumeTrue
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -25,18 +34,55 @@ class EmojiPanelInstrumentedTest {
     private val context get() = instrumentation.targetContext
     private val driver = ImeTestDriver()
     private var prepared = false
+    private var privateInput = false
+    private var stores: Map<String, Map<String, String>>? = null
 
     @Before fun prepare() {
-        check(android.os.Build.HARDWARE in setOf("ranchu", "goldfish"))
+        val args = InstrumentationRegistry.getArguments()
+        val emulator = Build.HARDWARE in setOf("ranchu", "goldfish")
+        val fold = Build.MODEL.startsWith("SM-F") && args.getString("allowPhysicalDevice") == "true" &&
+            args.getString("runeFailureArtifacts") == "false"
+        assumeTrue("Owned emulator or explicitly authorized Fold required", emulator || fold)
+        privateInput = fold || emulator && args.getString("runeEmojiPrivateFixture") == "true"
+        if (privateInput) flushDiagnostics()
+        stores = personalStoreSnapshot(context).let { snapshot ->
+            if (privateInput) snapshot else snapshot.filterKeys { it != "typing-diagnostics" }
+        }
         prepared = true
-        driver.setUp()
+        driver.setUp(privateQa = privateInput)
+        val edit = context.getSharedPreferences(ImeTestDriver.PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
+        for (key in listOf(SettingsCodec.KEY_PERSONAL_LEARNING, SettingsCodec.KEY_TOUCH_PERSONALIZATION,
+            SettingsCodec.KEY_COLLECT_EXAMPLES, SettingsCodec.KEY_TYPO_PATTERNS, SettingsCodec.KEY_DYNAMIC_TOUCH,
+            SettingsCodec.KEY_DYNAMIC_TOUCH_APPLY, SettingsCodec.KEY_QUALITY_METRICS,
+            SettingsCodec.KEY_SHADOW_COMPARISON, SettingsCodec.KEY_APP_PROFILES)) edit.putBoolean(key, false)
+        assertTrue(edit.commit())
         driver.configureSmartTyping(AutocorrectionMode.HIGH_CONFIDENCE, true, mechanical = false, doubleSpace = false)
-        driver.launchComposingQa()
+        if (!privateInput) driver.launchComposingQa()
     }
 
-    @After fun restore() { if (prepared) driver.tearDown() }
+    @After fun restore() {
+        try {
+            if (privateInput && stores != null) flushDiagnostics()
+            stores?.let { before ->
+                val after = personalStoreSnapshot(context).let { snapshot ->
+                    if (privateInput) snapshot else snapshot.filterKeys { it != "typing-diagnostics" }
+                }
+                assertEquals("Synthetic QA changed personal stores", before, after)
+            }
+        } finally { if (prepared) driver.tearDown() }
+    }
+
+    private fun flushDiagnostics() {
+        val recorder = TypingDiagnosticsProvider.create(context) as DiagnosticsRecorder
+        val done = CountDownLatch(1)
+        var success = false
+        recorder.barrier { success = it; done.countDown() }
+        assertTrue("Diagnostics queue fence timed out", done.await(5, TimeUnit.SECONDS))
+        assertTrue("Diagnostics queue fence failed", success)
+    }
 
     @Test fun paletteCommitIsLiteralRecentsAreNamedAndPanelHeightStaysFourRows() {
+        assumeTrue("Recents are hidden in private editors", !privateInput)
         "teh".forEach { driver.tapKey(it.toString()) }
         val before = contentHeight()
         openPanel()
@@ -54,6 +100,120 @@ class EmojiPanelInstrumentedTest {
         noPayloadReads()
     }
 
+    @Test fun privatePaletteKeepsHeightAndInsertsEmojiWithoutReadingEditor() {
+        if (!privateInput) driver.launchComposingQa("private")
+        driver.tapKey("a")
+        val before = contentHeight()
+        openPanel()
+        assertEquals(before, contentHeight())
+        assertNull(driver.device.findObject(By.desc("Recent emoji")))
+        clickEmoji("smileys", "😀")
+        driver.awaitFieldText("qa_composing_text", "a😀")
+        noPayloadReads()
+    }
+
+    @Test fun privateWebViewEmojiDeletionAndContinuation() {
+        driver.launchWebViewQa(privateInput = true)
+        val keyboard = keyboardSnapshot().keyboard
+        instrumentation.runOnMainSync {
+            var owner = keyboard.rootView.context
+            while (owner is ContextWrapper && owner !is RuneInputMethodService) owner = owner.baseContext
+            val service = checkNotNull(owner as? RuneInputMethodService)
+            assertTrue("WebView must request no personalized learning",
+                service.currentInputEditorInfo.imeOptions and android.view.inputmethod.EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING != 0)
+        }
+        driver.tapKey("a")
+        awaitWebText("a")
+        openPanel()
+        for ((category, glyph) in listOf("people" to "👩‍💻", "flags" to "🇪🇸")) {
+            clickEmoji(category, glyph)
+            awaitWebText("a$glyph")
+            driver.tapKeyByDescription(context.getString(R.string.key_delete))
+            awaitWebText("a")
+            noPayloadReads(web = true)
+        }
+        clickEmoji("people", "👩‍💻")
+        awaitWebText("a👩‍💻")
+        driver.tapKeyByDescription(context.getString(R.string.key_letters))
+        driver.tapKey("b")
+        awaitWebText("a👩‍💻b")
+        noPayloadReads(web = true)
+    }
+
+    private fun awaitWebText(expected: String) {
+        val selector = By.pkg(context.packageName).clazz(android.widget.EditText::class.java)
+        val deadline = SystemClock.uptimeMillis() + 10_000
+        do {
+            if (driver.device.findObject(selector)?.text == expected) return
+            SystemClock.sleep(25)
+        } while (SystemClock.uptimeMillis() < deadline)
+        fail("WebView synthetic text did not reach the expected value")
+    }
+
+    @Test fun privateEmojiExternalRewriteKeepsEditorText() {
+        if (!privateInput) driver.launchComposingQa("private")
+        driver.tapKey("a")
+        openPanel()
+        clickEmoji("people", "👩‍💻")
+        driver.awaitFieldText("qa_composing_text", "a👩‍💻")
+        driver.tapQaControl("qa_composing_rewrite")
+        driver.awaitFieldText("qa_composing_text", "editor")
+        driver.tapKeyByDescription(context.getString(R.string.key_letters))
+        driver.tapKey("b")
+        driver.awaitFieldText("qa_composing_text", "editorb")
+        noPayloadReads()
+    }
+
+    @Test fun privateEmojiExternalCursorMoveDoesNotDeleteEmoji() {
+        if (!privateInput) driver.launchComposingQa("private")
+        driver.tapKey("a")
+        openPanel()
+        clickEmoji("people", "👩‍💻")
+        driver.awaitFieldText("qa_composing_text", "a👩‍💻")
+        driver.tapQaControl("qa_composing_cursor")
+        driver.tapKeyByDescription(context.getString(R.string.key_delete))
+        driver.awaitFieldText("qa_composing_text", "a👩‍💻")
+        driver.tapKeyByDescription(context.getString(R.string.key_letters))
+        driver.tapKey("b")
+        driver.awaitFieldText("qa_composing_text", "ba👩‍💻")
+        noPayloadReads()
+    }
+
+    @Test fun privateEmojiDroppedCompositionKeepsEmojiAndNextInput() {
+        if (!privateInput) driver.launchComposingQa("private")
+        driver.tapKey("a")
+        openPanel()
+        clickEmoji("people", "👩‍💻")
+        driver.awaitFieldText("qa_composing_text", "a👩‍💻")
+        driver.tapQaControl("qa_composing_drop")
+        driver.awaitFieldText("qa_composing_text", "a👩‍💻")
+        driver.tapKeyByDescription(context.getString(R.string.key_letters))
+        driver.tapKey("b")
+        driver.awaitFieldText("qa_composing_text", "a👩‍💻b")
+        noPayloadReads()
+    }
+
+    @Test fun privateComplexEmojiDeletionNeverReadsEditor() {
+        driver.launchComposingQa("private")
+        supportedZwjAndFlagInsertFromGridAndDeleteAsOneGrapheme()
+        noPayloadReads()
+        driver.launchComposingQa("private")
+        modifierCommitTextIsLiteralAcrossBinderAndDeletesAsOneGrapheme()
+        noPayloadReads()
+    }
+
+    @Test fun privateEmojiThenLetterPreservesBothWithoutPayloadReads() {
+        if (!privateInput) driver.launchComposingQa("private")
+        driver.tapKey("a")
+        openPanel()
+        clickEmoji("people", "👩‍💻")
+        driver.awaitFieldText("qa_composing_text", "a👩‍💻")
+        driver.tapKeyByDescription(context.getString(R.string.key_letters))
+        driver.tapKey("b")
+        driver.awaitFieldText("qa_composing_text", "a👩‍💻b")
+        noPayloadReads()
+    }
+
     @Test fun supportedZwjAndFlagInsertFromGridAndDeleteAsOneGrapheme() {
         driver.tapKey("a")
         openPanel()
@@ -62,14 +222,16 @@ class EmojiPanelInstrumentedTest {
         noPayloadReads()
         driver.tapKeyByDescription(context.getString(R.string.key_delete))
         driver.awaitFieldText("qa_composing_text", "a")
+        if (privateInput) noPayloadReads()
         clickEmoji("flags", "🇪🇸")
         driver.awaitFieldText("qa_composing_text", "a🇪🇸")
         driver.tapKeyByDescription(context.getString(R.string.key_delete))
         driver.awaitFieldText("qa_composing_text", "a")
+        if (privateInput) noPayloadReads()
     }
 
     @Test fun incognitoShowsEmojiButHidesRecents() {
-        driver.launchComposingQa("private")
+        if (!privateInput) driver.launchComposingQa("private")
         openPanel()
         assertNull(driver.device.findObject(By.desc("Recent emoji")))
         clickEmoji("smileys", "😀")
@@ -105,6 +267,7 @@ class EmojiPanelInstrumentedTest {
             assertEquals("Isolated insertion must not read editor payload", before, payloadReads())
             driver.tapKeyByDescription(context.getString(R.string.key_delete))
             driver.awaitFieldText("qa_composing_text", "teh")
+            if (privateInput) assertEquals("Private deletion must not read editor payload", before, payloadReads())
         }
     }
 
@@ -169,14 +332,15 @@ class EmojiPanelInstrumentedTest {
     private fun descendants(view: View): List<View> = listOf(view) + if (view is ViewGroup)
         (0 until view.childCount).flatMap { descendants(view.getChildAt(it)) } else emptyList()
 
-    private fun payloadReads(): Map<String, Int> {
-        val counts = checkNotNull(driver.device.findObject(By.res(context.packageName, "qa_composing_stats"))).text
+    private fun payloadReads(web: Boolean = false): Map<String, Int> {
+        val id = if (web) "qa_webview_stats" else "qa_composing_stats"
+        val counts = checkNotNull(driver.device.findObject(By.res(context.packageName, id))).text
             .orEmpty().split(' ').associate { val (key, value) = it.split('='); key to value.toInt() }
         return counts.filterKeys { it in setOf("before", "after", "selected", "extracted", "surrounding", "snapshot") }
     }
 
-    private fun noPayloadReads() {
-        val counts = payloadReads()
+    private fun noPayloadReads(web: Boolean = false) {
+        val counts = payloadReads(web)
         for (name in listOf("before", "after", "selected", "extracted", "surrounding", "snapshot"))
             assertEquals("Unexpected payload read: $name", 0, counts.getValue(name))
     }

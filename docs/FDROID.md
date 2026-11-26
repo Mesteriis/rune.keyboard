@@ -24,14 +24,15 @@ The optional large Rune Text model is not bundled. Its download is explicit, pin
 
 ## Current review data overlay
 
-[review-data-policy.json](../fdroid/review-data-policy.json) binds 29 exact data
+[review-data-policy.json](../fdroid/review-data-policy.json) binds 33 exact data
 files and their declared provenance JSON bytes. Its three actions are:
 
 - Nineteen literal scanignore paths: ten shipped numeric .bin files, eight numeric
   test .bin fixtures and the verified Unicode/CLDR source-data ZIP.
-- Five inventory-only files: four .ctx/.gram indexes and the existing test
-  calibration gzip. The indexes are unflagged; calibration remains warning-only.
-  No scanner suppression is added for these files.
+- Nine inventory-only files: four .ctx/.gram indexes, the test calibration
+  gzip, two pinned Tatoeba source exports and two historical qualification
+  archives. The calibration gzip remains warning-only. The scanner receives
+  no suppression for these files.
 - Five exact scandelete paths: the unused training baseline and four host CI
   archives (two replay baselines, historical data and model fixtures).
 
@@ -67,6 +68,11 @@ blocked. See the [data-overlay receipt](acceptance/2026-10-27-q1-fdroid-data.md)
 No new distribution recipe, isolated build-server success or public release is
 established by this overlay.
 
+A [current-source repeat](acceptance/2026-11-09-q1-current-source-scanner.md)
+on `f3e98a7b` also reports zero fatal findings and the same two warnings, with
+both negative scanner/data-guard controls. It uses packaged default signatures
+and does not establish independent build-server or distribution acceptance.
+
 ## Prepared-source release checkpoint
 
 Normal release builds still require a clean committed Git checkout. F-Droid
@@ -79,16 +85,20 @@ three root wrapper files, the unused training baseline, two llama.cpp example
 wrapper files and four host CI archives. The archives are deleted by exact path
 and hash; the calibration test gzip remains inventory-only.
 
-A future versioned recipe must run both guards in `init`, before preparation,
+A future versioned recipe for the source export without the rebuildable v3/v4
+qualification archives must run both guards in `init`, before preparation,
 and explicitly select the prepared-source mode for Gradle:
 
 ```yaml
 init:
-  - cd .. && python3 tools/release_source_check.py && python3 tools/fdroid_data_policy.py
+  - cd .. && python3 tools/release_source_check.py && python3 tools/fdroid_data_policy.py --source-export
 gradleprops:
   - runePreparedSource=fdroidserver-2.4.5
 ```
 
+The source-export check requires both known archive paths to be absent and
+validates both inventory records against their catalog. CI reconstructs those
+archives in its test checkout and uses the ordinary full inventory check.
 Use the current review data overlay with that entry; retain historical recipes.
 After source scanning, the equivalent standalone checkpoint is:
 
@@ -119,12 +129,14 @@ resolves them: CMake uses the full source checkpoint and the independent
 wrapper-only runtime check. Its source/build prefix maps remove local paths and
 AGP directory hashes. The new runtime identity has exact-model execution
 qualification; the model gate was retained closed until that evidence existed.
-Actual local `fdroidserver.build.build_local` now passes with zero fatal source
-findings and the same two known warnings. Its complete unsigned APK equals the
-normal build byte for byte (180,096,157 bytes) on this host/toolchain/cache.
-The SDK-acquisition-only prebuild was omitted because the pinned CMake was already
-installed; source tarball creation and final binary scanning were disabled. This
-is not an independent build-server or next-version distribution acceptance.
+The earlier local `fdroidserver.build.build_local` passed with zero fatal source
+findings and the same two known warnings. Its unsigned APK equalled the normal
+build byte for byte (180,096,157 bytes) on that host/toolchain/cache; source
+tarball creation and final binary scanning were disabled in that run.
+The [later local build](acceptance/2026-10-29-q1-fdroid-source-export.md) enabled
+both, and the verified archive [rebuilt against the trusted checkout](acceptance/2026-10-29-q1-fdroid-trusted-export-rebuild.md)
+to an identical unsigned APK. Both reused the installed SDK and existing cache.
+This is not independent build-server or next-version distribution acceptance.
 
 Refresh the fixed hashes deliberately when the app build script or any listed
 original changes. Use the actual pinned fdroidserver signing transformation to

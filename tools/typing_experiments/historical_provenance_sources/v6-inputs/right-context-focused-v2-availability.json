@@ -1,0 +1,15 @@
+{
+  "scannedSourceRows": 1232336,
+  "eligibleSourceSentences": 1324,
+  "eligibleFamilies": 23,
+  "selected": {
+    "calibration": 83,
+    "holdout": 14
+  },
+  "families": {
+    "calibration": 14,
+    "holdout": 9
+  },
+  "blockedPriorSentenceIds": 57094,
+  "blockedSentenceHashes": 57094
+}

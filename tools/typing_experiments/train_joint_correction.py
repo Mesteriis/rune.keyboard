@@ -7,13 +7,21 @@ import math
 import struct
 from functools import lru_cache
 from pathlib import Path
-import numpy as np
-from catboost import CatBoostRanker, Pool
-import abstaining_ranker as base
-import rank_refinement as rank
-import neural_refinement as neural
+import independent_corpus_guard as registry_guard
+
+def load_dependencies():
+    global np, CatBoostRanker, Pool, base, rank, neural
+    import numpy as np
+    from catboost import CatBoostRanker, Pool
+    import abstaining_ranker as base
+    import rank_refinement as rank
+    import neural_refinement as neural
+
+if __name__ != '__main__':
+    load_dependencies()
 
 SEED=25102026
+HISTORICAL_POLICY_SHA256='cdb2c5176504c044fa83567e99fe6956f8e3419d972fb558af0da04ded90410e'
 
 
 def read(path):return [json.loads(x) for x in Path(path).read_text().splitlines() if x.strip()]
@@ -130,14 +138,61 @@ def calibrate(records,band):
     return dict(qualifiedCalibration=True,minimumScore=best[1],minimumMargin=best[2],metrics=best[3])
 
 
+def train_independent(args,snapshot):
+    import joint_calibration_receipt as binding
+    binding.freeze_training(args.corpus,args.train_export,args.calibration_export,snapshot)
+    # The held partition has not yet been source-attested against the selected
+    # training rows; do not turn a registry-only proposal into a frozen model.
+    raise ValueError('TRAINING_SOURCE_ATTESTATION_REQUIRED')
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ['corpus','train_export','calibration_export','output']:p.add_argument(name,type=Path)
+    p.add_argument('--historical-reproduction',action='store_true')
     a=p.parse_args()
-    if a.output.exists():raise ValueError('FRESH_OUTPUT')
+    snapshot=registry_guard.begin(a.historical_reproduction)
+    root=Path(__file__).resolve().parents[2]
+    output=a.output.absolute()
+    if output.is_symlink() or output.exists() or not output.resolve().is_relative_to(root/'build'):
+        raise ValueError('FRESH_BUILD_OUTPUT')
+    if not a.historical_reproduction:
+        return train_independent(a,snapshot)
+    reference_path=root/'tools/typing_experiments/historical_provenance_sources/joint-neighbor-receipts/joint-original-policy.json'
+    if sha(reference_path)!=HISTORICAL_POLICY_SHA256:raise ValueError('HISTORICAL_POLICY_IDENTITY')
+    reference=json.loads(reference_path.read_text())
+    if sha(a.corpus/'manifest.json')!=reference['corpusManifestSha256']:
+        raise ValueError('HISTORICAL_CORPUS_IDENTITY')
     manifest=json.loads((a.corpus/'manifest.json').read_text())
+    if manifest['files']['holdout.jsonl']!=reference['holdoutSha256']:
+        raise ValueError('HISTORICAL_HOLDOUT_IDENTITY')
     for part in ['train','calibration']:
         if sha(a.corpus/f'{part}.jsonl')!=manifest['files'][f'{part}.jsonl']:raise ValueError('CORPUS_DRIFT')
+    for part,path,key in [('train',a.train_export,'trainExportReceiptSha256'),('calibration',a.calibration_export,'calibrationExportReceiptSha256')]:
+        if sha(path/'receipt.json')!=reference[key]:raise ValueError('HISTORICAL_EXPORT_RECEIPT')
+        export=json.loads((path/'receipt.json').read_text())
+        if export['rows']!=manifest['files'][f'{part}.jsonl'] or sha(path/'observations.jsonl')!=export['observations']:
+            raise ValueError('HISTORICAL_EXPORT_IDENTITY')
+    load_dependencies()
+    if (sha(base.CONTEXT_MODEL)!=reference['contextSha256'] or sha(Path(rank.__file__))!=reference['featureCodeSha256'] or
+            sha(Path(neural.__file__))!=reference['contextCodeSha256']):
+        raise ValueError('HISTORICAL_FEATURE_IDENTITY')
+    bound_paths=[a.corpus/'manifest.json',a.corpus/'train.jsonl',a.corpus/'calibration.jsonl',
+        a.train_export/'receipt.json',a.train_export/'observations.jsonl',
+        a.calibration_export/'receipt.json',a.calibration_export/'observations.jsonl',
+        Path(base.CONTEXT_MODEL),Path(rank.__file__),Path(neural.__file__),Path(base.__file__),Path(__file__),
+        reference_path,root/'tools/typing_experiments/holdout-ledger.json',root/'tools/typing_experiments/control-ledger.json']
+    bindings={path:sha(path) for path in bound_paths}
+    if (bindings[reference_path]!=HISTORICAL_POLICY_SHA256 or
+            bindings[a.corpus/'manifest.json']!=reference['corpusManifestSha256'] or
+            any(bindings[a.corpus/f'{part}.jsonl']!=manifest['files'][f'{part}.jsonl'] for part in ('train','calibration')) or
+            any(bindings[path/'receipt.json']!=reference[key] or
+                bindings[path/'observations.jsonl']!=json.loads((path/'receipt.json').read_text())['observations']
+                for path,key in ((a.train_export,'trainExportReceiptSha256'),(a.calibration_export,'calibrationExportReceiptSha256'))) or
+            bindings[Path(base.CONTEXT_MODEL)]!=reference['contextSha256'] or
+            bindings[Path(rank.__file__)]!=reference['featureCodeSha256'] or
+            bindings[Path(neural.__file__)]!=reference['contextCodeSha256']):
+        raise ValueError('HISTORICAL_INPUT_DRIFT')
     train=groups(read(a.corpus/'train.jsonl'),read(a.train_export/'observations.jsonl'))
     calibration=groups(read(a.corpus/'calibration.jsonl'),read(a.calibration_export/'observations.jsonl'))
     if {g['row']['family'] for g in train}&{g['row']['family'] for g in calibration}:raise ValueError('FAMILY_OVERLAP')
@@ -145,12 +200,15 @@ def main():
     records=score(a.output/'joint-ranker.bin',calibration)
     write(a.output/'calibration-scores.json',records)
     policies={band:calibrate(records,band) for band in ['short','long']}
-    policy=dict(schema=1,stage='frozen-before-independent-holdout',seed=SEED,modelSha256=sha(a.output/'joint-ranker.bin'),
+    policy=dict(schema=1,stage='historical-disclosed-calibration',historicalReproduction=True,
+        independentQualification=False,productionQualified=False,
+        registrySha256={path.name:bindings[path] for path in bound_paths[-2:]},seed=SEED,modelSha256=sha(a.output/'joint-ranker.bin'),
         contextSha256=sha(base.CONTEXT_MODEL),corpusManifestSha256=sha(a.corpus/'manifest.json'),
         holdoutSha256=manifest['files']['holdout.jsonl'],thresholds=policies,
         trainingGroups=len(train),calibrationGroups=len(calibration),trainerSha256=sha(Path(__file__)),
         featureCodeSha256=sha(Path(rank.__file__)),contextCodeSha256=sha(Path(neural.__file__)),
         trainExportReceiptSha256=sha(a.train_export/'receipt.json'),calibrationExportReceiptSha256=sha(a.calibration_export/'receipt.json'))
+    if any(sha(path)!=digest for path,digest in bindings.items()):raise ValueError('HISTORICAL_INPUT_DRIFT')
     write(a.output/'frozen-policy.json',policy);print(json.dumps(policies),flush=True)
 
 

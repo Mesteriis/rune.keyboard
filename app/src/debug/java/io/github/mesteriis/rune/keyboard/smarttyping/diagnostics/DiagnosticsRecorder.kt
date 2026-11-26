@@ -181,6 +181,30 @@ internal class DiagnosticsRecorder(private val backend: DiagnosticsBackend) : Ty
         return { outcome(false) }
     }
 
+    override fun externalSelectionDisabled(event: DiagnosticEvent): (() -> Unit)? = synchronized(lock) {
+        if (closed || this.session != event.session || event.session < 0 || event.revision < 0 ||
+            (!settings.metadata && !settings.text)) return@synchronized null
+        val consent = preferenceEpoch
+        val admitted = settings
+        var consumed = false
+        val outcome: () -> Unit = {
+            try {
+                synchronized(lock) {
+                    if (!consumed) {
+                        consumed = true
+                        if (!closed && preferenceEpoch == consent) {
+                            val value = DiagnosticsEncoding.metadata(event.copy(kind = DiagnosticKind.SESSION,
+                                reason = DiagnosticReason.EXTERNAL_SELECTION_DISABLED))
+                            if (admitted.metadata && settings.metadata) enqueue(DiagnosticStream.METADATA, value, terminal = true)
+                            if (admitted.text && settings.text) enqueue(DiagnosticStream.TEXT, value, terminal = true)
+                        }
+                    }
+                }
+            } catch (_: Throwable) { }
+        }
+        outcome
+    }
+
     override fun editorOutcome(event: DiagnosticEvent): ((Boolean) -> Unit)? = synchronized(lock) {
         if (closed || this.session != event.session || event.session < 0 || event.revision < 0 ||
             (!settings.metadata && !settings.text)) return@synchronized null

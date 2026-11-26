@@ -62,6 +62,34 @@ class ReplayProjectionTest(unittest.TestCase):
         for before, after in ((True, 1), (1, 1.0), (False, 0)):
             self.assertEqual(['/x'], replay.changed_paths({'x': before}, {'x': after}))
 
+    def test_baseline_tolerance_only_applies_to_named_scores(self):
+        old = observation() | {'jointModelScores': [0.5], 'rescueModelScores': [0.5],
+            'compactScores': [{'combinedScore': 0.5, 'contextScore': 0.5, 'other': 0.5}]}
+        new = copy.deepcopy(old)
+        delta = replay.BASELINE_SCORE_ABS_TOLERANCE
+        new['jointModelScores'][0] += delta
+        new['rescueModelScores'][0] += delta
+        new['compactScores'][0]['combinedScore'] += delta
+        new['compactScores'][0]['contextScore'] += delta
+        self.assertFalse(replay.compare([old], [new])['passed'])
+        result = replay.compare([old], [new], score_tolerance=delta)
+        self.assertTrue(result['passed'])
+        self.assertEqual(4, result['toleratedScoreDifferences'])
+        new['afterBoundary']['text'] = 'go wrong '
+        self.assertEqual(['/afterBoundary/text'],
+            replay.compare([old], [new], score_tolerance=delta)['differences'][0]['paths'])
+        new['afterBoundary']['text'] = old['afterBoundary']['text']
+        new['compactScores'][0]['other'] += delta
+        self.assertEqual(['/compactScores/0/other'],
+            replay.compare([old], [new], score_tolerance=delta)['differences'][0]['paths'])
+        new['compactScores'][0]['other'] = 0.5
+        new['jointModelScores'][0] = 0.5 + 2 * delta
+        self.assertFalse(replay.compare([old], [new], score_tolerance=delta)['passed'])
+        new['jointModelScores'][0] = 1
+        self.assertFalse(replay.compare([old], [new], score_tolerance=delta)['passed'])
+        with self.assertRaisesRegex(ValueError, 'REPLAY_SCORE_TOLERANCE'):
+            replay.compare([old], [new], score_tolerance=1.0)
+
     def test_extra_or_removed_row_fails_with_its_row_number(self):
         for old, new in (([observation()], []), ([], [observation()])):
             result = replay.compare(old, new)

@@ -1,6 +1,7 @@
 package io.github.mesteriis.rune.keyboard.smarttyping.lexicon
 
 import io.github.mesteriis.rune.keyboard.ime.model.KeyboardLanguage
+import io.github.mesteriis.rune.keyboard.smarttyping.correction.CasePattern
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.EditCostProfile
 import io.github.mesteriis.rune.keyboard.smarttyping.correction.WeightedDamerauLevenshtein
 import java.io.IOException
@@ -11,6 +12,21 @@ class CandidateGeneratorTest {
     private val en = KeyboardLanguage.ENGLISH
     private val es = KeyboardLanguage.SPANISH
     private val ru = KeyboardLanguage.RUSSIAN
+
+    @Test fun `english lowercase i offers a manual only capital pronoun`() {
+        val lexicon = ScriptedLexicon(mapOf(en to listOf(Entry("i"), Entry("ii")), es to listOf(Entry("i"))))
+        val generator = CandidateGenerator(lexicon)
+        val item = generator.generate("i", en).alternatives.single()
+        assertEquals("I", item.text)
+        assertEquals(CasePattern.UPPER, item.casePattern)
+        assertFalse(item.canonicalCaseUnambiguous)
+        assertFalse(item.canonicalCaseAutoEligible)
+        assertTrue(generator.generate("i", es).alternatives.isEmpty())
+        assertTrue(generator.generate("i", ru).alternatives.isEmpty())
+        assertTrue(generator.generate("I", en).alternatives.isEmpty())
+        assertTrue(generator.generate("ii", en).alternatives.isEmpty())
+        assertTrue(generator.generate("i'", en).alternatives.isEmpty())
+    }
 
     @Test
     fun `protected input never calls a lexicon and keeps the exact original`() {
@@ -76,6 +92,23 @@ class CandidateGeneratorTest {
         }
         assertTrue(CandidateGenerator(lexicon, canonicalCaseLexicon = canonical)
             .generate("London", en).alternatives.isEmpty())
+    }
+
+    @Test
+    fun `ambiguous abbreviations retain title case suggestions without automatic eligibility`() {
+        val abbreviations = mapOf("альп" to "Альп", "инн" to "Инн")
+        val canonicalForms = abbreviations + ("москва" to "Москва")
+        val lexicon = ScriptedLexicon(mapOf(ru to canonicalForms.keys.map { Entry(it) }))
+        val canonical = CanonicalCaseLexicon { language, key ->
+            if (language == ru) canonicalForms[key]?.let { CanonicalCase(it, true) } else null
+        }
+        val generator = CandidateGenerator(lexicon, canonicalCaseLexicon = canonical)
+        for ((typed, expected) in abbreviations) {
+            val candidate = generator.generate(typed, ru).alternatives.single()
+            assertEquals(expected, candidate.text)
+            assertFalse(candidate.canonicalCaseAutoEligible)
+        }
+        assertTrue(generator.generate("москва", ru).alternatives.single().canonicalCaseAutoEligible)
     }
 
     @Test

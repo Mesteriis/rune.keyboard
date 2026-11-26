@@ -1,0 +1,27 @@
+{
+  "addedWords": 7,
+  "appAssetChanged": false,
+  "baselineSha256": "434b462d4edb0165946568dfdf2a6729ff8b2590fead1fe815d3912817837b6e",
+  "builderSha256": "0a837dff07a240a6dd1cf85bd8967e0119becab3ba6bda451b73a9295ce4d063",
+  "candidate": {
+    "blockSize": 32,
+    "bytes": 3009056,
+    "format": "RUNERAR1",
+    "schemaVersion": 1,
+    "scriptSha256": "c9d1b614da298140e59a0755019b7df2dba32c47ca9991b87f87caa842330656",
+    "sha256": "1ab7c294c4b56a025a0219de8338156ed047e22ae42c2c55015cb091ac980bda",
+    "sourceCountsSha256": "222c1f995b9fa9aabfcf88f422b75e774b555dd0f072c5fad11d4bebcfdad1cd",
+    "sourceManifestSha256": "77495a4e945e40d82b6df7906d8b6cad52e63026b85c27525f98842f836cf020",
+    "sourceWordsSha256": "b50396004684c29e908d3bcb5dbb525a26b61cf6b073200414543d5685ac5d87",
+    "words": 288253
+  },
+  "candidateSha256": "1ab7c294c4b56a025a0219de8338156ed047e22ae42c2c55015cb091ac980bda",
+  "caveat": "Rank-only reconstruction uses placeholder counts; app fingerprints bind the old rare-word SHA and cannot transfer qualification.",
+  "independentQualification": false,
+  "previousRanksPreserved": true,
+  "previousWords": 288246,
+  "purpose": "POSTHOC_PACKED_CANDIDATE_NOT_QUALIFICATION",
+  "reviewSha256": "06c68ae27b540e3bfcae541c3ea074a9213ceac9fb77fe31cff64a9d8095d2b8",
+  "sourceArticlesAlreadyExcluded": true,
+  "sourceControls": 8
+}

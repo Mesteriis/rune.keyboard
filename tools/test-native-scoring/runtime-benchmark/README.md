@@ -1,6 +1,6 @@
 # Optional Android public-runtime benchmark
 
-This manual benchmark scores fixed public synthetic English, Russian and Spanish continuations through `LlamaLocalModelRuntime`. It never generates text or reads editor/session data. It is separate from the existing one-test `VerifiedModelOnly` qualification and from the six ordinary no-model Android tests.
+This manual benchmark scores fixed public synthetic English, Russian and Spanish continuations through `LlamaLocalModelRuntime`. It never generates text or reads editor/session data. It is separate from the `VerifiedModelOnly` qualification tests and from the six ordinary no-model Android tests.
 
 The model must already exist as `qualification-model.gguf` in the instrumentation app's private files directory. The test fails unless its canonical parent, size **396704416 bytes**, and SHA-256 **7a97111c917e19117207428971fa1c2583f2d9c2a07a6fda5b6f198b707dd9c4** match before runtime construction or load. This workflow contains no download or model staging command. The checksum reads the whole model before load, so the load measurement is **not a cold filesystem measurement**.
 

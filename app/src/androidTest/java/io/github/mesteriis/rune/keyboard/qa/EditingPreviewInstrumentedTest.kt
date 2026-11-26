@@ -59,7 +59,9 @@ class EditingPreviewInstrumentedTest {
             }
         } finally {
             if (clipboardTouched) instrumentation.runOnMainSync {
-                context.getSystemService(ClipboardManager::class.java).clearPrimaryClip()
+                val clipboard = context.getSystemService(ClipboardManager::class.java)
+                if (android.os.Build.VERSION.SDK_INT >= 28) clipboard.clearPrimaryClip()
+                else clipboard.setPrimaryClip(ClipData.newPlainText("Rune QA", ""))
             }
         }
     }

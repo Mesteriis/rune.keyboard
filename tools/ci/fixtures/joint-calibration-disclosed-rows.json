@@ -1,0 +1,135 @@
+{
+  "articleAttribution": [
+    {
+      "articleId": "8624813",
+      "authors": "Wikipedia contributors",
+      "historyUrl": "https://ru.wikipedia.org/w/index.php?curid=8624813&action=history"
+    },
+    {
+      "articleId": "8663468",
+      "authors": "Wikipedia contributors",
+      "historyUrl": "https://ru.wikipedia.org/w/index.php?curid=8663468&action=history"
+    },
+    {
+      "articleId": "8720522",
+      "authors": "Wikipedia contributors",
+      "historyUrl": "https://ru.wikipedia.org/w/index.php?curid=8720522&action=history"
+    },
+    {
+      "articleId": "8922964",
+      "authors": "Wikipedia contributors",
+      "historyUrl": "https://ru.wikipedia.org/w/index.php?curid=8922964&action=history"
+    }
+  ],
+  "containsPersonalMessages": false,
+  "originalCalibrationPath": "build/joint-correction-20261025/corpus/calibration.jsonl",
+  "originalCalibrationSha256": "1234785b62d4ff59ea54b52a7e7fb2ca3214996e0bb173d1c0b355d86015e97a",
+  "originalManifestPath": "build/joint-correction-20261025/corpus/manifest.json",
+  "originalManifestSha256": "27c7084f8c739f608da77f617eca1c5ac552ff16b74da05a1a3c3cc888120e3f",
+  "rows": [
+    {
+      "article": "8922964",
+      "band": "short",
+      "cohort": "typo",
+      "expectedSpelling": "шкаф",
+      "family": "172788",
+      "group": "adjacent1",
+      "id": "joint-calibration-000000",
+      "language": "ru",
+      "noAuto": false,
+      "prefix": "кухонной мебели, предназначенный для стекания воды с вымытой посуды и естественной сушки\n\n В литературных произведениях:\n Исчезательный",
+      "selectionHash": "012d7be52efc4231be9933d438b4305426ba40474d16e003762881bcb0298bad",
+      "source": "0018.parquet",
+      "split": "calibration",
+      "typed": "шккф",
+      "word": "шкаф"
+    },
+    {
+      "article": "8922964",
+      "band": "short",
+      "cohort": "typo",
+      "expectedSpelling": "шкаф",
+      "family": "172788",
+      "group": "substitution",
+      "id": "joint-calibration-000001",
+      "language": "ru",
+      "noAuto": false,
+      "prefix": "кухонной мебели, предназначенный для стекания воды с вымытой посуды и естественной сушки\n\n В литературных произведениях:\n Исчезательный",
+      "selectionHash": "012d7be52efc4231be9933d438b4305426ba40474d16e003762881bcb0298bad",
+      "source": "0018.parquet",
+      "split": "calibration",
+      "typed": "якаф",
+      "word": "шкаф"
+    },
+    {
+      "article": "8922964",
+      "band": "short",
+      "cohort": "typo",
+      "expectedSpelling": "шкаф",
+      "family": "172788",
+      "group": "repeated_letter",
+      "id": "joint-calibration-000003",
+      "language": "ru",
+      "noAuto": false,
+      "prefix": "кухонной мебели, предназначенный для стекания воды с вымытой посуды и естественной сушки\n\n В литературных произведениях:\n Исчезательный",
+      "selectionHash": "012d7be52efc4231be9933d438b4305426ba40474d16e003762881bcb0298bad",
+      "source": "0018.parquet",
+      "split": "calibration",
+      "typed": "шкафф",
+      "word": "шкаф"
+    },
+    {
+      "article": "8663468",
+      "band": "short",
+      "cohort": "typo",
+      "expectedSpelling": "шкаф",
+      "family": "172788",
+      "group": "repeated_letter",
+      "id": "joint-calibration-000007",
+      "language": "ru",
+      "noAuto": false,
+      "prefix": "омлета смесь яйца с другими компонентами выливают на смазанный жиром противень или порционную сковороду слоем 2-3 см, ставят в жарочный",
+      "selectionHash": "03198cc2ee9408ad499cce2b6abb53ed4c45490053bfb61bfc2f0da9d3559857",
+      "source": "0018.parquet",
+      "split": "calibration",
+      "typed": "шккаф",
+      "word": "шкаф"
+    },
+    {
+      "article": "8720522",
+      "band": "short",
+      "cohort": "typo",
+      "expectedSpelling": "шкаф",
+      "family": "172788",
+      "group": "repeated_letter",
+      "id": "joint-calibration-000019",
+      "language": "ru",
+      "noAuto": false,
+      "prefix": "колоннами классического коринфского ордера, шторами из тёмной ткани и компоновкой мебели в симметричном порядке. Тахта, кресла,",
+      "selectionHash": "04f6265c2061a33c16990c95ef91239260329b0c43d8fab1672a572bc36780de",
+      "source": "0018.parquet",
+      "split": "calibration",
+      "typed": "шшкаф",
+      "word": "шкаф"
+    },
+    {
+      "article": "8624813",
+      "band": "short",
+      "cohort": "typo",
+      "expectedSpelling": "твит",
+      "family": "155909",
+      "group": "repeated_letter",
+      "id": "joint-calibration-000030",
+      "language": "ru",
+      "noAuto": false,
+      "prefix": "губернатор написал в Твиттере: «Необходимо объяснить, что ни один губернатор не контролирует правила применения вооружённых сил». Его",
+      "selectionHash": "0e4e87007c1aff4fc90082e03235d873a81f0fce9813099268f9b563463817ea",
+      "source": "0018.parquet",
+      "split": "calibration",
+      "typed": "тввит",
+      "word": "твит"
+    }
+  ],
+  "schema": "rune-joint-calibration-disclosed-rows-v1",
+  "scope": "six original disclosed calibration rows selected using existing scores; not unseen families or original training reproduction"
+}

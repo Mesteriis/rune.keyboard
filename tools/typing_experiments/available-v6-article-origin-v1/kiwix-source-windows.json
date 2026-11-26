@@ -1,0 +1,144 @@
+{
+  "archive": {
+    "bytes": 17149351246,
+    "catalogSha1": "7b37d3d4d3d45f0c350e23bfa6b8ea6fb47edc60",
+    "url": "https://archive.org/details/wikipedia_ru_all_nopic_2023-09.zim"
+  },
+  "corpusRowsSha256": {
+    "calibration": "0e38210241368965d30edbce36387b6de3f821447c1e69d5ba19ef4c2b75ebf9",
+    "holdout": "fab03f6fb1c08c462328ebf5c18877b0483ab7977179090c2bd48db9e89a0e8d"
+  },
+  "passages": [
+    {
+      "article": "5883205",
+      "blob": 50,
+      "citationMarkersRemoved": false,
+      "firstByte": 2442797762,
+      "htmlSha256": "f3f89ade7013a3b89547d6f2788c759a9d19500c910acf1691d1f9ae6e4d8b12",
+      "lastByte": 2443038803,
+      "revision": 79987682,
+      "rows": 5
+    },
+    {
+      "article": "5935145",
+      "blob": 38,
+      "citationMarkersRemoved": false,
+      "firstByte": 3119993476,
+      "htmlSha256": "6187b299cf49c2cc1be428691e401e45c206a95a86a7ad5170730aec4eb81f5d",
+      "lastByte": 3120215516,
+      "revision": 131086844,
+      "rows": 5
+    },
+    {
+      "article": "6139095",
+      "blob": 27,
+      "citationMarkersRemoved": false,
+      "firstByte": 613977742,
+      "htmlSha256": "a5f44dce5d70665aac5910f2cf0248c70accf6252055d6bbe285bdb0e39492f3",
+      "lastByte": 614210761,
+      "revision": 128358701,
+      "rows": 5
+    },
+    {
+      "article": "7121163",
+      "blob": 26,
+      "citationMarkersRemoved": false,
+      "firstByte": 3448551862,
+      "htmlSha256": "37750a45aabcd3a41f7384d4b43d20124a7018c3ee927759988a26db6122d58d",
+      "lastByte": 3448795146,
+      "revision": 128935987,
+      "rows": 5
+    },
+    {
+      "article": "7171152",
+      "blob": 15,
+      "citationMarkersRemoved": false,
+      "firstByte": 5889118905,
+      "htmlSha256": "6392097e14238b2a014c378a834f210713fd254c22649e899d8337b66ce0270e",
+      "lastByte": 5889347147,
+      "revision": 118409286,
+      "rows": 5
+    },
+    {
+      "article": "8345062",
+      "blob": 4,
+      "citationMarkersRemoved": false,
+      "firstByte": 717343944,
+      "htmlSha256": "a984a42ea2f16cbd972793fdac94ca3494178d5854c4076952dff66231a713db",
+      "lastByte": 717577821,
+      "revision": 118287516,
+      "rows": 5
+    },
+    {
+      "article": "8717920",
+      "blob": 22,
+      "citationMarkersRemoved": false,
+      "firstByte": 4369609468,
+      "htmlSha256": "737bf341f06f73383405feb869fd65c3e74226843dc65c5a6a0c370ab609044d",
+      "lastByte": 4369824916,
+      "revision": 118325851,
+      "rows": 5
+    },
+    {
+      "article": "9089473",
+      "blob": 9,
+      "citationMarkersRemoved": false,
+      "firstByte": 8548920109,
+      "htmlSha256": "7e2c6e699bc1a351bc6433ff125859cb04072a31b5c6317958e7851e2a7e02be",
+      "lastByte": 8549138585,
+      "revision": 130904314,
+      "rows": 5
+    },
+    {
+      "article": "9744441",
+      "blob": 34,
+      "citationMarkersRemoved": true,
+      "firstByte": 6367202785,
+      "htmlSha256": "bac4342343db7361f82211675437ecf66708b13858f06ac836ffd903abb8f757",
+      "lastByte": 6367430571,
+      "revision": 126305416,
+      "rows": 5
+    },
+    {
+      "article": "10084417",
+      "blob": 9,
+      "citationMarkersRemoved": false,
+      "firstByte": 7516401414,
+      "htmlSha256": "e7d50abf26b496d5da28e9b86b1ee43dd23f12e1c1a71cfe9117e5e0f91cd7b3",
+      "lastByte": 7516632083,
+      "revision": 129291440,
+      "rows": 5
+    },
+    {
+      "article": "10138404",
+      "blob": 18,
+      "citationMarkersRemoved": false,
+      "firstByte": 5073599735,
+      "htmlSha256": "6dc13ea36d8505093b831783285c634416537ec708d2909c38f15e4e7e997529",
+      "lastByte": 5073774336,
+      "revision": 129401855,
+      "rows": 4
+    },
+    {
+      "article": "10164587",
+      "blob": 43,
+      "citationMarkersRemoved": false,
+      "firstByte": 3736203028,
+      "htmlSha256": "0147f3700e6c1d0d5da13403a93acc81aa318b853a79aaecede615a15fd12a83",
+      "lastByte": 3736398234,
+      "revision": 132000224,
+      "rows": 5
+    },
+    {
+      "article": "10323497",
+      "blob": 44,
+      "citationMarkersRemoved": false,
+      "firstByte": 1292557585,
+      "htmlSha256": "7efe7b056de5744668c784ddc79aea2092316512d52d9febd2d5c3f11fc88cb6",
+      "lastByte": 1292786483,
+      "revision": 132671990,
+      "rows": 5
+    }
+  ],
+  "schema": 1
+}

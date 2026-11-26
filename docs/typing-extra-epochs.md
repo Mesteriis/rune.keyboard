@@ -43,9 +43,9 @@
 Инструменты находятся в `tools/typing_experiments/`; используются прежние `requirements.txt` и `requirements-neural.txt` в двух host-окружениях. Выходы — только игнорируемая папка `build/typing-extra-epochs`; команды обучения, выбора и оценки отказываются перезаписывать уже зафиксированные результаты.
 
 1. В окружении MLX: `extra_epochs.py train`; затем в окружении CatBoost/NumPy: `extra_epochs.py evaluate-dev`.
-2. До оценки теста: в окружении PyArrow запустить `prepare_epoch_test.py --parquet PATH_TO_PINNED_RU_0007 --frequency PATH_TO_PINNED_RU_50K --output build/typing-extra-epochs/data`.
+2. Для исторического воспроизведения в окружении PyArrow запустить `prepare_epoch_test.py --historical-reproduction --parquet PATH_TO_PINNED_RU_0007 --frequency PATH_TO_PINNED_RU_50K --output build/typing-extra-epochs/data`. Этот ранее раскрытый тест теперь является регрессионным: текущий manifest явно указывает этот статус. Обычный запуск требует полного покрытия постоянных реестров Q6; он не может заново объявить эти данные независимыми.
 3. Экспортировать кандидаты: `tools/morphology/evaluate.py export --rows build/typing-extra-epochs/data/all-rows.jsonl --output build/typing-extra-epochs/candidates`; разделить проверенным `split_observations.py --data build/typing-extra-epochs/data --export build/typing-extra-epochs/candidates --output build/typing-extra-epochs/observations`.
-4. Выполнить один раз `evaluate_extra_epochs.py`. Он оценивает только зафиксированную версию и возвращает решение по условиям принятия; не меняет приложение.
+4. Выполнить `evaluate_extra_epochs.py --historical-reproduction` для раскрытого исторического теста. Он оценивает зафиксированную версию, записывает численные критерии в `observedGatePassed`, а `accepted` для регрессионных данных всегда оставляет `false`. Обычная независимая оценка требует полного покрытия реестров Q6. Отчёт связывает выбор, веса, входы трёх наборов и код; повторная запись результата запрещена. Приложение не меняется.
 5. Проверки: `PYTHONDONTWRITEBYTECODE=1 build/morphology-venv/bin/python -m unittest discover -s tools/typing_experiments -v`.
 
 Точные хеши, полный ход обучения, выбор, независимые результаты и журналы сохранены в `build/typing-extra-epochs`. В публичном исходном коде сохраняются инструменты, тесты и этот агрегированный отчёт; новые веса не опубликованы в APK.

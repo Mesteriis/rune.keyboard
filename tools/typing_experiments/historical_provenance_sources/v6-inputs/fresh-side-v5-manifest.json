@@ -1,0 +1,62 @@
+{
+  "stage": "frozen-before-any-model-scoring",
+  "files": {
+    "calibration.jsonl": "1a556778163d73b3bacac576bd50abe0d51a5c9173206bc97107601736f74962",
+    "calibration.tsv": "ac78020a9dc235e1c251fb65a3ced2bbb946b5f36837464471e22140c3f36366",
+    "holdout.jsonl": "451c595a48d179e0d73e29c444424d7f4bd0b2aaf643d6e3d8ec0a2882e64439",
+    "holdout.tsv": "de85748d8a0d691544cab9c1b3cae12b409800e0b27581cd16cd05545c0a26f1"
+  },
+  "counts": {
+    "calibration": {
+      "rows": 5800,
+      "contexts": 1240,
+      "groups": {
+        "hard_other_part_negative": 400,
+        "agreement_role_negative": 40,
+        "direct_subject_positive": 400,
+        "ordinary_other_part_negative": 400
+      },
+      "families": 665,
+      "controls": 3320,
+      "unfinishedControls": 1240
+    },
+    "holdout": {
+      "rows": 5776,
+      "contexts": 1235,
+      "groups": {
+        "hard_other_part_negative": 400,
+        "agreement_role_negative": 36,
+        "direct_subject_positive": 400,
+        "ordinary_other_part_negative": 399
+      },
+      "families": 693,
+      "controls": 3306,
+      "unfinishedControls": 1235
+    }
+  },
+  "exclusionAudits": {
+    "calibration": {
+      "originalRows": 5800,
+      "keptRows": 5800,
+      "excludedRows": 0,
+      "excludedContexts": 0,
+      "excludedContextHashes": []
+    },
+    "holdout": {
+      "originalRows": 5780,
+      "keptRows": 5776,
+      "excludedRows": 4,
+      "excludedContexts": 1,
+      "excludedContextHashes": [
+        "231214a2f72cbf167050947b7c6983580bf006ab347a69844d98d6fc38f2defa"
+      ]
+    }
+  },
+  "planSha256": "1d27c2c87c7da4dfa30b231e3384ecb191da9231c34b32775b304e693093701f",
+  "sourceManifestSha256": "62eb452779ca787bab3f5df2957fffefccf19f3ecd534395d5d0efebfcdfca47",
+  "trainingCorpusManifestSha256": "ab7a8da1297e05fe6b6fd4d6d02a0a628c567e012e7daef752ff25b8e307c702",
+  "familyArticleContextSeparation": true,
+  "excludedAdditionalTrainingFamilies": true,
+  "modelScoresUsed": false,
+  "modelBindingRequiredBeforeScoring": true
+}

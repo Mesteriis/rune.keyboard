@@ -63,3 +63,73 @@ WebView/Compose, Fold and manual TalkBack acceptance. This receipt closes only t
 public EditText panel slice, not the U8 card or the complete review. Exact sources,
 APK/result/log hashes, failed probes, replay bindings and cleanup are in the
 adjacent JSON.
+
+## 2026-11-23 TalkBack menu, editing and Emoji
+
+TalkBack 17.0.0.889642762 was bound with touch exploration enabled on a
+disposable API 37 ARM64 emulator. Touch events entered through the virtual
+touchscreen over ADB. The passive `UiAutomation` observer kept services active
+with `FLAG_DONT_SUPPRESS_ACCESSIBILITY_SERVICES`. It logged focus and text
+changes in the synthetic QA editor and issued no accessibility actions.
+
+- **U8 editing.** On `9aacdb65`, the focused Symbols key exposed a custom
+  keyboard switch and voice action. TalkBack's Actions menu omitted the labeled
+  standard long-click for Edit. A dedicated Edit action now appears in the
+  menu, with the existing tap and long-press behavior preserved. Selecting it
+  opened the real editing layer. Seeding a selection and double-tapping
+  Copy, Line end and Paste produced exactly `beforeSELECTEDafterSELECTED` in
+  the editor.
+- **U9 Emoji.** Double taps opened Symbols and then Emoji. Focus events named
+  Recent emoji, Smileys & Emotion, People & Body and waving hand. Activating
+  People & Body set its selected state. Activating waving hand inserted `👋`,
+  Delete removed the entire glyph, and Recent emoji still exposed the named
+  entry. The ABC key returned to the letter layout.
+- **U15 IME switching.** With the emulator voice IME enabled, TalkBack showed
+  Next keyboard and Voice input in Actions. Activating Next keyboard changed
+  the registered current IME from Rune to Gboard. After disabling the voice
+  IME, the Rune key offered Next keyboard and its existing editing alternate,
+  and omitted Voice input. The screen-reader probe did not start recording.
+
+The patched build passed debug lint and 12 instrumentation methods on each
+of API 26 and API 37. They cover eight key-view methods, public editing,
+raw and password controls, and two public/private Emoji methods. The added
+editing-action assertions check its label, dispatch, and rejection when the
+key is disabled or offers no Edit alternate. The ordinary instrumentation ran
+without TalkBack. Actual touch exploration and menu activation ran on API 37.
+Sequential TalkBack navigation on the letter layout moved focus `Q → W → E → W`
+with forward, forward and backward swipes. Sequential navigation within the
+Emoji panel remains unverified. The clean patched checkout passed
+`:app:privacyGateRelease`.
+
+This checks an ordinary synthetic editor and its on-screen keyboard. The
+audio output, physical Fold displays and their TalkBack flows remain open.
+
+## Editing selection and sequential Emoji traversal with TalkBack
+
+The API 37 ARM64 emulator ran candidate `687361c8` with TalkBack
+17.0.0.889642762. The observer kept TalkBack active. All actions used
+virtual touchscreen gestures sent through ADB.
+
+For U8, the run typed `abcd` and opened **Edit** through the focused
+Symbols key's TalkBack Actions menu. **Selection off** reported a
+checkable, unchecked control. Activating it made **Selection on**
+checked. **Move left** produced numeric selection endpoints 4 and 3.
+**Cut** changed the editor to `abc`; **Paste** restored `abcd` at the
+same caret. The receiver reported zero text-before, text-after,
+selected-text, extracted-text, surrounding-text and snapshot calls
+through this flow.
+
+For U9, a forward swipe from **grinning face** moved through the eight
+distinct cells in the first row, then moved to **slightly smiling face**
+at the start of the second row. Eight backward swipes retraced the
+same bounds and accessibility labels. Double-tapping the first cell
+inserted the complete glyph. After disconnecting the observer, an
+independent hierarchy dump read the exact editor value `abcd😀`.
+
+The APK SHA-256 was
+`6b31bee517d2a99427a417e1fd22894abb01876e759d387dd643add23b0bf28d`.
+The event trace SHA-256 was
+`4bdc0c939b34784aaeda7c7b6a4758d4310d119a7185b4d115d1d4aa6dbdd7af`.
+The isolated guest, clipboard, observer and temporary records were
+removed. Physical Fold acceptance and the remaining U9 device budgets
+remain open.

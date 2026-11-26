@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "modelCalls": 0,
+  "independentQualification": false,
+  "originalRoot": "build/conversation-supervised-20261026/corpus-v2",
+  "originalBuilderSha256": "fe412895f2db47303a6669a266c50c71bcb20778c9049887187fdc1eb0ba5fec",
+  "guardSha256": "373879a4483989d8adb7f1831265ee0803502fb25660a202a6898ed74c613683",
+  "exclusions": 33,
+  "excludedSentenceIds": 9962,
+  "excludedTargetContexts": 35346,
+  "removedCrossSplitPredictionContexts": 199,
+  "rows": {
+    "train": 22527,
+    "calibration": 3204,
+    "holdout": 3172
+  },
+  "declaredFamilyKind": "packed-morphology-id",
+  "files": {
+    "manifest.json": "330ac710e7cb3053fae1b97d2841b327caf0e498b2a8148d84c1c9bae82c358c",
+    "train.jsonl": "c175cd5a1a23248f5b25518e3ba912111ad8ce05de70c60dc3b2077327e3b7de",
+    "calibration.jsonl": "e3582b9235a275a03aff9bb89e2f7d495250a6a31897b39aa406fcdf1e110ac6",
+    "holdout.jsonl": "8588f4549bc872e2eedd7abd859d565952bf4a916d003be61705ef9a1a564015"
+  }
+}

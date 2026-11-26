@@ -194,17 +194,12 @@ class ModelCandidateCoordinator(
             cancel()
             return result
         }
-        spaceExecutor = execute
-        spaceStartedAt = startedAt
+        armSpaceRequest(execute, startedAt)
         val expiry = object : Runnable {
             override fun run() {
                 checkOwner()
                 if (timer === this && epoch == editingEpoch) {
-                    diagnosticRequest?.let {
-                        recordSpaceExpiry(it)
-                        controller.recordRequest(DiagnosticReason.DEADLINE_MISSED,
-                            diagnosticSource, it.sessionId, it.revision, it.requestId)
-                    }
+                    diagnosticRequest?.let(::recordSpaceDeadline)
                     diagnosticRequest = null
                     cancel()
                 }
@@ -232,18 +227,13 @@ class ModelCandidateCoordinator(
         diagnosticSource = DiagnosticSource.MODEL
         diagnosticRequest = input.token
         diagnosticScheduled = null
-        spaceExecutor = execute
-        spaceStartedAt = scheduler.nowMillis() - elapsedMillis
+        armSpaceRequest(execute, scheduler.nowMillis() - elapsedMillis)
         val currentEpoch = epoch
         val expiry = object : Runnable {
             override fun run() {
                 checkOwner()
                 if (timer === this && epoch == currentEpoch) {
-                    diagnosticRequest?.let {
-                        recordSpaceExpiry(it)
-                        controller.recordRequest(DiagnosticReason.DEADLINE_MISSED,
-                            diagnosticSource, it.sessionId, it.revision, it.requestId)
-                    }
+                    diagnosticRequest?.let(::recordSpaceDeadline)
                     diagnosticRequest = null
                     cancel()
                 }
@@ -298,6 +288,21 @@ class ModelCandidateCoordinator(
             controller.recordModelWindowExpired(token)
     }
 
+    private fun armSpaceRequest(execute: (TypingEdit) -> Boolean, startedAt: Long) {
+        trace.section(SmartTypingTraceSection.MODEL_SPACE_REQUEST) {
+            spaceExecutor = execute
+            spaceStartedAt = startedAt
+        }
+    }
+
+    private fun recordSpaceDeadline(token: ScoringToken) {
+        trace.section(SmartTypingTraceSection.MODEL_SPACE_DEADLINE) {
+            recordSpaceExpiry(token)
+            controller.recordRequest(DiagnosticReason.DEADLINE_MISSED, diagnosticSource,
+                token.sessionId, token.revision, token.requestId)
+        }
+    }
+
     override fun onReply(reply: ScoringReply) {
         trace.section(SmartTypingTraceSection.MODEL_RESULT) {
             checkOwner()
@@ -308,8 +313,8 @@ class ModelCandidateCoordinator(
             }
             val executeSpace = spaceExecutor
             if (executeSpace != null && (if (kind == RequestKind.REFINEMENT) !controller.canRefinePreviousWord else !withinSpaceWindow())) {
-                recordSpaceExpiry(reply.token)
-                controller.recordRequest(DiagnosticReason.DEADLINE_MISSED, diagnosticSource,
+                if (kind == RequestKind.SPELLING) recordSpaceDeadline(reply.token)
+                else controller.recordRequest(DiagnosticReason.DEADLINE_MISSED, diagnosticSource,
                     reply.token.sessionId, reply.token.revision, reply.token.requestId)
                 diagnosticRequest = null
                 cancel(); return@section
@@ -324,14 +329,25 @@ class ModelCandidateCoordinator(
                 return@section
             }
             if (reply.code == ScoringCode.NO_MODEL || reply.code == ScoringCode.LOAD_FAILED) {
-                controller.recordScoringReply(reply, contextual = kind == RequestKind.CONTEXTUAL)
+                if (executeSpace != null && kind == RequestKind.SPELLING) {
+                    trace.section(SmartTypingTraceSection.MODEL_SPACE_SCORING_ERROR) {
+                        controller.recordScoringReply(reply)
+                    }
+                } else controller.recordScoringReply(reply, contextual = kind == RequestKind.CONTEXTUAL)
                 diagnosticRequest = null
                 cancel(); client.attachSession(null, false); readiness.setActive(false)
                 return@section
             }
             val accepted = if (executeSpace != null && kind == RequestKind.REFINEMENT)
                 controller.acceptPreviousWordRefinement(reply, executeSpace)
-            else if (executeSpace != null) controller.acceptSpaceCorrection(reply, executeSpace) else when (kind) {
+            else if (executeSpace != null) {
+                val section = when (reply.code) {
+                    ScoringCode.OK -> SmartTypingTraceSection.MODEL_SPACE_SCORE_OK
+                    ScoringCode.CONTEXT_TOO_LONG -> SmartTypingTraceSection.MODEL_SPACE_CONTEXT_TOO_LONG
+                    else -> SmartTypingTraceSection.MODEL_SPACE_SCORING_ERROR
+                }
+                trace.section(section) { controller.acceptSpaceCorrection(reply, executeSpace) }
+            } else when (kind) {
                 RequestKind.SPELLING -> controller.acceptModelRanking(reply)
                 RequestKind.CONTEXTUAL -> controller.acceptContextualRanking(reply)
                 RequestKind.REFINEMENT -> false

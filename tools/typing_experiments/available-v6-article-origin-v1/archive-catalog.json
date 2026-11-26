@@ -1,0 +1,22 @@
+{
+  "archives": {
+    "calibration.tsv.bz2": {
+      "archive": "calibration.tsv.bz2",
+      "archiveSha256": "0db4c6ed1cffce9f24f3f5fe9e5f875e8bdedf215196c5040e3a8baf62488903",
+      "decodedSha256": "b19e91877a9dc4ec200a4982b191d7c9348efdf8196ddb84047521a4c04b3abb",
+      "rows": 7905
+    },
+    "matches.jsonl.bz2": {
+      "archive": "matches.jsonl.bz2",
+      "archiveSha256": "514facc84e44086de5c6be788be481027bb3829a4250030c0ce4b16e0d23d9e7",
+      "decodedSha256": "44af5d541f2c302a0afc9acfe67352551c4444f0f7de49aef891f58912e04b2f",
+      "rows": 2492
+    }
+  },
+  "independentQualification": false,
+  "originalManifestSha256": "63a96729330de3d36024ab6d062542bfeed0461d3b3d4202f820c74a30b90691",
+  "publicationRightsReviewed": false,
+  "purpose": "DISCLOSED_HISTORICAL_CORPORA_NOT_QUALIFICATION",
+  "schema": 1,
+  "sourceLockSha256": "02397f3424d85634e372e87d8cde55bd97af79615442d3ec1cada45831f95ede"
+}

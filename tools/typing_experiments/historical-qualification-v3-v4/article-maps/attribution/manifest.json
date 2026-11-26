@@ -1,0 +1,98 @@
+[
+  {
+    "articleMapSha256": "010e73b16cef526a35ae7c5fac85cdef1333f339ead676ffa8e4de1403696ce1",
+    "articles": 2657,
+    "language": "en",
+    "outputSha256": "9538bfe8ec32013e577fd22aab1e8efa6de86e19e180c7f95df7dbdf9c0d7767",
+    "sourceColumns": [
+      "id",
+      "url",
+      "title",
+      "text"
+    ],
+    "sourcePath": "20231101.en/train/0019.parquet",
+    "sourceRevision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+    "sourceShardSha256": "99c23125b0dd115d68f4a921376880e307bdfcbf3bfd66ae4ed90e853e1dadac",
+    "version": "v2"
+  },
+  {
+    "articleMapSha256": "791567744f7f5f7d08afc7afa041f94941c8552e24af9a71653634109ac9ffdf",
+    "articles": 2463,
+    "language": "es",
+    "outputSha256": "5511793b93abb7e7f5f0a3b90baf06ba02f0d5a343cd93d11533771d29f738c1",
+    "sourceColumns": [
+      "id",
+      "url",
+      "title",
+      "text"
+    ],
+    "sourcePath": "20231101.es/train/0004.parquet",
+    "sourceRevision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+    "sourceShardSha256": "09fcc5eb122edc35fb507935643995999e01cc286f1968d14a5a71f24d2a7cf8",
+    "version": "v2"
+  },
+  {
+    "articleMapSha256": "a6e1c372ac9aaa57c0ff6a32d33d165892ddfeb92f4400ad036ac82f2e63c288",
+    "articles": 2666,
+    "language": "en",
+    "outputSha256": "eb4a34c30797e2ada4b12e66f9292fa0f0adb1656444aff5d2e0919c3f530991",
+    "sourceColumns": [
+      "id",
+      "url",
+      "title",
+      "text"
+    ],
+    "sourcePath": "20231101.en/train/0030.parquet",
+    "sourceRevision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+    "sourceShardSha256": "1de329963a4aaed0c40d820a564487dc98ef113c8ca6b88b11d495d6a4b98774",
+    "version": "v3"
+  },
+  {
+    "articleMapSha256": "d27aebca87ef795dc4f74c966a3a912d0baea37e6375d84655f2ca5ea83ae0da",
+    "articles": 2537,
+    "language": "es",
+    "outputSha256": "bacd9d8ad20e3ed1147265b03658a4f9824cdd5246dea25c2baf7fb6f92dd497",
+    "sourceColumns": [
+      "id",
+      "url",
+      "title",
+      "text"
+    ],
+    "sourcePath": "20231101.es/train/0005.parquet",
+    "sourceRevision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+    "sourceShardSha256": "f62215c55935e6e0d4df9c0b4dd35be38899126457f233d229119c35bec749ae",
+    "version": "v3"
+  },
+  {
+    "articleMapSha256": "4c7d6cefa2f945a69e599830791a20673ecb818d069e0ca01d9cf03c895d696d",
+    "articles": 2712,
+    "language": "en",
+    "outputSha256": "a01c71f57a38631e2bf11ce405e406a0b6b8fe3d6d39730b2f3bfa55ad0aab35",
+    "sourceColumns": [
+      "id",
+      "url",
+      "title",
+      "text"
+    ],
+    "sourcePath": "20231101.en/train/0027.parquet",
+    "sourceRevision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+    "sourceShardSha256": "1f0c7bcaf2aeb9765a981c8911b95ab3a9e50456bbad64e50e722a53b8608ccc",
+    "version": "v4"
+  },
+  {
+    "articleMapSha256": "52829200603faad738dfac521037e3a91c1f82ec88112b4e4eee0fe4c2d33c3f",
+    "articles": 2617,
+    "language": "es",
+    "outputSha256": "89167854b65e5839fbc705176a91ae7cb86fb1537ca5606bb840256a46afaec5",
+    "sourceColumns": [
+      "id",
+      "url",
+      "title",
+      "text"
+    ],
+    "sourcePath": "20231101.es/train/0006.parquet",
+    "sourceRevision": "a634f78b1c435397c07001e175fa74cc4ad5e775",
+    "sourceShardSha256": "2e3543788d1cf3c3cadfd800cbea1c0f6d76a2bb639455825e368f25fb47de9d",
+    "version": "v4"
+  }
+]

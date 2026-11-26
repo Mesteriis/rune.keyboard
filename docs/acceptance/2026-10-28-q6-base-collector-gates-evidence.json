@@ -1,0 +1,202 @@
+{
+  "actualCliRefusals": [
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout.py",
+        "--parquet",
+        "build/review-q6-base-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-base-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-base-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-base-collector-gates-20261028/prepare_external_spelling_holdout.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "c2b4ceb311114fe6c8b42181f4bed19da69ba184c281302e90e58a7374aa06fc"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v7.py",
+        "--parquet",
+        "build/review-q6-base-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-base-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-base-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-base-collector-gates-20261028/prepare_external_spelling_holdout_v7.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "386d677a77fed730125e29592301477bbd33639922068c10991b30c8e8ac8736"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v8.py",
+        "--parquet",
+        "build/review-q6-base-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-base-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-base-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-base-collector-gates-20261028/prepare_external_spelling_holdout_v8.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "17aa9f70ab90de70c7cdeb3f92ab34404461e89f8d39c5670dd0d05c493f2d32"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v9.py",
+        "--parquet",
+        "build/review-q6-base-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-base-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-base-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-base-collector-gates-20261028/prepare_external_spelling_holdout_v9.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "92d4b06a172cc90126d857ba941445a6fcf5a54f75eb51d59d940c6e7a50521d"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v10.py",
+        "--parquet",
+        "build/review-q6-base-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-base-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-base-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-base-collector-gates-20261028/prepare_external_spelling_holdout_v10.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "5791b5ff99ad9dac9298662fcad0a5b99e52dbf51ba5c400d37c82c5ae9b816c"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v11.py",
+        "--parquet",
+        "build/review-q6-base-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-base-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-base-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-base-collector-gates-20261028/prepare_external_spelling_holdout_v11.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "71773cde1d40b5529d416215b025bd7d3130567ad658e7662226ab9e44d0837b"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_external_spelling_holdout_v12.py",
+        "--parquet",
+        "build/review-q6-base-collector-gates-20261028/absent.parquet",
+        "--frequency",
+        "build/review-q6-base-collector-gates-20261028/absent-frequency",
+        "--exclude-rows",
+        "build/review-q6-base-collector-gates-20261028/absent-exclusions",
+        "--output",
+        "build/review-q6-base-collector-gates-20261028/prepare_external_spelling_holdout_v12.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "b4f1afbbbeac4240be47d709ea4e932b3b06e86b15da0fb85548321890c96126"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_joint_correction.py",
+        "--source-root",
+        "build/review-q6-base-collector-gates-20261028/absent-source",
+        "--output",
+        "build/review-q6-base-collector-gates-20261028/prepare_joint_correction.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "03e7a7aac801e040a51719cdcf5e66d80d906f4b6b412d77ef643145ecdbe18e"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/typing_experiments/prepare_joint_followup.py",
+        "--source-root",
+        "build/review-q6-base-collector-gates-20261028/absent-source",
+        "--output",
+        "build/review-q6-base-collector-gates-20261028/prepare_joint_followup.py.must-not-freeze"
+      ],
+      "exitCode": 1,
+      "outputCreated": false,
+      "reason": "NEW_HOLDOUT_REGISTRY_COVERAGE_INCOMPLETE",
+      "stderrSha256": "652917ee4bb88bd5603375755e5aebfd70a6f5fb7baae51dd69276b7c725e414"
+    }
+  ],
+  "freshQualification": false,
+  "historicalSourceRetention": {
+    "prepare_external_spelling_holdout.py": {
+      "archived": "tools/typing_experiments/frozen_sources/prepare_external_spelling_holdout_956436a1fbd70870.py",
+      "sha256": "956436a1fbd708706bddb3bad44c1fdf7bff838ef95a8c06911008148590fe01"
+    },
+    "prepare_joint_correction.py": {
+      "archived": "tools/typing_experiments/frozen_sources/prepare_joint_correction_cfa5777d2a2ac53f.py",
+      "sha256": "cfa5777d2a2ac53ffb339aa56b34d57c4a4a6a0ec1a712b1867b857d85043728"
+    }
+  },
+  "modelTrainingPerformed": false,
+  "phoneExecuted": false,
+  "rowParity": {
+    "holdoutBuilders": 4,
+    "jointBuilderRows": 16,
+    "rowsEach": 4,
+    "scope": "deterministic finite fixtures, not full natural historical corpus reproduction"
+  },
+  "schemaVersion": 1,
+  "scientificTests": {
+    "errors": 0,
+    "failures": 0,
+    "modules": 19,
+    "receiptSha256": "23dd26a64edc9e99170c70c256136d96cefd41f0988148cda3f5967aca5899e1",
+    "skips": 1,
+    "tests": 72
+  },
+  "scope": "Q6-base-collector-registry-gates",
+  "sourceSha256": {
+    "tools/typing_experiments/prepare_external_spelling_holdout.py": "0433c995d89211489bb7827190a7093164a39983a8179f6573670398db1f9bfb",
+    "tools/typing_experiments/prepare_joint_correction.py": "f6bb5edac8fc9ee785653e3d6e8018b9ac5003e87d0ae448807b08d53ced13c5",
+    "tools/typing_experiments/test_fresh_spelling_holdout.py": "b6c1a24ede989bc717bcf4636370369d5791fcc8d55346fabc3f12a45359e3e2"
+  },
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "focusedPython3.12": 7,
+    "focusedPython3.14": 7,
+    "receiptSha256": "b4b160b5dbde5382ab0dfcc8697fbbe5cd8488b334af01b7896ea9aacab6eee5",
+    "skips": 0,
+    "stdlibModules": 113,
+    "stdlibTests": 599
+  }
+}

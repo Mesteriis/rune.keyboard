@@ -1,0 +1,116 @@
+{
+  "auditSourceSha256": "529ced1b4babf1d74a2d796847446ec9b819d1f87c410c6991831ad8e5e83a99",
+  "independentQualification": false,
+  "ledgerCoverageComplete": false,
+  "ledgerEntries": 239,
+  "ledgerSha256": "db1093ede1b0fcfebf9112bec83a135eaf92d694ee89d344d3d65545702cac77",
+  "manifestSha256": "63a96729330de3d36024ab6d062542bfeed0461d3b3d4202f820c74a30b90691",
+  "modelCalls": 0,
+  "partitions": {
+    "calibration": {
+      "neighbor": {
+        "articles": 26,
+        "contexts": 27,
+        "groups": {
+          "correct": 27,
+          "correct_rival": 25,
+          "protected": 27,
+          "typo": 27,
+          "unfinished": 27
+        },
+        "rows": 133
+      },
+      "otherRegistered": {
+        "articles": 304,
+        "contexts": 308,
+        "groups": {
+          "correct": 308,
+          "correct_rival": 237,
+          "protected": 308,
+          "typo": 308,
+          "unfinished": 308
+        },
+        "rows": 1469
+      },
+      "spelling": {
+        "articles": 122,
+        "contexts": 125,
+        "groups": {
+          "correct": 125,
+          "correct_rival": 96,
+          "protected": 125,
+          "typo": 125,
+          "unfinished": 125
+        },
+        "rows": 596
+      },
+      "spellingOrNeighbor": {
+        "articles": 140,
+        "contexts": 144,
+        "groups": {
+          "correct": 144,
+          "correct_rival": 114,
+          "protected": 144,
+          "typo": 144,
+          "unfinished": 144
+        },
+        "rows": 690
+      }
+    },
+    "holdout": {
+      "neighbor": {
+        "articles": 25,
+        "contexts": 25,
+        "groups": {
+          "correct": 25,
+          "correct_rival": 20,
+          "protected": 25,
+          "typo": 25,
+          "unfinished": 25
+        },
+        "rows": 120
+      },
+      "otherRegistered": {
+        "articles": 289,
+        "contexts": 293,
+        "groups": {
+          "correct": 293,
+          "correct_rival": 230,
+          "protected": 293,
+          "typo": 293,
+          "unfinished": 293
+        },
+        "rows": 1402
+      },
+      "spelling": {
+        "articles": 131,
+        "contexts": 134,
+        "groups": {
+          "correct": 134,
+          "correct_rival": 110,
+          "protected": 134,
+          "typo": 134,
+          "unfinished": 134
+        },
+        "rows": 646
+      },
+      "spellingOrNeighbor": {
+        "articles": 144,
+        "contexts": 147,
+        "groups": {
+          "correct": 147,
+          "correct_rival": 122,
+          "protected": 147,
+          "typo": 147,
+          "unfinished": 147
+        },
+        "rows": 710
+      }
+    }
+  },
+  "rowsSha256": {
+    "calibration": "0e38210241368965d30edbce36387b6de3f821447c1e69d5ba19ef4c2b75ebf9",
+    "holdout": "fab03f6fb1c08c462328ebf5c18877b0483ab7977179090c2bd48db9e89a0e8d"
+  },
+  "schema": 1
+}

@@ -22,8 +22,13 @@ def run_builder(folder,script,rows,extra=(),bad_hash=False):
 class SpellingBuilderTest(unittest.TestCase):
     def test_real_incomplete_registries_prevent_any_output_corpus(self):
         with tempfile.TemporaryDirectory() as folder:
-            # Artificial identity fixture: it tests coverage failure, not a proposed dictionary label.
-            result=run_builder(folder,'prepare_public_spelling_v1.py',[candidate(families=['fixture-only-family'])])
+            # A made-up word keeps the coverage check independent of historical surface exclusions.
+            row = candidate(
+                families=['fixture-only-family'],
+                typed='рунфикстуролексема',
+                expectedSpelling='рунфикстуролексема',
+            )
+            result = run_builder(folder, 'prepare_public_spelling_v1.py', [row])
             self.assertEqual(2,result.returncode,result.stderr)
             report=json.loads(result.stdout);self.assertEqual('BLOCKED_COVERAGE',report['status'])
             self.assertFalse((Path(folder)/'output').exists());self.assertIn('control-ledger.json',report['inputBindings'])
