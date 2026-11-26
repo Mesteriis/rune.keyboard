@@ -1,0 +1,1 @@
+Improves Russian spelling suggestions and preserves reviewed abbreviations and domain labels. The quality dashboard shows local corrections and Undo by source. Improves editor transitions and typing reliability.

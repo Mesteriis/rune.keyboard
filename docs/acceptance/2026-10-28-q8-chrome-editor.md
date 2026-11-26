@@ -196,3 +196,47 @@ reverse mapping and temporary browser configuration were gone afterward.
 All 50 Android CI helper tests, eight Chrome oracle tests, and actionlint
 passed. The most recent published run remained 40680972358 at `2c1ff975`
 with a failed conclusion.
+
+### Complete physical fold and unfold on the merged main tree
+
+A physical Samsung Fold ran the debug app built from merge commit
+`c42e83da32ea41696a0e48ab8d1b5064d7a9cef0`. Instrumentation and the
+owned loopback fixture came from `5b5f1758`. The disposable test
+checkout widened the real posture waits and used the exact loopback
+URL to identify the Chrome test page. An ADB-forwarded DevTools
+connection focused the empty textarea before measurement. After the
+first checkpoint the harness left the textarea untouched and sent one
+hardware letter on the cover display.
+
+Android reported real base postures `CLOSED` and `OPENED`, with
+display widths of 1968 → 1080 → 1968. Chrome measured a collapsed
+selection at every checkpoint. The focus and exact-text assertions
+passed at all four checkpoints.
+
+| DOM checkpoint | Observed offset |
+| --- | ---: |
+| Inner display after four corrected words and Space | 16 |
+| Cover display before additional input | 16 |
+| Cover display after one hardware letter | 17 |
+| Inner display after unfolding | 17 |
+
+The debug app and instrumentation APKs built successfully, all 13
+host oracle tests passed, the native run returned `OK (1 test)`, and
+the independent DOM verifier returned `passed: true`. The original
+app and test APKs were restored and matched their pre-run hashes.
+The four secure IME settings and both preference maps also matched.
+The owned tab and temporary ADB mappings were removed.
+
+This passes the physical Chrome textarea criterion for passive
+caret continuity on the merged tree. A separate emulator diagnostic isolated an apparent caret shift to
+the fixture's textarea refocus tap. Continued
+soft-keyboard visibility and the broader third-party editor matrix
+remain open.
+
+| Evidence | SHA-256 |
+| --- | --- |
+| Main debug app APK | `29bc43ff5070ed290b6b93826899629bfaf42027c231a68aed241f288a336757` |
+| Instrumentation APK | `1a29e4b0b7e983b7d108d2c32845936e356a9e5c5e617151d884272557d9a87c` |
+| Native result | `c551c0a7c9eba18e8aac278843a4f2ca1b5f9dd4658ced52f6e23917035a958e` |
+| Numeric DOM stream | `5cc8b6cbf943c3a52aeb74222a2061115b594dc203c95c7df418e4fed5ae6efd` |
+| DOM verdict | `21cf47cdf003a407d4fa301cf6c14150c12e47adf25a99935f239bb738d3c09b` |

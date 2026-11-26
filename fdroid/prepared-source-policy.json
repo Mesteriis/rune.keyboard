@@ -5,8 +5,8 @@
     {
       "path": "app/build.gradle.kts",
       "action": "replace",
-      "beforeSha256": "263acdbb14e987124e0f24e237db9dd47be4df55edb31e4a925ac4d30908f177",
-      "afterSha256": "9e6ddbd26fb4da0d7b044f97c3fb2aad1cb579629cf912d0785094aefd1a4347"
+      "beforeSha256": "fd0f88ebf4c727d8b3e041a2124665e13b13455bf5226c9f07b9fb0d0fd32757",
+      "afterSha256": "96f87c8eb251a1b6ae4252568a94c00b5dd6f77724f6767647c02acddecaca41"
     },
     {
       "path": "gradlew",

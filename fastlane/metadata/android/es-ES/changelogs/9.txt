@@ -1,0 +1,1 @@
+Mejora las sugerencias en ruso y conserva abreviaturas y nombres de dominio. El panel de calidad muestra correcciones locales y acciones de deshacer por origen. Mejora la escritura y el cambio de campo.

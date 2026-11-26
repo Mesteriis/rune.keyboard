@@ -761,3 +761,40 @@ started without a build directory and was removed after the run.
 Receipt SHA-256:
 `41476fb2c6fd650a60b80c19aa75ad28e588c8c144d3665ef4ba3a839d8a9f18`.
 Hosted execution remains open.
+
+### Hosted acceptance and merge of PR 4
+
+`25ac09a9` gave API 26 general instrumentation its own silent
+rebind IME on the disposable emulator. This removed the 49 failures
+following the Gboard crash. The API 37 numeric test passed on
+GitHub after moving the same field and its action status into the
+visible portion of the QA page. It still checks both exact numeric
+values and the Done action in the same remote editor.
+
+API 26 still had five failures in retrieval and contextual
+suggestions. Its numeric diagnostics showed recovery reaching the
+100 ms cutoff before the 32,768-state cap. The final change caches
+substitution costs, avoids temporary arrays in the traversal and
+samples time periodically. Cancellation is checked on every edge.
+Terminal verification and the returned search certificate still
+check the 100 ms deadline. The new unit case verifies rejection
+when time expires between traversal samples. Historical replay
+continues to use the exact archived original source.
+
+[GitHub Actions](https://github.com/Mesteriis/rune.keyboard/actions/runs/45742863674)
+passed all seven primary jobs on `85f2aed5`, including the frozen
+2,160- and 12,000-row comparisons and both Android versions.
+Each general XML contains 352 passes, the same 64 inventoried skips,
+zero failures and zero errors. Both night-learning routes and all
+routed Android suites passed. The independent model-build workflow
+was skipped by its existing branch condition.
+
+| API | Boundary receipt SHA-256 | General XML SHA-256 |
+| --- | --- | --- |
+| 26 | `37d9349a6da3ff3baeb4777b2dba7913886365e9876932081c1ebed5128d1ff6` | `f0c9fdee630429a56ff0c046856cf00f026b29ccaf0d261ba4a7de25567004f7` |
+| 37.0 | `01f9dc9c33739d784dd696f8339285bd2ec597341ab0e9822f002491855dd34b` | `6bf116265cd88e29e54c864966d79cb7ce8d88685348200f146e573f1c5cfe6d` |
+
+[PR 4](https://github.com/Mesteriis/rune.keyboard/pull/4) merged into
+`main` at `c42e83da32ea41696a0e48ab8d1b5064d7a9cef0`. The checked
+remote merge tree exactly matches the CI-tested tree. GitHub also
+started the normal [post-merge run](https://github.com/Mesteriis/rune.keyboard/actions/runs/45751312221).

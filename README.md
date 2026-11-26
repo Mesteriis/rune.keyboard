@@ -49,7 +49,7 @@ to an enabled voice input method; it does not implement speech recognition.
 
 ## Install
 
-1. Download `rune-keyboard-0.4.2.apk` from [GitHub Releases](https://github.com/Mesteriis/rune.keyboard/releases/latest).
+1. Download `rune-keyboard-0.4.3.apk` from [GitHub Releases](https://github.com/Mesteriis/rune.keyboard/releases/latest).
 2. Open the APK and allow installation from that source when Android asks.
 3. Open **Rune Keyboard → Set up keyboard**, enable Rune and select it as your keyboard.
 4. Choose languages and try the practice field.

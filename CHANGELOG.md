@@ -1,6 +1,15 @@
 # Changelog
 
-## Unreleased
+## 0.4.3 — 2026-11-26
+
+- Offer the standard Russian suggestion «куда» for «куа» without forcing a
+  replacement. Preserve Cyrillic domain labels and reviewed abbreviations
+  as punctuation is typed.
+- Track on-device autocorrection applications and Undo by source on the
+  quality dashboard. Faster Russian neighbor search retains the existing
+  result deadline.
+- Finish owned composition safely when switching editors.
+- Includes the unreleased 0.4.2 changes described in the next section.
 
 - With personal learning enabled, retain an explicit rejection of a lowercase-to-titlecase
   correction across restarts. The veto applies only to that language and case transition;
@@ -42,7 +51,7 @@
   checkpoint preserved the existing runtime identity; the later source-path
   recipe above has its own renewed identity and execution qualification.
 
-## 0.4.2 — 2026-09-16
+## 0.4.2 — unreleased preparation
 
 - Ordinary letters are no longer dropped when a small upward finger drift rejects a secondary-symbol flick while the contact remains inside the key.
 - Downward flick symbols, long-press alternatives, cancellation, accessibility and multi-touch delivery retain their existing behavior.

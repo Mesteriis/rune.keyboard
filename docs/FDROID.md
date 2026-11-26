@@ -9,7 +9,7 @@ The repository records [packaging request #4406](https://gitlab.com/fdroid/rfp/-
 - Proposed recipe: [fdroid/io.github.mesteriis.rune.keyboard.yml](../fdroid/io.github.mesteriis.rune.keyboard.yml)
 - Localized store metadata: [fastlane/metadata/android](../fastlane/metadata/android)
 - Historical source tag: `v0.4.2`, version code `8`, original preparation commit `d332c0e`. The tag was restored locally during review; it has not been pushed by this work. Both historical recipes now use full immutable commit hashes.
-- Current review changes remain unreleased. The historical 0.4.2 recipe retains the three exceptions applicable to its original source, without reassigning that version to current HEAD.
+- The proposed 0.4.3 build pins tag `v0.4.3` and version code 9, with the reviewed data overlay and prepared-source guard. The historical 0.4.2 recipe remains pinned to its original source.
 - Build: Gradle release, `app` subdirectory, recursive submodules; JDK 17, SDK 37, NDK 29.0.14206865 and CMake 3.31.6.
 
 No signing secrets are required to compile the source. Without the ignored local `keystore.properties`, Gradle produces an unsigned release APK. F-Droid can sign its independently built APK. That signing identity is different from the upstream GitHub release unless reproducible upstream signing is separately configured and verified. Local normal/prepared builds now have matching whole-APK hashes under the same host/toolchain/cache; independent build-server reproducibility remains unverified (see the native receipt below).
@@ -18,7 +18,7 @@ No signing secrets are required to compile the source. Without the ignored local
 
 The native runtime is built from the pinned llama.cpp source submodule, not shipped as a prebuilt library. The Gradle wrapper is checked in. The dependency repositories are Google Maven, Maven Central and the Gradle plugin portal.
 
-Packed dictionaries, morphology, frequency data and small experimental weights are committed data assets. Their formats, licenses, source revisions, transformations and hashes are documented in [packaged lexicon provenance](../app/src/main/assets/smarttyping/lexicon/provenance/PACKAGED_LEXICONS.md), [morphology](../tools/morphology/README.md) and [typing experiments](../tools/typing_experiments/README.md). They are not executable downloads. The historical 0.4.1/0.4.2 recipes have exact scanner exceptions for their three numeric model data files, with their declared provenance retained. Later review assets are inventoried in the separate review-data policy below; a new versioned release recipe still needs to be prepared. The unused training baseline is removed from the F-Droid build tree. There is no blanket binary scanner exclusion.
+Packed dictionaries, morphology, frequency data and small experimental weights are committed data assets. Their formats, licenses, source revisions, transformations and hashes are documented in [packaged lexicon provenance](../app/src/main/assets/smarttyping/lexicon/provenance/PACKAGED_LEXICONS.md), [morphology](../tools/morphology/README.md) and [typing experiments](../tools/typing_experiments/README.md). They are not executable downloads. The historical 0.4.1/0.4.2 recipes have exact scanner exceptions for their three numeric model data files, with their declared provenance retained. The proposed 0.4.3 recipe uses the literal scanner exceptions from the data policy below. The unused training baseline is removed from the F-Droid build tree. There is no blanket binary scanner exclusion.
 
 The optional large Rune Text model is not bundled. Its download is explicit, pinned to a full source revision and checked by size/SHA-256. Typing works without it. Its source and notices are linked from [Rune Text documentation](../tools/model/rune-text-0.1/README.md).
 
@@ -41,7 +41,7 @@ manifest and hash. New archives, changed provenance and filename-prefix siblings
 fail the guard. The test calibration archive remains warning-only inventory;
 no broad directory or gzip exclusion is used. The prepared-source policy also
 binds all four host archive deletions. The historical release recipes are retained;
-the next release recipe must apply the current overlay's literal paths.
+the 0.4.3 recipe applies the overlay's literal paths.
 
 Run before F-Droid source preparation, on the original checkout:
 
@@ -85,8 +85,8 @@ three root wrapper files, the unused training baseline, two llama.cpp example
 wrapper files and four host CI archives. The archives are deleted by exact path
 and hash; the calibration test gzip remains inventory-only.
 
-A future versioned recipe for the source export without the rebuildable v3/v4
-qualification archives must run both guards in `init`, before preparation,
+The 0.4.3 recipe uses the source export without the rebuildable v3/v4
+qualification archives. It runs both guards in `init`, before preparation,
 and explicitly select the prepared-source mode for Gradle:
 
 ```yaml

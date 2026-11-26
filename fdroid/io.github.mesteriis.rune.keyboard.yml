@@ -48,7 +48,47 @@ Builds:
       - tools/typing_experiments/baseline/ru-ranker.bin
     ndk: 29.0.14206865
 
+  - versionName: 0.4.3
+    versionCode: 9
+    commit: v0.4.3
+    subdir: app
+    submodules: true
+    init:
+      - cd .. && python3 tools/release_source_check.py && python3 tools/fdroid_data_policy.py --source-export
+    gradle:
+      - yes
+    gradleprops:
+      - runePreparedSource=fdroidserver-2.4.5
+    prebuild: sdkmanager 'cmake;3.31.6'
+    scanignore:
+      - app/src/main/assets/smarttyping/experiments/ru-context.bin
+      - app/src/main/assets/smarttyping/experiments/ru-contextual-ranker.bin
+      - app/src/main/assets/smarttyping/experiments/ru-infinitive-revision-ranker.bin
+      - app/src/main/assets/smarttyping/experiments/ru-joint-ranker.bin
+      - app/src/main/assets/smarttyping/experiments/ru-joint-rescue-ranker.bin
+      - app/src/main/assets/smarttyping/experiments/ru-neighbor-ranker.bin
+      - app/src/main/assets/smarttyping/experiments/ru-noun-case-ranker.bin
+      - app/src/main/assets/smarttyping/experiments/ru-ranker-auto-v1.bin
+      - app/src/main/assets/smarttyping/experiments/ru-ranker.bin
+      - app/src/main/assets/smarttyping/experiments/ru-ranking-context.bin
+      - app/src/test/resources/context-feature-parity/conversation.bin
+      - app/src/test/resources/context-feature-parity/grammar.bin
+      - app/src/test/resources/context-feature-parity/wiki.bin
+      - app/src/test/resources/reliable-subject-parity/grammar.bin
+      - app/src/test/resources/right-context-feature-parity/grammar.bin
+      - app/src/test/resources/right-context-model-parity/model.bin
+      - app/src/test/resources/right-context-role-parity/grammar.bin
+      - app/src/test/resources/right-context-role-parity/past.bin
+      - tools/emoji/sources/unicode-15.1-cldr-44.1.zip
+    scandelete:
+      - tools/ci/historical-data-v1/files.tar.gz
+      - tools/ci/historical-model-fixtures-v1/files.tar.gz
+      - tools/ci/product-replay-history-v1/baseline.jsonl.gz
+      - tools/ci/product-replay-v1/baseline.jsonl.gz
+      - tools/typing_experiments/baseline/ru-ranker.bin
+    ndk: 29.0.14206865
+
 AutoUpdateMode: Version v%v
 UpdateCheckMode: Tags ^v[0-9]+\.[0-9]+\.[0-9]+$
-CurrentVersion: 0.4.2
-CurrentVersionCode: 8
+CurrentVersion: 0.4.3
+CurrentVersionCode: 9
