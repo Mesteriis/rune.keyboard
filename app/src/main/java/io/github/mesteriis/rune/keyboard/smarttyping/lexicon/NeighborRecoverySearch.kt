@@ -40,10 +40,11 @@ internal class NeighborRecoverySearch(
         var states = 0
         val candidates = ArrayList<GeneratedCandidate>()
         var completion = CandidateCompletion.COMPLETE
-        fun checkpoint(): Boolean {
-            if (Thread.currentThread().isInterrupted || cancellation.isCancelled()) {
+        val searchThread = Thread.currentThread()
+        fun checkpoint(checkTime: Boolean = true): Boolean {
+            if (searchThread.isInterrupted || cancellation.isCancelled()) {
                 completion = CandidateCompletion.CANCELLED
-            } else if (nanoTime() - started !in 0 until MAX_NANOS) {
+            } else if (checkTime && nanoTime() - started !in 0 until MAX_NANOS) {
                 completion = CandidateCompletion.STATES_EXHAUSTED
             }
             return completion == CandidateCompletion.COMPLETE
@@ -51,7 +52,9 @@ internal class NeighborRecoverySearch(
         try {
             var depth = 0
             next[0] = index.child(0)
-            while (depth >= 0 && checkpoint()) {
+            // Sample time during traversal and always before verifying a terminal or returning.
+            // Cancellation remains per edge. No complete certificate can cross the deadline.
+            while (depth >= 0 && checkpoint(checkTime = states % TIME_CHECK_INTERVAL == 0)) {
                 val node = next[depth]
                 if (node == 0) { depth--; continue }
                 if (states == maximumStates) { completion = CandidateCompletion.STATES_EXHAUSTED; break }
@@ -72,15 +75,16 @@ internal class NeighborRecoverySearch(
                 }
                 // The first half of a transposition may mismatch a non-neighbour. Do not prune it.
                 val pendingTranspose = if (length < key.length && letter == key[length]) plain[depth] + 1 else INF
-                if (minOf(plain[length], inserted[length], deleted[length], transposed[length], pendingTranspose) > radius) continue
-                val terminal = index.terminal(node)
+                if (plain[length] > radius && inserted[length] > radius && deleted[length] > radius &&
+                    transposed[length] > radius && pendingTranspose > radius) continue
                 val distance = when (length - key.length) {
                     0 -> minOf(plain[length], transposed[length])
                     1 -> inserted[length]
                     -1 -> deleted[length]
                     else -> INF
                 }
-                if (terminal != 0 && distance in 2..radius) {
+                val terminal = if (distance in 2..radius) index.terminal(node) else 0
+                if (terminal != 0) {
                     if (!checkpoint()) break
                     if (candidates.size == maximumTerminals) { completion = CandidateCompletion.VERIFIED_EXHAUSTED; break }
                     val word = String(path, 0, length)
@@ -117,6 +121,7 @@ internal class NeighborRecoverySearch(
         const val MAX_TERMINALS = 64
         const val MAX_NANOS = 100_000_000L
         private const val INF = 128
+        private const val TIME_CHECK_INTERVAL = 32
         private const val ALPHABET_SIZE = 'ё' - 'а' + 1
         private val UNREACHABLE = IntArray(ALPHABET_SIZE + 1) { INF }
         private val SUBSTITUTION_COSTS = Array(ALPHABET_SIZE) { source ->
